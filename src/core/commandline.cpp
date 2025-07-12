@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "commandline.h"
+#include "core/searchjobstoppable.h"
 #include <QDir>
 #include <QDateTime>
 #include <QSqlDatabase>
@@ -44,82 +45,57 @@
 CommandLineHandler::CommandLineHandler(QObject *parent)
     : QObject(parent)
     , collection(nullptr)
-    , search(nullptr)
+    , searchManager(nullptr)
+    , searchEngine(nullptr)
     , selectedDevice(nullptr)
-    , searchRequested(false)
-    , outputCSV(false)
+    , eventLoop(nullptr)
+    , searchResult(0)
+    , searchCompleted(false)
     , verbose(false)
 {
     setupCommandLineParser();
 }
 
-void CommandLineHandler::setupCommandLineParser()
+CommandLineHandler::~CommandLineHandler()
 {
-    parser.setApplicationDescription("Katalog - File Catalog Management and Search Tool");
-    parser.addHelpOption();
-    parser.addVersionOption();
+    cleanup();
+}
 
-    // Existing positional arguments (for compatibility)
-    parser.addPositionalArgument("action", "The action to be performed. Choices:\n"
-                                           "  list_catalogs     - List all catalogs (ID, active state, name)\n"
-                                           "  update_catalog    - Update a specific catalog (deviceID)\n"
-                                           "  update_all_active - Update all active catalogs\n"
-                                           "  search            - Execute search using last search criteria\n"
-                                           "  restart           - Restart the application.");
-    parser.addPositionalArgument("deviceID", "Device ID on which the action is performed (required for update_catalog)");
+void CommandLineHandler::cleanup()
+{
+    // Clean up search objects
+    if (searchManager) {
+        searchManager->deleteLater();
+        searchManager = nullptr;
+    }
 
-    // Existing options (for compatibility)
-    parser.addOption(QCommandLineOption("report", "Display a report of the operation"));
+    if (searchEngine) {
+        searchEngine->deleteLater();
+        searchEngine = nullptr;
+    }
 
-    // New search-specific options - Fix duplicate "v" option
-    parser.addOption(QCommandLineOption(QStringList() << "s" << "search",
-                                        "Execute search using last search criteria from the collection (alternative to positional 'search')"));
+    if (selectedDevice) {
+        delete selectedDevice;
+        selectedDevice = nullptr;
+    }
 
-    // CSV output option
-    parser.addOption(QCommandLineOption("csv",
-                                        "Output search results to CSV file. Use with search action or --search option.",
-                                        "filename"));
+    if (eventLoop) {
+        delete eventLoop;
+        eventLoop = nullptr;
+    }
 
-    // Collection path option
-    parser.addOption(QCommandLineOption(QStringList() << "c" << "collection",
-                                        "Path to collection folder",
-                                        "path"));
-
-    // Verbose option - Remove duplicate short option
-    parser.addOption(QCommandLineOption("verbose",
-                                        "Enable verbose output"));
+    // Collection will be cleaned up by parent
 }
 
 bool CommandLineHandler::parseArguments(const QCoreApplication &app)
 {
     parser.process(app);
 
-    // Get positional arguments
-    QStringList positionalArguments = parser.positionalArguments();
-    QString action = positionalArguments.value(0);
-
-    // Check for search request (either positional or option)
-    searchRequested = (action == "search") || parser.isSet("search");
-
-    outputCSV = parser.isSet("csv");
+    // Get options
     verbose = parser.isSet("verbose");
-
-    if (parser.isSet("csv")) {
-        csvFilename = parser.value("csv");
-        if (csvFilename.isEmpty()) {
-            csvFilename = QString("search_results_%1.csv").arg(generateTimestamp());
-        }
-    }
 
     if (parser.isSet("collection")) {
         collectionPath = parser.value("collection");
-    }
-
-    // Validate combinations
-    if (outputCSV && !searchRequested) {
-        QTextStream stderr_stream(stderr);
-        stderr_stream << "Error: --csv option requires search action or --search option" << Qt::endl;
-        return false;
     }
 
     return true;
@@ -131,14 +107,12 @@ int CommandLineHandler::processCommandLine(QCoreApplication &app)
         return 1;
     }
 
-    // Get parsed values
-    bool displayReport = parser.isSet("report");
-    QStringList positionalArguments = parser.positionalArguments();
-    QString action = positionalArguments.value(0);
-    QString deviceIDStr = positionalArguments.value(1);
+    // Store parsed values
+    positionalArgs = parser.positionalArguments();
+    requestedAction = positionalArgs.value(0);
 
-    // If no command line action/options, return special code to continue to GUI
-    if (action.isEmpty() && !searchRequested) {
+    // If no command line action, return special code to continue to GUI
+    if (requestedAction.isEmpty()) {
         return -1; // Special code to indicate "continue to GUI"
     }
 
@@ -146,6 +120,7 @@ int CommandLineHandler::processCommandLine(QCoreApplication &app)
         QTextStream stdout_stream(stdout);
         stdout_stream << "Katalog Command Line" << Qt::endl;
         stdout_stream << "===================" << Qt::endl;
+        stdout_stream << "Action selected: \"" << requestedAction << "\"" << Qt::endl;
     }
 
     // Initialize collection and database for any command
@@ -155,106 +130,68 @@ int CommandLineHandler::processCommandLine(QCoreApplication &app)
         return 1;
     }
 
-    // Test collection folder and files
-    if (verbose) {
-        QTextStream stdout_stream(stdout);
-        stdout_stream << "Testing collection folder..." << Qt::endl;
-
-        QDir collectionDir(collection->folder);
-        stdout_stream << "Collection folder exists: " << (collectionDir.exists() ? "Yes" : "No") << Qt::endl;
-
-        // Check key CSV files
-        QStringList keyFiles = {"device.csv", "storage.csv", "search_history.csv", "parameters.csv"};
-        for (const QString &fileName : keyFiles) {
-            QString filePath = collection->folder + "/" + fileName;
-            QFile file(filePath);
-            bool exists = file.exists();
-            bool readable = exists && file.open(QIODevice::ReadOnly);
-            if (readable) file.close();
-
-            stdout_stream << fileName << " - exists: " << (exists ? "Yes" : "No")
-                          << ", readable: " << (readable ? "Yes" : "No") << Qt::endl;
-        }
+    // Handle different actions
+    if (requestedAction == "search") {
+        return cmd_search();
     }
-
-    loadCollection();
-
-    // Handle actions
-    if (!action.isEmpty()) {
-        qDebug() << "";
-        qDebug() << "Action selected:" << action;
-
-        if (action == "update_catalog") {
-            if (deviceIDStr.isEmpty()) {
-                qWarning() << "Stopped. A device ID is required for update_catalog action.\n";
-                return 1;
-            }
-            bool deviceIDIsInt;
-            int deviceID = deviceIDStr.toInt(&deviceIDIsInt);
-            if (!deviceIDIsInt) {
-                qWarning() << "Stopped. The device ID must be an integer.\n";
-                return 1;
-            }
-            cmd_updateCatalog(deviceID, displayReport);
-            return 0;
-        }
-        else if (action == "list_catalogs") {
-            cmd_listGroup0Catalogs();
-            return 0;
-        }
-        else if (action == "update_all_active") {
-            cmd_updateAllActive(displayReport);
-            return 0;
-        }
-        else if (action == "search") {
-            return executeSearch();
-        }
-        else if (action == "restart") {
-            // Handle the restart action (existing functionality)
-            qDebug() << "Restarting the application...";
-
-            QStringList newArgs;
-            bool skipNext = false;
-            for (const QString &arg : QCoreApplication::arguments()) {
-                if (skipNext) {
-                    skipNext = false;
-                    continue;
-                }
-                if (arg == "--catalogID" || arg == "--report" || arg == "--myoption") {
-                    skipNext = true;
-                } else if (arg.startsWith("--")) {
-                    newArgs << arg;
-                } else if (arg.startsWith("-")) {
-                    newArgs << arg;
-                } else {
-                    continue;
-                }
-            }
-
-            QProcess::startDetached(QCoreApplication::applicationFilePath(), newArgs);
-            return 0;
-        }
-        else {
-            qDebug() << "Incorrect action requested.\n"
-                        "Valid actions: list_catalogs, update_catalog, update_all_active, search, restart.\n"
-                        "For more information, use ./Katalog --help";
-            qDebug() << "";
+    else if (requestedAction == "list_catalogs") {
+        cmd_listGroup0Catalogs();
+        return 0;
+    }
+    else if (requestedAction == "update_catalog") {
+        bool deviceIdOk = false;
+        int deviceId = positionalArgs.value(1).toInt(&deviceIdOk);
+        if (!deviceIdOk) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Invalid device ID: " << positionalArgs.value(1) << Qt::endl;
             return 1;
         }
+        bool displayReport = parser.isSet("report");
+        cmd_updateCatalog(deviceId, displayReport);
+        return 0;
     }
-
-    // Handle standalone search option
-    if (searchRequested) {
-        return executeSearch();
+    else if (requestedAction == "update_all_active") {
+        bool displayReport = parser.isSet("report");
+        cmd_updateAllActive(displayReport);
+        return 0;
     }
+    else {
+        QTextStream stderr_stream(stderr);
+        stderr_stream << "Error: Unknown action: " << requestedAction << Qt::endl;
+        return 1;
+    }
+}
 
-    return 0;
+void CommandLineHandler::setupCommandLineParser()
+{
+    parser.setApplicationDescription("Katalog - File Catalog Management and Search Tool");
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    // Positional arguments
+    parser.addPositionalArgument("action", "The action to be performed. Choices:\n"
+                                           "  list_catalogs     - List all catalogs (ID, active state, name)\n"
+                                           "  update_catalog    - Update a specific catalog (deviceID)\n"
+                                           "  update_all_active - Update all active catalogs\n"
+                                           "  search            - Execute search using last search criteria");
+
+    parser.addPositionalArgument("deviceID", "Device ID for update_catalog action (optional)", "[deviceID]");
+
+    // Options
+    parser.addOption(QCommandLineOption(QStringList() << "r" << "report",
+                                        "Show detailed report for update operations"));
+
+    parser.addOption(QCommandLineOption(QStringList() << "c" << "collection",
+                                        "Path to collection folder",
+                                        "path"));
+
+    parser.addOption(QCommandLineOption("verbose",
+                                        "Enable verbose output"));
 }
 
 void CommandLineHandler::setCollection(Collection *coll)
 {
-    // This method is no longer needed since we create our own collection
-    // Keeping for potential compatibility, but collection is created internally
+    // This method allows external setting of collection (for compatibility)
     if (collection == nullptr) {
         collection = coll;
     }
@@ -287,7 +224,6 @@ bool CommandLineHandler::initializeDatabase()
     // Load from settings only if no command line path was provided
     if (collection->folder.isEmpty()) {
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-        // FIXED: Changed from "Settings/collectionFolder" to "LastCollectionFolder"
         collection->folder = settings.value("LastCollectionFolder").toString();
 
         // Use default if not set
@@ -320,12 +256,37 @@ bool CommandLineHandler::initializeDatabase()
         return false;
     }
 
+    // DEBUG: Show collection files
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "DEBUG: Collection files:" << Qt::endl;
+        QStringList nameFilters;
+        nameFilters << "*.csv" << "*.idx";
+        QFileInfoList files = collectionDir.entryInfoList(nameFilters, QDir::Files);
+        foreach (const QFileInfo &fileInfo, files) {
+            stdout_stream << "  " << fileInfo.fileName() << " - " << fileInfo.size() << " bytes" << Qt::endl;
+        }
+    }
+
     // Use the new Database class for initialization
     QSqlError err = Database::initialize("defaultConnection", collection);
     if (err.type() != QSqlError::NoError) {
         QTextStream stderr_stream(stderr);
         stderr_stream << "Error: Failed to initialize database: " << err.text() << Qt::endl;
         return false;
+    }
+
+    // Load the collection metadata (devices, catalogs, storage, etc.)
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "DEBUG: Loading collection..." << Qt::endl;
+    }
+
+    collection->load();
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "DEBUG: Collection loaded" << Qt::endl;
     }
 
     return true;
@@ -599,123 +560,297 @@ void CommandLineHandler::cmd_updateAllActive(bool displayReport)
 
 void CommandLineHandler::loadLastSearchCriteria()
 {
-    // Get the most recent search from history
+    // NOTE: This method is for Step 2, but keeping it for compatibility
+    // For Step 1, we don't actually load from search history
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "loadLastSearchCriteria() called (Step 1: not used)" << Qt::endl;
+    }
+
+    // FIXED: Use searchEngine instead of undefined 'search' variable
+    if (!searchEngine) {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "No search engine available for loading criteria" << Qt::endl;
+        }
+        return;
+    }
+
+    // Load criteria from the last search in the search history
+    searchEngine->loadSearchHistoryCriteria("defaultConnection");
+
+    // Check if any search criteria were loaded
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
-        SELECT MAX(date_time)
+        SELECT date_time, text_phrase, search_catalog_checked, search_directory_checked
         FROM search
+        ORDER BY date_time DESC
+        LIMIT 1
     )");
     query.prepare(querySQL);
     query.exec();
 
     if (query.next()) {
-        QString lastSearchDateTime = query.value(0).toString();
+        QString dateTime = query.value(0).toString();
+        QString searchText = query.value(1).toString();
+        bool catalogsChecked = query.value(2).toBool();
+        bool directoriesChecked = query.value(3).toBool();
 
-        if (!lastSearchDateTime.isEmpty()) {
-            search->searchDateTime = lastSearchDateTime;
-            search->loadSearchHistoryCriteria("defaultConnection");
-
-            if (verbose) {
-                QTextStream stdout_stream(stdout);
-                stdout_stream << "Loaded search criteria from: " << lastSearchDateTime << Qt::endl;
-                stdout_stream << "Search text: \"" << search->searchText << "\"" << Qt::endl;
-                stdout_stream << "Search in catalogs: " << (search->searchInCatalogsChecked ? "Yes" : "No") << Qt::endl;
-                stdout_stream << "Search in directories: " << (search->searchInConnectedChecked ? "Yes" : "No") << Qt::endl;
-            }
-        } else {
-            if (verbose) {
-                QTextStream stdout_stream(stdout);
-                stdout_stream << "No previous search found, using default criteria" << Qt::endl;
-            }
-            // Set minimal default search criteria
-            search->searchOnFileName = true;
-            search->searchText = "*"; // Search for all files
-            search->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS;
-            search->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES;
-            search->searchInCatalogsChecked = true;
-            search->searchInConnectedChecked = false;
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Loaded search criteria from: " << dateTime << Qt::endl;
+            stdout_stream << "Search text: \"" << searchText << "\"" << Qt::endl;
+            stdout_stream << "Search in catalogs: " << (catalogsChecked ? "Yes" : "No") << Qt::endl;
+            stdout_stream << "Search in directories: " << (directoriesChecked ? "Yes" : "No") << Qt::endl;
         }
+    } else {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "No previous search found in history" << Qt::endl;
+        }
+    }
+}
+
+void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
+{
+    if (!search) return;
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "Setting search parameters for 'return all files'..." << Qt::endl;
+    }
+
+    // Clear any existing results
+    search->clearResults();
+
+    // STEP 1: Configure search to return ALL files (no filtering)
+    search->searchOnFileName = true;
+    search->searchText = "";  // Empty = match all files
+    search->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS;
+    search->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES;
+    search->caseSensitive = false;
+    search->selectedSearchExclude = "";
+
+    // Search location - catalogs only (not directories)
+    search->searchInCatalogsChecked = true;
+    search->searchInConnectedChecked = false;
+
+    // Disable all filtering criteria
+    search->searchOnFileCriteria = false;
+    search->searchOnSize = false;
+    search->searchOnType = false;
+    search->searchOnDate = false;
+    search->searchOnDuplicates = false;
+    search->searchOnDifferences = false;
+    search->searchOnFolderCriteria = false;
+    search->searchOnTags = false;
+
+    // Set selected devices (All devices = deviceIDList from getSelectedDevice())
+    search->selectedDeviceIDList = selectedDevice->deviceIDList;
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "Search parameters configured:" << Qt::endl;
+        stdout_stream << "  searchText: \"" << search->searchText << "\" (empty = all files)" << Qt::endl;
+        stdout_stream << "  searchInCatalogsChecked: " << (search->searchInCatalogsChecked ? "Yes" : "No") << Qt::endl;
+        // FIXED: Format QList<int> properly for QTextStream
+        stdout_stream << "  selectedDeviceIDList: " << formatDeviceIDList(search->selectedDeviceIDList) << Qt::endl;
+        stdout_stream << "  All filtering disabled (return all files)" << Qt::endl;
     }
 }
 
 Device* CommandLineHandler::getSelectedDevice()
 {
-    // For command line, search in all devices (create a virtual "All" device)
-    Device *allDevice = new Device();
-    allDevice->ID = 0;
-    allDevice->type = "All";
-    allDevice->name = "All Devices";
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "DEBUG: getSelectedDevice() called" << Qt::endl;
+    }
 
-    // Load the device list manually since loadSubDeviceList is private
-    // Query for all active catalog devices
+    // Query for active catalog devices
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
-        SELECT device_id, device_type
+        SELECT device_id, device_type, device_name
         FROM device
         WHERE device_type = 'Catalog'
         AND device_active = 1
         ORDER BY device_id
+        LIMIT 1
     )");
-    query.prepare(querySQL);
-    query.exec();
 
-    while (query.next()) {
-        int deviceId = query.value(0).toInt();
-        allDevice->deviceIDList.append(deviceId);
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "DEBUG: Looking for first active catalog device" << Qt::endl;
     }
 
-    return allDevice;
+    query.prepare(querySQL);
+    bool querySuccess = query.exec();
+
+    if (!querySuccess) {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "DEBUG: Query failed: " << query.lastError().text() << Qt::endl;
+        }
+        return nullptr;
+    }
+
+    if (query.next()) {
+        int deviceId = query.value(0).toInt();
+        QString deviceType = query.value(1).toString();
+        QString deviceName = query.value(2).toString();
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "DEBUG: Using first catalog device - ID: " << deviceId
+                          << ", Type: " << deviceType << ", Name: " << deviceName << Qt::endl;
+        }
+
+        // FIXED: Create a real catalog device instead of virtual "All" device
+        Device *catalogDevice = new Device();
+        catalogDevice->ID = deviceId;
+        catalogDevice->loadDevice("defaultConnection");
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "DEBUG: Device loaded - Name: " << catalogDevice->name
+                          << ", Type: " << catalogDevice->type
+                          << ", External ID: " << catalogDevice->externalID << Qt::endl;
+        }
+
+        return catalogDevice;
+    }
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "DEBUG: No active catalog devices found" << Qt::endl;
+    }
+
+    return nullptr;
 }
 
-int CommandLineHandler::executeSearch()
+int CommandLineHandler::cmd_search()
 {
     if (verbose) {
         QTextStream stdout_stream(stdout);
         stdout_stream << "Executing search..." << Qt::endl;
     }
 
-    // Create search object
-    search = new SearchMemory(this);
+    // Create SearchManager (same as UI)
+    if (!searchManager) {
+        searchManager = new SearchManager(this);
 
-    // Connect progress signal for verbose output
-    if (verbose) {
-        connect(search, &Search::searchProgress, this, &CommandLineHandler::handleSearchProgress);
+        // Connect signals for synchronous execution
+        connect(searchManager, &SearchManager::searchCompleted,
+                this, &CommandLineHandler::onSearchCompleted);
+        connect(searchManager, &SearchManager::searchCancelled,
+                this, &CommandLineHandler::onSearchCancelled);
+        connect(searchManager, &SearchManager::searchError,
+                this, &CommandLineHandler::onSearchError);
     }
 
-    // Load search criteria from last search
-    loadLastSearchCriteria();
+    // Create SearchJobStoppable (same as UI)
+    searchEngine = new SearchJobStoppable(this);
+    searchEngine->setDatabaseConnection("defaultConnection");
 
-    // Get device to search in
+    // Enable memory mode if collection is in Memory mode (same as UI)
+    if (collection->databaseMode == "Memory") {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Memory mode: Enabling memory mode for SearchJobStoppable" << Qt::endl;
+        }
+        searchEngine->setMemoryModeEnabled(true);
+    }
+
+    // Connect progress for verbose output
+    if (verbose) {
+        connect(searchEngine, &Search::searchProgress, this, &CommandLineHandler::handleSearchProgress);
+    }
+
+    // FIXED: Get a single catalog device instead of virtual "All" device
     selectedDevice = getSelectedDevice();
 
-    if (selectedDevice->deviceIDList.isEmpty()) {
+    if (!selectedDevice) {
         QTextStream stderr_stream(stderr);
-        stderr_stream << "Warning: No catalogs found in collection" << Qt::endl;
-        if (!search->searchInConnectedChecked) {
-            stderr_stream << "Error: No catalogs to search and directory search not enabled" << Qt::endl;
-            return 1;
-        }
+        stderr_stream << "Error: No active catalog devices found" << Qt::endl;
+        return 1;
     }
-
-    // Execute the search
-    search->searchFiles(selectedDevice);
 
     if (verbose) {
         QTextStream stdout_stream(stdout);
-        stdout_stream << Qt::endl; // New line after progress
-        stdout_stream << "Search completed." << Qt::endl;
-        stdout_stream << "Files found: " << search->filesFoundNumber << Qt::endl;
-        stdout_stream << "Total size: " << QLocale().formattedDataSize(search->filesFoundTotalSize) << Qt::endl;
+        stdout_stream << "Selected device - ID: " << selectedDevice->ID
+                      << ", Name: " << selectedDevice->name
+                      << ", Type: " << selectedDevice->type << Qt::endl;
+    }
+
+    // Set search parameters
+    sendSearchParametersFromSearchHistory(searchEngine);
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "Starting search via SearchManager..." << Qt::endl;
+    }
+
+    // Start search via SearchManager - this should now work!
+    searchManager->startSearchJobStoppable(searchEngine, selectedDevice);
+
+    // Wait for search completion (CLI-specific)
+    eventLoop = new QEventLoop(this);
+    eventLoop->exec();  // Blocks until onSearchCompleted/Cancelled/Error
+
+    // Clean up
+    delete eventLoop;
+    eventLoop = nullptr;
+
+    return searchResult;
+}
+void CommandLineHandler::onSearchCompleted()
+{
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << Qt::endl << "Search completed successfully." << Qt::endl;
+
+        // Get results from SearchManager
+        Search* currentSearch = searchManager->getCurrentSearch();
+        if (currentSearch) {
+            stdout_stream << "Files found: " << currentSearch->filesFoundNumber << Qt::endl;
+            stdout_stream << "Total size: " << currentSearch->filesFoundTotalSize << " octets" << Qt::endl;
+        }
     }
 
     // Output results
     outputSearchResults();
 
-    // Cleanup
-    delete search;
-    delete selectedDevice;
+    searchResult = 0;  // Success
+    searchCompleted = true;
+    if (eventLoop) {
+        eventLoop->quit();
+    }
+}
 
-    return 0;
+void CommandLineHandler::onSearchCancelled()
+{
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << Qt::endl << "Search was cancelled." << Qt::endl;
+    }
+
+    searchResult = 1;  // Error
+    searchCompleted = true;
+    if (eventLoop) {
+        eventLoop->quit();
+    }
+}
+
+void CommandLineHandler::onSearchError(const QString &error)
+{
+    QTextStream stderr_stream(stderr);
+    stderr_stream << "Search error: " << error << Qt::endl;
+
+    searchResult = 1;  // Error
+    searchCompleted = true;
+    if (eventLoop) {
+        eventLoop->quit();
+    }
 }
 
 void CommandLineHandler::handleSearchProgress(int filesProcessed)
@@ -740,92 +875,65 @@ void CommandLineHandler::handleSearchProgress(int filesProcessed)
     }
 }
 
-void CommandLineHandler::outputSearchResults()
+QString CommandLineHandler::formatDeviceIDList(const QList<int> &deviceIDs)
 {
-    if (outputCSV) {
-        outputSearchResultsCSV(csvFilename);
-        if (verbose) {
-            QTextStream stdout_stream(stdout);
-            stdout_stream << "Results exported to: " << csvFilename << Qt::endl;
-        }
-    } else {
-        outputSearchResultsStdout();
+    if (deviceIDs.isEmpty()) {
+        return "[]";
     }
+
+    QStringList stringList;
+    for (int id : deviceIDs) {
+        stringList << QString::number(id);
+    }
+    return "[" + stringList.join(", ") + "]";
 }
 
-void CommandLineHandler::outputSearchResultsCSV(const QString &filename)
+void CommandLineHandler::outputSearchResults()
 {
-    QFile csvFile(filename);
-    if (!csvFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream stderr_stream(stderr);
-        stderr_stream << "Error: Cannot create CSV file: " << filename << Qt::endl;
+    Search* currentSearch = searchManager->getCurrentSearch();
+    if (!currentSearch) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "No search results available." << Qt::endl;
         return;
     }
 
-    QTextStream out(&csvFile);
-
-    // Write header
-    out << "Name,Size,Date,Folder,Catalog" << Qt::endl;
-
-    // Write data
-    for (int i = 0; i < search->fileNames.size(); ++i) {
-        QString name = search->fileNames[i];
-        QString size = QString::number(search->fileSizes[i]);
-        QString date = search->fileDateTimes[i];
-        QString folder = search->filePaths[i];
-        QString catalog = search->fileCatalogs[i];
-
-        // Escape CSV fields that contain commas or quotes
-        auto escapeCSV = [](const QString &field) {
-            if (field.contains(',') || field.contains('"') || field.contains('\n')) {
-                QString escaped = field;
-                escaped.replace("\"", "\"\"");
-                return "\"" + escaped + "\"";
-            }
-            return field;
-        };
-
-        out << escapeCSV(name) << ","
-            << escapeCSV(size) << ","
-            << escapeCSV(date) << ","
-            << escapeCSV(folder) << ","
-            << escapeCSV(catalog) << Qt::endl;
-    }
-
-    csvFile.close();
+    outputSearchResultsStdout();
 }
 
 void CommandLineHandler::outputSearchResultsStdout()
 {
+    Search* currentSearch = searchManager->getCurrentSearch();
+    if (!currentSearch) {
+        return;
+    }
+
     QTextStream stdout_stream(stdout);
 
-    if (search->filesFoundNumber == 0) {
+    if (currentSearch->filesFoundNumber == 0) {
         stdout_stream << "No files found." << Qt::endl;
         return;
     }
 
-    // Output header
-    stdout_stream << QString("%-40s %10s %20s %s").arg("Name", "Size", "Date", "Path") << Qt::endl;
-    stdout_stream << QString(80, '-') << Qt::endl;
+    stdout_stream << Qt::endl << "Search Results:" << Qt::endl;
+    stdout_stream << "===============" << Qt::endl;
 
-    // Output results
-    for (int i = 0; i < search->fileNames.size(); ++i) {
-        QString name = search->fileNames[i];
-        if (name.length() > 37) {
-            name = name.left(34) + "...";
+    // Output first few files as sample
+    int maxDisplay = qMin(10, currentSearch->fileNames.size());
+    for (int i = 0; i < maxDisplay; ++i) {
+        stdout_stream << currentSearch->fileNames[i];
+        if (i < currentSearch->filePaths.size()) {
+            stdout_stream << " (" << currentSearch->filePaths[i] << ")";
         }
-
-        QString size = QLocale().formattedDataSize(search->fileSizes[i]);
-        QString date = search->fileDateTimes[i].left(16); // Just date part
-        QString fullPath = search->filePaths[i] + "/" + search->fileNames[i];
-
-        stdout_stream << QString("%-40s %10s %20s %s").arg(name, size, date, fullPath) << Qt::endl;
+        stdout_stream << Qt::endl;
     }
 
-    stdout_stream << QString(80, '-') << Qt::endl;
-    stdout_stream << QString("Total: %1 files, %2")
-                         .arg(search->filesFoundNumber)
-                         .arg(QLocale().formattedDataSize(search->filesFoundTotalSize)) << Qt::endl;
+    if (currentSearch->fileNames.size() > maxDisplay) {
+        stdout_stream << "... and " << (currentSearch->fileNames.size() - maxDisplay) << " more files" << Qt::endl;
+    }
+
+    stdout_stream << Qt::endl;
+    stdout_stream << "Total: " << currentSearch->filesFoundNumber << " files, "
+                  << currentSearch->filesFoundTotalSize << " bytes" << Qt::endl;
 }
 
 QString CommandLineHandler::generateTimestamp()

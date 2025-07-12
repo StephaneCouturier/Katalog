@@ -77,7 +77,7 @@ void MainWindow::launchSearchMemory()
     currentSearch = searchMemory;
 
     // Transfer search parameters from UI to the search object
-    sendSearchParameters(searchMemory);
+    sendSearchParametersFromUI(searchMemory);
 
     setSearchButtonState(SearchButtonState::Searching);
 
@@ -176,7 +176,7 @@ void MainWindow::launchSearchJobStoppable()
     }
 
     // Set up basic search parameters
-    sendSearchParameters(searchJobStoppable);
+    sendSearchParametersFromUI(searchJobStoppable);
 
     setSearchButtonState(SearchButtonState::Running);
 
@@ -194,7 +194,7 @@ void MainWindow::launchSearchJobStoppable()
     qDebug() << "=== launchSearchJobStoppable() complete ===";
 }
 //----------------------------------------------------------------------
-void MainWindow::sendSearchParameters(Search *search)
+void MainWindow::sendSearchParametersFromUI(Search *search)
 {// Send search parameters from UI to the search object
     if (!search) return;
 

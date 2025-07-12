@@ -129,7 +129,7 @@ class MainWindow : public KXmlGuiWindow
 
         void extracted();
         void launchSearch();
-        void sendSearchParameters(Search *search);
+        void sendSearchParametersFromUI(Search *search);
 
         //FileTypes
         QStringList fileType_Image;

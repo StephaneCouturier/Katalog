@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
-// src/core/commandline.h
+
 #ifndef COMMANDLINE_H
 #define COMMANDLINE_H
 
@@ -39,10 +39,15 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include <QEventLoop>
+#include <QTimer>
+
 #include "collection.h"
-#include "search_memory.h"
 #include "device.h"
 #include "database.h"
+#include "search.h"
+#include "searchmanager.h"
+#include "searchjobstoppable.h"
 
 class CommandLineHandler : public QObject
 {
@@ -50,6 +55,7 @@ class CommandLineHandler : public QObject
 
 public:
     explicit CommandLineHandler(QObject *parent = nullptr);
+    ~CommandLineHandler();
 
     // Main entry point for command line processing
     int processCommandLine(QCoreApplication &app);
@@ -63,18 +69,25 @@ public:
     void cmd_updateAllActive(bool displayReport);
 
 private slots:
+    // Search completion handling
+    void onSearchCompleted();
+    void onSearchCancelled();
+    void onSearchError(const QString &error);
+
+    // Progress handling
     void handleSearchProgress(int filesProcessed);
 
 private:
+    QString formatDeviceIDList(const QList<int> &deviceIDs);
     // Command line parsing
     void setupCommandLineParser();
     bool parseArguments(const QCoreApplication &app);
 
     // Search functionality
-    int executeSearch();
+    int cmd_search();
+    void sendSearchParametersFromSearchHistory(Search *search);
     void loadLastSearchCriteria();
     void outputSearchResults();
-    void outputSearchResultsCSV(const QString &filename);
     void outputSearchResultsStdout();
 
     // Helper methods
@@ -84,18 +97,28 @@ private:
     Device* getSelectedDevice();
     QString generateTimestamp();
 
-    // Members
+    // Cleanup
+    void cleanup();
+
+    // Members - Core objects
     QCommandLineParser parser;
     Collection *collection;
-    SearchMemory *search;
+    SearchManager *searchManager;
+    SearchJobStoppable *searchEngine;
     Device *selectedDevice;
+    QEventLoop *eventLoop;
+
+    // Search result tracking
+    int searchResult;
+    bool searchCompleted;
 
     // Command line options
-    bool searchRequested;
-    bool outputCSV;
-    QString csvFilename;
     bool verbose;
     QString collectionPath;
+
+    // Action tracking
+    QString requestedAction;
+    QStringList positionalArgs;
 };
 
 #endif // COMMANDLINE_H
