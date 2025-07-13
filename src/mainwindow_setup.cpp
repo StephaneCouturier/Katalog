@@ -229,7 +229,7 @@
             }
 
             selectedDevice->ID   = settings.value("Selection/SelectedDeviceID").toInt();
-            if(selectedDevice->ID == 0) selectedDevice->type = tr("All");
+            if(selectedDevice->ID == 0) selectedDevice->type = "All";
             selectedDevice->loadDevice("defaultConnection");
 
             graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
