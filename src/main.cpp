@@ -33,6 +33,7 @@
 #include <QTranslator>
 #include <QMessageBox>
 #include <QCommandLineParser>
+#include <QProcess>
 
 //#ifdef Q_OS_LINUX
 //    #include <KAboutData>
@@ -130,12 +131,50 @@ int main(int argc, char *argv[])
 
     //Command line parser
         QStringList args = QCoreApplication::arguments();
-        bool hasCommandLineArgs = false;
 
+        // Handle restart action early (application lifecycle management)
+        for (int i = 1; i < args.size(); ++i) {
+            QString arg = args[i];
+            if (arg == "restart") {
+                qDebug() << "Restarting the application...";
+
+                // Prepare arguments for restarting the application
+                QStringList newArgs;
+                bool skipNext = false;
+                for (const QString &cmdArg : QApplication::arguments()) {
+                    if (skipNext) {
+                        skipNext = false;
+                        continue;
+                    }
+                    if (cmdArg == "--catalogID" || cmdArg == "--report" || cmdArg == "--myoption") {
+                        // Skip the next argument as it is the value for the current option
+                        skipNext = true;
+                    } else if (cmdArg.startsWith("--")) {
+                        // Include other options
+                        newArgs << cmdArg;
+                    } else if (cmdArg.startsWith("-")) {
+                        // Include short options
+                        newArgs << cmdArg;
+                    } else {
+                        // Skip positional arguments (actions like "restart")
+                        continue;
+                    }
+                }
+
+                // Start the new process
+                QProcess::startDetached(QApplication::applicationFilePath(), newArgs);
+
+                // Exit the current application
+                return 0;
+            }
+        }
+
+        // Check for other command line arguments (excluding restart)
+        bool hasCommandLineArgs = false;
         for (int i = 1; i < args.size(); ++i) {
             QString arg = args[i];
             if (arg == "list_catalogs" || arg == "update_catalog" || arg == "update_all_active" ||
-                arg == "search" || arg == "restart" || arg == "--search" || arg == "-s" ||
+                arg == "search" || arg == "--search" || arg == "-s" ||
                 arg == "--csv" || arg == "--report") {
                 hasCommandLineArgs = true;
                 break;
@@ -157,7 +196,5 @@ int main(int argc, char *argv[])
         MainWindow window;
         window.show();
 
-    window.show();
-
-    return app.exec();
+        return app.exec();
 }
