@@ -122,6 +122,10 @@ public:
     QStringList fileType_ImageS;
     QStringList fileType_TextS;
     QStringList fileType_VideoS;
+    static void initializeFileTypeArrays(QStringList &audioTypes, QStringList &imageTypes,
+                                         QStringList &textTypes, QStringList &videoTypes);
+    static void initializeFileTypesForCataloging(QStringList &audioTypes, QStringList &imageTypes,
+                                                 QStringList &textTypes, QStringList &videoTypes);
 
     // Results
     QList<QString> fileNames;

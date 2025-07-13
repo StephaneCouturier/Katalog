@@ -364,17 +364,11 @@
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()
     {
-        //Filetypes for cataloging
-        fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg" << "*.aif";
-        fileType_Image<< "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
-        fileType_Text << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
-        fileType_Video<< "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv"  << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
+        // Use static method for cataloging file types
+        Search::initializeFileTypesForCataloging(fileType_Audio, fileType_Image, fileType_Text, fileType_Video);
 
-        //filetypes for searching
-        fileType_AudioS<< "*.mp3$" << "*.wav$" << "*.ogg$" << "*.aif$";
-        fileType_ImageS<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
-        fileType_TextS << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
-        fileType_VideoS<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$"<< "*.m4v$" << "*.vob$"  << "*.ogv$" << "*.mov$";
+        // Use static method for search file types
+        Search::initializeFileTypeArrays(fileType_AudioS, fileType_ImageS, fileType_TextS, fileType_VideoS);
     }
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()

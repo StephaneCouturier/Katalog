@@ -138,6 +138,38 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
     return QVariant();
 }
 
+void Search::initializeFileTypeArrays(QStringList &audioTypes, QStringList &imageTypes,
+                                      QStringList &textTypes, QStringList &videoTypes)
+{
+    // Clear existing arrays
+    audioTypes.clear();
+    imageTypes.clear();
+    textTypes.clear();
+    videoTypes.clear();
+
+    // Populate file type arrays for searching (with regex endings)
+    audioTypes << "*.mp3$" << "*.wav$" << "*.ogg$" << "*.aif$";
+    imageTypes << "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
+    textTypes  << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
+    videoTypes << "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$" << "*.webm$" << "*.m4v$" << "*.vob$" << "*.ogv$" << "*.mov$";
+}
+
+void Search::initializeFileTypesForCataloging(QStringList &audioTypes, QStringList &imageTypes,
+                                              QStringList &textTypes, QStringList &videoTypes)
+{
+    // Clear existing arrays
+    audioTypes.clear();
+    imageTypes.clear();
+    textTypes.clear();
+    videoTypes.clear();
+
+    // Populate file type arrays for cataloging (without regex endings)
+    audioTypes << "*.mp3" << "*.wav" << "*.ogg" << "*.aif";
+    imageTypes << "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
+    textTypes  << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
+    videoTypes << "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv" << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
+}
+
 //Search Processing
 void Search::prepareSearchPatterns()
 {

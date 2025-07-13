@@ -882,42 +882,12 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
             search->searchDateTime = "";
         }
 
-        // NOW load from search history (gets the ready-to-use fields)
+        // Load from search history (gets the ready-to-use fields)
         search->loadSearchHistoryCriteria("defaultConnection");
 
-        // Override complex fields with safe defaults until we implement proper conversion
-
-        // 1. TEXT CRITERIA - Default to "All Words" (most common)
-        search->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS;
-
-        // 2. SEARCH IN LOCATION - Default to "File names only" (most restrictive)
-        search->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES;
-
-        // 3. SIZE UNITS - Default to Bytes with multiplier 1
-        search->selectedMinSizeUnit = Search::SIZE_UNIT_BYTES;
-        search->selectedMaxSizeUnit = Search::SIZE_UNIT_GIB;  // Match UI default
-        search->sizeMultiplierMin = 1;
-        search->sizeMultiplierMax = 1024 * 1024 * 1024;      // 1 GiB for max
-
-        // 4. FILE TYPE - Default to "All" (no filtering)
-        search->selectedFileType = "All";
-        search->fileType_AudioS.clear();  // Empty = no filtering
-        search->fileType_ImageS.clear();
-        search->fileType_TextS.clear();
-        search->fileType_VideoS.clear();
-
-        // 5. DEVICE ID LIST - Use selected device from CLI
-        search->selectedDeviceIDList.clear();
-        if (selectedDevice && selectedDevice->ID != 0) {
-            search->selectedDeviceIDList.append(selectedDevice->ID);
-        } else {
-            search->selectedDeviceIDList.append(0);  // All devices
-        }
-
-        // 6. DIFFERENCES DEVICES - Default to disabled
-        search->differencesDeviceID1 = 0;
-        search->differencesDeviceID2 = 0;
-        search->differencesDevices.clear();
+        // Initialize file type arrays for search functionality
+        Search::initializeFileTypeArrays(search->fileType_AudioS, search->fileType_ImageS,
+                                         search->fileType_TextS, search->fileType_VideoS);
 
         if (verbose) {
             QTextStream stdout_stream(stdout);
