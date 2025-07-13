@@ -175,7 +175,9 @@ int main(int argc, char *argv[])
             QString arg = args[i];
             if (arg == "list_catalogs" || arg == "update_catalog" || arg == "update_all_active" ||
                 arg == "search" || arg == "--search" || arg == "-s" ||
-                arg == "--csv" || arg == "--report") {
+                arg == "--csv" || arg == "--report" ||
+                arg == "--help" || arg == "-h" ||
+                arg == "--version" || arg == "-v") {
                 hasCommandLineArgs = true;
                 break;
             }
