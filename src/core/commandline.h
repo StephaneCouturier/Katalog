@@ -78,6 +78,7 @@ private slots:
     void handleSearchProgress(int filesProcessed);
 
 private:
+    QString autoDetectDatabaseMode(const QString &path);
     QString formatDeviceIDList(const QList<int> &deviceIDs);
     // Command line parsing
     void setupCommandLineParser();
@@ -115,6 +116,7 @@ private:
     // Command line options
     bool verbose;
     QString collectionPath;
+    int outputLimit;
 
     // Action tracking
     QString requestedAction;

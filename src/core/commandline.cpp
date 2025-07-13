@@ -52,6 +52,7 @@ CommandLineHandler::CommandLineHandler(QObject *parent)
     , searchResult(0)
     , searchCompleted(false)
     , verbose(false)
+    , outputLimit(-1)
 {
     setupCommandLineParser();
 }
@@ -87,6 +88,37 @@ void CommandLineHandler::cleanup()
     // Collection will be cleaned up by parent
 }
 
+void CommandLineHandler::setupCommandLineParser()
+{
+    parser.setApplicationDescription("Katalog - File Catalog Management and Search Tool");
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    // Positional arguments
+    parser.addPositionalArgument("action", "The action to be performed. Choices:\n"
+                                           "  list_catalogs     - List all catalogs (ID, active state, name)\n"
+                                           "  update_catalog    - Update a specific catalog (deviceID)\n"
+                                           "  update_all_active - Update all active catalogs\n"
+                                           "  search            - Execute search using last search criteria");
+
+    parser.addPositionalArgument("deviceID", "Device ID for update_catalog action (optional)", "[deviceID]");
+
+    // Options
+    parser.addOption(QCommandLineOption(QStringList() << "r" << "report",
+                                        "Show detailed report for update operations"));
+
+    parser.addOption(QCommandLineOption(QStringList() << "c" << "collection",
+                                        "Path to collection folder",
+                                        "path"));
+
+    parser.addOption(QCommandLineOption("verbose",
+                                        "Enable verbose output"));
+
+    parser.addOption(QCommandLineOption("limit",
+                                        "Limit number of files to display",
+                                        "number"));
+}
+
 bool CommandLineHandler::parseArguments(const QCoreApplication &app)
 {
     parser.process(app);
@@ -96,6 +128,20 @@ bool CommandLineHandler::parseArguments(const QCoreApplication &app)
 
     if (parser.isSet("collection")) {
         collectionPath = parser.value("collection");
+    }
+
+    if (parser.isSet("limit")) {
+        bool ok;
+        outputLimit = parser.value("limit").toInt(&ok);
+        if (!ok || outputLimit < 1) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: --limit must be a positive number" << Qt::endl;
+            return false;
+        }
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Output limit set to: " << outputLimit << " files" << Qt::endl;
+        }
     }
 
     return true;
@@ -162,33 +208,6 @@ int CommandLineHandler::processCommandLine(QCoreApplication &app)
     }
 }
 
-void CommandLineHandler::setupCommandLineParser()
-{
-    parser.setApplicationDescription("Katalog - File Catalog Management and Search Tool");
-    parser.addHelpOption();
-    parser.addVersionOption();
-
-    // Positional arguments
-    parser.addPositionalArgument("action", "The action to be performed. Choices:\n"
-                                           "  list_catalogs     - List all catalogs (ID, active state, name)\n"
-                                           "  update_catalog    - Update a specific catalog (deviceID)\n"
-                                           "  update_all_active - Update all active catalogs\n"
-                                           "  search            - Execute search using last search criteria");
-
-    parser.addPositionalArgument("deviceID", "Device ID for update_catalog action (optional)", "[deviceID]");
-
-    // Options
-    parser.addOption(QCommandLineOption(QStringList() << "r" << "report",
-                                        "Show detailed report for update operations"));
-
-    parser.addOption(QCommandLineOption(QStringList() << "c" << "collection",
-                                        "Path to collection folder",
-                                        "path"));
-
-    parser.addOption(QCommandLineOption("verbose",
-                                        "Enable verbose output"));
-}
-
 void CommandLineHandler::setCollection(Collection *coll)
 {
     // This method allows external setting of collection (for compatibility)
@@ -199,7 +218,7 @@ void CommandLineHandler::setCollection(Collection *coll)
 
 bool CommandLineHandler::initializeDatabase()
 {
-    // Create collection object (similar to MainWindow constructor)
+    // Create collection object
     collection = new Collection();
     collection->appVersion = "2.6";
 
@@ -208,67 +227,157 @@ bool CommandLineHandler::initializeDatabase()
     QString homePath = standardsPaths[0];
     QString applicationDirPath = QCoreApplication::applicationDirPath();
 
-    // Set collection folder path BEFORE loading settings
-    if (!collectionPath.isEmpty()) {
-        collection->folder = collectionPath;
-    }
-
-    // Define Settings file path - check for portable mode first (similar to MainWindow)
+    // Define Settings file path
     collection->settingsFilePath = applicationDirPath + "/katalog_settings.ini";
     QFile settingsFile(collection->settingsFilePath);
     if (!settingsFile.exists()) {
-        // Fall back to default katalog_settings path
         collection->settingsFilePath = homePath + "/.config/katalog_settings.ini";
     }
 
-    // Load from settings only if no command line path was provided
-    if (collection->folder.isEmpty()) {
+    // Auto-detect database mode if collection path provided
+    QString databaseMode;
+
+    if (!collectionPath.isEmpty()) {
+        // Auto-detect mode from provided collection path
+        databaseMode = autoDetectDatabaseMode(collectionPath);
+
+        if (databaseMode.isEmpty()) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Could not determine database mode for collection path: " << collectionPath << Qt::endl;
+            stderr_stream << "Path should contain either:" << Qt::endl;
+            stderr_stream << "  - CSV files (device.csv, storage.csv) for Memory mode" << Qt::endl;
+            stderr_stream << "  - Database file (*.db) for File mode" << Qt::endl;
+            return false;
+        }
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Auto-detected database mode: " << databaseMode << Qt::endl;
+        }
+    }
+    else {
+        // No collection path provided - use settings
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-        collection->folder = settings.value("LastCollectionFolder").toString();
+        databaseMode = settings.value("Settings/databaseMode").toString();
 
-        // Use default if not set
-        if (collection->folder.isEmpty()) {
-            collection->folder = homePath + "/.local/share/katalog";
+        if (databaseMode.isEmpty()) {
+            databaseMode = "Memory"; // Default
+        }
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Using database mode from settings: " << databaseMode << Qt::endl;
         }
     }
 
     if (verbose) {
         QTextStream stdout_stream(stdout);
-        stdout_stream << "Using collection: " << collection->folder << Qt::endl;
         stdout_stream << "Settings file: " << collection->settingsFilePath << Qt::endl;
+        stdout_stream << "Final database mode: " << databaseMode << Qt::endl;
     }
 
-    // Verify collection exists and has data
-    QDir collectionDir(collection->folder);
-    if (!collectionDir.exists()) {
-        QTextStream stderr_stream(stderr);
-        stderr_stream << "Error: Collection folder does not exist: " << collection->folder << Qt::endl;
-        stderr_stream << "Use --collection <path> to specify collection folder" << Qt::endl;
-        return false;
-    }
+    // Handle paths based on detected/configured database mode
+    if (!collectionPath.isEmpty()) {
+        // Command line override - set collection details based on detected mode
+        if (databaseMode == "Memory") {
+            collection->folder = collectionPath;
+        }
+        else if (databaseMode == "File") {
+            QFileInfo pathInfo(collectionPath);
+            if (pathInfo.isFile()) {
+                // Path is the .db file itself
+                collection->databaseFilePath = collectionPath;
+                collection->folder = pathInfo.absolutePath();
+            }
+            else {
+                // Path is directory containing .db file - find the .db file
+                QDir dir(collectionPath);
+                QStringList dbFiles = dir.entryList(QStringList() << "*.db", QDir::Files);
+                if (dbFiles.isEmpty()) {
+                    QTextStream stderr_stream(stderr);
+                    stderr_stream << "Error: No .db files found in directory: " << collectionPath << Qt::endl;
+                    return false;
+                }
+                collection->databaseFilePath = dir.absoluteFilePath(dbFiles.first());
+                collection->folder = collectionPath;
 
-    // Check if collection has device.csv file (key indicator of existing collection)
-    QString deviceCsvPath = collection->folder + "/device.csv";
-    if (!QFile::exists(deviceCsvPath)) {
-        QTextStream stderr_stream(stderr);
-        stderr_stream << "Error: Collection folder does not contain device.csv: " << collection->folder << Qt::endl;
-        stderr_stream << "This doesn't appear to be a valid Katalog collection" << Qt::endl;
-        return false;
+                if (verbose) {
+                    QTextStream stdout_stream(stdout);
+                    stdout_stream << "Using database file: " << collection->databaseFilePath << Qt::endl;
+                }
+            }
+        }
     }
+    else {
+        // Use settings-based paths
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
 
-    // DEBUG: Show collection files
-    if (verbose) {
-        QTextStream stdout_stream(stdout);
-        stdout_stream << "DEBUG: Collection files:" << Qt::endl;
-        QStringList nameFilters;
-        nameFilters << "*.csv" << "*.idx";
-        QFileInfoList files = collectionDir.entryInfoList(nameFilters, QDir::Files);
-        foreach (const QFileInfo &fileInfo, files) {
-            stdout_stream << "  " << fileInfo.fileName() << " - " << fileInfo.size() << " bytes" << Qt::endl;
+        if (databaseMode == "Memory") {
+            collection->folder = settings.value("LastCollectionFolder").toString();
+            if (collection->folder.isEmpty()) {
+                collection->folder = homePath + "/.local/share/katalog";
+            }
+        }
+        else if (databaseMode == "File") {
+            collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+            if (collection->databaseFilePath.isEmpty()) {
+                QTextStream stderr_stream(stderr);
+                stderr_stream << "Error: No database file configured for File mode" << Qt::endl;
+                return false;
+            }
+            QFileInfo dbFileInfo(collection->databaseFilePath);
+            collection->folder = dbFileInfo.absolutePath();
         }
     }
 
-    // Use the new Database class for initialization
+    // Validate paths exist
+    if (databaseMode == "Memory") {
+        QDir collectionDir(collection->folder);
+        if (!collectionDir.exists()) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Collection folder does not exist: " << collection->folder << Qt::endl;
+            return false;
+        }
+
+        QString deviceCsvPath = collection->folder + "/device.csv";
+        if (!QFile::exists(deviceCsvPath)) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Collection folder does not contain device.csv: " << collection->folder << Qt::endl;
+            return false;
+        }
+    }
+    else if (databaseMode == "File") {
+        if (!QFile::exists(collection->databaseFilePath)) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Database file does not exist: " << collection->databaseFilePath << Qt::endl;
+            return false;
+        }
+    }
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "Using collection folder: " << collection->folder << Qt::endl;
+        if (databaseMode == "File") {
+            stdout_stream << "Using database file: " << collection->databaseFilePath << Qt::endl;
+        }
+    }
+
+    // Store our auto-detected values before Database::initialize() overwrites them
+    QString detectedDatabaseMode = databaseMode;
+    QString detectedDatabaseFilePath = collection->databaseFilePath;
+    QString detectedCollectionFolder = collection->folder;
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "=== Database Initialization Debug ===" << Qt::endl;
+        stdout_stream << "collectionPath provided: " << (!collectionPath.isEmpty() ? "Yes" : "No") << Qt::endl;
+        stdout_stream << "Before Database::initialize():" << Qt::endl;
+        stdout_stream << "  detectedDatabaseMode: " << detectedDatabaseMode << Qt::endl;
+        stdout_stream << "  detectedDatabaseFilePath: " << detectedDatabaseFilePath << Qt::endl;
+        stdout_stream << "  detectedCollectionFolder: " << detectedCollectionFolder << Qt::endl;
+    }
+
+    // Use Database class for initialization
     QSqlError err = Database::initialize("defaultConnection", collection);
     if (err.type() != QSqlError::NoError) {
         QTextStream stderr_stream(stderr);
@@ -276,17 +385,117 @@ bool CommandLineHandler::initializeDatabase()
         return false;
     }
 
-    // Load the collection metadata (devices, catalogs, storage, etc.)
     if (verbose) {
         QTextStream stdout_stream(stdout);
-        stdout_stream << "DEBUG: Loading collection..." << Qt::endl;
+        stdout_stream << "After Database::initialize() (before restore):" << Qt::endl;
+        stdout_stream << "  collection->databaseMode: " << collection->databaseMode << Qt::endl;
+        stdout_stream << "  collection->databaseFilePath: " << collection->databaseFilePath << Qt::endl;
+        stdout_stream << "  collection->folder: " << collection->folder << Qt::endl;
+
+        // Check what database is actually connected
+        QSqlDatabase db = QSqlDatabase::database("defaultConnection");
+        stdout_stream << "  Actual database connected: " << db.databaseName() << Qt::endl;
+        stdout_stream << "  Database is open: " << (db.isOpen() ? "Yes" : "No") << Qt::endl;
     }
 
-    collection->load();
+    // Restore our auto-detected values after Database::initialize()
+    if (!collectionPath.isEmpty()) {
+        // Store original database name for comparison
+        QSqlDatabase originalDb = QSqlDatabase::database("defaultConnection");
+        QString originalDbName = originalDb.databaseName();
+
+        // Restore our auto-detected values
+        collection->databaseMode = detectedDatabaseMode;
+        collection->databaseFilePath = detectedDatabaseFilePath;
+        collection->folder = detectedCollectionFolder;
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Restored auto-detected values:" << Qt::endl;
+            stdout_stream << "  collection->databaseMode: " << collection->databaseMode << Qt::endl;
+            stdout_stream << "  collection->databaseFilePath: " << collection->databaseFilePath << Qt::endl;
+            stdout_stream << "  Original database name: " << originalDbName << Qt::endl;
+            stdout_stream << "  Target database name: " << detectedDatabaseFilePath << Qt::endl;
+            stdout_stream << "  Paths match: " << (originalDbName == detectedDatabaseFilePath ? "Yes" : "No") << Qt::endl;
+        }
+
+        // Only re-initialize if the database path actually changed
+        if (originalDbName != detectedDatabaseFilePath) {
+            if (verbose) {
+                QTextStream stdout_stream(stdout);
+                stdout_stream << "Database path changed - re-initializing connection..." << Qt::endl;
+            }
+
+            // Close and remove the old connection more thoroughly
+            if (originalDb.isOpen()) {
+                originalDb.close();
+                if (verbose) {
+                    QTextStream stdout_stream(stdout);
+                    stdout_stream << "Closed database connection" << Qt::endl;
+                }
+            }
+
+            // Force removal of the connection
+            QSqlDatabase::removeDatabase("defaultConnection");
+            if (verbose) {
+                QTextStream stdout_stream(stdout);
+                stdout_stream << "Removed database connection" << Qt::endl;
+            }
+
+            // Wait a moment for cleanup (might help with connection caching)
+            QThread::msleep(10);
+
+            // Re-initialize with our correct paths
+            err = Database::initialize("defaultConnection", collection);
+            if (err.type() != QSqlError::NoError) {
+                QTextStream stderr_stream(stderr);
+                stderr_stream << "Error: Failed to re-initialize database: " << err.text() << Qt::endl;
+                return false;
+            }
+
+            if (verbose) {
+                QTextStream stdout_stream(stdout);
+                stdout_stream << "Database re-initialized" << Qt::endl;
+
+                // Verify the new connection
+                QSqlDatabase newDb = QSqlDatabase::database("defaultConnection");
+                stdout_stream << "New database connected: " << newDb.databaseName() << Qt::endl;
+                stdout_stream << "New database is open: " << (newDb.isOpen() ? "Yes" : "No") << Qt::endl;
+                stdout_stream << "Target path matches: " << (newDb.databaseName() == detectedDatabaseFilePath ? "Yes" : "No") << Qt::endl;
+
+                // Additional verification: check a simple query
+                QSqlQuery testQuery(newDb);
+                testQuery.exec("SELECT COUNT(*) FROM device");
+                if (testQuery.next()) {
+                    int deviceCount = testQuery.value(0).toInt();
+                    stdout_stream << "Device count in connected database: " << deviceCount << Qt::endl;
+                }
+            }
+        } else {
+            if (verbose) {
+                QTextStream stdout_stream(stdout);
+                stdout_stream << "Database path unchanged - no re-initialization needed" << Qt::endl;
+            }
+        }
+    }
+
+    // Load collection data only for Memory mode
+    if (collection->databaseMode == "Memory") {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Memory mode: Loading collection data from CSV files..." << Qt::endl;
+        }
+        collection->load();
+    } else {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << collection->databaseMode << " mode: Using persistent database" << Qt::endl;
+        }
+    }
 
     if (verbose) {
         QTextStream stdout_stream(stdout);
-        stdout_stream << "DEBUG: Collection loaded" << Qt::endl;
+        stdout_stream << "=== End Database Initialization Debug ===" << Qt::endl;
     }
 
     return true;
@@ -864,8 +1073,17 @@ void CommandLineHandler::outputSearchResultsStdout()
     stdout_stream << Qt::endl << "Search Results:" << Qt::endl;
     stdout_stream << "===============" << Qt::endl;
 
-    // Output ALL files (removed maxDisplay limit)
-    for (int i = 0; i < currentSearch->fileNames.size(); ++i) {
+    // Apply limit if specified
+    int maxDisplay = currentSearch->fileNames.size();
+    if (outputLimit > 0 && outputLimit < maxDisplay) {
+        maxDisplay = outputLimit;
+        if (verbose) {
+            stdout_stream << "Showing first " << maxDisplay << " files (limited by --limit option)" << Qt::endl;
+        }
+    }
+
+    // Output files up to maxDisplay
+    for (int i = 0; i < maxDisplay; ++i) {
         QString catalogName = "";
         QString fileName = "";
         QString filePath = "";
@@ -908,12 +1126,89 @@ void CommandLineHandler::outputSearchResultsStdout()
         stdout_stream << catalogName << "\t" << fullPath << "\t" << fileSize << "\t" << fileDate << Qt::endl;
     }
 
+    // Show summary with limit info
+    if (outputLimit > 0 && currentSearch->fileNames.size() > outputLimit) {
+        stdout_stream << Qt::endl;
+        stdout_stream << "... and " << (currentSearch->fileNames.size() - outputLimit) << " more files (use --limit 0, or remove option --limit to show all)" << Qt::endl;
+    }
+
     stdout_stream << Qt::endl;
     stdout_stream << "Total: " << currentSearch->filesFoundNumber << " files, "
-                  << currentSearch->filesFoundTotalSize << " bytes" << Qt::endl << Qt::endl;
+                  << currentSearch->filesFoundTotalSize << " bytes" << Qt::endl;
 }
 
 QString CommandLineHandler::generateTimestamp()
 {
     return QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss");
+}
+
+QString CommandLineHandler::autoDetectDatabaseMode(const QString &path)
+{
+    if (path.isEmpty()) {
+        return "";  // Let caller handle settings fallback
+    }
+
+    QFileInfo pathInfo(path);
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "Auto-detecting database mode for: " << path << Qt::endl;
+    }
+
+    // Case 1: Path is a .db file -> File mode
+    if (pathInfo.isFile() && pathInfo.suffix().toLower() == "db") {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Detected File mode: path is a .db file" << Qt::endl;
+        }
+        return "File";
+    }
+
+    // Case 2: Path is a directory -> check contents
+    if (pathInfo.isDir()) {
+        QDir dir(path);
+
+        // Look for Memory mode indicators (.csv files)
+        QStringList csvFiles = dir.entryList(QStringList() << "device.csv" << "storage.csv", QDir::Files);
+        bool hasMemoryFiles = csvFiles.contains("device.csv") && csvFiles.contains("storage.csv");
+
+        // Look for File mode indicators (.db files)
+        QStringList dbFiles = dir.entryList(QStringList() << "*.db", QDir::Files);
+        bool hasDbFiles = !dbFiles.isEmpty();
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Directory analysis:" << Qt::endl;
+            stdout_stream << "  Memory mode files (device.csv, storage.csv): " << (hasMemoryFiles ? "Found" : "Not found") << Qt::endl;
+            stdout_stream << "  Database files (*.db): " << (hasDbFiles ? "Found" : "Not found") << Qt::endl;
+        }
+
+        // Priority: Memory mode if CSV files found
+        if (hasMemoryFiles) {
+            if (verbose) {
+                QTextStream stdout_stream(stdout);
+                stdout_stream << "Detected Memory mode: found required CSV files" << Qt::endl;
+            }
+            return "Memory";
+        }
+
+        // Fallback: File mode if .db files found
+        if (hasDbFiles) {
+            if (verbose) {
+                QTextStream stdout_stream(stdout);
+                stdout_stream << "Detected File mode: found .db files in directory" << Qt::endl;
+            }
+            return "File";
+        }
+
+        // Could add Hosted mode detection here if there's a config file pattern
+        // e.g., if (dir.exists("connection.conf")) return "Hosted";
+    }
+
+    if (verbose) {
+        QTextStream stdout_stream(stdout);
+        stdout_stream << "Could not auto-detect database mode from path" << Qt::endl;
+    }
+
+    return "";  // Could not determine
 }
