@@ -90,7 +90,16 @@ void CommandLineHandler::cleanup()
 
 void CommandLineHandler::setupCommandLineParser()
 {
-    parser.setApplicationDescription("Katalog - File Catalog Management and Search Tool");
+    parser.setApplicationDescription(
+        "Katalog - File Catalog Management and Search Tool\n\n"
+        "Examples:\n"
+        "  katalog search                                     # Use collection and device from settings\n"
+        "  katalog search --selectedDeviceID 4                # Use collection from settings, device ID 4\n"
+        "  katalog search --collection /path/to/collection    # Use specified collection, all devices\n"
+        "  katalog search --collection /path/to/collection --selectedDeviceID 4  # Use specified collection, device ID 4\n"
+        "  katalog search --collection /path/to/collection --selectedDeviceID 0  # Use specified collection, all devices (explicit)"
+        );
+
     parser.addHelpOption();
     parser.addVersionOption();
 
@@ -117,6 +126,10 @@ void CommandLineHandler::setupCommandLineParser()
     parser.addOption(QCommandLineOption("limit",
                                         "Limit number of files to display",
                                         "number"));
+
+    parser.addOption(QCommandLineOption("selectedDeviceID",
+                                        "Device ID to search in. Default: use settings file value, or 0 (All) when used with --collection",
+                                        "deviceID"));
 }
 
 bool CommandLineHandler::parseArguments(const QCoreApplication &app)
@@ -126,10 +139,12 @@ bool CommandLineHandler::parseArguments(const QCoreApplication &app)
     // Get options
     verbose = parser.isSet("verbose");
 
+    // Parse collection option
     if (parser.isSet("collection")) {
         collectionPath = parser.value("collection");
     }
 
+    // Parse limit option
     if (parser.isSet("limit")) {
         bool ok;
         outputLimit = parser.value("limit").toInt(&ok);
@@ -141,6 +156,27 @@ bool CommandLineHandler::parseArguments(const QCoreApplication &app)
         if (verbose) {
             QTextStream stdout_stream(stdout);
             stdout_stream << "Output limit set to: " << outputLimit << " files" << Qt::endl;
+        }
+    }
+
+    // Parse selectedDeviceID option
+    selectedDeviceID = 0; // Default value
+    selectedDeviceIDProvided = false;
+
+    if (parser.isSet("selectedDeviceID")) {
+        bool ok;
+        selectedDeviceID = parser.value("selectedDeviceID").toInt(&ok);
+        selectedDeviceIDProvided = true;
+
+        if (!ok || selectedDeviceID < 0) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: --selectedDeviceID must be a non-negative number" << Qt::endl;
+            return false;
+        }
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Command line selectedDeviceID: " << selectedDeviceID << Qt::endl;
         }
     }
 
@@ -816,15 +852,50 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
 
 Device* CommandLineHandler::getSelectedDevice()
 {
-    Device *allDevice = new Device();
-    allDevice->ID = 0;
-    allDevice->type = "All";
-    allDevice->name = "All Devices";
+    Device *device = new Device();
 
-    // THE MISSING CALL - populate deviceListTable
-    allDevice->loadDevice("defaultConnection");
+    if (selectedDeviceIDProvided) {
+        // --selectedDeviceID was explicitly provided: use it regardless of collection source
+        device->ID = selectedDeviceID;
 
-    return allDevice;
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Using selectedDeviceID from command line: ID=" << device->ID;
+            if (collectionPath.isEmpty()) {
+                stdout_stream << " (with collection from settings file)";
+            } else {
+                stdout_stream << " (with collection from --collection)";
+            }
+            stdout_stream << Qt::endl;
+        }
+    } else if (collectionPath.isEmpty()) {
+        // No --collection and no --selectedDeviceID: use selectedDevice from settings file
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        device->ID = settings.value("Selection/SelectedDeviceID", 0).toInt();
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Using selectedDevice from settings file: ID=" << device->ID << Qt::endl;
+        }
+    } else {
+        // --collection specified but no --selectedDeviceID: default to 0 (All)
+        device->ID = 0;
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Using default selectedDeviceID=0 (All) with collection from --collection" << Qt::endl;
+        }
+    }
+
+    // Load device details
+    if (device->ID == 0) {
+        device->type = "All";
+        device->name = "All Devices";
+    }
+
+    device->loadDevice("defaultConnection");
+
+    return device;
 }
 
 int CommandLineHandler::cmd_search()
@@ -867,6 +938,26 @@ int CommandLineHandler::cmd_search()
 
     // FIXED: Get a single catalog device instead of virtual "All" device
     selectedDevice = getSelectedDevice();
+
+    if (selectedDevice->ID != 0) {
+        // Validate that specific device exists
+        QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
+        checkQuery.prepare("SELECT device_name, device_type FROM device WHERE device_id = :id");
+        checkQuery.bindValue(":id", selectedDevice->ID);
+
+        if (!checkQuery.exec() || !checkQuery.next()) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Device ID " << selectedDevice->ID << " not found" << Qt::endl;
+            return 1;
+        }
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Found device - ID: " << selectedDevice->ID
+                          << ", Name: " << checkQuery.value(0).toString()
+                          << ", Type: " << checkQuery.value(1).toString() << Qt::endl;
+        }
+    }
 
     if (!selectedDevice) {
         QTextStream stderr_stream(stderr);

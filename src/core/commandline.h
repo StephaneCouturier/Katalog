@@ -117,6 +117,8 @@ private:
     bool verbose;
     QString collectionPath;
     int outputLimit;
+    int selectedDeviceID;
+    bool selectedDeviceIDProvided;
 
     // Action tracking
     QString requestedAction;
