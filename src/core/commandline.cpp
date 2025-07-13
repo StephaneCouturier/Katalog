@@ -805,48 +805,128 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
 {
     if (!search) return;
 
-    if (verbose) {
-        QTextStream stdout_stream(stdout);
-        stdout_stream << "Setting search parameters for 'return all files'..." << Qt::endl;
+    // Setting search parameters for 'return all files'
+    bool tempSearchSkipCriteria = false; //DEV: For dev or later option, Set to true to skip criteria and return all files
+    if (tempSearchSkipCriteria) {
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Setting search parameters for 'return all files'..." << Qt::endl;
+        }
+
+        // Clear any existing results
+        search->clearResults();
+
+        // STEP 1: Configure search to return ALL files (no filtering)
+        search->searchOnFileName = true;
+        search->searchText = "";  // Empty = match all files
+        search->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS;
+        search->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES;
+        search->caseSensitive = false;
+        search->selectedSearchExclude = "";
+
+        // Search location - catalogs only (not directories)
+        search->searchInCatalogsChecked = true;
+        search->searchInConnectedChecked = false;
+
+        // Disable all filtering criteria
+        search->searchOnFileCriteria = false;
+        search->searchOnSize = false;
+        search->searchOnType = false;
+        search->searchOnDate = false;
+        search->searchOnDuplicates = false;
+        search->searchOnDifferences = false;
+        search->searchOnFolderCriteria = false;
+        search->searchOnTags = false;
+
+        // Set selected devices (All devices = deviceIDList from getSelectedDevice())
+        search->selectedDeviceIDList.clear();
+        search->selectedDeviceIDList.append(0);
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Search parameters configured:" << Qt::endl;
+            stdout_stream << "  searchText: \"" << search->searchText << "\" (empty = all files)" << Qt::endl;
+            stdout_stream << "  searchInCatalogsChecked: " << (search->searchInCatalogsChecked ? "Yes" : "No") << Qt::endl;
+            // FIXED: Format QList<int> properly for QTextStream
+            stdout_stream << "  selectedDeviceIDList: " << formatDeviceIDList(search->selectedDeviceIDList) << Qt::endl;
+            stdout_stream << "  All filtering disabled (return all files)" << Qt::endl;
+        }
     }
-
-    // Clear any existing results
-    search->clearResults();
-
-    // STEP 1: Configure search to return ALL files (no filtering)
-    search->searchOnFileName = true;
-    search->searchText = "";  // Empty = match all files
-    search->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS;
-    search->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES;
-    search->caseSensitive = false;
-    search->selectedSearchExclude = "";
-
-    // Search location - catalogs only (not directories)
-    search->searchInCatalogsChecked = true;
-    search->searchInConnectedChecked = false;
-
-    // Disable all filtering criteria
-    search->searchOnFileCriteria = false;
-    search->searchOnSize = false;
-    search->searchOnType = false;
-    search->searchOnDate = false;
-    search->searchOnDuplicates = false;
-    search->searchOnDifferences = false;
-    search->searchOnFolderCriteria = false;
-    search->searchOnTags = false;
-
-    // Set selected devices (All devices = deviceIDList from getSelectedDevice())
-    search->selectedDeviceIDList.clear();
-    search->selectedDeviceIDList.append(0);
-
-    if (verbose) {
+    else{
         QTextStream stdout_stream(stdout);
-        stdout_stream << "Search parameters configured:" << Qt::endl;
-        stdout_stream << "  searchText: \"" << search->searchText << "\" (empty = all files)" << Qt::endl;
-        stdout_stream << "  searchInCatalogsChecked: " << (search->searchInCatalogsChecked ? "Yes" : "No") << Qt::endl;
-        // FIXED: Format QList<int> properly for QTextStream
-        stdout_stream << "  selectedDeviceIDList: " << formatDeviceIDList(search->selectedDeviceIDList) << Qt::endl;
-        stdout_stream << "  All filtering disabled (return all files)" << Qt::endl;
+        stdout_stream << "Setting search parameters from search history..." << Qt::endl;
+
+        // FIX: Get the latest search date first and set it on the search object
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QString querySQL = QLatin1String(R"(
+            SELECT date_time
+            FROM search
+            ORDER BY date_time DESC
+            LIMIT 1
+        )");
+        query.prepare(querySQL);
+        query.exec();
+
+        if (query.next()) {
+            QString latestSearchDateTime = query.value(0).toString();
+            search->searchDateTime = latestSearchDateTime;
+
+            if (verbose) {
+                stdout_stream << "Loading search criteria from: " << latestSearchDateTime << Qt::endl;
+            }
+        } else {
+            if (verbose) {
+                stdout_stream << "No previous search found in history" << Qt::endl;
+            }
+            // Set empty datetime to prevent errors
+            search->searchDateTime = "";
+        }
+
+        // NOW load from search history (gets the ready-to-use fields)
+        search->loadSearchHistoryCriteria("defaultConnection");
+
+        // Override complex fields with safe defaults until we implement proper conversion
+
+        // 1. TEXT CRITERIA - Default to "All Words" (most common)
+        search->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS;
+
+        // 2. SEARCH IN LOCATION - Default to "File names only" (most restrictive)
+        search->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES;
+
+        // 3. SIZE UNITS - Default to Bytes with multiplier 1
+        search->selectedMinSizeUnit = Search::SIZE_UNIT_BYTES;
+        search->selectedMaxSizeUnit = Search::SIZE_UNIT_GIB;  // Match UI default
+        search->sizeMultiplierMin = 1;
+        search->sizeMultiplierMax = 1024 * 1024 * 1024;      // 1 GiB for max
+
+        // 4. FILE TYPE - Default to "All" (no filtering)
+        search->selectedFileType = "All";
+        search->fileType_AudioS.clear();  // Empty = no filtering
+        search->fileType_ImageS.clear();
+        search->fileType_TextS.clear();
+        search->fileType_VideoS.clear();
+
+        // 5. DEVICE ID LIST - Use selected device from CLI
+        search->selectedDeviceIDList.clear();
+        if (selectedDevice && selectedDevice->ID != 0) {
+            search->selectedDeviceIDList.append(selectedDevice->ID);
+        } else {
+            search->selectedDeviceIDList.append(0);  // All devices
+        }
+
+        // 6. DIFFERENCES DEVICES - Default to disabled
+        search->differencesDeviceID1 = 0;
+        search->differencesDeviceID2 = 0;
+        search->differencesDevices.clear();
+
+        if (verbose) {
+            QTextStream stdout_stream(stdout);
+            stdout_stream << "Applied default overrides for complex fields" << Qt::endl;
+            stdout_stream << "  selectedTextCriteria: " << search->selectedTextCriteria << Qt::endl;
+            stdout_stream << "  selectedSearchIn: " << search->selectedSearchIn << Qt::endl;
+            stdout_stream << "  selectedFileType: " << search->selectedFileType << Qt::endl;
+            //stdout_stream << "  selectedDeviceIDList: " << search->selectedDeviceIDList << Qt::endl;
+        }
     }
 }
 
