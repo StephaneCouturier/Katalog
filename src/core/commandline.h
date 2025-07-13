@@ -41,6 +41,7 @@
 #include <QSqlError>
 #include <QEventLoop>
 #include <QTimer>
+#include <QDateTime>
 
 #include "collection.h"
 #include "device.h"
@@ -119,6 +120,24 @@ private:
     int outputLimit;
     int selectedDeviceID;
     bool selectedDeviceIDProvided;
+    // Search criteria overrides
+    bool useSearchHistory;
+    QString overrideSearchText;
+    QString overrideFileType;
+    QString overrideSizeMin;
+    QString overrideSizeMax;
+    QDateTime overrideDateAfter;
+    QDateTime overrideDateBefore;
+    bool overrideCaseSensitive;
+    QString overrideSearchIn;
+    QString overrideTextCriteria;
+    QString overrideExclude;
+    bool searchCriteriaProvided;
+    // Helper methods for search criteria parsing
+    bool validateSizeFormat(const QString &sizeStr);
+    void parseSizeValue(const QString &sizeStr, qint64 &value, QString &unit);
+    bool validateDateFormat(const QString &dateStr);
+    QDateTime parseDate(const QString &dateStr);
 
     // Action tracking
     QString requestedAction;

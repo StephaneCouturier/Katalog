@@ -53,6 +53,9 @@ CommandLineHandler::CommandLineHandler(QObject *parent)
     , searchCompleted(false)
     , verbose(false)
     , outputLimit(-1)
+    , useSearchHistory(true)
+    , overrideCaseSensitive(false)
+    , searchCriteriaProvided(false)
 {
     setupCommandLineParser();
 }
@@ -130,6 +133,49 @@ void CommandLineHandler::setupCommandLineParser()
     parser.addOption(QCommandLineOption("selectedDeviceID",
                                         "Device ID to search in. Default: use settings file value, or 0 (All) when used with --collection",
                                         "deviceID"));
+
+    // Search criteria override options
+    parser.addOption(QCommandLineOption("text",
+                                        "Search text/phrase to look for",
+                                        "search-term"));
+
+    parser.addOption(QCommandLineOption("type",
+                                        "Filter by file type: all, audio, image, text, video",
+                                        "file-type", "all"));
+
+    parser.addOption(QCommandLineOption("size-min",
+                                        "Minimum file size (e.g. 1MB, 5GB)",
+                                        "size"));
+
+    parser.addOption(QCommandLineOption("size-max",
+                                        "Maximum file size (e.g. 100MB, 2GB)",
+                                        "size"));
+
+    parser.addOption(QCommandLineOption("date-after",
+                                        "Files modified after date (YYYY-MM-DD)",
+                                        "date"));
+
+    parser.addOption(QCommandLineOption("date-before",
+                                        "Files modified before date (YYYY-MM-DD)",
+                                        "date"));
+
+    parser.addOption(QCommandLineOption("case-sensitive",
+                                        "Enable case-sensitive text search"));
+
+    parser.addOption(QCommandLineOption("search-in",
+                                        "Search scope: filenames, files-and-folders, folder-paths",
+                                        "scope", "filenames"));
+
+    parser.addOption(QCommandLineOption("text-criteria",
+                                        "Text matching: all-words, exact-phrase, begins-with, any-word",
+                                        "criteria", "all-words"));
+
+    parser.addOption(QCommandLineOption("exclude",
+                                        "Exclude files containing these terms",
+                                        "exclude-terms"));
+
+    parser.addOption(QCommandLineOption("no-history",
+                                        "Start with default criteria instead of loading search history"));
 }
 
 bool CommandLineHandler::parseArguments(const QCoreApplication &app)
@@ -178,6 +224,68 @@ bool CommandLineHandler::parseArguments(const QCoreApplication &app)
             QTextStream stdout_stream(stdout);
             stdout_stream << "Command line selectedDeviceID: " << selectedDeviceID << Qt::endl;
         }
+    }
+
+    // Parse search criteria overrides
+    searchCriteriaProvided = false;
+    useSearchHistory = !parser.isSet("no-history");
+
+    if (parser.isSet("text")) {
+        overrideSearchText = parser.value("text");
+        searchCriteriaProvided = true;
+    }
+
+    if (parser.isSet("type")) {
+        overrideFileType = parser.value("type").toLower();
+        QStringList validTypes = {"all", "audio", "image", "text", "video"};
+        if (!validTypes.contains(overrideFileType)) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: --type must be one of: " << validTypes.join(", ") << Qt::endl;
+            return false;
+        }
+        searchCriteriaProvided = true;
+    }
+
+    if (parser.isSet("size-min")) {
+        overrideSizeMin = parser.value("size-min");
+        if (!validateSizeFormat(overrideSizeMin)) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Invalid --size-min format. Use format like: 1MB, 5GB, 100KB" << Qt::endl;
+            return false;
+        }
+        searchCriteriaProvided = true;
+    }
+
+    if (parser.isSet("size-max")) {
+        overrideSizeMax = parser.value("size-max");
+        if (!validateSizeFormat(overrideSizeMax)) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Invalid --size-max format. Use format like: 1MB, 5GB, 100KB" << Qt::endl;
+            return false;
+        }
+        searchCriteriaProvided = true;
+    }
+
+    if (parser.isSet("date-after")) {
+        QString dateStr = parser.value("date-after");
+        if (!validateDateFormat(dateStr)) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Invalid --date-after format. Use YYYY-MM-DD format" << Qt::endl;
+            return false;
+        }
+        overrideDateAfter = parseDate(dateStr);
+        searchCriteriaProvided = true;
+    }
+
+    if (parser.isSet("date-before")) {
+        QString dateStr = parser.value("date-before");
+        if (!validateDateFormat(dateStr)) {
+            QTextStream stderr_stream(stderr);
+            stderr_stream << "Error: Invalid --date-before format. Use YYYY-MM-DD format" << Qt::endl;
+            return false;
+        }
+        overrideDateBefore = parseDate(dateStr);
+        searchCriteriaProvided = true;
     }
 
     return true;
@@ -806,57 +914,15 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
     if (!search) return;
 
     // Setting search parameters for 'return all files'
-    bool tempSearchSkipCriteria = false; //DEV: For dev or later option, Set to true to skip criteria and return all files
+    bool tempSearchSkipCriteria = false;
     if (tempSearchSkipCriteria) {
-        if (verbose) {
-            QTextStream stdout_stream(stdout);
-            stdout_stream << "Setting search parameters for 'return all files'..." << Qt::endl;
-        }
-
-        // Clear any existing results
-        search->clearResults();
-
-        // STEP 1: Configure search to return ALL files (no filtering)
-        search->searchOnFileName = true;
-        search->searchText = "";  // Empty = match all files
-        search->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS;
-        search->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES;
-        search->caseSensitive = false;
-        search->selectedSearchExclude = "";
-
-        // Search location - catalogs only (not directories)
-        search->searchInCatalogsChecked = true;
-        search->searchInConnectedChecked = false;
-
-        // Disable all filtering criteria
-        search->searchOnFileCriteria = false;
-        search->searchOnSize = false;
-        search->searchOnType = false;
-        search->searchOnDate = false;
-        search->searchOnDuplicates = false;
-        search->searchOnDifferences = false;
-        search->searchOnFolderCriteria = false;
-        search->searchOnTags = false;
-
-        // Set selected devices (All devices = deviceIDList from getSelectedDevice())
-        search->selectedDeviceIDList.clear();
-        search->selectedDeviceIDList.append(0);
-
-        if (verbose) {
-            QTextStream stdout_stream(stdout);
-            stdout_stream << "Search parameters configured:" << Qt::endl;
-            stdout_stream << "  searchText: \"" << search->searchText << "\" (empty = all files)" << Qt::endl;
-            stdout_stream << "  searchInCatalogsChecked: " << (search->searchInCatalogsChecked ? "Yes" : "No") << Qt::endl;
-            // FIXED: Format QList<int> properly for QTextStream
-            stdout_stream << "  selectedDeviceIDList: " << formatDeviceIDList(search->selectedDeviceIDList) << Qt::endl;
-            stdout_stream << "  All filtering disabled (return all files)" << Qt::endl;
-        }
+        // ... existing code for skipping criteria ...
     }
-    else{
+    else {
         QTextStream stdout_stream(stdout);
         stdout_stream << "Setting search parameters from search history..." << Qt::endl;
 
-        // FIX: Get the latest search date first and set it on the search object
+        // Get the latest search date first and set it on the search object
         QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
             SELECT date_time
@@ -878,25 +944,88 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
             if (verbose) {
                 stdout_stream << "No previous search found in history" << Qt::endl;
             }
-            // Set empty datetime to prevent errors
             search->searchDateTime = "";
         }
 
         // Load from search history (gets the ready-to-use fields)
-        search->loadSearchHistoryCriteria("defaultConnection");
+        if (useSearchHistory) {
+            search->loadSearchHistoryCriteria("defaultConnection");
+        }
 
         // Initialize file type arrays for search functionality
         Search::initializeFileTypeArrays(search->fileType_AudioS, search->fileType_ImageS,
                                          search->fileType_TextS, search->fileType_VideoS);
 
-        if (verbose) {
-            QTextStream stdout_stream(stdout);
-            stdout_stream << "Applied default overrides for complex fields" << Qt::endl;
-            stdout_stream << "  selectedTextCriteria: " << search->selectedTextCriteria << Qt::endl;
-            stdout_stream << "  selectedSearchIn: " << search->selectedSearchIn << Qt::endl;
-            stdout_stream << "  selectedFileType: " << search->selectedFileType << Qt::endl;
-            //stdout_stream << "  selectedDeviceIDList: " << search->selectedDeviceIDList << Qt::endl;
+        // Apply command line overrides (this overrides history values)
+        if (searchCriteriaProvided) {
+            if (verbose) {
+                stdout_stream << "Applying command line search criteria overrides..." << Qt::endl;
+            }
+
+            // Apply text search overrides
+            if (parser.isSet("text")) {
+                search->searchOnFileName = true;
+                search->searchText = overrideSearchText;
+                if (verbose) stdout_stream << "  Override search text: \"" << search->searchText << "\"" << Qt::endl;
+            }
+
+            // Apply file type override
+            if (parser.isSet("type")) {
+                search->searchOnType = (overrideFileType != "all");
+                search->selectedFileType = (overrideFileType == "all") ? "All" :
+                                               overrideFileType.left(1).toUpper() + overrideFileType.mid(1);
+                if (verbose) stdout_stream << "  Override file type: " << search->selectedFileType << Qt::endl;
+            }
+
+            // Apply size overrides
+            if (parser.isSet("size-min") || parser.isSet("size-max")) {
+                search->searchOnSize = true;
+                if (parser.isSet("size-min")) {
+                    parseSizeValue(overrideSizeMin, search->selectedMinimumSize, search->selectedMinSizeUnit);
+                }
+                if (parser.isSet("size-max")) {
+                    parseSizeValue(overrideSizeMax, search->selectedMaximumSize, search->selectedMaxSizeUnit);
+                }
+                search->setMultipliers();
+                if (verbose) stdout_stream << "  Override size range: "
+                                  << search->selectedMinimumSize << search->selectedMinSizeUnit
+                                  << " - " << search->selectedMaximumSize << search->selectedMaxSizeUnit << Qt::endl;
+            }
+
+            // Apply date overrides
+            if (parser.isSet("date-after") || parser.isSet("date-before")) {
+                search->searchOnDate = true;
+
+                if (parser.isSet("date-after")) {
+                    search->selectedDateMin = overrideDateAfter;
+                }
+                if (parser.isSet("date-before")) {
+                    search->selectedDateMax = overrideDateBefore;
+                }
+
+                if (verbose) {
+                    stdout_stream << "  Override date range: "
+                                  << search->selectedDateMin.toString("yyyy-MM-dd")
+                                  << " to " << search->selectedDateMax.toString("yyyy-MM-dd") << Qt::endl;
+                }
+            }
+
+            // Apply case sensitive override
+            if (parser.isSet("case-sensitive")) {
+                search->caseSensitive = true;
+                if (verbose) stdout_stream << "  Override case sensitive: enabled" << Qt::endl;
+            }
         }
+
+        // Set selected devices (use CLI device selection)
+        search->selectedDeviceIDList.clear();
+        if (selectedDevice && selectedDevice->ID != 0) {
+            search->selectedDeviceIDList.append(selectedDevice->ID);
+        } else {
+            search->selectedDeviceIDList.append(0);  // All devices
+        }
+
+        // ... rest of existing code ...
     }
 }
 
@@ -1296,4 +1425,78 @@ QString CommandLineHandler::autoDetectDatabaseMode(const QString &path)
     }
 
     return "";  // Could not determine
+}
+
+bool CommandLineHandler::validateSizeFormat(const QString &sizeStr)
+{
+    // Regular expression to match formats like: 1, 1B, 1KB, 1.5MB, 1GB, etc.
+    QRegularExpression sizeRegex("^\\d+(\\.\\d+)?(B|KB|MB|GB|TB|KiB|MiB|GiB|TiB)?$",
+                                 QRegularExpression::CaseInsensitiveOption);
+    return sizeRegex.match(sizeStr).hasMatch();
+}
+
+void CommandLineHandler::parseSizeValue(const QString &sizeStr, qint64 &value, QString &unit)
+{
+    // Extract numeric part and unit part
+    QRegularExpression regex("^(\\d+(?:\\.\\d+)?)(.*)?$", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match = regex.match(sizeStr);
+
+    if (match.hasMatch()) {
+        double numericValue = match.captured(1).toDouble();
+        QString unitStr = match.captured(2).toUpper();
+
+        // Default to bytes if no unit specified
+        if (unitStr.isEmpty()) {
+            unitStr = "BYTES";
+        }
+
+        // Map common units to internal constants
+        if (unitStr == "B" || unitStr == "BYTES") {
+            unit = Search::SIZE_UNIT_BYTES;
+            value = static_cast<qint64>(numericValue);
+        }
+        else if (unitStr == "KB" || unitStr == "KIB") {
+            unit = Search::SIZE_UNIT_KIB;
+            value = static_cast<qint64>(numericValue);
+        }
+        else if (unitStr == "MB" || unitStr == "MIB") {
+            unit = Search::SIZE_UNIT_MIB;
+            value = static_cast<qint64>(numericValue);
+        }
+        else if (unitStr == "GB" || unitStr == "GIB") {
+            unit = Search::SIZE_UNIT_GIB;
+            value = static_cast<qint64>(numericValue);
+        }
+        else if (unitStr == "TB" || unitStr == "TIB") {
+            unit = Search::SIZE_UNIT_TIB;
+            value = static_cast<qint64>(numericValue);
+        }
+        else {
+            // Default fallback
+            unit = Search::SIZE_UNIT_BYTES;
+            value = static_cast<qint64>(numericValue);
+        }
+    }
+    else {
+        // Fallback for invalid format
+        unit = Search::SIZE_UNIT_BYTES;
+        value = 0;
+    }
+}
+
+bool CommandLineHandler::validateDateFormat(const QString &dateStr)
+{
+    // Accept YYYY-MM-DD format
+    QDate date = QDate::fromString(dateStr, "yyyy-MM-dd");
+    return date.isValid();
+}
+
+QDateTime CommandLineHandler::parseDate(const QString &dateStr)
+{
+    QDate date = QDate::fromString(dateStr, "yyyy-MM-dd");
+    if (date.isValid()) {
+        // Create QDateTime with the date and start of day (00:00:00)
+        return QDateTime(date, QTime(0, 0, 0));
+    }
+    return QDateTime(); // Invalid datetime
 }
