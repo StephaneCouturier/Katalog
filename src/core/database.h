@@ -303,8 +303,10 @@ class Database
 {
 public:
     // Main initialization method - creates connection and sets up database
-    static QSqlError initialize(const QString &connectionName, Collection *collection);
-
+    // Optional overrides allow command line to bypass settings file values
+    static QSqlError initialize(const QString &connectionName, Collection *collection,
+                                const QString &overrideDatabaseMode = QString(),
+                                const QString &overrideDatabaseFilePath = QString());
     // Create all database tables
     static QSqlError createAllTables(const QString &connectionName);
 

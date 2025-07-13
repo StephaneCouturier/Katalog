@@ -5,12 +5,27 @@
 #include <QFile>
 #include <QDebug>
 
-QSqlError Database::initialize(const QString &connectionName, Collection *collection)
+QSqlError Database::initialize(const QString &connectionName, Collection *collection,
+                               const QString &overrideDatabaseMode,
+                               const QString &overrideDatabaseFilePath)
 {
     // Load database settings from collection settings file
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    collection->databaseMode = settings.value("Settings/databaseMode").toString();
-    collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+
+    // Use override values if provided, otherwise load from settings
+    if (!overrideDatabaseMode.isEmpty()) {
+        collection->databaseMode = overrideDatabaseMode;
+    } else {
+        collection->databaseMode = settings.value("Settings/databaseMode").toString();
+    }
+
+    if (!overrideDatabaseFilePath.isEmpty()) {
+        collection->databaseFilePath = overrideDatabaseFilePath;
+    } else {
+        collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+    }
+
+    // Always load other settings from file (not overridden by command line)
     collection->databaseHostName = settings.value("Settings/databaseHostName").toString();
     collection->databaseName = settings.value("Settings/databaseName").toString();
     collection->databasePort = settings.value("Settings/databasePort").toInt();
