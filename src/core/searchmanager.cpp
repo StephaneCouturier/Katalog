@@ -45,41 +45,6 @@ SearchManager::~SearchManager()
     }
 }
 //----------------------------------------------------------------------
-void SearchManager::startSearchMemory(SearchMemory *searchEngine, Device *targetDevice)
-{
-    if (m_currentJob) {
-        qDebug() << "Search already running!";
-        return;
-    }
-
-    if (!searchEngine || !targetDevice) {
-        emit searchError("Invalid search configuration");
-        return;
-    }
-
-    m_currentJob = new SearchJob(this);
-    m_currentJob->setSearchMemory(searchEngine);
-    m_currentJob->setTargetDevice(targetDevice);
-
-    // Connect job signals
-    connect(m_currentJob, &KJob::result, this, &SearchManager::onJobResult);
-    connect(m_currentJob, &KJob::percent, this, &SearchManager::onJobPercent);
-    // Note: infoMessage signal may not be available in all KJob versions
-    // connect(m_currentJob, &KJob::infoMessage, this, &SearchManager::onJobInfoMessage);
-
-    // Connect search-specific signals
-    connect(m_currentJob, &SearchJob::catalogLoadingStarted, this, &SearchManager::onCatalogLoadingStarted);
-    connect(m_currentJob, &SearchJob::catalogLoadingFinished, this, &SearchManager::onCatalogLoadingFinished);
-
-    setStatus("Starting search...");
-    setSearchRunning(true);
-    setProgress(0);
-    m_isPaused = false;
-
-    // Start the job
-    m_currentJob->startJob();
-}
-//----------------------------------------------------------------------
 void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, Device *targetDevice)
 {
     if (m_currentJob) {
@@ -245,9 +210,9 @@ void SearchManager::onJobResult(KJob *job)
     setCurrentCatalogName("");
     m_isPaused = false;
 
-    qDebug() << "About to cleanup job...";
+    //qDebug() << "About to cleanup job...";
     cleanupJob();
-    qDebug() << "Job cleanup finished";
+    //qDebug() << "Job cleanup finished";
 }
 //----------------------------------------------------------------------
 void SearchManager::onJobPercent()
@@ -312,10 +277,10 @@ void SearchManager::setCurrentCatalogName(const QString &catalog)
 void SearchManager::cleanupJob()
 {
     if (m_currentJob) {
-        qDebug() << "Cleaning up search job...";
+        //qDebug() << "Cleaning up search job...";
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
-        qDebug() << "Search job cleanup complete";
+        //qDebug() << "Search job cleanup complete";
     }
 }
 //----------------------------------------------------------------------

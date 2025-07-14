@@ -433,7 +433,7 @@
         {//Load and restore the criteria of the selected search history
             // Ensure currentSearch exists
             if (!currentSearch) {
-                currentSearch = new SearchMemory(this);
+                currentSearch = new SearchJobStoppable(this);
             }
 
             // Load directly into currentSearch - no temporary object needed!

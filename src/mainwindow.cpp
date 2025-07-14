@@ -38,9 +38,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     // Initialize objects first
     collection = new Collection();
     selectedDevice = new Device();
-    //searchMemory = new SearchMemory(this);
-    //loadSearch = new SearchMemory(this);
-    searchMemory = nullptr;
+    searchJobStoppable = nullptr;
     loadSearch = nullptr;
 
     // Initialize other pointers
@@ -53,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     //Set current version, release date, and development mode
         currentVersion  = "2.6";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-07-09";
+        releaseDate     = "2025-07-14";
         developmentMode = false;
 
     //Default UI settings
@@ -191,10 +189,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
     //Load Collection data
             //Create searchMemory initially
-            searchMemory = new SearchMemory(this);
+            searchJobStoppable = new SearchJobStoppable(this);
             // Both currentSearch and lastSearch point to searchMemory
-            currentSearch = searchMemory;
-            lastSearch = searchMemory;
+            currentSearch = searchJobStoppable;
+            lastSearch = searchJobStoppable;
 
         //Load Collection
             loadCollection();

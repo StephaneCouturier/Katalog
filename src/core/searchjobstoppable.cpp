@@ -50,12 +50,12 @@ SearchJobStoppable::SearchJobStoppable(QObject *parent)
 
 SearchJobStoppable::~SearchJobStoppable()
 {
-    qDebug() << "SearchJobStoppable destructor called";
+    //qDebug() << "SearchJobStoppable destructor called";
 
     m_objectValid.storeRelease(0);
     stopSearch();
 
-    qDebug() << "SearchJobStoppable destructor complete";
+    //qDebug() << "SearchJobStoppable destructor complete";
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::setDatabaseConnection(const QString &connectionName)
@@ -65,12 +65,12 @@ void SearchJobStoppable::setDatabaseConnection(const QString &connectionName)
 //----------------------------------------------------------------------
 void SearchJobStoppable::searchFiles(Device *selectedDevice)
 {
-    qDebug() << "SearchJobStoppable::searchFiles() starting";
-    qDebug() << "  - Selected device type:" << selectedDevice->type;
-    qDebug() << "  - Selected device name:" << selectedDevice->name;
-    qDebug() << "  - Database connection:" << m_connectionName;
-    qDebug() << "  - Search in catalogs checked:" << searchInCatalogsChecked;
-    qDebug() << "  - Search text:" << searchText;
+    // qDebug() << "SearchJobStoppable::searchFiles() starting";
+    // qDebug() << "  - Selected device type:" << selectedDevice->type;
+    // qDebug() << "  - Selected device name:" << selectedDevice->name;
+    // qDebug() << "  - Database connection:" << m_connectionName;
+    // qDebug() << "  - Search in catalogs checked:" << searchInCatalogsChecked;
+    // qDebug() << "  - Search text:" << searchText;
 
     // Add this debug check to see if there's leftover data
     QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
@@ -93,7 +93,7 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
     checkQuery2.exec("SELECT COUNT(*) FROM filetemp");
     if (checkQuery2.next()) {
         int tempCount = checkQuery2.value(0).toInt();
-        qDebug() << "  - filetemp table has" << tempCount << "records at start";
+        //qDebug() << "  - filetemp table has" << tempCount << "records at start";
         if (tempCount > 0) {
             qDebug() << "  - WARNING: filetemp table not empty! Clearing it...";
             QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
@@ -280,8 +280,8 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
 //----------------------------------------------------------------------
 void SearchJobStoppable::stopSearch()
 {
-    qDebug() << "=== SearchJobStoppable::stopSearch() called ===";
-    qDebug() << "Setting stop flag to 1";
+    //qDebug() << "=== SearchJobStoppable::stopSearch() called ===";
+    //qDebug() << "Setting stop flag to 1";
 
     m_stopRequested.storeRelease(1);
 
@@ -294,8 +294,8 @@ void SearchJobStoppable::stopSearch()
         m_paused.storeRelease(0);
     }
 
-    qDebug() << "Stop flag set - shouldContinue() now returns:" << shouldContinue();
-    qDebug() << "=== SearchJobStoppable::stopSearch() complete ===";
+    //qDebug() << "Stop flag set - shouldContinue() now returns:" << shouldContinue();
+    //qDebug() << "=== SearchJobStoppable::stopSearch() complete ===";
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::pauseSearch()

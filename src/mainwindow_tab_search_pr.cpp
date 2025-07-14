@@ -42,13 +42,8 @@ void MainWindow::launchSearch()
     // Set animation cursor before starting
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // For memory mode with development flag, use SearchMemory (fallback/testing of obsolete code)
-    if (collection->databaseMode == "Memory" && developmentMode == true) {
-        qDebug() << "\n Development mode: using SearchMemory for Memory mode (fallback)";
-        launchSearchMemory();
-    }
     // For memory mode without development flag, use SearchJobStoppable (default)
-    else if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
+    if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
         qDebug() << "\n Using SearchJobStoppable for memory mode (default)";
         launchSearchJobStoppable();
     }
@@ -57,50 +52,6 @@ void MainWindow::launchSearch()
         qDebug() << "\n Using SearchJobStoppable for database mode";
         launchSearchJobStoppable();
     }
-}
-//----------------------------------------------------------------------
-void MainWindow::launchSearchMemory()
-{
-    setSearchButtonState(SearchButtonState::Searching);
-
-    // Create memory search object if not already created
-    if (!searchMemory) {
-        searchMemory = new SearchMemory(this);
-    }
-
-    // Always connect the signal, whether searchMemory is new or existing
-    // First disconnect any existing connections to avoid duplicates
-    disconnect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
-    connect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
-
-    // Point the currentSearch to searchMemory for consistent access
-    currentSearch = searchMemory;
-
-    // Transfer search parameters from UI to the search object
-    sendSearchParametersFromUI(searchMemory);
-
-    setSearchButtonState(SearchButtonState::Searching);
-
-    // Set the search as running, but DON'T change button appearance for memory mode
-    // since it can't be stopped
-    //isSearchRunning = true;
-
-    // Run the search
-    searchMemory->searchFiles(selectedDevice);
-
-    // Display the results
-    displaySearchResults();
-
-    // Reset the search state when search is complete
-    isSearchRunning = false;
-
-    // Restore cursor and enable export buttons
-
-    ui->Search_pushButton_ProcessResults->setEnabled(true);
-    ui->Search_comboBox_SelectProcess->setEnabled(true);
-
-    setSearchButtonState(SearchButtonState::Idle);
-    QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------
 void MainWindow::setupSearchManager()
@@ -727,52 +678,34 @@ void MainWindow::updateSearchProgress(int filesProcessed)
 
     // Special case for catalog loading progress update (-4) - used by both SearchMemory and SearchJobStoppable
     if (filesProcessed == -4) {
-        SearchMemory* searchMemory = dynamic_cast<SearchMemory*>(currentSearch);
         SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
 
-        if (searchMemory) {
-            double percentLoaded = 0;
-            if (searchMemory->currentCatalogTotalFiles > 0) {
-                percentLoaded = (double)searchMemory->currentCatalogFilesLoaded /
-                                searchMemory->currentCatalogTotalFiles * 100.0;
-            }
-
-            statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7")
-                                .arg(searchMemory->currentCatalogIndex)
-                                .arg(searchMemory->totalCatalogs)
-                                .arg(searchMemory->currentCatalogName)
-                                .arg(QLocale().toString(searchMemory->currentCatalogFilesLoaded))
-                                .arg(QString::number(percentLoaded, 'f', 1))
-                                .arg(QLocale().toString(currentSearch->fileNames.size()))
-                                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
-        }
-        else if (searchJobStoppable) {
-            double percentLoaded = 0;
-            if (searchJobStoppable->currentCatalogTotalFiles > 0) {
-                percentLoaded = (double)searchJobStoppable->currentCatalogFilesLoaded /
-                                searchJobStoppable->currentCatalogTotalFiles * 100.0;
-            }
-
-            statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7")
-                                .arg(searchJobStoppable->currentCatalogIndex)
-                                .arg(searchJobStoppable->totalCatalogs)
-                                .arg(searchJobStoppable->currentCatalogName)
-                                .arg(QLocale().toString(searchJobStoppable->currentCatalogFilesLoaded))
-                                .arg(QString::number(percentLoaded, 'f', 1))
-                                .arg(QLocale().toString(currentSearch->fileNames.size()))
-                                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
-
-            // Append PAUSED status if search is paused
-            if (searchJobStoppable->isPaused()) {
-                statusMessage += tr(" | CATALOG LOADING PAUSED");
-            }
+        double percentLoaded = 0;
+        if (searchJobStoppable->currentCatalogTotalFiles > 0) {
+            percentLoaded = (double)searchJobStoppable->currentCatalogFilesLoaded /
+                            searchJobStoppable->currentCatalogTotalFiles * 100.0;
         }
 
-        if (searchMemory || searchJobStoppable) {
-            statusBar()->show();
-            statusBar()->showMessage(statusMessage);
-            QCoreApplication::processEvents();
+        statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7")
+                            .arg(searchJobStoppable->currentCatalogIndex)
+                            .arg(searchJobStoppable->totalCatalogs)
+                            .arg(searchJobStoppable->currentCatalogName)
+                            .arg(QLocale().toString(searchJobStoppable->currentCatalogFilesLoaded))
+                            .arg(QString::number(percentLoaded, 'f', 1))
+                            .arg(QLocale().toString(currentSearch->fileNames.size()))
+                            .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+
+        // Append PAUSED status if search is paused
+        if (searchJobStoppable->isPaused()) {
+            statusMessage += tr(" | CATALOG LOADING PAUSED");
         }
+
+
+
+        statusBar()->show();
+        statusBar()->showMessage(statusMessage);
+        QCoreApplication::processEvents();
+
         return;
     }
 

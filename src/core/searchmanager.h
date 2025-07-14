@@ -36,7 +36,6 @@
 #include <QObject>
 #include <QTimer>
 #include "src/core/searchjob.h"
-#include "src/core/search_memory.h"
 #include "src/core/searchjobstoppable.h"
 
 /**
@@ -81,7 +80,6 @@ private:
     bool m_isPaused = false;
 
 public slots:
-    void startSearchMemory(SearchMemory *searchEngine, Device *targetDevice);
     void startSearchJobStoppable(SearchJobStoppable *searchEngine, Device *targetDevice);
     void stopSearch();
     void pauseSearch();

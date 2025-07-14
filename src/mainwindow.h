@@ -88,7 +88,6 @@
 #include "core/collection.h"
 #include "core/search.h"
 #include "core/device.h"
-#include "core/search_memory.h"
 #include "core/searchmanager.h"
 #include "core/searchjobstoppable.h"
 #include "core/searchmanager.h"
@@ -119,9 +118,8 @@ class MainWindow : public KXmlGuiWindow
         Collection *collection = nullptr;   // Collection object, used to access the collection of devices, catalogs and storage
         Device *selectedDevice = nullptr;  // Selected device from Selection panel, used for operations on any screen
         Search *currentSearch = nullptr;
-        SearchMemory *searchMemory = nullptr;
-        SearchMemory *loadSearch = new SearchMemory(this); //temporary search object used to load criteria from a previous search.
-        SearchMemory *lastSearch = new SearchMemory(this); //temporary search object used to load criteria from the last search.
+        SearchJobStoppable *loadSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from a previous search.
+        SearchJobStoppable *lastSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from the last search.
         SearchManager *searchManager = nullptr;
         SearchProgressManager *searchProgressManager = nullptr;
         SearchResultsThrottler *searchResultsThrottler = nullptr;
@@ -491,7 +489,6 @@ class MainWindow : public KXmlGuiWindow
             void reportSearchStatistics();
 
             void launchSearchJobStoppable();
-            void launchSearchMemory();
 
             //UI elements
             void on_Search_pushButton_Search_clicked();

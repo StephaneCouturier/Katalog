@@ -30,7 +30,6 @@
 */
 
 #include "searchjob.h"
-#include "src/core/search_memory.h"
 #include "searchjobstoppable.h"
 #include <QDebug>
 
@@ -41,22 +40,6 @@ SearchJob::SearchJob(QObject *parent)
     setTotalAmount(KJob::Files, 0); // Will be set when we know the estimate
 }
 //----------------------------------------------------------------------
-void SearchJob::setSearchMemory(SearchMemory *searchEngine)
-{
-    if (m_searchEngine) {
-        // Disconnect previous engine
-        disconnect(m_searchEngine, nullptr, this, nullptr);
-    }
-
-    m_searchEngine = searchEngine;
-    m_engineType = Memory;
-
-    if (m_searchEngine) {
-        // Connect to search progress signals
-        connect(m_searchEngine, &Search::searchProgress, this, &SearchJob::onSearchProgress);
-    }
-}
-//----------------------------------------------------------------------
 void SearchJob::setSearchJobStoppable(SearchJobStoppable *searchEngine)
 {
     if (m_searchEngine) {
@@ -65,7 +48,6 @@ void SearchJob::setSearchJobStoppable(SearchJobStoppable *searchEngine)
     }
 
     m_searchEngine = searchEngine;
-    m_engineType = JobStoppable;
 
     if (m_searchEngine) {
         // Connect to search progress signals
@@ -80,13 +62,6 @@ void SearchJob::setTargetDevice(Device *device)
 //----------------------------------------------------------------------
 void SearchJob::startJob()
 {
-    if (!m_searchEngine || m_engineType == None) {
-        setError(UserDefinedError);
-        setErrorText("No search engine configured");
-        emitResult();
-        return;
-    }
-
     if (!m_targetDevice) {
         setError(UserDefinedError);
         setErrorText("No target device configured");
@@ -128,7 +103,7 @@ void SearchJob::start()
 //----------------------------------------------------------------------
 void SearchJob::executeSearch()
 {
-    if (!m_searchEngine || !m_targetDevice || m_engineType == None) {
+    if (!m_searchEngine || !m_targetDevice) {
         setError(UserDefinedError);
         setErrorText("Search configuration invalid");
         emitResult();
@@ -136,24 +111,14 @@ void SearchJob::executeSearch()
     }
 
     try {
-        // Execute the search based on engine type
-        if (m_engineType == Memory) {
-            SearchMemory* searchMemory = static_cast<SearchMemory*>(m_searchEngine);
-            searchMemory->searchFiles(m_targetDevice);
-        } else if (m_engineType == JobStoppable) {
-            SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
-            searchJobStoppable->searchFiles(m_targetDevice);
+        // Execute the search
+        SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
+        searchJobStoppable->searchFiles(m_targetDevice);
 
-            // Check if search was stopped
-            if (searchJobStoppable->wasStopRequested()) {
-                setError(KilledJobError);
-                setErrorText("Search was cancelled");
-                emitResult();
-                return;
-            }
-        } else {
-            setError(UserDefinedError);
-            setErrorText("Unknown search engine type");
+        // Check if search was stopped
+        if (searchJobStoppable->wasStopRequested()) {
+            setError(KilledJobError);
+            setErrorText("Search was cancelled");
             emitResult();
             return;
         }
@@ -186,12 +151,10 @@ bool SearchJob::doKill()
     }
 
     // Stop the search engine
-    if (m_searchEngine && m_engineType == JobStoppable) {
-        qDebug() << "Stopping SearchJobStoppable engine";
-        SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
-        searchJobStoppable->stopSearch();
-        qDebug() << "SearchJobStoppable::stopSearch() called";
-    }
+    qDebug() << "Stopping SearchJobStoppable engine";
+    SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
+    searchJobStoppable->stopSearch();
+    qDebug() << "SearchJobStoppable::stopSearch() called";
 
     setError(KilledJobError);
     setErrorText("Search was cancelled by user");

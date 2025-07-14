@@ -32,7 +32,6 @@
 #define SEARCHJOB_H
 
 #pragma once
-class SearchMemory;
 class SearchJobStoppable;
 
 #include <KJob>
@@ -53,7 +52,6 @@ public:
     explicit SearchJob(QObject *parent = nullptr);
 
     // Configure the search job
-    void setSearchMemory(SearchMemory *searchEngine);
     void setSearchJobStoppable(SearchJobStoppable *searchEngine);
     void setTargetDevice(Device *device);
 
@@ -64,14 +62,7 @@ public:
     Search* getSearchEngine() const { return m_searchEngine; }
 
 private:
-    enum SearchEngineType {
-        None,
-        Memory,
-        JobStoppable
-    };
-
     Search *m_searchEngine = nullptr;
-    SearchEngineType m_engineType = None;
     Device *m_targetDevice = nullptr;
     QTimer *m_executeTimer = nullptr;
     QMutex m_mutex;
