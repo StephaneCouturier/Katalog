@@ -59,7 +59,7 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+587"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+538"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
@@ -308,7 +308,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+247"/>
+        <location filename="../mainwindow.cpp" line="+246"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
@@ -386,8 +386,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+355"/>
-        <location line="+672"/>
+        <location filename="../mainwindow_setup.cpp" line="+898"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -1478,7 +1477,7 @@
     <message>
         <location line="+8874"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-721"/>
+        <location filename="../mainwindow_setup.cpp" line="-715"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
@@ -1657,32 +1656,7 @@
         <translation>Otevřeno</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-271"/>
-        <source>Unable to load database.&lt;br/&gt;The SQLite driver was not loaded.</source>
-        <translation>Nelze načíst databázi.&lt;br/&gt;Nebyl načten ovladač SQLite.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be initialized.&lt;br/&gt;Create a new database or select an existing one.</source>
-        <translation>Databázi nelze inicializovat.&lt;br/&gt;Vytvořte novou databázi nebo vyberte existující.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>The database file could not be found:&lt;br/&gt;</source>
-        <translation>Soubor databáze nebyl nalezen:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be opened:&lt;br/&gt;</source>
-        <translation>Databázi nelze otevřít:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connected to Hosted database.</source>
-        <translation>Připojeno k hostované databázi.</translation>
-    </message>
-    <message>
-        <location line="+184"/>
+        <location filename="../mainwindow_setup.cpp" line="-3"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt; &lt;b&gt; Vítejte v Katalogu! &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Zdá se, že toto je první spuštění. &lt;br/&gt; &lt;br/&gt; Byla použita následující nastavení: &lt;br/&gt; - Jazyk: &lt;b&gt;%1 &lt;/b&gt; &lt;br/&gt; - Téma: &lt;b&gt;%2 &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Tyto údaje můžete změnit na kartě%3.</translation>
     </message>
@@ -1702,7 +1676,7 @@
         <translation>1- Vyberte celou jednotku nebo adresář, &lt;br/&gt;2- vyberte možnosti a &lt;br/&gt;3- klikněte na &apos;Vytvořit&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+590"/>
+        <location line="+584"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Toto je verze: v%1 &lt;br/&gt; &lt;br/&gt; K dispozici je nová verze: &lt;b&gt; v%2 &lt;/b&gt; &lt;br/&gt; Seznam nových funkcí najdete v &lt;a href = &apos;%3 &apos;&gt; Poznámky k vydání &lt;/a&gt; &lt;br/&gt; &lt;br/&gt; Chcete si jej stáhnout?</translation>
     </message>
@@ -1821,7 +1795,7 @@
         <translation>Hledání přerušeno. Nejsou k dispozici žádné výsledky.</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+58"/>
         <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
         <translation>Zpracování katalogu %1 z %2 | Nalezené soubory: %3 | Zpracovávání souborů...</translation>
     </message>
@@ -1842,7 +1816,7 @@
         <translation> (%1 %)</translation>
     </message>
     <message>
-        <location line="-452"/>
+        <location line="-434"/>
         <source>Catalog Name</source>
         <translation>Název katalogu</translation>
     </message>
@@ -1900,8 +1874,7 @@
         <translation>Načítání katalogu %1 z %2 (%3) | Nalezené soubory: %4 | Zpracované soubory: %5</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <location line="+16"/>
+        <location line="+22"/>
         <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
         <translation>Načítání katalogu %1 z %2 (%3) | Načteno %4 souborů (%5 %) | Nalezené soubory: %6 | Zpracované soubory: %7</translation>
     </message>
@@ -2351,7 +2324,7 @@ do koše?</translation>
         <translation>Smazat tento soubor?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-535"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-517"/>
         <source>Folder</source>
         <translation>Složka</translation>
     </message>
@@ -2415,7 +2388,7 @@ do koše?</translation>
         <translation>Vyberte jiné jméno a zkuste to znovu.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-606"/>
+        <location filename="../mainwindow_setup.cpp" line="-600"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>Vyberte adresář pro tuto kolekci</translation>

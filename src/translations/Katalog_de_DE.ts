@@ -126,7 +126,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="+314"/>
+        <location filename="../mainwindow_setup.cpp" line="+191"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -146,7 +146,7 @@
         <location line="+7000"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-2"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+365"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+316"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1518"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+95"/>
         <source>Date</source>
@@ -354,7 +354,7 @@
     </message>
     <message>
         <location line="+9276"/>
-        <location filename="../mainwindow.cpp" line="+246"/>
+        <location filename="../mainwindow.cpp" line="+245"/>
         <source>Memory</source>
         <translation>Speicher</translation>
     </message>
@@ -596,8 +596,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+41"/>
-        <location line="+672"/>
+        <location filename="../mainwindow_setup.cpp" line="+707"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -1657,32 +1656,7 @@
         <translation>Laden Sie die Datei neu, in der die Tags gespeichert sind</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-992"/>
-        <source>Unable to load database.&lt;br/&gt;The SQLite driver was not loaded.</source>
-        <translation>Datenbank konnte nicht geladen werden.&lt;br/&gt;Der SQLite-Treiber wurde nicht geladen.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be initialized.&lt;br/&gt;Create a new database or select an existing one.</source>
-        <translation>Die Datenbank konnte nicht initialisiert werden.&lt;br/&gt;Erstellen Sie eine neue Datenbank oder wählen Sie eine vorhandene aus.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>The database file could not be found:&lt;br/&gt;</source>
-        <translation>Die Datenbankdatei konnte nicht gefunden werden:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be opened:&lt;br/&gt;</source>
-        <translation>Die Datenbank konnte nicht geöffnet werden:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connected to Hosted database.</source>
-        <translation>Verbunden mit der gehosteten Datenbank.</translation>
-    </message>
-    <message>
-        <location line="+184"/>
+        <location filename="../mainwindow_setup.cpp" line="-718"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Willkommen im Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies scheint der erste Lauf zu sein.&lt;br/&gt;&lt;br/&gt;Die folgenden Einstellungen wurden angewendet:&lt;br/&gt; - Sprache: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Diese können Sie im Reiter %3 ändern.</translation>
     </message>
@@ -1702,7 +1676,7 @@
         <translation>1- Wählen Sie ein ganzes Laufwerk oder Verzeichnis aus, &lt;br/&gt;2- wählen Sie Optionen aus und &lt;br/&gt;3- klicken Sie auf &quot;Erstellen&quot;.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+590"/>
+        <location line="+584"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dies ist Version: v%1 &lt;br/&gt;&lt;br/&gt;Eine neue Version ist verfügbar: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Die Liste der neuen Funktionen finden Sie im &lt;a href=&apos;%3 &apos;&gt;Versionshinweise&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Möchten Sie es herunterladen?</translation>
     </message>
@@ -1821,7 +1795,7 @@
         <translation>Suche unterbrochen. Keine Ergebnisse verfügbar.</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+58"/>
         <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
         <translation>Katalog %1 von %2 wird verarbeitet | Gefundene Dateien: %3 | Dateien werden verarbeitet …</translation>
     </message>
@@ -1842,7 +1816,7 @@
         <translation> (%1%)</translation>
     </message>
     <message>
-        <location line="-452"/>
+        <location line="-434"/>
         <source>Catalog Name</source>
         <translation>Katalogname</translation>
     </message>
@@ -1900,8 +1874,7 @@
         <translation>Katalog %1 von %2 (%3) wird geladen | Gefundene Dateien: %4 | Verarbeitete Dateien: %5</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <location line="+16"/>
+        <location line="+22"/>
         <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
         <translation>Katalog %1 von %2 (%3) wird geladen | %4 Dateien geladen (%5%) | Gefundene Dateien: %6 | Verarbeitete Dateien: %7</translation>
     </message>
@@ -2351,7 +2324,7 @@ in den Papierkorb?</translation>
         <translation>Diese Datei löschen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-535"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-517"/>
         <source>Folder</source>
         <translation>Ordner</translation>
     </message>
@@ -2880,7 +2853,7 @@ in den Papierkorb?</translation>
         <translation>Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-606"/>
+        <location filename="../mainwindow_setup.cpp" line="-600"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>Wählen Sie das Verzeichnis für diese Sammlung</translation>

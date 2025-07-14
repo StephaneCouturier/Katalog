@@ -96,7 +96,7 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-66"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+587"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+538"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
@@ -175,7 +175,7 @@
     <message>
         <location line="+818"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="+314"/>
+        <location filename="../mainwindow_setup.cpp" line="+191"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
@@ -281,7 +281,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+247"/>
+        <location filename="../mainwindow.cpp" line="+246"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
@@ -554,8 +554,7 @@
         <location line="-3044"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+41"/>
-        <location line="+672"/>
+        <location filename="../mainwindow_setup.cpp" line="+707"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+84"/>
         <location line="+1"/>
@@ -872,7 +871,7 @@
         <translation>de</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-711"/>
+        <location filename="../mainwindow_setup.cpp" line="-705"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>Sélectionner le répertoire pour cette collection</translation>
@@ -1971,7 +1970,7 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+619"/>
+        <location filename="../mainwindow_setup.cpp" line="+613"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translatorcomment>a</translatorcomment>
         <translation>Ceci est la version: v%1 &lt;br/&gt;&lt;br/&gt;Une nouvelle version est disponible : &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Voir la liste de nouvelles fonctionnalités dans les &lt;a href=&apos;%3&apos;&gt;Notes de Version&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Voulez-vous la télécharger ?</translation>
@@ -2227,32 +2226,7 @@
         <translation>Historique de recherche</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-887"/>
-        <source>Unable to load database.&lt;br/&gt;The SQLite driver was not loaded.</source>
-        <translation>Impossible de charger la base de données.&lt;br/&gt;Le pilote SQLite n&apos;a pas été chargé.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be initialized.&lt;br/&gt;Create a new database or select an existing one.</source>
-        <translation>La base de données n&apos;a pas pu être initialisée.&lt;br/&gt;Créez une nouvelle base de données ou sélectionnez-en une existante.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>The database file could not be found:&lt;br/&gt;</source>
-        <translation>Le fichier de base de données est introuvable&#xa0;:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be opened:&lt;br/&gt;</source>
-        <translation>La base de données n&apos;a pas pu être ouverte&#xa0;:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connected to Hosted database.</source>
-        <translation>Connecté à la base de données hébergée.</translation>
-    </message>
-    <message>
-        <location line="+188"/>
+        <location filename="../mainwindow_setup.cpp" line="-609"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/Sur l&apos;écran suivant, choisir un dossier de Collection existant ou créez-en un nouveau.</translation>
     </message>
@@ -2508,8 +2482,7 @@
         <translation>Chargement du catalogue %1 sur %2 (%3) | Fichiers trouvés&#xa0;: %4 | Fichiers traités&#xa0;: %5</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <location line="+16"/>
+        <location line="+22"/>
         <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
         <translation>Chargement du catalogue %1 sur %2 (%3) | %4 fichiers chargés (%5%) | Fichiers trouvés&#xa0;: %6 | Fichiers traités&#xa0;: %7</translation>
     </message>
@@ -3184,7 +3157,7 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="-66"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-585"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-567"/>
         <location line="+243"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+330"/>

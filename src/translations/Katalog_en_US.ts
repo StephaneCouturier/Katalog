@@ -59,7 +59,7 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+587"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+538"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -180,7 +180,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+247"/>
+        <location filename="../mainwindow.cpp" line="+246"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -245,8 +245,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+355"/>
-        <location line="+672"/>
+        <location filename="../mainwindow_setup.cpp" line="+898"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -984,7 +983,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-721"/>
+        <location filename="../mainwindow_setup.cpp" line="-715"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2172,7 +2171,7 @@ to another folder?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+619"/>
+        <location filename="../mainwindow_setup.cpp" line="+613"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2243,32 +2242,7 @@ to another folder?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-887"/>
-        <source>Unable to load database.&lt;br/&gt;The SQLite driver was not loaded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be initialized.&lt;br/&gt;Create a new database or select an existing one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>The database file could not be found:&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>The database could not be opened:&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connected to Hosted database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+188"/>
+        <location filename="../mainwindow_setup.cpp" line="-609"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3020,8 +2994,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
-        <location line="+16"/>
+        <location line="+22"/>
         <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
         <translation type="unfinished"></translation>
     </message>
