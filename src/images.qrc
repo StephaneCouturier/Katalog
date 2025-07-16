@@ -23,5 +23,7 @@
         <file>images/screenshots/Filters_catalogs_storage.png</file>
         <file>images/screenshots/Filters_catalogs_virtual.png</file>
         <file>images/screenshots/Filters_connecteddrives.png</file>
+        <file>images/flags/es.png</file>
+        <file>images/flags/it.png</file>
     </qresource>
 </RCC>

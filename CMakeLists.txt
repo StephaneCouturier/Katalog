@@ -145,10 +145,13 @@ set(UI_FILES
 
 # Translation files
 set(TS_FILES
-    src/translations/Katalog_de_DE.ts
-    src/translations/Katalog_en_US.ts
-    src/translations/Katalog_fr_FR.ts
     src/translations/Katalog_cz_CZ.ts
+    src/translations/Katalog_de_DE.ts
+    src/translations/Katalog_es_ES.ts
+    src/translations/Katalog_fr_FR.ts
+    src/translations/Katalog_en_US.ts
+    src/translations/Katalog_it_IT.ts
+
 )
 
 # Make sure LinguistTools is found (should already be in your find_package)

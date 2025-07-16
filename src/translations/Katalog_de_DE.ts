@@ -354,7 +354,7 @@
     </message>
     <message>
         <location line="+9276"/>
-        <location filename="../mainwindow.cpp" line="+245"/>
+        <location filename="../mainwindow.cpp" line="+246"/>
         <source>Memory</source>
         <translation>Speicher</translation>
     </message>

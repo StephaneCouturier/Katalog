@@ -281,7 +281,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+246"/>
+        <location filename="../mainwindow.cpp" line="+247"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>

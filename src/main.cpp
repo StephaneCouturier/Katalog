@@ -69,10 +69,13 @@ int main(int argc, char *argv[])
 
             //If this language is not supported yet, default to English US.
             QStringList availableUserLanguages;
-            availableUserLanguages  << "de_DE"
-                                    << "cz_CZ"
+            availableUserLanguages  << "cz_CZ"
+                                    << "de_DE"
+                                    << "en_US"
+                                    << "es_ES"
                                     << "fr_FR"
-                                    << "en_US";
+                                    << "it_IT"
+                                    ;
             if ( availableUserLanguages.contains(userLanguage) == false )
                 userLanguage = "en_US";
         }
