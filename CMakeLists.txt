@@ -151,7 +151,8 @@ set(TS_FILES
     src/translations/Katalog_fr_FR.ts
     src/translations/Katalog_en_US.ts
     src/translations/Katalog_it_IT.ts
-
+    src/translations/Katalog_pt_PT.ts
+    src/translations/Katalog_ja_JP.ts
 )
 
 # Make sure LinguistTools is found (should already be in your find_package)

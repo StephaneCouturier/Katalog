@@ -72,7 +72,7 @@
     <message>
         <location line="+146"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
-        <translation>Vuoi rimuovere l'assegnazione di questo catalogo da questo dispositivo virtuale?</translation>
+        <translation>Vuoi rimuovere l&apos;assegnazione di questo catalogo da questo dispositivo virtuale?</translation>
     </message>
     <message>
         <location line="+52"/>
@@ -82,7 +82,7 @@
     <message>
         <location line="+93"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;br/&gt;Un'istantanea di questa collezione è stata registrata:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Cataloghi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Numero di file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensione totale file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Archiviazione&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spazio libero archiviazione: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spazio totale archiviazione: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+        <translation>&lt;br/&gt;Un&apos;istantanea di questa collezione è stata registrata:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Cataloghi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Numero di file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensione totale file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Archiviazione&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spazio libero archiviazione: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spazio totale archiviazione: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location line="+344"/>
@@ -92,7 +92,7 @@
     <message>
         <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Esiste già un'archiviazione con questo ID.&lt;b&gt;</translation>
+        <translation>Esiste già un&apos;archiviazione con questo ID.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -102,7 +102,7 @@
     <message>
         <location line="+21"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
-        <translation>Un catalogo nel gruppo fisico può essere impostato solo sotto un'archiviazione o questo gruppo. Seleziona un'archiviazione in questo gruppo.&lt;br/&gt;&lt;br/&gt;Per usare questo catalogo sotto un dispositivo in un gruppo virtuale, usa il comando Assegna.&lt;b&gt;</translation>
+        <translation>Un catalogo nel gruppo fisico può essere impostato solo sotto un&apos;archiviazione o questo gruppo. Seleziona un&apos;archiviazione in questo gruppo.&lt;br/&gt;&lt;br/&gt;Per usare questo catalogo sotto un dispositivo in un gruppo virtuale, usa il comando Assegna.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+526"/>
@@ -358,7 +358,7 @@
     <message>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
         <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
-        <translation>Sembra che questo catalogo non sia stato importato correttamente o abbia un formato vecchio.&lt;br/&gt;Modificalo e assicurati che abbia le seguenti prime 2 righe:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/percorsocartella&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copia/incolla queste righe all'inizio del file e modifica i valori dopo il &gt;:&lt;br/&gt;- catalogSourcePath è la cartella da cui catalogare i file.&lt;br/&gt;- il numero catalogFileCount non importa molto, può essere aggiornato.&lt;br/&gt;</translation>
+        <translation>Sembra che questo catalogo non sia stato importato correttamente o abbia un formato vecchio.&lt;br/&gt;Modificalo e assicurati che abbia le seguenti prime 2 righe:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/percorsocartella&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copia/incolla queste righe all&apos;inizio del file e modifica i valori dopo il &gt;:&lt;br/&gt;- catalogSourcePath è la cartella da cui catalogare i file.&lt;br/&gt;- il numero catalogFileCount non importa molto, può essere aggiornato.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -369,7 +369,7 @@
     <message>
         <location line="-41"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-        <translation>La cartella di origine non contiene alcun file.&lt;br/&gt;Questo potrebbe significare che l'origine è vuota o che il dispositivo non è montato in questa cartella.&lt;br/&gt;Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
+        <translation>La cartella di origine non contiene alcun file.&lt;br/&gt;Questo potrebbe significare che l&apos;origine è vuota o che il dispositivo non è montato in questa cartella.&lt;br/&gt;Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -385,7 +385,7 @@
     <message>
         <location line="-12"/>
         <source>Error opening output file.</source>
-        <translation>Errore nell'apertura del file di output.</translation>
+        <translation>Errore nell&apos;apertura del file di output.</translation>
     </message>
     <message>
         <location line="+35"/>
@@ -1203,7 +1203,7 @@
     <message>
         <location line="+45"/>
         <source>Apply options to the Selection device tree.</source>
-        <translation>Applica opzioni all'albero dispositivi di selezione.</translation>
+        <translation>Applica opzioni all&apos;albero dispositivi di selezione.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1777,12 +1777,12 @@
     <message>
         <location line="+7"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
-        <translation>Se abilitato, l'ordinamento rispetterà l'ordinamento sensibile alle maiuscole, per avere questo ordine AA, AB, AC, Aa, Ab, Ac</translation>
+        <translation>Se abilitato, l&apos;ordinamento rispetterà l&apos;ordinamento sensibile alle maiuscole, per avere questo ordine AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>File sorting is Case Sensitive</source>
-        <translation>L'ordinamento file è sensibile alle maiuscole</translation>
+        <translation>L&apos;ordinamento file è sensibile alle maiuscole</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1803,12 +1803,12 @@
     <message>
         <location line="+10"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
-        <translation>Verifica se una nuova versione di Katalog è disponibile all'avvio dell'app.</translation>
+        <translation>Verifica se una nuova versione di Katalog è disponibile all&apos;avvio dell&apos;app.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Check at start up</source>
-        <translation>Controlla all'avvio</translation>
+        <translation>Controlla all&apos;avvio</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -1818,7 +1818,7 @@
     <message>
         <location line="+132"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation>Modalità dati "File locale SQLite"</translation>
+        <translation>Modalità dati &quot;File locale SQLite&quot;</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1870,7 +1870,7 @@
         <location line="+10"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation>Esporta per convertire e aprire la collezione in modalità "File".</translation>
+        <translation>Esporta per convertire e aprire la collezione in modalità &quot;File&quot;.</translation>
     </message>
     <message>
         <location line="-203"/>
@@ -1880,7 +1880,7 @@
     <message>
         <location line="+50"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation>Modalità dati "Memoria"</translation>
+        <translation>Modalità dati &quot;Memoria&quot;</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1919,7 +1919,7 @@
         <location line="+39"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
-        <translation>Precarica ultimi cataloghi selezionati all'avvio per accelerare la prossima ricerca</translation>
+        <translation>Precarica ultimi cataloghi selezionati all&apos;avvio per accelerare la prossima ricerca</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -1963,7 +1963,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow.cpp" line="+246"/>
+        <location filename="../mainwindow.cpp" line="+248"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -1988,7 +1988,7 @@
     <message>
         <location line="-7"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation>Modalità dati "Database ospitato"</translation>
+        <translation>Modalità dati &quot;Database ospitato&quot;</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -2094,7 +2094,7 @@
     <message>
         <location line="+66"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
-        <translation>Alcune modifiche nella lista dispositivi di archiviazione non sono state salvate.&lt;br/&gt;Salvare ed uscire, scartare ed uscire, o annullare l'uscita?</translation>
+        <translation>Alcune modifiche nella lista dispositivi di archiviazione non sono state salvate.&lt;br/&gt;Salvare ed uscire, scartare ed uscire, o annullare l&apos;uscita?</translation>
     </message>
     <message>
         <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
@@ -2125,12 +2125,12 @@
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation>1- Seleziona un'intera unità o directory, &lt;br/&gt;2- seleziona opzioni, e &lt;br/&gt;3- clicca 'Crea'&lt;br/&gt;</translation>
+        <translation>1- Seleziona un&apos;intera unità o directory, &lt;br/&gt;2- seleziona opzioni, e &lt;br/&gt;3- clicca &apos;Crea&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+584"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
-        <translation>Questa è la versione: v%1 &lt;br/&gt;&lt;br/&gt;Una nuova versione è disponibile: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Trova l'elenco delle nuove funzionalità nelle &lt;a href=&apos;%3&apos;&gt;Note di rilascio&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vuoi scaricarla?</translation>
+        <translation>Questa è la versione: v%1 &lt;br/&gt;&lt;br/&gt;Una nuova versione è disponibile: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Trova l&apos;elenco delle nuove funzionalità nelle &lt;a href=&apos;%3&apos;&gt;Note di rilascio&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vuoi scaricarla?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-14"/>
@@ -2245,7 +2245,7 @@
     <message>
         <location line="+6"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
-        <translation>Seleziona un'origine o destinazione diversa (un dispositivo non deve essere mappato su se stesso).</translation>
+        <translation>Seleziona un&apos;origine o destinazione diversa (un dispositivo non deve essere mappato su se stesso).</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+61"/>
@@ -2273,7 +2273,7 @@
     <message>
         <location line="+8"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
-        <translation>Seleziona un'archiviazione per questo nuovo catalogo.&lt;br/&gt;(Pannello di selezione a sinistra e lista a discesa)</translation>
+        <translation>Seleziona un&apos;archiviazione per questo nuovo catalogo.&lt;br/&gt;(Pannello di selezione a sinistra e lista a discesa)</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -2692,7 +2692,7 @@ nel cestino?</translation>
 to another folder?</source>
         <translation>Spostare
 %1
-in un'altra cartella?</translation>
+in un&apos;altra cartella?</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -3046,7 +3046,7 @@ in un'altra cartella?</translation>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation>Questa applicazione di 'Katalog' è nella versione: </translation>
+        <translation>Questa applicazione di &apos;Katalog&apos; è nella versione: </translation>
     </message>
     <message>
         <location line="+2"/>
@@ -3096,7 +3096,7 @@ in un'altra cartella?</translation>
     <message>
         <location line="+2"/>
         <source>Exit Application</source>
-        <translation>Esci dall'applicazione</translation>
+        <translation>Esci dall&apos;applicazione</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -3136,7 +3136,7 @@ in un'altra cartella?</translation>
     <message>
         <location line="+23"/>
         <source>Select the directory for the CSV export</source>
-        <translation>Seleziona la directory per l'esportazione CSV</translation>
+        <translation>Seleziona la directory per l&apos;esportazione CSV</translation>
     </message>
     <message>
         <location line="+80"/>

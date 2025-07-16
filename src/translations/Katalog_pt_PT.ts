@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.1" language="pt_PT">
 <context>
     <name>Catalog</name>
     <message>
         <location filename="../core/catalog.cpp" line="+82"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo</translation>
     </message>
 </context>
 <context>
@@ -34,17 +34,17 @@
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No of items</source>
-        <translation type="unfinished"></translation>
+        <translation>Nº de itens</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Full path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho completo</translation>
     </message>
 </context>
 <context>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../mainwindow.ui" line="+35"/>
         <source>Katalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog</translation>
     </message>
     <message>
         <location line="+977"/>
@@ -61,72 +61,72 @@
         <location line="+39"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+538"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisar</translation>
     </message>
     <message>
         <location line="-433"/>
         <source>Search for files or folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisar ficheiros ou pastas</translation>
     </message>
     <message>
         <location line="+1768"/>
         <location line="+2752"/>
         <location line="+1822"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location line="-6028"/>
         <source>Paste the text from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Colar o texto da área de transferência</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Get the text from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Obter o texto da área de transferência</translation>
     </message>
     <message>
         <location line="+110"/>
         <location line="+38"/>
         <source>Launch the search of files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar a pesquisa de ficheiros.</translation>
     </message>
     <message>
         <location line="+189"/>
         <source>with</source>
-        <translation type="unfinished"></translation>
+        <translation>com</translation>
     </message>
     <message>
         <location line="+39"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+894"/>
         <source>All Words</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas as Palavras</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Exact Phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Frase Exacta</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Begins With</source>
-        <translation type="unfinished"></translation>
+        <translation>Começa com</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Any Word</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualquer Palavra</translation>
     </message>
     <message>
         <location line="+89"/>
         <source>in</source>
-        <translation type="unfinished"></translation>
+        <translation>em</translation>
     </message>
     <message>
         <location line="+41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
         <source>File names or Folder paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomes de ficheiros ou caminhos de pastas</translation>
     </message>
     <message>
         <location line="-5"/>
@@ -134,55 +134,55 @@
         <location line="+3"/>
         <location line="+750"/>
         <source>File names only</source>
-        <translation type="unfinished"></translation>
+        <translation>Apenas nomes de ficheiros</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
         <source>Folder path only</source>
-        <translation type="unfinished"></translation>
+        <translation>Apenas caminho da pasta</translation>
     </message>
     <message>
         <location line="+2254"/>
         <source>Choose to only show folders as results</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolher mostrar apenas pastas como resultados</translation>
     </message>
     <message>
         <location line="-2941"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
-        <translation type="unfinished"></translation>
+        <translation>Repor todos os critérios para valores padrão e limpar resultados anteriores.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Repor</translation>
     </message>
     <message>
         <location line="+9768"/>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta</translation>
     </message>
     <message>
         <location line="-2654"/>
         <location line="+2633"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Palavra-passe</translation>
     </message>
     <message>
         <location line="-702"/>
         <source>Database File Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho do ficheiro da base de dados</translation>
     </message>
     <message>
         <location line="+497"/>
         <source>Data mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de dados</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../mainwindow.cpp" line="+249"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro</translation>
     </message>
     <message>
         <location line="-8293"/>
@@ -192,40 +192,40 @@
         <location filename="../mainwindow_tab_explore.cpp" line="+637"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location line="-3092"/>
         <location line="+4522"/>
         <source>Device tree</source>
-        <translation type="unfinished"></translation>
+        <translation>Árvore de dispositivos</translation>
     </message>
     <message>
         <location line="-4074"/>
         <source>Reload all collection&apos;s data</source>
-        <translation type="unfinished"></translation>
+        <translation>Recarregar todos os dados da colecção</translation>
     </message>
     <message>
         <location line="+1579"/>
         <location line="+488"/>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <location line="-424"/>
         <source>File size unit for minimum value</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidade de tamanho de ficheiro para valor mínimo</translation>
     </message>
     <message>
         <location line="+49"/>
         <location line="+463"/>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location line="-402"/>
         <source>File size unit for maximum value</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidade de tamanho de ficheiro para valor máximo</translation>
     </message>
     <message>
         <location line="+81"/>
@@ -234,12 +234,12 @@
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1493"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location line="-2927"/>
         <source>Select the type of files</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o tipo de ficheiros</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -264,56 +264,56 @@
         <location line="+1"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+762"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos</translation>
     </message>
     <message>
         <location line="-4474"/>
         <location line="+2752"/>
         <location line="+1780"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Áudio</translation>
     </message>
     <message>
         <location line="-4524"/>
         <location line="+2752"/>
         <location line="+1743"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagem</translation>
     </message>
     <message>
         <location line="-4479"/>
         <location line="+2752"/>
         <location line="+1785"/>
         <source>Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <location line="-3213"/>
         <source>only list folders in results</source>
-        <translation type="unfinished"></translation>
+        <translation>mostrar apenas pastas nos resultados</translation>
     </message>
     <message>
         <location line="+465"/>
         <location line="+3"/>
         <source>Define which batch process to execute on all results</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir que processo em lote executar em todos os resultados</translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+233"/>
         <source>Export Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar Resultados</translation>
     </message>
     <message>
         <location line="-276"/>
         <source>Show/Hide Catalogs with results</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/Ocultar Catálogos com resultados</translation>
     </message>
     <message>
         <location line="+129"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+295"/>
         <source>Files found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiros encontrados</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -343,43 +343,43 @@
         <location line="+38"/>
         <location line="+24"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location line="-3505"/>
         <location line="+347"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+335"/>
         <source>Catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogos</translation>
     </message>
     <message>
         <location line="-302"/>
         <location line="+2526"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho total dos ficheiros</translation>
     </message>
     <message>
         <location line="-2488"/>
         <source>Total Number of Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Número total de ficheiros</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>All active</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos activos</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <location line="+313"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+240"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-167"/>
         <source>Explore</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <location line="-811"/>
@@ -390,7 +390,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-58"/>
         <location line="+39"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location line="+4076"/>
@@ -398,26 +398,26 @@
         <location line="+56"/>
         <location line="+54"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location line="-5676"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location line="+1960"/>
         <source>Explore a catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar um catálogo</translation>
     </message>
     <message>
         <location line="-6222"/>
         <location line="+6601"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
         <source>Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo</translation>
     </message>
     <message>
         <location line="+1454"/>
@@ -428,128 +428,128 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho</translation>
     </message>
     <message>
         <location line="-1777"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Directórios</translation>
     </message>
     <message>
         <location line="-6512"/>
         <location line="+656"/>
         <source>Show/Hide Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/Ocultar Filtros</translation>
     </message>
     <message>
         <location line="-510"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
         <source>Virtual</source>
-        <translation type="unfinished"></translation>
+        <translation>Virtual</translation>
     </message>
     <message>
         <location line="+1220"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Parar</translation>
     </message>
     <message>
         <location line="+3101"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+29"/>
         <source>Rename (KRename)</source>
-        <translation type="unfinished"></translation>
+        <translation>Renomear (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-605"/>
         <location line="+611"/>
         <source>Move to Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover para o Lixo</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Run process on all results</source>
-        <translation type="unfinished"></translation>
+        <translation>Executar processo em todos os resultados</translation>
     </message>
     <message>
         <location line="+372"/>
         <source>Catalogs list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de catálogos</translation>
     </message>
     <message>
         <location line="+442"/>
         <source>The change will be applied only when Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>A alteração será aplicada apenas ao guardar</translation>
     </message>
     <message>
         <location line="+244"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+961"/>
         <source>Comment 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Comentário 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Comment 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Comentário 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Comment 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Comentário 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-6"/>
         <source>Brand</source>
-        <translation type="unfinished"></translation>
+        <translation>Marca</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo</translation>
     </message>
     <message>
         <location line="+412"/>
         <source>&lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;&lt;</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>Display the *Physical Group* and its related Devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar o *Grupo Físico* e os seus dispositivos relacionados.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Display the *Virtual Groups* and their related Devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar os *Grupos Virtuais* e os seus dispositivos relacionados.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Display the *Storage* devices (if unticked, the Catalogs would be hidden too).</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar os dispositivos de *Armazenamento* (se desmarcado, os catálogos também serão ocultados).</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Display the *Catalog* devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar os dispositivos de *Catálogo*.</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Create and insert a new Virtual Group device at the top of the hierarchy, and open the Edit panel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar e inserir um novo dispositivo de Grupo Virtual no topo da hierarquia e abrir o painel de edição.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Create and insert a new Virtual device under the selected device in the hierarchy, and open the Edit panel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar e inserir um novo dispositivo Virtual sob o dispositivo seleccionado na hierarquia e abrir o painel de edição.</translation>
     </message>
     <message>
         <location line="+227"/>
@@ -559,228 +559,228 @@
         <location line="+90"/>
         <location line="+38"/>
         <source>Number of Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de ficheiros</translation>
     </message>
     <message>
         <location line="-2428"/>
         <source>Click to open the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Clique para abrir o ficheiro</translation>
     </message>
     <message>
         <location line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="+131"/>
         <location line="+126"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Create a catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar um catálogo</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>2- </source>
-        <translation type="unfinished"></translation>
+        <translation>2- </translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Select Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar opções de conteúdo</translation>
     </message>
     <message>
         <location line="+85"/>
         <source>include File Type</source>
-        <translation type="unfinished"></translation>
+        <translation>incluir tipo de ficheiro</translation>
     </message>
     <message>
         <location line="+178"/>
         <source>Other options</source>
-        <translation type="unfinished"></translation>
+        <translation>Outras opções</translation>
     </message>
     <message>
         <location line="+87"/>
         <source>Directories to exclude from catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Directórios a excluir dos catálogos</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Add directory to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar directório a excluir</translation>
     </message>
     <message>
         <location line="+78"/>
         <source>3- </source>
-        <translation type="unfinished"></translation>
+        <translation>3- </translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Define &amp; Create catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir e criar catálogo</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Select Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar armazenamento</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Add a new storage device</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar um novo dispositivo de armazenamento</translation>
     </message>
     <message>
         <location line="-2444"/>
         <location line="+2447"/>
         <source>Add Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar armazenamento</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Enter the Name of the new catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza o nome do novo catálogo</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>NewCatalog</source>
-        <translation type="unfinished"></translation>
+        <translation>NovoCatálogo</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Enter a name for your new catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza um nome para o seu novo catálogo</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Generate</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerar</translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Launch the cataloging and save it to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar a catalogação e guardar num ficheiro</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar catálogo</translation>
     </message>
     <message>
         <location line="+111"/>
         <source>1- </source>
-        <translation type="unfinished"></translation>
+        <translation>1- </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Select Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar caminho de origem</translation>
     </message>
     <message>
         <location line="-1739"/>
         <source>Tree options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções da árvore</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Physical Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupo físico</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Virtual Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupos virtuais</translation>
     </message>
     <message>
         <location line="+108"/>
         <source>Insert Virtual Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserir grupo virtual</translation>
     </message>
     <message>
         <location line="-1487"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>Storage list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de armazenamento</translation>
     </message>
     <message>
         <location line="+541"/>
         <source>Catalog fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Campos do catálogo</translation>
     </message>
     <message>
         <location line="+236"/>
         <location line="+28"/>
         <source>Free Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço livre</translation>
     </message>
     <message>
         <location line="-219"/>
         <source>Device Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagem do dispositivo</translation>
     </message>
     <message>
         <location line="-579"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registar os valores de todos os dispositivos para estatísticas da colecção completa.</translation>
     </message>
     <message>
         <location line="+701"/>
         <source>Storage fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Campos de armazenamento</translation>
     </message>
     <message>
         <location line="+5406"/>
         <source>Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Ícones</translation>
     </message>
     <message>
         <location line="-28"/>
         <source>Use bigger icon size</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar tamanho de ícone maior</translation>
     </message>
     <message>
         <location line="-555"/>
         <source>Load last catalog to Explore</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar último catálogo para explorar</translation>
     </message>
     <message>
         <location line="+424"/>
         <source>Database Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome da base de dados</translation>
     </message>
     <message>
         <location line="-96"/>
         <source>User Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do utilizador</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Host Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do host</translation>
     </message>
     <message>
         <location line="-560"/>
         <source>Create a new database file</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar um novo ficheiro de base de dados</translation>
     </message>
     <message>
         <location line="+426"/>
         <location filename="../mainwindow.cpp" line="+1"/>
         <source>Hosted</source>
-        <translation type="unfinished"></translation>
+        <translation>Hospedado</translation>
     </message>
     <message>
         <location line="-41"/>
         <source>Data management</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestão de dados</translation>
     </message>
     <message>
         <location line="-9993"/>
         <location line="+7751"/>
         <source>Select the path</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o caminho</translation>
     </message>
     <message>
         <location line="-7748"/>
@@ -788,7 +788,7 @@
         <location line="+3013"/>
         <location line="+453"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <location line="-8582"/>
@@ -797,446 +797,446 @@
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamento</translation>
     </message>
     <message>
         <location line="+3905"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Novo</translation>
     </message>
     <message>
         <location line="-5382"/>
         <location line="+186"/>
         <source>Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos</translation>
     </message>
     <message>
         <location line="+41"/>
         <location line="+622"/>
         <location line="+28"/>
         <source>Total Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço total</translation>
     </message>
     <message>
         <location line="-542"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location line="+3290"/>
         <location line="+287"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Recarregar</translation>
     </message>
     <message>
         <location line="-363"/>
         <source>Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Estatísticas</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View collection statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver estatísticas da colecção</translation>
     </message>
     <message>
         <location line="+150"/>
         <source>Type of data</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de dados</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Select the type of data</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o tipo de dados</translation>
     </message>
     <message>
         <location line="-115"/>
         <source>Edit the file storing all records</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar o ficheiro que armazena todos os registos</translation>
     </message>
     <message>
         <location line="-2024"/>
         <source>Add Virtual</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar virtual</translation>
     </message>
     <message>
         <location line="-1558"/>
         <source>Edit List</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar lista</translation>
     </message>
     <message>
         <location line="+36"/>
         <location line="+4048"/>
         <source>Full Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabela completa</translation>
     </message>
     <message>
         <location line="-3708"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
         <source>Device Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do dispositivo</translation>
     </message>
     <message>
         <location line="+76"/>
         <source>Parent name (ID)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do pai (ID)</translation>
     </message>
     <message>
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-1"/>
         <source>Device ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do dispositivo</translation>
     </message>
     <message>
         <location line="+3146"/>
         <source>Edit Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar estatísticas</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Reload the file storing all records</source>
-        <translation type="unfinished"></translation>
+        <translation>Recarregar o ficheiro que armazena todos os registos</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>Display each value</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar cada valor</translation>
     </message>
     <message>
         <location line="+97"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tag folders for search and statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetar pastas para pesquisa e estatísticas</translation>
     </message>
     <message>
         <location line="+154"/>
         <source>Add the tag to this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar a etiqueta a esta pasta</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tag the folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetar a pasta</translation>
     </message>
     <message>
         <location line="-81"/>
         <source>Current folders and tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Pastas e etiquetas actuais</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Select a tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar uma etiqueta</translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+24"/>
         <source>Select a folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar uma pasta</translation>
     </message>
     <message>
         <location line="-107"/>
         <source>Existing tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetas existentes</translation>
     </message>
     <message>
         <location line="+22"/>
         <location line="+19"/>
         <source>Reload the file storing the tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Recarregar o ficheiro que armazena as etiquetas</translation>
     </message>
     <message>
         <location line="+223"/>
         <source>Link name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome da ligação</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Create link</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar ligação</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Catalog Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligações do catálogo</translation>
     </message>
     <message>
         <location line="+357"/>
         <source>Linked</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligado</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Unlinked</source>
-        <translation type="unfinished"></translation>
+        <translation>Desligado</translation>
     </message>
     <message>
         <location line="+124"/>
         <location line="+43"/>
         <source>without links</source>
-        <translation type="unfinished"></translation>
+        <translation>sem ligações</translation>
     </message>
     <message>
         <location line="+18"/>
         <location line="+878"/>
         <location filename="../mainwindow_setup.cpp" line="-715"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location line="-636"/>
         <location line="+45"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Release Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Notas de lançamento</translation>
     </message>
     <message>
         <location line="+701"/>
         <location line="+60"/>
         <source>(Changing requires to restart)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Alteração requer reiniciar)</translation>
     </message>
     <message>
         <location line="-428"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de dados "Memória"</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Select and read folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar e ler pasta</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Preload last catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Pré-carregar últimos catálogos</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Start up</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicialização</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Back up</source>
-        <translation type="unfinished"></translation>
+        <translation>Cópia de segurança</translation>
     </message>
     <message>
         <location line="-476"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de dados "Ficheiro SQLite local"</translation>
     </message>
     <message>
         <location line="-3868"/>
         <source>Apply options to the Selection device tree.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar opções à árvore de dispositivos de selecção.</translation>
     </message>
     <message>
         <location line="+1820"/>
         <source>Type of source</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de origem</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Local drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidade local</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Samba share</source>
-        <translation type="unfinished"></translation>
+        <translation>Partilha Samba</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>IP address</source>
-        <translation type="unfinished"></translation>
+        <translation>Endereço IP</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do utilizador</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>Connection settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições de ligação</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Verify connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificar ligação</translation>
     </message>
     <message>
         <location line="+622"/>
         <source>BackUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Cópia de segurança</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>BackUp links for device</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligações de cópia de segurança para o dispositivo</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recarregar ligações e actualizar estatísticas para o dispositivo seleccionado.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+88"/>
         <source>Create new link</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar nova ligação</translation>
     </message>
     <message>
         <location line="+306"/>
         <source>Coverage</source>
-        <translation type="unfinished"></translation>
+        <translation>Cobertura</translation>
     </message>
     <message>
         <location line="+246"/>
         <source>Load Source Catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar catálogos de origem</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Load Target Catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar catálogos de destino</translation>
     </message>
     <message>
         <location line="+149"/>
         <source>File list display</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibição da lista de ficheiros</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
-        <translation type="unfinished"></translation>
+        <translation>Se activado, a ordenação respeitará a ordenação sensível a maiúsculas, para ter esta ordem AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>File sorting is Case Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>A ordenação de ficheiros é sensível a maiúsculas</translation>
     </message>
     <message>
         <location line="+93"/>
         <source>Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Documentação</translation>
     </message>
     <message>
         <location line="+251"/>
         <source>The collection data is saved to an SQLite .db file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Os dados da colecção são guardados num ficheiro SQLite .db.</translation>
     </message>
     <message>
         <location line="+46"/>
         <location line="+222"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <location line="-192"/>
         <source>Select and open database file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar e abrir ficheiro de base de dados</translation>
     </message>
     <message>
         <location line="+51"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar para converter e abrir a colecção em modo "Ficheiro".</translation>
     </message>
     <message>
         <location line="-203"/>
         <source>Export to Memory mode (csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar para modo memória (csv)</translation>
     </message>
     <message>
         <location line="+206"/>
         <source>Export to SQLite file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar para ficheiro SQLite</translation>
     </message>
     <message>
         <location line="+265"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de dados "Base de dados hospedada"</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
-        <translation type="unfinished"></translation>
+        <translation>Os dados da colecção são guardados numa base de dados hospedada num servidor local ou remoto.</translation>
     </message>
     <message>
         <location line="+209"/>
         <source>Apply and restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar e reiniciar</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Select a theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar um tema</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Desktop Theme</source>
         <extracomment>Using desktop theme</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tema do ambiente de trabalho</translation>
     </message>
     <message>
         <location line="-17"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <location line="+96"/>
         <source>(requires to restart)</source>
-        <translation type="unfinished"></translation>
+        <translation>(requer reiniciar)</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <location line="-729"/>
         <source>Collection folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta da colecção</translation>
     </message>
     <message>
         <location line="-174"/>
         <location line="+225"/>
         <location line="+540"/>
         <source>Select a different Collection folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar uma pasta de colecção diferente</translation>
     </message>
     <message>
         <location line="-1245"/>
         <source>Other Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Outras definições</translation>
     </message>
     <message>
         <location line="+32"/>
         <location line="+470"/>
         <location line="+225"/>
         <source>Open the collection folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir a pasta da colecção</translation>
     </message>
     <message>
         <location line="-692"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location line="-1000"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-466"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-650"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir ficheiro</translation>
     </message>
     <message>
         <location line="+1695"/>
@@ -1244,32 +1244,32 @@
         <location line="+41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir pasta</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-35"/>
         <location line="+41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+10"/>
         <source>Copy folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar caminho da pasta</translation>
     </message>
     <message>
         <location line="-37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar caminho absoluto do ficheiro</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name with extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar nome do ficheiro com extensão</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name without extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar nome do ficheiro sem extensão</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-7242"/>
@@ -1280,7 +1280,7 @@
         <location filename="../mainwindow_tab_explore.cpp" line="+437"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location line="-583"/>
@@ -1291,7 +1291,7 @@
         <location filename="../mainwindow_tab_search_ui.cpp" line="+971"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+61"/>
@@ -1299,13 +1299,13 @@
         <location filename="../mainwindow_tab_filters.cpp" line="+61"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o directório a ser catalogado neste novo catálogo</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="+10"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o directório para esta colecção</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-5487"/>
@@ -1314,13 +1314,13 @@
         <location line="+223"/>
         <location line="+252"/>
         <source>Total Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho total</translation>
     </message>
     <message>
         <location line="-1354"/>
         <location line="+1537"/>
         <source>Source Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho de origem</translation>
     </message>
     <message>
         <location line="-1401"/>
@@ -1328,115 +1328,115 @@
         <location line="+370"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de ficheiro</translation>
     </message>
     <message>
         <location line="+3599"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
         <location line="+7"/>
         <source>File Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho do ficheiro</translation>
     </message>
     <message>
         <location line="-3204"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-631"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiqueta</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>FileSystem</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema de ficheiros</translation>
     </message>
     <message>
         <location line="+3456"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <location line="-4220"/>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Livre</translation>
     </message>
     <message>
         <location line="+698"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de série</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Build Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de construção</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1435"/>
         <source>The catalog is already assigned to this Virtual device.</source>
-        <translation type="unfinished"></translation>
+        <translation>O catálogo já está atribuído a este dispositivo virtual.</translation>
     </message>
     <message>
         <location line="+146"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseja desatribuir este catálogo deste dispositivo virtual?</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Deletion failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha na eliminação</translation>
     </message>
     <message>
         <location line="+93"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;Foi registado um instantâneo desta colecção:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catálogos&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Número de ficheiros: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adicionado: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tamanho total dos ficheiros: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adicionado: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Armazenamento&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espaço livre de armazenamento: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adicionado: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espaço total de armazenamento: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adicionado: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location line="+344"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Já existe um catálogo com este nome:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Já existe um armazenamento com este ID.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha um ID diferente e tente novamente.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Um catálogo no grupo físico só pode ser definido sob um armazenamento ou este grupo. Seleccione um armazenamento neste grupo.&lt;br/&gt;&lt;br/&gt;Para usar este catálogo sob um dispositivo num grupo virtual, use o comando Atribuir.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+526"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Parent ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do pai</translation>
     </message>
     <message>
         <location line="-474"/>
         <source>External ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID externo</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Number of files</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de ficheiros</translation>
     </message>
     <message>
         <location line="-472"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Free space</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço livre</translation>
     </message>
     <message>
         <location line="-474"/>
@@ -1444,123 +1444,124 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-24"/>
         <source>Total space</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço total</translation>
     </message>
     <message>
         <location line="-474"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Date updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Data actualizada</translation>
     </message>
     <message>
         <location line="-473"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Group ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do grupo</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Catalog ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do catálogo</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>include hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>incluir ocultos</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>incluir metadados</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamento pai</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Fulldevice</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo completo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Data carregada</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>App Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão da aplicação</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho do ficheiro</translation>
     </message>
     <message>
         <location line="+359"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar alterações à definição do catálogo?&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>field</source>
-        <translation type="unfinished"></translation>
+        <translation>campo</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>previous value</source>
-        <translation type="unfinished"></translation>
+        <translation>valor anterior</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>new value</source>
-        <translation type="unfinished"></translation>
+        <translation>novo valor</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Include Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir ocultos</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Is Full Device</source>
-        <translation type="unfinished"></translation>
+        <translation>É dispositivo completo</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>(The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>(O catálogo deve ser actualizado para reflectir estas alterações)</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Update the catalog content with the new criteria?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar o conteúdo do catálogo com os novos critérios?
+</translation>
     </message>
     <message>
         <location line="+89"/>
         <source>Select the csv file to be imported</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o ficheiro csv a ser importado</translation>
     </message>
     <message>
         <location line="+56"/>
         <source>No catalog found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum catálogo encontrado.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>A file was found, but could not be loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Foi encontrado um ficheiro, mas não pôde ser carregado</translation>
     </message>
     <message>
         <location line="+222"/>
         <source>Catalog updated: </source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo actualizado: </translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1570,13 +1571,13 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Path: </source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho: </translation>
     </message>
     <message>
         <location line="-112"/>
         <location line="+39"/>
         <source>Number of files: </source>
-        <translation type="unfinished"></translation>
+        <translation>Número de ficheiros: </translation>
     </message>
     <message>
         <location line="-39"/>
@@ -1594,13 +1595,13 @@
         <location line="+1"/>
         <location line="+1"/>
         <source>(added: </source>
-        <translation type="unfinished"></translation>
+        <translation>(adicionado: </translation>
     </message>
     <message>
         <location line="-117"/>
         <location line="+39"/>
         <source>Total file size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho total dos ficheiros: </translation>
     </message>
     <message>
         <location line="-27"/>
@@ -1608,7 +1609,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Storage updated: </source>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamento actualizado: </translation>
     </message>
     <message>
         <location line="-93"/>
@@ -1616,7 +1617,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Used Space: </source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço utilizado: </translation>
     </message>
     <message>
         <location line="-97"/>
@@ -1624,7 +1625,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Free Space: </source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço livre: </translation>
     </message>
     <message>
         <location line="-97"/>
@@ -1632,42 +1633,42 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Total Space: </source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço total: </translation>
     </message>
     <message>
         <location line="-83"/>
         <source>Catalog created: </source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo criado: </translation>
     </message>
     <message>
         <location line="+59"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table&gt;&lt;br/&gt;Catálogos activos seleccionados de &lt;b&gt;%1&lt;/b&gt; foram actualizados.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 catálogos actualizados (activos), %2 catálogos ignorados (inactivos)</translation>
     </message>
     <message>
         <location line="+91"/>
         <source>Update all active catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar todos os catálogos activos</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Do you want a the summary of updates for each catalog?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseja um resumo das actualizações para cada catálogo?</translation>
     </message>
     <message>
         <location line="+192"/>
         <source>Upgraded collection to v2.0.</source>
-        <translation type="unfinished"></translation>
+        <translation>Colecção actualizada para v2.0.</translation>
     </message>
     <message>
         <location line="+1196"/>
         <source>The device selected must be a Catalog. Try with a different device ID</source>
-        <translation type="unfinished"></translation>
+        <translation>O dispositivo seleccionado deve ser um catálogo. Tente com um ID de dispositivo diferente</translation>
     </message>
     <message>
         <location line="-2877"/>
@@ -1675,65 +1676,65 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
         <source>Used space</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço utilizado</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_statistics.cpp" line="-163"/>
         <source>All device records</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos os registos de dispositivos</translation>
     </message>
     <message>
         <location line="+177"/>
         <source>of</source>
-        <translation type="unfinished"></translation>
+        <translation>de</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-4096"/>
         <location line="+1889"/>
         <location line="+67"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir se o texto de pesquisa deve ser usado para procurar apenas em nomes de ficheiros, ou caminhos de pastas, ou ambos.</translation>
     </message>
     <message>
         <location line="-2099"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir como o texto de pesquisa deve ser usado.</translation>
     </message>
     <message>
         <location line="+5703"/>
         <source>Include Hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir ficheiros ocultos</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Follow symbolic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Seguir ligações simbólicas</translation>
     </message>
     <message>
         <location line="+400"/>
         <source>Generate a catalog name based on the path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerar um nome de catálogo baseado no caminho.</translation>
     </message>
     <message>
         <location line="-6987"/>
         <source>Reset all filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Repor todos os filtros</translation>
     </message>
     <message>
         <location line="+9024"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Acerca</translation>
     </message>
     <message>
         <location line="+710"/>
         <source>Auto-backup catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Cópia de segurança automática de catálogos</translation>
     </message>
     <message>
         <location line="+539"/>
         <source>Keep records of files and size for Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Manter registos de ficheiros e tamanho para estatísticas</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-667"/>
@@ -1741,589 +1742,591 @@
         <location line="+34"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
         <source>GiB</source>
-        <translation type="unfinished"></translation>
+        <translation>GiB</translation>
     </message>
     <message>
         <location line="-43"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+8"/>
         <source>KiB</source>
-        <translation type="unfinished"></translation>
+        <translation>KiB</translation>
     </message>
     <message>
         <location line="-12"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-4"/>
         <source>MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>MiB</translation>
     </message>
     <message>
         <location line="-343"/>
         <source>Explore folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar pasta</translation>
     </message>
     <message>
         <location line="+168"/>
         <source>Move
 %1
 to another folder?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover
+%1
+para outra pasta?</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Um ficheiro %&amp; já existe. Sobrescrever?</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Cancelled move to folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelada a mudança para a pasta.</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="unfinished"></translation>
+        <translation>Este ficheiro não pode ser movido (offline ou não existente).</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+431"/>
         <source>MOVE</source>
-        <translation type="unfinished"></translation>
+        <translation>MOVER</translation>
     </message>
     <message>
         <location line="-430"/>
         <source>Move this file to the trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover este ficheiro para o lixo?</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+42"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informação</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Moving a folder to Trash is not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover uma pasta para o lixo não está disponível.</translation>
     </message>
     <message>
         <location line="+24"/>
         <location line="+428"/>
         <source>DELETE</source>
-        <translation type="unfinished"></translation>
+        <translation>ELIMINAR</translation>
     </message>
     <message>
         <location line="-427"/>
         <source>Delete this file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar este ficheiro?</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Deleting a folder is not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar uma pasta não está disponível.</translation>
     </message>
     <message>
         <location line="+51"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-8"/>
         <source>TiB</source>
-        <translation type="unfinished"></translation>
+        <translation>TiB</translation>
     </message>
     <message>
         <location line="-7"/>
         <location line="+11"/>
         <location line="+29"/>
         <source>Bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Bytes</translation>
     </message>
     <message>
         <location line="+234"/>
         <source>Select first a process to be applied to all results below.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione primeiro um processo a ser aplicado a todos os resultados abaixo.</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Results exported to the collection folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultados exportados para a pasta da colecção:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported a new Catalog:</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultados exportados para um novo catálogo:</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Move all %1 files (%2) from these results to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover todos os %1 ficheiros (%2) destes resultados para o lixo?</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Problem moving file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Problema ao mover ficheiro: </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 files were moved to trash, out of %2 files from the results.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ficheiros foram movidos para o lixo, de %2 ficheiros dos resultados.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Moving a list of folders to Trash is not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover uma lista de pastas para o lixo não está disponível.</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Delete permanently all %1 files (%2) from these results?</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar permanentemente todos os %1 ficheiros (%2) destes resultados?</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>%1 files were deleted, out of %2 files from the results.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ficheiros foram eliminados, de %2 ficheiros dos resultados.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Deleting a list of folders is not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar uma lista de pastas não está disponível.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar um catálogo a partir destes resultados?&lt;br/&gt;- Sim: criar um &lt;b&gt;Catálogo&lt;/b&gt; para armazenar os resultados e usá-lo para refinar a sua pesquisa,&lt;br/&gt;- Não: exportar resultados para um &lt;b&gt;ficheiro csv&lt;/b&gt;.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>search_results</source>
-        <translation type="unfinished"></translation>
+        <translation>resultados_pesquisa</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultados da pesquisa</translation>
     </message>
     <message>
         <location line="+246"/>
         <source>Text Phrase selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Frase de texto seleccionada</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Frase de texto</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Criteria</source>
-        <translation type="unfinished"></translation>
+        <translation>Critério de texto</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Search In</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisa de texto em</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensível a maiúsculas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Excluir texto</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Criteria selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Critério de ficheiro seleccionado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Type selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de ficheiro seleccionado</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>File Size selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho de ficheiro seleccionado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Min</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho mínimo de ficheiro</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Min Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidade mínima do tamanho do ficheiro</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Max</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho máximo de ficheiro</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Max Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidade máxima do tamanho do ficheiro</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de modificação seleccionada</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified Min</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de modificação mínima</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified Max</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de modificação máxima</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicados seleccionados</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome dos duplicados</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho dos duplicados</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de modificação dos duplicados</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Diferenças seleccionadas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome das diferenças</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho das diferenças</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de modificação das diferenças</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogos das diferenças</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folders selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Pastas seleccionadas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar pastas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tag selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiqueta seleccionada</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Selected Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Localização seleccionada</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamento seleccionado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo seleccionado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search Catalog selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo de pesquisa seleccionado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search Directory selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Directório de pesquisa seleccionado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directório seleccionado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Device ID List</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de IDs de dispositivos seleccionados</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-542"/>
         <source>Always keep one back of each catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Manter sempre uma cópia de segurança de cada catálogo</translation>
     </message>
     <message>
         <location line="-5391"/>
         <source>Used</source>
-        <translation type="unfinished"></translation>
+        <translation>Usado</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+97"/>
         <source>Remove this directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover este directório</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Forneça um nome para este novo catálogo.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Forneça um caminho para este novo catálogo.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione um armazenamento para este novo catálogo.&lt;br/&gt;(Painel de selecção à esquerda e lista suspensa)</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Já existe um catálogo com este nome:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1038"/>
         <source>Choose a different name and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha um nome diferente e tente novamente.</translation>
     </message>
     <message>
         <location line="+162"/>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Resolução</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificar na inicialização</translation>
     </message>
     <message>
         <location line="-4529"/>
         <source>Include Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir ficheiros ocultos</translation>
     </message>
     <message>
         <location line="+529"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="-13"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Bem-vindo ao Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Parece que esta é a primeira execução.&lt;br/&gt;&lt;br/&gt;As seguintes definições foram aplicadas:&lt;br/&gt; - Idioma: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Pode alterar estas definições no separador %3.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-974"/>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Instantâneo</translation>
     </message>
     <message>
         <location line="+3523"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Origem</translation>
     </message>
     <message>
         <location line="-2339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizar todos os catálogos que estão activos, se o dispositivo estiver disponível.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importar uma lista de volumes do VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-219"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-59"/>
         <location line="+126"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="+613"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta é a versão: v%1 &lt;br/&gt;&lt;br/&gt;Uma nova versão está disponível: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Encontre a lista de novas funcionalidades nas &lt;a href=&apos;%3&apos;&gt;Notas de Lançamento&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Deseja transferi-la?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-375"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+783"/>
         <source>Storage ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do armazenamento</translation>
     </message>
     <message>
         <location line="+96"/>
         <location line="+454"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizar os ficheiros do catálogo seleccionado, se o dispositivo estiver disponível&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+706"/>
         <location line="+1327"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directório</translation>
     </message>
     <message>
         <location line="-6859"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar o texto de pesquisa de caracteres como _ - . ,</translation>
     </message>
     <message>
         <location line="+1839"/>
         <source>Duplicates on</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicados em</translation>
     </message>
     <message>
         <location line="+95"/>
         <location line="+232"/>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de modificação</translation>
     </message>
     <message>
         <location line="+6469"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificar se uma nova versão do Katalog está disponível ao iniciar a aplicação.</translation>
     </message>
     <message>
         <location line="-5198"/>
         <source>Show/Hide search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/ocultar histórico de pesquisa</translation>
     </message>
     <message>
         <location line="-3696"/>
         <source>Search criteria</source>
-        <translation type="unfinished"></translation>
+        <translation>Critérios de pesquisa</translation>
     </message>
     <message>
         <location line="+3089"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
         <source>Tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiqueta</translation>
     </message>
     <message>
         <location line="+196"/>
         <source>View more statitics about the results</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver mais estatísticas sobre os resultados</translation>
     </message>
     <message>
         <location line="+449"/>
         <source>Search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Histórico de pesquisa</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="-609"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;&lt;br/&gt;No próximo ecrã, escolha uma pasta de colecção existente ou crie uma nova.</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Pronto para criar um catálogo de ficheiros:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>1- Seleccione uma unidade ou directório completo, &lt;br/&gt;2- seleccione opções, e &lt;br/&gt;3- clique em 'Criar'&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-3772"/>
         <source>Show/Hide search criteria</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/ocultar critérios de pesquisa</translation>
     </message>
     <message>
         <location line="-454"/>
         <source>Search in connected drives</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisar em unidades ligadas</translation>
     </message>
     <message>
         <location line="-50"/>
         <source>Search in file catalogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisar em catálogos de ficheiros</translation>
     </message>
     <message>
         <location line="+1496"/>
         <source>exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>excluir</translation>
     </message>
     <message>
         <location line="+3472"/>
         <source>is full device</source>
-        <translation type="unfinished"></translation>
+        <translation>é dispositivo completo</translation>
     </message>
     <message>
         <location line="+2199"/>
         <source>catalog is for the full device</source>
-        <translation type="unfinished"></translation>
+        <translation>catálogo é para o dispositivo completo</translation>
     </message>
     <message>
         <location line="-4530"/>
         <location line="+232"/>
         <source>Choose to search duplicates based on the next criteria</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha pesquisar duplicados com base nos próximos critérios</translation>
     </message>
     <message>
         <location line="+759"/>
         <source>Choose to use Tags to filter results</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha usar etiquetas para filtrar resultados</translation>
     </message>
     <message>
         <location line="-2223"/>
         <source>case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>sensível a maiúsculas</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Os resultados devem corresponder exactamente ao texto (sensível às maiúsculas)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+8581"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
-        <translation type="unfinished"></translation>
+        <translation>Pré-carregar os últimos catálogos seleccionados na inicialização para acelerar a próxima pesquisa</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-432"/>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-993"/>
         <source>Move file to other folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover ficheiro para outra pasta</translation>
     </message>
     <message>
         <location line="-28"/>
         <source>Move file to Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover ficheiro para o lixo</translation>
     </message>
     <message>
         <location line="+134"/>
@@ -2336,13 +2339,13 @@ to another folder?</source>
         <location line="+389"/>
         <location line="+39"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmação</translation>
     </message>
     <message>
         <location line="-74"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-515"/>
         <source>Select the folder to move this file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar a pasta para mover este ficheiro</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -2357,48 +2360,48 @@ to another folder?</source>
         <location line="+27"/>
         <location line="+42"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location line="-74"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-73"/>
         <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Movido para a pasta:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+28"/>
         <source>Moved to trash:&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Movido para o lixo:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Move to trash failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao mover para o lixo.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
         <source>Deleted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminado.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao eliminar.</translation>
     </message>
     <message>
         <location line="-71"/>
         <source>Move to folder failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao mover para a pasta.</translation>
     </message>
     <message>
         <location line="-151"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-237"/>
         <source>Delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar ficheiro</translation>
     </message>
     <message>
         <location line="+131"/>
@@ -2406,136 +2409,138 @@ to another folder?</source>
         <source>Move
 %1
 to the trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover
+%1
+para o lixo?</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>&lt;span style=&apos;color:red;&apos;&gt;DELETE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&apos;color:red;&apos;&gt;ELIMINAR&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
         <location line="-280"/>
         <source>Tag this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetar esta pasta</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-9808"/>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecção</translation>
     </message>
     <message>
         <location line="-324"/>
         <location line="+5859"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandir 1 nível, 2 níveis ou colapsar</translation>
     </message>
     <message>
         <location line="+2251"/>
         <source>all records</source>
-        <translation type="unfinished"></translation>
+        <translation>todos os registos</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+36"/>
         <source>updates only</source>
-        <translation type="unfinished"></translation>
+        <translation>apenas actualizações</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-4"/>
         <source>snapshots only</source>
-        <translation type="unfinished"></translation>
+        <translation>apenas instantâneos</translation>
     </message>
     <message>
         <location line="+394"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar seleccionado</translation>
     </message>
     <message>
         <location line="+360"/>
         <source>as Source</source>
-        <translation type="unfinished"></translation>
+        <translation>como origem</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>as Target</source>
-        <translation type="unfinished"></translation>
+        <translation>como destino</translation>
     </message>
     <message>
         <location line="+216"/>
         <source>Select Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar catálogo de origem</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Select Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar catálogo de destino</translation>
     </message>
     <message>
         <location line="+717"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Os dados da colecção são guardados em ficheiros .idx ou .csv localmente no computador.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>The database is in Memory only (RAM).</source>
-        <translation type="unfinished"></translation>
+        <translation>A base de dados está apenas na memória (RAM).</translation>
     </message>
     <message>
         <location line="+687"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cores do Katalog</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>Language &amp; Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Idioma e tema</translation>
     </message>
     <message>
         <location line="-1473"/>
         <source>Open Settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir ficheiro de definições</translation>
     </message>
     <message>
         <location line="-2871"/>
         <source>Display folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar pastas</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>and all sub-folders</source>
-        <translation type="unfinished"></translation>
+        <translation>e todas as sub-pastas</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>Order folders first</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar pastas primeiro</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="+85"/>
         <source>Copy folder name</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar nome da pasta</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Delete folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar pasta</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Move folder to Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover pasta para o lixo</translation>
     </message>
     <message>
         <location line="+393"/>
         <source>orderValue</source>
-        <translation type="unfinished"></translation>
+        <translation>valorOrdem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-1587"/>
@@ -2544,191 +2549,191 @@ to the trash?</source>
         <location line="+223"/>
         <location line="+252"/>
         <source>Device Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de dispositivo</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-172"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>O catálogo seleccionado contém mais de %1 ficheiros.&lt;br/&gt;Pode levar vários minutos a abrir.&lt;br/&gt;Continuar?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+5361"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Memória</translation>
     </message>
     <message>
         <location line="-9473"/>
         <location line="+1022"/>
         <location line="+1700"/>
         <source>Use the Text criteria in the Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar os critérios de texto na pesquisa</translation>
     </message>
     <message>
         <location line="-515"/>
         <source>Differences on</source>
-        <translation type="unfinished"></translation>
+        <translation>Diferenças em</translation>
     </message>
     <message>
         <location line="+243"/>
         <source>Catalog 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo 1</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>Catalog2</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo2</translation>
     </message>
     <message>
         <location line="-2514"/>
         <source>File name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do ficheiro</translation>
     </message>
     <message>
         <location line="+1022"/>
         <source>File criteria</source>
-        <translation type="unfinished"></translation>
+        <translation>Critérios de ficheiro</translation>
     </message>
     <message>
         <location line="+1700"/>
         <source>Folder criteria</source>
-        <translation type="unfinished"></translation>
+        <translation>Critérios de pasta</translation>
     </message>
     <message>
         <location line="+4737"/>
         <source>Graphic Start Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data de início gráfica</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Select date</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar data</translation>
     </message>
     <message>
         <location line="-3237"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+401"/>
         <source>Include Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir metadados</translation>
     </message>
     <message>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir metadados de ficheiros multimédia</translation>
     </message>
     <message>
         <location line="+3821"/>
         <source>TESTS</source>
-        <translation type="unfinished"></translation>
+        <translation>TESTES</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>TEST MEDIA</source>
-        <translation type="unfinished"></translation>
+        <translation>TESTAR MULTIMÉDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
         <source>Local disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Disco local</translation>
     </message>
     <message>
         <location line="-613"/>
         <source>The directory does not exist. Create it?</source>
-        <translation type="unfinished"></translation>
+        <translation>O directório não existe. Criar?</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>The database file does not exist. Create it?</source>
-        <translation type="unfinished"></translation>
+        <translation>O ficheiro de base de dados não existe. Criar?</translation>
     </message>
     <message>
         <location line="+339"/>
         <source>Collection Upgrade Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualização da colecção necessária</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Esta aplicação do 'Katalog' está na versão: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Current collection version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Versão actual da colecção: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Collection folder: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta da colecção: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This upgrade process can be performed automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este processo de actualização pode ser executado automaticamente.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Descubra as principais alterações e a migração nesta &lt;a href=&apos;%1&apos;&gt;Versão principal 2.0&lt;/a&gt;.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontre a lista habitual de novas funcionalidades nas &lt;a href=&apos;%1&apos;&gt;Notas de Lançamento&lt;/a&gt;.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Faça uma cópia de segurança da pasta/ficheiros da colecção antes de actualizar!&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>What should be done now?</source>
-        <translation type="unfinished"></translation>
+        <translation>O que deve ser feito agora?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Upgrade Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar agora</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Choose a Different Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolher uma pasta diferente</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Exit Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair da aplicação</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Select the database to open:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar a base de dados a abrir:</translation>
     </message>
     <message>
         <location line="-305"/>
         <source>Select the database to create and open:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar a base de dados a criar e abrir:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+122"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Algumas alterações na lista de dispositivos de armazenamento não foram guardadas.&lt;br/&gt;Guardar e sair, descartar e sair, ou cancelar saída?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+347"/>
         <source> Physical Group</source>
-        <translation type="unfinished"></translation>
+        <translation> Grupo físico</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Virtual device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo virtual</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_tags.cpp" line="+91"/>
         <source>Remove this tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover esta etiqueta</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="-66"/>
@@ -2737,7 +2742,7 @@ to the trash?</source>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1005"/>
         <source>Catalog with results</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogo com resultados</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
@@ -2745,17 +2750,17 @@ to the trash?</source>
         <location line="+223"/>
         <location line="+252"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mapping Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do mapeamento</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Source ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de origem</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2764,399 +2769,399 @@ to the trash?</source>
         <location line="+223"/>
         <location line="+252"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Activo</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+7"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiros</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
         <source>Date Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Data actualizada</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Target ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de destino</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Target</source>
-        <translation type="unfinished"></translation>
+        <translation>Destino</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Size Diff.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dif. tamanho</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size Diff.(%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dif. tamanho(%)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Files Diff.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dif. ficheiros</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Files Diff.(%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dif. ficheiros(%)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Diff.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dif. data</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Parent Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo pai</translation>
     </message>
     <message>
         <location line="+76"/>
         <location line="+5"/>
         <source>Populate the lists first (One or both device lists are empty).</source>
-        <translation type="unfinished"></translation>
+        <translation>Preencha as listas primeiro (Uma ou ambas as listas de dispositivos estão vazias).</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Invalid selection model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo de selecção inválido</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Select a device from both lists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione um dispositivo de ambas as listas.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Invalid device selection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecção de dispositivo inválida.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Empty device ID.</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do dispositivo vazio.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Provide a mapping name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Forneça um nome de mapeamento.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione uma origem ou destino diferente (um dispositivo não deve ser mapeado para si mesmo).</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
         <source>Virtual Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupo virtual</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Um dispositivo virtual só pode ser adicionado a outro dispositivo virtual.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+170"/>
         <location line="+56"/>
         <source>Filelight</source>
-        <translation type="unfinished"></translation>
+        <translation>Filelight</translation>
     </message>
     <message>
         <location line="-46"/>
         <source>Unassign this catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Desatribuir este catálogo</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Delete this catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar este catálogo</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Unassign this storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Desatribuir este armazenamento</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Delete this storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar este armazenamento</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Add Virtual device</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar dispositivo virtual</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Add Storage device</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar dispositivo de armazenamento</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Assign selected catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Atribuir catálogo seleccionado</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este grupo é necessário para hospedar armazenamento e catálogos.&lt;br/&gt;Não pode ser eliminado.</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
         <location line="+337"/>
         <source>Search Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro de pesquisa</translation>
     </message>
     <message>
         <location line="-112"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do catálogo</translation>
     </message>
     <message>
         <location line="+178"/>
         <location line="+46"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausar</translation>
     </message>
     <message>
         <location line="-31"/>
         <location line="+33"/>
         <source>Resume</source>
-        <translation type="unfinished"></translation>
+        <translation>Retomar</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Searching...</source>
-        <translation type="unfinished"></translation>
+        <translation>A pesquisar...</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Start a new search</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar nova pesquisa</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pause the current search</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausar a pesquisa actual</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Resume the paused search</source>
-        <translation type="unfinished"></translation>
+        <translation>Retomar a pesquisa pausada</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Stop the current search</source>
-        <translation type="unfinished"></translation>
+        <translation>Parar a pesquisa actual</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Folders found</source>
-        <translation type="unfinished"></translation>
+        <translation>Pastas encontradas</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Duplicates found</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicados encontrados</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Differences found</source>
-        <translation type="unfinished"></translation>
+        <translation>Diferenças encontradas</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Search interrupted | Files found: %1 | Files processed: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisa interrompida | Ficheiros encontrados: %1 | Ficheiros processados: %2</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Search interrupted. No results available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisa interrompida. Nenhum resultado disponível.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5</source>
-        <translation type="unfinished"></translation>
+        <translation>A carregar catálogo %1 de %2 (%3) | Ficheiros encontrados: %4 | Ficheiros processados: %5</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
-        <translation type="unfinished"></translation>
+        <translation>A carregar catálogo %1 de %2 (%3) | %4 ficheiros carregados (%5%) | Ficheiros encontrados: %6 | Ficheiros processados: %7</translation>
     </message>
     <message>
         <location line="+11"/>
         <source> | CATALOG LOADING PAUSED</source>
-        <translation type="unfinished"></translation>
+        <translation> | CARREGAMENTO DE CATÁLOGO PAUSADO</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
-        <translation type="unfinished"></translation>
+        <translation>A processar catálogo %1 de %2 | Ficheiros encontrados: %3 | A processar ficheiros...</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Searching in Catalog %1 of %2 | </source>
-        <translation type="unfinished"></translation>
+        <translation>A pesquisar no catálogo %1 de %2 | </translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+5"/>
         <source>Files found: %1 | Files processed: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiros encontrados: %1 | Ficheiros processados: %2</translation>
     </message>
     <message>
         <location line="+9"/>
         <source> (%1%)</source>
-        <translation type="unfinished"></translation>
+        <translation> (%1%)</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>No search results available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum resultado de pesquisa disponível.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Folders Found Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Estatísticas de pastas encontradas</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Files Found Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Estatísticas de ficheiros encontrados</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Catalogs processed: %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogos processados: %1 de %2</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Interrupted Search, incomplete results</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisa interrompida, resultados incompletos</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+11"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;tr&gt;&lt;td&gt;Ficheiros processados: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>&lt;tr&gt;&lt;td&gt;Percentage processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;tr&gt;&lt;td&gt;Percentagem processada: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Folders found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Pastas encontradas:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Ficheiros encontrados:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tamanho total:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tamanho mín:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tamanho máx:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tamanho médio: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Data mín:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Data máx:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location line="+27"/>
         <location line="+32"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Pronto</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Search completed | Files found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisa concluída | Ficheiros encontrados: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings_exp.cpp" line="+48"/>
         <source>Select the directory and file name for his export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione o directório e nome de ficheiro para esta exportação.</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao exportar base de dados na memória para ficheiro.&lt;br/&gt;&lt;br/&gt; Caminho do ficheiro de exportação: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Successful export of collection to SQLite database file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportação bem-sucedida da colecção para ficheiro de base de dados SQLite.&lt;br/&gt;&lt;br/&gt; Caminho do ficheiro de exportação: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Select the directory for the CSV export</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione o directório para a exportação CSV</translation>
     </message>
     <message>
         <location line="+80"/>
         <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de dados exportada com sucesso para ficheiros CSV.&lt;br/&gt;&lt;br/&gt;Directório de exportação: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Pode agora mudar para o modo memória e carregar esta colecção.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Export failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportação falhou: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
         <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Parece que este catálogo não foi correctamente importado ou tem um formato antigo.&lt;br/&gt;Edite-o e certifique-se de que tem as seguintes primeiras 2 linhas:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/caminhopasta&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copie/cole estas linhas no início do ficheiro e modifique os valores após o &gt;:&lt;br/&gt;- o catalogSourcePath é a pasta para catalogar os ficheiros.&lt;br/&gt;- o número catalogFileCount não importa tanto, pode ser actualizado.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+15"/>
         <location line="+55"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione primeiro um catálogo (algumas informações estão em falta).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
     </message>
     <message>
         <location line="-41"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-        <translation type="unfinished"></translation>
+        <translation>A pasta de origem não contém nenhum ficheiro.&lt;br/&gt;Isto pode significar que a origem está vazia ou o dispositivo não está montado nesta pasta.&lt;br/&gt;Deseja guardá-lo assim mesmo (o catálogo ficaria vazio)?.</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>O catálogo &lt;b&gt;%1&lt;/b&gt; não pode ser actualizado.&lt;br/&gt;&lt;br/&gt; A pasta de origem não foi encontrada.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possíveis razões:&lt;br/&gt;    - o dispositivo não está ligado e montado,&lt;br/&gt;    - a pasta de origem foi movida ou renomeada.,&lt;br/&gt;    - a pasta de origem introduzida está incorrecta.</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+87"/>
         <source>Could not open file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível abrir o ficheiro.</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Error opening output file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro ao abrir ficheiro de saída.</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Select a catalog with a valid path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione um catálogo com um caminho válido.</translation>
     </message>
     <message>
         <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamento: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;A pasta de origem não contém nenhum ficheiro:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Isto pode significar que o dispositivo não está montado nesta pasta,&lt;br/&gt;ou a pasta está simplesmente vazia.&lt;br/&gt;&lt;br/&gt;Forçar tentativa de obter valores de qualquer forma?</translation>
     </message>
 </context>
 <context>
@@ -3164,32 +3169,32 @@ to the trash?</source>
     <message>
         <location filename="../core/search.cpp" line="+130"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do catálogo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID do catálogo</translation>
     </message>
 </context>
 <context>
@@ -3198,80 +3203,80 @@ to the trash?</source>
         <location filename="../core/searchprogressmanager.cpp" line="+78"/>
         <location line="+11"/>
         <source> | SEARCH PAUSED</source>
-        <translation type="unfinished"></translation>
+        <translation> | PESQUISA PAUSADA</translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+8"/>
         <source> | CATALOG LOADING PAUSED</source>
-        <translation type="unfinished"></translation>
+        <translation> | CARREGAMENTO DE CATÁLOGO PAUSADO</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Searching in directory %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A pesquisar no directório %1</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+14"/>
         <source>Searching in catalog %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A pesquisar no catálogo %1</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Searching in catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>A pesquisar no catálogo</translation>
     </message>
     <message>
         <location line="+5"/>
         <source> | Catalog %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation> | Catálogo %1 de %2</translation>
     </message>
     <message>
         <location line="+9"/>
         <location line="+5"/>
         <source>Searching</source>
-        <translation type="unfinished"></translation>
+        <translation>A pesquisar</translation>
     </message>
     <message>
         <location line="+6"/>
         <source> | Total folders found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation> | Total de pastas encontradas: %1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source> | Total files found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation> | Total de ficheiros encontrados: %1</translation>
     </message>
     <message>
         <location line="+5"/>
         <source> | Total folders found: 0</source>
-        <translation type="unfinished"></translation>
+        <translation> | Total de pastas encontradas: 0</translation>
     </message>
     <message>
         <location line="+2"/>
         <source> | Total files found: 0</source>
-        <translation type="unfinished"></translation>
+        <translation> | Total de ficheiros encontrados: 0</translation>
     </message>
     <message>
         <location line="+7"/>
         <source> | Total files processed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation> | Total de ficheiros processados: %1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source> (%1%)</source>
-        <translation type="unfinished"></translation>
+        <translation> (%1%)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Search completed | Total folders found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisa concluída | Total de pastas encontradas: %1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Search completed | Total files found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisa concluída | Total de ficheiros encontrados: %1</translation>
     </message>
 </context>
 <context>
@@ -3279,17 +3284,17 @@ to the trash?</source>
     <message>
         <location filename="../core/tag.cpp" line="+68"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiqueta</translation>
     </message>
 </context>
 </TS>

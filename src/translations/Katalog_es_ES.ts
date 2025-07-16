@@ -1818,7 +1818,7 @@
     <message>
         <location line="+132"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation>Modo de datos "archivo local SQLite"</translation>
+        <translation>Modo de datos &quot;archivo local SQLite&quot;</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1870,7 +1870,7 @@
         <location line="+10"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation>Exportar para convertir y abrir la colección en modo "Archivo".</translation>
+        <translation>Exportar para convertir y abrir la colección en modo &quot;Archivo&quot;.</translation>
     </message>
     <message>
         <location line="-203"/>
@@ -1880,7 +1880,7 @@
     <message>
         <location line="+50"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation>Modo de datos "Memoria"</translation>
+        <translation>Modo de datos &quot;Memoria&quot;</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1963,7 +1963,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow.cpp" line="+246"/>
+        <location filename="../mainwindow.cpp" line="+248"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -1988,7 +1988,7 @@
     <message>
         <location line="-7"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation>Modo de datos "Base de datos hospedada"</translation>
+        <translation>Modo de datos &quot;Base de datos hospedada&quot;</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -3046,7 +3046,7 @@ a otra carpeta?</translation>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation>Esta aplicación de 'Katalog' está en la versión: </translation>
+        <translation>Esta aplicación de &apos;Katalog&apos; está en la versión: </translation>
     </message>
     <message>
         <location line="+2"/>

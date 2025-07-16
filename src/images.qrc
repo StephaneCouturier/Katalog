@@ -25,5 +25,7 @@
         <file>images/screenshots/Filters_connecteddrives.png</file>
         <file>images/flags/es.png</file>
         <file>images/flags/it.png</file>
+        <file>images/flags/pt.png</file>
+        <file>images/flags/jp.png</file>
     </qresource>
 </RCC>

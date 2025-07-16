@@ -308,7 +308,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+247"/>
+        <location filename="../mainwindow.cpp" line="+249"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>

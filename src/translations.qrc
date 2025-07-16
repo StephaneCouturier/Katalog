@@ -6,5 +6,7 @@
         <file>translations/Katalog_de_DE.qm</file>
         <file>translations/Katalog_es_ES.qm</file>
         <file>translations/Katalog_it_IT.qm</file>
+        <file>translations/Katalog_pt_PT.qm</file>
+        <file>translations/Katalog_ja_JP.qm</file>
     </qresource>
 </RCC>
