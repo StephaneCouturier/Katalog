@@ -59,7 +59,11 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+538"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+253"/>
+        <location line="+20"/>
+        <location line="+30"/>
+        <location line="+177"/>
+        <location line="+58"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
     </message>
@@ -180,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+249"/>
+        <location filename="../mainwindow.cpp" line="+252"/>
         <source>File</source>
         <translation>Ficheiro</translation>
     </message>
@@ -1007,7 +1011,7 @@
     <message>
         <location line="-428"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation>Modo de dados "Memória"</translation>
+        <translation>Modo de dados &quot;Memória&quot;</translation>
     </message>
     <message>
         <location line="+121"/>
@@ -1032,7 +1036,7 @@
     <message>
         <location line="-476"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation>Modo de dados "Ficheiro SQLite local"</translation>
+        <translation>Modo de dados &quot;Ficheiro SQLite local&quot;</translation>
     </message>
     <message>
         <location line="-3868"/>
@@ -1149,7 +1153,7 @@
         <location line="+51"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation>Exportar para converter e abrir a colecção em modo "Ficheiro".</translation>
+        <translation>Exportar para converter e abrir a colecção em modo &quot;Ficheiro&quot;.</translation>
     </message>
     <message>
         <location line="-203"/>
@@ -1164,7 +1168,7 @@
     <message>
         <location line="+265"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation>Modo de dados "Base de dados hospedada"</translation>
+        <translation>Modo de dados &quot;Base de dados hospedada&quot;</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -2257,7 +2261,7 @@ para outra pasta?</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation>1- Seleccione uma unidade ou directório completo, &lt;br/&gt;2- seleccione opções, e &lt;br/&gt;3- clique em 'Criar'&lt;br/&gt;</translation>
+        <translation>1- Seleccione uma unidade ou directório completo, &lt;br/&gt;2- seleccione opções, e &lt;br/&gt;3- clique em &apos;Criar&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-3772"/>
@@ -2653,7 +2657,7 @@ para o lixo?</translation>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation>Esta aplicação do 'Katalog' está na versão: </translation>
+        <translation>Esta aplicação do &apos;Katalog&apos; está na versão: </translation>
     </message>
     <message>
         <location line="+2"/>

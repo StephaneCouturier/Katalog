@@ -348,13 +348,17 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+222"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-63"/>
+        <location line="+20"/>
+        <location line="+30"/>
+        <location line="+177"/>
+        <location line="+58"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
         <location line="+9276"/>
-        <location filename="../mainwindow.cpp" line="+248"/>
+        <location filename="../mainwindow.cpp" line="+251"/>
         <source>Memory</source>
         <translation>Speicher</translation>
     </message>

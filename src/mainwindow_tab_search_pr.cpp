@@ -250,7 +250,7 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
 void MainWindow::handleSearchCompleted()
 {
     // Reset the search button
-    ui->Search_pushButton_Search->setText("Search");
+    ui->Search_pushButton_Search->setText(tr("Search"));
     ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
     ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
 
@@ -270,7 +270,7 @@ void MainWindow::handleSearchCompleted()
 void MainWindow::handleSearchStopped()
 {
     // Reset the search button
-    ui->Search_pushButton_Search->setText("Search");
+    ui->Search_pushButton_Search->setText(tr("Search"));
     ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
     ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
 
@@ -300,7 +300,7 @@ void MainWindow::resetSearchState()
     isSearchRunning = false;
 
     // Reset the search button
-    ui->Search_pushButton_Search->setText("Search");
+    ui->Search_pushButton_Search->setText(tr("Search"));
     ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
     ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
 
@@ -477,7 +477,7 @@ void MainWindow::setSearchButtonState(SearchButtonState state)
     switch (state) {
     case SearchButtonState::Idle:
         // Search button
-        ui->Search_pushButton_Search->setText("&Search");
+        ui->Search_pushButton_Search->setText(tr("Search"));
         ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
         ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
         ui->Search_pushButton_Search->setEnabled(true);

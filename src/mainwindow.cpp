@@ -153,7 +153,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/it.png"),"it_IT");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/jp.png"),"ja_JP");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/nl.png"),"nl_NL");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/pt.png"),"pt_PT");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/ro.png"),"ro_RO");
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
         //Hide some widgets by default

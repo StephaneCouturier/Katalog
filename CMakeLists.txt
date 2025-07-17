@@ -5,6 +5,9 @@ project(Katalog VERSION 2.6 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2")
+set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+
 # Windows-specific: Better dependency tracking
 if(WIN32)
     # Force CMake to use file timestamps for dependency checking
@@ -151,8 +154,10 @@ set(TS_FILES
     src/translations/Katalog_fr_FR.ts
     src/translations/Katalog_en_US.ts
     src/translations/Katalog_it_IT.ts
+    src/translations/Katalog_nl_NL.ts
     src/translations/Katalog_pt_PT.ts
     src/translations/Katalog_ja_JP.ts
+    src/translations/Katalog_ro_RO.ts
 )
 
 # Make sure LinguistTools is found (should already be in your find_package)
@@ -169,12 +174,12 @@ if(${Qt6_VERSION} VERSION_GREATER_EQUAL "6.2")
     )
 
     # Create aliases for the auto-generated targets for easier access
-    add_custom_target(update_translations
+    add_custom_target(translations_lupdate
         DEPENDS Katalog_lupdate
         COMMENT "Alias for updating translation files"
     )
 
-    add_custom_target(translations
+    add_custom_target(translations_lrelease
         DEPENDS Katalog_lrelease
         COMMENT "Alias for compiling translation files"
     )
@@ -188,7 +193,7 @@ add_custom_target(lupdate_manual
 )
 
 # Optional: Create a target to copy translations manually
-add_custom_target(copy_translations
+add_custom_target(translations_copy
     COMMENT "Copy .qm files from build to source directory"
 )
 
@@ -197,7 +202,7 @@ foreach(ts_file ${TS_FILES})
     set(qm_file_build "${CMAKE_CURRENT_BINARY_DIR}/${qm_filename}.qm")
     set(qm_file_source "${CMAKE_CURRENT_SOURCE_DIR}/src/translations/${qm_filename}.qm")
 
-    add_custom_command(TARGET copy_translations POST_BUILD
+    add_custom_command(TARGET translations_copy POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
                 ${qm_file_build}
                 ${qm_file_source}

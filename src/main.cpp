@@ -76,7 +76,9 @@ int main(int argc, char *argv[])
                                     << "fr_FR"
                                     << "it_IT"
                                     << "ja_JP"
+                                    << "nl_NL"
                                     << "pt_PT"
+                                    << "ro_RO"
                                     ;
             if ( availableUserLanguages.contains(userLanguage) == false )
                 userLanguage = "en_US";

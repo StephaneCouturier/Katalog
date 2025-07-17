@@ -96,7 +96,11 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-66"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+538"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+253"/>
+        <location line="+20"/>
+        <location line="+30"/>
+        <location line="+177"/>
+        <location line="+58"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
@@ -281,7 +285,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+249"/>
+        <location filename="../mainwindow.cpp" line="+252"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>

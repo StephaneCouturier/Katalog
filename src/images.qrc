@@ -27,5 +27,7 @@
         <file>images/flags/it.png</file>
         <file>images/flags/pt.png</file>
         <file>images/flags/jp.png</file>
+        <file>images/flags/nl.png</file>
+        <file>images/flags/ro.png</file>
     </qresource>
 </RCC>

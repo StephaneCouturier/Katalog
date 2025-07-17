@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ja_JP">
+<TS version="2.1" language="ro_RO">
 <context>
     <name>Catalog</name>
     <message>
         <location filename="../core/catalog.cpp" line="+82"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>Nume</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size</source>
-        <translation>サイズ</translation>
+        <translation>Dimensiune</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation>フォルダ</translation>
+        <translation>Dosar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date</source>
-        <translation>日付</translation>
+        <translation>Dată</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog</source>
-        <translation>カタログ</translation>
+        <translation>Catalog</translation>
     </message>
 </context>
 <context>
@@ -34,17 +34,17 @@
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
         <source>Folder</source>
-        <translation>フォルダ</translation>
+        <translation>Dosar</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No of items</source>
-        <translation>アイテム数</translation>
+        <translation>Numărul de elemente</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Full path</source>
-        <translation>フルパス</translation>
+        <translation>Calea completă</translation>
     </message>
 </context>
 <context>
@@ -65,72 +65,72 @@
         <location line="+177"/>
         <location line="+58"/>
         <source>Search</source>
-        <translation>検索</translation>
+        <translation>Căutare</translation>
     </message>
     <message>
         <location line="-433"/>
         <source>Search for files or folders</source>
-        <translation>ファイルまたはフォルダを検索</translation>
+        <translation>Căutați fișiere sau dosare</translation>
     </message>
     <message>
         <location line="+1768"/>
         <location line="+2752"/>
         <location line="+1822"/>
         <source>Text</source>
-        <translation>テキスト</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location line="-6028"/>
         <source>Paste the text from the clipboard</source>
-        <translation>クリップボードからテキストを貼り付け</translation>
+        <translation>Lipiți textul din clipboard</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Get the text from the clipboard</source>
-        <translation>クリップボードからテキストを取得</translation>
+        <translation>Obțineți textul din clipboard</translation>
     </message>
     <message>
         <location line="+110"/>
         <location line="+38"/>
         <source>Launch the search of files.</source>
-        <translation>ファイル検索を開始します。</translation>
+        <translation>Lansați căutarea fișierelor.</translation>
     </message>
     <message>
         <location line="+189"/>
         <source>with</source>
-        <translation>条件</translation>
+        <translation>cu</translation>
     </message>
     <message>
         <location line="+39"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+894"/>
         <source>All Words</source>
-        <translation>すべての単語</translation>
+        <translation>Toate cuvintele</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Exact Phrase</source>
-        <translation>完全一致</translation>
+        <translation>Fraza exactă</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Begins With</source>
-        <translation>で始まる</translation>
+        <translation>Începe cu</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Any Word</source>
-        <translation>いずれかの単語</translation>
+        <translation>Orice cuvânt</translation>
     </message>
     <message>
         <location line="+89"/>
         <source>in</source>
-        <translation>対象</translation>
+        <translation>în</translation>
     </message>
     <message>
         <location line="+41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
         <source>File names or Folder paths</source>
-        <translation>ファイル名またはフォルダパス</translation>
+        <translation>Numele fișierelor sau căile dosarelor</translation>
     </message>
     <message>
         <location line="-5"/>
@@ -138,55 +138,55 @@
         <location line="+3"/>
         <location line="+750"/>
         <source>File names only</source>
-        <translation>ファイル名のみ</translation>
+        <translation>Numai numele fișierelor</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
         <source>Folder path only</source>
-        <translation>フォルダパスのみ</translation>
+        <translation>Numai calea dosarului</translation>
     </message>
     <message>
         <location line="+2254"/>
         <source>Choose to only show folders as results</source>
-        <translation>フォルダのみを結果として表示</translation>
+        <translation>Alegeți să afișați doar dosarele ca rezultate</translation>
     </message>
     <message>
         <location line="-2941"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
-        <translation>すべての条件をデフォルト値にリセットし、以前の結果をクリアします。</translation>
+        <translation>Resetați toate criteriile la valorile implicite și ștergeți rezultatele anterioare.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Reset</source>
-        <translation>リセット</translation>
+        <translation>Resetare</translation>
     </message>
     <message>
         <location line="+9768"/>
         <source>Port</source>
-        <translation>ポート</translation>
+        <translation>Port</translation>
     </message>
     <message>
         <location line="-2654"/>
         <location line="+2633"/>
         <source>Password</source>
-        <translation>パスワード</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <location line="-702"/>
         <source>Database File Path</source>
-        <translation>データベースファイルパス</translation>
+        <translation>Calea fișierului de bază de date</translation>
     </message>
     <message>
         <location line="+497"/>
         <source>Data mode</source>
-        <translation>データモード</translation>
+        <translation>Modul de date</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../mainwindow.cpp" line="+252"/>
         <source>File</source>
-        <translation>ファイル</translation>
+        <translation>Fișier</translation>
     </message>
     <message>
         <location line="-8293"/>
@@ -196,18 +196,18 @@
         <location filename="../mainwindow_tab_explore.cpp" line="+637"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
-        <translation>サイズ</translation>
+        <translation>Dimensiune</translation>
     </message>
     <message>
         <location line="-3092"/>
         <location line="+4522"/>
         <source>Device tree</source>
-        <translation>デバイスツリー</translation>
+        <translation>Arborele dispozitivelor</translation>
     </message>
     <message>
         <location line="-4074"/>
         <source>Reload all collection&apos;s data</source>
-        <translation>すべてのコレクションデータを再読み込み</translation>
+        <translation>Reîncărcați toate datele colecției</translation>
     </message>
     <message>
         <location line="+1579"/>
@@ -218,7 +218,7 @@
     <message>
         <location line="-424"/>
         <source>File size unit for minimum value</source>
-        <translation>最小値のファイルサイズ単位</translation>
+        <translation>Unitatea de măsură pentru valoarea minimă</translation>
     </message>
     <message>
         <location line="+49"/>
@@ -229,7 +229,7 @@
     <message>
         <location line="-402"/>
         <source>File size unit for maximum value</source>
-        <translation>最大値のファイルサイズ単位</translation>
+        <translation>Unitatea de măsură pentru valoarea maximă</translation>
     </message>
     <message>
         <location line="+81"/>
@@ -238,12 +238,12 @@
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1493"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
-        <translation>タイプ</translation>
+        <translation>Tip</translation>
     </message>
     <message>
         <location line="-2927"/>
         <source>Select the type of files</source>
-        <translation>ファイルタイプを選択</translation>
+        <translation>Selectați tipul de fișiere</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -268,56 +268,56 @@
         <location line="+1"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+762"/>
         <source>All</source>
-        <translation>すべて</translation>
+        <translation>Toate</translation>
     </message>
     <message>
         <location line="-4474"/>
         <location line="+2752"/>
         <location line="+1780"/>
         <source>Audio</source>
-        <translation>オーディオ</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location line="-4524"/>
         <location line="+2752"/>
         <location line="+1743"/>
         <source>Image</source>
-        <translation>画像</translation>
+        <translation>Imagine</translation>
     </message>
     <message>
         <location line="-4479"/>
         <location line="+2752"/>
         <location line="+1785"/>
         <source>Video</source>
-        <translation>ビデオ</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location line="-3213"/>
         <source>only list folders in results</source>
-        <translation>結果にフォルダのみを表示</translation>
+        <translation>listați doar dosarele în rezultate</translation>
     </message>
     <message>
         <location line="+465"/>
         <location line="+3"/>
         <source>Define which batch process to execute on all results</source>
-        <translation>すべての結果に対して実行するバッチプロセスを定義</translation>
+        <translation>Definiți ce proces în serie să execute pe toate rezultatele</translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+233"/>
         <source>Export Results</source>
-        <translation>結果をエクスポート</translation>
+        <translation>Exportați rezultatele</translation>
     </message>
     <message>
         <location line="-276"/>
         <source>Show/Hide Catalogs with results</source>
-        <translation>結果を含むカタログを表示/非表示</translation>
+        <translation>Afișați/Ascundeți cataloagele cu rezultate</translation>
     </message>
     <message>
         <location line="+129"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+295"/>
         <source>Files found</source>
-        <translation>見つかったファイル</translation>
+        <translation>Fișiere găsite</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -354,36 +354,36 @@
         <location line="+347"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+335"/>
         <source>Catalogs</source>
-        <translation>カタログ</translation>
+        <translation>Cataloage</translation>
     </message>
     <message>
         <location line="-302"/>
         <location line="+2526"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
-        <translation>総ファイルサイズ</translation>
+        <translation>Dimensiunea totală a fișierelor</translation>
     </message>
     <message>
         <location line="-2488"/>
         <source>Total Number of Files</source>
-        <translation>総ファイル数</translation>
+        <translation>Numărul total de fișiere</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>All active</source>
-        <translation>すべてアクティブ</translation>
+        <translation>Toate active</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Import</source>
-        <translation>インポート</translation>
+        <translation>Importă</translation>
     </message>
     <message>
         <location line="+313"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+240"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-167"/>
         <source>Explore</source>
-        <translation>エクスプローラ</translation>
+        <translation>Explorează</translation>
     </message>
     <message>
         <location line="-811"/>
@@ -394,7 +394,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-58"/>
         <location line="+39"/>
         <source>Update</source>
-        <translation>更新</translation>
+        <translation>Actualizare</translation>
     </message>
     <message>
         <location line="+4076"/>
@@ -402,26 +402,26 @@
         <location line="+56"/>
         <location line="+54"/>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation>Editare</translation>
     </message>
     <message>
         <location line="-5676"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>Șterge</translation>
     </message>
     <message>
         <location line="+1960"/>
         <source>Explore a catalog</source>
-        <translation>カタログを探索</translation>
+        <translation>Explorează un catalog</translation>
     </message>
     <message>
         <location line="-6222"/>
         <location line="+6601"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
         <source>Catalog</source>
-        <translation>カタログ</translation>
+        <translation>Catalog</translation>
     </message>
     <message>
         <location line="+1454"/>
@@ -432,93 +432,93 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
-        <translation>パス</translation>
+        <translation>Cale</translation>
     </message>
     <message>
         <location line="-1777"/>
         <source>Directories</source>
-        <translation>ディレクトリ</translation>
+        <translation>Directoare</translation>
     </message>
     <message>
         <location line="-6512"/>
         <location line="+656"/>
         <source>Show/Hide Filters</source>
-        <translation>フィルタを表示/非表示</translation>
+        <translation>Afișați/Ascundeți filtrele</translation>
     </message>
     <message>
         <location line="-510"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
         <source>Virtual</source>
-        <translation>仮想</translation>
+        <translation>Virtual</translation>
     </message>
     <message>
         <location line="+1220"/>
         <source>Stop</source>
-        <translation>停止</translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <location line="+3101"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
-        <translation>選択...</translation>
+        <translation>Selectați...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+29"/>
         <source>Rename (KRename)</source>
-        <translation>名前変更 (KRename)</translation>
+        <translation>Redenumire (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-605"/>
         <location line="+611"/>
         <source>Move to Trash</source>
-        <translation>ゴミ箱に移動</translation>
+        <translation>Mutați la coșul de gunoi</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Run process on all results</source>
-        <translation>すべての結果でプロセスを実行</translation>
+        <translation>Rulați procesul pe toate rezultatele</translation>
     </message>
     <message>
         <location line="+372"/>
         <source>Catalogs list</source>
-        <translation>カタログリスト</translation>
+        <translation>Lista cataloagelor</translation>
     </message>
     <message>
         <location line="+442"/>
         <source>The change will be applied only when Saving</source>
-        <translation>変更は保存時にのみ適用されます</translation>
+        <translation>Modificarea va fi aplicată doar la salvare</translation>
     </message>
     <message>
         <location line="+244"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+961"/>
         <source>Comment 1</source>
-        <translation>コメント 1</translation>
+        <translation>Comentariu 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Comment 2</source>
-        <translation>コメント 2</translation>
+        <translation>Comentariu 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Comment 3</source>
-        <translation>コメント 3</translation>
+        <translation>Comentariu 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-6"/>
         <source>Brand</source>
-        <translation>ブランド</translation>
+        <translation>Marcă</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Model</source>
-        <translation>モデル</translation>
+        <translation>Model</translation>
     </message>
     <message>
         <location line="+412"/>
@@ -528,32 +528,32 @@
     <message>
         <location line="+57"/>
         <source>Display the *Physical Group* and its related Devices.</source>
-        <translation>*物理グループ*と関連するデバイスを表示します。</translation>
+        <translation>Afișați *Grupul fizic* și dispozitivele sale conexe.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Display the *Virtual Groups* and their related Devices.</source>
-        <translation>*仮想グループ*と関連するデバイスを表示します。</translation>
+        <translation>Afișați *Grupurile virtuale* și dispozitivele lor conexe.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Display the *Storage* devices (if unticked, the Catalogs would be hidden too).</source>
-        <translation>*ストレージ*デバイスを表示します（チェックを外すとカタログも非表示になります）。</translation>
+        <translation>Afișați dispozitivele de *Stocare* (dacă nu este bifat, cataloagele vor fi ascunse și ele).</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Display the *Catalog* devices.</source>
-        <translation>*カタログ*デバイスを表示します。</translation>
+        <translation>Afișați dispozitivele *Catalog*.</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Create and insert a new Virtual Group device at the top of the hierarchy, and open the Edit panel.</source>
-        <translation>階層の最上位に新しい仮想グループデバイスを作成・挿入し、編集パネルを開きます。</translation>
+        <translation>Creați și inserați un nou dispozitiv Grup Virtual în partea de sus a ierarhiei și deschideți panoul de editare.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Create and insert a new Virtual device under the selected device in the hierarchy, and open the Edit panel.</source>
-        <translation>階層内の選択したデバイスの下に新しい仮想デバイスを作成・挿入し、編集パネルを開きます。</translation>
+        <translation>Creați și inserați un nou dispozitiv Virtual sub dispozitivul selectat în ierarhie și deschideți panoul de editare.</translation>
     </message>
     <message>
         <location line="+227"/>
@@ -563,24 +563,24 @@
         <location line="+90"/>
         <location line="+38"/>
         <source>Number of Files</source>
-        <translation>ファイル数</translation>
+        <translation>Numărul de fișiere</translation>
     </message>
     <message>
         <location line="-2428"/>
         <source>Click to open the file</source>
-        <translation>クリックしてファイルを開く</translation>
+        <translation>Faceți clic pentru a deschide fișierul</translation>
     </message>
     <message>
         <location line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="+131"/>
         <location line="+126"/>
         <source>Create</source>
-        <translation>作成</translation>
+        <translation>Creează</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Create a catalog</source>
-        <translation>カタログを作成</translation>
+        <translation>Creează un catalog</translation>
     </message>
     <message>
         <location line="+41"/>
@@ -590,27 +590,27 @@
     <message>
         <location line="+17"/>
         <source>Select Content options</source>
-        <translation>コンテンツオプションを選択</translation>
+        <translation>Selectați opțiunile de conținut</translation>
     </message>
     <message>
         <location line="+85"/>
         <source>include File Type</source>
-        <translation>ファイルタイプを含める</translation>
+        <translation>include tipul de fișier</translation>
     </message>
     <message>
         <location line="+178"/>
         <source>Other options</source>
-        <translation>その他のオプション</translation>
+        <translation>Alte opțiuni</translation>
     </message>
     <message>
         <location line="+87"/>
         <source>Directories to exclude from catalogs</source>
-        <translation>カタログから除外するディレクトリ</translation>
+        <translation>Directoare de exclus din cataloage</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Add directory to exclude</source>
-        <translation>除外するディレクトリを追加</translation>
+        <translation>Adăugați directorul de exclus</translation>
     </message>
     <message>
         <location line="+78"/>
@@ -620,53 +620,53 @@
     <message>
         <location line="+17"/>
         <source>Define &amp; Create catalog</source>
-        <translation>カタログを定義・作成</translation>
+        <translation>Definiți și creați catalogul</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Select Storage</source>
-        <translation>ストレージを選択</translation>
+        <translation>Selectați stocarea</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Add a new storage device</source>
-        <translation>新しいストレージデバイスを追加</translation>
+        <translation>Adăugați un nou dispozitiv de stocare</translation>
     </message>
     <message>
         <location line="-2444"/>
         <location line="+2447"/>
         <source>Add Storage</source>
-        <translation>ストレージを追加</translation>
+        <translation>Adăugați stocare</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Enter the Name of the new catalog</source>
-        <translation>新しいカタログの名前を入力</translation>
+        <translation>Introduceți numele noului catalog</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>NewCatalog</source>
-        <translation>新しいカタログ</translation>
+        <translation>CatalogNou</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Enter a name for your new catalog</source>
-        <translation>新しいカタログの名前を入力してください</translation>
+        <translation>Introduceți un nume pentru noul dvs. catalog</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Generate</source>
-        <translation>生成</translation>
+        <translation>Generează</translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Launch the cataloging and save it to a file</source>
-        <translation>カタログ化を開始してファイルに保存</translation>
+        <translation>Lansați catalogarea și salvați-o într-un fișier</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create Catalog</source>
-        <translation>カタログを作成</translation>
+        <translation>Creează catalog</translation>
     </message>
     <message>
         <location line="+111"/>
@@ -676,115 +676,115 @@
     <message>
         <location line="+23"/>
         <source>Select Source path</source>
-        <translation>ソースパスを選択</translation>
+        <translation>Selectați calea sursă</translation>
     </message>
     <message>
         <location line="-1739"/>
         <source>Tree options</source>
-        <translation>ツリーオプション</translation>
+        <translation>Opțiuni arbore</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Physical Group</source>
-        <translation>物理グループ</translation>
+        <translation>Grup fizic</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Virtual Groups</source>
-        <translation>仮想グループ</translation>
+        <translation>Grupuri virtuale</translation>
     </message>
     <message>
         <location line="+108"/>
         <source>Insert Virtual Group</source>
-        <translation>仮想グループを挿入</translation>
+        <translation>Inserați grup virtual</translation>
     </message>
     <message>
         <location line="-1487"/>
         <source>View</source>
-        <translation>表示</translation>
+        <translation>Vizualizare</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>Storage list</source>
-        <translation>ストレージリスト</translation>
+        <translation>Lista de stocare</translation>
     </message>
     <message>
         <location line="+541"/>
         <source>Catalog fields</source>
-        <translation>カタログフィールド</translation>
+        <translation>Câmpurile catalogului</translation>
     </message>
     <message>
         <location line="+236"/>
         <location line="+28"/>
         <source>Free Space</source>
-        <translation>空き容量</translation>
+        <translation>Spațiu liber</translation>
     </message>
     <message>
         <location line="-219"/>
         <source>Device Picture</source>
-        <translation>デバイス画像</translation>
+        <translation>Imaginea dispozitivului</translation>
     </message>
     <message>
         <location line="-579"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
-        <translation>コレクション全体の統計のため、すべてのデバイスの値を記録します。</translation>
+        <translation>Înregistrați valorile tuturor dispozitivelor pentru statistici asupra întregii colecții.</translation>
     </message>
     <message>
         <location line="+701"/>
         <source>Storage fields</source>
-        <translation>ストレージフィールド</translation>
+        <translation>Câmpurile de stocare</translation>
     </message>
     <message>
         <location line="+5406"/>
         <source>Icons</source>
-        <translation>アイコン</translation>
+        <translation>Pictograme</translation>
     </message>
     <message>
         <location line="-28"/>
         <source>Use bigger icon size</source>
-        <translation>大きなアイコンサイズを使用</translation>
+        <translation>Folosiți dimensiunea mai mare a pictogramelor</translation>
     </message>
     <message>
         <location line="-555"/>
         <source>Load last catalog to Explore</source>
-        <translation>最後のカタログを読み込んで探索</translation>
+        <translation>Încărcați ultimul catalog pentru explorare</translation>
     </message>
     <message>
         <location line="+424"/>
         <source>Database Name</source>
-        <translation>データベース名</translation>
+        <translation>Numele bazei de date</translation>
     </message>
     <message>
         <location line="-96"/>
         <source>User Name</source>
-        <translation>ユーザー名</translation>
+        <translation>Numele utilizatorului</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Host Name</source>
-        <translation>ホスト名</translation>
+        <translation>Numele gazdei</translation>
     </message>
     <message>
         <location line="-560"/>
         <source>Create a new database file</source>
-        <translation>新しいデータベースファイルを作成</translation>
+        <translation>Creați un nou fișier de bază de date</translation>
     </message>
     <message>
         <location line="+426"/>
         <location filename="../mainwindow.cpp" line="+1"/>
         <source>Hosted</source>
-        <translation>ホスト型</translation>
+        <translation>Găzduit</translation>
     </message>
     <message>
         <location line="-41"/>
         <source>Data management</source>
-        <translation>データ管理</translation>
+        <translation>Gestionarea datelor</translation>
     </message>
     <message>
         <location line="-9993"/>
         <location line="+7751"/>
         <source>Select the path</source>
-        <translation>パスを選択</translation>
+        <translation>Selectați calea</translation>
     </message>
     <message>
         <location line="-7748"/>
@@ -792,7 +792,7 @@
         <location line="+3013"/>
         <location line="+453"/>
         <source>Select</source>
-        <translation>選択</translation>
+        <translation>Selectați</translation>
     </message>
     <message>
         <location line="-8582"/>
@@ -801,25 +801,25 @@
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
-        <translation>ストレージ</translation>
+        <translation>Stocare</translation>
     </message>
     <message>
         <location line="+3905"/>
         <source>New</source>
-        <translation>新規</translation>
+        <translation>Nou</translation>
     </message>
     <message>
         <location line="-5382"/>
         <location line="+186"/>
         <source>Devices</source>
-        <translation>デバイス</translation>
+        <translation>Dispozitive</translation>
     </message>
     <message>
         <location line="+41"/>
         <location line="+622"/>
         <location line="+28"/>
         <source>Total Space</source>
-        <translation>総容量</translation>
+        <translation>Spațiul total</translation>
     </message>
     <message>
         <location line="-542"/>
@@ -830,417 +830,417 @@
         <location line="+3290"/>
         <location line="+287"/>
         <source>Reload</source>
-        <translation>再読み込み</translation>
+        <translation>Reîncărcați</translation>
     </message>
     <message>
         <location line="-363"/>
         <source>Statistics</source>
-        <translation>統計</translation>
+        <translation>Statistici</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View collection statistics</source>
-        <translation>コレクション統計を表示</translation>
+        <translation>Vizualizați statisticile colecției</translation>
     </message>
     <message>
         <location line="+150"/>
         <source>Type of data</source>
-        <translation>データタイプ</translation>
+        <translation>Tipul de date</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Select the type of data</source>
-        <translation>データタイプを選択</translation>
+        <translation>Selectați tipul de date</translation>
     </message>
     <message>
         <location line="-115"/>
         <source>Edit the file storing all records</source>
-        <translation>すべてのレコードを保存するファイルを編集</translation>
+        <translation>Editați fișierul care stochează toate înregistrările</translation>
     </message>
     <message>
         <location line="-2024"/>
         <source>Add Virtual</source>
-        <translation>仮想を追加</translation>
+        <translation>Adăugați virtual</translation>
     </message>
     <message>
         <location line="-1558"/>
         <source>Edit List</source>
-        <translation>リストを編集</translation>
+        <translation>Editați lista</translation>
     </message>
     <message>
         <location line="+36"/>
         <location line="+4048"/>
         <source>Full Table</source>
-        <translation>全テーブル</translation>
+        <translation>Tabelul complet</translation>
     </message>
     <message>
         <location line="-3708"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
         <source>Device Name</source>
-        <translation>デバイス名</translation>
+        <translation>Numele dispozitivului</translation>
     </message>
     <message>
         <location line="+76"/>
         <source>Parent name (ID)</source>
-        <translation>親名 (ID)</translation>
+        <translation>Numele părintelui (ID)</translation>
     </message>
     <message>
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-1"/>
         <source>Device ID</source>
-        <translation>デバイスID</translation>
+        <translation>ID-ul dispozitivului</translation>
     </message>
     <message>
         <location line="+3146"/>
         <source>Edit Statistics</source>
-        <translation>統計を編集</translation>
+        <translation>Editați statisticile</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Reload the file storing all records</source>
-        <translation>すべてのレコードを保存するファイルを再読み込み</translation>
+        <translation>Reîncărcați fișierul care stochează toate înregistrările</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>Display each value</source>
-        <translation>各値を表示</translation>
+        <translation>Afișați fiecare valoare</translation>
     </message>
     <message>
         <location line="+97"/>
         <source>Tags</source>
-        <translation>タグ</translation>
+        <translation>Etichete</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tag folders for search and statistics</source>
-        <translation>検索と統計のためのフォルダタグ</translation>
+        <translation>Etichetați dosarele pentru căutare și statistici</translation>
     </message>
     <message>
         <location line="+154"/>
         <source>Add the tag to this folder</source>
-        <translation>このフォルダにタグを追加</translation>
+        <translation>Adăugați eticheta la acest dosar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tag the folder</source>
-        <translation>フォルダにタグを付ける</translation>
+        <translation>Etichetați dosarul</translation>
     </message>
     <message>
         <location line="-81"/>
         <source>Current folders and tags</source>
-        <translation>現在のフォルダとタグ</translation>
+        <translation>Dosarele și etichetele curente</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Select a tag</source>
-        <translation>タグを選択</translation>
+        <translation>Selectați o etichetă</translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+24"/>
         <source>Select a folder</source>
-        <translation>フォルダを選択</translation>
+        <translation>Selectați un dosar</translation>
     </message>
     <message>
         <location line="-107"/>
         <source>Existing tags</source>
-        <translation>既存のタグ</translation>
+        <translation>Etichetele existente</translation>
     </message>
     <message>
         <location line="+22"/>
         <location line="+19"/>
         <source>Reload the file storing the tags</source>
-        <translation>タグを保存するファイルを再読み込み</translation>
+        <translation>Reîncărcați fișierul care stochează etichetele</translation>
     </message>
     <message>
         <location line="+223"/>
         <source>Link name</source>
-        <translation>リンク名</translation>
+        <translation>Numele linkului</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Create link</source>
-        <translation>リンクを作成</translation>
+        <translation>Creați linkul</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Catalog Links</source>
-        <translation>カタログリンク</translation>
+        <translation>Linkurile catalogului</translation>
     </message>
     <message>
         <location line="+357"/>
         <source>Linked</source>
-        <translation>リンク済み</translation>
+        <translation>Legat</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Unlinked</source>
-        <translation>リンクなし</translation>
+        <translation>Nelegat</translation>
     </message>
     <message>
         <location line="+124"/>
         <location line="+43"/>
         <source>without links</source>
-        <translation>リンクなし</translation>
+        <translation>fără linkuri</translation>
     </message>
     <message>
         <location line="+18"/>
         <location line="+878"/>
         <location filename="../mainwindow_setup.cpp" line="-715"/>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>Setări</translation>
     </message>
     <message>
         <location line="-636"/>
         <location line="+45"/>
         <source>Version</source>
-        <translation>バージョン</translation>
+        <translation>Versiune</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Release Notes</source>
-        <translation>リリースノート</translation>
+        <translation>Note de lansare</translation>
     </message>
     <message>
         <location line="+701"/>
         <location line="+60"/>
         <source>(Changing requires to restart)</source>
-        <translation>（変更には再起動が必要です）</translation>
+        <translation>(Modificarea necesită repornire)</translation>
     </message>
     <message>
         <location line="-428"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation>データモード &quot;メモリ&quot;</translation>
+        <translation>Modul de date „Memorie&quot;</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Select and read folder</source>
-        <translation>フォルダを選択して読み込み</translation>
+        <translation>Selectați și citiți dosarul</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Preload last catalogs</source>
-        <translation>最後のカタログをプリロード</translation>
+        <translation>Preîncărcați ultimele cataloage</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Start up</source>
-        <translation>起動</translation>
+        <translation>Pornire</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Back up</source>
-        <translation>バックアップ</translation>
+        <translation>Copie de rezervă</translation>
     </message>
     <message>
         <location line="-476"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation>データモード &quot;SQLiteローカルファイル&quot;</translation>
+        <translation>Modul de date „Fișier local SQLite&quot;</translation>
     </message>
     <message>
         <location line="-3868"/>
         <source>Apply options to the Selection device tree.</source>
-        <translation>選択デバイスツリーにオプションを適用します。</translation>
+        <translation>Aplicați opțiunile arborelui de dispozitive de selecție.</translation>
     </message>
     <message>
         <location line="+1820"/>
         <source>Type of source</source>
-        <translation>ソースタイプ</translation>
+        <translation>Tipul de sursă</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Local drive</source>
-        <translation>ローカルドライブ</translation>
+        <translation>Unitatea locală</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Samba share</source>
-        <translation>Samba共有</translation>
+        <translation>Partajarea Samba</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>IP address</source>
-        <translation>IPアドレス</translation>
+        <translation>Adresa IP</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Username</source>
-        <translation>ユーザー名</translation>
+        <translation>Numele de utilizator</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>Connection settings</source>
-        <translation>接続設定</translation>
+        <translation>Setările de conexiune</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Verify connection</source>
-        <translation>接続を確認</translation>
+        <translation>Verificați conexiunea</translation>
     </message>
     <message>
         <location line="+622"/>
         <source>BackUp</source>
-        <translation>バックアップ</translation>
+        <translation>Copie de rezervă</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>BackUp links for device</source>
-        <translation>デバイスのバックアップリンク</translation>
+        <translation>Linkuri de rezervă pentru dispozitiv</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;選択したデバイスのリンクを再読み込みし、統計を更新します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reîncărcați linkurile și actualizați statisticile pentru dispozitivul selectat.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+88"/>
         <source>Create new link</source>
-        <translation>新しいリンクを作成</translation>
+        <translation>Creați un link nou</translation>
     </message>
     <message>
         <location line="+306"/>
         <source>Coverage</source>
-        <translation>カバレッジ</translation>
+        <translation>Acoperire</translation>
     </message>
     <message>
         <location line="+246"/>
         <source>Load Source Catalogs</source>
-        <translation>ソースカタログを読み込み</translation>
+        <translation>Încărcați cataloagele sursă</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Load Target Catalogs</source>
-        <translation>ターゲットカタログを読み込み</translation>
+        <translation>Încărcați cataloagele țintă</translation>
     </message>
     <message>
         <location line="+149"/>
         <source>File list display</source>
-        <translation>ファイルリスト表示</translation>
+        <translation>Afișarea listei de fișiere</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
-        <translation>有効にすると、大文字小文字を区別したソートが適用され、AA、AB、AC、Aa、Ab、Acの順序になります</translation>
+        <translation>Dacă este activată, sortarea va respecta sortarea sensibilă la majuscule, astfel încât să avem această ordine AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>File sorting is Case Sensitive</source>
-        <translation>ファイルソートは大文字小文字を区別</translation>
+        <translation>Sortarea fișierelor este sensibilă la majuscule</translation>
     </message>
     <message>
         <location line="+93"/>
         <source>Documentation</source>
-        <translation>ドキュメンテーション</translation>
+        <translation>Documentație</translation>
     </message>
     <message>
         <location line="+251"/>
         <source>The collection data is saved to an SQLite .db file.</source>
-        <translation>コレクションデータはSQLite .dbファイルに保存されます。</translation>
+        <translation>Datele colecției sunt salvate într-un fișier SQLite .db.</translation>
     </message>
     <message>
         <location line="+46"/>
         <location line="+222"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Aplicați</translation>
     </message>
     <message>
         <location line="-192"/>
         <source>Select and open database file</source>
-        <translation>データベースファイルを選択して開く</translation>
+        <translation>Selectați și deschideți fișierul bazei de date</translation>
     </message>
     <message>
         <location line="+51"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation>エクスポートして「ファイル」モードでコレクションを開きます。</translation>
+        <translation>Exportați pentru a converti și deschide colecția în modul „Fișier&quot;.</translation>
     </message>
     <message>
         <location line="-203"/>
         <source>Export to Memory mode (csv)</source>
-        <translation>メモリモードにエクスポート (csv)</translation>
+        <translation>Exportați în modul Memorie (csv)</translation>
     </message>
     <message>
         <location line="+206"/>
         <source>Export to SQLite file</source>
-        <translation>SQLiteファイルにエクスポート</translation>
+        <translation>Exportați în fișierul SQLite</translation>
     </message>
     <message>
         <location line="+265"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation>データモード &quot;ホスト型データベース&quot;</translation>
+        <translation>Modul de date „Baza de date găzduită&quot;</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
-        <translation>コレクションデータは、ローカルまたはリモートサーバーでホストされているデータベースに保存されます。</translation>
+        <translation>Datele colecției sunt salvate într-o bază de date găzduită pe un server local sau la distanță.</translation>
     </message>
     <message>
         <location line="+209"/>
         <source>Apply and restart</source>
-        <translation>適用して再起動</translation>
+        <translation>Aplicați și reporniți</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Select a theme</source>
-        <translation>テーマを選択</translation>
+        <translation>Selectați o temă</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Desktop Theme</source>
         <extracomment>Using desktop theme</extracomment>
-        <translation>デスクトップテーマ</translation>
+        <translation>Tema desktop-ului</translation>
     </message>
     <message>
         <location line="-17"/>
         <source>Theme</source>
-        <translation>テーマ</translation>
+        <translation>Temă</translation>
     </message>
     <message>
         <location line="+96"/>
         <source>(requires to restart)</source>
-        <translation>（再起動が必要です）</translation>
+        <translation>(necesită repornire)</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Language</source>
-        <translation>言語</translation>
+        <translation>Limbă</translation>
     </message>
     <message>
         <location line="-729"/>
         <source>Collection folder</source>
-        <translation>コレクションフォルダ</translation>
+        <translation>Dosarul colecției</translation>
     </message>
     <message>
         <location line="-174"/>
         <location line="+225"/>
         <location line="+540"/>
         <source>Select a different Collection folder</source>
-        <translation>別のコレクションフォルダを選択</translation>
+        <translation>Selectați un dosar de colecție diferit</translation>
     </message>
     <message>
         <location line="-1245"/>
         <source>Other Settings</source>
-        <translation>その他の設定</translation>
+        <translation>Alte setări</translation>
     </message>
     <message>
         <location line="+32"/>
         <location line="+470"/>
         <location line="+225"/>
         <source>Open the collection folder</source>
-        <translation>コレクションフォルダを開く</translation>
+        <translation>Deschideți dosarul colecției</translation>
     </message>
     <message>
         <location line="-692"/>
         <source>Open</source>
-        <translation>開く</translation>
+        <translation>Deschide</translation>
     </message>
     <message>
         <location line="-1000"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-466"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-650"/>
         <source>Open file</source>
-        <translation>ファイルを開く</translation>
+        <translation>Deschide fișierul</translation>
     </message>
     <message>
         <location line="+1695"/>
@@ -1248,32 +1248,32 @@
         <location line="+41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
-        <translation>フォルダを開く</translation>
+        <translation>Deschide dosarul</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-35"/>
         <location line="+41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+10"/>
         <source>Copy folder path</source>
-        <translation>フォルダパスをコピー</translation>
+        <translation>Copiați calea dosarului</translation>
     </message>
     <message>
         <location line="-37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
-        <translation>ファイルの絶対パスをコピー</translation>
+        <translation>Copiați calea absolută a fișierului</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name with extension</source>
-        <translation>拡張子付きファイル名をコピー</translation>
+        <translation>Copiați numele fișierului cu extensia</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name without extension</source>
-        <translation>拡張子なしファイル名をコピー</translation>
+        <translation>Copiați numele fișierului fără extensie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-7242"/>
@@ -1284,7 +1284,7 @@
         <location filename="../mainwindow_tab_explore.cpp" line="+437"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>Nume</translation>
     </message>
     <message>
         <location line="-583"/>
@@ -1295,7 +1295,7 @@
         <location filename="../mainwindow_tab_search_ui.cpp" line="+971"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
-        <translation>日付</translation>
+        <translation>Dată</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+61"/>
@@ -1303,13 +1303,13 @@
         <location filename="../mainwindow_tab_filters.cpp" line="+61"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
-        <translation>この新しいカタログでカタログ化するディレクトリを選択</translation>
+        <translation>Selectați directorul care va fi catalogat în acest nou catalog</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="+10"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
-        <translation>このコレクションのディレクトリを選択</translation>
+        <translation>Selectați directorul pentru această colecție</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-5487"/>
@@ -1318,13 +1318,13 @@
         <location line="+223"/>
         <location line="+252"/>
         <source>Total Size</source>
-        <translation>総サイズ</translation>
+        <translation>Dimensiunea totală</translation>
     </message>
     <message>
         <location line="-1354"/>
         <location line="+1537"/>
         <source>Source Path</source>
-        <translation>ソースパス</translation>
+        <translation>Calea sursă</translation>
     </message>
     <message>
         <location line="-1401"/>
@@ -1332,115 +1332,115 @@
         <location line="+370"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
-        <translation>ファイルタイプ</translation>
+        <translation>Tipul fișierului</translation>
     </message>
     <message>
         <location line="+3599"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
         <location line="+7"/>
         <source>File Size</source>
-        <translation>ファイルサイズ</translation>
+        <translation>Dimensiunea fișierului</translation>
     </message>
     <message>
         <location line="-3204"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-631"/>
         <source>Label</source>
-        <translation>ラベル</translation>
+        <translation>Etichetă</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>FileSystem</source>
-        <translation>ファイルシステム</translation>
+        <translation>Sistemul de fișiere</translation>
     </message>
     <message>
         <location line="+3456"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
-        <translation>合計</translation>
+        <translation>Total</translation>
     </message>
     <message>
         <location line="-4220"/>
         <source>Free</source>
-        <translation>空き</translation>
+        <translation>Liber</translation>
     </message>
     <message>
         <location line="+698"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
-        <translation>シリアル番号</translation>
+        <translation>Numărul de serie</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Build Date</source>
-        <translation>ビルド日</translation>
+        <translation>Data de construire</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1435"/>
         <source>The catalog is already assigned to this Virtual device.</source>
-        <translation>このカタログは既にこの仮想デバイスに割り当てられています。</translation>
+        <translation>Catalogul este deja atribuit acestui dispozitiv virtual.</translation>
     </message>
     <message>
         <location line="+146"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
-        <translation>この仮想デバイスからこのカタログの割り当てを解除しますか？</translation>
+        <translation>Doriți să anulați atribuirea acestui catalog de la acest dispozitiv virtual?</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Deletion failed</source>
-        <translation>削除に失敗しました</translation>
+        <translation>Ștergerea a eșuat</translation>
     </message>
     <message>
         <location line="+93"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;br/&gt;このコレクションのスナップショットが記録されました：&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;カタログ&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ファイル数: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;総ファイルサイズ: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;ストレージ&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ストレージ空き容量: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ストレージ総容量: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+        <translation>&lt;br/&gt;O captură de ecran a acestei colecții a fost înregistrată:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Cataloage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Numărul de fișiere: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensiunea totală a fișierului: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Stocare&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spațiul liber de stocare: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spațiul total de stocare: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location line="+344"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
-        <translation>この名前のカタログは既に存在します：&lt;br/&gt;&lt;b&gt;</translation>
+        <translation>Există deja un catalog cu acest nume:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>このIDのストレージは既に存在します。&lt;b&gt;</translation>
+        <translation>Există deja o stocare cu acest ID.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>別のIDを選択してもう一度お試しください。</translation>
+        <translation>Alegeți un ID diferit și încercați din nou.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
-        <translation>物理グループのカタログは、ストレージまたはこのグループ下にのみ設定できます。このグループのストレージを選択してください。&lt;br/&gt;&lt;br/&gt;仮想グループのデバイス下でこのカタログを使用するには、割り当てコマンドを使用してください。&lt;b&gt;</translation>
+        <translation>Un catalog din grupul fizic poate fi setat doar sub o stocare sau acest grup. Selectați o stocare din acest grup.&lt;br/&gt;&lt;br/&gt;Pentru a utiliza acest catalog sub un dispozitiv dintr-un grup virtual, utilizați comanda Atribuire.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+526"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Parent ID</source>
-        <translation>親ID</translation>
+        <translation>ID-ul părintelui</translation>
     </message>
     <message>
         <location line="-474"/>
         <source>External ID</source>
-        <translation>外部ID</translation>
+        <translation>ID-ul extern</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Number of files</source>
-        <translation>ファイル数</translation>
+        <translation>Numărul de fișiere</translation>
     </message>
     <message>
         <location line="-472"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Free space</source>
-        <translation>空き容量</translation>
+        <translation>Spațiu liber</translation>
     </message>
     <message>
         <location line="-474"/>
@@ -1448,124 +1448,124 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-24"/>
         <source>Total space</source>
-        <translation>総容量</translation>
+        <translation>Spațiul total</translation>
     </message>
     <message>
         <location line="-474"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Date updated</source>
-        <translation>更新日</translation>
+        <translation>Data actualizării</translation>
     </message>
     <message>
         <location line="-473"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Group ID</source>
-        <translation>グループID</translation>
+        <translation>ID-ul grupului</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Catalog ID</source>
-        <translation>カタログID</translation>
+        <translation>ID-ul catalogului</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>include hidden</source>
-        <translation>隠しファイルを含む</translation>
+        <translation>include ascunse</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>include metadata</source>
-        <translation>メタデータを含む</translation>
+        <translation>include metadate</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent storage</source>
-        <translation>親ストレージ</translation>
+        <translation>Stocarea părinte</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Fulldevice</source>
-        <translation>フルデバイス</translation>
+        <translation>Dispozitiv complet</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Loaded</source>
-        <translation>読み込み日</translation>
+        <translation>Data încărcării</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>App Version</source>
-        <translation>アプリバージョン</translation>
+        <translation>Versiunea aplicației</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Path</source>
-        <translation>ファイルパス</translation>
+        <translation>Calea fișierului</translation>
     </message>
     <message>
         <location line="+359"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
-        <translation>カタログの定義への変更を保存しますか？&lt;br/&gt;</translation>
+        <translation>Salvați modificările la definiția catalogului?&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>field</source>
-        <translation>フィールド</translation>
+        <translation>câmp</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>previous value</source>
-        <translation>前の値</translation>
+        <translation>valoarea anterioară</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>new value</source>
-        <translation>新しい値</translation>
+        <translation>valoarea nouă</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Include Hidden</source>
-        <translation>隠しファイルを含める</translation>
+        <translation>Include ascunse</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Is Full Device</source>
-        <translation>フルデバイスです</translation>
+        <translation>Este dispozitiv complet</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>(The catalog must be updated to reflect these changes)</source>
-        <translation>（これらの変更を反映するにはカタログを更新する必要があります）</translation>
+        <translation>(Catalogul trebuie actualizat pentru a reflecta aceste modificări)</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Update the catalog content with the new criteria?
 </source>
-        <translation>新しい条件でカタログ内容を更新しますか？
+        <translation>Actualizați conținutul catalogului cu noile criterii?
 </translation>
     </message>
     <message>
         <location line="+89"/>
         <source>Select the csv file to be imported</source>
-        <translation>インポートするcsvファイルを選択</translation>
+        <translation>Selectați fișierul csv care va fi importat</translation>
     </message>
     <message>
         <location line="+56"/>
         <source>No catalog found.</source>
-        <translation>カタログが見つかりません。</translation>
+        <translation>Nu s-a găsit niciun catalog.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>A file was found, but could not be loaded</source>
-        <translation>ファイルが見つかりましたが、読み込めませんでした</translation>
+        <translation>S-a găsit un fișier, dar nu a putut fi încărcat</translation>
     </message>
     <message>
         <location line="+222"/>
         <source>Catalog updated: </source>
-        <translation>カタログが更新されました: </translation>
+        <translation>Catalog actualizat: </translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1575,13 +1575,13 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Path: </source>
-        <translation>パス: </translation>
+        <translation>Cale: </translation>
     </message>
     <message>
         <location line="-112"/>
         <location line="+39"/>
         <source>Number of files: </source>
-        <translation>ファイル数: </translation>
+        <translation>Numărul de fișiere: </translation>
     </message>
     <message>
         <location line="-39"/>
@@ -1599,13 +1599,13 @@
         <location line="+1"/>
         <location line="+1"/>
         <source>(added: </source>
-        <translation>（追加: </translation>
+        <translation>(adăugat: </translation>
     </message>
     <message>
         <location line="-117"/>
         <location line="+39"/>
         <source>Total file size: </source>
-        <translation>総ファイルサイズ: </translation>
+        <translation>Dimensiunea totală a fișierului: </translation>
     </message>
     <message>
         <location line="-27"/>
@@ -1613,7 +1613,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Storage updated: </source>
-        <translation>ストレージが更新されました: </translation>
+        <translation>Stocare actualizată: </translation>
     </message>
     <message>
         <location line="-93"/>
@@ -1621,7 +1621,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Used Space: </source>
-        <translation>使用容量: </translation>
+        <translation>Spațiul utilizat: </translation>
     </message>
     <message>
         <location line="-97"/>
@@ -1629,7 +1629,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Free Space: </source>
-        <translation>空き容量: </translation>
+        <translation>Spațiu liber: </translation>
     </message>
     <message>
         <location line="-97"/>
@@ -1637,42 +1637,42 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Total Space: </source>
-        <translation>総容量: </translation>
+        <translation>Spațiul total: </translation>
     </message>
     <message>
         <location line="-83"/>
         <source>Catalog created: </source>
-        <translation>カタログが作成されました: </translation>
+        <translation>Catalog creat: </translation>
     </message>
     <message>
         <location line="+59"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
-        <translation>&lt;table&gt;&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;から選択されたアクティブなカタログが更新されました。&amp;nbsp;&lt;br/&gt;</translation>
+        <translation>&lt;table&gt;&lt;br/&gt;Cataloagele active selectate din &lt;b&gt;%1&lt;/b&gt; sunt actualizate.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 個のカタログが更新されました（アクティブ）、%2 個のカタログがスキップされました（非アクティブ）</translation>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 cataloage actualizate (active), %2 cataloage sărite (inactive)</translation>
     </message>
     <message>
         <location line="+91"/>
         <source>Update all active catalogs</source>
-        <translation>すべてのアクティブなカタログを更新</translation>
+        <translation>Actualizați toate cataloagele active</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Do you want a the summary of updates for each catalog?</source>
-        <translation>各カタログの更新概要を表示しますか？</translation>
+        <translation>Doriți rezumatul actualizărilor pentru fiecare catalog?</translation>
     </message>
     <message>
         <location line="+192"/>
         <source>Upgraded collection to v2.0.</source>
-        <translation>コレクションをv2.0にアップグレードしました。</translation>
+        <translation>Colecția a fost actualizată la v2.0.</translation>
     </message>
     <message>
         <location line="+1196"/>
         <source>The device selected must be a Catalog. Try with a different device ID</source>
-        <translation>選択したデバイスはカタログである必要があります。別のデバイスIDで試してください</translation>
+        <translation>Dispozitivul selectat trebuie să fie un catalog. Încercați cu un ID de dispozitiv diferit</translation>
     </message>
     <message>
         <location line="-2877"/>
@@ -1680,65 +1680,65 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
         <source>Used space</source>
-        <translation>使用容量</translation>
+        <translation>Spațiul utilizat</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_statistics.cpp" line="-163"/>
         <source>All device records</source>
-        <translation>すべてのデバイスレコード</translation>
+        <translation>Toate înregistrările dispozitivelor</translation>
     </message>
     <message>
         <location line="+177"/>
         <source>of</source>
-        <translation>/</translation>
+        <translation>din</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-4096"/>
         <location line="+1889"/>
         <location line="+67"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
-        <translation>検索テキストをファイル名のみ、フォルダパスのみ、または両方で検索するかを定義します。</translation>
+        <translation>Definiți dacă textul de căutare trebuie folosit pentru a căuta doar în numele fișierelor, sau căile dosarelor, sau ambele.</translation>
     </message>
     <message>
         <location line="-2099"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
-        <translation>検索テキストの使用方法を定義します。</translation>
+        <translation>Definiți cum trebuie folosit textul de căutare.</translation>
     </message>
     <message>
         <location line="+5703"/>
         <source>Include Hidden files</source>
-        <translation>隠しファイルを含める</translation>
+        <translation>Include fișierele ascunse</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Follow symbolic links</source>
-        <translation>シンボリックリンクを追跡</translation>
+        <translation>Urmați legăturile simbolice</translation>
     </message>
     <message>
         <location line="+400"/>
         <source>Generate a catalog name based on the path.</source>
-        <translation>パスに基づいてカタログ名を生成します。</translation>
+        <translation>Generați un nume de catalog bazat pe cale.</translation>
     </message>
     <message>
         <location line="-6987"/>
         <source>Reset all filters</source>
-        <translation>すべてのフィルタをリセット</translation>
+        <translation>Resetați toate filtrele</translation>
     </message>
     <message>
         <location line="+9024"/>
         <source>About</source>
-        <translation>このアプリについて</translation>
+        <translation>Despre</translation>
     </message>
     <message>
         <location line="+710"/>
         <source>Auto-backup catalogs</source>
-        <translation>カタログの自動バックアップ</translation>
+        <translation>Cataloage de rezervă automate</translation>
     </message>
     <message>
         <location line="+539"/>
         <source>Keep records of files and size for Statistics</source>
-        <translation>統計用にファイルとサイズの記録を保持</translation>
+        <translation>Păstrați înregistrările fișierelor și dimensiunile pentru statistici</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-667"/>
@@ -1765,68 +1765,69 @@
     <message>
         <location line="-343"/>
         <source>Explore folder</source>
-        <translation>フォルダを探索</translation>
+        <translation>Explorează dosarul</translation>
     </message>
     <message>
         <location line="+168"/>
         <source>Move
 %1
 to another folder?</source>
-        <translation>%1
-を別のフォルダに移動しますか？</translation>
+        <translation>Mutați
+%1
+în alt dosar?</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation>ファイル %&amp; は既に存在します。上書きしますか？</translation>
+        <translation>Un fișier %&amp; există deja. Îl suprascrieți?</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Cancelled move to folder.</source>
-        <translation>フォルダへの移動をキャンセルしました。</translation>
+        <translation>Mutarea în dosar a fost anulată.</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>This file cannot be moved (offline or not existing).</source>
-        <translation>このファイルは移動できません（オフラインまたは存在しません）。</translation>
+        <translation>Acest fișier nu poate fi mutat (offline sau inexistent).</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+431"/>
         <source>MOVE</source>
-        <translation>移動</translation>
+        <translation>MUTARE</translation>
     </message>
     <message>
         <location line="-430"/>
         <source>Move this file to the trash?</source>
-        <translation>このファイルをゴミ箱に移動しますか？</translation>
+        <translation>Mutați acest fișier la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+42"/>
         <source>Information</source>
-        <translation>情報</translation>
+        <translation>Informații</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Moving a folder to Trash is not available.</source>
-        <translation>フォルダをゴミ箱に移動することはできません。</translation>
+        <translation>Mutarea unui dosar la coșul de gunoi nu este disponibilă.</translation>
     </message>
     <message>
         <location line="+24"/>
         <location line="+428"/>
         <source>DELETE</source>
-        <translation>削除</translation>
+        <translation>ȘTERGE</translation>
     </message>
     <message>
         <location line="-427"/>
         <source>Delete this file?</source>
-        <translation>このファイルを削除しますか？</translation>
+        <translation>Ștergeți acest fișier?</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Deleting a folder is not available.</source>
-        <translation>フォルダの削除はできません。</translation>
+        <translation>Ștergerea unui dosar nu este disponibilă.</translation>
     </message>
     <message>
         <location line="+51"/>
@@ -1840,496 +1841,496 @@ to another folder?</source>
         <location line="+11"/>
         <location line="+29"/>
         <source>Bytes</source>
-        <translation>バイト</translation>
+        <translation>Octeți</translation>
     </message>
     <message>
         <location line="+234"/>
         <source>Select first a process to be applied to all results below.</source>
-        <translation>最初に以下のすべての結果に適用するプロセスを選択してください。</translation>
+        <translation>Selectați mai întâi un proces care să fie aplicat tuturor rezultatelor de mai jos.</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Results exported to the collection folder:</source>
-        <translation>結果をコレクションフォルダにエクスポートしました：</translation>
+        <translation>Rezultatele exportate în dosarul colecției:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported a new Catalog:</source>
-        <translation>結果を新しいカタログにエクスポートしました：</translation>
+        <translation>Rezultatele au exportat un nou catalog:</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Move all %1 files (%2) from these results to trash?</source>
-        <translation>これらの結果からすべての %1 ファイル (%2) をゴミ箱に移動しますか？</translation>
+        <translation>Mutați toate %1 fișierele (%2) din aceste rezultate la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Problem moving file: </source>
-        <translation>ファイル移動の問題: </translation>
+        <translation>Problemă la mutarea fișierului: </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 files were moved to trash, out of %2 files from the results.</source>
-        <translation>結果から %2 ファイル中 %1 ファイルがゴミ箱に移動されました。</translation>
+        <translation>%1 fișiere au fost mutate la coșul de gunoi, din %2 fișiere din rezultate.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Moving a list of folders to Trash is not available.</source>
-        <translation>フォルダのリストをゴミ箱に移動することはできません。</translation>
+        <translation>Mutarea unei liste de dosare la coșul de gunoi nu este disponibilă.</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Delete permanently all %1 files (%2) from these results?</source>
-        <translation>これらの結果からすべての %1 ファイル (%2) を完全に削除しますか？</translation>
+        <translation>Ștergeți definitiv toate %1 fișierele (%2) din aceste rezultate?</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>%1 files were deleted, out of %2 files from the results.</source>
-        <translation>結果から %2 ファイル中 %1 ファイルが削除されました。</translation>
+        <translation>%1 fișiere au fost șterse, din %2 fișiere din rezultate.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Deleting a list of folders is not available.</source>
-        <translation>フォルダのリストを削除することはできません。</translation>
+        <translation>Ștergerea unei liste de dosare nu este disponibilă.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
-        <translation>これらの結果からカタログを作成しますか？&lt;br/&gt;- はい：結果を保存し、検索を絞り込むために&lt;b&gt;カタログ&lt;/b&gt;を作成します&lt;br/&gt;- いいえ：結果を&lt;b&gt;csvファイル&lt;/b&gt;にエクスポートします。</translation>
+        <translation>Creați un catalog din aceste rezultate?&lt;br/&gt;- Da: creați un &lt;b&gt;Catalog&lt;/b&gt; pentru a stoca rezultatele și utilizați-l pentru a vă rafina căutarea,&lt;br/&gt;- Nu: exportați rezultatele într-un &lt;b&gt;fișier csv&lt;/b&gt;.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>search_results</source>
-        <translation>検索結果</translation>
+        <translation>rezultate_cautare</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search Results</source>
-        <translation>検索結果</translation>
+        <translation>Rezultatele căutării</translation>
     </message>
     <message>
         <location line="+246"/>
         <source>Text Phrase selected</source>
-        <translation>テキストフレーズが選択されました</translation>
+        <translation>Fraza de text selectată</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Phrase</source>
-        <translation>テキストフレーズ</translation>
+        <translation>Fraza de text</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Criteria</source>
-        <translation>テキスト条件</translation>
+        <translation>Criteriile textului</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Search In</source>
-        <translation>テキスト検索対象</translation>
+        <translation>Căutare de text în</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Case Sensitive</source>
-        <translation>大文字小文字を区別</translation>
+        <translation>Sensibil la majuscule</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Exclude</source>
-        <translation>テキスト除外</translation>
+        <translation>Exclude textul</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Criteria selected</source>
-        <translation>ファイル条件が選択されました</translation>
+        <translation>Criteriile fișierului selectate</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Type selected</source>
-        <translation>ファイルタイプが選択されました</translation>
+        <translation>Tipul de fișier selectat</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>File Size selected</source>
-        <translation>ファイルサイズが選択されました</translation>
+        <translation>Dimensiunea fișierului selectată</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Min</source>
-        <translation>ファイルサイズ最小</translation>
+        <translation>Dimensiunea min. a fișierului</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Min Unit</source>
-        <translation>ファイルサイズ最小単位</translation>
+        <translation>Unitatea min. a dimensiunii fișierului</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Max</source>
-        <translation>ファイルサイズ最大</translation>
+        <translation>Dimensiunea max. a fișierului</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Max Unit</source>
-        <translation>ファイルサイズ最大単位</translation>
+        <translation>Unitatea max. a dimensiunii fișierului</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified selected</source>
-        <translation>更新日が選択されました</translation>
+        <translation>Data modificării selectată</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified Min</source>
-        <translation>更新日最小</translation>
+        <translation>Data min. a modificării</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified Max</source>
-        <translation>更新日最大</translation>
+        <translation>Data max. a modificării</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates selected</source>
-        <translation>重複が選択されました</translation>
+        <translation>Duplicatele selectate</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Name</source>
-        <translation>重複名前</translation>
+        <translation>Numele duplicatelor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Size</source>
-        <translation>重複サイズ</translation>
+        <translation>Dimensiunea duplicatelor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Date Modified</source>
-        <translation>重複更新日</translation>
+        <translation>Data modificării duplicatelor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences selected</source>
-        <translation>差異が選択されました</translation>
+        <translation>Diferențele selectate</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Name</source>
-        <translation>差異名前</translation>
+        <translation>Numele diferențelor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Size</source>
-        <translation>差異サイズ</translation>
+        <translation>Dimensiunea diferențelor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Date Modified</source>
-        <translation>差異更新日</translation>
+        <translation>Data modificării diferențelor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Catalogs</source>
-        <translation>差異カタログ</translation>
+        <translation>Cataloagele diferențelor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folders selected</source>
-        <translation>フォルダが選択されました</translation>
+        <translation>Dosarele selectate</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show Folders</source>
-        <translation>フォルダを表示</translation>
+        <translation>Afișați dosarele</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tag selected</source>
-        <translation>タグが選択されました</translation>
+        <translation>Eticheta selectată</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Selected Location</source>
-        <translation>選択された場所</translation>
+        <translation>Locația selectată</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Storage</source>
-        <translation>選択されたストレージ</translation>
+        <translation>Stocarea selectată</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Catalog</source>
-        <translation>選択されたカタログ</translation>
+        <translation>Catalogul selectat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search Catalog selected</source>
-        <translation>検索カタログが選択されました</translation>
+        <translation>Catalogul de căutare selectat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search Directory selected</source>
-        <translation>検索ディレクトリが選択されました</translation>
+        <translation>Directorul de căutare selectat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Directory</source>
-        <translation>選択されたディレクトリ</translation>
+        <translation>Directorul selectat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Device ID List</source>
-        <translation>選択されたデバイスIDリスト</translation>
+        <translation>Lista ID-urilor dispozitivelor selectate</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-542"/>
         <source>Always keep one back of each catalog</source>
-        <translation>各カタログのバックアップを常に1つ保持</translation>
+        <translation>Păstrați întotdeauna o copie de rezervă a fiecărui catalog</translation>
     </message>
     <message>
         <location line="-5391"/>
         <source>Used</source>
-        <translation>使用済み</translation>
+        <translation>Utilizat</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+97"/>
         <source>Remove this directory</source>
-        <translation>このディレクトリを削除</translation>
+        <translation>Eliminați acest director</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
-        <translation>この新しいカタログの名前を入力してください。&lt;br/&gt;</translation>
+        <translation>Furnizați un nume pentru acest nou catalog.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
-        <translation>この新しいカタログのパスを入力してください。&lt;br/&gt;</translation>
+        <translation>Furnizați o cale pentru acest nou catalog.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
-        <translation>この新しいカタログのストレージを選択してください。&lt;br/&gt;（左側の選択パネルとドロップダウンリスト）</translation>
+        <translation>Selectați o stocare pentru acest nou catalog.&lt;br/&gt;(Panoul de selecție din stânga și lista derulantă)</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
-        <translation>この名前のカタログは既に存在します：&lt;br/&gt;&lt;b&gt;</translation>
+        <translation>Există deja un catalog cu acest nume:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1038"/>
         <source>Choose a different name and try again.</source>
-        <translation>別の名前を選択してもう一度お試しください。</translation>
+        <translation>Alegeți un nume diferit și încercați din nou.</translation>
     </message>
     <message>
         <location line="+162"/>
         <source>Resolution</source>
-        <translation>解像度</translation>
+        <translation>Rezoluție</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
-        <translation>起動時に確認</translation>
+        <translation>Verificați la pornire</translation>
     </message>
     <message>
         <location line="-4529"/>
         <source>Include Hidden Files</source>
-        <translation>隠しファイルを含める</translation>
+        <translation>Include fișierele ascunse</translation>
     </message>
     <message>
         <location line="+529"/>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation>Salvați</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="-13"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation>&lt;br/&gt;&lt;b&gt;Katalogへようこそ！&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;初回実行のようです。&lt;br/&gt;&lt;br/&gt;以下の設定が適用されました：&lt;br/&gt; - 言語: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - テーマ: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;これらは%3タブで変更できます。</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Bun venit la Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Se pare că aceasta este prima rulare.&lt;br/&gt;&lt;br/&gt;Următoarele setări au fost aplicate:&lt;br/&gt; - Limba: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Puteți modifica acestea în fila %3.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-974"/>
         <source>Snapshot</source>
-        <translation>スナップショット</translation>
+        <translation>Instantaneu</translation>
     </message>
     <message>
         <location line="+3523"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
-        <translation>ソース</translation>
+        <translation>Sursă</translation>
     </message>
     <message>
         <location line="-2339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デバイスが利用可能な場合、アクティブなすべてのカタログを更新します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizați toate cataloagele care sunt active, dacă dispozitivul este disponibil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;VVVからボリュームリストをインポートします&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importați o listă de volume din VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-219"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-59"/>
         <location line="+126"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Anulare</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="+613"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
-        <translation>現在のバージョン: v%1 &lt;br/&gt;&lt;br/&gt;新しいバージョンが利用可能です: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; 新機能のリストは&lt;a href=&apos;%3&apos;&gt;リリースノート&lt;/a&gt;をご覧ください&lt;br/&gt;&lt;br/&gt;ダウンロードしますか？</translation>
+        <translation>Aceasta este versiunea: v%1 &lt;br/&gt;&lt;br/&gt;O nouă versiune este disponibilă: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Găsiți lista de funcții noi în &lt;a href=&apos;%3&apos;&gt;Notele de lansare&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Doriți să o descărcați?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-375"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+783"/>
         <source>Storage ID</source>
-        <translation>ストレージID</translation>
+        <translation>ID-ul stocării</translation>
     </message>
     <message>
         <location line="+96"/>
         <location line="+454"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デバイスが利用可能な場合、選択したカタログのファイルを更新します&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizați fișierele catalogului selectat, dacă dispozitivul este disponibil&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+706"/>
         <location line="+1327"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
         <source>Directory</source>
-        <translation>ディレクトリ</translation>
+        <translation>Director</translation>
     </message>
     <message>
         <location line="-6859"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
-        <translation>検索テキストから _ - . , などの文字を削除</translation>
+        <translation>Curățați textul de căutare de caractere precum _ - . ,</translation>
     </message>
     <message>
         <location line="+1839"/>
         <source>Duplicates on</source>
-        <translation>重複条件</translation>
+        <translation>Duplicate pe</translation>
     </message>
     <message>
         <location line="+95"/>
         <location line="+232"/>
         <source>Date Modified</source>
-        <translation>更新日</translation>
+        <translation>Data modificării</translation>
     </message>
     <message>
         <location line="+6469"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
-        <translation>アプリ起動時にKatalogの新しいバージョンが利用可能かを確認します。</translation>
+        <translation>Verificați dacă o nouă versiune de Katalog este disponibilă la pornirea aplicației.</translation>
     </message>
     <message>
         <location line="-5198"/>
         <source>Show/Hide search history</source>
-        <translation>検索履歴を表示/非表示</translation>
+        <translation>Afișați/Ascundeți istoricul căutărilor</translation>
     </message>
     <message>
         <location line="-3696"/>
         <source>Search criteria</source>
-        <translation>検索条件</translation>
+        <translation>Criteriile de căutare</translation>
     </message>
     <message>
         <location line="+3089"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
         <source>Tag</source>
-        <translation>タグ</translation>
+        <translation>Etichetă</translation>
     </message>
     <message>
         <location line="+196"/>
         <source>View more statitics about the results</source>
-        <translation>結果の詳細統計を表示</translation>
+        <translation>Vizualizați mai multe statistici despre rezultate</translation>
     </message>
     <message>
         <location line="+449"/>
         <source>Search history</source>
-        <translation>検索履歴</translation>
+        <translation>Istoricul căutărilor</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="-609"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;次の画面で、既存のコレクションフォルダを選択するか、新しく作成してください。</translation>
+        <translation>&lt;br/&gt;&lt;br/&gt;Pe ecranul următor, alegeți un dosar de colecție existent sau creați unul nou.</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
-        <translation>&lt;br/&gt;&lt;b&gt;ファイルカタログを作成する準備ができました：&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Gata să creați un catalog de fișiere:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation>1- ドライブまたはディレクトリ全体を選択、&lt;br/&gt;2- オプションを選択、&lt;br/&gt;3- &apos;作成&apos;をクリック&lt;br/&gt;</translation>
+        <translation>1- Selectați o unitate sau un director întreg, &lt;br/&gt;2- selectați opțiunile, și &lt;br/&gt;3- faceți clic pe „Creează&quot;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-3772"/>
         <source>Show/Hide search criteria</source>
-        <translation>検索条件を表示/非表示</translation>
+        <translation>Afișați/Ascundeți criteriile de căutare</translation>
     </message>
     <message>
         <location line="-454"/>
         <source>Search in connected drives</source>
-        <translation>接続されたドライブを検索</translation>
+        <translation>Căutați în unitățile conectate</translation>
     </message>
     <message>
         <location line="-50"/>
         <source>Search in file catalogs</source>
-        <translation>ファイルカタログを検索</translation>
+        <translation>Căutați în cataloagele de fișiere</translation>
     </message>
     <message>
         <location line="+1496"/>
         <source>exclude</source>
-        <translation>除外</translation>
+        <translation>exclude</translation>
     </message>
     <message>
         <location line="+3472"/>
         <source>is full device</source>
-        <translation>フルデバイス</translation>
+        <translation>este dispozitiv complet</translation>
     </message>
     <message>
         <location line="+2199"/>
         <source>catalog is for the full device</source>
-        <translation>カタログはフルデバイス用</translation>
+        <translation>catalogul este pentru dispozitivul complet</translation>
     </message>
     <message>
         <location line="-4530"/>
         <location line="+232"/>
         <source>Choose to search duplicates based on the next criteria</source>
-        <translation>次の条件に基づいて重複を検索することを選択</translation>
+        <translation>Alegeți să căutați duplicate bazate pe următoarele criterii</translation>
     </message>
     <message>
         <location line="+759"/>
         <source>Choose to use Tags to filter results</source>
-        <translation>タグを使用して結果をフィルタリングすることを選択</translation>
+        <translation>Alegeți să folosiți etichetele pentru a filtra rezultatele</translation>
     </message>
     <message>
         <location line="-2223"/>
         <source>case sensitive</source>
-        <translation>大文字小文字を区別</translation>
+        <translation>sensibil la majuscule</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;結果はテキストと完全に一致する必要があります（文字の大文字小文字を区別）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rezultatele trebuie să se potrivească exact cu textul (sensibil la majuscule)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+8581"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
-        <translation>次の検索を高速化するため、起動時に最後に選択したカタログをプリロード</translation>
+        <translation>Preîncărcați ultimele cataloage selectate la pornire pentru a accelera următoarea căutare</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-432"/>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-993"/>
         <source>Move file to other folder</source>
-        <translation>ファイルを他のフォルダに移動</translation>
+        <translation>Mutați fișierul în alt dosar</translation>
     </message>
     <message>
         <location line="-28"/>
         <source>Move file to Trash</source>
-        <translation>ファイルをゴミ箱に移動</translation>
+        <translation>Mutați fișierul la coșul de gunoi</translation>
     </message>
     <message>
         <location line="+134"/>
@@ -2342,13 +2343,13 @@ to another folder?</source>
         <location line="+389"/>
         <location line="+39"/>
         <source>Confirmation</source>
-        <translation>確認</translation>
+        <translation>Confirmare</translation>
     </message>
     <message>
         <location line="-74"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-515"/>
         <source>Select the folder to move this file</source>
-        <translation>このファイルを移動するフォルダを選択</translation>
+        <translation>Selectați dosarul în care să mutați acest fișier</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -2363,48 +2364,48 @@ to another folder?</source>
         <location line="+27"/>
         <location line="+42"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>Avertisment</translation>
     </message>
     <message>
         <location line="-74"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-73"/>
         <source>Moved to folder:&lt;br/&gt;</source>
-        <translation>フォルダに移動しました：&lt;br/&gt;</translation>
+        <translation>Mutat în dosarul:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+28"/>
         <source>Moved to trash:&lt;br/&gt;</source>
-        <translation>ゴミ箱に移動しました：&lt;br/&gt;</translation>
+        <translation>Mutat la coșul de gunoi:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Move to trash failed.</source>
-        <translation>ゴミ箱への移動に失敗しました。</translation>
+        <translation>Mutarea la coșul de gunoi a eșuat.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
         <source>Deleted.</source>
-        <translation>削除しました。</translation>
+        <translation>Șters.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
-        <translation>削除に失敗しました。</translation>
+        <translation>Ștergerea a eșuat.</translation>
     </message>
     <message>
         <location line="-71"/>
         <source>Move to folder failed.</source>
-        <translation>フォルダへの移動に失敗しました。</translation>
+        <translation>Mutarea în dosar a eșuat.</translation>
     </message>
     <message>
         <location line="-151"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-237"/>
         <source>Delete file</source>
-        <translation>ファイルを削除</translation>
+        <translation>Șterge fișierul</translation>
     </message>
     <message>
         <location line="+131"/>
@@ -2412,137 +2413,138 @@ to another folder?</source>
         <source>Move
 %1
 to the trash?</source>
-        <translation>%1
-をゴミ箱に移動しますか？</translation>
+        <translation>Mutați
+%1
+la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>&lt;span style=&apos;color:red;&apos;&gt;DELETE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</source>
-        <translation>&lt;span style=&apos;color:red;&apos;&gt;削除&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
+        <translation>&lt;span style=&apos;color:red;&apos;&gt;ȘTERGE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
         <location line="-280"/>
         <source>Tag this folder</source>
-        <translation>このフォルダにタグを付ける</translation>
+        <translation>Etichetați acest dosar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-9808"/>
         <source>Selection</source>
-        <translation>選択</translation>
+        <translation>Selecție</translation>
     </message>
     <message>
         <location line="-324"/>
         <location line="+5859"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
-        <translation>1レベル、2レベル展開、または折りたたみ</translation>
+        <translation>Extindeți 1 nivel, 2 nivele sau restrângeți</translation>
     </message>
     <message>
         <location line="+2251"/>
         <source>all records</source>
-        <translation>すべてのレコード</translation>
+        <translation>toate înregistrările</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+36"/>
         <source>updates only</source>
-        <translation>更新のみ</translation>
+        <translation>doar actualizări</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-4"/>
         <source>snapshots only</source>
-        <translation>スナップショットのみ</translation>
+        <translation>doar instantanee</translation>
     </message>
     <message>
         <location line="+394"/>
         <source>Device</source>
-        <translation>デバイス</translation>
+        <translation>Dispozitiv</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Delete selected</source>
-        <translation>選択を削除</translation>
+        <translation>Șterge selecția</translation>
     </message>
     <message>
         <location line="+360"/>
         <source>as Source</source>
-        <translation>ソースとして</translation>
+        <translation>ca sursă</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>as Target</source>
-        <translation>ターゲットとして</translation>
+        <translation>ca țintă</translation>
     </message>
     <message>
         <location line="+216"/>
         <source>Select Source catalog</source>
-        <translation>ソースカタログを選択</translation>
+        <translation>Selectați catalogul sursă</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Select Target catalog</source>
-        <translation>ターゲットカタログを選択</translation>
+        <translation>Selectați catalogul țintă</translation>
     </message>
     <message>
         <location line="+717"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
-        <translation>コレクションデータは、コンピューターにローカルで .idx または .csv ファイルに保存されます。</translation>
+        <translation>Datele colecției sunt salvate în fișiere .idx sau .csv local pe computer.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>The database is in Memory only (RAM).</source>
-        <translation>データベースはメモリ（RAM）のみです。</translation>
+        <translation>Baza de date este doar în memorie (RAM).</translation>
     </message>
     <message>
         <location line="+687"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
-        <translation>Katalog カラー</translation>
+        <translation>Culorile Katalog</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>Language &amp; Theme</source>
-        <translation>言語とテーマ</translation>
+        <translation>Limba și tema</translation>
     </message>
     <message>
         <location line="-1473"/>
         <source>Open Settings file</source>
-        <translation>設定ファイルを開く</translation>
+        <translation>Deschide fișierul de setări</translation>
     </message>
     <message>
         <location line="-2871"/>
         <source>Display folders</source>
-        <translation>フォルダを表示</translation>
+        <translation>Afișați dosarele</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>and all sub-folders</source>
-        <translation>およびすべてのサブフォルダ</translation>
+        <translation>și toate subdosarele</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>Order folders first</source>
-        <translation>フォルダを最初に並べる</translation>
+        <translation>Ordonați dosarele primul</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="+85"/>
         <source>Copy folder name</source>
-        <translation>フォルダ名をコピー</translation>
+        <translation>Copiați numele dosarului</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Delete folder</source>
-        <translation>フォルダを削除</translation>
+        <translation>Șterge dosarul</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Move folder to Trash</source>
-        <translation>フォルダをゴミ箱に移動</translation>
+        <translation>Mutați dosarul la coșul de gunoi</translation>
     </message>
     <message>
         <location line="+393"/>
         <source>orderValue</source>
-        <translation>並び順値</translation>
+        <translation>valoareaOrdinii</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-1587"/>
@@ -2551,191 +2553,191 @@ to the trash?</source>
         <location line="+223"/>
         <location line="+252"/>
         <source>Device Type</source>
-        <translation>デバイスタイプ</translation>
+        <translation>Tipul dispozitivului</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-172"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
-        <translation>選択したカタログには %1 個以上のファイルが含まれています。&lt;br/&gt;開くのに数分かかる場合があります。&lt;br/&gt;続行しますか？</translation>
+        <translation>Catalogul selectat conține mai mult de %1 fișiere.&lt;br/&gt;Poate dura câteva minute să se deschidă.&lt;br/&gt;Continuați?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+5361"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
-        <translation>メモリ</translation>
+        <translation>Memorie</translation>
     </message>
     <message>
         <location line="-9473"/>
         <location line="+1022"/>
         <location line="+1700"/>
         <source>Use the Text criteria in the Search</source>
-        <translation>検索でテキスト条件を使用</translation>
+        <translation>Folosiți criteriile de text în căutare</translation>
     </message>
     <message>
         <location line="-515"/>
         <source>Differences on</source>
-        <translation>差異条件</translation>
+        <translation>Diferențe pe</translation>
     </message>
     <message>
         <location line="+243"/>
         <source>Catalog 1</source>
-        <translation>カタログ 1</translation>
+        <translation>Catalogul 1</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>Catalog2</source>
-        <translation>カタログ2</translation>
+        <translation>Catalogul 2</translation>
     </message>
     <message>
         <location line="-2514"/>
         <source>File name</source>
-        <translation>ファイル名</translation>
+        <translation>Numele fișierului</translation>
     </message>
     <message>
         <location line="+1022"/>
         <source>File criteria</source>
-        <translation>ファイル条件</translation>
+        <translation>Criteriile fișierului</translation>
     </message>
     <message>
         <location line="+1700"/>
         <source>Folder criteria</source>
-        <translation>フォルダ条件</translation>
+        <translation>Criteriile dosarului</translation>
     </message>
     <message>
         <location line="+4737"/>
         <source>Graphic Start Date</source>
-        <translation>グラフィック開始日</translation>
+        <translation>Data de început grafic</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Select date</source>
-        <translation>日付を選択</translation>
+        <translation>Selectați data</translation>
     </message>
     <message>
         <location line="-3237"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+401"/>
         <source>Include Metadata</source>
-        <translation>メタデータを含める</translation>
+        <translation>Include metadatele</translation>
     </message>
     <message>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
-        <translation>メディアファイルのメタデータを含める</translation>
+        <translation>Include metadatele fișierelor media</translation>
     </message>
     <message>
         <location line="+3821"/>
         <source>TESTS</source>
-        <translation>テスト</translation>
+        <translation>TESTE</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>TEST MEDIA</source>
-        <translation>メディアテスト</translation>
+        <translation>TEST MEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
         <source>Local disk</source>
-        <translation>ローカルディスク</translation>
+        <translation>Disc local</translation>
     </message>
     <message>
         <location line="-613"/>
         <source>The directory does not exist. Create it?</source>
-        <translation>ディレクトリが存在しません。作成しますか？</translation>
+        <translation>Directorul nu există. Îl creați?</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>The database file does not exist. Create it?</source>
-        <translation>データベースファイルが存在しません。作成しますか？</translation>
+        <translation>Fișierul bazei de date nu există. Îl creați?</translation>
     </message>
     <message>
         <location line="+339"/>
         <source>Collection Upgrade Required</source>
-        <translation>コレクションのアップグレードが必要</translation>
+        <translation>Este necesară actualizarea colecției</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation>この「Katalog」アプリケーションのバージョン: </translation>
+        <translation>Această aplicație „Katalog&quot; este în versiunea: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Current collection version: </source>
-        <translation>現在のコレクションバージョン: </translation>
+        <translation>Versiunea actuală a colecției: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Collection folder: </source>
-        <translation>コレクションフォルダ: </translation>
+        <translation>Dosarul colecției: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This upgrade process can be performed automatically.</source>
-        <translation>このアップグレード処理は自動で実行できます。</translation>
+        <translation>Acest proces de actualizare poate fi efectuat automat.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
-        <translation>主な変更と移行については、この&lt;a href=&apos;%1&apos;&gt;メジャーリリース2.0&lt;/a&gt;をご覧ください。</translation>
+        <translation>Aflați despre principalele modificări și migrația în această &lt;a href=&apos;%1&apos;&gt;Versiune majoră 2.0&lt;/a&gt;.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
-        <translation>新機能の通常のリストは&lt;a href=&apos;%1&apos;&gt;リリースノート&lt;/a&gt;をご覧ください。</translation>
+        <translation>Găsiți lista obișnuită de noi funcții în &lt;a href=&apos;%1&apos;&gt;Notele de lansare&lt;/a&gt;.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
-        <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;アップグレード前にコレクションフォルダ/ファイルをバックアップしてください！&lt;/b&gt;</translation>
+        <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Faceți o copie de rezervă a dosarului/fișierelor colecției înainte de actualizare!&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>What should be done now?</source>
-        <translation>今何をすべきですか？</translation>
+        <translation>Ce ar trebui să se facă acum?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Upgrade Now</source>
-        <translation>今すぐアップグレード</translation>
+        <translation>Actualizați acum</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Choose a Different Folder</source>
-        <translation>別のフォルダを選択</translation>
+        <translation>Alegeți un dosar diferit</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Exit Application</source>
-        <translation>アプリケーションを終了</translation>
+        <translation>Ieșiți din aplicație</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Select the database to open:</source>
-        <translation>開くデータベースを選択：</translation>
+        <translation>Selectați baza de date de deschis:</translation>
     </message>
     <message>
         <location line="-305"/>
         <source>Select the database to create and open:</source>
-        <translation>作成して開くデータベースを選択：</translation>
+        <translation>Selectați baza de date de creat și deschis:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+122"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
-        <translation>ストレージデバイスリストの一部の変更が保存されていません。&lt;br/&gt;保存して終了、破棄して終了、または終了をキャンセルしますか？</translation>
+        <translation>Unele modificări în lista dispozitivelor de stocare nu au fost salvate.&lt;br/&gt;Salvați și ieșiți, renunțați și ieșiți, sau anulați ieșirea?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+347"/>
         <source> Physical Group</source>
-        <translation> 物理グループ</translation>
+        <translation> Grup fizic</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Virtual device</source>
-        <translation>仮想デバイス</translation>
+        <translation>Dispozitiv virtual</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_tags.cpp" line="+91"/>
         <source>Remove this tag</source>
-        <translation>このタグを削除</translation>
+        <translation>Eliminați această etichetă</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="-66"/>
@@ -2744,7 +2746,7 @@ to the trash?</source>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1005"/>
         <source>Catalog with results</source>
-        <translation>結果を含むカタログ</translation>
+        <translation>Catalog cu rezultate</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
@@ -2757,12 +2759,12 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Mapping Name</source>
-        <translation>マッピング名</translation>
+        <translation>Numele mapării</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Source ID</source>
-        <translation>ソースID</translation>
+        <translation>ID-ul sursei</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2771,105 +2773,105 @@ to the trash?</source>
         <location line="+223"/>
         <location line="+252"/>
         <source>Active</source>
-        <translation>アクティブ</translation>
+        <translation>Activ</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+7"/>
         <source>Files</source>
-        <translation>ファイル</translation>
+        <translation>Fișiere</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
         <source>Date Updated</source>
-        <translation>更新日</translation>
+        <translation>Data actualizării</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Target ID</source>
-        <translation>ターゲットID</translation>
+        <translation>ID-ul țintei</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Target</source>
-        <translation>ターゲット</translation>
+        <translation>Ținta</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Size Diff.</source>
-        <translation>サイズ差</translation>
+        <translation>Dif. dimensiune</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size Diff.(%)</source>
-        <translation>サイズ差(%)</translation>
+        <translation>Dif. dimensiune (%)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Files Diff.</source>
-        <translation>ファイル差</translation>
+        <translation>Dif. fișiere</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Files Diff.(%)</source>
-        <translation>ファイル差(%)</translation>
+        <translation>Dif. fișiere (%)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Diff.</source>
-        <translation>日付差</translation>
+        <translation>Dif. dată</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Parent Device</source>
-        <translation>親デバイス</translation>
+        <translation>Dispozitivul părinte</translation>
     </message>
     <message>
         <location line="+76"/>
         <location line="+5"/>
         <source>Populate the lists first (One or both device lists are empty).</source>
-        <translation>最初にリストを入力してください（一方または両方のデバイスリストが空です）。</translation>
+        <translation>Populați mai întâi listele (Una sau ambele liste de dispozitive sunt goale).</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Invalid selection model</source>
-        <translation>無効な選択モデル</translation>
+        <translation>Model de selecție invalid</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Select a device from both lists.</source>
-        <translation>両方のリストからデバイスを選択してください。</translation>
+        <translation>Selectați un dispozitiv din ambele liste.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Invalid device selection.</source>
-        <translation>無効なデバイス選択です。</translation>
+        <translation>Selecția dispozitivului este invalidă.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Empty device ID.</source>
-        <translation>空のデバイスIDです。</translation>
+        <translation>ID-ul dispozitivului este gol.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Provide a mapping name.</source>
-        <translation>マッピング名を入力してください。</translation>
+        <translation>Furnizați un nume de mapare.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
-        <translation>別のソースまたはターゲットを選択してください（デバイスは自分自身にマッピングできません）。</translation>
+        <translation>Selectați o sursă sau țintă diferită (un dispozitiv nu trebuie să fie mapat la el însuși).</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
         <source>Virtual Group</source>
-        <translation>仮想グループ</translation>
+        <translation>Grup virtual</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
-        <translation>仮想デバイスは他の仮想デバイスにのみ追加できます。&lt;br/&gt;</translation>
+        <translation>Un dispozitiv virtual poate fi adăugat doar la alt dispozitiv virtual.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+170"/>
@@ -2880,151 +2882,151 @@ to the trash?</source>
     <message>
         <location line="-46"/>
         <source>Unassign this catalog</source>
-        <translation>このカタログの割り当てを解除</translation>
+        <translation>Anulați atribuirea acestui catalog</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Delete this catalog</source>
-        <translation>このカタログを削除</translation>
+        <translation>Ștergeți acest catalog</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Unassign this storage</source>
-        <translation>このストレージの割り当てを解除</translation>
+        <translation>Anulați atribuirea acestei stocări</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Delete this storage</source>
-        <translation>このストレージを削除</translation>
+        <translation>Ștergeți această stocare</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Add Virtual device</source>
-        <translation>仮想デバイスを追加</translation>
+        <translation>Adăugați dispozitiv virtual</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Add Storage device</source>
-        <translation>ストレージデバイスを追加</translation>
+        <translation>Adăugați dispozitiv de stocare</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Assign selected catalog</source>
-        <translation>選択したカタログを割り当て</translation>
+        <translation>Atribuiți catalogul selectat</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
-        <translation>このグループはストレージとカタログをホストするために必要です。&lt;br/&gt;削除できません。</translation>
+        <translation>Acest grup este necesar pentru a găzdui stocarea și cataloagele.&lt;br/&gt;Nu poate fi șters.</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
         <location line="+337"/>
         <source>Search Error</source>
-        <translation>検索エラー</translation>
+        <translation>Eroare de căutare</translation>
     </message>
     <message>
         <location line="-112"/>
         <source>Folder</source>
-        <translation>フォルダ</translation>
+        <translation>Dosar</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog Name</source>
-        <translation>カタログ名</translation>
+        <translation>Numele catalogului</translation>
     </message>
     <message>
         <location line="+178"/>
         <location line="+46"/>
         <source>Pause</source>
-        <translation>一時停止</translation>
+        <translation>Pauză</translation>
     </message>
     <message>
         <location line="-31"/>
         <location line="+33"/>
         <source>Resume</source>
-        <translation>再開</translation>
+        <translation>Reluare</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Searching...</source>
-        <translation>検索中...</translation>
+        <translation>Se caută...</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Start a new search</source>
-        <translation>新しい検索を開始</translation>
+        <translation>Începeți o căutare nouă</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pause the current search</source>
-        <translation>現在の検索を一時停止</translation>
+        <translation>Întrerupeți căutarea curentă</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Resume the paused search</source>
-        <translation>一時停止した検索を再開</translation>
+        <translation>Reluați căutarea întreruptă</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Stop the current search</source>
-        <translation>現在の検索を停止</translation>
+        <translation>Opriți căutarea curentă</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Folders found</source>
-        <translation>見つかったフォルダ</translation>
+        <translation>Dosare găsite</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Duplicates found</source>
-        <translation>見つかった重複</translation>
+        <translation>Duplicate găsite</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Differences found</source>
-        <translation>見つかった差異</translation>
+        <translation>Diferențe găsite</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Search interrupted | Files found: %1 | Files processed: %2</source>
-        <translation>検索中断 | 見つかったファイル: %1 | 処理されたファイル: %2</translation>
+        <translation>Căutare întreruptă | Fișiere găsite: %1 | Fișiere procesate: %2</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Search interrupted. No results available.</source>
-        <translation>検索が中断されました。結果が利用できません。</translation>
+        <translation>Căutare întreruptă. Nu sunt disponibile rezultate.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5</source>
-        <translation>カタログ %1 / %2 (%3) を読み込み中 | 見つかったファイル: %4 | 処理されたファイル: %5</translation>
+        <translation>Se încarcă catalogul %1 din %2 (%3) | Fișiere găsite: %4 | Fișiere procesate: %5</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
-        <translation>カタログ %1 / %2 (%3) を読み込み中 | %4 ファイル読み込み済み (%5%) | 見つかったファイル: %6 | 処理されたファイル: %7</translation>
+        <translation>Se încarcă catalogul %1 din %2 (%3) | %4 fișiere încărcate (%5%) | Fișiere găsite: %6 | Fișiere procesate: %7</translation>
     </message>
     <message>
         <location line="+11"/>
         <source> | CATALOG LOADING PAUSED</source>
-        <translation> | カタログ読み込み一時停止中</translation>
+        <translation> | ÎNCĂRCAREA CATALOGULUI ÎNTRERUPTĂ</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
-        <translation>カタログ %1 / %2 を処理中 | 見つかったファイル: %3 | ファイルを処理中...</translation>
+        <translation>Se procesează catalogul %1 din %2 | Fișiere găsite: %3 | Se procesează fișierele...</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Searching in Catalog %1 of %2 | </source>
-        <translation>カタログ %1 / %2 を検索中 | </translation>
+        <translation>Se caută în catalogul %1 din %2 | </translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+5"/>
         <source>Files found: %1 | Files processed: %2</source>
-        <translation>見つかったファイル: %1 | 処理されたファイル: %2</translation>
+        <translation>Fișiere găsite: %1 | Fișiere procesate: %2</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -3034,136 +3036,136 @@ to the trash?</source>
     <message>
         <location line="+18"/>
         <source>No search results available.</source>
-        <translation>検索結果がありません。</translation>
+        <translation>Nu sunt disponibile rezultate de căutare.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Folders Found Statistics</source>
-        <translation>見つかったフォルダの統計</translation>
+        <translation>Statistici dosare găsite</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Files Found Statistics</source>
-        <translation>見つかったファイルの統計</translation>
+        <translation>Statistici fișiere găsite</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Catalogs processed: %1 of %2</source>
-        <translation>処理されたカタログ: %1 / %2</translation>
+        <translation>Cataloage procesate: %1 din %2</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Interrupted Search, incomplete results</source>
-        <translation>中断された検索、不完全な結果</translation>
+        <translation>Căutare întreruptă, rezultate incomplete</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+11"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;tr&gt;&lt;td&gt;処理されたファイル: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;tr&gt;&lt;td&gt;Fișiere procesate: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>&lt;tr&gt;&lt;td&gt;Percentage processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;tr&gt;&lt;td&gt;処理率: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;tr&gt;&lt;td&gt;Procentaj procesat: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Folders found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;見つかったフォルダ:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Dosare găsite:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;見つかったファイル:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Fișiere găsite:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;総サイズ:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;最小サイズ:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;最大サイズ:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;平均サイズ: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;最小日付:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;最大日付:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+        <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensiune totală:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensiune min:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensiune max:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensiune medie: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Data min:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Data max:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location line="+27"/>
         <location line="+32"/>
         <source>Ready</source>
-        <translation>準備完了</translation>
+        <translation>Gata</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Search completed | Files found: %1</source>
-        <translation>検索完了 | 見つかったファイル: %1</translation>
+        <translation>Căutare completă | Fișiere găsite: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings_exp.cpp" line="+48"/>
         <source>Select the directory and file name for his export.</source>
-        <translation>このエクスポートのディレクトリとファイル名を選択してください。</translation>
+        <translation>Selectați directorul și numele fișierului pentru acest export.</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-        <translation>メモリ内データベースのファイルへのエクスポートに失敗しました。&lt;br/&gt;&lt;br/&gt; エクスポートファイルパス: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
+        <translation>Nu s-a reușit exportarea bazei de date din memorie în fișier.&lt;br/&gt;&lt;br/&gt; Calea fișierului de export: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Successful export of collection to SQLite database file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-        <translation>コレクションのSQLiteデータベースファイルへのエクスポートが成功しました。&lt;br/&gt;&lt;br/&gt; エクスポートファイルパス: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
+        <translation>Export reușit al colecției în fișierul bazei de date SQLite.&lt;br/&gt;&lt;br/&gt; Calea fișierului de export: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Select the directory for the CSV export</source>
-        <translation>CSVエクスポートのディレクトリを選択</translation>
+        <translation>Selectați directorul pentru exportul CSV</translation>
     </message>
     <message>
         <location line="+80"/>
         <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
-        <translation>データベースのCSVファイルへのエクスポートが成功しました。&lt;br/&gt;&lt;br/&gt;エクスポートディレクトリ: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;メモリモードに切り替えて、このコレクションを読み込むことができます。</translation>
+        <translation>Baza de date a fost exportată cu succes în fișiere CSV.&lt;br/&gt;&lt;br/&gt;Directorul de export: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Acum puteți comuta în modul Memorie și încărca această colecție.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Export failed: %1</source>
-        <translation>エクスポートに失敗しました: %1</translation>
+        <translation>Exportul a eșuat: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
         <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
-        <translation>このカタログは正しくインポートされていないか、古い形式のようです。&lt;br/&gt;編集して、最初の2行が以下のようになっていることを確認してください：&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/フォルダパス&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;これらの行をファイルの先頭にコピー/貼り付けし、&gt;の後の値を変更してください：&lt;br/&gt;- catalogSourcePathはファイルをカタログ化するフォルダです。&lt;br/&gt;- catalogFileCountの数字はそれほど重要ではなく、更新できます。&lt;br/&gt;</translation>
+        <translation>Se pare că acest catalog nu a fost importat corect sau are un format vechi.&lt;br/&gt;Editați-l și asigurați-vă că are următoarele primele 2 linii:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/calea_dosarului&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copiați/lipiți aceste linii la începutul fișierului și modificați valorile după &gt;:&lt;br/&gt;- catalogSourcePath este dosarul din care să catalogheze fișierele.&lt;br/&gt;- numărul catalogFileCount nu contează atât de mult, poate fi actualizat.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+15"/>
         <location line="+55"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
-        <translation>最初にカタログを選択してください（一部の情報が不足しています）。&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
+        <translation>Selectați mai întâi un catalog (lipsesc unele informații).&lt;br/&gt; calea_fișierului_catalogului_curent: %1 &lt;br/&gt;numele_catalogului_curent: %2 &lt;br/&gt; calea_sursei_catalogului_curent: %3</translation>
     </message>
     <message>
         <location line="-41"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-        <translation>ソースフォルダにファイルが含まれていません。&lt;br/&gt;これはソースが空であるか、デバイスがこのフォルダにマウントされていないことを意味する可能性があります。&lt;br/&gt;それでも保存しますか（カタログは空になります）？</translation>
+        <translation>Dosarul sursă nu conține niciun fișier.&lt;br/&gt;Aceasta ar putea însemna că sursa este goală sau dispozitivul nu este montat în acest dosar.&lt;br/&gt;Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
-        <translation>カタログ &lt;b&gt;%1&lt;/b&gt; を更新できません。&lt;br/&gt;&lt;br/&gt; ソースフォルダが見つかりませんでした。&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; 考えられる理由：&lt;br/&gt;    - デバイスが接続されてマウントされていない&lt;br/&gt;    - ソースフォルダが移動または名前変更された&lt;br/&gt;    - 入力されたソースフォルダが正しくない</translation>
+        <translation>Catalogul &lt;b&gt;%1&lt;/b&gt; nu poate fi actualizat.&lt;br/&gt;&lt;br/&gt; Dosarul sursă nu a fost găsit.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Motive posibile:&lt;br/&gt;    - dispozitivul nu este conectat și montat,&lt;br/&gt;    - dosarul sursă a fost mutat sau redenumit,&lt;br/&gt;    - dosarul sursă introdus este incorect.</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+87"/>
         <source>Could not open file.</source>
-        <translation>ファイルを開けませんでした。</translation>
+        <translation>Nu s-a putut deschide fișierul.</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Error opening output file.</source>
-        <translation>出力ファイルを開くときにエラーが発生しました。</translation>
+        <translation>Eroare la deschiderea fișierului de ieșire.</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Select a catalog with a valid path.</source>
-        <translation>有効なパスを持つカタログを選択してください。</translation>
+        <translation>Selectați un catalog cu o cale validă.</translation>
     </message>
     <message>
         <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
-        <translation>ストレージ: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;ソースフォルダにファイルが含まれていません：&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;これはデバイスがこのフォルダにマウントされていないか、&lt;br/&gt;フォルダが単に空であることを意味する可能性があります。&lt;br/&gt;&lt;br/&gt;とにかく値を取得しようとしますか？</translation>
+        <translation>Stocare: &lt;b&gt;„%1&quot;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dosarul sursă nu conține niciun fișier:&lt;br/&gt;&lt;b&gt;„%2&quot;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Aceasta ar putea însemna că dispozitivul nu este montat în acest dosar,&lt;br/&gt;sau dosarul este pur și simplu gol.&lt;br/&gt;&lt;br/&gt;Forțați încercarea de a obține valorile oricum?</translation>
     </message>
 </context>
 <context>
@@ -3171,32 +3173,32 @@ to the trash?</source>
     <message>
         <location filename="../core/search.cpp" line="+130"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>Nume</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size</source>
-        <translation>サイズ</translation>
+        <translation>Dimensiune</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date</source>
-        <translation>日付</translation>
+        <translation>Dată</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation>フォルダ</translation>
+        <translation>Dosar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog Name</source>
-        <translation>カタログ名</translation>
+        <translation>Numele catalogului</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog ID</source>
-        <translation>カタログID</translation>
+        <translation>ID-ul catalogului</translation>
     </message>
 </context>
 <context>
@@ -3205,65 +3207,65 @@ to the trash?</source>
         <location filename="../core/searchprogressmanager.cpp" line="+78"/>
         <location line="+11"/>
         <source> | SEARCH PAUSED</source>
-        <translation> | 検索一時停止中</translation>
+        <translation> | CĂUTARE ÎNTRERUPTĂ</translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+8"/>
         <source> | CATALOG LOADING PAUSED</source>
-        <translation> | カタログ読み込み一時停止中</translation>
+        <translation> | ÎNCĂRCAREA CATALOGULUI ÎNTRERUPTĂ</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Searching in directory %1</source>
-        <translation>ディレクトリ %1 を検索中</translation>
+        <translation>Se caută în directorul %1</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+14"/>
         <source>Searching in catalog %1</source>
-        <translation>カタログ %1 を検索中</translation>
+        <translation>Se caută în catalogul %1</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Searching in catalog</source>
-        <translation>カタログを検索中</translation>
+        <translation>Se caută în catalog</translation>
     </message>
     <message>
         <location line="+5"/>
         <source> | Catalog %1 of %2</source>
-        <translation> | カタログ %1 / %2</translation>
+        <translation> | Catalogul %1 din %2</translation>
     </message>
     <message>
         <location line="+9"/>
         <location line="+5"/>
         <source>Searching</source>
-        <translation>検索中</translation>
+        <translation>Se caută</translation>
     </message>
     <message>
         <location line="+6"/>
         <source> | Total folders found: %1</source>
-        <translation> | 見つかったフォルダ数: %1</translation>
+        <translation> | Total dosare găsite: %1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source> | Total files found: %1</source>
-        <translation> | 見つかったファイル数: %1</translation>
+        <translation> | Total fișiere găsite: %1</translation>
     </message>
     <message>
         <location line="+5"/>
         <source> | Total folders found: 0</source>
-        <translation> | 見つかったフォルダ数: 0</translation>
+        <translation> | Total dosare găsite: 0</translation>
     </message>
     <message>
         <location line="+2"/>
         <source> | Total files found: 0</source>
-        <translation> | 見つかったファイル数: 0</translation>
+        <translation> | Total fișiere găsite: 0</translation>
     </message>
     <message>
         <location line="+7"/>
         <source> | Total files processed: %1</source>
-        <translation> | 処理されたファイル数: %1</translation>
+        <translation> | Total fișiere procesate: %1</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3273,12 +3275,12 @@ to the trash?</source>
     <message>
         <location line="+17"/>
         <source>Search completed | Total folders found: %1</source>
-        <translation>検索完了 | 見つかったフォルダ数: %1</translation>
+        <translation>Căutare completă | Total dosare găsite: %1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Search completed | Total files found: %1</source>
-        <translation>検索完了 | 見つかったファイル数: %1</translation>
+        <translation>Căutare completă | Total fișiere găsite: %1</translation>
     </message>
 </context>
 <context>
@@ -3291,12 +3293,12 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation>フォルダ</translation>
+        <translation>Dosar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tag</source>
-        <translation>タグ</translation>
+        <translation>Etichetă</translation>
     </message>
 </context>
 </TS>
