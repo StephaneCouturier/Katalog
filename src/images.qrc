@@ -29,5 +29,8 @@
         <file>images/flags/jp.png</file>
         <file>images/flags/nl.png</file>
         <file>images/flags/ro.png</file>
+        <file>images/flags/pl.png</file>
+        <file>images/flags/in.png</file>
+        <file>images/flags/cn.png</file>
     </qresource>
 </RCC>

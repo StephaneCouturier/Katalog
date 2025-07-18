@@ -10,5 +10,8 @@
         <file>translations/Katalog_ja_JP.qm</file>
         <file>translations/Katalog_nl_NL.qm</file>
         <file>translations/Katalog_ro_RO.qm</file>
+        <file>translations/Katalog_pl_PL.qm</file>
+        <file>translations/Katalog_hi_IN.qm</file>
+        <file>translations/Katalog_zh_CN.qm</file>
     </qresource>
 </RCC>
