@@ -28,8 +28,6 @@ find_package(Qt6 REQUIRED COMPONENTS
     Sql
     Charts
     Network
-    Multimedia
-    MultimediaWidgets  # Often needed with Multimedia
     LinguistTools      # Required for translations
 )
 
@@ -240,7 +238,6 @@ target_link_libraries(katalog-core PUBLIC
     Qt6::Network
     Qt6::Widgets # Temporarily needed for QApplication in catalog.cpp
     Qt6::Charts  # Required for QDateTimeAxis used in mainwindow.h
-    Qt6::Multimedia  # Required for QMediaPlayer used in mainwindow.h
     KF6::CoreAddons
     KF6::I18n
     KF6::XmlGui
@@ -271,8 +268,6 @@ target_link_libraries(Katalog PRIVATE
     Qt6::Sql
     Qt6::Charts
     Qt6::Network
-    Qt6::Multimedia
-    Qt6::MultimediaWidgets
     KF6::CoreAddons
     KF6::I18n
     KF6::XmlGui

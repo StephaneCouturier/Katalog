@@ -11241,19 +11241,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <attribute name="title">
             <string>TESTS</string>
            </attribute>
-           <widget class="QPushButton" name="TEST_pushButton_TestMedia">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>10</y>
-              <width>231</width>
-              <height>26</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>TEST MEDIA</string>
-            </property>
-           </widget>
            <widget class="QListView" name="Storage_listView_Media">
             <property name="geometry">
              <rect>

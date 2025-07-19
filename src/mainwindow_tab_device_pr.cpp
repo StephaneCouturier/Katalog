@@ -4257,22 +4257,3 @@ void MainWindow::cmd_updateAllActive(bool displayReport)
     qDebug() << "All active catalogs updated";
     qDebug() << "-----------------------------------------------------------------------";
 }
-
-//--------------------------------------------------------------------------
-//--- DEV: metadata --------------------------------------------------------
-//--------------------------------------------------------------------------
-void MainWindow::on_TEST_pushButton_TestMedia_clicked()
-{
-    QStringList filePaths;
-    filePaths << "/home/stephane/Vidéos/COPY/test6.mp4";
-    //        filePaths << "/home/stephane/Vidéos/COPY/test2.mkv";
-    //        filePaths << "/home/stephane/Vidéos/COPY/test3.mp3";
-    //        filePaths << "/home/stephane/Vidéos/COPY/test5.mkv";
-
-    for(int i = 0; i<filePaths.length(); i++){
-        setMediaFile(filePaths[i]);
-    }
-
-    QString filePath = "/home/stephane/Vidéos/COPY/test8.mkv";
-    setMediaFile(filePath);
-}

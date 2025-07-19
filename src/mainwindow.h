@@ -69,8 +69,6 @@
 //QtSql
 #include <QtSql>
 //QtMultimedia
-#include <QMediaPlayer>
-#include <QMediaMetaData>
 //QtNetwork
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -309,9 +307,6 @@ class MainWindow : public KXmlGuiWindow
             QStringList storageNameList;
 
             QString fileMetadataString;
-            //QMediaMetaData mediaMetadata;
-
-            QMediaPlayer *m_player;
 
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
@@ -547,10 +542,6 @@ class MainWindow : public KXmlGuiWindow
             void searchContextDeleteFile();
 
         //Create
-            void setMediaFile(QString filePath);
-            void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
-            void getMetaData(QMediaPlayer *player);
-
             void on_Create_pushButton_PickPath_clicked();
             void on_Create_treeView_Explorer_clicked(const QModelIndex &index);
             void on_Create_pushButton_AddDirectoryToExclude_clicked();
@@ -647,9 +638,6 @@ class MainWindow : public KXmlGuiWindow
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
-
-        //DEV
-            void on_TEST_pushButton_TestMedia_clicked();
 };
 
 #endif // MAINWINDOW_H
