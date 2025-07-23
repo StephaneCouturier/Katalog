@@ -226,10 +226,9 @@ void SearchJob::onSearchProgress(int filesProcessed)
         m_lastFilesProcessed = filesProcessed;
         setProcessedAmount(KJob::Files, filesProcessed);
 
-        // Calculate percentage if we have a total
         if (m_searchEngine->estimatedTotalFiles > 0) {
-            qint64 percent = qMin(100ULL,
-                                         (static_cast<unsigned long>(filesProcessed) * 100) / m_searchEngine->estimatedTotalFiles);
+            qint64 calculation = (static_cast<qint64>(filesProcessed) * 100) / m_searchEngine->estimatedTotalFiles;
+            qint64 percent = qMin(static_cast<qint64>(100), calculation);
             qDebug() << "SearchJob emitting percent:" << percent;
             emitPercent(static_cast<unsigned long>(percent), 100);
         }
