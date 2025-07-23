@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     //Set current version, release date, and development mode
         currentVersion  = "2.6";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-07-20";
+        releaseDate     = "2025-07-23";
         developmentMode = false;
 
     //Default UI settings
