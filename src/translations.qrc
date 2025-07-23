@@ -13,5 +13,7 @@
         <file>translations/Katalog_pl_PL.qm</file>
         <file>translations/Katalog_hi_IN.qm</file>
         <file>translations/Katalog_zh_CN.qm</file>
+        <file>translations/Katalog_da_DK.qm</file>
+        <file>translations/Katalog_hu_HU.qm</file>
     </qresource>
 </RCC>

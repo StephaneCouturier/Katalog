@@ -32,5 +32,7 @@
         <file>images/flags/pl.png</file>
         <file>images/flags/in.png</file>
         <file>images/flags/cn.png</file>
+        <file>images/flags/dk.png</file>
+        <file>images/flags/hu.png</file>
     </qresource>
 </RCC>

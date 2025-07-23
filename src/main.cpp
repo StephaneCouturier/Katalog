@@ -71,11 +71,13 @@ int main(int argc, char *argv[])
             QStringList availableUserLanguages;
             availableUserLanguages  << "zh_CN"
                                     << "cz_CZ"
+                                    << "da_DK"
                                     << "de_DE"
                                     << "en_US"
                                     << "es_ES"
                                     << "fr_FR"
                                     << "hi_IN"
+                                    << "hu_HU"
                                     << "it_IT"
                                     << "ja_JP"
                                     << "nl_NL"

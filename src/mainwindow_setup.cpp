@@ -439,9 +439,6 @@
                 ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
             }
 
-        //Splitter widget, invisible
-        ui->splitter->setHandleWidth(0);
-
         //Filters widget
         ui->main_widget_ShowFilters->setStyleSheet(
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
@@ -641,9 +638,6 @@
             )");
 
             ui->tabWidget->setStyleSheet(styleSheetText);
-
-        //Splitter widget, invisible
-            ui->splitter->setHandleWidth(0);
 
         //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
