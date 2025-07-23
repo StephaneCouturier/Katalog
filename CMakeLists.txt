@@ -275,6 +275,16 @@ target_link_libraries(Katalog PRIVATE
     KF6::XmlGui
     KF6::ConfigCore
 )
+
+# To avoid threat detection of a separate freetype dll.
+if(WIN32)
+    target_compile_definitions(Katalog PRIVATE
+        QT_NO_FREETYPE
+        -DNOMINMAX
+        -DWIN32_LEAN_AND_MEAN
+    )
+endif()
+
 set_target_properties(katalog-core PROPERTIES
     AUTOMOC_MOC_OPTIONS "-I${CMAKE_CURRENT_SOURCE_DIR}/src"
 )
