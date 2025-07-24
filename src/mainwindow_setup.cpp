@@ -948,17 +948,6 @@
             );
     }
     //----------------------------------------------------------------------
-    void MainWindow::setupIconTheme()
-    {
-#ifdef Q_OS_LINUX
-        // Linux: Handle KDE/KXmlGuiWindow icon regression
-        setupLinuxIconTheme();
-#else
-        // Windows/Mac: Use the original Qt approach that was working
-        setupWindowsIconTheme();
-#endif
-    }
-    //----------------------------------------------------------------------
     bool MainWindow::isDarkTheme() const
     {
         // Use the same logic as the existing code in mainwindow.cpp
@@ -966,12 +955,27 @@
         return palette.color(QPalette::Window).lightness() < 128;
     }
     //----------------------------------------------------------------------
+    void MainWindow::setupIconTheme()
+    {
+#ifdef Q_OS_LINUX
+        // Linux: Handle KDE/KXmlGuiWindow icon regression
+        setupLinuxIconTheme();
+#elif defined(Q_OS_WIN)
+        // Windows: Use the original Qt approach that was working
+        setupWindowsIconTheme();
+#else
+        // macOS or other: Use Windows approach as fallback
+        setupWindowsIconTheme();
+#endif
+    }
+    //----------------------------------------------------------------------
+#ifdef Q_OS_LINUX
     void MainWindow::setupLinuxIconTheme()
     {
         qDebug() << "Setting up Linux icon theme...";
 
-        // Option 1: Disable KDE icon integration (most reliable)
-        // This restores the old Qt-only behavior that worked in portable versions
+        // Disable KDE icon integration to restore Qt-only behavior
+        // This forces Qt to use fallback paths like the old portable versions
 
         // Force Qt to ignore KDE integration for icon loading
         QApplication::setDesktopSettingsAware(false);
@@ -999,6 +1003,37 @@
         QIcon testIcon = QIcon::fromTheme("folder");
         qDebug() << "Test folder icon loaded successfully:" << !testIcon.isNull();
     }
+#endif
+    //----------------------------------------------------------------------
+#ifdef Q_OS_WIN
+    void MainWindow::setupWindowsIconTheme()
+    {
+        // Windows: Keep the exact same logic that was working before
+        qDebug() << "Setting up Windows icon theme...";
+
+        // Use the original approach from main.cpp
+        bool darkTheme = isDarkTheme();
+
+        // Set breeze theme (works fine on Windows)
+        QIcon::setThemeName("breeze");
+
+        // Set fallback paths
+        QStringList fallbackPaths = QIcon::fallbackSearchPaths();
+
+        if (darkTheme) {
+            fallbackPaths << ":/fallback-icons-dark";
+            qDebug() << "Windows dark theme: Using fallback-icons-dark";
+        } else {
+            fallbackPaths << ":/fallback-icons-light";
+            qDebug() << "Windows light theme: Using fallback-icons-light";
+        }
+
+        QIcon::setFallbackSearchPaths(fallbackPaths);
+
+        qDebug() << "Windows icon setup completed. Theme:" << QIcon::themeName();
+        qDebug() << "Fallback paths:" << QIcon::fallbackSearchPaths();
+    }
+#endif
     //----------------------------------------------------------------------
     void MainWindow::debugIconSetup()
     {
@@ -1030,39 +1065,6 @@
         }
 
         qDebug() << "=== END ICON DEBUG ===";
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::changeEvent(QEvent *event)
-    {
-        if (event->type() == QEvent::PaletteChange ||
-            event->type() == QEvent::StyleChange ||
-            event->type() == QEvent::ThemeChange) {
-
-            qDebug() << "Desktop theme change detected, refreshing icons...";
-
-            // Small delay to ensure the palette change is fully applied
-            QTimer::singleShot(100, this, [this]() {
-                // Reapply icon theme with new desktop theme detection
-                setupIconTheme();
-
-                // Refresh all existing icons in the UI
-                refreshAllIcons();
-
-                // Optionally reapply custom theme colors if using Katalog theme
-                if (themeID == 1) {
-                    if (isDarkTheme()) {
-                        loadCustomThemeDark();
-                    } else {
-                        loadCustomThemeLight();
-                    }
-                }
-
-                qDebug() << "Theme change handling completed";
-            });
-        }
-
-        // Call parent implementation
-        KXmlGuiWindow::changeEvent(event);
     }
     //----------------------------------------------------------------------
     void MainWindow::refreshAllIcons()
@@ -1099,5 +1101,38 @@
         update();
 
         qDebug() << "Icon refresh completed";
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::changeEvent(QEvent *event)
+    {
+        if (event->type() == QEvent::PaletteChange ||
+            event->type() == QEvent::StyleChange ||
+            event->type() == QEvent::ThemeChange) {
+
+            qDebug() << "Desktop theme change detected, refreshing icons...";
+
+            // Small delay to ensure the palette change is fully applied
+            QTimer::singleShot(100, this, [this]() {
+                // Reapply icon theme with new desktop theme detection
+                setupIconTheme();
+
+                // Refresh all existing icons in the UI
+                refreshAllIcons();
+
+                // Optionally reapply custom theme colors if using Katalog theme
+                if (themeID == 1) {
+                    if (isDarkTheme()) {
+                        loadCustomThemeDark();
+                    } else {
+                        loadCustomThemeLight();
+                    }
+                }
+
+                qDebug() << "Theme change handling completed";
+            });
+        }
+
+        // Call parent implementation
+        KXmlGuiWindow::changeEvent(event);
     }
     //----------------------------------------------------------------------

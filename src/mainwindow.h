@@ -182,14 +182,9 @@ class MainWindow : public KXmlGuiWindow
             void setupLinuxIconTheme();
 #endif
 
-#ifndef Q_OS_LINUX
-    void setupWindowsIconTheme();
-#endif
-
 #ifdef Q_OS_WIN
     void setupWindowsIconTheme();
 #endif
-
 
             //Application settings
             void loadSettings();
