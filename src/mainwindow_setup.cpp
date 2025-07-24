@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/database.h"
+#include <QTimer>
 
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenus(){
@@ -1029,5 +1030,74 @@
         }
 
         qDebug() << "=== END ICON DEBUG ===";
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::changeEvent(QEvent *event)
+    {
+        if (event->type() == QEvent::PaletteChange ||
+            event->type() == QEvent::StyleChange ||
+            event->type() == QEvent::ThemeChange) {
+
+            qDebug() << "Desktop theme change detected, refreshing icons...";
+
+            // Small delay to ensure the palette change is fully applied
+            QTimer::singleShot(100, this, [this]() {
+                // Reapply icon theme with new desktop theme detection
+                setupIconTheme();
+
+                // Refresh all existing icons in the UI
+                refreshAllIcons();
+
+                // Optionally reapply custom theme colors if using Katalog theme
+                if (themeID == 1) {
+                    if (isDarkTheme()) {
+                        loadCustomThemeDark();
+                    } else {
+                        loadCustomThemeLight();
+                    }
+                }
+
+                qDebug() << "Theme change handling completed";
+            });
+        }
+
+        // Call parent implementation
+        KXmlGuiWindow::changeEvent(event);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::refreshAllIcons()
+    {
+        qDebug() << "Refreshing all UI icons after theme change...";
+
+        // Force refresh of tree view icons by triggering model updates
+        if (ui->Search_treeView_FilesFound && ui->Search_treeView_FilesFound->model()) {
+            ui->Search_treeView_FilesFound->model()->layoutChanged();
+        }
+
+        if (ui->Explore_treeView_FileList && ui->Explore_treeView_FileList->model()) {
+            ui->Explore_treeView_FileList->model()->layoutChanged();
+        }
+
+        if (ui->Explore_treeview_Directories && ui->Explore_treeview_Directories->model()) {
+            ui->Explore_treeview_Directories->model()->layoutChanged();
+        }
+
+        if (ui->Filters_treeView_Devices && ui->Filters_treeView_Devices->model()) {
+            ui->Filters_treeView_Devices->model()->layoutChanged();
+        }
+
+        if (ui->Devices_treeView_DeviceList && ui->Devices_treeView_DeviceList->model()) {
+            ui->Devices_treeView_DeviceList->model()->layoutChanged();
+        }
+
+        // Refresh button icons that use QIcon::fromTheme
+        if (ui->Search_pushButton_Search) {
+            ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        }
+
+        // Force repaint of the entire UI
+        update();
+
+        qDebug() << "Icon refresh completed";
     }
     //----------------------------------------------------------------------

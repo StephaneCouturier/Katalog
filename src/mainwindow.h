@@ -176,6 +176,7 @@ class MainWindow : public KXmlGuiWindow
             // Theme management (add these to existing private methods)
             bool isDarkTheme() const;
             void setupIconTheme();
+            void refreshAllIcons();
             void debugIconSetup();
 #ifdef Q_OS_LINUX
             void setupLinuxIconTheme();
@@ -659,6 +660,9 @@ class MainWindow : public KXmlGuiWindow
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
+
+        protected:
+            void changeEvent(QEvent *event) override;
 };
 
 #endif // MAINWINDOW_H
