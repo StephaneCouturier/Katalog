@@ -125,22 +125,6 @@ int main(int argc, char *argv[])
         QApplication::setStyle("fusion");
     #endif
 
-    //Themes and Icons
-        // Detect if the theme is dark
-        QPalette palette = app.palette();
-        bool isDarkTheme = palette.color(QPalette::Window).value() < 128;
-
-        //Set theme (on linux with Plasma it would use the Desktop one, on windows this will fallback to the path set just after)
-        QIcon::setThemeName( "breeze" );
-
-        //Set the fallback paths
-        if (isDarkTheme) {
-            QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/fallback-icons-dark");
-        }
-        else {
-            QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/fallback-icons");
-        }
-
     //Command line parser
         QStringList args = QCoreApplication::arguments();
 

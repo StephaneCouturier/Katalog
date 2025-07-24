@@ -33,116 +33,6 @@
 #include "ui_mainwindow.h"
 #include "core/database.h"
 
-//----------------------------------------------------------------------
-    bool MainWindow::backupMemoryDatabaseToFile(const QString &memoryConnectionName, const QString &filePath) {
-        // Open the file-based database (destination)
-        QSqlDatabase fileDb = QSqlDatabase::addDatabase("QSQLITE", "file_connection");
-        fileDb.setDatabaseName(filePath);
-
-        if (!fileDb.open()) {
-            QMessageBox::warning(nullptr, "Database Error", "Unable to open file-based database: " + fileDb.lastError().text());
-            return false;
-        }
-
-        // Get the in-memory database
-        QSqlDatabase memoryDb = QSqlDatabase::database(memoryConnectionName, false);
-
-        if (!memoryDb.isOpen()) {
-            QMessageBox::warning(nullptr, "Database Error", "In-memory database is not open.");
-            return false;
-        }
-
-        // Dump schema and data from in-memory database
-        QSqlQuery queryTableList(memoryDb);
-        if (!queryTableList.exec("SELECT name, sql FROM sqlite_master WHERE type='table'")) {
-            QMessageBox::warning(nullptr, "Database Error", "Error retrieving schema from in-memory database: " + queryTableList.lastError().text());
-            return false;
-        }
-
-        //Display progress
-        //Prepare temporary variables
-
-            // Get the total number of files for all devices
-            QSqlQuery tableCountQuery(QSqlDatabase::database("defaultConnection"));
-            QString tableCountQuerySQL = QLatin1String(R"(
-                        SELECT COUNT(*) FROM sqlite_master WHERE type='table'
-                    )");
-            tableCountQuery.prepare(tableCountQuerySQL);
-            tableCountQuery.exec();
-            tableCountQuery.next();
-            qint64 totalTableCount = tableCountQuery.value(0).toInt();
-
-        QProgressDialog progress("Dumping Tables...", "Cancel", 0, totalTableCount, this);
-        progress.setWindowModality(Qt::WindowModal);
-        progress.setMinimumDuration(0); // This will make the dialog appear immediately
-        progress.setValue(0);
-        qint64 tablesDumped = 0;
-
-        // Apply schema and data to the file-based database
-        QSqlQuery fileDbQuery(fileDb);
-        while (queryTableList.next()) {
-            QString tableName = queryTableList.value(0).toString();
-            QString createTableSQL = queryTableList.value(1).toString();
-
-            progress.setLabelText(QString("Dumping table <br/> %1 <br/><br/> %2 table(s) dumped out of %3" ).arg(tableName, QLocale().toString(tablesDumped), QLocale().toString(totalTableCount)) );
-            progress.setValue(tablesDumped);
-
-            QCoreApplication::processEvents();
-
-            //Process table copy, except for the system table sqlite_sequence
-            if (tableName != "sqlite_sequence")
-            {
-                qDebug()<<tablesDumped;
-                // Create table in file-based database
-                if (!fileDbQuery.exec(createTableSQL)) {
-                    QMessageBox::warning(nullptr, "Database Error", "Error creating table in file-based database: " + fileDbQuery.lastError().text());
-                    return false;
-                }
-
-                // Copy data from in-memory to file-based database
-                QSqlQuery dataQuery(memoryDb);
-                QString selectDataSQL = QString("SELECT * FROM %1").arg(tableName);
-                if (!dataQuery.exec(selectDataSQL)) {
-                    QMessageBox::warning(nullptr, "Database Error", "Error retrieving data from in-memory database: " + dataQuery.lastError().text());
-                    return false;
-                }
-
-                // Prepare insert query for file-based database
-                QString insertSQL = QString("INSERT INTO %1 VALUES (").arg(tableName);
-                for (int i = 0; i < dataQuery.record().count(); ++i) {
-                    if (i > 0) insertSQL += ", ";
-                    insertSQL += "?";
-                }
-                insertSQL += ")";
-
-                QSqlQuery insertQuery(fileDb);
-
-                fileDbQuery.exec("BEGIN TRANSACTION");
-                while (dataQuery.next()) {
-                    insertQuery.prepare(insertSQL);
-                    for (int i = 0; i < dataQuery.record().count(); ++i) {
-                        insertQuery.addBindValue(dataQuery.value(i));
-                    }
-
-                    if (!insertQuery.exec()) {
-                        QMessageBox::warning(nullptr, "Database Error", "Error inserting data: " + insertQuery.lastError().text());
-                        return false;
-                    }
-                }
-                fileDbQuery.exec("COMMIT");
-            }
-
-            if (progress.wasCanceled())
-                return false;
-
-            tablesDumped += 1;
-            progress.setValue(tablesDumped);
-        }
-
-        fileDb.close();
-        return true;
-    }
-
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenus(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -411,345 +301,6 @@
 
     }
     //----------------------------------------------------------------------
-    void MainWindow::loadCustomThemeLight()
-    {       
-        //Standard colors:
-            //blue light	39b2e5
-            //blue dark		10a2df  0D79A6
-            //blue lightest e9f7fc
-            //green light	81d41a
-            //green dark	43bf0c
-            //orange light	ff8000
-            //orange dark	e36600
-            //purple light	a1467e
-            //purple dark	8b1871
-
-        //Tab widget, including combo boxes and buttons
-
-            if(developmentMode==true){
-                QFile file(":styles/tabwidget_dev.css");
-                file.open(QFile::ReadOnly);
-                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
-                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
-            }
-            else{
-                QFile file(":styles/tabwidget_blue.css");
-                file.open(QFile::ReadOnly);
-                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
-                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
-            }
-
-        //Filters widget
-        ui->main_widget_ShowFilters->setStyleSheet(
-            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
-            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-         );
-
-        ui->Filters_widget_Hide->setStyleSheet(
-            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
-            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-
-         );
-
-        ui->Filters_label_Selection->setStyleSheet(
-                    "color: #095676;"
-                  );
-
-        ui->Filters_widget->setStyleSheet(
-            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
-            "QLabel                { color: #095676; }"
-            "QTabBar::tab          { height: 30px; }"
-            "QTabWidget::tab-bar   { left: 0px; }"
-            "QTabWidget            { padding: 0px; margin: 0px; }"
-
-            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
-            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-         );
-
-        //Colored buttons
-        ui->Search_pushButton_Search->setStyleSheet(
-                "QPushButton           { background-color: #81d41a; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Create_pushButton_CreateCatalog->setStyleSheet(
-                "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Settings_pushButton_DatabaseModeApplyAndRestart->setStyleSheet(
-            "QPushButton           { background-color: #ff8000; } "
-            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-            "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-            );
-
-        //Lines
-        ui->Filters_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Filters_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Devices_line_SeparateTop->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Devices_line_separateButtons->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Explore_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Create_hline_01->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Create_hline_02->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Create_hline_03->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Settings_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5; } ");
-        ui->Settings_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Create_hline_01->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-
-        //Doted lines on Search screen
-        ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
-        ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage12->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage13->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage16->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage18->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage19->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage20->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-
-        //Change the alternate color of treeview lines
-        ui->Filters_treeView_Devices->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        //Search
-        ui->Search_treeView_FilesFound->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->Search_treeView_CatalogsFound->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->Search_treeView_History->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-
-        //Devices
-        ui->Devices_treeView_DeviceList->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-
-        //Explore
-        ui->Explore_treeview_Directories->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->Explore_treeView_FileList->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        //Create
-        ui->Create_treeView_Explorer->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->Create_treeView_Excluded->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        //Tags
-        ui->Tags_treeview_Explorer->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->Tags_listView_ExistingTags->setStyleSheet(
-            "QListView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->Tags_treeView_FolderTags->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        //BackUp
-        ui->BackUp_tableView_CurrentMappings->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->BackUp_treeView_List1->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-        ui->BackUp_treeView_List2->setStyleSheet(
-            "QTreeView { alternate-background-color: #e9f7fc;}"
-            );
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::loadCustomThemeDark()
-    {
-        //Standard colors:
-            //blue light	39b2e5
-            //blue dark		10a2df  0D79A6
-            //blue alternate 161b1d
-            //green light	81d41a
-            //green dark	43bf0c
-            //orange light	ff8000
-            //orange dark	e36600
-            //purple light	a1467e
-            //purple dark	8b1871
-
-        //Tab widget, including combo boxes and buttons
-
-            QString styleSheetText = QLatin1String(R"(
-                        QTabWidget            { padding: 10px; margin: 0px; background-color: #095676; }
-                        QTabWidget::tab-bar   { left: 0px; height: 38px;}
-
-                        QTabBar               { background:  url(:images/Appname_Logo.png) no-repeat right; background-color: #0D79A6;
-                                                border-top-left-radius:  3px;
-                                                border-top-right-radius: 3px;
-                                              }
-                        QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
-
-                        QTabBar:tab:first     { margin-left:  6px; }
-                        QTabBar::tab          { background-color: #0D79A6; color: #000;
-                                                padding-top: 3px; padding-bottom: 6px; padding-left:  6px; padding-right: 10px;
-                                                margin-top: 6px; margin-bottom: 0px;
-                                                border-top-left-radius:  3px;
-                                                border-top-right-radius: 3px;
-                        }
-
-                        QTabBar::tab::hover   { background-color: #095676; color: #FFF; }
-
-                        QTabBar::tab:selected { background-color: #2a2e32; color: #FFF;
-                                                /*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #8b1871, stop: 1 #eff0f1); */
-                        }
-
-                        QTabBar::tab:!selected{  }
-
-            )");
-
-            ui->tabWidget->setStyleSheet(styleSheetText);
-
-        //Colored buttons
-        ui->Search_pushButton_Search->setStyleSheet(
-                "QPushButton           { background-color: #81d41a; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Create_pushButton_CreateCatalog->setStyleSheet(
-                "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-              );
-
-        //Lines
-        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; } ");
-        ui->Devices_line_SeparateTop->setStyleSheet("QFrame { color: #095676; } "); // border-top: 1px solid #095676;
-        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; } ");
-
-        //Doted lines on Search screen
-        ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
-        ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage12->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage13->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage16->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage18->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage19->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage20->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-
-        //Change the alternate color of treeview lines
-        ui->Filters_treeView_Devices->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-
-        //Search
-        ui->Search_treeView_FilesFound->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        ui->Search_treeView_CatalogsFound->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        ui->Search_treeView_History->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-
-        //Devices
-        ui->Devices_treeView_DeviceList->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-
-        //Explore
-        ui->Explore_treeview_Directories->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        ui->Explore_treeView_FileList->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        //Create
-        ui->Create_treeView_Explorer->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        ui->Create_treeView_Excluded->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        //Tags
-        ui->Tags_treeview_Explorer->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        ui->Tags_listView_ExistingTags->setStyleSheet(
-            "QListView { alternate-background-color: #161b1d; }"
-            );
-        ui->Tags_treeView_FolderTags->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        //BackUp
-        ui->BackUp_tableView_CurrentMappings->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        ui->BackUp_treeView_List1->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-        ui->BackUp_treeView_List2->setStyleSheet(
-            "QTreeView { alternate-background-color: #161b1d; }"
-            );
-
-    }
-    //----------------------------------------------------------------------
     void MainWindow::checkVersion()
     {
         //Get the number of the lastest Version
@@ -807,6 +358,8 @@
         }
     }
     //----------------------------------------------------------------------
+
+    //--- Database management -----------------------------------------------
     void MainWindow::runDatabaseMigrations()
     {
         QString currentSchemaVersion = collection->loadDatabaseSchemaVersion();
@@ -942,3 +495,539 @@
 
         qDebug() << "Search history device data migration completed";
     }
+    //----------------------------------------------------------------------
+    bool MainWindow::backupMemoryDatabaseToFile(
+        const QString &memoryConnectionName, const QString &filePath)
+    {
+        // Open the file-based database (destination)
+        QSqlDatabase fileDb = QSqlDatabase::addDatabase("QSQLITE", "file_connection");
+        fileDb.setDatabaseName(filePath);
+
+        if (!fileDb.open()) {
+            QMessageBox::warning(nullptr, "Database Error", "Unable to open file-based database: " + fileDb.lastError().text());
+            return false;
+        }
+
+        // Get the in-memory database
+        QSqlDatabase memoryDb = QSqlDatabase::database(memoryConnectionName, false);
+
+        if (!memoryDb.isOpen()) {
+            QMessageBox::warning(nullptr, "Database Error", "In-memory database is not open.");
+            return false;
+        }
+
+        // Dump schema and data from in-memory database
+        QSqlQuery queryTableList(memoryDb);
+        if (!queryTableList.exec("SELECT name, sql FROM sqlite_master WHERE type='table'")) {
+            QMessageBox::warning(nullptr, "Database Error", "Error retrieving schema from in-memory database: " + queryTableList.lastError().text());
+            return false;
+        }
+
+        //Display progress
+        //Prepare temporary variables
+
+        // Get the total number of files for all devices
+        QSqlQuery tableCountQuery(QSqlDatabase::database("defaultConnection"));
+        QString tableCountQuerySQL = QLatin1String(R"(
+                        SELECT COUNT(*) FROM sqlite_master WHERE type='table'
+                    )");
+        tableCountQuery.prepare(tableCountQuerySQL);
+        tableCountQuery.exec();
+        tableCountQuery.next();
+        qint64 totalTableCount = tableCountQuery.value(0).toInt();
+
+        QProgressDialog progress("Dumping Tables...", "Cancel", 0, totalTableCount, this);
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setMinimumDuration(0); // This will make the dialog appear immediately
+        progress.setValue(0);
+        qint64 tablesDumped = 0;
+
+        // Apply schema and data to the file-based database
+        QSqlQuery fileDbQuery(fileDb);
+        while (queryTableList.next()) {
+            QString tableName = queryTableList.value(0).toString();
+            QString createTableSQL = queryTableList.value(1).toString();
+
+            progress.setLabelText(QString("Dumping table <br/> %1 <br/><br/> %2 table(s) dumped out of %3" ).arg(tableName, QLocale().toString(tablesDumped), QLocale().toString(totalTableCount)) );
+            progress.setValue(tablesDumped);
+
+            QCoreApplication::processEvents();
+
+            //Process table copy, except for the system table sqlite_sequence
+            if (tableName != "sqlite_sequence")
+            {
+                qDebug()<<tablesDumped;
+                // Create table in file-based database
+                if (!fileDbQuery.exec(createTableSQL)) {
+                    QMessageBox::warning(nullptr, "Database Error", "Error creating table in file-based database: " + fileDbQuery.lastError().text());
+                    return false;
+                }
+
+                // Copy data from in-memory to file-based database
+                QSqlQuery dataQuery(memoryDb);
+                QString selectDataSQL = QString("SELECT * FROM %1").arg(tableName);
+                if (!dataQuery.exec(selectDataSQL)) {
+                    QMessageBox::warning(nullptr, "Database Error", "Error retrieving data from in-memory database: " + dataQuery.lastError().text());
+                    return false;
+                }
+
+                // Prepare insert query for file-based database
+                QString insertSQL = QString("INSERT INTO %1 VALUES (").arg(tableName);
+                for (int i = 0; i < dataQuery.record().count(); ++i) {
+                    if (i > 0) insertSQL += ", ";
+                    insertSQL += "?";
+                }
+                insertSQL += ")";
+
+                QSqlQuery insertQuery(fileDb);
+
+                fileDbQuery.exec("BEGIN TRANSACTION");
+                while (dataQuery.next()) {
+                    insertQuery.prepare(insertSQL);
+                    for (int i = 0; i < dataQuery.record().count(); ++i) {
+                        insertQuery.addBindValue(dataQuery.value(i));
+                    }
+
+                    if (!insertQuery.exec()) {
+                        QMessageBox::warning(nullptr, "Database Error", "Error inserting data: " + insertQuery.lastError().text());
+                        return false;
+                    }
+                }
+                fileDbQuery.exec("COMMIT");
+            }
+
+            if (progress.wasCanceled())
+                return false;
+
+            tablesDumped += 1;
+            progress.setValue(tablesDumped);
+        }
+
+        fileDb.close();
+        return true;
+    }
+    //----------------------------------------------------------------------
+
+    //--- Theme management -------------------------------------------------
+    void MainWindow::loadCustomThemeLight()
+    {
+        //Standard colors:
+        //blue light	39b2e5
+        //blue dark		10a2df  0D79A6
+        //blue lightest e9f7fc
+        //green light	81d41a
+        //green dark	43bf0c
+        //orange light	ff8000
+        //orange dark	e36600
+        //purple light	a1467e
+        //purple dark	8b1871
+
+        //Tab widget, including combo boxes and buttons
+
+        if(developmentMode==true){
+            QFile file(":styles/tabwidget_dev.css");
+            file.open(QFile::ReadOnly);
+            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+        }
+        else{
+            QFile file(":styles/tabwidget_blue.css");
+            file.open(QFile::ReadOnly);
+            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+        }
+
+        //Filters widget
+        ui->main_widget_ShowFilters->setStyleSheet(
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+            );
+
+        ui->Filters_widget_Hide->setStyleSheet(
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+
+            );
+
+        ui->Filters_label_Selection->setStyleSheet(
+            "color: #095676;"
+            );
+
+        ui->Filters_widget->setStyleSheet(
+            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
+            "QLabel                { color: #095676; }"
+            "QTabBar::tab          { height: 30px; }"
+            "QTabWidget::tab-bar   { left: 0px; }"
+            "QTabWidget            { padding: 0px; margin: 0px; }"
+
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+            );
+
+        //Colored buttons
+        ui->Search_pushButton_Search->setStyleSheet(
+            "QPushButton           { background-color: #81d41a; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+            );
+        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
+            "QPushButton           { background-color: #ff8000; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+            );
+        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
+            "QPushButton           { background-color: #ff8000; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            );
+        ui->Create_pushButton_CreateCatalog->setStyleSheet(
+            "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            );
+        ui->Settings_pushButton_DatabaseModeApplyAndRestart->setStyleSheet(
+            "QPushButton           { background-color: #ff8000; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+            );
+
+        //Lines
+        ui->Filters_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Filters_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Devices_line_SeparateTop->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Devices_line_separateButtons->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Explore_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Create_hline_01->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Create_hline_02->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Create_hline_03->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Settings_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5; } ");
+        ui->Settings_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Create_hline_01->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+
+        //Doted lines on Search screen
+        ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
+        ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage12->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage13->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage18->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage19->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage20->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+
+        //Change the alternate color of treeview lines
+        ui->Filters_treeView_Devices->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        //Search
+        ui->Search_treeView_FilesFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->Search_treeView_CatalogsFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->Search_treeView_History->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+
+        //Devices
+        ui->Devices_treeView_DeviceList->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+
+        //Explore
+        ui->Explore_treeview_Directories->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->Explore_treeView_FileList->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        //Create
+        ui->Create_treeView_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->Create_treeView_Excluded->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        //Tags
+        ui->Tags_treeview_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->Tags_listView_ExistingTags->setStyleSheet(
+            "QListView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->Tags_treeView_FolderTags->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        //BackUp
+        ui->BackUp_tableView_CurrentMappings->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->BackUp_treeView_List1->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+        ui->BackUp_treeView_List2->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::loadCustomThemeDark()
+    {
+        //Standard colors:
+        //blue light	39b2e5
+        //blue dark		10a2df  0D79A6
+        //blue alternate 161b1d
+        //green light	81d41a
+        //green dark	43bf0c
+        //orange light	ff8000
+        //orange dark	e36600
+        //purple light	a1467e
+        //purple dark	8b1871
+
+        //Tab widget, including combo boxes and buttons
+
+        QString styleSheetText = QLatin1String(R"(
+                        QTabWidget            { padding: 10px; margin: 0px; background-color: #095676; }
+                        QTabWidget::tab-bar   { left: 0px; height: 38px;}
+
+                        QTabBar               { background:  url(:images/Appname_Logo.png) no-repeat right; background-color: #0D79A6;
+                                                border-top-left-radius:  3px;
+                                                border-top-right-radius: 3px;
+                                              }
+                        QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
+
+                        QTabBar:tab:first     { margin-left:  6px; }
+                        QTabBar::tab          { background-color: #0D79A6; color: #000;
+                                                padding-top: 3px; padding-bottom: 6px; padding-left:  6px; padding-right: 10px;
+                                                margin-top: 6px; margin-bottom: 0px;
+                                                border-top-left-radius:  3px;
+                                                border-top-right-radius: 3px;
+                        }
+
+                        QTabBar::tab::hover   { background-color: #095676; color: #FFF; }
+
+                        QTabBar::tab:selected { background-color: #2a2e32; color: #FFF;
+                                                /*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #8b1871, stop: 1 #eff0f1); */
+                        }
+
+                        QTabBar::tab:!selected{  }
+
+            )");
+
+        ui->tabWidget->setStyleSheet(styleSheetText);
+
+        //Colored buttons
+        ui->Search_pushButton_Search->setStyleSheet(
+            "QPushButton           { background-color: #81d41a; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+            );
+        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
+            "QPushButton           { background-color: #ff8000; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+            );
+        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
+            "QPushButton           { background-color: #ff8000; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            );
+        ui->Create_pushButton_CreateCatalog->setStyleSheet(
+            "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            );
+
+        //Lines
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; } ");
+        ui->Devices_line_SeparateTop->setStyleSheet("QFrame { color: #095676; } "); // border-top: 1px solid #095676;
+        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; } ");
+
+        //Doted lines on Search screen
+        ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
+        ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage12->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage13->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage18->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage19->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage20->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+
+        //Change the alternate color of treeview lines
+        ui->Filters_treeView_Devices->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+
+        //Search
+        ui->Search_treeView_FilesFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Search_treeView_CatalogsFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Search_treeView_History->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+
+        //Devices
+        ui->Devices_treeView_DeviceList->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+
+        //Explore
+        ui->Explore_treeview_Directories->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Explore_treeView_FileList->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        //Create
+        ui->Create_treeView_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Create_treeView_Excluded->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        //Tags
+        ui->Tags_treeview_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Tags_listView_ExistingTags->setStyleSheet(
+            "QListView { alternate-background-color: #161b1d; }"
+            );
+        ui->Tags_treeView_FolderTags->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        //BackUp
+        ui->BackUp_tableView_CurrentMappings->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->BackUp_treeView_List1->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->BackUp_treeView_List2->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::setupIconTheme()
+    {
+#ifdef Q_OS_LINUX
+        // Linux: Handle KDE/KXmlGuiWindow icon regression
+        setupLinuxIconTheme();
+#else
+        // Windows/Mac: Use the original Qt approach that was working
+        setupWindowsIconTheme();
+#endif
+    }
+    //----------------------------------------------------------------------
+    bool MainWindow::isDarkTheme() const
+    {
+        // Use the same logic as the existing code in mainwindow.cpp
+        QPalette palette = QApplication::palette();
+        return palette.color(QPalette::Window).lightness() < 128;
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::setupLinuxIconTheme()
+    {
+        qDebug() << "Setting up Linux icon theme...";
+
+        // Option 1: Disable KDE icon integration (most reliable)
+        // This restores the old Qt-only behavior that worked in portable versions
+
+        // Force Qt to ignore KDE integration for icon loading
+        QApplication::setDesktopSettingsAware(false);
+
+        // Clear any KDE theme to force fallback usage
+        QIcon::setThemeName("");
+
+        // Set up fallback paths like the old working versions
+        bool darkTheme = isDarkTheme();
+        QStringList fallbackPaths;
+
+        if (darkTheme) {
+            fallbackPaths << ":/fallback-icons-dark";  // White icons for dark backgrounds
+            qDebug() << "Linux dark theme: Using white icons from :/fallback-icons-dark";
+        } else {
+            fallbackPaths << ":/fallback-icons-light"; // Dark icons for light backgrounds
+            qDebug() << "Linux light theme: Using dark icons from :/fallback-icons-light";
+        }
+
+        QIcon::setFallbackSearchPaths(fallbackPaths);
+
+        qDebug() << "Linux icon setup completed. Fallback paths:" << QIcon::fallbackSearchPaths();
+
+        // Test icon loading
+        QIcon testIcon = QIcon::fromTheme("folder");
+        qDebug() << "Test folder icon loaded successfully:" << !testIcon.isNull();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::debugIconSetup()
+    {
+        qDebug() << "=== ICON SETUP DEBUG ===";
+        qDebug() << "Platform:"
+#ifdef Q_OS_LINUX
+                 << "Linux"
+#elif defined(Q_OS_WIN)
+                 << "Windows"
+#elif defined(Q_OS_MAC)
+                 << "macOS"
+#else
+                 << "Other"
+#endif
+            ;
+
+        qDebug() << "Icon theme name:" << QIcon::themeName();
+        qDebug() << "Fallback search paths:" << QIcon::fallbackSearchPaths();
+        qDebug() << "Theme search paths:" << QIcon::themeSearchPaths();
+        qDebug() << "Desktop settings aware:" << QApplication::desktopSettingsAware();
+        qDebug() << "Dark theme detected:" << isDarkTheme();
+
+        // Test key icons
+        QStringList testIcons = {"folder", "edit-find", "image-jpeg"};
+        for (const QString &iconName : testIcons) {
+            QIcon icon = QIcon::fromTheme(iconName);
+            qDebug() << "Icon" << iconName << "- null:" << icon.isNull()
+                     << "sizes:" << icon.availableSizes().size();
+        }
+
+        qDebug() << "=== END ICON DEBUG ===";
+    }
+    //----------------------------------------------------------------------

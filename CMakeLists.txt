@@ -38,6 +38,7 @@ find_package(KF6CoreAddons REQUIRED)
 find_package(KF6I18n REQUIRED)
 find_package(KF6XmlGui REQUIRED)
 find_package(KF6Config REQUIRED)
+find_package(KF6IconThemes REQUIRED)
 
 # Enable Qt's automatic processing
 set(CMAKE_AUTOMOC ON)
@@ -274,6 +275,7 @@ target_link_libraries(Katalog PRIVATE
     KF6::I18n
     KF6::XmlGui
     KF6::ConfigCore
+    KF6::IconThemes
 )
 
 # To avoid threat detection of a separate freetype dll.

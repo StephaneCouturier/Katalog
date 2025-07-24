@@ -97,6 +97,10 @@
 #include <KXmlGuiWindow>
 #include <KSharedConfig>
 #include <KConfigGroup>
+#ifdef Q_OS_LINUX
+#include <KIconTheme>
+#include <KIconLoader>
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -168,6 +172,23 @@ class MainWindow : public KXmlGuiWindow
             bool unsavedChanges;
             void closeEvent (QCloseEvent *event);
             QTimer* statusBarTimer;
+
+            // Theme management (add these to existing private methods)
+            bool isDarkTheme() const;
+            void setupIconTheme();
+            void debugIconSetup();
+#ifdef Q_OS_LINUX
+            void setupLinuxIconTheme();
+#endif
+
+#ifndef Q_OS_LINUX
+    void setupWindowsIconTheme();
+#endif
+
+#ifdef Q_OS_WIN
+    void setupWindowsIconTheme();
+#endif
+
 
             //Application settings
             void loadSettings();

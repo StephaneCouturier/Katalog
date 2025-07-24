@@ -193,6 +193,12 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->splitter_widget_Filters->setStyleSheet("font-family: calibri; font-size: 16px;");
             #endif
 
+            // Setup icon theme first (platform-specific)
+            setupIconTheme();
+
+            // Optional: Debug icon setup
+            // debugIconSetup();
+
             //Load custom Katalog stylesheet instead of default theme
             if (themeID == 1) {
                 if (QApplication::palette().color(QPalette::Window).lightness() < 128){
