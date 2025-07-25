@@ -896,6 +896,22 @@
             "QTreeView { alternate-background-color: #161b1d; }"
             );
 
+        ui->Filters_label_Selection->setStyleSheet(
+            "color: #FFF;"
+            );
+
+        ui->Filters_widget->setStyleSheet(
+            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
+            "QLabel                { color: #FFF; }"
+            "QTabBar::tab          { height: 30px; }"
+            "QTabWidget::tab-bar   { left: 0px; }"
+            "QTabWidget            { padding: 0px; margin: 0px; }"
+
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+            );
+
         //Search
         ui->Search_treeView_FilesFound->setStyleSheet(
             "QTreeView { alternate-background-color: #161b1d; }"

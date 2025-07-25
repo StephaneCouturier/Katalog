@@ -242,7 +242,7 @@
               <item>
                <layout class="QGridLayout" name="Filters_gridLayout_2">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="Filters_label_Catalog_2">
+                 <widget class="QLabel" name="Filters_label_Virtual">
                   <property name="minimumSize">
                    <size>
                     <width>70</width>
