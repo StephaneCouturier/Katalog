@@ -23,49 +23,71 @@
 #/////////////////////////////////////////////////////////////////////////////
 # Application: Katalog
 # File Name:   Katalog.sh
-# Version:     2.4
+# Version:     2.6
 # Purpose:     To run Katalog in linux in portable mode, using provided librairies
 # Description:
 # Author:      Stephane Couturier
 #/////////////////////////////////////////////////////////////////////////////
 
-#Inputs
-    #echo " "
-    #echo "inputs:"
-    appname=`basename $0 | sed s,\.sh$,,`
-    #echo "  appname:  " $appname
+# Get script directory
+appname=$(basename "$0" | sed 's/\.sh$//')
+dirname=$(dirname "$0")
+tmp="${dirname#?}"
 
-    dirname=`dirname $0`
-    #echo "  dirname:  " $dirname
-
-    tmp="${dirname#?}"
-    #echo "  tmp:  " $tmp
-    #echo "  PWD:        " $PWD
-
-#Set dir name
-    if [ "${dirname%$tmp}" != "/" ]; then
+# Set directory name to absolute path
+if [ "${dirname%$tmp}" != "/" ]; then
     dirname="$PWD/$dirname"
-    #echo " "
-    #echo "dir is not /"
+fi
 
-    #echo "  dirname:    " $dirname
+# Set up library path
+export LD_LIBRARY_PATH="$dirname/lib:$LD_LIBRARY_PATH"
+
+# Set up Qt plugin path
+export QT_PLUGIN_PATH="$dirname/plugins:$QT_PLUGIN_PATH"
+
+# Ensure Qt uses OpenSSL
+export QT_SSL_USE_OPENSSL=1
+
+# Check GLIBC compatibility
+REQUIRED_GLIBC="2.38"
+SYSTEM_GLIBC=$(ldd --version | head -n1 | grep -o '[0-9]\+\.[0-9]\+' | head -n1)
+if [ "$(printf '%s\n' "$REQUIRED_GLIBC" "$SYSTEM_GLIBC" | sort -V | head -n1)" != "$REQUIRED_GLIBC" ]; then
+    echo "Error: This system has GLIBC $SYSTEM_GLIBC, but Katalog requires GLIBC $REQUIRED_GLIBC or newer"
+    echo "Katalog requires a newer Linux distribution or to be rebuild on this system"
+    exit 1
+fi
+
+# Debug info if verbose
+if [ "$KATALOG_VERBOSE" = "1" ]; then
+    echo "Katalog Portable Launcher - System Qt Mode"
+    echo "================================================="
+    echo "Working directory: $dirname"
+    echo "Libraries: $(find "$dirname/lib" -name "*.so*" -type f | wc -l)"
+    echo "Symlinks: $(find "$dirname/lib" -type l | wc -l)"
+    echo "Plugins: $(find "$dirname/plugins" -name "*.so" 2>/dev/null | wc -l)"
+    echo ""
+    echo "Qt6 libraries check:"
+    find "$dirname/lib" -name "libQt6*.so.6" | while read qt_lib; do
+        echo "  • $(basename "$qt_lib")"
+    done
+    echo ""
+    echo "XCB Platform library:"
+    if [ -f "$dirname/lib/libQt6XcbQpa.so.6" ]; then
+        echo "  ✅ libQt6XcbQpa.so.6 found in portable lib"
+    else
+        echo "  ❌ libQt6XcbQpa.so.6 NOT found in portable lib"
     fi
+    echo ""
+    echo "Library dependency check:"
+    if ldd "$dirname/Katalog" | grep -q "not found"; then
+        echo "❌ Missing dependencies:"
+        ldd "$dirname/Katalog" | grep "not found"
+    else
+        echo "✅ All dependencies satisfied"
+    fi
+    echo ""
+    echo "Starting Katalog..."
+fi
 
-#Define LD_LIBRARY_PATH
-    #LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/
-    LD_LIBRARY_PATH="$dirname"
-    #echo " "
-    #echo "LD_LIBRARY_PATH:  " $LD_LIBRARY_PATH
-    #echo " "
-    export LD_LIBRARY_PATH
-
-
-#Ensure Qt uses OpenSSL
-    export QT_SSL_USE_OPENSSL=1
-    #export QT_OPENSSL_VERSION_OVERRIDE="1.1"  # Adjust version if necessary
-
-#Run the application with verbose plugin debugging
-   #QT_DEBUG_PLUGINS=1 "$dirname/$appname" "$@"
-
-#Run app
-   "$dirname/$appname" "$@"
+# Run the application
+exec "$dirname/Katalog" "$@"
