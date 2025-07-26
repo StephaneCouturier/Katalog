@@ -1,4 +1,4 @@
-name: Create AppImage v11
+name: Create AppImage v14
 
 on:
   # Trigger on new releases
@@ -216,8 +216,9 @@ jobs:
         # Now build the main application
         ninja
 
-        # Install to AppDir
-        DESTDIR=$PWD/AppDir ninja installD/AppDir ninja install
+        # Create AppDir and install
+        mkdir -p AppDir
+        DESTDIR="$(pwd)/AppDir" ninja installD/AppDir ninja install
 
     - name: Prepare AppDir structure
       run: |
