@@ -1,5 +1,5 @@
-name: Create AppImage v18
-
+name: Create AppImage
+# AppImage creation script, version 18
 on:
   # Trigger on new releases
   release:
