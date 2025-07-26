@@ -1,7 +1,34 @@
 #!/bin/bash
+#LICENCE
+#    This file is part of Katalog
+#
+#    Copyright (C) 2020, the Katalog Development team
+#
+#    Author: Stephane Couturier (Symbioxy)
+#
+#    Katalog is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    Katalog is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Katalog; if not, write to the Free Software
+#    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+#/////////////////////////////////////////////////////////////////////////////
+# Application: Katalog
+# File Name:   Katalog_create_appimage_local.sh
+# Version:     1.0
+# Purpose:     Katalog Local AppImage Builder
+# Description: Based on the portable script architecture but creates AppImage instead
+# Author:      Stephane Couturier
+#/////////////////////////////////////////////////////////////////////////////
 
-# Katalog Local AppImage Builder
-# Based on the portable script architecture but creates AppImage instead
 
 # Colors for output
 RED='\033[0;31m'
@@ -594,18 +621,22 @@ create_appimage() {
             print_warning "AppImage version test failed (not critical)"
         fi
 
-        # Move to project root for convenience
-        mv "$created_appimage" "$PROJECT_ROOT/"
-        print_success "AppImage moved to project root: $PROJECT_ROOT/$created_appimage"
+        # Move AppImage to build base directory (final location)
+        mv "$created_appimage" "$BUILD_BASE_DIR/"
+        print_success "AppImage created in build directory: $BUILD_BASE_DIR/$created_appimage"
 
-        # Also create a symlink in the build base directory for easy access
-        ln -sf "$PROJECT_ROOT/$created_appimage" "$BUILD_BASE_DIR/$(basename "$created_appimage")"
-        print_info "Symlink created in build directory: $BUILD_BASE_DIR/$(basename "$created_appimage")"
+        # Create a symlink in the project root for easy access
+        #ln -sf "$BUILD_BASE_DIR/$created_appimage" "$PROJECT_ROOT/$(basename "$created_appimage")"
+        #print_info "Symlink created in project root: $PROJECT_ROOT/$(basename "$created_appimage")"
 
         echo ""
         print_info "To test themes and icons:"
-        echo "  cd $PROJECT_ROOT"
+        echo "  cd $BUILD_BASE_DIR"
         echo "  ./$created_appimage"
+        echo ""
+        #print_info "Or use the symlink from project root:"
+        #echo "  cd $PROJECT_ROOT"
+        #echo "  ./$(basename "$created_appimage")"
 
     else
         print_error "AppImage file not found after creation"
