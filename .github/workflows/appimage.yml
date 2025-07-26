@@ -33,10 +33,30 @@ jobs:
 
     - name: Install Qt6 and KF6 dependencies
       run: |
+        # Add KDE neon repository for KF6 packages
         sudo apt-get update
+        sudo apt-get install -y software-properties-common wget gpg
+
+        # Add KDE neon repository
+        wget -qO - https://archive.neon.kde.org/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg
+        echo "deb http://archive.neon.kde.org/user noble main" | sudo tee /etc/apt/sources.list.d/neon.list
+
+        # Update package lists
+        sudo apt-get update
+
+        # Install base dependencies
         sudo apt-get install -y \
           cmake \
           ninja-build \
+          desktop-file-utils \
+          appstream-util \
+          wget \
+          file \
+          fuse3 \
+          libfuse2
+
+        # Install Qt6 packages
+        sudo apt-get install -y \
           qt6-base-dev \
           qt6-base-dev-tools \
           qt6-tools-dev \
@@ -44,18 +64,31 @@ jobs:
           qt6-l10n-tools \
           libqt6charts6-dev \
           libqt6sql6-sqlite \
-          libqt6networkauth6-dev \
+          libqt6networkauth6-dev
+
+        # Install KF6 packages from neon repository
+        sudo apt-get install -y \
           libkf6coreaddons-dev \
           libkf6i18n-dev \
           libkf6xmlgui-dev \
           libkf6config-dev \
-          libkf6iconthemes-dev \
-          desktop-file-utils \
-          appstream-util \
-          wget \
-          file \
-          fuse3 \
-          libfuse2
+          libkf6iconthemes-dev || \
+        {
+          # Fallback: try alternative package names
+          echo "Trying alternative KF6 package names..."
+          sudo apt-get install -y \
+            kf6-kcoreaddons-dev \
+            kf6-ki18n-dev \
+            kf6-kxmlgui-dev \
+            kf6-kconfig-dev \
+            kf6-kiconthemes-dev || \
+          {
+            echo "KF6 packages not available, listing available packages..."
+            apt list --installed | grep -i kf6 || true
+            apt search kf6 | head -20 || true
+            exit 1
+          }
+        }
 
     - name: Download and setup linuxdeploy
       run: |
