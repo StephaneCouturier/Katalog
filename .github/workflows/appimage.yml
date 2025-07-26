@@ -1,5 +1,5 @@
 name: Create AppImage
-#v19
+#v20
 on:
   # Trigger on new releases
   release:
@@ -98,21 +98,31 @@ jobs:
 
         chmod +x *.AppImage
 
-        # Extract for use in container environment
-        ./linuxdeploy-x86_64.AppImage --appimage-extract
-        ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
+        # Extract both AppImages to separate directories
+        mkdir -p linuxdeploy-extracted
+        mkdir -p linuxdeploy-qt-extracted
+
+        cd linuxdeploy-extracted
+        ../linuxdeploy-x86_64.AppImage --appimage-extract
+        cd ..
+
+        cd linuxdeploy-qt-extracted
+        ../linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
+        cd ..
 
         # Create proper executable scripts
         echo '#!/bin/bash' > linuxdeploy
-        echo 'exec "$HOME/linuxdeploy/squashfs-root/AppRun" "$@"' >> linuxdeploy
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy
 
         echo '#!/bin/bash' > linuxdeploy-plugin-qt
-        echo 'exec "$HOME/linuxdeploy/squashfs-root-1/AppRun" "$@"' >> linuxdeploy-plugin-qt
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-qt-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy-plugin-qt
 
         chmod +x linuxdeploy linuxdeploy-plugin-qt
 
         # Test the tools
+        echo "Testing main linuxdeploy tool:"
         ./linuxdeploy --help | head -5
+        echo "Testing Qt plugin:"
         ./linuxdeploy-plugin-qt --help | head -5
 
     - name: Create packaging directory and files
