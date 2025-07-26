@@ -177,9 +177,7 @@ class MainWindow : public KXmlGuiWindow
             bool isDarkTheme() const;
             void setupIconTheme();
             void refreshAllIcons();
-            void debugKDEIconSystem();
             void debugIconSetup();
-            void testIconDisplay();
 #ifdef Q_OS_LINUX
             void setupLinuxIconTheme();
 #endif
