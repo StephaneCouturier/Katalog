@@ -1,5 +1,5 @@
 name: Create AppImage
-#v20
+#v21
 on:
   # Trigger on new releases
   release:
@@ -262,20 +262,25 @@ jobs:
         # Copy AppData
         cp ../packaging/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
 
-        # Extract and copy icon from Qt resources (fallback to a simple icon if extraction fails)
-        if [ -f "AppDir/usr/bin/Katalog" ]; then
-          # Try to extract icon from compiled resources or use existing icon file
-          if [ -f "../src/images/Katalog_logo_64.ico" ]; then
-            # Convert ico to png if needed (install imagemagick if needed)
-            sudo apt-get install -y imagemagick
-            convert "../src/images/Katalog_logo_64.ico[0]" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
-            cp ../src/images/Katalog_logo_64.ico AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
-          else
-            # Create a simple fallback icon
-            sudo apt-get install -y imagemagick
-            convert -size 64x64 xc:steelblue -gravity center -pointsize 14 -fill white -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
-          fi
+        # Create proper 64x64 icon
+        if [ -f "../src/images/Katalog_logo_64.ico" ]; then
+          # Convert ico to png with exact 64x64 size
+          sudo apt-get install -y imagemagick
+          convert "../src/images/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
+          {
+            echo "ICO conversion failed, creating fallback icon"
+            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+          }
+        else
+          echo "ICO file not found, creating fallback icon"
+          sudo apt-get install -y imagemagick
+          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
         fi
+
+        # Verify icon dimensions
+        echo "Icon information:"
+        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png || echo "Could not identify icon"
 
         # Validate desktop file
         desktop-file-validate AppDir/usr/share/applications/Katalog.desktop || echo "Desktop file validation warnings (non-critical)"
