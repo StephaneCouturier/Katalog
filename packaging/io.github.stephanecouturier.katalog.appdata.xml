@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.stephanecouturier.katalog</id>
+  <name>Katalog</name>
+  <summary>File Catalog Manager</summary>
+  <description>
+    <p>
+      Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
+      Create catalogs of your DVDs, external drives, and folders to quickly find files without having to connect the device.
+    </p>
+    <p>Key Features:</p>
+    <ul>
+      <li>Create comprehensive catalogs of files and folders from any storage device</li>
+      <li>Search across multiple catalogs simultaneously with advanced filters</li>
+      <li>Track files on external devices (DVDs, USB drives, network storage)</li>
+      <li>Import catalogs from other popular catalog software formats</li>
+      <li>Generate detailed statistics and file analysis reports</li>
+      <li>Multiple language support with professional translations</li>
+      <li>Cross-platform compatibility (Linux, Windows)</li>
+      <li>Backup and synchronization features</li>
+      <li>Custom device and storage management</li>
+      <li>Metadata extraction for media files</li>
+    </ul>
+    <p>
+      Perfect for digital archivists, content creators, system administrators, and anyone who needs to organize 
+      and track large collections of files across multiple storage devices.
+    </p>
+  </description>
+  <categories>
+    <category>Utility</category>
+    <category>FileManager</category>
+    <category>Office</category>
+  </categories>
+  <keywords>
+    <keyword>catalog</keyword>
+    <keyword>files</keyword>
+    <keyword>folders</keyword>
+    <keyword>organization</keyword>
+    <keyword>storage</keyword>
+    <keyword>backup</keyword>
+    <keyword>archiving</keyword>
+    <keyword>inventory</keyword>
+  </keywords>
+  <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
+  <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
+  <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
+  <url type="donation">https://github.com/sponsors/StephaneCouturier</url>
+  <url type="vcs-browser">https://github.com/StephaneCouturier/Katalog</url>
+  <launchable type="desktop-id">io.github.stephanecouturier.katalog.desktop</launchable>
+  <provides>
+    <binary>Katalog</binary>
+  </provides>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main interface showing catalog creation</caption>
+      <image>https://stephanecouturier.github.io/Katalog/img/screenshots/Filters_catalogs_storage.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Search interface with advanced filters</caption>
+      <image>https://stephanecouturier.github.io/Katalog/img/screenshots/Filters_catalogs_virtual.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Device management interface</caption>
+      <image>https://stephanecouturier.github.io/Katalog/img/screenshots/Filters_connecteddrives.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+  <project_license>GPL-3.0+</project_license>
+  <developer_name>Stéphane Couturier</developer_name>
+  <releases>
+    <release version="2.6" date="2024-12-01">
+      <description>
+        <p>Major update with enhanced KF6 integration and improved cross-platform support.</p>
+      </description>
+    </release>
+  </releases>
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+  <recommends>
+    <memory compare="ge">512</memory>
+  </recommends>
+</component>
