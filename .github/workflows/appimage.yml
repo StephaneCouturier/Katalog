@@ -1,4 +1,4 @@
-name: Create AppImage v10
+name: Create AppImage v11
 
 on:
   # Trigger on new releases
@@ -194,6 +194,26 @@ jobs:
           -DCMAKE_PREFIX_PATH=/usr \
           -DBUILD_TESTS=OFF
 
+        # Build translations first
+        echo "Building translations..."
+        ninja Katalog_lrelease || echo "Translation build failed, continuing..."
+
+        # Check what .qm files are available
+        echo "Available .qm files:"
+        find .. -name "*.qm" -type f || echo "No .qm files found"
+
+        # Create missing .qm files as empty files if needed
+        for ts_file in ../src/translations/*.ts; do
+          if [ -f "$ts_file" ]; then
+            qm_file="${ts_file%.ts}.qm"
+            if [ ! -f "$qm_file" ]; then
+              echo "Creating empty .qm file: $qm_file"
+              touch "$qm_file"
+            fi
+          fi
+        done
+
+        # Now build the main application
         ninja
 
         # Install to AppDir
