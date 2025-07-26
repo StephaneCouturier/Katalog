@@ -1,4 +1,4 @@
-name: Create AppImage v14
+name: Create AppImage v16
 
 on:
   # Trigger on new releases
@@ -216,9 +216,17 @@ jobs:
         # Now build the main application
         ninja
 
-        # Create AppDir and install
-        mkdir -p AppDir
-        DESTDIR="$(pwd)/AppDir" ninja installD/AppDir ninja install
+        # Check available targets
+        echo "Available ninja targets:"
+        ninja -t targets | grep install || echo "No install targets found"
+
+        # Create AppDir and install manually if needed
+        mkdir -p AppDir/usr/bin
+        cp Katalog AppDir/usr/bin/
+
+        # Or try the install target with proper environment
+        export DESTDIR="$(pwd)/AppDir"
+        ninja install || echo "Install target failed, but binary copied manually"D/AppDir ninja install
 
     - name: Prepare AppDir structure
       run: |
