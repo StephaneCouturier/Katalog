@@ -38,6 +38,7 @@
 //#ifdef Q_OS_LINUX
 //    #include <KAboutData>
 #include <KLocalizedString>
+#include <KIconTheme>
 //#endif
 
 #include "mainwindow.h"
@@ -45,6 +46,7 @@
 
 int main(int argc, char *argv[])
 {
+    KIconTheme::initTheme();
     QApplication app(argc, argv);
     app.setApplicationName("Katalog");
     app.setApplicationVersion("2.6");
@@ -96,6 +98,7 @@ int main(int argc, char *argv[])
 
     #ifdef Q_OS_LINUX
         KLocalizedString::setApplicationDomain("Katalog");
+        QApplication::setStyle("breeze");
 
 //        KAboutData aboutData(
 //             QStringLiteral("Katalog"),         // The program name used internally. (componentName)

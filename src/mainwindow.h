@@ -173,11 +173,13 @@ class MainWindow : public KXmlGuiWindow
             void closeEvent (QCloseEvent *event);
             QTimer* statusBarTimer;
 
-            // Theme management (add these to existing private methods)
+            // Theme management
             bool isDarkTheme() const;
             void setupIconTheme();
             void refreshAllIcons();
+            void debugKDEIconSystem();
             void debugIconSetup();
+            void testIconDisplay();
 #ifdef Q_OS_LINUX
             void setupLinuxIconTheme();
 #endif

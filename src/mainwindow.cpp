@@ -91,8 +91,13 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
         Database::initialize("defaultConnection", collection);
 
     //Set up the interface globally
+
+
+
         //Set up the User Interface
+            qDebug() << "Style before setupUi:" << QApplication::style()->objectName();
             ui->setupUi(this);
+            qDebug() << "Style after setupUi:" << QApplication::style()->objectName();
 
             // Hide status bar initially
             statusBar()->hide();
@@ -194,10 +199,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             #endif
 
             // Setup icon theme first (platform-specific)
-            setupIconTheme();
+            //setupIconTheme();
 
             // Optional: Debug icon setup
-            // debugIconSetup();
+            debugIconSetup();
 
             //Load custom Katalog stylesheet instead of default theme
             if (themeID == 1) {
@@ -208,6 +213,25 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                     loadCustomThemeLight();
                 }
             }
+
+            debugKDEIconSystem();
+            testIconDisplay();
+
+            qDebug() << "=== STYLE MONITORING ===";
+            qDebug() << "Initial style after diagnostic:" << QApplication::style()->objectName();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //Load Collection data
             //Create searchMemory initially
@@ -372,6 +396,12 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
+
+            // Add this to your MainWindow constructor at the very end
+            qDebug() << "Final style:" << QApplication::style()->objectName();
+
+            //QApplication::setStyle("Fusion");
+            //qDebug() << "Forced style to:" << QApplication::style()->objectName();
 }
 
 MainWindow::~MainWindow()
@@ -452,3 +482,111 @@ msgBox.exec();
             qDebug()<<query.value(0).toString()<<query.value(1).toString();
         }
 */
+void MainWindow::debugKDEIconSystem()
+{
+    qDebug() << "=== KDE ICON SYSTEM DIAGNOSTIC ===";
+
+    // Check KIconThemes initialization
+    qDebug() << "KIconThemes Status:";
+
+    // Check if KIconLoader is working
+    KIconLoader *loader = KIconLoader::global();
+    if (loader) {
+        qDebug() << "  ✅ KIconLoader global instance available";
+        qDebug() << "  Theme path:" << loader->theme()->dir();
+        qDebug() << "  Current theme:" << loader->theme()->name();
+        qDebug() << "  Theme description:" << loader->theme()->description();
+    } else {
+        qDebug() << "  ❌ KIconLoader global instance NOT available";
+    }
+
+    // Check environment variables
+    qDebug() << "Environment Variables:";
+    qDebug() << "  XDG_DATA_DIRS:" << qgetenv("XDG_DATA_DIRS");
+    qDebug() << "  XDG_DATA_HOME:" << qgetenv("XDG_DATA_HOME");
+    qDebug() << "  QT_PLUGIN_PATH:" << qgetenv("QT_PLUGIN_PATH");
+    qDebug() << "  LD_LIBRARY_PATH:" << qgetenv("LD_LIBRARY_PATH");
+    qDebug() << "  KICONTHEMES_PORTABLE_MODE:" << qgetenv("KICONTHEMES_PORTABLE_MODE");
+
+    // Check Qt icon system
+    qDebug() << "Qt Icon System:";
+    qDebug() << "  Theme name:" << QIcon::themeName();
+    qDebug() << "  Theme search paths:" << QIcon::themeSearchPaths();
+    qDebug() << "  Fallback search paths:" << QIcon::fallbackSearchPaths();
+    qDebug() << "  Has theme icon (folder):" << QIcon::hasThemeIcon("folder");
+    qDebug() << "  Has theme icon (edit-find):" << QIcon::hasThemeIcon("edit-find");
+
+    // Test direct icon loading
+    qDebug() << "Direct Icon Loading Tests:";
+
+    // Test resource loading
+    QIcon resourceIcon(":/fallback-icons/folder.png");
+    qDebug() << "  Resource icon (:/fallback-icons/folder.png):" << !resourceIcon.isNull()
+             << "sizes:" << resourceIcon.availableSizes().size();
+
+    // Test KIconLoader direct loading
+    if (loader) {
+        QIcon kloaderIcon = loader->loadIcon("folder", KIconLoader::Small);
+        qDebug() << "  KIconLoader direct (folder):" << !kloaderIcon.isNull()
+                 << "sizes:" << kloaderIcon.availableSizes().size();
+    }
+
+    // Test QIcon::fromTheme
+    QIcon themeIcon = QIcon::fromTheme("folder");
+    qDebug() << "  QIcon::fromTheme (folder):" << !themeIcon.isNull()
+             << "sizes:" << themeIcon.availableSizes().size();
+
+    // Check what files actually exist
+    qDebug() << "File System Checks:";
+    QStringList checkPaths = {
+        ":/fallback-icons/folder.png",
+        ":/fallback-icons-dark/folder.png",
+        "./share/icons/breeze",
+        "/usr/share/icons/breeze",
+        QStandardPaths::locate(QStandardPaths::GenericDataLocation, "icons", QStandardPaths::LocateDirectory)
+    };
+
+    for (const QString &path : checkPaths) {
+        if (path.startsWith(":/")) {
+            // Resource path
+            QFile resource(path);
+            qDebug() << "  Resource" << path << "exists:" << resource.exists();
+        } else {
+            // File system path
+            qDebug() << "  Path" << path << "exists:" << QDir(path).exists();
+        }
+    }
+
+    qDebug() << "=== END DIAGNOSTIC ===";
+}
+void MainWindow::testIconDisplay()
+{
+    qDebug() << "=== SIMPLE ICON DISPLAY TEST ===";
+
+    // Test 1: Can we load an icon?
+    QIcon testIcon = QIcon::fromTheme("folder");
+    qDebug() << "Icon loaded:" << !testIcon.isNull();
+    qDebug() << "Icon sizes:" << testIcon.availableSizes();
+
+    // Test 2: Can we get a pixmap from it?
+    QPixmap pixmap = testIcon.pixmap(16, 16);
+    qDebug() << "Pixmap generated:" << !pixmap.isNull();
+    qDebug() << "Pixmap size:" << pixmap.size();
+
+    // Test 3: Test on a real button
+    if (ui->Filters_pushButton_ResetGlobal) {
+        ui->Filters_pushButton_ResetGlobal->setIcon(testIcon);
+        ui->Filters_pushButton_ResetGlobal->setIconSize(QSize(16, 16));
+
+        // Check what the button actually got
+        QIcon buttonIcon = ui->Filters_pushButton_ResetGlobal->icon();
+        qDebug() << "Button has icon:" << !buttonIcon.isNull();
+        qDebug() << "Button icon sizes:" << buttonIcon.availableSizes();
+    }
+
+    // Test 4: Check the application's current style/theme
+    qDebug() << "Current style:" << QApplication::style()->objectName();
+    qDebug() << "Style supports icons:" << QApplication::style()->styleHint(QStyle::SH_DialogButtonBox_ButtonsHaveIcons);
+
+    qDebug() << "=== END TEST ===";
+}

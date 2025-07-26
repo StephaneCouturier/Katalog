@@ -49,7 +49,6 @@
         <file>fallback-icons/view-list-text.png</file>
         <file>fallback-icons/view-list-tree.png</file>
         <file>fallback-icons/view-media-playlist.png</file>
-        <file>fallback-icons/view-refresh.png</file>
         <file>fallback-icons/view-statistics.png</file>
         <file>fallback-icons/xml-node-duplicate.png</file>
         <file>fallback-icons-dark/address-book-new.png</file>
@@ -106,5 +105,6 @@
         <file>fallback-icons-dark/xml-node-duplicate.png</file>
         <file>fallback-icons/process-stop.png</file>
         <file>fallback-icons-dark/process-stop.png</file>
+        <file>fallback-icons/view-refresh.png</file>
     </qresource>
 </RCC>

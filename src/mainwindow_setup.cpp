@@ -994,7 +994,7 @@
         // This forces Qt to use fallback paths like the old portable versions
 
         // Force Qt to ignore KDE integration for icon loading
-        QApplication::setDesktopSettingsAware(false);
+        //QApplication::setDesktopSettingsAware(false);
 
         // Clear any KDE theme to force fallback usage
         QIcon::setThemeName("");
@@ -1007,7 +1007,7 @@
             fallbackPaths << ":/fallback-icons-dark";  // White icons for dark backgrounds
             qDebug() << "Linux dark theme: Using white icons from :/fallback-icons-dark";
         } else {
-            fallbackPaths << ":/fallback-icons-light"; // Dark icons for light backgrounds
+            fallbackPaths << ":/fallback-icons"; // Dark icons for light backgrounds
             qDebug() << "Linux light theme: Using dark icons from :/fallback-icons-light";
         }
 
@@ -1130,10 +1130,10 @@
             // Small delay to ensure the palette change is fully applied
             QTimer::singleShot(100, this, [this]() {
                 // Reapply icon theme with new desktop theme detection
-                setupIconTheme();
+                //setupIconTheme();
 
                 // Refresh all existing icons in the UI
-                refreshAllIcons();
+                //refreshAllIcons();
 
                 // Optionally reapply custom theme colors if using Katalog theme
                 if (themeID == 1) {
