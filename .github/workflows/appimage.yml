@@ -1,4 +1,4 @@
-name: Create AppImage v16
+name: Create AppImage v18
 
 on:
   # Trigger on new releases
@@ -102,9 +102,22 @@ jobs:
         ./linuxdeploy-x86_64.AppImage --appimage-extract
         ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
 
-        # Create convenient symlinks
-        ln -sf squashfs-root/AppRun linuxdeploy
-        ln -sf squashfs-root-1/AppRun linuxdeploy-plugin-qt
+        # Create proper executable scripts
+        cat > linuxdeploy << 'EOF'
+#!/bin/bash
+exec "$HOME/linuxdeploy/squashfs-root/AppRun" "$@"
+EOF
+
+        cat > linuxdeploy-plugin-qt << 'EOF'
+#!/bin/bash
+exec "$HOME/linuxdeploy/squashfs-root-1/AppRun" "$@"
+EOF
+
+        chmod +x linuxdeploy linuxdeploy-plugin-qt
+
+        # Test the tools
+        ./linuxdeploy --help | head -5
+        ./linuxdeploy-plugin-qt --help | head -5
 
     - name: Create packaging directory and files
       run: |
@@ -271,6 +284,18 @@ jobs:
         # Set up environment for linuxdeploy
         export PATH="$HOME/linuxdeploy:$PATH"
         export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+        # Verify tools work
+        echo "Testing linuxdeploy..."
+        linuxdeploy --version || linuxdeploy --help | head -3
+
+        echo "Testing linuxdeploy-plugin-qt..."
+        linuxdeploy-plugin-qt --version || linuxdeploy-plugin-qt --help | head -3
+
+        # Check AppDir structure
+        echo "AppDir contents:"
+        find AppDir -type f -name "Katalog*" || true
+        ls -la AppDir/usr/bin/ || true
 
         # Create AppImage
         linuxdeploy \
