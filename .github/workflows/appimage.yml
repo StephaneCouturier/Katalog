@@ -4,7 +4,7 @@ on:
   # Trigger on new releases
   release:
     types: [published]
-  
+
   # Allow manual triggering
   workflow_dispatch:
     inputs:
@@ -12,7 +12,7 @@ on:
         description: 'Version tag (e.g., v2.6.1)'
         required: false
         default: 'dev-build'
-  
+
   # Optional: trigger on push to main (remove if you don't want this)
   push:
     branches: [ main ]
@@ -23,14 +23,14 @@ on:
 
 jobs:
   build-appimage:
-    runs-on: ubuntu-22.04
-    
+    runs-on: ubuntu-24.04
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         submodules: recursive
-    
+
     - name: Install Qt6 and KF6 dependencies
       run: |
         sudo apt-get update
@@ -54,31 +54,32 @@ jobs:
           appstream-util \
           wget \
           file \
-          fuse
-    
+          fuse3 \
+          libfuse2
+
     - name: Download and setup linuxdeploy
       run: |
         mkdir -p $HOME/linuxdeploy
         cd $HOME/linuxdeploy
-        
+
         # Download linuxdeploy and Qt plugin
         wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
         wget -c "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
-        
+
         chmod +x *.AppImage
-        
+
         # Extract for use in container environment
         ./linuxdeploy-x86_64.AppImage --appimage-extract
         ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
-        
+
         # Create convenient symlinks
         ln -sf squashfs-root/AppRun linuxdeploy
         ln -sf squashfs-root-1/AppRun linuxdeploy-plugin-qt
-    
+
     - name: Create packaging directory and files
       run: |
         mkdir -p packaging
-        
+
         # Create desktop file
         cat > packaging/Katalog.desktop << EOF
         [Desktop Entry]
@@ -95,7 +96,7 @@ jobs:
         StartupNotify=true
         StartupWMClass=Katalog
         EOF
-        
+
         # Create AppData file
         cat > packaging/io.github.stephanecouturier.katalog.appdata.xml << EOF
         <?xml version="1.0" encoding="UTF-8"?>
@@ -135,7 +136,7 @@ jobs:
           </releases>
         </component>
         EOF
-    
+
     - name: Set version information
       run: |
         if [ "${{ github.event_name }}" = "release" ]; then
@@ -148,41 +149,41 @@ jobs:
           echo "VERSION_TAG=dev-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
           echo "IS_RELEASE=false" >> $GITHUB_ENV
         fi
-        
+
         echo "Building version: $VERSION_TAG"
-    
+
     - name: Build Katalog
       run: |
         mkdir build
         cd build
-        
+
         cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr \
           -DCMAKE_PREFIX_PATH=/usr \
           -DBUILD_TESTS=OFF
-        
+
         ninja
-        
+
         # Install to AppDir
         DESTDIR=$PWD/AppDir ninja install
-    
+
     - name: Prepare AppDir structure
       run: |
         cd build
-        
+
         # Ensure proper AppDir structure
         mkdir -p AppDir/usr/share/applications
         mkdir -p AppDir/usr/share/metainfo
         mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
-        
+
         # Copy desktop file
         cp ../packaging/Katalog.desktop AppDir/usr/share/applications/
-        
+
         # Copy AppData
         cp ../packaging/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
-        
+
         # Extract and copy icon from Qt resources (fallback to a simple icon if extraction fails)
         if [ -f "AppDir/usr/bin/Katalog" ]; then
           # Try to extract icon from compiled resources or use existing icon file
@@ -197,21 +198,21 @@ jobs:
             convert -size 64x64 xc:steelblue -gravity center -pointsize 14 -fill white -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
           fi
         fi
-        
+
         # Validate desktop file
         desktop-file-validate AppDir/usr/share/applications/Katalog.desktop || echo "Desktop file validation warnings (non-critical)"
-        
+
         # Validate AppData
         appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.katalog.appdata.xml || echo "AppData validation warnings (non-critical)"
-    
+
     - name: Create AppImage
       run: |
         cd build
-        
+
         # Set up environment for linuxdeploy
         export PATH="$HOME/linuxdeploy:$PATH"
         export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-        
+
         # Create AppImage
         linuxdeploy \
           --appdir AppDir \
@@ -220,7 +221,7 @@ jobs:
           --desktop-file AppDir/usr/share/applications/Katalog.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png \
           --output appimage
-        
+
         # Rename AppImage with version
         if ls Katalog-*.AppImage 1> /dev/null 2>&1; then
           mv Katalog-*.AppImage Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
@@ -229,21 +230,21 @@ jobs:
           ls -la *.AppImage || echo "No AppImage files found"
           exit 1
         fi
-    
+
     - name: Test AppImage
       run: |
         cd build
-        
+
         # Basic test - check if AppImage can show version
         chmod +x Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-        
+
         # Test extraction
         ./Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
-        
+
         # Get AppImage size and info
         ls -lh Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
         file Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-    
+
     - name: Upload AppImage to Release
       if: env.IS_RELEASE == 'true'
       uses: actions/upload-release-asset@v1
@@ -254,7 +255,7 @@ jobs:
         asset_path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
         asset_name: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
         asset_content_type: application/octet-stream
-    
+
     - name: Upload AppImage as Artifact
       if: env.IS_RELEASE != 'true'
       uses: actions/upload-artifact@v4
@@ -262,7 +263,7 @@ jobs:
         name: Katalog-AppImage-${{ env.VERSION_TAG }}
         path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
         retention-days: 30
-    
+
     - name: Summary
       run: |
         echo "## Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
@@ -270,7 +271,7 @@ jobs:
         echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
         echo "- **File**: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
         echo "- **Size**: $(ls -lh build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
-        
+
         if [ "${{ env.IS_RELEASE }}" = "true" ]; then
           echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY
         else
