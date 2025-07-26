@@ -88,7 +88,7 @@ void Device::loadDevice(QString connectionName){
         return;
     }
 
-    if(useTimerForDebug) qDebug() << "      TIMER3: load device query.exec:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
+    if(useTimerForDebug) {qDebug() << "      TIMER3: load device query.exec:" << stepTimer.elapsed() << "ms"; stepTimer.restart();}
 
 
     //Load storage values
@@ -99,7 +99,10 @@ void Device::loadDevice(QString connectionName){
         storage->totalSpace = totalSpace;
         storage->freeSpace  = freeSpace;
     }
-    if(useTimerForDebug) qDebug() << "      TIMER3: Load storage values:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
+    if(useTimerForDebug){
+        qDebug() << "      TIMER3: Load storage values:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
+    }
 
     //Load catalog values
     if(type == "Catalog"){
@@ -110,16 +113,25 @@ void Device::loadDevice(QString connectionName){
         catalog->fileCount = totalFileCount;
         catalog->totalFileSize = totalFileSize;
     }
-    if(useTimerForDebug) qDebug() << "      TIMER3: Load catalog values:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
+    if(useTimerForDebug){
+        qDebug() << "      TIMER3: Load catalog values:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
+    }
 
     //Load sub-device list
     loadSubDeviceList(connectionName);
     loadSubDeviceTree(connectionName);
-    if(useTimerForDebug) qDebug() << "      TIMER3: Load sub-device list:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
+    if(useTimerForDebug){
+        qDebug() << "      TIMER3: Load sub-device list:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
+    }
 
     //Update states
     verifyHasSubDevice(connectionName);
-    if(useTimerForDebug) qDebug() << "      TIMER3: verifyHasSubDevice:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
+    if(useTimerForDebug){
+        qDebug() << "      TIMER3: verifyHasSubDevice:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
+    }
 }
 
 void Device::loadSubDeviceTree(QString connectionName) {
