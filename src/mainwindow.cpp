@@ -37,23 +37,22 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 {
     //Set current version, release date, and development mode
     currentVersion  = "2.6";
-    collection->appVersion = currentVersion;
     releaseDate     = "2025-07-26";
     developmentMode = false;
 
-    // Initialize
-        // Initialize objects first
-        collection = new Collection();
-        selectedDevice = new Device();
-        searchJobStoppable = nullptr;
-        loadSearch = nullptr;
+    // Initialize objects first
+    collection = new Collection();
+    collection->appVersion = currentVersion;
+    selectedDevice = new Device();
+    searchJobStoppable = nullptr;
+    loadSearch = nullptr;
 
-        // Initialize other pointers
-        currentSearch = nullptr;
-        searchManager = nullptr;
-        searchProgressManager = nullptr;
-        searchProcess = nullptr;
-        isSearchRunning = false;
+    // Initialize other pointers
+    currentSearch = nullptr;
+    searchManager = nullptr;
+    searchProgressManager = nullptr;
+    searchProcess = nullptr;
+    isSearchRunning = false;
 
     //Default UI settings
         themeID = 1; //default theme is Katalog Colors

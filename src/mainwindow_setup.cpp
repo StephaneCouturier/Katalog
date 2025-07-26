@@ -974,7 +974,6 @@
     void MainWindow::setupIconTheme()
     {
 #ifdef Q_OS_LINUX
-        // Linux: Handle KDE/KXmlGuiWindow icon regression
         setupLinuxIconTheme();
 #elif defined(Q_OS_WIN)
         // Windows: Use the original Qt approach that was working
@@ -994,7 +993,7 @@
         // This forces Qt to use fallback paths like the old portable versions
 
         // Force Qt to ignore KDE integration for icon loading
-        QApplication::setDesktopSettingsAware(false);
+        //QApplication::setDesktopSettingsAware(false);
 
         // Clear any KDE theme to force fallback usage
         QIcon::setThemeName("");

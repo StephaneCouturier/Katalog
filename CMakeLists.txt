@@ -214,14 +214,6 @@ foreach(ts_file ${TS_FILES})
     )
 endforeach()
 
-#Translation build commands
-    # Update .ts files
-        #cmake --build . --target update_translations
-    # Compile .qm files
-        #cmake --build . --target translations
-    # Copy .qm files to source
-        #cmake --build . --target copy_translations
-
 # Resource files
 set(QRC_FILES
     src/icons.qrc
