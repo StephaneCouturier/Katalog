@@ -161,8 +161,7 @@ class MainWindow : public KXmlGuiWindow
             bool checkVersionChoice;
             void checkVersion();
             bool firstRun;
-            bool developmentMode;
-            int themeID;
+
 
             //UI
             Ui::MainWindow *ui;
@@ -174,7 +173,12 @@ class MainWindow : public KXmlGuiWindow
             QTimer* statusBarTimer;
 
             // Theme management
+            int themeID;
+            QString themeColor = "dev"; //blue
             bool isDarkTheme() const;
+            bool checkGnomeTheme() const;
+            bool checkXfceTheme() const;
+            bool checkCinnamonTheme() const;
             void setupIconTheme();
             void refreshAllIcons();
             void debugIconSetup();
@@ -554,7 +558,6 @@ class MainWindow : public KXmlGuiWindow
             void searchContextCopyFolderPath();
             void searchContextCopyFileNameWithExtension();
             void searchContextCopyFileNameWithoutExtension();
-            void searchContextMoveFileToFolder();
             void searchContextMoveFileToTrash();
             void searchContextDeleteFile();
 
@@ -589,7 +592,6 @@ class MainWindow : public KXmlGuiWindow
             void exploreContextCopyFolderPath();
             void exploreContextCopyFileNameWithExtension();
             void exploreContextCopyFileNameWithoutExtension();
-            void exploreContextMoveFileToFolder();
             void exploreContextMoveFileToTrash();
             void exploreContextDeleteFile();
 

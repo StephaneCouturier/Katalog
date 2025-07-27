@@ -202,13 +202,6 @@
 
             fileContextMenu.addSeparator();
 
-            //DEV
-            if (developmentMode == true){
-                QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
-                connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
-                fileContextMenu.addAction(menuAction7);
-            }
-
             QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
             connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
             fileContextMenu.addAction(menuAction8);
@@ -234,17 +227,6 @@
             fileContextMenu.addAction(menuAction5);
 
             fileContextMenu.addSeparator();
-
-            //DEV
-            if (developmentMode == true){
-                QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
-                connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
-                fileContextMenu.addAction(menuAction7);
-
-                QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete folder")), this);
-                connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
-                fileContextMenu.addAction(menuAction9);
-            }
 
             QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move folder to Trash")), this);
             connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
@@ -326,47 +308,6 @@
         QClipboard *clipboard = QGuiApplication::clipboard();
         QString originalText = clipboard->text();
         clipboard->setText(fileNameWithoutExtension);
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::exploreContextMoveFileToFolder()
-    {
-        QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
-
-        QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-        QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
-        QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-
-        QString pathInTrash;
-
-        if (selectedFileName.isEmpty()) {
-            return;
-        }
-
-        if (QMessageBox::question(this,
-                                  tr("Confirmation"),
-                                  tr("Move\n%1\nto the trash?").arg(selectedFile))
-            == QMessageBox::Yes) {
-            QFile file(selectedFile);
-            if (file.exists()) {
-                //Open a dialog for the user to select the target folder
-                QString dir = QFileDialog::getExistingDirectory(this, tr("Select the folder to move this file"),
-                                                                collection->folder,
-                                                                QFileDialog::ShowDirsOnly
-                                                                | QFileDialog::DontResolveSymlinks);
-
-                //Unless the selection was cancelled, set the new collection folder, and refresh the list of catalogs
-                if ( dir !=""){
-                    //move
-
-                }
-
-                //move file
-                QMessageBox::warning(this, tr("Warning"), tr("Moved to folder:<br/>") + dir);
-
-            } else {
-                QMessageBox::warning(this, tr("Warning"), tr("Move to folder failed."));
-            }
-        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::exploreContextMoveFileToTrash()

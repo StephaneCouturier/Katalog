@@ -395,73 +395,7 @@ void MainWindow::updateAllNumbers()
 //--------------------------------------------------------------------------
 void MainWindow::setDeviceTreeExpandState(bool toggle)
 {
-    //DEV:
-    if (developmentMode==false)
-        deviceTreeExpandState = 0;
-    else{
-        //Count the number of tree level from root
-        QMap<int, QList<int>> deviceTree;
-        QSqlQuery query("SELECT device_id, device_parent_id FROM device", QSqlDatabase::database("defaultConnection"));
-        while (query.next()) {
-            int deviceId = query.value(0).toInt();
-            int parentId = query.value(1).toInt();
-            deviceTree[parentId].append(deviceId);
-        }
-        int treeLevels = countTreeLevels(deviceTree, 0);
-
-        //optionDeviceTreeExpandState values:  collapseAll / 0 / 2 to x levels / x+1 last level
-        QString iconName = ui->Devices_pushButton_TreeExpandCollapse->icon().name();
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-
-        if (toggle==true){
-
-            if ( iconName=="collapse-all"/*deviceTreeExpandState == 2*/ ){
-                //collapsed > expand first level
-                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-                deviceTreeExpandState =-1;
-                ui->Devices_treeView_DeviceList->collapseAll();
-                settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
-            }
-            else if ( iconName=="expand-all" /*deviceTreeExpandState == 0 */){
-                //expanded first level > expand to second level
-                if(deviceTreeExpandState == treeLevels-3){
-                    ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-                    deviceTreeExpandState +=1;
-                    ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-                    settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
-                }
-                else{
-                    deviceTreeExpandState +=1;
-                    ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-                    settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
-                }
-
-            }
-            else if ( iconName=="expand-all" /* deviceTreeExpandState == 1 */){
-                //expanded second level > collapse
-                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-                ui->Devices_treeView_DeviceList->expandToDepth(treeLevels);
-                settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
-            }
-        }
-        else
-        {
-            if ( deviceTreeExpandState == 0 ){
-                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-                ui->Devices_treeView_DeviceList->collapseAll();
-                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-            }
-            else if ( deviceTreeExpandState != treeLevels-3 ){
-                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-                ui->Devices_treeView_DeviceList->collapseAll();
-                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-            }
-            else{
-                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-                ui->Devices_treeView_DeviceList->collapseAll();
-            }
-        }
-    }
+    deviceTreeExpandState = 0;
 }
 //--------------------------------------------------------------------------
 void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
@@ -1923,14 +1857,10 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection(10); //Total space
     ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
 
-    if(developmentMode==true){
-        ui->Devices_treeView_DeviceList->header()->showSection(26); //catalog_include_metadata
-        ui->Devices_treeView_DeviceList->header()->showSection(28); //catalog_is_full_device
-    }
-    else{
-        ui->Devices_treeView_DeviceList->header()->hideSection(26); //catalog_include_metadata
-        ui->Devices_treeView_DeviceList->header()->hideSection(28); //catalog_is_full_device
-    }
+    //Hide development fields
+    ui->Devices_treeView_DeviceList->header()->hideSection(26); //catalog_include_metadata
+    ui->Devices_treeView_DeviceList->header()->hideSection(28); //catalog_is_full_device
+
 
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active

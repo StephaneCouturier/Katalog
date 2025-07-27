@@ -550,13 +550,6 @@
 
             fileContextMenu.addSeparator();
 
-            //DEV
-            if (developmentMode == true){
-                QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
-                connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
-                fileContextMenu.addAction(menuAction7);
-            }
-
             QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move to Trash")), this);
             connect( menuAction8,&QAction::triggered, this, &MainWindow::searchContextMoveFileToTrash);
             fileContextMenu.addAction(menuAction8);
@@ -678,60 +671,6 @@
 
             QClipboard *clipboard = QGuiApplication::clipboard();
             clipboard->setText(fileNameWithoutExtension);
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::searchContextMoveFileToFolder()
-        {
-            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
-
-            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;           
-
-            if (selectedFileName.isEmpty()) {
-                return;
-            }
-
-            if (QMessageBox::question(this,
-                                      tr("Confirmation"),
-                                      tr("Move\n%1\nto another folder?").arg(selectedFile))
-                == QMessageBox::Yes) {
-                QFile file(selectedFile);
-                if (file.exists()) {
-                    //Open a dialog for the user to select the target folder
-                    QString dir = QFileDialog::getExistingDirectory(this, tr("Select the folder to move this file"),
-                                                                    collection->folder,
-                                                                    QFileDialog::ShowDirsOnly
-                                                                    | QFileDialog::DontResolveSymlinks);
-
-                    //Check and move the file
-                    if ( dir !=""){
-                        //verify file exists and decide to overwrite
-                        QString targetFilePath = dir + "/" + file.fileName();
-                        QFile targetFile(targetFilePath);
-                        if (file.exists()) {
-                            if (QMessageBox::question(this,
-                                                      tr("Confirmation"),
-                                                      tr("A file %& already exists. Overwrite it?").arg(targetFilePath))
-                                == QMessageBox::Yes) {
-                                //overwrite
-                            }
-                            else
-                                 QMessageBox::warning(this, tr("Warning"), tr("Cancelled move to folder."));
-                            return;
-                        }
-                        //remove exisiting
-
-                        //copy
-
-                        //move file
-                        QMessageBox::warning(this, tr("Warning"), tr("Moved to folder:<br/>") + dir);
-                    }
-
-                } else {
-                    QMessageBox::warning(this, tr("Warning"), tr("This file cannot be moved (offline or not existing)."));
-                }
-            }
         }
         //----------------------------------------------------------------------
         void MainWindow::searchContextMoveFileToTrash()

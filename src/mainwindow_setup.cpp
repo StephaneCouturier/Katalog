@@ -247,10 +247,6 @@
                 ui->BackUp_radioButton_Target->setChecked(true);
             }
 
-            //Restore DEV Settings
-            if(developmentMode==true){
-                ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(collection->databaseMode.toStdString().c_str()));
-            }
     }
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()
@@ -264,12 +260,9 @@
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
-        //Tabs
-            ui->tabWidget->removeTab(8);
-
         //Filter
 
-            //Search
+        //Search
             //hide Krename if not linux
             #ifndef Q_OS_LINUX
                 ui->Search_comboBox_SelectProcess->removeItem(2);
@@ -295,10 +288,6 @@
 
         //Settings
             ui->Settings_comboBox_DatabaseMode->removeItem(2);
-
-        //TESTS
-            //ui->Storage_pushButton_TestMedia->hide();
-            //ui->Storage_listView_Media->hide();
 
     }
     //----------------------------------------------------------------------
@@ -625,13 +614,13 @@
 
         //Tab widget, including combo boxes and buttons
 
-        if(developmentMode==true){
+        if(themeColor=="dev"){
             QFile file(":styles/tabwidget_dev.css");
             file.open(QFile::ReadOnly);
             QString tabwidgetStyleSheet = QLatin1String(file.readAll());
             ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
         }
-        else{
+        else if(themeColor=="blue"){
             QFile file(":styles/tabwidget_blue.css");
             file.open(QFile::ReadOnly);
             QString tabwidgetStyleSheet = QLatin1String(file.readAll());
@@ -967,9 +956,155 @@
     bool MainWindow::isDarkTheme() const
     {
         // Use the same logic as the existing code in mainwindow.cpp
+        //QPalette palette = QApplication::palette();
+        //return palette.color(QPalette::Window).lightness() < 128;
+
+        // First, detect the desktop environment to choose the best detection method
+        QString xdgCurrentDesktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+        QString sessionDesktop = qEnvironmentVariable("DESKTOP_SESSION");
+
+        qDebug() << "Theme detection - XDG_CURRENT_DESKTOP:" << xdgCurrentDesktop
+                 << "DESKTOP_SESSION:" << sessionDesktop;
+
+        // KDE Detection: Use Qt palette method as it works well on KDE
+        if (xdgCurrentDesktop.contains("KDE", Qt::CaseInsensitive) ||
+            sessionDesktop.contains("plasma", Qt::CaseInsensitive) ||
+            qEnvironmentVariable("KDE_SESSION_VERSION").length() > 0) {
+
+            QPalette palette = QApplication::palette();
+            bool kdeDark = palette.color(QPalette::Window).lightness() < 128;
+            qDebug() << "KDE detected - using Qt palette detection. Window lightness:"
+                     << palette.color(QPalette::Window).lightness() << "- Dark theme:" << kdeDark;
+            return kdeDark;
+        }
+
+        // For non-KDE environments, use enhanced detection
+        qDebug() << "Non-KDE environment detected - using enhanced detection";
+
+        // Method 1: Check GTK_THEME environment variable (most reliable when set)
+        QString gtkTheme = qEnvironmentVariable("GTK_THEME");
+        if (!gtkTheme.isEmpty()) {
+            bool gtkDark = gtkTheme.contains("dark", Qt::CaseInsensitive);
+            qDebug() << "GTK_THEME found:" << gtkTheme << "- Dark theme:" << gtkDark;
+            return gtkDark;
+        }
+
+        // Method 2: Desktop environment specific detection
+        bool desktopSpecificResult = false;
+        bool desktopSpecificFound = false;
+
+        if (xdgCurrentDesktop.contains("GNOME", Qt::CaseInsensitive) ||
+            xdgCurrentDesktop.contains("ubuntu", Qt::CaseInsensitive)) {
+            desktopSpecificResult = checkGnomeTheme();
+            desktopSpecificFound = true;
+            qDebug() << "GNOME/Ubuntu theme detection result:" << desktopSpecificResult;
+        }
+        else if (xdgCurrentDesktop.contains("XFCE", Qt::CaseInsensitive)) {
+            desktopSpecificResult = checkXfceTheme();
+            desktopSpecificFound = true;
+            qDebug() << "XFCE theme detection result:" << desktopSpecificResult;
+        }
+        else if (xdgCurrentDesktop.contains("X-Cinnamon", Qt::CaseInsensitive) ||
+                 xdgCurrentDesktop.contains("Cinnamon", Qt::CaseInsensitive)) {
+            desktopSpecificResult = checkCinnamonTheme();
+            desktopSpecificFound = true;
+            qDebug() << "Cinnamon theme detection result:" << desktopSpecificResult;
+        }
+
+        // If desktop-specific detection worked, use it
+        if (desktopSpecificFound) {
+            return desktopSpecificResult;
+        }
+
+        // Method 3: Fallback to Qt palette with additional checks
         QPalette palette = QApplication::palette();
-        return palette.color(QPalette::Window).lightness() < 128;
+        bool qtPaletteDark = palette.color(QPalette::Window).lightness() < 128;
+
+        // Method 4: Additional validation using text color
+        QColor textColor = palette.color(QPalette::WindowText);
+        bool textColorIndicatesDark = textColor.lightness() > 128; // Light text suggests dark theme
+
+        qDebug() << "Fallback detection - Window lightness:" << palette.color(QPalette::Window).lightness()
+                 << "Text lightness:" << textColor.lightness()
+                 << "Qt palette says dark:" << qtPaletteDark
+                 << "Text color suggests dark:" << textColorIndicatesDark;
+
+        // If both indicators agree, use that result
+        if (qtPaletteDark == textColorIndicatesDark) {
+            qDebug() << "Both indicators agree - using result:" << qtPaletteDark;
+            return qtPaletteDark;
+        }
+
+        // If they disagree, prefer text color indication (often more reliable on non-KDE)
+        qDebug() << "Indicators disagree - preferring text color indication:" << textColorIndicatesDark;
+        return textColorIndicatesDark;
     }
+    bool MainWindow::checkGnomeTheme() const
+    {
+        // First try the newer color-scheme setting (GNOME 42+)
+        QProcess process;
+        process.start("gsettings", QStringList() << "get" << "org.gnome.desktop.interface" << "color-scheme");
+        process.waitForFinished(1000);
+
+        if (process.exitCode() == 0) {
+            QString colorScheme = process.readAllStandardOutput().trimmed();
+            colorScheme.remove(QChar('\''));  // Remove quotes
+            qDebug() << "GNOME color-scheme:" << colorScheme;
+            if (colorScheme.contains("dark", Qt::CaseInsensitive) || colorScheme.contains("prefer-dark")) {
+                return true;
+            }
+            if (colorScheme.contains("light", Qt::CaseInsensitive) || colorScheme.contains("default")) {
+                return false;
+            }
+        }
+
+        // Fallback to gtk-theme setting
+        process.start("gsettings", QStringList() << "get" << "org.gnome.desktop.interface" << "gtk-theme");
+        process.waitForFinished(1000);
+
+        if (process.exitCode() == 0) {
+            QString gtkTheme = process.readAllStandardOutput().trimmed();
+            gtkTheme.remove(QChar('\''));  // Remove quotes
+            qDebug() << "GNOME gtk-theme:" << gtkTheme;
+            return gtkTheme.contains("dark", Qt::CaseInsensitive);
+        }
+
+        return false;
+    }
+
+    // Helper method to check XFCE theme
+    bool MainWindow::checkXfceTheme() const
+    {
+        QProcess process;
+        process.start("xfconf-query", QStringList() << "-c" << "xsettings" << "-p" << "/Net/ThemeName");
+        process.waitForFinished(1000);
+
+        if (process.exitCode() == 0) {
+            QString themeName = process.readAllStandardOutput().trimmed();
+            qDebug() << "XFCE theme name:" << themeName;
+            return themeName.contains("dark", Qt::CaseInsensitive);
+        }
+
+        return false;
+    }
+
+    // Helper method to check Cinnamon theme
+    bool MainWindow::checkCinnamonTheme() const
+    {
+        QProcess process;
+        process.start("gsettings", QStringList() << "get" << "org.cinnamon.desktop.interface" << "gtk-theme");
+        process.waitForFinished(1000);
+
+        if (process.exitCode() == 0) {
+            QString gtkTheme = process.readAllStandardOutput().trimmed();
+            gtkTheme.remove(QChar('\''));  // Remove quotes
+            qDebug() << "Cinnamon gtk-theme:" << gtkTheme;
+            return gtkTheme.contains("dark", Qt::CaseInsensitive);
+        }
+
+        return false;
+    }
+
     //----------------------------------------------------------------------
     void MainWindow::setupIconTheme()
     {

@@ -11234,24 +11234,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tabTEST">
-           <attribute name="icon">
-            <iconset theme="video-display"/>
-           </attribute>
-           <attribute name="title">
-            <string>TESTS</string>
-           </attribute>
-           <widget class="QListView" name="Storage_listView_Media">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>40</y>
-              <width>741</width>
-              <height>174</height>
-             </rect>
-            </property>
-           </widget>
-          </widget>
          </widget>
         </item>
        </layout>

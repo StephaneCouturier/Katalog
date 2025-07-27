@@ -36,9 +36,8 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)
 {
     //Set current version, release date, and development mode
-    currentVersion  = "2.6";
-    releaseDate     = "2025-07-26";
-    developmentMode = false;
+    currentVersion  = "2.7";
+    releaseDate     = "2025-07-27";
 
     // Initialize objects first
     collection = new Collection();
@@ -116,9 +115,8 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                 qDebug() << "Window restored to:" << size() << "at position:" << pos();
             });
 
-            if(developmentMode==false){
-                hideDevelopmentUIItems();
-            }
+            //Hide specific UI items
+            hideDevelopmentUIItems();
 
             QButtonGroup buttonGroupDevices;
             buttonGroupDevices.addButton(ui->Devices_radioButton_DeviceTree);
