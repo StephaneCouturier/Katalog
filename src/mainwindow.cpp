@@ -165,6 +165,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/pl.png"),"pl_PL");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/pt.png"),"pt_PT");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/ro.png"),"ro_RO");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/se.png"),"sv_SE");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cn.png"),"zh_CN");
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 

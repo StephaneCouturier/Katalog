@@ -15,5 +15,6 @@
         <file>translations/Katalog_zh_CN.qm</file>
         <file>translations/Katalog_da_DK.qm</file>
         <file>translations/Katalog_hu_HU.qm</file>
+        <file>translations/Katalog_sv_SE.qm</file>
     </qresource>
 </RCC>
