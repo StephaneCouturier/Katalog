@@ -42,6 +42,7 @@
 
 #include "mainwindow.h"
 #include "core/commandline.h"
+#include "core/language.h"
 
 int main(int argc, char *argv[])
 {
@@ -65,34 +66,17 @@ int main(int argc, char *argv[])
         if ( userLanguage == "" ){
 
             //Get the language of the user's system
-            userLanguage = QLocale::system().name();
+            //userLanguage = QLocale::system().name();
+            userLanguage = Language::getSystemLanguage();
 
             //If this language is not supported yet, default to English US.
-            QStringList availableUserLanguages;
-            availableUserLanguages  << "zh_CN"
-                                    << "cz_CZ"
-                                    << "da_DK"
-                                    << "de_DE"
-                                    << "en_US"
-                                    << "es_ES"
-                                    << "fr_FR"
-                                    << "fi_FI"
-                                    << "hi_IN"
-                                    << "hu_HU"
-                                    << "it_IT"
-                                    << "ja_JP"
-                                    << "nb_NO"
-                                    << "nl_NL"
-                                    << "pl_PL"
-                                    << "pt_PT"
-                                    << "ro_RO"
-                                    << "sr_RS"
-                                    << "sk_SK"
-                                    << "si_SI"
-                                    << "sv_SE"
-                                    ;
-            if ( availableUserLanguages.contains(userLanguage) == false )
+            if (!Language::isLanguageSupported(userLanguage)) {
                 userLanguage = "en_US";
+            }
+
+            //Save the value
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/Language", userLanguage);
         }
 
         QTranslator* translator=new QTranslator(0);

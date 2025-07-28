@@ -71,6 +71,7 @@ set(CORE_HEADERS
     src/core/searchresultsthrottler.h
     src/core/storage.h
     src/core/tag.h
+    src/core/language.h
 )
 
 set(CORE_SOURCES
@@ -87,6 +88,7 @@ set(CORE_SOURCES
     src/core/searchresultsthrottler.cpp
     src/core/storage.cpp
     src/core/tag.cpp
+    src/core/language.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

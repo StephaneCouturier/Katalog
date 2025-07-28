@@ -31,6 +31,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/database.h"
+#include "core/language.h"
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)
@@ -149,27 +150,13 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
         //Load languages to the Settings combobox, keeping the user's selection
             QString userLanguage = settings.value("Settings/Language").toString();
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/dk.png"),"da_DK");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/es.png"),"es_ES");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fi.png"),"fi_FI");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/in.png"),"hi_IN");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/hu.png"),"hu_HU");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/it.png"),"it_IT");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/jp.png"),"ja_JP");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/nl.png"),"nl_NL");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/no.png"),"nb_NO"); 
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/pl.png"),"pl_PL");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/pt.png"),"pt_PT");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/ro.png"),"ro_RO");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/se.png"),"sv_SE");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/sk.png"),"sk_SK");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/si.png"),"si_SI");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/rs.png"),"sr_RS");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cn.png"),"zh_CN");
+            const QStringList supportedLanguages = Language::getSupportedLanguages();
+            for (const QString& code : supportedLanguages) {
+                ui->Settings_comboBox_Language->addItem(
+                    Language::getFlagIcon(code),
+                    code
+                    );
+            }
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
         //Hide some widgets by default
