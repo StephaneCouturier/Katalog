@@ -358,7 +358,7 @@
     </message>
     <message>
         <location line="+9276"/>
-        <location filename="../mainwindow.cpp" line="+267"/>
+        <location filename="../mainwindow.cpp" line="+268"/>
         <source>Memory</source>
         <translation>Speicher</translation>
     </message>
@@ -1528,14 +1528,6 @@
         <translation>Katalog Colors</translation>
     </message>
     <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTS</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TEST MEDIA</translation>
-    </message>
-    <message>
         <location line="-2622"/>
         <source>View collection statistics</source>
         <translation>Sammlungsstatistiken anzeigen</translation>
@@ -1748,10 +1740,6 @@
         <translation>Dateinamen ohne Erweiterung kopieren</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Datei in anderen Ordner verschieben</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="-5909"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+6"/>
         <location line="+557"/>
@@ -1773,10 +1761,6 @@
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Bestätigung</translation>
-    </message>
-    <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Wählen Sie den Ordner aus, um diese Datei zu verschieben</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+337"/>
@@ -1973,14 +1957,6 @@
         <location line="+10"/>
         <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Gesamtgröße: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mindestgröße: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximale Größe: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Durchschnittsgröße: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt; &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mindestdatum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximales Datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Verschoben in Ordner:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Diese Datei kann nicht verschoben werden (offline oder nicht vorhanden).</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-53"/>
@@ -2252,22 +2228,6 @@
         <translation>Liste der ausgewählten Geräte-IDs</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Umzug
-%1
-in einen anderen Ordner?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Eine Datei %&amp; existiert bereits. Überschreibe es?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Verschieben in Ordner abgebrochen.</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-44"/>
         <source>Move
 %1
@@ -2357,10 +2317,6 @@ in den Papierkorb?</translation>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+259"/>
         <source>Error opening output file.</source>
         <translation>Fehler beim Öffnen der Ausgabedatei.</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation type="vanished">Auflösung</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+2"/>
@@ -2940,17 +2896,9 @@ in den Papierkorb?</translation>
         <translation>Ordnernamen kopieren</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Lösche Ordner</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Ordner in den Papierkorb verschieben</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Verschieben in Ordner fehlgeschlagen.</translation>
     </message>
     <message>
         <location line="+180"/>

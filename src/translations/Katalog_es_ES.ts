@@ -1967,7 +1967,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow.cpp" line="+267"/>
+        <location filename="../mainwindow.cpp" line="+268"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -2075,14 +2075,6 @@
         <location line="+52"/>
         <source>Language &amp; Theme</source>
         <translation>Idioma y tema</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">PRUEBAS</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">PRUEBA DE MEDIOS</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+54"/>
@@ -2289,10 +2281,6 @@
         <translation>Elija un nombre diferente e inténtelo de nuevo.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Resolución</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
         <source>Virtual Group</source>
         <translation>Grupo virtual</translation>
@@ -2379,10 +2367,6 @@
         <translation>Copiar nombre del archivo sin extensión</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Mover archivo a otra carpeta</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move file to Trash</source>
         <translation>Mover archivo a la papelera</translation>
@@ -2397,10 +2381,6 @@
         <location line="+16"/>
         <source>Copy folder name</source>
         <translation>Copiar nombre de carpeta</translation>
-    </message>
-    <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Eliminar carpeta</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2427,10 +2407,6 @@ to the trash?</source>
 a la papelera?</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Seleccione la carpeta para mover este archivo</translation>
-    </message>
-    <message>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2439,14 +2415,6 @@ a la papelera?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Movido a carpeta:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Error al mover a carpeta.</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2667,26 +2635,6 @@ a la papelera?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-211"/>
         <source>Explore folder</source>
         <translation>Explorar carpeta</translation>
-    </message>
-    <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">¿Mover
-%1
-a otra carpeta?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Ya existe un archivo %&amp;. ¿Sobrescribirlo?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Movimiento a carpeta cancelado.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Este archivo no se puede mover (fuera de línea o no existe).</translation>
     </message>
     <message>
         <location line="+158"/>

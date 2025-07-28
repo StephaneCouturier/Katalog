@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Ficheiro</translation>
     </message>
@@ -1768,26 +1768,6 @@
         <translation>Explorar pasta</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Mover
-%1
-para outra pasta?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Um ficheiro %&amp; já existe. Sobrescrever?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Cancelada a mudança para a pasta.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Este ficheiro não pode ser movido (offline ou não existente).</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2121,10 +2101,6 @@ para outra pasta?</translation>
         <translation>Escolha um nome diferente e tente novamente.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Resolução</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Verificar na inicialização</translation>
@@ -2316,10 +2292,6 @@ para outra pasta?</translation>
         <translation>Pré-carregar os últimos catálogos seleccionados na inicialização para acelerar a próxima pesquisa</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Mover ficheiro para outra pasta</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Mover ficheiro para o lixo</translation>
@@ -2335,10 +2307,6 @@ para outra pasta?</translation>
         <translation>Confirmação</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Seleccionar a pasta para mover este ficheiro</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2347,10 +2315,6 @@ para outra pasta?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Aviso</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Movido para a pasta:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2375,10 +2339,6 @@ para outra pasta?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Falha ao eliminar.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Falha ao mover para a pasta.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2510,10 +2470,6 @@ para o lixo?</translation>
         <translation>Copiar nome da pasta</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Eliminar pasta</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Mover pasta para o lixo</translation>
@@ -2600,14 +2556,6 @@ para o lixo?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Incluir metadados de ficheiros multimédia</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTES</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TESTAR MULTIMÉDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

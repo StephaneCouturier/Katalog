@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
                                     << "pl_PL"
                                     << "pt_PT"
                                     << "ro_RO"
+                                    << "sr_RS"
                                     << "sk_SK"
                                     << "si_SI"
                                     << "sv_SE"

@@ -285,7 +285,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
@@ -1916,10 +1916,6 @@
         <translation>Erreur lors de l&apos;ouverture du fichier de sortie.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Résolution</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Vérifier au démarrage</translation>
@@ -2306,10 +2302,6 @@
         <translation>Explorer le dossier</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Déplacer le fichier vers un autre dossier</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="-6005"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+24"/>
         <location line="+557"/>
@@ -2327,10 +2319,6 @@
         <translation>Confirmation</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Sélectionnez le dossier pour déplacer ce fichier</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2339,14 +2327,6 @@
         <location line="+42"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Déplacé vers le dossier&#xa0;:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Ce fichier ne peut pas être déplacé (hors ligne ou inexistant).</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-53"/>
@@ -2772,22 +2752,10 @@
         <translation>Liste des ID d&apos;appareils sélectionnés</translation>
     </message>
     <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Échec du déplacement vers le dossier.</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-170"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-937"/>
         <source>Delete file</source>
         <translation>Supprimer le fichier</translation>
-    </message>
-    <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Déplacer
-%1
-vers un autre dossier ?</translation>
     </message>
     <message>
         <location line="+126"/>
@@ -2804,17 +2772,9 @@ to the trash?</source>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;SUPPRIMER&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt; ?</translation>
     </message>
     <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Déplacement vers le dossier.annulé.</translation>
-    </message>
-    <message>
         <location line="-221"/>
         <source>Tag this folder</source>
         <translation>Etiquetter ce dossier</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Un fichier %&amp; existe déjà. L&apos;écraser ?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+562"/>
@@ -2876,10 +2836,6 @@ to the trash?</source>
         <location line="+20"/>
         <source>Copy folder name</source>
         <translation>Copier le nom du dossier</translation>
-    </message>
-    <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Supprimer le dossier</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2975,14 +2931,6 @@ to the trash?</source>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Inclure les metadonnées des fichiers média</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">ESSAIS</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TEST MEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

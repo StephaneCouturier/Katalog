@@ -187,14 +187,6 @@
         <translation>Katalog Colors</translation>
     </message>
     <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTY</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TEST MEDIA</translation>
-    </message>
-    <message>
         <location line="-2360"/>
         <source>Select date</source>
         <translation>Vyberte datum</translation>
@@ -310,7 +302,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
@@ -1748,10 +1740,6 @@
         <translation>Zkopírujte název souboru bez přípony</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Přesuňte soubor do jiné složky</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="-5909"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+6"/>
         <location line="+557"/>
@@ -1773,10 +1761,6 @@
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>potvrzení</translation>
-    </message>
-    <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Vyberte složku, do které chcete tento soubor přesunout</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+337"/>
@@ -1973,14 +1957,6 @@
         <location line="+10"/>
         <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková velikost:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Minimální velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximální velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Averttrage &gt;&lt;d&gt; &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt; &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Minimální datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximální datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Přesunuto do složky:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Tento soubor nelze přesunout (offline nebo neexistující).</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-53"/>
@@ -2252,22 +2228,6 @@
         <translation>Vybraný seznam ID zařízení</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Hýbat se
-%1
-do jiné složky?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Soubor %&amp; již existuje. Přepsat to?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Přesun do složky byl zrušen.</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-44"/>
         <source>Move
 %1
@@ -2357,10 +2317,6 @@ do koše?</translation>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+259"/>
         <source>Error opening output file.</source>
         <translation>Chyba při otevírání výstupního souboru.</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation type="vanished">Rozlišení</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+2"/>
@@ -2940,17 +2896,9 @@ do koše?</translation>
         <translation>Kopírovat název složky</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Smazat složku</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Přesunout složku do koše</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Přesunutí do složky se nezdařilo.</translation>
     </message>
     <message>
         <location line="+180"/>

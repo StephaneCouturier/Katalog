@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
@@ -1768,26 +1768,6 @@
         <translation>Udforsk mappe</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Flyt
-%1
-til en anden mappe?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">En fil %&amp; findes allerede. Overskriv den?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Annullerede flytning til mappe.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Denne fil kan ikke flyttes (offline eller eksisterer ikke).</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2121,10 +2101,6 @@ til en anden mappe?</translation>
         <translation>Vælg et andet navn og prøv igen.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Opløsning</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Tjek ved opstart</translation>
@@ -2316,10 +2292,6 @@ til en anden mappe?</translation>
         <translation>Forudindlæs sidst valgte kataloger ved opstart for at accelerere næste søgning</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Flyt fil til anden mappe</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Flyt fil til papirkurv</translation>
@@ -2335,10 +2307,6 @@ til en anden mappe?</translation>
         <translation>Bekræftelse</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Vælg mappen at flytte denne fil til</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2347,10 +2315,6 @@ til en anden mappe?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Flyttet til mappe:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2375,10 +2339,6 @@ til en anden mappe?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Kunne ikke slette.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Flytning til mappe mislykkedes.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2510,10 +2470,6 @@ til papirkurven?</translation>
         <translation>Kopiér mappenavn</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Slet mappe</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Flyt mappe til papirkurv</translation>
@@ -2600,14 +2556,6 @@ til papirkurven?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Inkluder mediefiler metadata</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTS</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TEST MEDIER</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

@@ -39,5 +39,6 @@
         <file>images/flags/sk.png</file>
         <file>images/flags/fi.png</file>
         <file>images/flags/si.png</file>
+        <file>images/flags/rs.png</file>
     </qresource>
 </RCC>

@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Fișier</translation>
     </message>
@@ -1768,26 +1768,6 @@
         <translation>Explorează dosarul</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Mutați
-%1
-în alt dosar?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Un fișier %&amp; există deja. Îl suprascrieți?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Mutarea în dosar a fost anulată.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Acest fișier nu poate fi mutat (offline sau inexistent).</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2121,10 +2101,6 @@ to another folder?</source>
         <translation>Alegeți un nume diferit și încercați din nou.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Rezoluție</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Verificați la pornire</translation>
@@ -2316,10 +2292,6 @@ to another folder?</source>
         <translation>Preîncărcați ultimele cataloage selectate la pornire pentru a accelera următoarea căutare</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Mutați fișierul în alt dosar</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Mutați fișierul la coșul de gunoi</translation>
@@ -2335,10 +2307,6 @@ to another folder?</source>
         <translation>Confirmare</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Selectați dosarul în care să mutați acest fișier</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2347,10 +2315,6 @@ to another folder?</source>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Mutat în dosarul:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2375,10 +2339,6 @@ to another folder?</source>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Ștergerea a eșuat.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Mutarea în dosar a eșuat.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2510,10 +2470,6 @@ la coșul de gunoi?</translation>
         <translation>Copiați numele dosarului</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Șterge dosarul</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Mutați dosarul la coșul de gunoi</translation>
@@ -2600,14 +2556,6 @@ la coșul de gunoi?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Include metadatele fișierelor media</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTE</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TEST MEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

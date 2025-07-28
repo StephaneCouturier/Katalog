@@ -102,7 +102,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+894"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
         <source>All Words</source>
         <translation>Kaikki sanat</translation>
     </message>
@@ -128,7 +128,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>File names or Folder paths</source>
         <translation>Tiedostonimet tai kansiopoisut</translation>
     </message>
@@ -136,13 +136,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+750"/>
+        <location line="+689"/>
         <source>File names only</source>
         <translation>Vain tiedostonimet</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>Folder path only</source>
         <translation>Vain kansiopolku</translation>
     </message>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+252"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Tiedosto</translation>
     </message>
@@ -193,7 +193,7 @@
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+637"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
         <translation>Koko</translation>
@@ -235,7 +235,7 @@
         <location line="+81"/>
         <location line="+2965"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1493"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1427"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tyyppi</translation>
@@ -249,7 +249,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+898"/>
+        <location filename="../mainwindow_setup.cpp" line="+435"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -266,7 +266,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+762"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
         <source>All</source>
         <translation>Kaikki</translation>
     </message>
@@ -470,8 +470,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-605"/>
-        <location line="+611"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-551"/>
+        <location line="+557"/>
         <source>Move to Trash</source>
         <translation>Siirrä roskakoriin</translation>
     </message>
@@ -987,7 +987,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-715"/>
+        <location filename="../mainwindow_setup.cpp" line="-361"/>
         <source>Settings</source>
         <translation>Asetukset</translation>
     </message>
@@ -1237,28 +1237,28 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-466"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-650"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-589"/>
         <source>Open file</source>
         <translation>Avaa tiedosto</translation>
     </message>
     <message>
         <location line="+1695"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+41"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Avaa kansio</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-35"/>
-        <location line="+41"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+10"/>
         <source>Copy folder path</source>
         <translation>Kopioi kansion polku</translation>
     </message>
     <message>
-        <location line="-37"/>
+        <location line="-30"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Kopioi tiedoston absoluuttinen polku</translation>
@@ -1281,7 +1281,7 @@
         <location filename="../mainwindow_tab_device_pr.cpp" line="+689"/>
         <location line="+223"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+437"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+378"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
         <translation>Nimi</translation>
@@ -1292,7 +1292,7 @@
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+971"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+910"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Päivämäärä</translation>
@@ -1329,7 +1329,7 @@
     <message>
         <location line="-1401"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+370"/>
+        <location line="+366"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Tiedostotyyppi</translation>
@@ -1343,7 +1343,7 @@
     </message>
     <message>
         <location line="-3204"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-631"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
         <source>Label</source>
         <translation>Nimike</translation>
     </message>
@@ -1377,7 +1377,7 @@
         <translation>Valmistuspäivä</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1435"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1369"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalogi on jo osoitettu tälle virtuaalilaitteelle.</translation>
     </message>
@@ -1397,7 +1397,7 @@
         <translation>&lt;br/&gt;Tilannevedos tästä kokoelmasta tallennettu:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogit&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tiedostojen määrä: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisätty: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tiedostojen kokonaiskoko: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisätty: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Tallennustila&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tallennustilan vapaa tila: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisätty: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tallennustilan kokonaistila: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisätty: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+344"/>
+        <location line="+278"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>On jo olemassa katalogi tällä nimellä:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1506,7 +1506,7 @@
         <translation>Tiedostopolku</translation>
     </message>
     <message>
-        <location line="+359"/>
+        <location line="+355"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Tallenna muutokset katalogin määritelmään?&lt;br/&gt;</translation>
     </message>
@@ -1675,7 +1675,7 @@
         <translation>Valitun laitteen on oltava katalogi. Kokeile eri laite-ID:llä</translation>
     </message>
     <message>
-        <location line="-2877"/>
+        <location line="-2873"/>
         <location line="+223"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
@@ -1763,36 +1763,12 @@
         <translation>Mt</translation>
     </message>
     <message>
-        <location line="-343"/>
+        <location line="-282"/>
         <source>Explore folder</source>
         <translation>Selaa kansiota</translation>
     </message>
     <message>
-        <location line="+168"/>
-        <source>Move
-%1
-to another folder?</source>
-        <translation>Siirrä
-%1
-toiseen kansioon?</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation>Tiedosto %&amp; on jo olemassa. Korvataanko se?</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Cancelled move to folder.</source>
-        <translation>Peruttu siirto kansioon.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation>Tätä tiedostoa ei voida siirtää (offline tai ei olemassa).</translation>
-    </message>
-    <message>
-        <location line="+16"/>
+        <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
         <translation>SIIRRÄ</translation>
@@ -2125,11 +2101,6 @@ toiseen kansioon?</translation>
         <translation>Valitse eri nimi ja yritä uudelleen.</translation>
     </message>
     <message>
-        <location line="+162"/>
-        <source>Resolution</source>
-        <translation>Resoluutio</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Tarkista käynnistyksessä</translation>
@@ -2178,7 +2149,7 @@ toiseen kansioon?</translation>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+613"/>
+        <location filename="../mainwindow_setup.cpp" line="+257"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Tämä on versio: v%1 &lt;br/&gt;&lt;br/&gt;Uusi versio on saatavilla: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Löydä lista uusista ominaisuuksista &lt;a href=&apos;%3&apos;&gt;julkaisumuistiinpanoista&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Haluatko ladata sen?</translation>
     </message>
@@ -2249,7 +2220,7 @@ toiseen kansioon?</translation>
         <translation>Hakuhistoria</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-609"/>
+        <location filename="../mainwindow_setup.cpp" line="-253"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;Valitse seuraavassa näytössä olemassa oleva kokoelman kansio tai luo uusi.</translation>
     </message>
@@ -2321,24 +2292,14 @@ toiseen kansioon?</translation>
         <translation>Esilataa viimeksi valitut katalogit käynnistyksessä nopeuttaaksesi seuraavaa hakua</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-432"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-993"/>
-        <source>Move file to other folder</source>
-        <translation>Siirrä tiedosto toiseen kansioon</translation>
-    </message>
-    <message>
-        <location line="-28"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Siirrä tiedosto roskakoriin</translation>
     </message>
     <message>
-        <location line="+134"/>
-        <location line="+47"/>
+        <location line="+129"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+141"/>
-        <location line="+18"/>
-        <location line="+33"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-801"/>
         <location line="+42"/>
         <location line="+389"/>
         <location line="+39"/>
@@ -2346,35 +2307,18 @@ toiseen kansioon?</translation>
         <translation>Vahvistus</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-515"/>
-        <source>Select the folder to move this file</source>
-        <translation>Valitse kansio johon tämä tiedosto siirretään</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location line="+30"/>
+        <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+18"/>
-        <location line="+8"/>
-        <location line="+4"/>
-        <location line="+27"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-458"/>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Varoitus</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-73"/>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation>Siirretty kansioon:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+28"/>
+        <location line="-41"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-45"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Siirretty roskakoriin:&lt;br/&gt;</translation>
     </message>
@@ -2397,19 +2341,13 @@ toiseen kansioon?</translation>
         <translation>Poisto epäonnistui.</translation>
     </message>
     <message>
-        <location line="-71"/>
-        <source>Move to folder failed.</source>
-        <translation>Siirto kansioon epäonnistui.</translation>
-    </message>
-    <message>
-        <location line="-151"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-237"/>
+        <location line="-170"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-183"/>
         <source>Delete file</source>
         <translation>Poista tiedosto</translation>
     </message>
     <message>
-        <location line="+131"/>
-        <location line="+47"/>
+        <location line="+126"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2423,7 +2361,7 @@ roskakoriin?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;POISTA&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-280"/>
+        <location line="-221"/>
         <source>Tag this folder</source>
         <translation>Merkitse tämä kansio</translation>
     </message>
@@ -2527,22 +2465,17 @@ roskakoriin?</translation>
         <translation>Järjestä kansiot ensin</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+85"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+78"/>
         <source>Copy folder name</source>
         <translation>Kopioi kansion nimi</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Delete folder</source>
-        <translation>Poista kansio</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Siirrä kansio roskakoriin</translation>
     </message>
     <message>
-        <location line="+393"/>
+        <location line="+352"/>
         <source>orderValue</source>
         <translation>järjestysarvo</translation>
     </message>
@@ -2615,7 +2548,7 @@ roskakoriin?</translation>
     </message>
     <message>
         <location line="-3237"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+401"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
         <source>Include Metadata</source>
         <translation>Sisällytä metatiedot</translation>
     </message>
@@ -2623,16 +2556,6 @@ roskakoriin?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Sisällytä mediatiedostojen metatiedot</translation>
-    </message>
-    <message>
-        <location line="+3821"/>
-        <source>TESTS</source>
-        <translation>TESTIT</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>TEST MEDIA</source>
-        <translation>TESTIMEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
@@ -2744,13 +2667,13 @@ roskakoriin?</translation>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+243"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1005"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+951"/>
         <source>Catalog with results</source>
         <translation>Katalogi tulosten kanssa</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-874"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-870"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>ID</source>
@@ -2821,6 +2744,351 @@ roskakoriin?</translation>
         <location line="+1"/>
         <source>Date Diff.</source>
         <translation>Päivämääräero</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Parent Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <location line="+5"/>
+        <source>Populate the lists first (One or both device lists are empty).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Invalid selection model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Select a device from both lists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Invalid device selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Empty device ID.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Provide a mapping name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Select a different source or target (a device shall not be mapped to itself).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
+        <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
+        <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <location line="+55"/>
+        <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-41"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+87"/>
+        <source>Could not open file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-12"/>
+        <source>Error opening output file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Select a catalog with a valid path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
+        <source>Virtual Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+170"/>
+        <location line="+56"/>
+        <source>Filelight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-46"/>
+        <source>Unassign this catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Delete this catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Unassign this storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Delete this storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Add Virtual device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Add Storage device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Assign selected catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
+        <location line="+337"/>
+        <source>Search Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-112"/>
+        <source>Folder</source>
+        <translation type="unfinished">Kansio</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Catalog Name</source>
+        <translation type="unfinished">Katalogin nimi</translation>
+    </message>
+    <message>
+        <location line="+178"/>
+        <location line="+46"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-31"/>
+        <location line="+33"/>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-21"/>
+        <source>Searching...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Start a new search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pause the current search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Resume the paused search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Stop the current search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Folders found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Duplicates found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Differences found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>Search interrupted | Files found: %1 | Files processed: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Search interrupted. No results available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source> | CATALOG LOADING PAUSED</source>
+        <translation type="unfinished"> | KATALOGIN LATAUS KESKEYTETTY</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Searching in Catalog %1 of %2 | </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+5"/>
+        <source>Files found: %1 | Files processed: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source> (%1%)</source>
+        <translation type="unfinished"> (%1%)</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>No search results available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Folders Found Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Files Found Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Catalogs processed: %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Interrupted Search, incomplete results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+11"/>
+        <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-5"/>
+        <source>&lt;tr&gt;&lt;td&gt;Percentage processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Folders found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+32"/>
+        <source>Ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Search completed | Files found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings_exp.cpp" line="+48"/>
+        <source>Select the directory and file name for his export.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+67"/>
+        <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Successful export of collection to SQLite database file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Select the directory for the CSV export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+80"/>
+        <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Export failed: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

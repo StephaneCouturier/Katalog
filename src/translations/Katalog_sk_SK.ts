@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Súbor</translation>
     </message>
@@ -1768,26 +1768,6 @@
         <translation>Prehliadať priečinok</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Presunúť
-%1
-do iného priečinka?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Súbor %&amp; už existuje. Prepísať ho?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Presunutie do priečinka zrušené.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Tento súbor nemožno presunúť (offline alebo neexistuje).</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2121,10 +2101,6 @@ do iného priečinka?</translation>
         <translation>Vyberte iný názov a skúste znova.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Rozlíšenie</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Skontrolovať pri spustení</translation>
@@ -2316,10 +2292,6 @@ do iného priečinka?</translation>
         <translation>Prednačítať naposledy vybrané katalógy pri spustení na urýchlenie ďalšieho vyhľadávania</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Presunúť súbor do iného priečinka</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Presunúť súbor do koša</translation>
@@ -2335,10 +2307,6 @@ do iného priečinka?</translation>
         <translation>Potvrdenie</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Vyberte priečinok na presunutie tohto súboru</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2347,10 +2315,6 @@ do iného priečinka?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Upozornenie</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Presunuté do priečinka:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2375,10 +2339,6 @@ do iného priečinka?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Mazanie zlyhalo.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Presunutie do priečinka zlyhalo.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2510,10 +2470,6 @@ do koša?</translation>
         <translation>Kopírovať názov priečinka</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Zmazať priečinok</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Presunúť priečinok do koša</translation>
@@ -2600,14 +2556,6 @@ do koša?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Zahrnúť metadáta mediálnych súborov</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTY</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TESTOVÉ MÉDIÁ</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

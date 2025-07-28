@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Bestand</translation>
     </message>
@@ -1768,25 +1768,6 @@
         <translation>Map verkennen</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">%1
-naar een andere map verplaatsen?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Een bestand %&amp; bestaat al. Overschrijven?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Verplaatsing naar map geannuleerd.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Dit bestand kan niet worden verplaatst (offline of bestaat niet).</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2120,10 +2101,6 @@ naar een andere map verplaatsen?</translation>
         <translation>Kies een andere naam en probeer opnieuw.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Resolutie</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Controleren bij opstarten</translation>
@@ -2315,10 +2292,6 @@ naar een andere map verplaatsen?</translation>
         <translation>Laatst geselecteerde catalogi voorladen bij opstarten om volgende zoekopdracht te versnellen</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Bestand naar andere map verplaatsen</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Bestand naar prullenbak verplaatsen</translation>
@@ -2334,10 +2307,6 @@ naar een andere map verplaatsen?</translation>
         <translation>Bevestiging</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Selecteer de map om dit bestand naartoe te verplaatsen</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2346,10 +2315,6 @@ naar een andere map verplaatsen?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Verplaatst naar map:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2374,10 +2339,6 @@ naar een andere map verplaatsen?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Verwijderen mislukt.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Verplaatsen naar map mislukt.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2508,10 +2469,6 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Mapnaam kopiëren</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Map verwijderen</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Map naar prullenbak verplaatsen</translation>
@@ -2598,14 +2555,6 @@ naar de prullenbak verplaatsen?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Metagegevens van mediabestanden opnemen</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTS</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TEST MEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

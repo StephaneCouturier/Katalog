@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Datoteka</translation>
     </message>
@@ -1663,11 +1663,11 @@
     <message>
         <location line="-32"/>
         <source>Move
-    %1
-    to the trash?</source>
-        <translation>Premakni
-    %1
-    v smeti?</translation>
+%1
+to the trash?</source>
+        <translation>Premakniti
+%1
+v koš?</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2265,26 +2265,6 @@
         <location line="-282"/>
         <source>Explore folder</source>
         <translation>Razišči mapo</translation>
-    </message>
-    <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Premakni
-%1
-v drugo mapo?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Datoteka %&amp; že obstaja. Jo prepišem?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Prekinjeno premikanje v mapo.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Te datoteke ni mogoče premakniti (brez povezave ali ne obstaja).</translation>
     </message>
     <message>
         <location line="+158"/>

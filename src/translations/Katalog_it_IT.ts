@@ -1967,7 +1967,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow.cpp" line="+267"/>
+        <location filename="../mainwindow.cpp" line="+268"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -2075,14 +2075,6 @@
         <location line="+52"/>
         <source>Language &amp; Theme</source>
         <translation>Lingua e tema</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TEST</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TEST MEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+54"/>
@@ -2289,10 +2281,6 @@
         <translation>Scegli un nome diverso e riprova.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Risoluzione</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
         <source>Virtual Group</source>
         <translation>Gruppo virtuale</translation>
@@ -2379,10 +2367,6 @@
         <translation>Copia nome file senza estensione</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Sposta file in altra cartella</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move file to Trash</source>
         <translation>Sposta file nel cestino</translation>
@@ -2397,10 +2381,6 @@
         <location line="+16"/>
         <source>Copy folder name</source>
         <translation>Copia nome cartella</translation>
-    </message>
-    <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Elimina cartella</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2427,10 +2407,6 @@ to the trash?</source>
 nel cestino?</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Seleziona la cartella dove spostare questo file</translation>
-    </message>
-    <message>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2439,14 +2415,6 @@ nel cestino?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Avviso</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Spostato nella cartella:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Spostamento nella cartella fallito.</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2667,26 +2635,6 @@ nel cestino?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-211"/>
         <source>Explore folder</source>
         <translation>Esplora cartella</translation>
-    </message>
-    <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Spostare
-%1
-in un&apos;altra cartella?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Un file %&amp; esiste già. Sovrascriverlo?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Spostamento nella cartella annullato.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Questo file non può essere spostato (offline o inesistente).</translation>
     </message>
     <message>
         <location line="+158"/>

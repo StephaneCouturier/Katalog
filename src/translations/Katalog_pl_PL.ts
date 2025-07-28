@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Plik</translation>
     </message>
@@ -1768,26 +1768,6 @@
         <translation>Eksploruj folder</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Przenieść
-%1
-do innego folderu?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">Plik %&amp; już istnieje. Zastąpić go?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Anulowano przenoszenie do folderu.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Ten plik nie może zostać przeniesiony (offline lub nie istnieje).</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2121,10 +2101,6 @@ do innego folderu?</translation>
         <translation>Wybierz inną nazwę i spróbuj ponownie.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Rozdzielczość</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Sprawdź przy uruchomieniu</translation>
@@ -2316,10 +2292,6 @@ do innego folderu?</translation>
         <translation>Wstępnie załaduj ostatnio wybrane katalogi przy uruchomieniu, aby przyspieszyć następne wyszukiwanie</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Przenieś plik do innego folderu</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Przenieś plik do kosza</translation>
@@ -2335,10 +2307,6 @@ do innego folderu?</translation>
         <translation>Potwierdzenie</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Wybierz folder, do którego przenieść ten plik</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2347,10 +2315,6 @@ do innego folderu?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Przeniesiono do folderu:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2375,10 +2339,6 @@ do innego folderu?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Nie udało się usunąć.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Przenoszenie do folderu nie powiodło się.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2510,10 +2470,6 @@ do kosza?</translation>
         <translation>Kopiuj nazwę folderu</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Usuń folder</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Przenieś folder do kosza</translation>
@@ -2600,14 +2556,6 @@ do kosza?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Uwzględnij metadane plików multimedialnych</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESTY</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TESTUJ MEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

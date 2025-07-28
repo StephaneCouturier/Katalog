@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Fájl</translation>
     </message>
@@ -1768,25 +1768,6 @@
         <translation>Mappa tallózása</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">%1
-másik mappába áthelyezése?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">A %&amp; fájl már létezik. Felülírja?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Mappába áthelyezés megszakítva.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">Ez a fájl nem mozgatható (offline vagy nem létezik).</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2120,10 +2101,6 @@ másik mappába áthelyezése?</translation>
         <translation>Válasszon másik nevet és próbálja újra.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">Felbontás</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Ellenőrzés indításkor</translation>
@@ -2315,10 +2292,6 @@ másik mappába áthelyezése?</translation>
         <translation>Utoljára kiválasztott katalógusok előtöltése indításkor a következő keresés felgyorsításához</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Fájl áthelyezése másik mappába</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Fájl lomtárba helyezése</translation>
@@ -2334,10 +2307,6 @@ másik mappába áthelyezése?</translation>
         <translation>Megerősítés</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Válassza ki a mappát a fájl áthelyezéséhez</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2346,10 +2315,6 @@ másik mappába áthelyezése?</translation>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Áthelyezve a mappába:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2374,10 +2339,6 @@ másik mappába áthelyezése?</translation>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Törlés sikertelen.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Mappába áthelyezés sikertelen.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2508,10 +2469,6 @@ lomtárba helyezése?</translation>
         <translation>Mappaév másolása</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Mappa törlése</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Mappa lomtárba helyezése</translation>
@@ -2598,14 +2555,6 @@ lomtárba helyezése?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Médiafájlok metaadatainak befoglalása</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TESZTEK</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TESZT MÉDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

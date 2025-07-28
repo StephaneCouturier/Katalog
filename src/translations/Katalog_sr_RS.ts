@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sv_SE">
+<TS version="2.1" language="sr_RS">
 <context>
     <name>Catalog</name>
     <message>
         <location filename="../core/catalog.cpp" line="+82"/>
         <source>Name</source>
-        <translation>Namn</translation>
+        <translation>Ime</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size</source>
-        <translation>Storlek</translation>
+        <translation>Veličina</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation>Mapp</translation>
+        <translation>Fascikla</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -34,17 +34,17 @@
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
         <source>Folder</source>
-        <translation>Mapp</translation>
+        <translation>Fascikla</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No of items</source>
-        <translation>Antal objekt</translation>
+        <translation>Broj stavki</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Full path</source>
-        <translation>Fullständig sökväg</translation>
+        <translation>Puna putanja</translation>
     </message>
 </context>
 <context>
@@ -65,72 +65,72 @@
         <location line="+177"/>
         <location line="+58"/>
         <source>Search</source>
-        <translation>Sök</translation>
+        <translation>Pretraga</translation>
     </message>
     <message>
         <location line="-433"/>
         <source>Search for files or folders</source>
-        <translation>Sök efter filer eller mappar</translation>
+        <translation>Pretragaj datoteke ili fascikle</translation>
     </message>
     <message>
         <location line="+1768"/>
         <location line="+2752"/>
         <location line="+1822"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location line="-6028"/>
         <source>Paste the text from the clipboard</source>
-        <translation>Klistra in text från urklipp</translation>
+        <translation>Zalepi tekst iz privremene memorije</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Get the text from the clipboard</source>
-        <translation>Hämta text från urklipp</translation>
+        <translation>Uzmi tekst iz privremene memorije</translation>
     </message>
     <message>
         <location line="+110"/>
         <location line="+38"/>
         <source>Launch the search of files.</source>
-        <translation>Starta filsökning.</translation>
+        <translation>Pokreni pretragu datoteka.</translation>
     </message>
     <message>
         <location line="+189"/>
         <source>with</source>
-        <translation>med</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <location line="+39"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
         <source>All Words</source>
-        <translation>Alla ord</translation>
+        <translation>Sve reči</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Exact Phrase</source>
-        <translation>Exakt fras</translation>
+        <translation>Tačna fraza</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Begins With</source>
-        <translation>Börjar med</translation>
+        <translation>Počinje sa</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Any Word</source>
-        <translation>Något ord</translation>
+        <translation>Bilo koja reč</translation>
     </message>
     <message>
         <location line="+89"/>
         <source>in</source>
-        <translation>i</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location line="+41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>File names or Folder paths</source>
-        <translation>Filnamn eller mappsökvägar</translation>
+        <translation>Imena datoteka ili putanje fascikli</translation>
     </message>
     <message>
         <location line="-5"/>
@@ -138,28 +138,28 @@
         <location line="+3"/>
         <location line="+689"/>
         <source>File names only</source>
-        <translation>Endast filnamn</translation>
+        <translation>Samo imena datoteka</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>Folder path only</source>
-        <translation>Endast mappsökväg</translation>
+        <translation>Samo putanja fascikle</translation>
     </message>
     <message>
         <location line="+2254"/>
         <source>Choose to only show folders as results</source>
-        <translation>Välj att endast visa mappar som resultat</translation>
+        <translation>Izaberi da prikaže samo fascikle kao rezultate</translation>
     </message>
     <message>
         <location line="-2941"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
-        <translation>Återställ alla kriterier till standardvärden och rensa tidigare resultat.</translation>
+        <translation>Resetuj sve kriterijume na podrazumevane vrednosti i obriši prethodne rezultate.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Reset</source>
-        <translation>Återställ</translation>
+        <translation>Resetuj</translation>
     </message>
     <message>
         <location line="+9768"/>
@@ -170,23 +170,23 @@
         <location line="-2654"/>
         <location line="+2633"/>
         <source>Password</source>
-        <translation>Lösenord</translation>
+        <translation>Lozinka</translation>
     </message>
     <message>
         <location line="-702"/>
         <source>Database File Path</source>
-        <translation>Sökväg till databasfil</translation>
+        <translation>Putanja datoteke baze podataka</translation>
     </message>
     <message>
         <location line="+497"/>
         <source>Data mode</source>
-        <translation>Dataläge</translation>
+        <translation>Režim podataka</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
-        <translation>Fil</translation>
+        <translation>Datoteka</translation>
     </message>
     <message>
         <location line="-8293"/>
@@ -196,18 +196,18 @@
         <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
-        <translation>Storlek</translation>
+        <translation>Veličina</translation>
     </message>
     <message>
         <location line="-3092"/>
         <location line="+4522"/>
         <source>Device tree</source>
-        <translation>Enhetsträd</translation>
+        <translation>Stablo uređaja</translation>
     </message>
     <message>
         <location line="-4074"/>
         <source>Reload all collection&apos;s data</source>
-        <translation>Ladda om all samlingsdata</translation>
+        <translation>Ponovno učitaj sve podatke kolekcije</translation>
     </message>
     <message>
         <location line="+1579"/>
@@ -218,7 +218,7 @@
     <message>
         <location line="-424"/>
         <source>File size unit for minimum value</source>
-        <translation>Filstorleksenhet för minimivärde</translation>
+        <translation>Jedinica veličine datoteke za minimalnu vrednost</translation>
     </message>
     <message>
         <location line="+49"/>
@@ -229,7 +229,7 @@
     <message>
         <location line="-402"/>
         <source>File size unit for maximum value</source>
-        <translation>Filstorleksenhet för maximivärde</translation>
+        <translation>Jedinica veličine datoteke za maksimalnu vrednost</translation>
     </message>
     <message>
         <location line="+81"/>
@@ -238,12 +238,12 @@
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1427"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
-        <translation>Typ</translation>
+        <translation>Tip</translation>
     </message>
     <message>
         <location line="-2927"/>
         <source>Select the type of files</source>
-        <translation>Välj filtyp</translation>
+        <translation>Izaberi tip datoteka</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -268,21 +268,21 @@
         <location line="+1"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
         <source>All</source>
-        <translation>Alla</translation>
+        <translation>Sve</translation>
     </message>
     <message>
         <location line="-4474"/>
         <location line="+2752"/>
         <location line="+1780"/>
         <source>Audio</source>
-        <translation>Ljud</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location line="-4524"/>
         <location line="+2752"/>
         <location line="+1743"/>
         <source>Image</source>
-        <translation>Bild</translation>
+        <translation>Slika</translation>
     </message>
     <message>
         <location line="-4479"/>
@@ -294,30 +294,30 @@
     <message>
         <location line="-3213"/>
         <source>only list folders in results</source>
-        <translation>visa endast mappar i resultaten</translation>
+        <translation>prikaži samo fascikle u rezultatima</translation>
     </message>
     <message>
         <location line="+465"/>
         <location line="+3"/>
         <source>Define which batch process to execute on all results</source>
-        <translation>Definiera vilken batchprocess som ska köras på alla resultat</translation>
+        <translation>Definiši koji grupni proces izvršiti na svim rezultatima</translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+233"/>
         <source>Export Results</source>
-        <translation>Exportera resultat</translation>
+        <translation>Izvezi rezultate</translation>
     </message>
     <message>
         <location line="-276"/>
         <source>Show/Hide Catalogs with results</source>
-        <translation>Visa/dölj kataloger med resultat</translation>
+        <translation>Prikaži/Sakrij kataloge sa rezultatima</translation>
     </message>
     <message>
         <location line="+129"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+295"/>
         <source>Files found</source>
-        <translation>Filer hittade</translation>
+        <translation>Pronađene datoteke</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -354,36 +354,36 @@
         <location line="+347"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+335"/>
         <source>Catalogs</source>
-        <translation>Kataloger</translation>
+        <translation>Katalozi</translation>
     </message>
     <message>
         <location line="-302"/>
         <location line="+2526"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
-        <translation>Total filstorlek</translation>
+        <translation>Ukupna veličina datoteka</translation>
     </message>
     <message>
         <location line="-2488"/>
         <source>Total Number of Files</source>
-        <translation>Totalt antal filer</translation>
+        <translation>Ukupan broj datoteka</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>All active</source>
-        <translation>Alla aktiva</translation>
+        <translation>Sve aktivne</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Import</source>
-        <translation>Importera</translation>
+        <translation>Uvezi</translation>
     </message>
     <message>
         <location line="+313"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+240"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-167"/>
         <source>Explore</source>
-        <translation>Utforska</translation>
+        <translation>Istražuj</translation>
     </message>
     <message>
         <location line="-811"/>
@@ -394,7 +394,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-58"/>
         <location line="+39"/>
         <source>Update</source>
-        <translation>Uppdatera</translation>
+        <translation>Ažuriraj</translation>
     </message>
     <message>
         <location line="+4076"/>
@@ -402,19 +402,19 @@
         <location line="+56"/>
         <location line="+54"/>
         <source>Edit</source>
-        <translation>Redigera</translation>
+        <translation>Uredi</translation>
     </message>
     <message>
         <location line="-5676"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
-        <translation>Ta bort</translation>
+        <translation>Obriši</translation>
     </message>
     <message>
         <location line="+1960"/>
         <source>Explore a catalog</source>
-        <translation>Utforska en katalog</translation>
+        <translation>Istražuj katalog</translation>
     </message>
     <message>
         <location line="-6222"/>
@@ -432,93 +432,93 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
-        <translation>Sökväg</translation>
+        <translation>Putanja</translation>
     </message>
     <message>
         <location line="-1777"/>
         <source>Directories</source>
-        <translation>Kataloger</translation>
+        <translation>Direktorijumi</translation>
     </message>
     <message>
         <location line="-6512"/>
         <location line="+656"/>
         <source>Show/Hide Filters</source>
-        <translation>Visa/dölj filter</translation>
+        <translation>Prikaži/Sakrij filtere</translation>
     </message>
     <message>
         <location line="-510"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
         <source>Virtual</source>
-        <translation>Virtuell</translation>
+        <translation>Virtuelni</translation>
     </message>
     <message>
         <location line="+1220"/>
         <source>Stop</source>
-        <translation>Stoppa</translation>
+        <translation>Zaustavi</translation>
     </message>
     <message>
         <location line="+3101"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
-        <translation>Välj...</translation>
+        <translation>Izaberi...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+29"/>
         <source>Rename (KRename)</source>
-        <translation>Byt namn (KRename)</translation>
+        <translation>Preimenuj (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-551"/>
         <location line="+557"/>
         <source>Move to Trash</source>
-        <translation>Flytta till papperskorg</translation>
+        <translation>Premesti u korpu</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Run process on all results</source>
-        <translation>Kör process på alla resultat</translation>
+        <translation>Pokreni proces na svim rezultatima</translation>
     </message>
     <message>
         <location line="+372"/>
         <source>Catalogs list</source>
-        <translation>Kataloglista</translation>
+        <translation>Lista kataloga</translation>
     </message>
     <message>
         <location line="+442"/>
         <source>The change will be applied only when Saving</source>
-        <translation>Ändringen tillämpas endast vid sparande</translation>
+        <translation>Promena će biti primenjena samo pri čuvanju</translation>
     </message>
     <message>
         <location line="+244"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+961"/>
         <source>Comment 1</source>
-        <translation>Kommentar 1</translation>
+        <translation>Komentar 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Comment 2</source>
-        <translation>Kommentar 2</translation>
+        <translation>Komentar 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Comment 3</source>
-        <translation>Kommentar 3</translation>
+        <translation>Komentar 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-6"/>
         <source>Brand</source>
-        <translation>Märke</translation>
+        <translation>Brend</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Model</source>
-        <translation>Modell</translation>
+        <translation>Model</translation>
     </message>
     <message>
         <location line="+412"/>
@@ -528,32 +528,32 @@
     <message>
         <location line="+57"/>
         <source>Display the *Physical Group* and its related Devices.</source>
-        <translation>Visa *Fysisk grupp* och dess relaterade enheter.</translation>
+        <translation>Prikaži *Fizičku grupu* i povezane uređaje.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Display the *Virtual Groups* and their related Devices.</source>
-        <translation>Visa *Virtuella grupper* och dess relaterade enheter.</translation>
+        <translation>Prikaži *Virtuelne grupe* i povezane uređaje.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Display the *Storage* devices (if unticked, the Catalogs would be hidden too).</source>
-        <translation>Visa *Lagrings*enheter (om inte ikryssad döljs även katalogerna).</translation>
+        <translation>Prikaži uređaje za *skladištenje* (ako nije označeno, katalozi će takođe biti sakriveni).</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Display the *Catalog* devices.</source>
-        <translation>Visa *Katalog*enheter.</translation>
+        <translation>Prikaži uređaje *Katalog*.</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Create and insert a new Virtual Group device at the top of the hierarchy, and open the Edit panel.</source>
-        <translation>Skapa och infoga en ny virtuell gruppenhet högst upp i hierarkin och öppna redigeringspanelen.</translation>
+        <translation>Kreiraj i ubaci novi uređaj virtuelne grupe na vrh hijerarhije i otvori panel za uređivanje.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Create and insert a new Virtual device under the selected device in the hierarchy, and open the Edit panel.</source>
-        <translation>Skapa och infoga en ny virtuell enhet under den valda enheten i hierarkin och öppna redigeringspanelen.</translation>
+        <translation>Kreiraj i ubaci novi virtuelni uređaj pod izabranim uređajem u hijerarhiji i otvori panel za uređivanje.</translation>
     </message>
     <message>
         <location line="+227"/>
@@ -563,24 +563,24 @@
         <location line="+90"/>
         <location line="+38"/>
         <source>Number of Files</source>
-        <translation>Antal filer</translation>
+        <translation>Broj datoteka</translation>
     </message>
     <message>
         <location line="-2428"/>
         <source>Click to open the file</source>
-        <translation>Klicka för att öppna filen</translation>
+        <translation>Klikni da otvoriš datoteku</translation>
     </message>
     <message>
         <location line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="+131"/>
         <location line="+126"/>
         <source>Create</source>
-        <translation>Skapa</translation>
+        <translation>Kreiraj</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Create a catalog</source>
-        <translation>Skapa en katalog</translation>
+        <translation>Kreiraj katalog</translation>
     </message>
     <message>
         <location line="+41"/>
@@ -590,27 +590,27 @@
     <message>
         <location line="+17"/>
         <source>Select Content options</source>
-        <translation>Välj innehållsalternativ</translation>
+        <translation>Izaberi opcije sadržaja</translation>
     </message>
     <message>
         <location line="+85"/>
         <source>include File Type</source>
-        <translation>inkludera filtyp</translation>
+        <translation>uključi tip datoteke</translation>
     </message>
     <message>
         <location line="+178"/>
         <source>Other options</source>
-        <translation>Andra alternativ</translation>
+        <translation>Ostale opcije</translation>
     </message>
     <message>
         <location line="+87"/>
         <source>Directories to exclude from catalogs</source>
-        <translation>Kataloger att utesluta från kataloger</translation>
+        <translation>Direktorijumi za isključivanje iz kataloga</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Add directory to exclude</source>
-        <translation>Lägg till katalog att utesluta</translation>
+        <translation>Dodaj direktorijum za isključivanje</translation>
     </message>
     <message>
         <location line="+78"/>
@@ -620,53 +620,53 @@
     <message>
         <location line="+17"/>
         <source>Define &amp; Create catalog</source>
-        <translation>Definiera &amp; skapa katalog</translation>
+        <translation>Definiši i kreiraj katalog</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Select Storage</source>
-        <translation>Välj lagring</translation>
+        <translation>Izaberi skladište</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Add a new storage device</source>
-        <translation>Lägg till en ny lagringsenhet</translation>
+        <translation>Dodaj novi uređaj za skladištenje</translation>
     </message>
     <message>
         <location line="-2444"/>
         <location line="+2447"/>
         <source>Add Storage</source>
-        <translation>Lägg till lagring</translation>
+        <translation>Dodaj skladište</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Enter the Name of the new catalog</source>
-        <translation>Ange namnet på den nya katalogen</translation>
+        <translation>Unesi ime novog kataloga</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>NewCatalog</source>
-        <translation>NyKatalog</translation>
+        <translation>NoviKatalog</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Enter a name for your new catalog</source>
-        <translation>Ange ett namn för din nya katalog</translation>
+        <translation>Unesi ime za novi katalog</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Generate</source>
-        <translation>Generera</translation>
+        <translation>Generiši</translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Launch the cataloging and save it to a file</source>
-        <translation>Starta katalogiseringen och spara till fil</translation>
+        <translation>Pokreni katalogizaciju i sačuvaj u datoteku</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create Catalog</source>
-        <translation>Skapa katalog</translation>
+        <translation>Kreiraj katalog</translation>
     </message>
     <message>
         <location line="+111"/>
@@ -676,115 +676,115 @@
     <message>
         <location line="+23"/>
         <source>Select Source path</source>
-        <translation>Välj källsökväg</translation>
+        <translation>Izaberi izvornu putanju</translation>
     </message>
     <message>
         <location line="-1739"/>
         <source>Tree options</source>
-        <translation>Trädalternativ</translation>
+        <translation>Opcije stabla</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Physical Group</source>
-        <translation>Fysisk grupp</translation>
+        <translation>Fizička grupa</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Virtual Groups</source>
-        <translation>Virtuella grupper</translation>
+        <translation>Virtuelne grupe</translation>
     </message>
     <message>
         <location line="+108"/>
         <source>Insert Virtual Group</source>
-        <translation>Infoga virtuell grupp</translation>
+        <translation>Ubaci virtuelnu grupu</translation>
     </message>
     <message>
         <location line="-1487"/>
         <source>View</source>
-        <translation>Visa</translation>
+        <translation>Prikaži</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>Storage list</source>
-        <translation>Lagringslista</translation>
+        <translation>Lista skladišta</translation>
     </message>
     <message>
         <location line="+541"/>
         <source>Catalog fields</source>
-        <translation>Katalogfält</translation>
+        <translation>Polja kataloga</translation>
     </message>
     <message>
         <location line="+236"/>
         <location line="+28"/>
         <source>Free Space</source>
-        <translation>Ledigt utrymme</translation>
+        <translation>Slobodan prostor</translation>
     </message>
     <message>
         <location line="-219"/>
         <source>Device Picture</source>
-        <translation>Enhetsbild</translation>
+        <translation>Slika uređaja</translation>
     </message>
     <message>
         <location line="-579"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
-        <translation>Registrera värden för alla enheter för statistik över hela samlingen.</translation>
+        <translation>Zabeleži vrednosti svih uređaja za statistike cele kolekcije.</translation>
     </message>
     <message>
         <location line="+701"/>
         <source>Storage fields</source>
-        <translation>Lagringsfält</translation>
+        <translation>Polja skladišta</translation>
     </message>
     <message>
         <location line="+5406"/>
         <source>Icons</source>
-        <translation>Ikoner</translation>
+        <translation>Ikone</translation>
     </message>
     <message>
         <location line="-28"/>
         <source>Use bigger icon size</source>
-        <translation>Använd större ikonstorlek</translation>
+        <translation>Koristi veću veličinu ikona</translation>
     </message>
     <message>
         <location line="-555"/>
         <source>Load last catalog to Explore</source>
-        <translation>Ladda senaste katalog för utforskning</translation>
+        <translation>Učitaj poslednji katalog za istraživanje</translation>
     </message>
     <message>
         <location line="+424"/>
         <source>Database Name</source>
-        <translation>Databasnamn</translation>
+        <translation>Ime baze podataka</translation>
     </message>
     <message>
         <location line="-96"/>
         <source>User Name</source>
-        <translation>Användarnamn</translation>
+        <translation>Korisničko ime</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Host Name</source>
-        <translation>Värdnamn</translation>
+        <translation>Ime hosta</translation>
     </message>
     <message>
         <location line="-560"/>
         <source>Create a new database file</source>
-        <translation>Skapa en ny databasfil</translation>
+        <translation>Kreiraj novu datoteku baze podataka</translation>
     </message>
     <message>
         <location line="+426"/>
         <location filename="../mainwindow.cpp" line="+1"/>
         <source>Hosted</source>
-        <translation>Värdbaserad</translation>
+        <translation>Hostovan</translation>
     </message>
     <message>
         <location line="-41"/>
         <source>Data management</source>
-        <translation>Datahantering</translation>
+        <translation>Upravljanje podacima</translation>
     </message>
     <message>
         <location line="-9993"/>
         <location line="+7751"/>
         <source>Select the path</source>
-        <translation>Välj sökvägen</translation>
+        <translation>Izaberi putanju</translation>
     </message>
     <message>
         <location line="-7748"/>
@@ -792,7 +792,7 @@
         <location line="+3013"/>
         <location line="+453"/>
         <source>Select</source>
-        <translation>Välj</translation>
+        <translation>Izaberi</translation>
     </message>
     <message>
         <location line="-8582"/>
@@ -801,25 +801,25 @@
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
-        <translation>Lagring</translation>
+        <translation>Skladište</translation>
     </message>
     <message>
         <location line="+3905"/>
         <source>New</source>
-        <translation>Ny</translation>
+        <translation>Novo</translation>
     </message>
     <message>
         <location line="-5382"/>
         <location line="+186"/>
         <source>Devices</source>
-        <translation>Enheter</translation>
+        <translation>Uređaji</translation>
     </message>
     <message>
         <location line="+41"/>
         <location line="+622"/>
         <location line="+28"/>
         <source>Total Space</source>
-        <translation>Totalt utrymme</translation>
+        <translation>Ukupan prostor</translation>
     </message>
     <message>
         <location line="-542"/>
@@ -830,366 +830,366 @@
         <location line="+3290"/>
         <location line="+287"/>
         <source>Reload</source>
-        <translation>Ladda om</translation>
+        <translation>Ponovo učitaj</translation>
     </message>
     <message>
         <location line="-363"/>
         <source>Statistics</source>
-        <translation>Statistik</translation>
+        <translation>Statistike</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View collection statistics</source>
-        <translation>Visa samlingsstatistik</translation>
+        <translation>Prikaži statistike kolekcije</translation>
     </message>
     <message>
         <location line="+150"/>
         <source>Type of data</source>
-        <translation>Datatyp</translation>
+        <translation>Tip podataka</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Select the type of data</source>
-        <translation>Välj datatyp</translation>
+        <translation>Izaberi tip podataka</translation>
     </message>
     <message>
         <location line="-115"/>
         <source>Edit the file storing all records</source>
-        <translation>Redigera filen som lagrar alla poster</translation>
+        <translation>Uredi datoteku koja čuva sve zapise</translation>
     </message>
     <message>
         <location line="-2024"/>
         <source>Add Virtual</source>
-        <translation>Lägg till virtuell</translation>
+        <translation>Dodaj virtuelni</translation>
     </message>
     <message>
         <location line="-1558"/>
         <source>Edit List</source>
-        <translation>Redigera lista</translation>
+        <translation>Uredi listu</translation>
     </message>
     <message>
         <location line="+36"/>
         <location line="+4048"/>
         <source>Full Table</source>
-        <translation>Fullständig tabell</translation>
+        <translation>Puna tabela</translation>
     </message>
     <message>
         <location line="-3708"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
         <source>Device Name</source>
-        <translation>Enhetsnamn</translation>
+        <translation>Ime uređaja</translation>
     </message>
     <message>
         <location line="+76"/>
         <source>Parent name (ID)</source>
-        <translation>Föräldranamn (ID)</translation>
+        <translation>Ime roditelja (ID)</translation>
     </message>
     <message>
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-1"/>
         <source>Device ID</source>
-        <translation>Enhets-ID</translation>
+        <translation>ID uređaja</translation>
     </message>
     <message>
         <location line="+3146"/>
         <source>Edit Statistics</source>
-        <translation>Redigera statistik</translation>
+        <translation>Uredi statistike</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Reload the file storing all records</source>
-        <translation>Ladda om filen som lagrar alla poster</translation>
+        <translation>Ponovo učitaj datoteku koja čuva sve zapise</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>Display each value</source>
-        <translation>Visa varje värde</translation>
+        <translation>Prikaži svaku vrednost</translation>
     </message>
     <message>
         <location line="+97"/>
         <source>Tags</source>
-        <translation>Taggar</translation>
+        <translation>Oznake</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tag folders for search and statistics</source>
-        <translation>Tagga mappar för sökning och statistik</translation>
+        <translation>Označi fascikle za pretragu i statistike</translation>
     </message>
     <message>
         <location line="+154"/>
         <source>Add the tag to this folder</source>
-        <translation>Lägg till taggen till denna mapp</translation>
+        <translation>Dodaj oznaku ovoj fascikli</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tag the folder</source>
-        <translation>Tagga mappen</translation>
+        <translation>Označi fasciklu</translation>
     </message>
     <message>
         <location line="-81"/>
         <source>Current folders and tags</source>
-        <translation>Aktuella mappar och taggar</translation>
+        <translation>Trenutne fascikle i oznake</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Select a tag</source>
-        <translation>Välj en tagg</translation>
+        <translation>Izaberi oznaku</translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+24"/>
         <source>Select a folder</source>
-        <translation>Välj en mapp</translation>
+        <translation>Izaberi fasciklu</translation>
     </message>
     <message>
         <location line="-107"/>
         <source>Existing tags</source>
-        <translation>Befintliga taggar</translation>
+        <translation>Postojeće oznake</translation>
     </message>
     <message>
         <location line="+22"/>
         <location line="+19"/>
         <source>Reload the file storing the tags</source>
-        <translation>Ladda om filen som lagrar taggarna</translation>
+        <translation>Ponovo učitaj datoteku koja čuva oznake</translation>
     </message>
     <message>
         <location line="+223"/>
         <source>Link name</source>
-        <translation>Länknamn</translation>
+        <translation>Ime linka</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Create link</source>
-        <translation>Skapa länk</translation>
+        <translation>Kreiraj link</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Catalog Links</source>
-        <translation>Kataloglänkar</translation>
+        <translation>Linkovi kataloga</translation>
     </message>
     <message>
         <location line="+357"/>
         <source>Linked</source>
-        <translation>Länkad</translation>
+        <translation>Povezan</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Unlinked</source>
-        <translation>Olänkad</translation>
+        <translation>Nepovezan</translation>
     </message>
     <message>
         <location line="+124"/>
         <location line="+43"/>
         <source>without links</source>
-        <translation>utan länkar</translation>
+        <translation>bez linkova</translation>
     </message>
     <message>
         <location line="+18"/>
         <location line="+878"/>
         <location filename="../mainwindow_setup.cpp" line="-361"/>
         <source>Settings</source>
-        <translation>Inställningar</translation>
+        <translation>Podešavanja</translation>
     </message>
     <message>
         <location line="-636"/>
         <location line="+45"/>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation>Verzija</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Release Notes</source>
-        <translation>Versionsanteckningar</translation>
+        <translation>Napomene o izdanju</translation>
     </message>
     <message>
         <location line="+701"/>
         <location line="+60"/>
         <source>(Changing requires to restart)</source>
-        <translation>(Ändring kräver omstart)</translation>
+        <translation>(Promena zahteva restart)</translation>
     </message>
     <message>
         <location line="-428"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation>Dataläge &quot;Minne&quot;</translation>
+        <translation>Režim podataka &quot;Memorija&quot;</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Select and read folder</source>
-        <translation>Välj och läs mapp</translation>
+        <translation>Izaberi i čitaj fasciklu</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Preload last catalogs</source>
-        <translation>Förladda senaste kataloger</translation>
+        <translation>Unapred učitaj poslednje kataloge</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Start up</source>
-        <translation>Uppstart</translation>
+        <translation>Pokretanje</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Back up</source>
-        <translation>Säkerhetskopiera</translation>
+        <translation>Rezervna kopija</translation>
     </message>
     <message>
         <location line="-476"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation>Dataläge &quot;SQLite lokal fil&quot;</translation>
+        <translation>Režim podataka &quot;SQLite lokalna datoteka&quot;</translation>
     </message>
     <message>
         <location line="-3868"/>
         <source>Apply options to the Selection device tree.</source>
-        <translation>Tillämpa alternativ på urvalsenhetsträdet.</translation>
+        <translation>Primeni opcije na stablo uređaja za selekciju.</translation>
     </message>
     <message>
         <location line="+1820"/>
         <source>Type of source</source>
-        <translation>Typ av källa</translation>
+        <translation>Tip izvora</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Local drive</source>
-        <translation>Lokal enhet</translation>
+        <translation>Lokalni disk</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Samba share</source>
-        <translation>Samba-delning</translation>
+        <translation>Samba deljenje</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>IP address</source>
-        <translation>IP-adress</translation>
+        <translation>IP adresa</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Username</source>
-        <translation>Användarnamn</translation>
+        <translation>Korisničko ime</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>Connection settings</source>
-        <translation>Anslutningsinställningar</translation>
+        <translation>Podešavanja konekcije</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Verify connection</source>
-        <translation>Verifiera anslutning</translation>
+        <translation>Proveri konekciju</translation>
     </message>
     <message>
         <location line="+622"/>
         <source>BackUp</source>
-        <translation>Säkerhetskopia</translation>
+        <translation>Rezervna kopija</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>BackUp links for device</source>
-        <translation>Säkerhetskopieringslänkar för enhet</translation>
+        <translation>Linkovi rezervne kopije za uređaj</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ladda om länkar och uppdatera statistik för den valda enheten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ponovo učitaj linkove i osveži statistike za izabrani uređaj.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+88"/>
         <source>Create new link</source>
-        <translation>Skapa ny länk</translation>
+        <translation>Kreiraj novi link</translation>
     </message>
     <message>
         <location line="+306"/>
         <source>Coverage</source>
-        <translation>Täckning</translation>
+        <translation>Pokrivenost</translation>
     </message>
     <message>
         <location line="+246"/>
         <source>Load Source Catalogs</source>
-        <translation>Ladda källkataloger</translation>
+        <translation>Učitaj izvorni katalog</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Load Target Catalogs</source>
-        <translation>Ladda målkataloger</translation>
+        <translation>Učitaj ciljni katalog</translation>
     </message>
     <message>
         <location line="+149"/>
         <source>File list display</source>
-        <translation>Fillistevisning</translation>
+        <translation>Prikaz liste datoteka</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
-        <translation>Om aktiverad kommer sorteringen att respektera skiftlägeskänslig sortering, så att ordningen blir AA, AB, AC, Aa, Ab, Ac</translation>
+        <translation>Ako je omogućeno, sortiranje će poštovati sortiranje osetljivo na velika i mala slova, da bi imalo ovaj redosled AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>File sorting is Case Sensitive</source>
-        <translation>Filsortering är skiftlägeskänslig</translation>
+        <translation>Sortiranje datoteka je osetljivo na velika i mala slova</translation>
     </message>
     <message>
         <location line="+93"/>
         <source>Documentation</source>
-        <translation>Dokumentation</translation>
+        <translation>Dokumentacija</translation>
     </message>
     <message>
         <location line="+251"/>
         <source>The collection data is saved to an SQLite .db file.</source>
-        <translation>Samlingsdata sparas till en SQLite .db-fil.</translation>
+        <translation>Podaci kolekcije se čuvaju u SQLite .db datoteku.</translation>
     </message>
     <message>
         <location line="+46"/>
         <location line="+222"/>
         <source>Apply</source>
-        <translation>Tillämpa</translation>
+        <translation>Primeni</translation>
     </message>
     <message>
         <location line="-192"/>
         <source>Select and open database file</source>
-        <translation>Välj och öppna databasfil</translation>
+        <translation>Izaberi i otvori datoteku baze podataka</translation>
     </message>
     <message>
         <location line="+51"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation>Exportera för att konvertera och öppna samlingen i &quot;Fil&quot;-läge.</translation>
+        <translation>Izvezi da konvertuješ i otvoriš kolekciju u &quot;Datoteka&quot; režimu.</translation>
     </message>
     <message>
         <location line="-203"/>
         <source>Export to Memory mode (csv)</source>
-        <translation>Exportera till minnesläge (csv)</translation>
+        <translation>Izvezi u režim memorije (csv)</translation>
     </message>
     <message>
         <location line="+206"/>
         <source>Export to SQLite file</source>
-        <translation>Exportera till SQLite-fil</translation>
+        <translation>Izvezi u SQLite datoteku</translation>
     </message>
     <message>
         <location line="+265"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation>Dataläge &quot;Värdbaserad databas&quot;</translation>
+        <translation>Režim podataka &quot;Hostovana baza podataka&quot;</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
-        <translation>Samlingsdata sparas till en databas som finns på en lokal eller fjärrserver.</translation>
+        <translation>Podaci kolekcije se čuvaju u bazu podataka hostovanu na lokalnom ili udaljenom serveru.</translation>
     </message>
     <message>
         <location line="+209"/>
         <source>Apply and restart</source>
-        <translation>Tillämpa och starta om</translation>
+        <translation>Primeni i restartuj</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Select a theme</source>
-        <translation>Välj ett tema</translation>
+        <translation>Izaberi temu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Desktop Theme</source>
         <extracomment>Using desktop theme</extracomment>
-        <translation>Skrivbordstema</translation>
+        <translation>Desktop tema</translation>
     </message>
     <message>
         <location line="-17"/>
@@ -1199,48 +1199,48 @@
     <message>
         <location line="+96"/>
         <source>(requires to restart)</source>
-        <translation>(kräver omstart)</translation>
+        <translation>(zahteva restart)</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Language</source>
-        <translation>Språk</translation>
+        <translation>Jezik</translation>
     </message>
     <message>
         <location line="-729"/>
         <source>Collection folder</source>
-        <translation>Samlingsmapp</translation>
+        <translation>Fascikla kolekcije</translation>
     </message>
     <message>
         <location line="-174"/>
         <location line="+225"/>
         <location line="+540"/>
         <source>Select a different Collection folder</source>
-        <translation>Välj en annan samlingsmapp</translation>
+        <translation>Izaberi drugu fasciklu kolekcije</translation>
     </message>
     <message>
         <location line="-1245"/>
         <source>Other Settings</source>
-        <translation>Andra inställningar</translation>
+        <translation>Ostala podešavanja</translation>
     </message>
     <message>
         <location line="+32"/>
         <location line="+470"/>
         <location line="+225"/>
         <source>Open the collection folder</source>
-        <translation>Öppna samlingsmappen</translation>
+        <translation>Otvori fasciklu kolekcije</translation>
     </message>
     <message>
         <location line="-692"/>
         <source>Open</source>
-        <translation>Öppna</translation>
+        <translation>Otvori</translation>
     </message>
     <message>
         <location line="-1000"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-589"/>
         <source>Open file</source>
-        <translation>Öppna fil</translation>
+        <translation>Otvori datoteku</translation>
     </message>
     <message>
         <location line="+1695"/>
@@ -1248,32 +1248,32 @@
         <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
-        <translation>Öppna mapp</translation>
+        <translation>Otvori fasciklu</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
         <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+10"/>
         <source>Copy folder path</source>
-        <translation>Kopiera mappsökväg</translation>
+        <translation>Kopiraj putanju fascikle</translation>
     </message>
     <message>
         <location line="-30"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
-        <translation>Kopiera absolut filsökväg</translation>
+        <translation>Kopiraj apsolutnu putanju datoteke</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name with extension</source>
-        <translation>Kopiera filnamn med filändelse</translation>
+        <translation>Kopiraj ime datoteke sa ekstenzijom</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name without extension</source>
-        <translation>Kopiera filnamn utan filändelse</translation>
+        <translation>Kopiraj ime datoteke bez ekstenzije</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-7242"/>
@@ -1284,7 +1284,7 @@
         <location filename="../mainwindow_tab_explore.cpp" line="+378"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
-        <translation>Namn</translation>
+        <translation>Ime</translation>
     </message>
     <message>
         <location line="-583"/>
@@ -1303,13 +1303,13 @@
         <location filename="../mainwindow_tab_filters.cpp" line="+61"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
-        <translation>Välj katalogen som ska katalogiseras i denna nya katalog</translation>
+        <translation>Izaberi direktorijum koji će biti katalogizovan u ovom novom katalogu</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="+10"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
-        <translation>Välj katalogen för denna samling</translation>
+        <translation>Izaberi direktorijum za ovu kolekciju</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-5487"/>
@@ -1318,13 +1318,13 @@
         <location line="+223"/>
         <location line="+252"/>
         <source>Total Size</source>
-        <translation>Total storlek</translation>
+        <translation>Ukupna veličina</translation>
     </message>
     <message>
         <location line="-1354"/>
         <location line="+1537"/>
         <source>Source Path</source>
-        <translation>Källsökväg</translation>
+        <translation>Izvorna putanja</translation>
     </message>
     <message>
         <location line="-1401"/>
@@ -1332,115 +1332,115 @@
         <location line="+366"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
-        <translation>Filtyp</translation>
+        <translation>Tip datoteke</translation>
     </message>
     <message>
         <location line="+3599"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
         <location line="+7"/>
         <source>File Size</source>
-        <translation>Filstorlek</translation>
+        <translation>Veličina datoteke</translation>
     </message>
     <message>
         <location line="-3204"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
         <source>Label</source>
-        <translation>Etikett</translation>
+        <translation>Labela</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>FileSystem</source>
-        <translation>Filsystem</translation>
+        <translation>Sistem datoteka</translation>
     </message>
     <message>
         <location line="+3456"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
-        <translation>Totalt</translation>
+        <translation>Ukupno</translation>
     </message>
     <message>
         <location line="-4220"/>
         <source>Free</source>
-        <translation>Ledigt</translation>
+        <translation>Slobodno</translation>
     </message>
     <message>
         <location line="+698"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
-        <translation>Serienummer</translation>
+        <translation>Serijski broj</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>Build Date</source>
-        <translation>Byggdatum</translation>
+        <translation>Datum izgradnje</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1369"/>
         <source>The catalog is already assigned to this Virtual device.</source>
-        <translation>Katalogen är redan tilldelad denna virtuella enhet.</translation>
+        <translation>Katalog je već dodeljen ovom virtuelnom uređaju.</translation>
     </message>
     <message>
         <location line="+146"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
-        <translation>Vill du ta bort tilldelningen av denna katalog från denna virtuella enhet?</translation>
+        <translation>Da li želiš da ukloniš ovaj katalog sa ovog virtuelnog uređaja?</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Deletion failed</source>
-        <translation>Borttagning misslyckades</translation>
+        <translation>Brisanje neuspešno</translation>
     </message>
     <message>
         <location line="+93"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;br/&gt;En ögonblicksbild av denna samling registrerades:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Kataloger&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Antal filer: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total filstorlek: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Lagring&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ledigt lagringsutrymme: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Totalt lagringsutrymme: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+        <translation>&lt;br/&gt;Snimak ove kolekcije je zabeležen:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalozi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Broj datoteka: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ukupna veličina datoteka: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Skladište&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Slobodan prostor skladišta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ukupan prostor skladišta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location line="+278"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
-        <translation>Det finns redan en katalog med detta namn:&lt;br/&gt;&lt;b&gt;</translation>
+        <translation>Već postoji katalog sa ovim imenom:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Det finns redan en lagring med detta ID.&lt;b&gt;</translation>
+        <translation>Već postoji skladište sa ovim ID.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>Välj ett annat ID och försök igen.</translation>
+        <translation>Izaberi drugi ID i pokušaj ponovo.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
-        <translation>En katalog i den fysiska gruppen kan endast placeras under en lagring eller denna grupp. Välj en lagring i denna grupp.&lt;br/&gt;&lt;br/&gt;För att använda denna katalog under en enhet i en virtuell grupp, använd kommandot Tilldela.&lt;b&gt;</translation>
+        <translation>Katalog u fizičkoj grupi može biti postavljen samo pod skladište ili ovu grupu. Izaberi skladište u ovoj grupi.&lt;br/&gt;&lt;br/&gt;Da koristiš ovaj katalog pod uređajem u virtuelnoj grupi, koristi komandu Dodeli.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+526"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Parent ID</source>
-        <translation>Förälder-ID</translation>
+        <translation>ID roditelja</translation>
     </message>
     <message>
         <location line="-474"/>
         <source>External ID</source>
-        <translation>Externt ID</translation>
+        <translation>Spoljašnji ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Number of files</source>
-        <translation>Antal filer</translation>
+        <translation>Broj datoteka</translation>
     </message>
     <message>
         <location line="-472"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Free space</source>
-        <translation>Ledigt utrymme</translation>
+        <translation>Slobodan prostor</translation>
     </message>
     <message>
         <location line="-474"/>
@@ -1448,124 +1448,124 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-24"/>
         <source>Total space</source>
-        <translation>Totalt utrymme</translation>
+        <translation>Ukupan prostor</translation>
     </message>
     <message>
         <location line="-474"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Date updated</source>
-        <translation>Datum uppdaterad</translation>
+        <translation>Datum ažuriranja</translation>
     </message>
     <message>
         <location line="-473"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Group ID</source>
-        <translation>Grupp-ID</translation>
+        <translation>ID grupe</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Catalog ID</source>
-        <translation>Katalog-ID</translation>
+        <translation>ID kataloga</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>include hidden</source>
-        <translation>inkludera dolda</translation>
+        <translation>uključi skrivene</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>include metadata</source>
-        <translation>inkludera metadata</translation>
+        <translation>uključi metapodatke</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent storage</source>
-        <translation>Föräldralagring</translation>
+        <translation>Roditeljsko skladište</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Fulldevice</source>
-        <translation>Hellenhet</translation>
+        <translation>Ceo uređaj</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Loaded</source>
-        <translation>Datum laddad</translation>
+        <translation>Datum učitavanja</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>App Version</source>
-        <translation>Appversion</translation>
+        <translation>Verzija aplikacije</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Path</source>
-        <translation>Filsökväg</translation>
+        <translation>Putanja datoteke</translation>
     </message>
     <message>
         <location line="+355"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
-        <translation>Spara ändringar av katalogdefinitionen?&lt;br/&gt;</translation>
+        <translation>Sačuvaj promene u definiciji kataloga?&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>field</source>
-        <translation>fält</translation>
+        <translation>polje</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>previous value</source>
-        <translation>tidigare värde</translation>
+        <translation>prethodna vrednost</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>new value</source>
-        <translation>nytt värde</translation>
+        <translation>nova vrednost</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Include Hidden</source>
-        <translation>Inkludera dolda</translation>
+        <translation>Uključi skrivene</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Is Full Device</source>
-        <translation>Är hellenhet</translation>
+        <translation>Je ceo uređaj</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>(The catalog must be updated to reflect these changes)</source>
-        <translation>(Katalogen måste uppdateras för att återspegla dessa ändringar)</translation>
+        <translation>(Katalog mora biti ažuriran da reflektuje ove promene)</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Update the catalog content with the new criteria?
 </source>
-        <translation>Uppdatera kataloginnehållet med de nya kriterierna?
+        <translation>Ažurirati sadržaj kataloga novim kriterijumima?
 </translation>
     </message>
     <message>
         <location line="+89"/>
         <source>Select the csv file to be imported</source>
-        <translation>Välj csv-filen som ska importeras</translation>
+        <translation>Izaberi csv datoteku za uvoz</translation>
     </message>
     <message>
         <location line="+56"/>
         <source>No catalog found.</source>
-        <translation>Ingen katalog hittades.</translation>
+        <translation>Katalog nije pronađen.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>A file was found, but could not be loaded</source>
-        <translation>En fil hittades, men kunde inte laddas</translation>
+        <translation>Datoteka je pronađena, ali ne može biti učitana</translation>
     </message>
     <message>
         <location line="+222"/>
         <source>Catalog updated: </source>
-        <translation>Katalog uppdaterad: </translation>
+        <translation>Katalog ažuriran: </translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1575,13 +1575,13 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Path: </source>
-        <translation>Sökväg: </translation>
+        <translation>Putanja: </translation>
     </message>
     <message>
         <location line="-112"/>
         <location line="+39"/>
         <source>Number of files: </source>
-        <translation>Antal filer: </translation>
+        <translation>Broj datoteka: </translation>
     </message>
     <message>
         <location line="-39"/>
@@ -1599,13 +1599,13 @@
         <location line="+1"/>
         <location line="+1"/>
         <source>(added: </source>
-        <translation>(tillagt: </translation>
+        <translation>(dodano: </translation>
     </message>
     <message>
         <location line="-117"/>
         <location line="+39"/>
         <source>Total file size: </source>
-        <translation>Total filstorlek: </translation>
+        <translation>Ukupna veličina datoteka: </translation>
     </message>
     <message>
         <location line="-27"/>
@@ -1613,7 +1613,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Storage updated: </source>
-        <translation>Lagring uppdaterad: </translation>
+        <translation>Skladište ažurirano: </translation>
     </message>
     <message>
         <location line="-93"/>
@@ -1621,7 +1621,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Used Space: </source>
-        <translation>Använt utrymme: </translation>
+        <translation>Korišćen prostor: </translation>
     </message>
     <message>
         <location line="-97"/>
@@ -1629,7 +1629,7 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Free Space: </source>
-        <translation>Ledigt utrymme: </translation>
+        <translation>Slobodan prostor: </translation>
     </message>
     <message>
         <location line="-97"/>
@@ -1637,42 +1637,42 @@
         <location line="+24"/>
         <location line="+35"/>
         <source>Total Space: </source>
-        <translation>Totalt utrymme: </translation>
+        <translation>Ukupan prostor: </translation>
     </message>
     <message>
         <location line="-83"/>
         <source>Catalog created: </source>
-        <translation>Katalog skapad: </translation>
+        <translation>Katalog kreiran: </translation>
     </message>
     <message>
         <location line="+59"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
-        <translation>&lt;table&gt;&lt;br/&gt;Valda aktiva kataloger från &lt;b&gt;%1&lt;/b&gt; uppdateras.&amp;nbsp;&lt;br/&gt;</translation>
+        <translation>&lt;table&gt;&lt;br/&gt;Izabrani aktivni katalozi iz &lt;b&gt;%1&lt;/b&gt; su ažurirani.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 uppdaterade kataloger (aktiva), %2 överhoppade kataloger (inaktiva)</translation>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 ažuriranih kataloga (aktivnih), %2 preskočenih kataloga (neaktivnih)</translation>
     </message>
     <message>
         <location line="+91"/>
         <source>Update all active catalogs</source>
-        <translation>Uppdatera alla aktiva kataloger</translation>
+        <translation>Ažuriraj sve aktivne kataloge</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Do you want a the summary of updates for each catalog?</source>
-        <translation>Vill du ha sammanfattningen av uppdateringar för varje katalog?</translation>
+        <translation>Da li želiš rezime ažuriranja za svaki katalog?</translation>
     </message>
     <message>
         <location line="+192"/>
         <source>Upgraded collection to v2.0.</source>
-        <translation>Uppgraderade samling till v2.0.</translation>
+        <translation>Kolekcija unapređena na v2.0.</translation>
     </message>
     <message>
         <location line="+1196"/>
         <source>The device selected must be a Catalog. Try with a different device ID</source>
-        <translation>Den valda enheten måste vara en katalog. Försök med ett annat enhets-ID</translation>
+        <translation>Izabrani uređaj mora biti katalog. Pokušaj sa drugim ID uređaja</translation>
     </message>
     <message>
         <location line="-2873"/>
@@ -1680,65 +1680,65 @@
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
         <source>Used space</source>
-        <translation>Använt utrymme</translation>
+        <translation>Korišćen prostor</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_statistics.cpp" line="-163"/>
         <source>All device records</source>
-        <translation>Alla enhetsposter</translation>
+        <translation>Svi zapisi uređaja</translation>
     </message>
     <message>
         <location line="+177"/>
         <source>of</source>
-        <translation>av</translation>
+        <translation>od</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-4096"/>
         <location line="+1889"/>
         <location line="+67"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
-        <translation>Definiera om söktexten ska användas för att leta endast i filnamn, mappsökvägar eller båda.</translation>
+        <translation>Definiši da li se tekst pretrage koristi samo za imena datoteka, putanje fascikli, ili oboje.</translation>
     </message>
     <message>
         <location line="-2099"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
-        <translation>Definiera hur söktexten ska användas.</translation>
+        <translation>Definiši kako se tekst pretrage koristi.</translation>
     </message>
     <message>
         <location line="+5703"/>
         <source>Include Hidden files</source>
-        <translation>Inkludera dolda filer</translation>
+        <translation>Uključi skrivene datoteke</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Follow symbolic links</source>
-        <translation>Följ symboliska länkar</translation>
+        <translation>Prati simboličke linkove</translation>
     </message>
     <message>
         <location line="+400"/>
         <source>Generate a catalog name based on the path.</source>
-        <translation>Generera ett katalognamn baserat på sökvägen.</translation>
+        <translation>Generiši ime kataloga na osnovu putanje.</translation>
     </message>
     <message>
         <location line="-6987"/>
         <source>Reset all filters</source>
-        <translation>Återställ alla filter</translation>
+        <translation>Resetuj sve filtere</translation>
     </message>
     <message>
         <location line="+9024"/>
         <source>About</source>
-        <translation>Om</translation>
+        <translation>O programu</translation>
     </message>
     <message>
         <location line="+710"/>
         <source>Auto-backup catalogs</source>
-        <translation>Säkerhetskopiera kataloger automatiskt</translation>
+        <translation>Automatska rezervna kopija kataloga</translation>
     </message>
     <message>
         <location line="+539"/>
         <source>Keep records of files and size for Statistics</source>
-        <translation>Behåll register över filer och storlek för statistik</translation>
+        <translation>Zadrži zapise datoteka i veličine za statistike</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-667"/>
@@ -1765,45 +1765,45 @@
     <message>
         <location line="-282"/>
         <source>Explore folder</source>
-        <translation>Utforska mapp</translation>
+        <translation>Istražuj fasciklu</translation>
     </message>
     <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
-        <translation>FLYTTA</translation>
+        <translation>PREMESTI</translation>
     </message>
     <message>
         <location line="-430"/>
         <source>Move this file to the trash?</source>
-        <translation>Flytta denna fil till papperskorgen?</translation>
+        <translation>Premesti ovu datoteku u korpu?</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+42"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informacija</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Moving a folder to Trash is not available.</source>
-        <translation>Att flytta en mapp till papperskorgen är inte tillgängligt.</translation>
+        <translation>Premeštanje fascikle u korpu nije dostupno.</translation>
     </message>
     <message>
         <location line="+24"/>
         <location line="+428"/>
         <source>DELETE</source>
-        <translation>TA BORT</translation>
+        <translation>OBRIŠI</translation>
     </message>
     <message>
         <location line="-427"/>
         <source>Delete this file?</source>
-        <translation>Ta bort denna fil?</translation>
+        <translation>Obriši ovu datoteku?</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Deleting a folder is not available.</source>
-        <translation>Att ta bort en mapp är inte tillgängligt.</translation>
+        <translation>Brisanje fascikle nije dostupno.</translation>
     </message>
     <message>
         <location line="+51"/>
@@ -1817,484 +1817,484 @@
         <location line="+11"/>
         <location line="+29"/>
         <source>Bytes</source>
-        <translation>Bytes</translation>
+        <translation>Bajtovi</translation>
     </message>
     <message>
         <location line="+234"/>
         <source>Select first a process to be applied to all results below.</source>
-        <translation>Välj först en process som ska tillämpas på alla resultat nedan.</translation>
+        <translation>Prvo izaberi proces koji će biti primenjen na sve rezultate ispod.</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Results exported to the collection folder:</source>
-        <translation>Resultat exporterade till samlingsmappen:</translation>
+        <translation>Rezultati izvezeni u fasciklu kolekcije:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported a new Catalog:</source>
-        <translation>Resultat exporterade till en ny katalog:</translation>
+        <translation>Rezultati izvezeni u novi katalog:</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Move all %1 files (%2) from these results to trash?</source>
-        <translation>Flytta alla %1 filer (%2) från dessa resultat till papperskorgen?</translation>
+        <translation>Premesti svih %1 datoteka (%2) iz ovih rezultata u korpu?</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Problem moving file: </source>
-        <translation>Problem med att flytta fil: </translation>
+        <translation>Problem pri premeštanju datoteke: </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 files were moved to trash, out of %2 files from the results.</source>
-        <translation>%1 filer flyttades till papperskorgen, av %2 filer från resultaten.</translation>
+        <translation>%1 datoteka je premešteno u korpu, od %2 datoteka iz rezultata.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Moving a list of folders to Trash is not available.</source>
-        <translation>Att flytta en lista med mappar till papperskorgen är inte tillgängligt.</translation>
+        <translation>Premeštanje liste fascikli u korpu nije dostupno.</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Delete permanently all %1 files (%2) from these results?</source>
-        <translation>Ta bort permanent alla %1 filer (%2) från dessa resultat?</translation>
+        <translation>Trajno obriši svih %1 datoteka (%2) iz ovih rezultata?</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>%1 files were deleted, out of %2 files from the results.</source>
-        <translation>%1 filer togs bort, av %2 filer från resultaten.</translation>
+        <translation>%1 datoteka je obrisano, od %2 datoteka iz rezultata.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Deleting a list of folders is not available.</source>
-        <translation>Att ta bort en lista med mappar är inte tillgängligt.</translation>
+        <translation>Brisanje liste fascikli nije dostupno.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
-        <translation>Skapa en katalog från dessa resultat?&lt;br/&gt;- Ja: skapa en &lt;b&gt;Katalog&lt;/b&gt; för att lagra resultaten och använd den för att förfina din sökning,&lt;br/&gt;- Nej: exportera resultat till en &lt;b&gt;csv-fil&lt;/b&gt;.</translation>
+        <translation>Kreiraj katalog od ovih rezultata?&lt;br/&gt;- Da: kreiraj &lt;b&gt;Katalog&lt;/b&gt; da sačuvaš rezultate i koristi ga za usavršavanje pretrage,&lt;br/&gt;- Ne: izvezi rezultate u &lt;b&gt;csv datoteku&lt;/b&gt;.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>search_results</source>
-        <translation>sökresultat</translation>
+        <translation>rezultati_pretrage</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search Results</source>
-        <translation>Sökresultat</translation>
+        <translation>Rezultati pretrage</translation>
     </message>
     <message>
         <location line="+246"/>
         <source>Text Phrase selected</source>
-        <translation>Textfras vald</translation>
+        <translation>Tekstualna fraza izabrana</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Phrase</source>
-        <translation>Textfras</translation>
+        <translation>Tekstualna fraza</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Criteria</source>
-        <translation>Textkriterier</translation>
+        <translation>Tekstualni kriterijum</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Search In</source>
-        <translation>Textsökning i</translation>
+        <translation>Pretraži tekst u</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Case Sensitive</source>
-        <translation>Skiftlägeskänslig</translation>
+        <translation>Osetljivo na velika i mala slova</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text Exclude</source>
-        <translation>Textuteslutning</translation>
+        <translation>Isključi tekst</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Criteria selected</source>
-        <translation>Filkriterier valda</translation>
+        <translation>Kriterijum datoteke izabran</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Type selected</source>
-        <translation>Filtyp vald</translation>
+        <translation>Tip datoteke izabran</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>File Size selected</source>
-        <translation>Filstorlek vald</translation>
+        <translation>Veličina datoteke izabrana</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Min</source>
-        <translation>Filstorlek min</translation>
+        <translation>Minimalna veličina datoteke</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Min Unit</source>
-        <translation>Filstorlek min enhet</translation>
+        <translation>Jedinica minimalne veličine datoteke</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Max</source>
-        <translation>Filstorlek max</translation>
+        <translation>Maksimalna veličina datoteke</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File Size Max Unit</source>
-        <translation>Filstorlek max enhet</translation>
+        <translation>Jedinica maksimalne veličine datoteke</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified selected</source>
-        <translation>Ändringsdatum valt</translation>
+        <translation>Datum izmene izabran</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified Min</source>
-        <translation>Ändringsdatum min</translation>
+        <translation>Minimalni datum izmene</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Modified Max</source>
-        <translation>Ändringsdatum max</translation>
+        <translation>Maksimalni datum izmene</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates selected</source>
-        <translation>Dubbletter valda</translation>
+        <translation>Duplikati izabrani</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Name</source>
-        <translation>Dubbletter namn</translation>
+        <translation>Ime duplikata</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Size</source>
-        <translation>Dubbletter storlek</translation>
+        <translation>Veličina duplikata</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates Date Modified</source>
-        <translation>Dubbletter ändringsdatum</translation>
+        <translation>Datum izmene duplikata</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences selected</source>
-        <translation>Skillnader valda</translation>
+        <translation>Razlike izabrane</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Name</source>
-        <translation>Skillnader namn</translation>
+        <translation>Ime razlika</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Size</source>
-        <translation>Skillnader storlek</translation>
+        <translation>Veličina razlika</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Date Modified</source>
-        <translation>Skillnader ändringsdatum</translation>
+        <translation>Datum izmene razlika</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Differences Catalogs</source>
-        <translation>Skillnader kataloger</translation>
+        <translation>Katalozi razlika</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folders selected</source>
-        <translation>Mappar valda</translation>
+        <translation>Fascikle izabrane</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show Folders</source>
-        <translation>Visa mappar</translation>
+        <translation>Prikaži fascikle</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tag selected</source>
-        <translation>Tagg vald</translation>
+        <translation>Oznaka izabrana</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Selected Location</source>
-        <translation>Vald plats</translation>
+        <translation>Izabrana lokacija</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Storage</source>
-        <translation>Vald lagring</translation>
+        <translation>Izabrano skladište</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Catalog</source>
-        <translation>Vald katalog</translation>
+        <translation>Izabrani katalog</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search Catalog selected</source>
-        <translation>Sökkatalog vald</translation>
+        <translation>Katalog pretrage izabran</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search Directory selected</source>
-        <translation>Sökkatalog vald</translation>
+        <translation>Direktorijum pretrage izabran</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Directory</source>
-        <translation>Vald katalog</translation>
+        <translation>Izabrani direktorijum</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selected Device ID List</source>
-        <translation>Vald enhets-ID-lista</translation>
+        <translation>Lista izabranih ID uređaja</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-542"/>
         <source>Always keep one back of each catalog</source>
-        <translation>Behåll alltid en säkerhetskopia av varje katalog</translation>
+        <translation>Uvek zadrži jednu rezervnu kopiju svakog kataloga</translation>
     </message>
     <message>
         <location line="-5391"/>
         <source>Used</source>
-        <translation>Använt</translation>
+        <translation>Korišćeno</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+97"/>
         <source>Remove this directory</source>
-        <translation>Ta bort denna katalog</translation>
+        <translation>Ukloni ovaj direktorijum</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
-        <translation>Ange ett namn för denna nya katalog.&lt;br/&gt;</translation>
+        <translation>Obezbedi ime za ovaj novi katalog.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
-        <translation>Ange en sökväg för denna nya katalog.&lt;br/&gt;</translation>
+        <translation>Obezbedi putanju za ovaj novi katalog.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
-        <translation>Välj en lagring för denna nya katalog.&lt;br/&gt;(Urvalspanel till vänster och rullgardinslista)</translation>
+        <translation>Izaberi skladište za ovaj novi katalog.&lt;br/&gt;(Panel za selekciju levo i padajuća lista)</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
-        <translation>Det finns redan en katalog med detta namn:&lt;br/&gt;&lt;b&gt;</translation>
+        <translation>Već postoji katalog sa ovim imenom:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1038"/>
         <source>Choose a different name and try again.</source>
-        <translation>Välj ett annat namn och försök igen.</translation>
+        <translation>Izaberi drugo ime i pokušaj ponovo.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
-        <translation>Kontrollera vid uppstart</translation>
+        <translation>Proveri pri pokretanju</translation>
     </message>
     <message>
         <location line="-4529"/>
         <source>Include Hidden Files</source>
-        <translation>Inkludera dolda filer</translation>
+        <translation>Uključi skrivene datoteke</translation>
     </message>
     <message>
         <location line="+529"/>
         <source>Save</source>
-        <translation>Spara</translation>
+        <translation>Sačuvaj</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="-13"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation>&lt;br/&gt;&lt;b&gt;Välkommen till Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Det verkar som detta är första körningen.&lt;br/&gt;&lt;br/&gt;Följande inställningar har tillämpats:&lt;br/&gt; - Språk: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Du kan ändra dessa i fliken %3.</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Dobrodošli u Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Izgleda da je ovo prvo pokretanje.&lt;br/&gt;&lt;br/&gt;Sledeća podešavanja su primenjena:&lt;br/&gt; - Jezik: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Možete ih promeniti u tabu %3.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-974"/>
         <source>Snapshot</source>
-        <translation>Ögonblicksbild</translation>
+        <translation>Snimak</translation>
     </message>
     <message>
         <location line="+3523"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
-        <translation>Källa</translation>
+        <translation>Izvor</translation>
     </message>
     <message>
         <location line="-2339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uppdatera alla kataloger som är aktiva, om enheten är tillgänglig.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ažuriraj sve kataloge koji su aktivni, ako je uređaj dostupan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importera en lista med volymer från VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uvezi listu volumena iz VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-219"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-59"/>
         <location line="+126"/>
         <source>Cancel</source>
-        <translation>Avbryt</translation>
+        <translation>Otkaži</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="+257"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
-        <translation>Detta är version: v%1 &lt;br/&gt;&lt;br/&gt;En ny version är tillgänglig: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Hitta listan över nya funktioner i &lt;a href=&apos;%3&apos;&gt;Versionsanteckningarna&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vill du ladda ner den?</translation>
+        <translation>Ovo je verzija: v%1 &lt;br/&gt;&lt;br/&gt;Nova verzija je dostupna: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Pogledaj listu novih funkcija u &lt;a href=&apos;%3&apos;&gt;Napomenama o izdanju&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Da li želiš da je preuzmeeš?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-375"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+783"/>
         <source>Storage ID</source>
-        <translation>Lagrings-ID</translation>
+        <translation>ID skladišta</translation>
     </message>
     <message>
         <location line="+96"/>
         <location line="+454"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uppdatera den valda katalogens filer, om enheten är tillgänglig&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ažuriraj datoteke izabranog kataloga, ako je uređaj dostupan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+706"/>
         <location line="+1327"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
         <source>Directory</source>
-        <translation>Katalog</translation>
+        <translation>Direktorijum</translation>
     </message>
     <message>
         <location line="-6859"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
-        <translation>Rensa söktexten från tecken som _ - . ,</translation>
+        <translation>Očisti tekst pretrage od karaktera kao što su _ - . ,</translation>
     </message>
     <message>
         <location line="+1839"/>
         <source>Duplicates on</source>
-        <translation>Dubbletter på</translation>
+        <translation>Duplikati uključeni</translation>
     </message>
     <message>
         <location line="+95"/>
         <location line="+232"/>
         <source>Date Modified</source>
-        <translation>Ändringsdatum</translation>
+        <translation>Datum izmene</translation>
     </message>
     <message>
         <location line="+6469"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
-        <translation>Kontrollera om en ny version av Katalog är tillgänglig när appen startas.</translation>
+        <translation>Proveri da li je nova verzija Kataloga dostupna pri pokretanju aplikacije.</translation>
     </message>
     <message>
         <location line="-5198"/>
         <source>Show/Hide search history</source>
-        <translation>Visa/dölj sökhistorik</translation>
+        <translation>Prikaži/Sakrij istoriju pretrage</translation>
     </message>
     <message>
         <location line="-3696"/>
         <source>Search criteria</source>
-        <translation>Sökkriterier</translation>
+        <translation>Kriterijumi pretrage</translation>
     </message>
     <message>
         <location line="+3089"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
         <source>Tag</source>
-        <translation>Tagg</translation>
+        <translation>Oznaka</translation>
     </message>
     <message>
         <location line="+196"/>
         <source>View more statitics about the results</source>
-        <translation>Visa mer statistik om resultaten</translation>
+        <translation>Prikaži više statistika o rezultatima</translation>
     </message>
     <message>
         <location line="+449"/>
         <source>Search history</source>
-        <translation>Sökhistorik</translation>
+        <translation>Istorija pretrage</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="-253"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;På nästa skärm, välj en befintlig samlingsmapp eller skapa en ny.</translation>
+        <translation>&lt;br/&gt;&lt;br/&gt;Na sledećem ekranu, izaberi postojeću fasciklu kolekcije ili kreiraj novu.</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
-        <translation>&lt;br/&gt;&lt;b&gt;Redo att skapa en filkatalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Spreman za kreiranje kataloga datoteka:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation>1- Välj en hel enhet eller katalog, &lt;br/&gt;2- välj alternativ, och &lt;br/&gt;3- klicka &apos;Skapa&apos;&lt;br/&gt;</translation>
+        <translation>1- Izaberi ceo disk ili direktorijum, &lt;br/&gt;2- izaberi opcije, i &lt;br/&gt;3- klikni &apos;Kreiraj&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-3772"/>
         <source>Show/Hide search criteria</source>
-        <translation>Visa/dölj sökkriterier</translation>
+        <translation>Prikaži/Sakrij kriterijume pretrage</translation>
     </message>
     <message>
         <location line="-454"/>
         <source>Search in connected drives</source>
-        <translation>Sök i anslutna enheter</translation>
+        <translation>Pretraži u povezanim diskovima</translation>
     </message>
     <message>
         <location line="-50"/>
         <source>Search in file catalogs</source>
-        <translation>Sök i filkataloger</translation>
+        <translation>Pretraži u katalozima datoteka</translation>
     </message>
     <message>
         <location line="+1496"/>
         <source>exclude</source>
-        <translation>uteslut</translation>
+        <translation>isključi</translation>
     </message>
     <message>
         <location line="+3472"/>
         <source>is full device</source>
-        <translation>är hellenhet</translation>
+        <translation>je ceo uređaj</translation>
     </message>
     <message>
         <location line="+2199"/>
         <source>catalog is for the full device</source>
-        <translation>katalogen är för hela enheten</translation>
+        <translation>katalog je za ceo uređaj</translation>
     </message>
     <message>
         <location line="-4530"/>
         <location line="+232"/>
         <source>Choose to search duplicates based on the next criteria</source>
-        <translation>Välj att söka dubbletter baserat på nästa kriterier</translation>
+        <translation>Izaberi da pretražiš duplikate na osnovu sledećih kriterijuma</translation>
     </message>
     <message>
         <location line="+759"/>
         <source>Choose to use Tags to filter results</source>
-        <translation>Välj att använda taggar för att filtrera resultat</translation>
+        <translation>Izaberi da koristiš oznake za filtriranje rezultata</translation>
     </message>
     <message>
         <location line="-2223"/>
         <source>case sensitive</source>
-        <translation>skiftlägeskänslig</translation>
+        <translation>osetljivo na velika i mala slova</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resultaten ska matcha texten exakt (känslig för versaler och gemener)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rezultati treba da se tačno slažu sa tekstom (osetljivi na velika i mala slova)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+8581"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
-        <translation>Förladda senast valda kataloger vid uppstart för att påskynda nästa sökning</translation>
+        <translation>Unapred učitaj poslednje izabrane kataloge pri pokretanju da ubrzaš sledeću pretragu</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
-        <translation>Flytta fil till papperskorg</translation>
+        <translation>Premesti datoteku u korpu</translation>
     </message>
     <message>
         <location line="+129"/>
@@ -2304,7 +2304,7 @@
         <location line="+389"/>
         <location line="+39"/>
         <source>Confirmation</source>
-        <translation>Bekräftelse</translation>
+        <translation>Potvrda</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -2314,174 +2314,170 @@
         <location filename="../mainwindow_tab_search_ui.cpp" line="-458"/>
         <location line="+42"/>
         <source>Warning</source>
-        <translation>Varning</translation>
+        <translation>Upozorenje</translation>
     </message>
     <message>
         <location line="-41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-45"/>
         <source>Moved to trash:&lt;br/&gt;</source>
-        <translation>Flyttad till papperskorg:&lt;br/&gt;</translation>
+        <translation>Premešteno u korpu:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Move to trash failed.</source>
-        <translation>Flytt till papperskorg misslyckades.</translation>
+        <translation>Premeštanje u korpu neuspešno.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
         <source>Deleted.</source>
-        <translation>Borttagen.</translation>
+        <translation>Obrisano.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
-        <translation>Misslyckades att ta bort.</translation>
+        <translation>Brisanje neuspešno.</translation>
     </message>
     <message>
         <location line="-170"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-183"/>
         <source>Delete file</source>
-        <translation>Ta bort fil</translation>
+        <translation>Obriši datoteku</translation>
     </message>
     <message>
-        <location line="+126"/>
-        <source>Move
-%1
-to the trash?</source>
-        <translation>Flytta
-%1
-till papperskorgen?</translation>
-    </message>
-    <message>
-        <location line="+33"/>
+        <location line="+159"/>
         <source>&lt;span style=&apos;color:red;&apos;&gt;DELETE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</source>
-        <translation>&lt;span style=&apos;color:red;&apos;&gt;TA BORT&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
+        <translation>&lt;span style=&apos;color:red;&apos;&gt;OBRIŠI&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
         <location line="-221"/>
         <source>Tag this folder</source>
-        <translation>Tagga denna mapp</translation>
+        <translation>Označi ovu fasciklu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-9808"/>
         <source>Selection</source>
-        <translation>Urval</translation>
+        <translation>Selekcija</translation>
     </message>
     <message>
         <location line="-324"/>
         <location line="+5859"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
-        <translation>Expandera 1 nivå, 2 nivåer eller kollaps</translation>
+        <translation>Proširi 1 nivo, 2 nivoa, ili smanji</translation>
     </message>
     <message>
         <location line="+2251"/>
         <source>all records</source>
-        <translation>alla poster</translation>
+        <translation>svi zapisi</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+36"/>
         <source>updates only</source>
-        <translation>endast uppdateringar</translation>
+        <translation>samo ažuriranja</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-4"/>
         <source>snapshots only</source>
-        <translation>endast ögonblicksbilder</translation>
+        <translation>samo snimci</translation>
     </message>
     <message>
         <location line="+394"/>
         <source>Device</source>
-        <translation>Enhet</translation>
+        <translation>Uređaj</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Delete selected</source>
-        <translation>Ta bort valda</translation>
+        <translation>Obriši izabrano</translation>
     </message>
     <message>
         <location line="+360"/>
         <source>as Source</source>
-        <translation>som källa</translation>
+        <translation>kao izvor</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>as Target</source>
-        <translation>som mål</translation>
+        <translation>kao cilj</translation>
     </message>
     <message>
         <location line="+216"/>
         <source>Select Source catalog</source>
-        <translation>Välj källkatalog</translation>
+        <translation>Izaberi izvorni katalog</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Select Target catalog</source>
-        <translation>Välj målkatalog</translation>
+        <translation>Izaberi ciljni katalog</translation>
     </message>
     <message>
         <location line="+717"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
-        <translation>Samlingsdata sparas till .idx eller .csv-filer lokalt på datorn.</translation>
+        <translation>Podaci kolekcije se čuvaju u .idx ili .csv datotekama lokalno na računaru.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>The database is in Memory only (RAM).</source>
-        <translation>Databasen finns endast i minnet (RAM).</translation>
+        <translation>Baza podataka je samo u memoriji (RAM).</translation>
     </message>
     <message>
         <location line="+687"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
-        <translation>Katalog-färger</translation>
+        <translation>Katalog boje</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>Language &amp; Theme</source>
-        <translation>Språk &amp; tema</translation>
+        <translation>Jezik i tema</translation>
     </message>
     <message>
         <location line="-1473"/>
         <source>Open Settings file</source>
-        <translation>Öppna inställningsfil</translation>
+        <translation>Otvori datoteku podešavanja</translation>
     </message>
     <message>
         <location line="-2871"/>
         <source>Display folders</source>
-        <translation>Visa mappar</translation>
+        <translation>Prikaži fascikle</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>and all sub-folders</source>
-        <translation>och alla undermappar</translation>
+        <translation>i sve podfascikle</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>Order folders first</source>
-        <translation>Ordna mappar först</translation>
+        <translation>Sortiraj fascikle prvo</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="+78"/>
         <source>Copy folder name</source>
-        <translation>Kopiera mappnamn</translation>
-    </message>
-    <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Ta bort mapp</translation>
+        <translation>Kopiraj ime fascikle</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
-        <translation>Flytta mapp till papperskorg</translation>
+        <translation>Premesti fasciklu u korpu</translation>
     </message>
     <message>
-        <location line="+352"/>
+        <location line="+104"/>
+        <source>Move
+%1
+to the trash?</source>
+        <translation>Premestiti
+%1
+u smeće?</translation>
+    </message>
+    <message>
+        <location line="+248"/>
         <source>orderValue</source>
-        <translation>ordningsvärde</translation>
+        <translation>vrednostRedosleda</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-1587"/>
@@ -2490,30 +2486,30 @@ till papperskorgen?</translation>
         <location line="+223"/>
         <location line="+252"/>
         <source>Device Type</source>
-        <translation>Enhetstyp</translation>
+        <translation>Tip uređaja</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-172"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
-        <translation>Den valda katalogen innehåller mer än %1 filer.&lt;br/&gt;Det kan ta flera minuter att öppna.&lt;br/&gt;Fortsätt?</translation>
+        <translation>Izabrani katalog sadrži više od %1 datoteka.&lt;br/&gt;Možda će trebati nekoliko minuta da se otvori.&lt;br/&gt;Nastavi?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+5361"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
-        <translation>Minne</translation>
+        <translation>Memorija</translation>
     </message>
     <message>
         <location line="-9473"/>
         <location line="+1022"/>
         <location line="+1700"/>
         <source>Use the Text criteria in the Search</source>
-        <translation>Använd textkriterier i sökningen</translation>
+        <translation>Koristi tekstualni kriterijum u pretrazi</translation>
     </message>
     <message>
         <location line="-515"/>
         <source>Differences on</source>
-        <translation>Skillnader på</translation>
+        <translation>Razlike uključene</translation>
     </message>
     <message>
         <location line="+243"/>
@@ -2528,143 +2524,143 @@ till papperskorgen?</translation>
     <message>
         <location line="-2514"/>
         <source>File name</source>
-        <translation>Filnamn</translation>
+        <translation>Ime datoteke</translation>
     </message>
     <message>
         <location line="+1022"/>
         <source>File criteria</source>
-        <translation>Filkriterier</translation>
+        <translation>Kriterijum datoteke</translation>
     </message>
     <message>
         <location line="+1700"/>
         <source>Folder criteria</source>
-        <translation>Mappkriterier</translation>
+        <translation>Kriterijum fascikle</translation>
     </message>
     <message>
         <location line="+4737"/>
         <source>Graphic Start Date</source>
-        <translation>Grafik startdatum</translation>
+        <translation>Početni datum grafikona</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Select date</source>
-        <translation>Välj datum</translation>
+        <translation>Izaberi datum</translation>
     </message>
     <message>
         <location line="-3237"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
         <source>Include Metadata</source>
-        <translation>Inkludera metadata</translation>
+        <translation>Uključi metapodatke</translation>
     </message>
     <message>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
-        <translation>Inkludera metadata för mediafiler</translation>
+        <translation>Uključi metapodatke medijskih datoteka</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
         <source>Local disk</source>
-        <translation>Lokal disk</translation>
+        <translation>Lokalni disk</translation>
     </message>
     <message>
         <location line="-613"/>
         <source>The directory does not exist. Create it?</source>
-        <translation>Katalogen existerar inte. Skapa den?</translation>
+        <translation>Direktorijum ne postoji. Kreiraj ga?</translation>
     </message>
     <message>
         <location line="+126"/>
         <source>The database file does not exist. Create it?</source>
-        <translation>Databasfilen existerar inte. Skapa den?</translation>
+        <translation>Datoteka baze podataka ne postoji. Kreiraj je?</translation>
     </message>
     <message>
         <location line="+339"/>
         <source>Collection Upgrade Required</source>
-        <translation>Samlingsuppgradering krävs</translation>
+        <translation>Potrebno unapređenje kolekcije</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation>Denna applikation av &apos;Katalog&apos; är i version: </translation>
+        <translation>Ova aplikacija &apos;Katalog&apos; je u verziji: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Current collection version: </source>
-        <translation>Aktuell samlingsversion: </translation>
+        <translation>Trenutna verzija kolekcije: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Collection folder: </source>
-        <translation>Samlingsmapp: </translation>
+        <translation>Fascikla kolekcije: </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This upgrade process can be performed automatically.</source>
-        <translation>Denna uppgraderingsprocess kan utföras automatiskt.</translation>
+        <translation>Ovaj proces unapređenja može se izvršiti automatski.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
-        <translation>Ta reda på de huvudsakliga förändringarna och migreringen i denna &lt;a href=&apos;%1&apos;&gt;Större release 2.0&lt;/a&gt;.</translation>
+        <translation>Saznaj o glavnim promenama i migraciji u ovom &lt;a href=&apos;%1&apos;&gt;Glavnom izdanju 2.0&lt;/a&gt;.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
-        <translation>Hitta den vanliga listan över nya funktioner i &lt;a href=&apos;%1&apos;&gt;Versionsanteckningarna&lt;/a&gt;.</translation>
+        <translation>Pronađi uobičajenu listu novih funkcija u &lt;a href=&apos;%1&apos;&gt;Napomenama o izdanju&lt;/a&gt;.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
-        <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Säkerhetskopiera samlingsmappen/filerna innan uppgradering!&lt;/b&gt;</translation>
+        <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Napravi rezervnu kopiju fascikle/datoteka kolekcije pre unapređenja!&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>What should be done now?</source>
-        <translation>Vad ska göras nu?</translation>
+        <translation>Šta treba da se uradi sada?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Upgrade Now</source>
-        <translation>Uppgradera nu</translation>
+        <translation>Unapredi sada</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Choose a Different Folder</source>
-        <translation>Välj en annan mapp</translation>
+        <translation>Izaberi drugu fasciklu</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Exit Application</source>
-        <translation>Avsluta applikation</translation>
+        <translation>Zatvori aplikaciju</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Select the database to open:</source>
-        <translation>Välj databasen att öppna:</translation>
+        <translation>Izaberi bazu podataka za otvaranje:</translation>
     </message>
     <message>
         <location line="-305"/>
         <source>Select the database to create and open:</source>
-        <translation>Välj databasen att skapa och öppna:</translation>
+        <translation>Izaberi bazu podataka za kreiranje i otvaranje:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="+122"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
-        <translation>Vissa ändringar i lagringsenhetslistam har inte sparats.&lt;br/&gt;Spara och avsluta, kasta och avsluta, eller avbryt avslutning?</translation>
+        <translation>Neke promene u listi uređaja skladišta nisu sačuvane.&lt;br/&gt;Sačuvaj i izađi, odbaci i izađi, ili otkaži izlaz?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+347"/>
         <source> Physical Group</source>
-        <translation> Fysisk grupp</translation>
+        <translation> Fizička grupa</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Virtual device</source>
-        <translation>Virtuell enhet</translation>
+        <translation>Virtuelni uređaj</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_tags.cpp" line="+91"/>
         <source>Remove this tag</source>
-        <translation>Ta bort denna tagg</translation>
+        <translation>Ukloni ovu oznaku</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="-66"/>
@@ -2673,7 +2669,7 @@ till papperskorgen?</translation>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+951"/>
         <source>Catalog with results</source>
-        <translation>Katalog med resultat</translation>
+        <translation>Katalog sa rezultatima</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
@@ -2686,12 +2682,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+1"/>
         <source>Mapping Name</source>
-        <translation>Mappningsnamn</translation>
+        <translation>Ime mapiranja</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Source ID</source>
-        <translation>Käll-ID</translation>
+        <translation>ID izvora</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2700,105 +2696,105 @@ till papperskorgen?</translation>
         <location line="+223"/>
         <location line="+252"/>
         <source>Active</source>
-        <translation>Aktiv</translation>
+        <translation>Aktivan</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+7"/>
         <source>Files</source>
-        <translation>Filer</translation>
+        <translation>Datoteke</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
         <source>Date Updated</source>
-        <translation>Datum uppdaterad</translation>
+        <translation>Datum ažuriranja</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Target ID</source>
-        <translation>Mål-ID</translation>
+        <translation>ID cilja</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Target</source>
-        <translation>Mål</translation>
+        <translation>Cilj</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Size Diff.</source>
-        <translation>Storleksskillnad</translation>
+        <translation>Razlika veličine</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size Diff.(%)</source>
-        <translation>Storleksskillnad (%)</translation>
+        <translation>Razlika veličine(%)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Files Diff.</source>
-        <translation>Filskillnad</translation>
+        <translation>Razlika datoteka</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Files Diff.(%)</source>
-        <translation>Filskillnad (%)</translation>
+        <translation>Razlika datoteka(%)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date Diff.</source>
-        <translation>Datumskillnad</translation>
+        <translation>Razlika datuma</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Parent Device</source>
-        <translation>Föräldraeenhdet</translation>
+        <translation>Roditeljski uređaj</translation>
     </message>
     <message>
         <location line="+76"/>
         <location line="+5"/>
         <source>Populate the lists first (One or both device lists are empty).</source>
-        <translation>Fyll listorna först (En eller båda enhetslistorna är tomma).</translation>
+        <translation>Popuni liste prvo (Jedna ili obe liste uređaja su prazne).</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Invalid selection model</source>
-        <translation>Ogiltlig urvalsmodell</translation>
+        <translation>Neispravan model selekcije</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Select a device from both lists.</source>
-        <translation>Välj en enhet från båda listorna.</translation>
+        <translation>Izaberi uređaj sa obe liste.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Invalid device selection.</source>
-        <translation>Ogiltigt enhetsurval.</translation>
+        <translation>Neispravna selekcija uređaja.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Empty device ID.</source>
-        <translation>Tomt enhets-ID.</translation>
+        <translation>Prazan ID uređaja.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Provide a mapping name.</source>
-        <translation>Ange ett mappningsnamn.</translation>
+        <translation>Obezbedi ime mapiranja.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
-        <translation>Välj en annan källa eller mål (en enhet ska inte mappas till sig själv).</translation>
+        <translation>Izaberi različit izvor ili cilj (uređaj ne sme biti mapiran sam na sebe).</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
         <source>Virtual Group</source>
-        <translation>Virtuell grupp</translation>
+        <translation>Virtuelna grupa</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
-        <translation>En virtuell enhet kan endast läggas till i en annan virtuell enhet.&lt;br/&gt;</translation>
+        <translation>Virtuelni uređaj može biti dodat samo drugom virtuelnom uređaju.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+170"/>
@@ -2809,151 +2805,151 @@ till papperskorgen?</translation>
     <message>
         <location line="-46"/>
         <source>Unassign this catalog</source>
-        <translation>Ta bort tilldelning av denna katalog</translation>
+        <translation>Ukloni ovaj katalog</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Delete this catalog</source>
-        <translation>Ta bort denna katalog</translation>
+        <translation>Obriši ovaj katalog</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Unassign this storage</source>
-        <translation>Ta bort tilldelning av denna lagring</translation>
+        <translation>Ukloni ovo skladište</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Delete this storage</source>
-        <translation>Ta bort denna lagring</translation>
+        <translation>Obriši ovo skladište</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Add Virtual device</source>
-        <translation>Lägg till virtuell enhet</translation>
+        <translation>Dodaj virtuelni uređaj</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Add Storage device</source>
-        <translation>Lägg till lagringsenhet</translation>
+        <translation>Dodaj uređaj skladišta</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Assign selected catalog</source>
-        <translation>Tilldela vald katalog</translation>
+        <translation>Dodeli izabrani katalog</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
-        <translation>Denna grupp är nödvändig för att hålla lagring och kataloger.&lt;br/&gt;Den kan inte tas bort.</translation>
+        <translation>Ova grupa je potrebna za hostovanje skladišta i kataloga.&lt;br/&gt;Ne može biti obrisana.</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
         <location line="+337"/>
         <source>Search Error</source>
-        <translation>Sökfel</translation>
+        <translation>Greška pretrage</translation>
     </message>
     <message>
         <location line="-112"/>
         <source>Folder</source>
-        <translation>Mapp</translation>
+        <translation>Fascikla</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog Name</source>
-        <translation>Katalognamn</translation>
+        <translation>Ime kataloga</translation>
     </message>
     <message>
         <location line="+178"/>
         <location line="+46"/>
         <source>Pause</source>
-        <translation>Pausa</translation>
+        <translation>Pauza</translation>
     </message>
     <message>
         <location line="-31"/>
         <location line="+33"/>
         <source>Resume</source>
-        <translation>Återuppta</translation>
+        <translation>Nastavi</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Searching...</source>
-        <translation>Söker...</translation>
+        <translation>Pretraguje...</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Start a new search</source>
-        <translation>Starta en ny sökning</translation>
+        <translation>Počni novu pretragu</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pause the current search</source>
-        <translation>Pausa aktuell sökning</translation>
+        <translation>Pauziraj trenutnu pretragu</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Resume the paused search</source>
-        <translation>Återuppta pausad sökning</translation>
+        <translation>Nastavi pauziranu pretragu</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Stop the current search</source>
-        <translation>Stoppa aktuell sökning</translation>
+        <translation>Zaustavi trenutnu pretragu</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Folders found</source>
-        <translation>Mappar hittade</translation>
+        <translation>Pronađene fascikle</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Duplicates found</source>
-        <translation>Dubbletter hittade</translation>
+        <translation>Pronađeni duplikati</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Differences found</source>
-        <translation>Skillnader hittade</translation>
+        <translation>Pronađene razlike</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Search interrupted | Files found: %1 | Files processed: %2</source>
-        <translation>Sökning avbruten | Filer hittade: %1 | Filer behandlade: %2</translation>
+        <translation>Pretraga prekinuta | Pronađene datoteke: %1 | Obrađene datoteke: %2</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Search interrupted. No results available.</source>
-        <translation>Sökning avbruten. Inga resultat tillgängliga.</translation>
+        <translation>Pretraga prekinuta. Nema rezultata.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5</source>
-        <translation>Laddar katalog %1 av %2 (%3) | Filer hittade: %4 | Filer behandlade: %5</translation>
+        <translation>Učitavanje kataloga %1 od %2 (%3) | Pronađene datoteke: %4 | Obrađene datoteke: %5</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
-        <translation>Laddar katalog %1 av %2 (%3) | %4 filer laddade (%5%) | Filer hittade: %6 | Filer behandlade: %7</translation>
+        <translation>Učitavanje kataloga %1 od %2 (%3) | %4 datoteka učitano (%5%) | Pronađene datoteke: %6 | Obrađene datoteke: %7</translation>
     </message>
     <message>
         <location line="+11"/>
         <source> | CATALOG LOADING PAUSED</source>
-        <translation> | KATALOGLADDNING PAUSAD</translation>
+        <translation> | UČITAVANJE KATALOGA PAUZIRANO</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
-        <translation>Behandlar katalog %1 av %2 | Filer hittade: %3 | Behandlar filer...</translation>
+        <translation>Obrađuje katalog %1 od %2 | Pronađene datoteke: %3 | Obrađuje datoteke...</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Searching in Catalog %1 of %2 | </source>
-        <translation>Söker i katalog %1 av %2 | </translation>
+        <translation>Pretraga u katalogu %1 od %2 | </translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+5"/>
         <source>Files found: %1 | Files processed: %2</source>
-        <translation>Filer hittade: %1 | Filer behandlade: %2</translation>
+        <translation>Pronađene datoteke: %1 | Obrađene datoteke: %2</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -2963,136 +2959,136 @@ till papperskorgen?</translation>
     <message>
         <location line="+18"/>
         <source>No search results available.</source>
-        <translation>Inga sökresultat tillgängliga.</translation>
+        <translation>Nema dostupnih rezultata pretrage.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Folders Found Statistics</source>
-        <translation>Statistik över hittade mappar</translation>
+        <translation>Statistike pronađenih fascikli</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Files Found Statistics</source>
-        <translation>Statistik över hittade filer</translation>
+        <translation>Statistike pronađenih datoteka</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Catalogs processed: %1 of %2</source>
-        <translation>Kataloger behandlade: %1 av %2</translation>
+        <translation>Obrađeni katalozi: %1 od %2</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Interrupted Search, incomplete results</source>
-        <translation>Avbruten sökning, ofullständiga resultat</translation>
+        <translation>Prekinuta pretraga, nepotpuni rezultati</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+11"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;tr&gt;&lt;td&gt;Filer behandlade: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;tr&gt;&lt;td&gt;Obrađene datoteke: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>&lt;tr&gt;&lt;td&gt;Percentage processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;tr&gt;&lt;td&gt;Procent behandlade: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;tr&gt;&lt;td&gt;Procenat obrađeno: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Folders found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Mappar hittade:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Pronađene fascikle:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Filer hittade:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Pronađene datoteke:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total storlek:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min storlek:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max storlek:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Genomsnittlig storlek: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+        <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ukupna veličina:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min veličina:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maks veličina:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Prosečna veličina: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maks datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location line="+27"/>
         <location line="+32"/>
         <source>Ready</source>
-        <translation>Redo</translation>
+        <translation>Spreman</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Search completed | Files found: %1</source>
-        <translation>Sökning slutförd | Filer hittade: %1</translation>
+        <translation>Pretraga završena | Pronađene datoteke: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings_exp.cpp" line="+48"/>
         <source>Select the directory and file name for his export.</source>
-        <translation>Välj katalog och filnamn för denna export.</translation>
+        <translation>Izaberi direktorijum i ime datoteke za ovaj izvoz.</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-        <translation>Misslyckades att exportera minnesdatabas till fil.&lt;br/&gt;&lt;br/&gt; Exportfilsökväg: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
+        <translation>Neuspešan izvoz baze podataka iz memorije u datoteku.&lt;br/&gt;&lt;br/&gt; Putanja datoteke izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Successful export of collection to SQLite database file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-        <translation>Lyckad export av samling till SQLite-databasfil.&lt;br/&gt;&lt;br/&gt; Exportfilsökväg: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
+        <translation>Uspešan izvoz kolekcije u SQLite datoteku baze podataka.&lt;br/&gt;&lt;br/&gt; Putanja datoteke izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Select the directory for the CSV export</source>
-        <translation>Välj katalog för CSV-export</translation>
+        <translation>Izaberi direktorijum za CSV izvoz</translation>
     </message>
     <message>
         <location line="+80"/>
         <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
-        <translation>Lyckad export av databas till CSV-filer.&lt;br/&gt;&lt;br/&gt;Exportkatalog: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Du kan nu växla till minnesläge och ladda denna samling.</translation>
+        <translation>Uspešno izvezena baza podataka u CSV datoteke.&lt;br/&gt;&lt;br/&gt;Direktorijum izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Sada možeš preći u režim memorije i učitati ovu kolekciju.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Export failed: %1</source>
-        <translation>Export misslyckades: %1</translation>
+        <translation>Izvoz neuspešan: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
+        <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
+        <translation>Memorija: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Izvorna fascikla ne sadrži nijednu datoteku:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ovo bi moglo da znači da uređaj nije montiran na ovu fasciklu,&lt;br/&gt;ili je fascikla jednostavno prazna.&lt;br/&gt;&lt;br/&gt;Da li ipak želite da pokušate da preuzmete vrednosti?</translation>
     </message>
     <message>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
         <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
-        <translation>Det verkar som denna katalog inte importerades korrekt eller har ett gammalt format.&lt;br/&gt;Redigera den och se till att den har följande första 2 rader:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/mappsökväg&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Kopiera/klistra in dessa rader i början av filen och ändra värdena efter &gt;:&lt;br/&gt;- catalogSourcePath är mappen att katalogisera filerna från.&lt;br/&gt;- catalogFileCount-numret spelar inte lika stor roll, det kan uppdateras.&lt;br/&gt;</translation>
+        <translation>Izgleda da ovaj katalog nije pravilno uvezen ili ima stari format.&lt;br/&gt;Uredite ga i uverite se da ima sledeća prva 2 reda:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Kopirajte/nalepite ove redove na početak datoteke i izmenite vrednosti posle &gt;:&lt;br/&gt;- catalogSourcePath je fascikla iz koje se katalogizuju datoteke.&lt;br/&gt;- broj catalogFileCount nije toliko važan, može se ažurirati.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+15"/>
         <location line="+55"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
-        <translation>Välj en katalog först (viss information saknas).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
+        <translation>Prvo izaberite katalog (neki podaci nedostaju).&lt;br/&gt; trenutna putanjaDatotekeKataloga: %1 &lt;br/&gt;trenutniNazivKataloga: %2 &lt;br/&gt; trenutna putanjaIzvoraKataloga: %3</translation>
     </message>
     <message>
         <location line="-41"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-        <translation>Källmappen innehåller ingen fil.&lt;br/&gt;Detta kan betyda att källan är tom eller att enheten inte är monterad till denna mapp.&lt;br/&gt;Vill du spara den ändå (katalogen skulle vara tom)?</translation>
+        <translation>Izvorni folder ne sadrži nijednu datoteku.&lt;br/&gt;Ovo bi moglo da znači da je izvor prazan ili da uređaj nije montiran u ovaj folder.&lt;br/&gt;Da li želite da ga ipak sačuvate (katalog bi bio prazan)?.</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
-        <translation>Katalogen &lt;b&gt;%1&lt;/b&gt; kan inte uppdateras.&lt;br/&gt;&lt;br/&gt; Källmappen hittades inte.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Möjliga orsaker:&lt;br/&gt;    - enheten är inte ansluten och monterad,&lt;br/&gt;    - källmappen flyttades eller döptes om,&lt;br/&gt;    - källmappen som angavs är felaktig.</translation>
+        <translation>Katalog &lt;b&gt;%1&lt;/b&gt; ne može biti ažuriran.&lt;br/&gt;&lt;br/&gt; Izvorna fascikla nije pronađena.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Mogući razlozi:&lt;br/&gt; - uređaj nije povezan i montiran,&lt;br/&gt; - izvorna fascikla je premeštena ili preimenovana.,&lt;br/&gt; - uneta izvorna fascikla je netačna.</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+87"/>
         <source>Could not open file.</source>
-        <translation>Kunde inte öppna fil.</translation>
+        <translation>Nije moguće otvoriti datoteku.</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Error opening output file.</source>
-        <translation>Fel vid öppning av utdatafil.</translation>
+        <translation>Greška pri otvaranju izlazne datoteke.</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Select a catalog with a valid path.</source>
-        <translation>Välj en katalog med en giltig sökväg.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
-        <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
-        <translation>Lagring: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Källmappen innehåller ingen fil:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Detta kan betyda att enheten inte är monterad till denna mapp,&lt;br/&gt;eller att mappen helt enkelt är tom.&lt;br/&gt;&lt;br/&gt;Tvinga försök att hämta värden ändå?</translation>
+        <translation>Izaberite katalog sa važećom putanjom.</translation>
     </message>
 </context>
 <context>
@@ -3100,12 +3096,12 @@ till papperskorgen?</translation>
     <message>
         <location filename="../core/search.cpp" line="+130"/>
         <source>Name</source>
-        <translation>Namn</translation>
+        <translation>Ime</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size</source>
-        <translation>Storlek</translation>
+        <translation>Veličina</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3115,17 +3111,17 @@ till papperskorgen?</translation>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation>Mapp</translation>
+        <translation>Fascikla</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog Name</source>
-        <translation>Katalognamn</translation>
+        <translation>Ime kataloga</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog ID</source>
-        <translation>Katalog-ID</translation>
+        <translation>ID kataloga</translation>
     </message>
 </context>
 <context>
@@ -3134,65 +3130,65 @@ till papperskorgen?</translation>
         <location filename="../core/searchprogressmanager.cpp" line="+78"/>
         <location line="+11"/>
         <source> | SEARCH PAUSED</source>
-        <translation> | SÖKNING PAUSAD</translation>
+        <translation> | PRETRAGA PAUZIRANA</translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+8"/>
         <source> | CATALOG LOADING PAUSED</source>
-        <translation> | KATALOGLADDNING PAUSAD</translation>
+        <translation> | UČITAVANJE KATALOGA PAUZIRANO</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Searching in directory %1</source>
-        <translation>Söker i katalog %1</translation>
+        <translation>Pretraga u direktorijumu %1</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+14"/>
         <source>Searching in catalog %1</source>
-        <translation>Söker i katalog %1</translation>
+        <translation>Pretraga u katalogu %1</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Searching in catalog</source>
-        <translation>Söker i katalog</translation>
+        <translation>Pretraga u katalogu</translation>
     </message>
     <message>
         <location line="+5"/>
         <source> | Catalog %1 of %2</source>
-        <translation> | Katalog %1 av %2</translation>
+        <translation> | Katalog %1 od %2</translation>
     </message>
     <message>
         <location line="+9"/>
         <location line="+5"/>
         <source>Searching</source>
-        <translation>Söker</translation>
+        <translation>Pretraguje</translation>
     </message>
     <message>
         <location line="+6"/>
         <source> | Total folders found: %1</source>
-        <translation> | Totalt mappar hittade: %1</translation>
+        <translation> | Ukupno pronađenih fascikli: %1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source> | Total files found: %1</source>
-        <translation> | Totalt filer hittade: %1</translation>
+        <translation> | Ukupno pronađenih datoteka: %1</translation>
     </message>
     <message>
         <location line="+5"/>
         <source> | Total folders found: 0</source>
-        <translation> | Totalt mappar hittade: 0</translation>
+        <translation> | Ukupno pronađenih fascikli: 0</translation>
     </message>
     <message>
         <location line="+2"/>
         <source> | Total files found: 0</source>
-        <translation> | Totalt filer hittade: 0</translation>
+        <translation> | Ukupno pronađenih datoteka: 0</translation>
     </message>
     <message>
         <location line="+7"/>
         <source> | Total files processed: %1</source>
-        <translation> | Totalt filer behandlade: %1</translation>
+        <translation> | Ukupno obrađenih datoteka: %1</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3202,12 +3198,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+17"/>
         <source>Search completed | Total folders found: %1</source>
-        <translation>Sökning slutförd | Totalt mappar hittade: %1</translation>
+        <translation>Pretraga završena | Ukupno pronađenih fascikli: %1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Search completed | Total files found: %1</source>
-        <translation>Sökning slutförd | Totalt filer hittade: %1</translation>
+        <translation>Pretraga završena | Ukupno pronađenih datoteka: %1</translation>
     </message>
 </context>
 <context>
@@ -3220,12 +3216,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+1"/>
         <source>Folder</source>
-        <translation>Mapp</translation>
+        <translation>Fascikla</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tag</source>
-        <translation>Tagg</translation>
+        <translation>Oznaka</translation>
     </message>
 </context>
 </TS>

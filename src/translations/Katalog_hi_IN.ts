@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
@@ -1768,25 +1768,6 @@
         <translation>फ़ोल्डर अन्वेषण</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">%1
-को दूसरे फ़ोल्डर में भेजें?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">एक फ़ाइल %&amp; पहले से मौजूद है। इसे ओवरराइट करें?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">फ़ोल्डर में स्थानांतरित करना रद्द किया गया।</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">यह फ़ाइल स्थानांतरित नहीं की जा सकती (ऑफलाइन या मौजूद नहीं)।</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2120,10 +2101,6 @@ to another folder?</source>
         <translation>एक अलग नाम चुनें और फिर से कोशिश करें।</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">रिज़ॉल्यूशन</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>स्टार्ट अप पर जांचें</translation>
@@ -2315,10 +2292,6 @@ to another folder?</source>
         <translation>अगली खोज को तेज़ करने के लिए स्टार्ट-अप पर अंतिम चयनित कैटलॉग प्रीलोड करें</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">फ़ाइल को दूसरे फ़ोल्डर में भेजें</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>फ़ाइल को ट्रैश में भेजें</translation>
@@ -2334,10 +2307,6 @@ to another folder?</source>
         <translation>पुष्टि</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">इस फ़ाइल को भेजने के लिए फ़ोल्डर चुनें</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2346,10 +2315,6 @@ to another folder?</source>
         <location line="+42"/>
         <source>Warning</source>
         <translation>चेतावनी</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">फ़ोल्डर में भेजा गया:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2374,10 +2339,6 @@ to another folder?</source>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>डिलीट करने में असफल।</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">फ़ोल्डर में भेजना असफल।</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2508,10 +2469,6 @@ to the trash?</source>
         <translation>फ़ोल्डर नाम कॉपी करें</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">फ़ोल्डर डिलीट करें</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>फ़ोल्डर को ट्रैश में भेजें</translation>
@@ -2598,14 +2555,6 @@ to the trash?</source>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>मीडिया फ़ाइल मेटाडेटा शामिल करें</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">टेस्ट</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">टेस्ट मीडिया</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>

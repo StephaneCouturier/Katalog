@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
@@ -1768,26 +1768,6 @@
         <translation>浏览文件夹</translation>
     </message>
     <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">移动
-%1
-到另一个文件夹？</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">文件 %&amp; 已存在。覆盖它？</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">已取消移动到文件夹。</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">此文件无法移动（离线或不存在）。</translation>
-    </message>
-    <message>
         <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
@@ -2121,10 +2101,6 @@ to another folder?</source>
         <translation>选择不同的名称并重试。</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation type="vanished">分辨率</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>启动时检查</translation>
@@ -2316,10 +2292,6 @@ to another folder?</source>
         <translation>启动时预加载最后选择的目录以加快下一次搜索</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">移动文件到其他文件夹</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>移动文件到回收站</translation>
@@ -2335,10 +2307,6 @@ to another folder?</source>
         <translation>确认</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">选择要移动此文件到的文件夹</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2347,10 +2315,6 @@ to another folder?</source>
         <location line="+42"/>
         <source>Warning</source>
         <translation>警告</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">已移动到文件夹：&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2375,10 +2339,6 @@ to another folder?</source>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>删除失败。</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">移动到文件夹失败。</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2510,10 +2470,6 @@ to the trash?</source>
         <translation>复制文件夹名称</translation>
     </message>
     <message>
-        <source>Delete folder</source>
-        <translation type="vanished">删除文件夹</translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>移动文件夹到回收站</translation>
@@ -2600,14 +2556,6 @@ to the trash?</source>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>包括媒体文件元数据</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">测试</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">测试媒体</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
