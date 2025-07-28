@@ -155,15 +155,19 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/es.png"),"es_ES");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fi.png"),"fi_FI");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/in.png"),"hi_IN");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/hu.png"),"hu_HU");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/it.png"),"it_IT");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/jp.png"),"ja_JP");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/nl.png"),"nl_NL");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/no.png"),"nb_NO"); 
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/pl.png"),"pl_PL");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/pt.png"),"pt_PT");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/ro.png"),"ro_RO");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/se.png"),"sv_SE");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/sk.png"),"sk_SK");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/si.png"),"si_SI");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cn.png"),"zh_CN");
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 

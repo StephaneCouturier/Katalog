@@ -108,7 +108,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+894"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
         <source>All Words</source>
         <translation>Všechna slova</translation>
     </message>
@@ -141,7 +141,7 @@
     </message>
     <message>
         <location line="-1947"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>File names or Folder paths</source>
         <translation>Názvy souborů nebo cesty ke složkám</translation>
     </message>
@@ -149,13 +149,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+750"/>
+        <location line="+689"/>
         <source>File names only</source>
         <translation>Pouze názvy souborů</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>Folder path only</source>
         <translation>Pouze cesta ke složce</translation>
     </message>
@@ -187,17 +187,15 @@
         <translation>Katalog Colors</translation>
     </message>
     <message>
-        <location line="+139"/>
         <source>TESTS</source>
-        <translation>TESTY</translation>
+        <translation type="vanished">TESTY</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>TEST MEDIA</source>
-        <translation>TEST MEDIA</translation>
+        <translation type="vanished">TEST MEDIA</translation>
     </message>
     <message>
-        <location line="-2511"/>
+        <location line="-2360"/>
         <source>Select date</source>
         <translation>Vyberte datum</translation>
     </message>
@@ -312,7 +310,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+252"/>
+        <location filename="../mainwindow.cpp" line="+268"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
@@ -345,7 +343,7 @@
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+637"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
         <translation>Velikost</translation>
@@ -376,7 +374,7 @@
         <location line="+81"/>
         <location line="+2965"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1493"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1427"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Typ</translation>
@@ -390,7 +388,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+898"/>
+        <location filename="../mainwindow_setup.cpp" line="+435"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -407,7 +405,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+762"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
         <source>All</source>
         <translation>Všechno</translation>
     </message>
@@ -722,7 +720,7 @@
     <message>
         <location line="-693"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+262"/>
-        <location line="+370"/>
+        <location line="+366"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+317"/>
         <source>File Type</source>
         <translation>Typ souboru</translation>
@@ -735,7 +733,7 @@
     <message>
         <location line="-5171"/>
         <location line="+6081"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1558"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1554"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+46"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -995,13 +993,13 @@
     </message>
     <message>
         <location line="+49"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1594"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1590"/>
         <source>Include Metadata</source>
         <translation>Zahrnout metadata</translation>
     </message>
     <message>
         <location line="+195"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-633"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-629"/>
         <source>Comment 1</source>
         <translation>Komentář 1</translation>
     </message>
@@ -1481,7 +1479,7 @@
     <message>
         <location line="+8874"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-715"/>
+        <location filename="../mainwindow_setup.cpp" line="-361"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
@@ -1680,7 +1678,7 @@
         <translation>1- Vyberte celou jednotku nebo adresář, &lt;br/&gt;2- vyberte možnosti a &lt;br/&gt;3- klikněte na &apos;Vytvořit&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+584"/>
+        <location line="+228"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Toto je verze: v%1 &lt;br/&gt; &lt;br/&gt; K dispozici je nová verze: &lt;b&gt; v%2 &lt;/b&gt; &lt;br/&gt; Seznam nových funkcí najdete v &lt;a href = &apos;%3 &apos;&gt; Poznámky k vydání &lt;/a&gt; &lt;br/&gt; &lt;br/&gt; Chcete si jej stáhnout?</translation>
     </message>
@@ -1706,15 +1704,15 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-461"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-631"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-402"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-570"/>
         <source>Open file</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
         <location line="+1695"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+41"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Otevřená složka</translation>
@@ -1725,14 +1723,14 @@
         <translation>Prozkoumat složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-35"/>
-        <location line="+41"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+6"/>
         <source>Copy folder path</source>
         <translation>Zkopírujte cestu ke složce</translation>
     </message>
     <message>
-        <location line="-37"/>
+        <location line="-30"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Kopírovat absolutní cestu k souboru</translation>
@@ -1750,32 +1748,26 @@
         <translation>Zkopírujte název souboru bez přípony</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+8"/>
         <source>Move file to other folder</source>
-        <translation>Přesuňte soubor do jiné složky</translation>
+        <translation type="vanished">Přesuňte soubor do jiné složky</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-5909"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+5"/>
-        <location line="+611"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+6"/>
+        <location line="+557"/>
         <source>Move to Trash</source>
         <translation>Přesunout do koše</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-607"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+10"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-553"/>
         <source>Delete file</source>
         <translation>Smazat soubor</translation>
     </message>
     <message>
-        <location line="+130"/>
-        <location line="+47"/>
+        <location line="+125"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+132"/>
-        <location line="+18"/>
-        <location line="+33"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+129"/>
         <location line="+42"/>
         <location line="+389"/>
         <location line="+39"/>
@@ -1783,10 +1775,8 @@
         <translation>potvrzení</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-515"/>
         <source>Select the folder to move this file</source>
-        <translation>Vyberte složku, do které chcete tento soubor přesunout</translation>
+        <translation type="vanished">Vyberte složku, do které chcete tento soubor přesunout</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+337"/>
@@ -1899,7 +1889,7 @@
         <translation>Hledání dokončeno | Nalezené soubory: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+435"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-80"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>Nejprve vyberte proces, který se použije na všechny výsledky níže.</translation>
     </message>
@@ -1924,16 +1914,11 @@
         <translation>La suppression d&apos;une liste de dossiers n&apos;est pas disponible.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+12"/>
-        <location line="+3"/>
-        <location line="+30"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-519"/>
-        <location line="+8"/>
-        <location line="+4"/>
-        <location line="+27"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-480"/>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Varování</translation>
@@ -1990,24 +1975,21 @@
         <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková velikost:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Minimální velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximální velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Averttrage &gt;&lt;d&gt; &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt; &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Minimální datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximální datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-73"/>
         <source>Moved to folder:&lt;br/&gt;</source>
-        <translation>Přesunuto do složky:&lt;br/&gt;</translation>
+        <translation type="vanished">Přesunuto do složky:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>This file cannot be moved (offline or not existing).</source>
-        <translation>Tento soubor nelze přesunout (offline nebo neexistující).</translation>
+        <translation type="vanished">Tento soubor nelze přesunout (offline nebo neexistující).</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-53"/>
         <location line="+431"/>
         <source>MOVE</source>
         <translation>PŘESUNOUT</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+33"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-423"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Přesunuto do koše:&lt;br/&gt;</translation>
@@ -2270,27 +2252,23 @@
         <translation>Vybraný seznam ID zařízení</translation>
     </message>
     <message>
-        <location line="-858"/>
         <source>Move
 %1
 to another folder?</source>
-        <translation>Hýbat se
+        <translation type="vanished">Hýbat se
 %1
 do jiné složky?</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation>Soubor %&amp; již existuje. Přepsat to?</translation>
+        <translation type="vanished">Soubor %&amp; již existuje. Přepsat to?</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Cancelled move to folder.</source>
-        <translation>Přesun do složky byl zrušen.</translation>
+        <translation type="vanished">Přesun do složky byl zrušen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-91"/>
-        <location line="+47"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-44"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2304,7 +2282,7 @@ do koše?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;SMAZAT&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+141"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-694"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-4"/>
         <source>MiB</source>
@@ -2381,18 +2359,17 @@ do koše?</translation>
         <translation>Chyba při otevírání výstupního souboru.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+164"/>
         <source>Resolution</source>
-        <translation>Rozlišení</translation>
+        <translation type="vanished">Rozlišení</translation>
     </message>
     <message>
-        <location line="-162"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+2"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-796"/>
         <source>Choose a different name and try again.</source>
         <translation>Vyberte jiné jméno a zkuste to znovu.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-600"/>
+        <location filename="../mainwindow_setup.cpp" line="-244"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>Vyberte adresář pro tuto kolekci</translation>
@@ -2409,7 +2386,7 @@ do koše?</translation>
         <translation>Cesta k souboru</translation>
     </message>
     <message>
-        <location line="+375"/>
+        <location line="+371"/>
         <source>Is Full Device</source>
         <translation>Je plné zařízení</translation>
     </message>
@@ -2421,7 +2398,7 @@ do koše?</translation>
     <message>
         <location filename="../mainwindow.ui" line="-107"/>
         <location line="+2284"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-884"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-880"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Total Size</source>
@@ -2547,7 +2524,7 @@ do koše?</translation>
         <translation>Verze aplikace</translation>
     </message>
     <message>
-        <location line="+361"/>
+        <location line="+357"/>
         <source>field</source>
         <translation>pole</translation>
     </message>
@@ -2601,7 +2578,7 @@ do koše?</translation>
 </translation>
     </message>
     <message>
-        <location line="-1819"/>
+        <location line="-1749"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Byl zaznamenán snímek této sbírky:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogy&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td &gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Počet souborů: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno : &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková velikost souboru: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Úložiště&lt;/b &gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Volné místo v úložišti: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt; &lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celkový úložný prostor: &lt;/td &gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr &gt;&lt;/table&gt;</translation>
     </message>
@@ -2631,7 +2608,7 @@ do koše?</translation>
         <translation>Smazání se nezdařilo</translation>
     </message>
     <message>
-        <location line="+450"/>
+        <location line="+384"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
         <translation>Úložiště s tímto ID již existuje.&lt;b&gt;</translation>
     </message>
@@ -2686,7 +2663,7 @@ do koše?</translation>
         <translation>Datum načtení</translation>
     </message>
     <message>
-        <location line="+794"/>
+        <location line="+790"/>
         <source>Catalog updated: </source>
         <translation>Katalog aktualizován: </translation>
     </message>
@@ -2819,7 +2796,7 @@ do koše?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-202"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-862"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-858"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>ID</source>
@@ -2953,7 +2930,7 @@ do koše?</translation>
         <translation>Složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-427"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Přesunout soubor do koše</translation>
     </message>
@@ -2963,22 +2940,20 @@ do koše?</translation>
         <translation>Kopírovat název složky</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Delete folder</source>
-        <translation>Smazat složku</translation>
+        <translation type="vanished">Smazat složku</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Přesunout složku do koše</translation>
     </message>
     <message>
-        <location line="+118"/>
         <source>Move to folder failed.</source>
-        <translation>Přesunutí do složky se nezdařilo.</translation>
+        <translation type="vanished">Přesunutí do složky se nezdařilo.</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+180"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Vybraný katalog obsahuje více než %1 souborů.&lt;br/&gt;Otevření může trvat několik minut.&lt;br/&gt;Pokračovat?</translation>
     </message>
@@ -2988,7 +2963,7 @@ do koše?</translation>
         <translation>orderValue</translation>
     </message>
     <message>
-        <location line="-495"/>
+        <location line="-436"/>
         <source>Tag this folder</source>
         <translation>Označte tuto složku</translation>
     </message>

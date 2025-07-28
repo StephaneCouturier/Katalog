@@ -102,7 +102,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+894"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
         <source>All Words</source>
         <translation>Alla ord</translation>
     </message>
@@ -128,7 +128,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>File names or Folder paths</source>
         <translation>Filnamn eller mappsökvägar</translation>
     </message>
@@ -136,13 +136,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+750"/>
+        <location line="+689"/>
         <source>File names only</source>
         <translation>Endast filnamn</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>Folder path only</source>
         <translation>Endast mappsökväg</translation>
     </message>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+252"/>
+        <location filename="../mainwindow.cpp" line="+268"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
@@ -193,7 +193,7 @@
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+637"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
         <translation>Storlek</translation>
@@ -235,7 +235,7 @@
         <location line="+81"/>
         <location line="+2965"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1493"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1427"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Typ</translation>
@@ -249,7 +249,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+898"/>
+        <location filename="../mainwindow_setup.cpp" line="+435"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -266,7 +266,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+762"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
         <source>All</source>
         <translation>Alla</translation>
     </message>
@@ -470,8 +470,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-605"/>
-        <location line="+611"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-551"/>
+        <location line="+557"/>
         <source>Move to Trash</source>
         <translation>Flytta till papperskorg</translation>
     </message>
@@ -987,7 +987,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-715"/>
+        <location filename="../mainwindow_setup.cpp" line="-361"/>
         <source>Settings</source>
         <translation>Inställningar</translation>
     </message>
@@ -1011,7 +1011,7 @@
     <message>
         <location line="-428"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation>Dataläge "Minne"</translation>
+        <translation>Dataläge &quot;Minne&quot;</translation>
     </message>
     <message>
         <location line="+121"/>
@@ -1036,7 +1036,7 @@
     <message>
         <location line="-476"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation>Dataläge "SQLite lokal fil"</translation>
+        <translation>Dataläge &quot;SQLite lokal fil&quot;</translation>
     </message>
     <message>
         <location line="-3868"/>
@@ -1153,7 +1153,7 @@
         <location line="+51"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation>Exportera för att konvertera och öppna samlingen i "Fil"-läge.</translation>
+        <translation>Exportera för att konvertera och öppna samlingen i &quot;Fil&quot;-läge.</translation>
     </message>
     <message>
         <location line="-203"/>
@@ -1168,7 +1168,7 @@
     <message>
         <location line="+265"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation>Dataläge "Värdbaserad databas"</translation>
+        <translation>Dataläge &quot;Värdbaserad databas&quot;</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1237,28 +1237,28 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-466"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-650"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-589"/>
         <source>Open file</source>
         <translation>Öppna fil</translation>
     </message>
     <message>
         <location line="+1695"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+41"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Öppna mapp</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-35"/>
-        <location line="+41"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+10"/>
         <source>Copy folder path</source>
         <translation>Kopiera mappsökväg</translation>
     </message>
     <message>
-        <location line="-37"/>
+        <location line="-30"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Kopiera absolut filsökväg</translation>
@@ -1281,7 +1281,7 @@
         <location filename="../mainwindow_tab_device_pr.cpp" line="+689"/>
         <location line="+223"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+437"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+378"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
         <translation>Namn</translation>
@@ -1292,7 +1292,7 @@
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+971"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+910"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -1329,7 +1329,7 @@
     <message>
         <location line="-1401"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+370"/>
+        <location line="+366"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Filtyp</translation>
@@ -1343,7 +1343,7 @@
     </message>
     <message>
         <location line="-3204"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-631"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
         <source>Label</source>
         <translation>Etikett</translation>
     </message>
@@ -1377,7 +1377,7 @@
         <translation>Byggdatum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1435"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1369"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalogen är redan tilldelad denna virtuella enhet.</translation>
     </message>
@@ -1397,7 +1397,7 @@
         <translation>&lt;br/&gt;En ögonblicksbild av denna samling registrerades:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Kataloger&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Antal filer: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total filstorlek: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Lagring&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ledigt lagringsutrymme: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Totalt lagringsutrymme: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (tillagt: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+344"/>
+        <location line="+278"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Det finns redan en katalog med detta namn:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1506,7 +1506,7 @@
         <translation>Filsökväg</translation>
     </message>
     <message>
-        <location line="+359"/>
+        <location line="+355"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Spara ändringar av katalogdefinitionen?&lt;br/&gt;</translation>
     </message>
@@ -1675,7 +1675,7 @@
         <translation>Den valda enheten måste vara en katalog. Försök med ett annat enhets-ID</translation>
     </message>
     <message>
-        <location line="-2877"/>
+        <location line="-2873"/>
         <location line="+223"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
@@ -1763,36 +1763,32 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-343"/>
+        <location line="-282"/>
         <source>Explore folder</source>
         <translation>Utforska mapp</translation>
     </message>
     <message>
-        <location line="+168"/>
         <source>Move
 %1
 to another folder?</source>
-        <translation>Flytta
+        <translation type="vanished">Flytta
 %1
 till en annan mapp?</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation>En fil %&amp; finns redan. Skriv över den?</translation>
+        <translation type="vanished">En fil %&amp; finns redan. Skriv över den?</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Cancelled move to folder.</source>
-        <translation>Avbröt flytt till mapp.</translation>
+        <translation type="vanished">Avbröt flytt till mapp.</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>This file cannot be moved (offline or not existing).</source>
-        <translation>Denna fil kan inte flyttas (offline eller existerar inte).</translation>
+        <translation type="vanished">Denna fil kan inte flyttas (offline eller existerar inte).</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
         <translation>FLYTTA</translation>
@@ -2125,9 +2121,8 @@ till en annan mapp?</translation>
         <translation>Välj ett annat namn och försök igen.</translation>
     </message>
     <message>
-        <location line="+162"/>
         <source>Resolution</source>
-        <translation>Upplösning</translation>
+        <translation type="vanished">Upplösning</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+4834"/>
@@ -2178,7 +2173,7 @@ till en annan mapp?</translation>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+613"/>
+        <location filename="../mainwindow_setup.cpp" line="+257"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Detta är version: v%1 &lt;br/&gt;&lt;br/&gt;En ny version är tillgänglig: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Hitta listan över nya funktioner i &lt;a href=&apos;%3&apos;&gt;Versionsanteckningarna&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vill du ladda ner den?</translation>
     </message>
@@ -2249,7 +2244,7 @@ till en annan mapp?</translation>
         <translation>Sökhistorik</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-609"/>
+        <location filename="../mainwindow_setup.cpp" line="-253"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;På nästa skärm, välj en befintlig samlingsmapp eller skapa en ny.</translation>
     </message>
@@ -2261,7 +2256,7 @@ till en annan mapp?</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation>1- Välj en hel enhet eller katalog, &lt;br/&gt;2- välj alternativ, och &lt;br/&gt;3- klicka 'Skapa'&lt;br/&gt;</translation>
+        <translation>1- Välj en hel enhet eller katalog, &lt;br/&gt;2- välj alternativ, och &lt;br/&gt;3- klicka &apos;Skapa&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-3772"/>
@@ -2321,24 +2316,18 @@ till en annan mapp?</translation>
         <translation>Förladda senast valda kataloger vid uppstart för att påskynda nästa sökning</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-432"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-993"/>
         <source>Move file to other folder</source>
-        <translation>Flytta fil till annan mapp</translation>
+        <translation type="vanished">Flytta fil till annan mapp</translation>
     </message>
     <message>
-        <location line="-28"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Flytta fil till papperskorg</translation>
     </message>
     <message>
-        <location line="+134"/>
-        <location line="+47"/>
+        <location line="+129"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+141"/>
-        <location line="+18"/>
-        <location line="+33"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-801"/>
         <location line="+42"/>
         <location line="+389"/>
         <location line="+39"/>
@@ -2346,35 +2335,26 @@ till en annan mapp?</translation>
         <translation>Bekräftelse</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-515"/>
         <source>Select the folder to move this file</source>
-        <translation>Välj mappen att flytta denna fil till</translation>
+        <translation type="vanished">Välj mappen att flytta denna fil till</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location line="+30"/>
+        <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+18"/>
-        <location line="+8"/>
-        <location line="+4"/>
-        <location line="+27"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-458"/>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Varning</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-73"/>
         <source>Moved to folder:&lt;br/&gt;</source>
-        <translation>Flyttad till mapp:&lt;br/&gt;</translation>
+        <translation type="vanished">Flyttad till mapp:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+28"/>
+        <location line="-41"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-45"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Flyttad till papperskorg:&lt;br/&gt;</translation>
     </message>
@@ -2397,19 +2377,17 @@ till en annan mapp?</translation>
         <translation>Misslyckades att ta bort.</translation>
     </message>
     <message>
-        <location line="-71"/>
         <source>Move to folder failed.</source>
-        <translation>Flytt till mapp misslyckades.</translation>
+        <translation type="vanished">Flytt till mapp misslyckades.</translation>
     </message>
     <message>
-        <location line="-151"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-237"/>
+        <location line="-170"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-183"/>
         <source>Delete file</source>
         <translation>Ta bort fil</translation>
     </message>
     <message>
-        <location line="+131"/>
-        <location line="+47"/>
+        <location line="+126"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2423,7 +2401,7 @@ till papperskorgen?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;TA BORT&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-280"/>
+        <location line="-221"/>
         <source>Tag this folder</source>
         <translation>Tagga denna mapp</translation>
     </message>
@@ -2527,22 +2505,21 @@ till papperskorgen?</translation>
         <translation>Ordna mappar först</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+85"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+78"/>
         <source>Copy folder name</source>
         <translation>Kopiera mappnamn</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Delete folder</source>
-        <translation>Ta bort mapp</translation>
+        <translation type="vanished">Ta bort mapp</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Flytta mapp till papperskorg</translation>
     </message>
     <message>
-        <location line="+393"/>
+        <location line="+352"/>
         <source>orderValue</source>
         <translation>ordningsvärde</translation>
     </message>
@@ -2615,7 +2592,7 @@ till papperskorgen?</translation>
     </message>
     <message>
         <location line="-3237"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+401"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
         <source>Include Metadata</source>
         <translation>Inkludera metadata</translation>
     </message>
@@ -2625,14 +2602,12 @@ till papperskorgen?</translation>
         <translation>Inkludera metadata för mediafiler</translation>
     </message>
     <message>
-        <location line="+3821"/>
         <source>TESTS</source>
-        <translation>TESTER</translation>
+        <translation type="vanished">TESTER</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>TEST MEDIA</source>
-        <translation>TEST MEDIA</translation>
+        <translation type="vanished">TEST MEDIA</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
@@ -2657,7 +2632,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation>Denna applikation av 'Katalog' är i version: </translation>
+        <translation>Denna applikation av &apos;Katalog&apos; är i version: </translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2744,13 +2719,13 @@ till papperskorgen?</translation>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+243"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1005"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+951"/>
         <source>Catalog with results</source>
         <translation>Katalog med resultat</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-874"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-870"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>ID</source>

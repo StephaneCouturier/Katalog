@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Katalog VERSION 2.6 LANGUAGES CXX)
+project(Katalog VERSION 2.7 LANGUAGES CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -153,6 +153,7 @@ set(TS_FILES
     src/translations/Katalog_en_US.ts
     src/translations/Katalog_es_ES.ts
     src/translations/Katalog_fr_FR.ts
+    src/translations/Katalog_fi_FI.ts
     src/translations/Katalog_hi_IN.ts
     src/translations/Katalog_hu_HU.ts
     src/translations/Katalog_it_IT.ts
@@ -163,6 +164,9 @@ set(TS_FILES
     src/translations/Katalog_ro_RO.ts
     src/translations/Katalog_sv_SE.ts
     src/translations/Katalog_zh_CN.ts
+    src/translations/Katalog_nb_NO.ts
+    src/translations/Katalog_sk_SK.ts
+    src/translations/Katalog_si_SI.ts
 )
 
 # Make sure LinguistTools is found (should already be in your find_package)

@@ -62,7 +62,7 @@
     <message>
         <location line="-526"/>
         <location line="+6081"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+567"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+501"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+351"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -71,7 +71,7 @@
     <message>
         <location line="-6052"/>
         <location line="+6601"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+640"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+581"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -126,7 +126,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="+191"/>
+        <location filename="../mainwindow_setup.cpp" line="+82"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -147,7 +147,7 @@
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+316"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1518"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1457"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+95"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -358,7 +358,7 @@
     </message>
     <message>
         <location line="+9276"/>
-        <location filename="../mainwindow.cpp" line="+251"/>
+        <location filename="../mainwindow.cpp" line="+267"/>
         <source>Memory</source>
         <translation>Speicher</translation>
     </message>
@@ -443,7 +443,7 @@
     </message>
     <message>
         <location line="-1947"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>File names or Folder paths</source>
         <translation>Dateinamen oder Ordnerpfade</translation>
     </message>
@@ -451,7 +451,7 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+750"/>
+        <location line="+689"/>
         <source>File names only</source>
         <translation>Nur Dateinamen</translation>
     </message>
@@ -462,7 +462,7 @@
     </message>
     <message>
         <location line="+471"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>Folder path only</source>
         <translation>Nur Ordnerpfad</translation>
     </message>
@@ -600,7 +600,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+707"/>
+        <location filename="../mainwindow_setup.cpp" line="+353"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -617,7 +617,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+762"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
@@ -939,7 +939,7 @@
     <message>
         <location line="-693"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+262"/>
-        <location line="+370"/>
+        <location line="+366"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+317"/>
         <source>File Type</source>
         <translation>Dateityp</translation>
@@ -952,7 +952,7 @@
     <message>
         <location line="-2221"/>
         <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-869"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-865"/>
         <location line="+223"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-5"/>
@@ -1137,13 +1137,13 @@
     </message>
     <message>
         <location line="+49"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1594"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1590"/>
         <source>Include Metadata</source>
         <translation>Metadaten einschließen</translation>
     </message>
     <message>
         <location line="+195"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-633"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-629"/>
         <source>Comment 1</source>
         <translation>Kommentar 1</translation>
     </message>
@@ -1528,17 +1528,15 @@
         <translation>Katalog Colors</translation>
     </message>
     <message>
-        <location line="+139"/>
         <source>TESTS</source>
-        <translation>TESTS</translation>
+        <translation type="vanished">TESTS</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>TEST MEDIA</source>
-        <translation>TEST MEDIA</translation>
+        <translation type="vanished">TEST MEDIA</translation>
     </message>
     <message>
-        <location line="-2773"/>
+        <location line="-2622"/>
         <source>View collection statistics</source>
         <translation>Sammlungsstatistiken anzeigen</translation>
     </message>
@@ -1660,7 +1658,7 @@
         <translation>Laden Sie die Datei neu, in der die Tags gespeichert sind</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-718"/>
+        <location filename="../mainwindow_setup.cpp" line="-364"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Willkommen im Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies scheint der erste Lauf zu sein.&lt;br/&gt;&lt;br/&gt;Die folgenden Einstellungen wurden angewendet:&lt;br/&gt; - Sprache: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Diese können Sie im Reiter %3 ändern.</translation>
     </message>
@@ -1680,7 +1678,7 @@
         <translation>1- Wählen Sie ein ganzes Laufwerk oder Verzeichnis aus, &lt;br/&gt;2- wählen Sie Optionen aus und &lt;br/&gt;3- klicken Sie auf &quot;Erstellen&quot;.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+584"/>
+        <location line="+228"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dies ist Version: v%1 &lt;br/&gt;&lt;br/&gt;Eine neue Version ist verfügbar: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Die Liste der neuen Funktionen finden Sie im &lt;a href=&apos;%3 &apos;&gt;Versionshinweise&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Möchten Sie es herunterladen?</translation>
     </message>
@@ -1706,15 +1704,15 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-16"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-466"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-631"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-570"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
         <location line="+1695"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+41"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Ordner öffnen</translation>
@@ -1725,14 +1723,14 @@
         <translation>Ordner durchsuchen</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-35"/>
-        <location line="+41"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+6"/>
         <source>Copy folder path</source>
         <translation>Ordnerpfad kopieren</translation>
     </message>
     <message>
-        <location line="-37"/>
+        <location line="-30"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Datei absoluten Pfad kopieren</translation>
@@ -1750,32 +1748,26 @@
         <translation>Dateinamen ohne Erweiterung kopieren</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+8"/>
         <source>Move file to other folder</source>
-        <translation>Datei in anderen Ordner verschieben</translation>
+        <translation type="vanished">Datei in anderen Ordner verschieben</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-5909"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+5"/>
-        <location line="+611"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+6"/>
+        <location line="+557"/>
         <source>Move to Trash</source>
         <translation>Ab in den Müll</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-607"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+10"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-553"/>
         <source>Delete file</source>
         <translation>Datei löschen</translation>
     </message>
     <message>
-        <location line="+130"/>
-        <location line="+47"/>
+        <location line="+125"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+132"/>
-        <location line="+18"/>
-        <location line="+33"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+129"/>
         <location line="+42"/>
         <location line="+389"/>
         <location line="+39"/>
@@ -1783,10 +1775,8 @@
         <translation>Bestätigung</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-515"/>
         <source>Select the folder to move this file</source>
-        <translation>Wählen Sie den Ordner aus, um diese Datei zu verschieben</translation>
+        <translation type="vanished">Wählen Sie den Ordner aus, um diese Datei zu verschieben</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+337"/>
@@ -1899,7 +1889,7 @@
         <translation>Suche abgeschlossen | Dateien gefunden: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+435"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-80"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>Wählen Sie unten zunächst einen Prozess aus, der auf alle Ergebnisse angewendet werden soll.</translation>
     </message>
@@ -1924,16 +1914,11 @@
         <translation>La suppression d&apos;une liste de dossiers n&apos;est pas disponible.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+12"/>
-        <location line="+3"/>
-        <location line="+30"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-519"/>
-        <location line="+8"/>
-        <location line="+4"/>
-        <location line="+27"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-480"/>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Warnung</translation>
@@ -1990,24 +1975,21 @@
         <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Gesamtgröße: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mindestgröße: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximale Größe: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Durchschnittsgröße: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt; &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mindestdatum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximales Datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-73"/>
         <source>Moved to folder:&lt;br/&gt;</source>
-        <translation>Verschoben in Ordner:&lt;br/&gt;</translation>
+        <translation type="vanished">Verschoben in Ordner:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>This file cannot be moved (offline or not existing).</source>
-        <translation>Diese Datei kann nicht verschoben werden (offline oder nicht vorhanden).</translation>
+        <translation type="vanished">Diese Datei kann nicht verschoben werden (offline oder nicht vorhanden).</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-53"/>
         <location line="+431"/>
         <source>MOVE</source>
         <translation>UMZUG</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+33"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-423"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>In den Papierkorb verschoben:&lt;br/&gt;</translation>
@@ -2270,27 +2252,23 @@
         <translation>Liste der ausgewählten Geräte-IDs</translation>
     </message>
     <message>
-        <location line="-858"/>
         <source>Move
 %1
 to another folder?</source>
-        <translation>Umzug
+        <translation type="vanished">Umzug
 %1
 in einen anderen Ordner?</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation>Eine Datei %&amp; existiert bereits. Überschreibe es?</translation>
+        <translation type="vanished">Eine Datei %&amp; existiert bereits. Überschreibe es?</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Cancelled move to folder.</source>
-        <translation>Verschieben in Ordner abgebrochen.</translation>
+        <translation type="vanished">Verschieben in Ordner abgebrochen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-91"/>
-        <location line="+47"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-44"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2304,7 +2282,7 @@ in den Papierkorb?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;LÖSCHEN&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+141"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-694"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-4"/>
         <source>MiB</source>
@@ -2381,23 +2359,22 @@ in den Papierkorb?</translation>
         <translation>Fehler beim Öffnen der Ausgabedatei.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+164"/>
         <source>Resolution</source>
-        <translation>Auflösung</translation>
+        <translation type="vanished">Auflösung</translation>
     </message>
     <message>
-        <location line="-162"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+2"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-796"/>
         <source>Choose a different name and try again.</source>
         <translation>Wählen Sie einen anderen Namen und versuchen Sie es erneut.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1618"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1614"/>
         <source>No catalog found.</source>
         <translation>Kein Katalog gefunden.</translation>
     </message>
     <message>
-        <location line="-558"/>
+        <location line="-554"/>
         <source>App Version</source>
         <translation>App Version</translation>
     </message>
@@ -2418,7 +2395,7 @@ in den Papierkorb?</translation>
         <translation>Ausgewählten Katalog zuweisen</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1672"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1606"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Der Katalog ist diesem virtuellen Gerät bereits zugewiesen.</translation>
     </message>
@@ -2428,7 +2405,7 @@ in den Papierkorb?</translation>
         <translation>Möchten Sie die Zuweisung dieses Katalogs zu diesem virtuellen Gerät aufheben?</translation>
     </message>
     <message>
-        <location line="+502"/>
+        <location line="+436"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
         <translation>Es gibt bereits einen Speicher mit dieser ID.&lt;b&gt;</translation>
     </message>
@@ -2483,7 +2460,7 @@ in den Papierkorb?</translation>
         <translation>Datum geladen</translation>
     </message>
     <message>
-        <location line="+794"/>
+        <location line="+790"/>
         <source>Catalog updated: </source>
         <translation>Catalogue mis à jour&#xa0;: </translation>
     </message>
@@ -2585,17 +2562,17 @@ in den Papierkorb?</translation>
         <translation>Das ausgewählte Gerät muss ein Katalog sein. Versuchen Sie es mit einer anderen Geräte-ID</translation>
     </message>
     <message>
-        <location line="-2379"/>
+        <location line="-2375"/>
         <source>File Path</source>
         <translation>Dateipfad</translation>
     </message>
     <message>
-        <location line="-1500"/>
+        <location line="-1434"/>
         <source>Deletion failed</source>
         <translation>Löschen fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="+1859"/>
+        <location line="+1789"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Änderungen an der Definition des Katalogs speichern?&lt;br/&gt;</translation>
     </message>
@@ -2625,14 +2602,14 @@ in den Papierkorb?</translation>
         <translation>Ist vollständiges Gerät</translation>
     </message>
     <message>
-        <location line="-1782"/>
+        <location line="-1712"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Byl zaznamenán snímek této sbírky:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogy&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td &gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Počet souborů: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno : &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková velikost souboru: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Úložiště&lt;/b &gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Volné místo v úložišti: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt; &lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celkový úložný prostor: &lt;/td &gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr &gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-1162"/>
         <location line="+2284"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+908"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+842"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>Total Size</source>
@@ -2753,7 +2730,7 @@ in den Papierkorb?</translation>
         <translation>Wählen Sie eine andere Quelle oder ein anderes Ziel (ein Gerät darf nicht auf sich selbst abgebildet werden).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1020"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1016"/>
         <source>Update all active catalogs</source>
         <translation>Aktualisieren Sie alle aktiven Kataloge</translation>
     </message>
@@ -2813,7 +2790,7 @@ in den Papierkorb?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-202"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-915"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-911"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>ID</source>
@@ -2857,7 +2834,7 @@ in den Papierkorb?</translation>
         <translation>Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-600"/>
+        <location filename="../mainwindow_setup.cpp" line="-244"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>Wählen Sie das Verzeichnis für diese Sammlung</translation>
@@ -2953,7 +2930,7 @@ in den Papierkorb?</translation>
         <translation>von</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-427"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Datei in den Papierkorb verschieben</translation>
     </message>
@@ -2963,22 +2940,20 @@ in den Papierkorb?</translation>
         <translation>Ordnernamen kopieren</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Delete folder</source>
-        <translation>Lösche Ordner</translation>
+        <translation type="vanished">Lösche Ordner</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Ordner in den Papierkorb verschieben</translation>
     </message>
     <message>
-        <location line="+118"/>
         <source>Move to folder failed.</source>
-        <translation>Verschieben in Ordner fehlgeschlagen.</translation>
+        <translation type="vanished">Verschieben in Ordner fehlgeschlagen.</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+180"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Der ausgewählte Katalog enthält mehr als %1 Dateien.&lt;br/&gt;Das Öffnen kann einige Minuten dauern.&lt;br/&gt;Fortfahren?</translation>
     </message>
@@ -2988,7 +2963,7 @@ in den Papierkorb?</translation>
         <translation>orderValue</translation>
     </message>
     <message>
-        <location line="-495"/>
+        <location line="-436"/>
         <source>Tag this folder</source>
         <translation>Markieren Sie diesen Ordner</translation>
     </message>

@@ -35,5 +35,9 @@
         <file>images/flags/dk.png</file>
         <file>images/flags/hu.png</file>
         <file>images/flags/se.png</file>
+        <file>images/flags/no.png</file>
+        <file>images/flags/sk.png</file>
+        <file>images/flags/fi.png</file>
+        <file>images/flags/si.png</file>
     </qresource>
 </RCC>

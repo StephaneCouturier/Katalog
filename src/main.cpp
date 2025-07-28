@@ -76,14 +76,18 @@ int main(int argc, char *argv[])
                                     << "en_US"
                                     << "es_ES"
                                     << "fr_FR"
+                                    << "fi_FI"
                                     << "hi_IN"
                                     << "hu_HU"
                                     << "it_IT"
                                     << "ja_JP"
+                                    << "nb_NO"
                                     << "nl_NL"
                                     << "pl_PL"
                                     << "pt_PT"
                                     << "ro_RO"
+                                    << "sk_SK"
+                                    << "si_SI"
                                     << "sv_SE"
                                     ;
             if ( availableUserLanguages.contains(userLanguage) == false )
