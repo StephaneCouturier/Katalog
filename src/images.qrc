@@ -40,5 +40,6 @@
         <file>images/flags/fi.png</file>
         <file>images/flags/si.png</file>
         <file>images/flags/rs.png</file>
+        <file>images/flags/bg.png</file>
     </qresource>
 </RCC>

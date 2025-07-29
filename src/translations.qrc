@@ -21,5 +21,6 @@
         <file>translations/Katalog_fi_FI.qm</file>
         <file>translations/Katalog_si_SI.qm</file>
         <file>translations/Katalog_sr_RS.qm</file>
+        <file>translations/Katalog_bg_BG.qm</file>
     </qresource>
 </RCC>

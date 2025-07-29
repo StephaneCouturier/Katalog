@@ -34,6 +34,7 @@
 
 // Static language data array - updated syntax for Language class
 const QList<Language::LanguageData> Language::supportedLanguages = {
+    {"bg_BG", "Bulgarian", ":/images/flags/bg.png"},
     {"cz_CZ", "Czech", ":/images/flags/cz.png"},
     {"da_DK", "Danish", ":/images/flags/dk.png"},
     {"de_DE", "German", ":/images/flags/de.png"},

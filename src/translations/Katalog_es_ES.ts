@@ -1967,7 +1967,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+255"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
