@@ -42,16 +42,55 @@ void MainWindow::launchSearch()
     // Set animation cursor before starting
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // For memory mode without development flag, use SearchJobStoppable (default)
-    if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
-        qDebug() << "\n Using SearchJobStoppable for memory mode (default)";
-        launchSearchJobStoppable();
+    qDebug() << "=== launchSearch() called ===";
+
+    if (!searchManager) {
+        qDebug() << "ERROR: SearchManager not initialized";
+        return;
     }
-    // For database mode, use SearchJobStoppable
-    else {
-        qDebug() << "\n Using SearchJobStoppable for database mode";
-        launchSearchJobStoppable();
+
+    // Clear the search view before starting a new search
+    clearSearchResults();
+
+    // Show status bar for Search
+    statusBar()->show();
+
+    // Create SearchJobStoppable
+    SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
+    searchJobStoppable->setDatabaseConnection("defaultConnection");
+
+    // Enable memory mode when in development mode and memory mode**
+    if (collection->databaseMode == "Memory") {
+        qDebug() << "Memory mode: Enabling memory mode for SearchJobStoppable";
+        searchJobStoppable->setMemoryModeEnabled(true);
     }
+
+    connect(searchJobStoppable, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
+
+    currentSearch = searchJobStoppable;
+
+    // Update progress manager with current search for file count display
+    if (searchProgressManager) {
+        searchProgressManager->setCurrentSearch(currentSearch);
+    }
+
+    // Set up basic search parameters
+    sendSearchParametersFromUI(searchJobStoppable);
+
+    setSearchButtonState(SearchButtonState::Running);
+
+    // Update UI for running search (Search button becomes Pause)
+    setSearchStateRunning();
+
+    // Start the search
+    qDebug() << "Starting Search via SearchManager";
+    searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
+
+    searchResultsThrottler->setCurrentSearch(searchJobStoppable);
+    connect(searchJobStoppable, &Search::searchProgress,
+            searchResultsThrottler, &SearchResultsThrottler::onSearchProgress);
+
+    qDebug() << "=== launchSearch() complete ===";
 }
 //----------------------------------------------------------------------
 void MainWindow::setupSearchManager()
@@ -90,59 +129,6 @@ void MainWindow::setupSearchManager()
         QApplication::restoreOverrideCursor();
         QMessageBox::warning(this, tr("Search Error"), error);
     });
-}
-//----------------------------------------------------------------------
-void MainWindow::launchSearchJobStoppable()
-{
-    qDebug() << "=== launchSearchJobStoppable() called ===";
-
-    if (!searchManager) {
-        qDebug() << "ERROR: SearchManager not initialized";
-        return;
-    }
-
-    // Clear the search view before starting a new search
-    clearSearchResults();
-
-    // Show status bar for SearchJobStoppable
-    statusBar()->show();
-
-    // Create SearchJobStoppable
-    SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
-    searchJobStoppable->setDatabaseConnection("defaultConnection");
-
-    // Enable memory mode when in development mode and memory mode**
-    if (collection->databaseMode == "Memory") {
-        qDebug() << "Memory mode: Enabling memory mode for SearchJobStoppable";
-        searchJobStoppable->setMemoryModeEnabled(true);
-    }
-
-    connect(searchJobStoppable, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
-
-    currentSearch = searchJobStoppable;
-
-    // Update progress manager with current search for file count display
-    if (searchProgressManager) {
-        searchProgressManager->setCurrentSearch(currentSearch);
-    }
-
-    // Set up basic search parameters
-    sendSearchParametersFromUI(searchJobStoppable);
-
-    setSearchButtonState(SearchButtonState::Running);
-
-    // Update UI for running search (Search button becomes Pause)
-    setSearchStateRunning();
-
-    // Start the search
-    qDebug() << "Starting SearchJobStoppable via SearchManager";
-    searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
-
-    searchResultsThrottler->setCurrentSearch(searchJobStoppable);
-    connect(searchJobStoppable, &Search::searchProgress,
-            searchResultsThrottler, &SearchResultsThrottler::onSearchProgress);
-
-    qDebug() << "=== launchSearchJobStoppable() complete ===";
 }
 //----------------------------------------------------------------------
 void MainWindow::sendSearchParametersFromUI(Search *search)

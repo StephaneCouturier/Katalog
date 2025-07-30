@@ -504,8 +504,6 @@ class MainWindow : public KXmlGuiWindow
             void updateSearchProgress(int filesProcessed);
             void reportSearchStatistics();
 
-            void launchSearchJobStoppable();
-
             //UI elements
             void on_Search_pushButton_Search_clicked();
             void on_Search_pushButton_Stop_clicked();
