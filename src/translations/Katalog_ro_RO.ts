@@ -59,7 +59,7 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+253"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+239"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
@@ -2843,8 +2843,8 @@ la coșul de gunoi?</translation>
         <translation>Acest grup este necesar pentru a găzdui stocarea și cataloagele.&lt;br/&gt;Nu poate fi șters.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
-        <location line="+337"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-428"/>
+        <location line="+284"/>
         <source>Search Error</source>
         <translation>Eroare de căutare</translation>
     </message>

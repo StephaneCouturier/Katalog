@@ -162,7 +162,7 @@
     </message>
     <message>
         <location line="-8"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+316"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+302"/>
         <source>Catalog ID</source>
         <translation>ID del catálogo</translation>
     </message>
@@ -2456,8 +2456,8 @@ a la papelera?</translation>
         <translation>valorOrden</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
-        <location line="+337"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-428"/>
+        <location line="+284"/>
         <source>Search Error</source>
         <translation>Error de búsqueda</translation>
     </message>

@@ -146,7 +146,7 @@
         <location line="+7000"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-2"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+316"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+302"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1457"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+95"/>
         <source>Date</source>
@@ -1799,8 +1799,8 @@
         <translation>Katalogname</translation>
     </message>
     <message>
-        <location line="-225"/>
-        <location line="+337"/>
+        <location line="-172"/>
+        <location line="+284"/>
         <source>Search Error</source>
         <translation>Suchfehler</translation>
     </message>

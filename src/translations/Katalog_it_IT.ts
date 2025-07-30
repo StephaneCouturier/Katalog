@@ -162,7 +162,7 @@
     </message>
     <message>
         <location line="-8"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+316"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+302"/>
         <source>Catalog ID</source>
         <translation>ID catalogo</translation>
     </message>
@@ -2456,8 +2456,8 @@ nel cestino?</translation>
         <translation>valoreOrdine</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
-        <location line="+337"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-428"/>
+        <location line="+284"/>
         <source>Search Error</source>
         <translation>Errore ricerca</translation>
     </message>
