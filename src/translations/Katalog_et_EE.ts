@@ -1420,7 +1420,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow.cpp" line="+257"/>
+        <location filename="../mainwindow.cpp" line="+260"/>
         <source>Hosted</source>
         <translation>Majutatud</translation>
     </message>

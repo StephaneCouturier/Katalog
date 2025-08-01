@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+256"/>
+        <location filename="../mainwindow.cpp" line="+259"/>
         <source>File</source>
         <translation>Fájl</translation>
     </message>

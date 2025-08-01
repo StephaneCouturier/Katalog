@@ -43,5 +43,6 @@
         <file>images/flags/bg.png</file>
         <file>images/flags/gr.png</file>
         <file>images/flags/ee.png</file>
+        <file>images/flags/lt.png</file>
     </qresource>
 </RCC>
