@@ -163,6 +163,8 @@ set(TS_FILES
     src/translations/Katalog_hu_HU.ts
     src/translations/Katalog_it_IT.ts
     src/translations/Katalog_ja_JP.ts
+    src/translations/Katalog_lt_LT.ts
+    src/translations/Katalog_lv_LV.ts
     src/translations/Katalog_nl_NL.ts
     src/translations/Katalog_nb_NO.ts
     src/translations/Katalog_pl_PL.ts
@@ -173,7 +175,6 @@ set(TS_FILES
     src/translations/Katalog_sk_SK.ts
     src/translations/Katalog_si_SI.ts
     src/translations/Katalog_sr_RS.ts
-    src/translations/Katalog_lt_LT.ts
 )
 
 # Make sure LinguistTools is found (should already be in your find_package)
