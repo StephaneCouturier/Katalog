@@ -402,65 +402,119 @@ copy_qt_plugins() {
     fi
 }
 
+# Copy KF6 icon themes for portable distribution
+copy_kf6_icon_themes() {
+    print_step "Copying KF6 Breeze icon themes for portable use"
+
+    # Find where breeze icons are installed
+    local breeze_icon_paths=(
+        "/usr/share/icons/breeze"
+        "/usr/local/share/icons/breeze"
+        "/opt/kde/share/icons/breeze"
+        "$QT_LIB_DIR/../share/icons/breeze"
+    )
+
+    local breeze_source=""
+    for path in "${breeze_icon_paths[@]}"; do
+        if [ -d "$path" ]; then
+            breeze_source="$path"
+            echo "✅ Found Breeze icons at: $path"
+            break
+        fi
+    done
+
+    if [ -z "$breeze_source" ]; then
+        print_warning "Breeze icon theme not found in standard locations"
+        print_warning "KF6BreezeIcons library will be available but no theme files"
+        return
+    fi
+
+    # Create portable icon structure
+    mkdir -p "$OUTPUT_DIR/share/icons"
+
+    # Copy breeze theme
+    cp -r "$breeze_source" "$OUTPUT_DIR/share/icons/"
+
+    # Also copy breeze-dark if available
+    local breeze_dark_source="${breeze_source%/*}/breeze-dark"
+    if [ -d "$breeze_dark_source" ]; then
+        cp -r "$breeze_dark_source" "$OUTPUT_DIR/share/icons/"
+        echo "✅ Also copied Breeze Dark theme"
+    fi
+
+    # Count icons copied
+    local icon_count=$(find "$OUTPUT_DIR/share/icons/breeze" -name "*.svg" | wc -l)
+    echo "📊 Total Breeze icons copied: $icon_count"
+
+    print_success "KF6 Breeze icon themes copied for portable use"
+}
+
 # Create launcher script
 create_launcher() {
-    print_step "Creating launcher script"
-    
+    print_step "Creating launcher script with KF6 icon support"
+
     local qt_mode=""
     if [ "$USE_SYSTEM_QT" = "true" ]; then
         qt_mode="System Qt Mode"
     else
         qt_mode="Specific Qt Installation"
     fi
-    
-    cat > "$OUTPUT_DIR/Katalog.sh" << EOF
+
+    cat > "$OUTPUT_DIR/Katalog.sh" << 'EOF'
 #!/bin/sh
-# Katalog Portable Launcher - $qt_mode
+# Katalog Portable Launcher with KF6 Icon Support
 
 # Get script directory
-appname=\$(basename "\$0" | sed 's/\.sh$//')
-dirname=\$(dirname "\$0")
-tmp="\${dirname#?}"
+appname=$(basename "$0" | sed 's/\.sh$//')
+dirname=$(dirname "$0")
+tmp="${dirname#?}"
 
 # Set directory name to absolute path
-if [ "\${dirname%\$tmp}" != "/" ]; then
-    dirname="\$PWD/\$dirname"
+if [ "${dirname%$tmp}" != "/" ]; then
+    dirname="$PWD/$dirname"
 fi
 
 # Set up library path
-export LD_LIBRARY_PATH="\$dirname/lib:\$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$dirname/lib:$LD_LIBRARY_PATH"
 
 # Set up Qt plugin path
-export QT_PLUGIN_PATH="\$dirname/plugins:\$QT_PLUGIN_PATH"
+export QT_PLUGIN_PATH="$dirname/plugins:$QT_PLUGIN_PATH"
+
+# Set up icon theme paths for KF6
+export XDG_DATA_DIRS="$dirname/share:$XDG_DATA_DIRS"
 
 # Ensure Qt uses OpenSSL
 export QT_SSL_USE_OPENSSL=1
 
 # Debug info if verbose
-if [ "\$KATALOG_VERBOSE" = "1" ]; then
-    echo "Katalog Portable Launcher - $qt_mode"
+if [ "$KATALOG_VERBOSE" = "1" ]; then
+    echo "Katalog Portable Launcher with KF6 Icon Support"
     echo "================================================="
-    echo "Working directory: \$dirname"
-    echo "Libraries: \$(find "\$dirname/lib" -name "*.so*" -type f | wc -l)"
-    echo "Symlinks: \$(find "\$dirname/lib" -type l | wc -l)"
-    echo "Plugins: \$(find "\$dirname/plugins" -name "*.so" 2>/dev/null | wc -l)"
+    echo "Working directory: $dirname"
+    echo "Libraries: $(find "$dirname/lib" -name "*.so*" -type f | wc -l)"
+    echo "Plugins: $(find "$dirname/plugins" -name "*.so" 2>/dev/null | wc -l)"
     echo ""
-    echo "Qt6 libraries check:"
-    find "\$dirname/lib" -name "libQt6*.so.6" | while read qt_lib; do
-        echo "  • \$(basename "\$qt_lib")"
-    done
-    echo ""
-    echo "XCB Platform library:"
-    if [ -f "\$dirname/lib/libQt6XcbQpa.so.6" ]; then
-        echo "  ✅ libQt6XcbQpa.so.6 found in portable lib"
+    echo "KF6 Icon Support Check:"
+    if [ -f "$dirname/lib/libKF6BreezeIcons.so.6" ]; then
+        echo "  ✅ libKF6BreezeIcons.so.6 found in portable lib"
     else
-        echo "  ❌ libQt6XcbQpa.so.6 NOT found in portable lib"
+        echo "  ❌ libKF6BreezeIcons.so.6 NOT found in portable lib"
     fi
+
+    if [ -d "$dirname/share/icons/breeze" ]; then
+        echo "  ✅ Breeze icon theme found in portable share"
+        icon_count=$(find "$dirname/share/icons/breeze" -name "*.svg" 2>/dev/null | wc -l)
+        echo "  📊 Available icons: $icon_count"
+    else
+        echo "  ❌ Breeze icon theme NOT found in portable share"
+    fi
+
+    echo "  🔍 XDG_DATA_DIRS: $XDG_DATA_DIRS"
     echo ""
     echo "Library dependency check:"
-    if ldd "\$dirname/Katalog" | grep -q "not found"; then
+    if ldd "$dirname/Katalog" | grep -q "not found"; then
         echo "❌ Missing dependencies:"
-        ldd "\$dirname/Katalog" | grep "not found"
+        ldd "$dirname/Katalog" | grep "not found"
     else
         echo "✅ All dependencies satisfied"
     fi
@@ -469,11 +523,11 @@ if [ "\$KATALOG_VERBOSE" = "1" ]; then
 fi
 
 # Run the application
-exec "\$dirname/Katalog" "\$@"
+exec "$dirname/Katalog" "$@"
 EOF
-    
+
     chmod +x "$OUTPUT_DIR/Katalog.sh"
-    print_success "Launcher script created"
+    print_success "Launcher script with KF6 support created"
 }
 
 # Create test script
@@ -640,6 +694,7 @@ main() {
     copy_qt_libraries
     copy_other_dependencies
     copy_qt_plugins
+    copy_kf6_icon_themes
     create_launcher
     create_test_script
     
