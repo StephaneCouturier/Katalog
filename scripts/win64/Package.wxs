@@ -1,0 +1,88 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Katalog" Language="1033" 
+           Manufacturer="Katalog" Version="2.6" 
+           UpgradeCode="4dfe687a-d6dc-4ad4-9d0f-ef7a9db13baa">
+		   
+        <!-- Add icon for the installer and programs list -->
+    <Icon Id="KatalogIcon.exe" SourceFile=".\Katalog_win64_portable\Katalog.exe" />
+    <Property Id="ARPPRODUCTICON" Value="KatalogIcon.exe" />
+	
+    <!-- Define directory structure -->
+    <StandardDirectory Id="ProgramFilesFolder">
+      <Directory Id="INSTALLFOLDER" Name="Katalog">
+               
+        <!-- Main executable in root -->
+		<File Source=".\Katalog_win64_portable\Katalog.exe" />
+		<File Source=".\Katalog_win64_portable\iconv.dll" />
+		<File Source=".\Katalog_win64_portable\icudt76.dll" />
+		<File Source=".\Katalog_win64_portable\icuin76.dll" />
+		<File Source=".\Katalog_win64_portable\icuuc76.dll" />
+		<File Source=".\Katalog_win64_portable\libb2-1.dll" />
+		<File Source=".\Katalog_win64_portable\libbrotlicommon.dll" />
+		<File Source=".\Katalog_win64_portable\libbrotlidec.dll" />
+		<File Source=".\Katalog_win64_portable\libbzip2.dll" />
+		<File Source=".\Katalog_win64_portable\libcrypto-3-x64.dll" />
+		<File Source=".\Katalog_win64_portable\libfreetype-6.dll" />
+		<File Source=".\Katalog_win64_portable\libgcc_s_seh-1.dll" />
+		<File Source=".\Katalog_win64_portable\libgomp-1.dll" />
+		<File Source=".\Katalog_win64_portable\libharfbuzz.dll" />
+		<File Source=".\Katalog_win64_portable\libintl-8.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6Archive.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6BreezeIcons.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6Codecs.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6ColorScheme.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6ConfigCore.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6ConfigGui.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6ConfigWidgets.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6CoreAddons.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6GuiAddons.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6I18n.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6IconThemes.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6IconWidgets.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6ItemViews.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6WidgetsAddons.dll" />
+		<File Source=".\Katalog_win64_portable\libKF6XmlGui.dll" />
+		<File Source=".\Katalog_win64_portable\liblzma-5.dll" />
+		<File Source=".\Katalog_win64_portable\libpcre2-16.dll" />
+		<File Source=".\Katalog_win64_portable\libpng16.dll" />
+		<File Source=".\Katalog_win64_portable\libsqlite.dll" />
+		<File Source=".\Katalog_win64_portable\libstdc++-6.dll" />
+		<File Source=".\Katalog_win64_portable\libwinpthread-1.dll" />
+		<File Source=".\Katalog_win64_portable\libzstd.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Charts.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Core.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Gui.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Multimedia.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Network.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6OpenGL.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6OpenGLWidgets.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6PrintSupport.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Sql.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Widgets.dll" />
+		<File Source=".\Katalog_win64_portable\Qt6Xml.dll" />
+		<File Source=".\Katalog_win64_portable\zlib1.dll" />
+        
+        <!-- platforms subdirectory -->
+        <Directory Id="PlatformsDir" Name="platforms">
+          <File Source=".\Katalog_win64_portable\platforms\qdirect2d.dll" />
+          <File Source=".\Katalog_win64_portable\platforms\qminimal.dll" />
+          <File Source=".\Katalog_win64_portable\platforms\qoffscreen.dll" />
+          <File Source=".\Katalog_win64_portable\platforms\qwindows.dll" />
+        </Directory>
+        
+        <!-- sqldrivers subdirectory -->
+        <Directory Id="SqlDriversDir" Name="sqldrivers">
+          <File Source=".\Katalog_win64_portable\sqldrivers\qsqlite.dll" />
+        </Directory>
+        
+        <!-- tls subdirectory -->
+        <Directory Id="TlsDir" Name="tls">
+          <File Source=".\Katalog_win64_portable\tls\qcertonlybackend.dll" />
+          <File Source=".\Katalog_win64_portable\tls\qopensslbackend.dll" />
+          <File Source=".\Katalog_win64_portable\tls\qschannelbackend.dll" />
+        </Directory>
+        
+      </Directory>
+    </StandardDirectory>
+  </Package>
+</Wix>
