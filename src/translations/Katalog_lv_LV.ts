@@ -59,7 +59,7 @@
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+253"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+239"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
@@ -102,7 +102,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+894"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
         <source>All Words</source>
         <translation>Visi vārdi</translation>
     </message>
@@ -128,7 +128,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>File names or Folder paths</source>
         <translation>Failu nosaukumi vai mapju ceļi</translation>
     </message>
@@ -136,13 +136,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+750"/>
+        <location line="+689"/>
         <source>File names only</source>
         <translation>Tikai failu nosaukumi</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-748"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
         <source>Folder path only</source>
         <translation>Tikai mapju ceļš</translation>
     </message>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+252"/>
+        <location filename="../mainwindow.cpp" line="+259"/>
         <source>File</source>
         <translation>Fails</translation>
     </message>
@@ -193,7 +193,7 @@
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+637"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
         <translation>Izmērs</translation>
@@ -235,7 +235,7 @@
         <location line="+81"/>
         <location line="+2965"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1493"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1427"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tips</translation>
@@ -249,7 +249,7 @@
         <location line="+4"/>
         <location line="+2752"/>
         <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+898"/>
+        <location filename="../mainwindow_setup.cpp" line="+435"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
         <location line="+1"/>
@@ -266,7 +266,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+762"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
         <source>All</source>
         <translation>Visi</translation>
     </message>
@@ -470,8 +470,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-605"/>
-        <location line="+611"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-551"/>
+        <location line="+557"/>
         <source>Move to Trash</source>
         <translation>Pārvietot uz miskasti</translation>
     </message>
@@ -987,7 +987,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-715"/>
+        <location filename="../mainwindow_setup.cpp" line="-361"/>
         <source>Settings</source>
         <translation>Iestatījumi</translation>
     </message>
@@ -1011,7 +1011,7 @@
     <message>
         <location line="-428"/>
         <source>Data mode &quot;Memory&quot;</source>
-        <translation>Datu režīms "Atmiņa"</translation>
+        <translation>Datu režīms &quot;Atmiņa&quot;</translation>
     </message>
     <message>
         <location line="+121"/>
@@ -1036,7 +1036,7 @@
     <message>
         <location line="-476"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
-        <translation>Datu režīms "SQLite lokālais fails"</translation>
+        <translation>Datu režīms &quot;SQLite lokālais fails&quot;</translation>
     </message>
     <message>
         <location line="-3868"/>
@@ -1153,7 +1153,7 @@
         <location line="+51"/>
         <location line="+206"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
-        <translation>Eksportēt, lai konvertētu un atvērtu kolekciju "Faila" režīmā.</translation>
+        <translation>Eksportēt, lai konvertētu un atvērtu kolekciju &quot;Faila&quot; režīmā.</translation>
     </message>
     <message>
         <location line="-203"/>
@@ -1168,7 +1168,7 @@
     <message>
         <location line="+265"/>
         <source>Data mode &quot;Hosted database&quot;</source>
-        <translation>Datu režīms "Servera datubāze"</translation>
+        <translation>Datu režīms &quot;Servera datubāze&quot;</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1237,28 +1237,28 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-466"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-650"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-589"/>
         <source>Open file</source>
         <translation>Atvērt failu</translation>
     </message>
     <message>
         <location line="+1695"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+41"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Atvērt mapi</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-35"/>
-        <location line="+41"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
+        <location line="+34"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+10"/>
         <source>Copy folder path</source>
         <translation>Kopēt mapes ceļu</translation>
     </message>
     <message>
-        <location line="-37"/>
+        <location line="-30"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Kopēt faila absolūto ceļu</translation>
@@ -1281,7 +1281,7 @@
         <location filename="../mainwindow_tab_device_pr.cpp" line="+689"/>
         <location line="+223"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+437"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+378"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
         <translation>Nosaukums</translation>
@@ -1292,7 +1292,7 @@
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+971"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+910"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Datums</translation>
@@ -1329,7 +1329,7 @@
     <message>
         <location line="-1401"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+370"/>
+        <location line="+366"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Faila tips</translation>
@@ -1343,7 +1343,7 @@
     </message>
     <message>
         <location line="-3204"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-631"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
         <source>Label</source>
         <translation>Etiķete</translation>
     </message>
@@ -1377,7 +1377,7 @@
         <translation>Ražošanas datums</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1435"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1369"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalogs jau ir piešķirts šai virtuālajai ierīcei.</translation>
     </message>
@@ -1397,7 +1397,7 @@
         <translation>&lt;br/&gt;Šīs kolekcijas momentuzņēmums tika ierakstīts:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Failu skaits: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pievienoti: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Kopējais failu izmērs: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pievienoti: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Krātuve&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Krātuves brīvā vieta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pievienoti: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Krātuves kopējā vieta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pievienoti: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+344"/>
+        <location line="+278"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Jau eksistē katalogs ar šādu nosaukumu:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1506,7 +1506,7 @@
         <translation>Faila ceļš</translation>
     </message>
     <message>
-        <location line="+359"/>
+        <location line="+355"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Saglabāt izmaiņas kataloga definīcijā?&lt;br/&gt;</translation>
     </message>
@@ -1675,7 +1675,7 @@
         <translation>Izvēlētajai ierīcei jābūt katalogam. Mēģiniet ar citu ierīces ID</translation>
     </message>
     <message>
-        <location line="-2877"/>
+        <location line="-2873"/>
         <location line="+223"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
@@ -1763,36 +1763,12 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-343"/>
+        <location line="-282"/>
         <source>Explore folder</source>
         <translation>Pārlūkot mapi</translation>
     </message>
     <message>
-        <location line="+168"/>
-        <source>Move
-%1
-to another folder?</source>
-        <translation>Pārvietot
-%1
-uz citu mapi?</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation>Fails %&amp; jau eksistē. Pārrakstīt to?</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Cancelled move to folder.</source>
-        <translation>Pārvietošana uz mapi atcelta.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation>Šo failu nevar pārvietot (bezsaistē vai neeksistē).</translation>
-    </message>
-    <message>
-        <location line="+16"/>
+        <location line="+158"/>
         <location line="+431"/>
         <source>MOVE</source>
         <translation>PĀRVIETOT</translation>
@@ -2125,11 +2101,6 @@ uz citu mapi?</translation>
         <translation>Izvēlieties citu nosaukumu un mēģiniet vēlreiz.</translation>
     </message>
     <message>
-        <location line="+162"/>
-        <source>Resolution</source>
-        <translation>Izšķirtspēja</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+4834"/>
         <source>Check at start up</source>
         <translation>Pārbaudīt startēšanas laikā</translation>
@@ -2178,7 +2149,7 @@ uz citu mapi?</translation>
         <translation>Atcelt</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+613"/>
+        <location filename="../mainwindow_setup.cpp" line="+257"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Šī ir versija: v%1 &lt;br/&gt;&lt;br/&gt;Ir pieejama jauna versija: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Atrodiet jauno funkciju sarakstu &lt;a href=&apos;%3&apos;&gt;Laidiena piezīmēs&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vai vēlaties to lejupielādēt?</translation>
     </message>
@@ -2249,7 +2220,7 @@ uz citu mapi?</translation>
         <translation>Meklēšanas vēsture</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-609"/>
+        <location filename="../mainwindow_setup.cpp" line="-253"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;Nākamajā ekrānā izvēlieties esošu kolekcijas mapi vai izveidojiet jaunu.</translation>
     </message>
@@ -2261,7 +2232,7 @@ uz citu mapi?</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation>1- Izvēlieties veselu disku vai direktoriju, &lt;br/&gt;2- izvēlieties opcijas, un &lt;br/&gt;3- noklikšķiniet 'Izveidot'&lt;br/&gt;</translation>
+        <translation>1- Izvēlieties veselu disku vai direktoriju, &lt;br/&gt;2- izvēlieties opcijas, un &lt;br/&gt;3- noklikšķiniet &apos;Izveidot&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-3772"/>
@@ -2321,24 +2292,14 @@ uz citu mapi?</translation>
         <translation>Iepriekš ielādēt pēdējos izvēlētos katalogus startēšanas laikā, lai paātrinātu nākamo meklēšanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-432"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-993"/>
-        <source>Move file to other folder</source>
-        <translation>Pārvietot failu uz citu mapi</translation>
-    </message>
-    <message>
-        <location line="-28"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>Move file to Trash</source>
         <translation>Pārvietot failu uz miskasti</translation>
     </message>
     <message>
-        <location line="+134"/>
-        <location line="+47"/>
+        <location line="+129"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+141"/>
-        <location line="+18"/>
-        <location line="+33"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-801"/>
         <location line="+42"/>
         <location line="+389"/>
         <location line="+39"/>
@@ -2346,35 +2307,18 @@ uz citu mapi?</translation>
         <translation>Apstiprinājums</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-515"/>
-        <source>Select the folder to move this file</source>
-        <translation>Izvēlieties mapi, uz kuru pārvietot šo failu</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location line="+30"/>
+        <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+18"/>
-        <location line="+8"/>
-        <location line="+4"/>
-        <location line="+27"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-458"/>
         <location line="+42"/>
         <source>Warning</source>
         <translation>Brīdinājums</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-73"/>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation>Pārvietots uz mapi:&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+28"/>
+        <location line="-41"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-45"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Pārvietots uz miskasti:&lt;br/&gt;</translation>
     </message>
@@ -2397,19 +2341,13 @@ uz citu mapi?</translation>
         <translation>Dzēšana neizdevās.</translation>
     </message>
     <message>
-        <location line="-71"/>
-        <source>Move to folder failed.</source>
-        <translation>Pārvietošana uz mapi neizdevās.</translation>
-    </message>
-    <message>
-        <location line="-151"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-237"/>
+        <location line="-170"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-183"/>
         <source>Delete file</source>
         <translation>Dzēst failu</translation>
     </message>
     <message>
-        <location line="+131"/>
-        <location line="+47"/>
+        <location line="+126"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2423,7 +2361,7 @@ uz miskasti?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;DZĒST&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-280"/>
+        <location line="-221"/>
         <source>Tag this folder</source>
         <translation>Atzīmēt šo mapi</translation>
     </message>
@@ -2527,22 +2465,17 @@ uz miskasti?</translation>
         <translation>Vispirms kārtot mapes</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+85"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+78"/>
         <source>Copy folder name</source>
         <translation>Kopēt mapes nosaukumu</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Delete folder</source>
-        <translation>Dzēst mapi</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Move folder to Trash</source>
         <translation>Pārvietot mapi uz miskasti</translation>
     </message>
     <message>
-        <location line="+393"/>
+        <location line="+352"/>
         <source>orderValue</source>
         <translation>kārtībasVērtība</translation>
     </message>
@@ -2615,7 +2548,7 @@ uz miskasti?</translation>
     </message>
     <message>
         <location line="-3237"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+401"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
         <source>Include Metadata</source>
         <translation>Iekļaut metadatus</translation>
     </message>
@@ -2623,16 +2556,6 @@ uz miskasti?</translation>
         <location line="+1915"/>
         <source>Include Media files metadata</source>
         <translation>Iekļaut multivides failu metadatus</translation>
-    </message>
-    <message>
-        <location line="+3821"/>
-        <source>TESTS</source>
-        <translation>TESTI</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>TEST MEDIA</source>
-        <translation>TESTA MULTIVIDE</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
@@ -2657,7 +2580,7 @@ uz miskasti?</translation>
     <message>
         <location line="+2"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation>Šī 'Katalog' lietotne ir versijā: </translation>
+        <translation>Šī &apos;Katalog&apos; lietotne ir versijā: </translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2744,13 +2667,13 @@ uz miskasti?</translation>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+243"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1005"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+951"/>
         <source>Catalog with results</source>
         <translation>Katalogs ar rezultātiem</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-874"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-870"/>
         <location line="+223"/>
         <location line="+252"/>
         <source>ID</source>
@@ -2920,8 +2843,8 @@ uz miskasti?</translation>
         <translation>Šī grupa ir nepieciešama krātuvju un katalogu izvietošanai.&lt;br/&gt;To nevar dzēst.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-481"/>
-        <location line="+337"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-428"/>
+        <location line="+284"/>
         <source>Search Error</source>
         <translation>Meklēšanas kļūda</translation>
     </message>

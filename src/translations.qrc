@@ -26,5 +26,7 @@
         <file>translations/Katalog_et_EE.qm</file>
         <file>translations/Katalog_lt_LT.qm</file>
         <file>translations/Katalog_lv_LV.qm</file>
+        <file>translations/Katalog_uk_UA.qm</file>
+        <file>translations/Katalog_hr_HR.qm</file>
     </qresource>
 </RCC>

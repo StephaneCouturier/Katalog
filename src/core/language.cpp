@@ -45,6 +45,7 @@ const QList<Language::LanguageData> Language::supportedLanguages = {
     {"fr_FR", "French", ":/images/flags/fr.png"},
     {"el_GR", "Greek", ":/images/flags/gr.png"},
     {"hi_IN", "Hindi", ":/images/flags/in.png"},
+    {"hr_HR", "Croatian", ":/images/flags/hr.png"},
     {"hu_HU", "Hungarian", ":/images/flags/hu.png"},
     {"it_IT", "Italian", ":/images/flags/it.png"},
     {"ja_JP", "Japanese", ":/images/flags/jp.png"},

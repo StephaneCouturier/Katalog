@@ -176,6 +176,7 @@ set(TS_FILES
     src/translations/Katalog_si_SI.ts
     src/translations/Katalog_sr_RS.ts
     src/translations/Katalog_uk_UA.ts
+    src/translations/Katalog_hr_HR.ts
 )
 
 # Make sure LinguistTools is found (should already be in your find_package)
