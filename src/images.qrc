@@ -47,5 +47,6 @@
         <file>images/flags/lv.png</file>
         <file>images/flags/ua.png</file>
         <file>images/flags/hr.png</file>
+        <file>images/flags/id.png</file>
     </qresource>
 </RCC>
