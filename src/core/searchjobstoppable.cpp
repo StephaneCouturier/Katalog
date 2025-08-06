@@ -269,9 +269,6 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
     // Calculate statistics
     calculateStatistics();
 
-    // Save the search criteria to the search history
-    saveSearchHistoryToTable("defaultConnection");
-
     // Final progress report
     if (shouldContinue()) {
         emit searchProgress(totalFilesProcessed);

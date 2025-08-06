@@ -57,6 +57,9 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
         return;
     }
 
+    // Save search criteria to history immediately when search is initiated
+    searchEngine->saveSearchHistoryToTable("defaultConnection");
+
     m_currentJob = new SearchJob(this);
     m_currentJob->setSearchJobStoppable(searchEngine);
     m_currentJob->setTargetDevice(targetDevice);
