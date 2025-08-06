@@ -154,6 +154,18 @@ class MainWindow : public KXmlGuiWindow
         void cmd_updateAllActive(bool displayReport);
 
     private:
+        void debugIconLoadingDetailed();
+        void testIconSourceTracking();
+        void setupIconThemeWithKF6Test();
+        void testWithoutFallbackResources();
+#ifdef Q_OS_LINUX
+        void setupLinuxIconThemeKF6Test();
+#endif
+#ifdef Q_OS_WIN
+        void setupWindowsIconThemeKF6Test();
+#endif
+
+
         //Global
             //Application version
             QString currentVersion;

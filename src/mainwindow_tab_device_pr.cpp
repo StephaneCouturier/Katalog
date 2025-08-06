@@ -4187,3 +4187,352 @@ void MainWindow::cmd_updateAllActive(bool displayReport)
     qDebug() << "All active catalogs updated";
     qDebug() << "-----------------------------------------------------------------------";
 }
+
+// Add this enhanced diagnostic method to MainWindow class in mainwindow_setup.cpp
+
+void MainWindow::debugIconLoadingDetailed()
+{
+    qDebug() << "=== DETAILED ICON LOADING ANALYSIS ===";
+    qDebug() << "Platform:"
+#ifdef Q_OS_LINUX
+             << "Linux"
+#elif defined(Q_OS_WIN)
+             << "Windows"
+#elif defined(Q_OS_MAC)
+             << "macOS"
+#else
+             << "Other"
+#endif
+        ;
+
+    // Basic icon theme info
+    qDebug() << "Icon theme name:" << QIcon::themeName();
+    qDebug() << "Fallback search paths:" << QIcon::fallbackSearchPaths();
+    qDebug() << "Theme search paths:" << QIcon::themeSearchPaths();
+    qDebug() << "Desktop settings aware:" << QApplication::desktopSettingsAware();
+    qDebug() << "Dark theme detected:" << isDarkTheme();
+
+    // Check if KF6BreezeIcons is available
+    qDebug() << "";
+    qDebug() << "=== KF6 Integration Check ===";
+
+    // Try to load a test icon with different approaches
+    QStringList testIcons = {"folder", "edit-find", "media-optical", "dialog-ok-apply"};
+
+    for (const QString &iconName : testIcons) {
+        qDebug() << "";
+        qDebug() << "Testing icon:" << iconName;
+
+        // Method 1: Standard QIcon::fromTheme (current approach)
+        QIcon standardIcon = QIcon::fromTheme(iconName);
+        qDebug() << "  Standard fromTheme - null:" << standardIcon.isNull()
+                 << "sizes:" << standardIcon.availableSizes().size();
+        if (!standardIcon.isNull()) {
+            qDebug() << "  Available sizes:" << standardIcon.availableSizes();
+            // Try to get the actual file path being used
+            QPixmap pixmap = standardIcon.pixmap(22, 22);
+            qDebug() << "  22x22 pixmap null:" << pixmap.isNull();
+        }
+
+        // Method 2: Test if KF6 theme loading works by temporarily clearing fallbacks
+        QStringList originalFallbacks = QIcon::fallbackSearchPaths();
+        QIcon::setFallbackSearchPaths(QStringList()); // Clear fallbacks temporarily
+
+        // Try with breeze theme name
+        QIcon::setThemeName("breeze");
+        QIcon kf6Icon = QIcon::fromTheme(iconName);
+        qDebug() << "  KF6/Breeze without fallbacks - null:" << kf6Icon.isNull()
+                 << "sizes:" << kf6Icon.availableSizes().size();
+
+        // Try with system theme
+        QIcon::setThemeName(""); // Let system decide
+        QIcon systemIcon = QIcon::fromTheme(iconName);
+        qDebug() << "  System theme without fallbacks - null:" << systemIcon.isNull()
+                 << "sizes:" << systemIcon.availableSizes().size();
+
+        // Restore original settings
+        QIcon::setFallbackSearchPaths(originalFallbacks);
+        setupIconTheme(); // Restore your current setup
+
+        // Method 3: Direct resource check
+        QString lightResource = QString(":/fallback-icons/%1.png").arg(iconName);
+        QString darkResource = QString(":/fallback-icons-dark/%1.png").arg(iconName);
+        qDebug() << "  Light resource exists:" << QFile::exists(lightResource);
+        qDebug() << "  Dark resource exists:" << QFile::exists(darkResource);
+    }
+
+    qDebug() << "";
+    qDebug() << "=== Icon Search Path Analysis ===";
+    QStringList themePaths = QIcon::themeSearchPaths();
+    for (const QString &path : themePaths) {
+        qDebug() << "Theme path:" << path;
+        QDir dir(path);
+        if (dir.exists()) {
+            QStringList themes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+            qDebug() << "  Available themes:" << themes;
+
+            // Check if breeze theme exists
+            if (themes.contains("breeze")) {
+                QString breezePath = path + "/breeze";
+                QDir breezeDir(breezePath);
+                if (breezeDir.exists()) {
+                    QStringList categories = breezeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+                    qDebug() << "  Breeze categories:" << categories;
+                }
+            }
+        } else {
+            qDebug() << "  Path does not exist";
+        }
+    }
+
+    qDebug() << "";
+    qDebug() << "=== Environment Variables ===";
+    qDebug() << "XDG_DATA_DIRS:" << qgetenv("XDG_DATA_DIRS");
+    qDebug() << "XDG_CONFIG_HOME:" << qgetenv("XDG_CONFIG_HOME");
+    qDebug() << "XDG_DATA_HOME:" << qgetenv("XDG_DATA_HOME");
+
+    qDebug() << "=== END DETAILED ANALYSIS ===";
+    qDebug() << "";
+}
+
+// Also add this method to track which actual files are being loaded
+void MainWindow::testIconSourceTracking()
+{
+    qDebug() << "=== ICON SOURCE TRACKING TEST ===";
+
+    // Create a custom icon engine to track loading
+    QStringList testIcons = {"folder", "edit-find", "document-save"};
+
+    for (const QString &iconName : testIcons) {
+        QIcon icon = QIcon::fromTheme(iconName);
+        if (!icon.isNull()) {
+            // Get pixmaps at different sizes to see what's being loaded
+            QPixmap pm16 = icon.pixmap(16, 16);
+            QPixmap pm22 = icon.pixmap(22, 22);
+            QPixmap pm32 = icon.pixmap(32, 32);
+
+            qDebug() << "Icon" << iconName << ":";
+            qDebug() << "  16x16 available:" << !pm16.isNull();
+            qDebug() << "  22x22 available:" << !pm22.isNull();
+            qDebug() << "  32x32 available:" << !pm32.isNull();
+            qDebug() << "  Cachekey:" << QString::number(icon.cacheKey());
+
+            // Try to determine if it's coming from resources
+            // This is a bit hacky but can help identify the source
+            QIcon resourceIcon = QIcon(QString(":/fallback-icons/%1.png").arg(iconName));
+            QIcon resourceIconDark = QIcon(QString(":/fallback-icons-dark/%1.png").arg(iconName));
+
+            bool matchesLight = (icon.cacheKey() == resourceIcon.cacheKey());
+            bool matchesDark = (icon.cacheKey() == resourceIconDark.cacheKey());
+
+            qDebug() << "  Matches light resource:" << matchesLight;
+            qDebug() << "  Matches dark resource:" << matchesDark;
+
+            if (!matchesLight && !matchesDark) {
+                qDebug() << "  *** LIKELY FROM SYSTEM/KF6 ***";
+            } else {
+                qDebug() << "  *** FROM EMBEDDED RESOURCES ***";
+            }
+        }
+    }
+
+    qDebug() << "=== END SOURCE TRACKING ===";
+}
+
+
+
+// Modified setupIconTheme methods to test KF6 icon loading
+// Add these as test methods to MainWindow class
+
+void MainWindow::setupIconThemeWithKF6Test()
+{
+    qDebug() << "=== TESTING KF6 ICON LOADING ===";
+
+#ifdef Q_OS_LINUX
+    setupLinuxIconThemeKF6Test();
+#elif defined(Q_OS_WIN)
+    setupWindowsIconThemeKF6Test();
+#else
+    setupWindowsIconThemeKF6Test();
+#endif
+
+    // Run detailed diagnostics after setup
+    debugIconLoadingDetailed();
+    testIconSourceTracking();
+}
+
+#ifdef Q_OS_LINUX
+void MainWindow::setupLinuxIconThemeKF6Test()
+{
+    qDebug() << "Setting up Linux icon theme with KF6 integration test...";
+
+    // ENABLE KDE icon integration (opposite of current approach)
+    QApplication::setDesktopSettingsAware(true);
+
+    // Let KF6 handle the theme name (don't force empty)
+    // Try different approaches:
+
+    // Approach 1: Let system decide theme
+    qDebug() << "Test 1: System-decided theme";
+    QIcon::setThemeName(""); // Let system decide
+
+    // Clear fallback paths to force KF6/system usage
+    QIcon::setFallbackSearchPaths(QStringList());
+
+    qDebug() << "After clearing fallbacks:";
+    qDebug() << "  Theme name:" << QIcon::themeName();
+    qDebug() << "  Theme paths:" << QIcon::themeSearchPaths();
+
+    // Test if icons load
+    QIcon testIcon1 = QIcon::fromTheme("folder");
+    qDebug() << "  System folder icon loaded:" << !testIcon1.isNull();
+
+    // Approach 2: Explicitly set breeze theme
+    qDebug() << "";
+    qDebug() << "Test 2: Explicit breeze theme";
+    QIcon::setThemeName("breeze");
+
+    QIcon testIcon2 = QIcon::fromTheme("folder");
+    qDebug() << "  Breeze folder icon loaded:" << !testIcon2.isNull();
+
+    // Approach 3: Add minimal fallback only if KF6 fails
+    qDebug() << "";
+    qDebug() << "Test 3: KF6 with minimal fallback";
+
+    if (testIcon2.isNull()) {
+        qDebug() << "  KF6 icons not available, adding fallback";
+        QStringList fallbackPaths;
+        bool darkTheme = isDarkTheme();
+
+        if (darkTheme) {
+            fallbackPaths << ":/fallback-icons-dark";
+        } else {
+            fallbackPaths << ":/fallback-icons";
+        }
+
+        QIcon::setFallbackSearchPaths(fallbackPaths);
+        qDebug() << "  Added fallback paths:" << fallbackPaths;
+    } else {
+        qDebug() << "  KF6 icons working, no fallback needed";
+    }
+
+    qDebug() << "Linux KF6 test setup completed";
+}
+#endif
+
+#ifdef Q_OS_WIN
+void MainWindow::setupWindowsIconThemeKF6Test()
+{
+    qDebug() << "Setting up Windows icon theme with KF6 integration test...";
+
+    // Test if KF6BreezeIcons works on Windows
+    QApplication::setDesktopSettingsAware(true);
+
+    // Try KF6 approach first
+    QIcon::setThemeName("breeze");
+    QIcon::setFallbackSearchPaths(QStringList()); // Clear fallbacks
+
+    qDebug() << "Testing KF6 on Windows:";
+    qDebug() << "  Theme name:" << QIcon::themeName();
+    qDebug() << "  Theme paths:" << QIcon::themeSearchPaths();
+
+    // Test critical icons
+    QStringList testIcons = {"folder", "edit-find", "document-save"};
+    int successCount = 0;
+
+    for (const QString &iconName : testIcons) {
+        QIcon icon = QIcon::fromTheme(iconName);
+        bool loaded = !icon.isNull();
+        if (loaded) successCount++;
+        qDebug() << "  " << iconName << "loaded:" << loaded;
+    }
+
+    qDebug() << "KF6 success rate:" << successCount << "/" << testIcons.size();
+
+    // If KF6 doesn't work well, add fallbacks
+    if (successCount < testIcons.size()) {
+        qDebug() << "Adding fallback paths for Windows";
+
+        QStringList fallbackPaths = QIcon::fallbackSearchPaths();
+        bool darkTheme = isDarkTheme();
+
+        if (darkTheme) {
+            fallbackPaths << ":/fallback-icons-dark";
+        } else {
+            fallbackPaths << ":/fallback-icons";
+        }
+
+        QIcon::setFallbackSearchPaths(fallbackPaths);
+        qDebug() << "Windows KF6 test with fallback completed";
+    } else {
+        qDebug() << "Windows KF6 test - no fallback needed!";
+    }
+}
+#endif
+
+// Safe method to test removing fallback resources
+void MainWindow::testWithoutFallbackResources()
+{
+    qDebug() << "=== TESTING WITHOUT FALLBACK RESOURCES ===";
+
+    // Store original setup
+    QString originalTheme = QIcon::themeName();
+    QStringList originalFallbacks = QIcon::fallbackSearchPaths();
+    bool originalDesktopAware = QApplication::desktopSettingsAware();
+
+    // Test KF6-only setup
+    QApplication::setDesktopSettingsAware(true);
+    QIcon::setThemeName("breeze");
+    QIcon::setFallbackSearchPaths(QStringList()); // Remove all fallbacks
+
+    qDebug() << "Testing icon loading without any fallback resources:";
+
+    // Test all your commonly used icons
+    QStringList criticalIcons = {
+        "folder", "edit-find", "document-save", "document-open", "edit-copy",
+        "edit-paste", "edit-delete", "media-optical", "drive-harddisk",
+        "dialog-ok-apply", "go-up", "go-down", "go-next", "go-previous"
+    };
+
+    int successCount = 0;
+    QStringList failedIcons;
+
+    for (const QString &iconName : criticalIcons) {
+        QIcon icon = QIcon::fromTheme(iconName);
+        bool loaded = !icon.isNull() && !icon.availableSizes().isEmpty();
+
+        if (loaded) {
+            successCount++;
+            qDebug() << "  ✅" << iconName << "- sizes:" << icon.availableSizes();
+        } else {
+            failedIcons << iconName;
+            qDebug() << "  ❌" << iconName << "- FAILED";
+        }
+    }
+
+    qDebug() << "";
+    qDebug() << "RESULTS:";
+    qDebug() << "  Success rate:" << successCount << "/" << criticalIcons.size()
+             << "(" << (100 * successCount / criticalIcons.size()) << "%)";
+
+    if (!failedIcons.isEmpty()) {
+        qDebug() << "  Failed icons:" << failedIcons;
+        qDebug() << "  These would need fallback resources";
+    }
+
+    if (successCount == criticalIcons.size()) {
+        qDebug() << "  🎉 ALL ICONS LOADED FROM KF6! Safe to remove fallback resources.";
+    } else if (successCount >= criticalIcons.size() * 0.8) {
+        qDebug() << "  ⚠️ Most icons work, consider keeping minimal fallback for:" << failedIcons;
+    } else {
+        qDebug() << "  ❌ KF6 icon loading insufficient, keep fallback resources";
+    }
+
+    // Restore original setup
+    QApplication::setDesktopSettingsAware(originalDesktopAware);
+    QIcon::setThemeName(originalTheme);
+    QIcon::setFallbackSearchPaths(originalFallbacks);
+
+    qDebug() << "=== FALLBACK TEST COMPLETED, ORIGINAL SETUP RESTORED ===";
+}
+

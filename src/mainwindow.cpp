@@ -186,7 +186,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
             // Setup icon theme first (platform-specific)
             setupIconTheme();
-
+#ifdef QT_DEBUG
+            debugIconLoadingDetailed();
+            testIconSourceTracking();
+#endif
             //Load custom Katalog stylesheet instead of default theme
             if (themeID == 1) {
                 if (QApplication::palette().color(QPalette::Window).lightness() < 128){
