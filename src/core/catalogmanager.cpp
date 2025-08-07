@@ -126,17 +126,17 @@ void CatalogManager::startUpdateCatalog(Device *device, const QString &databaseM
 
 void CatalogManager::stopOperation()
 {
-    // Placeholder for future stoppable implementation
     if (!m_currentJob) {
         qDebug() << "CatalogManager::stopOperation() called but no operation running";
         return;
     }
 
-    qDebug() << "CatalogManager::stopOperation() - Stop operation requested (not implemented yet)";
-    setStatus("Stop requested - not yet implemented");
+    qDebug() << "=== CatalogManager::stopOperation() - Killing job ===";
+    setStatus("Stopping catalog operation...");
 
-    // TODO: Implement when adding cancellation support
-    // For now, just log the request
+    // Kill the job - this will trigger onJobResult with KilledJobError
+    bool killResult = m_currentJob->kill();
+    qDebug() << "Job kill result:" << killResult;
 }
 
 void CatalogManager::pauseOperation()
@@ -177,42 +177,39 @@ void CatalogManager::onJobResult(KJob *job)
 {
     qDebug() << "=== CatalogManager::onJobResult() START ===";
     qDebug() << "Job completed, error:" << job->error();
+    qDebug() << "Error text:" << job->errorText();
 
     try {
         if (job->error() == KJob::KilledJobError) {
-            qDebug() << "Job was killed";
+            qDebug() << "=== HANDLING KILLED JOB ===";
             setStatus("Catalog operation cancelled");
+            qDebug() << "Status set to cancelled";
+
+            qDebug() << "About to emit catalogOperationCancelled signal...";
             emit catalogOperationCancelled();
+            qDebug() << "catalogOperationCancelled signal emitted";
+
         } else if (job->error()) {
-            qDebug() << "Job had error:" << job->errorString();
+            qDebug() << "=== HANDLING ERROR JOB ===";
             QString errorMsg = QString("Catalog operation failed: %1").arg(job->errorString());
             setStatus(errorMsg);
             emit catalogOperationError(errorMsg);
         } else {
-            qDebug() << "Job completed successfully";
-            // Success
+            qDebug() << "=== HANDLING SUCCESSFUL JOB ===";
+            // Success path...
             QString operationType = (m_currentJob->getOperationType() == CatalogJob::CreateCatalog) ? "creation" : "update";
             setStatus(QString("Catalog %1 completed successfully!").arg(operationType));
-            qDebug() << "About to emit catalogOperationCompleted signal...";
             emit catalogOperationCompleted();
-            qDebug() << "catalogOperationCompleted signal emitted";
         }
 
         qDebug() << "Setting operation running to false...";
         setCatalogOperationRunning(false);
         qDebug() << "Operation running set to false";
 
-        qDebug() << "Setting progress...";
+        // Rest of cleanup...
         setProgress(job->error() ? 0 : 100);
-        qDebug() << "Progress set";
-
-        qDebug() << "Clearing current path...";
         setCurrentPath("");
-        qDebug() << "Current path cleared";
-
-        qDebug() << "Setting paused to false...";
         m_isPaused = false;
-        qDebug() << "Paused set to false";
 
         qDebug() << "About to cleanup job...";
         cleanupJob();
@@ -228,6 +225,7 @@ void CatalogManager::onJobResult(KJob *job)
         //QApplication::restoreOverrideCursor();
     }
 }
+
 void CatalogManager::onJobPercent()
 {
     if (m_currentJob) {

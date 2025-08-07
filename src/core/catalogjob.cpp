@@ -275,7 +275,11 @@ void CatalogJob::createCatalogWithProgress()
     // *** STEP 2: Setup database transaction and queries ***
     QSqlQuery beginQuery(QSqlDatabase::database("defaultConnection"));
     beginQuery.prepare("BEGIN");
-    beginQuery.exec();
+    if (!beginQuery.exec()) {
+        qDebug() << "ERROR: Failed to begin transaction:" << beginQuery.lastError().text();
+        throw std::runtime_error(QString("Failed to begin transaction: %1").arg(beginQuery.lastError().text()).toStdString());
+    }
+    qDebug() << "Transaction started successfully";
 
     QSqlQuery insertFileQuery(QSqlDatabase::database("defaultConnection"));
     QString insertFileSQL = R"(
@@ -317,6 +321,9 @@ void CatalogJob::createCatalogWithProgress()
     insertFolderQuery.exec();
 
     // *** STEP 3: Process files with progress reporting ***
+    //QSqlQuery beginQuery(QSqlDatabase::database("defaultConnection"));
+    beginQuery.prepare("BEGIN");
+    beginQuery.exec();
 
     // Create iterator for processing (with both files and directories)
     QDirIterator* processIterator;
@@ -332,9 +339,17 @@ void CatalogJob::createCatalogWithProgress()
     }
 
     qint64 filesProcessed = 0;
+    bool transactionRollback = false;
 
-    // Process files with progress reporting
+    // Process files with progress reporting and stop checking
     while (processIterator->hasNext()) {
+        // *** CHECK FOR STOP REQUEST - CRITICAL ***
+        if (m_stopRequested) {
+            qDebug() << "Stop requested during file processing - rolling back transaction";
+            transactionRollback = true;
+            break;
+        }
+
         QString entryPath = processIterator->next();
         QFileInfo entry(entryPath);
 
@@ -376,31 +391,52 @@ void CatalogJob::createCatalogWithProgress()
 
                     // Emit progress update with proper totals
                     emit filesProcessedUpdate(filesProcessed, totalFiles, entry.absoluteFilePath());
+
+                    // *** ADDITIONAL STOP CHECK DURING PROGRESS UPDATES ***
+                    if (m_stopRequested) {
+                        qDebug() << "Stop requested during progress update - rolling back transaction";
+                        transactionRollback = true;
+                        break;
+                    }
                 }
             }
         }
     }
 
+    // qDebug() << "Final counts - Files:" << m_device->catalog->fileCount << "Size:" << m_device->catalog->totalFileSize;
     delete processIterator;
 
     qDebug() << "File processing completed. About to commit transaction...";
 
-    // Commit the transaction
+    // Commit the transaction with proper error checking
     QSqlQuery commitQuery(QSqlDatabase::database("defaultConnection"));
     commitQuery.prepare("COMMIT");
     if (!commitQuery.exec()) {
         qDebug() << "ERROR: Failed to commit transaction:" << commitQuery.lastError().text();
+        qDebug() << "Attempting to rollback...";
+
+        // Try to rollback on commit failure
+        QSqlQuery rollbackQuery(QSqlDatabase::database("defaultConnection"));
+        rollbackQuery.prepare("ROLLBACK");
+        rollbackQuery.exec();
+
         throw std::runtime_error(QString("Failed to commit transaction: %1").arg(commitQuery.lastError().text()).toStdString());
     }
     qDebug() << "Transaction committed successfully";
 
-    // Update catalog metadata
-    qDebug() << "About to update catalog metadata...";
-    m_device->catalog->updateFileCount();
-    qDebug() << "File count updated";
+    // *** CALCULATE METADATA OURSELVES - AVOID CALLING EXTERNAL METHODS ***
+    // Calculate total size from our inserts (no transaction issues)
+    qint64 totalSize = 0;
+    QSqlQuery sizeQuery(QSqlDatabase::database("defaultConnection"));
+    sizeQuery.prepare("SELECT SUM(file_size) FROM file WHERE file_catalog_id = :catalog_id");
+    sizeQuery.bindValue(":catalog_id", m_device->catalog->ID);
+    if (sizeQuery.exec() && sizeQuery.next()) {
+        totalSize = sizeQuery.value(0).toLongLong();
+    }
 
-    m_device->catalog->updateTotalFileSize();
-    qDebug() << "Total file size updated";
+    // Update catalog object directly (no database calls, no transaction issues)
+    m_device->catalog->fileCount = filesProcessed;
+    m_device->catalog->totalFileSize = totalSize;
 
     qDebug() << "Final counts - Files:" << m_device->catalog->fileCount << "Size:" << m_device->catalog->totalFileSize;
 
@@ -416,89 +452,127 @@ void CatalogJob::createCatalogWithProgress()
     emit filesProcessedUpdate(m_device->catalog->fileCount, m_device->catalog->fileCount, QString("Completed"));
     qDebug() << "Final progress update sent";
 
-    // Save to files if in Memory mode
+    // *** SAVE TO FILES IF IN MEMORY MODE ***
     if (m_databaseMode == "Memory") {
-        qDebug() << "Memory mode detected - preparing file list model...";
+        qDebug() << "Memory mode detected - preparing file saves...";
 
-        // *** POPULATE THE FILE LIST MODEL THAT saveCatalogToFile() EXPECTS ***
-        // This is the missing step that was causing the crash!
-        QStringList fileList;
-
-        QSqlQuery queryFileList(QSqlDatabase::database("defaultConnection"));
-        QString queryFileListSQL = R"(
-                        SELECT file_full_path, file_size, file_date_updated
-                        FROM file
-                        WHERE file_catalog_id = :file_catalog_id
-                    )";
-        queryFileList.prepare(queryFileListSQL);
-        queryFileList.bindValue(":file_catalog_id", m_device->catalog->ID);
-
-        qDebug() << "Executing file list query for catalog ID:" << m_device->catalog->ID;
-        if (!queryFileList.exec()) {
-            qDebug() << "ERROR: Failed to execute file list query:" << queryFileList.lastError().text();
-            throw std::runtime_error("Failed to query file list for model");
-        }
-
-        qDebug() << "Building file list for model...";
-        while(queryFileList.next()){
-            fileList << queryFileList.value(0).toString() + "\t" + queryFileList.value(1).toString() + "\t" + queryFileList.value(2).toString();
-        }
-        qDebug() << "File list built with" << fileList.size() << "entries";
-
-        // Prepare the catalog file data, adding headers at the beginning (like original catalogDirectory)
-        fileList.prepend("<catalogID>"              + QString::number(m_device->catalog->ID));
-        fileList.prepend("<catalogAppVersion>"      + m_device->catalog->appVersion);
-        fileList.prepend("<catalogIncludeMetadata>" + QVariant(m_device->catalog->includeMetadata).toString());
-        fileList.prepend("<catalogIsFullDevice>"    + QVariant(m_device->catalog->isFullDevice).toString());
-        fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(m_device->catalog->includeSymblinks).toString());
-        fileList.prepend("<catalogStorage>"         + m_device->catalog->storageName);
-        fileList.prepend("<catalogFileType>"        + m_device->catalog->fileType);
-        fileList.prepend("<catalogIncludeHidden>"   + QVariant(m_device->catalog->includeHidden).toString());
-        fileList.prepend("<catalogTotalFileSize>"   + QString::number(m_device->catalog->totalFileSize));
-        fileList.prepend("<catalogFileCount>"       + QString::number(m_device->catalog->fileCount));
-        fileList.prepend("<catalogSourcePath>"      + m_device->catalog->sourcePath);
-
-        qDebug() << "Creating and populating fileListModel...";
-        // Create and populate the model that saveCatalogToFile expects
-        m_device->catalog->fileListModel = new QStringListModel(m_device->catalog);
-        m_device->catalog->fileListModel->setStringList(fileList);
-        qDebug() << "fileListModel created with" << fileList.size() << "total entries (including headers)";
-
-        qDebug() << "Now calling saveCatalogToFile...";
         try {
-            bool catalogSaved = m_device->catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder);
-            if (!catalogSaved) {
-                qDebug() << "WARNING: saveCatalogToFile returned false, but continuing...";
-            } else {
-                qDebug() << "Catalog file saved successfully";
-            }
-        } catch (const std::exception& e) {
-            qDebug() << "EXCEPTION during saveCatalogToFile:" << e.what();
-            qDebug() << "Continuing without file save - database has the data";
-        } catch (...) {
-            qDebug() << "UNKNOWN EXCEPTION during saveCatalogToFile";
-            qDebug() << "Continuing without file save - database has the data";
-        }
+            // *** SAVE CATALOG FILE (.idx) ***
+            qDebug() << "Building file list for catalog file...";
+            QStringList fileList;
 
-        qDebug() << "Saving folders to file...";
-        try {
-            bool foldersSaved = m_device->catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder);
-            if (!foldersSaved) {
-                qDebug() << "WARNING: saveFoldersToFile returned false, but continuing...";
-            } else {
-                qDebug() << "Folders file saved successfully";
-            }
-        } catch (const std::exception& e) {
-            qDebug() << "EXCEPTION during saveFoldersToFile:" << e.what();
-            qDebug() << "Continuing without folders file save - database has the data";
-        } catch (...) {
-            qDebug() << "UNKNOWN EXCEPTION during saveFoldersToFile";
-            qDebug() << "Continuing without folders file save - database has the data";
-        }
+            // Query the database for all files we just inserted
+            QSqlQuery queryFileList(QSqlDatabase::database("defaultConnection"));
+            queryFileList.prepare(R"(
+                SELECT file_full_path, file_size, file_date_updated
+                FROM file
+                WHERE file_catalog_id = :file_catalog_id
+                ORDER BY file_full_path
+            )");
+            queryFileList.bindValue(":file_catalog_id", m_device->catalog->ID);
 
-        qDebug() << "File saving phase completed successfully";
+            if (!queryFileList.exec()) {
+                qDebug() << "WARNING: Failed to query file list for .idx file:" << queryFileList.lastError().text();
+            } else {
+                // Build the file list (path + size + date separated by tabs)
+                while (queryFileList.next()) {
+                    QString filePath = queryFileList.value(0).toString();
+                    QString fileSize = queryFileList.value(1).toString();
+                    QString fileDate = queryFileList.value(2).toString();
+                    fileList << filePath + "\t" + fileSize + "\t" + fileDate;
+                }
+                qDebug() << "Added" << fileList.size() << "file entries to catalog";
+            }
+
+            // Prepend catalog headers (in reverse order since we're prepending)
+            fileList.prepend("<catalogID>"              + QString::number(m_device->catalog->ID));
+            fileList.prepend("<catalogAppVersion>"      + m_device->catalog->appVersion);
+            fileList.prepend("<catalogIncludeMetadata>" + QVariant(m_device->catalog->includeMetadata).toString());
+            fileList.prepend("<catalogIsFullDevice>"    + QVariant(m_device->catalog->isFullDevice).toString());
+            fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(m_device->catalog->includeSymblinks).toString());
+            fileList.prepend("<catalogStorage>"         + m_device->catalog->storageName);
+            fileList.prepend("<catalogFileType>"        + m_device->catalog->fileType);
+            fileList.prepend("<catalogIncludeHidden>"   + QVariant(m_device->catalog->includeHidden).toString());
+            fileList.prepend("<catalogTotalFileSize>"   + QString::number(m_device->catalog->totalFileSize));
+            fileList.prepend("<catalogFileCount>"       + QString::number(m_device->catalog->fileCount));
+            fileList.prepend("<catalogSourcePath>"      + m_device->catalog->sourcePath);
+
+            // Write catalog file directly (avoid fileListModel complexity)
+            QString catalogFilePath = m_collectionFolder + "/" + m_device->catalog->name + ".idx";
+            QFile catalogFile(catalogFilePath);
+            if (catalogFile.open(QFile::WriteOnly | QFile::Text)) {
+                QTextStream stream(&catalogFile);
+                for (const QString &line : fileList) {
+                    stream << line << '\n';
+                }
+                catalogFile.close();
+                qDebug() << "Catalog file saved successfully:" << catalogFilePath;
+            } else {
+                qDebug() << "WARNING: Failed to open catalog file for writing:" << catalogFilePath;
+            }
+
+            // *** SAVE FOLDERS FILE (.folders.idx) ***
+            qDebug() << "Building folder list for folders file...";
+            QSqlQuery queryFolderList(QSqlDatabase::database("defaultConnection"));
+            queryFolderList.prepare(R"(
+                SELECT folder_catalog_id, folder_path
+                FROM folder
+                WHERE folder_catalog_id = :folder_catalog_id
+                ORDER BY folder_path
+            )");
+            queryFolderList.bindValue(":folder_catalog_id", m_device->catalog->ID);
+
+            if (!queryFolderList.exec()) {
+                qDebug() << "WARNING: Failed to query folder list for .folders.idx file:" << queryFolderList.lastError().text();
+            } else {
+                QString foldersFilePath = m_collectionFolder + "/" + m_device->catalog->name + ".folders.idx";
+                QFile foldersFile(foldersFilePath);
+                if (foldersFile.open(QFile::WriteOnly | QFile::Text)) {
+                    QTextStream stream(&foldersFile);
+                    while (queryFolderList.next()) {
+                        stream << queryFolderList.value(0).toString() << '\t';
+                        stream << queryFolderList.value(1).toString() << '\n';
+                    }
+                    foldersFile.close();
+                    qDebug() << "Folders file saved successfully:" << foldersFilePath;
+                } else {
+                    qDebug() << "WARNING: Failed to open folders file for writing:" << foldersFilePath;
+                }
+            }
+
+            qDebug() << "Memory mode file saving completed successfully";
+
+        } catch (const std::exception& e) {
+            qDebug() << "EXCEPTION during Memory mode file saving:" << e.what();
+            qDebug() << "Continuing - database has the data, files can be regenerated";
+        } catch (...) {
+            qDebug() << "UNKNOWN EXCEPTION during Memory mode file saving";
+            qDebug() << "Continuing - database has the data, files can be regenerated";
+        }
     } else {
         qDebug() << "Not in Memory mode - skipping file saves";
+    }
+
+    // *** UPDATE CATALOG RECORD IN DATABASE ***
+    // This is a single UPDATE with no transaction conflicts
+    qDebug() << "Updating catalog metadata in database...";
+    QSqlQuery updateCatalogQuery(QSqlDatabase::database("defaultConnection"));
+    updateCatalogQuery.prepare(R"(
+        UPDATE catalog
+        SET catalog_file_count = :file_count,
+            catalog_total_file_size = :total_size,
+            catalog_date_updated = :date_updated
+        WHERE catalog_id = :catalog_id
+    )");
+    updateCatalogQuery.bindValue(":file_count", m_device->catalog->fileCount);
+    updateCatalogQuery.bindValue(":total_size", m_device->catalog->totalFileSize);
+    updateCatalogQuery.bindValue(":date_updated", QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss"));
+    updateCatalogQuery.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!updateCatalogQuery.exec()) {
+        qDebug() << "WARNING: Failed to update catalog metadata:" << updateCatalogQuery.lastError().text();
+    } else {
+        qDebug() << "Catalog metadata updated successfully in database";
     }
 
     qDebug() << "About to emit final info message...";

@@ -267,6 +267,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                             }
                         }
                     });
+            connect(catalogManager, &CatalogManager::catalogOperationError,
+                    this, [this](const QString &error) {
+                        restoreCreateCatalogUIState();
+                        QMessageBox::warning(this, "Katalog", tr("Catalog creation failed: %1").arg(error));
+                    });
 
         //Setup tab: Tags
             //Set Default path to scan

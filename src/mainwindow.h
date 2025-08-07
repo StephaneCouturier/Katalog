@@ -347,7 +347,7 @@ class MainWindow : public KXmlGuiWindow
             void createCatalog();
             void loadStorageList();
             void onCatalogOperationCompleted();
-
+            void restoreCreateCatalogUIState();
         //TAB: Storage
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;

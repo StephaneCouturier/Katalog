@@ -197,16 +197,24 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_Stop_clicked()
     {
-        //Stop the cataloging process
+        qDebug() << "=== Create Stop button clicked ===";
+        qDebug() << "Before stop - CatalogManager exists:" << (catalogManager != nullptr);
+
         if (catalogManager) {
-            catalogManager->stopOperation();
-            qDebug() << "Catalog creation stopped by user.";
-        } else {
-            qDebug() << "No catalogManager instance to stop.";
+            qDebug() << "Before stop - Catalog operation running:" << catalogManager->catalogOperationRunning();
         }
 
-        //Change back mouse cursor
-        QApplication::restoreOverrideCursor();
+        // Stop any running catalog operation
+        if (catalogManager && catalogManager->catalogOperationRunning()) {
+            qDebug() << "Stopping active catalog operation via CatalogManager";
+            catalogManager->stopOperation();
+        } else {
+            qDebug() << "No active catalog operation, but user clicked Stop - just reset buttons";
+            // Could add button state management here if needed
+        }
+
+        qDebug() << "=== Create Stop button clicked complete ===";
+        restoreCreateCatalogUIState();
     }
 
 //Methods-----------------------------------------------------------------------
@@ -251,10 +259,12 @@
         // Basic validation (like existing createCatalog method)
         if (ui->Create_lineEdit_NewCatalogName->text().isEmpty()) {
             QMessageBox::warning(this, "Katalog", tr("Provide a name for this new catalog."));
+            restoreCreateCatalogUIState();
             return;
         }
         if (ui->Create_lineEdit_NewCatalogPath->text().isEmpty()) {
             QMessageBox::warning(this, "Katalog", tr("Provide a path for this new catalog."));
+            restoreCreateCatalogUIState();
             return;
         }
 
@@ -262,6 +272,7 @@
         QDir sourceDir(ui->Create_lineEdit_NewCatalogPath->text());
         if (!sourceDir.exists()) {
             QMessageBox::warning(this, "Katalog", tr("Source directory does not exist."));
+            restoreCreateCatalogUIState();
             return;
         }
 
@@ -270,6 +281,7 @@
                                                                       tr("The selected directory is empty. Do you want to create an empty catalog?"),
                                                                       QMessageBox::Yes | QMessageBox::No);
             if (reply == QMessageBox::No) {
+                restoreCreateCatalogUIState();
                 return; // User cancelled - no crash!
             }
         }
@@ -285,6 +297,7 @@
             QMessageBox::warning(this, "Katalog",
                                  tr("There is already a catalog with this name: %1").arg(newDevice->name));
             delete newDevice;
+            restoreCreateCatalogUIState();
             return;
         }
 
@@ -333,8 +346,6 @@
 
         //Change back mouse cursor
         QApplication::restoreOverrideCursor();
-        ui->Create_pushButton_CreateCatalog->setEnabled(true);
-        ui->Create_pushButton_Stop->setEnabled(false);
     }
     //----------------------------------------------------------------------
     void MainWindow::updateStatusBarFromCatalogManager()
@@ -405,91 +416,172 @@
     {
         qDebug() << "onCatalogOperationCompleted() called";
 
-        // Get the device that was just processed
-        Device* completedDevice = catalogManager->getCurrentDevice();
-        if (!completedDevice) {
-            qDebug() << "No device found in completed operation";
-            QApplication::restoreOverrideCursor();
-            return;
+        try {
+            // Get the device that was just processed - but validate it immediately
+            Device* completedDevice = catalogManager->getCurrentDevice();
+            if (!completedDevice) {
+                qDebug() << "ERROR: No device found in completed operation";
+                QApplication::restoreOverrideCursor();
+                return;
+            }
+
+            // *** SAFETY: Copy device data immediately to avoid pointer issues ***
+            // Create a safe copy of the device data before any cleanup happens
+            QString deviceName = completedDevice->name;
+            QString devicePath = completedDevice->path;
+            QString deviceType = completedDevice->type;
+            qint64 fileCount = completedDevice->catalog ? completedDevice->catalog->fileCount : 0;
+            qint64 totalFileSize = completedDevice->catalog ? completedDevice->catalog->totalFileSize : 0;
+            int deviceID = completedDevice->ID;
+
+            qDebug() << "Device data copied safely - Name:" << deviceName << "Files:" << fileCount;
+
+            // Update device statistics from the catalog (if catalog exists)
+            if (completedDevice->catalog) {
+                completedDevice->totalFileCount = fileCount;
+                completedDevice->totalFileSize = totalFileSize;
+                completedDevice->dateTimeUpdated = QDateTime::currentDateTime();
+            }
+
+            // Build list of process results
+            QList<qint64> resultList;
+            resultList << 1; // [0] Success code
+            resultList << fileCount; // [1] New file count
+            resultList << fileCount; // [2] Delta file count (all files are new for create)
+            resultList << totalFileSize; // [3] New total file size
+            resultList << totalFileSize; // [4] Delta total file size (all size is new for create)
+            resultList << 1; // [5] Updated catalogs count
+            resultList << 0; // [6] Skipped catalogs count
+            resultList << 0; // [7] Storage success code (0 = not updated)
+            resultList << 0; // [8] Used space
+            resultList << 0; // [9] Delta used space
+            resultList << 0; // [10] Free space
+            resultList << 0; // [11] Delta free space
+            resultList << 0; // [12] Total space
+            resultList << 0; // [13] Delta total space
+
+            qDebug() << "Calling reportAllUpdates with list:" << resultList;
+            qDebug() << "List size:" << resultList.size();
+
+            // *** SAFETY: Call reportAllUpdates with proper error handling ***
+            bool updateResult = false;
+            try {
+                updateResult = reportAllUpdates(completedDevice, resultList, "create");
+                qDebug() << "reportAllUpdates completed successfully, result:" << updateResult;
+            } catch (const std::exception& e) {
+                qDebug() << "EXCEPTION in reportAllUpdates:" << e.what();
+                updateResult = false; // Treat as failure but continue
+            } catch (...) {
+                qDebug() << "UNKNOWN EXCEPTION in reportAllUpdates";
+                updateResult = false; // Treat as failure but continue
+            }
+
+            // *** SAFETY: Only continue with post-processing if device is still valid ***
+            if (updateResult && completedDevice && completedDevice->catalog) {
+                qDebug() << "Processing post-completion tasks...";
+
+                try {
+                    qDebug() << "Step 1: About to call completedDevice->saveDevice()";
+                    completedDevice->saveDevice();
+                    qDebug() << "Step 1: completedDevice->saveDevice() completed";
+
+                    qDebug() << "Step 2: About to call collection->saveDeviceTableToFile()";
+                    collection->saveDeviceTableToFile();
+                    qDebug() << "Step 2: collection->saveDeviceTableToFile() completed";
+
+                    // *** SKIP FILE SAVES - Already done in createCatalogWithProgress() ***
+                    qDebug() << "Step 3: Skipping catalog file saves (already completed in createCatalogWithProgress)";
+                    // NOTE: We don't call saveCatalogToFile() or saveFoldersToFile() here because:
+                    // 1. They were already handled properly in createCatalogWithProgress()
+                    // 2. Calling them again causes crashes due to fileListModel state issues
+                    // 3. The files are already written successfully to disk
+
+                    qDebug() << "Step 4: About to update catalog loaded version";
+                    QDateTime emptyDateTime = QDateTime::currentDateTime();
+                    completedDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
+                    qDebug() << "Step 4: Catalog loaded version updated";
+
+                    qDebug() << "Step 5: About to call collection->saveStatiticsTableToFile()";
+                    collection->saveStatiticsTableToFile();
+                    qDebug() << "Step 5: saveStatiticsTableToFile completed";
+
+                    qDebug() << "Step 6: About to refresh UI - refreshDifferencesCatalogSelection()";
+                    refreshDifferencesCatalogSelection();
+                    qDebug() << "Step 6: refreshDifferencesCatalogSelection completed";
+
+                    qDebug() << "Step 7: About to call updateAllDeviceActive()";
+                    updateAllDeviceActive();
+                    qDebug() << "Step 7: updateAllDeviceActive completed";
+
+                    qDebug() << "Step 8: About to call loadDevicesView(\"\")";
+                    loadDevicesView("");
+                    qDebug() << "Step 8: loadDevicesView completed";
+
+                    qDebug() << "Step 9: About to restore selected catalog";
+                    ui->Filters_label_DisplayCatalog->setText(deviceName);
+                    selectedDevice->ID = deviceID;
+                    selectedDevice->loadDevice("defaultConnection");
+                    qDebug() << "Step 9: Selected catalog restored";
+
+                    qDebug() << "Step 10: About to refresh filter tree";
+                    collection->loadDeviceFileToTable();
+                    qDebug() << "Step 10a: loadDeviceFileToTable completed";
+
+                    loadDevicesTreeToModel("Filters");
+                    qDebug() << "Step 10b: loadDevicesTreeToModel completed";
+
+                    loadDevicesView("");
+                    qDebug() << "Step 10c: second loadDevicesView completed";
+
+                    qDebug() << "Step 11: About to change tab and disable buttons";
+                    ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
+                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+                    qDebug() << "Step 11: Tab changed and buttons disabled";
+
+                    qDebug() << "Post-completion tasks completed successfully";
+
+                } catch (const std::exception& e) {
+                    qDebug() << "EXCEPTION in post-completion tasks:" << e.what();
+                    // Continue anyway - the catalog was created successfully
+                } catch (...) {
+                    qDebug() << "UNKNOWN EXCEPTION in post-completion tasks";
+                    // Continue anyway - the catalog was created successfully
+                }
+
+            } else {
+                qDebug() << "Skipping post-completion tasks due to failure or invalid device";
+
+                // Handle failure case - but only if device is still valid
+                if (completedDevice) {
+                    try {
+                        DeviceUIWrapper::deleteDeviceWithUI(completedDevice, false);
+                        loadDevicesView("");
+                    } catch (...) {
+                        qDebug() << "Exception during cleanup of failed catalog";
+                    }
+                }
+            }
+
+            // Always restore cursor, regardless of success/failure
+            //QApplication::restoreOverrideCursor();
+            qDebug() << "Catalog creation completion handler finished successfully";
+
+        } catch (const std::exception& e) {
+            qDebug() << "EXCEPTION in onCatalogOperationCompleted():" << e.what();
+            //QApplication::restoreOverrideCursor();
+        } catch (...) {
+            qDebug() << "UNKNOWN EXCEPTION in onCatalogOperationCompleted()";
+            //QApplication::restoreOverrideCursor();
         }
 
-        // Update device statistics from the catalog
-        completedDevice->totalFileCount = completedDevice->catalog->fileCount;
-        completedDevice->totalFileSize = completedDevice->catalog->totalFileSize;
-        completedDevice->dateTimeUpdated = QDateTime::currentDateTime();
-
-        // Build list of process results based on the pattern from DeviceUIWrapper::updateDeviceWithUI
-        QList<qint64> resultList;
-
-        // Catalog update data (indices 0-6)
-        resultList << 1; // [0] Success code
-        resultList << completedDevice->catalog->fileCount; // [1] New file count
-        resultList << completedDevice->catalog->fileCount; // [2] Delta file count (all files are new for create)
-        resultList << completedDevice->catalog->totalFileSize; // [3] New total file size
-        resultList << completedDevice->catalog->totalFileSize; // [4] Delta total file size (all size is new for create)
-        resultList << 1; // [5] Updated catalogs count (we updated 1 catalog)
-        resultList << 0; // [6] Skipped catalogs count (we skipped 0 catalogs)
-
-        // Storage update data (indices 7-13) - using zeros since we don't have storage update
-        resultList << 0; // [7] Storage success code (0 = not updated)
-        resultList << 0; // [8] Used space
-        resultList << 0; // [9] Delta used space
-        resultList << 0; // [10] Free space
-        resultList << 0; // [11] Delta free space
-        resultList << 0; // [12] Total space
-        resultList << 0; // [13] Delta total space
-
-        qDebug() << "Calling reportAllUpdates with list:" << resultList;
-        qDebug() << "List size:" << resultList.size();
-
-        // Use the reportAllUpdates for consistency
-        bool updateResult = reportAllUpdates(completedDevice, resultList, "create");
-
-        if (updateResult == true) {
-            // Save device data (since reportAllUpdates doesn't do this)
-            completedDevice->saveDevice();
-
-            // Save data to files (exactly like original createCatalog)
-            collection->saveDeviceTableToFile();
-            completedDevice->catalog->saveCatalogToFile(collection->databaseMode, collection->folder);
-            completedDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->folder);
-
-            // Update the new catalog loaded version (exactly like original)
-            QDateTime emptyDateTime = *new QDateTime;
-            completedDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
-
-            // Save statistics
-            collection->saveStatiticsTableToFile();
-
-            // Refresh data and UI (exactly like original createCatalog)
-            refreshDifferencesCatalogSelection();
-            updateAllDeviceActive();
-            loadDevicesView("");
-
-            // Restore selected catalog
-            ui->Filters_label_DisplayCatalog->setText(completedDevice->name);
-            selectedDevice->ID = completedDevice->ID;
-            selectedDevice->loadDevice("defaultConnection");
-
-            // Refresh filter tree
-            collection->loadDeviceFileToTable();
-            loadDevicesTreeToModel("Filters");
-            loadDevicesView("");
-
-            // Change tab to show the result of the catalog creation
-            ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
-
-            // Disable buttons
-            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-        } else {
-            // Handle failure case (like original createCatalog)
-            DeviceUIWrapper::deleteDeviceWithUI(completedDevice, false);
-            loadDevicesView("");
-        }
-
-        // Change back mouse cursor (like original createCatalog)
-        QApplication::restoreOverrideCursor();
-
-        qDebug() << "Catalog creation completed successfully!";
+        restoreCreateCatalogUIState();
     }
     //----------------------------------------------------------------------
+    void MainWindow::restoreCreateCatalogUIState()
+    {
+        // Restore UI to idle state
+        QApplication::restoreOverrideCursor();
+        ui->Create_pushButton_CreateCatalog->setEnabled(true);
+        ui->Create_pushButton_Stop->setEnabled(false);
+        qDebug() << "Create catalog UI state restored to idle";
+    }
