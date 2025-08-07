@@ -208,13 +208,20 @@
         if (catalogManager && catalogManager->catalogOperationRunning()) {
             qDebug() << "Stopping active catalog operation via CatalogManager";
             catalogManager->stopOperation();
+
+            // IMMEDIATE UI FEEDBACK: Just disable the stop button to show it was clicked
+            ui->Create_pushButton_Stop->setEnabled(false);
+
+            // DON'T restore full UI state here - let the cancelled signal handler do it
+            // restoreCreateCatalogUIState(); // ← REMOVE THIS LINE
+
         } else {
             qDebug() << "No active catalog operation, but user clicked Stop - just reset buttons";
-            // Could add button state management here if needed
+            restoreCreateCatalogUIState(); // Only restore if no operation was running
         }
 
         qDebug() << "=== Create Stop button clicked complete ===";
-        restoreCreateCatalogUIState();
+        // restoreCreateCatalogUIState(); // ← REMOVE THIS LINE TOO
     }
 
 //Methods-----------------------------------------------------------------------

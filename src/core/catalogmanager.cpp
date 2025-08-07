@@ -134,9 +134,34 @@ void CatalogManager::stopOperation()
     qDebug() << "=== CatalogManager::stopOperation() - Killing job ===";
     setStatus("Stopping catalog operation...");
 
-    // Kill the job - this will trigger onJobResult with KilledJobError
+    // CRITICAL: Disconnect signals FIRST to prevent any queued signals from being processed
+    qDebug() << "Disconnecting all signals from current job...";
+    disconnect(m_currentJob, nullptr, this, nullptr);
+
+    // Kill the job
+    qDebug() << "Calling m_currentJob->kill()";
     bool killResult = m_currentJob->kill();
     qDebug() << "Job kill result:" << killResult;
+
+    // IMMEDIATE CLEANUP: Don't wait for onJobResult() - do it now
+    qDebug() << "Force immediate cleanup after kill...";
+    setCatalogOperationRunning(false);
+    setProgress(0);
+    setCurrentPath("");
+    m_isPaused = false;
+    setStatus("Catalog operation cancelled");
+
+    // Clean up job immediately
+    if (m_currentJob) {
+        m_currentJob->deleteLater();
+        m_currentJob = nullptr;
+        qDebug() << "Forced cleanup complete";
+    }
+
+    // Emit the cancelled signal directly
+    qDebug() << "Emitting catalogOperationCancelled signal...";
+    emit catalogOperationCancelled();
+    qDebug() << "=== CatalogManager::stopOperation() complete ===";
 }
 
 void CatalogManager::pauseOperation()
@@ -176,6 +201,14 @@ Device* CatalogManager::getCurrentDevice() const
 void CatalogManager::onJobResult(KJob *job)
 {
     qDebug() << "=== CatalogManager::onJobResult() START ===";
+
+    // Check if job was already cleaned up by stopOperation()
+    if (!m_currentJob) {
+        qDebug() << "Job already cleaned up by stopOperation() - ignoring result";
+        qDebug() << "=== CatalogManager::onJobResult() COMPLETED (early exit) ===";
+        return;
+    }
+
     qDebug() << "Job completed, error:" << job->error();
     qDebug() << "Error text:" << job->errorText();
 
@@ -183,12 +216,7 @@ void CatalogManager::onJobResult(KJob *job)
         if (job->error() == KJob::KilledJobError) {
             qDebug() << "=== HANDLING KILLED JOB ===";
             setStatus("Catalog operation cancelled");
-            qDebug() << "Status set to cancelled";
-
-            qDebug() << "About to emit catalogOperationCancelled signal...";
             emit catalogOperationCancelled();
-            qDebug() << "catalogOperationCancelled signal emitted";
-
         } else if (job->error()) {
             qDebug() << "=== HANDLING ERROR JOB ===";
             QString errorMsg = QString("Catalog operation failed: %1").arg(job->errorString());
@@ -196,60 +224,64 @@ void CatalogManager::onJobResult(KJob *job)
             emit catalogOperationError(errorMsg);
         } else {
             qDebug() << "=== HANDLING SUCCESSFUL JOB ===";
-            // Success path...
             QString operationType = (m_currentJob->getOperationType() == CatalogJob::CreateCatalog) ? "creation" : "update";
             setStatus(QString("Catalog %1 completed successfully!").arg(operationType));
             emit catalogOperationCompleted();
         }
 
-        qDebug() << "Setting operation running to false...";
         setCatalogOperationRunning(false);
-        qDebug() << "Operation running set to false";
-
-        // Rest of cleanup...
         setProgress(job->error() ? 0 : 100);
         setCurrentPath("");
         m_isPaused = false;
 
-        qDebug() << "About to cleanup job...";
         cleanupJob();
-        qDebug() << "Job cleanup completed";
-
         qDebug() << "=== CatalogManager::onJobResult() COMPLETED ===";
 
     } catch (const std::exception& e) {
         qDebug() << "=== EXCEPTION in CatalogManager::onJobResult():" << e.what() << "===";
-        //QApplication::restoreOverrideCursor();
     } catch (...) {
         qDebug() << "=== UNKNOWN EXCEPTION in CatalogManager::onJobResult() ===";
-        //QApplication::restoreOverrideCursor();
     }
 }
 
 void CatalogManager::onJobPercent()
 {
-    if (m_currentJob) {
-        unsigned long percent = m_currentJob->percent();
-        qDebug() << "CatalogManager::onJobPercent() received percent:" << percent;
-        setProgress(static_cast<int>(percent));
+    // Guard against stale signals after job cleanup
+    if (!m_currentJob) {
+        qDebug() << "CatalogManager::onJobPercent() - Ignoring stale signal, no current job";
+        return;
     }
+
+    unsigned long percent = m_currentJob->percent();
+    qDebug() << "CatalogManager::onJobPercent() received percent:" << percent;
+    setProgress(static_cast<int>(percent));
 }
 
 void CatalogManager::onJobInfoMessage(KJob *job, const QString &message)
 {
-    Q_UNUSED(job);
+    // Guard against stale signals after job cleanup
+    if (!m_currentJob || job != m_currentJob) {
+        qDebug() << "CatalogManager::onJobInfoMessage() - Ignoring stale signal";
+        return;
+    }
+
     setStatus(message);
 }
 
 void CatalogManager::onFilesProcessedUpdate(qint64 processed, qint64 total, const QString &currentPath)
 {
+    // Guard against stale signals after job cleanup
+    if (!m_currentJob) {
+        qDebug() << "CatalogManager::onFilesProcessedUpdate() - Ignoring stale signal, no current job";
+        return;
+    }
+
     qDebug() << "CatalogManager::onFilesProcessedUpdate() - Processed:" << processed << "Total:" << total << "Path:" << currentPath;
 
     setFilesProcessed(processed);
     setTotalFiles(total);
     setCurrentPath(currentPath);
 
-    // Calculate and update progress percentage
     if (total > 0) {
         int progressPercent = static_cast<int>((processed * 100) / total);
         setProgress(progressPercent);

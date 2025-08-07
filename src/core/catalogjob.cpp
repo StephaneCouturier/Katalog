@@ -99,23 +99,31 @@ void CatalogJob::doWork()
     qDebug() << "CatalogJob::doWork() - Starting work in thread";
 
     try {
+        // CHECK FOR STOP REQUEST AT START
+        if (m_stopRequested) {
+            qDebug() << "CatalogJob::doWork() - Stop was requested, aborting";
+            return; // emitResult() already called in doKill()
+        }
+
         if (m_operationType == CreateCatalog) {
-            // For create operations, start the catalog creation directly
             emit infoMessage(this, QString("Creating catalog %1...").arg(m_device->catalog->name));
-
-            // Call our progress-reporting catalog creation
             createCatalogWithProgress();
-
         } else {
-            // For update operations, use existing catalog update method
             emit infoMessage(this, QString("Updating catalog %1...").arg(m_device->catalog->name));
 
-            // Use existing updateCatalogFiles method
+            // For update operations, we need to check stop request periodically
+            // since updateCatalogFiles() might be a long-running operation
             QList<qint64> updateResults = m_device->catalog->updateCatalogFiles(m_databaseMode, m_collectionFolder, false);
 
-            // Process results
+            // CHECK FOR STOP REQUEST AFTER UPDATE
+            if (m_stopRequested) {
+                qDebug() << "CatalogJob::doWork() - Stop requested during update";
+                return; // emitResult() already called in doKill()
+            }
+
+            // Process results...
             if (!updateResults.isEmpty() && updateResults[0] == 1) {
-                // Success
+                // Success handling code...
                 qint64 newFileCount = updateResults[1];
                 qint64 newTotalSize = updateResults[3];
 
@@ -129,7 +137,7 @@ void CatalogJob::doWork()
                 emit infoMessage(this, QString("Catalog updated successfully. Files: %1, Size: %2 bytes")
                                            .arg(newFileCount).arg(newTotalSize));
             } else {
-                // Handle error cases
+                // Handle error cases...
                 QString errorMsg = "Catalog update failed";
                 if (!updateResults.isEmpty()) {
                     switch (updateResults[0]) {
@@ -145,22 +153,19 @@ void CatalogJob::doWork()
             }
         }
 
+        // Final check before completion
+        if (m_stopRequested) {
+            qDebug() << "CatalogJob::doWork() - Stop requested before completion";
+            return; // emitResult() already called in doKill()
+        }
+
         // Operation completed successfully
         qDebug() << "=== Catalog operation completed successfully ===";
         emit infoMessage(this, QString("Catalog operation completed successfully"));
 
-        qDebug() << "About to stop progress timer...";
         m_progressTimer->stop();
-        qDebug() << "Progress timer stopped successfully";
-
-        // Set final progress and complete the job
-        qDebug() << "About to set final progress to 100%...";
         setPercent(100);
-        qDebug() << "Final progress set to 100% successfully";
-
-        qDebug() << "About to emit result...";
-        emitResult(); // This is the proper KJob way to signal completion
-        qDebug() << "Result emitted successfully";
+        emitResult(); // Signal successful completion
 
     } catch (const std::exception& e) {
         qDebug() << "=== EXCEPTION in doWork():" << e.what() << "===";
@@ -406,6 +411,20 @@ void CatalogJob::createCatalogWithProgress()
     // qDebug() << "Final counts - Files:" << m_device->catalog->fileCount << "Size:" << m_device->catalog->totalFileSize;
     delete processIterator;
 
+    // *** ADD THIS CRITICAL CHECK HERE ***
+    if (transactionRollback || m_stopRequested) {
+        qDebug() << "=== STOP DETECTED: Rolling back transaction and returning early ===";
+
+        // Rollback the transaction
+        QSqlQuery rollbackQuery(QSqlDatabase::database("defaultConnection"));
+        rollbackQuery.prepare("ROLLBACK");
+        rollbackQuery.exec();
+
+        qDebug() << "=== EARLY RETURN: Stop processing completed ===";
+        return; // ← CRITICAL: Don't continue with commit/save!
+    }
+
+    // Only continue if NOT stopped
     qDebug() << "File processing completed. About to commit transaction...";
 
     // Commit the transaction with proper error checking
@@ -651,6 +670,9 @@ bool CatalogJob::doKill()
     setErrorText("Catalog operation was cancelled by user");
 
     emit infoMessage(this, "Catalog operation cancelled");
+
+    // ADD THIS LINE - This is the only fix needed!
+    emitResult();
 
     return true;
 }

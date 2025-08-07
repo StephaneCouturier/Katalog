@@ -272,6 +272,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                         restoreCreateCatalogUIState();
                         QMessageBox::warning(this, "Katalog", tr("Catalog creation failed: %1").arg(error));
                     });
+            connect(catalogManager, &CatalogManager::catalogOperationCancelled,
+                    this, [this]() {
+                        qDebug() << "Catalog operation was cancelled - restoring UI state";
+                        restoreCreateCatalogUIState();
+                    });
 
         //Setup tab: Tags
             //Set Default path to scan
