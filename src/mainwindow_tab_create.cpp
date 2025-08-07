@@ -195,6 +195,19 @@
         excludeContextMenu.exec(globalPos);
     }
     //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_Stop_clicked()
+    {
+        //Stop the cataloging process
+        if (catalogManager) {
+            catalogManager->stopOperation();
+            qDebug() << "Catalog creation stopped by user.";
+        } else {
+            qDebug() << "No catalogManager instance to stop.";
+        }
+
+        //Change back mouse cursor
+        QApplication::restoreOverrideCursor();
+    }
 
 //Methods-----------------------------------------------------------------------
     void MainWindow::loadFileSystem(QString newCatalogPath)
@@ -232,154 +245,251 @@
     {//Create a new catalog, launch the cataloging and save, and refresh data and UI
         //Change mouse cursor to wait cursor
         QApplication::setOverrideCursor(Qt::WaitCursor);
+        ui->Create_pushButton_CreateCatalog->setEnabled(false);
+        ui->Create_pushButton_Stop->setEnabled(true);
 
-        //Check if mandatory inputs are provided
-        if (ui->Create_lineEdit_NewCatalogName->text() == ""){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Provide a name for this new catalog.<br/>"));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
+        // Basic validation (like existing createCatalog method)
+        if (ui->Create_lineEdit_NewCatalogName->text().isEmpty()) {
+            QMessageBox::warning(this, "Katalog", tr("Provide a name for this new catalog."));
             return;
         }
-        if (ui->Create_lineEdit_NewCatalogPath->text() == ""){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Provide a path for this new catalog.<br/>"));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
-            return;
-        }
-        if (ui->Create_comboBox_StorageSelection->currentText() == ""){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Select a Storage for this new catalog.<br/>(Selection panel on the left and dropdown list)"));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
+        if (ui->Create_lineEdit_NewCatalogPath->text().isEmpty()) {
+            QMessageBox::warning(this, "Katalog", tr("Provide a path for this new catalog."));
             return;
         }
 
-        //Create a new device and catalog
+        // Check if directory exists and is not empty**
+        QDir sourceDir(ui->Create_lineEdit_NewCatalogPath->text());
+        if (!sourceDir.exists()) {
+            QMessageBox::warning(this, "Katalog", tr("Source directory does not exist."));
+            return;
+        }
 
-            //Initiate Device entry
-            Device *newDevice = new Device();
-            newDevice->generateDeviceID();
-            newDevice->type = "Catalog";
-            newDevice->name = ui->Create_lineEdit_NewCatalogName->text();
-
-            //Check if the catalog name (so the csv file name) already exists
-            if (newDevice->verifyDeviceNameExists()){
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
-                               + newDevice->name
-                               + "</b><br/><br/>"+tr("Choose a different name and try again."));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
-                return;
+        if (sourceDir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0) {
+            QMessageBox::StandardButton reply = QMessageBox::question(this, "Katalog",
+                                                                      tr("The selected directory is empty. Do you want to create an empty catalog?"),
+                                                                      QMessageBox::Yes | QMessageBox::No);
+            if (reply == QMessageBox::No) {
+                return; // User cancelled - no crash!
             }
+        }
 
-            //Continue populating values and add device
-            newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
-            newDevice->catalog->generateID();
-            newDevice->externalID = newDevice->catalog->ID;
-            newDevice->groupID = 0;
-            newDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
-            newDevice->insertDevice();
+        // Create new device and catalog (following existing pattern)
+        Device *newDevice = new Device();
+        newDevice->generateDeviceID();
+        newDevice->type = "Catalog";
+        newDevice->name = ui->Create_lineEdit_NewCatalogName->text();
 
-            //Get inputs and set values of the newCatalog
-            newDevice->catalog->filePath = collection->folder + "/" + newDevice->name + ".idx";
-            newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
-            newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
-            newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
-            newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
-            newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
-            newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
-            newDevice->catalog->appVersion = currentVersion;
+        // Check if name already exists
+        if (newDevice->verifyDeviceNameExists()) {
+            QMessageBox::warning(this, "Katalog",
+                                 tr("There is already a catalog with this name: %1").arg(newDevice->name));
+            delete newDevice;
+            return;
+        }
 
-            //Get the file type for the catalog
-            if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
-                    newDevice->catalog->fileType = "Image";}
-            else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
-                    newDevice->catalog->fileType = "Audio";}
-            else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
-                    newDevice->catalog->fileType = "Video";}
-            else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
-                    newDevice->catalog->fileType = "Text";}
-            else
-                    newDevice->catalog->fileType = "All";
+        // Set up device properties (from existing createCatalog)
+        newDevice->catalog->name = newDevice->name;  // *** ADD THIS LINE ***
+        newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
+        newDevice->catalog->generateID();
+        newDevice->externalID = newDevice->catalog->ID;
+        newDevice->groupID = 0;
+        newDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
+        newDevice->insertDevice();
 
-            //Save new catalog
-            newDevice->catalog->insertCatalog();
+        // Configure catalog properties
+        newDevice->catalog->filePath = collection->folder + "/" + newDevice->name + ".idx";
+        newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
+        newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+        newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
+        newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+        newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
+        newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
+        newDevice->catalog->appVersion = currentVersion;
 
-            //Add path to parent Storage device if empty
-            Device parentStorageDevice;
-            parentStorageDevice.ID = newDevice->parentID;
-            parentStorageDevice.loadDevice("defaultConnection");
-            if(parentStorageDevice.path == ""){
-                parentStorageDevice.path = newDevice->path;
-                parentStorageDevice.saveDevice();
-                collection->saveStorageTableToFile();
-            }
+        // Set file type
+        if (ui->Create_radioButton_FileType_Image->isChecked()) {
+            newDevice->catalog->fileType = "Image";
+        } else if (ui->Create_radioButton_FileType_Audio->isChecked()) {
+            newDevice->catalog->fileType = "Audio";
+        } else if (ui->Create_radioButton_FileType_Video->isChecked()) {
+            newDevice->catalog->fileType = "Video";
+        } else if (ui->Create_radioButton_FileType_Text->isChecked()) {
+            newDevice->catalog->fileType = "Text";
+        } else {
+            newDevice->catalog->fileType = "All";
+        }
 
-            //Reload
-            loadDevicesView("");
-            loadStorageList();
+        // Save catalog to database
+        newDevice->catalog->insertCatalog();
 
-        //Launch the scan and cataloging of files, including statistics
-            bool updateResult = reportAllUpdates(newDevice,
-                                                 DeviceUIWrapper::updateDeviceWithUI(newDevice,
-                                                                                     "update",
-                                                                                     collection->databaseMode,
-                                                                                     false,
-                                                                                     collection->folder,
-                                                                                     true),
-                                                 "create");
+        // Use CatalogManager for asynchronous work
+        qDebug() << "About to start catalog creation for:" << newDevice->catalog->name;
+        catalogManager->startCreateCatalog(newDevice, collection->databaseMode, collection->folder);
 
-            if (updateResult==true){
-                newDevice->saveDevice();
+        // Reload UI
+        loadDevicesView("");
+        loadStorageList();
 
-                //Save data to files
-                collection->saveDeviceTableToFile();
-                newDevice->catalog->saveCatalogToFile(collection->databaseMode, collection->folder);
-                newDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->folder);
-
-                //Update the new catalog loadedversion to indicate that files are already in memory
-                QDateTime emptyDateTime = *new QDateTime; //Using an empty date as the function will manage creating one if needed
-                newDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
-
-                //Save statistics
-                collection->saveStatiticsTableToFile();
-
-                //Refresh data and UI
-                    //Refresh the catalog list for the combobox of the Search screen
-                    refreshDifferencesCatalogSelection();
-
-                    //Refresh Catalogs list
-                    updateAllDeviceActive();
-                    loadDevicesView("");
-
-                    //Restore selected catalog
-                    ui->Filters_label_DisplayCatalog->setText(newDevice->name);
-                    selectedDevice->ID = newDevice->ID;
-                    selectedDevice->loadDevice("defaultConnection");
-
-                    //Refresh filter tree
-                    collection->loadDeviceFileToTable();
-                    loadDevicesTreeToModel("Filters");
-                    loadDevicesView("");
-
-                    //Change tab to show the result of the catalog creation
-                    ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
-
-                    //Disable buttons
-                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-            }
-            else{
-                DeviceUIWrapper::deleteDeviceWithUI(newDevice, false);
-                loadDevicesView("");
-            }
         //Change back mouse cursor
         QApplication::restoreOverrideCursor();
+        ui->Create_pushButton_CreateCatalog->setEnabled(true);
+        ui->Create_pushButton_Stop->setEnabled(false);
     }
-    //--------------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    void MainWindow::updateStatusBarFromCatalogManager()
+    {
+        qDebug() << "updateStatusBarFromCatalogManager() called";
+
+        if (!catalogManager) {
+            qDebug() << "No catalogManager - showing Ready";
+            statusBar()->showMessage(tr("Ready"));
+            return;
+        }
+
+        QString statusMessage;
+        qDebug() << "CatalogManager state - Running:" << catalogManager->catalogOperationRunning()
+                 << "Progress:" << catalogManager->progress()
+                 << "FilesProcessed:" << catalogManager->filesProcessed()
+                 << "TotalFiles:" << catalogManager->totalFiles();
+
+        if (catalogManager->catalogOperationRunning()) {
+            // Build dynamic status message while catalog operation is running
+
+            if (catalogManager->totalFiles() > 0 && catalogManager->filesProcessed() >= 0) {
+                // Show detailed progress with your requested format:
+                // "Files processed: 500 | Total files: 50,000 | Progress: 1% | path_of_last_file_added"
+                statusMessage = QString("Files processed: %1 | Total files: %2 | Progress: %3%")
+                                    .arg(QLocale().toString(catalogManager->filesProcessed()))
+                                    .arg(QLocale().toString(catalogManager->totalFiles()))
+                                    .arg(catalogManager->progress());
+
+                // Add current path if available
+                if (!catalogManager->currentPath().isEmpty()) {
+                    statusMessage += QString(" | %1").arg(catalogManager->currentPath());
+                }
+            } else {
+                // Fallback to basic status during initial phases
+                statusMessage = catalogManager->status();
+
+                // Add progress percentage if available
+                if (catalogManager->progress() > 0) {
+                    statusMessage += QString(" (%1%)").arg(catalogManager->progress());
+                }
+            }
+        } else {
+            // Catalog operation not running - show final status or ready state
+            if (catalogManager->status() == "Ready") {
+                statusMessage = tr("Ready");
+            } else {
+                // Show completion status or error
+                statusMessage = catalogManager->status();
+
+                // If we have final file counts, show them
+                if (catalogManager->totalFiles() > 0) {
+                    statusMessage += QString(" | Files processed: %1")
+                    .arg(QLocale().toString(catalogManager->totalFiles()));
+                }
+            }
+        }
+
+        qDebug() << "Setting status bar message:" << statusMessage;
+
+        // Status Bar handling
+        statusBar()->show();
+        statusBar()->showMessage(statusMessage, 0);  // 0 = no timeout, don't auto-clear
+        QCoreApplication::processEvents();  // Force immediate UI update
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::onCatalogOperationCompleted()
+    {
+        qDebug() << "onCatalogOperationCompleted() called";
+
+        // Get the device that was just processed
+        Device* completedDevice = catalogManager->getCurrentDevice();
+        if (!completedDevice) {
+            qDebug() << "No device found in completed operation";
+            QApplication::restoreOverrideCursor();
+            return;
+        }
+
+        // Update device statistics from the catalog
+        completedDevice->totalFileCount = completedDevice->catalog->fileCount;
+        completedDevice->totalFileSize = completedDevice->catalog->totalFileSize;
+        completedDevice->dateTimeUpdated = QDateTime::currentDateTime();
+
+        // Build list of process results based on the pattern from DeviceUIWrapper::updateDeviceWithUI
+        QList<qint64> resultList;
+
+        // Catalog update data (indices 0-6)
+        resultList << 1; // [0] Success code
+        resultList << completedDevice->catalog->fileCount; // [1] New file count
+        resultList << completedDevice->catalog->fileCount; // [2] Delta file count (all files are new for create)
+        resultList << completedDevice->catalog->totalFileSize; // [3] New total file size
+        resultList << completedDevice->catalog->totalFileSize; // [4] Delta total file size (all size is new for create)
+        resultList << 1; // [5] Updated catalogs count (we updated 1 catalog)
+        resultList << 0; // [6] Skipped catalogs count (we skipped 0 catalogs)
+
+        // Storage update data (indices 7-13) - using zeros since we don't have storage update
+        resultList << 0; // [7] Storage success code (0 = not updated)
+        resultList << 0; // [8] Used space
+        resultList << 0; // [9] Delta used space
+        resultList << 0; // [10] Free space
+        resultList << 0; // [11] Delta free space
+        resultList << 0; // [12] Total space
+        resultList << 0; // [13] Delta total space
+
+        qDebug() << "Calling reportAllUpdates with list:" << resultList;
+        qDebug() << "List size:" << resultList.size();
+
+        // Use the reportAllUpdates for consistency
+        bool updateResult = reportAllUpdates(completedDevice, resultList, "create");
+
+        if (updateResult == true) {
+            // Save device data (since reportAllUpdates doesn't do this)
+            completedDevice->saveDevice();
+
+            // Save data to files (exactly like original createCatalog)
+            collection->saveDeviceTableToFile();
+            completedDevice->catalog->saveCatalogToFile(collection->databaseMode, collection->folder);
+            completedDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->folder);
+
+            // Update the new catalog loaded version (exactly like original)
+            QDateTime emptyDateTime = *new QDateTime;
+            completedDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
+
+            // Save statistics
+            collection->saveStatiticsTableToFile();
+
+            // Refresh data and UI (exactly like original createCatalog)
+            refreshDifferencesCatalogSelection();
+            updateAllDeviceActive();
+            loadDevicesView("");
+
+            // Restore selected catalog
+            ui->Filters_label_DisplayCatalog->setText(completedDevice->name);
+            selectedDevice->ID = completedDevice->ID;
+            selectedDevice->loadDevice("defaultConnection");
+
+            // Refresh filter tree
+            collection->loadDeviceFileToTable();
+            loadDevicesTreeToModel("Filters");
+            loadDevicesView("");
+
+            // Change tab to show the result of the catalog creation
+            ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
+
+            // Disable buttons
+            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        } else {
+            // Handle failure case (like original createCatalog)
+            DeviceUIWrapper::deleteDeviceWithUI(completedDevice, false);
+            loadDevicesView("");
+        }
+
+        // Change back mouse cursor (like original createCatalog)
+        QApplication::restoreOverrideCursor();
+
+        qDebug() << "Catalog creation completed successfully!";
+    }
+    //----------------------------------------------------------------------

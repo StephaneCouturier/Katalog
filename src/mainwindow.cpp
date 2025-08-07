@@ -32,6 +32,7 @@
 #include "ui_mainwindow.h"
 #include "core/database.h"
 #include "core/language.h"
+#include "core/catalogmanager.h"
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)
@@ -64,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
         connect(statusBarTimer, &QTimer::timeout, this, [this]() {
             statusBar()->hide();
         });
-
 
     //Prepare paths, user setting file, check version
         //Get user home path and application dir path
@@ -241,6 +241,32 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
             //Load the list of Storage devices for Create and Catalog tabs
             loadStorageList();
+
+            //Set up a catalog manager for creation and updates
+            catalogManager = new CatalogManager(this);
+            connect(catalogManager, &CatalogManager::progressUpdate,
+                    this, &MainWindow::updateStatusBarFromCatalogManager);
+            connect(catalogManager, &CatalogManager::progressChanged,
+                    this, &MainWindow::updateStatusBarFromCatalogManager);
+            connect(catalogManager, &CatalogManager::statusChanged,
+                    this, &MainWindow::updateStatusBarFromCatalogManager);
+            connect(catalogManager, &CatalogManager::filesProcessedChanged,
+                    this, &MainWindow::updateStatusBarFromCatalogManager);
+            connect(catalogManager, &CatalogManager::totalFilesChanged,
+                    this, &MainWindow::updateStatusBarFromCatalogManager);
+            connect(catalogManager, &CatalogManager::currentPathChanged,
+                    this, &MainWindow::updateStatusBarFromCatalogManager);
+            connect(catalogManager, &CatalogManager::catalogOperationCompleted,
+                    this, &MainWindow::onCatalogOperationCompleted);
+            connect(catalogManager, &CatalogManager::catalogOperationRunningChanged,
+                    this, [this]() {
+                        if (catalogManager->catalogOperationRunning()) {
+                            // Stop any existing status bar timer during catalog operations
+                            if (statusBarTimer) {
+                                statusBarTimer->stop();
+                            }
+                        }
+                    });
 
         //Setup tab: Tags
             //Set Default path to scan

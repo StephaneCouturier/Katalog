@@ -123,18 +123,15 @@ public:
                            const QList<QString> &fileCatalogs);
 
     int countFileLines(const QString &filePath);
+    void getFileExtensions();
 
 private:
     QStringList fileExtensions;
-
     QList<QString> fileNames;
     QList<qint64>  fileSizes;
     QList<QString> filePaths;
     QList<QString> fileDateTimes;
     QList<QString> fileCatalogs;
-
-    void getFileExtensions();
-
     QThread *workerThread;
 
 signals:

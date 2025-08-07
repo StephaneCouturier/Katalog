@@ -31,7 +31,26 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#pragma once
+//Katalog object classes
+#include "core/collection.h"
+#include "core/search.h"
+#include "core/device.h"
+#include "core/searchmanager.h"
+#include "core/searchjobstoppable.h"
+#include "core/searchmanager.h"
+#include "core/searchprogressmanager.h"
+#include "core/searchresultsthrottler.h"
+#include "core/catalogmanager.h"
+
+//KDE KF6
+#include <KFormat>
+#include <KXmlGuiWindow>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#ifdef Q_OS_LINUX
+#include <KIconTheme>
+#include <KIconLoader>
+#endif
 
 //QtWidget
 #include <QMainWindow>
@@ -82,25 +101,7 @@
 #include <QScatterSeries>
 #include <QtCharts/QLegendMarker>
 
-//Katalog object classes
-#include "core/collection.h"
-#include "core/search.h"
-#include "core/device.h"
-#include "core/searchmanager.h"
-#include "core/searchjobstoppable.h"
-#include "core/searchmanager.h"
-#include "core/searchprogressmanager.h"
-#include "core/searchresultsthrottler.h"
-
-//KDE KF6
-#include <KFormat>
-#include <KXmlGuiWindow>
-#include <KSharedConfig>
-#include <KConfigGroup>
-#ifdef Q_OS_LINUX
-#include <KIconTheme>
-#include <KIconLoader>
-#endif
+#pragma once
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -126,6 +127,7 @@ class MainWindow : public KXmlGuiWindow
         SearchProgressManager *searchProgressManager = nullptr;
         SearchResultsThrottler *searchResultsThrottler = nullptr;
         SearchProcess *searchProcess  = nullptr;
+        CatalogManager *catalogManager;
 
         void extracted();
         void launchSearch();
@@ -344,6 +346,7 @@ class MainWindow : public KXmlGuiWindow
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
             void loadStorageList();
+            void onCatalogOperationCompleted();
 
         //TAB: Storage
             int     selectedStorageIndexRow;
@@ -445,6 +448,7 @@ class MainWindow : public KXmlGuiWindow
     public slots:
             void displaySearchResults();
             void updateStatusBarFromSearchManager();
+            void updateStatusBarFromCatalogManager();
             void runDatabaseMigrations();
             void runDatabaseMigration_2_6();
 
@@ -578,6 +582,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Create_pushButton_AddStorage_clicked();
             void on_Create_pushButton_GenerateFromPath_clicked();
             void on_Create_pushButton_CreateCatalog_clicked();
+            void on_Create_pushButton_Stop_clicked();
             void on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos);
 
         //Explore
