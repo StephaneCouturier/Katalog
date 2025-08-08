@@ -34,9 +34,9 @@
 
 #pragma once
 
-#include <QObject>
 #include "catalogmanager.h"
 #include "catalogjobstoppable.h"
+#include <QObject>
 
 // Forward declarations
 class QStatusBar;
