@@ -265,65 +265,26 @@
         // Create the new catalog manager
         catalogManager = new CatalogManager(this);
 
-        // Create the catalog progress manager
-        catalogProgressManager = new CatalogProgressManager(this);
+        // Create catalog progress manager with timer reference (like SearchProgressManager)
+        catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, this);
         catalogProgressManager->setCatalogManager(catalogManager);
-        catalogProgressManager->setStatusBar(statusBar());
 
-        // Enhanced signal connections with status bar timer management
+        // Remove the timer management from catalogOperationRunningChanged since
+        // CatalogProgressManager now handles it internally
         connect(catalogManager, &CatalogManager::catalogOperationRunningChanged,
                 this, [this]() {
+                    // Update progress manager with current catalog engine
                     if (catalogManager->catalogOperationRunning()) {
-                        qDebug() << "Catalog operation started - stopping status bar timer";
-                        // Stop any existing status bar timer during catalog operations
-                        if (statusBarTimer) {
-                            statusBarTimer->stop();
-                        }
-
-                        // Update progress manager with current catalog engine
                         if (catalogProgressManager && catalogManager->getCurrentCatalogEngine()) {
                             catalogProgressManager->setCurrentCatalogEngine(catalogManager->getCurrentCatalogEngine());
                         }
-                    } else {
-                        qDebug() << "Catalog operation finished - restarting status bar timer";
-                        // Restart status bar timer when operation completes
-                        if (statusBarTimer) {
-                            statusBarTimer->start(5000); // Hide status after 5 seconds
-                        }
                     }
+                    // Note: Timer management is now handled by CatalogProgressManager directly
                 });
 
-        // Connect catalog manager signals (same as before but using new system)
-        connect(catalogManager, &CatalogManager::specialProgressUpdate,
-                this, &MainWindow::updateStatusBarFromCatalogManager);
-        connect(catalogManager, &CatalogManager::progressChanged,
-                this, &MainWindow::updateStatusBarFromCatalogManager);
-        connect(catalogManager, &CatalogManager::statusChanged,
-                this, &MainWindow::updateStatusBarFromCatalogManager);
-        connect(catalogManager, &CatalogManager::filesProcessedChanged,
-                this, &MainWindow::updateStatusBarFromCatalogManager);
-        connect(catalogManager, &CatalogManager::totalFilesChanged,
-                this, &MainWindow::updateStatusBarFromCatalogManager);
-        connect(catalogManager, &CatalogManager::currentPathChanged,
-                this, &MainWindow::updateStatusBarFromCatalogManager);
-
+        // Connect catalog manager signals
         connect(catalogManager, &CatalogManager::catalogOperationCompleted,
                 this, &MainWindow::onCatalogOperationCompleted);
-
-        connect(catalogManager, &CatalogManager::catalogOperationRunningChanged,
-                this, [this]() {
-                    if (catalogManager->catalogOperationRunning()) {
-                        // Stop any existing status bar timer during catalog operations
-                        if (statusBarTimer) {
-                            statusBarTimer->stop();
-                        }
-
-                        // Update progress manager with current catalog engine
-                        if (catalogProgressManager && catalogManager->getCurrentCatalogEngine()) {
-                            catalogProgressManager->setCurrentCatalogEngine(catalogManager->getCurrentCatalogEngine());
-                        }
-                    }
-                });
 
         connect(catalogManager, &CatalogManager::catalogOperationError,
                 this, [this](const QString &error) {
@@ -508,28 +469,6 @@
         // QApplication::restoreOverrideCursor(); // REMOVED - completion handler will do this
 
         qDebug() << "=== MainWindow::createCatalog() EXIT ===";
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::updateStatusBarFromCatalogManager()
-    {
-        // SIMPLIFIED: The CatalogProgressManager now handles all status bar updates automatically
-        // This method can be removed or simplified to just defer to the progress manager
-
-        if (catalogProgressManager) {
-            // Let the progress manager handle the status bar updates
-            catalogProgressManager->updateFromCatalogManager();
-        } else {
-            // Fallback for basic status if progress manager is not available
-            if (!catalogManager) {
-                statusBar()->showMessage(tr("Ready"));
-                return;
-            }
-
-            QString statusMessage = catalogManager->catalogOperationRunning()
-                                        ? catalogManager->status()
-                                        : tr("Ready");
-            statusBar()->showMessage(statusMessage);
-        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::onCatalogOperationCompleted()

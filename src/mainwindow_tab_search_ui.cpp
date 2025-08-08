@@ -712,6 +712,29 @@
         {
             QString pathInTrash;
             QFile::moveToTrash(fileFullPath, &pathInTrash);
+
+            // Remove file from database
+
+            // QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            // query.prepare("DELETE FROM file WHERE file_full_path = :file_full_path");
+            // query.bindValue(":file_full_path", fileFullPath);
+            // if (!query.exec()) {
+            //     qDebug() << "Error deleting file from database:" << query.lastError().text();
+            // }
+
+            //Return the path in the trash
+            //Note: QFile::moveToTrash() may not return a path in all implementations, so we check if it's empty
+            // if (pathInTrash.isEmpty()) {
+            //     qDebug() << "Failed to move file to trash, path is empty.";
+            //     return "";
+            // }
+            // qDebug() << "File moved to trash at:" << pathInTrash;
+
+            // Refresh model
+            removeFileFromResults(fileFullPath);
+            // Refresh the search results
+            displaySearchResults();
+
             return pathInTrash;
         }
         //----------------------------------------------------------------------

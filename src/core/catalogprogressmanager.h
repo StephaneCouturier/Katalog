@@ -37,9 +37,10 @@
 #include "catalogmanager.h"
 #include "catalogjobstoppable.h"
 #include <QObject>
-
-// Forward declarations
-class QStatusBar;
+#include <QStatusBar>
+#include <QTimer>
+#include <QString>
+#include <QLocale>
 
 /**
  * @brief The CatalogProgressManager class
@@ -51,7 +52,8 @@ class CatalogProgressManager : public QObject
     Q_OBJECT
 
 public:
-    explicit CatalogProgressManager(QObject *parent = nullptr);
+    // Declare constructor - implement in cpp file
+    explicit CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QObject *parent = nullptr);
 
     /**
      * @brief Set the catalog manager to monitor
@@ -65,12 +67,6 @@ public:
      */
     void setCurrentCatalogEngine(CatalogJobStoppable *currentCatalogEngine);
 
-    /**
-     * @brief Set the status bar for progress updates
-     * @param statusBar The status bar widget
-     */
-    void setStatusBar(QStatusBar *statusBar);
-
 public slots:
     /**
      * @brief Update progress display from catalog manager
@@ -78,10 +74,19 @@ public slots:
      */
     void updateFromCatalogManager();
 
+    /**
+     * @brief Show message with optional timeout (matching SearchProgressManager)
+     */
+    void showMessage(const QString &message, int timeout = 0);
+
+signals:
+    void statusBarUpdated();  // Keep for consistency with SearchProgressManager
+
 private:
     CatalogManager *m_catalogManager = nullptr;
     CatalogJobStoppable *m_currentCatalogEngine = nullptr;
     QStatusBar *m_statusBar = nullptr;
+    QTimer *m_statusBarTimer = nullptr;
 };
 
 #endif // CATALOGPROGRESSMANAGER_H

@@ -455,7 +455,6 @@ class MainWindow : public KXmlGuiWindow
     public slots:
             void displaySearchResults();
             void updateStatusBarFromSearchManager();
-            void updateStatusBarFromCatalogManager();
             void runDatabaseMigrations();
             void runDatabaseMigration_2_6();
 

@@ -314,11 +314,15 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
     QDirIterator it(directory, extensions, filters, iteratorFlags);
 
+    // Database batching arrays
     QStringList fileNames, filePaths, fileDateTimes, fileCatalogs;
     QList<qint64> fileSizes;
 
-    int batchSize = 1000; // Process files in batches for efficiency
-    int batchCount = 0;
+    int batchSize = 1000; // Database batch size
+    int batchCount = 0;   // Database batch counter
+
+    // Progress tracking (separate from database batching)
+    qint64 filesProcessedInThisCall = 0;
 
     while (it.hasNext() && shouldContinue()) {
         waitIfPaused();
@@ -336,19 +340,27 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         }
         if (isExcluded) continue;
 
-        // Collect file information
-        fileNames.append(fileInfo.fileName());
-        filePaths.append(fileInfo.absolutePath());
-        fileSizes.append(fileInfo.size());
-        fileDateTimes.append(fileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-        fileCatalogs.append(catalog->name);
+        // Process file - add to database batch
+        fileNames << fileInfo.fileName();
+        filePaths << filePath;
+        fileDateTimes << fileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss");
+        fileCatalogs << QString::number(catalog->ID);
+        fileSizes << fileInfo.size();
 
-        processedCount++;
-        batchCount++;
+        // Update counters
+        processedCount++;           // Total files processed (passed by reference)
+        filesProcessedInThisCall++; // Files processed in this method call
+        batchCount++;              // Database batch counter
 
-        // Process batch when full or emit progress periodically
+        // *** KEY FIX: Simple progress updates every 250 files (like working version) ***
+        if (filesProcessedInThisCall % 250 == 0) {
+            emitProgressUpdate(processedCount, estimatedTotalFiles, fileInfo.absoluteFilePath());
+            QCoreApplication::processEvents(); // Keep UI responsive like working version
+        }
+
+        // Database batching (separate from progress reporting)
         if (batchCount >= batchSize) {
-            // Insert batch into database
+            // Insert batch to database
             if (!fileNames.isEmpty()) {
                 QSqlQuery query(QSqlDatabase::database(m_connectionName));
                 query.prepare(R"(
@@ -370,7 +382,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                     }
                 }
 
-                // Insert folder entries into folder table
+                // Insert folders for this batch
                 QStringList uniqueFolders = filePaths;
                 uniqueFolders.removeDuplicates();
 
@@ -390,24 +402,19 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                         qDebug() << "Folder insert error:" << folderQuery.lastError().text();
                     }
                 }
-
-                // Clear batch
-                fileNames.clear();
-                filePaths.clear();
-                fileSizes.clear();
-                fileDateTimes.clear();
-                fileCatalogs.clear();
-                batchCount = 0;
             }
 
-            // Emit progress update
-            if (processedCount % progressRefreshRate == 0 || processedCount == estimatedTotalFiles) {
-                emitProgressUpdate(processedCount, estimatedTotalFiles, fileInfo.absoluteFilePath());
-            }
+            // Clear batch arrays
+            fileNames.clear();
+            filePaths.clear();
+            fileDateTimes.clear();
+            fileCatalogs.clear();
+            fileSizes.clear();
+            batchCount = 0;
         }
     }
 
-    // Process remaining files in last batch
+    // Process remaining files in final batch
     if (!fileNames.isEmpty() && shouldContinue()) {
         QSqlQuery query(QSqlDatabase::database(m_connectionName));
         query.prepare(R"(
@@ -454,7 +461,10 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     // Final progress update for this directory
     if (shouldContinue()) {
         emitProgressUpdate(processedCount, estimatedTotalFiles, "Processing completed");
+        QCoreApplication::processEvents(); // Final UI update
     }
+
+    qDebug() << "Processed" << filesProcessedInThisCall << "files in directory:" << directory;
 }
 
 qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *catalog)

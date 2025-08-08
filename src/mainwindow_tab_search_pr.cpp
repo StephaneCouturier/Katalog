@@ -886,3 +886,51 @@ void MainWindow::updateStatusBarFromSearchManager()
     statusBar()->showMessage(statusMessage);
 }
 //----------------------------------------------------------------------
+/*
+void MainWindow::removeFileFromResults(QString fullFilePath)
+{//Remove the file from the list of results and refresh the UI
+    //Find the index of the file in the results
+    int index = currentSearch->filePaths.indexOf(QFileInfo(fullFilePath).absolutePath());
+    if (index != -1) {
+        //Remove the file from all lists
+        currentSearch->filePaths.removeAt(index);
+        currentSearch->fileNames.removeAt(index);
+        currentSearch->fileSizes.removeAt(index);
+        currentSearch->fileDateTimes.removeAt(index);
+        currentSearch->fileCatalogs.removeAt(index);
+
+        //Update the number of files found and their total size
+        currentSearch->filesFoundNumber = currentSearch->fileNames.size();
+        currentSearch->filesFoundTotalSize = 0;
+        for (const qint64 &size : currentSearch->fileSizes) {
+            currentSearch->filesFoundTotalSize += size;
+        }
+    }
+}
+*/
+
+void MainWindow::removeFileFromResults(QString fullFilePath)
+{
+    // Remove the file from the list of results and refresh the UI
+    // Find the index of the file in the results
+    qDebug() << "Removing file from results:" << fullFilePath << QFileInfo(fullFilePath).absoluteFilePath();
+
+    int index = currentSearch->filePaths.indexOf(QFileInfo(fullFilePath).absoluteFilePath());
+
+    if (index != -1) {
+        // Remove the file from all lists
+        currentSearch->filePaths.removeAt(index);
+        currentSearch->fileNames.removeAt(index);
+        currentSearch->fileSizes.removeAt(index);
+        currentSearch->fileDateTimes.removeAt(index);
+        currentSearch->fileCatalogs.removeAt(index);
+
+        // Update the number of files found and their total size
+        currentSearch->filesFoundNumber = currentSearch->fileNames.size();
+        currentSearch->filesFoundTotalSize = 0;
+
+        for (const qint64 &size : currentSearch->fileSizes) {
+            currentSearch->filesFoundTotalSize += size;
+        }
+    }
+}
