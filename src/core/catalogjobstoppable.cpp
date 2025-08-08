@@ -79,7 +79,7 @@ void CatalogJobStoppable::configureOperation(Device *device,
              << "DatabaseMode:" << databaseMode;
 }
 
-void CatalogJobStoppable::processCatalog(Device *selectedDevice)
+void CatalogJobStoppable::processCatalog()
 {
     qDebug() << "=== CatalogJobStoppable::processCatalog() START ===";
 
@@ -108,9 +108,16 @@ void CatalogJobStoppable::processCatalog(Device *selectedDevice)
                  << "of catalog:" << currentCatalogName;
 
         if (m_operationType == CreateCatalog) {
-            createCatalogWithProgress(m_device);
+            createCatalogWithProgress();
+
+            // NEW: Complete the catalog creation with all backend tasks
+            if (shouldContinue()) {
+                qDebug() << "Scanning completed, starting post-processing...";
+                completeCatalogCreation();
+                qDebug() << "Post-processing completed successfully";
+            }
         } else {
-            updateCatalogWithProgress(m_device);
+            updateCatalogWithProgress();
         }
 
         if (shouldContinue()) {
@@ -121,38 +128,49 @@ void CatalogJobStoppable::processCatalog(Device *selectedDevice)
     } catch (const std::exception &e) {
         qDebug() << "=== EXCEPTION in processCatalog():" << e.what() << "===";
         emit catalogOperationError(QString("Catalog operation failed: %1").arg(e.what()));
-    } catch (...) {
-        qDebug() << "=== UNKNOWN EXCEPTION in processCatalog() ===";
-        emit catalogOperationError("Unknown error during catalog operation");
     }
 
     qDebug() << "=== CatalogJobStoppable::processCatalog() END ===";
 }
 
-void CatalogJobStoppable::createCatalogWithProgress(Device *device)
+void CatalogJobStoppable::createCatalogWithProgress()
 {
-    qDebug() << "=== Creating catalog with progress ===";
 
-    if (!device || !device->catalog) {
+    qDebug() << "=== CATALOG CREATION STARTED ===";
+    qDebug() << "Device ID:" << m_device->ID;
+    qDebug() << "Catalog Name:" << m_device->catalog->name;
+    qDebug() << "Source Path:" << m_device->catalog->sourcePath;
+    qDebug() << "Database Mode:" << m_databaseMode;
+    qDebug() << "Collection Folder:" << m_collectionFolder;
+
+        if (!m_device || !m_device->catalog) {
+        qDebug() << "ERROR: Invalid device or catalog";
         throw std::runtime_error("Invalid device or catalog");
     }
 
-    Catalog *catalog = device->catalog;
+    Catalog* catalog = m_device->catalog;
 
     // Validate source path
+    qDebug() << "Step 1: Validating source directory";
     QDir sourceDir(catalog->sourcePath);
     if (!sourceDir.exists()) {
+        qDebug() << "ERROR: Source directory does not exist:" << catalog->sourcePath;
         throw std::runtime_error("Source directory does not exist: " + catalog->sourcePath.toStdString());
     }
 
     // Check if directory is empty
-    if (sourceDir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count() == 0) {
+    int entryCount = sourceDir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count();
+    qDebug() << "Source directory entry count:" << entryCount;
+    if (entryCount == 0) {
+        qDebug() << "WARNING: Source directory is empty:" << catalog->sourcePath;
         throw std::runtime_error("Source directory is empty: " + catalog->sourcePath.toStdString());
     }
 
     // Get file extensions to scan for and load excluded folders
+    qDebug() << "Step 2: Loading file extensions and excluded folders";
     catalog->getFileExtensions();
     catalog->loadExcludedFolders();
+    qDebug() << "File extensions loaded, excluded folders loaded";
 
     // Estimate total files for progress calculation
     qDebug() << "Estimating total files...";
@@ -160,7 +178,20 @@ void CatalogJobStoppable::createCatalogWithProgress(Device *device)
     estimatedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
     qDebug() << "Estimated total files:" << estimatedTotalFiles;
 
-    if (!shouldContinue()) return;
+    qDebug() << "Step 3: Estimating total files...";
+    emitProgressUpdate(0, 0, "Estimating total files...");
+
+    auto startTime = QDateTime::currentDateTime();
+    estimatedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
+    auto endTime = QDateTime::currentDateTime();
+
+    qDebug() << "Estimation completed in" << startTime.msecsTo(endTime) << "ms";
+    qDebug() << "Estimated total files:" << estimatedTotalFiles;
+
+    if (!shouldContinue()) {
+        qDebug() << "Stop requested during estimation";
+        return;
+    }
 
     // Initialize database transaction for efficiency
     QSqlDatabase db = QSqlDatabase::database(m_connectionName);
@@ -168,6 +199,7 @@ void CatalogJobStoppable::createCatalogWithProgress(Device *device)
         qDebug() << "Warning: Could not start transaction:" << db.lastError().text();
     }
 
+    qDebug() << "Step 4: Starting database transaction";
     // Save catalog to database first
     catalog->insertCatalog();
 
@@ -191,38 +223,26 @@ void CatalogJobStoppable::createCatalogWithProgress(Device *device)
     catalog->updateTotalFileSize();
     catalog->saveCatalog();
 
-    // Handle Memory mode file saving
-    if (m_databaseMode == "Memory") {
-        emitProgressUpdate(processedCount, estimatedTotalFiles, "Saving catalog files...");
-
-        // Save catalog to .idx file
-        if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
-            qDebug() << "Warning: Failed to save catalog to file";
-        }
-
-        // Save folders to .folders.idx file
-        if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
-            qDebug() << "Warning: Failed to save folders to file";
-        }
-    }
-
     // Final progress update
+    qDebug() << "About to emit final progress update";
     emitProgressUpdate(processedCount, estimatedTotalFiles, "Catalog creation completed");
-    qDebug() << "Catalog creation completed. Files processed:" << processedCount;
+    qDebug() << "Final progress update emitted";
+
+    qDebug() << "=== CatalogJobStoppable::createCatalogWithProgress() completed successfully ===";
 }
 
-void CatalogJobStoppable::updateCatalogWithProgress(Device *device)
+void CatalogJobStoppable::updateCatalogWithProgress()
 {
     qDebug() << "=== Updating catalog with progress ===";
 
-    if (!device || !device->catalog) {
+    if (!m_device || !m_device->catalog) {
         throw std::runtime_error("Invalid device or catalog");
     }
 
     emitProgressUpdate(0, 0, "Starting catalog update...");
 
     // Use the existing updateCatalogFiles method but with progress monitoring
-    QList<qint64> updateResults = device->catalog->updateCatalogFiles(m_databaseMode, m_collectionFolder, false);
+    QList<qint64> updateResults = m_device->catalog->updateCatalogFiles(m_databaseMode, m_collectionFolder, false);
 
     if (!shouldContinue()) return;
 
@@ -528,8 +548,79 @@ void CatalogJobStoppable::waitIfPaused()
 
 void CatalogJobStoppable::emitProgressUpdate(qint64 processed, qint64 total, const QString &currentPath)
 {
-    if (!m_objectValid.loadAcquire()) return;
-
     filesProcessed = processed;
+    estimatedTotalFiles = total;
+
+    // Throttle progress updates to avoid overwhelming the UI
+    QDateTime now = QDateTime::currentDateTime();
+    if (m_lastProgressEmit.isValid() &&
+        m_lastProgressEmit.msecsTo(now) < PROGRESS_UPDATE_INTERVAL_MS &&
+        processed > 0 && processed < total) {
+        // Skip this update to avoid flooding
+        return;
+    }
+    m_lastProgressEmit = now;
+
+    qDebug() << "Progress:" << processed << "/" << total << "("
+             << (total > 0 ? (processed * 100 / total) : 0) << "%) -" << currentPath;
+
     emit catalogProgress(processed, total, currentPath);
+}
+
+void CatalogJobStoppable::completeCatalogCreation()
+{
+    qDebug() << "=== CatalogJobStoppable::completeCatalogCreation() START ===";
+
+    if (!m_device || !m_device->catalog) {
+        qDebug() << "ERROR: Invalid device or catalog in completion";
+        return;
+    }
+
+    try {
+        // Step 1: Update device statistics from catalog
+        qDebug() << "Step 1: Updating device statistics";
+        m_device->totalFileCount = m_device->catalog->fileCount;
+        m_device->totalFileSize = m_device->catalog->totalFileSize;
+        m_device->dateTimeUpdated = QDateTime::currentDateTime();
+        qDebug() << "Device stats - Files:" << m_device->totalFileCount << "Size:" << m_device->totalFileSize;
+
+        // Step 2: Save device to database
+        qDebug() << "Step 2: Saving device to database";
+        m_device->saveDevice();
+
+        // Step 3: Save catalog files (Memory mode)
+        if (m_databaseMode == "Memory") {
+            qDebug() << "Step 3: Saving catalog files for Memory mode";
+
+            qDebug() << "Step 3a: About to call saveCatalogToFile()";
+            if (!m_device->catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
+                qDebug() << "Warning: Failed to save catalog to file";
+            } else {
+                qDebug() << "Catalog saved to file successfully";
+            }
+
+            qDebug() << "Step 3b: About to call saveFoldersToFile()";
+            if (!m_device->catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
+                qDebug() << "Warning: Failed to save folders to file";
+            } else {
+                qDebug() << "Folders saved to file successfully";
+            }
+        }
+
+        // Step 4: Update catalog loaded version
+        qDebug() << "Step 4: Setting catalog loaded date";
+        QDateTime currentDateTime = QDateTime::currentDateTime();
+        m_device->catalog->setDateLoaded(currentDateTime, m_connectionName);
+
+        qDebug() << "=== Backend post-processing completed successfully ===";
+
+    } catch (const std::exception& e) {
+        qDebug() << "EXCEPTION in completeCatalogCreation():" << e.what();
+        throw; // Re-throw to let caller handle
+    } catch (...) {
+        qDebug() << "UNKNOWN EXCEPTION in completeCatalogCreation()";
+        throw;
+    }
+
+    qDebug() << "=== CatalogJobStoppable::completeCatalogCreation() END ===";
 }

@@ -1127,25 +1127,84 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         return true; // Nothing to do for non-Memory mode
     }
 
-    if (!fileListModel) {
-        return false; // No data to save
+    qDebug() << "=== Catalog::saveCatalogToFile() START ===";
+    qDebug() << "Building file list directly from database (independent of fileListModel)";
+
+    try {
+        // Build file list directly from database (don't depend on fileListModel)
+        QStringList fileList;
+
+        // Get file data from database
+        QSqlQuery queryFileList(QSqlDatabase::database("defaultConnection"));
+        QString queryFileListSQL = QLatin1String(R"(
+                        SELECT file_full_path, file_size, file_date_updated
+                        FROM file
+                        WHERE file_catalog_id = :file_catalog_id
+                        ORDER BY file_full_path
+                    )");
+        queryFileList.prepare(queryFileListSQL);
+        queryFileList.bindValue(":file_catalog_id", ID);
+
+        if (!queryFileList.exec()) {
+            qDebug() << "ERROR: Failed to query file list:" << queryFileList.lastError().text();
+            return false;
+        }
+
+        qDebug() << "Queried files from database successfully";
+
+        // Build the file list (same format as original)
+        while(queryFileList.next()){
+            QString fileEntry = queryFileList.value(0).toString() + "\t" +
+                                queryFileList.value(1).toString() + "\t" +
+                                queryFileList.value(2).toString();
+            fileList << fileEntry;
+        }
+
+        qDebug() << "Built file list with" << fileList.size() << "entries";
+
+        // Prepare the catalog file data, adding headers at the beginning (same as original)
+        fileList.prepend("<catalogID>"              + QString::number(ID));
+        fileList.prepend("<catalogAppVersion>"      + appVersion);
+        fileList.prepend("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString());
+        fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
+        fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
+        fileList.prepend("<catalogStorage>"         + storageName);
+        fileList.prepend("<catalogFileType>"        + fileType);
+        fileList.prepend("<catalogIncludeHidden>"   + QVariant(includeHidden).toString());
+        fileList.prepend("<catalogTotalFileSize>"   + QString::number(totalFileSize));
+        fileList.prepend("<catalogFileCount>"       + QString::number(fileCount));
+        fileList.prepend("<catalogSourcePath>"      + sourcePath);
+
+        qDebug() << "Added catalog headers, total lines:" << fileList.size();
+
+        // Write to file
+        filePath = collectionFolder + "/" + name + ".idx";
+        qDebug() << "Writing to file:" << filePath;
+
+        QFile fileOut(filePath);
+        if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
+            qDebug() << "ERROR: Failed to open file for writing:" << filePath;
+            return false;
+        }
+
+        QTextStream stream(&fileOut);
+        for (int i = 0; i < fileList.size(); ++i) {
+            stream << fileList.at(i) << '\n';
+        }
+
+        fileOut.close();
+
+        qDebug() << "File written successfully:" << filePath;
+        qDebug() << "=== Catalog::saveCatalogToFile() SUCCESS ===";
+        return true;
+
+    } catch (const std::exception& e) {
+        qDebug() << "=== EXCEPTION in saveCatalogToFile():" << e.what() << "===";
+        return false;
+    } catch (...) {
+        qDebug() << "=== UNKNOWN EXCEPTION in saveCatalogToFile() ===";
+        return false;
     }
-
-    QStringList filelist = fileListModel->stringList();
-    filePath = collectionFolder + "/" + name + ".idx";
-
-    QFile fileOut(filePath);
-    if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
-        return false; // Failed to open file
-    }
-
-    QTextStream stream(&fileOut);
-    for (int i = 0; i < filelist.size(); ++i) {
-        stream << filelist.at(i) << '\n';
-    }
-
-    fileOut.close();
-    return true; // Success
 }
 //--------------------------------------------------------------------------
 bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
@@ -1154,36 +1213,59 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
         return true; // Nothing to do for non-Memory mode
     }
 
-    // Get the folder list from database
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-    QString querySQL = QLatin1String(R"(
-                                SELECT
-                                    folder_catalog_id,
-                                    folder_path
-                                FROM folder
-                                WHERE folder_catalog_id=:folder_catalog_id
-                                        )");
-    query.prepare(querySQL);
-    query.bindValue(":folder_catalog_id", ID);
-    if (!query.exec()) {
-        return false; // Database query failed
-    }
+    qDebug() << "=== Catalog::saveFoldersToFile() START ===";
 
-    // Open output file
-    QFile fileOut(collectionFolder + "/" + name + ".folders.idx");
-    if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
-        return false; // Failed to open file
-    }
+    try {
+        // Get the folder list from database
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QString querySQL = QLatin1String(R"(
+                                    SELECT folder_path
+                                    FROM folder
+                                    WHERE folder_catalog_id = :folder_catalog_id
+                                    ORDER BY folder_path
+                                )");
+        query.prepare(querySQL);
+        query.bindValue(":folder_catalog_id", ID);
 
-    // Write data
-    QTextStream stream(&fileOut);
-    while(query.next()){
-        stream << query.value(0).toString() << '\t';
-        stream << query.value(1).toString() << '\n';
-    }
+        if (!query.exec()) {
+            qDebug() << "ERROR: Failed to query folders:" << query.lastError().text();
+            return false;
+        }
 
-    fileOut.close();
-    return true; // Success
+        // Build folder list
+        QStringList folderList;
+        while (query.next()) {
+            folderList << query.value(0).toString();
+        }
+
+        qDebug() << "Found" << folderList.size() << "folders to save";
+
+        // Write to file
+        QString foldersFilePath = collectionFolder + "/" + name + ".folders.idx";
+        QFile fileOut(foldersFilePath);
+        if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
+            qDebug() << "ERROR: Failed to open folders file:" << foldersFilePath;
+            return false;
+        }
+
+        QTextStream stream(&fileOut);
+        for (const QString &folder : folderList) {
+            stream << folder << '\n';
+        }
+
+        fileOut.close();
+
+        qDebug() << "Folders file written successfully:" << foldersFilePath;
+        qDebug() << "=== Catalog::saveFoldersToFile() SUCCESS ===";
+        return true;
+
+    } catch (const std::exception& e) {
+        qDebug() << "=== EXCEPTION in saveFoldersToFile():" << e.what() << "===";
+        return false;
+    } catch (...) {
+        qDebug() << "=== UNKNOWN EXCEPTION in saveFoldersToFile() ===";
+        return false;
+    }
 }
 
 //--------------------------------------------------------------------------

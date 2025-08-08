@@ -229,6 +229,7 @@ class MainWindow : public KXmlGuiWindow
             Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
             Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
+            Device *m_currentCatalogDevice = nullptr;
 
             //Collection
             void translateDefaultDevices();

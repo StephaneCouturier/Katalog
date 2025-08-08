@@ -204,28 +204,48 @@ CatalogJobStoppable* CatalogManager::getCurrentCatalogEngine() const
 
 void CatalogManager::onJobResult(KJob *job)
 {
+    qDebug() << "=== CatalogManager::onJobResult() ENTRY ===";
     qDebug() << "Catalog job result received, error:" << job->error();
 
-    if (job->error() == KJob::KilledJobError) {
-        setStatus("Catalog operation cancelled");
-        emit catalogOperationCancelled();
-    } else if (job->error()) {
-        QString errorMsg = QString("Catalog operation failed: %1").arg(job->errorString());
-        setStatus(errorMsg);
-        emit catalogOperationError(errorMsg);
-    } else {
-        QString operationType = (m_currentJob && m_currentJob->getOperationType() == CatalogJobStoppable::CreateCatalog) ? "creation" : "update";
-        setStatus(QString("Catalog %1 completed successfully!").arg(operationType));
-        emit catalogOperationCompleted();
+    try {
+        if (job->error() == KJob::KilledJobError) {
+            qDebug() << "Job was killed - emitting cancelled signal";
+            setStatus("Catalog operation cancelled");
+            emit catalogOperationCancelled();
+        } else if (job->error()) {
+            qDebug() << "Job failed with error:" << job->errorString();
+            QString errorMsg = QString("Catalog operation failed: %1").arg(job->errorString());
+            setStatus(errorMsg);
+            emit catalogOperationError(errorMsg);
+        } else {
+            qDebug() << "Job completed successfully - emitting completed signal";
+            QString operationType = (m_currentJob && m_currentJob->getOperationType() == CatalogJobStoppable::CreateCatalog) ?
+                                        "creation" : "update";
+            setStatus(QString("Catalog %1 completed successfully!").arg(operationType));
+
+            qDebug() << "About to emit catalogOperationCompleted()";
+            emit catalogOperationCompleted();
+            qDebug() << "catalogOperationCompleted() emitted successfully";
+        }
+
+        qDebug() << "Setting catalog operation running to false";
+        setCatalogOperationRunning(false);
+        setProgress(job->error() ? 0 : 100);
+        setCurrentCatalogName("");
+        setCurrentPath("");
+        m_isPaused = false;
+
+        qDebug() << "About to cleanup job";
+        cleanupJob();
+        qDebug() << "Job cleanup completed";
+
+    } catch (const std::exception& e) {
+        qDebug() << "=== EXCEPTION in onJobResult():" << e.what() << "===";
+    } catch (...) {
+        qDebug() << "=== UNKNOWN EXCEPTION in onJobResult() ===";
     }
 
-    setCatalogOperationRunning(false);
-    setProgress(job->error() ? 0 : 100);
-    setCurrentCatalogName("");
-    setCurrentPath("");
-    m_isPaused = false;
-
-    cleanupJob();
+    qDebug() << "=== CatalogManager::onJobResult() EXIT ===";
 }
 
 void CatalogManager::onJobPercent()

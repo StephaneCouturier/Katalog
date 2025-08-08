@@ -132,13 +132,16 @@ void CatalogJob::executeCatalogOperation()
     }
 
     try {
-        qDebug() << "Executing catalog operation...";
+        qDebug() << "=== CatalogJob::executeCatalogOperation() START ===";
 
         // Execute the catalog operation
-        m_catalogEngine->processCatalog(m_targetDevice);
+        qDebug() << "About to call m_catalogEngine->processCatalog()";
+        m_catalogEngine->processCatalog();
+        qDebug() << "m_catalogEngine->processCatalog() returned successfully";
 
         // Check if operation was stopped
         if (m_catalogEngine->wasStopRequested()) {
+            qDebug() << "Stop was requested during catalog operation";
             setError(KilledJobError);
             setErrorText("Catalog operation was cancelled");
             emitResult();
@@ -146,19 +149,29 @@ void CatalogJob::executeCatalogOperation()
         }
 
         // If we get here, catalog operation completed successfully
-        qDebug() << "Catalog job completed successfully!";
+        qDebug() << "=== Catalog job completed successfully! ===";
+
+        qDebug() << "About to emit catalogFinished()";
         emit catalogFinished();
+        qDebug() << "catalogFinished() emitted successfully";
+
+        qDebug() << "About to call emitResult()";
         emitResult();
+        qDebug() << "emitResult() called successfully";
 
     } catch (const std::exception &e) {
+        qDebug() << "=== EXCEPTION in executeCatalogOperation():" << e.what() << "===";
         setError(UserDefinedError);
         setErrorText(QString("Catalog operation failed: %1").arg(e.what()));
         emitResult();
     } catch (...) {
+        qDebug() << "=== UNKNOWN EXCEPTION in executeCatalogOperation() ===";
         setError(UserDefinedError);
         setErrorText("Catalog operation failed with unknown error");
         emitResult();
     }
+
+    qDebug() << "=== CatalogJob::executeCatalogOperation() END ===";
 }
 
 bool CatalogJob::doKill()

@@ -74,7 +74,7 @@ public:
      * @brief Main method to execute catalog operation
      * @param selectedDevice The device to process (usually same as configured device)
      */
-    void processCatalog(Device *selectedDevice);
+    void processCatalog();
 
     /**
      * @brief Stop the catalog operation
@@ -116,6 +116,12 @@ public:
      */
     QString getCurrentCatalogName() const { return currentCatalogName; }
 
+    /**
+     * @brief Complete catalog creation with all post-processing tasks
+     * @param device The device that was processed
+     */
+    void completeCatalogCreation();
+
     // Progress tracking properties (similar to SearchJobStoppable)
     qint64 estimatedTotalFiles = 0;
     qint64 filesProcessed = 0;
@@ -127,13 +133,13 @@ protected:
      * @brief Create catalog with progress reporting
      * @param device The device to create catalog for
      */
-    void createCatalogWithProgress(Device *device);
+    void createCatalogWithProgress();
 
     /**
      * @brief Update catalog with progress reporting
      * @param device The device to update catalog for
      */
-    void updateCatalogWithProgress(Device *device);
+    void updateCatalogWithProgress();
 
     /**
      * @brief Process directory recursively with progress updates
@@ -170,6 +176,10 @@ private:
     QAtomicInt m_paused{0};
     mutable QMutex m_pauseMutex;
     QAtomicInt m_objectValid{1};
+
+    QDateTime m_lastProgressEmit;
+    static const int PROGRESS_UPDATE_INTERVAL_MS = 500; // Update every 500ms max
+
 
 signals:
     /**
