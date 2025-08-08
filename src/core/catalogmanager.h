@@ -89,6 +89,7 @@ private slots:
     void onJobPercent();
     void onJobInfoMessage(KJob *job, const QString &message);
     void onFilesProcessedUpdate(qint64 processed, qint64 total, const QString &currentPath);
+    void onProgressDetailsUpdate(qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString &currentPath); // ADD THIS LINE
 
 private:
     void setCatalogOperationRunning(bool running);

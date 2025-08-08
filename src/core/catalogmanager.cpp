@@ -70,7 +70,7 @@ void CatalogManager::startCreateCatalog(Device *device, const QString &databaseM
     connect(m_currentJob, &KJob::percent, this, &CatalogManager::onJobPercent);
     connect(m_currentJob, &KJob::infoMessage, this, &CatalogManager::onJobInfoMessage);
     connect(m_currentJob, &CatalogJob::filesProcessedUpdate, this, &CatalogManager::onFilesProcessedUpdate);
-    connect(m_currentJob, &CatalogJob::progressDetailsUpdate, this, &CatalogManager::progressUpdate);
+    connect(m_currentJob, &CatalogJob::progressDetailsUpdate, this, &CatalogManager::onProgressDetailsUpdate);
 
     // Set initial state
     setCatalogOperationRunning(true);
@@ -108,7 +108,7 @@ void CatalogManager::startUpdateCatalog(Device *device, const QString &databaseM
     connect(m_currentJob, &KJob::percent, this, &CatalogManager::onJobPercent);
     connect(m_currentJob, &KJob::infoMessage, this, &CatalogManager::onJobInfoMessage);
     connect(m_currentJob, &CatalogJob::filesProcessedUpdate, this, &CatalogManager::onFilesProcessedUpdate);
-    connect(m_currentJob, &CatalogJob::progressDetailsUpdate, this, &CatalogManager::progressUpdate);
+    connect(m_currentJob, &CatalogJob::progressDetailsUpdate, this, &CatalogManager::onProgressDetailsUpdate);
 
     // Set initial state
     setCatalogOperationRunning(true);
@@ -346,4 +346,24 @@ void CatalogManager::cleanupJob()
         m_currentJob = nullptr;
         qDebug() << "CatalogManager::cleanupJob() - Job cleanup complete";
     }
+}
+
+void CatalogManager::onProgressDetailsUpdate(qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString &currentPath)
+{
+    // Guard against stale signals after job cleanup
+    if (!m_currentJob) {
+        qDebug() << "CatalogManager::onProgressDetailsUpdate() - Ignoring stale signal, no current job";
+        return;
+    }
+
+    qDebug() << "CatalogManager::onProgressDetailsUpdate() - Progress:" << progressPercent << "% Files:" << filesProcessed << "/" << totalFiles;
+
+    // Update internal state
+    setFilesProcessed(filesProcessed);
+    setTotalFiles(totalFiles);
+    setCurrentPath(currentPath);
+    setProgress(progressPercent);
+
+    // Emit the progress update signal for MainWindow
+    emit progressUpdate(filesProcessed, totalFiles, progressPercent, currentPath);
 }
