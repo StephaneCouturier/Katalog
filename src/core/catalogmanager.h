@@ -23,8 +23,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalogmanager.h
-// Purpose:     Class/model to manage catalog operations using KJob framework
-// Description: Manages catalog creation/update with progress reporting and cancellation
+// Purpose:     Manager for catalog operations (follows SearchManager pattern exactly)
+// Description: Provides clean UI interface for catalog creation/update operations
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
@@ -36,14 +36,13 @@
 #include <QObject>
 #include <QTimer>
 #include "catalogjob.h"
-
-class Catalog;
+#include "catalogjobstoppable.h"
 
 /**
  * @brief The CatalogManager class
  * Manages catalog creation/update operations using KJob framework
  * Provides a clean interface for the UI to interact with catalog jobs
- * Similar to SearchManager but for catalog operations
+ * Follows the exact same pattern as SearchManager for consistency
  */
 class CatalogManager : public QObject
 {
@@ -52,9 +51,10 @@ class CatalogManager : public QObject
     Q_PROPERTY(bool catalogOperationRunning READ catalogOperationRunning NOTIFY catalogOperationRunningChanged)
     Q_PROPERTY(int progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(QString status READ status NOTIFY statusChanged)
-    Q_PROPERTY(QString currentPath READ currentPath NOTIFY currentPathChanged)
+    Q_PROPERTY(QString currentCatalogName READ currentCatalogName NOTIFY currentCatalogNameChanged)
     Q_PROPERTY(qint64 filesProcessed READ filesProcessed NOTIFY filesProcessedChanged)
     Q_PROPERTY(qint64 totalFiles READ totalFiles NOTIFY totalFilesChanged)
+    Q_PROPERTY(QString currentPath READ currentPath NOTIFY currentPathChanged)
 
 public:
     explicit CatalogManager(QObject *parent = nullptr);
@@ -64,65 +64,64 @@ public:
     bool catalogOperationRunning() const { return m_catalogOperationRunning; }
     int progress() const { return m_progress; }
     QString status() const { return m_status; }
-    QString currentPath() const { return m_currentPath; }
+    QString currentCatalogName() const { return m_currentCatalogName; }
     qint64 filesProcessed() const { return m_filesProcessed; }
     qint64 totalFiles() const { return m_totalFiles; }
+    QString currentPath() const { return m_currentPath; }
 
-    // Get the current catalog being processed
-    Catalog* getCurrentCatalog() const;
-    Device* getCurrentDevice() const;
-
-public slots:
-    // Start catalog operations
-    //void startCreateCatalog(Catalog *catalog, const QString &databaseMode, const QString &collectionFolder);
-    //void startUpdateCatalog(Catalog *catalog, const QString &databaseMode, const QString &collectionFolder);
-    void startCreateCatalog(Device *device, const QString &databaseMode, const QString &collectionFolder);
-    void startUpdateCatalog(Device *device, const QString &databaseMode, const QString &collectionFolder);
-
-    // Control operations (placeholder for future stoppable implementation)
-    void stopOperation();
-    void pauseOperation();
-    void resumeOperation();
-
-private slots:
-    void onJobResult(KJob *job);
-    void onJobPercent();
-    void onJobInfoMessage(KJob *job, const QString &message);
-    void onFilesProcessedUpdate(qint64 processed, qint64 total, const QString &currentPath);
-    void onProgressDetailsUpdate(qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString &currentPath); // ADD THIS LINE
+    // Get the current catalog operation results
+    CatalogJobStoppable* getCurrentCatalogEngine() const;
 
 private:
     void setCatalogOperationRunning(bool running);
     void setProgress(int progress);
     void setStatus(const QString &status);
-    void setCurrentPath(const QString &path);
+    void setCurrentCatalogName(const QString &catalogName);
     void setFilesProcessed(qint64 processed);
     void setTotalFiles(qint64 total);
+    void setCurrentPath(const QString &path);
     void cleanupJob();
 
     CatalogJob *m_currentJob = nullptr;
     bool m_catalogOperationRunning = false;
     int m_progress = 0;
     QString m_status = "Ready";
-    QString m_currentPath;
+    QString m_currentCatalogName;
     qint64 m_filesProcessed = 0;
     qint64 m_totalFiles = 0;
+    QString m_currentPath;
     bool m_isPaused = false;
+
+public slots:
+    void startCatalogJobStoppable(CatalogJobStoppable *catalogEngine,
+                                  Device *targetDevice,
+                                  CatalogJobStoppable::OperationType operationType,
+                                  const QString &databaseMode,
+                                  const QString &collectionFolder);
+    void stopCatalogOperation();
+    void pauseCatalogOperation();
+    void resumeCatalogOperation();
+
+private slots:
+    void onJobResult(KJob *job);
+    void onJobPercent();
+    void onJobInfoMessage(KJob *job, const QString &message);
 
 signals:
     void catalogOperationRunningChanged();
     void progressChanged();
     void statusChanged();
-    void currentPathChanged();
+    void currentCatalogNameChanged();
     void filesProcessedChanged();
     void totalFilesChanged();
-    
+    void currentPathChanged();
+
     void catalogOperationCompleted();
     void catalogOperationCancelled();
     void catalogOperationError(const QString &error);
 
-    // Special progress update for status bar
-    void progressUpdate(qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString &currentPath);
+    // Special progress update for status bar (like SearchManager)
+    void specialProgressUpdate(qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString &currentPath);
 };
 
 #endif // CATALOGMANAGER_H

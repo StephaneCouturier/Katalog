@@ -72,8 +72,10 @@ set(CORE_HEADERS
     src/core/storage.h
     src/core/tag.h
     src/core/language.h
-    src/core/catalogmanager.h
     src/core/catalogjob.h
+    src/core/catalogjobstoppable.h
+    src/core/catalogmanager.h
+    src/core/catalogprogressmanager.h
 )
 
 set(CORE_SOURCES
@@ -92,7 +94,9 @@ set(CORE_SOURCES
     src/core/tag.cpp
     src/core/language.cpp
     src/core/catalogjob.cpp
+    src/core/catalogjobstoppable.cpp
     src/core/catalogmanager.cpp
+    src/core/catalogprogressmanager.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

@@ -23,159 +23,78 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalogjob.h
-// Purpose:     KJob implementation for catalog operations
-// Description: Handles catalog creation and update operations with progress reporting
+// Purpose:     KJob wrapper for catalog operations (follows SearchJob pattern exactly)
+// Description: Simple KJob implementation that wraps CatalogJobStoppable
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
 #ifndef CATALOGJOB_H
 #define CATALOGJOB_H
 
-
-#include "device.h"
+#pragma once
 
 #include <KJob>
-
-#include <QObject>
-#include <QThread>
-#include <QMutex>
 #include <QTimer>
-#pragma once
+#include <QMutex>
+#include "catalogjobstoppable.h"
+#include "device.h"
 
 /**
  * @brief The CatalogJob class
- * KJob implementation for catalog creation and update operations
- * Provides progress reporting and will support cancellation in the future
+ * KJob implementation for catalog operations
+ * Follows the exact same pattern as SearchJob for consistency and reliability
  */
 class CatalogJob : public KJob
 {
     Q_OBJECT
 
 public:
-    enum OperationType {
-        CreateCatalog,
-        UpdateCatalog
-    };
+    explicit CatalogJob(QObject *parent = nullptr);
 
-    /**
-     * @brief Constructor for CatalogJob
-     * @param device The device (with catalog) to operate on
-     * @param operationType Whether to create or update the catalog
-     * @param databaseMode Database mode (e.g., "Memory")
-     * @param collectionFolder Path to the collection folder
-     * @param parent Parent QObject
-     */
-    explicit CatalogJob(Device *device,
-                        OperationType operationType,
-                        const QString &databaseMode,
-                        const QString &collectionFolder,
-                        QObject *parent = nullptr);
+    // Configure the catalog job
+    void setCatalogJobStoppable(CatalogJobStoppable *catalogEngine);
+    void setTargetDevice(Device *device);
+    void setOperationType(CatalogJobStoppable::OperationType operationType);
+    void setDatabaseMode(const QString &databaseMode);
+    void setCollectionFolder(const QString &collectionFolder);
 
-    ~CatalogJob();
+    // Public method to start the job
+    void startJob();
 
-    /**
-     * @brief Start the catalog operation
-     * Reimplemented from KJob
-     */
-    void start() override;
+    // Get the catalog engine
+    CatalogJobStoppable* getCatalogEngine() const { return m_catalogEngine; }
 
-    /**
-     * @brief Get the device being processed
-     * @return Pointer to the device
-     */
-    Device* getDevice() const { return m_device; }
+    // Get the target device
+    Device* getTargetDevice() const { return m_targetDevice; }
 
-    /**
-     * @brief Get the operation type
-     * @return The type of operation (create or update)
-     */
-    OperationType getOperationType() const { return m_operationType; }
-
-protected:
-    /**
-     * @brief Kill/stop the job (from KJob interface)
-     * @return true if job was successfully killed
-     */
-    bool doKill() override;
-
-protected:
-    /**
-     * @brief Main work method executed in separate thread
-     */
-    void doWork();
-
-    /**
-     * @brief Update progress during file processing
-     * @param filesProcessed Number of files processed so far
-     * @param totalFiles Total number of files to process
-     * @param currentPath Current file/directory being processed
-     */
-    void updateProgress(qint64 filesProcessed, qint64 totalFiles, const QString &currentPath);
-
-    /**
-     * @brief Calculate percentage progress
-     * @param processed Files processed
-     * @param total Total files
-     * @return Percentage (0-100)
-     */
-    int calculateProgressPercent(qint64 processed, qint64 total) const;
-
-private slots:
-    /**
-     * @brief Handle progress updates from catalog operations
-     */
-    void onProgressUpdate(qint64 filesProcessed, qint64 totalFiles, const QString &currentPath);
-
-    /**
-     * @brief Periodically update job percentage
-     */
-    void updateJobProgress();
-    void createCatalogWithProgress();
+    // Get operation type
+    CatalogJobStoppable::OperationType getOperationType() const { return m_operationType; }
 
 private:
-    Device *m_device;
-    OperationType m_operationType;
+    CatalogJobStoppable *m_catalogEngine = nullptr;
+    Device *m_targetDevice = nullptr;
+    CatalogJobStoppable::OperationType m_operationType = CatalogJobStoppable::CreateCatalog;
     QString m_databaseMode;
     QString m_collectionFolder;
+    QTimer *m_executeTimer = nullptr;
+    QMutex m_mutex;
+    bool m_suspended = false;
+    qint64 m_lastFilesProcessed = 0;
 
-    // Progress tracking
-    qint64 m_filesProcessed = 0;
-    qint64 m_totalFiles = 0;
-    QString m_currentPath;
-    QTimer *m_progressTimer;
-
-    // Threading
-    QMutex m_progressMutex;
-
-    // Operation state
-    bool m_operationStarted = false;
-    bool m_stopRequested = false;
-
-signals:
-    /**
-     * @brief Signal emitted when files processed count updates
-     * @param filesProcessed Number of files processed
-     * @param totalFiles Total number of files
-     * @param currentPath Current file/directory path
-     */
-    void filesProcessedUpdate(qint64 filesProcessed, qint64 totalFiles, const QString &currentPath);
-
-    /**
-     * @brief Signal for detailed progress information
-     * Used by CatalogManager to update UI
-     */
-    void progressDetailsUpdate(qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString &currentPath);
-
-    /**
-     * @brief Internal signal to trigger work in worker thread
-     */
-    void startWork();
+protected:
+    void start() override;
+    bool doKill() override;
+    bool doSuspend() override;
+    bool doResume() override;
 
 private slots:
-    /**
-     * @brief Slot called when worker thread encounters an error
-     */
-    void onWorkError(const QString &errorMessage);
+    void onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString &currentPath);
+    void executeCatalogOperation();
+
+signals:
+    void catalogStarted();
+    void catalogFinished();
+    void catalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString &currentPath);
 };
 
 #endif // CATALOGJOB_H

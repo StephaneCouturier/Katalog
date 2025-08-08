@@ -33,13 +33,15 @@
 #include "core/database.h"
 #include "core/language.h"
 #include "core/catalogmanager.h"
+#include "core/catalogjobstoppable.h"
+#include "core/catalogprogressmanager.h"
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)
 {
     //Set current version, release date, and development mode
     currentVersion  = "2.7";
-    releaseDate     = "2025-07-27";
+    releaseDate     = "2025-08-08";
 
     // Initialize objects first
     collection = new Collection();
@@ -54,6 +56,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     searchProgressManager = nullptr;
     searchProcess = nullptr;
     isSearchRunning = false;
+
+    // Initialize catalog-related pointers
+    catalogManager = nullptr;
+    catalogProgressManager = nullptr;
+    catalogJobStoppable = nullptr;
 
     //Default UI settings
         themeID = 1; //default theme is Katalog Colors
@@ -243,40 +250,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             loadStorageList();
 
             //Set up a catalog manager for creation and updates
-            catalogManager = new CatalogManager(this);
-            connect(catalogManager, &CatalogManager::progressUpdate,
-                    this, &MainWindow::updateStatusBarFromCatalogManager);
-            connect(catalogManager, &CatalogManager::progressChanged,
-                    this, &MainWindow::updateStatusBarFromCatalogManager);
-            connect(catalogManager, &CatalogManager::statusChanged,
-                    this, &MainWindow::updateStatusBarFromCatalogManager);
-            connect(catalogManager, &CatalogManager::filesProcessedChanged,
-                    this, &MainWindow::updateStatusBarFromCatalogManager);
-            connect(catalogManager, &CatalogManager::totalFilesChanged,
-                    this, &MainWindow::updateStatusBarFromCatalogManager);
-            connect(catalogManager, &CatalogManager::currentPathChanged,
-                    this, &MainWindow::updateStatusBarFromCatalogManager);
-            connect(catalogManager, &CatalogManager::catalogOperationCompleted,
-                    this, &MainWindow::onCatalogOperationCompleted);
-            connect(catalogManager, &CatalogManager::catalogOperationRunningChanged,
-                    this, [this]() {
-                        if (catalogManager->catalogOperationRunning()) {
-                            // Stop any existing status bar timer during catalog operations
-                            if (statusBarTimer) {
-                                statusBarTimer->stop();
-                            }
-                        }
-                    });
-            connect(catalogManager, &CatalogManager::catalogOperationError,
-                    this, [this](const QString &error) {
-                        restoreCreateCatalogUIState();
-                        QMessageBox::warning(this, "Katalog", tr("Catalog creation failed: %1").arg(error));
-                    });
-            connect(catalogManager, &CatalogManager::catalogOperationCancelled,
-                    this, [this]() {
-                        qDebug() << "Catalog operation was cancelled - restoring UI state";
-                        restoreCreateCatalogUIState();
-                    });
+            setupCatalogManager();
 
         //Setup tab: Tags
             //Set Default path to scan
@@ -403,6 +377,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
 MainWindow::~MainWindow()
 {
+    if (catalogJobStoppable) {
+        catalogJobStoppable->stopCatalogOperation();
+        catalogJobStoppable->deleteLater();
+    }
+
     qDebug() << "=== Testing selectedDevice only ===";
     // delete collection;  // Comment out
     delete selectedDevice;  // Test this alone

@@ -204,16 +204,16 @@
             qDebug() << "Before stop - Catalog operation running:" << catalogManager->catalogOperationRunning();
         }
 
-        // Stop any running catalog operation
+        // Stop any running catalog operation using the new interface
         if (catalogManager && catalogManager->catalogOperationRunning()) {
-            qDebug() << "Stopping active catalog operation via CatalogManager";
-            catalogManager->stopOperation();
+            qDebug() << "Stopping active catalog operation via new CatalogManager";
+            catalogManager->stopCatalogOperation();  // NEW: Use the new method name
 
             // IMMEDIATE UI FEEDBACK: Just disable the stop button to show it was clicked
             ui->Create_pushButton_Stop->setEnabled(false);
 
             // DON'T restore full UI state here - let the cancelled signal handler do it
-            // restoreCreateCatalogUIState(); // ← REMOVE THIS LINE
+            // The new system will emit catalogOperationCancelled which restores UI state
 
         } else {
             qDebug() << "No active catalog operation, but user clicked Stop - just reset buttons";
@@ -221,7 +221,6 @@
         }
 
         qDebug() << "=== Create Stop button clicked complete ===";
-        // restoreCreateCatalogUIState(); // ← REMOVE THIS LINE TOO
     }
 
 //Methods-----------------------------------------------------------------------
@@ -254,6 +253,65 @@
             ui->Filters_treeView_Directory->setColumnHidden(3,true);
             ui->Filters_treeView_Directory->setHeaderHidden(true);
             ui->Filters_treeView_Directory->expandToDepth(1);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::setupCatalogManager()
+    {
+        qDebug() << "Setting up new catalog manager system...";
+
+        // Create the new catalog manager
+        catalogManager = new CatalogManager(this);
+
+        // Create the catalog progress manager
+        catalogProgressManager = new CatalogProgressManager(this);
+        catalogProgressManager->setCatalogManager(catalogManager);
+        catalogProgressManager->setStatusBar(statusBar());
+
+        // Connect catalog manager signals (same as before but using new system)
+        connect(catalogManager, &CatalogManager::specialProgressUpdate,
+                this, &MainWindow::updateStatusBarFromCatalogManager);
+        connect(catalogManager, &CatalogManager::progressChanged,
+                this, &MainWindow::updateStatusBarFromCatalogManager);
+        connect(catalogManager, &CatalogManager::statusChanged,
+                this, &MainWindow::updateStatusBarFromCatalogManager);
+        connect(catalogManager, &CatalogManager::filesProcessedChanged,
+                this, &MainWindow::updateStatusBarFromCatalogManager);
+        connect(catalogManager, &CatalogManager::totalFilesChanged,
+                this, &MainWindow::updateStatusBarFromCatalogManager);
+        connect(catalogManager, &CatalogManager::currentPathChanged,
+                this, &MainWindow::updateStatusBarFromCatalogManager);
+
+        connect(catalogManager, &CatalogManager::catalogOperationCompleted,
+                this, &MainWindow::onCatalogOperationCompleted);
+
+        connect(catalogManager, &CatalogManager::catalogOperationRunningChanged,
+                this, [this]() {
+                    if (catalogManager->catalogOperationRunning()) {
+                        // Stop any existing status bar timer during catalog operations
+                        if (statusBarTimer) {
+                            statusBarTimer->stop();
+                        }
+
+                        // Update progress manager with current catalog engine
+                        if (catalogProgressManager && catalogManager->getCurrentCatalogEngine()) {
+                            catalogProgressManager->setCurrentCatalogEngine(catalogManager->getCurrentCatalogEngine());
+                        }
+                    }
+                });
+
+        connect(catalogManager, &CatalogManager::catalogOperationError,
+                this, [this](const QString &error) {
+                    restoreCreateCatalogUIState();
+                    QMessageBox::warning(this, "Katalog", tr("Catalog creation failed: %1").arg(error));
+                });
+
+        connect(catalogManager, &CatalogManager::catalogOperationCancelled,
+                this, [this]() {
+                    restoreCreateCatalogUIState();
+                    QMessageBox::information(this, "Katalog", tr("Catalog operation was cancelled."));
+                });
+
+        qDebug() << "New catalog manager system setup complete";
     }
     //--------------------------------------------------------------------------
     void MainWindow::createCatalog()
@@ -293,37 +351,16 @@
             }
         }
 
-        // Create new device and catalog (following existing pattern)
+        // Create new device and catalog (same as before)
         Device *newDevice = new Device();
-        newDevice->generateDeviceID();
         newDevice->type = "Catalog";
-        newDevice->name = ui->Create_lineEdit_NewCatalogName->text();
-
-        // Check if name already exists
-        if (newDevice->verifyDeviceNameExists()) {
-            QMessageBox::warning(this, "Katalog",
-                                 tr("There is already a catalog with this name: %1").arg(newDevice->name));
-            delete newDevice;
-            restoreCreateCatalogUIState();
-            return;
-        }
-
-        // Set up device properties (from existing createCatalog)
-        newDevice->catalog->name = newDevice->name;  // *** ADD THIS LINE ***
+        newDevice->groupID = 1;
         newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
-        newDevice->catalog->generateID();
-        newDevice->externalID = newDevice->catalog->ID;
-        newDevice->groupID = 0;
-        newDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
-        newDevice->insertDevice();
-
-        // Configure catalog properties
-        newDevice->catalog->filePath = collection->folder + "/" + newDevice->name + ".idx";
+        newDevice->catalog = new Catalog(this);
+        newDevice->catalog->name = ui->Create_lineEdit_NewCatalogName->text();
         newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
         newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
-        newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
         newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
-        newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
         newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
         newDevice->catalog->appVersion = currentVersion;
 
@@ -343,9 +380,31 @@
         // Save catalog to database
         newDevice->catalog->insertCatalog();
 
-        // Use CatalogManager for asynchronous work
-        qDebug() << "About to start catalog creation for:" << newDevice->catalog->name;
-        catalogManager->startCreateCatalog(newDevice, collection->databaseMode, collection->folder);
+        // NEW: Use the new catalog system directly instead of startCreateCatalog()
+        qDebug() << "About to start catalog creation using new system for:" << newDevice->catalog->name;
+
+        if (!catalogManager) {
+            qDebug() << "ERROR: Catalog manager not initialized";
+            restoreCreateCatalogUIState();
+            return;
+        }
+
+        // Create a new catalog job stoppable for this operation
+        catalogJobStoppable = new CatalogJobStoppable(this);
+
+        // Update progress manager with the new engine
+        if (catalogProgressManager) {
+            catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+        }
+
+        // Start the catalog operation using the new interface directly
+        catalogManager->startCatalogJobStoppable(
+            catalogJobStoppable,
+            newDevice,
+            CatalogJobStoppable::CreateCatalog,
+            collection->databaseMode,
+            collection->folder
+            );
 
         // Reload UI
         loadDevicesView("");
@@ -354,71 +413,29 @@
         //Change back mouse cursor
         QApplication::restoreOverrideCursor();
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::updateStatusBarFromCatalogManager()
     {
-        qDebug() << "updateStatusBarFromCatalogManager() called";
+        // SIMPLIFIED: The CatalogProgressManager now handles all status bar updates automatically
+        // This method can be removed or simplified to just defer to the progress manager
 
-        if (!catalogManager) {
-            qDebug() << "No catalogManager - showing Ready";
-            statusBar()->showMessage(tr("Ready"));
-            return;
-        }
-
-        QString statusMessage;
-        qDebug() << "CatalogManager state - Running:" << catalogManager->catalogOperationRunning()
-                 << "Progress:" << catalogManager->progress()
-                 << "FilesProcessed:" << catalogManager->filesProcessed()
-                 << "TotalFiles:" << catalogManager->totalFiles();
-
-        if (catalogManager->catalogOperationRunning()) {
-            // Build dynamic status message while catalog operation is running
-
-            if (catalogManager->totalFiles() > 0 && catalogManager->filesProcessed() >= 0) {
-                // Show detailed progress with your requested format:
-                // "Files processed: 500 | Total files: 50,000 | Progress: 1% | path_of_last_file_added"
-                statusMessage = QString("Files processed: %1 | Total files: %2 | Progress: %3%")
-                                    .arg(QLocale().toString(catalogManager->filesProcessed()))
-                                    .arg(QLocale().toString(catalogManager->totalFiles()))
-                                    .arg(catalogManager->progress());
-
-                // Add current path if available
-                if (!catalogManager->currentPath().isEmpty()) {
-                    statusMessage += QString(" | %1").arg(catalogManager->currentPath());
-                }
-            } else {
-                // Fallback to basic status during initial phases
-                statusMessage = catalogManager->status();
-
-                // Add progress percentage if available
-                if (catalogManager->progress() > 0) {
-                    statusMessage += QString(" (%1%)").arg(catalogManager->progress());
-                }
-            }
+        if (catalogProgressManager) {
+            // Let the progress manager handle the status bar updates
+            catalogProgressManager->updateFromCatalogManager();
         } else {
-            // Catalog operation not running - show final status or ready state
-            if (catalogManager->status() == "Ready") {
-                statusMessage = tr("Ready");
-            } else {
-                // Show completion status or error
-                statusMessage = catalogManager->status();
-
-                // If we have final file counts, show them
-                if (catalogManager->totalFiles() > 0) {
-                    statusMessage += QString(" | Files processed: %1")
-                    .arg(QLocale().toString(catalogManager->totalFiles()));
-                }
+            // Fallback for basic status if progress manager is not available
+            if (!catalogManager) {
+                statusBar()->showMessage(tr("Ready"));
+                return;
             }
+
+            QString statusMessage = catalogManager->catalogOperationRunning()
+                                        ? catalogManager->status()
+                                        : tr("Ready");
+            statusBar()->showMessage(statusMessage);
         }
-
-        qDebug() << "Setting status bar message:" << statusMessage;
-
-        // Status Bar handling
-        statusBar()->show();
-        statusBar()->showMessage(statusMessage, 0);  // 0 = no timeout, don't auto-clear
-        QCoreApplication::processEvents();  // Force immediate UI update
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::onCatalogOperationCompleted()
     {
         qDebug() << "onCatalogOperationCompleted() called";
@@ -583,7 +600,7 @@
 
         restoreCreateCatalogUIState();
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::restoreCreateCatalogUIState()
     {
         // Restore UI to idle state
@@ -592,3 +609,96 @@
         ui->Create_pushButton_Stop->setEnabled(false);
         qDebug() << "Create catalog UI state restored to idle";
     }
+
+
+    // void MainWindow::updateCatalog(Device *device)  // If this method exists
+    // {
+    //     qDebug() << "MainWindow::updateCatalog() - Using new catalog system";
+
+    //     if (!catalogManager) {
+    //         qDebug() << "ERROR: Catalog manager not initialized";
+    //         return;
+    //     }
+
+    //     // Create a new catalog job stoppable for this operation
+    //     catalogJobStoppable = new CatalogJobStoppable(this);
+
+    //     // Update progress manager with the new engine
+    //     if (catalogProgressManager) {
+    //         catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+    //     }
+
+    //     // Start the catalog update using the new interface directly
+    //     catalogManager->startCatalogJobStoppable(
+    //         catalogJobStoppable,
+    //         device,
+    //         CatalogJobStoppable::UpdateCatalog,
+    //         collection->databaseMode,
+    //         collection->folder
+    //         );
+    // }
+
+
+
+    // void MainWindow::startCreateCatalog(Device *device, const QString &databaseMode, const QString &collectionFolder)
+    // {
+    //     qDebug() << "MainWindow::startCreateCatalog() - Using new catalog system";
+
+    //     if (!catalogManager) {
+    //         qDebug() << "ERROR: Catalog manager not initialized";
+    //         return;
+    //     }
+
+    //     // Create a new catalog job stoppable for this operation
+    //     catalogJobStoppable = new CatalogJobStoppable(this);
+
+    //     // Update progress manager with the new engine
+    //     if (catalogProgressManager) {
+    //         catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+    //     }
+
+    //     // Start the catalog operation using the new interface
+    //     catalogManager->startCatalogJobStoppable(
+    //         catalogJobStoppable,
+    //         device,
+    //         CatalogJobStoppable::CreateCatalog,
+    //         databaseMode,
+    //         collectionFolder
+    //         );
+    // }
+
+    // void MainWindow::startUpdateCatalog(Device *device, const QString &databaseMode, const QString &collectionFolder)
+    // {
+    //     qDebug() << "MainWindow::startUpdateCatalog() - Using new catalog system";
+
+    //     if (!catalogManager) {
+    //         qDebug() << "ERROR: Catalog manager not initialized";
+    //         return;
+    //     }
+
+    //     // Create a new catalog job stoppable for this operation
+    //     catalogJobStoppable = new CatalogJobStoppable(this);
+
+    //     // Update progress manager with the new engine
+    //     if (catalogProgressManager) {
+    //         catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+    //     }
+
+    //     // Start the catalog operation using the new interface
+    //     catalogManager->startCatalogJobStoppable(
+    //         catalogJobStoppable,
+    //         device,
+    //         CatalogJobStoppable::UpdateCatalog,
+    //         databaseMode,
+    //         collectionFolder
+    //         );
+    // }
+
+    // void MainWindow::stopCatalogOperation()
+    // {
+    //     qDebug() << "MainWindow::stopCatalogOperation() - Using new catalog system";
+
+    //     if (catalogManager) {
+    //         catalogManager->stopCatalogOperation();
+    //     }
+    // }
