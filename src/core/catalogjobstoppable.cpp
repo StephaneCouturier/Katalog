@@ -179,7 +179,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
     qDebug() << "Estimated total files:" << estimatedTotalFiles;
 
     qDebug() << "Step 3: Estimating total files...";
-    emitProgressUpdate(0, 0, "Estimating total files...");
+    emitProgressUpdate(0, 0, "Starting file count estimation...");
 
     auto startTime = QDateTime::currentDateTime();
     estimatedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
@@ -324,6 +324,9 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     // Progress tracking (separate from database batching)
     qint64 filesProcessedInThisCall = 0;
 
+    // Emit the transition message once
+    emitProgressUpdate(0, estimatedTotalFiles, "Processing files...");
+
     while (it.hasNext() && shouldContinue()) {
         waitIfPaused();
 
@@ -355,7 +358,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         // *** KEY FIX: Simple progress updates every 250 files (like working version) ***
         if (filesProcessedInThisCall % 250 == 0) {
             emitProgressUpdate(processedCount, estimatedTotalFiles, fileInfo.absoluteFilePath());
-            QCoreApplication::processEvents(); // Keep UI responsive like working version
+            QCoreApplication::processEvents();
         }
 
         // Database batching (separate from progress reporting)
@@ -521,6 +524,8 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
             QCoreApplication::processEvents(); // Allow UI updates during estimation
         }
     }
+
+    emitProgressUpdate(totalFiles, totalFiles, QString("Found %1 files. Starting processing...").arg(totalFiles));
 
     return totalFiles;
 }

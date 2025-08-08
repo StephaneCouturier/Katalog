@@ -714,7 +714,6 @@
             QFile::moveToTrash(fileFullPath, &pathInTrash);
 
             // Remove file from database
-
             // QSqlQuery query(QSqlDatabase::database("defaultConnection"));
             // query.prepare("DELETE FROM file WHERE file_full_path = :file_full_path");
             // query.bindValue(":file_full_path", fileFullPath);
@@ -731,9 +730,9 @@
             // qDebug() << "File moved to trash at:" << pathInTrash;
 
             // Refresh model
-            removeFileFromResults(fileFullPath);
+            //removeFileFromResults(fileFullPath);
             // Refresh the search results
-            displaySearchResults();
+            //displaySearchResults();
 
             return pathInTrash;
         }

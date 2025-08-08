@@ -265,36 +265,23 @@
         // Create the new catalog manager
         catalogManager = new CatalogManager(this);
 
-        // Create catalog progress manager with timer reference (like SearchProgressManager)
+        // Create catalog progress manager with timer reference
         catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, this);
         catalogProgressManager->setCatalogManager(catalogManager);
 
-        // Remove the timer management from catalogOperationRunningChanged since
-        // CatalogProgressManager now handles it internally
-        connect(catalogManager, &CatalogManager::catalogOperationRunningChanged,
-                this, [this]() {
-                    // Update progress manager with current catalog engine
-                    if (catalogManager->catalogOperationRunning()) {
-                        if (catalogProgressManager && catalogManager->getCurrentCatalogEngine()) {
-                            catalogProgressManager->setCurrentCatalogEngine(catalogManager->getCurrentCatalogEngine());
-                        }
-                    }
-                    // Note: Timer management is now handled by CatalogProgressManager directly
-                });
-
-        // Connect catalog manager signals
+        // Connect signals
         connect(catalogManager, &CatalogManager::catalogOperationCompleted,
                 this, &MainWindow::onCatalogOperationCompleted);
 
         connect(catalogManager, &CatalogManager::catalogOperationError,
                 this, [this](const QString &error) {
-                    restoreCreateCatalogUIState();
+                    cleanupStoppedCatalogCreation();
                     QMessageBox::warning(this, "Katalog", tr("Catalog creation failed: %1").arg(error));
                 });
 
         connect(catalogManager, &CatalogManager::catalogOperationCancelled,
                 this, [this]() {
-                    restoreCreateCatalogUIState();
+                    cleanupStoppedCatalogCreation();
                     QMessageBox::information(this, "Katalog", tr("Catalog operation was cancelled."));
                 });
 
@@ -551,3 +538,39 @@
         ui->Create_pushButton_Stop->setEnabled(false);
         qDebug() << "Create catalog UI state restored to idle";
     }
+    //--------------------------------------------------------------------------
+    void MainWindow::cleanupStoppedCatalogCreation()
+    {
+        qDebug() << "=== cleanupFailedCatalogCreation() START ===";
+
+        // Use the device reference we stored when starting the operation
+        if (m_currentCatalogDevice) {
+            qDebug() << "Cleaning up failed catalog creation for device:" << m_currentCatalogDevice->name;
+
+            // Use the existing backend method to delete the device (no UI confirmation)
+            bool success = DeviceUIWrapper::deleteDeviceWithUI(m_currentCatalogDevice, false);
+
+            if (success) {
+                qDebug() << "Device deleted successfully";
+            } else {
+                qDebug() << "Failed to delete device";
+            }
+
+            // Clear the reference
+            m_currentCatalogDevice = nullptr;
+        } else {
+            qDebug() << "No device to cleanup";
+        }
+
+        // Refresh UI
+        loadDevicesView("");
+        loadStorageList();
+
+        // Restore UI state
+        QApplication::restoreOverrideCursor();
+        ui->Create_pushButton_CreateCatalog->setEnabled(true);
+        ui->Create_pushButton_Stop->setEnabled(false);
+
+        qDebug() << "=== cleanupFailedCatalogCreation() COMPLETE ===";
+    }
+    //--------------------------------------------------------------------------

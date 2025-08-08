@@ -81,16 +81,26 @@ void CatalogProgressManager::updateFromCatalogManager()
     QString message;
 
     if (m_catalogManager->catalogOperationRunning()) {
-        // Active catalog operation - build detailed progress message
-        if (m_catalogManager->totalFiles() > 0 && m_catalogManager->filesProcessed() >= 0) {
-            // Detailed progress format
+
+        // Simple detection: if totalFiles is 0 AND path contains "Estimating", we're counting
+        if (m_catalogManager->totalFiles() == 0 &&
+            !m_catalogManager->currentPath().isEmpty() &&
+            m_catalogManager->currentPath().contains("Estimating")) {
+
+            // COUNTING PHASE: Just show the estimation message
+            message = m_catalogManager->currentPath(); // "Estimating... X files found"
+
+        } else if (m_catalogManager->totalFiles() > 0) {
+
+            // PROCESSING PHASE: Show detailed progress
             message = QString("Files processed: %1 | Total files: %2 | Progress: %3%")
                           .arg(QLocale().toString(m_catalogManager->filesProcessed()))
                           .arg(QLocale().toString(m_catalogManager->totalFiles()))
                           .arg(m_catalogManager->progress());
 
-            // Add current path if available
-            if (!m_catalogManager->currentPath().isEmpty()) {
+            // Add current file path
+            if (!m_catalogManager->currentPath().isEmpty() &&
+                !m_catalogManager->currentPath().contains("Estimating")) {
                 QString displayPath = m_catalogManager->currentPath();
                 if (displayPath.length() > 60) {
                     displayPath = "..." + displayPath.right(57);
@@ -98,42 +108,31 @@ void CatalogProgressManager::updateFromCatalogManager()
                 message += QString(" | %1").arg(displayPath);
             }
 
-            // Add catalog name prefix
-            if (!m_catalogManager->currentCatalogName().isEmpty()) {
-                message = QString("Catalog: %1 | %2")
-                .arg(m_catalogManager->currentCatalogName())
-                    .arg(message);
-            }
         } else {
-            // Fallback to basic status during initial phases
+            // Fallback
             message = m_catalogManager->status();
-            if (m_catalogManager->progress() > 0) {
-                message += QString(" (%1%)").arg(m_catalogManager->progress());
-            }
-            if (!m_catalogManager->currentCatalogName().isEmpty()) {
-                message = QString("Catalog: %1 | %2")
-                .arg(m_catalogManager->currentCatalogName())
-                    .arg(message);
-            }
         }
 
-        // Show status bar without timeout during catalog operation (like SearchProgressManager)
+        // Add catalog name prefix
+        if (!m_catalogManager->currentCatalogName().isEmpty()) {
+            message = QString("Catalog: %1 | %2")
+            .arg(m_catalogManager->currentCatalogName())
+                .arg(message);
+        }
+
         m_statusBar->show();
         m_statusBar->showMessage(message);
 
-        // Stop any existing timer during catalog operation
         if (m_statusBarTimer) {
             m_statusBarTimer->stop();
         }
 
     } else {
-        // Catalog operation not running - show final status
+        // Not running - existing code
         if (m_catalogManager->status() == "Ready") {
             message = tr("Ready for catalog operations");
         } else {
             message = m_catalogManager->status();
-
-            // Add final file count for successful completions
             if (message.contains("completed successfully", Qt::CaseInsensitive) &&
                 m_catalogManager->filesProcessed() > 0) {
                 message += QString(" | %1 files processed")
@@ -141,11 +140,9 @@ void CatalogProgressManager::updateFromCatalogManager()
             }
         }
 
-        // Show completion message
         m_statusBar->show();
         m_statusBar->showMessage(message);
 
-        // Start timer when catalog operation completes (like SearchProgressManager)
         if (m_statusBarTimer) {
             m_statusBarTimer->start(5000);
         }
