@@ -107,9 +107,9 @@ public:
     void setProgressRefreshRate(int rate) { progressRefreshRate = rate; }
 
     /**
-     * @brief Get estimated total files for progress calculation
+     * @brief Get counted total files for progress calculation
      */
-    qint64 getEstimatedTotalFiles() const { return estimatedTotalFiles; }
+    qint64 getCountedTotalFiles() const { return countedTotalFiles; }
 
     /**
      * @brief Get current catalog name being processed
@@ -123,7 +123,7 @@ public:
     void completeCatalogCreation();
 
     // Progress tracking properties (similar to SearchJobStoppable)
-    qint64 estimatedTotalFiles = 0;
+    qint64 countedTotalFiles = 0;
     qint64 filesProcessed = 0;
     QString currentCatalogName;
     int progressRefreshRate = 100; // Progress update frequency
@@ -155,7 +155,7 @@ protected:
      * @brief Count total files in directory for progress estimation
      * @param directory Directory to count
      * @param catalog Catalog with file type filters
-     * @return Estimated total file count
+     * @return counted total file count
      */
     qint64 countTotalFiles(const QString &directory, Catalog *catalog);
 

@@ -69,7 +69,7 @@ void CatalogJobStoppable::configureOperation(Device *device,
     // Reset state
     m_stopRequested.storeRelease(0);
     m_paused.storeRelease(0);
-    estimatedTotalFiles = 0;
+    countedTotalFiles = 0;
     filesProcessed = 0;
     currentCatalogName = device ? device->catalog->name : QString();
 
@@ -173,20 +173,15 @@ void CatalogJobStoppable::createCatalogWithProgress()
     qDebug() << "File extensions loaded, excluded folders loaded";
 
     // Count total files for progress calculation
-    qDebug() << "Counting total files...";
-    emitProgressUpdate(0, 0, "Counting total files...");
-    estimatedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
-    qDebug() << "Counted total files:" << estimatedTotalFiles;
-
     qDebug() << "Step 3: Counting total files...";
     emitProgressUpdate(0, 0, "Starting file counting...");
 
     auto startTime = QDateTime::currentDateTime();
-    estimatedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
+    countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
     auto endTime = QDateTime::currentDateTime();
 
-    qDebug() << "Estimation completed in" << startTime.msecsTo(endTime) << "ms";
-    qDebug() << "Estimated total files:" << estimatedTotalFiles;
+    qDebug() << "Counting completed in" << startTime.msecsTo(endTime) << "ms";
+    qDebug() << "Counting total files:" << countedTotalFiles;
 
     if (!shouldContinue()) {
         qDebug() << "Stop requested during estimation";
@@ -225,7 +220,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
 
     // Final progress update
     qDebug() << "About to emit final progress update";
-    emitProgressUpdate(processedCount, estimatedTotalFiles, "Catalog creation completed");
+    emitProgressUpdate(processedCount, countedTotalFiles, "Catalog creation completed");
     qDebug() << "Final progress update emitted";
 
     qDebug() << "=== CatalogJobStoppable::createCatalogWithProgress() completed successfully ===";
@@ -325,7 +320,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     qint64 filesProcessedInThisCall = 0;
 
     // Emit the transition message once
-    emitProgressUpdate(0, estimatedTotalFiles, "Processing files...");
+    emitProgressUpdate(0, countedTotalFiles, "Processing files...");
 
     while (it.hasNext() && shouldContinue()) {
         waitIfPaused();
@@ -357,7 +352,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
         // *** KEY FIX: Simple progress updates every 250 files (like working version) ***
         if (filesProcessedInThisCall % 250 == 0) {
-            emitProgressUpdate(processedCount, estimatedTotalFiles, fileInfo.absoluteFilePath());
+            emitProgressUpdate(processedCount, countedTotalFiles, fileInfo.absoluteFilePath());
             QCoreApplication::processEvents();
         }
 
@@ -463,7 +458,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
     // Final progress update for this directory
     if (shouldContinue()) {
-        emitProgressUpdate(processedCount, estimatedTotalFiles, "Processing completed");
+        emitProgressUpdate(processedCount, countedTotalFiles, "Processing completed");
         QCoreApplication::processEvents(); // Final UI update
     }
 
@@ -564,7 +559,7 @@ void CatalogJobStoppable::waitIfPaused()
 void CatalogJobStoppable::emitProgressUpdate(qint64 processed, qint64 total, const QString &currentPath)
 {
     filesProcessed = processed;
-    estimatedTotalFiles = total;
+    countedTotalFiles = total;
 
     // Throttle progress updates to avoid overwhelming the UI
     QDateTime now = QDateTime::currentDateTime();

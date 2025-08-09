@@ -110,8 +110,8 @@ void CatalogJob::start()
                                         m_collectionFolder);
 
     // Set total amount if we have an estimate
-    if (m_catalogEngine->getEstimatedTotalFiles() > 0) {
-        setTotalAmount(KJob::Files, m_catalogEngine->getEstimatedTotalFiles());
+    if (m_catalogEngine->getCountedTotalFiles() > 0) {
+        setTotalAmount(KJob::Files, m_catalogEngine->getCountedTotalFiles());
     }
 
     // Use a timer to execute catalog operation in next event loop iteration
