@@ -309,8 +309,8 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
     QDirIterator it(directory, extensions, filters, iteratorFlags);
 
-    // Database batching arrays
-    QStringList fileNames, filePaths, fileDateTimes, fileCatalogs;
+    // Database batching arrays - separate arrays for folder paths and full paths
+    QStringList fileNames, fileFolderPaths, fileFullPaths, fileDateTimes, fileCatalogs;
     QList<qint64> fileSizes;
 
     int batchSize = 1000; // Database batch size
@@ -325,24 +325,25 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     while (it.hasNext() && shouldContinue()) {
         waitIfPaused();
 
-        QString filePath = it.next();
-        QFileInfo fileInfo(filePath);
+        QString fileFullPath = it.next();
+        QFileInfo fileInfo(fileFullPath);
 
         // Skip excluded folders
         bool isExcluded = false;
         for (const QString &excludedFolder : catalog->excludedFolders) {
-            if (filePath.contains(excludedFolder)) {
+            if (fileFullPath.contains(excludedFolder)) {
                 isExcluded = true;
                 break;
             }
         }
         if (isExcluded) continue;
 
-        // Process file - add to database batch
-        fileNames << fileInfo.fileName();
-        filePaths << filePath;
-        fileDateTimes << fileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss");
-        fileCatalogs << QString::number(catalog->ID);
+        // Process file - correctly separate folder path from full path
+        fileNames << fileInfo.fileName();                                    // Just the filename
+        fileFolderPaths << fileInfo.path();                                  // Just the directory path
+        fileFullPaths << fileFullPath;                                       // Complete file path
+        fileDateTimes << fileInfo.lastModified().toString("yyyy/MM/dd hh:mm:ss");
+        fileCatalogs << catalog->name;                                       // Use catalog NAME, not ID
         fileSizes << fileInfo.size();
 
         // Update counters
@@ -350,8 +351,8 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         filesProcessedInThisCall++; // Files processed in this method call
         batchCount++;              // Database batch counter
 
-        // *** KEY FIX: Simple progress updates every 250 files (like working version) ***
-        if (filesProcessedInThisCall % 250 == 0) {
+        // Simple progress updates every 250 files (like working version) ***
+        if (filesProcessedInThisCall % progressRefreshRate == 0) {
             emitProgressUpdate(processedCount, countedTotalFiles, fileInfo.absoluteFilePath());
             QCoreApplication::processEvents();
         }
@@ -361,27 +362,30 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
             // Insert batch to database
             if (!fileNames.isEmpty()) {
                 QSqlQuery query(QSqlDatabase::database(m_connectionName));
+                // Updated SQL to include file_catalog field
                 query.prepare(R"(
-                    INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_size, file_date_updated)
-                    VALUES (:catalog_id, :name, :path, :size, :date)
+                    INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path, file_size, file_date_updated, file_catalog)
+                    VALUES (:catalog_id, :name, :folder_path, :full_path, :size, :date, :catalog_name)
                 )");
 
                 for (int i = 0; i < fileNames.size(); ++i) {
                     if (!shouldContinue()) break;
 
                     query.bindValue(":catalog_id", catalog->ID);
-                    query.bindValue(":name", fileNames[i]);
-                    query.bindValue(":path", filePaths[i]);
+                    query.bindValue(":name", fileNames[i]);                     // Just filename
+                    query.bindValue(":folder_path", fileFolderPaths[i]);        // Just directory path
+                    query.bindValue(":full_path", fileFullPaths[i]);            // Complete file path
                     query.bindValue(":size", fileSizes[i]);
                     query.bindValue(":date", fileDateTimes[i]);
+                    query.bindValue(":catalog_name", fileCatalogs[i]);          // Add catalog name
 
                     if (!query.exec()) {
                         qDebug() << "Database insert error:" << query.lastError().text();
                     }
                 }
 
-                // Insert folders for this batch
-                QStringList uniqueFolders = filePaths;
+                // Insert folders for this batch - Use folder paths, not full file paths
+                QStringList uniqueFolders = fileFolderPaths;
                 uniqueFolders.removeDuplicates();
 
                 QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
@@ -404,9 +408,10 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
             // Clear batch arrays
             fileNames.clear();
-            filePaths.clear();
+            fileFolderPaths.clear();        // Clear new array
+            fileFullPaths.clear();          // Clear new array
             fileDateTimes.clear();
-            fileCatalogs.clear();
+            fileCatalogs.clear();           // Contains catalog names
             fileSizes.clear();
             batchCount = 0;
         }
@@ -416,18 +421,20 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     if (!fileNames.isEmpty() && shouldContinue()) {
         QSqlQuery query(QSqlDatabase::database(m_connectionName));
         query.prepare(R"(
-            INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_size, file_date_updated)
-            VALUES (:catalog_id, :name, :path, :size, :date)
+            INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path, file_size, file_date_updated, file_catalog)
+            VALUES (:catalog_id, :name, :folder_path, :full_path, :size, :date, :catalog_name)
         )");
 
         for (int i = 0; i < fileNames.size(); ++i) {
             if (!shouldContinue()) break;
 
             query.bindValue(":catalog_id", catalog->ID);
-            query.bindValue(":name", fileNames[i]);
-            query.bindValue(":path", filePaths[i]);
+            query.bindValue(":name", fileNames[i]);                     // Just filename
+            query.bindValue(":folder_path", fileFolderPaths[i]);        // Just directory path
+            query.bindValue(":full_path", fileFullPaths[i]);            // Complete file path
             query.bindValue(":size", fileSizes[i]);
             query.bindValue(":date", fileDateTimes[i]);
+            query.bindValue(":catalog_name", fileCatalogs[i]);          // Add catalog name
 
             if (!query.exec()) {
                 qDebug() << "Database insert error:" << query.lastError().text();
@@ -435,7 +442,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         }
 
         // Insert remaining folders
-        QStringList uniqueFolders = filePaths;
+        QStringList uniqueFolders = fileFolderPaths;
         uniqueFolders.removeDuplicates();
 
         QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
