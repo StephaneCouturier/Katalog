@@ -30,6 +30,14 @@
     </message>
 </context>
 <context>
+    <name>CatalogProgressManager</name>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+133"/>
+        <source>Ready for catalog operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ExploreTreeModel</name>
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
@@ -102,7 +110,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+855"/>
         <source>All Words</source>
         <translation>Minden szó</translation>
     </message>
@@ -128,7 +136,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-709"/>
         <source>File names or Folder paths</source>
         <translation>Fájlnevek vagy mappa elérési utak</translation>
     </message>
@@ -136,13 +144,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+689"/>
+        <location line="+711"/>
         <source>File names only</source>
         <translation>Csak fájlnevek</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-709"/>
         <source>Folder path only</source>
         <translation>Csak mappa elérési út</translation>
     </message>
@@ -162,7 +170,7 @@
         <translation>Visszaállítás</translation>
     </message>
     <message>
-        <location line="+9768"/>
+        <location line="+9806"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
@@ -184,16 +192,16 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+259"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Fájl</translation>
     </message>
     <message>
-        <location line="-8293"/>
+        <location line="-8331"/>
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+580"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
         <translation>Méret</translation>
@@ -266,7 +274,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+723"/>
         <source>All</source>
         <translation>Minden</translation>
     </message>
@@ -332,7 +340,7 @@
         <location line="+466"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2339"/>
+        <location line="+2377"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -350,7 +358,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3505"/>
+        <location line="-3543"/>
         <location line="+347"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+335"/>
         <source>Catalogs</source>
@@ -358,13 +366,13 @@
     </message>
     <message>
         <location line="-302"/>
-        <location line="+2526"/>
+        <location line="+2564"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Összes fájlméret</translation>
     </message>
     <message>
-        <location line="-2488"/>
+        <location line="-2526"/>
         <source>Total Number of Files</source>
         <translation>Összes fájlszám</translation>
     </message>
@@ -397,7 +405,7 @@
         <translation>Frissítés</translation>
     </message>
     <message>
-        <location line="+4076"/>
+        <location line="+4114"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-94"/>
         <location line="+56"/>
         <location line="+54"/>
@@ -405,7 +413,7 @@
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location line="-5676"/>
+        <location line="-5714"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
@@ -424,7 +432,7 @@
         <translation>Katalógus</translation>
     </message>
     <message>
-        <location line="+1454"/>
+        <location line="+1492"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-225"/>
@@ -435,7 +443,7 @@
         <translation>Elérési út</translation>
     </message>
     <message>
-        <location line="-1777"/>
+        <location line="-1815"/>
         <source>Directories</source>
         <translation>Könyvtárak</translation>
     </message>
@@ -453,11 +461,12 @@
     </message>
     <message>
         <location line="+1220"/>
+        <location line="+6478"/>
         <source>Stop</source>
         <translation>Leállítás</translation>
     </message>
     <message>
-        <location line="+3101"/>
+        <location line="-3377"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Kiválasztás...</translation>
@@ -470,8 +479,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-551"/>
-        <location line="+557"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-573"/>
+        <location line="+579"/>
         <source>Move to Trash</source>
         <translation>Lomtárba helyezés</translation>
     </message>
@@ -557,7 +566,7 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+1924"/>
+        <location line="+1962"/>
         <location line="+620"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-97"/>
         <location line="+90"/>
@@ -566,7 +575,7 @@
         <translation>Fájlok száma</translation>
     </message>
     <message>
-        <location line="-2428"/>
+        <location line="-2466"/>
         <source>Click to open the file</source>
         <translation>Kattintás a fájl megnyitásához</translation>
     </message>
@@ -660,16 +669,17 @@
     </message>
     <message>
         <location line="+79"/>
+        <location line="+38"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Katalogizálás indítása és fájlba mentés</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-32"/>
         <source>Create Catalog</source>
         <translation>Katalógus létrehozása</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+149"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
@@ -679,7 +689,7 @@
         <translation>Forrás elérési út kiválasztása</translation>
     </message>
     <message>
-        <location line="-1739"/>
+        <location line="-1777"/>
         <source>Tree options</source>
         <translation>Fa opciók</translation>
     </message>
@@ -735,7 +745,7 @@
         <translation>Tároló mezők</translation>
     </message>
     <message>
-        <location line="+5406"/>
+        <location line="+5444"/>
         <source>Icons</source>
         <translation>Ikonok</translation>
     </message>
@@ -781,21 +791,21 @@
         <translation>Adatkezelés</translation>
     </message>
     <message>
-        <location line="-9993"/>
-        <location line="+7751"/>
+        <location line="-10031"/>
+        <location line="+7789"/>
         <source>Select the path</source>
         <translation>Elérési út kiválasztása</translation>
     </message>
     <message>
-        <location line="-7748"/>
+        <location line="-7786"/>
         <location line="+4738"/>
-        <location line="+3013"/>
+        <location line="+3051"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Kiválasztás</translation>
     </message>
     <message>
-        <location line="-8582"/>
+        <location line="-8620"/>
         <location line="+6081"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-930"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
@@ -804,12 +814,12 @@
         <translation>Tároló</translation>
     </message>
     <message>
-        <location line="+3905"/>
+        <location line="+3943"/>
         <source>New</source>
         <translation>Új</translation>
     </message>
     <message>
-        <location line="-5382"/>
+        <location line="-5420"/>
         <location line="+186"/>
         <source>Devices</source>
         <translation>Eszközök</translation>
@@ -827,7 +837,7 @@
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3290"/>
+        <location line="+3328"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Újratöltés</translation>
@@ -858,7 +868,7 @@
         <translation>Összes rekordot tároló fájl szerkesztése</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-2062"/>
         <source>Add Virtual</source>
         <translation>Virtuális hozzáadása</translation>
     </message>
@@ -869,12 +879,12 @@
     </message>
     <message>
         <location line="+36"/>
-        <location line="+4048"/>
+        <location line="+4086"/>
         <source>Full Table</source>
         <translation>Teljes táblázat</translation>
     </message>
     <message>
-        <location line="-3708"/>
+        <location line="-3746"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
         <source>Device Name</source>
         <translation>Eszköz neve</translation>
@@ -892,7 +902,7 @@
         <translation>Eszköz azonosító</translation>
     </message>
     <message>
-        <location line="+3146"/>
+        <location line="+3184"/>
         <source>Edit Statistics</source>
         <translation>Statisztikák szerkesztése</translation>
     </message>
@@ -1039,12 +1049,12 @@
         <translation>Adatmód &quot;SQLite helyi fájl&quot;</translation>
     </message>
     <message>
-        <location line="-3868"/>
+        <location line="-3906"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Opciók alkalmazása a kiválasztott eszközfa-ra.</translation>
     </message>
     <message>
-        <location line="+1820"/>
+        <location line="+1858"/>
         <source>Type of source</source>
         <translation>Forrás típusa</translation>
     </message>
@@ -1237,8 +1247,8 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-589"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-409"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-611"/>
         <source>Open file</source>
         <translation>Fájl megnyitása</translation>
     </message>
@@ -1276,23 +1286,23 @@
         <translation>Fájlnév másolása kiterjesztés nélkül</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-7242"/>
+        <location filename="../mainwindow.ui" line="-7280"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+689"/>
         <location line="+223"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+378"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+380"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
         <location line="-583"/>
-        <location line="+7000"/>
+        <location line="+7038"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+910"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+932"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Dátum</translation>
@@ -1312,7 +1322,7 @@
         <translation>Válassza ki a könyvtárat ehhez a gyűjteményhez</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5487"/>
+        <location filename="../mainwindow.ui" line="-5525"/>
         <location line="+2284"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-468"/>
         <location line="+223"/>
@@ -1335,14 +1345,14 @@
         <translation>Fájl típus</translation>
     </message>
     <message>
-        <location line="+3599"/>
+        <location line="+3637"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Fájlméret</translation>
     </message>
     <message>
-        <location line="-3204"/>
+        <location line="-3242"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
         <source>Label</source>
         <translation>Címke</translation>
@@ -1354,13 +1364,13 @@
         <translation>Fájlrendszer</translation>
     </message>
     <message>
-        <location line="+3456"/>
+        <location line="+3494"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Összesen</translation>
     </message>
     <message>
-        <location line="-4220"/>
+        <location line="-4258"/>
         <source>Free</source>
         <translation>Szabad</translation>
     </message>
@@ -1726,7 +1736,7 @@
         <translation>Összes szűrő visszaállítása</translation>
     </message>
     <message>
-        <location line="+9024"/>
+        <location line="+9062"/>
         <source>About</source>
         <translation>Névjegy</translation>
     </message>
@@ -1763,34 +1773,34 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location line="-304"/>
         <source>Explore folder</source>
         <translation>Mappa tallózása</translation>
     </message>
     <message>
         <location line="+158"/>
-        <location line="+431"/>
+        <location line="+453"/>
         <source>MOVE</source>
         <translation>ÁTHELYEZÉS</translation>
     </message>
     <message>
-        <location line="-430"/>
+        <location line="-452"/>
         <source>Move this file to the trash?</source>
         <translation>Fájl lomtárba helyezése?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+42"/>
+        <location line="+64"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="-54"/>
         <source>Moving a folder to Trash is not available.</source>
         <translation>Mappa lomtárba helyezése nem érhető el.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+46"/>
         <location line="+428"/>
         <source>DELETE</source>
         <translation>TÖRLÉS</translation>
@@ -2065,7 +2075,7 @@
         <translation>Mindig tartson egy biztonsági másolatot minden katalógusról</translation>
     </message>
     <message>
-        <location line="-5391"/>
+        <location line="-5429"/>
         <source>Used</source>
         <translation>Használt</translation>
     </message>
@@ -2075,22 +2085,42 @@
         <translation>Könyvtár eltávolítása</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+121"/>
+        <source>Catalog creation failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Catalog operation was cancelled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Adjon nevet ennek az új katalógusnak.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
         <translation>Adjon elérési utat ennek az új katalógusnak.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
         <translation>Válasszon tárolót ehhez az új katalógushoz.&lt;br/&gt;(Kiválasztási panel a bal oldalon és legördülő lista)</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+10"/>
+        <source>Source directory does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The selected directory is empty. Do you want to create an empty catalog?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Már létezik katalógus ezzel a névvel:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2101,12 +2131,12 @@
         <translation>Válasszon másik nevet és próbálja újra.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4834"/>
+        <location filename="../mainwindow.ui" line="+4872"/>
         <source>Check at start up</source>
         <translation>Ellenőrzés indításkor</translation>
     </message>
     <message>
-        <location line="-4529"/>
+        <location line="-4567"/>
         <source>Include Hidden Files</source>
         <translation>Rejtett fájlok befoglalása</translation>
     </message>
@@ -2126,13 +2156,13 @@
         <translation>Pillanatkép</translation>
     </message>
     <message>
-        <location line="+3523"/>
+        <location line="+3561"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Forrás</translation>
     </message>
     <message>
-        <location line="-2339"/>
+        <location line="-2377"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Összes aktív katalógus frissítése, ha az eszköz elérhető.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2167,13 +2197,13 @@
     </message>
     <message>
         <location line="+706"/>
-        <location line="+1327"/>
+        <location line="+1365"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
         <source>Directory</source>
         <translation>Könyvtár</translation>
     </message>
     <message>
-        <location line="-6859"/>
+        <location line="-6897"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Keresési szöveg megtisztítása olyan karakterektől mint _ - . ,</translation>
     </message>
@@ -2189,12 +2219,12 @@
         <translation>Módosítás dátuma</translation>
     </message>
     <message>
-        <location line="+6469"/>
+        <location line="+6507"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Ellenőrizze, hogy elérhető-e a Katalog új verziója az alkalmazás indításakor.</translation>
     </message>
     <message>
-        <location line="-5198"/>
+        <location line="-5236"/>
         <source>Show/Hide search history</source>
         <translation>Keresési előzmények megjelenítése/elrejtése</translation>
     </message>
@@ -2286,21 +2316,21 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Az eredményeknek pontosan meg kell egyezniük a szöveggel (érzékeny a betűk nagy- és kisbetű írására)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+8581"/>
+        <location line="+8619"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Utoljára kiválasztott katalógusok előtöltése indításkor a következő keresés felgyorsításához</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-377"/>
         <source>Move file to Trash</source>
         <translation>Fájl lomtárba helyezése</translation>
     </message>
     <message>
         <location line="+129"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-801"/>
-        <location line="+42"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-823"/>
+        <location line="+64"/>
         <location line="+389"/>
         <location line="+39"/>
         <source>Confirmation</source>
@@ -2311,14 +2341,14 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-458"/>
-        <location line="+42"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-480"/>
+        <location line="+64"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location line="-41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-45"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-67"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Lomtárba helyezve:&lt;br/&gt;</translation>
     </message>
@@ -2330,7 +2360,7 @@
     </message>
     <message>
         <location line="+35"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+61"/>
         <source>Deleted.</source>
         <translation>Törölve.</translation>
     </message>
@@ -2342,7 +2372,7 @@
     </message>
     <message>
         <location line="-170"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-183"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
         <source>Delete file</source>
         <translation>Fájl törlése</translation>
     </message>
@@ -2365,7 +2395,7 @@ lomtárba helyezése?</translation>
         <translation>Mappa címkézése</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-9808"/>
+        <location filename="../mainwindow.ui" line="-9846"/>
         <source>Selection</source>
         <translation>Kiválasztás</translation>
     </message>
@@ -2376,7 +2406,7 @@ lomtárba helyezése?</translation>
         <translation>1 szint, 2 szint kibontása vagy összecsukás</translation>
     </message>
     <message>
-        <location line="+2251"/>
+        <location line="+2289"/>
         <source>all records</source>
         <translation>minden rekord</translation>
     </message>
@@ -2449,7 +2479,7 @@ lomtárba helyezése?</translation>
         <translation>Beállítások fájl megnyitása</translation>
     </message>
     <message>
-        <location line="-2871"/>
+        <location line="-2909"/>
         <source>Display folders</source>
         <translation>Mappák megjelenítése</translation>
     </message>
@@ -2474,7 +2504,7 @@ lomtárba helyezése?</translation>
         <translation>Mappa lomtárba helyezése</translation>
     </message>
     <message>
-        <location line="+352"/>
+        <location line="+354"/>
         <source>orderValue</source>
         <translation>rendezési érték</translation>
     </message>
@@ -2488,18 +2518,18 @@ lomtárba helyezése?</translation>
         <translation>Eszköz típusa</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-172"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-174"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>A kiválasztott katalógus több mint %1 fájlt tartalmaz.&lt;br/&gt;A megnyitás több percet is igénybe vehet.&lt;br/&gt;Folytatja?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5361"/>
+        <location filename="../mainwindow.ui" line="+5399"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Memória</translation>
     </message>
     <message>
-        <location line="-9473"/>
+        <location line="-9511"/>
         <location line="+1022"/>
         <location line="+1700"/>
         <source>Use the Text criteria in the Search</source>
@@ -2536,7 +2566,7 @@ lomtárba helyezése?</translation>
         <translation>Mappa feltételek</translation>
     </message>
     <message>
-        <location line="+4737"/>
+        <location line="+4775"/>
         <source>Graphic Start Date</source>
         <translation>Grafikon kezdő dátuma</translation>
     </message>
@@ -2546,7 +2576,7 @@ lomtárba helyezése?</translation>
         <translation>Dátum kiválasztása</translation>
     </message>
     <message>
-        <location line="-3237"/>
+        <location line="-3275"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
         <source>Include Metadata</source>
         <translation>Metaadatok befoglalása</translation>
@@ -2642,7 +2672,7 @@ lomtárba helyezése?</translation>
         <translation>Válassza ki a létrehozandó és megnyitandó adatbázist:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
+        <location filename="../mainwindow.cpp" line="+127"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Néhány változás a tároló eszközök listájában nincs elmentve.&lt;br/&gt;Mentés és kilépés, elvetés és kilépés, vagy kilépés megszakítása?</translation>
     </message>
@@ -2662,11 +2692,11 @@ lomtárba helyezése?</translation>
         <translation>Címke eltávolítása</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-66"/>
+        <location filename="../mainwindow.cpp" line="-71"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+243"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+951"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+973"/>
         <source>Catalog with results</source>
         <translation>Katalógus eredményekkel</translation>
     </message>

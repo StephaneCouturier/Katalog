@@ -30,6 +30,14 @@
     </message>
 </context>
 <context>
+    <name>CatalogProgressManager</name>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+133"/>
+        <source>Ready for catalog operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ExploreTreeModel</name>
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
@@ -102,7 +110,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+855"/>
         <source>All Words</source>
         <translation>Alle woorden</translation>
     </message>
@@ -128,7 +136,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-709"/>
         <source>File names or Folder paths</source>
         <translation>Bestandsnamen of mappaden</translation>
     </message>
@@ -136,13 +144,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+689"/>
+        <location line="+711"/>
         <source>File names only</source>
         <translation>Alleen bestandsnamen</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-709"/>
         <source>Folder path only</source>
         <translation>Alleen mappad</translation>
     </message>
@@ -162,7 +170,7 @@
         <translation>Herstellen</translation>
     </message>
     <message>
-        <location line="+9768"/>
+        <location line="+9806"/>
         <source>Port</source>
         <translation>Poort</translation>
     </message>
@@ -184,16 +192,16 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+259"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Bestand</translation>
     </message>
     <message>
-        <location line="-8293"/>
+        <location line="-8331"/>
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+580"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
         <translation>Grootte</translation>
@@ -266,7 +274,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+723"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
@@ -332,7 +340,7 @@
         <location line="+466"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2339"/>
+        <location line="+2377"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -350,7 +358,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3505"/>
+        <location line="-3543"/>
         <location line="+347"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+335"/>
         <source>Catalogs</source>
@@ -358,13 +366,13 @@
     </message>
     <message>
         <location line="-302"/>
-        <location line="+2526"/>
+        <location line="+2564"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Totale bestandsgrootte</translation>
     </message>
     <message>
-        <location line="-2488"/>
+        <location line="-2526"/>
         <source>Total Number of Files</source>
         <translation>Totaal aantal bestanden</translation>
     </message>
@@ -397,7 +405,7 @@
         <translation>Bijwerken</translation>
     </message>
     <message>
-        <location line="+4076"/>
+        <location line="+4114"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-94"/>
         <location line="+56"/>
         <location line="+54"/>
@@ -405,7 +413,7 @@
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location line="-5676"/>
+        <location line="-5714"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
@@ -424,7 +432,7 @@
         <translation>Catalogus</translation>
     </message>
     <message>
-        <location line="+1454"/>
+        <location line="+1492"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-225"/>
@@ -435,7 +443,7 @@
         <translation>Pad</translation>
     </message>
     <message>
-        <location line="-1777"/>
+        <location line="-1815"/>
         <source>Directories</source>
         <translation>Mappen</translation>
     </message>
@@ -453,11 +461,12 @@
     </message>
     <message>
         <location line="+1220"/>
+        <location line="+6478"/>
         <source>Stop</source>
         <translation>Stoppen</translation>
     </message>
     <message>
-        <location line="+3101"/>
+        <location line="-3377"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Selecteren...</translation>
@@ -470,8 +479,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-551"/>
-        <location line="+557"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-573"/>
+        <location line="+579"/>
         <source>Move to Trash</source>
         <translation>Naar prullenbak verplaatsen</translation>
     </message>
@@ -557,7 +566,7 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+1924"/>
+        <location line="+1962"/>
         <location line="+620"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-97"/>
         <location line="+90"/>
@@ -566,7 +575,7 @@
         <translation>Aantal bestanden</translation>
     </message>
     <message>
-        <location line="-2428"/>
+        <location line="-2466"/>
         <source>Click to open the file</source>
         <translation>Klik om het bestand te openen</translation>
     </message>
@@ -660,16 +669,17 @@
     </message>
     <message>
         <location line="+79"/>
+        <location line="+38"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Start de catalogisering en sla deze op in een bestand</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-32"/>
         <source>Create Catalog</source>
         <translation>Catalogus maken</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+149"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
@@ -679,7 +689,7 @@
         <translation>Bronpad selecteren</translation>
     </message>
     <message>
-        <location line="-1739"/>
+        <location line="-1777"/>
         <source>Tree options</source>
         <translation>Structuuropties</translation>
     </message>
@@ -735,7 +745,7 @@
         <translation>Opslagvelden</translation>
     </message>
     <message>
-        <location line="+5406"/>
+        <location line="+5444"/>
         <source>Icons</source>
         <translation>Pictogrammen</translation>
     </message>
@@ -781,21 +791,21 @@
         <translation>Gegevensbeheer</translation>
     </message>
     <message>
-        <location line="-9993"/>
-        <location line="+7751"/>
+        <location line="-10031"/>
+        <location line="+7789"/>
         <source>Select the path</source>
         <translation>Selecteer het pad</translation>
     </message>
     <message>
-        <location line="-7748"/>
+        <location line="-7786"/>
         <location line="+4738"/>
-        <location line="+3013"/>
+        <location line="+3051"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Selecteren</translation>
     </message>
     <message>
-        <location line="-8582"/>
+        <location line="-8620"/>
         <location line="+6081"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-930"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
@@ -804,12 +814,12 @@
         <translation>Opslag</translation>
     </message>
     <message>
-        <location line="+3905"/>
+        <location line="+3943"/>
         <source>New</source>
         <translation>Nieuw</translation>
     </message>
     <message>
-        <location line="-5382"/>
+        <location line="-5420"/>
         <location line="+186"/>
         <source>Devices</source>
         <translation>Apparaten</translation>
@@ -827,7 +837,7 @@
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3290"/>
+        <location line="+3328"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Herladen</translation>
@@ -858,7 +868,7 @@
         <translation>Bewerk het bestand dat alle records opslaat</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-2062"/>
         <source>Add Virtual</source>
         <translation>Virtueel toevoegen</translation>
     </message>
@@ -869,12 +879,12 @@
     </message>
     <message>
         <location line="+36"/>
-        <location line="+4048"/>
+        <location line="+4086"/>
         <source>Full Table</source>
         <translation>Volledige tabel</translation>
     </message>
     <message>
-        <location line="-3708"/>
+        <location line="-3746"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
         <source>Device Name</source>
         <translation>Apparaatnaam</translation>
@@ -892,7 +902,7 @@
         <translation>Apparaat-ID</translation>
     </message>
     <message>
-        <location line="+3146"/>
+        <location line="+3184"/>
         <source>Edit Statistics</source>
         <translation>Statistieken bewerken</translation>
     </message>
@@ -1039,12 +1049,12 @@
         <translation>Gegevensmodus &quot;SQLite lokaal bestand&quot;</translation>
     </message>
     <message>
-        <location line="-3868"/>
+        <location line="-3906"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Pas opties toe op de selectie-apparaatstructuur.</translation>
     </message>
     <message>
-        <location line="+1820"/>
+        <location line="+1858"/>
         <source>Type of source</source>
         <translation>Type bron</translation>
     </message>
@@ -1237,8 +1247,8 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-589"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-409"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-611"/>
         <source>Open file</source>
         <translation>Bestand openen</translation>
     </message>
@@ -1276,23 +1286,23 @@
         <translation>Bestandsnaam zonder extensie kopiëren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-7242"/>
+        <location filename="../mainwindow.ui" line="-7280"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+689"/>
         <location line="+223"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+378"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+380"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
         <translation>Naam</translation>
     </message>
     <message>
         <location line="-583"/>
-        <location line="+7000"/>
+        <location line="+7038"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+910"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+932"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -1312,7 +1322,7 @@
         <translation>Selecteer de map voor deze collectie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5487"/>
+        <location filename="../mainwindow.ui" line="-5525"/>
         <location line="+2284"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-468"/>
         <location line="+223"/>
@@ -1335,14 +1345,14 @@
         <translation>Bestandstype</translation>
     </message>
     <message>
-        <location line="+3599"/>
+        <location line="+3637"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Bestandsgrootte</translation>
     </message>
     <message>
-        <location line="-3204"/>
+        <location line="-3242"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
         <source>Label</source>
         <translation>Label</translation>
@@ -1354,13 +1364,13 @@
         <translation>Bestandssysteem</translation>
     </message>
     <message>
-        <location line="+3456"/>
+        <location line="+3494"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Totaal</translation>
     </message>
     <message>
-        <location line="-4220"/>
+        <location line="-4258"/>
         <source>Free</source>
         <translation>Vrij</translation>
     </message>
@@ -1726,7 +1736,7 @@
         <translation>Alle filters herstellen</translation>
     </message>
     <message>
-        <location line="+9024"/>
+        <location line="+9062"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
@@ -1763,34 +1773,34 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location line="-304"/>
         <source>Explore folder</source>
         <translation>Map verkennen</translation>
     </message>
     <message>
         <location line="+158"/>
-        <location line="+431"/>
+        <location line="+453"/>
         <source>MOVE</source>
         <translation>VERPLAATSEN</translation>
     </message>
     <message>
-        <location line="-430"/>
+        <location line="-452"/>
         <source>Move this file to the trash?</source>
         <translation>Dit bestand naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+42"/>
+        <location line="+64"/>
         <source>Information</source>
         <translation>Informatie</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="-54"/>
         <source>Moving a folder to Trash is not available.</source>
         <translation>Een map naar de prullenbak verplaatsen is niet beschikbaar.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+46"/>
         <location line="+428"/>
         <source>DELETE</source>
         <translation>VERWIJDEREN</translation>
@@ -2065,7 +2075,7 @@
         <translation>Altijd een back-up van elke catalogus bewaren</translation>
     </message>
     <message>
-        <location line="-5391"/>
+        <location line="-5429"/>
         <source>Used</source>
         <translation>Gebruikt</translation>
     </message>
@@ -2075,22 +2085,42 @@
         <translation>Deze map verwijderen</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+121"/>
+        <source>Catalog creation failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Catalog operation was cancelled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Geef een naam voor deze nieuwe catalogus.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
         <translation>Geef een pad voor deze nieuwe catalogus.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
         <translation>Selecteer een opslag voor deze nieuwe catalogus.&lt;br/&gt;(Selectiepaneel links en dropdown lijst)</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+10"/>
+        <source>Source directory does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The selected directory is empty. Do you want to create an empty catalog?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Er bestaat al een catalogus met deze naam:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2101,12 +2131,12 @@
         <translation>Kies een andere naam en probeer opnieuw.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4834"/>
+        <location filename="../mainwindow.ui" line="+4872"/>
         <source>Check at start up</source>
         <translation>Controleren bij opstarten</translation>
     </message>
     <message>
-        <location line="-4529"/>
+        <location line="-4567"/>
         <source>Include Hidden Files</source>
         <translation>Verborgen bestanden opnemen</translation>
     </message>
@@ -2126,13 +2156,13 @@
         <translation>Snapshot</translation>
     </message>
     <message>
-        <location line="+3523"/>
+        <location line="+3561"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Bron</translation>
     </message>
     <message>
-        <location line="-2339"/>
+        <location line="-2377"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Werk alle actieve catalogi bij, als het apparaat beschikbaar is.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2167,13 +2197,13 @@
     </message>
     <message>
         <location line="+706"/>
-        <location line="+1327"/>
+        <location line="+1365"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
         <source>Directory</source>
         <translation>Map</translation>
     </message>
     <message>
-        <location line="-6859"/>
+        <location line="-6897"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Reinig de zoektekst van tekens zoals _ - . ,</translation>
     </message>
@@ -2189,12 +2219,12 @@
         <translation>Datum gewijzigd</translation>
     </message>
     <message>
-        <location line="+6469"/>
+        <location line="+6507"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Controleer of een nieuwe versie van Katalog beschikbaar is bij het starten van de app.</translation>
     </message>
     <message>
-        <location line="-5198"/>
+        <location line="-5236"/>
         <source>Show/Hide search history</source>
         <translation>Zoekgeschiedenis tonen/verbergen</translation>
     </message>
@@ -2286,21 +2316,21 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;De resultaten moeten exact overeenkomen met de tekst (gevoelig voor hoofdletters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+8581"/>
+        <location line="+8619"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Laatst geselecteerde catalogi voorladen bij opstarten om volgende zoekopdracht te versnellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-377"/>
         <source>Move file to Trash</source>
         <translation>Bestand naar prullenbak verplaatsen</translation>
     </message>
     <message>
         <location line="+129"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-801"/>
-        <location line="+42"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-823"/>
+        <location line="+64"/>
         <location line="+389"/>
         <location line="+39"/>
         <source>Confirmation</source>
@@ -2311,14 +2341,14 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-458"/>
-        <location line="+42"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-480"/>
+        <location line="+64"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
         <location line="-41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-45"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-67"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Naar prullenbak verplaatst:&lt;br/&gt;</translation>
     </message>
@@ -2330,7 +2360,7 @@
     </message>
     <message>
         <location line="+35"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+61"/>
         <source>Deleted.</source>
         <translation>Verwijderd.</translation>
     </message>
@@ -2342,7 +2372,7 @@
     </message>
     <message>
         <location line="-170"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-183"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
         <source>Delete file</source>
         <translation>Bestand verwijderen</translation>
     </message>
@@ -2365,7 +2395,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Deze map taggen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-9808"/>
+        <location filename="../mainwindow.ui" line="-9846"/>
         <source>Selection</source>
         <translation>Selectie</translation>
     </message>
@@ -2376,7 +2406,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>1 niveau, 2 niveaus uitvouwen of inklappen</translation>
     </message>
     <message>
-        <location line="+2251"/>
+        <location line="+2289"/>
         <source>all records</source>
         <translation>alle records</translation>
     </message>
@@ -2449,7 +2479,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Instellingenbestand openen</translation>
     </message>
     <message>
-        <location line="-2871"/>
+        <location line="-2909"/>
         <source>Display folders</source>
         <translation>Mappen weergeven</translation>
     </message>
@@ -2474,7 +2504,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Map naar prullenbak verplaatsen</translation>
     </message>
     <message>
-        <location line="+352"/>
+        <location line="+354"/>
         <source>orderValue</source>
         <translation>sorteerwaarde</translation>
     </message>
@@ -2488,18 +2518,18 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Apparaattype</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-172"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-174"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>De geselecteerde catalogus bevat meer dan %1 bestanden.&lt;br/&gt;Het kan enkele minuten duren om te openen.&lt;br/&gt;Doorgaan?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5361"/>
+        <location filename="../mainwindow.ui" line="+5399"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Geheugen</translation>
     </message>
     <message>
-        <location line="-9473"/>
+        <location line="-9511"/>
         <location line="+1022"/>
         <location line="+1700"/>
         <source>Use the Text criteria in the Search</source>
@@ -2536,7 +2566,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Mapcriteria</translation>
     </message>
     <message>
-        <location line="+4737"/>
+        <location line="+4775"/>
         <source>Graphic Start Date</source>
         <translation>Grafiek startdatum</translation>
     </message>
@@ -2546,7 +2576,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Datum selecteren</translation>
     </message>
     <message>
-        <location line="-3237"/>
+        <location line="-3275"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
         <source>Include Metadata</source>
         <translation>Metadata opnemen</translation>
@@ -2642,7 +2672,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Selecteer de database om te maken en openen:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
+        <location filename="../mainwindow.cpp" line="+127"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Sommige wijzigingen in de lijst met opslagapparaten zijn niet opgeslagen.&lt;br/&gt;Opslaan en afsluiten, verwijderen en afsluiten, of afsluiten annuleren?</translation>
     </message>
@@ -2662,11 +2692,11 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Deze tag verwijderen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-66"/>
+        <location filename="../mainwindow.cpp" line="-71"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+243"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+951"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+973"/>
         <source>Catalog with results</source>
         <translation>Catalogus met resultaten</translation>
     </message>

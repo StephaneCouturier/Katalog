@@ -30,6 +30,14 @@
     </message>
 </context>
 <context>
+    <name>CatalogProgressManager</name>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+133"/>
+        <source>Ready for catalog operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ExploreTreeModel</name>
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
@@ -102,7 +110,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+833"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+855"/>
         <source>All Words</source>
         <translation>Sve riječi</translation>
     </message>
@@ -128,7 +136,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-709"/>
         <source>File names or Folder paths</source>
         <translation>Nazivi datoteka ili putanje mapa</translation>
     </message>
@@ -136,13 +144,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+689"/>
+        <location line="+711"/>
         <source>File names only</source>
         <translation>Samo nazivi datoteka</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-687"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-709"/>
         <source>Folder path only</source>
         <translation>Samo putanja mape</translation>
     </message>
@@ -162,7 +170,7 @@
         <translation>Vrati</translation>
     </message>
     <message>
-        <location line="+9768"/>
+        <location line="+9806"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
@@ -184,16 +192,16 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+259"/>
+        <location filename="../mainwindow.cpp" line="+269"/>
         <source>File</source>
         <translation>Datoteka</translation>
     </message>
     <message>
-        <location line="-8293"/>
+        <location line="-8331"/>
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+578"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+580"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-222"/>
         <source>Size</source>
         <translation>Veličina</translation>
@@ -266,7 +274,7 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+701"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+723"/>
         <source>All</source>
         <translation>Sve</translation>
     </message>
@@ -332,7 +340,7 @@
         <location line="+466"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2339"/>
+        <location line="+2377"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -350,7 +358,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3505"/>
+        <location line="-3543"/>
         <location line="+347"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+335"/>
         <source>Catalogs</source>
@@ -358,13 +366,13 @@
     </message>
     <message>
         <location line="-302"/>
-        <location line="+2526"/>
+        <location line="+2564"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Ukupna veličina datoteka</translation>
     </message>
     <message>
-        <location line="-2488"/>
+        <location line="-2526"/>
         <source>Total Number of Files</source>
         <translation>Ukupan broj datoteka</translation>
     </message>
@@ -397,7 +405,7 @@
         <translation>Ažuriraj</translation>
     </message>
     <message>
-        <location line="+4076"/>
+        <location line="+4114"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-94"/>
         <location line="+56"/>
         <location line="+54"/>
@@ -405,7 +413,7 @@
         <translation>Uredi</translation>
     </message>
     <message>
-        <location line="-5676"/>
+        <location line="-5714"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
@@ -424,7 +432,7 @@
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+1454"/>
+        <location line="+1492"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-225"/>
@@ -435,7 +443,7 @@
         <translation>Putanja</translation>
     </message>
     <message>
-        <location line="-1777"/>
+        <location line="-1815"/>
         <source>Directories</source>
         <translation>Direktoriji</translation>
     </message>
@@ -453,11 +461,12 @@
     </message>
     <message>
         <location line="+1220"/>
+        <location line="+6478"/>
         <source>Stop</source>
         <translation>Zaustavi</translation>
     </message>
     <message>
-        <location line="+3101"/>
+        <location line="-3377"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Odaberi...</translation>
@@ -470,8 +479,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-551"/>
-        <location line="+557"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-573"/>
+        <location line="+579"/>
         <source>Move to Trash</source>
         <translation>Premjesti u smeće</translation>
     </message>
@@ -557,7 +566,7 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+1924"/>
+        <location line="+1962"/>
         <location line="+620"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-97"/>
         <location line="+90"/>
@@ -566,7 +575,7 @@
         <translation>Broj datoteka</translation>
     </message>
     <message>
-        <location line="-2428"/>
+        <location line="-2466"/>
         <source>Click to open the file</source>
         <translation>Kliknite za otvaranje datoteke</translation>
     </message>
@@ -660,16 +669,17 @@
     </message>
     <message>
         <location line="+79"/>
+        <location line="+38"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Pokreni katalogizaciju i spremi je u datoteku</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-32"/>
         <source>Create Catalog</source>
         <translation>Stvori katalog</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+149"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
@@ -679,7 +689,7 @@
         <translation>Odaberi izvornu putanju</translation>
     </message>
     <message>
-        <location line="-1739"/>
+        <location line="-1777"/>
         <source>Tree options</source>
         <translation>Opcije stabla</translation>
     </message>
@@ -735,7 +745,7 @@
         <translation>Polja pohraništa</translation>
     </message>
     <message>
-        <location line="+5406"/>
+        <location line="+5444"/>
         <source>Icons</source>
         <translation>Ikone</translation>
     </message>
@@ -781,21 +791,21 @@
         <translation>Upravljanje podacima</translation>
     </message>
     <message>
-        <location line="-9993"/>
-        <location line="+7751"/>
+        <location line="-10031"/>
+        <location line="+7789"/>
         <source>Select the path</source>
         <translation>Odaberi putanju</translation>
     </message>
     <message>
-        <location line="-7748"/>
+        <location line="-7786"/>
         <location line="+4738"/>
-        <location line="+3013"/>
+        <location line="+3051"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Odaberi</translation>
     </message>
     <message>
-        <location line="-8582"/>
+        <location line="-8620"/>
         <location line="+6081"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-930"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
@@ -804,12 +814,12 @@
         <translation>Pohranište</translation>
     </message>
     <message>
-        <location line="+3905"/>
+        <location line="+3943"/>
         <source>New</source>
         <translation>Nova</translation>
     </message>
     <message>
-        <location line="-5382"/>
+        <location line="-5420"/>
         <location line="+186"/>
         <source>Devices</source>
         <translation>Uređaji</translation>
@@ -827,7 +837,7 @@
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3290"/>
+        <location line="+3328"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Ponovno učitaj</translation>
@@ -858,7 +868,7 @@
         <translation>Uredi datoteku koja pohranjuje sve zapise</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-2062"/>
         <source>Add Virtual</source>
         <translation>Dodaj virtualno</translation>
     </message>
@@ -869,12 +879,12 @@
     </message>
     <message>
         <location line="+36"/>
-        <location line="+4048"/>
+        <location line="+4086"/>
         <source>Full Table</source>
         <translation>Puna tablica</translation>
     </message>
     <message>
-        <location line="-3708"/>
+        <location line="-3746"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
         <source>Device Name</source>
         <translation>Naziv uređaja</translation>
@@ -892,7 +902,7 @@
         <translation>ID uređaja</translation>
     </message>
     <message>
-        <location line="+3146"/>
+        <location line="+3184"/>
         <source>Edit Statistics</source>
         <translation>Uredi statistike</translation>
     </message>
@@ -1039,12 +1049,12 @@
         <translation>Način rada s podacima &quot;SQLite lokalna datoteka&quot;</translation>
     </message>
     <message>
-        <location line="-3868"/>
+        <location line="-3906"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Primijeni opcije na stablo uređaja za odabir.</translation>
     </message>
     <message>
-        <location line="+1820"/>
+        <location line="+1858"/>
         <source>Type of source</source>
         <translation>Tip izvora</translation>
     </message>
@@ -1237,8 +1247,8 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-407"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-589"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-409"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-611"/>
         <source>Open file</source>
         <translation>Otvori datoteku</translation>
     </message>
@@ -1276,23 +1286,23 @@
         <translation>Kopiraj naziv datoteke bez ekstenzije</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-7242"/>
+        <location filename="../mainwindow.ui" line="-7280"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+689"/>
         <location line="+223"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+378"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+380"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
         <source>Name</source>
         <translation>Naziv</translation>
     </message>
     <message>
         <location line="-583"/>
-        <location line="+7000"/>
+        <location line="+7038"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+910"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+932"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -1312,7 +1322,7 @@
         <translation>Odaberi direktorij za ovu kolekciju</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5487"/>
+        <location filename="../mainwindow.ui" line="-5525"/>
         <location line="+2284"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-468"/>
         <location line="+223"/>
@@ -1335,14 +1345,14 @@
         <translation>Tip datoteke</translation>
     </message>
     <message>
-        <location line="+3599"/>
+        <location line="+3637"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Veličina datoteke</translation>
     </message>
     <message>
-        <location line="-3204"/>
+        <location line="-3242"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
         <source>Label</source>
         <translation>Oznaka</translation>
@@ -1354,13 +1364,13 @@
         <translation>Datotečni sustav</translation>
     </message>
     <message>
-        <location line="+3456"/>
+        <location line="+3494"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Ukupno</translation>
     </message>
     <message>
-        <location line="-4220"/>
+        <location line="-4258"/>
         <source>Free</source>
         <translation>Slobodno</translation>
     </message>
@@ -1726,7 +1736,7 @@
         <translation>Vrati sve filtere</translation>
     </message>
     <message>
-        <location line="+9024"/>
+        <location line="+9062"/>
         <source>About</source>
         <translation>O programu</translation>
     </message>
@@ -1763,34 +1773,34 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location line="-304"/>
         <source>Explore folder</source>
         <translation>Istraži mapu</translation>
     </message>
     <message>
         <location line="+158"/>
-        <location line="+431"/>
+        <location line="+453"/>
         <source>MOVE</source>
         <translation>PREMJESTI</translation>
     </message>
     <message>
-        <location line="-430"/>
+        <location line="-452"/>
         <source>Move this file to the trash?</source>
         <translation>Premjesti ovu datoteku u smeće?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+42"/>
+        <location line="+64"/>
         <source>Information</source>
         <translation>Informacije</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="-54"/>
         <source>Moving a folder to Trash is not available.</source>
         <translation>Premještanje mape u smeće nije dostupno.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+46"/>
         <location line="+428"/>
         <source>DELETE</source>
         <translation>OBRIŠI</translation>
@@ -2065,7 +2075,7 @@
         <translation>Uvijek zadrži jednu sigurnosnu kopiju svakog kataloga</translation>
     </message>
     <message>
-        <location line="-5391"/>
+        <location line="-5429"/>
         <source>Used</source>
         <translation>Korišteno</translation>
     </message>
@@ -2075,22 +2085,42 @@
         <translation>Ukloni ovaj direktorij</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+121"/>
+        <source>Catalog creation failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Catalog operation was cancelled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Navedite naziv za ovaj novi katalog.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
         <translation>Navedite putanju za ovaj novi katalog.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
         <translation>Odaberite pohranište za ovaj novi katalog.&lt;br/&gt;(Panel za odabir lijevo i padajuća lista)</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+10"/>
+        <source>Source directory does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The selected directory is empty. Do you want to create an empty catalog?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Već postoji katalog s ovim nazivom:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2101,12 +2131,12 @@
         <translation>Odaberite drugi naziv i pokušajte ponovo.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4834"/>
+        <location filename="../mainwindow.ui" line="+4872"/>
         <source>Check at start up</source>
         <translation>Provjeri pri pokretanju</translation>
     </message>
     <message>
-        <location line="-4529"/>
+        <location line="-4567"/>
         <source>Include Hidden Files</source>
         <translation>Uključi skrivene datoteke</translation>
     </message>
@@ -2126,13 +2156,13 @@
         <translation>Snimka</translation>
     </message>
     <message>
-        <location line="+3523"/>
+        <location line="+3561"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Izvor</translation>
     </message>
     <message>
-        <location line="-2339"/>
+        <location line="-2377"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ažuriraj sve kataloge koji su aktivni, ako je uređaj dostupan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2167,13 +2197,13 @@
     </message>
     <message>
         <location line="+706"/>
-        <location line="+1327"/>
+        <location line="+1365"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
         <source>Directory</source>
         <translation>Direktorij</translation>
     </message>
     <message>
-        <location line="-6859"/>
+        <location line="-6897"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Očisti tekst pretrage od znakova poput _ - . ,</translation>
     </message>
@@ -2189,12 +2219,12 @@
         <translation>Datum izmjene</translation>
     </message>
     <message>
-        <location line="+6469"/>
+        <location line="+6507"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Provjeri je li nova verzija Kataloga dostupna pri pokretanju aplikacije.</translation>
     </message>
     <message>
-        <location line="-5198"/>
+        <location line="-5236"/>
         <source>Show/Hide search history</source>
         <translation>Prikaži/Sakrij povijest pretrage</translation>
     </message>
@@ -2286,21 +2316,21 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rezultati trebaju točno odgovarati tekstu (osjetljivo na velika i mala slova)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+8581"/>
+        <location line="+8619"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Predučitaj zadnje odabrane kataloge pri pokretanju za ubrzanje sljedeće pretrage</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-377"/>
         <source>Move file to Trash</source>
         <translation>Premjesti datoteku u smeće</translation>
     </message>
     <message>
         <location line="+129"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-801"/>
-        <location line="+42"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-823"/>
+        <location line="+64"/>
         <location line="+389"/>
         <location line="+39"/>
         <source>Confirmation</source>
@@ -2311,14 +2341,14 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-458"/>
-        <location line="+42"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-480"/>
+        <location line="+64"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
         <location line="-41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-45"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-67"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Premješteno u smeće:&lt;br/&gt;</translation>
     </message>
@@ -2330,7 +2360,7 @@
     </message>
     <message>
         <location line="+35"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+61"/>
         <source>Deleted.</source>
         <translation>Obrisano.</translation>
     </message>
@@ -2342,7 +2372,7 @@
     </message>
     <message>
         <location line="-170"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-183"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
         <source>Delete file</source>
         <translation>Obriši datoteku</translation>
     </message>
@@ -2366,7 +2396,7 @@ u smeće?</translation>
         <translation>Označi ovu mapu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-9808"/>
+        <location filename="../mainwindow.ui" line="-9846"/>
         <source>Selection</source>
         <translation>Odabir</translation>
     </message>
@@ -2377,7 +2407,7 @@ u smeće?</translation>
         <translation>Proširi 1 razinu, 2 razine ili sažmi</translation>
     </message>
     <message>
-        <location line="+2251"/>
+        <location line="+2289"/>
         <source>all records</source>
         <translation>svi zapisi</translation>
     </message>
@@ -2450,7 +2480,7 @@ u smeće?</translation>
         <translation>Otvori datoteku postavki</translation>
     </message>
     <message>
-        <location line="-2871"/>
+        <location line="-2909"/>
         <source>Display folders</source>
         <translation>Prikaži mape</translation>
     </message>
@@ -2475,7 +2505,7 @@ u smeće?</translation>
         <translation>Premjesti mapu u smeće</translation>
     </message>
     <message>
-        <location line="+352"/>
+        <location line="+354"/>
         <source>orderValue</source>
         <translation>vrijrednostPoretka</translation>
     </message>
@@ -2489,18 +2519,18 @@ u smeće?</translation>
         <translation>Tip uređaja</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-172"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-174"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Odabrani katalog sadrži više od %1 datoteka.&lt;br/&gt;Otvaranje može potrajati nekoliko minuta.&lt;br/&gt;Nastaviti?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5361"/>
+        <location filename="../mainwindow.ui" line="+5399"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Memorija</translation>
     </message>
     <message>
-        <location line="-9473"/>
+        <location line="-9511"/>
         <location line="+1022"/>
         <location line="+1700"/>
         <source>Use the Text criteria in the Search</source>
@@ -2537,7 +2567,7 @@ u smeće?</translation>
         <translation>Kriteriji mape</translation>
     </message>
     <message>
-        <location line="+4737"/>
+        <location line="+4775"/>
         <source>Graphic Start Date</source>
         <translation>Grafički početni datum</translation>
     </message>
@@ -2547,7 +2577,7 @@ u smeće?</translation>
         <translation>Odaberi datum</translation>
     </message>
     <message>
-        <location line="-3237"/>
+        <location line="-3275"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
         <source>Include Metadata</source>
         <translation>Uključi metapodatke</translation>
@@ -2643,7 +2673,7 @@ u smeće?</translation>
         <translation>Odaberite bazu podataka za stvaranje i otvaranje:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
+        <location filename="../mainwindow.cpp" line="+127"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Neke promjene u listi uređaja za pohranu nisu spremljene.&lt;br/&gt;Spremi i izađi, odbaci i izađi ili odustani od izlaska?</translation>
     </message>
@@ -2663,11 +2693,11 @@ u smeće?</translation>
         <translation>Ukloni ovu oznaku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-66"/>
+        <location filename="../mainwindow.cpp" line="-71"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+243"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+951"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+973"/>
         <source>Catalog with results</source>
         <translation>Katalog s rezultatima</translation>
     </message>
@@ -2746,482 +2776,482 @@ u smeće?</translation>
         <translation>Razlika datuma</translation>
     </message>
     <message>
-            <location line="+46"/>
-            <source>Parent Device</source>
-            <translation>Roditeljski uređaj</translation>
-        </message>
-        <message>
-            <location line="+76"/>
-            <location line="+5"/>
-            <source>Populate the lists first (One or both device lists are empty).</source>
-            <translation>Prvo popunite liste (Jedna ili obje liste uređaja su prazne).</translation>
-        </message>
-        <message>
-            <location line="+10"/>
-            <source>Invalid selection model</source>
-            <translation>Neispravni model odabira</translation>
-        </message>
-        <message>
-            <location line="+11"/>
-            <source>Select a device from both lists.</source>
-            <translation>Odaberite uređaj iz obje liste.</translation>
-        </message>
-        <message>
-            <location line="+10"/>
-            <source>Invalid device selection.</source>
-            <translation>Neispravni odabir uređaja.</translation>
-        </message>
-        <message>
-            <location line="+10"/>
-            <source>Empty device ID.</source>
-            <translation>Prazan ID uređaja.</translation>
-        </message>
-        <message>
-            <location line="+7"/>
-            <source>Provide a mapping name.</source>
-            <translation>Navedite naziv mapiranja.</translation>
-        </message>
-        <message>
-            <location line="+6"/>
-            <source>Select a different source or target (a device shall not be mapped to itself).</source>
-            <translation>Odaberite drukčiji izvor ili cilj (uređaj se ne smije mapirati sam na sebe).</translation>
-        </message>
-        <message>
-            <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
-            <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
-            <translation>Pohranište: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Izvorna mapa ne sadrži nijednu datoteku:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;To može značiti da uređaj nije montiran u ovu mapu,&lt;br/&gt;ili je mapa jednostavno prazna.&lt;br/&gt;&lt;br/&gt;Prisilno pokušati dobiti vrijednosti?</translation>
-        </message>
-        <message>
-            <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
-            <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
-            <translation>Čini se da ovaj katalog nije pravilno uvezen ili ima stari format.&lt;br/&gt;Uredite ga i provjerite da ima sljedeće prve 2 linije:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/putanja_mape&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Kopirajte/zalijepite ove linije na početak datoteke i modificirajte vrijednosti nakon &gt;:&lt;br/&gt;- catalogSourcePath je mapa iz koje se katalogiziraju datoteke.&lt;br/&gt;- broj catalogFileCount nije toliko važan, može se ažurirati.&lt;br/&gt;</translation>
-        </message>
-        <message>
-            <location line="+15"/>
-            <location line="+55"/>
-            <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
-            <translation>Prvo odaberite katalog (nedostaju neke informacije).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
-        </message>
-        <message>
-            <location line="-41"/>
-            <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-            <translation>Izvorna mapa ne sadrži nijednu datoteku.&lt;br/&gt;To može značiti da je izvor prazan ili uređaj nije montiran u ovu mapu.&lt;br/&gt;Želite li ga ipak spremiti (katalog bi bio prazan)?</translation>
-        </message>
-        <message>
-            <location line="+15"/>
-            <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
-            <translation>Katalog &lt;b&gt;%1&lt;/b&gt; se ne može ažurirati.&lt;br/&gt;&lt;br/&gt; Izvorna mapa nije pronađena.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Mogući razlozi:&lt;br/&gt;    - uređaj nije povezan i montiran,&lt;br/&gt;    - izvorna mapa je premještena ili preimenovana,&lt;br/&gt;    - unesena izvorna mapa je neispravna.</translation>
-        </message>
-        <message>
-            <location line="+14"/>
-            <location line="+87"/>
-            <source>Could not open file.</source>
-            <translation>Ne mogu otvoriti datoteku.</translation>
-        </message>
-        <message>
-            <location line="-12"/>
-            <source>Error opening output file.</source>
-            <translation>Greška pri otvaranju izlazne datoteke.</translation>
-        </message>
-        <message>
-            <location line="+35"/>
-            <source>Select a catalog with a valid path.</source>
-            <translation>Odaberite katalog s ispravnom putanjom.</translation>
-        </message>
-        <message>
-            <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
-            <source>Virtual Group</source>
-            <translation>Virtualna grupa</translation>
-        </message>
-        <message>
-            <location line="+22"/>
-            <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
-            <translation>Virtualni uređaj može se dodati samo drugom virtualnom uređaju.&lt;br/&gt;</translation>
-        </message>
-        <message>
-            <location line="+170"/>
-            <location line="+56"/>
-            <source>Filelight</source>
-            <translation>Filelight</translation>
-        </message>
-        <message>
-            <location line="-46"/>
-            <source>Unassign this catalog</source>
-            <translation>Ukloni dodjelu ovog kataloga</translation>
-        </message>
-        <message>
-            <location line="+7"/>
-            <source>Delete this catalog</source>
-            <translation>Obriši ovaj katalog</translation>
-        </message>
-        <message>
-            <location line="+48"/>
-            <source>Unassign this storage</source>
-            <translation>Ukloni dodjelu ovog pohraništa</translation>
-        </message>
-        <message>
-            <location line="+8"/>
-            <source>Delete this storage</source>
-            <translation>Obriši ovo pohranište</translation>
-        </message>
-        <message>
-            <location line="+39"/>
-            <source>Add Virtual device</source>
-            <translation>Dodaj virtualni uređaj</translation>
-        </message>
-        <message>
-            <location line="+7"/>
-            <source>Add Storage device</source>
-            <translation>Dodaj uređaj za pohranu</translation>
-        </message>
-        <message>
-            <location line="+7"/>
-            <source>Assign selected catalog</source>
-            <translation>Dodijeli odabrani katalog</translation>
-        </message>
-        <message>
-            <location line="+22"/>
-            <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
-            <translation>Ova grupa je potrebna za hostiranje pohraništa i kataloga.&lt;br/&gt;Ne može se obrisati.</translation>
-        </message>
-        <message>
-            <location filename="../mainwindow_tab_search_pr.cpp" line="-428"/>
-            <location line="+284"/>
-            <source>Search Error</source>
-            <translation>Greška pretrage</translation>
-        </message>
-        <message>
-            <location line="-112"/>
-            <source>Folder</source>
-            <translation>Mapa</translation>
-        </message>
-        <message>
-            <location line="+0"/>
-            <source>Catalog Name</source>
-            <translation>Naziv kataloga</translation>
-        </message>
-        <message>
-            <location line="+178"/>
-            <location line="+46"/>
-            <source>Pause</source>
-            <translation>Pauza</translation>
-        </message>
-        <message>
-            <location line="-31"/>
-            <location line="+33"/>
-            <source>Resume</source>
-            <translation>Nastavi</translation>
-        </message>
-        <message>
-            <location line="-21"/>
-            <source>Searching...</source>
-            <translation>Pretraživanje...</translation>
-        </message>
-        <message>
-            <location line="+18"/>
-            <source>Start a new search</source>
-            <translation>Pokreni novu pretragu</translation>
-        </message>
-        <message>
-            <location line="+2"/>
-            <source>Pause the current search</source>
-            <translation>Pauziraj trenutnu pretragu</translation>
-        </message>
-        <message>
-            <location line="+2"/>
-            <source>Resume the paused search</source>
-            <translation>Nastavi pauziranu pretragu</translation>
-        </message>
-        <message>
-            <location line="+2"/>
-            <source>Stop the current search</source>
-            <translation>Zaustavi trenutnu pretragu</translation>
-        </message>
-        <message>
-            <location line="+44"/>
-            <source>Folders found</source>
-            <translation>Pronađene mape</translation>
-        </message>
-        <message>
-            <location line="+16"/>
-            <source>Duplicates found</source>
-            <translation>Pronađeni duplikati</translation>
-        </message>
-        <message>
-            <location line="+3"/>
-            <source>Differences found</source>
-            <translation>Pronađene razlike</translation>
-        </message>
-        <message>
-            <location line="+45"/>
-            <source>Search interrupted | Files found: %1 | Files processed: %2</source>
-            <translation>Pretraga prekinuta | Pronađene datoteke: %1 | Obrađene datoteke: %2</translation>
-        </message>
-        <message>
-            <location line="+4"/>
-            <source>Search interrupted. No results available.</source>
-            <translation>Pretraga prekinuta. Nema dostupnih rezultata.</translation>
-        </message>
-        <message>
-            <location line="+10"/>
-            <source>Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5</source>
-            <translation>Učitavanje kataloga %1 od %2 (%3) | Pronađene datoteke: %4 | Obrađene datoteke: %5</translation>
-        </message>
-        <message>
-            <location line="+22"/>
-            <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
-            <translation>Učitavanje kataloga %1 od %2 (%3) | %4 datoteka učitano (%5%) | Pronađene datoteke: %6 | Obrađene datoteke: %7</translation>
-        </message>
-        <message>
-            <location line="+11"/>
-            <source> | CATALOG LOADING PAUSED</source>
-            <translation> | UČITAVANJE KATALOGA PAUZIRANO</translation>
-        </message>
-        <message>
-            <location line="+15"/>
-            <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
-            <translation>Obrađivanje kataloga %1 od %2 | Pronađene datoteke: %3 | Obrađivanje datoteka...</translation>
-        </message>
-        <message>
-            <location line="+17"/>
-            <source>Searching in Catalog %1 of %2 | </source>
-            <translation>Pretraživanje u katalogu %1 od %2 | </translation>
-        </message>
-        <message>
-            <location line="+4"/>
-            <location line="+5"/>
-            <source>Files found: %1 | Files processed: %2</source>
-            <translation>Pronađene datoteke: %1 | Obrađene datoteke: %2</translation>
-        </message>
-        <message>
-            <location line="+9"/>
-            <source> (%1%)</source>
-            <translation> (%1%)</translation>
-        </message>
-        <message>
-            <location line="+18"/>
-            <source>No search results available.</source>
-            <translation>Nema dostupnih rezultata pretrage.</translation>
-        </message>
-        <message>
-            <location line="+9"/>
-            <source>Folders Found Statistics</source>
-            <translation>Statistike pronađenih mapa</translation>
-        </message>
-        <message>
-            <location line="+3"/>
-            <source>Files Found Statistics</source>
-            <translation>Statistike pronađenih datoteka</translation>
-        </message>
-        <message>
-            <location line="+6"/>
-            <source>Catalogs processed: %1 of %2</source>
-            <translation>Obrađeni katalozi: %1 od %2</translation>
-        </message>
-        <message>
-            <location line="+12"/>
-            <source>Interrupted Search, incomplete results</source>
-            <translation>Prekinuta pretraga, nepotpuni rezultati</translation>
-        </message>
-        <message>
-            <location line="+3"/>
-            <location line="+11"/>
-            <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-            <translation>&lt;tr&gt;&lt;td&gt;Obrađene datoteke: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
-        </message>
-        <message>
-            <location line="-5"/>
-            <source>&lt;tr&gt;&lt;td&gt;Percentage processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
-            <translation>&lt;tr&gt;&lt;td&gt;Postotak obrađeno: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
-        </message>
-        <message>
-            <location line="+12"/>
-            <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Folders found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-            <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Pronađene mape:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
-        </message>
-        <message>
-            <location line="+4"/>
-            <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
-            <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Pronađene datoteke:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
-        </message>
-        <message>
-            <location line="+10"/>
-            <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-            <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ukupna veličina:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min veličina:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max veličina:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Prosječna veličina: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-        </message>
-        <message>
-            <location line="+27"/>
-            <location line="+32"/>
-            <source>Ready</source>
-            <translation>Spreman</translation>
-        </message>
-        <message>
-            <location line="-3"/>
-            <source>Search completed | Files found: %1</source>
-            <translation>Pretraga završena | Pronađene datoteke: %1</translation>
-        </message>
-        <message>
-            <location filename="../mainwindow_tab_settings_exp.cpp" line="+48"/>
-            <source>Select the directory and file name for his export.</source>
-            <translation>Odaberite direktorij i naziv datoteke za ovaj izvoz.</translation>
-        </message>
-        <message>
-            <location line="+67"/>
-            <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-            <translation>Neuspješan izvoz baze podataka iz memorije u datoteku.&lt;br/&gt;&lt;br/&gt; Putanja datoteke izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
-        </message>
-        <message>
-            <location line="+6"/>
-            <source>Successful export of collection to SQLite database file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
-            <translation>Uspješan izvoz kolekcije u SQLite datoteku baze podataka.&lt;br/&gt;&lt;br/&gt; Putanja datoteke izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
-        </message>
-        <message>
-            <location line="+23"/>
-            <source>Select the directory for the CSV export</source>
-            <translation>Odaberite direktorij za CSV izvoz</translation>
-        </message>
-        <message>
-            <location line="+80"/>
-            <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
-            <translation>Uspješno izvezena baza podataka u CSV datoteke.&lt;br/&gt;&lt;br/&gt;Direktorij izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Sada možete prebaciti na memorijski način i učitati ovu kolekciju.</translation>
-        </message>
-        <message>
-            <location line="+13"/>
-            <source>Export failed: %1</source>
-            <translation>Izvoz neuspješan: %1</translation>
-        </message>
-    </context>
-    <context>
-        <name>Search</name>
-        <message>
-            <location filename="../core/search.cpp" line="+130"/>
-            <source>Name</source>
-            <translation>Naziv</translation>
-        </message>
-        <message>
-            <location line="+1"/>
-            <source>Size</source>
-            <translation>Veličina</translation>
-        </message>
-        <message>
-            <location line="+1"/>
-            <source>Date</source>
-            <translation>Datum</translation>
-        </message>
-        <message>
-            <location line="+1"/>
-            <source>Folder</source>
-            <translation>Mapa</translation>
-        </message>
-        <message>
-            <location line="+1"/>
-            <source>Catalog Name</source>
-            <translation>Naziv kataloga</translation>
-        </message>
-        <message>
-            <location line="+1"/>
-            <source>Catalog ID</source>
-            <translation>ID kataloga</translation>
-        </message>
-    </context>
-    <context>
-        <name>SearchProgressManager</name>
-        <message>
-            <location filename="../core/searchprogressmanager.cpp" line="+78"/>
-            <location line="+11"/>
-            <source> | SEARCH PAUSED</source>
-            <translation> | PRETRAGA PAUZIRANA</translation>
-        </message>
-        <message>
-            <location line="-10"/>
-            <location line="+8"/>
-            <source> | CATALOG LOADING PAUSED</source>
-            <translation> | UČITAVANJE KATALOGA PAUZIRANO</translation>
-        </message>
-        <message>
-            <location line="+25"/>
-            <source>Searching in directory %1</source>
-            <translation>Pretraživanje u direktoriju %1</translation>
-        </message>
-        <message>
-            <location line="+7"/>
-            <location line="+14"/>
-            <source>Searching in catalog %1</source>
-            <translation>Pretraživanje u katalogu %1</translation>
-        </message>
-        <message>
-            <location line="-12"/>
-            <source>Searching in catalog</source>
-            <translation>Pretraživanje u katalogu</translation>
-        </message>
-        <message>
-            <location line="+5"/>
-            <source> | Catalog %1 of %2</source>
-            <translation> | Katalog %1 od %2</translation>
-        </message>
-        <message>
-            <location line="+9"/>
-            <location line="+5"/>
-            <source>Searching</source>
-            <translation>Pretraživanje</translation>
-        </message>
-        <message>
-            <location line="+6"/>
-            <source> | Total folders found: %1</source>
-            <translation> | Ukupno pronađenih mapa: %1</translation>
-        </message>
-        <message>
-            <location line="+3"/>
-            <source> | Total files found: %1</source>
-            <translation> | Ukupno pronađenih datoteka: %1</translation>
-        </message>
-        <message>
-            <location line="+5"/>
-            <source> | Total folders found: 0</source>
-            <translation> | Ukupno pronađenih mapa: 0</translation>
-        </message>
-        <message>
-            <location line="+2"/>
-            <source> | Total files found: 0</source>
-            <translation> | Ukupno pronađenih datoteka: 0</translation>
-        </message>
-        <message>
-            <location line="+7"/>
-            <source> | Total files processed: %1</source>
-            <translation> | Ukupno obrađenih datoteka: %1</translation>
-        </message>
-        <message>
-            <location line="+4"/>
-            <source> (%1%)</source>
-            <translation> (%1%)</translation>
-        </message>
-        <message>
-            <location line="+17"/>
-            <source>Search completed | Total folders found: %1</source>
-            <translation>Pretraga završena | Ukupno pronađenih mapa: %1</translation>
-        </message>
-        <message>
-            <location line="+3"/>
-            <source>Search completed | Total files found: %1</source>
-            <translation>Pretraga završena | Ukupno pronađenih datoteka: %1</translation>
-        </message>
-    </context>
-    <context>
-        <name>Tag</name>
-        <message>
-            <location filename="../core/tag.cpp" line="+68"/>
-            <source>ID</source>
-            <translation>ID</translation>
-        </message>
-        <message>
-            <location line="+1"/>
-            <source>Folder</source>
-            <translation>Mapa</translation>
-        </message>
-        <message>
-            <location line="+1"/>
-            <source>Tag</source>
-            <translation>Oznaka</translation>
-        </message>
-    </context>
+        <location line="+46"/>
+        <source>Parent Device</source>
+        <translation>Roditeljski uređaj</translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <location line="+5"/>
+        <source>Populate the lists first (One or both device lists are empty).</source>
+        <translation>Prvo popunite liste (Jedna ili obje liste uređaja su prazne).</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Invalid selection model</source>
+        <translation>Neispravni model odabira</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Select a device from both lists.</source>
+        <translation>Odaberite uređaj iz obje liste.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Invalid device selection.</source>
+        <translation>Neispravni odabir uređaja.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Empty device ID.</source>
+        <translation>Prazan ID uređaja.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Provide a mapping name.</source>
+        <translation>Navedite naziv mapiranja.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Select a different source or target (a device shall not be mapped to itself).</source>
+        <translation>Odaberite drukčiji izvor ili cilj (uređaj se ne smije mapirati sam na sebe).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
+        <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
+        <translation>Pohranište: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Izvorna mapa ne sadrži nijednu datoteku:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;To može značiti da uređaj nije montiran u ovu mapu,&lt;br/&gt;ili je mapa jednostavno prazna.&lt;br/&gt;&lt;br/&gt;Prisilno pokušati dobiti vrijednosti?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
+        <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
+        <translation>Čini se da ovaj katalog nije pravilno uvezen ili ima stari format.&lt;br/&gt;Uredite ga i provjerite da ima sljedeće prve 2 linije:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/putanja_mape&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Kopirajte/zalijepite ove linije na početak datoteke i modificirajte vrijednosti nakon &gt;:&lt;br/&gt;- catalogSourcePath je mapa iz koje se katalogiziraju datoteke.&lt;br/&gt;- broj catalogFileCount nije toliko važan, može se ažurirati.&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <location line="+55"/>
+        <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
+        <translation>Prvo odaberite katalog (nedostaju neke informacije).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
+    </message>
+    <message>
+        <location line="-41"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
+        <translation>Izvorna mapa ne sadrži nijednu datoteku.&lt;br/&gt;To može značiti da je izvor prazan ili uređaj nije montiran u ovu mapu.&lt;br/&gt;Želite li ga ipak spremiti (katalog bi bio prazan)?</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
+        <translation>Katalog &lt;b&gt;%1&lt;/b&gt; se ne može ažurirati.&lt;br/&gt;&lt;br/&gt; Izvorna mapa nije pronađena.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Mogući razlozi:&lt;br/&gt;    - uređaj nije povezan i montiran,&lt;br/&gt;    - izvorna mapa je premještena ili preimenovana,&lt;br/&gt;    - unesena izvorna mapa je neispravna.</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+87"/>
+        <source>Could not open file.</source>
+        <translation>Ne mogu otvoriti datoteku.</translation>
+    </message>
+    <message>
+        <location line="-12"/>
+        <source>Error opening output file.</source>
+        <translation>Greška pri otvaranju izlazne datoteke.</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Select a catalog with a valid path.</source>
+        <translation>Odaberite katalog s ispravnom putanjom.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
+        <source>Virtual Group</source>
+        <translation>Virtualna grupa</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
+        <translation>Virtualni uređaj može se dodati samo drugom virtualnom uređaju.&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+170"/>
+        <location line="+56"/>
+        <source>Filelight</source>
+        <translation>Filelight</translation>
+    </message>
+    <message>
+        <location line="-46"/>
+        <source>Unassign this catalog</source>
+        <translation>Ukloni dodjelu ovog kataloga</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Delete this catalog</source>
+        <translation>Obriši ovaj katalog</translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Unassign this storage</source>
+        <translation>Ukloni dodjelu ovog pohraništa</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Delete this storage</source>
+        <translation>Obriši ovo pohranište</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Add Virtual device</source>
+        <translation>Dodaj virtualni uređaj</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Add Storage device</source>
+        <translation>Dodaj uređaj za pohranu</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Assign selected catalog</source>
+        <translation>Dodijeli odabrani katalog</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
+        <translation>Ova grupa je potrebna za hostiranje pohraništa i kataloga.&lt;br/&gt;Ne može se obrisati.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-428"/>
+        <location line="+284"/>
+        <source>Search Error</source>
+        <translation>Greška pretrage</translation>
+    </message>
+    <message>
+        <location line="-112"/>
+        <source>Folder</source>
+        <translation>Mapa</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Catalog Name</source>
+        <translation>Naziv kataloga</translation>
+    </message>
+    <message>
+        <location line="+178"/>
+        <location line="+46"/>
+        <source>Pause</source>
+        <translation>Pauza</translation>
+    </message>
+    <message>
+        <location line="-31"/>
+        <location line="+33"/>
+        <source>Resume</source>
+        <translation>Nastavi</translation>
+    </message>
+    <message>
+        <location line="-21"/>
+        <source>Searching...</source>
+        <translation>Pretraživanje...</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Start a new search</source>
+        <translation>Pokreni novu pretragu</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pause the current search</source>
+        <translation>Pauziraj trenutnu pretragu</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Resume the paused search</source>
+        <translation>Nastavi pauziranu pretragu</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Stop the current search</source>
+        <translation>Zaustavi trenutnu pretragu</translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Folders found</source>
+        <translation>Pronađene mape</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Duplicates found</source>
+        <translation>Pronađeni duplikati</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Differences found</source>
+        <translation>Pronađene razlike</translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>Search interrupted | Files found: %1 | Files processed: %2</source>
+        <translation>Pretraga prekinuta | Pronađene datoteke: %1 | Obrađene datoteke: %2</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Search interrupted. No results available.</source>
+        <translation>Pretraga prekinuta. Nema dostupnih rezultata.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5</source>
+        <translation>Učitavanje kataloga %1 od %2 (%3) | Pronađene datoteke: %4 | Obrađene datoteke: %5</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
+        <translation>Učitavanje kataloga %1 od %2 (%3) | %4 datoteka učitano (%5%) | Pronađene datoteke: %6 | Obrađene datoteke: %7</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source> | CATALOG LOADING PAUSED</source>
+        <translation> | UČITAVANJE KATALOGA PAUZIRANO</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
+        <translation>Obrađivanje kataloga %1 od %2 | Pronađene datoteke: %3 | Obrađivanje datoteka...</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Searching in Catalog %1 of %2 | </source>
+        <translation>Pretraživanje u katalogu %1 od %2 | </translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+5"/>
+        <source>Files found: %1 | Files processed: %2</source>
+        <translation>Pronađene datoteke: %1 | Obrađene datoteke: %2</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source> (%1%)</source>
+        <translation> (%1%)</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>No search results available.</source>
+        <translation>Nema dostupnih rezultata pretrage.</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Folders Found Statistics</source>
+        <translation>Statistike pronađenih mapa</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Files Found Statistics</source>
+        <translation>Statistike pronađenih datoteka</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Catalogs processed: %1 of %2</source>
+        <translation>Obrađeni katalozi: %1 od %2</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Interrupted Search, incomplete results</source>
+        <translation>Prekinuta pretraga, nepotpuni rezultati</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+11"/>
+        <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;tr&gt;&lt;td&gt;Obrađene datoteke: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location line="-5"/>
+        <source>&lt;tr&gt;&lt;td&gt;Percentage processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;tr&gt;&lt;td&gt;Postotak obrađeno: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 %&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Folders found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Pronađene mape:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Pronađene datoteke:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ukupna veličina:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min veličina:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max veličina:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Prosječna veličina: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+32"/>
+        <source>Ready</source>
+        <translation>Spreman</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Search completed | Files found: %1</source>
+        <translation>Pretraga završena | Pronađene datoteke: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings_exp.cpp" line="+48"/>
+        <source>Select the directory and file name for his export.</source>
+        <translation>Odaberite direktorij i naziv datoteke za ovaj izvoz.</translation>
+    </message>
+    <message>
+        <location line="+67"/>
+        <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
+        <translation>Neuspješan izvoz baze podataka iz memorije u datoteku.&lt;br/&gt;&lt;br/&gt; Putanja datoteke izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Successful export of collection to SQLite database file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
+        <translation>Uspješan izvoz kolekcije u SQLite datoteku baze podataka.&lt;br/&gt;&lt;br/&gt; Putanja datoteke izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Select the directory for the CSV export</source>
+        <translation>Odaberite direktorij za CSV izvoz</translation>
+    </message>
+    <message>
+        <location line="+80"/>
+        <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
+        <translation>Uspješno izvezena baza podataka u CSV datoteke.&lt;br/&gt;&lt;br/&gt;Direktorij izvoza: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Sada možete prebaciti na memorijski način i učitati ovu kolekciju.</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Export failed: %1</source>
+        <translation>Izvoz neuspješan: %1</translation>
+    </message>
+</context>
+<context>
+    <name>Search</name>
+    <message>
+        <location filename="../core/search.cpp" line="+130"/>
+        <source>Name</source>
+        <translation>Naziv</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Size</source>
+        <translation>Veličina</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Folder</source>
+        <translation>Mapa</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Catalog Name</source>
+        <translation>Naziv kataloga</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Catalog ID</source>
+        <translation>ID kataloga</translation>
+    </message>
+</context>
+<context>
+    <name>SearchProgressManager</name>
+    <message>
+        <location filename="../core/searchprogressmanager.cpp" line="+78"/>
+        <location line="+11"/>
+        <source> | SEARCH PAUSED</source>
+        <translation> | PRETRAGA PAUZIRANA</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location line="+8"/>
+        <source> | CATALOG LOADING PAUSED</source>
+        <translation> | UČITAVANJE KATALOGA PAUZIRANO</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Searching in directory %1</source>
+        <translation>Pretraživanje u direktoriju %1</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+14"/>
+        <source>Searching in catalog %1</source>
+        <translation>Pretraživanje u katalogu %1</translation>
+    </message>
+    <message>
+        <location line="-12"/>
+        <source>Searching in catalog</source>
+        <translation>Pretraživanje u katalogu</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source> | Catalog %1 of %2</source>
+        <translation> | Katalog %1 od %2</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+5"/>
+        <source>Searching</source>
+        <translation>Pretraživanje</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source> | Total folders found: %1</source>
+        <translation> | Ukupno pronađenih mapa: %1</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source> | Total files found: %1</source>
+        <translation> | Ukupno pronađenih datoteka: %1</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source> | Total folders found: 0</source>
+        <translation> | Ukupno pronađenih mapa: 0</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source> | Total files found: 0</source>
+        <translation> | Ukupno pronađenih datoteka: 0</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source> | Total files processed: %1</source>
+        <translation> | Ukupno obrađenih datoteka: %1</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source> (%1%)</source>
+        <translation> (%1%)</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Search completed | Total folders found: %1</source>
+        <translation>Pretraga završena | Ukupno pronađenih mapa: %1</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Search completed | Total files found: %1</source>
+        <translation>Pretraga završena | Ukupno pronađenih datoteka: %1</translation>
+    </message>
+</context>
+<context>
+    <name>Tag</name>
+    <message>
+        <location filename="../core/tag.cpp" line="+68"/>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Folder</source>
+        <translation>Mapa</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tag</source>
+        <translation>Oznaka</translation>
+    </message>
+</context>
 </TS>
