@@ -297,11 +297,11 @@ void Catalog::clearCatalogData()
 {
     qDebug() << "Clearing existing catalog data for update";
 
-    // Clear files from database
-    QString deleteFilesSQL = "DELETE FROM file WHERE file_catalog_name = :catalog_name";
+    // Clear files from database (use catalog ID, not name)
+    QString deleteFilesSQL = "DELETE FROM file WHERE file_catalog_id = :file_catalog_id";
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     query.prepare(deleteFilesSQL);
-    query.bindValue(":catalog_name", name);
+    query.bindValue(":file_catalog_id", ID);  // Use ID, not name
 
     if (!query.exec()) {
         qDebug() << "Error clearing catalog files:" << query.lastError().text();
@@ -309,10 +309,10 @@ void Catalog::clearCatalogData()
         qDebug() << "Cleared" << query.numRowsAffected() << "files from catalog";
     }
 
-    // Clear folders from database
-    QString deleteFoldersSQL = "DELETE FROM folder WHERE folder_catalog_name = :catalog_name";
+    // Clear folders from database (use catalog ID, not name)
+    QString deleteFoldersSQL = "DELETE FROM folder WHERE folder_catalog_id = :folder_catalog_id";
     query.prepare(deleteFoldersSQL);
-    query.bindValue(":catalog_name", name);
+    query.bindValue(":folder_catalog_id", ID);  // Use ID, not name
 
     if (!query.exec()) {
         qDebug() << "Error clearing catalog folders:" << query.lastError().text();
