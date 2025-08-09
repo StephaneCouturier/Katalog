@@ -2670,99 +2670,6 @@ void MainWindow::createMissingParentDirectories() {
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 {
-    globalUpdateTotalFiles = 0;
-    globalUpdateDeltaFiles = 0;
-    globalUpdateTotalSize  = 0;
-    globalUpdateDeltaSize  = 0;
-
-    //User to choose showing or skipping summary for each catalog update
-    bool showEachCatalogUpdateSummary = false;
-
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Katalog");
-    msgBox.setText(tr("Update all active catalogs")+"<br/><br/>"+tr("Do you want a the summary of updates for each catalog?"));
-    msgBox.setIcon(QMessageBox::Question);
-    msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No | QMessageBox::Cancel);
-    int result = msgBox.exec();
-
-    if ( result == QMessageBox::Yes){
-        showEachCatalogUpdateSummary = true;
-    }
-    else if ( result == QMessageBox::Cancel){
-        return;
-    }
-
-    int updatedCatalogs = 0;
-    int skippedCatalogs = 0;
-
-    // Loop through each row of the displayed model
-    Device loopDevice;
-    for (int row = 0; row < ui->Devices_treeView_DeviceList->model()->rowCount(); ++row) {
-        // Get the index for the "Active" field in the current row
-        QModelIndex activeIndex = ui->Devices_treeView_DeviceList->model()->index(row, 2);
-
-        // Retrieve the data for the "Active" field (assuming it contains an icon)
-        QIcon activeIcon = qvariant_cast<QIcon>(ui->Devices_treeView_DeviceList->model()->data(activeIndex, Qt::DecorationRole));
-
-        // Check if the icon is set to "dialog-ok-apply"
-        if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
-            updatedCatalogs +=1;
-            loopDevice.ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 3)).toInt();
-            loopDevice.loadDevice("defaultConnection");
-            loopDevice.catalog->appVersion = currentVersion;
-
-            QList<qint64> list = DeviceUIWrapper::updateDeviceWithUI(&loopDevice,
-                                                                     "update",
-                                                                     collection->databaseMode,
-                                                                     false,
-                                                                     collection->folder,
-                                                                     true);
-            if ( showEachCatalogUpdateSummary == true ){
-                reportAllUpdates(&loopDevice, list, "update");
-            }
-
-            if(list.count()>0){
-                globalUpdateTotalFiles += list[1];
-                globalUpdateDeltaFiles += list[2];
-                globalUpdateTotalSize  += list[3];
-                globalUpdateDeltaSize  += list[4];
-            }
-        }
-        else
-            skippedCatalogs +=1;
-    }
-
-    QList<qint64> globalList;
-    globalList <<1;
-    globalList <<globalUpdateTotalFiles;
-    globalList <<globalUpdateDeltaFiles;
-    globalList <<globalUpdateTotalSize;
-    globalList <<globalUpdateDeltaSize;
-    globalList <<updatedCatalogs;
-    globalList <<skippedCatalogs;
-    globalList <<0;
-    globalList <<0;
-    globalList <<0;
-    globalList <<0;
-    globalList <<0;
-    globalList <<0;
-    globalList <<0;
-
-    reportAllUpdates(selectedDevice, globalList, "list");
-
-    collection->saveDeviceTableToFile();
-    collection->saveStatiticsTableToFile();
-
-    loadDevicesView("");
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
-{
-    if (!activeDevice || activeDevice->type != "Catalog") {
-        qDebug() << "ERROR: No valid catalog device selected";
-        return;
-    }
-
     if (!catalogManager) {
         qDebug() << "ERROR: Catalog manager not initialized";
         return;
@@ -2773,18 +2680,131 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         return;
     }
 
-    qDebug() << "Starting catalog update using new system for:" << activeDevice->name;
+    // COPY ORIGINAL: Ask user for report choice
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setText(tr("Do you want to see a report for each updated catalog?"));
+    msgBox.setIcon(QMessageBox::Question);
+    msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No | QMessageBox::Cancel);
+    int result = msgBox.exec();
 
-    // UI Protection: Set wait cursor and disable buttons (like creation)
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-    // Note: Add stop button if/when you want stop functionality for updates
+    bool showEachCatalogUpdateSummary = false;
+    if ( result == QMessageBox::Yes){
+        showEachCatalogUpdateSummary = true;
+    }
+    else if ( result == QMessageBox::Cancel){
+        return;
+    }
 
-    // Store reference for completion handling
-    m_currentUpdateDevice = activeDevice;
+    // Clear and initialize (simple)
+    qDeleteAll(m_catalogsToUpdate);
+    m_catalogsToUpdate.clear();
+    m_currentCatalogIndex = 0;
+    m_showEachCatalogUpdateSummary = showEachCatalogUpdateSummary;
 
-    // Update the app version before starting
-    activeDevice->catalog->appVersion = currentVersion;
+    // Initialize global statistics (same as original)
+    m_globalUpdateTotalFiles = 0;
+    m_globalUpdateDeltaFiles = 0;
+    m_globalUpdateTotalSize = 0;
+    m_globalUpdateDeltaSize = 0;
+    m_updatedCatalogs = 0;
+    m_skippedCatalogs = 0;
+
+    // COPY ORIGINAL: Loop through each row to collect active catalogs
+    for (int row = 0; row < ui->Devices_treeView_DeviceList->model()->rowCount(); ++row) {
+        // Get the index for the "Active" field in the current row
+        QModelIndex activeIndex = ui->Devices_treeView_DeviceList->model()->index(row, 2);
+
+        // Retrieve the data for the "Active" field (assuming it contains an icon)
+        QIcon activeIcon = qvariant_cast<QIcon>(ui->Devices_treeView_DeviceList->model()->data(activeIndex, Qt::DecorationRole));
+
+        // Check if the icon is set to "dialog-ok-apply"
+        if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
+            Device* loopDevice = new Device();
+            loopDevice->ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 3)).toInt();
+            loopDevice->loadDevice("defaultConnection");
+
+            // Only process catalogs (same as original logic)
+            if (loopDevice->type == "Catalog") {
+                loopDevice->catalog->appVersion = currentVersion;
+                m_catalogsToUpdate.append(loopDevice);
+                qDebug() << "Added catalog to update list:" << loopDevice->name;
+            } else {
+                delete loopDevice;
+                m_skippedCatalogs += 1;  // Count non-catalogs as skipped
+            }
+        }
+    }
+
+    if (m_catalogsToUpdate.isEmpty()) {
+        QMessageBox::information(this, "Katalog", tr("No active catalogs found to update."));
+        return;
+    }
+
+    qDebug() << "Starting batch update of" << m_catalogsToUpdate.size() << "catalogs";
+
+    // Disable the button during batch operation
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+
+    // Start with the first catalog
+    startNextCatalogUpdate();
+}
+
+void MainWindow::processNextCatalogUpdate()
+{
+    qDebug() << "=== processNextCatalogUpdate() called ===";
+    qDebug() << "Pending catalogs:" << m_pendingCatalogUpdates.size();
+    qDebug() << "Completed catalogs:" << m_completedCatalogUpdates;
+    qDebug() << "Total catalogs:" << m_totalCatalogsToUpdate;
+
+    if (m_pendingCatalogUpdates.isEmpty()) {
+        qDebug() << "All catalog updates completed - showing final report";
+
+        // REUSE ORIGINAL FINAL REPORT: Create global list (same format as original)
+        QList<qint64> globalList;
+        globalList << 1;  // Success code
+        globalList << m_globalUpdateTotalFiles;
+        globalList << m_globalUpdateDeltaFiles;
+        globalList << m_globalUpdateTotalSize;
+        globalList << m_globalUpdateDeltaSize;
+        globalList << m_updatedCatalogs;
+        globalList << m_skippedCatalogs;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+
+        // Show final global report (same as original)
+        reportAllUpdates(nullptr, globalList, "list");  // Use nullptr as device for global report
+
+        // Clean up and restore UI
+        m_globalUpdateTotalFiles = 0;
+        m_globalUpdateDeltaFiles = 0;
+        m_globalUpdateTotalSize = 0;
+        m_globalUpdateDeltaSize = 0;
+        m_updatedCatalogs = 0;
+        m_skippedCatalogs = 0;
+        m_completedCatalogUpdates = 0;
+        m_totalCatalogsToUpdate = 0;
+        m_showEachCatalogUpdateSummary = false;
+
+        // Re-enable the button
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+
+        // Refresh the view (same as original)
+        loadDevicesView("");
+        return;
+    }
+
+    Device* currentDevice = m_pendingCatalogUpdates.takeFirst();
+    m_currentUpdateDevice = currentDevice;
+
+    qDebug() << "Starting update for catalog:" << currentDevice->name
+             << "(" << (m_completedCatalogUpdates + 1) << "/" << m_totalCatalogsToUpdate << ")";
 
     // Create a new catalog job stoppable for this update operation
     CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
@@ -2794,16 +2814,59 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
     }
 
-    // Use the new catalog system for updating
+    // Start the update for this catalog
     catalogManager->startCatalogJobStoppable(
-        catalogJobStoppable,                   // The catalog engine
-        activeDevice,                          // Target device
-        CatalogJobStoppable::UpdateCatalog,    // Operation type
-        collection->databaseMode,              // Database mode
-        collection->folder                     // Collection folder
+        catalogJobStoppable,
+        currentDevice,
+        CatalogJobStoppable::UpdateCatalog,
+        collection->databaseMode,
+        collection->folder
     );
 
-    qDebug() << "Catalog update started via new CatalogManager system";
+    qDebug() << "Update started for catalog:" << currentDevice->name;
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
+{
+    if (!activeDevice || activeDevice->type != "Catalog") {
+        qDebug() << "ERROR: No valid catalog device selected";
+        return;
+    }
+
+    if (!catalogManager || catalogManager->catalogOperationRunning()) {
+        qDebug() << "ERROR: Catalog manager not available";
+        return;
+    }
+
+    qDebug() << "Starting SINGLE catalog update for:" << activeDevice->name;
+
+    // CLEAR batch state - this is a single update
+    qDeleteAll(m_catalogsToUpdate);
+    m_catalogsToUpdate.clear();
+    m_currentCatalogIndex = 0;
+
+    // UI Protection
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+
+    // Set current device
+    m_currentUpdateDevice = activeDevice;
+    activeDevice->catalog->appVersion = currentVersion;
+
+    // Start update (same as batch)
+    CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
+
+    if (catalogProgressManager) {
+        catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+    }
+
+    catalogManager->startCatalogJobStoppable(
+        catalogJobStoppable,
+        activeDevice,
+        CatalogJobStoppable::UpdateCatalog,
+        collection->databaseMode,
+        collection->folder
+    );
 }
 //--------------------------------------------------------------------------
 void MainWindow::onCatalogUpdateCompleted()
@@ -2815,55 +2878,146 @@ void MainWindow::onCatalogUpdateCompleted()
 
         if (!updatedDevice) {
             qDebug() << "ERROR: No device found for update completion";
-            // Restore UI anyway
-            QApplication::restoreOverrideCursor();
-            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
             return;
         }
 
-        qDebug() << "Processing catalog update completion for:" << updatedDevice->name;
+        qDebug() << "Processing completion for:" << updatedDevice->name;
 
         // Reload the device to get updated values
         updatedDevice->loadDevice("defaultConnection");
 
-        // Create the results list for reportAllUpdates (match old format)
+        // Create the results list (same format as original)
         QList<qint64> updateResults;
         updateResults << 1;  // Success code
         updateResults << updatedDevice->totalFileCount;  // Total files
-        updateResults << 0;  // Delta files (not calculated in new system yet)
+        updateResults << 0;  // Delta files
         updateResults << updatedDevice->totalFileSize;   // Total size
-        updateResults << 0;  // Delta size (not calculated in new system yet)
+        updateResults << 0;  // Delta size
 
         // Padding for compatibility
         for (int i = 0; i < 10; i++) {
             updateResults << 0;
         }
 
-        // Show the completion report (same as old system)
-        reportAllUpdates(updatedDevice, updateResults, "update");
+        // Check if this is a batch operation (simple check)
+        bool isBatchUpdate = (m_catalogsToUpdate.size() > 1);
 
-        // Save collection data
+        if (isBatchUpdate) {
+            // BATCH: Collect statistics (same as original)
+            m_globalUpdateTotalFiles += updateResults[1];
+            m_globalUpdateDeltaFiles += updateResults[2];
+            m_globalUpdateTotalSize += updateResults[3];
+            m_globalUpdateDeltaSize += updateResults[4];
+            m_updatedCatalogs += 1;
+
+            // Show individual report if requested (same as original)
+            if (m_showEachCatalogUpdateSummary) {
+                reportAllUpdates(updatedDevice, updateResults, "update");
+            }
+
+            qDebug() << "Batch progress:" << m_updatedCatalogs << "of" << m_catalogsToUpdate.size();
+
+            // Move to next catalog
+            m_currentCatalogIndex++;
+            startNextCatalogUpdate();
+
+        } else {
+            // SINGLE: Show report immediately
+            reportAllUpdates(updatedDevice, updateResults, "update");
+
+            // Restore UI for single update
+            QApplication::restoreOverrideCursor();
+            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+
+            // Refresh view
+            loadDevicesView("");
+        }
+
+        // Save data always
         collection->saveDeviceTableToFile();
         collection->saveStatiticsTableToFile();
 
-        // Refresh UI
-        loadDevicesView("");
-
-        qDebug() << "Catalog update completion processing finished";
+        // Clear current device reference
+        m_currentUpdateDevice = nullptr;
 
     } catch (const std::exception& e) {
         qDebug() << "EXCEPTION in update completion:" << e.what();
-    } catch (...) {
-        qDebug() << "UNKNOWN EXCEPTION in update completion";
-    }
 
-    // Always restore UI state
-    m_currentUpdateDevice = nullptr;
-    QApplication::restoreOverrideCursor();
-    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+        // Continue with next in batch mode
+        if (m_catalogsToUpdate.size() > 1) {
+            m_skippedCatalogs += 1;
+            m_currentCatalogIndex++;
+            startNextCatalogUpdate();
+        }
+    }
 
     qDebug() << "=== onCatalogUpdateCompleted() EXIT ===";
 }
+void MainWindow::startNextCatalogUpdate()
+{
+    qDebug() << "=== startNextCatalogUpdate() called ===";
+    qDebug() << "Current index:" << m_currentCatalogIndex << "Total:" << m_catalogsToUpdate.size();
+
+    // Check if we're done
+    if (m_currentCatalogIndex >= m_catalogsToUpdate.size()) {
+        qDebug() << "All catalogs processed - showing final report";
+
+        // COPY ORIGINAL: Create and show final global report
+        QList<qint64> globalList;
+        globalList << 1;  // Success code
+        globalList << m_globalUpdateTotalFiles;
+        globalList << m_globalUpdateDeltaFiles;
+        globalList << m_globalUpdateTotalSize;
+        globalList << m_globalUpdateDeltaSize;
+        globalList << m_updatedCatalogs;
+        globalList << m_skippedCatalogs;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+        globalList << 0;
+
+        // Show final report (same as original)
+        reportAllUpdates(nullptr, globalList, "list");
+
+        // Clean up
+        qDeleteAll(m_catalogsToUpdate);
+        m_catalogsToUpdate.clear();
+        m_currentCatalogIndex = 0;
+
+        // Restore UI
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+        loadDevicesView("");
+
+        return;
+    }
+
+    // Get next catalog to update
+    Device* currentDevice = m_catalogsToUpdate[m_currentCatalogIndex];
+    m_currentUpdateDevice = currentDevice;
+
+    qDebug() << "Starting update for catalog:" << currentDevice->name
+             << "(" << (m_currentCatalogIndex + 1) << "/" << m_catalogsToUpdate.size() << ")";
+
+    // Create job and start update (same as single update)
+    CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
+
+    if (catalogProgressManager) {
+        catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+    }
+
+    catalogManager->startCatalogJobStoppable(
+        catalogJobStoppable,
+        currentDevice,
+        CatalogJobStoppable::UpdateCatalog,
+        collection->databaseMode,
+        collection->folder
+    );
+}
+
 //--------------------------------------------------------------------------
 int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {
     if (!deviceTree.contains(parentId)) {

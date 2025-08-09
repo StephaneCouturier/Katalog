@@ -312,11 +312,26 @@ class MainWindow : public KXmlGuiWindow
             void importFromVVV();
             void createMissingParentDirectories();
 
-            qint64 globalUpdateTotalFiles;
-            qint64 globalUpdateDeltaFiles;
-            qint64 globalUpdateTotalSize;
-            qint64 globalUpdateDeltaSize;
+            // Updates Batch processing
+            QList<Device*> m_batchCatalogs;           // All catalogs to process in batch
+            int m_batchCurrentIndex = 0;              // Current catalog being processed
+            bool m_inBatchMode = false;               // Clear flag: are we in batch mode?
+            bool m_showEachCatalogUpdateSummary = false;
+            // Global statistics for batch
+            qint64 m_globalUpdateTotalFiles = 0;
+            qint64 m_globalUpdateDeltaFiles = 0;
+            qint64 m_globalUpdateTotalSize = 0;
+            qint64 m_globalUpdateDeltaSize = 0;
+            int m_updatedCatalogs = 0;
+            int m_skippedCatalogs = 0;
             bool reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
+
+            QList<Device*> m_pendingCatalogUpdates;
+            int m_totalCatalogsToUpdate = 0;
+            int m_completedCatalogUpdates = 0;
+            QList<Device*> m_catalogsToUpdate;  // All catalogs to update
+            int m_currentCatalogIndex = 0;      // Which one we're currently processing
+            void startNextCatalogUpdate();
 
         //TAB: Explore
             QString exploreSelectedFolderFullPath;
@@ -399,7 +414,11 @@ class MainWindow : public KXmlGuiWindow
             void updateAllDeviceActive();
             void recordDevicesSnapshot();
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
-            void onCatalogUpdateCompleted();
+
+            void onCatalogUpdateCompleted();  // Completion handler for updates
+            void processNextCatalogUpdate();  // Process next catalog in queue
+            void startCurrentBatchCatalog();  // Start the catalog at current index
+            void finishBatchOperation();      // Clean up and show final report
 
             //Migration 1.22 to 2.0
             void migrateCollectionFromV1toV2();

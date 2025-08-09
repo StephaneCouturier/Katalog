@@ -284,19 +284,68 @@
                 ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
             }
         });
-        connect(catalogManager, &CatalogManager::catalogOperationError,
-                this, [this](const QString &error) {
-                    cleanupStoppedCatalogCreation();
-                    QMessageBox::warning(this, "Katalog", tr("Catalog creation failed: %1").arg(error));
-                });
+        connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
+            if (m_currentUpdateDevice) {
+                qDebug() << "Catalog update error:" << error;
 
-        connect(catalogManager, &CatalogManager::catalogOperationCancelled,
-                this, [this]() {
-                    cleanupStoppedCatalogCreation();
-                    QMessageBox::information(this, "Katalog", tr("Catalog operation was cancelled."));
-                });
+                bool isBatchUpdate = !m_pendingCatalogUpdates.isEmpty() || m_completedCatalogUpdates > 0;
 
+                if (!isBatchUpdate) {
+                    // Single update - show error to user
+                    QMessageBox::warning(this, "Katalog", QString("Catalog update failed: %1").arg(error));
+                } else {
+                    // Batch update - log error but continue
+                    qDebug() << "Batch update error for" << m_currentUpdateDevice->name << ":" << error;
+                }
 
+                // Clean up and continue
+                if (m_currentUpdateDevice) {
+                    delete m_currentUpdateDevice;
+                    m_currentUpdateDevice = nullptr;
+                }
+
+                if (isBatchUpdate) {
+                    // Continue with next catalog
+                    processNextCatalogUpdate();
+                } else {
+                    // Single update cleanup
+                    QApplication::restoreOverrideCursor();
+                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                }
+            }
+            // Creation errors are handled in the existing onCatalogOperationCompleted()
+        });
+        connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
+            if (m_currentUpdateDevice) {
+                qDebug() << "Catalog update cancelled";
+
+                bool isBatchUpdate = !m_pendingCatalogUpdates.isEmpty() || m_completedCatalogUpdates > 0;
+
+                // Clean up current operation
+                if (m_currentUpdateDevice) {
+                    delete m_currentUpdateDevice;
+                    m_currentUpdateDevice = nullptr;
+                }
+
+                if (isBatchUpdate) {
+                    // Batch was cancelled - clean up remaining queue
+                    qDeleteAll(m_pendingCatalogUpdates);
+                    m_pendingCatalogUpdates.clear();
+                    m_completedCatalogUpdates = 0;
+                    m_totalCatalogsToUpdate = 0;
+
+                    // Re-enable button
+                    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+
+                    QMessageBox::information(this, "Update All Active Catalogs", "Batch update was cancelled.");
+                } else {
+                    // Single update cleanup
+                    QApplication::restoreOverrideCursor();
+                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                }
+            }
+            // Creation cancellation is handled in existing cleanupStoppedCatalogCreation()
+        });
 
         // Handle update errors
         connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
