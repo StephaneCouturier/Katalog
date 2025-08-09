@@ -126,7 +126,7 @@ public:
     qint64 estimatedTotalFiles = 0;
     qint64 filesProcessed = 0;
     QString currentCatalogName;
-    int progressRefreshRate = 1000; // Progress update frequency
+    int progressRefreshRate = 100; // Progress update frequency
 
 protected:
     /**

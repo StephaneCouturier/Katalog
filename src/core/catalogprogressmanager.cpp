@@ -82,13 +82,13 @@ void CatalogProgressManager::updateFromCatalogManager()
 
     if (m_catalogManager->catalogOperationRunning()) {
 
-        // Simple detection: if totalFiles is 0 AND path contains "Estimating", we're counting
+        // Simple detection: if totalFiles is 0 AND path contains "Counting", we're counting
         if (m_catalogManager->totalFiles() == 0 &&
             !m_catalogManager->currentPath().isEmpty() &&
-            m_catalogManager->currentPath().contains("Estimating")) {
+            m_catalogManager->currentPath().contains("Counting")) {
 
             // COUNTING PHASE: Just show the estimation message
-            message = m_catalogManager->currentPath(); // "Estimating... X files found"
+            message = m_catalogManager->currentPath(); // "Counting... X files found"
 
         } else if (m_catalogManager->totalFiles() > 0) {
 
@@ -100,11 +100,11 @@ void CatalogProgressManager::updateFromCatalogManager()
 
             // Add current file path
             if (!m_catalogManager->currentPath().isEmpty() &&
-                !m_catalogManager->currentPath().contains("Estimating")) {
+                !m_catalogManager->currentPath().contains("Counting")) {
                 QString displayPath = m_catalogManager->currentPath();
-                if (displayPath.length() > 60) {
-                    displayPath = "..." + displayPath.right(57);
-                }
+                // if (displayPath.length() > 60) {
+                //     displayPath = "..." + displayPath.right(57);
+                // }
                 message += QString(" | %1").arg(displayPath);
             }
 

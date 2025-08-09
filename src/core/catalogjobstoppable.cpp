@@ -172,14 +172,14 @@ void CatalogJobStoppable::createCatalogWithProgress()
     catalog->loadExcludedFolders();
     qDebug() << "File extensions loaded, excluded folders loaded";
 
-    // Estimate total files for progress calculation
-    qDebug() << "Estimating total files...";
-    emitProgressUpdate(0, 0, "Estimating total files...");
+    // Count total files for progress calculation
+    qDebug() << "Counting total files...";
+    emitProgressUpdate(0, 0, "Counting total files...");
     estimatedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
-    qDebug() << "Estimated total files:" << estimatedTotalFiles;
+    qDebug() << "Counted total files:" << estimatedTotalFiles;
 
-    qDebug() << "Step 3: Estimating total files...";
-    emitProgressUpdate(0, 0, "Starting file count estimation...");
+    qDebug() << "Step 3: Counting total files...";
+    emitProgressUpdate(0, 0, "Starting file counting...");
 
     auto startTime = QDateTime::currentDateTime();
     estimatedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
@@ -520,7 +520,7 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
 
         // Emit estimation progress periodically (every 1000 files)
         if (totalFiles % 1000 == 0) {
-            emitProgressUpdate(0, 0, QString("Estimating... %1 files found").arg(totalFiles));
+            emitProgressUpdate(0, 0, QString("Counting... %1 files found").arg(totalFiles));
             QCoreApplication::processEvents(); // Allow UI updates during estimation
         }
     }
