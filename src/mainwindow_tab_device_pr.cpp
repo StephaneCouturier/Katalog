@@ -3178,8 +3178,30 @@ void MainWindow::finishBatchOperation()
     globalList << 0;
 
     qDebug() << "Showing final global report";
+
+    // FIX: Use the first processed device instead of nullptr (like original)
+    Device* deviceForReport = nullptr;
+    if (!m_batchCatalogs.isEmpty()) {
+        deviceForReport = m_batchCatalogs[0]; // Use first device for the global report
+        qDebug() << "Using device for global report:" << deviceForReport->name;
+    } else {
+        qDebug() << "WARNING: No devices available for global report, using activeDevice";
+        deviceForReport = activeDevice; // Fallback to activeDevice
+    }
+
     // Show final global report (same as original)
-    reportAllUpdates(nullptr, globalList, "list");
+    if (deviceForReport) {
+        reportAllUpdates(deviceForReport, globalList, "list");
+    } else {
+        qDebug() << "ERROR: No device available for global report - skipping";
+        QMessageBox::information(this, "Katalog",
+                                QString("Batch update completed.\n"
+                                       "Updated %1 catalog(s), skipped %2.\n"
+                                       "Total files: %3")
+                                .arg(m_updatedCatalogs)
+                                .arg(m_skippedCatalogs)
+                                .arg(QLocale().toString(m_globalUpdateTotalFiles)));
+    }
 
     // Clean up batch state
     qDebug() << "Cleaning up batch state";
