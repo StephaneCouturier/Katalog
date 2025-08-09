@@ -270,9 +270,20 @@
         catalogProgressManager->setCatalogManager(catalogManager);
 
         // Connect signals
-        connect(catalogManager, &CatalogManager::catalogOperationCompleted,
-                this, &MainWindow::onCatalogOperationCompleted);
-
+        connect(catalogManager, &CatalogManager::catalogOperationCompleted, this, [this]() {
+            if (m_currentCatalogDevice) {
+                // This is a creation operation
+                onCatalogOperationCompleted();
+            } else if (m_currentUpdateDevice) {
+                // This is an update operation
+                onCatalogUpdateCompleted();
+            } else {
+                qDebug() << "Catalog operation completed but no device reference found";
+                // Fallback - just restore UI
+                QApplication::restoreOverrideCursor();
+                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+            }
+        });
         connect(catalogManager, &CatalogManager::catalogOperationError,
                 this, [this](const QString &error) {
                     cleanupStoppedCatalogCreation();
@@ -284,6 +295,38 @@
                     cleanupStoppedCatalogCreation();
                     QMessageBox::information(this, "Katalog", tr("Catalog operation was cancelled."));
                 });
+
+
+
+        // Handle update errors
+        connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
+            if (m_currentUpdateDevice) {
+                qDebug() << "Catalog update error:" << error;
+                QMessageBox::warning(this, "Katalog", QString("Catalog update failed: %1").arg(error));
+
+                // Clean up
+                m_currentUpdateDevice = nullptr;
+                QApplication::restoreOverrideCursor();
+                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+            }
+            // Creation errors are handled in the existing onCatalogOperationCompleted()
+        });
+
+        // Handle update cancellation
+        connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
+            if (m_currentUpdateDevice) {
+                qDebug() << "Catalog update cancelled";
+
+                // Clean up
+                m_currentUpdateDevice = nullptr;
+                QApplication::restoreOverrideCursor();
+                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+            }
+            // Creation cancellation is handled in existing cleanupStoppedCatalogCreation()
+        });
+
+
+
 
         qDebug() << "New catalog manager system setup complete";
     }

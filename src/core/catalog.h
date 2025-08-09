@@ -99,6 +99,7 @@ public:
     void loadCatalog(QString connectionName);
     void deleteCatalog();
     void saveCatalog();
+    void clearCatalogData();
 
     void loadExcludedFolders();
     QList<qint64> updateCatalogFiles(QString databaseMode, QString collectionFolder, bool reportCannotUpdate);

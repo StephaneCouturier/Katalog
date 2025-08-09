@@ -228,49 +228,97 @@ void CatalogJobStoppable::createCatalogWithProgress()
 
 void CatalogJobStoppable::updateCatalogWithProgress()
 {
-    qDebug() << "=== Updating catalog with progress ===";
+    qDebug() << "=== CATALOG UPDATE STARTED ===";
+    qDebug() << "Device ID:" << m_device->ID;
+    qDebug() << "Catalog Name:" << m_device->catalog->name;
+    qDebug() << "Source Path:" << m_device->catalog->sourcePath;
+    qDebug() << "Database Mode:" << m_databaseMode;
+    qDebug() << "Collection Folder:" << m_collectionFolder;
 
     if (!m_device || !m_device->catalog) {
+        qDebug() << "ERROR: Invalid device or catalog";
         throw std::runtime_error("Invalid device or catalog");
     }
 
-    emitProgressUpdate(0, 0, "Starting catalog update...");
+    Catalog* catalog = m_device->catalog;
 
-    // Use the existing updateCatalogFiles method but with progress monitoring
-    QList<qint64> updateResults = m_device->catalog->updateCatalogFiles(m_databaseMode, m_collectionFolder, false);
-
-    if (!shouldContinue()) return;
-
-    // Process update results
-    if (updateResults.isEmpty()) {
-        throw std::runtime_error("Update failed: No results returned");
+    // Validate source path (same as creation)
+    qDebug() << "Step 1: Validating source directory";
+    QDir sourceDir(catalog->sourcePath);
+    if (!sourceDir.exists()) {
+        qDebug() << "ERROR: Source directory does not exist:" << catalog->sourcePath;
+        throw std::runtime_error("Source directory does not exist: " + catalog->sourcePath.toStdString());
     }
 
-    qint64 resultCode = updateResults[0];
-    if (resultCode != 1) {
-        QString errorMsg;
-        switch (resultCode) {
-        case -1: errorMsg = "Catalog path not accessible"; break;
-        case -2: errorMsg = "Catalog path is empty"; break;
-        case -3: errorMsg = "Old catalog format - needs migration"; break;
-        case -4: errorMsg = "Missing catalog information"; break;
-        default: errorMsg = "Unknown update error"; break;
-        }
-        throw std::runtime_error(errorMsg.toStdString());
+    // Check if directory is empty (same as creation)
+    int entryCount = sourceDir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count();
+    qDebug() << "Source directory entry count:" << entryCount;
+    if (entryCount == 0) {
+        qDebug() << "WARNING: Source directory is empty:" << catalog->sourcePath;
+        // For updates, empty directory might be OK, just warn
+        qDebug() << "Empty directory detected during update - will clear catalog";
     }
 
-    // Report successful update
-    if (updateResults.size() >= 5) {
-        qint64 newFileCount = updateResults[1];
-        qint64 newTotalSize = updateResults[3];
+    // Get file extensions to scan for and load excluded folders (same as creation)
+    qDebug() << "Step 2: Loading file extensions and excluded folders";
+    catalog->getFileExtensions();
+    catalog->loadExcludedFolders();
+    qDebug() << "File extensions loaded, excluded folders loaded";
 
-        // Emit final progress
-        emitProgressUpdate(newFileCount, newFileCount,
-                           QString("Update completed. Files: %1, Size: %2 bytes")
-                               .arg(newFileCount).arg(newTotalSize));
+    // Count total files for progress calculation (SAME AS CREATION)
+    qDebug() << "Step 3: Counting total files...";
+    emitProgressUpdate(0, 0, "Starting file counting...");
+
+    auto startTime = QDateTime::currentDateTime();
+    countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
+    auto endTime = QDateTime::currentDateTime();
+
+    qDebug() << "Counting completed in" << startTime.msecsTo(endTime) << "ms";
+    qDebug() << "Counting total files:" << countedTotalFiles;
+
+    if (!shouldContinue()) {
+        qDebug() << "Stop requested during estimation";
+        return;
     }
 
-    qDebug() << "Catalog update completed successfully";
+    // Initialize database transaction for efficiency (same as creation)
+    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
+    if (!db.exec("BEGIN TRANSACTION").isActive()) {
+        qDebug() << "Warning: Could not start transaction:" << db.lastError().text();
+    }
+
+    qDebug() << "Step 4: Starting database transaction";
+
+    // FOR UPDATE: Clear existing catalog data first
+    qDebug() << "Step 5: Clearing existing catalog data for update";
+    catalog->clearCatalogData();  // This method should exist to clear old files
+
+    // Process files with progress (SAME AS CREATION)
+    qint64 processedCount = 0;
+    processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
+
+    if (!shouldContinue()) {
+        db.exec("ROLLBACK");
+        qDebug() << "Catalog update cancelled, transaction rolled back";
+        return;
+    }
+
+    // Commit transaction (same as creation)
+    if (!db.exec("COMMIT").isActive()) {
+        qDebug() << "Warning: Could not commit transaction:" << db.lastError().text();
+    }
+
+    // Update catalog metadata (same as creation)
+    catalog->updateFileCount();
+    catalog->updateTotalFileSize();
+    catalog->saveCatalog();
+
+    // Final progress update (ONLY DIFFERENCE: "update" instead of "creation")
+    qDebug() << "About to emit final progress update";
+    emitProgressUpdate(processedCount, countedTotalFiles, "Catalog update completed");
+    qDebug() << "Final progress update emitted";
+
+    qDebug() << "=== CatalogJobStoppable::updateCatalogWithProgress() completed successfully ===";
 }
 
 void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,

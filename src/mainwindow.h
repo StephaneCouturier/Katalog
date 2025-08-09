@@ -122,6 +122,7 @@ class MainWindow : public KXmlGuiWindow
         //Objects
         Collection *collection = nullptr;   // Collection object, used to access the collection of devices, catalogs and storage
         Device *selectedDevice = nullptr;  // Selected device from Selection panel, used for operations on any screen
+        Device* m_currentUpdateDevice = nullptr; // Device selected for update operations
         Search *currentSearch = nullptr;
         SearchJobStoppable *loadSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from a previous search.
         SearchJobStoppable *lastSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from the last search.
@@ -398,6 +399,7 @@ class MainWindow : public KXmlGuiWindow
             void updateAllDeviceActive();
             void recordDevicesSnapshot();
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
+            void onCatalogUpdateCompleted();
 
             //Migration 1.22 to 2.0
             void migrateCollectionFromV1toV2();
@@ -459,7 +461,7 @@ class MainWindow : public KXmlGuiWindow
             void runDatabaseMigrations();
             void runDatabaseMigration_2_6();
 
-   private slots:
+    private slots:
         //Filters
             void on_Filters_pushButton_Filters_Hide_clicked();
             void on_Filters_pushButton_Filters_Show_clicked();

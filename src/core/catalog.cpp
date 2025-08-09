@@ -293,6 +293,38 @@ void Catalog::saveCatalog()
     query.exec();
 }
 
+void Catalog::clearCatalogData()
+{
+    qDebug() << "Clearing existing catalog data for update";
+
+    // Clear files from database
+    QString deleteFilesSQL = "DELETE FROM file WHERE file_catalog_name = :catalog_name";
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    query.prepare(deleteFilesSQL);
+    query.bindValue(":catalog_name", name);
+
+    if (!query.exec()) {
+        qDebug() << "Error clearing catalog files:" << query.lastError().text();
+    } else {
+        qDebug() << "Cleared" << query.numRowsAffected() << "files from catalog";
+    }
+
+    // Clear folders from database
+    QString deleteFoldersSQL = "DELETE FROM folder WHERE folder_catalog_name = :catalog_name";
+    query.prepare(deleteFoldersSQL);
+    query.bindValue(":catalog_name", name);
+
+    if (!query.exec()) {
+        qDebug() << "Error clearing catalog folders:" << query.lastError().text();
+    } else {
+        qDebug() << "Cleared" << query.numRowsAffected() << "folders from catalog";
+    }
+
+    // Reset counters
+    fileCount = 0;
+    totalFileSize = 0;
+}
+
 bool Catalog::updateCatalogFileHeaders(QString databaseMode)
 {
     if(databaseMode != "Memory") {
