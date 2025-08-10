@@ -318,6 +318,25 @@ void CatalogJobStoppable::updateCatalogWithProgress()
     emitProgressUpdate(processedCount, countedTotalFiles, "Catalog update completed");
     qDebug() << "Final progress update emitted";
 
+    // Update the Device object
+        // 1. Set update date (like old system)
+        m_device->dateTimeUpdated = QDateTime::currentDateTime();
+
+        // 2. Update device file counts from catalog results (like old system)
+        m_device->totalFileCount = catalog->fileCount;
+        m_device->totalFileSize  = catalog->totalFileSize;
+
+        // 3. Save statistics (like old system)
+        m_device->saveStatistics(m_device->dateTimeUpdated, "update");
+
+        // 4. Save device to update the date in database (like old system)
+        m_device->saveDevice();
+
+    // Emit final progress
+    emitProgressUpdate(m_device->totalFileCount, m_device->totalFileSize,
+                       QString("Update completed. %1 files, %2 bytes")
+                           .arg(m_device->totalFileCount).arg(m_device->totalFileSize));
+
     qDebug() << "=== CatalogJobStoppable::updateCatalogWithProgress() completed successfully ===";
 }
 
