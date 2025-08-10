@@ -217,24 +217,32 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            //BackUp the file before, if the option is selected
-            if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
-                backupFile(activeDevice->catalog->filePath);
+            // Use new catalog system for context menu update
+            if (!catalogManager || catalogManager->catalogOperationRunning()) {
+                qDebug() << "Catalog manager not available for context menu update";
+                return;
             }
-            //Update and report
+
+            qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
+
+            // Clear batch mode - this is a single update
+            inBatchMode = false;
+            currentUpdateDevice = activeDevice;
             activeDevice->catalog->appVersion = currentVersion;
-            reportAllUpdates(activeDevice,
-                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
-                                                                 "update",
-                                                                 collection->databaseMode,
-                                                                 true,
-                                                                 collection->folder,
-                                                                 true),
-                             "update");
-            //Refresh
-            collection->saveDeviceTableToFile();
-            collection->saveStatiticsTableToFile();
-            loadDevicesView("");
+
+            CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
+
+            if (catalogProgressManager) {
+                catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+            }
+
+            catalogManager->startCatalogJobStoppable(
+                catalogJobStoppable,
+                activeDevice,
+                CatalogJobStoppable::UpdateCatalog,
+                collection->databaseMode,
+                collection->folder
+                );
         });
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
@@ -295,17 +303,32 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            reportAllUpdates(activeDevice,
-                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
-                                                                 "update",
-                                                                 collection->databaseMode,
-                                                                 true,
-                                                                 collection->folder,
-                                                                 true),
-                             "list");
-            collection->saveDeviceTableToFile();
-            collection->saveStatiticsTableToFile();
-            loadDevicesView("");
+            // Use new catalog system for context menu update
+            if (!catalogManager || catalogManager->catalogOperationRunning()) {
+                qDebug() << "Catalog manager not available for context menu update";
+                return;
+            }
+
+            qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
+
+            // Clear batch mode - this is a single update
+            inBatchMode = false;
+            currentUpdateDevice = activeDevice;
+            activeDevice->catalog->appVersion = currentVersion;
+
+            CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
+
+            if (catalogProgressManager) {
+                catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+            }
+
+            catalogManager->startCatalogJobStoppable(
+                catalogJobStoppable,
+                activeDevice,
+                CatalogJobStoppable::UpdateCatalog,
+                collection->databaseMode,
+                collection->folder
+                );
         });
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
@@ -349,17 +372,32 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction3);
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-            reportAllUpdates(activeDevice,
-                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
-                                                                 "update",
-                                                                 collection->databaseMode,
-                                                                 true,
-                                                                 collection->folder,
-                                                                 true),
-                             "update");
-            collection->saveDeviceTableToFile();
-            collection->saveStatiticsTableToFile();
-            loadDevicesView("");
+            // Use new catalog system for context menu update
+            if (!catalogManager || catalogManager->catalogOperationRunning()) {
+                qDebug() << "Catalog manager not available for context menu update";
+                return;
+            }
+
+            qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
+
+            // Clear batch mode - this is a single update
+            inBatchMode = false;
+            currentUpdateDevice = activeDevice;
+            activeDevice->catalog->appVersion = currentVersion;
+
+            CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
+
+            if (catalogProgressManager) {
+                catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+            }
+
+            catalogManager->startCatalogJobStoppable(
+                catalogJobStoppable,
+                activeDevice,
+                CatalogJobStoppable::UpdateCatalog,
+                collection->databaseMode,
+                collection->folder
+                );
         });
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
