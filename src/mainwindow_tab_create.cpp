@@ -221,7 +221,7 @@
         }
 
         // Clear device reference if stopping
-        m_currentCatalogDevice = nullptr;
+        currentCatalogDevice = nullptr;
 
         qDebug() << "=== Create Stop button clicked complete ===";
     }
@@ -271,10 +271,10 @@
 
         // Connect signals
         connect(catalogManager, &CatalogManager::catalogOperationCompleted, this, [this]() {
-            if (m_currentCatalogDevice) {
+            if (currentCatalogDevice) {
                 // This is a creation operation
                 onCatalogOperationCompleted();
-            } else if (m_currentUpdateDevice) {
+            } else if (currentUpdateDevice) {
                 // This is an update operation
                 onCatalogUpdateCompleted();
             } else {
@@ -285,23 +285,23 @@
             }
         });
         connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
-            if (m_currentUpdateDevice) {
+            if (currentUpdateDevice) {
                 qDebug() << "Catalog update error:" << error;
 
-                bool isBatchUpdate = !m_pendingCatalogUpdates.isEmpty() || m_completedCatalogUpdates > 0;
+                bool isBatchUpdate = !pendingCatalogUpdates.isEmpty() || completedCatalogUpdates > 0;
 
                 if (!isBatchUpdate) {
                     // Single update - show error to user
                     QMessageBox::warning(this, "Katalog", QString("Catalog update failed: %1").arg(error));
                 } else {
                     // Batch update - log error but continue
-                    qDebug() << "Batch update error for" << m_currentUpdateDevice->name << ":" << error;
+                    qDebug() << "Batch update error for" << currentUpdateDevice->name << ":" << error;
                 }
 
                 // Clean up and continue
-                if (m_currentUpdateDevice) {
-                    delete m_currentUpdateDevice;
-                    m_currentUpdateDevice = nullptr;
+                if (currentUpdateDevice) {
+                    delete currentUpdateDevice;
+                    currentUpdateDevice = nullptr;
                 }
 
                 if (isBatchUpdate) {
@@ -316,23 +316,23 @@
             // Creation errors are handled in the existing onCatalogOperationCompleted()
         });
         connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
-            if (m_currentUpdateDevice) {
+            if (currentUpdateDevice) {
                 qDebug() << "Catalog update cancelled";
 
-                bool isBatchUpdate = !m_pendingCatalogUpdates.isEmpty() || m_completedCatalogUpdates > 0;
+                bool isBatchUpdate = !pendingCatalogUpdates.isEmpty() || completedCatalogUpdates > 0;
 
                 // Clean up current operation
-                if (m_currentUpdateDevice) {
-                    delete m_currentUpdateDevice;
-                    m_currentUpdateDevice = nullptr;
+                if (currentUpdateDevice) {
+                    delete currentUpdateDevice;
+                    currentUpdateDevice = nullptr;
                 }
 
                 if (isBatchUpdate) {
                     // Batch was cancelled - clean up remaining queue
-                    qDeleteAll(m_pendingCatalogUpdates);
-                    m_pendingCatalogUpdates.clear();
-                    m_completedCatalogUpdates = 0;
-                    m_totalCatalogsToUpdate = 0;
+                    qDeleteAll(pendingCatalogUpdates);
+                    pendingCatalogUpdates.clear();
+                    completedCatalogUpdates = 0;
+                    totalCatalogsToUpdate = 0;
 
                     // Re-enable button
                     ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
@@ -349,12 +349,12 @@
 
         // Handle update errors
         connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
-            if (m_currentUpdateDevice) {
+            if (currentUpdateDevice) {
                 qDebug() << "Catalog update error:" << error;
                 QMessageBox::warning(this, "Katalog", QString("Catalog update failed: %1").arg(error));
 
                 // Clean up
-                m_currentUpdateDevice = nullptr;
+                currentUpdateDevice = nullptr;
                 QApplication::restoreOverrideCursor();
                 ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
             }
@@ -363,11 +363,11 @@
 
         // Handle update cancellation
         connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
-            if (m_currentUpdateDevice) {
+            if (currentUpdateDevice) {
                 qDebug() << "Catalog update cancelled";
 
                 // Clean up
-                m_currentUpdateDevice = nullptr;
+                currentUpdateDevice = nullptr;
                 QApplication::restoreOverrideCursor();
                 ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
             }
@@ -523,7 +523,7 @@
         }
 
         // Store reference to the device for completion handling (Device-centric approach)
-        m_currentCatalogDevice = newDevice;
+        currentCatalogDevice = newDevice;
 
         // Create a new catalog job stoppable for this operation
         catalogJobStoppable = new CatalogJobStoppable(this);
@@ -556,7 +556,7 @@
 
         try {
             // Get the device for UI updates
-            Device* completedDevice = m_currentCatalogDevice;
+            Device* completedDevice = currentCatalogDevice;
 
             if (!completedDevice) {
                 qDebug() << "ERROR: No device found for UI updates";
@@ -616,7 +616,7 @@
         }
 
         // UI Task 6: Restore UI state
-        m_currentCatalogDevice = nullptr;
+        currentCatalogDevice = nullptr;
         restoreCreateCatalogUIState();
 
         qDebug() << "=== onCatalogOperationCompleted() EXIT ===";
@@ -636,11 +636,11 @@
         qDebug() << "=== cleanupFailedCatalogCreation() START ===";
 
         // Use the device reference we stored when starting the operation
-        if (m_currentCatalogDevice) {
-            qDebug() << "Cleaning up failed catalog creation for device:" << m_currentCatalogDevice->name;
+        if (currentCatalogDevice) {
+            qDebug() << "Cleaning up failed catalog creation for device:" << currentCatalogDevice->name;
 
             // Use the existing backend method to delete the device (no UI confirmation)
-            bool success = DeviceUIWrapper::deleteDeviceWithUI(m_currentCatalogDevice, false);
+            bool success = DeviceUIWrapper::deleteDeviceWithUI(currentCatalogDevice, false);
 
             if (success) {
                 qDebug() << "Device deleted successfully";
@@ -649,7 +649,7 @@
             }
 
             // Clear the reference
-            m_currentCatalogDevice = nullptr;
+            currentCatalogDevice = nullptr;
         } else {
             qDebug() << "No device to cleanup";
         }

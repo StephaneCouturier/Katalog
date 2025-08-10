@@ -338,7 +338,7 @@ void MainWindow::pauseCurrentSearch()
     setSearchStatePaused();
 
     qDebug() << "State after pause should be:" << static_cast<int>(SearchButtonState::Paused);
-    qDebug() << "Actual state is:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "Actual state is:" << static_cast<int>(searchButtonState);
 }
 //----------------------------------------------------------------------
 void MainWindow::resumeCurrentSearch()
@@ -367,7 +367,7 @@ void MainWindow::resumeCurrentSearch()
 void MainWindow::onSearchCompleted()
 {
     qDebug() << "=== onSearchCompleted() called ===";
-    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "Before reset - Search button state:" << static_cast<int>(searchButtonState);
     qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
     // Reset search button state when search completes
@@ -383,7 +383,7 @@ void MainWindow::onSearchCompleted()
         qDebug() << "No search results to display";
     }
 
-    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "After reset - Search button state:" << static_cast<int>(searchButtonState);
     qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
     qDebug() << "=== onSearchCompleted() completed ===";
 }
@@ -391,7 +391,7 @@ void MainWindow::onSearchCompleted()
 void MainWindow::onSearchCancelled()
 {
     qDebug() << "=== onSearchCancelled() called ===";
-    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "Before reset - Search button state:" << static_cast<int>(searchButtonState);
     qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
     // Reset search button state when search is cancelled
@@ -399,7 +399,7 @@ void MainWindow::onSearchCancelled()
 
     QApplication::restoreOverrideCursor();
 
-    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "After reset - Search button state:" << static_cast<int>(searchButtonState);
     qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 }
 //----------------------------------------------------------------------
@@ -439,7 +439,7 @@ void MainWindow::setSearchStatePaused()
 //----------------------------------------------------------------------
 void MainWindow::setSearchButtonState(SearchButtonState state)
 {
-    qDebug() << "Setting search button state from" << static_cast<int>(m_searchButtonState)
+    qDebug() << "Setting search button state from" << static_cast<int>(searchButtonState)
     << "to" << static_cast<int>(state);
 
     // Safety checks
@@ -458,7 +458,7 @@ void MainWindow::setSearchButtonState(SearchButtonState state)
         return;
     }
 
-    m_searchButtonState = state;
+    searchButtonState = state;
 
     switch (state) {
     case SearchButtonState::Idle:

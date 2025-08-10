@@ -46,9 +46,9 @@
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
             qDebug() << "=== Search/Pause/Resume button clicked ===";
-            qDebug() << "Current state:" << static_cast<int>(m_searchButtonState);
+            qDebug() << "Current state:" << static_cast<int>(searchButtonState);
 
-            switch (m_searchButtonState) {
+            switch (searchButtonState) {
             case SearchButtonState::Idle:
                 qDebug() << "Starting search from idle state";
                 launchSearch();  // Let launchSearch() handle state updates
@@ -74,7 +74,7 @@
         void MainWindow::on_Search_pushButton_Stop_clicked()
         {
             qDebug() << "=== Stop button clicked ===";
-            qDebug() << "Before stop - Search button state:" << static_cast<int>(m_searchButtonState);
+            qDebug() << "Before stop - Search button state:" << static_cast<int>(searchButtonState);
             qDebug() << "Before stop - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
             // Stop any running search
@@ -86,7 +86,7 @@
                 setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
             }
 
-            qDebug() << "After stop - Search button state:" << static_cast<int>(m_searchButtonState);
+            qDebug() << "After stop - Search button state:" << static_cast<int>(searchButtonState);
             qDebug() << "After stop - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
         }
         //----------------------------------------------------------------------

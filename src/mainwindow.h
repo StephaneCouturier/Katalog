@@ -122,7 +122,7 @@ class MainWindow : public KXmlGuiWindow
         //Objects
         Collection *collection = nullptr;   // Collection object, used to access the collection of devices, catalogs and storage
         Device *selectedDevice = nullptr;  // Selected device from Selection panel, used for operations on any screen
-        Device* m_currentUpdateDevice = nullptr; // Device selected for update operations
+        Device* currentUpdateDevice = nullptr; // Device selected for update operations
         Search *currentSearch = nullptr;
         SearchJobStoppable *loadSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from a previous search.
         SearchJobStoppable *lastSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from the last search.
@@ -230,7 +230,7 @@ class MainWindow : public KXmlGuiWindow
             Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
             Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
-            Device *m_currentCatalogDevice = nullptr;
+            Device *currentCatalogDevice = nullptr;
 
             //Collection
             void translateDefaultDevices();
@@ -251,7 +251,7 @@ class MainWindow : public KXmlGuiWindow
                 Paused,
                 Searching
             };
-            SearchButtonState m_searchButtonState = SearchButtonState::Idle;
+            SearchButtonState searchButtonState = SearchButtonState::Idle;
 
             void setSearchButtonState(SearchButtonState state);
             void setSearchStateIdle();
@@ -262,7 +262,7 @@ class MainWindow : public KXmlGuiWindow
             SearchJobStoppable *searchJobStoppable = nullptr;
             void setupSearchManager();
             void resetSearchButton();
-            bool m_searchButtonClickPending = false;
+            bool searchButtonClickPending = false;
 
             bool isSearchRunning = false;
             void resetSearchState();
@@ -313,24 +313,24 @@ class MainWindow : public KXmlGuiWindow
             void createMissingParentDirectories();
 
             // Updates Batch processing
-            QList<Device*> m_batchCatalogs;           // All catalogs to process in batch
-            int m_batchCurrentIndex = 0;              // Current catalog being processed
-            bool m_inBatchMode = false;               // Clear flag: are we in batch mode?
-            bool m_showEachCatalogUpdateSummary = false;
+            QList<Device*> batchCatalogs;           // All catalogs to process in batch
+            int batchCurrentIndex = 0;              // Current catalog being processed
+            bool inBatchMode = false;               // Clear flag: are we in batch mode?
+            bool showEachCatalogUpdateSummary = false;
             // Global statistics for batch
-            qint64 m_globalUpdateTotalFiles = 0;
-            qint64 m_globalUpdateDeltaFiles = 0;
-            qint64 m_globalUpdateTotalSize = 0;
-            qint64 m_globalUpdateDeltaSize = 0;
-            int m_updatedCatalogs = 0;
-            int m_skippedCatalogs = 0;
+            qint64 globalUpdateTotalFiles = 0;
+            qint64 globalUpdateDeltaFiles = 0;
+            qint64 globalUpdateTotalSize = 0;
+            qint64 globalUpdateDeltaSize = 0;
+            int updatedCatalogs = 0;
+            int skippedCatalogs = 0;
             bool reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
 
-            QList<Device*> m_pendingCatalogUpdates;
-            int m_totalCatalogsToUpdate = 0;
-            int m_completedCatalogUpdates = 0;
-            QList<Device*> m_catalogsToUpdate;  // All catalogs to update
-            int m_currentCatalogIndex = 0;      // Which one we're currently processing
+            QList<Device*> pendingCatalogUpdates;
+            int totalCatalogsToUpdate = 0;
+            int completedCatalogUpdates = 0;
+            QList<Device*> catalogsToUpdate;  // All catalogs to update
+            int currentCatalogIndex = 0;      // Which one we're currently processing
             void startNextCatalogUpdate();
 
         //TAB: Explore
