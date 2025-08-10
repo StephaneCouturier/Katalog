@@ -76,6 +76,8 @@ set(CORE_HEADERS
     src/core/catalogjobstoppable.h
     src/core/catalogmanager.h
     src/core/catalogprogressmanager.h
+    src/core/devicejobstoppable.h
+    src/core/devicemanager.h
 )
 
 set(CORE_SOURCES
@@ -97,6 +99,8 @@ set(CORE_SOURCES
     src/core/catalogjobstoppable.cpp
     src/core/catalogmanager.cpp
     src/core/catalogprogressmanager.cpp
+    src/core/devicejobstoppable.cpp
+    src/core/devicemanager.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately
