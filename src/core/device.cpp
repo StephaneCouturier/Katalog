@@ -120,7 +120,7 @@ void Device::loadDevice(QString connectionName){
 
     //Load sub-device list
     loadSubDeviceList(connectionName);
-    loadSubDeviceTree(connectionName);
+
     if(useTimerForDebug){
         qDebug() << "      TIMER3: Load sub-device list:" << stepTimer.elapsed() << "ms";
         stepTimer.restart();
@@ -131,50 +131,6 @@ void Device::loadDevice(QString connectionName){
     if(useTimerForDebug){
         qDebug() << "      TIMER3: verifyHasSubDevice:" << stepTimer.elapsed() << "ms";
         stepTimer.restart();
-    }
-}
-
-void Device::loadSubDeviceTree(QString connectionName) {
-    subDevices.clear();
-
-    QSqlDatabase db = QSqlDatabase::database(connectionName);
-    if (!db.isOpen()) {
-        qDebug() << "DEBUG: Database is not open.";
-        return;
-    }
-
-    QSqlQuery query(db);
-    QString querySQL = QLatin1String(R"(
-                                    SELECT
-                                        device_id, device_type
-                                    FROM device
-                                    WHERE device_id IN (
-                                        WITH RECURSIVE hierarchy AS (
-                                            SELECT device_id
-                                            FROM device
-                                            WHERE device_id = :device_id
-                                            UNION ALL
-                                            SELECT t.device_id
-                                            FROM device t
-                                            JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                        )
-                                        SELECT device_id
-                                        FROM hierarchy )
-                                    AND device_id != :device_id
-                        )");
-    query.prepare(querySQL);
-    query.bindValue(":device_id",        ID);
-
-    if (query.exec()) {
-        while (query.next()) {
-            Device subDevice;
-            subDevice.ID = query.value(0).toInt();
-            subDevice.type = query.value(1).toString();
-            subDevice.loadDevice(connectionName);
-            subDevices.append(subDevice);
-        }
-    } else {
-        qDebug() << "DEBUG: Failed to execute device/loadSubDeviceTree:" << query.lastError().text();
     }
 }
 
