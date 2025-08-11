@@ -271,6 +271,8 @@ void DeviceManager::onDeviceOperationStarted()
 
 // REPLACE this method in src/core/devicemanager.cpp
 
+// REPLACE this complete method in src/core/devicemanager.cpp
+
 void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
 {
     qDebug() << "=== DeviceManager::onDeviceOperationCompleted() ===";
@@ -282,7 +284,7 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
     setCatalogProgress(100);
     setStatus("Device operation completed successfully");
 
-    // CRITICAL FIX: Get the ROOT device that was originally selected
+    // CRITICAL FIX: Get the ROOT device that was originally selected and show proper report
     if (m_currentDeviceJob) {
         Device* rootDevice = m_currentDeviceJob->rootDevice();
 
@@ -299,28 +301,71 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
                 // Set the success flag
                 storageResults[0] = 1;  // Success
 
-                // Set storage space values (indices 8-13)
-                if (rootDevice->storage) {
-                    storageResults[8] = rootDevice->storage->totalSpace - rootDevice->storage->freeSpace;  // Used space
-                    storageResults[9] = 0;   // Delta used space
-                    storageResults[10] = rootDevice->storage->freeSpace;  // Free space
-                    storageResults[11] = 0;  // Delta free space
-                    storageResults[12] = rootDevice->storage->totalSpace; // Total space
-                    storageResults[13] = 0;  // Delta total space
+                // CRITICAL FIX: Use actual storage update results with deltas
+                Storage::UpdateResult updateResult = m_currentDeviceJob->getStorageUpdateResult();
+
+                if (updateResult.wasUpdated) {
+                    qDebug() << "Using actual storage update results with deltas";
+
+                    // Set storage space values with real deltas (indices 8-13)
+                    storageResults[8] = updateResult.newUsedSpace;     // Used space
+                    storageResults[9] = updateResult.deltaUsedSpace;   // Delta used space
+                    storageResults[10] = updateResult.newFreeSpace;    // Free space
+                    storageResults[11] = updateResult.deltaFreeSpace;  // Delta free space
+                    storageResults[12] = updateResult.newTotalSpace;   // Total space
+                    storageResults[13] = updateResult.deltaTotalSpace; // Delta total space
+
+                    qDebug() << "Storage results - Used:" << storageResults[8] << "(+" << storageResults[9] << ")";
+                    qDebug() << "Storage results - Free:" << storageResults[10] << "(+" << storageResults[11] << ")";
+                    qDebug() << "Storage results - Total:" << storageResults[12] << "(+" << storageResults[13] << ")";
+
+                } else {
+                    qDebug() << "Storage was not updated, using current values with zero deltas";
+
+                    // Fallback to current values with zero deltas
+                    if (rootDevice->storage) {
+                        storageResults[8] = rootDevice->storage->totalSpace - rootDevice->storage->freeSpace;  // Used space
+                        storageResults[9] = 0;   // Delta used space
+                        storageResults[10] = rootDevice->storage->freeSpace;  // Free space
+                        storageResults[11] = 0;  // Delta free space
+                        storageResults[12] = rootDevice->storage->totalSpace; // Total space
+                        storageResults[13] = 0;  // Delta total space
+                    }
                 }
 
                 qDebug() << "Emitting requestReportAllUpdates for Storage device:" << rootDevice->name;
                 emit requestReportAllUpdates(rootDevice, storageResults, "update");
 
+            } else if (rootDevice->type == "Catalog") {
+                qDebug() << "Root device is Catalog - catalog reports handled by CatalogManager";
+                // Catalog reports are handled separately by the existing catalog system
+
+            } else if (rootDevice->type == "Virtual") {
+                qDebug() << "Root device is Virtual - creating virtual device report";
+                // For virtual devices, create a simple success report
+                QList<qint64> virtualResults;
+                for (int i = 0; i < 14; ++i) {
+                    virtualResults << 0;
+                }
+                virtualResults[0] = 1;  // Success
+
+                emit requestReportAllUpdates(rootDevice, virtualResults, "update");
+
             } else {
-                qDebug() << "Root device type" << rootDevice->type << "- no final report implemented yet";
+                qDebug() << "Root device type" << rootDevice->type << "- no specific report implemented";
             }
         } else {
             qDebug() << "No root device found for final report";
         }
+    } else {
+        qDebug() << "No current device job found";
     }
 
     emit deviceOperationCompleted(results);
+
+    // Request UI refresh to show updated values
+    qDebug() << "Emitting requestUIRefresh signal";
+    emit requestUIRefresh();
 
     // Clean up
     cleanupDeviceJob();

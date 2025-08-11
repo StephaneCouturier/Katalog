@@ -1933,9 +1933,24 @@ void MainWindow::setupDeviceManager()
                 // Handle cancellation UI updates
             });
 
+    connect(deviceManager, &DeviceManager::requestUIRefresh,
+            this, [this]() {
+                qDebug() << "Refreshing UI after device operation";
+
+                // Refresh device views to show updated values
+                loadDevicesView("");
+
+                // Refresh filter tree if it exists
+                loadDevicesTreeToModel("Filters");
+
+                // If we're on the storage tab, refresh storage statistics
+                updateStorageSelectionStatistics();
+
+                qDebug() << "UI refresh completed";
+            });
+
     qDebug() << "DeviceManager setup complete with existing UI infrastructure";
 }
-
 
 //--------------------------------------------------------------------------
 //--- Storage --------------------------------------------------------------

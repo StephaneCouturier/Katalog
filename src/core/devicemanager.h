@@ -144,6 +144,7 @@ signals:
     void deviceOperationCompleted(const QList<qint64>& results);
     void deviceOperationError(const QString& error);
     void deviceOperationCancelled();
+    void requestUIRefresh();
 
     // Property change signals
     void deviceOperationRunningChanged();

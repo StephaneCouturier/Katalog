@@ -314,20 +314,34 @@ void DeviceJobStoppable::processStorageDevice(Device* device)
         // Update storage path from device path (same as Device::updateDevice logic)
         device->storage->path = device->path;
 
-        // Update storage information (fast disk query)
-        try {
-            device->storage->updateStorageInfo();
-            device->totalSpace = device->storage->totalSpace;
-            device->freeSpace = device->storage->freeSpace;
+        // Update both storage table and device table automatically
+        Storage::UpdateResult result = device->storage->updateStorageInfo();
 
-            qDebug() << "Storage updated - Total:" << device->totalSpace << "Free:" << device->freeSpace;
-        } catch (const std::exception& e) {
-            qDebug() << "Error updating storage info:" << e.what();
+        if (result.wasUpdated) {
+            qDebug() << "Storage updated successfully and saved to database";
+            qDebug() << "New total space:" << result.newTotalSpace;
+            qDebug() << "Delta total space:" << result.deltaTotalSpace;
+            qDebug() << "New free space:" << result.newFreeSpace;
+            qDebug() << "Delta free space:" << result.deltaFreeSpace;
+            qDebug() << "New used space:" << result.newUsedSpace;
+            qDebug() << "Delta used space:" << result.deltaUsedSpace;
+
+            // Update device values with new storage information (for consistency)
+            device->totalSpace = result.newTotalSpace;
+            device->freeSpace = result.newFreeSpace;
+
+            // Store the deltas for reporting
+            m_storageUpdateResult = result;
+
+        } else {
+            qDebug() << "Storage not updated - Error:" << result.errorMessage;
+            // Store empty result for reporting
+            m_storageUpdateResult = Storage::UpdateResult();
         }
     }
 
-    // Save device state
-    device->saveDevice();
+    // NOTE: No need to call saveDevice() or insertStorage()
+    // because updateStorageInfo() already saved to database
 
     // Save statistics (same as Device::updateDevice logic)
     saveDeviceStatistics(device);

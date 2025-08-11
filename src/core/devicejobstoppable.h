@@ -38,7 +38,9 @@
 #pragma once
 
 #include "device.h"
+#include "storage.h"
 #include "catalogjobstoppable.h"
+
 #include <QObject>
 #include <QQueue>
 #include <QList>
@@ -129,6 +131,12 @@ public:
     // Results
     QList<qint64> getAccumulatedResults() const { return m_accumulatedResults; }
 
+    /**
+     * @brief Get the storage update result from the last storage device processed
+     * @return Storage update result with deltas
+     */
+    Storage::UpdateResult getStorageUpdateResult() const { return m_storageUpdateResult; }
+
 signals:
     // Main operation lifecycle signals
     void deviceOperationStarted();
@@ -154,6 +162,7 @@ private slots:
     void onCatalogProgressUpdate(qint64 filesProcessed, qint64 totalFiles, const QString& currentPath);
 
 private:
+    Storage::UpdateResult m_storageUpdateResult;
     /**
      * @brief Main recursive device processing entry point
      * @param device Device to process
