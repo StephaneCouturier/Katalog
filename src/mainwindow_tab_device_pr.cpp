@@ -1894,8 +1894,10 @@ void MainWindow::setupDeviceManager()
 
     // Create the device manager
     deviceManager = new DeviceManager(this);
+    // Use MainWindow's existing CatalogManager instead of creating a new one
+    deviceManager->setCatalogManager(catalogManager);
 
-    // CRITICAL FIX 1: Connect DeviceManager to existing CatalogProgressManager
+    // Connect DeviceManager to existing CatalogProgressManager
     // This restores the automatic status bar updates that were working before
     if (catalogProgressManager) {
         deviceManager->setCatalogProgressManager(catalogProgressManager);
@@ -1904,7 +1906,7 @@ void MainWindow::setupDeviceManager()
         qDebug() << "WARNING: catalogProgressManager not available during DeviceManager setup";
     }
 
-    // CRITICAL FIX 2: Connect DeviceManager signals to use existing reportAllUpdates
+    // Connect DeviceManager signals to use existing reportAllUpdates
     connect(deviceManager, &DeviceManager::requestReportAllUpdates,
             this, [this](Device* device, const QList<qint64>& results, const QString& updateType) {
                 // Use the existing, proven reportAllUpdates method
@@ -1913,7 +1915,7 @@ void MainWindow::setupDeviceManager()
 
     // Connect other DeviceManager signals for UI updates
     connect(deviceManager, &DeviceManager::deviceOperationStarted,
-            this, [this]() {
+            this, []() {
                 qDebug() << "Device operation started - setting UI to running state";
                 // Set any UI state for device operations
             });
@@ -1926,7 +1928,7 @@ void MainWindow::setupDeviceManager()
             });
 
     connect(deviceManager, &DeviceManager::deviceOperationCancelled,
-            this, [this]() {
+            this, []() {
                 qDebug() << "Device operation cancelled";
                 // Handle cancellation UI updates
             });

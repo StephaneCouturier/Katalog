@@ -84,7 +84,14 @@ public:
                               Device* rootDevice,
                               DeviceJobStoppable::OperationType operationType,
                               const QString& databaseMode,
-                              const QString& collectionFolder);
+                              const QString& collectionFolder,
+                              CatalogManager* catalogManager);
+
+    /**
+     * @brief Set the catalog manager to use (from MainWindow)
+     * @param catalogManager The existing catalog manager instance
+     */
+    void setCatalogManager(CatalogManager* catalogManager);
 
     /**
      * @brief Stop the current device operation

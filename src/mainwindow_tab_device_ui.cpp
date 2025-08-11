@@ -324,8 +324,8 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                 activeDevice,
                 DeviceJobStoppable::UpdateDevice,
                 collection->databaseMode,
-                collection->folder
-                );
+                collection->folder,
+                catalogManager);
 
             qDebug() << "Device operation started with proper UI integration";
         });

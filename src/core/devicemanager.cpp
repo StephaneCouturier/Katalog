@@ -40,9 +40,6 @@ DeviceManager::DeviceManager(QObject *parent)
 {
     qDebug() << "DeviceManager created";
 
-    // Create the catalog manager
-    m_catalogManager = new CatalogManager(this);
-
     // Setup catalog manager integration
     setupCatalogManagerIntegration();
 
@@ -59,7 +56,8 @@ void DeviceManager::startDeviceOperation(DeviceJobStoppable* deviceEngine,
                                          Device* rootDevice,
                                          DeviceJobStoppable::OperationType operationType,
                                          const QString& databaseMode,
-                                         const QString& collectionFolder)
+                                         const QString& collectionFolder,
+                                         CatalogManager* catalogManager)
 {
     qDebug() << "=== DeviceManager::startDeviceOperation() ===";
     qDebug() << "Root device:" << (rootDevice ? rootDevice->name : "NULL");
@@ -81,10 +79,12 @@ void DeviceManager::startDeviceOperation(DeviceJobStoppable* deviceEngine,
         return;
     }
 
-    if (!m_catalogManager) {
+    if (!catalogManager) {
         emit deviceOperationError("Catalog manager not available");
         return;
     }
+
+    m_catalogManager = catalogManager;
 
     // Clean up any previous operation
     cleanupDeviceJob();
@@ -121,6 +121,16 @@ void DeviceManager::startDeviceOperation(DeviceJobStoppable* deviceEngine,
         );
 
     qDebug() << "Device operation started";
+}
+
+void DeviceManager::setCatalogManager(CatalogManager* catalogManager)
+{
+    qDebug() << "DeviceManager::setCatalogManager() - using existing MainWindow CatalogManager";
+
+    m_catalogManager = catalogManager;  // Use MainWindow's CatalogManager instead of creating our own
+
+    // Re-setup integration with the existing catalog manager
+    setupCatalogManagerIntegration();
 }
 
 void DeviceManager::stopDeviceOperation()

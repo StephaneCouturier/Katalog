@@ -200,8 +200,8 @@
                     selectedDevice,
                     DeviceJobStoppable::UpdateDevice,
                     collection->databaseMode,
-                    collection->folder
-                    );
+                    collection->folder,
+                    catalogManager);
 
                 qDebug() << "Device operation started with proper UI integration";
             });
