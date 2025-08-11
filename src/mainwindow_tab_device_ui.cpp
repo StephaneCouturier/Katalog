@@ -300,35 +300,34 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QString deviceName = activeDevice->name;
 
+        // Storage update action
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            // Use new catalog system for context menu update
-            if (!catalogManager || catalogManager->catalogOperationRunning()) {
-                qDebug() << "Catalog manager not available for context menu update";
-                return;
+            qDebug() << "Storage update requested for:" << activeDevice->name;
+
+            // Ensure DeviceManager is set up with proper UI integration
+            if (!deviceManager) {
+                setupDeviceManager();
             }
 
-            qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
-
-            // Clear batch mode - this is a single update
-            inBatchMode = false;
-            currentUpdateDevice = activeDevice;
-            activeDevice->catalog->appVersion = currentVersion;
-
-            CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-            if (catalogProgressManager) {
-                catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+            // Ensure CatalogProgressManager is connected (double-check)
+            if (catalogProgressManager && deviceManager) {
+                deviceManager->setCatalogProgressManager(catalogProgressManager);
             }
 
-            catalogManager->startCatalogJobStoppable(
-                catalogJobStoppable,
+            // Start device operation using DeviceManager
+            DeviceJobStoppable* deviceEngine = new DeviceJobStoppable(this);
+
+            deviceManager->startDeviceOperation(
+                deviceEngine,
                 activeDevice,
-                CatalogJobStoppable::UpdateCatalog,
+                DeviceJobStoppable::UpdateDevice,
                 collection->databaseMode,
                 collection->folder
                 );
+
+            qDebug() << "Device operation started with proper UI integration";
         });
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
