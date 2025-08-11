@@ -2741,9 +2741,8 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No | QMessageBox::Cancel);
     int result = msgBox.exec();
 
-    bool showEachCatalogUpdateSummary = false;
     if ( result == QMessageBox::Yes){
-        showEachCatalogUpdateSummary = true;
+        showEachCatalogUpdateSummary = true;  // Use member variable, not local variable
     }
     else if ( result == QMessageBox::Cancel){
         qDebug() << "User cancelled batch update";
@@ -2758,7 +2757,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     batchCurrentIndex = 0;
     inBatchMode = false;  // Will be set to true if we find catalogs
     currentUpdateDevice = nullptr;
-    showEachCatalogUpdateSummary = showEachCatalogUpdateSummary;
 
     // Initialize global statistics
     globalUpdateTotalFiles = 0;
@@ -2821,7 +2819,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     // Start processing the first catalog
     startCurrentBatchCatalog();
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::startCurrentBatchCatalog()
 {
     qDebug() << "=== startCurrentBatchCatalog() ENTRY ===";
@@ -2882,7 +2880,7 @@ void MainWindow::startCurrentBatchCatalog()
     qDebug() << "Catalog update started for:" << currentDevice->name;
     qDebug() << "=== startCurrentBatchCatalog() EXIT ===";
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::processNextCatalogUpdate()
 {
     qDebug() << "=== processNextCatalogUpdate() called ===";
@@ -3136,7 +3134,7 @@ void MainWindow::onCatalogUpdateCompleted()
 
     qDebug() << "=== onCatalogUpdateCompleted() EXIT ===";
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::startNextCatalogUpdate()
 {
     qDebug() << "=== startNextCatalogUpdate() called ===";
@@ -3201,7 +3199,7 @@ void MainWindow::startNextCatalogUpdate()
         collection->folder
     );
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::finishBatchOperation()
 {
     qDebug() << "=== finishBatchOperation() ENTRY ===";
@@ -3259,7 +3257,6 @@ void MainWindow::finishBatchOperation()
 
     qDebug() << "=== finishBatchOperation() EXIT ===";
 }
-
 //--------------------------------------------------------------------------
 int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {
     if (!deviceTree.contains(parentId)) {
