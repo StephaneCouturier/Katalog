@@ -249,8 +249,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             //Load the list of Storage devices for Create and Catalog tabs
             loadStorageList();
 
-            //Set up a catalog manager for creation and updates
+            //Set up a catalog manager for creation and updates, and device manager for udpate
             setupCatalogManager();
+            setupDeviceManager();
 
         //Setup tab: Tags
             //Set Default path to scan
@@ -288,6 +289,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             unsavedChanges = false;
 
         //Setup tab: Devices
+
             ui->Devices_checkBox_DisplayCatalogs->setChecked(optionDisplayCatalogs);
             ui->Devices_checkBox_DisplayStorage->setChecked(optionDisplayStorage);
             ui->Devices_checkBox_DisplayPhysicalGroup->setChecked(optionDisplayPhysicalGroup);

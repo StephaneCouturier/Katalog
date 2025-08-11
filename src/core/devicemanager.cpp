@@ -167,6 +167,19 @@ void DeviceManager::resumeDeviceOperation()
     }
 }
 
+void DeviceManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
+{
+    qDebug() << "DeviceManager::setCatalogProgressManager()";
+
+    m_catalogProgressManager = catalogProgressManager;
+
+    if (m_catalogProgressManager && m_catalogManager) {
+        // Connect the existing CatalogProgressManager to our CatalogManager
+        m_catalogProgressManager->setCatalogManager(m_catalogManager);
+        qDebug() << "CatalogProgressManager connected to DeviceManager's CatalogManager";
+    }
+}
+
 void DeviceManager::connectDeviceJob(DeviceJobStoppable* deviceJob)
 {
     if (!deviceJob) return;

@@ -33,6 +33,7 @@
 
 //Katalog object classes
 #include "core/collection.h"
+#include "core/devicemanager.h"
 #include "core/search.h"
 #include "core/device.h"
 #include "core/searchmanager.h"
@@ -123,6 +124,7 @@ class MainWindow : public KXmlGuiWindow
         Collection *collection = nullptr;   // Collection object, used to access the collection of devices, catalogs and storage
         Device *selectedDevice = nullptr;  // Selected device from Selection panel, used for operations on any screen
         Device* currentUpdateDevice = nullptr; // Device selected for update operations
+        DeviceManager* deviceManager = nullptr;
         Search *currentSearch = nullptr;
         SearchJobStoppable *loadSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from a previous search.
         SearchJobStoppable *lastSearch = new SearchJobStoppable(this); //temporary search object used to load criteria from the last search.
@@ -381,6 +383,8 @@ class MainWindow : public KXmlGuiWindow
             void displayStoragePicture();
 
         //TAB: Devices
+            void setupDeviceManager();
+
             int lastDevicesSortSection;
             int lastDevicesSortOrder;
             void setDeviceTreeExpandState(bool toggle);

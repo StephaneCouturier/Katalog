@@ -1887,6 +1887,55 @@ void MainWindow::loadDevicesCatalogToModel(){
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
+//--- Device ---------------------------------------------------------------
+void MainWindow::setupDeviceManager()
+{
+    qDebug() << "Setting up DeviceManager with existing UI infrastructure...";
+
+    // Create the device manager
+    deviceManager = new DeviceManager(this);
+
+    // CRITICAL FIX 1: Connect DeviceManager to existing CatalogProgressManager
+    // This restores the automatic status bar updates that were working before
+    if (catalogProgressManager) {
+        deviceManager->setCatalogProgressManager(catalogProgressManager);
+        qDebug() << "Connected DeviceManager to existing CatalogProgressManager";
+    } else {
+        qDebug() << "WARNING: catalogProgressManager not available during DeviceManager setup";
+    }
+
+    // CRITICAL FIX 2: Connect DeviceManager signals to use existing reportAllUpdates
+    connect(deviceManager, &DeviceManager::requestReportAllUpdates,
+            this, [this](Device* device, const QList<qint64>& results, const QString& updateType) {
+                // Use the existing, proven reportAllUpdates method
+                this->reportAllUpdates(device, results, updateType);
+            });
+
+    // Connect other DeviceManager signals for UI updates
+    connect(deviceManager, &DeviceManager::deviceOperationStarted,
+            this, [this]() {
+                qDebug() << "Device operation started - setting UI to running state";
+                // Set any UI state for device operations
+            });
+
+    connect(deviceManager, &DeviceManager::deviceOperationError,
+            this, [this](const QString& error) {
+                qDebug() << "Device operation error:" << error;
+                // Show error using existing UI patterns
+                QMessageBox::critical(this, "Katalog", tr("Device operation failed: %1").arg(error));
+            });
+
+    connect(deviceManager, &DeviceManager::deviceOperationCancelled,
+            this, [this]() {
+                qDebug() << "Device operation cancelled";
+                // Handle cancellation UI updates
+            });
+
+    qDebug() << "DeviceManager setup complete with existing UI infrastructure";
+}
+
+
+//--------------------------------------------------------------------------
 //--- Storage --------------------------------------------------------------
 void MainWindow::loadStorageList()
 {//Load Storage selection to comboBoxes

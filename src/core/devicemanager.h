@@ -34,15 +34,19 @@
 #ifndef DEVICEMANAGER_H
 #define DEVICEMANAGER_H
 
-#pragma once
-
+#include "core/catalogprogressmanager.h"
 #include "device.h"
 #include "devicejobstoppable.h"
 #include "catalogmanager.h"
+
 #include <QObject>
 #include <QTimer>
 #include <QString>
 #include <QList>
+
+#pragma once
+
+class CatalogProgressManager;
 
 /**
  * @brief The DeviceManager class
@@ -121,6 +125,12 @@ public:
      */
     bool isPaused() const { return m_isPaused; }
 
+    /**
+     * @brief Connect to existing CatalogProgressManager for status bar updates
+     * @param catalogProgressManager The progress manager from MainWindow
+     */
+    void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
+
 signals:
     // Main operation signals
     void deviceOperationStarted();
@@ -144,6 +154,8 @@ signals:
     void deviceHierarchyProgress(int processedDevices, int totalDevices);
     void catalogOperationProgress(int processedCatalogs, int totalCatalogs);
     void currentOperationChanged(const QString& deviceName, const QString& operation);
+
+    void requestReportAllUpdates(Device* device, const QList<qint64>& results, const QString& updateType);
 
 private slots:
     // Device job integration
@@ -197,6 +209,7 @@ private:
 private:
     // Core managers
     CatalogManager* m_catalogManager = nullptr;
+    CatalogProgressManager* m_catalogProgressManager = nullptr;
     DeviceJobStoppable* m_currentDeviceJob = nullptr;
 
     // Operation state

@@ -207,12 +207,22 @@ void DeviceJobStoppable::loadDeviceChildren(Device* device)
     if (!device) return;
 
     try {
-        // FIX: Use public loadDevice method which loads subdevices
-        // Since loadSubDeviceList is private, we'll use the device list
-        // that was already loaded when the device was loaded
+        // Load device which populates deviceIDList
         device->loadDevice("defaultConnection");
 
+        // Create actual Device objects from deviceIDList
+        device->subDevices.clear();
+        for (int childID : device->deviceIDList) {
+            Device childDevice;
+            childDevice.ID = childID;
+            childDevice.loadDevice("defaultConnection");
+            device->subDevices.append(childDevice);
+        }
+
         qDebug() << "Loaded" << device->subDevices.size() << "children for device:" << device->name;
+        for (const Device& child : device->subDevices) {
+            qDebug() << "  Child:" << child.name << "Type:" << child.type;
+        }
     } catch (const std::exception& e) {
         qDebug() << "Error loading children for device" << device->name << ":" << e.what();
     }
@@ -407,8 +417,26 @@ void DeviceJobStoppable::onCatalogOperationCompleted()
     m_currentCatalogJob = nullptr;
     m_waitingForCatalogCompletion = false;
 
-    // Continue processing
-    processDeviceCompleted(m_currentDevice, catalogResults);
+    // CRITICAL FIX: Use a timer to ensure CatalogManager cleanup is complete
+    // before continuing to the next device
+    QTimer::singleShot(100, this, [this, catalogResults]() {
+        if (!shouldContinue()) {
+            handleOperationCancellation();
+            return;
+        }
+
+        // Verify CatalogManager is ready for next operation
+        if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
+            qDebug() << "CatalogManager still running, waiting longer...";
+            // Try again after a longer delay
+            QTimer::singleShot(500, this, [this, catalogResults]() {
+                processDeviceCompleted(m_currentDevice, catalogResults);
+            });
+        } else {
+            qDebug() << "CatalogManager ready, continuing to next device";
+            processDeviceCompleted(m_currentDevice, catalogResults);
+        }
+    });
 }
 
 void DeviceJobStoppable::onCatalogOperationError(const QString& error)

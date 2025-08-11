@@ -176,37 +176,67 @@
                 });
             }
 
-            QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+            QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update Storage and Catalogs"), this);
             deviceContextMenu.addAction(menuDeviceAction3);
+            // UPDATED: Storage update action
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-                // Use new catalog system for individual catalog update
-                if (!catalogManager || catalogManager->catalogOperationRunning()) {
-                    qDebug() << "Catalog manager not available for context menu update";
-                    return;
+                qDebug() << "Storage update requested for:" << selectedDevice->name;
+
+                // CRITICAL: Ensure DeviceManager is set up with proper UI integration
+                if (!deviceManager) {
+                    setupDeviceManager();
                 }
 
-                qDebug() << "Context menu catalog update for:" << selectedDevice->name;
-
-                // Clear batch mode - this is a single update
-                inBatchMode = false;
-                currentUpdateDevice = selectedDevice;
-                selectedDevice->catalog->appVersion = currentVersion;
-
-                // Start update using new system
-                CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-                if (catalogProgressManager) {
-                    catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+                // Ensure CatalogProgressManager is connected (double-check)
+                if (catalogProgressManager && deviceManager) {
+                    deviceManager->setCatalogProgressManager(catalogProgressManager);
                 }
 
-                catalogManager->startCatalogJobStoppable(
-                    catalogJobStoppable,
+                // Start device operation using DeviceManager
+                DeviceJobStoppable* deviceEngine = new DeviceJobStoppable(this);
+
+                deviceManager->startDeviceOperation(
+                    deviceEngine,
                     selectedDevice,
-                    CatalogJobStoppable::UpdateCatalog,
+                    DeviceJobStoppable::UpdateDevice,
                     collection->databaseMode,
                     collection->folder
                     );
+
+                qDebug() << "Device operation started with proper UI integration";
             });
+
+            // QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+            // deviceContextMenu.addAction(menuDeviceAction3);
+            // connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+            //     // Use new catalog system for individual catalog update
+            //     if (!catalogManager || catalogManager->catalogOperationRunning()) {
+            //         qDebug() << "Catalog manager not available for context menu update";
+            //         return;
+            //     }
+
+            //     qDebug() << "Context menu catalog update for:" << selectedDevice->name;
+
+            //     // Clear batch mode - this is a single update
+            //     inBatchMode = false;
+            //     currentUpdateDevice = selectedDevice;
+            //     selectedDevice->catalog->appVersion = currentVersion;
+
+            //     // Start update using new system
+            //     CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
+
+            //     if (catalogProgressManager) {
+            //         catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+            //     }
+
+            //     catalogManager->startCatalogJobStoppable(
+            //         catalogJobStoppable,
+            //         selectedDevice,
+            //         CatalogJobStoppable::UpdateCatalog,
+            //         collection->databaseMode,
+            //         collection->folder
+            //         );
+            // });
 
             deviceContextMenu.exec(globalPos);
         }
