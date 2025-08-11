@@ -3047,6 +3047,14 @@ void MainWindow::onCatalogUpdateCompleted()
         updatedDevice->loadDevice("defaultConnection");
         qDebug() << "Device reloaded - Files:" << updatedDevice->totalFileCount << "Size:" << updatedDevice->totalFileSize;
 
+        qDebug() << "Updating parent storage device numbers";
+        try {
+            updatedDevice->updateParentsNumbers();
+            qDebug() << "Parent numbers updated successfully";
+        } catch (const std::exception& e) {
+            qDebug() << "Error updating parent numbers:" << e.what();
+        }
+
         // Create the results list (same format as original)
         QList<qint64> updateResults;
         updateResults << 1;  // Success code
@@ -3086,6 +3094,10 @@ void MainWindow::onCatalogUpdateCompleted()
             collection->saveStatiticsTableToFile();
             qDebug() << "Data saved after catalog completion";
 
+            qDebug() << "Refreshing UI to show updated parent storage";
+            loadDevicesView("");
+            loadDevicesTreeToModel("Filters");
+
             // Clear current device reference
             currentUpdateDevice = nullptr;
 
@@ -3109,6 +3121,10 @@ void MainWindow::onCatalogUpdateCompleted()
             // Save data
             collection->saveDeviceTableToFile();
             collection->saveStatiticsTableToFile();
+
+            qDebug() << "Refreshing UI to show updated parent storage";
+            loadDevicesView("");
+            loadDevicesTreeToModel("Filters");
 
             // Clear current device reference
             currentUpdateDevice = nullptr;

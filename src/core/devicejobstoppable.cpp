@@ -509,8 +509,8 @@ void DeviceJobStoppable::processDeviceCompleted(Device* device, const QList<qint
         m_processedCatalogs++;
     }
 
-    // Update parent numbers (preserve business logic from Device::updateDevice)
-    updateParentNumbers(device);
+    // REMOVED: Don't update parent numbers here - do it at the end
+    // updateParentNumbers(device);
 
     emit deviceProcessingCompleted(device->name, deviceResults);
     updateProgress();
@@ -654,6 +654,35 @@ void DeviceJobStoppable::completeOperation()
     qDebug() << "=== DeviceJobStoppable::completeOperation() ===";
     qDebug() << "Total devices processed:" << m_processedDevices;
     qDebug() << "Total catalogs processed:" << m_processedCatalogs;
+
+    // CRITICAL FIX: Update parent numbers AFTER all devices in hierarchy are processed
+    qDebug() << "Updating parent numbers for entire hierarchy";
+    if (m_rootDevice) {
+        try {
+            // First, reload the root device to get latest data from database
+            qDebug() << "Reloading root device to get latest data";
+            m_rootDevice->loadDevice("defaultConnection");
+
+            // Update numbers from children (aggregates from child devices)
+            qDebug() << "Calling updateNumbersFromChildren on root device";
+            m_rootDevice->updateNumbersFromChildren();
+
+            // Save the updated device
+            qDebug() << "Saving updated root device";
+            m_rootDevice->saveDevice();
+
+            // Update parent numbers starting from the root device
+            // This will recursively update all parents in the hierarchy
+            qDebug() << "Calling updateParentsNumbers on root device";
+            m_rootDevice->updateParentsNumbers();
+
+            qDebug() << "Parent numbers updated successfully for entire hierarchy";
+            qDebug() << "Root device now has - Files:" << m_rootDevice->totalFileCount << "Size:" << m_rootDevice->totalFileSize;
+
+        } catch (const std::exception& e) {
+            qDebug() << "Error updating parent numbers for hierarchy:" << e.what();
+        }
+    }
 
     m_operationRunning = false;
 

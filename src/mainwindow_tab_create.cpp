@@ -574,6 +574,24 @@
             collection->saveDeviceTableToFile();
             collection->saveStatiticsTableToFile();
 
+            // Update parents
+            qDebug() << "CRITICAL FIX: Updating parent storage device numbers after creation";
+            try {
+                // Reload the completed device to ensure we have latest data
+                completedDevice->loadDevice("defaultConnection");
+
+                // Update parent numbers (this will update the parent storage device)
+                completedDevice->updateParentsNumbers();
+
+                qDebug() << "Parent numbers updated successfully after catalog creation";
+
+                // Save again to persist the updated parent device
+                collection->saveDeviceTableToFile();
+
+            } catch (const std::exception& e) {
+                qDebug() << "Error updating parent numbers after creation:" << e.what();
+            }
+
             // UI Task 2: Show completion report (UI-specific)
             qDebug() << "UI Task 2: Showing completion report";
             QList<qint64> resultList;
