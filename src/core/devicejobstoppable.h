@@ -61,15 +61,6 @@ class DeviceJobStoppable : public QObject
     Q_OBJECT
 
 public:
-    /**
-     * @brief Operation types for device processing
-     */
-    enum OperationType {
-        UpdateDevice = 0,    // Update existing device and hierarchy
-        CreateDevice = 1,    // Create new device (future extension)
-        DeleteDevice = 2     // Delete device (future extension)
-    };
-
     explicit DeviceJobStoppable(QObject *parent = nullptr);
     ~DeviceJobStoppable();
 
@@ -81,6 +72,23 @@ public:
      * @param collectionFolder Collection folder path
      * @param catalogManager Catalog manager for catalog operations
      */
+
+    /**
+     * @brief Get the root device that was originally selected for processing
+     * @return Pointer to the root device
+     */
+
+    /**
+     * @brief Operation types for device processing
+     */
+    enum OperationType {
+        UpdateDevice = 0,    // Update existing device and hierarchy
+        CreateDevice = 1,    // Create new device (future extension)
+        DeleteDevice = 2     // Delete device (future extension)
+    };
+
+    Device* rootDevice() const { return m_rootDevice; }
+
     void startDeviceOperation(Device* rootDevice,
                               OperationType operationType,
                               const QString& databaseMode,

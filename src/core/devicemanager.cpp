@@ -259,6 +259,8 @@ void DeviceManager::onDeviceOperationStarted()
     emit deviceOperationStarted();
 }
 
+// REPLACE this method in src/core/devicemanager.cpp
+
 void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
 {
     qDebug() << "=== DeviceManager::onDeviceOperationCompleted() ===";
@@ -269,6 +271,44 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
     setHierarchyProgress(100);
     setCatalogProgress(100);
     setStatus("Device operation completed successfully");
+
+    // CRITICAL FIX: Get the ROOT device that was originally selected
+    if (m_currentDeviceJob) {
+        Device* rootDevice = m_currentDeviceJob->rootDevice();
+
+        if (rootDevice) {
+            qDebug() << "Root device found:" << rootDevice->name << "Type:" << rootDevice->type;
+
+            if (rootDevice->type == "Storage") {
+                // Create results list in the format that reportAllUpdates expects for Storage
+                QList<qint64> storageResults;
+                for (int i = 0; i < 14; ++i) {
+                    storageResults << 0;  // Initialize with zeros
+                }
+
+                // Set the success flag
+                storageResults[0] = 1;  // Success
+
+                // Set storage space values (indices 8-13)
+                if (rootDevice->storage) {
+                    storageResults[8] = rootDevice->storage->totalSpace - rootDevice->storage->freeSpace;  // Used space
+                    storageResults[9] = 0;   // Delta used space
+                    storageResults[10] = rootDevice->storage->freeSpace;  // Free space
+                    storageResults[11] = 0;  // Delta free space
+                    storageResults[12] = rootDevice->storage->totalSpace; // Total space
+                    storageResults[13] = 0;  // Delta total space
+                }
+
+                qDebug() << "Emitting requestReportAllUpdates for Storage device:" << rootDevice->name;
+                emit requestReportAllUpdates(rootDevice, storageResults, "update");
+
+            } else {
+                qDebug() << "Root device type" << rootDevice->type << "- no final report implemented yet";
+            }
+        } else {
+            qDebug() << "No root device found for final report";
+        }
+    }
 
     emit deviceOperationCompleted(results);
 
