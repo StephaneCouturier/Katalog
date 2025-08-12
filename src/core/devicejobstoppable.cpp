@@ -431,7 +431,7 @@ void DeviceJobStoppable::onCatalogOperationCompleted()
     m_currentCatalogJob = nullptr;
     m_waitingForCatalogCompletion = false;
 
-    // CRITICAL FIX: Use a timer to ensure CatalogManager cleanup is complete
+    // Use a timer to ensure CatalogManager cleanup is complete
     // before continuing to the next device
     QTimer::singleShot(100, this, [this, catalogResults]() {
         if (!shouldContinue()) {
@@ -508,9 +508,6 @@ void DeviceJobStoppable::processDeviceCompleted(Device* device, const QList<qint
     if (device->type == "Catalog") {
         m_processedCatalogs++;
     }
-
-    // REMOVED: Don't update parent numbers here - do it at the end
-    // updateParentNumbers(device);
 
     emit deviceProcessingCompleted(device->name, deviceResults);
     updateProgress();
@@ -655,7 +652,7 @@ void DeviceJobStoppable::completeOperation()
     qDebug() << "Total devices processed:" << m_processedDevices;
     qDebug() << "Total catalogs processed:" << m_processedCatalogs;
 
-    // CRITICAL FIX: Update parent numbers AFTER all devices in hierarchy are processed
+    // Update parent numbers after all devices in hierarchy are processed
     qDebug() << "Updating parent numbers for entire hierarchy";
     if (m_rootDevice) {
         try {
