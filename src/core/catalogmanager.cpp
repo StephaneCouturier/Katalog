@@ -329,3 +329,169 @@ void CatalogManager::cleanupJob()
         qDebug() << "Catalog job cleanup complete";
     }
 }
+
+// Add these methods to catalogmanager.cpp:
+
+void CatalogManager::initializeBatchOperation(const QList<Device*>& catalogs, const QString& databaseMode, const QString& collectionFolder)
+{
+    qDebug() << "CatalogManager::initializeBatchOperation with" << catalogs.size() << "catalogs";
+    qDebug() << "Database mode:" << databaseMode << "Collection folder:" << collectionFolder;
+
+    // Clear existing batch state
+    qDeleteAll(m_batchCatalogs);
+    m_batchCatalogs.clear();
+
+    // Copy the catalog list and parameters
+    m_batchCatalogs = catalogs;
+    m_batchDatabaseMode = databaseMode;
+    m_batchCollectionFolder = collectionFolder;
+    m_batchCurrentIndex = 0;
+    m_inBatchMode = true;
+
+    // Reset global statistics
+    m_globalUpdateTotalFiles = 0;
+    m_globalUpdateDeltaFiles = 0;
+    m_globalUpdateTotalSize = 0;
+    m_globalUpdateDeltaSize = 0;
+    m_updatedCatalogs = 0;
+    m_skippedCatalogs = 0;
+}
+
+void CatalogManager::resetBatchState()
+{
+    qDebug() << "CatalogManager::resetBatchState";
+
+    // Clean up batch catalogs
+    qDeleteAll(m_batchCatalogs);
+    m_batchCatalogs.clear();
+    m_batchCurrentIndex = 0;
+    m_inBatchMode = false;
+
+    // Clear batch parameters
+    m_batchDatabaseMode.clear();
+    m_batchCollectionFolder.clear();
+
+    // Reset global statistics
+    m_globalUpdateTotalFiles = 0;
+    m_globalUpdateDeltaFiles = 0;
+    m_globalUpdateTotalSize = 0;
+    m_globalUpdateDeltaSize = 0;
+    m_updatedCatalogs = 0;
+    m_skippedCatalogs = 0;
+}
+
+void CatalogManager::updateGlobalStatistics(qint64 totalFiles, qint64 deltaFiles, qint64 totalSize, qint64 deltaSize)
+{
+    m_globalUpdateTotalFiles += totalFiles;
+    m_globalUpdateDeltaFiles += deltaFiles;
+    m_globalUpdateTotalSize += totalSize;
+    m_globalUpdateDeltaSize += deltaSize;
+}
+
+void CatalogManager::startCurrentBatchCatalog()
+{
+    qDebug() << "=== CatalogManager::startCurrentBatchCatalog() ENTRY ===";
+    qDebug() << "Batch mode:" << m_inBatchMode;
+    qDebug() << "Current index:" << m_batchCurrentIndex;
+    qDebug() << "Total catalogs:" << m_batchCatalogs.size();
+
+    // Safety check
+    if (!m_inBatchMode) {
+        qDebug() << "ERROR: Called startCurrentBatchCatalog but not in batch mode!";
+        return;
+    }
+
+    // Check if we're done
+    if (m_batchCurrentIndex >= m_batchCatalogs.size()) {
+        qDebug() << "Batch complete - all catalogs processed";
+        finishBatchOperation();
+        return;
+    }
+
+    // CRITICAL CHECK: Make sure CatalogManager is ready
+    if (catalogOperationRunning()) {
+        qDebug() << "CatalogManager still running - deferring start";
+        QTimer::singleShot(100, this, [this]() {
+            qDebug() << "Retry timer fired - attempting to start catalog";
+            startCurrentBatchCatalog();
+        });
+        return;
+    }
+
+    // Get current catalog
+    Device* currentDevice = m_batchCatalogs[m_batchCurrentIndex];
+
+    qDebug() << "Starting catalog" << (m_batchCurrentIndex + 1) << "of" << m_batchCatalogs.size();
+    qDebug() << "Catalog name:" << currentDevice->name;
+    qDebug() << "Catalog ID:" << currentDevice->ID;
+
+    // Emit signal to notify UI about batch progress
+    emit batchCatalogStarted(currentDevice, m_batchCurrentIndex + 1, m_batchCatalogs.size());
+
+    // Create catalog job stoppable for this update operation
+    CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
+
+    // Start the update for this catalog using existing method
+    startCatalogJobStoppable(
+        catalogJobStoppable,
+        currentDevice,
+        CatalogJobStoppable::UpdateCatalog,
+        m_batchDatabaseMode,
+        m_batchCollectionFolder
+        );
+
+    qDebug() << "Catalog update started for:" << currentDevice->name;
+    qDebug() << "=== CatalogManager::startCurrentBatchCatalog() EXIT ===";
+}
+
+void CatalogManager::finishBatchOperation()
+{
+    qDebug() << "=== CatalogManager::finishBatchOperation() ENTRY ===";
+    qDebug() << "Updated catalogs:" << m_updatedCatalogs;
+    qDebug() << "Skipped catalogs:" << m_skippedCatalogs;
+    qDebug() << "Total files:" << m_globalUpdateTotalFiles;
+    qDebug() << "Total size:" << m_globalUpdateTotalSize;
+
+    // Create final global report (same format as original)
+    QList<qint64> globalList;
+    globalList << 1;  // Success code
+    globalList << m_globalUpdateTotalFiles;
+    globalList << m_globalUpdateDeltaFiles;
+    globalList << m_globalUpdateTotalSize;
+    globalList << m_globalUpdateDeltaSize;
+    globalList << m_updatedCatalogs;
+    globalList << m_skippedCatalogs;
+    globalList << 0;
+    globalList << 0;
+    globalList << 0;
+    globalList << 0;
+    globalList << 0;
+    globalList << 0;
+    globalList << 0;
+    globalList << 0;
+
+    // Emit signal for UI to show final global report
+    emit batchNeedsUIReport(nullptr, globalList, "list");
+
+    // Clean up batch state
+    resetBatchState();
+
+    // Emit completion signal
+    emit batchOperationCompleted();
+
+    qDebug() << "=== CatalogManager::finishBatchOperation() EXIT ===";
+}
+
+// For backward compatibility - implement older method signatures but delegate to new implementation
+void CatalogManager::startNextCatalogUpdate()
+{
+    qDebug() << "CatalogManager::startNextCatalogUpdate() - delegating to startCurrentBatchCatalog()";
+    startCurrentBatchCatalog();
+}
+
+void CatalogManager::processNextCatalogUpdate()
+{
+    qDebug() << "CatalogManager::processNextCatalogUpdate() - incrementing and starting next";
+    m_batchCurrentIndex++;
+    startCurrentBatchCatalog();
+}

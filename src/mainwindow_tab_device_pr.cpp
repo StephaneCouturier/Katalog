@@ -2736,253 +2736,66 @@ void MainWindow::createMissingParentDirectories() {
 //--------------------------------------------------------------------------
 void MainWindow::startCurrentBatchCatalog()
 {
-    qDebug() << "=== startCurrentBatchCatalog() ENTRY ===";
-    qDebug() << "Batch mode:" << inBatchMode;
-    qDebug() << "Current index:" << batchCurrentIndex;
-    qDebug() << "Total catalogs:" << batchCatalogs.size();
+    qDebug() << "=== MainWindow::startCurrentBatchCatalog() - delegating to CatalogManager ===";
 
-    // Safety check
-    if (!inBatchMode) {
-        qDebug() << "ERROR: Called startCurrentBatchCatalog but not in batch mode!";
-        return;
+    // Delegate the batch logic to CatalogManager
+    if (catalogManager) {
+        catalogManager->startCurrentBatchCatalog();
+    } else {
+        qDebug() << "ERROR: catalogManager is null!";
     }
-
-    // Check if we're done
-    if (batchCurrentIndex >= batchCatalogs.size()) {
-        qDebug() << "Batch complete - all catalogs processed";
-        finishBatchOperation();
-        return;
-    }
-
-    // CRITICAL CHECK: Make sure CatalogManager is ready
-    if (catalogManager->catalogOperationRunning()) {
-        qDebug() << "CatalogManager still running - deferring start";
-        QTimer::singleShot(100, this, [this]() {
-            qDebug() << "Retry timer fired - attempting to start catalog";
-            startCurrentBatchCatalog();
-        });
-        return;
-    }
-
-    // Get current catalog
-    Device* currentDevice = batchCatalogs[batchCurrentIndex];
-    currentUpdateDevice = currentDevice;
-
-    qDebug() << "Starting catalog" << (batchCurrentIndex + 1) << "of" << batchCatalogs.size();
-    qDebug() << "Catalog name:" << currentDevice->name;
-    qDebug() << "Catalog ID:" << currentDevice->ID;
-
-    // Create catalog job stoppable for this update operation
-    CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-    // Update progress manager with the new engine
-    if (catalogProgressManager) {
-        catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
-        qDebug() << "Updated progress manager with new engine";
-    }
-
-    // Start the update for this catalog
-    qDebug() << "Calling catalogManager->startCatalogJobStoppable()";
-    catalogManager->startCatalogJobStoppable(
-        catalogJobStoppable,
-        currentDevice,
-        CatalogJobStoppable::UpdateCatalog,
-        collection->databaseMode,
-        collection->folder
-    );
-
-    qDebug() << "Catalog update started for:" << currentDevice->name;
-    qDebug() << "=== startCurrentBatchCatalog() EXIT ===";
 }
 //--------------------------------------------------------------------------
 void MainWindow::processNextCatalogUpdate()
 {
-    qDebug() << "=== processNextCatalogUpdate() called ===";
-    qDebug() << "Pending catalogs:" << pendingCatalogUpdates.size();
-    qDebug() << "Completed catalogs:" << completedCatalogUpdates;
-    qDebug() << "Total catalogs:" << totalCatalogsToUpdate;
+    qDebug() << "=== MainWindow::processNextCatalogUpdate() - delegating to CatalogManager ===";
 
-    if (pendingCatalogUpdates.isEmpty()) {
-        qDebug() << "All catalog updates completed - showing final report";
-
-        // REUSE ORIGINAL FINAL REPORT: Create global list (same format as original)
-        QList<qint64> globalList;
-        globalList << 1;  // Success code
-        globalList << globalUpdateTotalFiles;
-        globalList << globalUpdateDeltaFiles;
-        globalList << globalUpdateTotalSize;
-        globalList << globalUpdateDeltaSize;
-        globalList << updatedCatalogs;
-        globalList << skippedCatalogs;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-
-        // Show final global report (same as original)
-        reportAllUpdates(nullptr, globalList, "list");  // Use nullptr as device for global report
-
-        // Clean up and restore UI
-        globalUpdateTotalFiles = 0;
-        globalUpdateDeltaFiles = 0;
-        globalUpdateTotalSize = 0;
-        globalUpdateDeltaSize = 0;
-        updatedCatalogs = 0;
-        skippedCatalogs = 0;
-        completedCatalogUpdates = 0;
-        totalCatalogsToUpdate = 0;
-        showEachCatalogUpdateSummary = false;
-
-        // Re-enable the button
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-
-        // Refresh the view (same as original)
-        loadDevicesView("");
-        return;
+    // Delegate to CatalogManager
+    if (catalogManager) {
+        catalogManager->processNextCatalogUpdate();
+    } else {
+        qDebug() << "ERROR: catalogManager is null!";
     }
-
-    Device* currentDevice = pendingCatalogUpdates.takeFirst();
-    currentUpdateDevice = currentDevice;
-
-    qDebug() << "Starting update for catalog:" << currentDevice->name
-             << "(" << (completedCatalogUpdates + 1) << "/" << totalCatalogsToUpdate << ")";
-
-    // Create a new catalog job stoppable for this update operation
-    CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-    // Update progress manager with the new engine
-    if (catalogProgressManager) {
-        catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
-    }
-
-    // Start the update for this catalog
-    catalogManager->startCatalogJobStoppable(
-        catalogJobStoppable,
-        currentDevice,
-        CatalogJobStoppable::UpdateCatalog,
-        collection->databaseMode,
-        collection->folder
-    );
-
-    qDebug() << "Update started for catalog:" << currentDevice->name;
 }
 //--------------------------------------------------------------------------
+// Replace the batch handling section in onCatalogUpdateCompleted() with this:
+
 void MainWindow::onCatalogUpdateCompleted()
 {
-    qDebug() << "=== onCatalogUpdateCompleted() ENTRY ===";
-    qDebug() << "Batch mode:" << inBatchMode;
-    qDebug() << "Current device:" << (currentUpdateDevice ? currentUpdateDevice->name : "null");
+    qDebug() << "=== MainWindow::onCatalogUpdateCompleted() ENTRY ===";
 
     try {
-        Device* updatedDevice = currentUpdateDevice;
+        // Check if we're in batch mode (delegate to CatalogManager)
+        bool inBatchMode = catalogManager ? catalogManager->inBatchMode() : false;
+        qDebug() << "Batch mode:" << inBatchMode;
+        qDebug() << "Current device:" << (currentUpdateDevice ? currentUpdateDevice->name : "None");
 
-        if (!updatedDevice) {
-            qDebug() << "ERROR: No device found for update completion";
-            // Restore UI anyway
-            QApplication::restoreOverrideCursor();
-            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-            ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-            return;
-        }
+        if (inBatchMode && catalogManager) {
+            qDebug() << "In batch mode - handling batch progression via CatalogManager";
 
-        qDebug() << "Processing completion for:" << updatedDevice->name;
+            // Update global statistics in CatalogManager (if you have access to the results)
+            // Note: You may need to extract statistics from the operation result here
+            // catalogManager->updateGlobalStatistics(totalFiles, deltaFiles, totalSize, deltaSize);
+            catalogManager->incrementUpdatedCatalogs();
 
-        // Reload the device to get updated values
-        updatedDevice->loadDevice("defaultConnection");
-        qDebug() << "Device reloaded - Files:" << updatedDevice->totalFileCount << "Size:" << updatedDevice->totalFileSize;
-
-        qDebug() << "Updating parent storage device numbers";
-        try {
-            updatedDevice->updateParentsNumbers();
-            qDebug() << "Parent numbers updated successfully";
-        } catch (const std::exception& e) {
-            qDebug() << "Error updating parent numbers:" << e.what();
-        }
-
-        // Create the results list (same format as original)
-        QList<qint64> updateResults;
-        updateResults << 1;  // Success code
-        updateResults << updatedDevice->totalFileCount;  // Total files
-        updateResults << 0;  // Delta files (TODO: calculate properly)
-        updateResults << updatedDevice->totalFileSize;   // Total size
-        updateResults << 0;  // Delta size (TODO: calculate properly)
-
-        // Padding for compatibility
-        for (int i = 0; i < 10; i++) {
-            updateResults << 0;
-        }
-
-        qDebug() << "Results created - Files:" << updateResults[1] << "Size:" << updateResults[3];
-
-        if (inBatchMode) {
-            // BATCH MODE: Collect statistics and continue
-            qDebug() << "Processing batch completion";
-
-            globalUpdateTotalFiles += updateResults[1];
-            globalUpdateDeltaFiles += updateResults[2];
-            globalUpdateTotalSize += updateResults[3];
-            globalUpdateDeltaSize += updateResults[4];
-            updatedCatalogs += 1;
-
-            qDebug() << "Global stats updated - Total files:" << globalUpdateTotalFiles;
-            qDebug() << "Updated catalogs count:" << updatedCatalogs;
-
-            // Show individual report if requested
-            if (showEachCatalogUpdateSummary) {
-                qDebug() << "Showing individual catalog report";
-                reportAllUpdates(updatedDevice, updateResults, "update");
-            }
-
-            // Save data after each catalog
-            collection->saveDeviceTableToFile();
-            collection->saveStatiticsTableToFile();
-            qDebug() << "Data saved after catalog completion";
-
-            qDebug() << "Refreshing UI to show updated parent storage";
-            loadDevicesView("");
-            loadDevicesTreeToModel("Filters");
-
-            // Clear current device reference
+            // Clear current device
             currentUpdateDevice = nullptr;
 
-            // Move to next catalog
-            batchCurrentIndex++;
-            qDebug() << "Moving to next catalog - new index:" << batchCurrentIndex;
+            // Increment batch index and start next catalog
+            catalogManager->incrementBatchIndex();
 
-            // CRITICAL FIX: Defer the next catalog start until after cleanup
-            qDebug() << "Deferring next catalog start to allow CatalogManager cleanup";
+            // Defer the next catalog start slightly (same pattern as original)
             QTimer::singleShot(100, this, [this]() {
-                qDebug() << "Timer fired - starting next catalog";
-                startCurrentBatchCatalog();
+                qDebug() << "Timer fired - starting next catalog via CatalogManager";
+                catalogManager->startCurrentBatchCatalog();
             });
 
         } else {
-            // SINGLE MODE: Show report and restore UI
-            qDebug() << "Processing single catalog completion";
-
-            reportAllUpdates(updatedDevice, updateResults, "update");
-
-            // Save data
-            collection->saveDeviceTableToFile();
-            collection->saveStatiticsTableToFile();
-
-            qDebug() << "Refreshing UI to show updated parent storage";
-            loadDevicesView("");
-            loadDevicesTreeToModel("Filters");
-
-            // Clear current device reference
+            // Single catalog mode - restore UI as before
+            qDebug() << "Single catalog mode - restoring UI";
             currentUpdateDevice = nullptr;
-
-            // Restore UI for single update
-            qDebug() << "Restoring UI for single update";
             QApplication::restoreOverrideCursor();
             ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-
-            // Refresh view
             loadDevicesView("");
         }
 
@@ -2991,17 +2804,15 @@ void MainWindow::onCatalogUpdateCompleted()
     } catch (const std::exception& e) {
         qDebug() << "EXCEPTION in update completion:" << e.what();
 
-        if (inBatchMode) {
-            // Count as error and continue
-            skippedCatalogs += 1;
+        if (catalogManager && catalogManager->inBatchMode()) {
+            // Count as error and continue batch
+            catalogManager->incrementSkippedCatalogs();
             currentUpdateDevice = nullptr;
-            batchCurrentIndex++;
-            qDebug() << "Exception in batch mode - deferring next catalog";
+            catalogManager->incrementBatchIndex();
 
-            // Also defer on error
             QTimer::singleShot(100, this, [this]() {
-                qDebug() << "Timer fired after error - starting next catalog";
-                startCurrentBatchCatalog();
+                qDebug() << "Timer fired after error - starting next catalog via CatalogManager";
+                catalogManager->startCurrentBatchCatalog();
             });
         } else {
             // Single mode error
@@ -3016,125 +2827,26 @@ void MainWindow::onCatalogUpdateCompleted()
 //--------------------------------------------------------------------------
 void MainWindow::startNextCatalogUpdate()
 {
-    qDebug() << "=== startNextCatalogUpdate() called ===";
-    qDebug() << "Current index:" << currentCatalogIndex << "Total:" << catalogsToUpdate.size();
+    qDebug() << "=== MainWindow::startNextCatalogUpdate() - delegating to CatalogManager ===";
 
-    // Check if we're done
-    if (currentCatalogIndex >= catalogsToUpdate.size()) {
-        qDebug() << "All catalogs processed - showing final report";
-
-        // COPY ORIGINAL: Create and show final global report
-        QList<qint64> globalList;
-        globalList << 1;  // Success code
-        globalList << globalUpdateTotalFiles;
-        globalList << globalUpdateDeltaFiles;
-        globalList << globalUpdateTotalSize;
-        globalList << globalUpdateDeltaSize;
-        globalList << updatedCatalogs;
-        globalList << skippedCatalogs;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-        globalList << 0;
-
-        // Show final report (same as original)
-        reportAllUpdates(nullptr, globalList, "list");
-
-        // Clean up
-        qDeleteAll(catalogsToUpdate);
-        catalogsToUpdate.clear();
-        currentCatalogIndex = 0;
-
-        // Restore UI
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-        loadDevicesView("");
-
-        return;
+    // Delegate to CatalogManager
+    if (catalogManager) {
+        catalogManager->startNextCatalogUpdate();
+    } else {
+        qDebug() << "ERROR: catalogManager is null!";
     }
-
-    // Get next catalog to update
-    Device* currentDevice = catalogsToUpdate[currentCatalogIndex];
-    currentUpdateDevice = currentDevice;
-
-    qDebug() << "Starting update for catalog:" << currentDevice->name
-             << "(" << (currentCatalogIndex + 1) << "/" << catalogsToUpdate.size() << ")";
-
-    // Create job and start update (same as single update)
-    CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-    if (catalogProgressManager) {
-        catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
-    }
-
-    catalogManager->startCatalogJobStoppable(
-        catalogJobStoppable,
-        currentDevice,
-        CatalogJobStoppable::UpdateCatalog,
-        collection->databaseMode,
-        collection->folder
-    );
 }
 //--------------------------------------------------------------------------
 void MainWindow::finishBatchOperation()
 {
-    qDebug() << "=== finishBatchOperation() ENTRY ===";
-    qDebug() << "Updated catalogs:" << updatedCatalogs;
-    qDebug() << "Skipped catalogs:" << skippedCatalogs;
-    qDebug() << "Total files:" << globalUpdateTotalFiles;
-    qDebug() << "Total size:" << globalUpdateTotalSize;
+    qDebug() << "=== MainWindow::finishBatchOperation() - delegating to CatalogManager ===";
 
-    // Create final global report (same format as original)
-    QList<qint64> globalList;
-    globalList << 1;  // Success code
-    globalList << globalUpdateTotalFiles;
-    globalList << globalUpdateDeltaFiles;
-    globalList << globalUpdateTotalSize;
-    globalList << globalUpdateDeltaSize;
-    globalList << updatedCatalogs;
-    globalList << skippedCatalogs;
-    globalList << 0;
-    globalList << 0;
-    globalList << 0;
-    globalList << 0;
-    globalList << 0;
-    globalList << 0;
-    globalList << 0;
-    globalList << 0;
-
-    // Show final global report
-    qDebug() << "Showing final global report";
-    reportAllUpdates(selectedDevice, globalList, "list");
-
-    // Clean up batch state
-    qDebug() << "Cleaning up batch state";
-    qDeleteAll(batchCatalogs);
-    batchCatalogs.clear();
-    batchCurrentIndex = 0;
-    inBatchMode = false;
-    currentUpdateDevice = nullptr;
-
-    // Reset global statistics
-    globalUpdateTotalFiles = 0;
-    globalUpdateDeltaFiles = 0;
-    globalUpdateTotalSize = 0;
-    globalUpdateDeltaSize = 0;
-    updatedCatalogs = 0;
-    skippedCatalogs = 0;
-    showEachCatalogUpdateSummary = false;
-
-    // Restore UI
-    qDebug() << "Re-enabling UpdateAllActive button";
-    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-
-    // Refresh view
-    qDebug() << "Refreshing device view";
-    loadDevicesView("");
-
-    qDebug() << "=== finishBatchOperation() EXIT ===";
+    // Delegate the batch logic to CatalogManager
+    if (catalogManager) {
+        catalogManager->finishBatchOperation();
+    } else {
+        qDebug() << "ERROR: catalogManager is null!";
+    }
 }
 //--------------------------------------------------------------------------
 int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {

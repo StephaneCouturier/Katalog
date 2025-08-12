@@ -374,8 +374,42 @@
             // Creation cancellation is handled in existing cleanupStoppedCatalogCreation()
         });
 
+        // Connect batch operation signals
+        connect(catalogManager, &CatalogManager::batchOperationCompleted, this, [this]() {
+            qDebug() << "Batch operation completed - restoring UI";
 
+            // Reset MainWindow state
+            currentUpdateDevice = nullptr;
 
+            // Re-enable the UpdateAllActive button
+            ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+
+            // Refresh the device view
+            loadDevicesView("");
+        });
+
+        connect(catalogManager, &CatalogManager::batchCatalogStarted, this, [this](Device* device, int currentIndex, int totalCount) {
+            qDebug() << "Batch catalog started:" << device->name << "(" << currentIndex << "/" << totalCount << ")";
+
+            // Set current device for MainWindow tracking
+            currentUpdateDevice = device;
+
+            // Update progress manager with the current catalog engine if available
+            if (catalogProgressManager) {
+                CatalogJobStoppable* currentEngine = catalogManager->getCurrentCatalogEngine();
+                if (currentEngine) {
+                    catalogProgressManager->setCurrentCatalogEngine(currentEngine);
+                    qDebug() << "Updated progress manager with current engine";
+                }
+            }
+        });
+
+        connect(catalogManager, &CatalogManager::batchNeedsUIReport, this, [this](Device* device, const QList<qint64>& results, const QString& updateType) {
+            qDebug() << "Batch needs UI report for device:" << (device ? device->name : "GLOBAL REPORT");
+
+            // Use the existing reportAllUpdates method to show the report
+            reportAllUpdates(device, results, updateType);
+        });
 
         qDebug() << "New catalog manager system setup complete";
     }

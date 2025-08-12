@@ -72,6 +72,36 @@ public:
     // Get the current catalog operation results
     CatalogJobStoppable* getCurrentCatalogEngine() const;
 
+    // Batch processing
+    bool inBatchMode() const { return m_inBatchMode; }
+    int batchProgress() const { return m_batchCurrentIndex; }
+    int totalBatchCatalogs() const { return m_batchCatalogs.size(); }
+
+    // Batch processing methods (moved from MainWindow)
+    void startNextCatalogUpdate();
+    void processNextCatalogUpdate();
+    void startCurrentBatchCatalog();
+    void finishBatchOperation();
+
+    // Batch state management
+    void initializeBatchOperation(const QList<Device*>& catalogs, const QString& databaseMode, const QString& collectionFolder);
+    void setBatchMode(bool enabled) { m_inBatchMode = enabled; }
+    void incrementBatchIndex() { m_batchCurrentIndex++; }
+    void resetBatchState();
+
+    // Global statistics management
+    void updateGlobalStatistics(qint64 totalFiles, qint64 deltaFiles, qint64 totalSize, qint64 deltaSize);
+    void incrementUpdatedCatalogs() { m_updatedCatalogs++; }
+    void incrementSkippedCatalogs() { m_skippedCatalogs++; }
+
+    // Getters for statistics (for UI reporting)
+    qint64 globalUpdateTotalFiles() const { return m_globalUpdateTotalFiles; }
+    qint64 globalUpdateDeltaFiles() const { return m_globalUpdateDeltaFiles; }
+    qint64 globalUpdateTotalSize() const { return m_globalUpdateTotalSize; }
+    qint64 globalUpdateDeltaSize() const { return m_globalUpdateDeltaSize; }
+    int updatedCatalogs() const { return m_updatedCatalogs; }
+    int skippedCatalogs() const { return m_skippedCatalogs; }
+
 private:
     void setCatalogOperationRunning(bool running);
     void setProgress(int progress);
@@ -91,6 +121,23 @@ private:
     qint64 m_totalFiles = 0;
     QString m_currentPath;
     bool m_isPaused = false;
+
+    // Batch processing state
+    QList<Device*> m_batchCatalogs;           // All catalogs to process in batch
+    int m_batchCurrentIndex = 0;              // Current catalog being processed
+    bool m_inBatchMode = false;               // Clear flag: are we in batch mode?
+
+    // Batch operation parameters (stored during initialization)
+    QString m_batchDatabaseMode;
+    QString m_batchCollectionFolder;
+
+    // Global batch statistics
+    qint64 m_globalUpdateTotalFiles = 0;
+    qint64 m_globalUpdateDeltaFiles = 0;
+    qint64 m_globalUpdateTotalSize = 0;
+    qint64 m_globalUpdateDeltaSize = 0;
+    int m_updatedCatalogs = 0;
+    int m_skippedCatalogs = 0;
 
 public slots:
     void startCatalogJobStoppable(CatalogJobStoppable *catalogEngine,
@@ -122,6 +169,11 @@ signals:
 
     // Special progress update for status bar (like SearchManager)
     void specialProgressUpdate(qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString &currentPath);
+
+    // Batch operations (to notify MainWindow for UI updates)
+    void batchOperationCompleted();
+    void batchCatalogStarted(Device* device, int currentIndex, int totalCount);
+    void batchNeedsUIReport(Device* device, const QList<qint64>& results, const QString& updateType);
 };
 
 #endif // CATALOGMANAGER_H

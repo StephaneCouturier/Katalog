@@ -595,20 +595,9 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 
     qDebug() << "User chose to show individual reports:" << showEachCatalogUpdateSummary;
 
-    // CLEAR ALL STATE - Start fresh
-    qDeleteAll(batchCatalogs);
-    batchCatalogs.clear();
-    batchCurrentIndex = 0;
-    inBatchMode = false;  // Will be set to true if we find catalogs
-    currentUpdateDevice = nullptr;
-
-    // Initialize global statistics
-    globalUpdateTotalFiles = 0;
-    globalUpdateDeltaFiles = 0;
-    globalUpdateTotalSize = 0;
-    globalUpdateDeltaSize = 0;
-    updatedCatalogs = 0;
-    skippedCatalogs = 0;
+    // COLLECT ALL ACTIVE CATALOGS into local list (instead of member variables)
+    QList<Device*> collectedCatalogs;
+    int skippedDevices = 0;
 
     qDebug() << "Collecting active catalogs from tree view...";
 
@@ -631,36 +620,44 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
             // Only process catalogs
             if (loopDevice->type == "Catalog") {
                 loopDevice->catalog->appVersion = currentVersion;
-                batchCatalogs.append(loopDevice);
+                collectedCatalogs.append(loopDevice);
                 qDebug() << "Added catalog to batch:" << loopDevice->name;
             } else {
                 qDebug() << "Skipping non-catalog device:" << loopDevice->name;
                 delete loopDevice;
-                skippedCatalogs += 1;  // Count non-catalogs as skipped
+                skippedDevices += 1;  // Count non-catalogs as skipped
             }
         }
     }
 
-    qDebug() << "Collected" << batchCatalogs.size() << "catalogs for batch update";
-    qDebug() << "Skipped" << skippedCatalogs << "non-catalog devices";
+    qDebug() << "Collected" << collectedCatalogs.size() << "catalogs for batch update";
+    qDebug() << "Skipped" << skippedDevices << "non-catalog devices";
 
-    if (batchCatalogs.isEmpty()) {
+    if (collectedCatalogs.isEmpty()) {
         qDebug() << "No active catalogs found";
         QMessageBox::information(this, "Katalog", tr("No active catalogs found to update."));
         return;
     }
 
-    // SET BATCH MODE and start processing
-    inBatchMode = true;
-    batchCurrentIndex = 0;
+    // Initialize batch operation in CatalogManager (instead of setting MainWindow properties)
+    if (catalogManager) {
+        qDebug() << "Initializing batch operation in CatalogManager";
+        catalogManager->initializeBatchOperation(collectedCatalogs, collection->databaseMode, collection->folder);
 
-    qDebug() << "Starting batch mode with" << batchCatalogs.size() << "catalogs";
-    qDebug() << "Disabling UpdateAllActive button during batch";
+        // Disable the button during batch operation
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+        qDebug() << "Disabled UpdateAllActive button during batch";
 
-    // Disable the button during batch operation
-    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+        // Start the batch operation
+        qDebug() << "Starting batch operation via CatalogManager";
+        catalogManager->startCurrentBatchCatalog();
 
-    // Start processing the first catalog
-    startCurrentBatchCatalog();
+    } else {
+        qDebug() << "ERROR: catalogManager is null!";
+        QMessageBox::critical(this, "Katalog", tr("Catalog manager not available."));
+
+        // Clean up collected catalogs if we can't proceed
+        qDeleteAll(collectedCatalogs);
+    }
 }
 //--------------------------------------------------------------------------
