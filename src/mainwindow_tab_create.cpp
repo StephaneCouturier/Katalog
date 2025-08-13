@@ -269,7 +269,7 @@
         catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, this);
         catalogProgressManager->setCatalogManager(catalogManager);
 
-        // Connect signals
+        // Connect signals for main operations
         connect(catalogManager, &CatalogManager::catalogOperationCompleted, this, [this]() {
             if (currentCatalogDevice) {
                 // This is a creation operation
@@ -288,60 +288,53 @@
                 ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
             }
         });
+
+        // CLEANED: Update error handler - use NEW batch system only
         connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
             if (currentUpdateDevice) {
                 qDebug() << "Catalog update error:" << error;
 
-                bool isBatchUpdate = !pendingCatalogUpdates.isEmpty() || completedCatalogUpdates > 0;
+                // NEW: Use CatalogManager to detect batch mode instead of old variables
+                bool isBatchUpdate = catalogManager->inBatchMode();
 
                 if (!isBatchUpdate) {
                     // Single update - show error to user
                     QMessageBox::warning(this, "Katalog", QString("Catalog update failed: %1").arg(error));
-                } else {
-                    // Batch update - log error but continue
-                    qDebug() << "Batch update error for" << currentUpdateDevice->name << ":" << error;
-                }
 
-                // Clean up and continue
-                if (currentUpdateDevice) {
-                    delete currentUpdateDevice;
-                    currentUpdateDevice = nullptr;
-                }
-
-                if (isBatchUpdate) {
-                    // Continue with next catalog
-                    catalogManager->processNextCatalogUpdate();
-                } else {
                     // Single update cleanup
+                    currentUpdateDevice = nullptr;
                     QApplication::restoreOverrideCursor();
                     ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                } else {
+                    // Batch update - log error but let CatalogManager handle progression
+                    qDebug() << "Batch update error for" << currentUpdateDevice->name << ":" << error;
+
+                    // Clean up current device
+                    currentUpdateDevice = nullptr;
+
+                    // NEW: Let CatalogManager handle batch progression automatically
+                    // The batch system will detect the error and continue with next catalog
+                    // via the existing onCatalogUpdateCompleted mechanism
                 }
             }
             // Creation errors are handled in the existing onCatalogOperationCompleted()
         });
+
+        // CLEANED: Update cancellation handler - use NEW batch system only
         connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
             if (currentUpdateDevice) {
                 qDebug() << "Catalog update cancelled";
 
-                bool isBatchUpdate = !pendingCatalogUpdates.isEmpty() || completedCatalogUpdates > 0;
+                // NEW: Use CatalogManager to detect batch mode instead of old variables
+                bool isBatchUpdate = catalogManager->inBatchMode();
 
                 // Clean up current operation
-                if (currentUpdateDevice) {
-                    delete currentUpdateDevice;
-                    currentUpdateDevice = nullptr;
-                }
+                currentUpdateDevice = nullptr;
 
                 if (isBatchUpdate) {
-                    // Batch was cancelled - clean up remaining queue
-                    qDeleteAll(pendingCatalogUpdates);
-                    pendingCatalogUpdates.clear();
-                    completedCatalogUpdates = 0;
-                    totalCatalogsToUpdate = 0;
-
-                    // Re-enable button
-                    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-
-                    QMessageBox::information(this, "Update All Active Catalogs", "Batch update was cancelled.");
+                    // NEW: Batch cancellation is handled by CatalogManager automatically
+                    // The batchOperationCompleted signal will fire and restore UI
+                    qDebug() << "Batch operation was cancelled - CatalogManager will handle cleanup";
                 } else {
                     // Single update cleanup
                     QApplication::restoreOverrideCursor();
@@ -351,34 +344,7 @@
             // Creation cancellation is handled in existing cleanupStoppedCatalogCreation()
         });
 
-        // Handle update errors
-        connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
-            if (currentUpdateDevice) {
-                qDebug() << "Catalog update error:" << error;
-                QMessageBox::warning(this, "Katalog", QString("Catalog update failed: %1").arg(error));
-
-                // Clean up
-                currentUpdateDevice = nullptr;
-                QApplication::restoreOverrideCursor();
-                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-            }
-            // Creation errors are handled in the existing onCatalogOperationCompleted()
-        });
-
-        // Handle update cancellation
-        connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
-            if (currentUpdateDevice) {
-                qDebug() << "Catalog update cancelled";
-
-                // Clean up
-                currentUpdateDevice = nullptr;
-                QApplication::restoreOverrideCursor();
-                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-            }
-            // Creation cancellation is handled in existing cleanupStoppedCatalogCreation()
-        });
-
-        // Connect batch operation signals
+        // Connect batch operation signals (NEW batch system)
         connect(catalogManager, &CatalogManager::batchOperationCompleted, this, [this]() {
             qDebug() << "Batch operation completed - restoring UI";
 
