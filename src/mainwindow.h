@@ -419,11 +419,6 @@ class MainWindow : public KXmlGuiWindow
             void recordDevicesSnapshot();
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
 
-            void onCatalogUpdateCompleted();  // Completion handler for updates
-            void processNextCatalogUpdate();  // Process next catalog in queue
-            void startCurrentBatchCatalog();  // Start the catalog at current index
-            void finishBatchOperation();      // Clean up and show final report
-
             //Migration 1.22 to 2.0
             void migrateCollectionFromV1toV2();
             void importVirtualToDevices();

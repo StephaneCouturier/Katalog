@@ -275,8 +275,12 @@
                 // This is a creation operation
                 onCatalogOperationCompleted();
             } else if (currentUpdateDevice) {
-                // This is an update operation
-                onCatalogUpdateCompleted();
+                // Single update operation - handle UI cleanup directly
+                qDebug() << "Single catalog update completed - restoring UI";
+                currentUpdateDevice = nullptr;
+                QApplication::restoreOverrideCursor();
+                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                loadDevicesView("");
             } else {
                 qDebug() << "Catalog operation completed but no device reference found";
                 // Fallback - just restore UI
@@ -306,7 +310,7 @@
 
                 if (isBatchUpdate) {
                     // Continue with next catalog
-                    processNextCatalogUpdate();
+                    catalogManager->processNextCatalogUpdate();
                 } else {
                     // Single update cleanup
                     QApplication::restoreOverrideCursor();
