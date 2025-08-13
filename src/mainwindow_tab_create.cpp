@@ -320,9 +320,15 @@
             // Creation errors are handled in the existing onCatalogOperationCompleted()
         });
 
-        // CLEANED: Update cancellation handler - use NEW batch system only
+        // CLEANED: Update cancellation handler - handle both creation and updates
         connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
-            if (currentUpdateDevice) {
+            if (currentCatalogDevice) {
+                // CREATION cancellation - restore Create tab UI
+                qDebug() << "Catalog creation cancelled - cleaning up";
+                cleanupStoppedCatalogCreation();
+
+            } else if (currentUpdateDevice) {
+                // UPDATE cancellation
                 qDebug() << "Catalog update cancelled";
 
                 // NEW: Use CatalogManager to detect batch mode instead of old variables
@@ -340,8 +346,11 @@
                     QApplication::restoreOverrideCursor();
                     ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
                 }
+            } else {
+                // Fallback - just restore basic UI state
+                qDebug() << "Unknown operation cancelled - restoring basic UI";
+                QApplication::restoreOverrideCursor();
             }
-            // Creation cancellation is handled in existing cleanupStoppedCatalogCreation()
         });
 
         // Connect batch operation signals (NEW batch system)

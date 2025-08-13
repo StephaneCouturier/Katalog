@@ -140,7 +140,7 @@ void CatalogManager::stopCatalogOperation()
     }
 
     qDebug() << "Stopping catalog operation...";
-    setStatus("Stopping catalog operation...");
+    setStatus("Catalog operation stopped");
 
     // Disconnect signals first to prevent double handling (same pattern as SearchManager)
     disconnect(m_currentJob, nullptr, this, nullptr);

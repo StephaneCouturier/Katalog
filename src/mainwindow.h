@@ -326,13 +326,8 @@ class MainWindow : public KXmlGuiWindow
             qint64 globalUpdateDeltaSize = 0;
             int updatedCatalogs = 0;
             int skippedCatalogs = 0;
-            bool reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
 
-            // QList<Device*> pendingCatalogUpdates;
-            // int totalCatalogsToUpdate = 0;
-            // int completedCatalogUpdates = 0;
-            // QList<Device*> catalogsToUpdate;  // All catalogs to update
-            // int currentCatalogIndex = 0;      // Which one we're currently processing
+            bool reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
 
             void startNextCatalogUpdate();
 
