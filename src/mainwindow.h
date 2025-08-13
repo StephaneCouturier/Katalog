@@ -50,6 +50,7 @@
 #include <KXmlGuiWindow>
 #include <KSharedConfig>
 #include <KConfigGroup>
+#include <KActionCollection>
 #ifdef Q_OS_LINUX
 #include <KIconTheme>
 #include <KIconLoader>
@@ -328,8 +329,6 @@ class MainWindow : public KXmlGuiWindow
             int skippedCatalogs = 0;
 
             bool reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
-
-            void startNextCatalogUpdate();
 
         //TAB: Explore
             QString exploreSelectedFolderFullPath;

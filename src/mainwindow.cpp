@@ -101,6 +101,13 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
         //Set up the User Interface
             ui->setupUi(this);
 
+            // Add Quit shortcut
+            QAction *quitAction = new QAction(this);
+            connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
+            actionCollection()->addAction(QStringLiteral("quit"), quitAction);
+            quitAction->setShortcut(Qt::CTRL | Qt::Key_Q); // Set the shortcut to Ctrl+Q
+            setupGUI();
+
             // Hide status bar initially
             statusBar()->hide();
 
