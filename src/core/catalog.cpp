@@ -1282,7 +1282,7 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
 
         QTextStream stream(&fileOut);
         for (const QString &folder : folderList) {
-            stream << folder << '\n';
+            stream << ID << '\t' << folder << '\n';
         }
 
         fileOut.close();

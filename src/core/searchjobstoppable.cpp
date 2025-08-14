@@ -1,4 +1,4 @@
- /*LICENCE
+/*LICENCE
     This file is part of Katalog
 
     Copyright (C) 2021, the Katalog Development team

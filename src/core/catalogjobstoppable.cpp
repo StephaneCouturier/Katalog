@@ -319,18 +319,26 @@ void CatalogJobStoppable::updateCatalogWithProgress()
     qDebug() << "Final progress update emitted";
 
     // Update the Device object
-        // 1. Set update date (like old system)
+        // 1. Set update date
         m_device->dateTimeUpdated = QDateTime::currentDateTime();
 
-        // 2. Update device file counts from catalog results (like old system)
+        // 2. Update device file counts from catalog results
         m_device->totalFileCount = catalog->fileCount;
         m_device->totalFileSize  = catalog->totalFileSize;
 
-        // 3. Save statistics (like old system)
+        // 3. Save statistics
         m_device->saveStatistics(m_device->dateTimeUpdated, "update");
 
-        // 4. Save device to update the date in database (like old system)
+        // 4. Save device to update the date in database
         m_device->saveDevice();
+
+        // 5. Save catalog files to disk (Memory mode) - same as creation
+        if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
+            qDebug() << "Warning: Failed to save updated catalog to file";
+        }
+        if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
+            qDebug() << "Warning: Failed to save updated folders to file";
+        }
 
     // Emit final progress
     emitProgressUpdate(m_device->totalFileCount, m_device->totalFileSize,
