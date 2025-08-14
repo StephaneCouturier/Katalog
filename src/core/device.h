@@ -104,7 +104,7 @@ public:
         bool verifyDeviceHasSourceMapping();
         bool verifyDeviceHasTargetMapping();
         void getIDFromDeviceName();
-        void updateActive(QString connectionName);
+        void updateActiveState(QString connectionName);
 
         void updateNumbersFromChildren();
         void updateParentsNumbers();

@@ -930,7 +930,7 @@ void MainWindow::updateAllDeviceActive()
     while (query.next()){
         loopDevice.ID = query.value(0).toInt();
         loopDevice.loadDevice("defaultConnection");
-        loopDevice.updateActive("defaultConnection");
+        loopDevice.updateActiveState("defaultConnection");
     }
 }
 

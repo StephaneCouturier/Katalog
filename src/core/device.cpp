@@ -464,7 +464,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     Device parentDevice;
     parentDevice.ID = parentID;
     parentDevice.loadDevice("defaultConnection");
-    updateActive("defaultConnection");
+    updateActiveState("defaultConnection");
     dateTimeUpdated = QDateTime::currentDateTime();
 
     //Update device and children depending on type
@@ -762,7 +762,7 @@ void Device::updateParentsNumbers()
     }
 }
 
-void Device::updateActive(QString connectionName)
+void Device::updateActiveState(QString connectionName)
 {//Update the Active value: verify that the path is active = the related drive is mounted
     if(path !=""){
         QDir dir(path);

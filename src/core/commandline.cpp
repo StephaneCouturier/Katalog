@@ -934,7 +934,7 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
     selectedDevice = new Device();
     selectedDevice->ID = deviceId;
     selectedDevice->loadDevice("defaultConnection");
-    selectedDevice->updateActive("defaultConnection");
+    selectedDevice->updateActiveState("defaultConnection");
 
     if (selectedDevice->type != "Catalog") {
         qDebug() << "The device selected must be a Catalog. Try with a different device ID";

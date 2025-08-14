@@ -265,7 +265,7 @@ void DeviceJobStoppable::processDevice(Device* device)
     qDebug() << "Processing device:" << device->name << "Type:" << device->type;
 
     // Update device active state (same as original logic)
-    device->updateActive("defaultConnection");
+    device->updateActiveState("defaultConnection");
     device->dateTimeUpdated = QDateTime::currentDateTime();
 
     // Type-specific processing
