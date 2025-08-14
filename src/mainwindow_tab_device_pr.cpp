@@ -910,29 +910,6 @@ void MainWindow::recordAllDeviceStats(QDateTime dateTime)
     collection->loadStatisticsDeviceFileToTable();
     loadStatisticsChart();
 }
-//--------------------------------------------------------------------------
-void MainWindow::updateAllDeviceActive()
-{//Update the value Active for all Devices
-
-    //For Storage and Catalog devices
-    //Get the list of devices
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-    QString querySQL = QLatin1String(R"(
-                                            SELECT device_id
-                                            FROM   device
-                                            WHERE  device_type = 'Storage' OR device_type = 'Catalog'
-                                    )");
-    query.prepare(querySQL);
-    query.exec();
-
-    //Update and Save sourcePathIsActive for each catalog
-    Device loopDevice;
-    while (query.next()){
-        loopDevice.ID = query.value(0).toInt();
-        loopDevice.loadDevice("defaultConnection");
-        loopDevice.updateActiveState("defaultConnection");
-    }
-}
 
 //--------------------------------------------------------------------------
 //--- View -----------------------------------------------------------------
@@ -969,7 +946,7 @@ void MainWindow::loadDevicesView(QString sourceTrigger){
 void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
 {
     //Refresh active state
-    updateAllDeviceActive();
+    collection->updateAllDeviceActive();
 
     //Retrieve device hierarchy
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
@@ -1342,7 +1319,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
 //--------------------------------------------------------------------------
 void MainWindow::loadDevicesStorageToModel(){
     //Refresh active state
-    updateAllDeviceActive();
+    collection->updateAllDeviceActive();
 
     //Retrieve device hierarchy
     QSqlQuery loadStorageQuery(QSqlDatabase::database("defaultConnection"));
@@ -1595,7 +1572,7 @@ void MainWindow::loadDevicesStorageToModel(){
 void MainWindow::loadDevicesCatalogToModel(){
 
     //Refresh active state
-    updateAllDeviceActive();
+    collection->updateAllDeviceActive();
 
     //Retrieve device hierarchy
     QSqlQuery loadCatalogQuery(QSqlDatabase::database("defaultConnection"));

@@ -1619,4 +1619,27 @@ bool Collection::insertPhysicalStorageGroup() {
     }
     return defaultsCreated;
 }
+
+void Collection::updateAllDeviceActive()
+{//Update the value Active for all Devices
+
+    //For Storage and Catalog devices
+    //Get the list of devices
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+                                            SELECT device_id
+                                            FROM   device
+                                            WHERE  device_type = 'Storage' OR device_type = 'Catalog'
+                                    )");
+    query.prepare(querySQL);
+    query.exec();
+
+    //Update and Save sourcePathIsActive for each catalog
+    Device loopDevice;
+    while (query.next()){
+        loopDevice.ID = query.value(0).toInt();
+        loopDevice.loadDevice("defaultConnection");
+        loopDevice.updateActiveState("defaultConnection");
+    }
+}
 //----------------------------------------------------------------------

@@ -410,7 +410,6 @@ class MainWindow : public KXmlGuiWindow
             void shiftIDsInDeviceTable(int shiftAmount);
             void loadParentsList();
             void recordAllDeviceStats(QDateTime dateTime);
-            void updateAllDeviceActive();
             void recordDevicesSnapshot();
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
 

@@ -542,7 +542,7 @@
         }
 
         //Check active status and synch it
-        updateAllDeviceActive();
+        collection->updateAllDeviceActive();
 
         //Load data from tables to models and update display
         loadSearchHistoryTableToModel();

@@ -620,7 +620,7 @@
             // UI Task 3: Refresh UI displays
             qDebug() << "UI Task 3: Refreshing UI displays";
             refreshDifferencesCatalogSelection();
-            updateAllDeviceActive();
+            collection->updateAllDeviceActive();
             loadDevicesView("");
 
             // UI Task 4: Update filter tree and selection
