@@ -138,6 +138,25 @@ public:
      */
     void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
 
+    /**
+    * @brief Request gentle stop (stops after current device completes)
+    */
+    void requestGentleStop();
+
+    /**
+     * @brief Update a single device (catalog or storage)
+     * @param device The device to update
+     * @return Results for reporting
+     */
+    QList<qint64> updateDevice(Device* device);
+
+    /**
+     * @brief Update multiple devices
+     * @param devices List of devices to update
+     * @return Combined results for reporting
+     */
+    QList<qint64> updateDevices(const QList<Device*>& devices);
+
 signals:
     // Main operation signals
     void deviceOperationStarted();

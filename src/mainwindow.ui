@@ -6249,6 +6249,28 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item>
+                  <widget class="QPushButton" name="Catalogs_pushButton_Stop">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop the update of multiple catalogs, when the current catalog update is completed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string>Stop</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="QIcon::ThemeIcon::ProcessStop"/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QPushButton" name="Catalogs_pushButton_Import">
                    <property name="enabled">
                     <bool>true</bool>

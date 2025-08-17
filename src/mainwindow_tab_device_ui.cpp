@@ -661,3 +661,8 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     }
 }
 //--------------------------------------------------------------------------
+void MainWindow::on_Catalogs_pushButton_Stop_clicked()
+{
+    qDebug() << "Stopping current update operation";
+}
+//--------------------------------------------------------------------------

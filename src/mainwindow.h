@@ -695,6 +695,8 @@ class MainWindow : public KXmlGuiWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
 
+            void on_Catalogs_pushButton_Stop_clicked();
+
         protected:
             void changeEvent(QEvent *event) override;
 };

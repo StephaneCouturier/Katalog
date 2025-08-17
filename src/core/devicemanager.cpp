@@ -190,6 +190,18 @@ void DeviceManager::setCatalogProgressManager(CatalogProgressManager* catalogPro
     }
 }
 
+void DeviceManager::requestGentleStop()
+{
+    qDebug() << "DeviceManager::requestGentleStop()";
+
+    if (m_currentDeviceJob) {
+        m_currentDeviceJob->requestGentleStop();
+    }
+
+    // Update status to inform user
+    setStatus("Stopping after current device completes...");
+}
+
 void DeviceManager::connectDeviceJob(DeviceJobStoppable* deviceJob)
 {
     if (!deviceJob) return;

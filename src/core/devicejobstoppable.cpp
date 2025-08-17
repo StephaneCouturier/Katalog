@@ -238,6 +238,13 @@ void DeviceJobStoppable::processNextInQueue()
         return;
     }
 
+    // Check for gentle stop before starting new device
+    if (m_gentleStopRequested.loadAcquire()) {
+        qDebug() << "Gentle stop requested - completing operation after current device";
+        completeOperation();
+        return;
+    }
+
     waitIfPaused();
 
     if (m_processingQueue.isEmpty()) {
@@ -734,3 +741,10 @@ void DeviceJobStoppable::cleanupOperation()
     m_allDevicesInHierarchy.clear();
     m_allCatalogsInHierarchy.clear();
 }
+
+void DeviceJobStoppable::requestGentleStop()
+{
+    qDebug() << "DeviceJobStoppable::requestGentleStop() - Gentle stop requested";
+    m_gentleStopRequested.storeRelease(1);
+}
+

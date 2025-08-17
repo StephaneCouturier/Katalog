@@ -137,6 +137,16 @@ public:
      */
     Storage::UpdateResult getStorageUpdateResult() const { return m_storageUpdateResult; }
 
+    /**
+    * @brief Request gentle stop - will stop after current device completes
+    */
+    void requestGentleStop();
+
+    /**
+    * @brief Check if gentle stop was requested
+    */
+    bool isGentleStopRequested() const { return m_gentleStopRequested.loadAcquire(); }
+
 signals:
     // Main operation lifecycle signals
     void deviceOperationStarted();
@@ -306,9 +316,13 @@ private:
      */
     void cleanupOperation();
 
+
+
 private:
     // Atomic operation control
-    QAtomicInt m_stopRequested{0};
+    // State management (atomic for thread safety)
+    QAtomicInt m_stopRequested{0};  // Stop immediately
+    QAtomicInt m_gentleStopRequested{0};  // Stop after current device update completes
     QAtomicInt m_paused{0};
     QAtomicInt m_objectValid{1};
     QMutex m_pauseMutex;
