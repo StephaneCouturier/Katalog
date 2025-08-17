@@ -1900,35 +1900,36 @@ void MainWindow::setupDeviceManager()
     connect(deviceManager, &DeviceManager::deviceOperationError,
             this, [this](const QString& error) {
                 qDebug() << "Device operation error:" << error;
-                // Show error using existing UI patterns
-                QMessageBox::critical(this, "Katalog", tr("Device operation failed: %1").arg(error));
+                QMessageBox::warning(this, tr("Katalog"), tr("Device operation failed: %1").arg(error));
             });
 
-    connect(deviceManager, &DeviceManager::deviceOperationCancelled,
-            this, []() {
-                qDebug() << "Device operation cancelled";
-                // Handle cancellation UI updates
-            });
+    // Stop management
+    // Enable stop button when device hierarchy operations start
+    connect(deviceManager, &DeviceManager::deviceOperationStarted, this, [this]() {
+        ui->Catalogs_pushButton_Stop->setEnabled(true);
+        qDebug() << "Device operation started - Stop button enabled";
+    });
 
-    connect(deviceManager, &DeviceManager::requestUIRefresh,
-            this, [this]() {
-                qDebug() << "Refreshing UI after device operation";
+    // Disable stop button when device operations complete/cancel/error
+    connect(deviceManager, &DeviceManager::deviceOperationCompleted, this, [this](const QList<qint64>& results) {
+        Q_UNUSED(results);
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+        qDebug() << "Device operation completed - Stop button disabled";
+    });
 
-                // Refresh device views to show updated values
-                loadDevicesView("");
+    connect(deviceManager, &DeviceManager::deviceOperationCancelled, this, [this]() {
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+        qDebug() << "Device operation cancelled - Stop button disabled";
+    });
 
-                // Refresh filter tree if it exists
-                loadDevicesTreeToModel("Filters");
+    connect(deviceManager, &DeviceManager::deviceOperationError, this, [this](const QString& error) {
+        Q_UNUSED(error);
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+        qDebug() << "Device operation error - Stop button disabled";
+    });
 
-                // If we're on the storage tab, refresh storage statistics
-                updateStorageSelectionStatistics();
-
-                qDebug() << "UI refresh completed";
-            });
-
-    qDebug() << "DeviceManager setup complete with existing UI infrastructure";
+    qDebug() << "DeviceManager setup complete with stop button state management";
 }
-
 //--------------------------------------------------------------------------
 //--- Storage --------------------------------------------------------------
 void MainWindow::loadStorageList()

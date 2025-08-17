@@ -272,20 +272,28 @@
         // Connect signals for main operations
         connect(catalogManager, &CatalogManager::catalogOperationCompleted, this, [this]() {
             if (currentCatalogDevice) {
-                // This is a creation operation
                 onCatalogOperationCompleted();
             } else if (currentUpdateDevice) {
-                // Single update operation - handle UI cleanup directly
-                qDebug() << "Single catalog update completed - restoring UI";
+                qDebug() << "Single catalog update completed - getting results and showing report";
+
+                CatalogJobStoppable* catalogEngine = catalogManager->getCurrentCatalogEngine();
+                if (catalogEngine) {
+                    QList<qint64> results = catalogEngine->getResults();
+                    reportAllUpdates(currentUpdateDevice, results, "update");
+                } else {
+                    QList<qint64> basicResults;
+                    basicResults << 1 << currentUpdateDevice->totalFileCount << 0
+                                 << currentUpdateDevice->totalFileSize << 0;
+                    for (int i = 5; i < 14; ++i) basicResults << 0;
+                    reportAllUpdates(currentUpdateDevice, basicResults, "update");
+                }
+
                 currentUpdateDevice = nullptr;
                 QApplication::restoreOverrideCursor();
                 ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
                 loadDevicesView("");
             } else {
-                qDebug() << "Catalog operation completed but no device reference found";
-                // Fallback - just restore UI
-                QApplication::restoreOverrideCursor();
-                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                qDebug() << "Catalog operation completed but no device context";
             }
         });
 
@@ -388,6 +396,21 @@
 
             // Use the existing reportAllUpdates method to show the report
             reportAllUpdates(device, results, updateType);
+        });
+
+        // Stop management
+        // Enable stop button when catalog operations start (via running state change)
+        connect(catalogManager, &CatalogManager::catalogOperationRunningChanged, this, [this]() {
+            bool isRunning = catalogManager->catalogOperationRunning();
+            ui->Catalogs_pushButton_Stop->setEnabled(isRunning);
+            qDebug() << "Catalog operation running changed to:" << isRunning << "- Stop button" << (isRunning ? "enabled" : "disabled");
+        });
+
+        // Note: catalogOperationRunningChanged above handles both enable/disable
+        // Additional disable for batch operations (since they don't always trigger running state change)
+        connect(catalogManager, &CatalogManager::batchOperationCompleted, this, [this]() {
+            ui->Catalogs_pushButton_Stop->setEnabled(false);
+            qDebug() << "Batch operation completed - Stop button disabled";
         });
 
         qDebug() << "New catalog manager system setup complete";

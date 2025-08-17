@@ -6251,7 +6251,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="QPushButton" name="Catalogs_pushButton_Stop">
                    <property name="enabled">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </property>
                    <property name="toolTip">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop the update of multiple catalogs, when the current catalog update is completed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

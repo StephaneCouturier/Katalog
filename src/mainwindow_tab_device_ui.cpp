@@ -663,6 +663,35 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_Stop_clicked()
 {
-    qDebug() << "Stopping current update operation";
+    qDebug() << "=== Catalogs Stop button clicked ===";
+
+    bool operationStopped = false;
+
+    if (catalogManager && catalogManager->catalogOperationRunning()) {
+        if (catalogManager->inBatchMode()) {
+            // BATCH: Use gentle stop
+            catalogManager->requestGentleStop();
+            operationStopped = true;
+        } else {
+            // SINGLE: Hard stop is fine
+            catalogManager->stopCatalogOperation();
+            operationStopped = true;
+        }
+    }
+
+    if (deviceManager && deviceManager->deviceOperationRunning()) {
+        // HIERARCHY: Always use gentle stop
+        deviceManager->requestGentleStop();
+        operationStopped = true;
+    }
+
+    if (operationStopped) {
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+        qDebug() << "Stop button disabled - waiting for operation to complete";
+    } else {
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+    }
+
+    qDebug() << "=== Catalogs Stop button clicked complete ===";
 }
 //--------------------------------------------------------------------------

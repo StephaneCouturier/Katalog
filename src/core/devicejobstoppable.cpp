@@ -365,6 +365,24 @@ void DeviceJobStoppable::processCatalogDevice(Device* device)
         return;
     }
 
+    // Check if catalog is active. If not skip it and continue
+    if (!device->active) {
+        qDebug() << "Catalog is inactive, skipping:" << device->name;
+
+        // Create a "skipped" result for reporting
+        QList<qint64> skippedResults;
+        skippedResults << 0;  // 0 = skipped (not success=1, not error=-1)
+        skippedResults << 0;  // No files processed
+        skippedResults << 0;  // No delta files
+        skippedResults << 0;  // No size
+        skippedResults << 0;  // No delta size
+        for (int i = 5; i < 14; ++i) skippedResults << 0; // Padding
+
+        // Mark as processed and continue to next device
+        processDeviceCompleted(device, skippedResults);
+        return;
+    }
+
     emitStatusUpdate("Updating catalog", device->name);
 
     // Set waiting flag

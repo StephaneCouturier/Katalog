@@ -202,6 +202,18 @@ CatalogJobStoppable* CatalogManager::getCurrentCatalogEngine() const
     return nullptr;
 }
 
+void CatalogManager::requestGentleStop()
+{
+    qDebug() << "CatalogManager::requestGentleStop() - Gentle stop requested";
+    m_gentleStopRequested.storeRelease(1);
+
+    if (m_inBatchMode) {
+        setStatus("Stopping after current catalog completes...");
+    } else {
+        stopCatalogOperation(); // Single operations = immediate stop
+    }
+}
+
 void CatalogManager::onJobResult(KJob *job)
 {
     qDebug() << "=== CatalogManager::onJobResult() ENTRY ===";
@@ -226,6 +238,13 @@ void CatalogManager::onJobResult(KJob *job)
             qDebug() << "About to emit catalogOperationCompleted()";
             emit catalogOperationCompleted();
             qDebug() << "catalogOperationCompleted() emitted successfully";
+        }
+
+        if (m_inBatchMode) {
+            qDebug() << "Batch operation in progress - handling batch continuation";
+            QTimer::singleShot(50, this, [this]() {
+                handleBatchCatalogCompletion();
+            });
         }
 
         qDebug() << "Setting catalog operation running to false";
@@ -330,6 +349,52 @@ void CatalogManager::cleanupJob()
     }
 }
 
+void CatalogManager::handleBatchCatalogCompletion()
+{
+    qDebug() << "=== CatalogManager::handleBatchCatalogCompletion() ===";
+
+    if (!m_inBatchMode) return;
+
+    if (m_gentleStopRequested.loadAcquire()) {
+        qDebug() << "Gentle stop requested - finishing batch operation early";
+
+        QList<qint64> earlyStopList;
+        earlyStopList << 1 << m_globalUpdateTotalFiles << m_globalUpdateDeltaFiles
+                      << m_globalUpdateTotalSize << m_globalUpdateDeltaSize
+                      << m_updatedCatalogs << m_skippedCatalogs;
+        for (int i = 7; i < 14; ++i) earlyStopList << 0;
+
+        emit batchNeedsUIReport(nullptr, earlyStopList, "list");
+        m_gentleStopRequested.storeRelease(0);
+        resetBatchState();
+        emit batchOperationCompleted();
+        return;
+    }
+
+    CatalogJobStoppable* catalogEngine = getCurrentCatalogEngine();
+    if (catalogEngine) {
+        QList<qint64> results = catalogEngine->getResults();
+
+        if (results.size() >= 5 && results[0] == 1) {
+            updateGlobalStatistics(results[1], results[2], results[3], results[4]);
+            m_updatedCatalogs++;
+
+            Device* currentDevice = (m_batchCurrentIndex < m_batchCatalogs.size()) ?
+                                        m_batchCatalogs[m_batchCurrentIndex] : nullptr;
+            if (currentDevice) {
+                emit batchNeedsUIReport(currentDevice, results, "update");
+            }
+        } else {
+            m_skippedCatalogs++;
+        }
+    } else {
+        m_skippedCatalogs++;
+    }
+
+    m_batchCurrentIndex++;
+    startCurrentBatchCatalog();
+}
+
 // Add these methods to catalogmanager.cpp:
 
 void CatalogManager::initializeBatchOperation(const QList<Device*>& catalogs, const QString& databaseMode, const QString& collectionFolder)
@@ -398,6 +463,12 @@ void CatalogManager::startCurrentBatchCatalog()
     // Safety check
     if (!m_inBatchMode) {
         qDebug() << "ERROR: Called startCurrentBatchCatalog but not in batch mode!";
+        return;
+    }
+
+    if (m_gentleStopRequested.loadAcquire()) {
+        qDebug() << "Gentle stop requested - not starting new catalog";
+        handleBatchCatalogCompletion();
         return;
     }
 

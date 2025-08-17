@@ -242,6 +242,11 @@ void CatalogJobStoppable::updateCatalogWithProgress()
 
     Catalog* catalog = m_device->catalog;
 
+    // Capture original values before clearing for delta calculation
+    m_originalFileCount = catalog->fileCount;
+    m_originalTotalFileSize = catalog->totalFileSize;
+    qDebug() << "Captured original values - Files:" << m_originalFileCount << "Size:" << m_originalTotalFileSize;
+
     // Validate source path (same as creation)
     qDebug() << "Step 1: Validating source directory";
     QDir sourceDir(catalog->sourcePath);
@@ -715,4 +720,34 @@ void CatalogJobStoppable::completeCatalogCreation()
     }
 
     qDebug() << "=== CatalogJobStoppable::completeCatalogCreation() END ===";
+}
+
+QList<qint64> CatalogJobStoppable::getResults() const
+{
+    QList<qint64> results;
+
+    if (!m_device || !m_device->catalog) {
+        results << -1; // Error code
+        for (int i = 1; i < 14; ++i) results << 0;
+        return results;
+    }
+
+    // Calculate proper deltas using original values
+    qint64 newFileCount = m_device->totalFileCount;
+    qint64 deltaFileCount = newFileCount - m_originalFileCount;
+    qint64 newTotalFileSize = m_device->totalFileSize;
+    qint64 deltaTotalFileSize = newTotalFileSize - m_originalTotalFileSize;
+
+    results << 1; // Success code
+    results << newFileCount; // Total files after update
+    results << deltaFileCount; // CORRECTED: Actual delta files
+    results << newTotalFileSize; // Total size after update
+    results << deltaTotalFileSize; // CORRECTED: Actual delta size
+
+    // Add padding to match reportAllUpdates() format (14 elements total)
+    for (int i = 5; i < 14; ++i) {
+        results << 0;
+    }
+
+    return results;
 }

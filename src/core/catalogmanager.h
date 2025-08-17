@@ -72,6 +72,9 @@ public:
     // Get the current catalog operation results
     CatalogJobStoppable* getCurrentCatalogEngine() const;
 
+    void requestGentleStop();
+    bool isGentleStopRequested() const { return m_gentleStopRequested.loadAcquire(); }
+
     // Batch processing
     bool inBatchMode() const { return m_inBatchMode; }
     int batchProgress() const { return m_batchCurrentIndex; }
@@ -111,6 +114,8 @@ private:
     void setTotalFiles(qint64 total);
     void setCurrentPath(const QString &path);
     void cleanupJob();
+    void handleBatchCatalogCompletion();
+    QAtomicInt m_gentleStopRequested{0};
 
     CatalogJob *m_currentJob = nullptr;
     bool m_catalogOperationRunning = false;

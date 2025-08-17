@@ -128,6 +128,8 @@ public:
     QString currentCatalogName;
     int progressRefreshRate = 100; // Progress update frequency
 
+    QList<qint64> getResults() const;
+
 protected:
     /**
      * @brief Create catalog with progress reporting
@@ -179,6 +181,10 @@ private:
 
     QDateTime m_lastProgressEmit;
     static const int PROGRESS_UPDATE_INTERVAL_MS = 500; // Update every 500ms max
+
+    // Track original values for delta calculation
+    qint64 m_originalFileCount = 0;
+    qint64 m_originalTotalFileSize = 0;
 
 
 signals:
