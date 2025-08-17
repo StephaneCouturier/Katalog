@@ -297,7 +297,7 @@
             }
         });
 
-        // CLEANED: Update error handler - use NEW batch system only
+        // Update error handler - use NEW batch system only
         connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
             if (currentUpdateDevice) {
                 qDebug() << "Catalog update error:" << error;
@@ -328,7 +328,7 @@
             // Creation errors are handled in the existing onCatalogOperationCompleted()
         });
 
-        // CLEANED: Update cancellation handler - handle both creation and updates
+        // Update cancellation handler - handle both creation and updates
         connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
             if (currentCatalogDevice) {
                 // CREATION cancellation - restore Create tab UI
@@ -393,17 +393,23 @@
 
         connect(catalogManager, &CatalogManager::batchNeedsUIReport, this, [this](Device* device, const QList<qint64>& results, const QString& updateType) {
             qDebug() << "Batch needs UI report for device:" << (device ? device->name : "GLOBAL REPORT");
+            qDebug() << "showEachCatalogUpdateSummary:" << showEachCatalogUpdateSummary;
 
-            // Use the existing reportAllUpdates method to show the report
-            reportAllUpdates(device, results, updateType);
-        });
-
-        // Stop management
-        // Enable stop button when catalog operations start (via running state change)
-        connect(catalogManager, &CatalogManager::catalogOperationRunningChanged, this, [this]() {
-            bool isRunning = catalogManager->catalogOperationRunning();
-            ui->Catalogs_pushButton_Stop->setEnabled(isRunning);
-            qDebug() << "Catalog operation running changed to:" << isRunning << "- Stop button" << (isRunning ? "enabled" : "disabled");
+            // Only show reports if requested by user
+            if (showEachCatalogUpdateSummary) {
+                if (device == nullptr) {
+                    // Global report
+                    Device dummyDevice;
+                    dummyDevice.name = tr("All Active Catalogs");
+                    dummyDevice.type = "BatchSummary";
+                    reportAllUpdates(&dummyDevice, results, updateType);
+                } else {
+                    // Individual catalog report
+                    reportAllUpdates(device, results, updateType);
+                }
+            } else {
+                qDebug() << "User chose NO reports - skipping report display";
+            }
         });
 
         // Note: catalogOperationRunningChanged above handles both enable/disable

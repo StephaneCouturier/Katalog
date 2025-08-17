@@ -182,11 +182,6 @@
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
                 qDebug() << "Storage update requested for:" << selectedDevice->name;
 
-                // Ensure DeviceManager is set up with proper UI integration
-                if (!deviceManager) {
-                    setupDeviceManager();
-                }
-
                 // Ensure CatalogProgressManager is connected (double-check)
                 if (catalogProgressManager && deviceManager) {
                     deviceManager->setCatalogProgressManager(catalogProgressManager);

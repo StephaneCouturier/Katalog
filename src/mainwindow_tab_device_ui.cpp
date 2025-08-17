@@ -586,7 +586,10 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     int result = msgBox.exec();
 
     if ( result == QMessageBox::Yes){
-        showEachCatalogUpdateSummary = true;  // Use member variable, not local variable
+        showEachCatalogUpdateSummary = true;
+    }
+    else if ( result == QMessageBox::No){
+        showEachCatalogUpdateSummary = false;  // ✅ Explicitly set to false
     }
     else if ( result == QMessageBox::Cancel){
         qDebug() << "User cancelled batch update";
@@ -594,6 +597,8 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     }
 
     qDebug() << "User chose to show individual reports:" << showEachCatalogUpdateSummary;
+
+    ui->Catalogs_pushButton_Stop->setEnabled(true);
 
     // COLLECT ALL ACTIVE CATALOGS into local list (instead of member variables)
     QList<Device*> collectedCatalogs;
@@ -667,31 +672,28 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
 
     bool operationStopped = false;
 
-    if (catalogManager && catalogManager->catalogOperationRunning()) {
+    // CHECK DEVICEMANAGER FIRST - it takes priority
+    if (deviceManager && deviceManager->deviceOperationRunning()) {
+        qDebug() << "DeviceManager running - using gentle stop";
+        deviceManager->requestGentleStop();
+        operationStopped = true;
+    }
+    else if (catalogManager && catalogManager->catalogOperationRunning()) {
         if (catalogManager->inBatchMode()) {
-            // BATCH: Use gentle stop
+            qDebug() << "CatalogManager batch mode - using gentle stop";
             catalogManager->requestGentleStop();
             operationStopped = true;
         } else {
-            // SINGLE: Hard stop is fine
+            qDebug() << "CatalogManager single mode - using hard stop";
             catalogManager->stopCatalogOperation();
             operationStopped = true;
         }
     }
 
-    if (deviceManager && deviceManager->deviceOperationRunning()) {
-        // HIERARCHY: Always use gentle stop
-        deviceManager->requestGentleStop();
-        operationStopped = true;
-    }
-
     if (operationStopped) {
         ui->Catalogs_pushButton_Stop->setEnabled(false);
-        qDebug() << "Stop button disabled - waiting for operation to complete";
     } else {
         ui->Catalogs_pushButton_Stop->setEnabled(false);
     }
-
-    qDebug() << "=== Catalogs Stop button clicked complete ===";
 }
 //--------------------------------------------------------------------------
