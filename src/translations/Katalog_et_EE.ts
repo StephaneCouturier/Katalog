@@ -2213,8 +2213,8 @@ prügikasti?</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 uuendatud kataloogi (aktiivne), %2 vahele jäetud kataloogi (mitteaktiivne)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 uuendatud kataloogi, %2 vahele jäetud kataloogi</translation>
     </message>
     <message>
         <location line="+91"/>

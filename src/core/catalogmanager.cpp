@@ -217,54 +217,80 @@ void CatalogManager::requestGentleStop()
 void CatalogManager::onJobResult(KJob *job)
 {
     qDebug() << "=== CatalogManager::onJobResult() ENTRY ===";
-    qDebug() << "Catalog job result received, error:" << job->error();
 
     try {
         if (job->error() == KJob::KilledJobError) {
-            qDebug() << "Job was killed - emitting cancelled signal";
             setStatus("Catalog operation cancelled");
             emit catalogOperationCancelled();
         } else if (job->error()) {
-            qDebug() << "Job failed with error:" << job->errorString();
             QString errorMsg = QString("Catalog operation failed: %1").arg(job->errorString());
             setStatus(errorMsg);
             emit catalogOperationError(errorMsg);
         } else {
-            qDebug() << "Job completed successfully - emitting completed signal";
+            // Success, emit signals before any cleanup
             QString operationType = (m_currentJob && m_currentJob->getOperationType() == CatalogJobStoppable::CreateCatalog) ?
                                         "creation" : "update";
             setStatus(QString("Catalog %1 completed successfully!").arg(operationType));
 
-            qDebug() << "About to emit catalogOperationCompleted()";
+            // Emit individual report here (before cleanup, while job is still valid)
+            if (m_inBatchMode) {
+                CatalogJobStoppable* catalogEngine = getCurrentCatalogEngine();
+                if (catalogEngine) {
+                    QList<qint64> results = catalogEngine->getResults();
+                    if (results.size() >= 5 && results[0] == 1) {
+                        // Get current device BEFORE any index changes
+                        Device* currentDevice = (m_batchCurrentIndex < m_batchCatalogs.size()) ?
+                                                    m_batchCatalogs[m_batchCurrentIndex] : nullptr;
+                        if (currentDevice) {
+                            // Emit individual report immediately
+                            emit batchNeedsUIReport(currentDevice, results, "update");
+                        }
+
+                        // Update global statistics
+                        updateGlobalStatistics(results[1], results[2], results[3], results[4]);
+                        m_updatedCatalogs++;
+                    } else {
+                        m_skippedCatalogs++;
+                    }
+                } else {
+                    m_skippedCatalogs++;
+                }
+
+                // Increment and continue batch
+                m_batchCurrentIndex++;
+            }
+
             emit catalogOperationCompleted();
-            qDebug() << "catalogOperationCompleted() emitted successfully";
         }
 
+        // Batch handling - just start next or finish
         if (m_inBatchMode) {
-            qDebug() << "Batch operation in progress - handling batch continuation";
-            QTimer::singleShot(50, this, [this]() {
-                handleBatchCatalogCompletion();
-            });
+            if (m_batchCurrentIndex >= m_batchCatalogs.size()) {
+                finishBatchOperation();
+            } else {
+                // Continue with next catalog
+                QTimer::singleShot(100, this, [this]() {
+                    startCurrentBatchCatalog();
+                });
+            }
         }
 
-        qDebug() << "Setting catalog operation running to false";
+        // Clean up and reset state
         setCatalogOperationRunning(false);
-        setProgress(job->error() ? 0 : 100);
+        setProgress(0);
         setCurrentCatalogName("");
+        setFilesProcessed(0);
+        setTotalFiles(0);
         setCurrentPath("");
         m_isPaused = false;
-
-        qDebug() << "About to cleanup job";
         cleanupJob();
-        qDebug() << "Job cleanup completed";
 
     } catch (const std::exception& e) {
-        qDebug() << "=== EXCEPTION in onJobResult():" << e.what() << "===";
-    } catch (...) {
-        qDebug() << "=== UNKNOWN EXCEPTION in onJobResult() ===";
+        qDebug() << "EXCEPTION in onJobResult():" << e.what();
+        setStatus("Catalog operation failed with exception");
+        emit catalogOperationError("Catalog operation failed with exception");
+        cleanupJob();
     }
-
-    qDebug() << "=== CatalogManager::onJobResult() EXIT ===";
 }
 
 void CatalogManager::onJobPercent()
@@ -358,6 +384,13 @@ void CatalogManager::handleBatchCatalogCompletion()
     if (m_gentleStopRequested.loadAcquire()) {
         qDebug() << "Gentle stop requested - finishing batch operation early";
 
+        // ✅ Calculate remaining active catalogs that were never processed
+        int remainingActiveCatalogs = m_batchCatalogs.size() - m_batchCurrentIndex - 1;
+        if (remainingActiveCatalogs > 0) {
+            qDebug() << "Adding" << remainingActiveCatalogs << "stopped active catalogs to skipped count";
+            m_skippedCatalogs += remainingActiveCatalogs;
+        }
+
         QList<qint64> earlyStopList;
         earlyStopList << 1 << m_globalUpdateTotalFiles << m_globalUpdateDeltaFiles
                       << m_globalUpdateTotalSize << m_globalUpdateDeltaSize
@@ -371,26 +404,8 @@ void CatalogManager::handleBatchCatalogCompletion()
         return;
     }
 
-    CatalogJobStoppable* catalogEngine = getCurrentCatalogEngine();
-    if (catalogEngine) {
-        QList<qint64> results = catalogEngine->getResults();
-
-        if (results.size() >= 5 && results[0] == 1) {
-            updateGlobalStatistics(results[1], results[2], results[3], results[4]);
-            m_updatedCatalogs++;
-
-            Device* currentDevice = (m_batchCurrentIndex < m_batchCatalogs.size()) ?
-                                        m_batchCatalogs[m_batchCurrentIndex] : nullptr;
-            if (currentDevice) {
-                emit batchNeedsUIReport(currentDevice, results, "update");
-            }
-        } else {
-            m_skippedCatalogs++;
-        }
-    } else {
-        m_skippedCatalogs++;
-    }
-
+    // Just handle global statistics update and batch progression
+    m_updatedCatalogs++; // Assume success if we got here
     m_batchCurrentIndex++;
     startCurrentBatchCatalog();
 }

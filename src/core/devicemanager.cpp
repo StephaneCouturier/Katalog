@@ -281,10 +281,6 @@ void DeviceManager::onDeviceOperationStarted()
     emit deviceOperationStarted();
 }
 
-// REPLACE this method in src/core/devicemanager.cpp
-
-// REPLACE this complete method in src/core/devicemanager.cpp
-
 void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
 {
     qDebug() << "=== DeviceManager::onDeviceOperationCompleted() ===";

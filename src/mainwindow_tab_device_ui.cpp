@@ -31,7 +31,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "devicetreeview.h"
 #include "core/device.h"
 #include "mainwindow_ui_wrapper_device.h"
 
@@ -43,6 +42,8 @@ void MainWindow::on_Devices_radioButton_DeviceTree_clicked()
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayContents", "Tree");
 
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+
     loadDevicesView("");
 }
 //--------------------------------------------------------------------------
@@ -51,6 +52,8 @@ void MainWindow::on_Devices_radioButton_StorageList_clicked()
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayContents", "Storage");
 
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+
     loadDevicesView("");
 }
 //--------------------------------------------------------------------------
@@ -58,6 +61,8 @@ void MainWindow::on_Devices_radioButton_CatalogList_clicked()
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayContents", "Catalogs");
+
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
 
     loadDevicesView("");
 }
@@ -577,7 +582,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         return;
     }
 
-    // REUSE ORIGINAL TEXT: Ask user for report choice
+    // Ask user for report choice
     QMessageBox msgBox;
     msgBox.setWindowTitle("Katalog");
     msgBox.setText(tr("Do you want to see a report for each updated catalog?"));
@@ -589,10 +594,9 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         showEachCatalogUpdateSummary = true;
     }
     else if ( result == QMessageBox::No){
-        showEachCatalogUpdateSummary = false;  // ✅ Explicitly set to false
+        showEachCatalogUpdateSummary = false;
     }
     else if ( result == QMessageBox::Cancel){
-        qDebug() << "User cancelled batch update";
         return;
     }
 
@@ -600,43 +604,50 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 
     ui->Catalogs_pushButton_Stop->setEnabled(true);
 
-    // COLLECT ALL ACTIVE CATALOGS into local list (instead of member variables)
+    // Collect all active catalogs into local list
     QList<Device*> collectedCatalogs;
+    int totalCatalogs = 0;
+    int inactiveCatalogs = 0;
     int skippedDevices = 0;
 
-    qDebug() << "Collecting active catalogs from tree view...";
+    qDebug() << "Collecting catalogs from tree view...";
 
-    // COLLECT ALL ACTIVE CATALOGS (same logic as original)
     for (int row = 0; row < ui->Devices_treeView_DeviceList->model()->rowCount(); ++row) {
-        // Get the index for the "Active" field in the current row
+        // Get device info
         QModelIndex activeIndex = ui->Devices_treeView_DeviceList->model()->index(row, 2);
-
-        // Retrieve the data for the "Active" field (assuming it contains an icon)
         QIcon activeIcon = qvariant_cast<QIcon>(ui->Devices_treeView_DeviceList->model()->data(activeIndex, Qt::DecorationRole));
 
-        // Check if the icon is set to "dialog-ok-apply"
-        if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
-            Device* loopDevice = new Device();
-            loopDevice->ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 3)).toInt();
-            loopDevice->loadDevice("defaultConnection");
+        Device* loopDevice = new Device();
+        loopDevice->ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 3)).toInt();
+        loopDevice->loadDevice("defaultConnection");
 
-            qDebug() << "Found active device:" << loopDevice->name << "Type:" << loopDevice->type;
+        qDebug() << "Found device:" << loopDevice->name << "Type:" << loopDevice->type;
 
-            // Only process catalogs
-            if (loopDevice->type == "Catalog") {
+        if (loopDevice->type == "Catalog") {
+            totalCatalogs++;  // Count all catalogs
+
+            // Check if active (has "dialog-ok-apply" icon)
+            if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
+                // Active catalog - add to processing list
                 loopDevice->catalog->appVersion = currentVersion;
                 collectedCatalogs.append(loopDevice);
-                qDebug() << "Added catalog to batch:" << loopDevice->name;
+                qDebug() << "Added active catalog to batch:" << loopDevice->name;
             } else {
-                qDebug() << "Skipping non-catalog device:" << loopDevice->name;
+                // Inactive catalog - count but don't process
+                inactiveCatalogs++;
+                qDebug() << "Counted inactive catalog:" << loopDevice->name;
                 delete loopDevice;
-                skippedDevices += 1;  // Count non-catalogs as skipped
             }
+        } else {
+            qDebug() << "Skipping non-catalog device:" << loopDevice->name;
+            delete loopDevice;
+            skippedDevices++;
         }
     }
 
-    qDebug() << "Collected" << collectedCatalogs.size() << "catalogs for batch update";
-    qDebug() << "Skipped" << skippedDevices << "non-catalog devices";
+    qDebug() << "Total catalogs found:" << totalCatalogs;
+    qDebug() << "Active catalogs to process:" << collectedCatalogs.size();
+    qDebug() << "Inactive catalogs (baseline skipped):" << inactiveCatalogs;
 
     if (collectedCatalogs.isEmpty()) {
         qDebug() << "No active catalogs found";
@@ -648,6 +659,10 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     if (catalogManager) {
         qDebug() << "Initializing batch operation in CatalogManager";
         catalogManager->initializeBatchOperation(collectedCatalogs, collection->databaseMode, collection->folder);
+
+        // Set baseline: skipped count starts with inactive catalogs
+        catalogManager->setInitialSkippedCount(inactiveCatalogs);
+        qDebug() << "Set initial skipped count to:" << inactiveCatalogs;
 
         // Disable the button during batch operation
         ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);

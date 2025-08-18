@@ -673,6 +673,7 @@
             "QPushButton           { background-color: #ff8000; } "
             "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
             "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
             );
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
             "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
@@ -843,6 +844,7 @@
             "QPushButton           { background-color: #ff8000; } "
             "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
             "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
             );
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
             "QPushButton           { background-color: #81d41a; padding-right: 20px; } "

@@ -1661,8 +1661,8 @@
     </message>
     <message>
         <location line="+10"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 catálogos actualizados (activos), %2 catálogos ignorados (inactivos)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 catálogos actualizados, %2 catálogos ignorados</translation>
     </message>
     <message>
         <location line="+91"/>

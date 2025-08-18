@@ -306,8 +306,8 @@
     </message>
     <message>
         <location line="+10"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 cataloghi aggiornati (attivi), %2 cataloghi saltati (inattivi)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 cataloghi aggiornati, %2 cataloghi saltati</translation>
     </message>
     <message>
         <location line="+91"/>

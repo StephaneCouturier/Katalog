@@ -1660,8 +1660,8 @@
     </message>
     <message>
         <location line="+10"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 atnaujinti katalogai (aktyvūs), %2 praleisti katalogai (neaktyvūs)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 atnaujinti katalogai, %2 praleisti katalogai</translation>
     </message>
     <message>
         <location line="+91"/>

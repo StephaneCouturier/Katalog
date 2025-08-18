@@ -2126,8 +2126,8 @@
     </message>
     <message>
         <location line="+2237"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 catalogues mis à jour (actifs), %2 catalogues ignorés (inactifs)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 catalogues mis à jour, %2 catalogues ignorés</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-318"/>

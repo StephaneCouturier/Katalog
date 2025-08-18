@@ -2247,8 +2247,8 @@ to the trash?</source>
     </message>
     <message>
         <location line="+10"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 ενημερωμένοι κατάλογοι (ενεργοί), %2 παραλειπόμενοι κατάλογοι (ανενεργοί)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 ενημερωμένοι κατάλογοι, %2 παραλειπόμενοι κατάλογοι</translation>
     </message>
     <message>
         <location line="+91"/>

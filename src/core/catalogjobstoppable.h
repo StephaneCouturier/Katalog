@@ -186,6 +186,10 @@ private:
     qint64 m_originalFileCount = 0;
     qint64 m_originalTotalFileSize = 0;
 
+    void updateParentStorageAfterCatalogUpdate();
+    void updateRelatedCatalogDevices();
+    Storage::UpdateResult m_storageUpdateResult;
+    bool m_storageWasUpdated = false;
 
 signals:
     /**

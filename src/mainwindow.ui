@@ -4931,28 +4931,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <layout class="QGridLayout" name="gridLayout_16">
             <item row="4" column="0">
              <layout class="QGridLayout" name="Devices_gridLayout_15">
-              <item row="0" column="6">
-               <widget class="Line" name="Devices_line_separateButtons">
-                <property name="frameShadow">
-                 <enum>QFrame::Shadow::Plain</enum>
-                </property>
+              <item row="0" column="8">
+               <spacer name="Devices_horizontalSpacer_11">
                 <property name="orientation">
-                 <enum>Qt::Orientation::Vertical</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
-               </widget>
-              </item>
-              <item row="0" column="7">
-               <widget class="QPushButton" name="Devices_pushButton_EditList">
-                <property name="enabled">
-                 <bool>true</bool>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Policy::Expanding</enum>
                 </property>
-                <property name="text">
-                 <string>Edit List</string>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <property name="icon">
-                 <iconset theme="document-edit-sign"/>
-                </property>
-               </widget>
+               </spacer>
               </item>
               <item row="0" column="1">
                <widget class="QRadioButton" name="Devices_radioButton_DeviceTree">
@@ -4963,6 +4956,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <bool>false</bool>
                 </property>
                </widget>
+              </item>
+              <item row="0" column="9">
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayFullTable">
+                <property name="text">
+                 <string>Full Table</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="13">
+               <spacer name="Devices_horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Policy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>35</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
               <item row="0" column="4">
                <spacer name="Devices_horizontalSpacer_10">
@@ -4979,16 +4998,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item row="0" column="5">
-               <widget class="QCheckBox" name="Devices_checkBox_DisplayFullTable">
-                <property name="text">
-                 <string>Full Table</string>
-                </property>
-                <property name="checked">
-                 <bool>false</bool>
-                </property>
-               </widget>
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="Devices_label_ItemEditionPath_3">
@@ -5009,6 +5018,48 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
+              <item row="0" column="5">
+               <widget class="QPushButton" name="Catalogs_pushButton_UpdateCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog's files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Update</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="media-playlist-repeat"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="11">
+               <widget class="QPushButton" name="Devices_pushButton_EditList">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>Edit List</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-edit-sign"/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QRadioButton" name="Devices_radioButton_StorageList">
+                <property name="text">
+                 <string>Storage list</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="3">
                <widget class="QRadioButton" name="Devices_radioButton_CatalogList">
                 <property name="text">
@@ -5019,30 +5070,39 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="9">
-               <spacer name="Devices_horizontalSpacer_9">
+              <item row="0" column="10">
+               <widget class="Line" name="Devices_line_separateButtons">
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Plain</enum>
+                </property>
                 <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Policy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>35</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="2">
-               <widget class="QRadioButton" name="Devices_radioButton_StorageList">
-                <property name="text">
-                 <string>Storage list</string>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                </widget>
               </item>
-              <item row="0" column="8">
+              <item row="0" column="7">
+               <widget class="QPushButton" name="Catalogs_pushButton_Stop">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop the update of multiple catalogs, when the current catalog update is completed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Stop</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="QIcon::ThemeIcon::ProcessStop"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="12">
                <widget class="QPushButton" name="Devices_pushButton_Snapshot">
                 <property name="toolTip">
                  <string>Record the values of all devices for statistics on the full collection.</string>
@@ -5052,6 +5112,28 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="icon">
                  <iconset theme="document-save"/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QPushButton" name="Catalogs_pushButton_UpdateAllActive">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>All active</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="media-playlist-repeat"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
                 </property>
                </widget>
               </item>
@@ -6203,72 +6285,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                   </spacer>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Catalogs_pushButton_UpdateCatalog">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog's files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                   <property name="text">
-                    <string>Update</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="media-playlist-repeat"/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Catalogs_pushButton_UpdateAllActive">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                   <property name="text">
-                    <string>All active</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="media-playlist-repeat"/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Catalogs_pushButton_Stop">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop the update of multiple catalogs, when the current catalog update is completed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                   <property name="text">
-                    <string>Stop</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="QIcon::ThemeIcon::ProcessStop"/>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                  </widget>
                  </item>
                  <item>
                   <widget class="QPushButton" name="Catalogs_pushButton_Import">

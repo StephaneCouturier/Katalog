@@ -2534,8 +2534,8 @@ in den Papierkorb?</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 aktualisierte Kataloge (aktiv), %2 übersprungene Kataloge (inaktiv)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 aktualisierte Kataloge, %2 übersprungene Kataloge</translation>
     </message>
     <message>
         <location line="+283"/>

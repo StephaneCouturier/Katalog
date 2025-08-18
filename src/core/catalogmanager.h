@@ -104,6 +104,7 @@ public:
     qint64 globalUpdateDeltaSize() const { return m_globalUpdateDeltaSize; }
     int updatedCatalogs() const { return m_updatedCatalogs; }
     int skippedCatalogs() const { return m_skippedCatalogs; }
+    void setInitialSkippedCount(int count) { m_skippedCatalogs = count; }
 
 private:
     void setCatalogOperationRunning(bool running);

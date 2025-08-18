@@ -43,6 +43,7 @@
 
 CatalogJobStoppable::CatalogJobStoppable(QObject *parent)
     : QObject(parent)
+    , m_storageWasUpdated(false)
 {
     qDebug() << "CatalogJobStoppable created";
 }
@@ -287,9 +288,9 @@ void CatalogJobStoppable::updateCatalogWithProgress()
     }
 
     // Initialize database transaction for efficiency (same as creation)
-    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
-    if (!db.exec("BEGIN TRANSACTION").isActive()) {
-        qDebug() << "Warning: Could not start transaction:" << db.lastError().text();
+    QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
+    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
+        qDebug() << "Warning: Could not start transaction:" << transactionQuery.lastError().text();
     }
 
     qDebug() << "Step 4: Starting database transaction";
@@ -303,14 +304,14 @@ void CatalogJobStoppable::updateCatalogWithProgress()
     processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
 
     if (!shouldContinue()) {
-        db.exec("ROLLBACK");
-        qDebug() << "Catalog update cancelled, transaction rolled back";
+        transactionQuery.exec("ROLLBACK");
+        qDebug() << "Catalog creation cancelled, transaction rolled back";
         return;
     }
 
     // Commit transaction (same as creation)
-    if (!db.exec("COMMIT").isActive()) {
-        qDebug() << "Warning: Could not commit transaction:" << db.lastError().text();
+    if (!transactionQuery.exec("COMMIT")) {
+        qDebug() << "Warning: Could not commit transaction:" << transactionQuery.lastError().text();
     }
 
     // Update catalog metadata (same as creation)
@@ -337,7 +338,24 @@ void CatalogJobStoppable::updateCatalogWithProgress()
         // 4. Save device to update the date in database
         m_device->saveDevice();
 
-        // 5. Save catalog files to disk (Memory mode) - same as creation
+        // 5. Update parent storage space info
+        qDebug() << "CRITICAL FIX: Updating parent storage space after catalog update";
+        updateParentStorageAfterCatalogUpdate();
+
+        // 6. Update aggregated file counts up the hierarchy
+        qDebug() << "Updating parent device hierarchy numbers";
+        try {
+            m_device->updateParentsNumbers();
+            qDebug() << "Parent numbers updated successfully";
+        } catch (const std::exception& e) {
+            qDebug() << "Error updating parent numbers:" << e.what();
+        }
+
+        // 7. Update related catalog devices
+        qDebug() << "Updating related catalog devices";
+        updateRelatedCatalogDevices();
+
+        // 8. Save catalog files to disk (Memory mode) - same as creation
         if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
             qDebug() << "Warning: Failed to save updated catalog to file";
         }
@@ -664,6 +682,102 @@ void CatalogJobStoppable::emitProgressUpdate(qint64 processed, qint64 total, con
     emit catalogProgress(processed, total, currentPath);
 }
 
+void CatalogJobStoppable::updateParentStorageAfterCatalogUpdate()
+{
+    if (!m_device || m_device->parentID == 0) {
+        qDebug() << "No parent device to update";
+        m_storageWasUpdated = false;
+        return;
+    }
+
+    try {
+        qDebug() << "Loading parent storage device...";
+        Device parentDevice;
+        parentDevice.ID = m_device->parentID;
+        parentDevice.loadDevice("defaultConnection");
+
+        if (parentDevice.type == "Storage" && parentDevice.storage) {
+            qDebug() << "Updating parent storage space info for:" << parentDevice.name;
+
+            // ✅ Refresh physical storage space information and capture results
+            m_storageUpdateResult = parentDevice.storage->updateStorageInfo();
+
+            if (m_storageUpdateResult.wasUpdated) {
+                qDebug() << "Storage space updated successfully";
+                qDebug() << "New total space:" << m_storageUpdateResult.newTotalSpace;
+                qDebug() << "New free space:" << m_storageUpdateResult.newFreeSpace;
+
+                // Update device values with new storage information
+                parentDevice.totalSpace = m_storageUpdateResult.newTotalSpace;
+                parentDevice.freeSpace = m_storageUpdateResult.newFreeSpace;
+                parentDevice.dateTimeUpdated = QDateTime::currentDateTime();
+
+                // Save updated storage device
+                parentDevice.saveDevice();
+
+                // Save storage statistics
+                parentDevice.saveStatistics(parentDevice.dateTimeUpdated, "update");
+
+                // ✅ Mark that storage was successfully updated
+                m_storageWasUpdated = true;
+
+                qDebug() << "Parent storage device updated and saved";
+            } else {
+                qDebug() << "Storage space not updated - Error:" << m_storageUpdateResult.errorMessage;
+                m_storageWasUpdated = false;
+            }
+        } else {
+            qDebug() << "Parent device is not a storage or has no storage object";
+            m_storageWasUpdated = false;
+        }
+
+    } catch (const std::exception& e) {
+        qDebug() << "Error updating parent storage device:" << e.what();
+        m_storageWasUpdated = false;
+    }
+}
+
+void CatalogJobStoppable::updateRelatedCatalogDevices()
+{
+    if (!m_device) return;
+
+    qDebug() << "Updating related catalog devices...";
+
+    try {
+        // Update related devices (other catalog devices using the same catalog ID)
+        QSqlQuery queryRelatedDevice(QSqlDatabase::database("defaultConnection"));
+        QString queryRelatedDeviceSQL = QLatin1String(R"(
+                            SELECT device_id
+                            FROM device
+                            WHERE device_external_id = :device_external_id
+                            AND device_type = 'Catalog'
+                            AND device_id != :device_id
+                        )");
+
+        queryRelatedDevice.prepare(queryRelatedDeviceSQL);
+        queryRelatedDevice.bindValue(":device_external_id", m_device->externalID);
+        queryRelatedDevice.bindValue(":device_id", m_device->ID);
+        queryRelatedDevice.exec();
+
+        while (queryRelatedDevice.next()) {
+            Device relatedDevice;
+            relatedDevice.ID = queryRelatedDevice.value(0).toInt();
+            relatedDevice.loadDevice("defaultConnection");
+
+            // Update related device with same file counts
+            relatedDevice.totalFileCount = m_device->totalFileCount;
+            relatedDevice.totalFileSize = m_device->totalFileSize;
+            relatedDevice.dateTimeUpdated = m_device->dateTimeUpdated;
+            relatedDevice.saveDevice();
+
+            qDebug() << "Updated related catalog device:" << relatedDevice.name;
+        }
+
+    } catch (const std::exception& e) {
+        qDebug() << "Error updating related catalog devices:" << e.what();
+    }
+}
+
 void CatalogJobStoppable::completeCatalogCreation()
 {
     qDebug() << "=== CatalogJobStoppable::completeCatalogCreation() START ===";
@@ -738,15 +852,30 @@ QList<qint64> CatalogJobStoppable::getResults() const
     qint64 newTotalFileSize = m_device->totalFileSize;
     qint64 deltaTotalFileSize = newTotalFileSize - m_originalTotalFileSize;
 
+    // Catalog update results (indices 0-4)
     results << 1; // Success code
     results << newFileCount; // Total files after update
-    results << deltaFileCount; // CORRECTED: Actual delta files
+    results << deltaFileCount; // Actual delta files
     results << newTotalFileSize; // Total size after update
-    results << deltaTotalFileSize; // CORRECTED: Actual delta size
+    results << deltaTotalFileSize; // Actual delta size
 
-    // Add padding to match reportAllUpdates() format (14 elements total)
-    for (int i = 5; i < 14; ++i) {
-        results << 0;
+    // Catalog counters (indices 5-6) - not used for individual reports
+    results << 0; // Updated catalogs count (not relevant for single catalog)
+    results << 0; // Skipped catalogs count (not relevant for single catalog)
+
+    // Storage update results (indices 7-13)
+    if (m_storageWasUpdated && m_storageUpdateResult.wasUpdated) {
+        results << 1; // Storage updated flag
+        results << m_storageUpdateResult.newUsedSpace;     // Used space
+        results << m_storageUpdateResult.deltaUsedSpace;   // Delta used space
+        results << m_storageUpdateResult.newFreeSpace;     // Free space
+        results << m_storageUpdateResult.deltaFreeSpace;   // Delta free space
+        results << m_storageUpdateResult.newTotalSpace;    // Total space
+        results << m_storageUpdateResult.deltaTotalSpace;  // Delta total space
+    } else {
+        // No storage update
+        results << 0; // Storage updated flag = false
+        for (int i = 8; i < 14; ++i) results << 0; // No storage values
     }
 
     return results;

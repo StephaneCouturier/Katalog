@@ -2180,8 +2180,8 @@ v koš?</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 posodobljenih katalogov (aktivnih), %2 preskočenih katalogov (neaktivnih)</translation>
+        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
+        <translation>&lt;br/&gt;&lt;br/&gt; %1 posodobljenih katalogov, %2 preskočenih katalogov</translation>
     </message>
     <message>
         <location line="+91"/>

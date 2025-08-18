@@ -305,12 +305,16 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             loadParentsList();
 
             QString displayContents = settings.value("Devices/DisplayContents").toString();
-            if(displayContents=="Tree")
+            if(displayContents=="Tree"){
                 ui->Devices_radioButton_DeviceTree->setChecked(true);
-            else if(displayContents=="Storage")
+                ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+            } else if(displayContents=="Storage"){
                 ui->Devices_radioButton_StorageList->setChecked(true);
-            else if(displayContents=="Catalogs")
+                ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+            } else if(displayContents=="Catalogs"){
                 ui->Devices_radioButton_CatalogList->setChecked(true);
+                ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+            }
 
             // After setting the radio button state:
             if(ui->Devices_radioButton_DeviceTree->isChecked())

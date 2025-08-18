@@ -1890,20 +1890,6 @@ void MainWindow::setupDeviceManager()
                 this->reportAllUpdates(device, results, updateType);
             });
 
-    // Connect other DeviceManager signals for UI updates
-    connect(deviceManager, &DeviceManager::deviceOperationStarted,
-            this, []() {
-                qDebug() << "Device operation started - setting UI to running state";
-                // Set any UI state for device operations
-            });
-
-    connect(deviceManager, &DeviceManager::deviceOperationError,
-            this, [this](const QString& error) {
-                qDebug() << "Device operation error:" << error;
-                QMessageBox::warning(this, tr("Katalog"), tr("Device operation failed: %1").arg(error));
-            });
-
-    // Stop management
     // Enable stop button when device hierarchy operations start
     connect(deviceManager, &DeviceManager::deviceOperationStarted, this, [this]() {
         ui->Catalogs_pushButton_Stop->setEnabled(true);
@@ -2514,6 +2500,68 @@ void MainWindow::importFromVVV()
     loadCollection();
 }
 //--------------------------------------------------------------------------
+
+void MainWindow::createMissingParentDirectories() {
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+
+    // Select distinct folder paths
+    query.exec("SELECT DISTINCT folder_catalog_name, folder_path FROM folder");
+
+    // Iterate through the result set
+    while (query.next()) {
+        QString folderCatalogName = query.value(0).toString();
+        QString folderPath = query.value(1).toString();
+
+        // Split the folder path into components
+        QStringList folders = folderPath.split('/', Qt::SkipEmptyParts);
+        QString currentPath;
+
+        // Iterate through the components and insert missing parent directories
+        for (const QString& folder : folders) {
+            currentPath += '/' + folder;
+
+            // Check if the current path exists in the table
+            QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
+            checkQuery.prepare("SELECT 1 FROM folder WHERE folder_catalog_name = :catalog AND folder_path = :path");
+            checkQuery.bindValue(":catalog", folderCatalogName);
+            checkQuery.bindValue(":path", currentPath);
+
+            if (!checkQuery.exec()) {
+                qDebug() << "Error checking path:" << checkQuery.lastError().text();
+            }
+
+            // If the current path doesn't exist, insert it
+            if (!checkQuery.next()) {
+                QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+                insertQuery.prepare("INSERT INTO folder (folder_catalog_name, folder_path) VALUES (:catalog, :path)");
+                insertQuery.bindValue(":catalog", folderCatalogName);
+                insertQuery.bindValue(":path", currentPath);
+
+                if (!insertQuery.exec()) {
+                    qDebug() << "Error inserting path:" << insertQuery.lastError().text();
+                }
+            }
+        }
+    }
+}
+//--------------------------------------------------------------------------
+int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {
+    if (!deviceTree.contains(parentId)) {
+        return 0;
+    }
+    int maxLevel = 0;
+    for (int childId : deviceTree[parentId]) {
+        int level = countTreeLevels(deviceTree, childId);
+        if (level > maxLevel) {
+            maxLevel = level;
+        }
+    }
+    return maxLevel + 1;
+}
+
+//--------------------------------------------------------------------------
+//--- Reporting ------------------------------------------------------------
+//--------------------------------------------------------------------------
 bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
 {//Provide a report for any combinaison of updates (updateType = create, single, or list) and devices
     QMessageBox msgBox;
@@ -2633,7 +2681,7 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
                                 QLocale().formattedDataSize(list[3]),
                                 QLocale().formattedDataSize(list[4]));
 
-            message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs (active), %2 skipped Catalogs (inactive)")).arg(QString::number(list[5]),QString::number(list[6]));
+            message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs, %2 skipped Catalogs")).arg(QString::number(list[5]),QString::number(list[6]));
             reportAvailable = true;
         }
 
@@ -2668,63 +2716,6 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
     return reportAvailable;
 }
 //--------------------------------------------------------------------------
-void MainWindow::createMissingParentDirectories() {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-
-    // Select distinct folder paths
-    query.exec("SELECT DISTINCT folder_catalog_name, folder_path FROM folder");
-
-    // Iterate through the result set
-    while (query.next()) {
-        QString folderCatalogName = query.value(0).toString();
-        QString folderPath = query.value(1).toString();
-
-        // Split the folder path into components
-        QStringList folders = folderPath.split('/', Qt::SkipEmptyParts);
-        QString currentPath;
-
-        // Iterate through the components and insert missing parent directories
-        for (const QString& folder : folders) {
-            currentPath += '/' + folder;
-
-            // Check if the current path exists in the table
-            QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
-            checkQuery.prepare("SELECT 1 FROM folder WHERE folder_catalog_name = :catalog AND folder_path = :path");
-            checkQuery.bindValue(":catalog", folderCatalogName);
-            checkQuery.bindValue(":path", currentPath);
-
-            if (!checkQuery.exec()) {
-                qDebug() << "Error checking path:" << checkQuery.lastError().text();
-            }
-
-            // If the current path doesn't exist, insert it
-            if (!checkQuery.next()) {
-                QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
-                insertQuery.prepare("INSERT INTO folder (folder_catalog_name, folder_path) VALUES (:catalog, :path)");
-                insertQuery.bindValue(":catalog", folderCatalogName);
-                insertQuery.bindValue(":path", currentPath);
-
-                if (!insertQuery.exec()) {
-                    qDebug() << "Error inserting path:" << insertQuery.lastError().text();
-                }
-            }
-        }
-    }
-}
-//--------------------------------------------------------------------------
-int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {
-    if (!deviceTree.contains(parentId)) {
-        return 0;
-    }
-    int maxLevel = 0;
-    for (int childId : deviceTree[parentId]) {
-        int level = countTreeLevels(deviceTree, childId);
-        if (level > maxLevel) {
-            maxLevel = level;
-        }
-    }
-    return maxLevel + 1;
-}
 
 //--------------------------------------------------------------------------
 //--- Migration 1.22 to 2.0
@@ -4276,8 +4267,6 @@ void MainWindow::testIconSourceTracking()
 
     qDebug() << "=== END SOURCE TRACKING ===";
 }
-
-
 
 // Modified setupIconTheme methods to test KF6 icon loading
 // Add these as test methods to MainWindow class

@@ -274,30 +274,34 @@
             if (currentCatalogDevice) {
                 onCatalogOperationCompleted();
             } else if (currentUpdateDevice) {
-                qDebug() << "Single catalog update completed - getting results and showing report";
+                qDebug() << "Catalog update completed for:" << currentUpdateDevice->name;
 
-                CatalogJobStoppable* catalogEngine = catalogManager->getCurrentCatalogEngine();
-                if (catalogEngine) {
-                    QList<qint64> results = catalogEngine->getResults();
-                    reportAllUpdates(currentUpdateDevice, results, "update");
+                // Only handle single updates, not batch updates
+                bool isBatchUpdate = catalogManager->inBatchMode();
+
+                if (!isBatchUpdate) {
+                    // Single update - show report using proper results
+                    qDebug() << "Single catalog update - getting results from catalog engine";
+
+                    CatalogJobStoppable* catalogEngine = catalogManager->getCurrentCatalogEngine();
+                    if (catalogEngine) {
+                        QList<qint64> results = catalogEngine->getResults();
+                        reportAllUpdates(currentUpdateDevice, results, "update");
+                    }
+
+                    // Single update cleanup
+                    currentUpdateDevice = nullptr;
+                    QApplication::restoreOverrideCursor();
+                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                    loadDevicesView("");
                 } else {
-                    QList<qint64> basicResults;
-                    basicResults << 1 << currentUpdateDevice->totalFileCount << 0
-                                 << currentUpdateDevice->totalFileSize << 0;
-                    for (int i = 5; i < 14; ++i) basicResults << 0;
-                    reportAllUpdates(currentUpdateDevice, basicResults, "update");
+                    qDebug() << "Batch catalog update - report handled by batchNeedsUIReport signal";
+                    // Do nothing for batch updates
                 }
-
-                currentUpdateDevice = nullptr;
-                QApplication::restoreOverrideCursor();
-                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-                loadDevicesView("");
-            } else {
-                qDebug() << "Catalog operation completed but no device context";
             }
         });
 
-        // Update error handler - use NEW batch system only
+        // Update error handler
         connect(catalogManager, &CatalogManager::catalogOperationError, this, [this](const QString& error) {
             if (currentUpdateDevice) {
                 qDebug() << "Catalog update error:" << error;
@@ -361,7 +365,7 @@
             }
         });
 
-        // Connect batch operation signals (NEW batch system)
+        // Connect batch operation signals
         connect(catalogManager, &CatalogManager::batchOperationCompleted, this, [this]() {
             qDebug() << "Batch operation completed - restoring UI";
 
@@ -394,25 +398,24 @@
         connect(catalogManager, &CatalogManager::batchNeedsUIReport, this, [this](Device* device, const QList<qint64>& results, const QString& updateType) {
             qDebug() << "Batch needs UI report for device:" << (device ? device->name : "GLOBAL REPORT");
             qDebug() << "showEachCatalogUpdateSummary:" << showEachCatalogUpdateSummary;
+            qDebug() << "Results data:" << results;
 
-            // Only show reports if requested by user
-            if (showEachCatalogUpdateSummary) {
-                if (device == nullptr) {
-                    // Global report
-                    Device dummyDevice;
-                    dummyDevice.name = tr("All Active Catalogs");
-                    dummyDevice.type = "BatchSummary";
-                    reportAllUpdates(&dummyDevice, results, updateType);
-                } else {
-                    // Individual catalog report
-                    reportAllUpdates(device, results, updateType);
-                }
+            if (device == nullptr) {
+                // Final report, always show regardless of user choice
+                qDebug() << "Showing final global report";
+                Device dummyDevice;
+                dummyDevice.name = tr("All Active Catalogs");
+                dummyDevice.type = "BatchSummary";
+                reportAllUpdates(&dummyDevice, results, updateType);
+            } else if (showEachCatalogUpdateSummary) {
+                // Individual report, only if user requested
+                qDebug() << "Showing individual catalog report for:" << device->name;
+                reportAllUpdates(device, results, updateType);
             } else {
-                qDebug() << "User chose NO reports - skipping report display";
+                qDebug() << "User chose NO individual reports - skipping individual report for:" << device->name;
             }
         });
 
-        // Note: catalogOperationRunningChanged above handles both enable/disable
         // Additional disable for batch operations (since they don't always trigger running state change)
         connect(catalogManager, &CatalogManager::batchOperationCompleted, this, [this]() {
             ui->Catalogs_pushButton_Stop->setEnabled(false);
