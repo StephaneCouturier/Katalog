@@ -72,21 +72,30 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
         return db.lastError();
     }
 
-    // ADD THIS: Set SQLite pragmas for consistent behavior
     if (db.driverName() == "QSQLITE") {
         QSqlQuery pragmaQuery(db);
 
-        // Set synchronous mode (important for consistency)
+        // Use WAL mode for better corruption resistance and concurrent access
+        if (!pragmaQuery.exec("PRAGMA journal_mode = WAL")) {
+            qDebug() << "Failed to set WAL journal mode:" << pragmaQuery.lastError().text();
+        }
+
+        // Set synchronous mode for balance between safety and performance
         if (!pragmaQuery.exec("PRAGMA synchronous = NORMAL")) {
             qDebug() << "Failed to set synchronous pragma:" << pragmaQuery.lastError().text();
         }
 
-        // Set journal mode (important for memory databases)
-        if (!pragmaQuery.exec("PRAGMA journal_mode = MEMORY")) {
-            qDebug() << "Failed to set journal mode:" << pragmaQuery.lastError().text();
+        // Set page size for better performance
+        if (!pragmaQuery.exec("PRAGMA page_size = 4096")) {
+            qDebug() << "Failed to set page size:" << pragmaQuery.lastError().text();
         }
 
-        // Ensure foreign keys are enabled
+        // Set cache size
+        if (!pragmaQuery.exec("PRAGMA cache_size = 10000")) {
+            qDebug() << "Failed to set cache size:" << pragmaQuery.lastError().text();
+        }
+
+        // Enable foreign keys
         if (!pragmaQuery.exec("PRAGMA foreign_keys = ON")) {
             qDebug() << "Failed to enable foreign keys:" << pragmaQuery.lastError().text();
         }
@@ -96,7 +105,7 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
             qDebug() << "Failed to set temp store:" << pragmaQuery.lastError().text();
         }
 
-        qDebug() << "SQLite pragmas set successfully";
+        qDebug() << "SQLite pragmas set successfully for corruption prevention";
     }
 
     // Create all necessary tables

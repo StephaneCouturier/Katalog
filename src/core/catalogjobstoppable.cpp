@@ -136,7 +136,6 @@ void CatalogJobStoppable::processCatalog()
 
 void CatalogJobStoppable::createCatalogWithProgress()
 {
-
     qDebug() << "=== CATALOG CREATION STARTED ===";
     qDebug() << "Device ID:" << m_device->ID;
     qDebug() << "Catalog Name:" << m_device->catalog->name;
@@ -190,9 +189,9 @@ void CatalogJobStoppable::createCatalogWithProgress()
     }
 
     // Initialize database transaction for efficiency
-    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
-    if (!db.exec("BEGIN TRANSACTION").isActive()) {
-        qDebug() << "Warning: Could not start transaction:" << db.lastError().text();
+    QSqlQuery transactionQuery(QSqlDatabase::database("defaultConnection"));
+    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
+        qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
     }
 
     qDebug() << "Step 4: Starting database transaction";
@@ -204,14 +203,16 @@ void CatalogJobStoppable::createCatalogWithProgress()
     processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
 
     if (!shouldContinue()) {
-        db.exec("ROLLBACK");
-        qDebug() << "Catalog creation cancelled, transaction rolled back";
-        return;
+        QSqlQuery rollbackQuery(QSqlDatabase::database("defaultConnection"));
+        if (!rollbackQuery.exec("ROLLBACK")) {
+            qDebug() << "Warning: Could not ROLLBACK transaction:" << rollbackQuery.lastError().text();
+        }
     }
 
     // Commit transaction
-    if (!db.exec("COMMIT").isActive()) {
-        qDebug() << "Warning: Could not commit transaction:" << db.lastError().text();
+    QSqlQuery commitQuery(QSqlDatabase::database("defaultConnection"));
+    if (!commitQuery.exec("COMMIT")) {
+        qDebug() << "Warning: Could not COMMIT transaction:" << commitQuery.lastError().text();
     }
 
     // Update catalog metadata
@@ -310,8 +311,9 @@ void CatalogJobStoppable::updateCatalogWithProgress()
     }
 
     // Commit transaction (same as creation)
-    if (!transactionQuery.exec("COMMIT")) {
-        qDebug() << "Warning: Could not commit transaction:" << transactionQuery.lastError().text();
+    QSqlQuery commitQuery(QSqlDatabase::database(m_connectionName));
+    if (!commitQuery.exec("COMMIT")) {
+        qDebug() << "Warning: Could not commit transaction:" << commitQuery.lastError().text();
     }
 
     // Update catalog metadata (same as creation)

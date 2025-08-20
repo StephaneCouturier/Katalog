@@ -89,6 +89,7 @@ void DeviceJobStoppable::startDeviceOperation(Device* rootDevice,
     // Reset control flags
     m_stopRequested.storeRelease(0);
     m_paused.storeRelease(0);
+    m_gentleStopRequested.storeRelease(0);
     m_objectValid.storeRelease(1);
 
     // Reset progress tracking
@@ -238,8 +239,8 @@ void DeviceJobStoppable::processNextInQueue()
         return;
     }
 
-    // Check for gentle stop before starting new device
-    if (m_gentleStopRequested.loadAcquire()) {
+    // Check for gentle stop before starting new device (but not for single catalog creation)
+    if (m_gentleStopRequested.loadAcquire() && m_operationType == UpdateDevice) {
         qDebug() << "Gentle stop requested - completing operation after current device";
         completeOperation();
         return;
