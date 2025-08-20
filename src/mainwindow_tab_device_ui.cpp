@@ -692,7 +692,9 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
     bool ctrlPressed = QApplication::keyboardModifiers() & Qt::ControlModifier;
     bool useGentleStop = ctrlPressed;
 
-    qDebug() << "Ctrl key pressed:" << ctrlPressed << "Using gentle stop:" << useGentleStop;
+    qDebug() << "Ctrl key pressed:" << ctrlPressed;
+    qDebug() << "useGentleStop:" << useGentleStop;
+    qDebug() << "Will call:" << (useGentleStop ? "requestGentleStop()" : "requestHardStop()");
 
     bool operationStopped = false;
 
@@ -702,8 +704,8 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
         deviceManager->requestGentleStop();
         operationStopped = true;
     }
-    else if (catalogManager && catalogManager->catalogOperationRunning()) {
-        qDebug() << "CatalogManager is running. Batch mode:" << catalogManager->inBatchMode(); // ADD THIS
+    else if (catalogManager && (catalogManager->catalogOperationRunning() || catalogManager->inBatchMode())) {
+        qDebug() << "CatalogManager is running. Batch mode:" << catalogManager->inBatchMode();
 
         if (useGentleStop) {
             // Ctrl+click: Use gentle stop (existing behavior)
@@ -719,7 +721,7 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
         } else {
             // Regular click: Use hard stop (new default behavior)
             if (catalogManager->inBatchMode()) {
-                qDebug() << "CatalogManager batch mode - using hard stop";  // ADD DEBUG
+                qDebug() << "CatalogManager batch mode - using hard stop";
                 catalogManager->requestHardStop();
                 operationStopped = true;
             } else {
@@ -729,10 +731,10 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
             }
         }
     } else {
-        qDebug() << "No operations detected as running"; // ADD THIS
+        qDebug() << "No operations detected as running";
     }
 
-    qDebug() << "Operation stopped flag:" << operationStopped; // ADD THIS
+    qDebug() << "Operation stopped flag:" << operationStopped;
 
     ui->Catalogs_pushButton_Stop->setEnabled(false);
 }

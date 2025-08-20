@@ -659,6 +659,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Catalogs_pushButton_UpdateAllActive_clicked();
             void on_Catalogs_pushButton_UpdateCatalog_clicked();
             void on_Catalogs_pushButton_Import_clicked();
+            void on_Catalogs_pushButton_Stop_clicked();
 
             //Storage
             void on_Storage_pushButton_UpdateStorage_clicked();
@@ -694,9 +695,6 @@ class MainWindow : public KXmlGuiWindow
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
-
-            void on_Catalogs_pushButton_Stop_clicked();
-            void on_Catalogs_pushButton_StopHard_clicked();
 
         protected:
             void changeEvent(QEvent *event) override;

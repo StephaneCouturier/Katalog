@@ -70,6 +70,16 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
         return;
     }
 
+    if (operationType == CatalogJobStoppable::UpdateCatalog) {
+        m_catalogUpdateInProgress = true;
+        m_updatingCatalogID = targetDevice->catalog->ID;
+
+        // ADD THESE LINES:
+        m_gentleStopRequested.storeRelease(0);  // Reset stop flags for new operation
+        m_hardStopRequested.storeRelease(0);
+        qDebug() << "Reset stop flags for new catalog operation";
+    }
+
     qDebug() << "Starting catalog operation:"
              << "Type:" << (operationType == CatalogJobStoppable::CreateCatalog ? "Create" : "Update")
              << "Catalog:" << targetDevice->catalog->name
@@ -215,6 +225,11 @@ void CatalogManager::requestGentleStop()
 
     if (m_inBatchMode) {
         setStatus("Stopping after current catalog completes...");
+        // Also stop the currently running catalog
+        if (m_currentJob) {
+            qDebug() << "Stopping current catalog in batch gentle stop";
+            stopCatalogOperation();
+        }
     } else {
         stopCatalogOperation(); // Single operations = immediate stop
     }
@@ -271,6 +286,14 @@ void CatalogManager::onJobResult(KJob *job)
 
         // Batch handling - just start next or finish
         if (m_inBatchMode) {
+            // ADD THIS CHECK FIRST:
+            if (m_hardStopRequested.loadAcquire()) {
+                qDebug() << "Hard stop requested - finishing batch operation early";
+                m_hardStopRequested.storeRelease(0); // Reset flag
+                finishBatchOperation();
+                return;
+            }
+
             if (m_batchCurrentIndex >= m_batchCatalogs.size()) {
                 finishBatchOperation();
             } else {
@@ -465,6 +488,10 @@ void CatalogManager::initializeBatchOperation(const QList<Device*>& catalogs, co
     qDeleteAll(m_batchCatalogs);
     m_batchCatalogs.clear();
 
+    // Reset stop flags
+    m_gentleStopRequested.storeRelease(0);
+    m_hardStopRequested.storeRelease(0);
+
     // Copy the catalog list and parameters
     m_batchCatalogs = catalogs;
     m_batchDatabaseMode = databaseMode;
@@ -525,13 +552,21 @@ void CatalogManager::startCurrentBatchCatalog()
         return;
     }
 
+    // Check hard stop request first, before the gentle stop check,
+    if (m_hardStopRequested.loadAcquire()) {
+        qDebug() << "Hard stop requested - stopping batch operation";
+        finishBatchOperation();
+        return;
+    }
+
+    // Then check gentle stop request.
     if (m_gentleStopRequested.loadAcquire()) {
         qDebug() << "Gentle stop requested - not starting new catalog";
         handleBatchCatalogCompletion();
         return;
     }
 
-    // Check if we're done
+    // Check if the process is done
     if (m_batchCurrentIndex >= m_batchCatalogs.size()) {
         qDebug() << "Batch complete - all catalogs processed";
         finishBatchOperation();
@@ -581,6 +616,10 @@ void CatalogManager::finishBatchOperation()
     qDebug() << "Skipped catalogs:" << m_skippedCatalogs;
     qDebug() << "Total files:" << m_globalUpdateTotalFiles;
     qDebug() << "Total size:" << m_globalUpdateTotalSize;
+
+    // Reset stop flags
+    m_gentleStopRequested.storeRelease(0);
+    m_hardStopRequested.storeRelease(0);
 
     // Create final global report (same format as original)
     QList<qint64> globalList;
@@ -633,12 +672,16 @@ void CatalogManager::requestHardStop()
 
     if (m_inBatchMode) {
         setStatus("Hard stopping after current catalog completes...");
+        // Also stop the currently running catalog
+        if (m_currentJob) {
+            qDebug() << "Stopping current catalog in batch hard stop";
+            m_currentJob->requestHardStop(); // Use hard stop for the individual job
+        }
     } else {
         setStatus("Hard stopping catalog operation...");
 
         // For single operations, stop immediately
         if (m_currentJob) {
-            // Signal the job to perform hard stop cleanup
             m_currentJob->requestHardStop();
         }
     }
