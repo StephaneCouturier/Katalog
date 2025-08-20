@@ -130,6 +130,8 @@ public:
 
     QList<qint64> getResults() const;
 
+    void requestHardStop();
+
 protected:
     /**
      * @brief Create catalog with progress reporting
@@ -175,6 +177,7 @@ private:
 
     // State management (atomic for thread safety)
     QAtomicInt m_stopRequested{0};
+    QAtomicInt m_hardStopRequested{0};
     QAtomicInt m_paused{0};
     mutable QMutex m_pauseMutex;
     QAtomicInt m_objectValid{1};

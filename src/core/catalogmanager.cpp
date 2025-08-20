@@ -54,6 +54,12 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
                                               const QString &databaseMode,
                                               const QString &collectionFolder)
 {
+    if (operationType == CatalogJobStoppable::UpdateCatalog) {
+        m_catalogUpdateInProgress = true;
+        m_updatingCatalogID = targetDevice->catalog->ID;
+        qDebug() << "Starting catalog update - marking catalog" << m_updatingCatalogID << "as being updated";
+    }
+
     if (m_currentJob) {
         qDebug() << "Catalog operation already running!";
         return;
@@ -291,6 +297,19 @@ void CatalogManager::onJobResult(KJob *job)
         emit catalogOperationError("Catalog operation failed with exception");
         cleanupJob();
     }
+
+    // Clean up update state
+    if (m_catalogUpdateInProgress) {
+        qDebug() << "Catalog update completed - clearing update state for catalog" << m_updatingCatalogID;
+        m_catalogUpdateInProgress = false;
+        m_updatingCatalogID = 0;
+    }
+
+    // Reset hard stop flag
+    m_hardStopRequested.storeRelease(0);
+
+    qDebug() << "=== CatalogManager::onJobResult() EXIT ===";
+
 }
 
 void CatalogManager::onJobPercent()
@@ -381,10 +400,35 @@ void CatalogManager::handleBatchCatalogCompletion()
 
     if (!m_inBatchMode) return;
 
+    // ADD THIS CHECK FIRST - before the gentle stop check:
+    if (m_hardStopRequested.loadAcquire()) {
+        qDebug() << "Hard stop requested - finishing batch operation early (same as gentle stop)";
+
+        // For batch operations, hard stop = gentle stop (finish current, then stop)
+        // Calculate remaining active catalogs that were never processed
+        int remainingActiveCatalogs = m_batchCatalogs.size() - m_batchCurrentIndex - 1;
+        if (remainingActiveCatalogs > 0) {
+            qDebug() << "Adding" << remainingActiveCatalogs << "stopped active catalogs to skipped count";
+            m_skippedCatalogs += remainingActiveCatalogs;
+        }
+
+        QList<qint64> earlyStopList;
+        earlyStopList << 1 << m_globalUpdateTotalFiles << m_globalUpdateDeltaFiles
+                      << m_globalUpdateTotalSize << m_globalUpdateDeltaSize
+                      << m_updatedCatalogs << m_skippedCatalogs;
+        for (int i = 7; i < 14; ++i) earlyStopList << 0;
+
+        emit batchNeedsUIReport(nullptr, earlyStopList, "list");
+        m_hardStopRequested.storeRelease(0);  // Reset flag
+        resetBatchState();
+        emit batchOperationCompleted();
+        return;
+    }
+
     if (m_gentleStopRequested.loadAcquire()) {
         qDebug() << "Gentle stop requested - finishing batch operation early";
 
-        // ✅ Calculate remaining active catalogs that were never processed
+        // Calculate remaining active catalogs that were never processed
         int remainingActiveCatalogs = m_batchCatalogs.size() - m_batchCurrentIndex - 1;
         if (remainingActiveCatalogs > 0) {
             qDebug() << "Adding" << remainingActiveCatalogs << "stopped active catalogs to skipped count";
@@ -580,4 +624,37 @@ void CatalogManager::processNextCatalogUpdate()
     qDebug() << "CatalogManager::processNextCatalogUpdate() - incrementing and starting next";
     m_batchCurrentIndex++;
     startCurrentBatchCatalog();
+}
+
+void CatalogManager::requestHardStop()
+{
+    qDebug() << "CatalogManager::requestHardStop() - Hard stop requested";
+    m_hardStopRequested.storeRelease(1);
+
+    if (m_inBatchMode) {
+        setStatus("Hard stopping after current catalog completes...");
+    } else {
+        setStatus("Hard stopping catalog operation...");
+
+        // For single operations, stop immediately
+        if (m_currentJob) {
+            // Signal the job to perform hard stop cleanup
+            m_currentJob->requestHardStop();
+        }
+    }
+}
+
+QString CatalogManager::getEffectiveCatalogID(int catalogID) const
+{
+    // During update, show old data (temp ID) for searches to maintain stable results
+    if (m_catalogUpdateInProgress && catalogID == m_updatingCatalogID) {
+        // Return temp ID if we're updating this catalog
+        return QString::number(catalogID + 999999);
+    }
+    return QString::number(catalogID);
+}
+
+bool CatalogManager::isCatalogBeingUpdated(int catalogID) const
+{
+    return m_catalogUpdateInProgress && catalogID == m_updatingCatalogID;
 }

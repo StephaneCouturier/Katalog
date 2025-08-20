@@ -70,6 +70,8 @@ public:
     // Get operation type
     CatalogJobStoppable::OperationType getOperationType() const { return m_operationType; }
 
+    void requestHardStop();
+
 private:
     CatalogJobStoppable *m_catalogEngine = nullptr;
     Device *m_targetDevice = nullptr;

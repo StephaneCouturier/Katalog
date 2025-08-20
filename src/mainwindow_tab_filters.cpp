@@ -181,6 +181,7 @@
             deviceContextMenu.addAction(menuDeviceAction3);
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
                 qDebug() << "Storage update requested for:" << selectedDevice->name;
+                ui->Catalogs_pushButton_Stop->setEnabled(true);
 
                 // Ensure CatalogProgressManager is connected (double-check)
                 if (catalogProgressManager && deviceManager) {
@@ -231,6 +232,7 @@
                 }
 
                 qDebug() << "Filters context menu catalog update for:" << selectedDevice->name;
+                ui->Catalogs_pushButton_Stop->setEnabled(true);
 
                 // Clear batch mode - this is a single update
                 inBatchMode = false;

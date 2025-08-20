@@ -275,7 +275,9 @@
                 onCatalogOperationCompleted();
             } else if (currentUpdateDevice) {
                 qDebug() << "Catalog update completed for:" << currentUpdateDevice->name;
-
+                if (!catalogManager->inBatchMode()) {
+                    ui->Catalogs_pushButton_Stop->setEnabled(false);
+                }
                 // Only handle single updates, not batch updates
                 bool isBatchUpdate = catalogManager->inBatchMode();
 
@@ -358,6 +360,7 @@
                     QApplication::restoreOverrideCursor();
                     ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
                 }
+                ui->Catalogs_pushButton_Stop->setEnabled(false);
             } else {
                 // Fallback - just restore basic UI state
                 qDebug() << "Unknown operation cancelled - restoring basic UI";
@@ -373,6 +376,7 @@
             currentUpdateDevice = nullptr;
 
             // Re-enable the UpdateAllActive button
+            ui->Catalogs_pushButton_Stop->setEnabled(false);
             ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
 
             // Refresh the device view

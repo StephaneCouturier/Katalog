@@ -29,7 +29,8 @@
 /////////////////////////////////////////////////////////////////////////////
 *///
 
-#include "searchjobstoppable.h"
+#include "core/searchjobstoppable.h"
+#include "core/catalogmanager.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QElapsedTimer>
@@ -47,7 +48,7 @@ SearchJobStoppable::SearchJobStoppable(QObject *parent)
     // Set a reasonable default refresh rate
     progressRefreshRate = 1000;
 }
-
+//----------------------------------------------------------------------
 SearchJobStoppable::~SearchJobStoppable()
 {
     //qDebug() << "SearchJobStoppable destructor called";
@@ -56,6 +57,14 @@ SearchJobStoppable::~SearchJobStoppable()
     stopSearch();
 
     //qDebug() << "SearchJobStoppable destructor complete";
+}
+//----------------------------------------------------------------------
+QString getEffectiveCatalogIDForSearch(int catalogID, CatalogManager* catalogManager)
+{
+    if (catalogManager && catalogManager->isCatalogBeingUpdated(catalogID)) {
+        return catalogManager->getEffectiveCatalogID(catalogID);
+    }
+    return QString::number(catalogID);
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::setDatabaseConnection(const QString &connectionName)

@@ -72,7 +72,10 @@ public:
     // Get the current catalog operation results
     CatalogJobStoppable* getCurrentCatalogEngine() const;
 
+    QString getEffectiveCatalogID(int catalogID) const;
+    bool isCatalogBeingUpdated(int catalogID) const;
     void requestGentleStop();
+    void requestHardStop();
     bool isGentleStopRequested() const { return m_gentleStopRequested.loadAcquire(); }
 
     // Batch processing
@@ -117,6 +120,9 @@ private:
     void cleanupJob();
     void handleBatchCatalogCompletion();
     QAtomicInt m_gentleStopRequested{0};
+    QAtomicInt m_hardStopRequested{0};
+    int m_updatingCatalogID = 0;
+    bool m_catalogUpdateInProgress = false;
 
     CatalogJob *m_currentJob = nullptr;
     bool m_catalogOperationRunning = false;

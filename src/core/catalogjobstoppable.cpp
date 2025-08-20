@@ -321,6 +321,10 @@ void CatalogJobStoppable::updateCatalogWithProgress()
     catalog->updateTotalFileSize();
     catalog->saveCatalog();
 
+    // Clean up temp files on success
+    qDebug() << "Update successful - cleaning up temp ID";
+    catalog->cleanupTempID();
+
     // Final progress update (ONLY DIFFERENCE: "update" instead of "creation")
     qDebug() << "About to emit final progress update";
     emitProgressUpdate(processedCount, countedTotalFiles, "Catalog update completed");
@@ -652,7 +656,7 @@ void CatalogJobStoppable::resumeCatalogOperation()
 
 bool CatalogJobStoppable::shouldContinue() const
 {
-    return m_objectValid.loadAcquire() && !m_stopRequested.loadAcquire();
+    return !m_stopRequested.loadAcquire() && !m_hardStopRequested.loadAcquire();
 }
 
 void CatalogJobStoppable::waitIfPaused()
@@ -881,4 +885,13 @@ QList<qint64> CatalogJobStoppable::getResults() const
     }
 
     return results;
+}
+
+void CatalogJobStoppable::requestHardStop()
+{
+    qDebug() << "CatalogJobStoppable::requestHardStop() - Hard stop requested";
+    m_hardStopRequested.storeRelease(1);
+
+    // Also set the regular stop flag to exit processing loops
+    m_stopRequested.storeRelease(1);
 }

@@ -1316,3 +1316,143 @@ int Catalog::countFileLines(const QString &filePath)
     }
     return 0;
 }
+
+void Catalog::generateTempID()
+{
+    m_tempID = ID + 999999;
+    qDebug() << "Generated temp catalog ID:" << m_tempID << "for catalog:" << ID;
+}
+
+void Catalog::moveFilesToTempID()
+{
+    if (m_tempID == 0) {
+        qDebug() << "ERROR: Temp ID not generated before moving files";
+        return;
+    }
+
+    qDebug() << "Moving existing files from catalog ID" << ID << "to temp ID" << m_tempID;
+
+    // Move files to temp ID
+    QSqlQuery moveFilesQuery(QSqlDatabase::database("defaultConnection"));
+    QString moveFilesSQL = "UPDATE file SET file_catalog_id = :temp_id WHERE file_catalog_id = :catalog_id";
+    moveFilesQuery.prepare(moveFilesSQL);
+    moveFilesQuery.bindValue(":temp_id", m_tempID);
+    moveFilesQuery.bindValue(":catalog_id", ID);
+
+    if (!moveFilesQuery.exec()) {
+        qDebug() << "Error moving files to temp ID:" << moveFilesQuery.lastError().text();
+        return;
+    }
+
+    qDebug() << "Moved" << moveFilesQuery.numRowsAffected() << "files to temp ID";
+
+    // Move folders to temp ID
+    QSqlQuery moveFoldersQuery(QSqlDatabase::database("defaultConnection"));
+    QString moveFoldersSQL = "UPDATE folder SET folder_catalog_id = :temp_id WHERE folder_catalog_id = :catalog_id";
+    moveFoldersQuery.prepare(moveFoldersSQL);
+    moveFoldersQuery.bindValue(":temp_id", m_tempID);
+    moveFoldersQuery.bindValue(":catalog_id", ID);
+
+    if (!moveFoldersQuery.exec()) {
+        qDebug() << "Error moving folders to temp ID:" << moveFoldersQuery.lastError().text();
+        return;
+    }
+
+    qDebug() << "Moved" << moveFoldersQuery.numRowsAffected() << "folders to temp ID";
+}
+
+void Catalog::restoreFromTempID()
+{
+    if (m_tempID == 0) {
+        qDebug() << "No temp ID to restore from";
+        return;
+    }
+
+    qDebug() << "Restoring files from temp ID" << m_tempID << "to catalog ID" << ID;
+
+    // Delete any current files first (partial new scan)
+    QSqlQuery deleteCurrentQuery(QSqlDatabase::database("defaultConnection"));
+    QString deleteCurrentSQL = "DELETE FROM file WHERE file_catalog_id = :catalog_id";
+    deleteCurrentQuery.prepare(deleteCurrentSQL);
+    deleteCurrentQuery.bindValue(":catalog_id", ID);
+    deleteCurrentQuery.exec();
+
+    QSqlQuery deleteCurrentFoldersQuery(QSqlDatabase::database("defaultConnection"));
+    QString deleteCurrentFoldersSQL = "DELETE FROM folder WHERE folder_catalog_id = :catalog_id";
+    deleteCurrentFoldersQuery.prepare(deleteCurrentFoldersSQL);
+    deleteCurrentFoldersQuery.bindValue(":catalog_id", ID);
+    deleteCurrentFoldersQuery.exec();
+
+    // Restore files from temp ID
+    QSqlQuery restoreFilesQuery(QSqlDatabase::database("defaultConnection"));
+    QString restoreFilesSQL = "UPDATE file SET file_catalog_id = :catalog_id WHERE file_catalog_id = :temp_id";
+    restoreFilesQuery.prepare(restoreFilesSQL);
+    restoreFilesQuery.bindValue(":catalog_id", ID);
+    restoreFilesQuery.bindValue(":temp_id", m_tempID);
+
+    if (!restoreFilesQuery.exec()) {
+        qDebug() << "Error restoring files from temp ID:" << restoreFilesQuery.lastError().text();
+        return;
+    }
+
+    qDebug() << "Restored" << restoreFilesQuery.numRowsAffected() << "files from temp ID";
+
+    // Restore folders from temp ID
+    QSqlQuery restoreFoldersQuery(QSqlDatabase::database("defaultConnection"));
+    QString restoreFoldersSQL = "UPDATE folder SET folder_catalog_id = :catalog_id WHERE folder_catalog_id = :temp_id";
+    restoreFoldersQuery.prepare(restoreFoldersSQL);
+    restoreFoldersQuery.bindValue(":catalog_id", ID);
+    restoreFoldersQuery.bindValue(":temp_id", m_tempID);
+
+    if (!restoreFoldersQuery.exec()) {
+        qDebug() << "Error restoring folders from temp ID:" << restoreFoldersQuery.lastError().text();
+        return;
+    }
+
+    qDebug() << "Restored" << restoreFoldersQuery.numRowsAffected() << "folders from temp ID";
+
+    m_tempID = 0; // Reset temp ID
+}
+
+void Catalog::cleanupTempID()
+{
+    if (m_tempID == 0) {
+        qDebug() << "No temp ID to cleanup";
+        return;
+    }
+
+    qDebug() << "Cleaning up temp ID" << m_tempID;
+
+    // Delete temp files
+    QSqlQuery deleteTempQuery(QSqlDatabase::database("defaultConnection"));
+    QString deleteTempSQL = "DELETE FROM file WHERE file_catalog_id = :temp_id";
+    deleteTempQuery.prepare(deleteTempSQL);
+    deleteTempQuery.bindValue(":temp_id", m_tempID);
+
+    if (!deleteTempQuery.exec()) {
+        qDebug() << "Error deleting temp files:" << deleteTempQuery.lastError().text();
+        return;
+    }
+
+    qDebug() << "Deleted" << deleteTempQuery.numRowsAffected() << "temp files";
+
+    // Delete temp folders
+    QSqlQuery deleteTempFoldersQuery(QSqlDatabase::database("defaultConnection"));
+    QString deleteTempFoldersSQL = "DELETE FROM folder WHERE folder_catalog_id = :temp_id";
+    deleteTempFoldersQuery.prepare(deleteTempFoldersSQL);
+    deleteTempFoldersQuery.bindValue(":temp_id", m_tempID);
+
+    if (!deleteTempFoldersQuery.exec()) {
+        qDebug() << "Error deleting temp folders:" << deleteTempFoldersQuery.lastError().text();
+        return;
+    }
+
+    qDebug() << "Deleted" << deleteTempFoldersQuery.numRowsAffected() << "temp folders";
+
+    m_tempID = 0; // Reset temp ID
+}
+
+int Catalog::getTempID() const
+{
+    return m_tempID;
+}

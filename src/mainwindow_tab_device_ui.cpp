@@ -229,6 +229,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             }
 
             qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
+            ui->Catalogs_pushButton_Stop->setEnabled(true);
 
             // Clear batch mode - this is a single update
             inBatchMode = false;
@@ -320,6 +321,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             if (catalogProgressManager && deviceManager) {
                 deviceManager->setCatalogProgressManager(catalogProgressManager);
             }
+            ui->Catalogs_pushButton_Stop->setEnabled(true);
 
             // Start device operation using DeviceManager
             DeviceJobStoppable* deviceEngine = new DeviceJobStoppable(this);
@@ -383,7 +385,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             }
 
             qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
-
+            ui->Catalogs_pushButton_Stop->setEnabled(true);
             // Clear batch mode - this is a single update
             inBatchMode = false;
             currentUpdateDevice = activeDevice;
@@ -540,6 +542,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
 
     // UI Protection
     QApplication::setOverrideCursor(Qt::WaitCursor);
+    ui->Catalogs_pushButton_Stop->setEnabled(true);
     ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
     qDebug() << "Set wait cursor and disabled button";
 
@@ -685,30 +688,51 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
 {
     qDebug() << "=== Catalogs Stop button clicked ===";
 
+    // Check for Ctrl modifier key
+    bool ctrlPressed = QApplication::keyboardModifiers() & Qt::ControlModifier;
+    bool useGentleStop = ctrlPressed;
+
+    qDebug() << "Ctrl key pressed:" << ctrlPressed << "Using gentle stop:" << useGentleStop;
+
     bool operationStopped = false;
 
     // CHECK DEVICEMANAGER FIRST - it takes priority
     if (deviceManager && deviceManager->deviceOperationRunning()) {
-        qDebug() << "DeviceManager running - using gentle stop";
+        qDebug() << "DeviceManager running - using gentle stop (hard stop not supported for device operations)";
         deviceManager->requestGentleStop();
         operationStopped = true;
     }
     else if (catalogManager && catalogManager->catalogOperationRunning()) {
-        if (catalogManager->inBatchMode()) {
-            qDebug() << "CatalogManager batch mode - using gentle stop";
-            catalogManager->requestGentleStop();
-            operationStopped = true;
+        qDebug() << "CatalogManager is running. Batch mode:" << catalogManager->inBatchMode(); // ADD THIS
+
+        if (useGentleStop) {
+            // Ctrl+click: Use gentle stop (existing behavior)
+            if (catalogManager->inBatchMode()) {
+                qDebug() << "CatalogManager batch mode - using gentle stop";
+                catalogManager->requestGentleStop();
+                operationStopped = true;
+            } else {
+                qDebug() << "CatalogManager single mode - using gentle stop";
+                catalogManager->requestGentleStop();
+                operationStopped = true;
+            }
         } else {
-            qDebug() << "CatalogManager single mode - using hard stop";
-            catalogManager->stopCatalogOperation();
-            operationStopped = true;
+            // Regular click: Use hard stop (new default behavior)
+            if (catalogManager->inBatchMode()) {
+                qDebug() << "CatalogManager batch mode - using hard stop";  // ADD DEBUG
+                catalogManager->requestHardStop();
+                operationStopped = true;
+            } else {
+                qDebug() << "CatalogManager single mode - using hard stop";
+                catalogManager->requestHardStop();
+                operationStopped = true;
+            }
         }
+    } else {
+        qDebug() << "No operations detected as running"; // ADD THIS
     }
 
-    if (operationStopped) {
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-    } else {
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-    }
+    qDebug() << "Operation stopped flag:" << operationStopped; // ADD THIS
+
+    ui->Catalogs_pushButton_Stop->setEnabled(false);
 }
-//--------------------------------------------------------------------------

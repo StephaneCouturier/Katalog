@@ -126,6 +126,13 @@ public:
     int countFileLines(const QString &filePath);
     void getFileExtensions();
 
+    // Update management
+    void generateTempID();
+    void moveFilesToTempID();
+    void restoreFromTempID();
+    void cleanupTempID();
+    int getTempID() const;
+
 private:
     QStringList fileExtensions;
     QList<QString> fileNames;
@@ -134,6 +141,8 @@ private:
     QList<QString> fileDateTimes;
     QList<QString> fileCatalogs;
     QThread *workerThread;
+
+    int m_tempID = 0; // Temporary ID for update management
 
 signals:
     void loadProgress(int filesLoaded, int totalFiles);

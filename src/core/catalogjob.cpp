@@ -97,6 +97,16 @@ void CatalogJob::startJob()
     start();
 }
 
+void CatalogJob::requestHardStop()
+{
+    qDebug() << "CatalogJob::requestHardStop() - Hard stop requested";
+
+    // Forward the hard stop request to the catalog engine
+    if (m_catalogEngine) {
+        m_catalogEngine->requestHardStop();
+    }
+}
+
 void CatalogJob::start()
 {
     qDebug() << "Starting catalog job...";

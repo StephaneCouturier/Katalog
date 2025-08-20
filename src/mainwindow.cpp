@@ -471,3 +471,35 @@ msgBox.exec();
             qDebug()<<query.value(0).toString()<<query.value(1).toString();
         }
 */
+
+void MainWindow::on_Catalogs_pushButton_StopHard_clicked()
+{
+    qDebug() << "=== Catalogs HARD Stop button clicked ===";
+
+    bool operationStopped = false;
+
+    // CHECK DEVICEMANAGER FIRST - it takes priority
+    if (deviceManager && deviceManager->deviceOperationRunning()) {
+        qDebug() << "DeviceManager running - hard stop not supported for device operations";
+        QMessageBox::information(this, "Katalog", tr("Hard stop is only available for catalog operations."));
+        return;
+    }
+    else if (catalogManager && catalogManager->catalogOperationRunning()) {
+        if (catalogManager->inBatchMode()) {
+            qDebug() << "CatalogManager batch mode - using hard stop";
+            catalogManager->requestHardStop();
+            operationStopped = true;
+        } else {
+            qDebug() << "CatalogManager single mode - using hard stop";
+            catalogManager->requestHardStop();
+            operationStopped = true;
+        }
+    }
+
+    if (operationStopped) {
+        ui->Catalogs_pushButton_StopHard->setEnabled(false);
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+    } else {
+        ui->Catalogs_pushButton_StopHard->setEnabled(false);
+    }
+}
