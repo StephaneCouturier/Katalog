@@ -34,6 +34,7 @@
 //Katalog object classes
 #include "core/collection.h"
 #include "core/devicemanager.h"
+#include "core/deviceupdatemanager.h"
 #include "core/search.h"
 #include "core/device.h"
 #include "core/searchmanager.h"
@@ -112,6 +113,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class SearchProcess;
+class DeviceUpdateManager;
 
 class MainWindow : public KXmlGuiWindow
 {
@@ -163,7 +165,36 @@ class MainWindow : public KXmlGuiWindow
         void cmd_listGroup0Catalogs();
         void cmd_updateAllActive(bool displayReport);
 
+        void setupDeviceUpdateManager();
+        void updateStorageDevice(Device* storageDevice);
+        void updateVirtualDevice(Device* virtualDevice);
+        void updateFilteredSelection(const QList<Device*>& filteredDevices);
+        QList<Device*> collectActiveCatalogs();
+        bool confirmBatchOperation(int deviceCount);
+
+        void initializeManagers()
+        {
+            // Keep existing managers
+            setupCatalogManager();
+            setupDeviceManager();
+
+            // Add new unified manager
+            setupDeviceUpdateManager();
+
+            // Feature flag from settings or environment variable
+            useUnifiedManager = QSettings().value("use_unified_manager", false).toBool();
+            // or: useUnifiedManager = qEnvironmentVariableIsSet("KATALOG_USE_UNIFIED");
+
+            qDebug() << "Using unified manager:" << useUnifiedManager;
+        }
+
     private:
+        void onDeviceContextMenuRequested(const QPoint& pos);
+        DeviceUpdateManager* deviceUpdateManager = nullptr;
+        bool useUnifiedManager = false;
+        void startSingleCatalogUpdateUnified();
+        void startUpdateAllActiveCatalogsUnified();
+
         void debugIconLoadingDetailed();
         void testIconSourceTracking();
         void setupIconThemeWithKF6Test();

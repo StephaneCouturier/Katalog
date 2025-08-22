@@ -144,21 +144,24 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
     m_currentJob->startJob();
 }
 
+// Replace this method in src/core/catalogmanager.cpp
+
 void CatalogManager::stopCatalogOperation()
 {
     qDebug() << "=== CatalogManager::stopCatalogOperation() called ===";
     qDebug() << "Current job exists:" << (m_currentJob != nullptr);
     qDebug() << "Catalog operation running:" << m_catalogOperationRunning;
+    qDebug() << "In batch mode:" << m_inBatchMode;  // ADD THIS DEBUG
 
-    if (!m_currentJob) {
-        qDebug() << "No catalog operation to stop!";
+    if (!m_currentJob || !m_catalogOperationRunning) {
+        qDebug() << "No operation to stop";
         return;
     }
 
     qDebug() << "Stopping catalog operation...";
     setStatus("Catalog operation stopped");
 
-    // Disconnect signals first to prevent double handling (same pattern as SearchManager)
+    // Disconnect signals first to prevent double handling
     disconnect(m_currentJob, nullptr, this, nullptr);
 
     // Kill the job
@@ -181,6 +184,19 @@ void CatalogManager::stopCatalogOperation()
         m_currentJob = nullptr;
         qDebug() << "Forced cleanup complete";
     }
+
+    // CRITICAL FIX: Reset batch state if we were in batch mode
+    if (m_inBatchMode) {
+        qDebug() << "Was in batch mode - resetting batch state";
+        resetBatchState();
+
+        // Emit batch completion to restore UI properly
+        emit batchOperationCompleted();
+    }
+
+    // Reset stop flags
+    m_gentleStopRequested.storeRelease(0);
+    m_hardStopRequested.storeRelease(0);
 
     emit catalogOperationCancelled();
     qDebug() << "=== CatalogManager::stopCatalogOperation() complete ===";
@@ -609,6 +625,8 @@ void CatalogManager::startCurrentBatchCatalog()
     qDebug() << "=== CatalogManager::startCurrentBatchCatalog() EXIT ===";
 }
 
+// Replace this method in src/core/catalogmanager.cpp
+
 void CatalogManager::finishBatchOperation()
 {
     qDebug() << "=== CatalogManager::finishBatchOperation() ENTRY ===";
@@ -616,10 +634,7 @@ void CatalogManager::finishBatchOperation()
     qDebug() << "Skipped catalogs:" << m_skippedCatalogs;
     qDebug() << "Total files:" << m_globalUpdateTotalFiles;
     qDebug() << "Total size:" << m_globalUpdateTotalSize;
-
-    // Reset stop flags
-    m_gentleStopRequested.storeRelease(0);
-    m_hardStopRequested.storeRelease(0);
+    qDebug() << "Catalog operation running before reset:" << m_catalogOperationRunning;  // ADD DEBUG
 
     // Create final global report (same format as original)
     QList<qint64> globalList;
@@ -641,6 +656,17 @@ void CatalogManager::finishBatchOperation()
 
     // Emit signal for UI to show final global report
     emit batchNeedsUIReport(nullptr, globalList, "list");
+
+    // CRITICAL FIX: Reset the main operation state
+    setCatalogOperationRunning(false);
+    setProgress(0);
+    setCurrentCatalogName("");
+    setFilesProcessed(0);
+    setTotalFiles(0);
+    setCurrentPath("");
+    setStatus("Batch operation completed");
+
+    qDebug() << "Catalog operation running after reset:" << m_catalogOperationRunning;  // ADD DEBUG
 
     // Clean up batch state
     resetBatchState();

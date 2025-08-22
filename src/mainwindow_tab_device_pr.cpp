@@ -1917,6 +1917,289 @@ void MainWindow::setupDeviceManager()
     qDebug() << "DeviceManager setup complete with stop button state management";
 }
 //--------------------------------------------------------------------------
+
+void MainWindow::setupDeviceUpdateManager()
+{
+    qDebug() << "Setting up unified DeviceUpdateManager";
+
+    deviceUpdateManager = new DeviceUpdateManager(this);
+
+    // ===== OPERATION LIFECYCLE WITH PROPER UI RESTORATION =====
+
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationStarted, this, [this]() {
+        qDebug() << "Unified: Operation started - disabling UI";
+        ui->Catalogs_pushButton_Stop->setEnabled(true);
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+    });
+
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationCompleted, this, [this](const QList<qint64>& results) {
+        qDebug() << "Unified: Operation completed - restoring UI";
+        qDebug() << "Results:" << results;
+
+        // Always restore UI state
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+        QApplication::restoreOverrideCursor();
+
+        // Show results if we have a device to report on
+        if (currentUpdateDevice && results.size() >= 3) {
+            // Check if this was a successful completion or cancellation
+            bool wasSuccessful = (results[0] == 1);  // First element is success flag
+            int processedCatalogs = results[1];
+            int skippedCatalogs = results[2];
+
+            qDebug() << "Reporting: Success=" << wasSuccessful << "Processed=" << processedCatalogs << "Skipped=" << skippedCatalogs;
+
+            // Create a summary device for reporting
+            Device summaryDevice;
+            if (wasSuccessful) {
+                summaryDevice.name = QString("Update completed: %1 catalogs processed").arg(processedCatalogs);
+            } else {
+                summaryDevice.name = QString("Update stopped: %1 processed, %2 skipped").arg(processedCatalogs).arg(skippedCatalogs);
+            }
+            summaryDevice.type = "BatchSummary";
+
+            // Report using existing method
+            reportAllUpdates(&summaryDevice, results, "update");
+        }
+
+        // Refresh UI
+        loadDevicesView("");
+        currentUpdateDevice = nullptr;
+
+        qDebug() << "Unified: UI restoration complete";
+    });
+
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled, this, [this]() {
+        qDebug() << "Unified: Operation cancelled - restoring UI";
+
+        // Always restore UI state on cancellation
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+        QApplication::restoreOverrideCursor();
+
+        // Refresh UI
+        loadDevicesView("");
+        currentUpdateDevice = nullptr;
+
+        qDebug() << "Unified: Cancellation UI restoration complete";
+    });
+
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationError, this, [this](const QString& error) {
+        qDebug() << "Unified: Operation error - restoring UI";
+        qDebug() << "Error:" << error;
+
+        // Always restore UI state on error
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+        QApplication::restoreOverrideCursor();
+
+        // Show error message
+        QMessageBox::warning(this, "Katalog", error);
+
+        // Refresh UI
+        loadDevicesView("");
+        currentUpdateDevice = nullptr;
+
+        qDebug() << "Unified: Error UI restoration complete";
+    });
+
+    // ===== PROGRESS UPDATES =====
+    connect(deviceUpdateManager, &DeviceUpdateManager::deviceProcessingStarted,
+            this, [this](const QString& deviceName, const QString& deviceType) {
+                currentUpdateDevice = selectedDevice; // Track current device
+
+                QString message = QString("Processing: %1 (%2)").arg(deviceName, deviceType);
+                statusBar()->show();
+                statusBar()->showMessage(message);
+
+                qDebug() << "Processing started:" << deviceName;
+            });
+
+    connect(deviceUpdateManager, &DeviceUpdateManager::catalogProgress,
+            this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
+                QString message = QString("Files processed: %1 | Total files: %2")
+                                  .arg(QLocale().toString(filesProcessed))
+                                  .arg(QLocale().toString(totalFiles));
+
+                if (!currentPath.isEmpty()) {
+                    message += QString(" | %1").arg(currentPath);
+                }
+
+                statusBar()->show();
+                statusBar()->showMessage(message);
+            });
+}
+
+// ===== CORRECTED OPERATION HANDLERS =====
+
+// Single Catalog Update - CORRECTED to not duplicate existing button logic
+void MainWindow::startSingleCatalogUpdateUnified()
+{
+    qDebug() << "=== Single Catalog Update (Unified) ===";
+
+    if (!selectedDevice || selectedDevice->type != "Catalog") {
+        QMessageBox::information(this, "Katalog", tr("Select a catalog to update."));
+        return;
+    }
+
+    if (!selectedDevice->active) {
+        QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
+        return;
+    }
+
+    // Disable UI during operation
+    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // UNIFIED APPROACH: Just update the single catalog hierarchy
+    deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
+                                               collection->databaseMode,
+                                               collection->folder);
+}
+
+// UpdateAllActive - CORRECTED helper methods
+QList<Device*> MainWindow::collectActiveCatalogs()
+{
+    QList<Device*> activeCatalogs;
+
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+        SELECT device_id
+        FROM device
+        WHERE device_type = 'Catalog' AND device_active = 1
+    )");
+
+    query.exec(querySQL);
+    while (query.next()) {
+        Device* catalog = new Device();
+        catalog->ID = query.value(0).toInt();
+        catalog->loadDevice("defaultConnection");
+        activeCatalogs.append(catalog);
+    }
+
+    return activeCatalogs;
+}
+
+bool MainWindow::confirmBatchOperation(int deviceCount)
+{
+    QString message = tr("Update %1 devices?").arg(deviceCount);
+    return QMessageBox::question(this, "Katalog", message) == QMessageBox::Yes;
+}
+
+// UpdateAllActive - CORRECTED implementation
+void MainWindow::startUpdateAllActiveCatalogsUnified()
+{
+    qDebug() << "=== Update All Active Catalogs (Unified) ===";
+
+    // Collect active catalogs using corrected helper
+    QList<Device*> activeCatalogs = collectActiveCatalogs();
+
+    if (activeCatalogs.isEmpty()) {
+        QMessageBox::information(this, "Katalog", tr("No active catalogs found."));
+        return;
+    }
+
+    // Show confirmation using corrected helper
+    if (!confirmBatchOperation(activeCatalogs.size())) {
+        qDeleteAll(activeCatalogs);
+        return;
+    }
+
+    // Disable UI during operation
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // UNIFIED APPROACH: Create temporary virtual device and update its hierarchy
+    Device* tempVirtualDevice = deviceUpdateManager->createTempVirtualDeviceForActiveCatalogs(activeCatalogs);
+
+    deviceUpdateManager->updateDeviceHierarchy(tempVirtualDevice,
+                                               collection->databaseMode,
+                                               collection->folder);
+}
+
+// Storage Device Update - CORRECTED
+void MainWindow::updateStorageDevice(Device* storageDevice)
+{
+    qDebug() << "=== Storage Device Update (Unified) ===";
+    qDebug() << "Storage device:" << (storageDevice ? storageDevice->name : "NULL");
+
+    if (!storageDevice || storageDevice->type != "Storage") {
+        QMessageBox::warning(this, "Katalog", tr("Invalid storage device."));
+        return;
+    }
+
+    // Show confirmation for storage update (updates all child catalogs)
+    QString message = tr("Update storage '%1' and all its catalogs?").arg(storageDevice->name);
+    if (QMessageBox::question(this, "Katalog", message) != QMessageBox::Yes) {
+        return;
+    }
+
+    // Disable UI during operation
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // UNIFIED APPROACH: Just update the storage hierarchy (includes all children)
+    deviceUpdateManager->updateDeviceHierarchy(storageDevice,
+                                               collection->databaseMode,
+                                               collection->folder);
+}
+
+// Virtual Device Update - CORRECTED
+void MainWindow::updateVirtualDevice(Device* virtualDevice)
+{
+    qDebug() << "=== Virtual Device Update (Unified) ===";
+    qDebug() << "Virtual device:" << (virtualDevice ? virtualDevice->name : "NULL");
+
+    if (!virtualDevice || virtualDevice->type != "Virtual") {
+        QMessageBox::warning(this, "Katalog", tr("Invalid virtual device."));
+        return;
+    }
+
+    // Show confirmation
+    QString message = tr("Update virtual device '%1' and all its sub-devices?").arg(virtualDevice->name);
+    if (QMessageBox::question(this, "Katalog", message) != QMessageBox::Yes) {
+        return;
+    }
+
+    // Disable UI during operation
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // UNIFIED APPROACH: Just update the virtual device hierarchy
+    deviceUpdateManager->updateDeviceHierarchy(virtualDevice,
+                                               collection->databaseMode,
+                                               collection->folder);
+}
+
+// Context Menu - SIMPLIFIED for now (you can implement getDeviceFromIndex as needed)
+void MainWindow::onDeviceContextMenuRequested(const QPoint& pos)
+{
+    // This is a placeholder - implement based on your existing context menu pattern
+    qDebug() << "Device context menu requested at:" << pos;
+
+    // For now, just show that the method exists
+    // You can implement the actual context menu logic based on your existing patterns
+}
+
+// Placeholder for getDeviceFromIndex if it doesn't exist
+/*
+Device* MainWindow::getDeviceFromIndex(const QModelIndex& index)
+{
+    // Implement this based on your existing tree view model
+    // This is just a placeholder to prevent compilation errors
+    Q_UNUSED(index);
+    return nullptr;
+}
+*/
+
+
 //--- Storage --------------------------------------------------------------
 void MainWindow::loadStorageList()
 {//Load Storage selection to comboBoxes

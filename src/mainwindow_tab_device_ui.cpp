@@ -521,54 +521,27 @@ void MainWindow::on_Devices_pushButton_ApplyToSelection_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
 {
-    qDebug() << "=== SINGLE UPDATE CLICKED ===";
+    qDebug() << "=== Single Catalog Update ===";
 
     if (!activeDevice || activeDevice->type != "Catalog") {
-        qDebug() << "ERROR: No valid catalog device selected";
+        QMessageBox::information(this, "Katalog", tr("Select a catalog to update."));
         return;
     }
 
-    if (!catalogManager || catalogManager->catalogOperationRunning()) {
-        qDebug() << "ERROR: Catalog manager not available or already running";
+    if (!activeDevice->active) {
+        QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
         return;
     }
 
-    qDebug() << "Starting SINGLE catalog update for:" << activeDevice->name;
-
-    // ENSURE we're NOT in batch mode
-    inBatchMode = false;
-    currentUpdateDevice = nullptr;
-    qDebug() << "Cleared batch mode flag";
-
-    // UI Protection
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    ui->Catalogs_pushButton_Stop->setEnabled(true);
+    // Disable UI during operation
     ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-    qDebug() << "Set wait cursor and disabled button";
+    ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // Set current device
-    currentUpdateDevice = activeDevice;
-    activeDevice->catalog->appVersion = currentVersion;
-    qDebug() << "Set current device:" << activeDevice->name;
-
-    // Start update
-    CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-    if (catalogProgressManager) {
-        catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
-        qDebug() << "Updated progress manager";
-    }
-
-    qDebug() << "Starting catalog update operation";
-    catalogManager->startCatalogJobStoppable(
-        catalogJobStoppable,
-        activeDevice,
-        CatalogJobStoppable::UpdateCatalog,
-        collection->databaseMode,
-        collection->folder
-        );
-
-    qDebug() << "Single catalog update started";
+    // UNIFIED APPROACH: Just update the single catalog hierarchy
+    deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                               collection->databaseMode,
+                                               collection->folder);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -686,55 +659,53 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_Stop_clicked()
 {
-    qDebug() << "=== Catalogs Stop button clicked ===";
+    qDebug() << "=== UNIFIED Stop Button Clicked ===";
 
-    // Check for Ctrl modifier key
+    // Check for modifier key
     bool ctrlPressed = QApplication::keyboardModifiers() & Qt::ControlModifier;
-    bool useGentleStop = ctrlPressed;
 
-    qDebug() << "Ctrl key pressed:" << ctrlPressed;
-    qDebug() << "useGentleStop:" << useGentleStop;
-    qDebug() << "Will call:" << (useGentleStop ? "requestGentleStop()" : "requestHardStop()");
+    if (!deviceUpdateManager || !deviceUpdateManager->operationRunning()) {
+        qDebug() << "No unified operation running - checking legacy systems";
 
-    bool operationStopped = false;
+        // Fall back to legacy stop handling
+        bool operationStopped = false;
 
-    // CHECK DEVICEMANAGER FIRST - it takes priority
-    if (deviceManager && deviceManager->deviceOperationRunning()) {
-        qDebug() << "DeviceManager running - using gentle stop (hard stop not supported for device operations)";
-        deviceManager->requestGentleStop();
-        operationStopped = true;
-    }
-    else if (catalogManager && (catalogManager->catalogOperationRunning() || catalogManager->inBatchMode())) {
-        qDebug() << "CatalogManager is running. Batch mode:" << catalogManager->inBatchMode();
-
-        if (useGentleStop) {
-            // Ctrl+click: Use gentle stop (existing behavior)
-            if (catalogManager->inBatchMode()) {
-                qDebug() << "CatalogManager batch mode - using gentle stop";
-                catalogManager->requestGentleStop();
-                operationStopped = true;
-            } else {
-                qDebug() << "CatalogManager single mode - using gentle stop";
-                catalogManager->requestGentleStop();
-                operationStopped = true;
-            }
-        } else {
-            // Regular click: Use hard stop (new default behavior)
-            if (catalogManager->inBatchMode()) {
-                qDebug() << "CatalogManager batch mode - using hard stop";
-                catalogManager->requestHardStop();
-                operationStopped = true;
-            } else {
-                qDebug() << "CatalogManager single mode - using hard stop";
-                catalogManager->requestHardStop();
-                operationStopped = true;
-            }
+        if (deviceManager && deviceManager->deviceOperationRunning()) {
+            qDebug() << "DeviceManager running - using gentle stop";
+            deviceManager->requestGentleStop();
+            operationStopped = true;
         }
-    } else {
-        qDebug() << "No operations detected as running";
+        else if (catalogManager && catalogManager->catalogOperationRunning()) {
+            qDebug() << "CatalogManager running - using stop based on modifier";
+            if (ctrlPressed) {
+                catalogManager->requestGentleStop();
+            } else {
+                catalogManager->requestHardStop();
+            }
+            operationStopped = true;
+        }
+
+        if (!operationStopped) {
+            qDebug() << "No operations running - disabling stop button";
+            ui->Catalogs_pushButton_Stop->setEnabled(false);
+        }
+        return;
     }
 
-    qDebug() << "Operation stopped flag:" << operationStopped;
+    // UNIFIED SYSTEM STOP LOGIC
+    qDebug() << "Unified operation running - processing stop request";
+    qDebug() << "Ctrl pressed:" << ctrlPressed;
 
+    if (ctrlPressed) {
+        qDebug() << "Ctrl+Click: Requesting gentle stop";
+        deviceUpdateManager->requestGentleStop();
+    } else {
+        qDebug() << "Regular Click: Requesting hard stop";
+        deviceUpdateManager->requestHardStop();
+    }
+
+    // Immediate UI feedback - disable stop button
     ui->Catalogs_pushButton_Stop->setEnabled(false);
+
+    qDebug() << "Stop request sent - waiting for operation to complete";
 }

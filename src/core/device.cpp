@@ -90,6 +90,8 @@ void Device::loadDevice(QString connectionName){
 
     if(useTimerForDebug) {qDebug() << "      TIMER3: load device query.exec:" << stepTimer.elapsed() << "ms"; stepTimer.restart();}
 
+    // Get active state
+    updateActiveState(connectionName);
 
     //Load storage values
     if(type == "Storage"){

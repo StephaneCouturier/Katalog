@@ -66,6 +66,16 @@ void CatalogProgressManager::setCatalogManager(CatalogManager *catalogManager)
                 this, &CatalogProgressManager::updateFromCatalogManager);
         connect(m_catalogManager, &CatalogManager::currentCatalogNameChanged,
                 this, &CatalogProgressManager::updateFromCatalogManager);
+        connect(m_catalogManager, &CatalogManager::catalogOperationCancelled,
+                this, [this]() {
+                    qDebug() << "CatalogProgressManager: Operation cancelled - clearing status immediately";
+                    if (m_statusBar) {
+                        m_statusBar->showMessage("Catalog operation cancelled");
+                        if (m_statusBarTimer) {
+                            m_statusBarTimer->start(5000);
+                        }
+                    }
+                });
     }
 }
 
@@ -74,6 +84,8 @@ void CatalogProgressManager::setCurrentCatalogEngine(CatalogJobStoppable *curren
     m_currentCatalogEngine = currentCatalogEngine;
 }
 
+// Replace this method in src/core/catalogprogressmanager.cpp
+
 void CatalogProgressManager::updateFromCatalogManager()
 {
     if (!m_catalogManager || !m_statusBar) return;
@@ -81,6 +93,7 @@ void CatalogProgressManager::updateFromCatalogManager()
     QString message;
 
     if (m_catalogManager->catalogOperationRunning()) {
+        // OPERATION IS RUNNING - Show progress
 
         // Simple detection: if totalFiles is 0 AND path contains "Counting", we're counting
         if (m_catalogManager->totalFiles() == 0 &&
@@ -102,9 +115,6 @@ void CatalogProgressManager::updateFromCatalogManager()
             if (!m_catalogManager->currentPath().isEmpty() &&
                 !m_catalogManager->currentPath().contains("Counting")) {
                 QString displayPath = m_catalogManager->currentPath();
-                // if (displayPath.length() > 60) {
-                //     displayPath = "..." + displayPath.right(57);
-                // }
                 message += QString(" | %1").arg(displayPath);
             }
 
@@ -128,16 +138,30 @@ void CatalogProgressManager::updateFromCatalogManager()
         }
 
     } else {
-        // Not running - existing code
-        if (m_catalogManager->status() == "Ready") {
+        // OPERATION IS NOT RUNNING - Show final status WITHOUT stale progress data
+
+        QString status = m_catalogManager->status();
+
+        // CRITICAL FIX: Detect cancellation and show appropriate message
+        if (status.contains("stopped", Qt::CaseInsensitive) ||
+            status.contains("cancelled", Qt::CaseInsensitive)) {
+            // Operation was cancelled - show clear cancellation message
+            message = "Catalog operation cancelled";
+        }
+        else if (status == "Ready") {
             message = tr("Ready for catalog operations");
-        } else {
-            message = m_catalogManager->status();
-            if (message.contains("completed successfully", Qt::CaseInsensitive) &&
-                m_catalogManager->filesProcessed() > 0) {
+        }
+        else if (status.contains("completed successfully", Qt::CaseInsensitive)) {
+            // Success - can show file count if available and non-zero
+            message = status;
+            if (m_catalogManager->filesProcessed() > 0) {
                 message += QString(" | %1 files processed")
                 .arg(QLocale().toString(m_catalogManager->filesProcessed()));
             }
+        }
+        else {
+            // Any other status - just show it as-is
+            message = status;
         }
 
         m_statusBar->show();
