@@ -2117,6 +2117,31 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
     qDebug() << "Results count:" << results.size();
 
+    // Determine correct device for reporting
+    Device* reportDevice = nullptr;
+
+    // First, try to get the device from DeviceUpdateManager if possible
+    if (deviceUpdateManager && deviceUpdateManager->operationRunning() == false) {
+        // The operation just completed, so we can't get currentDevice from the manager
+        // We need to determine which device was updated
+    }
+
+    // Strategy: Use activeDevice if it's a catalog, otherwise use selectedDevice
+    if (activeDevice && activeDevice->type == "Catalog") {
+        reportDevice = activeDevice;
+        qDebug() << "Using activeDevice for report:" << activeDevice->name;
+    } else if (selectedDevice && selectedDevice->type == "Catalog") {
+        reportDevice = selectedDevice;
+        qDebug() << "Using selectedDevice for report:" << selectedDevice->name;
+    } else {
+        qDebug() << "*** ERROR: Cannot determine which device to report ***";
+        qDebug() << "activeDevice:" << (activeDevice ? activeDevice->name : "NULL");
+        qDebug() << "selectedDevice:" << (selectedDevice ? selectedDevice->name : "NULL");
+
+        // Fallback: try activeDevice first, then selectedDevice
+        reportDevice = activeDevice ? activeDevice : selectedDevice;
+    }
+
     // Restore UI state
     setCatalogUpdateUIState(false);
 
@@ -2140,7 +2165,14 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     statusBar()->showMessage(message, 5000);
     qDebug() << "Catalog update completed successfully";
 
-    reportAllUpdates(activeDevice, results, "update");
+    // Only call reportAllUpdates if we have a valid device
+    if (reportDevice) {
+        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name;
+        reportAllUpdates(reportDevice, results, "update");
+        qDebug() << "*** reportAllUpdates completed successfully ***";
+    } else {
+        qDebug() << "*** ERROR: No valid device for reportAllUpdates - skipping report ***";
+    }
 
     loadDevicesView("");
 }

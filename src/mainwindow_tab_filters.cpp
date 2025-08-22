@@ -180,26 +180,41 @@
             QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
             deviceContextMenu.addAction(menuDeviceAction3);
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-                qDebug() << "Storage update requested for:" << selectedDevice->name;
-                ui->Catalogs_pushButton_Stop->setEnabled(true);
+                qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) ===";
 
-                // Ensure CatalogProgressManager is connected (double-check)
-                if (catalogProgressManager && deviceManager) {
-                    deviceManager->setCatalogProgressManager(catalogProgressManager);
+                if (!selectedDevice || selectedDevice->type != "Catalog") {
+                    qDebug() << "Filters context menu update - invalid device";
+                    return;
                 }
 
-                // Start device operation using DeviceManager
-                DeviceJobStoppable* deviceEngine = new DeviceJobStoppable(this);
+                if (!selectedDevice->active) {
+                    QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
+                    return;
+                }
 
-                deviceManager->startDeviceOperation(
-                    deviceEngine,
-                    selectedDevice,
-                    DeviceJobStoppable::UpdateDevice,
-                    collection->databaseMode,
-                    collection->folder,
-                    catalogManager);
+                if (!deviceUpdateManager) {
+                    qDebug() << "DeviceUpdateManager not available - setting up now";
+                    setupDeviceUpdateManager();
+                }
 
-                qDebug() << "Device operation started with proper UI integration";
+                // Check if already running
+                if (deviceUpdateManager->operationRunning()) {
+                    QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+                    return;
+                }
+
+                qDebug() << "Filters context menu catalog update for:" << selectedDevice->name;
+
+                // Set UI state for catalog operation
+                setCatalogUpdateUIState(true);
+
+                // FIXED: Use DeviceUpdateManager instead of old CatalogManager
+                // This ensures consistent behavior across all update paths
+                deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
+                                                           collection->databaseMode,
+                                                           collection->folder);
+
+                qDebug() << "Filters context menu - DeviceUpdateManager operation started";
             });
 
             deviceContextMenu.exec(globalPos);
@@ -208,6 +223,8 @@
             //Empty
         }
         else if (selectedDevice->type=="Catalog"){
+            qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) CATALOG ===";
+
             QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
             QMenu deviceContextMenu;
 
@@ -225,10 +242,10 @@
             QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
             deviceContextMenu.addAction(menuDeviceAction3);
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-                qDebug() << "=== Context Menu Update (DeviceUpdateManager) ===";
+                qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) CATALOG ===";
 
                 if (!selectedDevice || selectedDevice->type != "Catalog") {
-                    qDebug() << "Context menu update - invalid device";
+                    qDebug() << "Filters context menu update - invalid device";
                     return;
                 }
 
@@ -238,8 +255,8 @@
                 }
 
                 if (!deviceUpdateManager) {
-                    QMessageBox::critical(this, "Katalog", tr("Device update manager not available."));
-                    return;
+                    qDebug() << "DeviceUpdateManager not available - setting up now";
+                    setupDeviceUpdateManager();
                 }
 
                 // Check if already running
@@ -248,15 +265,18 @@
                     return;
                 }
 
-                qDebug() << "Context menu catalog update for:" << selectedDevice->name;
+                qDebug() << "Filters context menu catalog update for:" << selectedDevice->name;
 
                 // Set UI state for catalog operation
                 setCatalogUpdateUIState(true);
 
-                // Use DeviceUpdateManager instead of old CatalogManager
+                // FIXED: Use DeviceUpdateManager instead of old CatalogManager
+                // This ensures consistent behavior across all update paths
                 deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
                                                            collection->databaseMode,
                                                            collection->folder);
+
+                qDebug() << "Filters context menu - DeviceUpdateManager operation started";
             });
 
             QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);

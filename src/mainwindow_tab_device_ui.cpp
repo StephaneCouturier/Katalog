@@ -222,10 +222,10 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            qDebug() << "=== Context Menu Update (DeviceUpdateManager) ===";
+            qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) ===";
 
             if (!activeDevice || activeDevice->type != "Catalog") {
-                qDebug() << "Context menu update - invalid device";
+                qDebug() << "Filters context menu update - invalid device";
                 return;
             }
 
@@ -234,9 +234,10 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                 return;
             }
 
+            // Ensure DeviceUpdateManager is set up (like in other tabs)
             if (!deviceUpdateManager) {
-                QMessageBox::critical(this, "Katalog", tr("Device update manager not available."));
-                return;
+                qDebug() << "DeviceUpdateManager not available - setting up now";
+                setupDeviceUpdateManager();
             }
 
             // Check if already running
@@ -245,15 +246,18 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                 return;
             }
 
-            qDebug() << "Context menu catalog update for:" << activeDevice->name;
+            qDebug() << "Filters context menu catalog update for:" << activeDevice->name;
 
             // Set UI state for catalog operation
             setCatalogUpdateUIState(true);
 
             // FIXED: Use DeviceUpdateManager instead of old CatalogManager
+            // This ensures consistent behavior across all update paths
             deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                        collection->databaseMode,
                                                        collection->folder);
+
+            qDebug() << "Filters context menu - DeviceUpdateManager operation started";
         });
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
