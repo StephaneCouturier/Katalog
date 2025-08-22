@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "mainwindow_ui_wrapper_device.h"
 #include "src/ui_mainwindow.h"
+#include "src/core/catalogprogressmanager.h"
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
@@ -267,7 +268,7 @@
 
         // Create catalog progress manager with timer reference
         catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, this);
-        catalogProgressManager->setCatalogManager(catalogManager);
+        catalogProgressManager->connectToCatalogManager(catalogManager);
 
         // Connect signals for main operations
         connect(catalogManager, &CatalogManager::catalogOperationCompleted, this, [this]() {
@@ -422,6 +423,13 @@
             ui->Catalogs_pushButton_Stop->setEnabled(false);
             qDebug() << "Batch operation completed - Stop button disabled";
         });
+
+        connect(catalogManager, &CatalogManager::specialProgressUpdate,
+                this, [this](qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString& currentPath) {
+                    QString progressText = tr("Processing: %1 (%2/%3)")
+                    .arg(currentPath, QLocale().toString(filesProcessed), QLocale().toString(totalFiles));
+                    statusBar()->showMessage(progressText);
+                });
 
         qDebug() << "New catalog manager system setup complete";
     }

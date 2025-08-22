@@ -17,7 +17,6 @@ DeviceUpdateManager::~DeviceUpdateManager()
     cleanupOperation();
 }
 
-
 void DeviceUpdateManager::setupCatalogManager()
 {
     qDebug() << "DeviceUpdateManager::setupCatalogManager()";
@@ -224,7 +223,6 @@ Device* DeviceUpdateManager::createTempVirtualDeviceForFilter(const QList<Device
 
     return tempDevice;
 }
-
 
 void DeviceUpdateManager::processNextDevice()
 {
@@ -509,8 +507,6 @@ void DeviceUpdateManager::updateVirtualDevice(Device* device)
     // Virtual devices continue to process their children in processChildren()
 }
 
-
-
 void DeviceUpdateManager::pauseOperation()
 {
     m_isPaused = true;
@@ -528,7 +524,6 @@ void DeviceUpdateManager::stopOperation()
     m_stopRequested.storeRelease(1);
     handleOperationCancellation();
 }
-
 
 QList<qint64> DeviceUpdateManager::buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult)
 {
@@ -788,7 +783,6 @@ void DeviceUpdateManager::requestHardStop()
     });
 }
 
-
 void DeviceUpdateManager::requestGentleStop()
 {
     qDebug() << "DeviceUpdateManager::requestGentleStop() - STOP AFTER CURRENT CATALOG";
@@ -907,14 +901,10 @@ bool DeviceUpdateManager::shouldContinue() const
 void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
 {
     if (catalogProgressManager && m_catalogManager) {
-        catalogProgressManager->setCatalogManager(m_catalogManager);
+        catalogProgressManager->connectToCatalogManager(m_catalogManager);
         qDebug() << "CatalogProgressManager connected to DeviceUpdateManager's CatalogManager";
     }
 }
-
-
-
-// In deviceupdatemanager.cpp - Fix storage update and signal issues
 
 void DeviceUpdateManager::onCatalogOperationCompleted()
 {
@@ -970,7 +960,6 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     });
 }
 
-// FIXED: Corrected storage update method that doesn't call updateStorageInfo twice
 Storage::UpdateResult DeviceUpdateManager::updateParentStorage(Device* catalogDevice)
 {
     qDebug() << "=== DeviceUpdateManager::updateParentStorage (FIXED) ===";

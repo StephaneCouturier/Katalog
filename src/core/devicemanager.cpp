@@ -185,7 +185,7 @@ void DeviceManager::setCatalogProgressManager(CatalogProgressManager* catalogPro
 
     if (m_catalogProgressManager && m_catalogManager) {
         // Connect the existing CatalogProgressManager to our CatalogManager
-        m_catalogProgressManager->setCatalogManager(m_catalogManager);
+        m_catalogProgressManager->connectToCatalogManager(m_catalogManager);
         qDebug() << "CatalogProgressManager connected to DeviceManager's CatalogManager";
     }
 }

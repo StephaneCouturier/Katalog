@@ -41,7 +41,7 @@ CatalogProgressManager::CatalogProgressManager(QStatusBar *statusBar, QTimer *ti
     qDebug() << "CatalogProgressManager created with statusBar and timer";
 }
 
-void CatalogProgressManager::setCatalogManager(CatalogManager *catalogManager)
+void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogManager)
 {
     if (m_catalogManager) {
         // Disconnect from previous catalog manager
@@ -49,6 +49,8 @@ void CatalogProgressManager::setCatalogManager(CatalogManager *catalogManager)
     }
 
     m_catalogManager = catalogManager;
+
+
 
     if (m_catalogManager) {
         // Connect to catalog manager signals for automatic updates

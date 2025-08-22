@@ -59,7 +59,7 @@ public:
      * @brief Set the catalog manager to monitor
      * @param catalogManager The catalog manager instance
      */
-    void setCatalogManager(CatalogManager *catalogManager);
+    void connectToCatalogManager(CatalogManager *catalogManager);
 
     /**
      * @brief Set the current catalog operation engine for detailed progress
