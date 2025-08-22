@@ -47,9 +47,15 @@ void DeviceUpdateManager::continueToNextDevice()
 {
     qDebug() << "=== DeviceUpdateManager::continueToNextDevice ===";
 
+    // Check if operation already completed to prevent duplicate reports
+    if (!m_operationRunning) {
+        qDebug() << "Operation already completed - skipping continueToNextDevice";
+        return;
+    }
+
     // For single device operation, complete
     if (m_allDevices.size() <= 1) {
-        completeOperation();  // FIXED: Remove results parameter
+        completeOperation();
         return;
     }
 
@@ -352,14 +358,33 @@ void DeviceUpdateManager::updateDeviceRecursive(Device* device)
 
 void DeviceUpdateManager::updateCatalogDevice(Device* device)
 {
-    // Remove all the timer simulation code and replace with:
+    qDebug() << "=== DeviceUpdateManager::updateCatalogDevice ===";
+    qDebug() << "Updating Catalog Device:" << device->name;
+    setStatus(QString("Updating catalog device: %1").arg(device->name));
 
     if (!device->active) {
+        qDebug() << "Catalog is inactive, skipping:" << device->name;
+
+        // Create a "skipped" result for reporting
+        QList<qint64> skippedResults;
+        skippedResults << 0;  // 0 = skipped (not success=1, not error=-1)
+        skippedResults << 0;  // No files processed
+        skippedResults << 0;  // No delta files
+        skippedResults << 0;  // No size
+        skippedResults << 0;  // No delta size
+        for (int i = 5; i < 14; ++i) skippedResults << 0; // Padding
+
         m_processedDevices++;
         m_processedCatalogs++;
         updateProgress();
+
         emit deviceProcessingCompleted(device->name);
-        continueToNextDevice();
+
+        // For inactive catalogs, complete immediately without storage update
+        m_operationRunning = false;
+        emit operationCompleted(skippedResults);
+        emit operationRunningChanged();
+        cleanupOperation();
         return;
     }
 
@@ -368,20 +393,27 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
         return;
     }
 
+    // CRITICAL: Set waiting flag and current device
     m_waitingForCatalogCompletion = true;
     m_currentDevice = device;
 
+    // Pass device values for catalog operations (same as Device::updateDevice logic)
     device->catalog->name = device->name;
     device->catalog->sourcePath = device->path;
 
+    // Clean up any existing catalog job
     cleanupCatalogJob();
     m_currentCatalogJob = new CatalogJobStoppable(this);
 
+    // Connect progress updates for UI
     connect(m_currentCatalogJob, &CatalogJobStoppable::catalogProgress,
             this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
                 emit catalogProgress(filesProcessed, totalFiles, currentPath);
             });
 
+    qDebug() << "Starting catalog operation for:" << device->name;
+
+    // CRITICAL: Start the actual catalog operation that will trigger onCatalogOperationCompleted()
     m_catalogManager->startCatalogJobStoppable(
         m_currentCatalogJob,
         device,
@@ -389,6 +421,8 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
         m_databaseMode,
         m_collectionFolder
         );
+
+    qDebug() << "Catalog operation started, waiting for completion...";
 }
 
 void DeviceUpdateManager::updateStorageDevice(Device* device)
@@ -506,48 +540,19 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     emit deviceProcessingCompleted(m_currentDevice->name);
 
     m_waitingForCatalogCompletion = false;
-
     m_currentDevice->updateParentsNumbers();
 
     // Update parent storage using existing updateStorageDevice logic
     Storage::UpdateResult storageResult = updateParentStorage(m_currentDevice);
-
     QList<qint64> results = buildCatalogUpdateResults(m_currentDevice, storageResult);
 
-    /*
-    // BEFORE continueToNextDevice(), capture storage results for reporting
-    QList<qint64> results;
-    results << 1;  // Success flag
+    // Mark operation as completed to prevent duplicate completion
+    m_operationRunning = false;
+    m_waitingForCatalogCompletion = false;
 
-    // Catalog results
-    results << m_currentDevice->totalFileCount;  // Total files
-    results << 0;  // Delta files (could calculate if needed)
-    results << m_currentDevice->totalFileSize;   // Total size
-    results << 0;  // Delta size (could calculate if needed)
-
-    // Get storage update results from CatalogJobStoppable
-    if (m_currentCatalogJob) {
-        Storage::UpdateResult storageResult = m_currentCatalogJob->getResults()->getStorageUpdateResult();
-        if (storageResult.wasUpdated) {
-            results << storageResult.newTotalSpace;   // Storage total space
-            results << storageResult.newFreeSpace;    // Storage free space
-            results << 1;  // Storage was updated flag
-        } else {
-            results << 0 << 0 << 0;  // No storage update
-        }
-    } else {
-        results << 0 << 0 << 0;  // No storage update
-    }
-
-    // Pad to expected length
-    while (results.size() < 14) results << 0;
-
-    // Store results for completion
-    m_accumulatedResults = results;
-*/
     emit operationCompleted(results);
-
-    continueToNextDevice();  // FIXED: Use new method
+    emit operationRunningChanged();
+    cleanupOperation();
 }
 
 QList<qint64> DeviceUpdateManager::buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult)
@@ -791,6 +796,12 @@ void DeviceUpdateManager::requestHardStop()
 
     setStatus("Hard stopping immediately...");
 
+    // Delegate stop to underlying CatalogManager if active
+    if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
+        qDebug() << "Delegating hard stop to CatalogManager";
+        m_catalogManager->requestHardStop();
+    }
+
     // Immediately cancel any waiting operations
     if (m_waitingForCatalogCompletion) {
         m_waitingForCatalogCompletion = false;
@@ -802,12 +813,19 @@ void DeviceUpdateManager::requestHardStop()
     });
 }
 
+
 void DeviceUpdateManager::requestGentleStop()
 {
     qDebug() << "DeviceUpdateManager::requestGentleStop() - STOP AFTER CURRENT CATALOG";
 
     m_gentleStopRequested.storeRelease(1);
     setStatus("Gentle stopping after current catalog completes...");
+
+    // For catalogs, gentle stop = hard stop (can't pause mid-catalog)
+    if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
+        qDebug() << "Delegating gentle stop to CatalogManager (will be hard stop for catalog)";
+        m_catalogManager->requestGentleStop();
+    }
 
     // If no catalog is currently running, stop immediately
     if (!m_waitingForCatalogCompletion) {
@@ -827,22 +845,17 @@ void DeviceUpdateManager::handleOperationCancellation()
     m_operationRunning = false;
     m_waitingForCatalogCompletion = false;
 
-    // Calculate skipped counts for reporting
+    // Calculate skipped counts for logging only
     int skippedDevices = m_totalDevices - m_processedDevices;
     int skippedCatalogs = m_totalCatalogs - m_processedCatalogs;
 
     setStatus(QString("Operation cancelled - %1 catalogs skipped").arg(skippedCatalogs));
 
-    // Create results with skip information
-    QList<qint64> results;
-    results << 0;  // Operation cancelled
-    results << m_processedCatalogs;     // Processed catalogs
-    results << skippedCatalogs;         // Skipped catalogs due to stop
-    results << m_processedDevices;      // Processed devices
-    results << skippedDevices;          // Skipped devices due to stop
+    // Remove the problematic operationCompleted emission
+    // This was causing crashes because reportAllUpdates expects catalog update format,
+    // not cancellation format. The UI properly handles cancellation via operationCancelled.
 
     emit operationCancelled();
-    emit operationCompleted(results);  // Send results for reporting
     emit operationRunningChanged();
 
     cleanupOperation();
@@ -851,6 +864,13 @@ void DeviceUpdateManager::handleOperationCancellation()
 void DeviceUpdateManager::completeOperation()
 {
     qDebug() << "=== DeviceUpdateManager::completeOperation ===";
+
+    // Prevent duplicate completion
+    if (!m_operationRunning) {
+        qDebug() << "Operation already completed - skipping duplicate completion";
+        return;
+    }
+
     qDebug() << "Total devices processed:" << m_processedDevices << "/" << m_totalDevices;
     qDebug() << "Total catalogs processed:" << m_processedCatalogs << "/" << m_totalCatalogs;
 
@@ -867,11 +887,13 @@ void DeviceUpdateManager::completeOperation()
     m_operationRunning = false;
     m_waitingForCatalogCompletion = false;
 
-    // Create results in catalog format for reportAllUpdates
+    // Create results for operations NOT handled by onCatalogOperationCompleted
     QList<qint64> results;
     results << 1;  // Success flag
 
     if (m_currentDevice && m_currentDevice->type == "Catalog") {
+        qDebug() << "WARNING: completeOperation() called for single catalog - this suggests a code path issue";
+
         // For single catalog: use actual catalog statistics
         results << m_currentDevice->totalFileCount;  // Total files
         results << 0;  // Delta files (would need to calculate)
@@ -887,8 +909,6 @@ void DeviceUpdateManager::completeOperation()
         results << 0;
         for (int i = 5; i < 14; ++i) results << 0;
     }
-
-    //setStatus(QString("Operation completed - %1 catalogs processed").arg(m_processedCatalogs));
 
     emit operationCompleted(results);
     emit operationRunningChanged();

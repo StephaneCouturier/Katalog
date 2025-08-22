@@ -222,33 +222,38 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            // Use new catalog system for context menu update
-            if (!catalogManager || catalogManager->catalogOperationRunning()) {
-                qDebug() << "Catalog manager not available for context menu update";
+            qDebug() << "=== Context Menu Update (DeviceUpdateManager) ===";
+
+            if (!activeDevice || activeDevice->type != "Catalog") {
+                qDebug() << "Context menu update - invalid device";
                 return;
             }
 
-            qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
-            ui->Catalogs_pushButton_Stop->setEnabled(true);
-
-            // Clear batch mode - this is a single update
-            inBatchMode = false;
-            currentUpdateDevice = activeDevice;
-            activeDevice->catalog->appVersion = currentVersion;
-
-            CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-            if (catalogProgressManager) {
-                catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+            if (!activeDevice->active) {
+                QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
+                return;
             }
 
-            catalogManager->startCatalogJobStoppable(
-                catalogJobStoppable,
-                activeDevice,
-                CatalogJobStoppable::UpdateCatalog,
-                collection->databaseMode,
-                collection->folder
-                );
+            if (!deviceUpdateManager) {
+                QMessageBox::critical(this, "Katalog", tr("Device update manager not available."));
+                return;
+            }
+
+            // Check if already running
+            if (deviceUpdateManager->operationRunning()) {
+                QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+                return;
+            }
+
+            qDebug() << "Context menu catalog update for:" << activeDevice->name;
+
+            // Set UI state for catalog operation
+            setCatalogUpdateUIState(true);
+
+            // FIXED: Use DeviceUpdateManager instead of old CatalogManager
+            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                       collection->databaseMode,
+                                                       collection->folder);
         });
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
@@ -689,28 +694,7 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
         return;
     }
 
-    // Ask user for stop type
-    QMessageBox::StandardButton reply = QMessageBox::question(
-        this,
-        "Katalog",
-        tr("How do you want to stop the catalog operation?\n\n"
-           "• Gentle Stop: Let current catalog complete, then stop\n"
-           "• Hard Stop: Stop immediately"),
-        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
-        QMessageBox::Yes
-        );
-
-    if (reply == QMessageBox::Yes) {
-        qDebug() << "Requesting gentle stop";
-        statusBar()->showMessage(tr("Stopping after current catalog completes..."));
-        deviceUpdateManager->requestGentleStop();
-
-    } else if (reply == QMessageBox::No) {
-        qDebug() << "Requesting hard stop";
-        statusBar()->showMessage(tr("Stopping immediately..."));
-        deviceUpdateManager->requestHardStop();
-
-    } else {
-        qDebug() << "Stop cancelled by user";
-    }
+    qDebug() << "Requesting hard stop (catalog operations can only be hard stopped)";
+    statusBar()->showMessage(tr("Stopping catalog operation..."));
+    deviceUpdateManager->requestHardStop();
 }

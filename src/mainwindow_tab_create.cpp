@@ -272,33 +272,30 @@
         // Connect signals for main operations
         connect(catalogManager, &CatalogManager::catalogOperationCompleted, this, [this]() {
             if (currentCatalogDevice) {
+                // Handle catalog CREATION (always through old system)
                 onCatalogOperationCompleted();
             } else if (currentUpdateDevice) {
                 qDebug() << "Catalog update completed for:" << currentUpdateDevice->name;
+
                 if (!catalogManager->inBatchMode()) {
                     ui->Catalogs_pushButton_Stop->setEnabled(false);
                 }
-                // Only handle single updates, not batch updates
+
+                // Only handle batch updates through old system
+                // Single updates are now handled by DeviceUpdateManager
                 bool isBatchUpdate = catalogManager->inBatchMode();
 
-                if (!isBatchUpdate) {
-                    // Single update - show report using proper results
-                    qDebug() << "Single catalog update - getting results from catalog engine";
-
-                    CatalogJobStoppable* catalogEngine = catalogManager->getCurrentCatalogEngine();
-                    if (catalogEngine) {
-                        QList<qint64> results = catalogEngine->getResults();
-                        reportAllUpdates(currentUpdateDevice, results, "update");
-                    }
-
-                    // Single update cleanup
-                    currentUpdateDevice = nullptr;
-                    QApplication::restoreOverrideCursor();
-                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-                    loadDevicesView("");
-                } else {
+                if (isBatchUpdate) {
                     qDebug() << "Batch catalog update - report handled by batchNeedsUIReport signal";
-                    // Do nothing for batch updates
+                    // Batch updates handled by existing batch reporting system
+                } else {
+                    qDebug() << "Single catalog update completed - handled by DeviceUpdateManager (skip old system report)";
+                    // REMOVED: reportAllUpdates call for single updates
+                    // DeviceUpdateManager now handles all single update reporting with combined catalog+storage data
+
+                    // Only do minimal cleanup if this was an old-style direct operation
+                    // (DeviceUpdateManager operations handle their own cleanup)
+                    currentUpdateDevice = nullptr;
                 }
             }
         });
