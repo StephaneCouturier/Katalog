@@ -346,7 +346,7 @@ void CatalogJobStoppable::updateCatalogWithProgress()
 
         // 5. Update parent storage space info
         qDebug() << "CRITICAL FIX: Updating parent storage space after catalog update";
-        updateParentStorageAfterCatalogUpdate();
+        //updateParentStorageAfterCatalogUpdate();
 
         // 6. Update aggregated file counts up the hierarchy
         qDebug() << "Updating parent device hierarchy numbers";
@@ -686,61 +686,6 @@ void CatalogJobStoppable::emitProgressUpdate(qint64 processed, qint64 total, con
              << (total > 0 ? (processed * 100 / total) : 0) << "%) -" << currentPath;
 
     emit catalogProgress(processed, total, currentPath);
-}
-
-void CatalogJobStoppable::updateParentStorageAfterCatalogUpdate()
-{
-    if (!m_device || m_device->parentID == 0) {
-        qDebug() << "No parent device to update";
-        m_storageWasUpdated = false;
-        return;
-    }
-
-    try {
-        qDebug() << "Loading parent storage device...";
-        Device parentDevice;
-        parentDevice.ID = m_device->parentID;
-        parentDevice.loadDevice("defaultConnection");
-
-        if (parentDevice.type == "Storage" && parentDevice.storage) {
-            qDebug() << "Updating parent storage space info for:" << parentDevice.name;
-
-            // ✅ Refresh physical storage space information and capture results
-            m_storageUpdateResult = parentDevice.storage->updateStorageInfo();
-
-            if (m_storageUpdateResult.wasUpdated) {
-                qDebug() << "Storage space updated successfully";
-                qDebug() << "New total space:" << m_storageUpdateResult.newTotalSpace;
-                qDebug() << "New free space:" << m_storageUpdateResult.newFreeSpace;
-
-                // Update device values with new storage information
-                parentDevice.totalSpace = m_storageUpdateResult.newTotalSpace;
-                parentDevice.freeSpace = m_storageUpdateResult.newFreeSpace;
-                parentDevice.dateTimeUpdated = QDateTime::currentDateTime();
-
-                // Save updated storage device
-                parentDevice.saveDevice();
-
-                // Save storage statistics
-                parentDevice.saveStatistics(parentDevice.dateTimeUpdated, "update");
-
-                // ✅ Mark that storage was successfully updated
-                m_storageWasUpdated = true;
-
-                qDebug() << "Parent storage device updated and saved";
-            } else {
-                qDebug() << "Storage space not updated - Error:" << m_storageUpdateResult.errorMessage;
-                m_storageWasUpdated = false;
-            }
-        } else {
-            qDebug() << "Parent device is not a storage or has no storage object";
-            m_storageWasUpdated = false;
-        }
-
-    } catch (const std::exception& e) {
-        qDebug() << "Error updating parent storage device:" << e.what();
-        m_storageWasUpdated = false;
-    }
 }
 
 void CatalogJobStoppable::updateRelatedCatalogDevices()

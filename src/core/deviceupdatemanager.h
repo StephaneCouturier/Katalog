@@ -8,6 +8,7 @@
 #define DEVICEUPDATEMANAGER_H
 
 #include "core/catalogmanager.h"
+#include "core/catalogprogressmanager.h"
 #include "device.h"
 #include "catalogjobstoppable.h"
 #include <QObject>
@@ -54,7 +55,7 @@ public:
     int totalDevices() const { return m_totalDevices; }
     int processedCatalogs() const { return m_processedCatalogs; }
     int totalCatalogs() const { return m_totalCatalogs; }
-
+void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
 signals:
     // Main operation lifecycle
     void operationStarted();
@@ -120,6 +121,12 @@ private:
     void cleanupCatalogJob();
     void continueToNextDevice();
     void processNextInQueue();
+
+    void updateParentStorageAfterCatalogUpdate(Device* device);
+    bool m_storageWasUpdated;
+    Storage::UpdateResult m_storageUpdateResult;
+    Storage::UpdateResult updateParentStorage(Device* catalogDevice);
+    QList<qint64> buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult);
 
 private:
     // ===== OPERATION STATE =====

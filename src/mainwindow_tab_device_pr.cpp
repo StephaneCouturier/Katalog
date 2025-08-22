@@ -1899,6 +1899,10 @@ void MainWindow::setupDeviceUpdateManager()
                 statusBar()->showMessage(progressText);
             });
 
+    if (catalogProgressManager) {
+        deviceUpdateManager->setCatalogProgressManager(catalogProgressManager);
+    }
+
     qDebug() << "DeviceUpdateManager connections established";
 }
 //--------------------------------------------------------------------------

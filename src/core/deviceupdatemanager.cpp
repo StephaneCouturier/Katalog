@@ -76,6 +76,61 @@ void DeviceUpdateManager::processNextInQueue()
     completeOperation();
 }
 
+void DeviceUpdateManager::updateParentStorageAfterCatalogUpdate(Device *device)
+{
+    if (!device || device->parentID == 0) {
+        qDebug() << "No parent device to update";
+        m_storageWasUpdated = false;
+        return;
+    }
+
+    try {
+        qDebug() << "Loading parent storage device...";
+        Device parentDevice;
+        parentDevice.ID = device->parentID;
+        parentDevice.loadDevice("defaultConnection");
+
+        if (parentDevice.type == "Storage" && parentDevice.storage) {
+            qDebug() << "Updating parent storage space info for:" << parentDevice.name;
+
+            // ✅ Refresh physical storage space information and capture results
+            m_storageUpdateResult = parentDevice.storage->updateStorageInfo();
+
+            if (m_storageUpdateResult.wasUpdated) {
+                qDebug() << "Storage space updated successfully";
+                qDebug() << "New total space:" << m_storageUpdateResult.newTotalSpace;
+                qDebug() << "New free space:" << m_storageUpdateResult.newFreeSpace;
+
+                // Update device values with new storage information
+                parentDevice.totalSpace = m_storageUpdateResult.newTotalSpace;
+                parentDevice.freeSpace = m_storageUpdateResult.newFreeSpace;
+                parentDevice.dateTimeUpdated = QDateTime::currentDateTime();
+
+                // Save updated storage device
+                parentDevice.saveDevice();
+
+                // Save storage statistics
+                parentDevice.saveStatistics(parentDevice.dateTimeUpdated, "update");
+
+                // ✅ Mark that storage was successfully updated
+                m_storageWasUpdated = true;
+
+                qDebug() << "Parent storage device updated and saved";
+            } else {
+                qDebug() << "Storage space not updated - Error:" << m_storageUpdateResult.errorMessage;
+                m_storageWasUpdated = false;
+            }
+        } else {
+            qDebug() << "Parent device is not a storage or has no storage object";
+            m_storageWasUpdated = false;
+        }
+
+    } catch (const std::exception& e) {
+        qDebug() << "Error updating parent storage device:" << e.what();
+        m_storageWasUpdated = false;
+    }
+}
+
 void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
                                                 const QString& databaseMode,
                                                 const QString& collectionFolder)
@@ -392,6 +447,23 @@ void DeviceUpdateManager::updateVirtualDevice(Device* device)
 }
 
 
+Storage::UpdateResult DeviceUpdateManager::updateParentStorage(Device* catalogDevice)
+{
+    if (!catalogDevice || catalogDevice->parentID == 0) return {};
+
+    Device parentDevice;
+    parentDevice.ID = catalogDevice->parentID;
+    parentDevice.loadDevice("defaultConnection");
+
+    if (parentDevice.type == "Storage") {
+        // Reuse existing updateStorageDevice logic
+        updateStorageDevice(&parentDevice);
+        //return parentDevice.storage->getLastUpdateResult();
+        return parentDevice.storage->updateStorageInfo();
+    }
+    return {};
+}
+
 
 void DeviceUpdateManager::pauseOperation()
 {
@@ -435,7 +507,72 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
 
     m_waitingForCatalogCompletion = false;
 
+    m_currentDevice->updateParentsNumbers();
+
+    // Update parent storage using existing updateStorageDevice logic
+    Storage::UpdateResult storageResult = updateParentStorage(m_currentDevice);
+
+    QList<qint64> results = buildCatalogUpdateResults(m_currentDevice, storageResult);
+
+    /*
+    // BEFORE continueToNextDevice(), capture storage results for reporting
+    QList<qint64> results;
+    results << 1;  // Success flag
+
+    // Catalog results
+    results << m_currentDevice->totalFileCount;  // Total files
+    results << 0;  // Delta files (could calculate if needed)
+    results << m_currentDevice->totalFileSize;   // Total size
+    results << 0;  // Delta size (could calculate if needed)
+
+    // Get storage update results from CatalogJobStoppable
+    if (m_currentCatalogJob) {
+        Storage::UpdateResult storageResult = m_currentCatalogJob->getResults()->getStorageUpdateResult();
+        if (storageResult.wasUpdated) {
+            results << storageResult.newTotalSpace;   // Storage total space
+            results << storageResult.newFreeSpace;    // Storage free space
+            results << 1;  // Storage was updated flag
+        } else {
+            results << 0 << 0 << 0;  // No storage update
+        }
+    } else {
+        results << 0 << 0 << 0;  // No storage update
+    }
+
+    // Pad to expected length
+    while (results.size() < 14) results << 0;
+
+    // Store results for completion
+    m_accumulatedResults = results;
+*/
+    emit operationCompleted(results);
+
     continueToNextDevice();  // FIXED: Use new method
+}
+
+QList<qint64> DeviceUpdateManager::buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult)
+{
+    QList<qint64> results;
+
+    // Catalog update results (first 7 elements)
+    results << 1;  // Success
+    results << catalogDevice->totalFileCount;
+    results << 0;  // Delta files (would need calculation)
+    results << catalogDevice->totalFileSize;
+    results << 0;  // Delta size (would need calculation)
+    results << 0;  // Reserved
+    results << 0;  // Reserved
+
+    // Storage update results (next 7 elements)
+    results << (storageResult.wasUpdated ? 1 : 0);  // Storage success
+    results << storageResult.newTotalSpace;
+    results << storageResult.newFreeSpace;
+    results << (storageResult.newTotalSpace - storageResult.newFreeSpace);  // Used space
+    results << 0;  // Reserved
+    results << 0;  // Reserved
+    results << 0;  // Reserved
+
+    return results;
 }
 
 void DeviceUpdateManager::onCatalogOperationError(const QString& error)
@@ -730,15 +867,28 @@ void DeviceUpdateManager::completeOperation()
     m_operationRunning = false;
     m_waitingForCatalogCompletion = false;
 
-    // Calculate final results
+    // Create results in catalog format for reportAllUpdates
     QList<qint64> results;
     results << 1;  // Success flag
-    results << m_processedCatalogs;     // Total processed catalogs
-    results << 0;  // No skipped catalogs (completed successfully)
-    results << m_processedDevices;      // Total processed devices
-    results << 0;  // No skipped devices (completed successfully)
 
-    setStatus(QString("Operation completed - %1 catalogs processed").arg(m_processedCatalogs));
+    if (m_currentDevice && m_currentDevice->type == "Catalog") {
+        // For single catalog: use actual catalog statistics
+        results << m_currentDevice->totalFileCount;  // Total files
+        results << 0;  // Delta files (would need to calculate)
+        results << m_currentDevice->totalFileSize;   // Total size
+        results << 0;  // Delta size (would need to calculate)
+        // Add more zeros to pad the list
+        for (int i = 5; i < 14; ++i) results << 0;
+    } else {
+        // For multi-device: use device counts
+        results << m_processedCatalogs;
+        results << 0;
+        results << m_processedDevices;
+        results << 0;
+        for (int i = 5; i < 14; ++i) results << 0;
+    }
+
+    //setStatus(QString("Operation completed - %1 catalogs processed").arg(m_processedCatalogs));
 
     emit operationCompleted(results);
     emit operationRunningChanged();
@@ -751,4 +901,10 @@ bool DeviceUpdateManager::shouldContinue() const
     return !m_stopRequested.loadAcquire() && m_operationRunning;
 }
 
-
+void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
+{
+    if (catalogProgressManager && m_catalogManager) {
+        catalogProgressManager->setCatalogManager(m_catalogManager);
+        qDebug() << "CatalogProgressManager connected to DeviceUpdateManager's CatalogManager";
+    }
+}
