@@ -8,12 +8,72 @@ DeviceUpdateManager::DeviceUpdateManager(QObject *parent)
     : QObject(parent)
 {
     qDebug() << "DeviceUpdateManager created";
+    setupCatalogManager();  // ADD THIS LINE
 }
 
 DeviceUpdateManager::~DeviceUpdateManager()
 {
     qDebug() << "DeviceUpdateManager destructor";
     cleanupOperation();
+}
+
+
+void DeviceUpdateManager::setupCatalogManager()
+{
+    qDebug() << "DeviceUpdateManager::setupCatalogManager()";
+
+    m_catalogManager = new CatalogManager(this);
+
+    connect(m_catalogManager, &CatalogManager::catalogOperationCompleted,
+            this, &DeviceUpdateManager::onCatalogOperationCompleted);
+    connect(m_catalogManager, &CatalogManager::catalogOperationError,
+            this, &DeviceUpdateManager::onCatalogOperationError);
+    connect(m_catalogManager, &CatalogManager::catalogOperationCancelled,
+            this, &DeviceUpdateManager::onCatalogOperationCancelled);
+
+    qDebug() << "CatalogManager setup complete";
+}
+
+void DeviceUpdateManager::cleanupCatalogJob()
+{
+    if (m_currentCatalogJob) {
+        qDebug() << "Cleaning up catalog job";
+        m_currentCatalogJob->deleteLater();
+        m_currentCatalogJob = nullptr;
+    }
+}
+
+void DeviceUpdateManager::continueToNextDevice()
+{
+    qDebug() << "=== DeviceUpdateManager::continueToNextDevice ===";
+
+    // For single device operation, complete
+    if (m_allDevices.size() <= 1) {
+        completeOperation();  // FIXED: Remove results parameter
+        return;
+    }
+
+    // For multi-device operations, check if all devices are processed
+    if (m_processedDevices >= m_totalDevices) {
+        qDebug() << "All devices processed, completing operation";
+        completeOperation();
+        return;
+    }
+
+    processNextInQueue();
+}
+
+void DeviceUpdateManager::processNextInQueue()
+{
+    qDebug() << "=== DeviceUpdateManager::processNextInQueue ===";
+
+    if (m_processedDevices >= m_totalDevices) {
+        completeOperation();
+        return;
+    }
+
+    // Simplified - complete for now
+    completeOperation();
 }
 
 void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
@@ -98,43 +158,6 @@ Device* DeviceUpdateManager::createTempVirtualDeviceForFilter(const QList<Device
     return tempDevice;
 }
 
-void DeviceUpdateManager::updateVirtualDevice(Device* device)
-{
-    qDebug() << "Updating Virtual Device:" << device->name;
-    setStatus(QString("Updating virtual device: %1").arg(device->name));
-
-    // Virtual devices just aggregate numbers from children
-    device->saveDevice();
-    m_processedDevices++;
-    updateProgress();
-
-    emit deviceProcessingCompleted(device->name);
-}
-
-void DeviceUpdateManager::updateStorageDevice(Device* device)
-{
-    qDebug() << "Updating Storage Device:" << device->name;
-    setStatus(QString("Updating storage device: %1").arg(device->name));
-
-    // Fast operation: Update storage space information
-    if (device->storage) {
-        device->storage->path = device->path;
-
-        Storage::UpdateResult result = device->storage->updateStorageInfo();
-
-        if (result.wasUpdated) {
-            device->freeSpace = result.newFreeSpace;
-            device->totalSpace = result.newTotalSpace;
-            device->saveDevice();
-            device->saveStatistics(device->dateTimeUpdated, "update");
-        }
-    }
-
-    m_processedDevices++;
-    updateProgress();
-
-    emit deviceProcessingCompleted(device->name);
-}
 
 void DeviceUpdateManager::processNextDevice()
 {
@@ -151,6 +174,224 @@ QString DeviceUpdateManager::currentDeviceName() const
 {
     return m_currentDevice ? m_currentDevice->name : QString();
 }
+
+void DeviceUpdateManager::processChildren(Device* device)
+{
+    qDebug() << "=== DeviceUpdateManager::processChildren ===";
+    qDebug() << "Processing children for:" << device->name << "Type:" << device->type;
+
+    if (!device || !shouldContinue()) {
+        if (!shouldContinue()) {
+            qDebug() << "Stop requested - aborting children processing";
+            handleOperationCancellation();
+        }
+        return;
+    }
+
+    // Load children if not already loaded
+    if (device->subDevices.isEmpty() && device->hasSubDevice) {
+        qDebug() << "Loading children for device:" << device->name;
+        device->loadDevice("defaultConnection");
+    }
+
+    // If no children, this device is complete
+    if (device->subDevices.isEmpty()) {
+        qDebug() << "No children found for:" << device->name;
+        updateParentNumbers(device);
+        emit deviceProcessingCompleted(device->name);
+        continueToNextDevice();
+        return;
+    }
+
+    qDebug() << "Found" << device->subDevices.size() << "children for:" << device->name;
+
+    // Process each child recursively
+    for (const Device& childDevice : device->subDevices) {
+        if (!shouldContinue()) {
+            qDebug() << "Stop requested during children processing";
+            handleOperationCancellation();
+            return;
+        }
+
+        // Create a copy for processing
+        Device* childPtr = new Device(childDevice);
+        qDebug() << "Processing child:" << childPtr->name << "Type:" << childPtr->type;
+
+        updateDeviceRecursive(childPtr);
+
+        // If we started an async catalog operation, wait for it to complete
+        if (m_waitingForCatalogCompletion) {
+            qDebug() << "Async catalog operation in progress, waiting...";
+            return;
+        }
+
+        // Check for stop after each child
+        if (!shouldContinue()) {
+            qDebug() << "Stop requested after processing child";
+            handleOperationCancellation();
+            return;
+        }
+    }
+
+    // All children processed for this device
+    qDebug() << "All children processed for:" << device->name;
+    updateParentNumbers(device);
+    emit deviceProcessingCompleted(device->name);
+    continueToNextDevice();
+}
+
+void DeviceUpdateManager::updateDeviceRecursive(Device* device)
+{
+    qDebug() << "=== DeviceUpdateManager::updateDeviceRecursive ===";
+    qDebug() << "Processing device:" << device->name << "Type:" << device->type;
+
+    if (!device || !shouldContinue()) {
+        if (!shouldContinue()) {
+            qDebug() << "Stop requested - aborting recursive processing";
+            handleOperationCancellation();
+        }
+        return;
+    }
+
+    // Check for gentle stop before starting new catalog
+    if (m_gentleStopRequested.loadAcquire() && device->type == "Catalog") {
+        qDebug() << "Gentle stop requested - stopping before catalog:" << device->name;
+        completeOperation();
+        return;
+    }
+
+    // Check for hard stop
+    if (m_stopRequested.loadAcquire()) {
+        qDebug() << "Hard stop requested - aborting processing for:" << device->name;
+        handleOperationCancellation();
+        return;
+    }
+
+    setCurrentDevice(device);
+    emit deviceProcessingStarted(device->name, device->type);
+
+    // Update device active state
+    device->updateActiveState("defaultConnection");
+    device->dateTimeUpdated = QDateTime::currentDateTime();
+
+    // Type-specific processing with proper flow control
+    if (device->type == "Virtual") {
+        updateVirtualDevice(device);
+        processChildren(device);  // Virtual devices process children
+
+    } else if (device->type == "Storage") {
+        updateStorageDevice(device);
+        processChildren(device);  // Storage devices process catalog children
+
+    } else if (device->type == "Catalog") {
+        updateCatalogDevice(device);
+        // NOTE: Catalog completion is handled in onCatalogOperationCompleted()
+        // Do NOT call processChildren here - catalogs are leaf nodes
+
+    } else {
+        qDebug() << "Unknown device type:" << device->type << "- treating as virtual";
+        updateVirtualDevice(device);
+        processChildren(device);
+    }
+}
+
+void DeviceUpdateManager::updateCatalogDevice(Device* device)
+{
+    // Remove all the timer simulation code and replace with:
+
+    if (!device->active) {
+        m_processedDevices++;
+        m_processedCatalogs++;
+        updateProgress();
+        emit deviceProcessingCompleted(device->name);
+        continueToNextDevice();
+        return;
+    }
+
+    if (!m_catalogManager) {
+        handleOperationError("CatalogManager not available");
+        return;
+    }
+
+    m_waitingForCatalogCompletion = true;
+    m_currentDevice = device;
+
+    device->catalog->name = device->name;
+    device->catalog->sourcePath = device->path;
+
+    cleanupCatalogJob();
+    m_currentCatalogJob = new CatalogJobStoppable(this);
+
+    connect(m_currentCatalogJob, &CatalogJobStoppable::catalogProgress,
+            this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
+                emit catalogProgress(filesProcessed, totalFiles, currentPath);
+            });
+
+    m_catalogManager->startCatalogJobStoppable(
+        m_currentCatalogJob,
+        device,
+        CatalogJobStoppable::UpdateCatalog,
+        m_databaseMode,
+        m_collectionFolder
+        );
+}
+
+void DeviceUpdateManager::updateStorageDevice(Device* device)
+{
+    qDebug() << "=== DeviceUpdateManager::updateStorageDevice ===";
+    qDebug() << "Updating Storage Device:" << device->name;
+    setStatus(QString("Updating storage device: %1").arg(device->name));
+
+    // Update storage space information (fast operation)
+    if (device->storage) {
+        device->storage->path = device->path;
+
+        try {
+            // Update storage space info using existing Storage class method
+            Storage::UpdateResult result = device->storage->updateStorageInfo();
+
+            if (result.wasUpdated) {
+                device->freeSpace = result.newFreeSpace;
+                device->totalSpace = result.newTotalSpace;
+                qDebug() << "Storage space updated - Free:" << device->freeSpace
+                         << "Total:" << device->totalSpace;
+            }
+        } catch (const std::exception& e) {
+            qDebug() << "Error updating storage info:" << e.what();
+        }
+    }
+
+    // Save storage device changes
+    device->saveDevice();
+    device->saveStatistics(device->dateTimeUpdated, "update");
+
+    m_processedDevices++;
+    updateProgress();
+
+    emit deviceProcessingCompleted(device->name);
+
+    // Storage devices continue to process their catalog children in processChildren()
+}
+
+void DeviceUpdateManager::updateVirtualDevice(Device* device)
+{
+    qDebug() << "=== DeviceUpdateManager::updateVirtualDevice ===";
+    qDebug() << "Updating Virtual Device:" << device->name;
+    setStatus(QString("Updating virtual device: %1").arg(device->name));
+
+    // Virtual devices just aggregate numbers from children
+    // The actual aggregation happens after children are processed
+    device->saveDevice();
+
+    m_processedDevices++;
+    updateProgress();
+
+    emit deviceProcessingCompleted(device->name);
+
+    // Virtual devices continue to process their children in processChildren()
+}
+
+
 
 void DeviceUpdateManager::pauseOperation()
 {
@@ -172,24 +413,29 @@ void DeviceUpdateManager::stopOperation()
 
 void DeviceUpdateManager::onCatalogOperationCompleted()
 {
-    qDebug() << "Catalog operation completed for:" << (m_currentDevice ? m_currentDevice->name : "unknown");
+    qDebug() << "=== DeviceUpdateManager::onCatalogOperationCompleted ===";
 
-    if (m_currentCatalogJob) {
-        m_currentCatalogJob->deleteLater();
-        m_currentCatalogJob = nullptr;
+    if (!m_currentDevice) {
+        qDebug() << "ERROR: No current device in catalog completion";
+        return;
     }
 
-    m_waitingForCatalogCompletion = false;
+    qDebug() << "Catalog processing completed for:" << m_currentDevice->name;
 
     m_processedDevices++;
     m_processedCatalogs++;
     updateProgress();
 
-    emit deviceProcessingCompleted(m_currentDevice ? m_currentDevice->name : "unknown");
+    m_currentDevice->loadDevice("defaultConnection");
+    m_currentDevice->saveDevice();
+    m_currentDevice->saveStatistics(m_currentDevice->dateTimeUpdated, "update");
+    updateRelatedDevices(m_currentDevice);
 
-    if (m_currentDevice) {
-        processChildren(m_currentDevice);
-    }
+    emit deviceProcessingCompleted(m_currentDevice->name);
+
+    m_waitingForCatalogCompletion = false;
+
+    continueToNextDevice();  // FIXED: Use new method
 }
 
 void DeviceUpdateManager::onCatalogOperationError(const QString& error)
@@ -399,78 +645,6 @@ void DeviceUpdateManager::cleanupTempDevice()
     }
 }
 
-
-
-
-
-
-// Replace these methods in deviceupdatemanager.cpp to fix stop handling:
-
-void DeviceUpdateManager::updateCatalogDevice(Device* device)
-{
-    qDebug() << "Updating Catalog Device:" << device->name;
-    setStatus(QString("Updating catalog: %1").arg(device->name));
-
-    if (!device->active) {
-        qDebug() << "Catalog is inactive, skipping:" << device->name;
-        m_processedDevices++;
-        m_processedCatalogs++;
-        updateProgress();
-        emit deviceProcessingCompleted(device->name);
-        processChildren(device);
-        return;
-    }
-
-    // Check for stop before starting catalog operation
-    if (!shouldContinue()) {
-        qDebug() << "Stop requested before catalog processing:" << device->name;
-        handleOperationCancellation();
-        return;
-    }
-
-    // Set waiting flag
-    m_waitingForCatalogCompletion = true;
-
-    // Prepare catalog for update
-    device->catalog->name = device->name;
-    device->catalog->sourcePath = device->path;
-
-    // Simulate catalog operation with proper stop checking
-    QTimer* catalogTimer = new QTimer(this);
-    catalogTimer->setSingleShot(true);
-
-    connect(catalogTimer, &QTimer::timeout, this, [this, device, catalogTimer]() {
-        catalogTimer->deleteLater();
-
-        // Check for stop during catalog operation
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested during catalog processing:" << device->name;
-            m_waitingForCatalogCompletion = false;
-            handleOperationCancellation();
-            return;
-        }
-
-        // Simulate catalog completion
-        qDebug() << "Catalog processing completed:" << device->name;
-        m_processedDevices++;
-        m_processedCatalogs++;
-        updateProgress();
-
-        device->saveDevice();
-        device->saveStatistics(device->dateTimeUpdated, "update");
-        updateRelatedDevices(device);
-
-        emit deviceProcessingCompleted(device->name);
-        m_waitingForCatalogCompletion = false;
-
-        // Continue processing children
-        processChildren(device);
-    });
-
-    // Start timer (simulate 1 second catalog operation)
-    catalogTimer->start(1000);
-}
-
 void DeviceUpdateManager::requestHardStop()
 {
     qDebug() << "DeviceUpdateManager::requestHardStop() - IMMEDIATE STOP";
@@ -505,104 +679,6 @@ void DeviceUpdateManager::requestGentleStop()
             completeOperation();
         });
     }
-}
-
-void DeviceUpdateManager::updateDeviceRecursive(Device* device)
-{
-    if (!device || !shouldContinue()) {
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested - aborting recursive processing";
-            handleOperationCancellation();
-        }
-        return;
-    }
-
-    // Check for gentle stop before starting new catalog
-    if (m_gentleStopRequested.loadAcquire() && device->type == "Catalog") {
-        qDebug() << "Gentle stop requested - stopping before catalog:" << device->name;
-        completeOperation();
-        return;
-    }
-
-    // Check for hard stop
-    if (m_stopRequested.loadAcquire()) {
-        qDebug() << "Hard stop requested - aborting processing for:" << device->name;
-        handleOperationCancellation();
-        return;
-    }
-
-    setCurrentDevice(device);
-    emit deviceProcessingStarted(device->name, device->type);
-
-    qDebug() << "Processing device:" << device->name << "Type:" << device->type;
-
-    // Update device active state
-    device->updateActiveState("defaultConnection");
-    device->dateTimeUpdated = QDateTime::currentDateTime();
-
-    // Type-specific processing
-    if (device->type == "Virtual") {
-        updateVirtualDevice(device);
-        processChildren(device);
-    }
-    else if (device->type == "Storage") {
-        updateStorageDevice(device);
-        processChildren(device);
-    }
-    else if (device->type == "Catalog") {
-        updateCatalogDevice(device);
-        return; // Async operation
-    }
-    else {
-        qDebug() << "Unknown device type:" << device->type << "- treating as virtual";
-        updateVirtualDevice(device);
-        processChildren(device);
-    }
-}
-
-void DeviceUpdateManager::processChildren(Device* device)
-{
-    if (!device || !shouldContinue()) {
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested - aborting children processing";
-            handleOperationCancellation();
-        }
-        return;
-    }
-
-    // Load children if not already loaded
-    if (device->subDevices.isEmpty() && device->hasSubDevice) {
-        device->loadDevice("defaultConnection");
-    }
-
-    // Process each child recursively
-    for (const Device& childDevice : device->subDevices) {
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested during children processing";
-            handleOperationCancellation();
-            return;
-        }
-
-        // Create a copy for processing
-        Device* childPtr = new Device(childDevice);
-        updateDeviceRecursive(childPtr);
-
-        if (m_waitingForCatalogCompletion) {
-            // Async catalog operation in progress
-            return;
-        }
-
-        // Check for stop after each child
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested after processing child";
-            handleOperationCancellation();
-            return;
-        }
-    }
-
-    // All children processed
-    updateParentNumbers(device);
-    processNextDevice();
 }
 
 void DeviceUpdateManager::handleOperationCancellation()
@@ -674,3 +750,5 @@ bool DeviceUpdateManager::shouldContinue() const
 {
     return !m_stopRequested.loadAcquire() && m_operationRunning;
 }
+
+

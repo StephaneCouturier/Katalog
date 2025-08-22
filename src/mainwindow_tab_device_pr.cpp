@@ -1865,176 +1865,43 @@ void MainWindow::loadDevicesCatalogToModel(){
 
 //--------------------------------------------------------------------------
 //--- Device ---------------------------------------------------------------
-void MainWindow::setupDeviceManager()
-{
-    qDebug() << "Setting up DeviceManager with existing UI infrastructure...";
-
-    // Create the device manager
-    deviceManager = new DeviceManager(this);
-    // Use MainWindow's existing CatalogManager instead of creating a new one
-    deviceManager->setCatalogManager(catalogManager);
-
-    // Connect DeviceManager to existing CatalogProgressManager
-    // This restores the automatic status bar updates that were working before
-    if (catalogProgressManager) {
-        deviceManager->setCatalogProgressManager(catalogProgressManager);
-        qDebug() << "Connected DeviceManager to existing CatalogProgressManager";
-    } else {
-        qDebug() << "WARNING: catalogProgressManager not available during DeviceManager setup";
-    }
-
-    // Connect DeviceManager signals to use existing reportAllUpdates
-    connect(deviceManager, &DeviceManager::requestReportAllUpdates,
-            this, [this](Device* device, const QList<qint64>& results, const QString& updateType) {
-                // Use the existing, proven reportAllUpdates method
-                this->reportAllUpdates(device, results, updateType);
-            });
-
-    // Enable stop button when device hierarchy operations start
-    connect(deviceManager, &DeviceManager::deviceOperationStarted, this, [this]() {
-        ui->Catalogs_pushButton_Stop->setEnabled(true);
-        qDebug() << "Device operation started - Stop button enabled";
-    });
-
-    // Disable stop button when device operations complete/cancel/error
-    connect(deviceManager, &DeviceManager::deviceOperationCompleted, this, [this](const QList<qint64>& results) {
-        Q_UNUSED(results);
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-        qDebug() << "Device operation completed - Stop button disabled";
-    });
-
-    connect(deviceManager, &DeviceManager::deviceOperationCancelled, this, [this]() {
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-        qDebug() << "Device operation cancelled - Stop button disabled";
-    });
-
-    connect(deviceManager, &DeviceManager::deviceOperationError, this, [this](const QString& error) {
-        Q_UNUSED(error);
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-        qDebug() << "Device operation error - Stop button disabled";
-    });
-
-    qDebug() << "DeviceManager setup complete with stop button state management";
-}
-//--------------------------------------------------------------------------
-
 void MainWindow::setupDeviceUpdateManager()
 {
-    qDebug() << "Setting up unified DeviceUpdateManager";
+    if (!deviceUpdateManager) {
+        deviceUpdateManager = new DeviceUpdateManager(this);
+    }
 
-    deviceUpdateManager = new DeviceUpdateManager(this);
+    // Connect operation lifecycle signals
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationStarted,
+            this, &MainWindow::onDeviceUpdateStarted);
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+            this, &MainWindow::onDeviceUpdateCompleted);
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationError,
+            this, &MainWindow::onDeviceUpdateError);
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
+            this, &MainWindow::onDeviceUpdateCancelled);
 
-    // ===== OPERATION LIFECYCLE WITH PROPER UI RESTORATION =====
+    // Connect progress signals
+    connect(deviceUpdateManager, &DeviceUpdateManager::progressChanged,
+            this, &MainWindow::onDeviceUpdateProgress);
+    connect(deviceUpdateManager, &DeviceUpdateManager::statusChanged,
+            this, &MainWindow::onDeviceUpdateProgress);
+    connect(deviceUpdateManager, &DeviceUpdateManager::currentDeviceNameChanged,
+            this, &MainWindow::onDeviceUpdateProgress);
 
-    connect(deviceUpdateManager, &DeviceUpdateManager::operationStarted, this, [this]() {
-        qDebug() << "Unified: Operation started - disabling UI";
-        ui->Catalogs_pushButton_Stop->setEnabled(true);
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-    });
-
-    connect(deviceUpdateManager, &DeviceUpdateManager::operationCompleted, this, [this](const QList<qint64>& results) {
-        qDebug() << "Unified: Operation completed - restoring UI";
-        qDebug() << "Results:" << results;
-
-        // Always restore UI state
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-        QApplication::restoreOverrideCursor();
-
-        // Show results if we have a device to report on
-        if (currentUpdateDevice && results.size() >= 3) {
-            // Check if this was a successful completion or cancellation
-            bool wasSuccessful = (results[0] == 1);  // First element is success flag
-            int processedCatalogs = results[1];
-            int skippedCatalogs = results[2];
-
-            qDebug() << "Reporting: Success=" << wasSuccessful << "Processed=" << processedCatalogs << "Skipped=" << skippedCatalogs;
-
-            // Create a summary device for reporting
-            Device summaryDevice;
-            if (wasSuccessful) {
-                summaryDevice.name = QString("Update completed: %1 catalogs processed").arg(processedCatalogs);
-            } else {
-                summaryDevice.name = QString("Update stopped: %1 processed, %2 skipped").arg(processedCatalogs).arg(skippedCatalogs);
-            }
-            summaryDevice.type = "BatchSummary";
-
-            // Report using existing method
-            reportAllUpdates(&summaryDevice, results, "update");
-        }
-
-        // Refresh UI
-        loadDevicesView("");
-        currentUpdateDevice = nullptr;
-
-        qDebug() << "Unified: UI restoration complete";
-    });
-
-    connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled, this, [this]() {
-        qDebug() << "Unified: Operation cancelled - restoring UI";
-
-        // Always restore UI state on cancellation
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-        QApplication::restoreOverrideCursor();
-
-        // Refresh UI
-        loadDevicesView("");
-        currentUpdateDevice = nullptr;
-
-        qDebug() << "Unified: Cancellation UI restoration complete";
-    });
-
-    connect(deviceUpdateManager, &DeviceUpdateManager::operationError, this, [this](const QString& error) {
-        qDebug() << "Unified: Operation error - restoring UI";
-        qDebug() << "Error:" << error;
-
-        // Always restore UI state on error
-        ui->Catalogs_pushButton_Stop->setEnabled(false);
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-        QApplication::restoreOverrideCursor();
-
-        // Show error message
-        QMessageBox::warning(this, "Katalog", error);
-
-        // Refresh UI
-        loadDevicesView("");
-        currentUpdateDevice = nullptr;
-
-        qDebug() << "Unified: Error UI restoration complete";
-    });
-
-    // ===== PROGRESS UPDATES =====
-    connect(deviceUpdateManager, &DeviceUpdateManager::deviceProcessingStarted,
-            this, [this](const QString& deviceName, const QString& deviceType) {
-                currentUpdateDevice = selectedDevice; // Track current device
-
-                QString message = QString("Processing: %1 (%2)").arg(deviceName, deviceType);
-                statusBar()->show();
-                statusBar()->showMessage(message);
-
-                qDebug() << "Processing started:" << deviceName;
-            });
-
+    // Connect detailed progress for catalog operations
     connect(deviceUpdateManager, &DeviceUpdateManager::catalogProgress,
             this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
-                QString message = QString("Files processed: %1 | Total files: %2")
-                                  .arg(QLocale().toString(filesProcessed))
-                                  .arg(QLocale().toString(totalFiles));
-
-                if (!currentPath.isEmpty()) {
-                    message += QString(" | %1").arg(currentPath);
-                }
-
-                statusBar()->show();
-                statusBar()->showMessage(message);
+                QString progressText = tr("Processing: %1 (%2/%3)")
+                    .arg(currentPath)
+                    .arg(QLocale().toString(filesProcessed))
+                    .arg(QLocale().toString(totalFiles));
+                statusBar()->showMessage(progressText);
             });
+
+    qDebug() << "DeviceUpdateManager connections established";
 }
+//--------------------------------------------------------------------------
 
 // ===== CORRECTED OPERATION HANDLERS =====
 
@@ -2198,7 +2065,127 @@ Device* MainWindow::getDeviceFromIndex(const QModelIndex& index)
     return nullptr;
 }
 */
+void MainWindow::setCatalogUpdateUIState(bool isRunning)
+{
+    qDebug() << "setCatalogUpdateUIState:" << isRunning;
 
+    if (isRunning) {
+        // Disable update buttons during operation
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+
+        // Enable stop button
+        ui->Catalogs_pushButton_Stop->setEnabled(true);
+
+        // Set cursor
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
+        // Update status
+        statusBar()->showMessage(tr("Updating catalog..."));
+
+    } else {
+        // Re-enable update buttons
+        bool catalogSelected = (activeDevice && activeDevice->type == "Catalog");
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(catalogSelected);
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+
+        // Disable stop button
+        ui->Catalogs_pushButton_Stop->setEnabled(false);
+
+        // Restore cursor
+        QApplication::restoreOverrideCursor();
+
+        // Clear status
+        statusBar()->clearMessage();
+    }
+}
+
+void MainWindow::onDeviceUpdateStarted()
+{
+    qDebug() << "=== MainWindow::onDeviceUpdateStarted ===";
+
+    // UI is already set by button handler, just log
+    qDebug() << "Device update operation started";
+}
+
+void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
+{
+    qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
+    qDebug() << "Results count:" << results.size();
+
+    // Restore UI state
+    setCatalogUpdateUIState(false);
+
+    // Reload device to show updated statistics
+    if (selectedDevice) {
+        selectedDevice->loadDevice("defaultConnection");
+        updateCatalogsScreenStatistics();
+    }
+
+    // Save collection data
+    collection->saveDeviceTableToFile();
+    collection->saveStatiticsTableToFile();
+
+    // Show success message
+    QString message = tr("Catalog update completed successfully.");
+    if (!results.isEmpty() && results.size() >= 2) {
+        qint64 fileCount = results[1];
+        message += tr("\nFiles processed: %1").arg(QLocale().toString(fileCount));
+    }
+
+    statusBar()->showMessage(message, 5000);
+    qDebug() << "Catalog update completed successfully";
+
+    reportAllUpdates(activeDevice, results, "update");
+
+    loadDevicesView("");
+}
+
+void MainWindow::onDeviceUpdateError(const QString& error)
+{
+    qDebug() << "=== MainWindow::onDeviceUpdateError ===";
+    qDebug() << "Error:" << error;
+
+    // Restore UI state
+    setCatalogUpdateUIState(false);
+
+    // Show error message
+    QMessageBox::warning(this, "Katalog", tr("Catalog update failed:\n%1").arg(error));
+
+    statusBar()->showMessage(tr("Catalog update failed"), 5000);
+}
+
+void MainWindow::onDeviceUpdateCancelled()
+{
+    qDebug() << "=== MainWindow::onDeviceUpdateCancelled ===";
+
+    // Restore UI state
+    setCatalogUpdateUIState(false);
+
+    // Show cancellation message
+    statusBar()->showMessage(tr("Catalog update cancelled"), 3000);
+    qDebug() << "Catalog update cancelled by user";
+}
+
+void MainWindow::onDeviceUpdateProgress()
+{
+    if (!deviceUpdateManager) return;
+
+    // Update progress display
+    int progress = deviceUpdateManager->progress();
+    QString status = deviceUpdateManager->status();
+    QString currentDevice = deviceUpdateManager->currentDeviceName();
+
+    // Update status bar with current progress
+    if (!currentDevice.isEmpty()) {
+        statusBar()->showMessage(QString("%1 - %2").arg(status, currentDevice));
+    } else {
+        statusBar()->showMessage(status);
+    }
+
+    // Log progress for debugging
+    qDebug() << "Progress:" << progress << "%" << "Status:" << status;
+}
 
 //--- Storage --------------------------------------------------------------
 void MainWindow::loadStorageList()

@@ -194,6 +194,10 @@ class MainWindow : public KXmlGuiWindow
         bool useUnifiedManager = false;
         void startSingleCatalogUpdateUnified();
         void startUpdateAllActiveCatalogsUnified();
+        void setCatalogUpdateUIState(bool isRunning);
+
+
+
 
         void debugIconLoadingDetailed();
         void testIconSourceTracking();
@@ -505,6 +509,13 @@ class MainWindow : public KXmlGuiWindow
             void runDatabaseMigration_2_6();
 
     private slots:
+            // DeviceUpdateManager signal handlers
+            void onDeviceUpdateStarted();
+            void onDeviceUpdateCompleted(const QList<qint64>& results);
+            void onDeviceUpdateError(const QString& error);
+            void onDeviceUpdateCancelled();
+            void onDeviceUpdateProgress();
+
         //Filters
             void on_Filters_pushButton_Filters_Hide_clicked();
             void on_Filters_pushButton_Filters_Show_clicked();

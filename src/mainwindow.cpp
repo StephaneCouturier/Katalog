@@ -258,7 +258,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
             //Set up a catalog manager for creation and updates, and device manager for udpate
             setupCatalogManager();
-            setupDeviceManager();
+            setupDeviceUpdateManager();
 
         //Setup tab: Tags
             //Set Default path to scan

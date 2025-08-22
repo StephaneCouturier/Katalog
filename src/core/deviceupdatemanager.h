@@ -7,6 +7,7 @@
 #ifndef DEVICEUPDATEMANAGER_H
 #define DEVICEUPDATEMANAGER_H
 
+#include "core/catalogmanager.h"
 #include "device.h"
 #include "catalogjobstoppable.h"
 #include <QObject>
@@ -33,7 +34,7 @@ public:
 
     // ===== TEMPORARY DEVICE CREATION =====
     Device* createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs);
-    Device* createTempVirtualDeviceForFilter(const QList<Device*>& filteredDevices);
+    Device* createTempVirtualDeviceForFilter(const QList<Device*>& filteredDevices); 
 
     // ===== CONTROL INTERFACE =====
     void requestGentleStop();
@@ -114,6 +115,12 @@ private:
     void cleanupOperation();
     void cleanupTempDevice();
 
+    // ===== CATALOG INTEGRATION =====
+    void setupCatalogManager();
+    void cleanupCatalogJob();
+    void continueToNextDevice();
+    void processNextInQueue();
+
 private:
     // ===== OPERATION STATE =====
     bool m_operationRunning = false;
@@ -144,6 +151,7 @@ private:
     QString m_collectionFolder;
 
     // ===== CATALOG OPERATION INTEGRATION =====
+    CatalogManager* m_catalogManager = nullptr;
     CatalogJobStoppable* m_currentCatalogJob = nullptr;
     bool m_waitingForCatalogCompletion = false;
 
