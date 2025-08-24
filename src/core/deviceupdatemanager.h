@@ -31,8 +31,9 @@ public:
     // ===== SINGLE UNIFIED INTERFACE =====
     void updateDeviceHierarchy(Device* rootDevice,
                                const QString& databaseMode,
-                               const QString& collectionFolder);
-
+                               const QString& collectionFolder,
+                               const QString& updateType = "update");
+    QString updateType() const { return m_updateType; }
     // ===== TEMPORARY DEVICE CREATION =====
     Device* createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs);
     Device* createTempVirtualDeviceForFilter(const QList<Device*>& filteredDevices); 
@@ -55,7 +56,10 @@ public:
     int totalDevices() const { return m_totalDevices; }
     int processedCatalogs() const { return m_processedCatalogs; }
     int totalCatalogs() const { return m_totalCatalogs; }
-void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
+
+    void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
+    Device* getCurrentDevice() const { return m_currentDevice; }
+
 signals:
     // Main operation lifecycle
     void operationStarted();
@@ -81,6 +85,8 @@ private slots:
     void onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString& currentPath);
 
 private:
+    QString m_updateType;
+
     // ===== CORE RECURSIVE LOGIC =====
     void updateDeviceRecursive(Device* device);
     void updateVirtualDevice(Device* device);

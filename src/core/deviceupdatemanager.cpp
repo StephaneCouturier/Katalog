@@ -144,10 +144,12 @@ void DeviceUpdateManager::updateParentStorageAfterCatalogUpdate(Device *device)
 
 void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
                                                 const QString& databaseMode,
-                                                const QString& collectionFolder)
+                                                const QString& collectionFolder,
+                                                const QString& updateType)
 {
     qDebug() << "=== DeviceUpdateManager::updateDeviceHierarchy ===";
     qDebug() << "Root device:" << (rootDevice ? rootDevice->name : "NULL");
+    qDebug() << "Update type:" << updateType;  // ADD THIS LINE
 
     if (!rootDevice) {
         emit operationError("Invalid root device provided");
@@ -167,17 +169,18 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
     m_rootDevice = rootDevice;
     m_databaseMode = databaseMode;
     m_collectionFolder = collectionFolder;
+    m_updateType = updateType;  // ADD THIS LINE - Store the operation type
     m_operationStartTime = QDateTime::currentDateTime();
 
     // Analyze hierarchy to get totals for progress
-    analyzeHierarchy(rootDevice);
+    analyzeHierarchy(rootDevice);  // CORRECTED - was collectDeviceHierarchy
 
-    setStatus("Starting device hierarchy update...");
+    setStatus(QString("Starting %1 operation...").arg(updateType));  // UPDATED MESSAGE
     emit operationStarted();
     emit operationRunningChanged();
 
     // Start recursive update
-    updateDeviceRecursive(rootDevice);
+    updateDeviceRecursive(rootDevice);  // KEPT - don't remove this!
 }
 
 Device* DeviceUpdateManager::createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs)
@@ -909,7 +912,10 @@ void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* cata
 void DeviceUpdateManager::onCatalogOperationCompleted()
 {
     qDebug() << "=== DeviceUpdateManager::onCatalogOperationCompleted ===";
-    qDebug() << "*** COMPLETION PATH 1: onCatalogOperationCompleted (CORRECT - combined data) ***";
+    qDebug() << "*** CRITICAL DEBUG: This method was called! ***";
+    qDebug() << "m_currentDevice:" << (m_currentDevice ? m_currentDevice->name : "NULL");
+    qDebug() << "m_operationRunning:" << m_operationRunning;
+    qDebug() << "m_updateType:" << m_updateType;
 
     if (!m_currentDevice) {
         qDebug() << "ERROR: No current device in catalog completion";
@@ -958,6 +964,21 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     QTimer::singleShot(10, this, [this]() {
         cleanupOperation();
     });
+
+    qDebug() << "*** CRITICAL DEBUG: About to emit operationCompleted signal ***";
+    qDebug() << "Results size:" << results.size();
+    qDebug() << "Results[0] (success):" << results[0];
+    if (results.size() > 1) qDebug() << "Results[1] (files):" << results[1];
+    if (results.size() > 7) qDebug() << "Results[7] (storage):" << results[7];
+
+    emit operationCompleted(results);
+    qDebug() << "*** CRITICAL DEBUG: operationCompleted signal emitted! ***";
+
+    emit operationRunningChanged();
+
+    cleanupOperation();
+
+    qDebug() << "=== DeviceUpdateManager::onCatalogOperationCompleted EXIT ===";
 }
 
 Storage::UpdateResult DeviceUpdateManager::updateParentStorage(Device* catalogDevice)

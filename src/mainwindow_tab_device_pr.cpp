@@ -1867,9 +1867,14 @@ void MainWindow::loadDevicesCatalogToModel(){
 //--- Device ---------------------------------------------------------------
 void MainWindow::setupDeviceUpdateManager()
 {
+    qDebug() << "=== setupDeviceUpdateManager called ===";
+
     if (!deviceUpdateManager) {
         deviceUpdateManager = new DeviceUpdateManager(this);
     }
+
+    // DISCONNECT any existing connections first
+    disconnect(deviceUpdateManager, nullptr, this, nullptr);
 
     // Connect operation lifecycle signals
     connect(deviceUpdateManager, &DeviceUpdateManager::operationStarted,
@@ -1932,7 +1937,8 @@ void MainWindow::startSingleCatalogUpdateUnified()
     // UNIFIED APPROACH: Just update the single catalog hierarchy
     deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
                                                collection->databaseMode,
-                                               collection->folder);
+                                               collection->folder,
+                                               "update");
 }
 
 // UpdateAllActive - CORRECTED helper methods
@@ -1992,7 +1998,8 @@ void MainWindow::startUpdateAllActiveCatalogsUnified()
 
     deviceUpdateManager->updateDeviceHierarchy(tempVirtualDevice,
                                                collection->databaseMode,
-                                               collection->folder);
+                                               collection->folder,
+                                               "update");
 }
 
 // Storage Device Update - CORRECTED
@@ -2019,7 +2026,8 @@ void MainWindow::updateStorageDevice(Device* storageDevice)
     // UNIFIED APPROACH: Just update the storage hierarchy (includes all children)
     deviceUpdateManager->updateDeviceHierarchy(storageDevice,
                                                collection->databaseMode,
-                                               collection->folder);
+                                               collection->folder,
+                                               "update");
 }
 
 // Virtual Device Update - CORRECTED
@@ -2046,7 +2054,8 @@ void MainWindow::updateVirtualDevice(Device* virtualDevice)
     // UNIFIED APPROACH: Just update the virtual device hierarchy
     deviceUpdateManager->updateDeviceHierarchy(virtualDevice,
                                                collection->databaseMode,
-                                               collection->folder);
+                                               collection->folder,
+                                               "update");
 }
 
 // Context Menu - SIMPLIFIED for now (you can implement getDeviceFromIndex as needed)
@@ -2059,16 +2068,6 @@ void MainWindow::onDeviceContextMenuRequested(const QPoint& pos)
     // You can implement the actual context menu logic based on your existing patterns
 }
 
-// Placeholder for getDeviceFromIndex if it doesn't exist
-/*
-Device* MainWindow::getDeviceFromIndex(const QModelIndex& index)
-{
-    // Implement this based on your existing tree view model
-    // This is just a placeholder to prevent compilation errors
-    Q_UNUSED(index);
-    return nullptr;
-}
-*/
 void MainWindow::setCatalogUpdateUIState(bool isRunning)
 {
     qDebug() << "setCatalogUpdateUIState:" << isRunning;
@@ -2114,67 +2113,98 @@ void MainWindow::onDeviceUpdateStarted()
 
 void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 {
+    // Determine correct device for reporting - preserve existing logic for updates
+    Device* reportDevice = nullptr;
+    reportDevice = deviceUpdateManager->getCurrentDevice();
+
     qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
     qDebug() << "Results count:" << results.size();
 
-    // Determine correct device for reporting
-    Device* reportDevice = nullptr;
+    // Get operation type from DeviceUpdateManager
+    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
+    bool isCatalogCreation = (updateType == "create");
 
-    // First, try to get the device from DeviceUpdateManager if possible
-    if (deviceUpdateManager && deviceUpdateManager->operationRunning() == false) {
-        // The operation just completed, so we can't get currentDevice from the manager
-        // We need to determine which device was updated
-    }
+    qDebug() << "Operation type from DeviceUpdateManager:" << updateType;
+    qDebug() << "Is catalog creation:" << isCatalogCreation;
+    qDebug() << "reportDevice:" << (reportDevice ? reportDevice->name : "NULL");
 
-    // Strategy: Use activeDevice if it's a catalog, otherwise use selectedDevice
-    if (activeDevice && activeDevice->type == "Catalog") {
-        reportDevice = activeDevice;
-        qDebug() << "Using activeDevice for report:" << activeDevice->name;
-    } else if (selectedDevice && selectedDevice->type == "Catalog") {
-        reportDevice = selectedDevice;
-        qDebug() << "Using selectedDevice for report:" << selectedDevice->name;
+
+
+    if (isCatalogCreation) {
+        // For catalog creation, use the stored device reference
+        if (!reportDevice) {
+            // Fallback: try to get from DeviceUpdateManager or activeDevice
+            reportDevice = activeDevice;
+            qDebug() << "FALLBACK: Using activeDevice for create report:" << (activeDevice ? activeDevice->name : "NULL");
+        } else {
+            qDebug() << "Using reportDevice for report:" << reportDevice->name;
+        }
     } else {
-        qDebug() << "*** ERROR: Cannot determine which device to report ***";
-        qDebug() << "activeDevice:" << (activeDevice ? activeDevice->name : "NULL");
-        qDebug() << "selectedDevice:" << (selectedDevice ? selectedDevice->name : "NULL");
-
-        // Fallback: try activeDevice first, then selectedDevice
-        reportDevice = activeDevice ? activeDevice : selectedDevice;
+        // PRESERVE EXISTING LOGIC FOR UPDATES - no changes here
+        if (activeDevice && activeDevice->type == "Catalog") {
+            reportDevice = activeDevice;
+            qDebug() << "Using activeDevice for update report:" << activeDevice->name;
+        } else if (selectedDevice && selectedDevice->type == "Catalog") {
+            reportDevice = selectedDevice;
+            qDebug() << "Using selectedDevice for update report:" << selectedDevice->name;
+        } else {
+            qDebug() << "*** ERROR: Cannot determine which device to report ***";
+            reportDevice = activeDevice ? activeDevice : selectedDevice;
+        }
     }
 
-    // Restore UI state
-    setCatalogUpdateUIState(false);
+    // Restore appropriate UI state
+    if (isCatalogCreation) {
+        // For catalog creation, restore Create tab UI state (no setCatalogUpdateUIState)
+        qDebug() << "Restoring Create tab UI state";
+        reportDevice = nullptr;  // Clear the reference
+        restoreCreateCatalogUIState();   // This handles cursor + Create tab buttons
 
-    // Reload device to show updated statistics
-    if (selectedDevice) {
-        selectedDevice->loadDevice("defaultConnection");
-        updateCatalogsScreenStatistics();
+        // PRESERVE EXISTING: Also refresh the devices view and storage list
+        loadDevicesView("");  // This refreshes Filters_treeview too!
+        loadStorageList();
+    } else {
+        // PRESERVE EXISTING LOGIC FOR UPDATES - use setCatalogUpdateUIState for Catalog tab
+        qDebug() << "Restoring Catalog tab UI state";
+        setCatalogUpdateUIState(false);  // This handles cursor + Catalog tab buttons
+
+        // PRESERVE EXISTING: Reload device to show updated statistics
+        if (selectedDevice) {
+            selectedDevice->loadDevice("defaultConnection");
+            updateCatalogsScreenStatistics();
+        }
     }
 
-    // Save collection data
+    // PRESERVE EXISTING: Save collection data
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
 
-    // Show success message
-    QString message = tr("Catalog update completed successfully.");
+    // PRESERVE EXISTING: Show success message
+    QString message = isCatalogCreation ?
+        tr("Catalog creation completed successfully.") :
+        tr("Catalog update completed successfully.");
+
     if (!results.isEmpty() && results.size() >= 2) {
         qint64 fileCount = results[1];
         message += tr("\nFiles processed: %1").arg(QLocale().toString(fileCount));
     }
 
     statusBar()->showMessage(message, 5000);
-    qDebug() << "Catalog update completed successfully";
+    qDebug() << "Catalog operation completed successfully";
 
-    // Only call reportAllUpdates if we have a valid device
+    // Call reportAllUpdates with the correct updateType
     if (reportDevice) {
-        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name;
-        reportAllUpdates(reportDevice, results, "update");
+        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name << "updateType:" << updateType;
+        reportAllUpdates(reportDevice, results, updateType);  // Pass the correct updateType!
         qDebug() << "*** reportAllUpdates completed successfully ***";
     } else {
         qDebug() << "*** ERROR: No valid device for reportAllUpdates - skipping report ***";
     }
 
-    loadDevicesView("");
+    // PRESERVE EXISTING: Final UI refresh only for updates (creation already refreshed above)
+    if (!isCatalogCreation) {
+        loadDevicesView("");  // This also refreshes Filters_treeview
+    }
 }
 
 void MainWindow::onDeviceUpdateError(const QString& error)

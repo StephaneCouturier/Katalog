@@ -199,32 +199,20 @@
     void MainWindow::on_Create_pushButton_Stop_clicked()
     {
         qDebug() << "=== Create Stop button clicked ===";
-        qDebug() << "Before stop - CatalogManager exists:" << (catalogManager != nullptr);
 
-        if (catalogManager) {
-            qDebug() << "Before stop - Catalog operation running:" << catalogManager->catalogOperationRunning();
-        }
+        // Stop DeviceUpdateManager (not catalogManager)
+        if (deviceUpdateManager && deviceUpdateManager->operationRunning()) {
+            qDebug() << "Stopping catalog creation via DeviceUpdateManager";
+            deviceUpdateManager->requestHardStop();
 
-        // Stop any running catalog operation using the new interface
-        if (catalogManager && catalogManager->catalogOperationRunning()) {
-            qDebug() << "Stopping active catalog operation via new CatalogManager";
-            catalogManager->stopCatalogOperation();  // NEW: Use the new method name
-
-            // IMMEDIATE UI FEEDBACK: Just disable the stop button to show it was clicked
+            // Immediate UI feedback
             ui->Create_pushButton_Stop->setEnabled(false);
-
-            // DON'T restore full UI state here - let the cancelled signal handler do it
-            // The new system will emit catalogOperationCancelled which restores UI state
+            statusBar()->showMessage(tr("Stopping catalog creation..."));
 
         } else {
-            qDebug() << "No active catalog operation, but user clicked Stop - just reset buttons";
-            restoreCreateCatalogUIState(); // Only restore if no operation was running
+            qDebug() << "No active operation - just reset UI";
+            restoreCreateCatalogUIState();
         }
-
-        // Clear device reference if stopping
-        currentCatalogDevice = nullptr;
-
-        qDebug() << "=== Create Stop button clicked complete ===";
     }
 
 //Methods-----------------------------------------------------------------------
@@ -272,10 +260,7 @@
 
         // Connect signals for main operations
         connect(catalogManager, &CatalogManager::catalogOperationCompleted, this, [this]() {
-            if (currentCatalogDevice) {
-                // Handle catalog CREATION (always through old system)
-                onCatalogOperationCompleted();
-            } else if (currentUpdateDevice) {
+            if (currentUpdateDevice) {
                 qDebug() << "Catalog update completed for:" << currentUpdateDevice->name;
 
                 if (!catalogManager->inBatchMode()) {
@@ -334,12 +319,7 @@
 
         // Update cancellation handler - handle both creation and updates
         connect(catalogManager, &CatalogManager::catalogOperationCancelled, this, [this]() {
-            if (currentCatalogDevice) {
-                // CREATION cancellation - restore Create tab UI
-                qDebug() << "Catalog creation cancelled - cleaning up";
-                cleanupStoppedCatalogCreation();
-
-            } else if (currentUpdateDevice) {
+            if (currentUpdateDevice) {
                 // UPDATE cancellation
                 qDebug() << "Catalog update cancelled";
 
@@ -514,7 +494,7 @@
             return;
         }
 
-        //Continue populating values and add device (SAME AS ORIGINAL)
+        //Continue populating values and add device
         newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
         newDevice->catalog->generateID();
         newDevice->externalID = newDevice->catalog->ID;
@@ -524,7 +504,7 @@
 
         qDebug() << "Device inserted - Parent ID:" << newDevice->parentID << "Path:" << newDevice->path;
 
-        //Get inputs and set values of the newCatalog (SAME AS ORIGINAL)
+        //Get inputs and set values of the newCatalog
         newDevice->catalog->name = newDevice->name;  // Make sure catalog name matches device name
         newDevice->catalog->filePath = collection->folder + "/" + newDevice->name + ".idx";
         newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
@@ -535,7 +515,7 @@
         newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
         newDevice->catalog->appVersion = currentVersion;
 
-        //Get the file type for the catalog (SAME AS ORIGINAL)
+        //Get the file type for the catalog
         if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
             newDevice->catalog->fileType = "Image";}
         else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
@@ -549,10 +529,10 @@
 
         qDebug() << "Catalog configured - File type:" << newDevice->catalog->fileType;
 
-        //Save new catalog (SAME AS ORIGINAL)
+        //Save new catalog
         newDevice->catalog->insertCatalog();
 
-        //Add path to parent Storage device if empty (SAME AS ORIGINAL)
+        //Add path to parent Storage device if empty
         Device parentStorageDevice;
         parentStorageDevice.ID = newDevice->parentID;
         parentStorageDevice.loadDevice("defaultConnection");
@@ -562,39 +542,37 @@
             collection->saveStorageTableToFile();
         }
 
-        //Reload (SAME AS ORIGINAL)
+        //Reload
         loadDevicesView("");
         loadStorageList();
 
-        // *** NEW: Use the new catalog system for scanning instead of old updateDeviceWithUI ***
-        qDebug() << "About to start catalog creation using new system for:" << newDevice->catalog->name;
+        if (!deviceUpdateManager) {
+            qDebug() << "DeviceUpdateManager not available - setting up now";
+            QMessageBox::information(this, "Katalog", tr("DeviceUpdateManager not available - setting up now."));
+            setupDeviceUpdateManager();
+        }
 
-        if (!catalogManager) {
-            qDebug() << "ERROR: Catalog manager not initialized";
-            delete newDevice;
+        // Check if already running
+        if (deviceUpdateManager->operationRunning()) {
+            QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+            currentUpdateDevice = nullptr;  // Clear on error
             restoreCreateCatalogUIState();
             return;
         }
 
-        // Store reference to the device for completion handling (Device-centric approach)
-        currentCatalogDevice = newDevice;
+        qDebug() << "Starting catalog CREATION using DeviceUpdateManager for:" << newDevice->name;
+        qDebug() << "Device ID:" << newDevice->ID;
+        qDebug() << "Source path:" << newDevice->path;
 
-        // Create a new catalog job stoppable for this operation
-        catalogJobStoppable = new CatalogJobStoppable(this);
+        // Set UI state for catalog operation
+        setCatalogUpdateUIState(true);
 
-        // Update progress manager with the new engine
-        if (catalogProgressManager) {
-            catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
-        }
-
-        // Start the catalog operation using the new interface directly (Device-centric)
-        catalogManager->startCatalogJobStoppable(
-            catalogJobStoppable,
-            newDevice,          // Pass the Device object (Device-centric approach)
-            CatalogJobStoppable::CreateCatalog,
-            collection->databaseMode,
-            collection->folder
-            );
+        // Use DeviceUpdateManager instead of CatalogManager
+        // This ensures consistent behavior across all update paths
+        deviceUpdateManager->updateDeviceHierarchy(newDevice,
+                                                   collection->databaseMode,
+                                                   collection->folder,
+                                                   "create");
 
         qDebug() << "Catalog creation started via new CatalogManager system";
 
@@ -604,13 +582,14 @@
         qDebug() << "=== MainWindow::createCatalog() EXIT ===";
     }
     //--------------------------------------------------------------------------
+    /*
     void MainWindow::onCatalogOperationCompleted()
     {
         qDebug() << "=== onCatalogOperationCompleted() ENTRY - UI tasks only ===";
 
         try {
             // Get the device for UI updates
-            Device* completedDevice = currentCatalogDevice;
+            Device* completedDevice = currentUpdateDevice;
 
             if (!completedDevice) {
                 qDebug() << "ERROR: No device found for UI updates";
@@ -688,11 +667,12 @@
         }
 
         // UI Task 6: Restore UI state
-        currentCatalogDevice = nullptr;
+        currentUpdateDevice = nullptr;
         restoreCreateCatalogUIState();
 
         qDebug() << "=== onCatalogOperationCompleted() EXIT ===";
     }
+    */
     //--------------------------------------------------------------------------
     void MainWindow::restoreCreateCatalogUIState()
     {
@@ -708,11 +688,11 @@
         qDebug() << "=== cleanupFailedCatalogCreation() START ===";
 
         // Use the device reference we stored when starting the operation
-        if (currentCatalogDevice) {
-            qDebug() << "Cleaning up failed catalog creation for device:" << currentCatalogDevice->name;
+        if (currentUpdateDevice) {
+            qDebug() << "Cleaning up failed catalog creation for device:" << currentUpdateDevice->name;
 
             // Use the existing backend method to delete the device (no UI confirmation)
-            bool success = DeviceUIWrapper::deleteDeviceWithUI(currentCatalogDevice, false);
+            bool success = DeviceUIWrapper::deleteDeviceWithUI(currentUpdateDevice, false);
 
             if (success) {
                 qDebug() << "Device deleted successfully";
@@ -720,8 +700,7 @@
                 qDebug() << "Failed to delete device";
             }
 
-            // Clear the reference
-            currentCatalogDevice = nullptr;
+
         } else {
             qDebug() << "No device to cleanup";
         }
