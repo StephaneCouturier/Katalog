@@ -2243,7 +2243,10 @@ void MainWindow::setCatalogUpdateUIState(bool isRunning)
         // Re-enable update buttons
         bool deviceActivated = (activeDevice && (activeDevice->type == "Catalog" || activeDevice->type == "Storage"));
         ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(deviceActivated);
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        QString displayContents = settings.value("Devices/DisplayContents", "Tree").toString();
+        bool isCatalogListView = (displayContents == "Catalogs");
+        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(isCatalogListView);
 
         // Disable stop button
         ui->Catalogs_pushButton_Stop->setEnabled(false);
