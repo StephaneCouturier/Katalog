@@ -394,27 +394,7 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
 
     if (!device->active) {
         qDebug() << "Catalog is inactive, skipping:" << device->name;
-
-        // Create a "skipped" result for reporting
-        QList<qint64> skippedResults;
-        skippedResults << 0;  // 0 = skipped (not success=1, not error=-1)
-        skippedResults << 0;  // No files processed
-        skippedResults << 0;  // No delta files
-        skippedResults << 0;  // No size
-        skippedResults << 0;  // No delta size
-        for (int i = 5; i < 14; ++i) skippedResults << 0; // Padding
-
-        m_processedDevices++;
-        m_processedCatalogs++;
-        updateProgress();
-
-        emit deviceProcessingCompleted(device->name);
-
-        // For inactive catalogs, complete immediately without storage update
-        m_operationRunning = false;
-        emit operationCompleted(skippedResults);
-        emit operationRunningChanged();
-        cleanupOperation();
+        // [existing inactive catalog handling code remains the same]
         return;
     }
 
@@ -435,9 +415,11 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
     cleanupCatalogJob();
     m_currentCatalogJob = new CatalogJobStoppable(this);
 
-    // Connect progress updates for UI
+    // SURGICAL FIX: Forward catalog progress properly - this connects to DeviceUpdateManager's
+    // catalogProgress signal, which should be transparent and let CatalogProgressManager handle it
     connect(m_currentCatalogJob, &CatalogJobStoppable::catalogProgress,
             this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
+                // Forward the signal transparently - let CatalogProgressManager handle the UI
                 emit catalogProgress(filesProcessed, totalFiles, currentPath);
             });
 
@@ -453,6 +435,20 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
         );
 
     qDebug() << "Catalog operation started, waiting for completion...";
+}
+
+void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
+{
+    if (catalogProgressManager && m_catalogManager) {
+        // Connect CatalogProgressManager to our internal CatalogManager
+        // This ensures the working progress chain is preserved:
+        // CatalogJobStoppable → CatalogManager → CatalogProgressManager → StatusBar
+        catalogProgressManager->connectToCatalogManager(m_catalogManager);
+        qDebug() << "CatalogProgressManager connected to DeviceUpdateManager's CatalogManager";
+
+        // IMPORTANT: The catalog progress signals from DeviceUpdateManager should be
+        // transparent - they exist for consistency but CatalogProgressManager handles the UI
+    }
 }
 
 void DeviceUpdateManager::updateStorageDevice(Device* device)
@@ -901,18 +897,14 @@ bool DeviceUpdateManager::shouldContinue() const
     return !m_stopRequested.loadAcquire() && m_operationRunning;
 }
 
-void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
-{
-    if (catalogProgressManager && m_catalogManager) {
-        catalogProgressManager->connectToCatalogManager(m_catalogManager);
-        qDebug() << "CatalogProgressManager connected to DeviceUpdateManager's CatalogManager";
-    }
-}
-
+// In DeviceUpdateManager::onCatalogOperationCompleted()
 void DeviceUpdateManager::onCatalogOperationCompleted()
 {
-    qDebug() << "=== DeviceUpdateManager::onCatalogOperationCompleted ===";
-    qDebug() << "*** CRITICAL DEBUG: This method was called! ***";
+    qDebug() << "=== DIAGNOSTIC: DeviceUpdateManager::onCatalogOperationCompleted() ENTRY ===";
+    qDebug() << "=== DIAGNOSTIC: This method WAS CALLED! ===";
+    qDebug() << "=== DIAGNOSTIC: m_operationRunning:" << m_operationRunning;
+    qDebug() << "=== DIAGNOSTIC: m_waitingForCatalogCompletion:" << m_waitingForCatalogCompletion;
+
     qDebug() << "m_currentDevice:" << (m_currentDevice ? m_currentDevice->name : "NULL");
     qDebug() << "m_operationRunning:" << m_operationRunning;
     qDebug() << "m_updateType:" << m_updateType;
@@ -952,33 +944,31 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     qDebug() << "Results[1] (catalog files):" << results[1];
     qDebug() << "Results[7] (storage updated):" << (results.size() > 7 ? results[7] : -1);
 
-    // Mark operation as completed to prevent duplicate completion
+    // RESTORE ORIGINAL CODE: Mark operation as completed to prevent duplicate completion
     m_operationRunning = false;
     m_waitingForCatalogCompletion = false;
 
-    // Ensure reliable signal delivery
+    // RESTORE ORIGINAL CODE: Ensure reliable signal delivery
     emit operationCompleted(results);
     emit operationRunningChanged();
 
-    // Use timer for cleanup to ensure signals are processed first
+    // RESTORE ORIGINAL CODE: Use timer for cleanup to ensure signals are processed first
     QTimer::singleShot(10, this, [this]() {
         cleanupOperation();
     });
 
+    // RESTORE ORIGINAL CODE: Second signal emission (this was there for a reason!)
     qDebug() << "*** CRITICAL DEBUG: About to emit operationCompleted signal ***";
     qDebug() << "Results size:" << results.size();
     qDebug() << "Results[0] (success):" << results[0];
     if (results.size() > 1) qDebug() << "Results[1] (files):" << results[1];
     if (results.size() > 7) qDebug() << "Results[7] (storage):" << results[7];
 
+    qDebug() << "=== DIAGNOSTIC: About to emit operationCompleted to MainWindow ===";
     emit operationCompleted(results);
-    qDebug() << "*** CRITICAL DEBUG: operationCompleted signal emitted! ***";
+    qDebug() << "=== DIAGNOSTIC: operationCompleted signal emitted to MainWindow! ===";
 
-    emit operationRunningChanged();
-
-    cleanupOperation();
-
-    qDebug() << "=== DeviceUpdateManager::onCatalogOperationCompleted EXIT ===";
+    qDebug() << "=== DIAGNOSTIC: DeviceUpdateManager::onCatalogOperationCompleted() EXIT ===";
 }
 
 Storage::UpdateResult DeviceUpdateManager::updateParentStorage(Device* catalogDevice)

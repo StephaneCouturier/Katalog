@@ -563,6 +563,10 @@
         qDebug() << "Starting catalog CREATION using DeviceUpdateManager for:" << newDevice->name;
         qDebug() << "Device ID:" << newDevice->ID;
         qDebug() << "Source path:" << newDevice->path;
+        qDebug() << "Starting catalog CREATION using DeviceUpdateManager for:" << newDevice->name;
+
+        currentUpdateDevice = newDevice;
+        qDebug() << "*** STORED currentUpdateDevice for creation:" << currentUpdateDevice->name;
 
         // Set UI state for catalog operation
         setCatalogUpdateUIState(true);

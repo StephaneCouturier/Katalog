@@ -122,13 +122,20 @@ void CatalogJobStoppable::processCatalog()
         }
 
         if (shouldContinue()) {
-            qDebug() << "=== Catalog operation completed successfully ===";
+            qDebug() << "=== DIAGNOSTIC: Catalog indexing completed, about to emit catalogOperationFinished ===";
             emit catalogOperationFinished();
+            qDebug() << "=== DIAGNOSTIC: catalogOperationFinished signal emitted! ===";
         }
 
     } catch (const std::exception &e) {
         qDebug() << "=== EXCEPTION in processCatalog():" << e.what() << "===";
         emit catalogOperationError(QString("Catalog operation failed: %1").arg(e.what()));
+    }
+
+    if (shouldContinue()) {
+        qDebug() << "=== DIAGNOSTIC: Catalog indexing completed, about to emit catalogOperationFinished ===";
+        emit catalogOperationFinished();
+        qDebug() << "=== DIAGNOSTIC: catalogOperationFinished signal emitted! ===";
     }
 
     qDebug() << "=== CatalogJobStoppable::processCatalog() END ===";

@@ -253,7 +253,9 @@ void CatalogManager::requestGentleStop()
 
 void CatalogManager::onJobResult(KJob *job)
 {
-    qDebug() << "=== CatalogManager::onJobResult() ENTRY ===";
+    qDebug() << "=== DIAGNOSTIC: CatalogManager::onJobResult() ENTRY ===";
+    qDebug() << "=== DIAGNOSTIC: Job error code:" << job->error();
+    qDebug() << "=== DIAGNOSTIC: KilledJobError constant:" << KJob::KilledJobError;
 
     try {
         if (job->error() == KJob::KilledJobError) {
