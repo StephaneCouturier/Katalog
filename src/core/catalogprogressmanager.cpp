@@ -78,16 +78,6 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                         }
                     }
                 });
-        connect(m_catalogManager, &CatalogManager::specialProgressUpdate,
-                this, [this](qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString& currentPath) {
-                    if (m_statusBar && !currentPath.isEmpty()) {
-                        QString progressText = tr("Processing: %1 (%2/%3)")
-                        .arg(currentPath)
-                            .arg(QLocale().toString(filesProcessed))
-                            .arg(QLocale().toString(totalFiles));
-                        m_statusBar->showMessage(progressText);
-                    }
-                });
     }
 }
 
@@ -100,33 +90,24 @@ void CatalogProgressManager::updateFromCatalogManager()
 {
     if (!m_catalogManager || !m_statusBar) return;
 
-    // Don't interfere with direct statusBar connections during active operations
-    if (m_catalogManager->catalogOperationRunning() &&
-        m_catalogManager->filesProcessed() > 0 &&
-        !m_catalogManager->currentPath().isEmpty()) {
-        // Direct connection is handling real-time progress - don't interfere
-        return;
-    }
-
     QString message;
 
     if (m_catalogManager->catalogOperationRunning()) {
-        // Ooperation is running, show progress
+        // Operation is running, show progress
 
-        // Simple detection: if totalFiles is 0 AND path contains "Counting", we're counting
+        // COUNTING FILES - Show dynamic counting
         if (m_catalogManager->totalFiles() == 0 &&
             !m_catalogManager->currentPath().isEmpty() &&
             m_catalogManager->currentPath().contains("Counting")) {
 
-            // COUNTING PHASE: Just show the estimation message
-            message = m_catalogManager->currentPath(); // "Counting... X files found"
+            // FORMAT: "Counting... X files found"
+            message = m_catalogManager->currentPath();
 
         } else if (m_catalogManager->totalFiles() > 0) {
 
-            // PROCESSING PHASE: Show detailed progress
+            // PROCESSING FILES - Show detailed progress
             message = QString("Files processed: %1 | Total files: %2 | Progress: %3%")
-                          .arg(QLocale().toString(m_catalogManager->filesProcessed()))
-                          .arg(QLocale().toString(m_catalogManager->totalFiles()))
+                          .arg(QLocale().toString(m_catalogManager->filesProcessed()), QLocale().toString(m_catalogManager->totalFiles()))
                           .arg(m_catalogManager->progress());
 
             // Add current file path
@@ -144,8 +125,7 @@ void CatalogProgressManager::updateFromCatalogManager()
         // Add catalog name prefix
         if (!m_catalogManager->currentCatalogName().isEmpty()) {
             message = QString("Catalog: %1 | %2")
-            .arg(m_catalogManager->currentCatalogName())
-                .arg(message);
+            .arg(m_catalogManager->currentCatalogName(), message);
         }
 
         m_statusBar->show();
@@ -156,21 +136,17 @@ void CatalogProgressManager::updateFromCatalogManager()
         }
 
     } else {
-        // OPERATION IS NOT RUNNING - Show final status WITHOUT stale progress data
-
+        // OPERATION NOT RUNNING - Show final status
         QString status = m_catalogManager->status();
 
-        // Detect cancellation and show appropriate message
         if (status.contains("stopped", Qt::CaseInsensitive) ||
             status.contains("cancelled", Qt::CaseInsensitive)) {
-            // Operation was cancelled - show clear cancellation message
             message = "Catalog operation cancelled";
         }
         else if (status == "Ready") {
             message = tr("Ready for catalog operations");
         }
         else if (status.contains("completed successfully", Qt::CaseInsensitive)) {
-            // Success - can show file count if available and non-zero
             message = status;
             if (m_catalogManager->filesProcessed() > 0) {
                 message += QString(" | %1 files processed")
@@ -178,7 +154,6 @@ void CatalogProgressManager::updateFromCatalogManager()
             }
         }
         else {
-            // Any other status - just show it as-is
             message = status;
         }
 
