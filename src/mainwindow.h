@@ -195,8 +195,7 @@ class MainWindow : public KXmlGuiWindow
         void startSingleCatalogUpdateUnified();
         void startUpdateAllActiveCatalogsUnified();
         void setCatalogUpdateUIState(bool isRunning);
-
-
+        void setCreateCatalogUIState(bool isRunning);
 
 
         void debugIconLoadingDetailed();

@@ -1886,7 +1886,7 @@ void MainWindow::setupDeviceUpdateManager()
     connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
             this, &MainWindow::onDeviceUpdateCancelled);
 
-    // SURGICAL FIX: For catalog operations, let CatalogProgressManager handle the progress
+    // For catalog operations, let CatalogProgressManager handle the progress
     // Only connect generic progress for non-catalog operations
     connect(deviceUpdateManager, &DeviceUpdateManager::progressChanged,
             this, [this]() {
@@ -1912,7 +1912,7 @@ void MainWindow::setupDeviceUpdateManager()
                 }
             });
 
-    // SURGICAL FIX: Remove the catalogProgress connection - let CatalogProgressManager handle it
+    // Remove the catalogProgress connection - let CatalogProgressManager handle it
     // The existing setupCatalogProgressManager() already connects CatalogProgressManager properly
     //
     // REMOVE THIS BLOCK:
@@ -1931,6 +1931,109 @@ void MainWindow::setupDeviceUpdateManager()
     }
 
     qDebug() << "DeviceUpdateManager connections established";
+}
+//--------------------------------------------------------------------------
+void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
+{
+    qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
+
+    // Get updateType from DeviceUpdateManager for context awareness
+    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
+    bool isCatalogCreation = (updateType == "create");
+
+    qDebug() << "Operation type:" << updateType;
+    qDebug() << "Is catalog creation:" << isCatalogCreation;
+
+    // Device resolution for reporting
+    Device* reportDevice = nullptr;
+    if (isCatalogCreation) {
+        reportDevice = currentUpdateDevice;
+        if (!reportDevice) {
+            reportDevice = deviceUpdateManager ? deviceUpdateManager->getCurrentDevice() : nullptr;
+        }
+        if (!reportDevice) {
+            reportDevice = activeDevice;
+        }
+        qDebug() << "Using device for create report:" << (reportDevice ? reportDevice->name : "NULL");
+    } else {
+        if (activeDevice && activeDevice->type == "Catalog") {
+            reportDevice = activeDevice;
+        } else if (selectedDevice && selectedDevice->type == "Catalog") {
+            reportDevice = selectedDevice;
+        } else {
+            reportDevice = activeDevice ? activeDevice : selectedDevice;
+        }
+        qDebug() << "Using device for update report:" << (reportDevice ? reportDevice->name : "NULL");
+    }
+
+    // Save collection data
+    collection->saveDeviceTableToFile();
+    collection->saveStatiticsTableToFile();
+
+    // Show success message
+    QString message = isCatalogCreation ?
+        tr("Catalog creation completed successfully.") :
+        tr("Catalog update completed successfully.");
+
+    if (!results.isEmpty() && results.size() >= 2) {
+        qint64 fileCount = results[1];
+        message += tr("\nFiles processed: %1").arg(QLocale().toString(fileCount));
+    }
+
+    statusBar()->showMessage(message, 5000);
+
+    // STEP 1: Call reportAllUpdates FIRST
+    if (reportDevice) {
+        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name << "updateType:" << updateType;
+        reportAllUpdates(reportDevice, results, updateType);
+        qDebug() << "*** reportAllUpdates completed successfully ***";
+    } else {
+        qDebug() << "*** ERROR: No valid device for reportAllUpdates - skipping report ***";
+    }
+
+    // STEP 2: SURGICAL FIX - Clean Context Separation
+    if (isCatalogCreation) {
+        qDebug() << "=== CREATION: Complete UI refresh + Clean Create tab restoration ===";
+
+        if (reportDevice) {
+            // Complete UI refresh (like original working code)
+            refreshDifferencesCatalogSelection();
+            collection->updateAllDeviceActive();
+            loadDevicesView("");
+            ui->Filters_label_DisplayCatalog->setText(reportDevice->name);
+            selectedDevice->ID = reportDevice->ID;
+            selectedDevice->loadDevice("defaultConnection");
+            collection->loadDeviceFileToTable();
+            loadDevicesTreeToModel("Filters");  // Key fix for Filters treeview
+            loadDevicesView("");
+            ui->tabWidget->setCurrentIndex(1); // Collection tab
+            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        }
+
+        loadStorageList();
+
+        // SURGICAL FIX: Clean Create tab restoration (no mixed contexts)
+        qDebug() << "Restoring ONLY Create tab UI state (clean separation)";
+        setCreateCatalogUIState(false);  // Use dedicated Create method
+
+    } else {
+        qDebug() << "=== UPDATE: Standard Catalog tab restoration ===";
+        setCatalogUpdateUIState(false);  // Use Catalog method for updates
+
+        // Reload device statistics for updates
+        if (selectedDevice) {
+            selectedDevice->loadDevice("defaultConnection");
+            updateCatalogsScreenStatistics();
+        }
+    }
+
+    // Clear references LAST
+    if (isCatalogCreation) {
+        currentUpdateDevice = nullptr;
+        qDebug() << "Cleared currentUpdateDevice after UI refresh";
+    }
+
+    qDebug() << "=== MainWindow::onDeviceUpdateCompleted COMPLETE ===";
 }
 //--------------------------------------------------------------------------
 
@@ -2133,121 +2236,49 @@ void MainWindow::onDeviceUpdateStarted()
     qDebug() << "Device update operation started";
 }
 
-// In MainWindow::onDeviceUpdateCompleted()
-// SURGICAL FIX: Use updateType for proper UI restoration context
-
-void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
-{
-    qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
-
-    // Get updateType from DeviceUpdateManager for context awareness
-    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
-    bool isCatalogCreation = (updateType == "create");
-
-    qDebug() << "Operation type:" << updateType;
-    qDebug() << "Is catalog creation:" << isCatalogCreation;
-
-    // SURGICAL FIX: Proper device resolution for reporting
-    Device* reportDevice = nullptr;
-    if (isCatalogCreation) {
-        // For creation: try currentUpdateDevice first, then DeviceUpdateManager's current device
-        reportDevice = currentUpdateDevice;
-        if (!reportDevice) {
-            reportDevice = deviceUpdateManager ? deviceUpdateManager->getCurrentDevice() : nullptr;
-        }
-        if (!reportDevice) {
-            // Final fallback for creation
-            reportDevice = activeDevice;
-        }
-        qDebug() << "Using device for create report:" << (reportDevice ? reportDevice->name : "NULL");
-    } else {
-        // PRESERVE EXISTING LOGIC FOR UPDATES
-        if (activeDevice && activeDevice->type == "Catalog") {
-            reportDevice = activeDevice;
-        } else if (selectedDevice && selectedDevice->type == "Catalog") {
-            reportDevice = selectedDevice;
-        } else {
-            reportDevice = activeDevice ? activeDevice : selectedDevice;
-        }
-        qDebug() << "Using device for update report:" << (reportDevice ? reportDevice->name : "NULL");
-    }
-
-    // SURGICAL FIX: Context-aware UI restoration
-    if (isCatalogCreation) {
-        qDebug() << "Restoring Create tab UI state";
-        restoreCreateCatalogUIState();   // Handles cursor + Create tab buttons
-
-        // SURGICAL FIX: Add missing UI refresh for creation
-        qDebug() << "Refreshing UI after catalog creation";
-        loadDevicesView("");     // Refreshes device tree AND Filters_treeview!
-        loadStorageList();       // Refresh storage dropdown
-
-    } else {
-        qDebug() << "Restoring Catalog tab UI state";
-        setCatalogUpdateUIState(false);  // Handles cursor + Catalog tab buttons
-
-        // PRESERVE EXISTING: Reload device statistics for updates
-        if (selectedDevice) {
-            selectedDevice->loadDevice("defaultConnection");
-            updateCatalogsScreenStatistics();
-        }
-    }
-
-    // PRESERVE EXISTING: Save collection data
-    collection->saveDeviceTableToFile();
-    collection->saveStatiticsTableToFile();
-
-    // PRESERVE EXISTING: Show success message
-    QString message = isCatalogCreation ?
-        tr("Catalog creation completed successfully.") :
-        tr("Catalog update completed successfully.");
-
-    if (!results.isEmpty() && results.size() >= 2) {
-        qint64 fileCount = results[1];
-        message += tr("\nFiles processed: %1").arg(QLocale().toString(fileCount));
-    }
-
-    statusBar()->showMessage(message, 5000);
-
-    // Call reportAllUpdates with proper device and updateType
-    if (reportDevice) {
-        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name << "updateType:" << updateType;
-        reportAllUpdates(reportDevice, results, updateType);
-        qDebug() << "*** reportAllUpdates completed successfully ***";
-    } else {
-        qDebug() << "*** ERROR: No valid device for reportAllUpdates - skipping report ***";
-    }
-
-    // SURGICAL FIX: Clear reference after completion
-    if (isCatalogCreation) {
-        currentUpdateDevice = nullptr;  // Clear for next operation
-    }
-}
-
 void MainWindow::onDeviceUpdateError(const QString& error)
 {
     qDebug() << "=== MainWindow::onDeviceUpdateError ===";
     qDebug() << "Error:" << error;
 
-    // Restore UI state
-    setCatalogUpdateUIState(false);
+    // SURGICAL FIX: Context-aware error restoration
+    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
+    bool isCatalogCreation = (updateType == "create");
+
+    if (isCatalogCreation) {
+        qDebug() << "Restoring Create tab UI state after error";
+        setCreateCatalogUIState(false);  // Use Create context restoration
+        currentUpdateDevice = nullptr;   // Clear reference
+    } else {
+        qDebug() << "Restoring Catalog tab UI state after error";
+        setCatalogUpdateUIState(false);  // Use Catalog context restoration
+    }
 
     // Show error message
-    QMessageBox::warning(this, "Katalog", tr("Catalog update failed:\n%1").arg(error));
-
-    statusBar()->showMessage(tr("Catalog update failed"), 5000);
+    QMessageBox::warning(this, "Katalog", tr("Catalog operation failed:\n%1").arg(error));
+    statusBar()->showMessage(tr("Catalog operation failed"), 5000);
 }
 
 void MainWindow::onDeviceUpdateCancelled()
 {
     qDebug() << "=== MainWindow::onDeviceUpdateCancelled ===";
 
-    // Restore UI state
-    setCatalogUpdateUIState(false);
+    // SURGICAL FIX: Context-aware cancellation restoration
+    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
+    bool isCatalogCreation = (updateType == "create");
 
-    // Show cancellation message
-    statusBar()->showMessage(tr("Catalog update cancelled"), 3000);
-    qDebug() << "Catalog update cancelled by user";
+    if (isCatalogCreation) {
+        qDebug() << "Restoring Create tab UI state after cancellation";
+        setCreateCatalogUIState(false);  // Use Create context restoration
+        currentUpdateDevice = nullptr;   // Clear reference
+        statusBar()->showMessage(tr("Catalog creation cancelled"), 3000);
+    } else {
+        qDebug() << "Restoring Catalog tab UI state after cancellation";
+        setCatalogUpdateUIState(false);  // Use Catalog context restoration
+        statusBar()->showMessage(tr("Catalog update cancelled"), 3000);
+    }
+
+    qDebug() << "Operation cancelled by user";
 }
 
 void MainWindow::onDeviceUpdateProgress()
