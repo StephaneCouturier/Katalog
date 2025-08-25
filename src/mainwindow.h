@@ -696,8 +696,8 @@ class MainWindow : public KXmlGuiWindow
             void on_Devices_pushButton_ApplyToSelection_clicked();
 
             //Catalogs
+            void on_Catalogs_pushButton_UpdateActiveDevice_clicked();
             void on_Catalogs_pushButton_UpdateAllActive_clicked();
-            void on_Catalogs_pushButton_UpdateCatalog_clicked();
             void on_Catalogs_pushButton_Import_clicked();
             void on_Catalogs_pushButton_Stop_clicked();
 

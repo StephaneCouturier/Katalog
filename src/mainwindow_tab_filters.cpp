@@ -146,7 +146,7 @@
 
         refreshDifferencesCatalogSelection();
 
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
 
         //Use device's path as default to create a new catalog
         ui->Create_lineEdit_NewCatalogPath->setText(selectedDevice->path);

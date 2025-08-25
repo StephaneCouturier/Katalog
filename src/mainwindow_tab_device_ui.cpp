@@ -194,11 +194,10 @@ void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index
     activeDevice->ID = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     activeDevice->loadDevice("defaultConnection");
 
-    if(activeDevice->type =="Catalog")
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+    if(activeDevice->type =="Catalog" || activeDevice->type == "Storage")
+        ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(true);
     else
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-
+        ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos)
@@ -527,22 +526,23 @@ void MainWindow::on_Devices_pushButton_ApplyToSelection_clicked()
     loadDevicesTreeToModel("Filters");
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
+void MainWindow::on_Catalogs_pushButton_UpdateActiveDevice_clicked()
 {
-    qDebug() << "=== Update Single Catalog (DeviceUpdateManager) ===";
+    qDebug() << "=== Update Active Device (DeviceUpdateManager) ===";
 
     if (!activeDevice || activeDevice->ID <= 0) {
-        QMessageBox::information(this, "Katalog", tr("Please first select a catalog to update"));
+        QMessageBox::information(this, "Katalog", tr("Please first select a device to update"));
         return;
     }
 
-    if (activeDevice->type != "Catalog") {
-        QMessageBox::information(this, "Katalog", tr("The device selected must be a Catalog."));
+    if (activeDevice->type != "Catalog" && activeDevice->type != "Storage") {
+        QMessageBox::information(this, "Katalog", tr("The device selected must be a Catalog or Storage."));
         return;
     }
 
     if (!activeDevice->active) {
-        QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
+        QString deviceType = (activeDevice->type == "Storage") ? tr("storage device") : tr("catalog");
+        QMessageBox::information(this, "Katalog", tr("The %1 is not active (path not available).").arg(deviceType));
         return;
     }
 
@@ -551,23 +551,21 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         return;
     }
 
-    // Check if already running
     if (deviceUpdateManager->operationRunning()) {
         QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
         return;
     }
 
-    qDebug() << "Starting catalog update for:" << activeDevice->name;
-    qDebug() << "Catalog ID:" << activeDevice->ID;
-    qDebug() << "Source path:" << activeDevice->path;
-
-    // Set UI state for catalog operation
+    // Set UI state for operation
     setCatalogUpdateUIState(true);
 
-    // Start the unified catalog update operation
+    // Use DeviceUpdateManager for both Catalog and Storage devices
     deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                collection->databaseMode,
-                                               collection->folder);
+                                               collection->folder,
+                                               "update");
+
+    qDebug() << "Device operation started for:" << activeDevice->name << "Type:" << activeDevice->type;
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()

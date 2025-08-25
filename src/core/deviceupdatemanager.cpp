@@ -1212,6 +1212,7 @@ QList<qint64> DeviceUpdateManager::buildStorageBatchResults(Device* storageDevic
 {
     qDebug() << "=== DeviceUpdateManager::buildStorageBatchResults ===";
     qDebug() << "Building batch results for storage:" << storageDevice->name;
+    qDebug() << "FINAL COUNTS - Updated:" << m_updatedCatalogs << "Skipped:" << m_skippedCatalogs;
 
     QList<qint64> results;
 
@@ -1269,6 +1270,10 @@ void DeviceUpdateManager::initializeStorageBatchProcessing(Device* storageDevice
     m_childrenToProcess.clear();
     for (const Device& childDevice : storageDevice->subDevices) {
         Device* childPtr = new Device(childDevice);
+
+        // CRITICAL FIX: Ensure active state is correctly updated
+        childPtr->updateActiveState("defaultConnection");
+
         m_childrenToProcess.append(childPtr);
         qDebug() << "  Child to process:" << childPtr->name << "Type:" << childPtr->type << "Active:" << childPtr->active;
     }
@@ -1338,7 +1343,7 @@ void DeviceUpdateManager::processNextStorageChild()
     qDebug() << "=== DeviceUpdateManager::processNextStorageChild ===";
     qDebug() << "Current child index:" << m_currentChildIndex << "/ Total children:" << m_childrenToProcess.size();
 
-    // ENHANCED: Check stop conditions first
+    // Check stop conditions first
     if (!shouldContinue()) {
         qDebug() << "Stop requested during batch processing";
         handleOperationCancellation();
@@ -1359,26 +1364,27 @@ void DeviceUpdateManager::processNextStorageChild()
     // Move to next child for next iteration
     m_currentChildIndex++;
 
-    // ENHANCED: Check for gentle stop before processing any child
+    // Check for gentle stop before processing any child
     if (m_gentleStopRequested.loadAcquire()) {
         qDebug() << "Gentle stop requested - completing batch operation";
         completeStorageBatchOperation();
         return;
     }
 
-    // SPECIAL HANDLING: Skip inactive catalogs but count them
+    // Skip inactive catalogs but count them
     if (nextChild->type == "Catalog" && !nextChild->active) {
         qDebug() << "Catalog is inactive, skipping:" << nextChild->name;
+        qDebug() << "BEFORE: m_updatedCatalogs=" << m_updatedCatalogs << "m_skippedCatalogs=" << m_skippedCatalogs;
 
         // Count this as a skipped catalog
         m_skippedCatalogs++;
         m_processedDevices++; // Still count as processed device
         updateProgress();
 
+        qDebug() << "AFTER: m_updatedCatalogs=" << m_updatedCatalogs << "m_skippedCatalogs=" << m_skippedCatalogs;
         emit deviceProcessingCompleted(nextChild->name);
 
         qDebug() << "Skipped inactive catalog, continuing to next child";
-        // Continue immediately to next child (with stop check)
         processNextStorageChild();
         return;
     }

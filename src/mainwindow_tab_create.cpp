@@ -301,7 +301,7 @@
                     // Single update cleanup
                     currentUpdateDevice = nullptr;
                     QApplication::restoreOverrideCursor();
-                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                    ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(true);
                 } else {
                     // Batch update - log error but let CatalogManager handle progression
                     qDebug() << "Batch update error for" << currentUpdateDevice->name << ":" << error;
@@ -336,7 +336,7 @@
                 } else {
                     // Single update cleanup
                     QApplication::restoreOverrideCursor();
-                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+                    ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(true);
                 }
                 ui->Catalogs_pushButton_Stop->setEnabled(false);
             } else {

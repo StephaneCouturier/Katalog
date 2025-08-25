@@ -2045,7 +2045,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
             loadDevicesTreeToModel("Filters");  // Key fix for Filters treeview
             loadDevicesView("");
             ui->tabWidget->setCurrentIndex(1); // Collection tab
-            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+            ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
         }
 
         loadStorageList();
@@ -2088,7 +2088,7 @@ void MainWindow::startSingleCatalogUpdateUnified()
     }
 
     // Disable UI during operation
-    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+    ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
     ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -2227,7 +2227,7 @@ void MainWindow::setCatalogUpdateUIState(bool isRunning)
 
     if (isRunning) {
         // Disable update buttons during operation
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
         ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
 
         // Enable stop button
@@ -2241,8 +2241,8 @@ void MainWindow::setCatalogUpdateUIState(bool isRunning)
 
     } else {
         // Re-enable update buttons
-        bool catalogSelected = (activeDevice && activeDevice->type == "Catalog");
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(catalogSelected);
+        bool deviceActivated = (activeDevice && (activeDevice->type == "Catalog" || activeDevice->type == "Storage"));
+        ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(deviceActivated);
         ui->Catalogs_pushButton_UpdateAllActive->setEnabled(true);
 
         // Disable stop button
