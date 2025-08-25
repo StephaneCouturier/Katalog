@@ -897,7 +897,6 @@ bool DeviceUpdateManager::shouldContinue() const
     return !m_stopRequested.loadAcquire() && m_operationRunning;
 }
 
-// In DeviceUpdateManager::onCatalogOperationCompleted()
 void DeviceUpdateManager::onCatalogOperationCompleted()
 {
     qDebug() << "=== DIAGNOSTIC: DeviceUpdateManager::onCatalogOperationCompleted() ENTRY ===";
@@ -958,15 +957,15 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     });
 
     // RESTORE ORIGINAL CODE: Second signal emission (this was there for a reason!)
-    qDebug() << "*** CRITICAL DEBUG: About to emit operationCompleted signal ***";
-    qDebug() << "Results size:" << results.size();
-    qDebug() << "Results[0] (success):" << results[0];
-    if (results.size() > 1) qDebug() << "Results[1] (files):" << results[1];
-    if (results.size() > 7) qDebug() << "Results[7] (storage):" << results[7];
+    // qDebug() << "*** CRITICAL DEBUG: About to emit operationCompleted signal ***";
+    // qDebug() << "Results size:" << results.size();
+    // qDebug() << "Results[0] (success):" << results[0];
+    // if (results.size() > 1) qDebug() << "Results[1] (files):" << results[1];
+    // if (results.size() > 7) qDebug() << "Results[7] (storage):" << results[7];
 
-    qDebug() << "=== DIAGNOSTIC: About to emit operationCompleted to MainWindow ===";
-    emit operationCompleted(results);
-    qDebug() << "=== DIAGNOSTIC: operationCompleted signal emitted to MainWindow! ===";
+    // qDebug() << "=== DIAGNOSTIC: About to emit operationCompleted to MainWindow ===";
+    //emit operationCompleted(results);
+    // qDebug() << "=== DIAGNOSTIC: operationCompleted signal emitted to MainWindow! ===";
 
     qDebug() << "=== DIAGNOSTIC: DeviceUpdateManager::onCatalogOperationCompleted() EXIT ===";
 }
