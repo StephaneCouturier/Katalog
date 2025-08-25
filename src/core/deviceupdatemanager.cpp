@@ -645,14 +645,16 @@ void DeviceUpdateManager::loadDeviceChildren(Device* device)
     qDebug() << "Loading children for device:" << device->name;
 
     try {
-        // Load device which populates deviceIDList
+        // Clear any existing children data first
+        device->subDevices.clear();
+        device->deviceIDList.clear();
+
+        // Force reload the device which populates deviceIDList
         device->loadDevice("defaultConnection");
 
         qDebug() << "Device has" << device->deviceIDList.size() << "child IDs";
         qDebug() << "hasSubDevice flag:" << device->hasSubDevice;
 
-        // Create actual Device objects from deviceIDList
-        device->subDevices.clear();
         for (int childID : std::as_const(device->deviceIDList)) {
             Device childDevice;
             childDevice.ID = childID;

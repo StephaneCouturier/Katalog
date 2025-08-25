@@ -1977,8 +1977,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
             qDebug() << "Using Storage device for batch operation report";
 
             // For Storage batch operations, use the Storage device from the UI context
-            // (activeDevice should be the Storage device that was updated)
-            reportDevice = activeDevice ? activeDevice : selectedDevice;
+            reportDevice = selectedDevice ? selectedDevice : activeDevice;
 
             // CRITICAL: Use "list" format for multiple catalogs, "update" for single catalog under storage
             if (hasMultipleCatalogs) {

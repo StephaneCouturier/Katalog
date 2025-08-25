@@ -178,6 +178,7 @@ void Device::loadSubDeviceList(QString connectionName)
     queryLoadSubDeviceList.bindValue(":device_parent_id", ID);
     queryLoadSubDeviceList.exec();
 
+    subDevices.clear();
     deviceIDList.clear();
     deviceListTable.clear();
     while (queryLoadSubDeviceList.next()) {
