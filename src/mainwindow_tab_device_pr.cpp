@@ -1939,31 +1939,63 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 
     // Get updateType from DeviceUpdateManager for context awareness
     QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
-    bool isCatalogCreation = (updateType == "create");
-
     qDebug() << "Operation type:" << updateType;
+
+    // Detect Storage batch operations by examining the results
+    bool isStorageBatchOperation = false;
+    bool hasMultipleCatalogs = false;
+
+    if (results.size() >= 7) {
+        // Check if this looks like a Storage batch operation
+        int updatedCatalogs = results.size() > 5 ? results[5] : 0;
+        int skippedCatalogs = results.size() > 6 ? results[6] : 0;
+        int storageUpdated = results.size() > 7 ? results[7] : 0;
+
+        qDebug() << "Results analysis - Updated catalogs:" << updatedCatalogs
+                 << "Skipped catalogs:" << skippedCatalogs
+                 << "Storage updated:" << storageUpdated;
+
+        if ((updatedCatalogs > 0 || skippedCatalogs > 0) && storageUpdated == 1) {
+            isStorageBatchOperation = true;
+            hasMultipleCatalogs = (updatedCatalogs + skippedCatalogs) > 1;
+            qDebug() << "Detected Storage batch operation - Multiple catalogs:" << hasMultipleCatalogs;
+        }
+    }
+
+    // Determine report device and correct updateType for reportAllUpdates
+    Device* reportDevice = nullptr;
+    QString reportUpdateType = updateType;
+
+    bool isCatalogCreation = (updateType == "create");
     qDebug() << "Is catalog creation:" << isCatalogCreation;
 
-    // Device resolution for reporting
-    Device* reportDevice = nullptr;
     if (isCatalogCreation) {
-        reportDevice = currentUpdateDevice;
-        if (!reportDevice) {
-            reportDevice = deviceUpdateManager ? deviceUpdateManager->getCurrentDevice() : nullptr;
-        }
-        if (!reportDevice) {
-            reportDevice = activeDevice;
-        }
-        qDebug() << "Using device for create report:" << (reportDevice ? reportDevice->name : "NULL");
+        reportDevice = currentUpdateDevice; // For creation operations
     } else {
-        if (activeDevice && activeDevice->type == "Catalog") {
-            reportDevice = activeDevice;
-        } else if (selectedDevice && selectedDevice->type == "Catalog") {
-            reportDevice = selectedDevice;
-        } else {
+        // For update operations - determine based on operation type
+        if (isStorageBatchOperation) {
+            qDebug() << "Using Storage device for batch operation report";
+
+            // For Storage batch operations, use the Storage device from the UI context
+            // (activeDevice should be the Storage device that was updated)
             reportDevice = activeDevice ? activeDevice : selectedDevice;
+
+            // CRITICAL: Use "list" format for multiple catalogs, "update" for single catalog under storage
+            if (hasMultipleCatalogs) {
+                reportUpdateType = "list";  // This triggers the "X updated Catalogs, Y skipped Catalogs" format
+                qDebug() << "Using 'list' updateType for multiple catalogs under storage";
+            } else {
+                reportUpdateType = "update"; // This allows mixed catalog+storage reporting
+                qDebug() << "Using 'update' updateType for single catalog under storage";
+            }
+        } else {
+            qDebug() << "Using single device for single operation report";
+            reportDevice = currentUpdateDevice ? currentUpdateDevice : activeDevice ?
+                          activeDevice : selectedDevice;
         }
+
         qDebug() << "Using device for update report:" << (reportDevice ? reportDevice->name : "NULL");
+        qDebug() << "Using updateType for report:" << reportUpdateType;
     }
 
     // Save collection data
@@ -1973,28 +2005,34 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     // Show success message
     QString message = isCatalogCreation ?
         tr("Catalog creation completed successfully.") :
-        tr("Catalog update completed successfully.");
+        tr("Device update completed successfully.");
 
     if (!results.isEmpty() && results.size() >= 2) {
         qint64 fileCount = results[1];
-        message += tr("\nFiles processed: %1").arg(QLocale().toString(fileCount));
+        if (isStorageBatchOperation && hasMultipleCatalogs) {
+            message += tr("\nCatalogs updated: %1, Files processed: %2")
+                      .arg(results.size() > 5 ? results[5] : 0)
+                      .arg(QLocale().toString(fileCount));
+        } else {
+            message += tr("\nFiles processed: %1").arg(QLocale().toString(fileCount));
+        }
     }
 
     statusBar()->showMessage(message, 5000);
 
-    // STEP 1: Call reportAllUpdates FIRST
+    // STEP 1: Call reportAllUpdates with correct parameters
     if (reportDevice) {
-        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name << "updateType:" << updateType;
-        reportAllUpdates(reportDevice, results, updateType);
+        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name
+                 << "updateType:" << reportUpdateType;
+        reportAllUpdates(reportDevice, results, reportUpdateType);
         qDebug() << "*** reportAllUpdates completed successfully ***";
     } else {
         qDebug() << "*** ERROR: No valid device for reportAllUpdates - skipping report ***";
     }
 
-    // STEP 2: SURGICAL FIX - Clean Context Separation
+    // STEP 2: UI restoration (existing logic continues...)
     if (isCatalogCreation) {
         qDebug() << "=== CREATION: Complete UI refresh + Clean Create tab restoration ===";
-
         if (reportDevice) {
             // Complete UI refresh (like original working code)
             refreshDifferencesCatalogSelection();
@@ -2015,10 +2053,9 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
         // SURGICAL FIX: Clean Create tab restoration (no mixed contexts)
         qDebug() << "Restoring ONLY Create tab UI state (clean separation)";
         setCreateCatalogUIState(false);  // Use dedicated Create method
-
     } else {
-        qDebug() << "=== UPDATE: Standard Catalog tab restoration ===";
-        setCatalogUpdateUIState(false);  // Use Catalog method for updates
+        qDebug() << "=== UPDATE: Standard update tab restoration ===";
+        setCatalogUpdateUIState(false);
 
         // Reload device statistics for updates
         if (selectedDevice) {
@@ -2036,10 +2073,6 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     qDebug() << "=== MainWindow::onDeviceUpdateCompleted COMPLETE ===";
 }
 //--------------------------------------------------------------------------
-
-// ===== CORRECTED OPERATION HANDLERS =====
-
-// Single Catalog Update - CORRECTED to not duplicate existing button logic
 void MainWindow::startSingleCatalogUpdateUnified()
 {
     qDebug() << "=== Single Catalog Update (Unified) ===";
@@ -2066,7 +2099,6 @@ void MainWindow::startSingleCatalogUpdateUnified()
                                                "update");
 }
 
-// UpdateAllActive - CORRECTED helper methods
 QList<Device*> MainWindow::collectActiveCatalogs()
 {
     QList<Device*> activeCatalogs;
@@ -2095,7 +2127,6 @@ bool MainWindow::confirmBatchOperation(int deviceCount)
     return QMessageBox::question(this, "Katalog", message) == QMessageBox::Yes;
 }
 
-// UpdateAllActive - CORRECTED implementation
 void MainWindow::startUpdateAllActiveCatalogsUnified()
 {
     qDebug() << "=== Update All Active Catalogs (Unified) ===";
@@ -2127,7 +2158,6 @@ void MainWindow::startUpdateAllActiveCatalogsUnified()
                                                "update");
 }
 
-// Storage Device Update - CORRECTED
 void MainWindow::updateStorageDevice(Device* storageDevice)
 {
     qDebug() << "=== Storage Device Update (Unified) ===";
@@ -2155,7 +2185,6 @@ void MainWindow::updateStorageDevice(Device* storageDevice)
                                                "update");
 }
 
-// Virtual Device Update - CORRECTED
 void MainWindow::updateVirtualDevice(Device* virtualDevice)
 {
     qDebug() << "=== Virtual Device Update (Unified) ===";
@@ -2183,7 +2212,6 @@ void MainWindow::updateVirtualDevice(Device* virtualDevice)
                                                "update");
 }
 
-// Context Menu - SIMPLIFIED for now (you can implement getDeviceFromIndex as needed)
 void MainWindow::onDeviceContextMenuRequested(const QPoint& pos)
 {
     // This is a placeholder - implement based on your existing context menu pattern
@@ -2888,7 +2916,6 @@ void MainWindow::importFromVVV()
     loadCollection();
 }
 //--------------------------------------------------------------------------
-
 void MainWindow::createMissingParentDirectories() {
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
 
@@ -2946,6 +2973,7 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
     }
     return maxLevel + 1;
 }
+//--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
 //--- Reporting ------------------------------------------------------------
@@ -3102,6 +3130,138 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
     }
 
     return reportAvailable;
+}
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- Command lines
+//--------------------------------------------------------------------------
+void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
+{
+    qDebug() << "Updating device:   " << deviceId;
+
+    //Set selected device to the one specified by catalogId
+    selectedDevice->ID = deviceId;
+    selectedDevice->loadDevice("defaultConnection");
+
+    if(selectedDevice->type != "Catalog"){
+        qDebug() << tr("The device selected must be a Catalog. Try with a different device ID");
+        qDebug() << "Device ID: " << selectedDevice->ID;;
+        qDebug() << "Device Name: " << selectedDevice->name;
+        qDebug() << "Device Type: " << selectedDevice->type;
+        return;
+    }
+
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "Catalog values prior to update:";
+    qDebug() << "Catalog ID: " << selectedDevice->ID;;
+    qDebug() << "Catalog Name: " << selectedDevice->name;
+    qDebug() << "Catalog Path: " << selectedDevice->path;
+    qDebug() << "Catalog Type: " << selectedDevice->type;
+    qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
+    qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
+    qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
+
+    // Perform the update operation
+    //Update and report if active
+    if(selectedDevice->active==true){
+        if(displayReport==true){
+            reportAllUpdates(selectedDevice,
+                             DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
+                                                                 "update",
+                                                                 collection->databaseMode,
+                                                                 true,
+                                                                 collection->folder,
+                                                                 true),
+                             "update");
+        }
+        else{
+            DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
+                                                "update",
+                                                collection->databaseMode,
+                                                true,
+                                                collection->folder,
+                                                true);
+        }
+
+        selectedDevice->catalog->appVersion = currentVersion;
+
+        //Save data
+        collection->saveDeviceTableToFile();
+        collection->saveStatiticsTableToFile();
+
+        //Report device info after update
+        qDebug() << "---";
+        qDebug() << "Catalog updated successfully.";
+        qDebug() << "Catalog ID: "   << selectedDevice->ID;;
+        qDebug() << "Catalog Name: " << selectedDevice->name;
+        qDebug() << "Catalog Path: " << selectedDevice->path;
+        qDebug() << "Catalog Type: " << selectedDevice->type;
+        qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
+        qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
+        qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
+    }
+    else{
+        qDebug() << "";
+        qDebug() << "The Catalog was not updated as it is not active.";
+        qDebug() << "";
+    }
+}
+//--------------------------------------------------------------------------
+void MainWindow::cmd_listGroup0Catalogs()
+{
+    //Query the database for all devices of type catalog in the device group 0
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+                                    SELECT device_id, device_name, device_active
+                                    FROM device
+                                    WHERE device_type = 'Catalog'
+                                    AND device_group_id = 0
+                                    ORDER BY device_id
+                                )");
+
+    //Prepare and execute the query
+    query.prepare(querySQL);
+    query.exec();
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "Catalogs";
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "Device ID" << "    Active" << "      Device Name:";
+
+    //Iterate through the results and print the device ID and name
+    while (query.next()) {
+        int deviceID = query.value(0).toInt();
+        QString deviceName = query.value(1).toString();
+        bool deviceActive = query.value(2).toBool();
+        qDebug() << "  " << deviceID << "         " << deviceActive << "      " << deviceName;
+    }
+    qDebug() << "-----------------------------------------------------------------------";
+}
+//--------------------------------------------------------------------------
+void MainWindow::cmd_updateAllActive(bool displayReport)
+{
+    //Select all active catalog devices from database
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+                           SELECT device_id
+                           FROM device
+                           WHERE device_type = 'Catalog'
+                           AND device_active = 1
+                           ORDER BY device_id
+                       )");
+    query.prepare(querySQL);
+    query.exec();
+
+    //Update each catalog
+    while (query.next()) {
+        int deviceID = query.value(0).toInt();
+        qDebug() << "processing:   "<< deviceID ;
+        cmd_updateCatalog(deviceID, displayReport);
+    }
+
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "All active catalogs updated";
+    qDebug() << "-----------------------------------------------------------------------";
 }
 //--------------------------------------------------------------------------
 
@@ -4375,479 +4535,3 @@ void MainWindow::convertStorage()
 
     collection->saveStorageTableToFile();
 }
-
-void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
-{
-    qDebug() << "Updating device:   " << deviceId;
-
-    //Set selected device to the one specified by catalogId
-    selectedDevice->ID = deviceId;
-    selectedDevice->loadDevice("defaultConnection");
-
-    if(selectedDevice->type != "Catalog"){
-        qDebug() << tr("The device selected must be a Catalog. Try with a different device ID");
-        qDebug() << "Device ID: " << selectedDevice->ID;;
-        qDebug() << "Device Name: " << selectedDevice->name;
-        qDebug() << "Device Type: " << selectedDevice->type;
-        return;
-    }
-
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "Catalog values prior to update:";
-    qDebug() << "Catalog ID: " << selectedDevice->ID;;
-    qDebug() << "Catalog Name: " << selectedDevice->name;
-    qDebug() << "Catalog Path: " << selectedDevice->path;
-    qDebug() << "Catalog Type: " << selectedDevice->type;
-    qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
-    qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
-    qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
-
-    // Perform the update operation
-    //Update and report if active
-    if(selectedDevice->active==true){
-        if(displayReport==true){
-            reportAllUpdates(selectedDevice,
-                             DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
-                                                                 "update",
-                                                                 collection->databaseMode,
-                                                                 true,
-                                                                 collection->folder,
-                                                                 true),
-                             "update");
-        }
-        else{
-            DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
-                                                "update",
-                                                collection->databaseMode,
-                                                true,
-                                                collection->folder,
-                                                true);
-        }
-
-        selectedDevice->catalog->appVersion = currentVersion;
-
-        //Save data
-        collection->saveDeviceTableToFile();
-        collection->saveStatiticsTableToFile();
-
-        //Report device info after update
-        qDebug() << "---";
-        qDebug() << "Catalog updated successfully.";
-        qDebug() << "Catalog ID: "   << selectedDevice->ID;;
-        qDebug() << "Catalog Name: " << selectedDevice->name;
-        qDebug() << "Catalog Path: " << selectedDevice->path;
-        qDebug() << "Catalog Type: " << selectedDevice->type;
-        qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
-        qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
-        qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
-    }
-    else{
-        qDebug() << "";
-        qDebug() << "The Catalog was not updated as it is not active.";
-        qDebug() << "";
-    }
-}
-
-void MainWindow::cmd_listGroup0Catalogs()
-{
-    //Query the database for all devices of type catalog in the device group 0
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-    QString querySQL = QLatin1String(R"(
-                                    SELECT device_id, device_name, device_active
-                                    FROM device
-                                    WHERE device_type = 'Catalog'
-                                    AND device_group_id = 0
-                                    ORDER BY device_id
-                                )");
-
-    //Prepare and execute the query
-    query.prepare(querySQL);
-    query.exec();
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "Catalogs";
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "Device ID" << "    Active" << "      Device Name:";
-
-    //Iterate through the results and print the device ID and name
-    while (query.next()) {
-        int deviceID = query.value(0).toInt();
-        QString deviceName = query.value(1).toString();
-        bool deviceActive = query.value(2).toBool();
-        qDebug() << "  " << deviceID << "         " << deviceActive << "      " << deviceName;
-    }
-    qDebug() << "-----------------------------------------------------------------------";
-}
-
-
-void MainWindow::cmd_updateAllActive(bool displayReport)
-{
-    //Select all active catalog devices from database
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-    QString querySQL = QLatin1String(R"(
-                           SELECT device_id
-                           FROM device
-                           WHERE device_type = 'Catalog'
-                           AND device_active = 1
-                           ORDER BY device_id
-                       )");
-    query.prepare(querySQL);
-    query.exec();
-
-    //Update each catalog
-    while (query.next()) {
-        int deviceID = query.value(0).toInt();
-        qDebug() << "processing:   "<< deviceID ;
-        cmd_updateCatalog(deviceID, displayReport);
-    }
-
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "All active catalogs updated";
-    qDebug() << "-----------------------------------------------------------------------";
-}
-
-// Add this enhanced diagnostic method to MainWindow class in mainwindow_setup.cpp
-
-void MainWindow::debugIconLoadingDetailed()
-{
-    qDebug() << "=== DETAILED ICON LOADING ANALYSIS ===";
-    qDebug() << "Platform:"
-#ifdef Q_OS_LINUX
-             << "Linux"
-#elif defined(Q_OS_WIN)
-             << "Windows"
-#elif defined(Q_OS_MAC)
-             << "macOS"
-#else
-             << "Other"
-#endif
-        ;
-
-    // Basic icon theme info
-    qDebug() << "Icon theme name:" << QIcon::themeName();
-    qDebug() << "Fallback search paths:" << QIcon::fallbackSearchPaths();
-    qDebug() << "Theme search paths:" << QIcon::themeSearchPaths();
-    qDebug() << "Desktop settings aware:" << QApplication::desktopSettingsAware();
-    qDebug() << "Dark theme detected:" << isDarkTheme();
-
-    // Check if KF6BreezeIcons is available
-    qDebug() << "";
-    qDebug() << "=== KF6 Integration Check ===";
-
-    // Try to load a test icon with different approaches
-    QStringList testIcons = {"folder", "edit-find", "media-optical", "dialog-ok-apply"};
-
-    for (const QString &iconName : testIcons) {
-        qDebug() << "";
-        qDebug() << "Testing icon:" << iconName;
-
-        // Method 1: Standard QIcon::fromTheme (current approach)
-        QIcon standardIcon = QIcon::fromTheme(iconName);
-        qDebug() << "  Standard fromTheme - null:" << standardIcon.isNull()
-                 << "sizes:" << standardIcon.availableSizes().size();
-        if (!standardIcon.isNull()) {
-            qDebug() << "  Available sizes:" << standardIcon.availableSizes();
-            // Try to get the actual file path being used
-            QPixmap pixmap = standardIcon.pixmap(22, 22);
-            qDebug() << "  22x22 pixmap null:" << pixmap.isNull();
-        }
-
-        // Method 2: Test if KF6 theme loading works by temporarily clearing fallbacks
-        QStringList originalFallbacks = QIcon::fallbackSearchPaths();
-        QIcon::setFallbackSearchPaths(QStringList()); // Clear fallbacks temporarily
-
-        // Try with breeze theme name
-        QIcon::setThemeName("breeze");
-        QIcon kf6Icon = QIcon::fromTheme(iconName);
-        qDebug() << "  KF6/Breeze without fallbacks - null:" << kf6Icon.isNull()
-                 << "sizes:" << kf6Icon.availableSizes().size();
-
-        // Try with system theme
-        QIcon::setThemeName(""); // Let system decide
-        QIcon systemIcon = QIcon::fromTheme(iconName);
-        qDebug() << "  System theme without fallbacks - null:" << systemIcon.isNull()
-                 << "sizes:" << systemIcon.availableSizes().size();
-
-        // Restore original settings
-        QIcon::setFallbackSearchPaths(originalFallbacks);
-        setupIconTheme(); // Restore your current setup
-
-        // Method 3: Direct resource check
-        QString lightResource = QString(":/fallback-icons/%1.png").arg(iconName);
-        QString darkResource = QString(":/fallback-icons-dark/%1.png").arg(iconName);
-        qDebug() << "  Light resource exists:" << QFile::exists(lightResource);
-        qDebug() << "  Dark resource exists:" << QFile::exists(darkResource);
-    }
-
-    qDebug() << "";
-    qDebug() << "=== Icon Search Path Analysis ===";
-    QStringList themePaths = QIcon::themeSearchPaths();
-    for (const QString &path : themePaths) {
-        qDebug() << "Theme path:" << path;
-        QDir dir(path);
-        if (dir.exists()) {
-            QStringList themes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-            qDebug() << "  Available themes:" << themes;
-
-            // Check if breeze theme exists
-            if (themes.contains("breeze")) {
-                QString breezePath = path + "/breeze";
-                QDir breezeDir(breezePath);
-                if (breezeDir.exists()) {
-                    QStringList categories = breezeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-                    qDebug() << "  Breeze categories:" << categories;
-                }
-            }
-        } else {
-            qDebug() << "  Path does not exist";
-        }
-    }
-
-    qDebug() << "";
-    qDebug() << "=== Environment Variables ===";
-    qDebug() << "XDG_DATA_DIRS:" << qgetenv("XDG_DATA_DIRS");
-    qDebug() << "XDG_CONFIG_HOME:" << qgetenv("XDG_CONFIG_HOME");
-    qDebug() << "XDG_DATA_HOME:" << qgetenv("XDG_DATA_HOME");
-
-    qDebug() << "=== END DETAILED ANALYSIS ===";
-    qDebug() << "";
-}
-
-// Also add this method to track which actual files are being loaded
-void MainWindow::testIconSourceTracking()
-{
-    qDebug() << "=== ICON SOURCE TRACKING TEST ===";
-
-    // Create a custom icon engine to track loading
-    QStringList testIcons = {"folder", "edit-find", "document-save"};
-
-    for (const QString &iconName : testIcons) {
-        QIcon icon = QIcon::fromTheme(iconName);
-        if (!icon.isNull()) {
-            // Get pixmaps at different sizes to see what's being loaded
-            QPixmap pm16 = icon.pixmap(16, 16);
-            QPixmap pm22 = icon.pixmap(22, 22);
-            QPixmap pm32 = icon.pixmap(32, 32);
-
-            qDebug() << "Icon" << iconName << ":";
-            qDebug() << "  16x16 available:" << !pm16.isNull();
-            qDebug() << "  22x22 available:" << !pm22.isNull();
-            qDebug() << "  32x32 available:" << !pm32.isNull();
-            qDebug() << "  Cachekey:" << QString::number(icon.cacheKey());
-
-            // Try to determine if it's coming from resources
-            // This is a bit hacky but can help identify the source
-            QIcon resourceIcon = QIcon(QString(":/fallback-icons/%1.png").arg(iconName));
-            QIcon resourceIconDark = QIcon(QString(":/fallback-icons-dark/%1.png").arg(iconName));
-
-            bool matchesLight = (icon.cacheKey() == resourceIcon.cacheKey());
-            bool matchesDark = (icon.cacheKey() == resourceIconDark.cacheKey());
-
-            qDebug() << "  Matches light resource:" << matchesLight;
-            qDebug() << "  Matches dark resource:" << matchesDark;
-
-            if (!matchesLight && !matchesDark) {
-                qDebug() << "  *** LIKELY FROM SYSTEM/KF6 ***";
-            } else {
-                qDebug() << "  *** FROM EMBEDDED RESOURCES ***";
-            }
-        }
-    }
-
-    qDebug() << "=== END SOURCE TRACKING ===";
-}
-
-// Modified setupIconTheme methods to test KF6 icon loading
-// Add these as test methods to MainWindow class
-
-void MainWindow::setupIconThemeWithKF6Test()
-{
-    qDebug() << "=== TESTING KF6 ICON LOADING ===";
-
-#ifdef Q_OS_LINUX
-    setupLinuxIconThemeKF6Test();
-#elif defined(Q_OS_WIN)
-    setupWindowsIconThemeKF6Test();
-#else
-    setupWindowsIconThemeKF6Test();
-#endif
-
-    // Run detailed diagnostics after setup
-    debugIconLoadingDetailed();
-    testIconSourceTracking();
-}
-
-#ifdef Q_OS_LINUX
-void MainWindow::setupLinuxIconThemeKF6Test()
-{
-    qDebug() << "Setting up Linux icon theme with KF6 integration test...";
-
-    // ENABLE KDE icon integration (opposite of current approach)
-    QApplication::setDesktopSettingsAware(true);
-
-    // Let KF6 handle the theme name (don't force empty)
-    // Try different approaches:
-
-    // Approach 1: Let system decide theme
-    qDebug() << "Test 1: System-decided theme";
-    QIcon::setThemeName(""); // Let system decide
-
-    // Clear fallback paths to force KF6/system usage
-    QIcon::setFallbackSearchPaths(QStringList());
-
-    qDebug() << "After clearing fallbacks:";
-    qDebug() << "  Theme name:" << QIcon::themeName();
-    qDebug() << "  Theme paths:" << QIcon::themeSearchPaths();
-
-    // Test if icons load
-    QIcon testIcon1 = QIcon::fromTheme("folder");
-    qDebug() << "  System folder icon loaded:" << !testIcon1.isNull();
-
-    // Approach 2: Explicitly set breeze theme
-    qDebug() << "";
-    qDebug() << "Test 2: Explicit breeze theme";
-    QIcon::setThemeName("breeze");
-
-    QIcon testIcon2 = QIcon::fromTheme("folder");
-    qDebug() << "  Breeze folder icon loaded:" << !testIcon2.isNull();
-
-    // Approach 3: Add minimal fallback only if KF6 fails
-    qDebug() << "";
-    qDebug() << "Test 3: KF6 with minimal fallback";
-
-    if (testIcon2.isNull()) {
-        qDebug() << "  KF6 icons not available, adding fallback";
-        QStringList fallbackPaths;
-        bool darkTheme = isDarkTheme();
-
-        if (darkTheme) {
-            fallbackPaths << ":/fallback-icons-dark";
-        } else {
-            fallbackPaths << ":/fallback-icons";
-        }
-
-        QIcon::setFallbackSearchPaths(fallbackPaths);
-        qDebug() << "  Added fallback paths:" << fallbackPaths;
-    } else {
-        qDebug() << "  KF6 icons working, no fallback needed";
-    }
-
-    qDebug() << "Linux KF6 test setup completed";
-}
-#endif
-
-#ifdef Q_OS_WIN
-void MainWindow::setupWindowsIconThemeKF6Test()
-{
-    qDebug() << "Setting up Windows icon theme with KF6 integration test...";
-
-    // Test if KF6BreezeIcons works on Windows
-    QApplication::setDesktopSettingsAware(true);
-
-    // Try KF6 approach first
-    QIcon::setThemeName("breeze");
-    QIcon::setFallbackSearchPaths(QStringList()); // Clear fallbacks
-
-    qDebug() << "Testing KF6 on Windows:";
-    qDebug() << "  Theme name:" << QIcon::themeName();
-    qDebug() << "  Theme paths:" << QIcon::themeSearchPaths();
-
-    // Test critical icons
-    QStringList testIcons = {"folder", "edit-find", "document-save"};
-    int successCount = 0;
-
-    for (const QString &iconName : testIcons) {
-        QIcon icon = QIcon::fromTheme(iconName);
-        bool loaded = !icon.isNull();
-        if (loaded) successCount++;
-        qDebug() << "  " << iconName << "loaded:" << loaded;
-    }
-
-    qDebug() << "KF6 success rate:" << successCount << "/" << testIcons.size();
-
-    // If KF6 doesn't work well, add fallbacks
-    if (successCount < testIcons.size()) {
-        qDebug() << "Adding fallback paths for Windows";
-
-        QStringList fallbackPaths = QIcon::fallbackSearchPaths();
-        bool darkTheme = isDarkTheme();
-
-        if (darkTheme) {
-            fallbackPaths << ":/fallback-icons-dark";
-        } else {
-            fallbackPaths << ":/fallback-icons";
-        }
-
-        QIcon::setFallbackSearchPaths(fallbackPaths);
-        qDebug() << "Windows KF6 test with fallback completed";
-    } else {
-        qDebug() << "Windows KF6 test - no fallback needed!";
-    }
-}
-#endif
-
-// Safe method to test removing fallback resources
-void MainWindow::testWithoutFallbackResources()
-{
-    qDebug() << "=== TESTING WITHOUT FALLBACK RESOURCES ===";
-
-    // Store original setup
-    QString originalTheme = QIcon::themeName();
-    QStringList originalFallbacks = QIcon::fallbackSearchPaths();
-    bool originalDesktopAware = QApplication::desktopSettingsAware();
-
-    // Test KF6-only setup
-    QApplication::setDesktopSettingsAware(true);
-    QIcon::setThemeName("breeze");
-    QIcon::setFallbackSearchPaths(QStringList()); // Remove all fallbacks
-
-    qDebug() << "Testing icon loading without any fallback resources:";
-
-    // Test all your commonly used icons
-    QStringList criticalIcons = {
-        "folder", "edit-find", "document-save", "document-open", "edit-copy",
-        "edit-paste", "edit-delete", "media-optical", "drive-harddisk",
-        "dialog-ok-apply", "go-up", "go-down", "go-next", "go-previous"
-    };
-
-    int successCount = 0;
-    QStringList failedIcons;
-
-    for (const QString &iconName : criticalIcons) {
-        QIcon icon = QIcon::fromTheme(iconName);
-        bool loaded = !icon.isNull() && !icon.availableSizes().isEmpty();
-
-        if (loaded) {
-            successCount++;
-            qDebug() << "  ✅" << iconName << "- sizes:" << icon.availableSizes();
-        } else {
-            failedIcons << iconName;
-            qDebug() << "  ❌" << iconName << "- FAILED";
-        }
-    }
-
-    qDebug() << "";
-    qDebug() << "RESULTS:";
-    qDebug() << "  Success rate:" << successCount << "/" << criticalIcons.size()
-             << "(" << (100 * successCount / criticalIcons.size()) << "%)";
-
-    if (!failedIcons.isEmpty()) {
-        qDebug() << "  Failed icons:" << failedIcons;
-        qDebug() << "  These would need fallback resources";
-    }
-
-    if (successCount == criticalIcons.size()) {
-        qDebug() << "  🎉 ALL ICONS LOADED FROM KF6! Safe to remove fallback resources.";
-    } else if (successCount >= criticalIcons.size() * 0.8) {
-        qDebug() << "  ⚠️ Most icons work, consider keeping minimal fallback for:" << failedIcons;
-    } else {
-        qDebug() << "  ❌ KF6 icon loading insufficient, keep fallback resources";
-    }
-
-    // Restore original setup
-    QApplication::setDesktopSettingsAware(originalDesktopAware);
-    QIcon::setThemeName(originalTheme);
-    QIcon::setFallbackSearchPaths(originalFallbacks);
-
-    qDebug() << "=== FALLBACK TEST COMPLETED, ORIGINAL SETUP RESTORED ===";
-}
-

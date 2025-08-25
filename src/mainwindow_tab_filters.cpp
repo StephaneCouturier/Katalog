@@ -180,15 +180,16 @@
             QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
             deviceContextMenu.addAction(menuDeviceAction3);
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-                qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) ===";
+                qDebug() << "=== Filters Context Menu Storage Update (DeviceUpdateManager) ===";
 
-                if (!selectedDevice || selectedDevice->type != "Catalog") {
-                    qDebug() << "Filters context menu update - invalid device";
+                // Check for Storage device type, not Catalog
+                if (!selectedDevice || selectedDevice->type != "Storage") {
+                    qDebug() << "Filters context menu update - invalid device type, expected Storage";
                     return;
                 }
 
                 if (!selectedDevice->active) {
-                    QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
+                    QMessageBox::information(this, "Katalog", tr("The storage device is not active (path not available)."));
                     return;
                 }
 
@@ -203,18 +204,21 @@
                     return;
                 }
 
-                qDebug() << "Filters context menu catalog update for:" << selectedDevice->name;
+                qDebug() << "Filters context menu storage update for:" << selectedDevice->name;
 
-                // Set UI state for catalog operation
-                setCatalogUpdateUIState(true);
+                // Set UI state for storage operation (different from catalog)
+                // Use proper UI state method for storage operations
+                ui->Catalogs_pushButton_Stop->setEnabled(true);
+                QApplication::setOverrideCursor(Qt::WaitCursor);
 
-                // FIXED: Use DeviceUpdateManager instead of old CatalogManager
-                // This ensures consistent behavior across all update paths
+                // Use DeviceUpdateManager for Storage hierarchy update
+                // This will update the storage AND process all its catalog children
                 deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
                                                            collection->databaseMode,
-                                                           collection->folder);
+                                                           collection->folder,
+                                                           "update");
 
-                qDebug() << "Filters context menu - DeviceUpdateManager operation started";
+                qDebug() << "Filters context menu - DeviceUpdateManager Storage operation started";
             });
 
             deviceContextMenu.exec(globalPos);

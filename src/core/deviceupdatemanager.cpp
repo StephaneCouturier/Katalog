@@ -149,7 +149,8 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
 {
     qDebug() << "=== DeviceUpdateManager::updateDeviceHierarchy ===";
     qDebug() << "Root device:" << (rootDevice ? rootDevice->name : "NULL");
-    qDebug() << "Update type:" << updateType;  // ADD THIS LINE
+    qDebug() << "Root device type:" << (rootDevice ? rootDevice->type : "NULL");
+    qDebug() << "Update type:" << updateType;
 
     if (!rootDevice) {
         emit operationError("Invalid root device provided");
@@ -169,18 +170,24 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
     m_rootDevice = rootDevice;
     m_databaseMode = databaseMode;
     m_collectionFolder = collectionFolder;
-    m_updateType = updateType;  // ADD THIS LINE - Store the operation type
+    m_updateType = updateType;
     m_operationStartTime = QDateTime::currentDateTime();
 
-    // Analyze hierarchy to get totals for progress
-    analyzeHierarchy(rootDevice);  // CORRECTED - was collectDeviceHierarchy
+    // Initialize storage batch tracking if root is Storage
+    if (rootDevice->type == "Storage" && updateType == "update") {
+        qDebug() << "=== STORAGE ROOT DEVICE - Initializing batch tracking ===";
+        initializeStorageBatch();
+    }
 
-    setStatus(QString("Starting %1 operation...").arg(updateType));  // UPDATED MESSAGE
+    // Analyze hierarchy to get totals for progress
+    analyzeHierarchy(rootDevice);
+
+    setStatus(QString("Starting %1 operation...").arg(updateType));
     emit operationStarted();
     emit operationRunningChanged();
 
     // Start recursive update
-    updateDeviceRecursive(rootDevice);  // KEPT - don't remove this!
+    updateDeviceRecursive(rootDevice);
 }
 
 Device* DeviceUpdateManager::createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs)
@@ -229,12 +236,45 @@ Device* DeviceUpdateManager::createTempVirtualDeviceForFilter(const QList<Device
 
 void DeviceUpdateManager::processNextDevice()
 {
+    qDebug() << "=== DeviceUpdateManager::processNextDevice ===";
+
     if (!shouldContinue()) {
         handleOperationCancellation();
         return;
     }
 
-    // Check if we're done with all processing
+    // For Storage batch operations, check if there are more children to process
+    if (m_rootDevice && m_rootDevice->type == "Storage") {
+        qDebug() << "Storage batch operation - checking for remaining children";
+
+        // If there are unprocessed catalog children, continue processing
+        // This logic depends on how children are tracked in the recursive system
+        // For now, we'll check if all expected catalogs have been processed
+
+        int expectedCatalogs = 0;
+        if (m_rootDevice->hasSubDevice) {
+            // Count expected active catalog children
+            for (const Device& child : m_rootDevice->subDevices) {
+                if (child.type == "Catalog" && child.active) {
+                    expectedCatalogs++;
+                }
+            }
+        }
+
+        qDebug() << "Expected catalogs:" << expectedCatalogs << "Processed:" << m_processedCatalogs;
+
+        if (m_processedCatalogs < expectedCatalogs) {
+            qDebug() << "Still processing catalogs - waiting for next completion";
+            return; // More catalogs to process - wait for next onCatalogOperationCompleted
+        } else {
+            qDebug() << "All catalogs processed for storage - completing batch operation";
+            completeOperation();
+            return;
+        }
+    }
+
+    // For other device types, complete immediately
+    qDebug() << "Non-storage operation - completing";
     completeOperation();
 }
 
@@ -251,22 +291,19 @@ void DeviceUpdateManager::processChildren(Device* device)
     // Catalog devices should never call processChildren
     if (device->type == "Catalog") {
         qDebug() << "*** ERROR: processChildren called for catalog device - this should never happen! ***";
-        qDebug() << "*** Catalog completion is handled by onCatalogOperationCompleted ***";
         return;
     }
 
     if (!device || !shouldContinue()) {
         if (!shouldContinue()) {
-            qDebug() << "Stop requested - aborting children processing";
             handleOperationCancellation();
         }
         return;
     }
 
-    // Load children if not already loaded
-    if (device->subDevices.isEmpty() && device->hasSubDevice) {
-        qDebug() << "Loading children for device:" << device->name;
-        device->loadDevice("defaultConnection");
+    // Load children if needed
+    if (device->subDevices.isEmpty()) {
+        loadDeviceChildren(device);
     }
 
     // If no children, this device is complete
@@ -274,60 +311,39 @@ void DeviceUpdateManager::processChildren(Device* device)
         qDebug() << "No children found for:" << device->name;
         updateParentNumbers(device);
         emit deviceProcessingCompleted(device->name);
-
-        // Check if operation already completed to prevent duplicate calls
-        if (!m_operationRunning) {
-            qDebug() << "*** SKIPPING continueToNextDevice from processChildren - operation already completed ***";
-            return;
-        }
-
-        qDebug() << "*** CALLING continueToNextDevice from processChildren (no children) ***";
         continueToNextDevice();
         return;
     }
 
     qDebug() << "Found" << device->subDevices.size() << "children for:" << device->name;
 
-    // Process each child recursively
+    // SPECIAL HANDLING: Storage devices with children use batch processing
+    if (device->type == "Storage") {
+        qDebug() << "=== STORAGE DEVICE WITH CHILDREN - Using batch processing ===";
+        initializeStorageBatchProcessing(device);
+        processNextStorageChild(); // Start processing children sequentially
+        return;
+    }
+
+    // For other device types (Virtual, etc.), process children normally
     for (const Device& childDevice : device->subDevices) {
         if (!shouldContinue()) {
-            qDebug() << "Stop requested during children processing";
             handleOperationCancellation();
             return;
         }
 
-        // Create a copy for processing
         Device* childPtr = new Device(childDevice);
-        qDebug() << "Processing child:" << childPtr->name << "Type:" << childPtr->type;
-
         updateDeviceRecursive(childPtr);
 
-        // If we started an async catalog operation, wait for it to complete
         if (m_waitingForCatalogCompletion) {
             qDebug() << "Async catalog operation in progress, waiting...";
             return;
         }
-
-        // Check for stop after each child
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested after processing child";
-            handleOperationCancellation();
-            return;
-        }
     }
 
-    // All children processed for this device
-    qDebug() << "All children processed for:" << device->name;
+    // All children processed
     updateParentNumbers(device);
     emit deviceProcessingCompleted(device->name);
-
-    // Check if operation already completed to prevent duplicate calls
-    if (!m_operationRunning) {
-        qDebug() << "*** SKIPPING continueToNextDevice from processChildren - operation already completed ***";
-        return;
-    }
-
-    qDebug() << "*** CALLING continueToNextDevice from processChildren (all children done) ***";
     continueToNextDevice();
 }
 
@@ -394,7 +410,18 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
 
     if (!device->active) {
         qDebug() << "Catalog is inactive, skipping:" << device->name;
-        // [existing inactive catalog handling code remains the same]
+
+        // Handle inactive catalog - mark as processed and continue
+        m_processedDevices++;
+        updateProgress();
+        emit deviceProcessingCompleted(device->name);
+
+        // For Storage batch operations, this should continue to next child
+        if (m_currentStorageDevice) {
+            processNextStorageChild();
+        } else {
+            continueToNextDevice();
+        }
         return;
     }
 
@@ -402,6 +429,37 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
         handleOperationError("CatalogManager not available");
         return;
     }
+
+    // ENHANCED: Check CatalogManager state before starting
+    qDebug() << "CatalogManager state check:";
+    qDebug() << "  catalogOperationRunning():" << m_catalogManager->catalogOperationRunning();
+
+    if (m_catalogManager->catalogOperationRunning()) {
+        qDebug() << "*** ERROR: CatalogManager reports operation still running! ***";
+        qDebug() << "*** This indicates cleanup timing issue ***";
+
+        // Try to wait a bit more and retry
+        qDebug() << "Retrying catalog start in 100ms...";
+        QTimer::singleShot(100, this, [this, device]() {
+            qDebug() << "Retry attempt - CatalogManager running:" << m_catalogManager->catalogOperationRunning();
+            if (!m_catalogManager->catalogOperationRunning()) {
+                qDebug() << "CatalogManager now available, starting catalog";
+                startCatalogOperation(device);
+            } else {
+                qDebug() << "*** ERROR: CatalogManager still running after retry - aborting operation ***";
+                handleOperationError(QString("Cannot start catalog %1 - CatalogManager busy").arg(device->name));
+            }
+        });
+        return;
+    }
+
+    startCatalogOperation(device);
+}
+
+void DeviceUpdateManager::startCatalogOperation(Device* device)
+{
+    qDebug() << "=== DeviceUpdateManager::startCatalogOperation ===";
+    qDebug() << "Starting catalog operation for:" << device->name;
 
     // CRITICAL: Set waiting flag and current device
     m_waitingForCatalogCompletion = true;
@@ -415,17 +473,15 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
     cleanupCatalogJob();
     m_currentCatalogJob = new CatalogJobStoppable(this);
 
-    // SURGICAL FIX: Forward catalog progress properly - this connects to DeviceUpdateManager's
-    // catalogProgress signal, which should be transparent and let CatalogProgressManager handle it
+    // Forward catalog progress properly
     connect(m_currentCatalogJob, &CatalogJobStoppable::catalogProgress,
             this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
-                // Forward the signal transparently - let CatalogProgressManager handle the UI
                 emit catalogProgress(filesProcessed, totalFiles, currentPath);
             });
 
     qDebug() << "Starting catalog operation for:" << device->name;
 
-    // CRITICAL: Start the actual catalog operation that will trigger onCatalogOperationCompleted()
+    // Start the actual catalog operation
     m_catalogManager->startCatalogJobStoppable(
         m_currentCatalogJob,
         device,
@@ -457,6 +513,10 @@ void DeviceUpdateManager::updateStorageDevice(Device* device)
     qDebug() << "Updating Storage Device:" << device->name;
     setStatus(QString("Updating storage device: %1").arg(device->name));
 
+    // Initialize storage update result
+    m_storageWasUpdated = false;
+    m_storageUpdateResult = Storage::UpdateResult{};
+
     // Update storage space information (fast operation)
     if (device->storage) {
         device->storage->path = device->path;
@@ -470,22 +530,31 @@ void DeviceUpdateManager::updateStorageDevice(Device* device)
                 device->totalSpace = result.newTotalSpace;
                 qDebug() << "Storage space updated - Free:" << device->freeSpace
                          << "Total:" << device->totalSpace;
+
+                // Store results for reporting
+                m_storageUpdateResult = result;
+                m_storageWasUpdated = true;
+
+                // Update parent device values
+                device->dateTimeUpdated = QDateTime::currentDateTime();
+                device->saveDevice();
+                device->saveStatistics(device->dateTimeUpdated, "update");
+
+                qDebug() << "Storage device updated and saved successfully";
+            } else {
+                qDebug() << "Storage space not updated - Error:" << result.errorMessage;
+                m_storageWasUpdated = false;
             }
         } catch (const std::exception& e) {
             qDebug() << "Error updating storage info:" << e.what();
+            m_storageWasUpdated = false;
         }
     }
-
-    // Save storage device changes
-    device->saveDevice();
-    device->saveStatistics(device->dateTimeUpdated, "update");
 
     m_processedDevices++;
     updateProgress();
 
     emit deviceProcessingCompleted(device->name);
-
-    // Storage devices continue to process their catalog children in processChildren()
 }
 
 void DeviceUpdateManager::updateVirtualDevice(Device* device)
@@ -526,27 +595,78 @@ void DeviceUpdateManager::stopOperation()
 
 QList<qint64> DeviceUpdateManager::buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult)
 {
+    qDebug() << "=== DeviceUpdateManager::buildCatalogUpdateResults ===";
+
     QList<qint64> results;
 
-    // Catalog update results (first 7 elements)
-    results << 1;  // Success
-    results << catalogDevice->totalFileCount;
-    results << 0;  // Delta files (would need calculation)
-    results << catalogDevice->totalFileSize;
-    results << 0;  // Delta size (would need calculation)
-    results << 0;  // Reserved
-    results << 0;  // Reserved
+    // Index 0-6: Catalog update results (matching existing format)
+    results << 1;  // Index 0: Success flag
+    results << catalogDevice->totalFileCount;  // Index 1: Total files after update
+    results << 0;  // Index 2: Delta files (would need previous count to calculate)
+    results << catalogDevice->totalFileSize;   // Index 3: Total file size after update
+    results << 0;  // Index 4: Delta file size (would need previous size to calculate)
+    results << 1;  // Index 5: Updated catalogs count (1 for single catalog)
+    results << 0;  // Index 6: Skipped catalogs count (0 for successful single catalog)
 
-    // Storage update results (next 7 elements)
-    results << (storageResult.wasUpdated ? 1 : 0);  // Storage success
-    results << storageResult.newTotalSpace;
-    results << storageResult.newFreeSpace;
-    results << (storageResult.newTotalSpace - storageResult.newFreeSpace);  // Used space
-    results << 0;  // Reserved
-    results << 0;  // Reserved
-    results << 0;  // Reserved
+    // Index 7-13: Storage update results (matching reportAllUpdates format)
+    if (storageResult.wasUpdated) {
+        results << 1;  // Index 7: Storage updated flag (1 = true)
+        results << storageResult.newUsedSpace;     // Index 8: Used space
+        results << storageResult.deltaUsedSpace;   // Index 9: Delta used space
+        results << storageResult.newFreeSpace;     // Index 10: Free space
+        results << storageResult.deltaFreeSpace;   // Index 11: Delta free space
+        results << storageResult.newTotalSpace;    // Index 12: Total space
+        results << storageResult.deltaTotalSpace;  // Index 13: Delta total space
+    } else {
+        results << 0;  // Index 7: Storage updated flag (0 = false)
+        results << 0;  // Index 8: Used space (0 when not updated)
+        results << 0;  // Index 9: Delta used space
+        results << 0;  // Index 10: Free space (0 when not updated)
+        results << 0;  // Index 11: Delta free space
+        results << 0;  // Index 12: Total space (0 when not updated)
+        results << 0;  // Index 13: Delta total space
+    }
+
+    qDebug() << "Built results for catalog:" << catalogDevice->name;
+    qDebug() << "  Files:" << results[1] << "Size:" << results[3];
+    qDebug() << "  Storage updated:" << results[7];
+    if (results[7]) {
+        qDebug() << "  Storage values - Used:" << results[8] << "Free:" << results[10] << "Total:" << results[12];
+    }
 
     return results;
+}
+
+void DeviceUpdateManager::loadDeviceChildren(Device* device)
+{
+    if (!device) return;
+
+    qDebug() << "=== DeviceUpdateManager::loadDeviceChildren ===";
+    qDebug() << "Loading children for device:" << device->name;
+
+    try {
+        // Load device which populates deviceIDList
+        device->loadDevice("defaultConnection");
+
+        qDebug() << "Device has" << device->deviceIDList.size() << "child IDs";
+        qDebug() << "hasSubDevice flag:" << device->hasSubDevice;
+
+        // Create actual Device objects from deviceIDList
+        device->subDevices.clear();
+        for (int childID : std::as_const(device->deviceIDList)) {
+            Device childDevice;
+            childDevice.ID = childID;
+            childDevice.loadDevice("defaultConnection");
+            device->subDevices.append(childDevice);
+
+            qDebug() << "  Loaded child:" << childDevice.name << "Type:" << childDevice.type << "Active:" << childDevice.active;
+        }
+
+        qDebug() << "Loaded" << device->subDevices.size() << "children for device:" << device->name;
+
+    } catch (const std::exception& e) {
+        qDebug() << "Error loading children for device" << device->name << ":" << e.what();
+    }
 }
 
 void DeviceUpdateManager::onCatalogOperationError(const QString& error)
@@ -641,9 +761,14 @@ void DeviceUpdateManager::buildDeviceList(Device* device, QList<Device*>& device
 
     deviceList.append(device);
 
-    // Load children if needed
+    // FIXED: Use proper method to load children that converts deviceIDList to subDevices
     if (device->subDevices.isEmpty() && device->hasSubDevice) {
-        device->loadDevice("defaultConnection");
+        qDebug() << "Device" << device->name << "has children but subDevices is empty - loading children";
+        loadDeviceChildren(device);  // This is the key fix!
+    } else if (device->subDevices.isEmpty()) {
+        // Force load to check if there are actually children
+        qDebug() << "Device" << device->name << "checking for children";
+        loadDeviceChildren(device);
     }
 
     // Recursively add children
@@ -810,6 +935,20 @@ void DeviceUpdateManager::handleOperationCancellation()
     qDebug() << "Processed devices:" << m_processedDevices << "/" << m_totalDevices;
     qDebug() << "Processed catalogs:" << m_processedCatalogs << "/" << m_totalCatalogs;
 
+    // ENHANCED: For Storage batch operations, update counts properly
+    if (m_currentStorageDevice) {
+        qDebug() << "Cancelling Storage batch operation:";
+        qDebug() << "  Updated catalogs so far:" << m_updatedCatalogs;
+        qDebug() << "  Skipped catalogs so far:" << m_skippedCatalogs;
+
+        // Calculate remaining catalogs that won't be processed
+        int remainingChildren = m_childrenToProcess.size() - m_currentChildIndex;
+        if (remainingChildren > 0) {
+            qDebug() << "  Remaining children that will be skipped:" << remainingChildren;
+            // We could add these to skipped count if needed for reporting
+        }
+    }
+
     m_operationRunning = false;
     m_waitingForCatalogCompletion = false;
 
@@ -817,12 +956,10 @@ void DeviceUpdateManager::handleOperationCancellation()
     int skippedDevices = m_totalDevices - m_processedDevices;
     int skippedCatalogs = m_totalCatalogs - m_processedCatalogs;
 
-    setStatus(QString("Operation cancelled - %1 catalogs skipped").arg(skippedCatalogs));
+    setStatus(QString("Operation cancelled - %1 devices skipped, %2 catalogs skipped")
+                  .arg(skippedDevices).arg(skippedCatalogs));
 
-    // Remove the problematic operationCompleted emission
-    // This was causing crashes because reportAllUpdates expects catalog update format,
-    // not cancellation format. The UI properly handles cancellation via operationCancelled.
-
+    // Emit cancellation (no results - MainWindow handles this differently)
     emit operationCancelled();
     emit operationRunningChanged();
 
@@ -832,11 +969,10 @@ void DeviceUpdateManager::handleOperationCancellation()
 void DeviceUpdateManager::completeOperation()
 {
     qDebug() << "=== DeviceUpdateManager::completeOperation ===";
-    qDebug() << "*** COMPLETION PATH 3: completeOperation (WRONG - catalog-only data) ***";
 
     // Prevent duplicate completion
     if (!m_operationRunning) {
-        qDebug() << "*** SKIPPING completeOperation - operation already completed by onCatalogOperationCompleted ***";
+        qDebug() << "*** SKIPPING completeOperation - operation already completed ***";
         return;
     }
 
@@ -856,40 +992,64 @@ void DeviceUpdateManager::completeOperation()
     m_operationRunning = false;
     m_waitingForCatalogCompletion = false;
 
-    // Create results for operations NOT handled by onCatalogOperationCompleted
+    // Determine result format based on root device type and operation
     QList<qint64> results;
-    results << 1;  // Success flag
 
-    if (m_currentDevice && m_currentDevice->type == "Catalog") {
-        // CRITICAL NOTE: Single catalog operations should be handled by onCatalogOperationCompleted
-        // This path should only be reached for multi-device operations or error cases
-        qDebug() << "*** WARNING: completeOperation() called for single catalog - THIS CREATES CATALOG-ONLY REPORTS ***";
+    if (m_rootDevice && m_rootDevice->type == "Storage") {
+        qDebug() << "*** STORAGE BATCH COMPLETION - Building storage batch results ***";
 
-        // For single catalog: use actual catalog statistics
-        results << m_currentDevice->totalFileCount;  // Total files
-        results << 0;  // Delta files (would need to calculate)
-        results << m_currentDevice->totalFileSize;   // Total size
-        results << 0;  // Delta size (would need to calculate)
-        // Add more zeros to pad the list (NO STORAGE DATA)
-        for (int i = 5; i < 14; ++i) results << 0;
+        // Storage device with catalog children - use batch format
+        results = buildStorageBatchResults(m_rootDevice);
+
+        // Set proper updateType for reportAllUpdates
+        if (m_updatedCatalogs > 1 || m_skippedCatalogs > 0) {
+            // Multiple catalogs were processed - this should be reported as "list" type
+            qDebug() << "Multiple catalogs processed, using 'list' format for reportAllUpdates";
+        } else if (m_updatedCatalogs == 1) {
+            // Single catalog under storage - hybrid format
+            qDebug() << "Single catalog under storage, using hybrid format";
+        }
+
+    } else if (m_rootDevice && m_rootDevice->type == "Virtual") {
+        qDebug() << "*** VIRTUAL DEVICE COMPLETION - Building virtual device results ***";
+
+        // Virtual device - use device count format
+        results << 1;  // Success flag
+        results << m_totalCatalogFiles;   // Total files from all catalogs
+        results << 0;  // Delta files
+        results << m_totalCatalogSize;    // Total size from all catalogs
+        results << 0;  // Delta size
+        results << m_updatedCatalogs;     // Updated catalogs
+        results << m_skippedCatalogs;     // Skipped catalogs
+
+        // No storage data for pure virtual operations
+        for (int i = 7; i < 14; ++i) results << 0;
+
     } else {
-        // For multi-device: use device counts
-        results << m_processedCatalogs;
-        results << 0;
-        results << m_processedDevices;
-        results << 0;
-        for (int i = 5; i < 14; ++i) results << 0;
+        qDebug() << "*** FALLBACK COMPLETION - Using generic format ***";
+
+        // Fallback for other cases
+        results << 1;  // Success flag
+        results << m_processedCatalogs;   // Use catalog count
+        results << 0;  // Delta
+        results << m_processedDevices;    // Use device count
+        results << 0;  // Delta
+        for (int i = 5; i < 14; ++i) results << 0;  // Pad with zeros
     }
 
-    qDebug() << "*** EMITTING operationCompleted from completeOperation with CATALOG-ONLY data ***";
+    qDebug() << "*** EMITTING operationCompleted from completeOperation ***";
     qDebug() << "Results[0] (success):" << results[0];
-    qDebug() << "Results[1] (catalog files):" << results[1];
+    qDebug() << "Results[1] (files/catalogs):" << results[1];
+    qDebug() << "Results[5] (updated catalogs):" << (results.size() > 5 ? results[5] : -1);
+    qDebug() << "Results[6] (skipped catalogs):" << (results.size() > 6 ? results[6] : -1);
     qDebug() << "Results[7] (storage updated):" << (results.size() > 7 ? results[7] : -1);
 
     emit operationCompleted(results);
     emit operationRunningChanged();
 
-    cleanupOperation();
+    QTimer::singleShot(10, this, [this]() {
+        cleanupOperation();
+    });
 }
 
 bool DeviceUpdateManager::shouldContinue() const
@@ -900,13 +1060,10 @@ bool DeviceUpdateManager::shouldContinue() const
 void DeviceUpdateManager::onCatalogOperationCompleted()
 {
     qDebug() << "=== DIAGNOSTIC: DeviceUpdateManager::onCatalogOperationCompleted() ENTRY ===";
-    qDebug() << "=== DIAGNOSTIC: This method WAS CALLED! ===";
-    qDebug() << "=== DIAGNOSTIC: m_operationRunning:" << m_operationRunning;
-    qDebug() << "=== DIAGNOSTIC: m_waitingForCatalogCompletion:" << m_waitingForCatalogCompletion;
-
     qDebug() << "m_currentDevice:" << (m_currentDevice ? m_currentDevice->name : "NULL");
-    qDebug() << "m_operationRunning:" << m_operationRunning;
-    qDebug() << "m_updateType:" << m_updateType;
+    qDebug() << "m_rootDevice:" << (m_rootDevice ? m_rootDevice->name : "NULL");
+    qDebug() << "m_rootDevice type:" << (m_rootDevice ? m_rootDevice->type : "NULL");
+    qDebug() << "m_currentStorageDevice:" << (m_currentStorageDevice ? m_currentStorageDevice->name : "NULL");
 
     if (!m_currentDevice) {
         qDebug() << "ERROR: No current device in catalog completion";
@@ -915,6 +1072,7 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
 
     qDebug() << "Catalog processing completed for:" << m_currentDevice->name;
 
+    // Update catalog device and save changes
     m_processedDevices++;
     m_processedCatalogs++;
     updateProgress();
@@ -927,47 +1085,65 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     emit deviceProcessingCompleted(m_currentDevice->name);
 
     m_waitingForCatalogCompletion = false;
+
+    // Update parent numbers for this catalog
     m_currentDevice->updateParentsNumbers();
 
-    // Use the fixed storage update method
-    Storage::UpdateResult storageResult = updateParentStorage(m_currentDevice);
-    QList<qint64> results = buildCatalogUpdateResults(m_currentDevice, storageResult);
+    // Determine if this is part of a Storage batch operation
+    // CRITICAL: Determine if this is part of a Storage batch operation
+    // Creation operations should NEVER be treated as batch operations
+    bool isStorageBatchOperation = (m_currentStorageDevice != nullptr && m_updateType == "update" && m_rootDevice && m_rootDevice->type == "Storage");
 
-    qDebug() << "*** STORAGE UPDATE DEBUG ***";
-    qDebug() << "Storage result wasUpdated:" << storageResult.wasUpdated;
-    qDebug() << "Storage result errorMessage:" << storageResult.errorMessage;
-    qDebug() << "Results[7] (storage updated flag):" << (results.size() > 7 ? results[7] : -1);
+    if (isStorageBatchOperation) {
+        qDebug() << "=== STORAGE BATCH OPERATION - Catalog completed ===";
 
-    qDebug() << "*** EMITTING operationCompleted from onCatalogOperationCompleted with COMBINED data ***";
-    qDebug() << "Results[0] (success):" << results[0];
-    qDebug() << "Results[1] (catalog files):" << results[1];
-    qDebug() << "Results[7] (storage updated):" << (results.size() > 7 ? results[7] : -1);
+        // Accumulate results for this catalog
+        accumulateStorageResults(m_currentDevice);
 
-    // RESTORE ORIGINAL CODE: Mark operation as completed to prevent duplicate completion
-    m_operationRunning = false;
-    m_waitingForCatalogCompletion = false;
+        // Update storage space after catalog completion (like the original Device::updateDevice logic)
+        if (m_currentDevice->parentID != 0) {
+            Storage::UpdateResult storageResult = updateParentStorage(m_currentDevice);
+            if (storageResult.wasUpdated && !m_storageWasUpdated) {
+                // Store the first successful storage update for reporting
+                m_storageUpdateResult = storageResult;
+                m_storageWasUpdated = true;
+                qDebug() << "Storage space updated during batch operation";
+            }
+        }
 
-    // RESTORE ORIGINAL CODE: Ensure reliable signal delivery
-    emit operationCompleted(results);
-    emit operationRunningChanged();
+        // CRITICAL FIX: Defer the next catalog start to allow CatalogManager cleanup
+        qDebug() << "Deferring next child processing to allow CatalogManager cleanup...";
+        QTimer::singleShot(50, this, [this]() {
+            qDebug() << "Timer triggered - continuing to next child in storage batch...";
+            processNextStorageChild();
+        });
 
-    // RESTORE ORIGINAL CODE: Use timer for cleanup to ensure signals are processed first
-    QTimer::singleShot(10, this, [this]() {
-        cleanupOperation();
-    });
+        return; // Don't emit operationCompleted yet - wait for all catalogs
 
-    // RESTORE ORIGINAL CODE: Second signal emission (this was there for a reason!)
-    // qDebug() << "*** CRITICAL DEBUG: About to emit operationCompleted signal ***";
-    // qDebug() << "Results size:" << results.size();
-    // qDebug() << "Results[0] (success):" << results[0];
-    // if (results.size() > 1) qDebug() << "Results[1] (files):" << results[1];
-    // if (results.size() > 7) qDebug() << "Results[7] (storage):" << results[7];
+    } else {
+        qDebug() << "=== SINGLE CATALOG OPERATION - Emitting results immediately ===";
 
-    // qDebug() << "=== DIAGNOSTIC: About to emit operationCompleted to MainWindow ===";
-    //emit operationCompleted(results);
-    // qDebug() << "=== DIAGNOSTIC: operationCompleted signal emitted to MainWindow! ===";
+        // Single catalog operation - update parent storage and emit results
+        Storage::UpdateResult storageResult = updateParentStorage(m_currentDevice);
+        QList<qint64> results = buildCatalogUpdateResults(m_currentDevice, storageResult);
 
-    qDebug() << "=== DIAGNOSTIC: DeviceUpdateManager::onCatalogOperationCompleted() EXIT ===";
+        qDebug() << "*** STORAGE UPDATE DEBUG ***";
+        qDebug() << "Storage result wasUpdated:" << storageResult.wasUpdated;
+        qDebug() << "Results[7] (storage updated flag):" << (results.size() > 7 ? results[7] : -1);
+
+        // Mark operation as completed
+        m_operationRunning = false;
+        m_waitingForCatalogCompletion = false;
+
+        // Emit completion with combined catalog + storage data
+        emit operationCompleted(results);
+        emit operationRunningChanged();
+
+        // Cleanup
+        QTimer::singleShot(10, this, [this]() {
+            cleanupOperation();
+        });
+    }
 }
 
 Storage::UpdateResult DeviceUpdateManager::updateParentStorage(Device* catalogDevice)
@@ -1029,5 +1205,220 @@ Storage::UpdateResult DeviceUpdateManager::updateParentStorage(Device* catalogDe
         errorResult.wasUpdated = false;
         errorResult.errorMessage = QString("Exception: %1").arg(e.what());
         return errorResult;
+    }
+}
+
+QList<qint64> DeviceUpdateManager::buildStorageBatchResults(Device* storageDevice)
+{
+    qDebug() << "=== DeviceUpdateManager::buildStorageBatchResults ===";
+    qDebug() << "Building batch results for storage:" << storageDevice->name;
+
+    QList<qint64> results;
+
+    // Index 0-6: Catalog batch results (matching "list" updateType format)
+    results << 1;  // Index 0: Success flag
+    results << m_totalCatalogFiles;  // Index 1: Total files from all catalogs
+    results << 0;  // Index 2: Delta files (would need previous count to calculate)
+    results << m_totalCatalogSize;   // Index 3: Total file size from all catalogs
+    results << 0;  // Index 4: Delta file size (would need previous size to calculate)
+    results << m_updatedCatalogs;    // Index 5: Updated catalogs count
+    results << m_skippedCatalogs;    // Index 6: Skipped catalogs count
+
+    // Index 7-13: Storage update results
+    if (m_storageWasUpdated && m_storageUpdateResult.wasUpdated) {
+        results << 1;  // Index 7: Storage updated flag
+        results << m_storageUpdateResult.newUsedSpace;     // Index 8: Used space
+        results << m_storageUpdateResult.deltaUsedSpace;   // Index 9: Delta used space
+        results << m_storageUpdateResult.newFreeSpace;     // Index 10: Free space
+        results << m_storageUpdateResult.deltaFreeSpace;   // Index 11: Delta free space
+        results << m_storageUpdateResult.newTotalSpace;    // Index 12: Total space
+        results << m_storageUpdateResult.deltaTotalSpace;  // Index 13: Delta total space
+    } else {
+        results << 0;  // Index 7: Storage updated flag (0 = false)
+        for (int i = 8; i < 14; ++i) results << 0;  // No storage values
+    }
+
+    qDebug() << "Built storage batch results:";
+    qDebug() << "  Total catalogs - Updated:" << results[5] << "Skipped:" << results[6];
+    qDebug() << "  Total files:" << results[1] << "Size:" << results[3];
+    qDebug() << "  Storage updated:" << results[7];
+
+    return results;
+}
+
+void DeviceUpdateManager::initializeStorageBatch()
+{
+    qDebug() << "=== DeviceUpdateManager::initializeStorageBatch ===";
+    m_updatedCatalogs = 0;
+    m_skippedCatalogs = 0;
+    m_totalCatalogFiles = 0;
+    m_totalCatalogSize = 0;
+    m_storageWasUpdated = false;
+    m_storageUpdateResult = Storage::UpdateResult{};
+}
+
+void DeviceUpdateManager::initializeStorageBatchProcessing(Device* storageDevice)
+{
+    qDebug() << "=== DeviceUpdateManager::initializeStorageBatchProcessing ===";
+    qDebug() << "Storage device:" << storageDevice->name;
+
+    m_currentStorageDevice = storageDevice;
+    m_currentChildIndex = 0;
+
+    // Build list of children to process (create copies for processing)
+    m_childrenToProcess.clear();
+    for (const Device& childDevice : storageDevice->subDevices) {
+        Device* childPtr = new Device(childDevice);
+        m_childrenToProcess.append(childPtr);
+        qDebug() << "  Child to process:" << childPtr->name << "Type:" << childPtr->type << "Active:" << childPtr->active;
+    }
+
+    qDebug() << "Initialized batch processing for" << m_childrenToProcess.size() << "children";
+}
+
+void DeviceUpdateManager::completeStorageBatchOperation()
+{
+    qDebug() << "=== DeviceUpdateManager::completeStorageBatchOperation ===";
+    qDebug() << "Final batch summary:";
+    qDebug() << "  Updated catalogs:" << m_updatedCatalogs;
+    qDebug() << "  Skipped catalogs:" << m_skippedCatalogs;
+    qDebug() << "  Total catalog files:" << m_totalCatalogFiles;
+    qDebug() << "  Total catalog size:" << m_totalCatalogSize;
+    qDebug() << "  Storage was updated:" << m_storageWasUpdated;
+
+    // Update parent numbers for the entire storage hierarchy
+    if (m_currentStorageDevice) {
+        try {
+            m_currentStorageDevice->updateParentsNumbers();
+            qDebug() << "Parent numbers updated for storage hierarchy";
+        } catch (const std::exception& e) {
+            qDebug() << "Error updating parent numbers:" << e.what();
+        }
+    }
+
+    // Mark operation as completed
+    m_operationRunning = false;
+    m_waitingForCatalogCompletion = false;
+
+    // Build final results for the storage batch
+    QList<qint64> results = buildStorageBatchResults(m_currentStorageDevice);
+
+    qDebug() << "*** EMITTING operationCompleted for Storage batch ***";
+    qDebug() << "Results[0] (success):" << results[0];
+    qDebug() << "Results[1] (total files):" << results[1];
+    qDebug() << "Results[5] (updated catalogs):" << results[5];
+    qDebug() << "Results[6] (skipped catalogs):" << results[6];
+    qDebug() << "Results[7] (storage updated):" << results[7];
+
+    // CRITICAL: For Storage batch operations with multiple catalogs,
+    // temporarily override updateType to "list" so reportAllUpdates uses the correct format
+    QString originalUpdateType = m_updateType;
+    if (m_updatedCatalogs + m_skippedCatalogs > 1) {
+        qDebug() << "Multiple catalogs processed - using 'list' format for reportAllUpdates";
+        m_updateType = "list";  // This ensures proper "X updated Catalogs, Y skipped Catalogs" format
+    } else if (m_updatedCatalogs == 1) {
+        qDebug() << "Single catalog processed - keeping original updateType for mixed format";
+        // Keep original updateType for single catalog under storage (hybrid format)
+    }
+
+    emit operationCompleted(results);
+    emit operationRunningChanged();
+
+    // Restore original updateType
+    m_updateType = originalUpdateType;
+
+    // Cleanup
+    QTimer::singleShot(10, this, [this]() {
+        cleanupOperation();
+    });
+}
+
+void DeviceUpdateManager::processNextStorageChild()
+{
+    qDebug() << "=== DeviceUpdateManager::processNextStorageChild ===";
+    qDebug() << "Current child index:" << m_currentChildIndex << "/ Total children:" << m_childrenToProcess.size();
+
+    // ENHANCED: Check stop conditions first
+    if (!shouldContinue()) {
+        qDebug() << "Stop requested during batch processing";
+        handleOperationCancellation();
+        return;
+    }
+
+    // Check if all children processed
+    if (m_currentChildIndex >= m_childrenToProcess.size()) {
+        qDebug() << "All children processed for storage - completing batch operation";
+        completeStorageBatchOperation();
+        return;
+    }
+
+    // Get next child to process
+    Device* nextChild = m_childrenToProcess[m_currentChildIndex];
+    qDebug() << "Processing next child:" << nextChild->name << "Type:" << nextChild->type << "Active:" << nextChild->active;
+
+    // Move to next child for next iteration
+    m_currentChildIndex++;
+
+    // ENHANCED: Check for gentle stop before processing any child
+    if (m_gentleStopRequested.loadAcquire()) {
+        qDebug() << "Gentle stop requested - completing batch operation";
+        completeStorageBatchOperation();
+        return;
+    }
+
+    // SPECIAL HANDLING: Skip inactive catalogs but count them
+    if (nextChild->type == "Catalog" && !nextChild->active) {
+        qDebug() << "Catalog is inactive, skipping:" << nextChild->name;
+
+        // Count this as a skipped catalog
+        m_skippedCatalogs++;
+        m_processedDevices++; // Still count as processed device
+        updateProgress();
+
+        emit deviceProcessingCompleted(nextChild->name);
+
+        qDebug() << "Skipped inactive catalog, continuing to next child";
+        // Continue immediately to next child (with stop check)
+        processNextStorageChild();
+        return;
+    }
+
+    // Check for gentle stop before starting new catalog (more specific check)
+    if (m_gentleStopRequested.loadAcquire() && nextChild->type == "Catalog") {
+        qDebug() << "Gentle stop requested - stopping before catalog:" << nextChild->name;
+        completeStorageBatchOperation();
+        return;
+    }
+
+    qDebug() << "Processing active child:" << nextChild->name;
+
+    // Process this child (will be either active catalog or other device type)
+    updateDeviceRecursive(nextChild);
+
+    // If we started an async catalog operation, we'll continue in onCatalogOperationCompleted
+    // If it's not a catalog or completes synchronously, continue immediately
+    if (!m_waitingForCatalogCompletion) {
+        qDebug() << "Child processed synchronously, continuing to next";
+        processNextStorageChild(); // Continue to next child
+    }
+}
+
+void DeviceUpdateManager::accumulateStorageResults(Device* catalogDevice)
+{
+    qDebug() << "=== DeviceUpdateManager::accumulateStorageResults ===";
+    qDebug() << "Accumulating results for catalog:" << catalogDevice->name;
+
+    // This method should only be called for active catalogs that were actually processed
+    // Inactive catalogs are handled directly in processNextStorageChild
+
+    if (catalogDevice->active) {
+        m_updatedCatalogs++;
+        m_totalCatalogFiles += catalogDevice->totalFileCount;
+        m_totalCatalogSize += catalogDevice->totalFileSize;
+        qDebug() << "Catalog updated - Files:" << catalogDevice->totalFileCount << "Size:" << catalogDevice->totalFileSize;
+        qDebug() << "Running totals - Updated:" << m_updatedCatalogs << "Skipped:" << m_skippedCatalogs;
+        qDebug() << "Total files:" << m_totalCatalogFiles << "Total size:" << m_totalCatalogSize;
+    } else {
+        qDebug() << "ERROR: accumulateStorageResults called for inactive catalog - this should not happen";
     }
 }

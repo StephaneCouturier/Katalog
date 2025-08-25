@@ -92,6 +92,7 @@ private:
     void updateVirtualDevice(Device* device);
     void updateStorageDevice(Device* device);
     void updateCatalogDevice(Device* device);
+    void startCatalogOperation(Device* device);
 
     // ===== HIERARCHY ANALYSIS =====
     void analyzeHierarchy(Device* rootDevice);
@@ -134,7 +135,6 @@ private:
     Storage::UpdateResult updateParentStorage(Device* catalogDevice);
     QList<qint64> buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult);
 
-private:
     // ===== OPERATION STATE =====
     bool m_operationRunning = false;
     bool m_isPaused = false;
@@ -151,6 +151,16 @@ private:
     QList<Device*> m_catalogDevices;
     int m_currentDeviceIndex = 0;
 
+    // ===== HIERARCHY ANALYSIS =====
+    void loadDeviceChildren(Device* device);
+    Device* m_currentStorageDevice = nullptr;  // The storage device being processed
+    int m_currentChildIndex = 0;               // Current child being processed
+    QList<Device*> m_childrenToProcess;        // Children that need processing
+    // ===== STORAGE BATCH PROCESSING METHODS =====
+    void initializeStorageBatchProcessing(Device* storageDevice);
+    void processNextStorageChild();
+    void completeStorageBatchOperation();
+
     // ===== PROGRESS TRACKING =====
     int m_progress = 0;
     QString m_status;
@@ -158,6 +168,15 @@ private:
     int m_totalDevices = 0;
     int m_processedCatalogs = 0;
     int m_totalCatalogs = 0;
+
+    QList<qint64> m_storageResults;
+    int m_updatedCatalogs = 0;
+    int m_skippedCatalogs = 0;
+    qint64 m_totalCatalogFiles = 0;
+    qint64 m_totalCatalogSize = 0;
+    void accumulateStorageResults(Device* catalogDevice);
+    QList<qint64> buildStorageBatchResults(Device* storageDevice);
+    void initializeStorageBatch();
 
     // ===== OPERATION PARAMETERS =====
     QString m_databaseMode;
