@@ -2241,16 +2241,18 @@ void MainWindow::onDeviceUpdateError(const QString& error)
     qDebug() << "=== MainWindow::onDeviceUpdateError ===";
     qDebug() << "Error:" << error;
 
-    // SURGICAL FIX: Context-aware error restoration
+    // Context-aware error restoration
     QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
     bool isCatalogCreation = (updateType == "create");
 
     if (isCatalogCreation) {
-        qDebug() << "Restoring Create tab UI state after error";
-        setCreateCatalogUIState(false);  // Use Create context restoration
-        currentUpdateDevice = nullptr;   // Clear reference
+        qDebug() << "CREATION ERROR: Performing database cleanup";
+
+        // SURGICAL FIX: Call the existing cleanup method for creation errors too
+        cleanupStoppedCatalogCreation();
+
     } else {
-        qDebug() << "Restoring Catalog tab UI state after error";
+        qDebug() << "UPDATE ERROR: Standard UI restoration";
         setCatalogUpdateUIState(false);  // Use Catalog context restoration
     }
 
@@ -2263,17 +2265,19 @@ void MainWindow::onDeviceUpdateCancelled()
 {
     qDebug() << "=== MainWindow::onDeviceUpdateCancelled ===";
 
-    // SURGICAL FIX: Context-aware cancellation restoration
+    // Context-aware cancellation restoration
     QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
     bool isCatalogCreation = (updateType == "create");
 
     if (isCatalogCreation) {
-        qDebug() << "Restoring Create tab UI state after cancellation";
-        setCreateCatalogUIState(false);  // Use Create context restoration
-        currentUpdateDevice = nullptr;   // Clear reference
+        qDebug() << "CREATION CANCELLED: Performing database cleanup";
+
+        // Call the existing cleanup method for creation cancellation
+        cleanupStoppedCatalogCreation();
+
         statusBar()->showMessage(tr("Catalog creation cancelled"), 3000);
     } else {
-        qDebug() << "Restoring Catalog tab UI state after cancellation";
+        qDebug() << "UPDATE CANCELLED: Standard UI restoration";
         setCatalogUpdateUIState(false);  // Use Catalog context restoration
         statusBar()->showMessage(tr("Catalog update cancelled"), 3000);
     }

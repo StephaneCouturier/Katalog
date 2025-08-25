@@ -398,12 +398,6 @@
             }
         });
 
-        // Additional disable for batch operations (since they don't always trigger running state change)
-        connect(catalogManager, &CatalogManager::batchOperationCompleted, this, [this]() {
-            ui->Catalogs_pushButton_Stop->setEnabled(false);
-            qDebug() << "Batch operation completed - Stop button disabled";
-        });
-
         connect(catalogManager, &CatalogManager::specialProgressUpdate,
                 this, [this](qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString& currentPath) {
                     QString progressText = tr("Processing: %1 (%2/%3)")
