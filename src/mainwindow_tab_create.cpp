@@ -486,17 +486,47 @@
         newDevice->groupID = 0;
         newDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
         newDevice->insertDevice();
+        qDebug() << "Device inserted - Parent ID:" << newDevice->parentID << "Path:" << newDevice->path;
 
-        // ... existing catalog setup code ...
-        newDevice->catalog->name = newDevice->name;
+        //Get inputs and set values of the newCatalog
+        newDevice->catalog->name = newDevice->name;  // Make sure catalog name matches device name
         newDevice->catalog->filePath = collection->folder + "/" + newDevice->name + ".idx";
         newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
-        // ... other catalog properties ...
+        newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+        newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
+        newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+        newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
+        newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
+        newDevice->catalog->appVersion = currentVersion;
+
+        // Set file type from UI radio buttons
+        QString fileType = "All";  // Default value
+        if (ui->Create_radioButton_FileType_Audio->isChecked()) {
+            fileType = "Audio";
+        } else if (ui->Create_radioButton_FileType_Image->isChecked()) {
+            fileType = "Image";
+        } else if (ui->Create_radioButton_FileType_Text->isChecked()) {
+            fileType = "Text";
+        } else if (ui->Create_radioButton_FileType_Video->isChecked()) {
+            fileType = "Video";
+        } else if (ui->Create_radioButton_FileType_Any->isChecked()) {
+            fileType = "All";
+        }
+        newDevice->catalog->fileType = fileType;
+        qDebug() << "Catalog configured - File type:" << newDevice->catalog->fileType;
 
         //Save new catalog
         newDevice->catalog->insertCatalog();
 
-        // ... existing parent storage setup ...
+        //Add path to parent Storage device if empty
+        Device parentStorageDevice;
+        parentStorageDevice.ID = newDevice->parentID;
+        parentStorageDevice.loadDevice("defaultConnection");
+        if(parentStorageDevice.path == ""){
+            parentStorageDevice.path = newDevice->path;
+            parentStorageDevice.saveDevice();
+            collection->saveStorageTableToFile();
+        }
 
         //Reload
         loadDevicesView("");
