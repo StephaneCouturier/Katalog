@@ -1952,39 +1952,11 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     }
 
     // Determine report device and correct updateType for reportAllUpdates
-    Device* reportDevice = nullptr;
+    Device* reportDevice = reportDevice = deviceUpdateManager->getCurrentDevice();
     QString reportUpdateType = updateType;
 
     bool isCatalogCreation = (updateType == "create");
     qDebug() << "Is catalog creation:" << isCatalogCreation;
-
-    if (isCatalogCreation) {
-        reportDevice = currentUpdateDevice; // For creation operations
-    } else {
-        // For update operations - determine based on operation type
-        if (isStorageBatchOperation) {
-            qDebug() << "Using Storage device for batch operation report";
-
-            // For Storage batch operations, use the Storage device from the UI context
-            reportDevice = selectedDevice ? selectedDevice : activeDevice;
-
-            // CRITICAL: Use "list" format for multiple catalogs, "update" for single catalog under storage
-            if (hasMultipleCatalogs) {
-                reportUpdateType = "list";  // This triggers the "X updated Catalogs, Y skipped Catalogs" format
-                qDebug() << "Using 'list' updateType for multiple catalogs under storage";
-            } else {
-                reportUpdateType = "update"; // This allows mixed catalog+storage reporting
-                qDebug() << "Using 'update' updateType for single catalog under storage";
-            }
-        } else {
-            qDebug() << "Using single device for single operation report";
-            reportDevice = currentUpdateDevice ? currentUpdateDevice : activeDevice ?
-                          activeDevice : selectedDevice;
-        }
-
-        qDebug() << "Using device for update report:" << (reportDevice ? reportDevice->name : "NULL");
-        qDebug() << "Using updateType for report:" << reportUpdateType;
-    }
 
     // Save collection data
     collection->saveDeviceTableToFile();
