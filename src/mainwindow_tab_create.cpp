@@ -56,15 +56,14 @@
 
         //Get current selected path as default path for the dialog window
         QString newSelectedPath = ui->Create_lineEdit_NewCatalogPath->text();
-        //newDevice->catalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
 
         //Open a dialog for the user to select the directory to be cataloged. Only show directories.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
                                                         newSelectedPath,
                                                         QFileDialog::ShowDirsOnly
                                                         | QFileDialog::DontResolveSymlinks);
+
         //Save selected directory, and update input line for the source path
-        //newDevice->catalog->setSourcePath(dir);
         ui->Create_lineEdit_NewCatalogPath->setText(dir);
 
         //Select this directory in the treeview.
@@ -459,45 +458,45 @@
         }
 
         //Create a new device and catalog (SAME AS ORIGINAL - Device-centric approach)
-        Device *newDevice = new Device();
-        newDevice->generateDeviceID();
-        newDevice->type = "Catalog";
-        newDevice->name = ui->Create_lineEdit_NewCatalogName->text();
+        Device *newCatalogDevice = new Device();
+        newCatalogDevice->generateDeviceID();
+        newCatalogDevice->type = "Catalog";
+        newCatalogDevice->name = ui->Create_lineEdit_NewCatalogName->text();
 
-        qDebug() << "Creating new Device - ID:" << newDevice->ID << "Name:" << newDevice->name;
+        qDebug() << "Creating new Device - ID:" << newCatalogDevice->ID << "Name:" << newCatalogDevice->name;
 
         //Check if the catalog name (so the csv file name) already exists
-        if (newDevice->verifyDeviceNameExists()) {
+        if (newCatalogDevice->verifyDeviceNameExists()) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(tr("There is already a catalog with this name:<br/><b>")
-                           + newDevice->name
+                           + newCatalogDevice->name
                            + "</b><br/><br/>"+tr("Choose a different name and try again."));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
-            delete newDevice;
+            delete newCatalogDevice;
             return;  // No UI state change needed
         }
 
         //Continue populating values and add device
-        newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
-        newDevice->catalog->generateID();
-        newDevice->externalID = newDevice->catalog->ID;
-        newDevice->groupID = 0;
-        newDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
-        newDevice->insertDevice();
-        qDebug() << "Device inserted - Parent ID:" << newDevice->parentID << "Path:" << newDevice->path;
+        newCatalogDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
+        newCatalogDevice->catalog->generateID();
+        newCatalogDevice->externalID = newCatalogDevice->catalog->ID;
+        newCatalogDevice->groupID = 0;
+        newCatalogDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
+        newCatalogDevice->insertDevice();
+        qDebug() << "Device inserted - Parent ID:" << newCatalogDevice->parentID << "Path:" << newCatalogDevice->path;
 
         //Get inputs and set values of the newCatalog
-        newDevice->catalog->name = newDevice->name;  // Make sure catalog name matches device name
-        newDevice->catalog->filePath = collection->folder + "/" + newDevice->name + ".idx";
-        newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
-        newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
-        newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
-        newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
-        newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
-        newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
-        newDevice->catalog->appVersion = currentVersion;
+        newCatalogDevice->catalog->name = newCatalogDevice->name;  // Make sure catalog name matches device name
+        newCatalogDevice->catalog->filePath = collection->folder + "/" + newCatalogDevice->name + ".idx";
+        newCatalogDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
+        newCatalogDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+        newCatalogDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
+        newCatalogDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+        newCatalogDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
+        newCatalogDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
+        newCatalogDevice->catalog->appVersion = currentVersion;
 
         // Set file type from UI radio buttons
         QString fileType = "All";  // Default value
@@ -512,18 +511,18 @@
         } else if (ui->Create_radioButton_FileType_Any->isChecked()) {
             fileType = "All";
         }
-        newDevice->catalog->fileType = fileType;
-        qDebug() << "Catalog configured - File type:" << newDevice->catalog->fileType;
+        newCatalogDevice->catalog->fileType = fileType;
+        qDebug() << "Catalog configured - File type:" << newCatalogDevice->catalog->fileType;
 
         //Save new catalog
-        newDevice->catalog->insertCatalog();
+        newCatalogDevice->catalog->insertCatalog();
 
         //Add path to parent Storage device if empty
         Device parentStorageDevice;
-        parentStorageDevice.ID = newDevice->parentID;
+        parentStorageDevice.ID = newCatalogDevice->parentID;
         parentStorageDevice.loadDevice("defaultConnection");
         if(parentStorageDevice.path == ""){
-            parentStorageDevice.path = newDevice->path;
+            parentStorageDevice.path = newCatalogDevice->path;
             parentStorageDevice.saveDevice();
             collection->saveStorageTableToFile();
         }
@@ -548,112 +547,20 @@
         qDebug() << "All validations passed - starting catalog creation";
 
         // Store device reference
-        currentUpdateDevice = newDevice;
+        currentUpdateDevice = newCatalogDevice;
         qDebug() << "*** STORED currentUpdateDevice for creation:" << currentUpdateDevice->name;
 
         // SURGICAL FIX: Set Create UI to running state AFTER validations pass
         setCreateCatalogUIState(true);  // Only affects Create tab
 
         // Start the DeviceUpdateManager operation
-        deviceUpdateManager->updateDeviceHierarchy(newDevice,
+        deviceUpdateManager->updateDeviceHierarchy(newCatalogDevice,
                                                    collection->databaseMode,
                                                    collection->folder,
                                                    "create");
 
         qDebug() << "=== MainWindow::createCatalog() EXIT ===";
     }
-    //--------------------------------------------------------------------------
-    /*
-    void MainWindow::onCatalogOperationCompleted()
-    {
-        qDebug() << "=== onCatalogOperationCompleted() ENTRY - UI tasks only ===";
-
-        try {
-            // Get the device for UI updates
-            Device* completedDevice = currentUpdateDevice;
-
-            if (!completedDevice) {
-                qDebug() << "ERROR: No device found for UI updates";
-                restoreCreateCatalogUIState();
-                return;
-            }
-
-            // All backend work is already done in CatalogJobStoppable
-            // This method only handles UI-specific tasks
-
-            qDebug() << "Backend processing completed, updating UI...";
-
-            // UI Task 1: Save collection data files
-            qDebug() << "UI Task 1: Saving collection data files";
-            collection->saveDeviceTableToFile();
-            collection->saveStatiticsTableToFile();
-
-            // Update parents
-            qDebug() << "CRITICAL FIX: Updating parent storage device numbers after creation";
-            try {
-                // Reload the completed device to ensure we have latest data
-                completedDevice->loadDevice("defaultConnection");
-
-                // Update parent numbers (this will update the parent storage device)
-                completedDevice->updateParentsNumbers();
-
-                qDebug() << "Parent numbers updated successfully after catalog creation";
-
-                // Save again to persist the updated parent device
-                collection->saveDeviceTableToFile();
-
-            } catch (const std::exception& e) {
-                qDebug() << "Error updating parent numbers after creation:" << e.what();
-            }
-
-            // UI Task 2: Show completion report (UI-specific)
-            qDebug() << "UI Task 2: Showing completion report";
-            QList<qint64> resultList;
-            resultList << 1; // Success
-            resultList << completedDevice->totalFileCount;
-            resultList << completedDevice->totalFileCount; // Delta (all new)
-            resultList << completedDevice->totalFileSize;
-            resultList << completedDevice->totalFileSize; // Delta (all new)
-            resultList << 1 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0; // Padding for reportAllUpdates
-
-            reportAllUpdates(completedDevice, resultList, "create");
-
-            // UI Task 3: Refresh UI displays
-            qDebug() << "UI Task 3: Refreshing UI displays";
-            refreshDifferencesCatalogSelection();
-            collection->updateAllDeviceActive();
-            loadDevicesView("");
-
-            // UI Task 4: Update filter tree and selection
-            qDebug() << "UI Task 4: Updating selection and filter tree";
-            ui->Filters_label_DisplayCatalog->setText(completedDevice->name);
-            selectedDevice->ID = completedDevice->ID;
-            selectedDevice->loadDevice("defaultConnection");
-
-            collection->loadDeviceFileToTable();
-            loadDevicesTreeToModel("Filters");
-            loadDevicesView("");
-
-            // UI Task 5: Change to results tab
-            qDebug() << "UI Task 5: Changing to Collection tab";
-            ui->tabWidget->setCurrentIndex(1); // Collection tab
-            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-
-            qDebug() << "All UI tasks completed successfully";
-
-        } catch (const std::exception& e) {
-            qDebug() << "EXCEPTION in UI completion tasks:" << e.what();
-        } catch (...) {
-            qDebug() << "UNKNOWN EXCEPTION in UI completion tasks";
-        }
-
-        // UI Task 6: Restore UI state
-        currentUpdateDevice = nullptr;
-        restoreCreateCatalogUIState();
-
-        qDebug() << "=== onCatalogOperationCompleted() EXIT ===";
-    }
-    */
     //--------------------------------------------------------------------------
     void MainWindow::restoreCreateCatalogUIState()
     {

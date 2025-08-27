@@ -1926,10 +1926,6 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 {
     qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
 
-    // Get updateType from DeviceUpdateManager for context awareness
-    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
-    qDebug() << "Operation type:" << updateType;
-
     // Detect Storage batch operations by examining the results
     bool isStorageBatchOperation = false;
     bool hasMultipleCatalogs = false;
@@ -1952,10 +1948,9 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     }
 
     // Determine report device and correct updateType for reportAllUpdates
-    Device* reportDevice = reportDevice = deviceUpdateManager->getCurrentDevice();
-    QString reportUpdateType = updateType;
+    Device* reportDevice = deviceUpdateManager->m_currentDevice;
 
-    bool isCatalogCreation = (updateType == "create");
+    bool isCatalogCreation = (deviceUpdateManager->m_updateType == "create");
     qDebug() << "Is catalog creation:" << isCatalogCreation;
 
     // Save collection data
@@ -1983,8 +1978,8 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     // STEP 1: Call reportAllUpdates with correct parameters
     if (reportDevice) {
         qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name
-                 << "updateType:" << reportUpdateType;
-        reportAllUpdates(reportDevice, results, reportUpdateType);
+                 << "updateType:" << deviceUpdateManager->m_updateType;
+        reportAllUpdates(reportDevice, results, deviceUpdateManager->m_updateType);
         qDebug() << "*** reportAllUpdates completed successfully ***";
     } else {
         qDebug() << "*** ERROR: No valid device for reportAllUpdates - skipping report ***";
@@ -2101,16 +2096,16 @@ void MainWindow::startUpdateAllActiveCatalogsUnified()
     qDebug() << "=== Update All Active Catalogs (Unified) ===";
 
     // Collect active catalogs using corrected helper
-    QList<Device*> activeCatalogs = collectActiveCatalogs();
+    QList<Device*> activeCatalogDevices = collectActiveCatalogs();
 
-    if (activeCatalogs.isEmpty()) {
+    if (activeCatalogDevices.isEmpty()) {
         QMessageBox::information(this, "Katalog", tr("No active catalogs found."));
         return;
     }
 
     // Show confirmation using corrected helper
-    if (!confirmBatchOperation(activeCatalogs.size())) {
-        qDeleteAll(activeCatalogs);
+    if (!confirmBatchOperation(activeCatalogDevices.size())) {
+        qDeleteAll(activeCatalogDevices);
         return;
     }
 
@@ -2119,7 +2114,7 @@ void MainWindow::startUpdateAllActiveCatalogsUnified()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // UNIFIED APPROACH: Create temporary virtual device and update its hierarchy
-    Device* tempVirtualDevice = deviceUpdateManager->createTempVirtualDeviceForActiveCatalogs(activeCatalogs);
+    Device* tempVirtualDevice = deviceUpdateManager->createDummyDeviceFromList(activeCatalogDevices);
 
     deviceUpdateManager->updateDeviceHierarchy(tempVirtualDevice,
                                                collection->databaseMode,
@@ -2241,11 +2236,7 @@ void MainWindow::onDeviceUpdateError(const QString& error)
     qDebug() << "=== MainWindow::onDeviceUpdateError ===";
     qDebug() << "Error:" << error;
 
-    // Context-aware error restoration
-    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
-    bool isCatalogCreation = (updateType == "create");
-
-    if (isCatalogCreation) {
+    if (deviceUpdateManager->m_updateType == "create") {
         qDebug() << "CREATION ERROR: Performing database cleanup";
 
         // SURGICAL FIX: Call the existing cleanup method for creation errors too
@@ -2265,11 +2256,7 @@ void MainWindow::onDeviceUpdateCancelled()
 {
     qDebug() << "=== MainWindow::onDeviceUpdateCancelled ===";
 
-    // Context-aware cancellation restoration
-    QString updateType = deviceUpdateManager ? deviceUpdateManager->updateType() : "update";
-    bool isCatalogCreation = (updateType == "create");
-
-    if (isCatalogCreation) {
+    if (deviceUpdateManager->m_updateType == "create") {
         qDebug() << "CREATION CANCELLED: Performing database cleanup";
 
         // Call the existing cleanup method for creation cancellation

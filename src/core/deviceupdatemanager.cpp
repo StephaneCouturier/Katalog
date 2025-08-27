@@ -104,7 +104,7 @@ void DeviceUpdateManager::updateParentStorageAfterCatalogUpdate(Device *device)
         if (parentDevice.type == "Storage" && parentDevice.storage) {
             qDebug() << "Updating parent storage space info for:" << parentDevice.name;
 
-            // ✅ Refresh physical storage space information and capture results
+            // Refresh physical storage space information and capture results
             m_storageUpdateResult = parentDevice.storage->updateStorageInfo();
 
             if (m_storageUpdateResult.wasUpdated) {
@@ -123,7 +123,7 @@ void DeviceUpdateManager::updateParentStorageAfterCatalogUpdate(Device *device)
                 // Save storage statistics
                 parentDevice.saveStatistics(parentDevice.dateTimeUpdated, "update");
 
-                // ✅ Mark that storage was successfully updated
+                // Mark that storage was successfully updated
                 m_storageWasUpdated = true;
 
                 qDebug() << "Parent storage device updated and saved";
@@ -190,35 +190,35 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
     updateDeviceRecursive(rootDevice);
 }
 
-Device* DeviceUpdateManager::createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs)
-{
-    qDebug() << "Creating temporary virtual device for" << activeCatalogs.size() << "active catalogs";
+// Device* DeviceUpdateManager::createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs)
+// {
+//     qDebug() << "Creating temporary virtual device for" << activeCatalogs.size() << "active catalogs";
 
-    Device* tempDevice = new Device();
-    tempDevice->ID = -1;
-    tempDevice->name = "Active Catalogs (Update Operation)";
-    tempDevice->type = "Virtual";
-    tempDevice->active = true;
-    tempDevice->hasSubDevice = !activeCatalogs.isEmpty();
+//     Device* tempDevice = new Device();
+//     tempDevice->ID = -1;
+//     tempDevice->name = "Active Catalogs (Update Operation)";
+//     tempDevice->type = "Virtual";
+//     tempDevice->active = true;
+//     tempDevice->hasSubDevice = !activeCatalogs.isEmpty();
 
-    for (Device* catalog : activeCatalogs) {
-        tempDevice->subDevices.append(*catalog);
-        tempDevice->deviceIDList.append(catalog->ID);
-    }
+//     for (Device* catalog : activeCatalogs) {
+//         tempDevice->subDevices.append(*catalog);
+//         tempDevice->deviceIDList.append(catalog->ID);
+//     }
 
-    qDebug() << "Temporary virtual device created with" << tempDevice->subDevices.size() << "children";
-    m_tempDevice = tempDevice;
+//     qDebug() << "Temporary virtual device created with" << tempDevice->subDevices.size() << "children";
+//     m_dummyDevice = tempDevice;
 
-    return tempDevice;
-}
+//     return tempDevice;
+// }
 
-Device* DeviceUpdateManager::createTempVirtualDeviceForFilter(const QList<Device*>& filteredDevices)
+Device* DeviceUpdateManager::createDummyDeviceFromList(const QList<Device*>& filteredDevices)
 {
     qDebug() << "Creating temporary virtual device for" << filteredDevices.size() << "filtered devices";
 
     Device* tempDevice = new Device();
-    tempDevice->ID = -2;
-    tempDevice->name = "Filtered Selection (Update Operation)";
+    tempDevice->ID = -1;
+    tempDevice->name = "Filtered Selection";
     tempDevice->type = "Virtual";
     tempDevice->active = true;
     tempDevice->hasSubDevice = !filteredDevices.isEmpty();
@@ -229,7 +229,7 @@ Device* DeviceUpdateManager::createTempVirtualDeviceForFilter(const QList<Device
     }
 
     qDebug() << "Temporary filtered device created with" << tempDevice->subDevices.size() << "children";
-    m_tempDevice = tempDevice;
+    m_dummyDevice = tempDevice;
 
     return tempDevice;
 }
@@ -867,7 +867,7 @@ void DeviceUpdateManager::cleanupOperation()
 {
     qDebug() << "DeviceUpdateManager::cleanupOperation()";
 
-    cleanupTempDevice();
+    cleanupDummyDevice();
 
     m_rootDevice = nullptr;
     m_currentDevice = nullptr;
@@ -884,12 +884,12 @@ void DeviceUpdateManager::cleanupOperation()
     m_waitingForCatalogCompletion = false;
 }
 
-void DeviceUpdateManager::cleanupTempDevice()
+void DeviceUpdateManager::cleanupDummyDevice()
 {
-    if (m_tempDevice) {
-        qDebug() << "Cleaning up temporary device:" << m_tempDevice->name;
-        delete m_tempDevice;
-        m_tempDevice = nullptr;
+    if (m_dummyDevice) {
+        qDebug() << "Cleaning up temporary device:" << m_dummyDevice->name;
+        delete m_dummyDevice;
+        m_dummyDevice = nullptr;
     }
 }
 

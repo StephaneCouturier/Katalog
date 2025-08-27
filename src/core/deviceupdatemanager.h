@@ -28,15 +28,18 @@ public:
     explicit DeviceUpdateManager(QObject *parent = nullptr);
     ~DeviceUpdateManager();
 
+
+    Device* m_rootDevice = nullptr; // selected or active Device and root of the device hierarchy being processed,
+    Device* m_currentDevice = nullptr; // current device being processed, as part of the hierarchy
+    Device* m_dummyDevice = nullptr; // temporary device usedd to cover a list of filtered devices
+    QString m_updateType;
+    Device* createDummyDeviceFromList(const QList<Device*>& filteredDevices);
+
     // ===== SINGLE UNIFIED INTERFACE =====
     void updateDeviceHierarchy(Device* rootDevice,
                                const QString& databaseMode,
                                const QString& collectionFolder,
                                const QString& updateType = "update");
-    QString updateType() const { return m_updateType; }
-    // ===== TEMPORARY DEVICE CREATION =====
-    Device* createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs);
-    Device* createTempVirtualDeviceForFilter(const QList<Device*>& filteredDevices); 
 
     // ===== CONTROL INTERFACE =====
     void requestGentleStop();
@@ -58,7 +61,7 @@ public:
     int totalCatalogs() const { return m_totalCatalogs; }
 
     void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
-    Device* getCurrentDevice() const { return m_currentDevice; }
+
 
 signals:
     // Main operation lifecycle
@@ -85,8 +88,6 @@ private slots:
     void onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString& currentPath);
 
 private:
-    QString m_updateType;
-
     // ===== CORE RECURSIVE LOGIC =====
     void updateDeviceRecursive(Device* device);
     void updateVirtualDevice(Device* device);
@@ -121,7 +122,7 @@ private:
     void handleOperationError(const QString& error);
     void handleOperationCancellation();
     void cleanupOperation();
-    void cleanupTempDevice();
+    void cleanupDummyDevice();
 
     // ===== CATALOG INTEGRATION =====
     void setupCatalogManager();
@@ -146,9 +147,6 @@ private:
     QAtomicInt m_gentleStopRequested{0};
 
     // ===== HIERARCHY STATE =====
-    Device* m_rootDevice = nullptr;
-    Device* m_currentDevice = nullptr;
-    Device* m_tempDevice = nullptr;
     QList<Device*> m_allDevices;
     QList<Device*> m_catalogDevices;
     int m_currentDeviceIndex = 0;
