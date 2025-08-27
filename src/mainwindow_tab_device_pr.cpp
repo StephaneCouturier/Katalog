@@ -697,21 +697,10 @@ void MainWindow::saveDeviceForm()
     activeDevice->saveDevice();
     //Update Storage values if path was changed
     if (activeDevice->path != previousPath){
-        //Prepare a list with 0 for catalog update, as no catalog is updated
-        QList<qint64> list;
-        list <<0<<0<<0<<0<<0<<0<<0;
-
-        //Update storage and add to the list
-        list += DeviceUIWrapper::updateDeviceWithUI(activeDevice,
-                                                    "update",
-                                                    collection->databaseMode,
-                                                    true,
-                                                    collection->folder,
-                                                    false);
-        //Report the change
-        reportAllUpdates(activeDevice,
-                         list,
-                         "update");
+        deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                   collection->databaseMode,
+                                                   collection->folder,
+                                                   "update");
     }
     collection->saveDeviceTableToFile();
 
@@ -2063,10 +2052,14 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
         }
     }
 
-    // Clear references LAST
+    // Clear references Last
     if (isCatalogCreation) {
         currentUpdateDevice = nullptr;
         qDebug() << "Cleared currentUpdateDevice after UI refresh";
+    } else {
+        // Clear for regular updates
+        currentUpdateDevice = nullptr;
+        qDebug() << "Cleared currentUpdateDevice after update completion";
     }
 
     qDebug() << "=== MainWindow::onDeviceUpdateCompleted COMPLETE ===";
@@ -2085,6 +2078,11 @@ void MainWindow::startSingleCatalogUpdateUnified()
         QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
         return;
     }
+
+    // Set currentUpdateDevice BEFORE starting operation
+    currentUpdateDevice = selectedDevice;
+    qDebug() << "*** SET currentUpdateDevice for update button:" << currentUpdateDevice->name
+             << "Type:" << currentUpdateDevice->type;
 
     // Disable UI during operation
     ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
@@ -2554,14 +2552,11 @@ void MainWindow::saveCatalogChanges()
                                                     | QMessageBox::No);
         if ( updatechoice == QMessageBox::Yes){
             activeDevice->catalog->loadCatalog("defaultConnection");
-            reportAllUpdates(activeDevice,
-                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
-                                                                 "update",
-                                                                 collection->databaseMode,
-                                                                 true,
-                                                                 collection->folder,
-                                                                 true),
-                             "update");
+            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                       collection->databaseMode,
+                                                       collection->folder,
+                                                       "update");
+
         }
     }
 
@@ -3167,24 +3162,10 @@ void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
     // Perform the update operation
     //Update and report if active
     if(selectedDevice->active==true){
-        if(displayReport==true){
-            reportAllUpdates(selectedDevice,
-                             DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
-                                                                 "update",
-                                                                 collection->databaseMode,
-                                                                 true,
-                                                                 collection->folder,
-                                                                 true),
-                             "update");
-        }
-        else{
-            DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
-                                                "update",
-                                                collection->databaseMode,
-                                                true,
-                                                collection->folder,
-                                                true);
-        }
+        deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
+                                                  collection->databaseMode,
+                                                  collection->folder,
+                                                  "update");
 
         selectedDevice->catalog->appVersion = currentVersion;
 

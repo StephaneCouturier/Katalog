@@ -66,7 +66,7 @@ bool DeviceUIWrapper::deleteDeviceWithUI(Device* device, bool askConfirmation)
 
     return false;
 }
-
+/*
 QList<qint64> DeviceUIWrapper::updateDeviceWithUI(Device* device,
                                                   QString statiticsRequestSource,
                                                   QString databaseMode,
@@ -95,14 +95,14 @@ QList<qint64> DeviceUIWrapper::updateDeviceWithUI(Device* device,
     callbacks.onStartUpdate = []() { showWaitCursor(); };
     callbacks.onFinishUpdate = []() { restoreCursor(); };
 
-    return device->updateDevice(statiticsRequestSource,
-                                databaseMode,
-                                reportStorageUpdate,
-                                collectionFolder,
-                                includeSubDevices,
-                                &callbacks);
+    // return device->updateDevice(statiticsRequestSource,
+    //                             databaseMode,
+    //                             reportStorageUpdate,
+    //                             collectionFolder,
+    //                             includeSubDevices,
+    //                             &callbacks);
 }
-
+*/
 bool DeviceUIWrapper::showConfirmationDialog(const QString& message)
 {
     QMessageBox msgBox;

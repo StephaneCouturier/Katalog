@@ -120,8 +120,9 @@ void CommandLineHandler::setupCommandLineParser()
     parser.addPositionalArgument("deviceID", "Device ID for update_catalog action (optional)", "[deviceID]");
 
     // Options
-    parser.addOption(QCommandLineOption(QStringList() << "r" << "report",
-                                        "Show detailed report for update operations"));
+    //Report option deactivated for now
+    // parser.addOption(QCommandLineOption(QStringList() << "r" << "report",
+    //                                     "Show detailed report for update operations"));
 
     parser.addOption(QCommandLineOption(QStringList() << "c" << "collection",
                                         "Path to collection folder",

@@ -45,12 +45,12 @@ public:
     static bool deleteDeviceWithUI(Device* device, bool askConfirmation = true);
 
     // Static method to update device with UI progress indicators
-    static QList<qint64> updateDeviceWithUI(Device* device,
-                                            QString statiticsRequestSource,
-                                            QString databaseMode,
-                                            bool reportStorageUpdate,
-                                            QString collectionFolder,
-                                            bool includeSubDevices);
+    // static QList<qint64> updateDeviceWithUI(Device* device,
+    //                                         QString statiticsRequestSource,
+    //                                         QString databaseMode,
+    //                                         bool reportStorageUpdate,
+    //                                         QString collectionFolder,
+    //                                         bool includeSubDevices);
     static void showErrorMessage(const QString& message);
 
 private:

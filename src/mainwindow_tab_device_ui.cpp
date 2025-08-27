@@ -385,32 +385,42 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction3);
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-            // Use new catalog system for context menu update
-            if (!catalogManager || catalogManager->catalogOperationRunning()) {
-                qDebug() << "Catalog manager not available for context menu update";
+            qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) ===";
+
+            if (!activeDevice || activeDevice->type != "Catalog") {
+                qDebug() << "Filters context menu update - invalid device";
                 return;
             }
 
-            qDebug() << "Device list context menu catalog update for:" << activeDevice->name;
-            ui->Catalogs_pushButton_Stop->setEnabled(true);
-            // Clear batch mode - this is a single update
-            inBatchMode = false;
-            currentUpdateDevice = activeDevice;
-            activeDevice->catalog->appVersion = currentVersion;
-
-            CatalogJobStoppable* catalogJobStoppable = new CatalogJobStoppable(this);
-
-            if (catalogProgressManager) {
-                catalogProgressManager->setCurrentCatalogEngine(catalogJobStoppable);
+            if (!activeDevice->active) {
+                QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
+                return;
             }
 
-            catalogManager->startCatalogJobStoppable(
-                catalogJobStoppable,
-                activeDevice,
-                CatalogJobStoppable::UpdateCatalog,
-                collection->databaseMode,
-                collection->folder
-                );
+            // Ensure DeviceUpdateManager is set up (like in other tabs)
+            if (!deviceUpdateManager) {
+                qDebug() << "DeviceUpdateManager not available - setting up now";
+                setupDeviceUpdateManager();
+            }
+
+            // Check if already running
+            if (deviceUpdateManager->operationRunning()) {
+                QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+                return;
+            }
+
+            qDebug() << "Filters context menu catalog update for:" << activeDevice->name;
+
+            // Set UI state for catalog operation
+            setCatalogUpdateUIState(true);
+
+            // FIXED: Use DeviceUpdateManager instead of old CatalogManager
+            // This ensures consistent behavior across all update paths
+            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                       collection->databaseMode,
+                                                       collection->folder);
+
+            qDebug() << "Filters context menu - DeviceUpdateManager operation started";
         });
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
@@ -505,16 +515,21 @@ void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
     list <<0<<0<<0<<0<<0<<0<<0;
 
     //Update storage and add to the list
-    list += DeviceUIWrapper::updateDeviceWithUI(activeDevice,
-                                                "update",
-                                                collection->databaseMode,
-                                                true,
-                                                collection->folder,
-                                                false);
+    // list += DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+    //                                             "update",
+    //                                             collection->databaseMode,
+    //                                             true,
+    //                                             collection->folder,
+    //                                             false);
+
+    deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                               collection->databaseMode,
+                                               collection->folder,
+                                               "update");
     //Report the change
-    reportAllUpdates(activeDevice,
-                     list,
-                     "update");
+    // reportAllUpdates(activeDevice,
+    //                  list,
+    //                  "update");
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
     loadDevicesView("");
