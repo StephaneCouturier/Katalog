@@ -118,12 +118,13 @@ public:
         DeleteOperationResult deleteDevice(bool askConfirmation = true,
                                            const UpdateCallbacks* callbacks = nullptr);
 
-        QList<qint64> updateDevice(QString statiticsRequestSource,
-                                   QString databaseMode,
-                                   bool reportStorageUpdate,
-                                   QString collectionFolder,
-                                   bool includeSubDevices,
-                                   const UpdateCallbacks* callbacks = nullptr);
+        /**
+         * @brief Update storage information only (no catalog processing)
+         * Simple storage update for initialization and basic operations
+         * @param statisticsRequestSource Source identifier for statistics
+         * @return QList<qint64> Results in same format as updateDevice for compatibility
+         */
+        QList<qint64> updateStorageOnly(const QString& statisticsRequestSource);
 
 private:
         void loadSubDeviceList(QString connectionName);

@@ -1606,12 +1606,7 @@ bool Collection::insertPhysicalStorageGroup() {
         newStorageDevice->storage->name = newStorageDevice->name;
         newStorageDevice->storage->insertStorage();
         newStorageDevice->saveDevice();
-        newStorageDevice->updateDevice("create",
-                                       databaseMode,
-                                       false,
-                                       folder,
-                                       false,
-                                       nullptr);
+        newStorageDevice->updateStorageOnly("create");
 
         //Save data to file
         saveDeviceTableToFile();

@@ -450,216 +450,6 @@ void Device::saveDevice()
     query.exec();
 }
 
-QList<qint64> Device::updateDevice(QString statiticsRequestSource,
-                                   QString databaseMode,
-                                   bool reportStorageUpdate,
-                                   QString collectionFolder,
-                                   bool includeSubDevices,
-                                   const UpdateCallbacks* callbacks)
-{//Update device and related children storage or catalog information where relevant
-    // Signal start of update if callback provided
-    if (callbacks && callbacks->onStartUpdate) {
-        callbacks->onStartUpdate();
-    }
-
-    // Prepare
-    QList<qint64> deviceUpdatesList;
-    Device parentDevice;
-    parentDevice.ID = parentID;
-    parentDevice.loadDevice("defaultConnection");
-    updateActiveState("defaultConnection");
-    dateTimeUpdated = QDateTime::currentDateTime();
-
-    //Update device and children depending on type
-    if (type=="Catalog"){
-        //Pass device values for messages
-        catalog->name = name;
-        catalog->sourcePath = path;
-
-        //Update this device/catalog (files) and its storage (space)
-        deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder, true);
-        totalFileSize  = deviceUpdatesList[1];
-        totalFileCount = deviceUpdatesList[3];
-
-        if( deviceUpdatesList.count() > 0 and deviceUpdatesList[0]==1){
-            //Update catalog with new values
-            totalFileCount = deviceUpdatesList[1];
-            totalFileSize  = deviceUpdatesList[3];
-            saveStatistics(dateTimeUpdated, statiticsRequestSource);
-            deviceUpdatesList<<1;
-            deviceUpdatesList<<0;
-        }
-        else{
-            deviceUpdatesList<<0;
-            deviceUpdatesList<<0;
-        }
-
-        //Update the parent Storage and add the update values to the list
-        QList<qint64> storageUpdatesList = parentDevice.updateDevice("update",
-                                                                     databaseMode,
-                                                                     reportStorageUpdate,
-                                                                     collectionFolder,
-                                                                     false,
-                                                                     nullptr);
-        deviceUpdatesList.append(storageUpdatesList);
-
-        //Update related devices (other catalog devices using the same catalog ID)
-        QSqlQuery queryRelatedDevice(QSqlDatabase::database("defaultConnection"));
-        QString queryRelatedDeviceSQL = QLatin1String(R"(
-                                    SELECT device_id
-                                    FROM device
-                                    WHERE device_external_id =:device_external_id
-                                    AND device_type = 'Catalog'
-                                    AND device_id !=:device_id
-                                )");
-        queryRelatedDevice.prepare(queryRelatedDeviceSQL);
-        queryRelatedDevice.bindValue(":device_external_id", externalID);
-        queryRelatedDevice.bindValue(":device_id",ID);
-        queryRelatedDevice.exec();
-        while(queryRelatedDevice.next()){
-            Device relatedDevice;
-            relatedDevice.ID = queryRelatedDevice.value(0).toInt();
-            relatedDevice.loadDevice("defaultConnection");
-            relatedDevice.totalFileCount = totalFileCount;
-            relatedDevice.totalFileSize  = totalFileSize;
-            relatedDevice.saveDevice();
-            relatedDevice.updateParentsNumbers();
-            parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
-        }
-    }
-
-    else if (type=="Storage"){
-        //Update device/storage and all its catalogs
-
-        //Update storage path from device for updateStorageInfo()
-        storage->path = path;
-
-        //Update catalogs
-        if(includeSubDevices==true){
-            //Get list of catalogs
-            loadSubDeviceList("defaultConnection");
-
-            //Process the list
-            qint64 globalUpdateFileCount = 0;
-            qint64 globalUpdateDeltaFileCount = 0;
-            qint64 globalUpdateTotalSize = 0;
-            qint64 globalUpdateDeltaTotalSize = 0;
-            int updatedCatalogs = 0;
-            int skippedCatalogs = 0;
-
-            //deviceListTable
-            if(deviceIDList.count()>0){
-                for(int deviceID = 0; deviceID<deviceIDList.count(); deviceID++) {
-                    Device updatedDevice;
-                    updatedDevice.ID = deviceIDList[deviceID];
-                    updatedDevice.loadDevice("defaultConnection");
-
-                    QList<qint64> catalogUpdatesList = updatedDevice.catalog->updateCatalogFiles(databaseMode, collectionFolder, false);
-
-                    if(catalogUpdatesList[0]==1){
-                        //Update catalog with new values
-                        updatedDevice.totalFileCount = catalogUpdatesList[1];
-                        updatedDevice.totalFileSize  = catalogUpdatesList[3];
-                        updatedDevice.dateTimeUpdated = dateTimeUpdated;
-                        updatedDevice.saveDevice();
-                        updatedDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
-
-                        globalUpdateFileCount       += catalogUpdatesList[1];
-                        globalUpdateDeltaFileCount  += catalogUpdatesList[2];
-                        globalUpdateTotalSize       += catalogUpdatesList[3];
-                        globalUpdateDeltaTotalSize  += catalogUpdatesList[4];
-                        updatedCatalogs +=1;
-                    }
-                    else
-                        skippedCatalogs +=1;
-                }
-
-                deviceUpdatesList << 1;
-                deviceUpdatesList << globalUpdateFileCount;
-                deviceUpdatesList << globalUpdateDeltaFileCount;
-                deviceUpdatesList << globalUpdateTotalSize;
-                deviceUpdatesList << globalUpdateDeltaTotalSize;
-                deviceUpdatesList << updatedCatalogs;
-                deviceUpdatesList << skippedCatalogs;
-            }
-            else {
-                //Add 0 for catalog
-                deviceUpdatesList<<0;
-                deviceUpdatesList<<0;
-                deviceUpdatesList<<0;
-                deviceUpdatesList<<0;
-                deviceUpdatesList<<0;
-                deviceUpdatesList<<0;
-                deviceUpdatesList<<0;
-            }
-        }
-
-        //Update storage itself
-        //QList<qint64> storageUpdates = StorageUIWrapper::updateStorageInfoWithUI(storage, reportStorageUpdate);
-        //QList<qint64> storageUpdates = storage->updateStorageInfo(reportStorageUpdate);
-        Storage::UpdateResult storageResult = storage->updateStorageInfo();
-
-        // Handle UI reporting manually if needed
-        if (!storageResult.wasUpdated && reportStorageUpdate) {
-            // You could either:
-            // 1. Add error handling here, or
-            // 2. Let the caller handle it, or
-            // 3. Pass the error info back somehow
-        }
-
-        // Convert to old format for compatibility with existing code
-        QList<qint64> storageUpdates;
-        if (storageResult.wasUpdated) {
-            storageUpdates << 1 << storageResult.newUsedSpace << storageResult.deltaUsedSpace
-                           << storageResult.newFreeSpace << storageResult.deltaFreeSpace
-                           << storageResult.newTotalSpace << storageResult.deltaTotalSpace;
-        } else {
-            storageUpdates << 0 << 0 << 0 << 0 << 0 << 0 << 0;
-        }
-
-        freeSpace  = storageUpdates[3];
-        totalSpace = storageUpdates[5];
-        saveStatistics(dateTimeUpdated, statiticsRequestSource);
-
-        deviceUpdatesList += storageUpdates[0];
-        deviceUpdatesList += storageUpdates[1];
-        deviceUpdatesList += storageUpdates[2];
-        deviceUpdatesList += storageUpdates[3];
-        deviceUpdatesList += storageUpdates[4];
-        deviceUpdatesList += storageUpdates[5];
-        deviceUpdatesList += storageUpdates[6];
-    }
-
-    else if (type=="Virtual"){
-        //Update all sub virtual devices, storage, catalogs, and this device
-        // if(includeSubDevices==true){
-            //DEV: update all children devices
-        // }
-        qDebug()<<"Updating a list of devices from a virtual one is not avaialable yet.";
-
-        saveStatistics(dateTimeUpdated, statiticsRequestSource);
-
-        //DEV: also save statistics of all parents
-    }
-
-    //Save changes
-    saveDevice();
-
-    //Update parent devices
-    updateParentsNumbers();
-
-    if( deviceUpdatesList.count() == 0)
-        deviceUpdatesList<<0;
-
-    //QApplication::restoreOverrideCursor();
-    // Signal end of update if callback provided
-    if (callbacks && callbacks->onFinishUpdate) {
-        callbacks->onFinishUpdate();
-    }
-
-    return deviceUpdatesList;
-}
-
 void Device::updateNumbersFromChildren()
 {
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
@@ -896,4 +686,74 @@ void Device::setActiveFromString(const QString& activeStr) {
     active = (activeStr.toLower() == "true" ||
               activeStr == "1" ||
               activeStr.toLower() == "yes");
+}
+
+QList<qint64> Device::updateStorageOnly(const QString& statisticsRequestSource)
+{
+    // Simple storage-only update
+    // Used for early initialization in Collection::insertPhysicalStorageGroup()
+
+    qDebug() << "updateStorageOnly for device:" << name;
+
+    QList<qint64> deviceUpdatesList;
+
+    // Only valid for Storage devices
+    if (type != "Storage") {
+        qDebug() << "ERROR: updateStorageOnly called on non-Storage device:" << type;
+        // Return empty results to indicate error
+        return QList<qint64>();
+    }
+
+    // Update device state (same as original logic)
+    updateActiveState("defaultConnection");
+    dateTimeUpdated = QDateTime::currentDateTime();
+
+    // === STORAGE UPDATE ONLY (extracted from Device::updateDevice) ===
+
+    // Update storage path from device for updateStorageInfo()
+    storage->path = path;
+
+    // Add zeros for catalog results (no catalog processing)
+    deviceUpdatesList << 0;  // Catalog updated flag
+    deviceUpdatesList << 0;  // Total file count
+    deviceUpdatesList << 0;  // Delta file count
+    deviceUpdatesList << 0;  // Total size
+    deviceUpdatesList << 0;  // Delta size
+    deviceUpdatesList << 0;  // Updated catalogs count
+    deviceUpdatesList << 0;  // Skipped catalogs count
+
+    // Update storage itself (same as original logic)
+    Storage::UpdateResult storageResult = storage->updateStorageInfo();
+
+    // Convert to old format for compatibility with existing code
+    QList<qint64> storageUpdates;
+    if (storageResult.wasUpdated) {
+        storageUpdates << 1 << storageResult.newUsedSpace << storageResult.deltaUsedSpace
+                       << storageResult.newFreeSpace << storageResult.deltaFreeSpace
+                       << storageResult.newTotalSpace << storageResult.deltaTotalSpace;
+
+        // Update device properties (same as original logic)
+        freeSpace = storageResult.newFreeSpace;
+        totalSpace = storageResult.newTotalSpace;
+
+        // Save device and statistics (same as original logic)
+        saveDevice();
+        saveStatistics(dateTimeUpdated, statisticsRequestSource);
+
+    } else {
+        storageUpdates << 0 << 0 << 0 << 0 << 0 << 0 << 0;
+    }
+
+    // Append storage results to device results list (same format as original)
+    deviceUpdatesList += storageUpdates[0];  // Storage updated flag
+    deviceUpdatesList += storageUpdates[1];  // Used space
+    deviceUpdatesList += storageUpdates[2];  // Delta used space
+    deviceUpdatesList += storageUpdates[3];  // Free space
+    deviceUpdatesList += storageUpdates[4];  // Delta free space
+    deviceUpdatesList += storageUpdates[5];  // Total space
+    deviceUpdatesList += storageUpdates[6];  // Delta total space
+
+    qDebug() << "updateStorageOnly completed. Storage updated:" << storageResult.wasUpdated;
+
+    return deviceUpdatesList;
 }
