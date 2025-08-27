@@ -599,16 +599,33 @@ QList<qint64> DeviceUpdateManager::buildCatalogUpdateResults(Device* catalogDevi
 
     QList<qint64> results;
 
-    // Index 0-6: Catalog update results (matching existing format)
+    // Get the actual catalog deltas from CatalogJobStoppable
+    qint64 deltaFileCount = 0;
+    qint64 deltaTotalFileSize = 0;
+
+    if (m_currentCatalogJob) {
+        QList<qint64> catalogResults = m_currentCatalogJob->getResults();
+        if (catalogResults.size() >= 5) {
+            deltaFileCount = catalogResults[2];      // Actual delta files
+            deltaTotalFileSize = catalogResults[4];  // Actual delta size
+            qDebug() << "Using actual catalog deltas - Files:" << deltaFileCount << "Size:" << deltaTotalFileSize;
+        } else {
+            qDebug() << "WARNING: Invalid catalog results size:" << catalogResults.size();
+        }
+    } else {
+        qDebug() << "WARNING: No current catalog job - deltas will be 0";
+    }
+
+    // Index 0-6: Catalog update results
     results << 1;  // Index 0: Success flag
     results << catalogDevice->totalFileCount;  // Index 1: Total files after update
-    results << 0;  // Index 2: Delta files (would need previous count to calculate)
+    results << deltaFileCount;                 // Index 2: FIXED - Actual delta files
     results << catalogDevice->totalFileSize;   // Index 3: Total file size after update
-    results << 0;  // Index 4: Delta file size (would need previous size to calculate)
+    results << deltaTotalFileSize;             // Index 4: FIXED - Actual delta size
     results << 1;  // Index 5: Updated catalogs count (1 for single catalog)
     results << 0;  // Index 6: Skipped catalogs count (0 for successful single catalog)
 
-    // Index 7-13: Storage update results (matching reportAllUpdates format)
+    // Index 7-13: Storage update results (keep existing logic)
     if (storageResult.wasUpdated) {
         results << 1;  // Index 7: Storage updated flag (1 = true)
         results << storageResult.newUsedSpace;     // Index 8: Used space
@@ -619,20 +636,13 @@ QList<qint64> DeviceUpdateManager::buildCatalogUpdateResults(Device* catalogDevi
         results << storageResult.deltaTotalSpace;  // Index 13: Delta total space
     } else {
         results << 0;  // Index 7: Storage updated flag (0 = false)
-        results << 0;  // Index 8: Used space (0 when not updated)
-        results << 0;  // Index 9: Delta used space
-        results << 0;  // Index 10: Free space (0 when not updated)
-        results << 0;  // Index 11: Delta free space
-        results << 0;  // Index 12: Total space (0 when not updated)
-        results << 0;  // Index 13: Delta total space
+        for (int i = 8; i < 14; ++i) results << 0;  // No storage values
     }
 
     qDebug() << "Built results for catalog:" << catalogDevice->name;
-    qDebug() << "  Files:" << results[1] << "Size:" << results[3];
+    qDebug() << "  Files:" << results[1] << "Delta files:" << results[2];
+    qDebug() << "  Size:" << results[3] << "Delta size:" << results[4];
     qDebug() << "  Storage updated:" << results[7];
-    if (results[7]) {
-        qDebug() << "  Storage values - Used:" << results[8] << "Free:" << results[10] << "Total:" << results[12];
-    }
 
     return results;
 }
@@ -1113,7 +1123,7 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
             }
         }
 
-        // CRITICAL FIX: Defer the next catalog start to allow CatalogManager cleanup
+        // Defer the next catalog start to allow CatalogManager cleanup
         qDebug() << "Deferring next child processing to allow CatalogManager cleanup...";
         QTimer::singleShot(50, this, [this]() {
             qDebug() << "Timer triggered - continuing to next child in storage batch...";
@@ -1221,13 +1231,13 @@ QList<qint64> DeviceUpdateManager::buildStorageBatchResults(Device* storageDevic
     // Index 0-6: Catalog batch results (matching "list" updateType format)
     results << 1;  // Index 0: Success flag
     results << m_totalCatalogFiles;  // Index 1: Total files from all catalogs
-    results << 0;  // Index 2: Delta files (would need previous count to calculate)
+    results << m_totalDeltaFiles;    // Index 2: FIXED - Accumulated delta files
     results << m_totalCatalogSize;   // Index 3: Total file size from all catalogs
-    results << 0;  // Index 4: Delta file size (would need previous size to calculate)
+    results << m_totalDeltaSize;     // Index 4: FIXED - Accumulated delta size
     results << m_updatedCatalogs;    // Index 5: Updated catalogs count
     results << m_skippedCatalogs;    // Index 6: Skipped catalogs count
 
-    // Index 7-13: Storage update results
+    // Index 7-13: Storage update results (keep existing logic)
     if (m_storageWasUpdated && m_storageUpdateResult.wasUpdated) {
         results << 1;  // Index 7: Storage updated flag
         results << m_storageUpdateResult.newUsedSpace;     // Index 8: Used space
@@ -1242,8 +1252,9 @@ QList<qint64> DeviceUpdateManager::buildStorageBatchResults(Device* storageDevic
     }
 
     qDebug() << "Built storage batch results:";
-    qDebug() << "  Total catalogs - Updated:" << results[5] << "Skipped:" << results[6];
-    qDebug() << "  Total files:" << results[1] << "Size:" << results[3];
+    qDebug() << "  Updated catalogs:" << results[5] << "Skipped:" << results[6];
+    qDebug() << "  Total files:" << results[1] << "Delta files:" << results[2];
+    qDebug() << "  Total size:" << results[3] << "Delta size:" << results[4];
     qDebug() << "  Storage updated:" << results[7];
 
     return results;
@@ -1258,6 +1269,8 @@ void DeviceUpdateManager::initializeStorageBatch()
     m_totalCatalogSize = 0;
     m_storageWasUpdated = false;
     m_storageUpdateResult = Storage::UpdateResult{};
+    m_totalDeltaFiles = 0;
+    m_totalDeltaSize = 0;
 }
 
 void DeviceUpdateManager::initializeStorageBatchProcessing(Device* storageDevice)
@@ -1273,7 +1286,7 @@ void DeviceUpdateManager::initializeStorageBatchProcessing(Device* storageDevice
     for (const Device& childDevice : storageDevice->subDevices) {
         Device* childPtr = new Device(childDevice);
 
-        // CRITICAL FIX: Ensure active state is correctly updated
+        // Ensure active state is correctly updated
         childPtr->updateActiveState("defaultConnection");
 
         m_childrenToProcess.append(childPtr);
@@ -1416,16 +1429,28 @@ void DeviceUpdateManager::accumulateStorageResults(Device* catalogDevice)
     qDebug() << "=== DeviceUpdateManager::accumulateStorageResults ===";
     qDebug() << "Accumulating results for catalog:" << catalogDevice->name;
 
-    // This method should only be called for active catalogs that were actually processed
-    // Inactive catalogs are handled directly in processNextStorageChild
-
     if (catalogDevice->active) {
         m_updatedCatalogs++;
         m_totalCatalogFiles += catalogDevice->totalFileCount;
         m_totalCatalogSize += catalogDevice->totalFileSize;
+
+        // Accumulate deltas from catalog job
+        if (m_currentCatalogJob) {
+            QList<qint64> catalogResults = m_currentCatalogJob->getResults();
+            if (catalogResults.size() >= 5) {
+                qint64 deltaFiles = catalogResults[2];
+                qint64 deltaSize = catalogResults[4];
+                m_totalDeltaFiles += deltaFiles;
+                m_totalDeltaSize += deltaSize;
+                qDebug() << "Added deltas - Files:" << deltaFiles << "Size:" << deltaSize;
+                qDebug() << "Total deltas now - Files:" << m_totalDeltaFiles << "Size:" << m_totalDeltaSize;
+            }
+        } else {
+            qDebug() << "WARNING: No catalog job to get deltas from";
+        }
+
         qDebug() << "Catalog updated - Files:" << catalogDevice->totalFileCount << "Size:" << catalogDevice->totalFileSize;
         qDebug() << "Running totals - Updated:" << m_updatedCatalogs << "Skipped:" << m_skippedCatalogs;
-        qDebug() << "Total files:" << m_totalCatalogFiles << "Total size:" << m_totalCatalogSize;
     } else {
         qDebug() << "ERROR: accumulateStorageResults called for inactive catalog - this should not happen";
     }

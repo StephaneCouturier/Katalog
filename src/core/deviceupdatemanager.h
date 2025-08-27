@@ -134,6 +134,8 @@ private:
     Storage::UpdateResult m_storageUpdateResult;
     Storage::UpdateResult updateParentStorage(Device* catalogDevice);
     QList<qint64> buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult);
+    qint64 m_totalDeltaFiles = 0;
+    qint64 m_totalDeltaSize = 0;
 
     // ===== OPERATION STATE =====
     bool m_operationRunning = false;
