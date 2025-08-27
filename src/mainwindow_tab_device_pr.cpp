@@ -1901,20 +1901,7 @@ void MainWindow::setupDeviceUpdateManager()
                 }
             });
 
-    // Remove the catalogProgress connection - let CatalogProgressManager handle it
-    // The existing setupCatalogProgressManager() already connects CatalogProgressManager properly
-    //
-    // REMOVE THIS BLOCK:
-    // connect(deviceUpdateManager, &DeviceUpdateManager::catalogProgress,
-    //         this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
-    //             QString progressText = tr("Processing: %1 (%2/%3)")
-    //                 .arg(currentPath)
-    //                 .arg(QLocale().toString(filesProcessed))
-    //                 .arg(QLocale().toString(totalFiles));
-    //             statusBar()->showMessage(progressText);
-    //         });
-
-    // PRESERVE: Connect CatalogProgressManager to DeviceUpdateManager's internal CatalogManager
+    // CatalogProgressManager to DeviceUpdateManager's internal CatalogManager
     if (catalogProgressManager) {
         deviceUpdateManager->setCatalogProgressManager(catalogProgressManager);
     }
@@ -1948,7 +1935,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     }
 
     // Determine report device and correct updateType for reportAllUpdates
-    Device* reportDevice = deviceUpdateManager->m_currentDevice;
+    Device* reportDevice = deviceUpdateManager->m_rootDevice;
 
     bool isCatalogCreation = (deviceUpdateManager->m_updateType == "create");
     qDebug() << "Is catalog creation:" << isCatalogCreation;
@@ -2174,15 +2161,6 @@ void MainWindow::updateVirtualDevice(Device* virtualDevice)
                                                collection->databaseMode,
                                                collection->folder,
                                                "update");
-}
-
-void MainWindow::onDeviceContextMenuRequested(const QPoint& pos)
-{
-    // This is a placeholder - implement based on your existing context menu pattern
-    qDebug() << "Device context menu requested at:" << pos;
-
-    // For now, just show that the method exists
-    // You can implement the actual context menu logic based on your existing patterns
 }
 
 void MainWindow::setCatalogUpdateUIState(bool isRunning)

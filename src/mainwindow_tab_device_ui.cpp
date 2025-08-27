@@ -331,8 +331,8 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             }
 
             // Set UI state for operation
-            ui->Catalogs_pushButton_Stop->setEnabled(true);
-            QApplication::setOverrideCursor(Qt::WaitCursor);
+            setCatalogUpdateUIState(true);
+
 
             // Use unified DeviceUpdateManager for Storage devices
             deviceUpdateManager->updateDeviceHierarchy(
@@ -511,25 +511,10 @@ void MainWindow::on_Devices_pushButton_SelectPath_clicked()
 void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
 {
     //Prepare a list with 0 for catalog update, as no catalog is updated
-    QList<qint64> list;
-    list <<0<<0<<0<<0<<0<<0<<0;
-
-    //Update storage and add to the list
-    // list += DeviceUIWrapper::updateDeviceWithUI(activeDevice,
-    //                                             "update",
-    //                                             collection->databaseMode,
-    //                                             true,
-    //                                             collection->folder,
-    //                                             false);
-
     deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                collection->databaseMode,
                                                collection->folder,
                                                "update");
-    //Report the change
-    // reportAllUpdates(activeDevice,
-    //                  list,
-    //                  "update");
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
     loadDevicesView("");
@@ -711,7 +696,16 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
         return;
     }
 
-    qDebug() << "Requesting hard stop (catalog operations can only be hard stopped)";
-    statusBar()->showMessage(tr("Stopping catalog operation..."));
-    deviceUpdateManager->requestHardStop();
+    // Check for Ctrl key modifier for gentle stop
+    bool useGentleStop = QApplication::keyboardModifiers() & Qt::ControlModifier;
+
+    if (useGentleStop) {
+        qDebug() << "Requesting gentle stop (Ctrl+Click detected)";
+        statusBar()->showMessage(tr("Gentle stop: will stop after current catalog completes..."));
+        deviceUpdateManager->requestGentleStop();
+    } else {
+        qDebug() << "Requesting hard stop (immediate)";
+        statusBar()->showMessage(tr("Stopping catalog operation..."));
+        deviceUpdateManager->requestHardStop();
+    }
 }

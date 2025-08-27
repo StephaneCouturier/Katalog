@@ -28,7 +28,6 @@ public:
     explicit DeviceUpdateManager(QObject *parent = nullptr);
     ~DeviceUpdateManager();
 
-
     Device* m_rootDevice = nullptr; // selected or active Device and root of the device hierarchy being processed,
     Device* m_currentDevice = nullptr; // current device being processed, as part of the hierarchy
     Device* m_dummyDevice = nullptr; // temporary device usedd to cover a list of filtered devices
@@ -61,7 +60,6 @@ public:
     int totalCatalogs() const { return m_totalCatalogs; }
 
     void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
-
 
 signals:
     // Main operation lifecycle

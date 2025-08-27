@@ -926,10 +926,23 @@ void DeviceUpdateManager::requestGentleStop()
     m_gentleStopRequested.storeRelease(1);
     setStatus("Gentle stopping after current catalog completes...");
 
-    // For catalogs, gentle stop = hard stop (can't pause mid-catalog)
-    if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
-        qDebug() << "Delegating gentle stop to CatalogManager (will be hard stop for catalog)";
-        m_catalogManager->requestGentleStop();
+    // Don't delegate to CatalogManager for storage batch operations
+    // because CatalogManager is not in batch mode and will do hard stop
+
+    bool isStorageBatchOperation = (m_currentStorageDevice != nullptr &&
+                                    m_rootDevice && m_rootDevice->type == "Storage");
+
+    if (isStorageBatchOperation) {
+        qDebug() << "Storage batch operation - handling gentle stop locally";
+        qDebug() << "Current catalog will complete, then operation will stop";
+        // Don't call CatalogManager - let current catalog complete naturally
+        // The gentle stop will be handled in onCatalogOperationCompleted()
+    } else {
+        // For non-storage operations, delegate to CatalogManager as before
+        if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
+            qDebug() << "Non-storage operation - delegating gentle stop to CatalogManager";
+            m_catalogManager->requestGentleStop();
+        }
     }
 
     // If no catalog is currently running, stop immediately
@@ -1102,7 +1115,6 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     m_currentDevice->updateParentsNumbers();
 
     // Determine if this is part of a Storage batch operation
-    // CRITICAL: Determine if this is part of a Storage batch operation
     // Creation operations should NEVER be treated as batch operations
     bool isStorageBatchOperation = (m_currentStorageDevice != nullptr && m_updateType == "update" && m_rootDevice && m_rootDevice->type == "Storage");
 
@@ -1123,9 +1135,25 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
             }
         }
 
+
+
+        // Check for gentle stop request before starting next catalog
+        if (m_gentleStopRequested.loadAcquire()) {
+            qDebug() << "Gentle stop requested - completing operation instead of processing next child";
+            completeStorageBatchOperation();
+            return;
+        }
+
         // Defer the next catalog start to allow CatalogManager cleanup
         qDebug() << "Deferring next child processing to allow CatalogManager cleanup...";
         QTimer::singleShot(50, this, [this]() {
+            // Check gentle stop again in the timer callback
+            if (m_gentleStopRequested.loadAcquire()) {
+                qDebug() << "Gentle stop requested during timer - completing operation";
+                completeStorageBatchOperation();
+                return;
+            }
+
             qDebug() << "Timer triggered - continuing to next child in storage batch...";
             processNextStorageChild();
         });
@@ -1330,22 +1358,11 @@ void DeviceUpdateManager::completeStorageBatchOperation()
     qDebug() << "Results[6] (skipped catalogs):" << results[6];
     qDebug() << "Results[7] (storage updated):" << results[7];
 
-    // CRITICAL: For Storage batch operations with multiple catalogs,
-    // temporarily override updateType to "list" so reportAllUpdates uses the correct format
-    QString originalUpdateType = m_updateType;
-    if (m_updatedCatalogs + m_skippedCatalogs > 1) {
-        qDebug() << "Multiple catalogs processed - using 'list' format for reportAllUpdates";
-        m_updateType = "list";  // This ensures proper "X updated Catalogs, Y skipped Catalogs" format
-    } else if (m_updatedCatalogs == 1) {
-        qDebug() << "Single catalog processed - keeping original updateType for mixed format";
-        // Keep original updateType for single catalog under storage (hybrid format)
-    }
+    // For Storage batch operations, report storage update and catalog summary
+    m_updateType = "list";
 
     emit operationCompleted(results);
     emit operationRunningChanged();
-
-    // Restore original updateType
-    m_updateType = originalUpdateType;
 
     // Cleanup
     QTimer::singleShot(10, this, [this]() {

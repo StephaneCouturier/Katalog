@@ -189,7 +189,6 @@ class MainWindow : public KXmlGuiWindow
         }
 
     private:
-        void onDeviceContextMenuRequested(const QPoint& pos);
         DeviceUpdateManager* deviceUpdateManager = nullptr;
         bool useUnifiedManager = false;
         void startSingleCatalogUpdateUnified();
