@@ -205,24 +205,34 @@
             penStorageTotalSpace.setWidth(2);
 
             //Customize the appearance of scatter series (data points)
+            series1s->setMarkerSize(10);
+            #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+            series1s->setMarkerShape(QScatterSeries::MarkerShapeRectangle);
+            #else
+            series1s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
+            #endif
             if ( selectedTypeOfData == tr("Number of Files") )
             {
-                series1s->setMarkerSize(10);
-                series1s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
                 series1s->setColor(colorCatalogNumberFiles);
             }
             else{
-                series1s->setMarkerSize(10);
-                series1s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
                 series1s->setColor(colorCatalogTotalSize);
             }
 
             series2s->setMarkerSize(10);
+            #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+            series2s->setMarkerShape(QScatterSeries::MarkerShapeRectangle);
+            #else
             series2s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
+            #endif
             series2s->setColor(colorStorageUsedSpace);
 
             series3s->setMarkerSize(10);
+            #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+            series3s->setMarkerShape(QScatterSeries::MarkerShapeRectangle);
+            #else
             series3s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
+            #endif
             series3s->setColor(colorStorageTotalSpace);
 
         //Scale and unit setting

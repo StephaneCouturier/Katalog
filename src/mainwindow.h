@@ -105,6 +105,12 @@
 #include <QtCharts/QValueAxis>
 #include <QScatterSeries>
 #include <QtCharts/QLegendMarker>
+#include <QtCharts>
+
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+using namespace QtCharts;
+#endif
+
 
 #pragma once
 

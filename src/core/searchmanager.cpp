@@ -99,7 +99,11 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
             // Regular progress updates (works for both catalog and directory)
             if (filesProcessed >= 0) {
                 if (engine->estimatedTotalFiles > 0) {
+                #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+                    int percent = qMin(100, static_cast<int>((filesProcessed * 100) / engine->estimatedTotalFiles));
+                #else
                     int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
+                #endif
                     setProgress(percent);
                 }
                 setCurrentCatalogName(engine->currentCatalogName);

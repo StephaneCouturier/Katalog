@@ -143,7 +143,11 @@ bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) cons
     QVariant leftData = sourceModel()->data(left);
     QVariant rightData = sourceModel()->data(right);
 
+    #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    if (leftData.type() == QMetaType::QString && rightData.type() == QMetaType::QString) {
+    #else
     if (leftData.typeId() == QMetaType::QString && rightData.typeId() == QMetaType::QString) {
+    #endif
         QString leftString = leftData.toString();
         QString rightString = rightData.toString();
 

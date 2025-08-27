@@ -663,7 +663,12 @@ void DeviceJobStoppable::accumulateResults(const QList<qint64>& deviceResults)
 
     // Initialize accumulated results if empty
     if (m_accumulatedResults.isEmpty()) {
+        #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+        QVector<qint64> tempVector(deviceResults.size(), 0);
+        m_accumulatedResults = tempVector.toList();
+        #else
         m_accumulatedResults = QList<qint64>(deviceResults.size(), 0);
+        #endif
     }
 
     // Add device results to accumulated totals
