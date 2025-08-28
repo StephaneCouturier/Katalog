@@ -190,28 +190,6 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
     updateDeviceRecursive(rootDevice);
 }
 
-// Device* DeviceUpdateManager::createTempVirtualDeviceForActiveCatalogs(const QList<Device*>& activeCatalogs)
-// {
-//     qDebug() << "Creating temporary virtual device for" << activeCatalogs.size() << "active catalogs";
-
-//     Device* tempDevice = new Device();
-//     tempDevice->ID = -1;
-//     tempDevice->name = "Active Catalogs (Update Operation)";
-//     tempDevice->type = "Virtual";
-//     tempDevice->active = true;
-//     tempDevice->hasSubDevice = !activeCatalogs.isEmpty();
-
-//     for (Device* catalog : activeCatalogs) {
-//         tempDevice->subDevices.append(*catalog);
-//         tempDevice->deviceIDList.append(catalog->ID);
-//     }
-
-//     qDebug() << "Temporary virtual device created with" << tempDevice->subDevices.size() << "children";
-//     m_dummyDevice = tempDevice;
-
-//     return tempDevice;
-// }
-
 Device* DeviceUpdateManager::createDummyDeviceFromList(const QList<Device*>& filteredDevices)
 {
     qDebug() << "Creating temporary virtual device for" << filteredDevices.size() << "filtered devices";
