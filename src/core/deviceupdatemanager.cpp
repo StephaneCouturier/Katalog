@@ -162,6 +162,9 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
         return;
     }
 
+    // Ensure complete clean state before starting
+    cleanupOperation();
+
     // Initialize operation
     m_operationRunning = true;
     m_stopRequested.storeRelease(0);
@@ -303,20 +306,53 @@ void DeviceUpdateManager::processChildren(Device* device)
         return;
     }
 
-    // For other device types (Virtual, etc.), process children normally
-    for (const Device& childDevice : device->subDevices) {
-        if (!shouldContinue()) {
-            handleOperationCancellation();
-            return;
+    // For Virtual devices, process children directly without recursive flow control
+    if (device->type == "Virtual") {
+        qDebug() << "=== VIRTUAL DEVICE CHILDREN - Direct processing ===";
+
+        for (const Device& childDevice : device->subDevices) {
+            if (!shouldContinue()) {
+                handleOperationCancellation();
+                return;
+            }
+
+            Device* childPtr = new Device(childDevice);
+            qDebug() << "Processing Virtual child:" << childPtr->name << "Type:" << childPtr->type;
+
+            // Process child directly without calling updateDeviceRecursive()
+            setCurrentDevice(childPtr);
+            emit deviceProcessingStarted(childPtr->name, childPtr->type);
+
+            // Update device state
+            childPtr->updateActiveState("defaultConnection");
+            childPtr->dateTimeUpdated = QDateTime::currentDateTime();
+
+            // Type-specific processing without recursive flow control
+            if (childPtr->type == "Storage") {
+                updateStorageDevice(childPtr);
+                // Don't call processChildren() - let updateStorageDevice handle its own completion
+                qDebug() << "Storage child processed within Virtual device";
+
+            } else if (childPtr->type == "Virtual") {
+                updateVirtualDevice(childPtr);
+                // For nested Virtual devices, recursively process children
+                processChildren(childPtr);
+
+            } else if (childPtr->type == "Catalog") {
+                // This shouldn't happen normally, but handle it
+                updateCatalogDevice(childPtr);
+                if (m_waitingForCatalogCompletion) {
+                    qDebug() << "Catalog operation started within Virtual processing";
+                    return; // Wait for catalog completion
+                }
+            }
         }
 
-        Device* childPtr = new Device(childDevice);
-        updateDeviceRecursive(childPtr);
-
-        if (m_waitingForCatalogCompletion) {
-            qDebug() << "Async catalog operation in progress, waiting...";
-            return;
-        }
+        // All children processed successfully
+        updateParentNumbers(device);
+        emit deviceProcessingCompleted(device->name);
+        continueToNextDevice();
+        return;
     }
 
     // All children processed
@@ -371,7 +407,7 @@ void DeviceUpdateManager::updateDeviceRecursive(Device* device)
     } else if (device->type == "Catalog") {
         updateCatalogDevice(device);
         // NOTE: Catalog completion is handled in onCatalogOperationCompleted()
-        // Do NOT call processChildren here - catalogs are leaf nodes
+        // Do NOT call processChildren here
 
     } else {
         qDebug() << "Unknown device type:" << device->type << "- treating as virtual";
@@ -384,6 +420,7 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
 {
     qDebug() << "=== DeviceUpdateManager::updateCatalogDevice ===";
     qDebug() << "Updating Catalog Device:" << device->name;
+    qDebug() << "Update type:" << m_updateType;
     setStatus(QString("Updating catalog device: %1").arg(device->name));
 
     if (!device->active) {
@@ -408,28 +445,28 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
         return;
     }
 
-    // ENHANCED: Check CatalogManager state before starting
+    // CRITICAL: Ensure CatalogManager is in clean state before starting
     qDebug() << "CatalogManager state check:";
     qDebug() << "  catalogOperationRunning():" << m_catalogManager->catalogOperationRunning();
 
     if (m_catalogManager->catalogOperationRunning()) {
-        qDebug() << "*** ERROR: CatalogManager reports operation still running! ***";
-        qDebug() << "*** This indicates cleanup timing issue ***";
+        qDebug() << "*** ERROR: CatalogManager reports operation still running!";
+        qDebug() << "*** FORCING CatalogManager stop to clean state ***";
 
-        // Try to wait a bit more and retry
-        qDebug() << "Retrying catalog start in 100ms...";
+        // Force stop the running operation
+        m_catalogManager->stopCatalogOperation();
+
+        // Give it a moment to clean up
         QTimer::singleShot(100, this, [this, device]() {
-            qDebug() << "Retry attempt - CatalogManager running:" << m_catalogManager->catalogOperationRunning();
-            if (!m_catalogManager->catalogOperationRunning()) {
-                qDebug() << "CatalogManager now available, starting catalog";
-                startCatalogOperation(device);
-            } else {
-                qDebug() << "*** ERROR: CatalogManager still running after retry - aborting operation ***";
-                handleOperationError(QString("Cannot start catalog %1 - CatalogManager busy").arg(device->name));
-            }
+            qDebug() << "*** RETRYING catalog operation after forced cleanup ***";
+            updateCatalogDevice(device);  // Retry after cleanup
         });
         return;
     }
+
+    // Start catalog operation
+    qDebug() << "Starting catalog operation for:" << device->name << "Type:" << m_updateType;
+    m_waitingForCatalogCompletion = true;
 
     startCatalogOperation(device);
 }
@@ -512,6 +549,35 @@ void DeviceUpdateManager::updateStorageDevice(Device* device)
                 // Store results for reporting
                 m_storageUpdateResult = result;
                 m_storageWasUpdated = true;
+
+                // Accumulate Virtual storage updates
+                if (m_rootDevice && m_rootDevice->type == "Virtual") {
+                    if (!m_virtualStorageWasUpdated) {
+                        // First storage device - initialize
+                        m_virtualStorageUpdateResult = result;
+                        m_virtualStorageWasUpdated = true;
+                        qDebug() << "Virtual storage tracking - First storage device initialized";
+                    } else {
+                        // Subsequent storage devices - accumulate
+                        m_virtualStorageUpdateResult.newFreeSpace += result.newFreeSpace;
+                        m_virtualStorageUpdateResult.newTotalSpace += result.newTotalSpace;
+                        m_virtualStorageUpdateResult.deltaFreeSpace += result.deltaFreeSpace;
+                        m_virtualStorageUpdateResult.deltaTotalSpace += result.deltaTotalSpace;
+
+                        // Calculate accumulated used space
+                        m_virtualStorageUpdateResult.newUsedSpace =
+                            m_virtualStorageUpdateResult.newTotalSpace - m_virtualStorageUpdateResult.newFreeSpace;
+                        m_virtualStorageUpdateResult.deltaUsedSpace += result.deltaUsedSpace;
+
+                        qDebug() << "Virtual storage tracking - Accumulated storage device results";
+                    }
+
+                    m_processedStorageDevices++;
+                    qDebug() << "Virtual storage summary - Processed devices:" << m_processedStorageDevices;
+                    qDebug() << "  Total free space:" << m_virtualStorageUpdateResult.newFreeSpace;
+                    qDebug() << "  Total total space:" << m_virtualStorageUpdateResult.newTotalSpace;
+                    qDebug() << "  Delta free space:" << m_virtualStorageUpdateResult.deltaFreeSpace;
+                }
 
                 // Update parent device values
                 device->dateTimeUpdated = QDateTime::currentDateTime();
@@ -841,25 +907,86 @@ void DeviceUpdateManager::handleOperationError(const QString& error)
     cleanupOperation();
 }
 
+// In DeviceUpdateManager::cleanupOperation() - ensure ALL state is reset:
+
 void DeviceUpdateManager::cleanupOperation()
 {
     qDebug() << "DeviceUpdateManager::cleanupOperation()";
 
-    cleanupDummyDevice();
+    // Reset operation state
+    m_operationRunning = false;
+    m_waitingForCatalogCompletion = false;
 
+    // Clear operation data - COMPLETE RESET
     m_rootDevice = nullptr;
     m_currentDevice = nullptr;
-    m_currentDeviceIndex = 0;
+    m_currentStorageDevice = nullptr;        // CRITICAL: Reset storage device pointer
+    m_processedDevices = 0;
+    m_totalDevices = 0;
+    m_processedCatalogs = 0;
+    m_totalCatalogs = 0;
+    m_currentChildIndex = 0;                 // Reset child processing index
+
+    // Clear catalog counters
+    m_updatedCatalogs = 0;
+    m_skippedCatalogs = 0;
+    m_totalCatalogFiles = 0;
+    m_totalCatalogSize = 0;
+    m_totalDeltaFiles = 0;
+    m_totalDeltaSize = 0;
+
+    // Clear storage update data
+    m_storageWasUpdated = false;
+    m_storageUpdateResult = Storage::UpdateResult{};
+
+    // Clear Virtual storage tracking
+    m_virtualStorageWasUpdated = false;
+    m_virtualStorageUpdateResult = Storage::UpdateResult{};
+    m_processedStorageDevices = 0;
+
+    // Clear children processing - ONLY clear lists, don't delete objects
+    m_childrenToProcess.clear();
     m_allDevices.clear();
     m_catalogDevices.clear();
+
+    // Clear results
     m_accumulatedResults.clear();
 
+    // Reset update type - CRITICAL for proper completion logic
+    m_updateType.clear();
+    m_databaseMode.clear();
+    m_collectionFolder.clear();
+
+    // Reset flags
+    m_stopRequested.storeRelease(0);
+    m_gentleStopRequested.storeRelease(0);
+    m_isPaused = false;
+
+    // Clean up catalog job
     if (m_currentCatalogJob) {
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }
 
-    m_waitingForCatalogCompletion = false;
+    // Disconnect from CatalogManager - but DON'T delete it
+    if (m_catalogManager) {
+        disconnect(m_catalogManager, nullptr, this, nullptr);
+        // Reconnect for next operation
+        connect(m_catalogManager, &CatalogManager::catalogOperationCompleted,
+                this, &DeviceUpdateManager::onCatalogOperationCompleted);
+        connect(m_catalogManager, &CatalogManager::catalogOperationError,
+                this, &DeviceUpdateManager::onCatalogOperationError);
+        connect(m_catalogManager, &CatalogManager::catalogOperationCancelled,
+                this, &DeviceUpdateManager::onCatalogOperationCancelled);
+    }
+
+    setStatus("Ready");
+    m_progress = 0;
+    emit progressChanged();
+
+    emit operationRunningChanged();
+
+    qDebug() << "DeviceUpdateManager cleanup completed - ALL state reset";
 }
 
 void DeviceUpdateManager::cleanupDummyDevice()
@@ -1016,7 +1143,7 @@ void DeviceUpdateManager::completeOperation()
     } else if (m_rootDevice && m_rootDevice->type == "Virtual") {
         qDebug() << "*** VIRTUAL DEVICE COMPLETION - Building virtual device results ***";
 
-        // Virtual device - use device count format
+        // Virtual device - include storage updates that occurred during processing
         results << 1;  // Success flag
         results << m_totalCatalogFiles;   // Total files from all catalogs
         results << 0;  // Delta files
@@ -1025,8 +1152,19 @@ void DeviceUpdateManager::completeOperation()
         results << m_updatedCatalogs;     // Updated catalogs
         results << m_skippedCatalogs;     // Skipped catalogs
 
-        // No storage data for pure virtual operations
-        for (int i = 7; i < 14; ++i) results << 0;
+        // FIXED: Include storage data if storage devices were updated during Virtual operation
+        if (m_virtualStorageWasUpdated) {
+            results << 1;  // Index 7: Storage updated flag (1 = true)
+            results << m_virtualStorageUpdateResult.newUsedSpace;     // Index 8: Used space
+            results << m_virtualStorageUpdateResult.deltaUsedSpace;   // Index 9: Delta used space
+            results << m_virtualStorageUpdateResult.newFreeSpace;     // Index 10: Free space
+            results << m_virtualStorageUpdateResult.deltaFreeSpace;   // Index 11: Delta free space
+            results << m_virtualStorageUpdateResult.newTotalSpace;    // Index 12: Total space
+            results << m_virtualStorageUpdateResult.deltaTotalSpace;  // Index 13: Delta total space
+        } else {
+            results << 0;  // Index 7: Storage updated flag (0 = false)
+            for (int i = 8; i < 14; ++i) results << 0;  // No storage values
+        }
 
     } else {
         qDebug() << "*** FALLBACK COMPLETION - Using generic format ***";
@@ -1112,8 +1250,6 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
                 qDebug() << "Storage space updated during batch operation";
             }
         }
-
-
 
         // Check for gentle stop request before starting next catalog
         if (m_gentleStopRequested.loadAcquire()) {

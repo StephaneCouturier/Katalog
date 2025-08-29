@@ -660,6 +660,11 @@
             qDebug() << "File database mode - checking for migrations";
             runDatabaseMigrations();
         }
+
+        // Refresh UI views to show updated data
+        loadDevicesView("");                // Refresh main device tree with updated dates
+        loadDevicesTreeToModel("Filters");  // Refresh filters tree view
+
     }
     //----------------------------------------------------------------------
     void MainWindow::preloadCatalogs()

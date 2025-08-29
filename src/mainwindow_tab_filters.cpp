@@ -199,11 +199,45 @@
             deviceContextMenu.exec(globalPos);
         }
         else if (selectedDevice->type=="Virtual"){
-            //Empty
+            QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
+            QMenu deviceContextMenu;
+
+            QString deviceName = selectedDevice->name;
+
+            if(ui->tabWidget->currentIndex() != 0){
+                QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-find"), tr("Search"), this);
+                deviceContextMenu.addAction(menuDeviceAction1);
+
+                connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+                    ui->tabWidget->setCurrentIndex(0);
+                });
+            }
+
+            QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+            deviceContextMenu.addAction(menuDeviceAction3);
+            connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+                if (!deviceUpdateManager) {
+                    setupDeviceUpdateManager();
+                }
+
+                // Check if already running
+                if (deviceUpdateManager->operationRunning()) {
+                    QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+                    return;
+                }
+
+                // Set UI state for catalog operation
+                setCatalogUpdateUIState(true);
+
+                // This ensures consistent behavior across all update paths
+                deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
+                                                           collection->databaseMode,
+                                                           collection->folder);
+            });
+
+            deviceContextMenu.exec(globalPos);
         }
         else if (selectedDevice->type=="Catalog"){
-            qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) CATALOG ===";
-
             QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
             QMenu deviceContextMenu;
 

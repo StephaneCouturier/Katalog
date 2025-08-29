@@ -1999,6 +1999,10 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
         qDebug() << "=== UPDATE: Standard update tab restoration ===";
         setCatalogUpdateUIState(false);
 
+        // Full UI refresh for updates to show updated dates and values
+        loadDevicesView("");                    // Refresh main device tree
+        loadDevicesTreeToModel("Filters");     // Refresh filters tree view
+
         // Reload device statistics for updates
         if (selectedDevice) {
             selectedDevice->loadDevice("defaultConnection");
@@ -2049,7 +2053,7 @@ void MainWindow::startSingleCatalogUpdateUnified()
                                                collection->folder,
                                                "update");
 }
-
+//--------------------------------------------------------------------------
 QList<Device*> MainWindow::collectActiveCatalogs()
 {
     QList<Device*> activeCatalogs;
@@ -2071,13 +2075,13 @@ QList<Device*> MainWindow::collectActiveCatalogs()
 
     return activeCatalogs;
 }
-
+//--------------------------------------------------------------------------
 bool MainWindow::confirmBatchOperation(int deviceCount)
 {
     QString message = tr("Update %1 devices?").arg(deviceCount);
     return QMessageBox::question(this, "Katalog", message) == QMessageBox::Yes;
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::startUpdateAllActiveCatalogsUnified()
 {
     qDebug() << "=== Update All Active Catalogs (Unified) ===";
@@ -2108,7 +2112,7 @@ void MainWindow::startUpdateAllActiveCatalogsUnified()
                                                collection->folder,
                                                "update");
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::updateStorageDevice(Device* storageDevice)
 {
     qDebug() << "=== Storage Device Update (Unified) ===";
@@ -2135,7 +2139,7 @@ void MainWindow::updateStorageDevice(Device* storageDevice)
                                                collection->folder,
                                                "update");
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::updateVirtualDevice(Device* virtualDevice)
 {
     qDebug() << "=== Virtual Device Update (Unified) ===";
@@ -2162,7 +2166,7 @@ void MainWindow::updateVirtualDevice(Device* virtualDevice)
                                                collection->folder,
                                                "update");
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::setCatalogUpdateUIState(bool isRunning)
 {
     qDebug() << "setCatalogUpdateUIState:" << isRunning;
@@ -2200,7 +2204,7 @@ void MainWindow::setCatalogUpdateUIState(bool isRunning)
         statusBar()->clearMessage();
     }
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateStarted()
 {
     qDebug() << "=== MainWindow::onDeviceUpdateStarted ===";
@@ -2208,7 +2212,7 @@ void MainWindow::onDeviceUpdateStarted()
     // UI is already set by button handler, just log
     qDebug() << "Device update operation started";
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateError(const QString& error)
 {
     qDebug() << "=== MainWindow::onDeviceUpdateError ===";
@@ -2229,7 +2233,7 @@ void MainWindow::onDeviceUpdateError(const QString& error)
     QMessageBox::warning(this, "Katalog", tr("Catalog operation failed:\n%1").arg(error));
     statusBar()->showMessage(tr("Catalog operation failed"), 5000);
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateCancelled()
 {
     qDebug() << "=== MainWindow::onDeviceUpdateCancelled ===";
@@ -2249,7 +2253,7 @@ void MainWindow::onDeviceUpdateCancelled()
 
     qDebug() << "Operation cancelled by user";
 }
-
+//--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateProgress()
 {
     if (!deviceUpdateManager) return;
@@ -2269,7 +2273,9 @@ void MainWindow::onDeviceUpdateProgress()
     // Log progress for debugging
     qDebug() << "Progress:" << progress << "%" << "Status:" << status;
 }
+//--------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------
 //--- Storage --------------------------------------------------------------
 void MainWindow::loadStorageList()
 {//Load Storage selection to comboBoxes
@@ -3059,8 +3065,38 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
     }
 
     //Virtual updates
-    if (device->type =="Virtual"){
-        reportAvailable = false;
+    if (device->type=="Virtual" and updateType=="update"){
+        message = "";
+
+        // Report virtual device updated
+        if(list[0]==1){
+            message += "<table>";
+            message += "<tr><td>" + tr("Virtual device updated: ") + "</td><td align='center'><b>" + device->name + "</b></td></tr>";
+            message += "</table><br/>";
+            reportAvailable = true;
+        }
+
+        // Report child storage updates if any occurred
+        if(list[7]==1){//Storage updated during virtual device processing
+            message += "<table>";
+            message += "<tr><td>"+tr("Child storage updated: ")+ "</td><td align='center'><b>" + tr("Storage space refreshed") + "</b></td></tr>";
+            message += "</table>";
+            message += "<br/>";
+            message += "<table>";
+            message += "<tr><td>" +  tr("Used Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[8])  + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[9])  + "</b>)</td></tr>";
+            message += "<tr><td>" +  tr("Free Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[10]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[11]) + "</b>)</td></tr>";
+            message += "<tr><td>" + tr("Total Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[12]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[13]) + "</b>)</td></tr>";
+            message += "</table>";
+            reportAvailable = true;
+        }
+
+        // Show the report if there's content
+        if(list[0]==1 or list[7]==1){
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(message);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        }
     }
 
     return reportAvailable;

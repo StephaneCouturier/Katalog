@@ -135,6 +135,9 @@ private:
     QList<qint64> buildCatalogUpdateResults(Device* catalogDevice, const Storage::UpdateResult& storageResult);
     qint64 m_totalDeltaFiles = 0;
     qint64 m_totalDeltaSize = 0;
+    bool m_virtualStorageWasUpdated = false;
+    Storage::UpdateResult m_virtualStorageUpdateResult{};
+    int m_processedStorageDevices = 0;
 
     // ===== OPERATION STATE =====
     bool m_operationRunning = false;
