@@ -86,12 +86,29 @@ private slots:
     void onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString& currentPath);
 
 private:
+    enum ProcessingContext {
+        RootDevice,           // Device is the root of the operation
+        VirtualChild,         // Device is a child of Virtual device
+        StorageBatch         // Device is part of Storage batch operation
+    };
+    ProcessingContext m_processingContext = RootDevice;
+
     // ===== CORE RECURSIVE LOGIC =====
     void updateDeviceRecursive(Device* device);
     void updateVirtualDevice(Device* device);
     void updateStorageDevice(Device* device);
     void updateCatalogDevice(Device* device);
     void startCatalogOperation(Device* device);
+
+    Device* m_currentVirtualDevice = nullptr;
+    int m_currentVirtualChildIndex = 0;
+    QList<Device*> m_virtualChildrenToProcess;
+
+    // Virtual processing methods (similar to Storage batch methods)
+    void initializeVirtualProcessing(Device* virtualDevice);
+    void processNextVirtualChild();
+    void completeVirtualProcessing();
+
 
     // ===== HIERARCHY ANALYSIS =====
     void analyzeHierarchy(Device* rootDevice);
