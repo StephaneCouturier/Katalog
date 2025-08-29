@@ -193,6 +193,8 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
     updateDeviceRecursive(rootDevice);
 }
 
+
+
 Device* DeviceUpdateManager::createDummyDeviceFromList(const QList<Device*>& filteredDevices)
 {
     qDebug() << "Creating temporary virtual device for" << filteredDevices.size() << "filtered devices";
@@ -298,7 +300,7 @@ void DeviceUpdateManager::processChildren(Device* device)
 
     qDebug() << "Found" << device->subDevices.size() << "children for:" << device->name;
 
-    // SPECIAL HANDLING: Storage devices with children use batch processing
+    // Storage devices with children use batch processing
     if (device->type == "Storage") {
         if (m_processingContext == VirtualChild) {
             qDebug() << "=== STORAGE DEVICE (Virtual Child) - Using simple recursive processing ===";
@@ -330,38 +332,24 @@ void DeviceUpdateManager::processChildren(Device* device)
             return;
         }
     }
+
     // For Virtual devices, process children directly without recursive flow control
-    // FIXED: Virtual devices - process children with context
     if (device->type == "Virtual") {
-        qDebug() << "=== VIRTUAL DEVICE - Processing" << device->subDevices.size() << "children ===";
+        qDebug() << "=== VIRTUAL DEVICE - Starting continuation-based processing ===";
 
-        // Set Virtual context for all children
-        ProcessingContext savedContext = m_processingContext;
-        m_processingContext = VirtualChild;
+        m_virtualDeviceBeingProcessed = device;
+        m_remainingVirtualChildren.clear();
 
+        // Add all children to remaining list
         for (const Device& childDevice : device->subDevices) {
-            if (!shouldContinue()) {
-                handleOperationCancellation();
-                m_processingContext = savedContext;
-                return;
-            }
-
             Device* childPtr = new Device(childDevice);
-            qDebug() << "Processing Virtual child:" << childPtr->name << "Type:" << childPtr->type;
-
-            updateDeviceRecursive(childPtr);  // This will use the VirtualChild context
-
-            if (m_waitingForCatalogCompletion) {
-                // Don't restore context yet - will be restored when operation completes
-                return;
-            }
+            childPtr->updateActiveState("defaultConnection");
+            m_remainingVirtualChildren.append(childPtr);
+            qDebug() << "Added to remaining list:" << childPtr->name << "Type:" << childPtr->type;
         }
 
-        // Restore context and complete Virtual device
-        m_processingContext = savedContext;
-        updateParentNumbers(device);
-        emit deviceProcessingCompleted(device->name);
-        continueToNextDevice();
+        // Process first child
+        processNextVirtualChild();
         return;
     }
 
@@ -917,8 +905,6 @@ void DeviceUpdateManager::handleOperationError(const QString& error)
     cleanupOperation();
 }
 
-// In DeviceUpdateManager::cleanupOperation() - ensure ALL state is reset:
-
 void DeviceUpdateManager::cleanupOperation()
 {
     qDebug() << "DeviceUpdateManager::cleanupOperation()";
@@ -1214,7 +1200,9 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     qDebug() << "m_currentDevice:" << (m_currentDevice ? m_currentDevice->name : "NULL");
     qDebug() << "m_rootDevice:" << (m_rootDevice ? m_rootDevice->name : "NULL");
     qDebug() << "m_rootDevice type:" << (m_rootDevice ? m_rootDevice->type : "NULL");
-    qDebug() << "m_currentStorageDevice:" << (m_currentStorageDevice ? m_currentStorageDevice->name : "NULL");
+    qDebug() << "m_updateType:" << m_updateType;
+    qDebug() << "m_activeVirtualDevice:" << (m_currentVirtualDevice ? m_currentVirtualDevice->name : "NULL");
+   // qDebug() << "m_pendingVirtualChildren.size():" << m_pendingVirtualChildren.size();
 
     if (!m_currentDevice) {
         qDebug() << "ERROR: No current device in catalog completion";
@@ -1239,6 +1227,25 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
 
     // Update parent numbers for this catalog
     m_currentDevice->updateParentsNumbers();
+
+    m_totalCatalogFiles += m_currentDevice->totalFileCount;
+    m_totalCatalogSize += m_currentDevice->totalFileSize;
+
+    if (m_virtualDeviceBeingProcessed != nullptr) {
+        qDebug() << "=== CONTINUING Virtual processing after catalog completion ===";
+
+        // Continue with next Virtual child
+        QTimer::singleShot(50, this, [this]() {
+            qDebug() << "Timer triggered - calling processNextVirtualChild";
+            processNextVirtualChild();
+        });
+        return;
+    }
+
+    // if (m_rootDevice && m_rootDevice->type == "Virtual") {
+    //     qDebug() << "=== Virtual operation - NOT completing, letting operation continue ===";
+    //     return;  // Just return - don't complete the operation
+    // }
 
     // Determine if this is part of a Storage batch operation
     // Creation operations should NEVER be treated as batch operations
@@ -1617,102 +1624,6 @@ void DeviceUpdateManager::initializeVirtualProcessing(Device* virtualDevice)
     qDebug() << "Initialized Virtual processing for" << m_virtualChildrenToProcess.size() << "children";
 }
 
-void DeviceUpdateManager::processNextVirtualChild()
-{
-    qDebug() << "=== DeviceUpdateManager::processNextVirtualChild ===";
-    qDebug() << "Current child index:" << m_currentVirtualChildIndex << "/ Total children:" << m_virtualChildrenToProcess.size();
-
-    // Check stop conditions first
-    if (!shouldContinue()) {
-        qDebug() << "Stop requested during Virtual processing";
-        handleOperationCancellation();
-        return;
-    }
-
-    // Check if all children processed
-    if (m_currentVirtualChildIndex >= m_virtualChildrenToProcess.size()) {
-        qDebug() << "All Virtual children processed - completing Virtual operation";
-        completeVirtualProcessing();
-        return;
-    }
-
-    // Get next child to process
-    Device* nextChild = m_virtualChildrenToProcess[m_currentVirtualChildIndex];
-    qDebug() << "Processing next Virtual child:" << nextChild->name << "Type:" << nextChild->type << "Active:" << nextChild->active;
-
-    // Move to next child for next iteration
-    m_currentVirtualChildIndex++;
-
-    // Set current device for progress tracking
-    setCurrentDevice(nextChild);
-    emit deviceProcessingStarted(nextChild->name, nextChild->type);
-
-    // Update device active state and timestamp
-    nextChild->updateActiveState("defaultConnection");
-    nextChild->dateTimeUpdated = QDateTime::currentDateTime();
-
-    // Process child based on type
-    if (nextChild->type == "Storage") {
-        updateStorageDevice(nextChild);
-
-        // Check if Storage has catalog children
-        loadDeviceChildren(nextChild);
-
-        if (!nextChild->subDevices.isEmpty()) {
-            qDebug() << "Storage has" << nextChild->subDevices.size() << "catalog children";
-
-            // Process first catalog child - others will be processed via async continuation
-            for (const Device& catalogDevice : nextChild->subDevices) {
-                Device* catalogPtr = new Device(catalogDevice);
-
-                setCurrentDevice(catalogPtr);
-                emit deviceProcessingStarted(catalogPtr->name, catalogPtr->type);
-
-                catalogPtr->updateActiveState("defaultConnection");
-                catalogPtr->dateTimeUpdated = QDateTime::currentDateTime();
-
-                if (catalogPtr->type == "Catalog" && catalogPtr->active) {
-                    qDebug() << "Starting catalog operation for:" << catalogPtr->name;
-                    updateCatalogDevice(catalogPtr);
-                    if (m_waitingForCatalogCompletion) {
-                        qDebug() << "Waiting for catalog completion in Virtual context";
-                        return; // Will continue when catalog completes
-                    }
-                } else if (!catalogPtr->active) {
-                    qDebug() << "Catalog inactive, skipping:" << catalogPtr->name;
-                    m_skippedCatalogs++;
-                }
-
-                // For now, only process first catalog - need to handle multiple catalogs per storage
-                break;
-            }
-        }
-
-        // If no async catalogs started, continue to next Virtual child
-        if (!m_waitingForCatalogCompletion) {
-            processNextVirtualChild();
-        }
-
-    } else if (nextChild->type == "Virtual") {
-        updateVirtualDevice(nextChild);
-        // For nested Virtual devices, we'd need recursive Virtual processing
-        // For now, treat as completed
-        processNextVirtualChild();
-
-    } else if (nextChild->type == "Catalog") {
-        updateCatalogDevice(nextChild);
-        if (m_waitingForCatalogCompletion) {
-            return; // Will continue when catalog completes
-        }
-        processNextVirtualChild();
-
-    } else {
-        // Unknown type - treat as virtual
-        updateVirtualDevice(nextChild);
-        processNextVirtualChild();
-    }
-}
-
 void DeviceUpdateManager::completeVirtualProcessing()
 {
     qDebug() << "=== DeviceUpdateManager::completeVirtualProcessing ===";
@@ -1736,10 +1647,32 @@ void DeviceUpdateManager::completeVirtualProcessing()
     m_waitingForCatalogCompletion = false;
 
     // Build results for Virtual device (use existing logic)
-    //QList<qint64> results = buildVirtualResults();
+    QList<qint64> results;
+    // Build results directly instead of calling buildVirtualResults()
+    results << 1;  // Success flag
+    results << m_totalCatalogFiles;   // Total files from all catalogs
+    results << 0;  // Delta files
+    results << m_totalCatalogSize;    // Total size from all catalogs
+    results << 0;  // Delta size
+    results << m_updatedCatalogs;     // Updated catalogs
+    results << m_skippedCatalogs;     // Skipped catalogs
+
+    // Include accumulated storage data if available
+    if (m_virtualStorageWasUpdated) {
+        results << 1;  // Storage updated flag
+        results << m_virtualStorageUpdateResult.newUsedSpace;
+        results << m_virtualStorageUpdateResult.deltaUsedSpace;
+        results << m_virtualStorageUpdateResult.newFreeSpace;
+        results << m_virtualStorageUpdateResult.deltaFreeSpace;
+        results << m_virtualStorageUpdateResult.newTotalSpace;
+        results << m_virtualStorageUpdateResult.deltaTotalSpace;
+    } else {
+        results << 0;  // No storage updated
+        for (int i = 8; i < 14; ++i) results << 0;
+    }
 
     qDebug() << "*** EMITTING operationCompleted for Virtual device ***";
-    //emit operationCompleted(results);
+    emit operationCompleted(results);
     emit operationRunningChanged();
 
     // Cleanup
@@ -1748,3 +1681,88 @@ void DeviceUpdateManager::completeVirtualProcessing()
     });
 }
 
+// Add this method to actually process Virtual children:
+void DeviceUpdateManager::processNextVirtualChild()
+{
+    qDebug() << "=== DeviceUpdateManager::processNextVirtualChild ===";
+    qDebug() << "Remaining children:" << m_remainingVirtualChildren.size();
+
+    // If no more children, complete Virtual device
+    if (m_remainingVirtualChildren.isEmpty()) {
+        qDebug() << "All Virtual children processed - completing Virtual device";
+
+        Device* virtualDevice = m_virtualDeviceBeingProcessed;
+        m_virtualDeviceBeingProcessed = nullptr;  // Clear before completing
+
+        updateParentNumbers(virtualDevice);
+        emit deviceProcessingCompleted(virtualDevice->name);
+        continueToNextDevice();
+        return;
+    }
+
+    // Get and process next child
+    Device* nextChild = m_remainingVirtualChildren.takeFirst();
+    qDebug() << "Processing next Virtual child:" << nextChild->name << "Type:" << nextChild->type;
+
+    setCurrentDevice(nextChild);
+    emit deviceProcessingStarted(nextChild->name, nextChild->type);
+
+    nextChild->updateActiveState("defaultConnection");
+    nextChild->dateTimeUpdated = QDateTime::currentDateTime();
+
+    if (nextChild->type == "Storage") {
+        updateStorageDevice(nextChild);
+
+        // Process Storage's catalog children
+        loadDeviceChildren(nextChild);
+
+        if (!nextChild->subDevices.isEmpty()) {
+            qDebug() << "Storage has" << nextChild->subDevices.size() << "catalog children";
+
+            // Find first active catalog to process
+            bool foundCatalog = false;
+            for (const Device& catalogDevice : nextChild->subDevices) {
+                Device* catalogPtr = new Device(catalogDevice);
+
+                setCurrentDevice(catalogPtr);
+                emit deviceProcessingStarted(catalogPtr->name, catalogPtr->type);
+
+                catalogPtr->updateActiveState("defaultConnection");
+                catalogPtr->dateTimeUpdated = QDateTime::currentDateTime();
+
+                if (catalogPtr->type == "Catalog" && catalogPtr->active) {
+                    qDebug() << "Starting catalog:" << catalogPtr->name;
+                    updateCatalogDevice(catalogPtr);
+                    if (m_waitingForCatalogCompletion) {
+                        foundCatalog = true;
+                        qDebug() << "Catalog started - will continue when complete";
+                        break; // Exit loop, will continue when catalog completes
+                    }
+                } else if (catalogPtr->type == "Catalog") {
+                    m_skippedCatalogs++;
+                    qDebug() << "Skipped inactive catalog:" << catalogPtr->name;
+                }
+            }
+
+            // If no async catalog started, continue immediately
+            if (!foundCatalog) {
+                processNextVirtualChild();
+            }
+        } else {
+            // Storage has no catalogs, continue immediately
+            processNextVirtualChild();
+        }
+
+    } else if (nextChild->type == "Catalog") {
+        updateCatalogDevice(nextChild);
+        if (!m_waitingForCatalogCompletion) {
+            processNextVirtualChild();
+        }
+        // If catalog started async, will continue when complete
+
+    } else {
+        // Other device types
+        updateVirtualDevice(nextChild);
+        processNextVirtualChild();
+    }
+}

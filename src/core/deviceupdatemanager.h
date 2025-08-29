@@ -92,6 +92,8 @@ private:
         StorageBatch         // Device is part of Storage batch operation
     };
     ProcessingContext m_processingContext = RootDevice;
+    Device* m_virtualDeviceBeingProcessed = nullptr;
+    QList<Device*> m_remainingVirtualChildren;
 
     // ===== CORE RECURSIVE LOGIC =====
     void updateDeviceRecursive(Device* device);
