@@ -60,6 +60,7 @@ public:
     int totalCatalogs() const { return m_totalCatalogs; }
 
     void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
+    int getProcessedStorageDevices() const { return m_processedStorageDevices; }
 
 signals:
     // Main operation lifecycle
@@ -94,7 +95,6 @@ private:
     ProcessingContext m_processingContext = RootDevice;
     Device* m_virtualDeviceBeingProcessed = nullptr;
     QList<Device*> m_remainingVirtualChildren;
-
     // ===== CORE RECURSIVE LOGIC =====
     void updateDeviceRecursive(Device* device);
     void updateVirtualDevice(Device* device);

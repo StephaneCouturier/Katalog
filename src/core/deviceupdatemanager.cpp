@@ -337,15 +337,32 @@ void DeviceUpdateManager::processChildren(Device* device)
     if (device->type == "Virtual") {
         qDebug() << "=== VIRTUAL DEVICE - Starting continuation-based processing ===";
 
+        // DEBUG: Show initial counter values
+        qDebug() << "INITIAL COUNTER VALUES:";
+        qDebug() << "  m_processedStorageDevices:" << m_processedStorageDevices;
+        qDebug() << "  m_updatedCatalogs:" << m_updatedCatalogs;
+        qDebug() << "  m_skippedCatalogs:" << m_skippedCatalogs;
+        qDebug() << "  m_totalCatalogFiles:" << m_totalCatalogFiles;
+        qDebug() << "  m_totalCatalogSize:" << m_totalCatalogSize;
+
         m_virtualDeviceBeingProcessed = device;
         m_remainingVirtualChildren.clear();
+
+        // RESET counters to avoid double counting from hierarchy analysis
+        m_processedStorageDevices = 0;
+        m_updatedCatalogs = 0;
+        m_skippedCatalogs = 0;
+        m_totalCatalogFiles = 0;
+        m_totalCatalogSize = 0;
+
+        qDebug() << "RESET COUNTERS TO ZERO";
 
         // Add all children to remaining list
         for (const Device& childDevice : device->subDevices) {
             Device* childPtr = new Device(childDevice);
             childPtr->updateActiveState("defaultConnection");
             m_remainingVirtualChildren.append(childPtr);
-            qDebug() << "Added to remaining list:" << childPtr->name << "Type:" << childPtr->type;
+            qDebug() << "Added to remaining list:" << childPtr->name << "Type:" << childPtr->type << "Active:" << childPtr->active;
         }
 
         // Process first child
@@ -1123,63 +1140,68 @@ void DeviceUpdateManager::completeOperation()
 
     if (m_rootDevice && m_rootDevice->type == "Storage") {
         qDebug() << "*** STORAGE BATCH COMPLETION - Building storage batch results ***";
-
-        // Storage device with catalog children - use batch format
         results = buildStorageBatchResults(m_rootDevice);
-
-        // Set proper updateType for reportAllUpdates
-        if (m_updatedCatalogs > 1 || m_skippedCatalogs > 0) {
-            // Multiple catalogs were processed - this should be reported as "list" type
-            qDebug() << "Multiple catalogs processed, using 'list' format for reportAllUpdates";
-        } else if (m_updatedCatalogs == 1) {
-            // Single catalog under storage - hybrid format
-            qDebug() << "Single catalog under storage, using hybrid format";
-        }
 
     } else if (m_rootDevice && m_rootDevice->type == "Virtual") {
         qDebug() << "*** VIRTUAL DEVICE COMPLETION - Building virtual device results ***";
+        qDebug() << "Virtual stats - Updated catalogs:" << m_updatedCatalogs << "Skipped:" << m_skippedCatalogs;
+        qDebug() << "Virtual stats - Total files:" << m_totalCatalogFiles << "Total size:" << m_totalCatalogSize;
+        qDebug() << "Virtual stats - Storage updated:" << m_virtualStorageWasUpdated << "Storage devices:" << m_processedStorageDevices;
 
-        // Virtual device - include storage updates that occurred during processing
-        results << 1;  // Success flag
-        results << m_totalCatalogFiles;   // Total files from all catalogs
-        results << 0;  // Delta files
-        results << m_totalCatalogSize;    // Total size from all catalogs
-        results << 0;  // Delta size
-        results << m_updatedCatalogs;     // Updated catalogs
-        results << m_skippedCatalogs;     // Skipped catalogs
+        // FIXED: Build results array systematically
+        results.clear();  // Ensure clean start
 
-        // FIXED: Include storage data if storage devices were updated during Virtual operation
-        if (m_virtualStorageWasUpdated) {
-            results << 1;  // Index 7: Storage updated flag (1 = true)
-            results << m_virtualStorageUpdateResult.newUsedSpace;     // Index 8: Used space
-            results << m_virtualStorageUpdateResult.deltaUsedSpace;   // Index 9: Delta used space
-            results << m_virtualStorageUpdateResult.newFreeSpace;     // Index 10: Free space
-            results << m_virtualStorageUpdateResult.deltaFreeSpace;   // Index 11: Delta free space
-            results << m_virtualStorageUpdateResult.newTotalSpace;    // Index 12: Total space
-            results << m_virtualStorageUpdateResult.deltaTotalSpace;  // Index 13: Delta total space
+        results << 1;                     // Index 0: Success flag
+        results << m_totalCatalogFiles;   // Index 1: Total files from all catalogs
+        results << 0;                     // Index 2: Delta files
+        results << m_totalCatalogSize;    // Index 3: Total size from all catalogs
+        results << 0;                     // Index 4: Delta size
+        results << m_updatedCatalogs;     // Index 5: Updated catalogs
+        results << m_skippedCatalogs;     // Index 6: Skipped catalogs
+
+        // Always add storage section (indices 7-13)
+        if (m_virtualStorageWasUpdated && m_processedStorageDevices > 0) {
+            qDebug() << "Adding storage data to results";
+            results << 1;  // Index 7: Storage updated flag
+            results << m_virtualStorageUpdateResult.newUsedSpace;     // Index 8
+            results << m_virtualStorageUpdateResult.deltaUsedSpace;   // Index 9
+            results << m_virtualStorageUpdateResult.newFreeSpace;     // Index 10
+            results << m_virtualStorageUpdateResult.deltaFreeSpace;   // Index 11
+            results << m_virtualStorageUpdateResult.newTotalSpace;    // Index 12
+            results << m_virtualStorageUpdateResult.deltaTotalSpace;  // Index 13
         } else {
-            results << 0;  // Index 7: Storage updated flag (0 = false)
-            for (int i = 8; i < 14; ++i) results << 0;  // No storage values
+            qDebug() << "Adding empty storage data to results";
+            results << 0;  // Index 7: No storage updated
+            results << 0;  // Index 8: Used space
+            results << 0;  // Index 9: Delta used space
+            results << 0;  // Index 10: Free space
+            results << 0;  // Index 11: Delta free space
+            results << 0;  // Index 12: Total space
+            results << 0;  // Index 13: Delta total space
+        }
+
+        qDebug() << "Built Virtual results array with" << results.size() << "elements";
+        for (int i = 0; i < results.size(); ++i) {
+            qDebug() << "  results[" << i << "] = " << results[i];
         }
 
     } else {
         qDebug() << "*** FALLBACK COMPLETION - Using generic format ***";
 
-        // Fallback for other cases
-        results << 1;  // Success flag
-        results << m_processedCatalogs;   // Use catalog count
-        results << 0;  // Delta
-        results << m_processedDevices;    // Use device count
-        results << 0;  // Delta
-        for (int i = 5; i < 14; ++i) results << 0;  // Pad with zeros
+        results << 1;                    // Success flag
+        results << m_processedCatalogs;  // Use catalog count
+        results << 0;                    // Delta
+        results << m_processedDevices;   // Use device count
+        results << 0;                    // Delta
+        for (int i = 5; i < 14; ++i) results << 0;  // Pad with zeros to index 13
     }
 
-    qDebug() << "*** EMITTING operationCompleted from completeOperation ***";
-    qDebug() << "Results[0] (success):" << results[0];
-    qDebug() << "Results[1] (files/catalogs):" << results[1];
-    qDebug() << "Results[5] (updated catalogs):" << (results.size() > 5 ? results[5] : -1);
-    qDebug() << "Results[6] (skipped catalogs):" << (results.size() > 6 ? results[6] : -1);
-    qDebug() << "Results[7] (storage updated):" << (results.size() > 7 ? results[7] : -1);
+    qDebug() << "*** EMITTING operationCompleted ***";
+    qDebug() << "Final results array size:" << results.size();
+    qDebug() << "Results[0] (success):" << (results.size() > 0 ? results[0] : -999);
+    qDebug() << "Results[5] (updated catalogs):" << (results.size() > 5 ? results[5] : -999);
+    qDebug() << "Results[6] (skipped catalogs):" << (results.size() > 6 ? results[6] : -999);
+    qDebug() << "Results[7] (storage updated):" << (results.size() > 7 ? results[7] : -999);
 
     emit operationCompleted(results);
     emit operationRunningChanged();
@@ -1228,18 +1250,36 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     // Update parent numbers for this catalog
     m_currentDevice->updateParentsNumbers();
 
+    // Accumulate results
     m_totalCatalogFiles += m_currentDevice->totalFileCount;
     m_totalCatalogSize += m_currentDevice->totalFileSize;
 
-    if (m_virtualDeviceBeingProcessed != nullptr) {
-        qDebug() << "=== CONTINUING Virtual processing after catalog completion ===";
+    if (m_virtualDeviceBeingProcessed != nullptr && m_currentDevice) {
+        qDebug() << "=== VIRTUAL MODE - Counting catalog completion ===";
+
+        // DEBUG: Show values before incrementing
+        qDebug() << "BEFORE increment - m_updatedCatalogs:" << m_updatedCatalogs;
+        qDebug() << "BEFORE accumulate - m_totalCatalogFiles:" << m_totalCatalogFiles << "m_totalCatalogSize:" << m_totalCatalogSize;
+        qDebug() << "Catalog files:" << m_currentDevice->totalFileCount << "size:" << m_currentDevice->totalFileSize;
+
+        // Count successful catalog update
+        m_updatedCatalogs++;
+
+        // Accumulate results
+        m_totalCatalogFiles += m_currentDevice->totalFileCount;
+        m_totalCatalogSize += m_currentDevice->totalFileSize;
+
+        // DEBUG: Show values after incrementing
+        qDebug() << "AFTER increment - m_updatedCatalogs:" << m_updatedCatalogs;
+        qDebug() << "AFTER accumulate - m_totalCatalogFiles:" << m_totalCatalogFiles << "m_totalCatalogSize:" << m_totalCatalogSize;
 
         // Continue with next Virtual child
         QTimer::singleShot(50, this, [this]() {
-            qDebug() << "Timer triggered - calling processNextVirtualChild";
             processNextVirtualChild();
         });
         return;
+    } else {
+        qDebug() << "=== NOT IN VIRTUAL MODE - Using standard completion ===";
     }
 
     // if (m_rootDevice && m_rootDevice->type == "Virtual") {
@@ -1681,18 +1721,29 @@ void DeviceUpdateManager::completeVirtualProcessing()
     });
 }
 
-// Add this method to actually process Virtual children:
 void DeviceUpdateManager::processNextVirtualChild()
 {
     qDebug() << "=== DeviceUpdateManager::processNextVirtualChild ===";
     qDebug() << "Remaining children:" << m_remainingVirtualChildren.size();
 
+    // DEBUG: Show current counter values
+    qDebug() << "CURRENT COUNTERS:";
+    qDebug() << "  Storage devices:" << m_processedStorageDevices;
+    qDebug() << "  Updated catalogs:" << m_updatedCatalogs;
+    qDebug() << "  Skipped catalogs:" << m_skippedCatalogs;
+
     // If no more children, complete Virtual device
     if (m_remainingVirtualChildren.isEmpty()) {
-        qDebug() << "All Virtual children processed - completing Virtual device";
+        qDebug() << "=== ALL VIRTUAL CHILDREN PROCESSED ===";
+        qDebug() << "FINAL COUNTS:";
+        qDebug() << "  Storage devices processed:" << m_processedStorageDevices;
+        qDebug() << "  Catalogs updated:" << m_updatedCatalogs;
+        qDebug() << "  Catalogs skipped:" << m_skippedCatalogs;
+        qDebug() << "  Total files:" << m_totalCatalogFiles;
+        qDebug() << "  Total size:" << m_totalCatalogSize;
 
         Device* virtualDevice = m_virtualDeviceBeingProcessed;
-        m_virtualDeviceBeingProcessed = nullptr;  // Clear before completing
+        m_virtualDeviceBeingProcessed = nullptr;
 
         updateParentNumbers(virtualDevice);
         emit deviceProcessingCompleted(virtualDevice->name);
@@ -1702,7 +1753,7 @@ void DeviceUpdateManager::processNextVirtualChild()
 
     // Get and process next child
     Device* nextChild = m_remainingVirtualChildren.takeFirst();
-    qDebug() << "Processing next Virtual child:" << nextChild->name << "Type:" << nextChild->type;
+    qDebug() << "Processing next Virtual child:" << nextChild->name << "Type:" << nextChild->type << "Active:" << nextChild->active;
 
     setCurrentDevice(nextChild);
     emit deviceProcessingStarted(nextChild->name, nextChild->type);
@@ -1711,57 +1762,38 @@ void DeviceUpdateManager::processNextVirtualChild()
     nextChild->dateTimeUpdated = QDateTime::currentDateTime();
 
     if (nextChild->type == "Storage") {
+        qDebug() << "=== PROCESSING STORAGE DEVICE:" << nextChild->name << "===";
+
         updateStorageDevice(nextChild);
 
-        // Process Storage's catalog children
-        loadDeviceChildren(nextChild);
+        // DEBUG: Show before/after storage counting
+        qDebug() << "BEFORE storage count increment:" << m_processedStorageDevices;
+        m_processedStorageDevices++;
+        qDebug() << "AFTER storage count increment:" << m_processedStorageDevices;
 
-        if (!nextChild->subDevices.isEmpty()) {
-            qDebug() << "Storage has" << nextChild->subDevices.size() << "catalog children";
-
-            // Find first active catalog to process
-            bool foundCatalog = false;
-            for (const Device& catalogDevice : nextChild->subDevices) {
-                Device* catalogPtr = new Device(catalogDevice);
-
-                setCurrentDevice(catalogPtr);
-                emit deviceProcessingStarted(catalogPtr->name, catalogPtr->type);
-
-                catalogPtr->updateActiveState("defaultConnection");
-                catalogPtr->dateTimeUpdated = QDateTime::currentDateTime();
-
-                if (catalogPtr->type == "Catalog" && catalogPtr->active) {
-                    qDebug() << "Starting catalog:" << catalogPtr->name;
-                    updateCatalogDevice(catalogPtr);
-                    if (m_waitingForCatalogCompletion) {
-                        foundCatalog = true;
-                        qDebug() << "Catalog started - will continue when complete";
-                        break; // Exit loop, will continue when catalog completes
-                    }
-                } else if (catalogPtr->type == "Catalog") {
-                    m_skippedCatalogs++;
-                    qDebug() << "Skipped inactive catalog:" << catalogPtr->name;
-                }
-            }
-
-            // If no async catalog started, continue immediately
-            if (!foundCatalog) {
-                processNextVirtualChild();
-            }
-        } else {
-            // Storage has no catalogs, continue immediately
-            processNextVirtualChild();
-        }
+        // For now, just continue to next child - don't process catalogs yet
+        processNextVirtualChild();
 
     } else if (nextChild->type == "Catalog") {
-        updateCatalogDevice(nextChild);
-        if (!m_waitingForCatalogCompletion) {
+        qDebug() << "=== PROCESSING CATALOG DEVICE:" << nextChild->name << "Active:" << nextChild->active << "===";
+
+        if (nextChild->active) {
+            updateCatalogDevice(nextChild);
+            if (!m_waitingForCatalogCompletion) {
+                qDebug() << "Catalog completed synchronously - continuing";
+                processNextVirtualChild();
+            } else {
+                qDebug() << "Catalog started async - waiting for completion";
+            }
+        } else {
+            qDebug() << "BEFORE skip count increment:" << m_skippedCatalogs;
+            m_skippedCatalogs++;
+            qDebug() << "AFTER skip count increment:" << m_skippedCatalogs;
             processNextVirtualChild();
         }
-        // If catalog started async, will continue when complete
 
     } else {
-        // Other device types
+        qDebug() << "=== PROCESSING OTHER DEVICE TYPE:" << nextChild->type << "===";
         updateVirtualDevice(nextChild);
         processNextVirtualChild();
     }

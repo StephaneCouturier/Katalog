@@ -3068,25 +3068,50 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
     if (device->type=="Virtual" and updateType=="update"){
         message = "";
 
-        // Report virtual device updated
-        if(list[0]==1){
-            message += "<table>";
-            message += "<tr><td>" + tr("Virtual device updated: ") + "</td><td align='center'><b>" + device->name + "</b></td></tr>";
-            message += "</table><br/>";
-            reportAvailable = true;
+        qDebug() << "Virtual device report - results list size:" << list.size();
+        for (int i = 0; i < list.size(); ++i) {
+            qDebug() << "  list[" << i << "] = " << list[i];
         }
+
+        // Report virtual device updated
+        if(list.size() > 0 && list[0]==1){
+             message += "<table>";
+             message += "<tr><td>" + tr("Virtual device updated: ") + "</td><td align='center'><b>" + device->name + "</b></td></tr>";
+             message += "</table><br/>";
+             reportAvailable = true;
+         }
 
         // Report child storage updates if any occurred
         if(list[7]==1){//Storage updated during virtual device processing
+            //int storageCount = (list.size() > 14) ? list[14] : 1;  // Use count if available, fallback to 1
+            //int storageCount = 999;
+            int storageCount = deviceUpdateManager ? deviceUpdateManager->getProcessedStorageDevices() : 0;
+
             message += "<table>";
-            message += "<tr><td>"+tr("Child storage updated: ")+ "</td><td align='center'><b>" + tr("Storage space refreshed") + "</b></td></tr>";
+            message += "<tr><td>"+tr("Storage updated: ")+ "</td><td align='center'><b>" + tr("%1 storage devices").arg(storageCount) + "</b></td></tr>";
             message += "</table>";
             message += "<br/>";
+
+            if (list.size() > 13) {
             message += "<table>";
             message += "<tr><td>" +  tr("Used Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[8])  + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[9])  + "</b>)</td></tr>";
             message += "<tr><td>" +  tr("Free Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[10]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[11]) + "</b>)</td></tr>";
             message += "<tr><td>" + tr("Total Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[12]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[13]) + "</b>)</td></tr>";
             message += "</table>";
+            message += "<br/>";
+            message += "<table>";
+            message += QString(
+                           "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
+                           "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
+                           ).arg(QString::number(list[1]),
+                                QString::number(list[2]),
+                                QLocale().formattedDataSize(list[3]),
+                                QLocale().formattedDataSize(list[4]));
+            message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs, %2 skipped Catalogs")).arg(QString::number(list[5]),QString::number(list[6]));
+
+            } else {
+                message += "<p>" + tr("Storage space information not available") + "</p>";
+            }
             reportAvailable = true;
         }
 
