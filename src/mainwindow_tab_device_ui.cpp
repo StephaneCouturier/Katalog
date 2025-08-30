@@ -137,11 +137,23 @@ void MainWindow::on_Devices_pushButton_Cancel_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_TreeExpand_clicked()
 {
-    setDeviceTreeExpandState(true);
+    changeTreeExpandLevel(1,
+                          ui->Devices_treeView_DeviceList,
+                          deviceTreeExpandState,
+                          "Devices/deviceTreeExpandState",
+                          ui->Devices_pushButton_TreeCollapse,
+                          ui->Devices_pushButton_TreeExpand,
+                          false);
 }
 void MainWindow::on_Devices_pushButton_TreeCollapse_clicked()
 {
-    setDeviceTreeExpandState(true);
+    changeTreeExpandLevel(-1,
+                          ui->Devices_treeView_DeviceList,
+                          deviceTreeExpandState,
+                          "Devices/deviceTreeExpandState",
+                          ui->Devices_pushButton_TreeCollapse,
+                          ui->Devices_pushButton_TreeExpand,
+                          false);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_checkBox_DisplayStorage_stateChanged(int arg1)

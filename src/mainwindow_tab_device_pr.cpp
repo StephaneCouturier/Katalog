@@ -1309,6 +1309,17 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
 
         //ui->Filters_treeView_Devices->expandAll();
     }
+
+    // At the end, refresh both tree states to update max levels
+    changeTreeExpandLevel(0, ui->Filters_treeView_Devices, filtersTreeExpandState,
+                          "Selection/filtersTreeExpandState",
+                          ui->Filters_pushButton_TreeCollapse, ui->Filters_pushButton_TreeExpand,
+                          true); // force refresh
+
+    changeTreeExpandLevel(0, ui->Devices_treeView_DeviceList, deviceTreeExpandState,
+                          "Devices/deviceTreeExpandState",
+                          ui->Devices_pushButton_TreeCollapse, ui->Devices_pushButton_TreeExpand,
+                          true); // force refresh
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadDevicesStorageToModel(){

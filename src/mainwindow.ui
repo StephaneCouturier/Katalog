@@ -6454,6 +6454,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <property name="text">
                     <string>Tree options</string>
                    </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                   </property>
                   </widget>
                  </item>
                  <item>

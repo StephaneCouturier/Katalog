@@ -281,7 +281,14 @@ class MainWindow : public KXmlGuiWindow
             QString selectedConnectedDrivePath;
 
             int filtersTreeExpandState;
-            void changeFiltersTreeExpandLevel(int levelChange);
+            //void changeFiltersTreeExpandLevel(int levelChange);
+            void changeTreeExpandLevel(int levelChange,
+                                       QTreeView* treeView,
+                                       int& expandState,
+                                       const QString& settingsKey,
+                                       QPushButton* collapseButton,
+                                       QPushButton* expandButton,
+                                       bool forceRefreshMaxLevels);
             void filterFromSelectedDevice();
             void resetSelection();
             void displaySelectedDeviceName();

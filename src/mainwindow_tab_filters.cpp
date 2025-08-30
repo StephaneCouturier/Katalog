@@ -130,12 +130,26 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeCollapse_clicked()
     {
-        changeFiltersTreeExpandLevel(-1); //Collapse tree 1 level down
+        //Collapse tree 1 level down
+        changeTreeExpandLevel(-1,
+                              ui->Filters_treeView_Devices,
+                              filtersTreeExpandState,
+                              "Selection/filtersTreeExpandState",
+                              ui->Filters_pushButton_TreeCollapse,
+                              ui->Filters_pushButton_TreeExpand,
+                              false);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpand_clicked()
     {
-        changeFiltersTreeExpandLevel(1); //Expand tree 1 level down
+        //Expand tree 1 level down
+        changeTreeExpandLevel(1,
+                              ui->Filters_treeView_Devices,
+                              filtersTreeExpandState,
+                              "Selection/filtersTreeExpandState",
+                              ui->Filters_pushButton_TreeCollapse,
+                              ui->Filters_pushButton_TreeExpand,
+                              false);
     }
     //----------------------------------------------------------------------
 
@@ -395,25 +409,31 @@
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
-    void MainWindow::changeFiltersTreeExpandLevel(int levelChange)
+    void MainWindow::changeTreeExpandLevel(int levelChange,
+                                           QTreeView* treeView,
+                                           int& expandState,
+                                           const QString& settingsKey,
+                                           QPushButton* collapseButton,
+                                           QPushButton* expandButton,
+                                           bool forceRefreshMaxLevels = false)
     {
-        filtersTreeExpandState = filtersTreeExpandState + levelChange;
+        expandState = expandState + levelChange;
 
-        // Get max levels once and cache it
+        // Get max levels once and cache it (shared for both trees)
         static int maxTreeLevels = -1;
-        if (maxTreeLevels == -1) {
+        if (maxTreeLevels == -1 || forceRefreshMaxLevels) {
             QSqlQuery query(QSqlDatabase::database("defaultConnection"));
             QString querySQL = QLatin1String(R"(
-                    WITH RECURSIVE device_tree AS (
-                      SELECT device_id, device_parent_id, 0 AS level
-                      FROM device
-                      WHERE device_parent_id = 0
-                      UNION ALL
-                      SELECT child.device_id, child.device_parent_id, parent.level + 1 AS level
-                      FROM device_tree parent
-                      JOIN device child ON child.device_parent_id = parent.device_id
-                    )
-                    SELECT MAX(level) AS total_levels FROM device_tree;
+                WITH RECURSIVE device_tree AS (
+                  SELECT device_id, device_parent_id, 0 AS level
+                  FROM device
+                  WHERE device_parent_id = 0
+                  UNION ALL
+                  SELECT child.device_id, child.device_parent_id, parent.level + 1 AS level
+                  FROM device_tree parent
+                  JOIN device child ON child.device_parent_id = parent.device_id
+                )
+                SELECT MAX(level) AS total_levels FROM device_tree;
         )");
             query.prepare(querySQL);
             query.exec();
@@ -424,26 +444,25 @@
         }
 
         // Bounds checking
-        if (filtersTreeExpandState < -1) filtersTreeExpandState = -1; // collapse all
-        if (filtersTreeExpandState >= maxTreeLevels) filtersTreeExpandState = maxTreeLevels - 1; // max level
+        if (expandState < -1) expandState = -1;
+        if (expandState >= maxTreeLevels) expandState = maxTreeLevels - 1;
 
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-        settings.setValue("Selection/filtersTreeExpandState", filtersTreeExpandState);
+        settings.setValue(settingsKey, expandState);
 
-        if (filtersTreeExpandState == -1) {
-            ui->Filters_treeView_Devices->collapseAll();
+        if (expandState == -1) {
+            treeView->collapseAll();
         } else {
-            ui->Filters_treeView_Devices->expandToDepth(filtersTreeExpandState);
+            treeView->expandToDepth(expandState);
         }
 
-        // Enable/disable buttons based on current state
-        ui->Filters_pushButton_TreeCollapse->setEnabled(filtersTreeExpandState > -1);
-        ui->Filters_pushButton_TreeExpand->setEnabled(filtersTreeExpandState < maxTreeLevels - 1);
+        // Enable/disable buttons
+        collapseButton->setEnabled(expandState > -1);
+        expandButton->setEnabled(expandState < maxTreeLevels - 1);
 
-        // Set focus to tree view when buttons are disabled to avoid focus glow
-        if (!ui->Filters_pushButton_TreeExpand->isEnabled()) {
-            ui->Filters_treeView_Devices->setFocus();
-        }
+        // Clear focus from disabled buttons
+        if (!collapseButton->isEnabled()) collapseButton->clearFocus();
+        if (!expandButton->isEnabled()) expandButton->clearFocus();
     }
     //----------------------------------------------------------------------
     void MainWindow::displaySelectedDeviceName(){
