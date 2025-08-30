@@ -1300,9 +1300,14 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
         }
 
         //Restore Expand or Collapse Device Tree
-        setTreeExpandState(false);
-        ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
-        ui->Filters_treeView_Devices->expandAll();
+        //ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
+        if (filtersTreeExpandState == -1) {
+            ui->Filters_treeView_Devices->collapseAll();
+        } else if (filtersTreeExpandState >= 0) {
+            ui->Filters_treeView_Devices->expandToDepth(filtersTreeExpandState);
+        }
+
+        //ui->Filters_treeView_Devices->expandAll();
     }
 }
 //--------------------------------------------------------------------------

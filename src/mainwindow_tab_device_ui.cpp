@@ -135,7 +135,11 @@ void MainWindow::on_Devices_pushButton_Cancel_clicked()
     ui->Devices_widget_Edit->hide();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Devices_pushButton_TreeExpandCollapse_clicked()
+void MainWindow::on_Devices_pushButton_TreeExpand_clicked()
+{
+    setDeviceTreeExpandState(true);
+}
+void MainWindow::on_Devices_pushButton_TreeCollapse_clicked()
 {
     setDeviceTreeExpandState(true);
 }

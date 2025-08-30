@@ -269,7 +269,6 @@
             #endif
 
         //Devices
-            ui->Devices_pushButton_TreeExpandCollapse->hide();
             ui->Catalogs_checkBox_IncludeMetadata->hide();
 
             //Catalogs
