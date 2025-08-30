@@ -172,36 +172,14 @@ class MainWindow : public KXmlGuiWindow
         void cmd_updateAllActive(bool displayReport);
 
         void setupDeviceUpdateManager();
-        void updateStorageDevice(Device* storageDevice);
-        void updateVirtualDevice(Device* virtualDevice);
         void updateFilteredSelection(const QList<Device*>& filteredDevices);
         QList<Device*> collectActiveCatalogs();
-        bool confirmBatchOperation(int deviceCount);
-
-        void initializeManagers()
-        {
-            // Keep existing managers
-            setupCatalogManager();
-            setupDeviceManager();
-
-            // Add new unified manager
-            setupDeviceUpdateManager();
-
-            // Feature flag from settings or environment variable
-            useUnifiedManager = QSettings().value("use_unified_manager", false).toBool();
-            // or: useUnifiedManager = qEnvironmentVariableIsSet("KATALOG_USE_UNIFIED");
-
-            qDebug() << "Using unified manager:" << useUnifiedManager;
-        }
 
     private:
         DeviceUpdateManager* deviceUpdateManager = nullptr;
         bool useUnifiedManager = false;
-        void startSingleCatalogUpdateUnified();
-        void startUpdateAllActiveCatalogsUnified();
         void setCatalogUpdateUIState(bool isRunning);
         void setCreateCatalogUIState(bool isRunning);
-
 
         void debugIconLoadingDetailed();
         void testIconSourceTracking();

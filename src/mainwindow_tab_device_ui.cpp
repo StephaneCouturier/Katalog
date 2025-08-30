@@ -210,7 +210,7 @@ void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index
     activeDevice->ID = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     activeDevice->loadDevice("defaultConnection");
 
-    if(activeDevice->type =="Catalog" || activeDevice->type == "Storage" || activeDevice->type == "Virtual")
+    if((activeDevice->type =="Catalog" && activeDevice->active) || activeDevice->type == "Storage" || activeDevice->type == "Virtual")
         ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(true);
     else
         ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
@@ -234,46 +234,37 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QString deviceName = activeDevice->name;
 
-        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
-        deviceContextMenu.addAction(menuDeviceAction1);
-        connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) ===";
+        if(activeDevice->active){
+            QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+            deviceContextMenu.addAction(menuDeviceAction1);
+            connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+                qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) ===";
 
-            if (!activeDevice || activeDevice->type != "Catalog") {
-                qDebug() << "Filters context menu update - invalid device";
-                return;
-            }
+                // Ensure DeviceUpdateManager is set up (like in other tabs)
+                if (!deviceUpdateManager) {
+                    qDebug() << "DeviceUpdateManager not available - setting up now";
+                    setupDeviceUpdateManager();
+                }
 
-            if (!activeDevice->active) {
-                QMessageBox::information(this, "Katalog", tr("The catalog is not active (path not available)."));
-                return;
-            }
+                // Check if already running
+                if (deviceUpdateManager->operationRunning()) {
+                    QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+                    return;
+                }
 
-            // Ensure DeviceUpdateManager is set up (like in other tabs)
-            if (!deviceUpdateManager) {
-                qDebug() << "DeviceUpdateManager not available - setting up now";
-                setupDeviceUpdateManager();
-            }
+                qDebug() << "Filters context menu catalog update for:" << activeDevice->name;
 
-            // Check if already running
-            if (deviceUpdateManager->operationRunning()) {
-                QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
-                return;
-            }
+                // Set UI state for catalog operation
+                setCatalogUpdateUIState(true);
 
-            qDebug() << "Filters context menu catalog update for:" << activeDevice->name;
+                // Use DeviceUpdateManager
+                deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                           collection->databaseMode,
+                                                           collection->folder);
 
-            // Set UI state for catalog operation
-            setCatalogUpdateUIState(true);
-
-            // FIXED: Use DeviceUpdateManager instead of old CatalogManager
-            // This ensures consistent behavior across all update paths
-            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
-                                                       collection->databaseMode,
-                                                       collection->folder);
-
-            qDebug() << "Filters context menu - DeviceUpdateManager operation started";
-        });
+                qDebug() << "Filters context menu - DeviceUpdateManager operation started";
+            });
+        }
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
         deviceContextMenu.addAction(menuDeviceAction5);
@@ -526,13 +517,9 @@ void MainWindow::on_Catalogs_pushButton_UpdateActiveDevice_clicked()
 {
     qDebug() << "=== Update Active Device (DeviceUpdateManager) ===";
 
-    if (!activeDevice || activeDevice->ID <= 0) {
-        QMessageBox::information(this, "Katalog", tr("Please first select a device to update"));
-        return;
-    }
-
     if (!deviceUpdateManager) {
-        QMessageBox::critical(this, "Katalog", tr("Device update manager not available."));
+        //QMessageBox::critical(this, "Katalog", tr("Device update manager not available."));
+        qDebug() << "ERROR: DeviceUpdateManager not available";
         return;
     }
 
@@ -570,7 +557,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     // Ask user for report choice
     QMessageBox msgBox;
     msgBox.setWindowTitle("Katalog");
-    msgBox.setText(tr("Do you want to see a report for each updated catalog?"));
+    msgBox.setText(tr("Do you want a the summary of updates for each catalog?"));
     msgBox.setIcon(QMessageBox::Question);
     msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No | QMessageBox::Cancel);
     int result = msgBox.exec();
@@ -635,8 +622,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     qDebug() << "Inactive catalogs (baseline skipped):" << inactiveCatalogs;
 
     if (collectedCatalogs.isEmpty()) {
-        qDebug() << "No active catalogs found";
-        QMessageBox::information(this, "Katalog", tr("No active catalogs found to update."));
+        qDebug() << "Catalogs_pushButton_UpdateAllActive: No active catalogs found";
         return;
     }
 
@@ -659,8 +645,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 
     } else {
         qDebug() << "ERROR: catalogManager is null!";
-        QMessageBox::critical(this, "Katalog", tr("Catalog manager not available."));
-
         // Clean up collected catalogs if we can't proceed
         qDeleteAll(collectedCatalogs);
     }
@@ -686,11 +670,9 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
 
     if (useGentleStop) {
         qDebug() << "Requesting gentle stop (Ctrl+Click detected)";
-        statusBar()->showMessage(tr("Gentle stop: will stop after current catalog completes..."));
         deviceUpdateManager->requestGentleStop();
     } else {
         qDebug() << "Requesting hard stop (immediate)";
-        statusBar()->showMessage(tr("Stopping catalog operation..."));
         deviceUpdateManager->requestHardStop();
     }
 }

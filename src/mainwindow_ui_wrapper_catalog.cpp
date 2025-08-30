@@ -153,9 +153,7 @@ CatalogUIWrapper::ImportValidationResult CatalogUIWrapper::validateCatalogForImp
 bool CatalogUIWrapper::confirmEmptyDirectoryAction(const QString& catalogName)
 {
     QString message = QCoreApplication::translate("MainWindow",
-                                                  "The source folder does not contain any file.<br/>"
-                                                  "This could mean that the source is empty or the device is not mounted to this folder.<br/>"
-                                                  "Do you want to save it anyway (the catalog would be empty)?.");
+                                                  "The source folder does not contain any file.<br/>This could mean that the source is empty or the device is not mounted to this folder.<br/>Do you want to save it anyway (the catalog would be empty)?");
 
     QMessageBox::StandardButton result = showConfirmationDialog(
         "Katalog",

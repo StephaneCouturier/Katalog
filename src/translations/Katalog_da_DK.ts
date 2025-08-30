@@ -30,14 +30,6 @@
     </message>
 </context>
 <context>
-    <name>CatalogProgressManager</name>
-    <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+133"/>
-        <source>Ready for catalog operations</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ExploreTreeModel</name>
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
@@ -58,14 +50,99 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="+35"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
+        <location line="+3"/>
+        <source>Counting files</source>
+        <translation>Tæller filer</translation>
+    </message>
+    <message>
+        <location filename="../core/device.cpp" line="+645"/>
+        <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
+        <translation>Vil du &lt;span style=&apos;color: red&apos;;&gt;slette&lt;/span&gt; denne %1 enhed?</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+7"/>
+        <source>Files processed</source>
+        <translation>Filer behandlet</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Total files</source>
+        <translation>Samlede filer</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Progress</source>
+        <translation>Fremskridt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2939"/>
+        <location line="+50"/>
+        <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
+        <translation>Kataloger opdateret:&lt;b&gt; %1 &lt;/b&gt;(%2 sprunget over)</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <source>Virtual device updated: </source>
+        <translation>Virtuell enhed opdateret: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+4972"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik: Stop med det samme (hårdt stop)&lt;/p&gt;&lt;p&gt;Ctrl+Klik: Stop efter nuværende katalog (blidt stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="+437"/>
+        <source>The source directory does not exist.</source>
+        <translation>Kildedirektoriet findes ikke.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+155"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+6"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
+        <translation>Kildemappen indeholder ingen filer.&lt;br/&gt;Dette kunne betyde at kilden er tom eller enheden ikke er monteret til denne mappe.&lt;br/&gt;Vil du gemme det alligevel (kataloget ville være tomt)?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="+88"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+251"/>
+        <location line="+83"/>
+        <location line="+63"/>
+        <location line="+130"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+245"/>
+        <location line="+43"/>
+        <source>A device operation is already running.</source>
+        <translation>En enhedsoperation kører allerede.</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-48"/>
+        <location line="+82"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1085"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-854"/>
+        <location line="+13"/>
+        <location line="+4"/>
+        <source>Operation cancelled</source>
+        <translation>Operation annulleret</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-164"/>
+        <source>Operation completed</source>
+        <translation>Operation fuldført</translation>
+    </message>
+    <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-59"/>
+        <source>Stopping after current catalog completes...</source>
+        <translation>Stopper efter nuværende katalog er færdig...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="-4937"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+977"/>
+        <location line="+1009"/>
         <location line="+436"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
+        <location line="+37"/>
         <location line="+39"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+239"/>
         <location line="+20"/>
@@ -82,13 +159,13 @@
     </message>
     <message>
         <location line="+1768"/>
-        <location line="+2752"/>
-        <location line="+1822"/>
+        <location line="+2834"/>
+        <location line="+1814"/>
         <source>Text</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <location line="-6028"/>
+        <location line="-6102"/>
         <source>Paste the text from the clipboard</source>
         <translation>Indsæt tekst fra udklipsholderen</translation>
     </message>
@@ -170,7 +247,7 @@
         <translation>Nulstil</translation>
     </message>
     <message>
-        <location line="+9806"/>
+        <location line="+9880"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
@@ -192,12 +269,12 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+269"/>
+        <location filename="../mainwindow.cpp" line="+277"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location line="-8331"/>
+        <location line="-8405"/>
         <location line="+862"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
@@ -207,13 +284,13 @@
         <translation>Størrelse</translation>
     </message>
     <message>
-        <location line="-3092"/>
-        <location line="+4522"/>
+        <location line="-3124"/>
+        <location line="+4579"/>
         <source>Device tree</source>
         <translation>Enhedstræ</translation>
     </message>
     <message>
-        <location line="-4074"/>
+        <location line="-4099"/>
         <source>Reload all collection&apos;s data</source>
         <translation>Genindlæs alle samlingens data</translation>
     </message>
@@ -241,30 +318,30 @@
     </message>
     <message>
         <location line="+81"/>
-        <location line="+2965"/>
+        <location line="+3047"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1427"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-555"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-2927"/>
+        <location line="-3009"/>
         <source>Select the type of files</source>
         <translation>Vælg filtype</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+2752"/>
-        <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+435"/>
+        <location line="+2834"/>
+        <location line="+1719"/>
+        <location filename="../mainwindow_setup.cpp" line="+434"/>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+105"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+10"/>
+        <location line="+9"/>
         <location line="+1"/>
-        <location line="+70"/>
+        <location line="+77"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -279,28 +356,28 @@
         <translation>Alle</translation>
     </message>
     <message>
-        <location line="-4474"/>
-        <location line="+2752"/>
-        <location line="+1780"/>
+        <location line="-4548"/>
+        <location line="+2834"/>
+        <location line="+1772"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-4524"/>
-        <location line="+2752"/>
-        <location line="+1743"/>
+        <location line="-4598"/>
+        <location line="+2834"/>
+        <location line="+1735"/>
         <source>Image</source>
         <translation>Billede</translation>
     </message>
     <message>
-        <location line="-4479"/>
-        <location line="+2752"/>
-        <location line="+1785"/>
+        <location line="-4553"/>
+        <location line="+2834"/>
+        <location line="+1777"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location line="-3213"/>
+        <location line="-3287"/>
         <source>only list folders in results</source>
         <translation>vis kun mapper i resultater</translation>
     </message>
@@ -322,22 +399,23 @@
         <translation>Vis/skjul kataloger med resultater</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-48"/>
+        <location filename="../mainwindow.ui" line="+129"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+295"/>
         <source>Files found</source>
         <translation>Filer fundet</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location filename="../mainwindow.ui" line="+27"/>
         <location line="+56"/>
-        <location line="+608"/>
+        <location line="+690"/>
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
         <location line="+866"/>
         <location line="+45"/>
         <location line="+38"/>
-        <location line="+466"/>
+        <location line="+458"/>
         <location line="+100"/>
         <location line="+53"/>
         <location line="+2377"/>
@@ -358,85 +436,87 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3543"/>
-        <location line="+347"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="+335"/>
+        <location line="-3535"/>
+        <location line="+339"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="+345"/>
         <source>Catalogs</source>
         <translation>Kataloger</translation>
     </message>
     <message>
-        <location line="-302"/>
-        <location line="+2564"/>
+        <location line="-294"/>
+        <location line="+2556"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Samlet filstørrelse</translation>
     </message>
     <message>
-        <location line="-2526"/>
+        <location line="-2518"/>
         <source>Total Number of Files</source>
         <translation>Samlet antal filer</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="-1227"/>
         <source>All active</source>
         <translation>Alle aktive</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+1280"/>
         <source>Import</source>
         <translation>Importer</translation>
     </message>
     <message>
-        <location line="+313"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+240"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-167"/>
+        <location line="+349"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-258"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
         <source>Explore</source>
         <translation>Udforsk</translation>
     </message>
     <message>
-        <location line="-811"/>
-        <location line="+454"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-23"/>
-        <location line="+78"/>
-        <location line="+54"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-58"/>
-        <location line="+39"/>
+        <location line="-1520"/>
+        <location line="+717"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
+        <location line="+87"/>
+        <location line="+63"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-107"/>
+        <location line="+36"/>
+        <location line="+40"/>
         <source>Update</source>
         <translation>Opdater</translation>
     </message>
     <message>
-        <location line="+4114"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-94"/>
-        <location line="+56"/>
-        <location line="+54"/>
+        <location line="+4560"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-104"/>
+        <location line="+66"/>
+        <location line="+63"/>
         <source>Edit</source>
         <translation>Rediger</translation>
     </message>
     <message>
-        <location line="-5714"/>
+        <location line="-5788"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location line="+1960"/>
+        <location line="+2034"/>
         <source>Explore a catalog</source>
         <translation>Udforsk et katalog</translation>
     </message>
     <message>
-        <location line="-6222"/>
-        <location line="+6601"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+31"/>
+        <location filename="../mainwindow.ui" line="-6328"/>
+        <location line="+6707"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+1492"/>
+        <location filename="../mainwindow.ui" line="+1492"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-225"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-241"/>
+        <location line="+239"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
@@ -448,25 +528,26 @@
         <translation>Mapper</translation>
     </message>
     <message>
-        <location line="-6512"/>
-        <location line="+656"/>
+        <location line="-6618"/>
+        <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>Vis/skjul filtre</translation>
     </message>
     <message>
-        <location line="-510"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
+        <location line="-542"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1186"/>
         <source>Virtual</source>
         <translation>Virtuel</translation>
     </message>
     <message>
-        <location line="+1220"/>
-        <location line="+6478"/>
+        <location line="+1252"/>
+        <location line="+3457"/>
+        <location line="+3095"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="-3377"/>
+        <location line="-3451"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Vælg...</translation>
@@ -490,18 +571,18 @@
         <translation>Kør proces på alle resultater</translation>
     </message>
     <message>
-        <location line="+372"/>
+        <location line="+468"/>
         <source>Catalogs list</source>
         <translation>Katalogliste</translation>
     </message>
     <message>
-        <location line="+442"/>
+        <location line="+428"/>
         <source>The change will be applied only when Saving</source>
         <translation>Ændringen vil kun blive anvendt ved lagring</translation>
     </message>
     <message>
         <location line="+244"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+961"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+943"/>
         <source>Comment 1</source>
         <translation>Kommentar 1</translation>
     </message>
@@ -530,12 +611,12 @@
         <translation>Model</translation>
     </message>
     <message>
-        <location line="+412"/>
+        <location line="+368"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+93"/>
         <source>Display the *Physical Group* and its related Devices.</source>
         <translation>Vis den *fysiske gruppe* og dens relaterede enheder.</translation>
     </message>
@@ -568,8 +649,8 @@
         <location line="+227"/>
         <location line="+1962"/>
         <location line="+620"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="-97"/>
-        <location line="+90"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
+        <location line="+94"/>
         <location line="+38"/>
         <source>Number of Files</source>
         <translation>Antal filer</translation>
@@ -642,8 +723,8 @@
         <translation>Tilføj en ny lagerenhed</translation>
     </message>
     <message>
-        <location line="-2444"/>
-        <location line="+2447"/>
+        <location line="-2436"/>
+        <location line="+2439"/>
         <source>Add Storage</source>
         <translation>Tilføj lager</translation>
     </message>
@@ -689,12 +770,12 @@
         <translation>Vælg kildesti</translation>
     </message>
     <message>
-        <location line="-1777"/>
+        <location line="-1749"/>
         <source>Tree options</source>
         <translation>Træindstillinger</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+19"/>
         <source>Physical Group</source>
         <translation>Fysisk gruppe</translation>
     </message>
@@ -709,17 +790,17 @@
         <translation>Indsæt virtuel gruppe</translation>
     </message>
     <message>
-        <location line="-1487"/>
+        <location line="-1481"/>
         <source>View</source>
         <translation>Vis</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="-93"/>
         <source>Storage list</source>
         <translation>Lagerliste</translation>
     </message>
     <message>
-        <location line="+541"/>
+        <location line="+669"/>
         <source>Catalog fields</source>
         <translation>Katalogfelter</translation>
     </message>
@@ -735,17 +816,17 @@
         <translation>Enhedsbillede</translation>
     </message>
     <message>
-        <location line="-579"/>
+        <location line="-646"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Registrer værdierne for alle enheder til statistik over hele samlingen.</translation>
     </message>
     <message>
-        <location line="+701"/>
+        <location line="+768"/>
         <source>Storage fields</source>
         <translation>Lagerfelter</translation>
     </message>
     <message>
-        <location line="+5444"/>
+        <location line="+5436"/>
         <source>Icons</source>
         <translation>Ikoner</translation>
     </message>
@@ -791,23 +872,23 @@
         <translation>Datahåndtering</translation>
     </message>
     <message>
-        <location line="-10031"/>
-        <location line="+7789"/>
+        <location line="-10105"/>
+        <location line="+7863"/>
         <source>Select the path</source>
         <translation>Vælg stien</translation>
     </message>
     <message>
-        <location line="-7786"/>
-        <location line="+4738"/>
-        <location line="+3051"/>
+        <location line="-7860"/>
+        <location line="+4820"/>
+        <location line="+3043"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Vælg</translation>
     </message>
     <message>
-        <location line="-8620"/>
-        <location line="+6081"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-930"/>
+        <location line="-8726"/>
+        <location line="+6187"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-912"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -819,8 +900,8 @@
         <translation>Ny</translation>
     </message>
     <message>
-        <location line="-5420"/>
-        <location line="+186"/>
+        <location line="-5494"/>
+        <location line="+268"/>
         <source>Devices</source>
         <translation>Enheder</translation>
     </message>
@@ -837,7 +918,7 @@
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3328"/>
+        <location line="+3320"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Genindlæs</translation>
@@ -873,18 +954,18 @@
         <translation>Tilføj virtuel</translation>
     </message>
     <message>
-        <location line="-1558"/>
+        <location line="-1529"/>
         <source>Edit List</source>
         <translation>Rediger liste</translation>
     </message>
     <message>
-        <location line="+36"/>
-        <location line="+4086"/>
+        <location line="-51"/>
+        <location line="+4144"/>
         <source>Full Table</source>
         <translation>Fuld tabel</translation>
     </message>
     <message>
-        <location line="-3746"/>
+        <location line="-3738"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
         <source>Device Name</source>
         <translation>Enhedsnavn</translation>
@@ -902,7 +983,7 @@
         <translation>Enheds-ID</translation>
     </message>
     <message>
-        <location line="+3184"/>
+        <location line="+3176"/>
         <source>Edit Statistics</source>
         <translation>Rediger statistik</translation>
     </message>
@@ -997,7 +1078,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-361"/>
+        <location filename="../mainwindow_setup.cpp" line="-360"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
@@ -1049,12 +1130,12 @@
         <translation>Datatilstand &quot;SQLite lokal fil&quot;</translation>
     </message>
     <message>
-        <location line="-3906"/>
+        <location line="-3942"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Anvend indstillinger på udvælgelsesenhedstræet.</translation>
     </message>
     <message>
-        <location line="+1858"/>
+        <location line="+1894"/>
         <source>Type of source</source>
         <translation>Kildetype</translation>
     </message>
@@ -1286,10 +1367,11 @@
         <translation>Kopiér filnavn uden udvidelse</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-7280"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../mainwindow.ui" line="-7354"/>
         <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+689"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+655"/>
+        <location line="+239"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+380"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
@@ -1297,8 +1379,8 @@
         <translation>Navn</translation>
     </message>
     <message>
-        <location line="-583"/>
-        <location line="+7038"/>
+        <location filename="../mainwindow.ui" line="-583"/>
+        <location line="+7112"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -1308,9 +1390,9 @@
         <translation>Dato</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+61"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-470"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+61"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+73"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Vælg mappen der skal katalogiseres i dette nye katalog</translation>
@@ -1322,38 +1404,38 @@
         <translation>Vælg mappen til denne samling</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5525"/>
-        <location line="+2284"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-468"/>
-        <location line="+223"/>
+        <location filename="../mainwindow.ui" line="-5599"/>
+        <location line="+2358"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-484"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Total Size</source>
         <translation>Samlet størrelse</translation>
     </message>
     <message>
-        <location line="-1354"/>
-        <location line="+1537"/>
+        <location line="-1346"/>
+        <location line="+1529"/>
         <source>Source Path</source>
         <translation>Kildesti</translation>
     </message>
     <message>
-        <location line="-1401"/>
+        <location line="-1393"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+366"/>
+        <location line="+650"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Filtype</translation>
     </message>
     <message>
-        <location line="+3637"/>
+        <location line="+3629"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Filstørrelse</translation>
     </message>
     <message>
-        <location line="-3242"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-627"/>
+        <location line="-3234"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-911"/>
         <source>Label</source>
         <translation>Etiket</translation>
     </message>
@@ -1364,13 +1446,13 @@
         <translation>Filsystem</translation>
     </message>
     <message>
-        <location line="+3494"/>
+        <location line="+3486"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>I alt</translation>
     </message>
     <message>
-        <location line="-4258"/>
+        <location line="-4250"/>
         <source>Free</source>
         <translation>Ledig</translation>
     </message>
@@ -1387,7 +1469,7 @@
         <translation>Byggedato</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1369"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1351"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Kataloget er allerede tildelt denne virtuelle enhed.</translation>
     </message>
@@ -1427,49 +1509,49 @@
         <translation>Et katalog i den fysiske gruppe kan kun placeres under et lager eller denne gruppe. Vælg et lager i denne gruppe.&lt;br/&gt;&lt;br/&gt;For at bruge dette katalog under en enhed i en virtuel gruppe, brug kommandoen Tildel.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+526"/>
-        <location line="+223"/>
+        <location line="+492"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Parent ID</source>
         <translation>Forælder-ID</translation>
     </message>
     <message>
-        <location line="-474"/>
+        <location line="-490"/>
         <source>External ID</source>
         <translation>Eksternt ID</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+223"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Number of files</source>
         <translation>Antal filer</translation>
     </message>
     <message>
-        <location line="-472"/>
-        <location line="+223"/>
+        <location line="-488"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Free space</source>
         <translation>Ledig plads</translation>
     </message>
     <message>
-        <location line="-474"/>
-        <location line="+223"/>
+        <location line="-490"/>
+        <location line="+239"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-24"/>
         <source>Total space</source>
         <translation>Samlet plads</translation>
     </message>
     <message>
-        <location line="-474"/>
-        <location line="+223"/>
+        <location line="-490"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Date updated</source>
         <translation>Dato opdateret</translation>
     </message>
     <message>
-        <location line="-473"/>
-        <location line="+223"/>
+        <location line="-489"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Group ID</source>
         <translation>Gruppe-ID</translation>
@@ -1516,7 +1598,7 @@
         <translation>Filsti</translation>
     </message>
     <message>
-        <location line="+355"/>
+        <location line="+639"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Gem ændringer til definitionen af kataloget?&lt;br/&gt;</translation>
     </message>
@@ -1558,7 +1640,7 @@
 </translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+86"/>
         <source>Select the csv file to be imported</source>
         <translation>Vælg csv-filen der skal importeres</translation>
     </message>
@@ -1573,7 +1655,7 @@
         <translation>En fil blev fundet, men kunne ikke indlæses</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+286"/>
         <source>Catalog updated: </source>
         <translation>Katalog opdateret: </translation>
     </message>
@@ -1582,13 +1664,13 @@
         <location line="+17"/>
         <location line="+22"/>
         <location line="+17"/>
+        <location line="+25"/>
         <location line="+24"/>
-        <location line="+35"/>
         <source>Path: </source>
         <translation>Sti: </translation>
     </message>
     <message>
-        <location line="-112"/>
+        <location line="-102"/>
         <location line="+39"/>
         <source>Number of files: </source>
         <translation>Antal filer: </translation>
@@ -1602,17 +1684,20 @@
         <location line="+37"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+22"/>
+        <location line="+26"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+33"/>
+        <location line="+19"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+59"/>
         <location line="+1"/>
         <location line="+1"/>
         <source>(added: </source>
         <translation>(tilføjet: </translation>
     </message>
     <message>
-        <location line="-117"/>
+        <location line="-168"/>
         <location line="+39"/>
         <source>Total file size: </source>
         <translation>Samlet filstørrelse: </translation>
@@ -1620,90 +1705,93 @@
     <message>
         <location line="-27"/>
         <location line="+39"/>
+        <location line="+25"/>
         <location line="+24"/>
-        <location line="+35"/>
+        <location line="+60"/>
         <source>Storage updated: </source>
         <translation>Lager opdateret: </translation>
     </message>
     <message>
-        <location line="-93"/>
+        <location line="-143"/>
         <location line="+39"/>
-        <location line="+24"/>
-        <location line="+35"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+61"/>
         <source>Used Space: </source>
         <translation>Brugt plads: </translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-148"/>
         <location line="+39"/>
-        <location line="+24"/>
-        <location line="+35"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+61"/>
         <source>Free Space: </source>
         <translation>Ledig plads: </translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-148"/>
         <location line="+39"/>
-        <location line="+24"/>
-        <location line="+35"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+61"/>
         <source>Total Space: </source>
         <translation>Samlet plads: </translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-134"/>
         <source>Catalog created: </source>
         <translation>Katalog oprettet: </translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+79"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Udvalgte aktive kataloger fra &lt;b&gt;%1&lt;/b&gt; bliver opdateret.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 opdaterede kataloger, %2 oversprungne kataloger</translation>
+        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 opdaterede kataloger, %2 oversprungne kataloger</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
         <translation>Opdater alle aktive kataloger</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+70"/>
         <source>Do you want a the summary of updates for each catalog?</source>
         <translation>Vil du have et resumé af opdateringer for hvert katalog?</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+289"/>
         <source>Upgraded collection to v2.0.</source>
         <translation>Opgraderede samling til v2.0.</translation>
     </message>
     <message>
-        <location line="+1196"/>
+        <location line="-190"/>
         <source>The device selected must be a Catalog. Try with a different device ID</source>
         <translation>Den valgte enhed skal være et katalog. Prøv med et andet enheds-ID</translation>
     </message>
     <message>
-        <location line="-2873"/>
-        <location line="+223"/>
+        <location line="-1864"/>
+        <location line="+239"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
         <source>Used space</source>
         <translation>Brugt plads</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_statistics.cpp" line="-163"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="-173"/>
         <source>All device records</source>
         <translation>Alle enhedsposter</translation>
     </message>
     <message>
-        <location line="+177"/>
+        <location line="+187"/>
         <source>of</source>
         <translation>af</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4096"/>
+        <location filename="../mainwindow.ui" line="-4178"/>
         <location line="+1889"/>
         <location line="+67"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
@@ -1716,7 +1804,7 @@
         <translation>Definer hvordan søgeteksten skal bruges.</translation>
     </message>
     <message>
-        <location line="+5703"/>
+        <location line="+5777"/>
         <source>Include Hidden files</source>
         <translation>Inkluder skjulte filer</translation>
     </message>
@@ -1731,12 +1819,12 @@
         <translation>Generer et katalognavn baseret på stien.</translation>
     </message>
     <message>
-        <location line="-6987"/>
+        <location line="-7061"/>
         <source>Reset all filters</source>
         <translation>Nulstil alle filtre</translation>
     </message>
     <message>
-        <location line="+9062"/>
+        <location line="+9136"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
@@ -2075,68 +2163,48 @@
         <translation>Behold altid en sikkerhedskopi af hvert katalog</translation>
     </message>
     <message>
-        <location line="-5429"/>
+        <location line="-5421"/>
         <source>Used</source>
         <translation>Brugt</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+97"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-228"/>
         <source>Remove this directory</source>
         <translation>Fjern denne mappe</translation>
     </message>
     <message>
-        <location line="+121"/>
-        <source>Catalog creation failed: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Catalog operation was cancelled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="+250"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Angiv et navn til dette nye katalog.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
         <translation>Angiv en sti til dette nye katalog.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
         <translation>Vælg et lager til dette nye katalog.&lt;br/&gt;(Udvælgelsespanel til venstre og dropdown-liste)</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Source directory does not exist.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>The selected directory is empty. Do you want to create an empty catalog?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location line="+34"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Der findes allerede et katalog med dette navn:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1038"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1020"/>
         <source>Choose a different name and try again.</source>
         <translation>Vælg et andet navn og prøv igen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4872"/>
+        <location filename="../mainwindow.ui" line="+4864"/>
         <source>Check at start up</source>
         <translation>Tjek ved opstart</translation>
     </message>
     <message>
-        <location line="-4567"/>
+        <location line="-4559"/>
         <source>Include Hidden Files</source>
         <translation>Inkluder skjulte filer</translation>
     </message>
@@ -2151,59 +2219,59 @@
         <translation>&lt;br/&gt;&lt;b&gt;Velkommen til Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Det ser ud til, at dette er første kørsel.&lt;br/&gt;&lt;br/&gt;Følgende indstillinger er blevet anvendt:&lt;br/&gt; - Sprog: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Du kan ændre disse i fanen %3.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-974"/>
+        <location filename="../mainwindow.ui" line="-1041"/>
         <source>Snapshot</source>
         <translation>Øjebliksbillede</translation>
     </message>
     <message>
-        <location line="+3561"/>
+        <location line="+3620"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Kilde</translation>
     </message>
     <message>
-        <location line="-2377"/>
+        <location line="-3671"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Opdater alle kataloger der er aktive, hvis enheden er tilgængelig.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+1280"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importer en liste over bind fra VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-175"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-59"/>
         <location line="+126"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+257"/>
+        <location filename="../mainwindow_setup.cpp" line="+256"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dette er version: v%1 &lt;br/&gt;&lt;br/&gt;En ny version er tilgængelig: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find listen over nye funktioner i &lt;a href=&apos;%3&apos;&gt;udgivelsesnoterne&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vil du downloade den?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-375"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+783"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+765"/>
         <source>Storage ID</source>
         <translation>Lager-ID</translation>
     </message>
     <message>
-        <location line="+96"/>
-        <location line="+454"/>
+        <location line="-621"/>
+        <location line="+717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Opdater det valgte katalogs filer, hvis enheden er tilgængelig&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+706"/>
+        <location line="+1152"/>
         <location line="+1365"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
         <source>Directory</source>
         <translation>Mappe</translation>
     </message>
     <message>
-        <location line="-6897"/>
+        <location line="-6971"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Rens søgeteksten for tegn som _ - . ,</translation>
     </message>
@@ -2219,12 +2287,12 @@
         <translation>Ændringsdato</translation>
     </message>
     <message>
-        <location line="+6507"/>
+        <location line="+6581"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Kontroller om en ny version af Katalog er tilgængelig ved start af appen.</translation>
     </message>
     <message>
-        <location line="-5236"/>
+        <location line="-5310"/>
         <source>Show/Hide search history</source>
         <translation>Vis/skjul søgehistorik</translation>
     </message>
@@ -2250,7 +2318,7 @@
         <translation>Søgehistorik</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-253"/>
+        <location filename="../mainwindow_setup.cpp" line="-252"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;På næste skærm skal du vælge en eksisterende samlingsmappe eller oprette en ny.</translation>
     </message>
@@ -2285,17 +2353,17 @@
         <translation>udeluk</translation>
     </message>
     <message>
-        <location line="+3472"/>
+        <location line="+3554"/>
         <source>is full device</source>
         <translation>er fuld enhed</translation>
     </message>
     <message>
-        <location line="+2199"/>
+        <location line="+2191"/>
         <source>catalog is for the full device</source>
         <translation>katalog er for hele enheden</translation>
     </message>
     <message>
-        <location line="-4530"/>
+        <location line="-4604"/>
         <location line="+232"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Vælg at søge dubletter baseret på næste kriterier</translation>
@@ -2316,7 +2384,7 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resultaterne skal præcis matche teksten (følsom overfor store/små bogstaver)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+8619"/>
+        <location line="+8693"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Forudindlæs sidst valgte kataloger ved opstart for at accelerere næste søgning</translation>
@@ -2396,18 +2464,20 @@ til papirkurven?</translation>
         <translation>Tag denne mappe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-9846"/>
+        <location filename="../mainwindow.ui" line="-9920"/>
         <source>Selection</source>
         <translation>Udvælgelse</translation>
     </message>
     <message>
-        <location line="-324"/>
-        <location line="+5859"/>
+        <location line="-356"/>
+        <location line="+32"/>
+        <location line="+5885"/>
+        <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Udvid 1 niveau, 2 niveauer eller fold sammen</translation>
     </message>
     <message>
-        <location line="+2289"/>
+        <location line="+2305"/>
         <source>all records</source>
         <translation>alle poster</translation>
     </message>
@@ -2510,10 +2580,10 @@ til papirkurven?</translation>
         <translation>sorteringsværdi</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1587"/>
+        <location filename="../mainwindow.ui" line="-1579"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-227"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Device Type</source>
         <translation>Enhedstype</translation>
@@ -2524,13 +2594,13 @@ til papirkurven?</translation>
         <translation>Det valgte katalog indeholder mere end %1 filer.&lt;br/&gt;Det kan tage flere minutter at åbne.&lt;br/&gt;Fortsæt?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5399"/>
+        <location filename="../mainwindow.ui" line="+5391"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Hukommelse</translation>
     </message>
     <message>
-        <location line="-9511"/>
+        <location line="-9585"/>
         <location line="+1022"/>
         <location line="+1700"/>
         <source>Use the Text criteria in the Search</source>
@@ -2567,7 +2637,7 @@ til papirkurven?</translation>
         <translation>Mappekriterier</translation>
     </message>
     <message>
-        <location line="+4775"/>
+        <location line="+4849"/>
         <source>Graphic Start Date</source>
         <translation>Grafisk startdato</translation>
     </message>
@@ -2577,23 +2647,23 @@ til papirkurven?</translation>
         <translation>Vælg dato</translation>
     </message>
     <message>
-        <location line="-3275"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
+        <location line="-3267"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+681"/>
         <source>Include Metadata</source>
         <translation>Inkluder metadata</translation>
     </message>
     <message>
-        <location line="+1915"/>
+        <location line="+1907"/>
         <source>Include Media files metadata</source>
         <translation>Inkluder mediefiler metadata</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+482"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+487"/>
         <source>Local disk</source>
         <translation>Lokal disk</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-618"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Mappen findes ikke. Opret den?</translation>
     </message>
@@ -2663,22 +2733,22 @@ til papirkurven?</translation>
         <translation>Afslut applikation</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+59"/>
         <source>Select the database to open:</source>
         <translation>Vælg databasen der skal åbnes:</translation>
     </message>
     <message>
-        <location line="-305"/>
+        <location line="-310"/>
         <source>Select the database to create and open:</source>
         <translation>Vælg databasen der skal oprettes og åbnes:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+127"/>
+        <location filename="../mainwindow.cpp" line="+132"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Nogle ændringer i lagerenheds-listen er ikke blevet gemt.&lt;br/&gt;Gem og afslut, forkast og afslut, eller annuller afslut?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+347"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+352"/>
         <source> Physical Group</source>
         <translation> Fysisk gruppe</translation>
     </message>
@@ -2702,15 +2772,16 @@ til papirkurven?</translation>
         <translation>Katalog med resultater</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-870"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1170"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+1"/>
         <source>Mapping Name</source>
         <translation>Kortlægningsnavn</translation>
     </message>
@@ -2722,8 +2793,8 @@ til papirkurven?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-476"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-492"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Active</source>
         <translation>Aktiv</translation>
@@ -2817,7 +2888,7 @@ til papirkurven?</translation>
         <translation>Vælg en anden kilde eller mål (en enhed kan ikke kortlægges til sig selv).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-485"/>
         <source>Virtual Group</source>
         <translation>Virtuel gruppe</translation>
     </message>
@@ -2827,13 +2898,13 @@ til papirkurven?</translation>
         <translation>En virtuel enhed kan kun tilføjes til en anden virtuel enhed.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+170"/>
-        <location line="+56"/>
+        <location line="+194"/>
+        <location line="+66"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-56"/>
         <source>Unassign this catalog</source>
         <translation>Fjern tildeling af dette katalog</translation>
     </message>
@@ -2843,7 +2914,7 @@ til papirkurven?</translation>
         <translation>Slet dette katalog</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+58"/>
         <source>Unassign this storage</source>
         <translation>Fjern tildeling af dette lager</translation>
     </message>
@@ -2853,7 +2924,7 @@ til papirkurven?</translation>
         <translation>Slet dette lager</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+48"/>
         <source>Add Virtual device</source>
         <translation>Tilføj virtuel enhed</translation>
     </message>
@@ -3079,23 +3150,18 @@ til papirkurven?</translation>
         <translation>Eksport mislykkedes: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
+        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="-29"/>
         <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
         <translation>Det ser ud til, at dette katalog ikke blev importeret korrekt eller har et gammelt format.&lt;br/&gt;Rediger det og sørg for at det har følgende første 2 linjer:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/mappesti&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Kopiér/indsæt disse linjer i begyndelsen af filen og modificer værdierne efter &gt;:&lt;br/&gt;- catalogSourcePath er mappen at katalogisere filerne fra.&lt;br/&gt;- catalogFileCount-tallet betyder ikke så meget, det kan opdateres.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+15"/>
-        <location line="+55"/>
+        <location line="+53"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Vælg et katalog først (nogle informationer mangler).&lt;br/&gt; nuværende katalogfilsti: %1 &lt;br/&gt;nuværende katalognavn: %2 &lt;br/&gt; nuværende katalogkildesti: %3</translation>
     </message>
     <message>
-        <location line="-41"/>
-        <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-        <translation>Kildemappen indeholder ingen filer.&lt;br/&gt;Dette kunne betyde at kilden er tom eller at enheden ikke er monteret til denne mappe.&lt;br/&gt;Vil du gemme den alligevel (kataloget ville være tomt)?</translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="-26"/>
         <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
         <translation>Kataloget &lt;b&gt;%1&lt;/b&gt; kan ikke opdateres.&lt;br/&gt;&lt;br/&gt; Kildemappen blev ikke fundet.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Mulige årsager:&lt;br/&gt;    - enheden er ikke tilsluttet og monteret,&lt;br/&gt;    - kildemappen blev flyttet eller omdøbt,&lt;br/&gt;    - den indtastede kildemappe er forkert.</translation>
     </message>
@@ -3119,6 +3185,13 @@ til papirkurven?</translation>
         <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
         <translation>Lager: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Kildemappen indeholder ingen filer:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dette kunne betyde at enheden ikke er monteret til denne mappe,&lt;br/&gt;eller at mappen simpelthen er tom.&lt;br/&gt;&lt;br/&gt;Tving forsøg på at få værdier alligevel?</translation>
+    </message>
+</context>
+<context>
+    <name>Mainwindow</name>
+    <message>
+        <source>Catalog</source>
+        <translation type="obsolete">Katalog</translation>
     </message>
 </context>
 <context>

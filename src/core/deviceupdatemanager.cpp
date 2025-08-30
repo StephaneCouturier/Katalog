@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QSqlQuery>
 #include <QSqlDatabase>
+#include <qapplication.h>
 
 DeviceUpdateManager::DeviceUpdateManager(QObject *parent)
     : QObject(parent)
@@ -185,7 +186,7 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
     // Analyze hierarchy to get totals for progress
     analyzeHierarchy(rootDevice);
 
-    setStatus(QString("Starting %1 operation...").arg(updateType));
+    //setStatus(QString(tr("Starting %1 operation...")).arg(updateType));
     emit operationStarted();
     emit operationRunningChanged();
 
@@ -436,7 +437,7 @@ void DeviceUpdateManager::updateCatalogDevice(Device* device)
     qDebug() << "=== DeviceUpdateManager::updateCatalogDevice ===";
     qDebug() << "Updating Catalog Device:" << device->name;
     qDebug() << "Update type:" << m_updateType;
-    setStatus(QString("Updating catalog device: %1").arg(device->name));
+    //setStatus(QString(tr("Updating device: %1")).arg(device->name));
 
     if (!device->active) {
         qDebug() << "Catalog is inactive, skipping:" << device->name;
@@ -539,9 +540,7 @@ void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* cata
 
 void DeviceUpdateManager::updateStorageDevice(Device* device)
 {
-    qDebug() << "=== DeviceUpdateManager::updateStorageDevice ===";
-    qDebug() << "Updating Storage Device:" << device->name;
-    setStatus(QString("Updating storage device: %1").arg(device->name));
+    qDebug() << "=== DeviceUpdateManager::updateStorageDevice:" << device->name;
 
     // Initialize storage update result
     m_storageWasUpdated = false;
@@ -617,9 +616,7 @@ void DeviceUpdateManager::updateStorageDevice(Device* device)
 
 void DeviceUpdateManager::updateVirtualDevice(Device* device)
 {
-    qDebug() << "=== DeviceUpdateManager::updateVirtualDevice ===";
-    qDebug() << "Updating Virtual Device:" << device->name;
-    setStatus(QString("Updating virtual device: %1").arg(device->name));
+    qDebug() << "=== DeviceUpdateManager::updateVirtualDevice:" << device->name;
 
     // Virtual devices just aggregate numbers from children
     // The actual aggregation happens after children are processed
@@ -631,18 +628,6 @@ void DeviceUpdateManager::updateVirtualDevice(Device* device)
     emit deviceProcessingCompleted(device->name);
 
     // Virtual devices continue to process their children in processChildren()
-}
-
-void DeviceUpdateManager::pauseOperation()
-{
-    m_isPaused = true;
-    setStatus("Operation paused");
-}
-
-void DeviceUpdateManager::resumeOperation()
-{
-    m_isPaused = false;
-    setStatus("Operation resumed");
 }
 
 void DeviceUpdateManager::stopOperation()
@@ -992,7 +977,6 @@ void DeviceUpdateManager::cleanupOperation()
                 this, &DeviceUpdateManager::onCatalogOperationCancelled);
     }
 
-    setStatus("Ready");
     m_progress = 0;
     emit progressChanged();
 
@@ -1017,8 +1001,6 @@ void DeviceUpdateManager::requestHardStop()
     m_stopRequested.storeRelease(1);
     m_gentleStopRequested.storeRelease(1); // Also set gentle stop for consistency
 
-    setStatus("Hard stopping immediately...");
-
     // Delegate stop to underlying CatalogManager if active
     if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
         qDebug() << "Delegating hard stop to CatalogManager";
@@ -1041,7 +1023,7 @@ void DeviceUpdateManager::requestGentleStop()
     qDebug() << "DeviceUpdateManager::requestGentleStop() - STOP AFTER CURRENT CATALOG";
 
     m_gentleStopRequested.storeRelease(1);
-    setStatus("Gentle stopping after current catalog completes...");
+    setStatus(QApplication::translate("MainWindow", "Stopping after current catalog completes..."));
 
     // Don't delegate to CatalogManager for storage batch operations
     // because CatalogManager is not in batch mode and will do hard stop
@@ -1095,11 +1077,12 @@ void DeviceUpdateManager::handleOperationCancellation()
     m_waitingForCatalogCompletion = false;
 
     // Calculate skipped counts for logging only
-    int skippedDevices = m_totalDevices - m_processedDevices;
-    int skippedCatalogs = m_totalCatalogs - m_processedCatalogs;
+    // int skippedDevices = m_totalDevices - m_processedDevices;
+    // int skippedCatalogs = m_totalCatalogs - m_processedCatalogs;
 
-    setStatus(QString("Operation cancelled - %1 devices skipped, %2 catalogs skipped")
-                  .arg(skippedDevices).arg(skippedCatalogs));
+    // setStatus(QString(tr("Operation cancelled - %1 devices skipped, %2 catalogs skipped"))
+    //               .arg(skippedDevices).arg(skippedCatalogs));
+    setStatus(QString(QApplication::translate("MainWindow", "Operation cancelled")));
 
     // Emit cancellation (no results - MainWindow handles this differently)
     emit operationCancelled();

@@ -206,8 +206,6 @@
 
             // Immediate UI feedback
             ui->Create_pushButton_Stop->setEnabled(false);
-            statusBar()->showMessage(tr("Stopping catalog creation..."));
-
         } else {
             qDebug() << "No active operation - just reset UI";
             restoreCreateCatalogUIState();
@@ -385,7 +383,7 @@
                 // Final report, always show regardless of user choice
                 qDebug() << "Showing final global report";
                 Device dummyDevice;
-                dummyDevice.name = tr("All Active Catalogs");
+                dummyDevice.name = tr("Update all active catalogs");
                 dummyDevice.type = "BatchSummary";
                 reportAllUpdates(&dummyDevice, results, updateType);
             } else if (showEachCatalogUpdateSummary) {
@@ -396,14 +394,6 @@
                 qDebug() << "User chose NO individual reports - skipping individual report for:" << device->name;
             }
         });
-
-        connect(catalogManager, &CatalogManager::specialProgressUpdate,
-                this, [this](qint64 filesProcessed, qint64 totalFiles, int progressPercent, const QString& currentPath) {
-                    QString progressText = tr("Processing: %1 (%2/%3)")
-                    .arg(currentPath, QLocale().toString(filesProcessed), QLocale().toString(totalFiles));
-                    statusBar()->showMessage(progressText);
-                });
-
         qDebug() << "New catalog manager system setup complete";
     }
     //--------------------------------------------------------------------------
@@ -444,13 +434,13 @@
         // Check if directory exists and is not empty
         QDir sourceDir(ui->Create_lineEdit_NewCatalogPath->text());
         if (!sourceDir.exists()) {
-            QMessageBox::warning(this, "Katalog", tr("Source directory does not exist."));
+            QMessageBox::warning(this, "Katalog", tr("The source directory does not exist."));
             return;  // No UI state change needed
         }
 
         if (sourceDir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0) {
             QMessageBox::StandardButton reply = QMessageBox::question(this, "Katalog",
-                                                                      tr("The selected directory is empty. Do you want to create an empty catalog?"),
+                                                                      tr("The source folder does not contain any file.<br/>This could mean that the source is empty or the device is not mounted to this folder.<br/>Do you want to save it anyway (the catalog would be empty)?"),
                                                                       QMessageBox::Yes | QMessageBox::No);
             if (reply == QMessageBox::No) {
                 return;  // No UI state change needed
@@ -580,8 +570,6 @@
             ui->Create_pushButton_CreateCatalog->setEnabled(false);
             ui->Create_pushButton_Stop->setEnabled(true);
             QApplication::setOverrideCursor(Qt::WaitCursor);
-            statusBar()->showMessage(tr("Creating catalog..."));
-
         } else {
             // CREATION FINISHED: Restore Create tab buttons, restore cursor
             ui->Create_pushButton_CreateCatalog->setEnabled(true);

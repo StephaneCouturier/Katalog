@@ -31,6 +31,7 @@
 
 #include "device.h"
 #include <QSqlError>
+#include <QApplication>
 
 void Device::loadDevice(QString connectionName){
     QElapsedTimer totalTimer;
@@ -632,12 +633,22 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
     }
 
     if (askConfirmation) {
+        // result.confirmationMessage = QString(
+        //                                    "Do you want to <span style='color: red';>delete</span> this %1 device?"
+        //                                     "<table><tr><td>ID:   </td><td><b> %2 </td></tr><tr><td>Name: </td><td><b> %3 </td></tr>"
+        //                                     "<tr><td></td></tr></table>"
+        //                                     )
+        //                                  .arg(type, QString::number(ID), name);
+
+
         result.confirmationMessage = QString(
-                                           "Do you want to <span style='color: red';>delete</span> this %1 device?"
-                                            "<table><tr><td>ID:   </td><td><b> %2 </td></tr><tr><td>Name: </td><td><b> %3 </td></tr>"
-                                            "<tr><td></td></tr></table>"
-                                            )
-                                         .arg(type, QString::number(ID), name);
+                                         QApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?").arg(type)
+                                         +"<table><tr><td>" +QApplication::translate("MainWindow", "ID")+":   </td><td><b>" +QString::number(ID)+" </td></tr><tr><td>"
+                                         +QApplication::translate("MainWindow", "Name") +": </td><td><b>"+ name +"</td></tr><tr><td></td></tr></table>"
+                                         );
+
+
+
 
         if (callbacks && callbacks->onConfirmation) {
             if (!callbacks->onConfirmation(result.confirmationMessage)) {

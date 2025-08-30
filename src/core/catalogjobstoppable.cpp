@@ -181,7 +181,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
 
     // Count total files for progress calculation
     qDebug() << "Step 3: Counting total files...";
-    emitProgressUpdate(0, 0, "Starting file counting...");
+    //emitProgressUpdate(0, 0, "Starting file counting...");
 
     auto startTime = QDateTime::currentDateTime();
     countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
@@ -633,7 +633,7 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
 
         // Emit estimation progress periodically (every 1000 files)
         if (totalFiles % 1000 == 0) {
-            emitProgressUpdate(0, 0, QString("Counting... %1 files found").arg(totalFiles));
+            emitProgressUpdate(0, 0, QString("__COUNTING_STATE__|%1").arg(totalFiles));
             QCoreApplication::processEvents(); // Allow UI updates during estimation
         }
     }

@@ -125,14 +125,10 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
                                   .arg(operationType)
                                   .arg(filesProcessed));
                 }
-
-                // Emit special progress update for status bar
-                emit specialProgressUpdate(filesProcessed, totalFiles, progress(), currentPath);
             }
         }
     });
 
-    setStatus("Starting catalog operation...");
     setCatalogOperationRunning(true);
     setProgress(0);
     setFilesProcessed(0);

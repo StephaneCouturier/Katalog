@@ -43,8 +43,6 @@ public:
     // ===== CONTROL INTERFACE =====
     void requestGentleStop();
     void requestHardStop();
-    void pauseOperation();
-    void resumeOperation();
     void stopOperation();
 
     // ===== STATE QUERIES =====

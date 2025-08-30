@@ -30,14 +30,6 @@
     </message>
 </context>
 <context>
-    <name>CatalogProgressManager</name>
-    <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+133"/>
-        <source>Ready for catalog operations</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ExploreTreeModel</name>
     <message>
         <location filename="../exploretreemodel.cpp" line="+37"/>
@@ -58,7 +50,91 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2523"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
+        <location line="+3"/>
+        <source>Counting files</source>
+        <translation>Conteggio file</translation>
+    </message>
+    <message>
+        <location filename="../core/device.cpp" line="+645"/>
+        <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
+        <translation>Vuoi &lt;span style=&apos;color: red&apos;;&gt;eliminare&lt;/span&gt; questo dispositivo %1?</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+7"/>
+        <source>Files processed</source>
+        <translation>File elaborati</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Total files</source>
+        <translation>File totali</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Progress</source>
+        <translation>Progresso</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2939"/>
+        <location line="+50"/>
+        <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
+        <translation>Cataloghi aggiornati:&lt;b&gt; %1 &lt;/b&gt;(%2 saltati)</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <source>Virtual device updated: </source>
+        <translation>Dispositivo virtuale aggiornato: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+4972"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clic: Ferma immediatamente (arresto forzato)&lt;/p&gt;&lt;p&gt;Ctrl+Clic: Ferma dopo il catalogo corrente (arresto graduale)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="+437"/>
+        <source>The source directory does not exist.</source>
+        <translation>La directory di origine non esiste.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+155"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+6"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
+        <translation>La cartella di origine non contiene alcun file.&lt;br/&gt;Questo potrebbe significare che l&apos;origine è vuota o il dispositivo non è montato in questa cartella.&lt;br/&gt;Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="+88"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+251"/>
+        <location line="+83"/>
+        <location line="+63"/>
+        <location line="+130"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+245"/>
+        <location line="+43"/>
+        <source>A device operation is already running.</source>
+        <translation>Un&apos;operazione del dispositivo è già in esecuzione.</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-48"/>
+        <location line="+82"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1085"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-854"/>
+        <location line="+13"/>
+        <location line="+4"/>
+        <source>Operation cancelled</source>
+        <translation>Operazione annullata</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-164"/>
+        <source>Operation completed</source>
+        <translation>Operazione completata</translation>
+    </message>
+    <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-59"/>
+        <source>Stopping after current catalog completes...</source>
+        <translation>Arresto dopo il completamento del catalogo corrente...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+886"/>
         <source>Catalog created: </source>
         <translation>Catalogo creato: </translation>
     </message>
@@ -67,13 +143,13 @@
         <location line="+17"/>
         <location line="+22"/>
         <location line="+17"/>
+        <location line="+25"/>
         <location line="+24"/>
-        <location line="+35"/>
         <source>Path: </source>
         <translation>Percorso: </translation>
     </message>
     <message>
-        <location line="-2536"/>
+        <location line="-2853"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Il catalogo è già assegnato a questo dispositivo virtuale.</translation>
     </message>
@@ -113,57 +189,57 @@
         <translation>Un catalogo nel gruppo fisico può essere impostato solo sotto un&apos;archiviazione o questo gruppo. Seleziona un&apos;archiviazione in questo gruppo.&lt;br/&gt;&lt;br/&gt;Per usare questo catalogo sotto un dispositivo in un gruppo virtuale, usa il comando Assegna.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+526"/>
-        <location line="+223"/>
+        <location line="+492"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Parent ID</source>
         <translation>ID genitore</translation>
     </message>
     <message>
-        <location line="-474"/>
+        <location line="-490"/>
         <source>External ID</source>
         <translation>ID esterno</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+223"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Number of files</source>
         <translation>Numero di file</translation>
     </message>
     <message>
-        <location line="-473"/>
-        <location line="+223"/>
+        <location line="-489"/>
+        <location line="+239"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="+351"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="+361"/>
         <source>Used space</source>
         <translation>Spazio utilizzato</translation>
     </message>
     <message>
-        <location line="-474"/>
-        <location line="+223"/>
+        <location line="-490"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Free space</source>
         <translation>Spazio libero</translation>
     </message>
     <message>
-        <location line="-474"/>
-        <location line="+223"/>
+        <location line="-490"/>
+        <location line="+239"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+2"/>
         <source>Total space</source>
         <translation>Spazio totale</translation>
     </message>
     <message>
-        <location line="-474"/>
-        <location line="+223"/>
+        <location line="-490"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Date updated</source>
         <translation>Data aggiornamento</translation>
     </message>
     <message>
-        <location line="-473"/>
-        <location line="+223"/>
+        <location line="-489"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Group ID</source>
         <translation>ID gruppo</translation>
@@ -210,7 +286,7 @@
         <translation>Percorso file</translation>
     </message>
     <message>
-        <location line="+355"/>
+        <location line="+639"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Salvare le modifiche alla definizione del catalogo?&lt;br/&gt;</translation>
     </message>
@@ -252,7 +328,7 @@
 </translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+86"/>
         <source>Select the csv file to be imported</source>
         <translation>Seleziona il file csv da importare</translation>
     </message>
@@ -267,7 +343,7 @@
         <translation>È stato trovato un file, ma non può essere caricato</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+286"/>
         <source>Catalog updated: </source>
         <translation>Catalogo aggiornato: </translation>
     </message>
@@ -286,51 +362,52 @@
     <message>
         <location line="-27"/>
         <location line="+39"/>
+        <location line="+25"/>
         <location line="+24"/>
-        <location line="+35"/>
+        <location line="+60"/>
         <source>Storage updated: </source>
         <translation>Archiviazione aggiornata: </translation>
     </message>
     <message>
-        <location line="-93"/>
+        <location line="-143"/>
         <location line="+39"/>
-        <location line="+24"/>
-        <location line="+35"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+61"/>
         <source>Used Space: </source>
         <translation>Spazio utilizzato: </translation>
     </message>
     <message>
-        <location line="-22"/>
+        <location line="-53"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;I cataloghi attivi selezionati da &lt;b&gt;%1&lt;/b&gt; sono aggiornati.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation>&lt;br/&gt;&lt;br/&gt; %1 cataloghi aggiornati, %2 cataloghi saltati</translation>
+        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 cataloghi aggiornati, %2 cataloghi saltati</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-145"/>
         <source>Update all active catalogs</source>
         <translation>Aggiorna tutti i cataloghi attivi</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+33"/>
         <source>Do you want a the summary of updates for each catalog?</source>
         <translation>Vuoi il riassunto degli aggiornamenti per ogni catalogo?</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+289"/>
         <source>Upgraded collection to v2.0.</source>
         <translation>Collezione aggiornata a v2.0.</translation>
     </message>
     <message>
-        <location line="+1196"/>
+        <location line="-190"/>
         <source>The device selected must be a Catalog. Try with a different device ID</source>
         <translation>Il dispositivo selezionato deve essere un catalogo. Prova con un ID dispositivo diverso</translation>
     </message>
     <message>
-        <location line="-1583"/>
+        <location line="-213"/>
         <location line="+1"/>
         <location line="+17"/>
         <location line="+1"/>
@@ -338,49 +415,49 @@
         <location line="+37"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+22"/>
+        <location line="+26"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+33"/>
+        <location line="+19"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+59"/>
         <location line="+1"/>
         <location line="+1"/>
         <source>(added: </source>
         <translation>(aggiunto: </translation>
     </message>
     <message>
-        <location line="-99"/>
+        <location line="-150"/>
         <location line="+39"/>
-        <location line="+24"/>
-        <location line="+35"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+61"/>
         <source>Free Space: </source>
         <translation>Spazio libero: </translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-148"/>
         <location line="+39"/>
-        <location line="+24"/>
-        <location line="+35"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+61"/>
         <source>Total Space: </source>
         <translation>Spazio totale: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+126"/>
+        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="-29"/>
         <source>It seems this catalog was not correctly imported or has an old format.&lt;br/&gt;Edit it and make sure it has the following first 2 lines:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/folderpath&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copy/paste these lines at the beginning of the file and modify the values after the &gt;:&lt;br/&gt;- the catalogSourcePath is the folder to catalog the files from.&lt;br/&gt;- the catalogFileCount number does not matter as much, it can be updated.&lt;br/&gt;</source>
         <translation>Sembra che questo catalogo non sia stato importato correttamente o abbia un formato vecchio.&lt;br/&gt;Modificalo e assicurati che abbia le seguenti prime 2 righe:&lt;br/&gt;&lt;br/&gt;&lt;catalogSourcePath&gt;/percorsocartella&lt;br/&gt;&lt;catalogFileCount&gt;10000&lt;br/&gt;&lt;br/&gt;Copia/incolla queste righe all&apos;inizio del file e modifica i valori dopo il &gt;:&lt;br/&gt;- catalogSourcePath è la cartella da cui catalogare i file.&lt;br/&gt;- il numero catalogFileCount non importa molto, può essere aggiornato.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+15"/>
-        <location line="+55"/>
+        <location line="+53"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Seleziona prima un catalogo (mancano alcune informazioni).&lt;br/&gt; percorsoFileCatalogoCorrente: %1 &lt;br/&gt;nomeCatalogoCorrente: %2 &lt;br/&gt; percorsoOrigineCorrente: %3</translation>
     </message>
     <message>
-        <location line="-41"/>
-        <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-        <translation>La cartella di origine non contiene alcun file.&lt;br/&gt;Questo potrebbe significare che l&apos;origine è vuota o che il dispositivo non è montato in questa cartella.&lt;br/&gt;Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="-26"/>
         <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
         <translation>Il catalogo &lt;b&gt;%1&lt;/b&gt; non può essere aggiornato.&lt;br/&gt;&lt;br/&gt; La cartella di origine non è stata trovata.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possibili ragioni:&lt;br/&gt;    - il dispositivo non è collegato e montato,&lt;br/&gt;    - la cartella di origine è stata spostata o rinominata,&lt;br/&gt;    - la cartella di origine inserita è incorretta.</translation>
     </message>
@@ -401,25 +478,25 @@
         <translation>Seleziona un catalogo con un percorso valido.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+35"/>
+        <location filename="../mainwindow.ui" line="-4937"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+656"/>
+        <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>Mostra/Nascondi filtri</translation>
     </message>
     <message>
-        <location line="-510"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2133"/>
+        <location line="-542"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2511"/>
         <source>Virtual</source>
         <translation>Virtuale</translation>
     </message>
     <message>
         <location line="+59"/>
-        <location line="+6081"/>
+        <location line="+6187"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
@@ -427,26 +504,29 @@
         <translation>Archiviazione</translation>
     </message>
     <message>
-        <location line="-6052"/>
-        <location line="+6601"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-17"/>
+        <location filename="../mainwindow.ui" line="-6158"/>
+        <location line="+6707"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+583"/>
         <source>Catalog</source>
         <translation>Catalogo</translation>
     </message>
     <message>
-        <location line="-6517"/>
-        <location line="+4522"/>
+        <location filename="../mainwindow.ui" line="-6623"/>
+        <location line="+4579"/>
         <source>Device tree</source>
         <translation>Albero dispositivi</translation>
     </message>
     <message>
-        <location line="-4479"/>
-        <location line="+5859"/>
+        <location line="-4536"/>
+        <location line="+32"/>
+        <location line="+5885"/>
+        <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Espandi 1 livello, 2 livelli o comprimi</translation>
     </message>
     <message>
-        <location line="-5754"/>
+        <location line="-5812"/>
         <source>Search in file catalogs</source>
         <translation>Cerca nei cataloghi di file</translation>
     </message>
@@ -457,20 +537,20 @@
     </message>
     <message>
         <location line="+64"/>
-        <location line="+7789"/>
+        <location line="+7863"/>
         <source>Select the path</source>
         <translation>Seleziona il percorso</translation>
     </message>
     <message>
-        <location line="-7786"/>
-        <location line="+4738"/>
-        <location line="+3051"/>
+        <location line="-7860"/>
+        <location line="+4820"/>
+        <location line="+3043"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Seleziona</translation>
     </message>
     <message>
-        <location line="-8140"/>
+        <location line="-8214"/>
         <source>Selection</source>
         <translation>Selezione</translation>
     </message>
@@ -487,7 +567,8 @@
     <message>
         <location line="+126"/>
         <location line="+436"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+171"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
+        <location line="+37"/>
         <location line="+39"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-63"/>
         <location line="+20"/>
@@ -557,12 +638,13 @@
     </message>
     <message>
         <location line="+6"/>
-        <location line="+6478"/>
+        <location line="+3457"/>
+        <location line="+3095"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location line="-6295"/>
+        <location line="-6369"/>
         <source>with</source>
         <translation>con</translation>
     </message>
@@ -679,30 +761,30 @@
     </message>
     <message>
         <location line="+81"/>
-        <location line="+2965"/>
+        <location line="+3047"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+926"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+908"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location line="-2927"/>
+        <location line="-3009"/>
         <source>Select the type of files</source>
         <translation>Seleziona il tipo di file</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+2752"/>
-        <location line="+1727"/>
-        <location filename="../mainwindow_setup.cpp" line="+435"/>
+        <location line="+2834"/>
+        <location line="+1719"/>
+        <location filename="../mainwindow_setup.cpp" line="+434"/>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+92"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+105"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+10"/>
+        <location line="+9"/>
         <location line="+1"/>
-        <location line="+70"/>
+        <location line="+77"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -717,36 +799,36 @@
         <translation>Tutto</translation>
     </message>
     <message>
-        <location line="-4474"/>
-        <location line="+2752"/>
-        <location line="+1780"/>
+        <location line="-4548"/>
+        <location line="+2834"/>
+        <location line="+1772"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-4524"/>
-        <location line="+2752"/>
-        <location line="+1743"/>
+        <location line="-4598"/>
+        <location line="+2834"/>
+        <location line="+1735"/>
         <source>Image</source>
         <translation>Immagine</translation>
     </message>
     <message>
-        <location line="-4487"/>
-        <location line="+2752"/>
-        <location line="+1822"/>
+        <location line="-4561"/>
+        <location line="+2834"/>
+        <location line="+1814"/>
         <source>Text</source>
         <translation>Testo</translation>
     </message>
     <message>
-        <location line="-4566"/>
-        <location line="+2752"/>
-        <location line="+1785"/>
+        <location line="-4640"/>
+        <location line="+2834"/>
+        <location line="+1777"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location line="-4404"/>
-        <location line="+7038"/>
+        <location line="-4478"/>
+        <location line="+7112"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-3"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -756,7 +838,7 @@
         <translation>Data</translation>
     </message>
     <message>
-        <location line="-6803"/>
+        <location line="-6877"/>
         <location line="+232"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Scegli di cercare duplicati basandoti sui seguenti criteri</translation>
@@ -767,10 +849,11 @@
         <translation>Duplicati su</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../mainwindow.ui" line="+49"/>
         <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-237"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-253"/>
+        <location line="+239"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -778,7 +861,7 @@
         <translation>Nome</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location filename="../mainwindow.ui" line="-186"/>
         <location line="+232"/>
         <source>Date Modified</source>
         <translation>Data modifica</translation>
@@ -835,22 +918,23 @@
         <translation>Visualizza più statistiche sui risultati</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-31"/>
+        <location filename="../mainwindow.ui" line="+32"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+295"/>
         <source>Files found</source>
         <translation>File trovati</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location filename="../mainwindow.ui" line="+27"/>
         <location line="+56"/>
-        <location line="+608"/>
+        <location line="+690"/>
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
         <location line="+866"/>
         <location line="+45"/>
         <location line="+38"/>
-        <location line="+466"/>
+        <location line="+458"/>
         <location line="+100"/>
         <location line="+53"/>
         <location line="+2377"/>
@@ -871,16 +955,16 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-5122"/>
-        <location line="+2284"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-468"/>
-        <location line="+223"/>
+        <location line="-5196"/>
+        <location line="+2358"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-484"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Total Size</source>
         <translation>Dimensione totale</translation>
     </message>
     <message>
-        <location line="-2205"/>
+        <location line="-2279"/>
         <location line="+3"/>
         <source>Define which batch process to execute on all results</source>
         <translation>Definisci quale processo batch eseguire su tutti i risultati</translation>
@@ -912,7 +996,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+402"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-110"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
         <source>Delete</source>
         <translation>Elimina</translation>
@@ -934,38 +1018,38 @@
     </message>
     <message>
         <location line="+67"/>
-        <location line="+186"/>
+        <location line="+268"/>
         <source>Devices</source>
         <translation>Dispositivi</translation>
     </message>
     <message>
-        <location line="-165"/>
+        <location line="-144"/>
         <source>Edit List</source>
         <translation>Modifica lista</translation>
     </message>
     <message>
-        <location line="+36"/>
-        <location line="+4086"/>
+        <location line="-51"/>
+        <location line="+4144"/>
         <source>Full Table</source>
         <translation>Tabella completa</translation>
     </message>
     <message>
-        <location line="-4064"/>
+        <location line="-4058"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+23"/>
         <source>Catalogs list</source>
         <translation>Lista cataloghi</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="-116"/>
         <source>Storage list</source>
         <translation>Lista archiviazione</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+68"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Registra i valori di tutti i dispositivi per statistiche sulla collezione completa.</translation>
     </message>
@@ -975,7 +1059,7 @@
         <translation>Istantanea</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+172"/>
         <location line="+622"/>
         <location line="+28"/>
         <source>Total Space</source>
@@ -998,12 +1082,12 @@
     </message>
     <message>
         <location line="+17"/>
-        <location line="+2447"/>
+        <location line="+2439"/>
         <source>Add Storage</source>
         <translation>Aggiungi archiviazione</translation>
     </message>
     <message>
-        <location line="-2402"/>
+        <location line="-2394"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+67"/>
         <source>Device Name</source>
         <translation>Nome dispositivo</translation>
@@ -1011,8 +1095,8 @@
     <message>
         <location line="+16"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-481"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-497"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Device Type</source>
         <translation>Tipo dispositivo</translation>
@@ -1031,12 +1115,12 @@
     </message>
     <message>
         <location line="+29"/>
-        <location line="+1537"/>
+        <location line="+1529"/>
         <source>Source Path</source>
         <translation>Percorso origine</translation>
     </message>
     <message>
-        <location line="-1511"/>
+        <location line="-1503"/>
         <source>The change will be applied only when Saving</source>
         <translation>La modifica sarà applicata solo quando si salva</translation>
     </message>
@@ -1047,7 +1131,7 @@
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+397"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+681"/>
         <source>Include Metadata</source>
         <translation>Includi metadati</translation>
     </message>
@@ -1058,8 +1142,8 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-374"/>
-        <location line="+366"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-658"/>
+        <location line="+650"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+317"/>
         <source>File Type</source>
         <translation>Tipo file</translation>
@@ -1076,7 +1160,7 @@
     </message>
     <message>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-637"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-921"/>
         <source>Storage ID</source>
         <translation>ID archiviazione</translation>
     </message>
@@ -1104,24 +1188,25 @@
         <translation>Campi archiviazione</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+454"/>
+        <location line="-707"/>
+        <location line="+717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aggiorna i file del catalogo selezionato, se il dispositivo è disponibile&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-451"/>
-        <location line="+454"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-185"/>
-        <location line="+78"/>
-        <location line="+54"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-225"/>
-        <location line="+39"/>
+        <location line="-714"/>
+        <location line="+717"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-212"/>
+        <location line="+87"/>
+        <location line="+63"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-280"/>
+        <location line="+36"/>
+        <location line="+40"/>
         <source>Update</source>
         <translation>Aggiorna</translation>
     </message>
     <message>
-        <location line="-398"/>
+        <location line="+56"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Spazio libero</translation>
@@ -1176,25 +1261,25 @@
     </message>
     <message>
         <location line="+42"/>
-        <location line="+347"/>
+        <location line="+339"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-38"/>
         <source>Catalogs</source>
         <translation>Cataloghi</translation>
     </message>
     <message>
-        <location line="-302"/>
-        <location line="+2564"/>
+        <location line="-294"/>
+        <location line="+2556"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Dimensione totale file</translation>
     </message>
     <message>
-        <location line="-2526"/>
+        <location line="-2518"/>
         <source>Total Number of Files</source>
         <translation>Numero totale di file</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="-1230"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aggiorna tutti i cataloghi che sono attivi, se il dispositivo è disponibile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1204,7 +1289,7 @@
         <translation>Tutti attivi</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+1277"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importa una lista di volumi da VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1224,12 +1309,12 @@
         <translation>&lt;&lt;</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+77"/>
         <source>Tree options</source>
         <translation>Opzioni albero</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+16"/>
         <source>Display the *Physical Group* and its related Devices.</source>
         <translation>Visualizza il *Gruppo fisico* e i suoi dispositivi correlati.</translation>
     </message>
@@ -1280,8 +1365,8 @@
     </message>
     <message>
         <location line="+65"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-109"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+19"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+31"/>
         <source>Explore</source>
         <translation>Esplora</translation>
     </message>
@@ -1299,8 +1384,8 @@
         <location line="+100"/>
         <location line="+1962"/>
         <location line="+620"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="-97"/>
-        <location line="+90"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
+        <location line="+94"/>
         <location line="+38"/>
         <source>Number of Files</source>
         <translation>Numero di file</translation>
@@ -1505,8 +1590,8 @@
         <location line="+66"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-62"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-227"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
+        <location line="+239"/>
         <location line="+252"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Path</source>
@@ -1757,7 +1842,7 @@
     <message>
         <location line="+34"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-361"/>
+        <location filename="../mainwindow_setup.cpp" line="-360"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
@@ -1865,8 +1950,8 @@
     <message>
         <location line="+22"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+15"/>
-        <location line="+56"/>
-        <location line="+54"/>
+        <location line="+66"/>
+        <location line="+63"/>
         <source>Edit</source>
         <translation>Modifica</translation>
     </message>
@@ -1977,7 +2062,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow.cpp" line="+268"/>
+        <location filename="../mainwindow.cpp" line="+276"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -2087,7 +2172,7 @@
         <translation>Lingua e tema</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+54"/>
+        <location filename="../mainwindow.cpp" line="+59"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-289"/>
         <location line="+243"/>
         <location line="+7"/>
@@ -2132,20 +2217,21 @@
         <translation>1- Seleziona un&apos;intera unità o directory, &lt;br/&gt;2- seleziona opzioni, e &lt;br/&gt;3- clicca &apos;Crea&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+228"/>
+        <location line="+227"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Questa è la versione: v%1 &lt;br/&gt;&lt;br/&gt;Una nuova versione è disponibile: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Trova l&apos;elenco delle nuove funzionalità nelle &lt;a href=&apos;%3&apos;&gt;Note di rilascio&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vuoi scaricarla?</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-14"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-484"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-500"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+1"/>
         <source>Mapping Name</source>
         <translation>Nome mappatura</translation>
     </message>
@@ -2157,8 +2243,8 @@
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-476"/>
-        <location line="+223"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-492"/>
+        <location line="+239"/>
         <location line="+252"/>
         <source>Active</source>
         <translation>Attivo</translation>
@@ -2252,7 +2338,7 @@
         <translation>Seleziona un&apos;origine o destinazione diversa (un dispositivo non deve essere mappato su se stesso).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+61"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-325"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -2265,53 +2351,33 @@
         <translation>Rimuovi questa directory</translation>
     </message>
     <message>
-        <location line="+121"/>
-        <source>Catalog creation failed: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Catalog operation was cancelled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="+250"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Fornisci un nome per questo nuovo catalogo.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
         <translation>Fornisci un percorso per questo nuovo catalogo.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
         <translation>Seleziona un&apos;archiviazione per questo nuovo catalogo.&lt;br/&gt;(Pannello di selezione a sinistra e lista a discesa)</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Source directory does not exist.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>The selected directory is empty. Do you want to create an empty catalog?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location line="+34"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Esiste già un catalogo con questo nome:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1032"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1014"/>
         <source>Choose a different name and try again.</source>
         <translation>Scegli un nome diverso e riprova.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-372"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-415"/>
         <source>Virtual Group</source>
         <translation>Gruppo virtuale</translation>
     </message>
@@ -2321,13 +2387,13 @@
         <translation>Un dispositivo virtuale può essere aggiunto solo a un altro dispositivo virtuale.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+170"/>
-        <location line="+56"/>
+        <location line="+194"/>
+        <location line="+66"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-56"/>
         <source>Unassign this catalog</source>
         <translation>Rimuovi assegnazione catalogo</translation>
     </message>
@@ -2337,7 +2403,7 @@
         <translation>Elimina questo catalogo</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+58"/>
         <source>Unassign this storage</source>
         <translation>Rimuovi assegnazione archiviazione</translation>
     </message>
@@ -2347,7 +2413,7 @@
         <translation>Elimina questa archiviazione</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+48"/>
         <source>Add Virtual device</source>
         <translation>Aggiungi dispositivo virtuale</translation>
     </message>
@@ -3056,7 +3122,7 @@ nel cestino?</translation>
         <translation>Esci dall&apos;applicazione</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+59"/>
         <source>Select the database to open:</source>
         <translation>Seleziona il database da aprire:</translation>
     </message>
@@ -3106,12 +3172,12 @@ nel cestino?</translation>
         <translation>Esportazione fallita: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_statistics.cpp" line="-70"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="-80"/>
         <source>All device records</source>
         <translation>Tutti i record dispositivi</translation>
     </message>
     <message>
-        <location line="+177"/>
+        <location line="+187"/>
         <source>of</source>
         <translation>di</translation>
     </message>
@@ -3119,6 +3185,13 @@ nel cestino?</translation>
         <location filename="../mainwindow_tab_tags.cpp" line="+91"/>
         <source>Remove this tag</source>
         <translation>Rimuovi questo tag</translation>
+    </message>
+</context>
+<context>
+    <name>Mainwindow</name>
+    <message>
+        <source>Catalog</source>
+        <translation type="obsolete">Catalogo</translation>
     </message>
 </context>
 <context>
