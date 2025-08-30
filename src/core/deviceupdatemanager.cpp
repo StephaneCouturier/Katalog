@@ -587,7 +587,6 @@ void DeviceUpdateManager::updateStorageDevice(Device* device)
                         qDebug() << "Virtual storage tracking - Accumulated storage device results";
                     }
 
-                    m_processedStorageDevices++;
                     qDebug() << "Virtual storage summary - Processed devices:" << m_processedStorageDevices;
                     qDebug() << "  Total free space:" << m_virtualStorageUpdateResult.newFreeSpace;
                     qDebug() << "  Total total space:" << m_virtualStorageUpdateResult.newTotalSpace;
@@ -1109,11 +1108,12 @@ void DeviceUpdateManager::handleOperationCancellation()
     cleanupOperation();
 }
 
+// In DeviceUpdateManager::completeOperation() - add Virtual device statistics saving:
+
 void DeviceUpdateManager::completeOperation()
 {
     qDebug() << "=== DeviceUpdateManager::completeOperation ===";
 
-    // Prevent duplicate completion
     if (!m_operationRunning) {
         qDebug() << "*** SKIPPING completeOperation - operation already completed ***";
         return;
@@ -1135,7 +1135,6 @@ void DeviceUpdateManager::completeOperation()
     m_operationRunning = false;
     m_waitingForCatalogCompletion = false;
 
-    // Determine result format based on root device type and operation
     QList<qint64> results;
 
     if (m_rootDevice && m_rootDevice->type == "Storage") {
@@ -1144,12 +1143,40 @@ void DeviceUpdateManager::completeOperation()
 
     } else if (m_rootDevice && m_rootDevice->type == "Virtual") {
         qDebug() << "*** VIRTUAL DEVICE COMPLETION - Building virtual device results ***";
+
+        // Save Virtual device statistics after all children processed
+        qDebug() << "Saving Virtual device statistics";
+
+        try {
+            // Update Virtual device's timestamp and aggregated values
+            m_rootDevice->dateTimeUpdated = QDateTime::currentDateTime();
+
+            // The aggregated file counts and sizes should already be updated by updateParentsNumbers() above
+            // but we can log them for verification
+            qDebug() << "Virtual device final stats:";
+            qDebug() << "  Total file count:" << m_rootDevice->totalFileCount;
+            qDebug() << "  Total file size:" << m_rootDevice->totalFileSize;
+            qDebug() << "  Date updated:" << m_rootDevice->dateTimeUpdated.toString("yyyy-MM-dd hh:mm:ss");
+
+            // Save the Virtual device to database with updated timestamp
+            m_rootDevice->saveDevice();
+
+            // Save Virtual device statistics - this records the update event
+            m_rootDevice->saveStatistics(m_rootDevice->dateTimeUpdated, "update");
+
+            qDebug() << "Virtual device statistics saved successfully";
+
+        } catch (const std::exception& e) {
+            qDebug() << "Error saving Virtual device statistics:" << e.what();
+        }
+
+        // Build results (existing code continues...)
         qDebug() << "Virtual stats - Updated catalogs:" << m_updatedCatalogs << "Skipped:" << m_skippedCatalogs;
         qDebug() << "Virtual stats - Total files:" << m_totalCatalogFiles << "Total size:" << m_totalCatalogSize;
         qDebug() << "Virtual stats - Storage updated:" << m_virtualStorageWasUpdated << "Storage devices:" << m_processedStorageDevices;
 
-        // FIXED: Build results array systematically
-        results.clear();  // Ensure clean start
+        // Build results array systematically
+        results.clear();
 
         results << 1;                     // Index 0: Success flag
         results << m_totalCatalogFiles;   // Index 1: Total files from all catalogs
@@ -1181,9 +1208,6 @@ void DeviceUpdateManager::completeOperation()
         }
 
         qDebug() << "Built Virtual results array with" << results.size() << "elements";
-        for (int i = 0; i < results.size(); ++i) {
-            qDebug() << "  results[" << i << "] = " << results[i];
-        }
 
     } else {
         qDebug() << "*** FALLBACK COMPLETION - Using generic format ***";
@@ -1249,10 +1273,6 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
 
     // Update parent numbers for this catalog
     m_currentDevice->updateParentsNumbers();
-
-    // Accumulate results
-    m_totalCatalogFiles += m_currentDevice->totalFileCount;
-    m_totalCatalogSize += m_currentDevice->totalFileSize;
 
     if (m_virtualDeviceBeingProcessed != nullptr && m_currentDevice) {
         qDebug() << "=== VIRTUAL MODE - Counting catalog completion ===";

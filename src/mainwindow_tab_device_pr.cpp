@@ -2920,6 +2920,8 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
 //--------------------------------------------------------------------------
 bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
 {//Provide a report for any combinaison of updates (updateType = create, single, or list) and devices
+    QApplication::restoreOverrideCursor();
+
     QMessageBox msgBox;
     QString message;
     bool reportAvailable;
@@ -3007,11 +3009,15 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
 
     //Storage updates
     if (device->type=="Storage" and updateType=="update"){
+        //Storage
         message += "<br/>";
         message += "<table>";
         message += "<tr><td>"+tr("Storage updated: ")+ "</td><td align='center'><b>" + device->name + "</b></td></tr>";
         message += "<tr><td>"+tr("Path: ")           + "</td><td align='right'> <b>" + device->path + "</b></td></tr>";
         message += "</table>";
+        message += "<br/>";
+
+        //Catalogs
         message += "<br/>";
         message += "<table>";
         message += "<tr><td>" +  tr("Used Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[8])  + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[9])  + "</b>)</td></tr>";
@@ -3026,7 +3032,23 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
         reportAvailable = true;
     }
     if (updateType=="list"){
-        if(list[0]==1){//Catalog updated
+        if(list[0]==1){
+            if(list[7]==1){//Storage updated
+                message += "<br/>";
+                message += "<table>";
+                message += "<tr><td>"+tr("Storage updated: ")+ "</td><td align='center'><b>" + device->name + "</b></td></tr>";
+                message += "<tr><td>"+tr("Path: ")           + "</td><td align='right'> <b>" + device->path + "</b></td></tr>";
+                message += "</table>";
+                message += "<br/>";
+                message += "<table>";
+                message += "<tr><td>" +  tr("Used Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[8])  + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[9])  + "</b>)</td></tr>";
+                message += "<tr><td>" +  tr("Free Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[10]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[11]) + "</b>)</td></tr>";
+                message += "<tr><td>" + tr("Total Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[12]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[13]) + "</b>)</td></tr>";
+                message += "</table>";
+                reportAvailable = true;
+            }
+
+            //Catalog updated
             message = QString(tr("<table>"
                                  "<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
             message += QString(
@@ -3041,20 +3063,7 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
             reportAvailable = true;
         }
 
-        if(list[7]==1){//Storage updated
-            message += "<br/>";
-            message += "<table>";
-            message += "<tr><td>"+tr("Storage updated: ")+ "</td><td align='center'><b>" + device->name + "</b></td></tr>";
-            message += "<tr><td>"+tr("Path: ")           + "</td><td align='right'> <b>" + device->path + "</b></td></tr>";
-            message += "</table>";
-            message += "<br/>";
-            message += "<table>";
-            message += "<tr><td>" +  tr("Used Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[8])  + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[9])  + "</b>)</td></tr>";
-            message += "<tr><td>" +  tr("Free Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[10]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[11]) + "</b>)</td></tr>";
-            message += "<tr><td>" + tr("Total Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[12]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[13]) + "</b>)</td></tr>";
-            message += "</table>";
-            reportAvailable = true;
-        }
+
 
         if(list[0]==1 or list[7]==1){
             msgBox.setWindowTitle("Katalog");
@@ -3082,13 +3091,12 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
          }
 
         // Report child storage updates if any occurred
-        if(list[7]==1){//Storage updated during virtual device processing
-            //int storageCount = (list.size() > 14) ? list[14] : 1;  // Use count if available, fallback to 1
-            //int storageCount = 999;
+        if(list[7]==1){
+            //Storage
             int storageCount = deviceUpdateManager ? deviceUpdateManager->getProcessedStorageDevices() : 0;
 
             message += "<table>";
-            message += "<tr><td>"+tr("Storage updated: ")+ "</td><td align='center'><b>" + tr("%1 storage devices").arg(storageCount) + "</b></td></tr>";
+            message += "<tr><td>"+tr("Storage updated: ")+ "</td><td align='center'><b>" + tr("%1").arg(storageCount) + "</b></td></tr>";
             message += "</table>";
             message += "<br/>";
 
@@ -3099,6 +3107,9 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
             message += "<tr><td>" + tr("Total Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[12]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[13]) + "</b>)</td></tr>";
             message += "</table>";
             message += "<br/>";
+
+            //Catalogs
+            message += QString(tr("<br/>Catalogs updated:<b> %1 </b>(%2 skipped)<br/>")).arg(QString::number(list[5]),QString::number(list[6]));
             message += "<table>";
             message += QString(
                            "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
@@ -3107,8 +3118,7 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
                                 QString::number(list[2]),
                                 QLocale().formattedDataSize(list[3]),
                                 QLocale().formattedDataSize(list[4]));
-            message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs, %2 skipped Catalogs")).arg(QString::number(list[5]),QString::number(list[6]));
-
+            message += "</table>";
             } else {
                 message += "<p>" + tr("Storage space information not available") + "</p>";
             }
