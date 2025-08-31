@@ -41,7 +41,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 # Use dedicated build directory outside of synced source
 BUILD_BASE_DIR="/home/shared/Development/Katalog/Build/AppImage"
 BUILD_DIR="$BUILD_BASE_DIR/build-appimage"
@@ -478,7 +478,7 @@ EOF
   </provides>
   <content_rating type="oars-1.1"/>
   <releases>
-    <release version="2.6" date="2024-07-26"/>
+    <release version="2.7" date="2025-08-31"/>
   </releases>
 </component>
 EOF
@@ -515,7 +515,7 @@ create_appimage() {
     export PATH="$LINUXDEPLOY_DIR:$PATH"
 
     # Get version info
-    local version="2.6-$(date +%Y%m%d-%H%M)"
+    local version="2.7-$(date +%Y%m%d-%H%M)"
     local appimage_name="Katalog-$version-x86_64.AppImage"
 
     # Verify AppDir structure

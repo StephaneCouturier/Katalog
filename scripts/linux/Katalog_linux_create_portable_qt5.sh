@@ -19,7 +19,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Katalog; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#
+#testse
 #/////////////////////////////////////////////////////////////////////////////
 # Application: Katalog
 # File Name:   Katalog_linux_create_portable.sh
@@ -77,25 +77,25 @@ check_executable() {
 
 # Detect Qt installation path
 detect_qt_installation() {
-    print_step "Detecting Qt6 installation path"
+    print_step "Detecting Qt5 installation path"
     
-    # Get Qt6Core path from your executable
-    QT_CORE_PATH=$(ldd "$EXECUTABLE_PATH" | grep "libQt6Core.so.6" | awk '{print $3}')
+    # Get Qt5Core path from your executable
+    QT_CORE_PATH=$(ldd "$EXECUTABLE_PATH" | grep "libQt5Core.so.5" | awk '{print $3}')
     
     if [ -z "$QT_CORE_PATH" ]; then
-        print_error "Could not detect Qt6Core path from executable"
+        print_error "Could not detect Qt5Core path from executable"
         exit 1
     fi
     
-    echo "📍 Qt6Core found at: $QT_CORE_PATH"
+    echo "📍 Qt5Core found at: $QT_CORE_PATH"
     
     if [ "$USE_SYSTEM_QT" = "true" ]; then
         # System Qt mode: use whatever Qt the executable is linked to
         QT_LIB_DIR=$(dirname "$QT_CORE_PATH")
         QT_INSTALL_DIR=$(dirname "$QT_LIB_DIR")
-        print_success "Using system Qt6 installation (wherever executable is linked)"
-        echo "📍 System Qt6 lib directory: $QT_LIB_DIR"
-        echo "📍 System Qt6 installation: $QT_INSTALL_DIR"
+        print_success "Using system Qt5 installation (wherever executable is linked)"
+        echo "📍 System Qt5 lib directory: $QT_LIB_DIR"
+        echo "📍 System Qt5 installation: $QT_INSTALL_DIR"
     else
         # Specific Qt installation mode: try to use your custom Qt installation
         if echo "$QT_CORE_PATH" | grep -q "/home/shared/Development/Qt/6.9.1/"; then
@@ -104,9 +104,9 @@ detect_qt_installation() {
             QT_INSTALL_DIR=$(dirname "$QT_LIB_DIR")
             print_success "Using your Qt 6.9.1 installation"
         else
-            # Executable is linked to system Qt6, but we want to use your Qt installation
-            print_warning "Executable is linked to system Qt6, but we'll use your Qt installation"
-            echo "System Qt6 path: $QT_CORE_PATH"
+            # Executable is linked to system Qt5, but we want to use your Qt installation
+            print_warning "Executable is linked to system Qt5, but we'll use your Qt installation"
+            echo "System Qt5 path: $QT_CORE_PATH"
             
             # Try to find your Qt installation
             EXPECTED_QT_PATH="/home/shared/Development/Qt/6.9.1"
@@ -129,7 +129,7 @@ detect_qt_installation() {
                 echo "  - $EXPECTED_QT_PATH/lib"
                 echo ""
                 echo "Suggestions:"
-                echo "  1. Use --use-system-qt to use the Qt6 your executable is linked to"
+                echo "  1. Use --use-system-qt to use the Qt5 your executable is linked to"
                 echo "  2. Update EXPECTED_QT_PATH in the script to match your Qt installation"
                 echo "  3. Rebuild your executable against the correct Qt installation"
                 exit 1
@@ -137,12 +137,12 @@ detect_qt_installation() {
         fi
     fi
     
-    echo "📍 Using Qt6 lib directory: $QT_LIB_DIR"
-    echo "📍 Using Qt6 installation: $QT_INSTALL_DIR"
+    echo "📍 Using Qt5 lib directory: $QT_LIB_DIR"
+    echo "📍 Using Qt5 installation: $QT_INSTALL_DIR"
     
-    # Verify Qt6Core exists in our chosen location
-    if [ ! -f "$QT_LIB_DIR/libQt6Core.so.6" ]; then
-        print_error "libQt6Core.so.6 not found in: $QT_LIB_DIR"
+    # Verify Qt5Core exists in our chosen location
+    if [ ! -f "$QT_LIB_DIR/libQt5Core.so.5" ]; then
+        print_error "libQt5Core.so.5 not found in: $QT_LIB_DIR"
         exit 1
     fi
     
@@ -150,9 +150,9 @@ detect_qt_installation() {
     if [ "$USE_SYSTEM_QT" = "true" ]; then
         # For system Qt, try common plugin locations
         possible_plugin_dirs=(
-            "/usr/lib64/qt6/plugins"
-            "/usr/lib/qt6/plugins" 
-            "/usr/lib/x86_64-linux-gnu/qt6/plugins"
+            "/usr/lib64/Qt5/plugins"
+            "/usr/lib/Qt5/plugins"
+            "/usr/lib/x86_64-linux-gnu/Qt5/plugins"
             "$QT_INSTALL_DIR/plugins"
         )
         
@@ -160,25 +160,25 @@ detect_qt_installation() {
         for plugin_dir in "${possible_plugin_dirs[@]}"; do
             if [ -d "$plugin_dir" ]; then
                 QT_PLUGINS_DIR="$plugin_dir"
-                echo "📍 Qt6 plugins directory: $QT_PLUGINS_DIR"
+                echo "📍 Qt5 plugins directory: $QT_PLUGINS_DIR"
                 break
             fi
         done
         
         if [ -z "$QT_PLUGINS_DIR" ]; then
-            print_warning "Qt6 plugins directory not found in common locations"
+            print_warning "Qt5 plugins directory not found in common locations"
             echo "Searched: ${possible_plugin_dirs[*]}"
         else
-            print_success "Qt6 installation detected successfully"
+            print_success "Qt5 installation detected successfully"
         fi
     else
         # For specific Qt installations
         QT_PLUGINS_DIR="$QT_INSTALL_DIR/plugins"
         if [ -d "$QT_PLUGINS_DIR" ]; then
-            echo "📍 Qt6 plugins directory: $QT_PLUGINS_DIR"
-            print_success "Qt6 installation detected successfully"
+            echo "📍 Qt5 plugins directory: $QT_PLUGINS_DIR"
+            print_success "Qt5 installation detected successfully"
         else
-            print_warning "Qt6 plugins directory not found at: $QT_PLUGINS_DIR"
+            print_warning "Qt5 plugins directory not found at: $QT_PLUGINS_DIR"
             echo "Will search for plugins in other locations"
         fi
     fi
@@ -241,25 +241,25 @@ copy_library_with_symlinks() {
     fi
 }
 
-# Copy ALL Qt6 libraries from the detected installation
+# Copy ALL Qt5 libraries from the detected installation
 copy_qt_libraries() {
     if [ "$USE_SYSTEM_QT" = "true" ]; then
-        print_step "Copying ALL Qt6 libraries from system Qt installation"
+        print_step "Copying ALL Qt5 libraries from system Qt installation"
     else
-        print_step "Copying ALL Qt6 libraries from detected installation"
+        print_step "Copying ALL Qt5 libraries from detected installation"
     fi
     
-    echo "📋 Copying Qt6 libraries from: $QT_LIB_DIR"
+    echo "📋 Copying Qt5 libraries from: $QT_LIB_DIR"
     echo ""
     
     local qt_lib_count=0
     
-    # Get the actual Qt6 libraries the executable needs from ldd
-    echo "🎯 Getting Qt6 libraries from ldd output..."
+    # Get the actual Qt5 libraries the executable needs from ldd
+    echo "🎯 Getting Qt5 libraries from ldd output..."
     
-    # Parse ldd output to get Qt6 library paths
-    ldd "$EXECUTABLE_PATH" | grep "libQt6" | while read -r line; do
-        # Extract library path from ldd line (format: "libQt6Xyz.so.6 => /path/to/lib (address)")
+    # Parse ldd output to get Qt5 library paths
+    ldd "$EXECUTABLE_PATH" | grep "libQt5" | while read -r line; do
+        # Extract library path from ldd line (format: "libQt5Xyz.so.5 => /path/to/lib (address)")
         lib_path=$(echo "$line" | sed -n 's/.*=> \([^ ]*\) .*/\1/p')
         lib_name=$(basename "$lib_path")
         
@@ -272,31 +272,31 @@ copy_qt_libraries() {
     done
     
     # Count how many we actually copied
-    qt_lib_count=$(find "$OUTPUT_DIR/lib" -name "libQt6*.so.6*" | wc -l)
+    qt_lib_count=$(find "$OUTPUT_DIR/lib" -name "libQt5*.so.5*" | wc -l)
     
-    # Copy the critical libQt6XcbQpa.so.6 from the same installation (if not already copied)
-    if [ -f "$QT_LIB_DIR/libQt6XcbQpa.so.6" ]; then
-        copy_library_with_symlinks "$QT_LIB_DIR/libQt6XcbQpa.so.6"
+    # Copy the critical libQt5XcbQpa.so.5 from the same installation (if not already copied)
+    if [ -f "$QT_LIB_DIR/libQt5XcbQpa.so.5" ]; then
+        copy_library_with_symlinks "$QT_LIB_DIR/libQt5XcbQpa.so.5"
         if [ "$USE_SYSTEM_QT" = "true" ]; then
-            echo "  ✅ Ensured libQt6XcbQpa.so.6 from system Qt installation"
+            echo "  ✅ Ensured libQt5XcbQpa.so.5 from system Qt installation"
         else
-            echo "  ✅ Ensured libQt6XcbQpa.so.6 from your Qt installation"
+            echo "  ✅ Ensured libQt5XcbQpa.so.5 from your Qt installation"
         fi
     else
         if [ "$USE_SYSTEM_QT" = "true" ]; then
-            print_warning "libQt6XcbQpa.so.6 not found in system Qt installation"
+            print_warning "libQt5XcbQpa.so.5 not found in system Qt installation"
         else
-            print_warning "libQt6XcbQpa.so.6 not found in your Qt installation"
+            print_warning "libQt5XcbQpa.so.5 not found in your Qt installation"
         fi
     fi
     
     echo ""
-    echo "📊 Total Qt6 libraries copied: $qt_lib_count"
+    echo "📊 Total Qt5 libraries copied: $qt_lib_count"
     
     if [ "$USE_SYSTEM_QT" = "true" ]; then
-        print_success "Qt6 libraries copied from system installation"
+        print_success "Qt5 libraries copied from system installation"
     else
-        print_success "Qt6 libraries copied from your installation"
+        print_success "Qt5 libraries copied from your installation"
     fi
 }
 
@@ -304,10 +304,10 @@ copy_qt_libraries() {
 copy_other_dependencies() {
     print_step "Copying other dependencies"
     
-    echo "📋 Processing non-Qt6 dependencies..."
+    echo "📋 Processing non-Qt5 dependencies..."
     echo ""
     
-    # Process ldd output for non-Qt6 libraries
+    # Process ldd output for non-Qt5 libraries
     ldd "$EXECUTABLE_PATH" | while read line; do
         if echo "$line" | grep -q "vdso\|linux-vdso"; then
             continue
@@ -318,12 +318,12 @@ copy_other_dependencies() {
         if [ -n "$lib_path" ] && [ "$lib_path" != "not" ] && [ -f "$lib_path" ]; then
             lib_name=$(basename "$lib_path")
             
-            # Skip Qt6 libraries (we already copied them)
-            if echo "$lib_name" | grep -q "^libQt6"; then
+            # Skip Qt5 libraries (we already copied them)
+            if echo "$lib_name" | grep -q "^libQt5"; then
                 continue
             fi
             
-            # Copy important non-Qt6 libraries
+            # Copy important non-Qt5 libraries
             case "$lib_name" in
                 # Always copy KF6
                 libKF6*)
@@ -364,16 +364,16 @@ copy_other_dependencies() {
     print_success "Other dependencies copied"
 }
 
-# Copy Qt6 plugins from the correct installation
+# Copy Qt5 plugins from the correct installation
 copy_qt_plugins() {
     if [ "$USE_SYSTEM_QT" = "true" ]; then
-        print_step "Copying Qt6 plugins from system Qt installation"
+        print_step "Copying Qt5 plugins from system Qt installation"
     else
-        print_step "Copying Qt6 plugins from detected installation"
+        print_step "Copying Qt5 plugins from detected installation"
     fi
     
     if [ -z "$QT_PLUGINS_DIR" ] || [ ! -d "$QT_PLUGINS_DIR" ]; then
-        print_warning "Qt6 plugins directory not found or not set: $QT_PLUGINS_DIR"
+        print_warning "Qt5 plugins directory not found or not set: $QT_PLUGINS_DIR"
         print_warning "Application may not work properly without platform plugins"
         return
     fi
@@ -396,9 +396,9 @@ copy_qt_plugins() {
     echo "📊 Total plugins copied: $total_plugins"
     
     if [ "$USE_SYSTEM_QT" = "true" ]; then
-        print_success "Qt6 plugins copied from system installation"
+        print_success "Qt5 plugins copied from system installation"
     else
-        print_success "Qt6 plugins copied from your installation"
+        print_success "Qt5 plugins copied from your installation"
     fi
 }
 
@@ -495,10 +495,10 @@ if [ "$KATALOG_VERBOSE" = "1" ]; then
     echo "Plugins: $(find "$dirname/plugins" -name "*.so" 2>/dev/null | wc -l)"
     echo ""
     echo "KF6 Icon Support Check:"
-    if [ -f "$dirname/lib/libKF6BreezeIcons.so.6" ]; then
-        echo "  ✅ libKF6BreezeIcons.so.6 found in portable lib"
+    if [ -f "$dirname/lib/libKF6BreezeIcons.so.5" ]; then
+        echo "  ✅ libKF6BreezeIcons.so.5 found in portable lib"
     else
-        echo "  ❌ libKF6BreezeIcons.so.6 NOT found in portable lib"
+        echo "  ❌ libKF6BreezeIcons.so.5 NOT found in portable lib"
     fi
 
     if [ -d "$dirname/share/icons/breeze" ]; then
@@ -548,18 +548,18 @@ echo "============================================"
 export LD_LIBRARY_PATH="\$(pwd)/lib:\$LD_LIBRARY_PATH"
 export QT_PLUGIN_PATH="\$(pwd)/plugins:\$QT_PLUGIN_PATH"
 
-# Check Qt6 libraries
-echo "🔍 Qt6 libraries in portable distribution:"
-find lib -name "libQt6*.so.6" | while read qt_lib; do
+# Check Qt5 libraries
+echo "🔍 Qt5 libraries in portable distribution:"
+find lib -name "libQt5*.so.5" | while read qt_lib; do
     echo "  • \$(basename "\$qt_lib")"
 done
 
 echo ""
-echo "🔍 Critical check - libQt6XcbQpa.so.6:"
-if [ -f "lib/libQt6XcbQpa.so.6" ]; then
-    echo "✅ libQt6XcbQpa.so.6 found in portable lib"
+echo "🔍 Critical check - libQt5XcbQpa.so.5:"
+if [ -f "lib/libQt5XcbQpa.so.5" ]; then
+    echo "✅ libQt5XcbQpa.so.5 found in portable lib"
 else
-    echo "❌ libQt6XcbQpa.so.6 NOT found in portable lib"
+    echo "❌ libQt5XcbQpa.so.5 NOT found in portable lib"
 fi
 
 # Check platform plugin dependencies
@@ -624,12 +624,12 @@ parse_arguments() {
                 echo "Options:"
                 echo "  --include-all      Copy all non-system libraries"
                 echo "  --selective        Copy only essential libraries (default)"
-                echo "  --use-system-qt    Use system Qt6 installation (wherever executable is linked)"
+                echo "  --use-system-qt    Use system Qt5 installation (wherever executable is linked)"
                 echo "  --help             Show this help"
                 echo ""
                 echo "Qt Installation Modes:"
                 echo "  Default: Uses specific Qt installation at /home/shared/Development/Qt/6.9.1/"
-                echo "  --use-system-qt: Uses whatever Qt6 the executable is currently linked to"
+                echo "  --use-system-qt: Uses whatever Qt5 the executable is currently linked to"
                 echo ""
                 echo "Examples:"
                 echo "  $0 ./build/Katalog ./katalog-portable-qt-fixed"
@@ -702,7 +702,7 @@ main() {
     print_success "Qt portable distribution created!"
     echo ""
     echo -e "${YELLOW}Output directory: $OUTPUT_DIR${NC}"
-    echo -e "${YELLOW}Qt6 installation used: $QT_INSTALL_DIR${NC}"
+    echo -e "${YELLOW}Qt5 installation used: $QT_INSTALL_DIR${NC}"
     echo -e "${YELLOW}Qt mode: $qt_mode_display${NC}"
     echo -e "${YELLOW}Libraries: $(find "$OUTPUT_DIR/lib" -name "*.so*" -type f | wc -l)${NC}"
     echo -e "${YELLOW}Symlinks: $(find "$OUTPUT_DIR/lib" -type l | wc -l)${NC}"
