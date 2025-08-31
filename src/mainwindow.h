@@ -52,10 +52,9 @@
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KActionCollection>
-#ifdef Q_OS_LINUX
+#include <KLocalizedString>
 #include <KIconTheme>
 #include <KIconLoader>
-#endif
 
 //QtWidget
 #include <QMainWindow>

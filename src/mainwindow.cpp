@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 {
     //Set current version, release date, and development mode
     currentVersion  = "2.7";
-    releaseDate     = "2025-08-30";
+    releaseDate     = "2025-08-31";
 
     // Initialize objects first
     collection = new Collection();
@@ -102,11 +102,8 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->setupUi(this);
 
             // Add Quit shortcut
-            QAction *quitAction = new QAction(this);
-            connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
-            actionCollection()->addAction(QStringLiteral("quit"), quitAction);
-            quitAction->setShortcut(Qt::CTRL | Qt::Key_Q); // Set the shortcut to Ctrl+Q
-            setupGUI();
+            QShortcut *quitShortcut = new QShortcut(QKeySequence::Quit, this);
+            connect(quitShortcut, &QShortcut::activated, qApp, &QApplication::quit);
 
             // Hide status bar initially
             statusBar()->hide();
