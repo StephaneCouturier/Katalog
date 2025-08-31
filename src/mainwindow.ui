@@ -490,7 +490,7 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset theme="collapse"/>
+                   <iconset theme="go-up"/>
                   </property>
                  </widget>
                 </item>
@@ -522,7 +522,7 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset theme="expand"/>
+                   <iconset theme="go-down"/>
                   </property>
                  </widget>
                 </item>
@@ -6407,7 +6407,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="collapse"/>
+                    <iconset theme="go-up"/>
                    </property>
                   </widget>
                  </item>
@@ -6439,7 +6439,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="expand"/>
+                    <iconset theme="go-down"/>
                    </property>
                   </widget>
                  </item>
