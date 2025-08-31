@@ -33,14 +33,52 @@ jobs:
 
     - name: Install dependencies via Homebrew
       run: |
+        # Show what's already installed to help debug conflicts
+        echo "=== Pre-installed tools ==="
+        echo "cmake: $(command -v cmake && cmake --version | head -1 || echo 'not found')"
+        echo "ninja: $(command -v ninja && ninja --version || echo 'not found')"
+        echo "qmake: $(command -v qmake && qmake --version | head -1 || echo 'not found')"
+        echo ""
+        
         # Update Homebrew
         brew update
 
-        # Install build tools
-        brew install cmake ninja
+        # Handle cmake installation (may be pre-installed from different tap)
+        if command -v cmake >/dev/null 2>&1; then
+          echo "cmake already installed: $(cmake --version)"
+          CMAKE_INSTALLED=true
+        else
+          CMAKE_INSTALLED=false
+        fi
 
-        # Install Qt6
-        brew install qt@6
+        if [ "$CMAKE_INSTALLED" = "false" ]; then
+          brew install cmake
+        else
+          echo "Using existing cmake installation"
+        fi
+
+        # Install ninja (less likely to have conflicts)
+        if ! command -v ninja >/dev/null 2>&1; then
+          brew install ninja
+        else
+          echo "ninja already installed: $(ninja --version)"
+        fi
+
+        # Install Qt6 (check if already installed first)
+        if brew list qt@6 >/dev/null 2>&1; then
+          echo "Qt6 already installed"
+        else
+          echo "Installing Qt6..."
+          brew install qt@6
+        fi
+
+        # Install imagemagick for icon conversion
+        if ! command -v convert >/dev/null 2>&1; then
+          echo "Installing ImageMagick for icon conversion..."
+          brew install imagemagick
+        else
+          echo "ImageMagick already available"
+        fi
 
         # Install KDE Frameworks 6 (KF6)
         # Note: KF6 might not be fully available on Homebrew yet, so we'll try different approaches
