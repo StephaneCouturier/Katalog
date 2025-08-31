@@ -15,11 +15,13 @@ on:
       target_branch:
         description: 'Branch to build from'
         required: false
-        default: 'macos-legacy-build'
+        default: 'macos-legacy-build_test1'
 
   # Trigger on push to the legacy macOS branch
   push:
-    branches: [ macos-legacy-build ]
+    branches: 
+      - macos-legacy-build
+      - macos-legacy-build_test1
     paths-ignore:
       - 'docs/**'
       - '*.md'
@@ -33,8 +35,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        # Use the legacy branch or specified branch from workflow dispatch
-        ref: ${{ github.event.inputs.target_branch || 'macos-legacy-build' }}
+        # Use the branch that triggered the workflow, or specified branch from manual dispatch
+        ref: ${{ github.event.inputs.target_branch || github.ref }}
         submodules: recursive
 
     - name: Install dependencies via Homebrew
