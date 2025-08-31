@@ -1,5 +1,5 @@
-name: Build macOS App Bundle
-#v1 - macOS Qt6/KF6 build
+name: Build macOS App Bundle (Qt5/KF5)
+#v1 - macOS Qt5/KF5 build for better compatibility
 on:
   # Trigger on new releases
   release:
@@ -11,7 +11,7 @@ on:
       version_tag:
         description: 'Version tag (e.g., v2.6.1)'
         required: false
-        default: 'dev-build-macos'
+        default: 'dev-build-macos-qt5'
 
   # Optional: trigger on push to main
   push:
@@ -64,12 +64,12 @@ jobs:
           echo "ninja already installed: $(ninja --version)"
         fi
 
-        # Install Qt6 (check if already installed first)
-        if brew list qt@6 >/dev/null 2>&1; then
-          echo "Qt6 already installed"
+        # Install Qt5 (instead of Qt6 for macOS compatibility)
+        if brew list qt@5 >/dev/null 2>&1; then
+          echo "Qt5 already installed"
         else
-          echo "Installing Qt6..."
-          brew install qt@6
+          echo "Installing Qt5..."
+          brew install qt@5
         fi
 
         # Install imagemagick for icon conversion
@@ -80,19 +80,22 @@ jobs:
           echo "ImageMagick already available"
         fi
 
-        # Install KDE Frameworks 6 (KF6)
-        # Note: KF6 might not be fully available on Homebrew yet, so we'll try different approaches
-        echo "Attempting to install KF6 packages..."
+        # Install KDE Frameworks 5 (KF5) - more mature and available on Homebrew
+        echo "Installing KF5 packages..."
         
-        # Try to install KF6 packages if available
-        brew install extra-cmake-modules || echo "extra-cmake-modules not available via brew"
+        # Install extra-cmake-modules (required for KF5)
+        brew install extra-cmake-modules
         
-        # For now, we may need to build without KF6 or with minimal KF6 support
-        # Let's check what's available
-        echo "Checking available KDE/KF packages..."
-        brew search kf6 || echo "No KF6 packages found"
-        brew search kf5 || echo "No KF5 packages found" 
-        brew search kde || echo "No KDE packages found"
+        # Install KF5 packages (try the available ones)
+        brew install kf5-kcoreaddons || echo "kf5-kcoreaddons not available, trying alternatives..."
+        brew install kf5-ki18n || echo "kf5-ki18n not available"  
+        brew install kf5-kxmlgui || echo "kf5-kxmlgui not available"
+        brew install kf5-kconfig || echo "kf5-kconfig not available"
+        brew install kf5-kiconthemes || echo "kf5-kiconthemes not available"
+        
+        # Check what KF5 packages are actually available
+        echo "Checking available KF5 packages..."
+        brew search kf5 | head -10 || echo "No KF5 packages found via search"
 
     - name: Set Qt6 environment
       run: |
@@ -109,45 +112,61 @@ jobs:
         echo "Available Qt6 libraries:"
         ls -la "$(brew --prefix qt@6)/lib" | grep -E "Qt6.*\.framework|libQt6.*\.dylib" | head -10
 
-    - name: Prepare build without full KF6 (fallback)
+    - name: Prepare Qt5/KF5 build configuration
       run: |
-        # Create a modified CMakeLists.txt that can build without full KF6 if needed
-        # We'll try the normal build first, but prepare a fallback
-        
-        echo "Checking if we can build with KF6..."
-        if ! pkg-config --exists KF6CoreAddons 2>/dev/null; then
-          echo "KF6 not fully available. We'll need to modify build configuration."
-          
-          # Create a backup of original CMakeLists.txt
-          cp CMakeLists.txt CMakeLists.txt.original
-          
-          # We might need to create a macOS-specific CMakeLists.txt here
-          echo "Original CMakeLists.txt backed up. Using original for now."
+        # Use the Qt5/KF5 specific CMakeLists.txt file (same as Qt5 Linux workflow)
+        if [ -f "CMakeLists_qt5.txt" ]; then
+          echo "Using Qt5/KF5 specific CMakeLists.txt"
+          cp CMakeLists_qt5.txt CMakeLists.txt
         else
-          echo "KF6 appears to be available."
+          echo "Warning: CMakeLists_qt5.txt not found. The build may not work properly with Qt5/KF5"
+          echo "Available CMakeLists files:"
+          ls -la CMakeLists*.txt || echo "No CMakeLists files found"
+        fi
+
+    - name: Prepare build without full KF5 (fallback)
+      run: |
+        # Check if we can build with KF5
+        echo "Checking if we can build with KF5..."
+        if ! pkg-config --exists KF5CoreAddons 2>/dev/null; then
+          echo "KF5 not fully available via pkg-config. Checking brew installations..."
+          brew list | grep kf5 || echo "No KF5 packages installed"
+          echo "We'll try the build anyway - your Qt5 CMakeLists should handle missing KF5 gracefully"
+        else
+          echo "KF5 appears to be available via pkg-config."
         fi
 
     - name: Set version information
       run: |
         if [ "${{ github.event_name }}" = "release" ]; then
-          echo "VERSION_TAG=${{ github.event.release.tag_name }}-macos" >> $GITHUB_ENV
+          echo "VERSION_TAG=${{ github.event.release.tag_name }}-macos-qt5" >> $GITHUB_ENV
           echo "IS_RELEASE=true" >> $GITHUB_ENV
         elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.version_tag }}" ]; then
           echo "VERSION_TAG=${{ github.event.inputs.version_tag }}" >> $GITHUB_ENV
           echo "IS_RELEASE=false" >> $GITHUB_ENV
         else
-          echo "VERSION_TAG=dev-macos-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
+          echo "VERSION_TAG=dev-macos-qt5-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
           echo "IS_RELEASE=false" >> $GITHUB_ENV
         fi
 
         echo "Building version: $VERSION_TAG"
 
-    - name: Build Katalog
+    - name: Build Katalog with Qt5/KF5
       run: |
         mkdir build
         cd build
 
-        # Configure with CMake
+        # Set Qt5 environment
+        export QT_SELECT=5
+        export CMAKE_PREFIX_PATH="$(brew --prefix qt@5):$(brew --prefix)/lib/cmake"
+        
+        # Try to find KF5 installations
+        if [ -d "$(brew --prefix)/lib/cmake/KF5CoreAddons" ]; then
+          echo "Found KF5CoreAddons in $(brew --prefix)/lib/cmake/KF5CoreAddons"
+          export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$(brew --prefix)/lib/cmake"
+        fi
+
+        # Configure with CMake for Qt5
         cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
@@ -176,7 +195,7 @@ jobs:
         done
 
         # Build the main application
-        echo "Building Katalog..."
+        echo "Building Katalog with Qt5..."
         ninja
 
         # Check if we have a proper macOS app bundle
@@ -234,9 +253,9 @@ jobs:
           fi
         fi
 
-        # Use macdeployqt to handle dependencies
-        echo "Running macdeployqt to bundle Qt libraries..."
-        MACDEPLOYQT="$(brew --prefix qt@6)/bin/macdeployqt"
+        # Use macdeployqt to handle Qt5 dependencies
+        echo "Running macdeployqt to bundle Qt5 libraries..."
+        MACDEPLOYQT="$(brew --prefix qt@5)/bin/macdeployqt"
         
         if [ -f "$MACDEPLOYQT" ]; then
           "$MACDEPLOYQT" Katalog.app -verbose=2 || echo "macdeployqt completed with warnings"
@@ -367,7 +386,8 @@ jobs:
         echo "- **Size**: $(ls -lh build/Katalog-*.dmg 2>/dev/null | awk '{print $5}' || echo 'N/A')" >> $GITHUB_STEP_SUMMARY
         echo "- **Target**: macOS 11.0+ (Big Sur and later)" >> $GITHUB_STEP_SUMMARY
         echo "- **Architecture**: $(uname -m)" >> $GITHUB_STEP_SUMMARY
-        echo "- **Qt Version**: $($(brew --prefix qt@6)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY
+        echo "- **Qt Version**: $($(brew --prefix qt@5)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY
+        echo "- **Framework**: Qt5/KF5 for better macOS compatibility" >> $GITHUB_STEP_SUMMARY
 
         if [ "${{ env.IS_RELEASE }}" = "true" ]; then
           echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY
@@ -377,6 +397,7 @@ jobs:
         
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Notes:" >> $GITHUB_STEP_SUMMARY
-        echo "- The app bundle includes Qt6 frameworks" >> $GITHUB_STEP_SUMMARY
+        echo "- The app bundle includes Qt5 frameworks" >> $GITHUB_STEP_SUMMARY
+        echo "- Uses KF5 (KDE Frameworks 5) for better macOS availability" >> $GITHUB_STEP_SUMMARY
         echo "- Compatible with Apple Silicon and Intel Macs" >> $GITHUB_STEP_SUMMARY
         echo "- May require 'Allow apps from anywhere' on first run" >> $GITHUB_STEP_SUMMARY
