@@ -264,19 +264,39 @@ bool Collection::load()
 void Collection::clearDatabaseData()
 {   //Clear database date in the context of Memory mode, prior to reloading files to tables
     if(databaseMode=="Memory"){
-        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
-        queryDelete.exec("DELETE FROM device");
+
+        // MEMORY SAFETY: Ensure database connection is valid before executing queries
+        QSqlDatabase db = QSqlDatabase::database("defaultConnection");
+        if (!db.isValid() || !db.isOpen()) {
+            qDebug() << "Database connection invalid - skipping clearDatabaseData";
+            return;
+        }
+
+        // Disable foreign key constraints temporarily to avoid constraint violations
+        QSqlQuery pragmaQuery(db);
+        pragmaQuery.exec("PRAGMA foreign_keys = OFF");
+
+        // Execute DELETE queries in dependency order to avoid foreign key issues
+        QSqlQuery queryDelete(db);
+
+        //QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
+        queryDelete.exec("DELETE FROM device_catalog");
+        queryDelete.exec("DELETE FROM virtual_storage_catalog");
+        queryDelete.exec("DELETE FROM virtual_storage");
+        queryDelete.exec("DELETE FROM statistics_catalog");
+        queryDelete.exec("DELETE FROM statistics_storage");
+        queryDelete.exec("DELETE FROM statistics_device");
+        queryDelete.exec("DELETE FROM device_mapping");
+        queryDelete.exec("DELETE FROM tag");
+        queryDelete.exec("DELETE FROM search");
+        queryDelete.exec("DELETE FROM metadata");
+        queryDelete.exec("DELETE FROM folder");
+        queryDelete.exec("DELETE FROM filetemp");
+        queryDelete.exec("DELETE FROM file");
+        queryDelete.exec("DELETE FROM parameter");
         queryDelete.exec("DELETE FROM catalog");
         queryDelete.exec("DELETE FROM storage");
-        queryDelete.exec("DELETE FROM file");
-        queryDelete.exec("DELETE FROM filetemp");
-        queryDelete.exec("DELETE FROM folder");
-        queryDelete.exec("DELETE FROM metadata");
-        queryDelete.exec("DELETE FROM statistics_device");
-        queryDelete.exec("DELETE FROM search");
-        queryDelete.exec("DELETE FROM tag");
-        queryDelete.exec("DELETE FROM parameter");
-        queryDelete.exec("DELETE FROM device_mapping");
+        queryDelete.exec("DELETE FROM device");
 
         //MIGRATION 1.22 to 2.0
         queryDelete.exec("DELETE FROM statistics_catalog");
@@ -284,6 +304,11 @@ void Collection::clearDatabaseData()
         queryDelete.exec("DELETE FROM virtual_storage");
         queryDelete.exec("DELETE FROM virtual_storage_catalog");
         queryDelete.exec("DELETE FROM device_catalog");
+
+        // Re-enable foreign key constraints
+        pragmaQuery.exec("PRAGMA foreign_keys = ON");
+
+        qDebug() << "Database cleared safely with proper constraint handling";
     }
 }
 //----------------------------------------------------------------------

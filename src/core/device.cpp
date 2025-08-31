@@ -66,7 +66,9 @@ void Device::loadDevice(QString connectionName){
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
 
-    if(useTimerForDebug) qDebug() << "      TIMER3: prepare load device query:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
+    if(useTimerForDebug){
+        qDebug() << "      TIMER3: prepare load device query:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
+    }
 
     if (query.exec()) {
         if (query.next()) {

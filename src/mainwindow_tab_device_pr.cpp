@@ -1930,7 +1930,6 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
 
     // Detect Storage batch operations by examining the results
-    bool isStorageBatchOperation = false;
     bool hasMultipleCatalogs = false;
 
     if (results.size() >= 7) {
@@ -1944,7 +1943,6 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
                  << "Storage updated:" << storageUpdated;
 
         if ((updatedCatalogs > 0 || skippedCatalogs > 0) && storageUpdated == 1) {
-            isStorageBatchOperation = true;
             hasMultipleCatalogs = (updatedCatalogs + skippedCatalogs) > 1;
             qDebug() << "Detected Storage batch operation - Multiple catalogs:" << hasMultipleCatalogs;
         }
