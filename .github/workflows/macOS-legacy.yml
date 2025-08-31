@@ -12,16 +12,14 @@ on:
         description: 'Version tag (e.g., v2.5-macos)'
         required: false
         default: 'dev-build-macos-legacy'
-      target_branch:
-        description: 'Branch to build from'
-        required: false
-        default: 'macos-legacy-build_test1'
 
-  # Trigger on push to the legacy macOS branch
+  # Trigger on push to specific macos-legacy branches
   push:
     branches: 
       - macos-legacy-build
       - macos-legacy-build_test1
+      - macos-legacy-build_test2
+      - macos-legacy-build_test3
     paths-ignore:
       - 'docs/**'
       - '*.md'
@@ -35,9 +33,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        # Use the branch that triggered the workflow, or specified branch from manual dispatch
-        ref: ${{ github.event.inputs.target_branch || github.ref }}
+        # Let GitHub Actions automatically checkout the triggering branch
         submodules: recursive
+
+    - name: Verify checkout
+      run: |
+        echo "Current branch: $(git branch --show-current)"
+        echo "Current commit: $(git rev-parse HEAD)"
+        echo "Repository: $(git remote get-url origin)"
+        
+        # Show we're on the right branch/commit
+        git log --oneline -n 3
 
     - name: Install dependencies via Homebrew
       run: |
@@ -131,7 +137,7 @@ jobs:
           echo "VERSION_TAG=${{ github.event.inputs.version_tag }}" >> $GITHUB_ENV
           echo "IS_RELEASE=false" >> $GITHUB_ENV
         else
-          echo "VERSION_TAG=v2.5-macos-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
+          echo "VERSION_TAG=v2.5-macos-$(git branch --show-current)-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
           echo "IS_RELEASE=false" >> $GITHUB_ENV
         fi
 
