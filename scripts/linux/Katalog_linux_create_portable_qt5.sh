@@ -325,8 +325,8 @@ copy_other_dependencies() {
             
             # Copy important non-Qt5 libraries
             case "$lib_name" in
-                # Always copy KF6
-                libKF6*)
+                # Always copy KF5
+                libKF5*)
                     copy_library_with_symlinks "$lib_path"
                     ;;
                 # Copy important support libraries
@@ -402,9 +402,9 @@ copy_qt_plugins() {
     fi
 }
 
-# Copy KF6 icon themes for portable distribution
-copy_kf6_icon_themes() {
-    print_step "Copying KF6 Breeze icon themes for portable use"
+# Copy KF5 icon themes for portable distribution
+copy_kf5_icon_themes() {
+    print_step "Copying KF5 Breeze icon themes for portable use"
 
     # Find where breeze icons are installed
     local breeze_icon_paths=(
@@ -425,7 +425,7 @@ copy_kf6_icon_themes() {
 
     if [ -z "$breeze_source" ]; then
         print_warning "Breeze icon theme not found in standard locations"
-        print_warning "KF6BreezeIcons library will be available but no theme files"
+        print_warning "KF5BreezeIcons library will be available but no theme files"
         return
     fi
 
@@ -446,12 +446,12 @@ copy_kf6_icon_themes() {
     local icon_count=$(find "$OUTPUT_DIR/share/icons/breeze" -name "*.svg" | wc -l)
     echo "📊 Total Breeze icons copied: $icon_count"
 
-    print_success "KF6 Breeze icon themes copied for portable use"
+    print_success "KF5 Breeze icon themes copied for portable use"
 }
 
 # Create launcher script
 create_launcher() {
-    print_step "Creating launcher script with KF6 icon support"
+    print_step "Creating launcher script with KF5 icon support"
 
     local qt_mode=""
     if [ "$USE_SYSTEM_QT" = "true" ]; then
@@ -462,7 +462,7 @@ create_launcher() {
 
     cat > "$OUTPUT_DIR/Katalog.sh" << 'EOF'
 #!/bin/sh
-# Katalog Portable Launcher with KF6 Icon Support
+# Katalog Portable Launcher with KF5 Icon Support
 
 # Get script directory
 appname=$(basename "$0" | sed 's/\.sh$//')
@@ -480,7 +480,7 @@ export LD_LIBRARY_PATH="$dirname/lib:$LD_LIBRARY_PATH"
 # Set up Qt plugin path
 export QT_PLUGIN_PATH="$dirname/plugins:$QT_PLUGIN_PATH"
 
-# Set up icon theme paths for KF6
+# Set up icon theme paths for KF5
 export XDG_DATA_DIRS="$dirname/share:$XDG_DATA_DIRS"
 
 # Ensure Qt uses OpenSSL
@@ -488,17 +488,17 @@ export QT_SSL_USE_OPENSSL=1
 
 # Debug info if verbose
 if [ "$KATALOG_VERBOSE" = "1" ]; then
-    echo "Katalog Portable Launcher with KF6 Icon Support"
+    echo "Katalog Portable Launcher with KF5 Icon Support"
     echo "================================================="
     echo "Working directory: $dirname"
     echo "Libraries: $(find "$dirname/lib" -name "*.so*" -type f | wc -l)"
     echo "Plugins: $(find "$dirname/plugins" -name "*.so" 2>/dev/null | wc -l)"
     echo ""
-    echo "KF6 Icon Support Check:"
-    if [ -f "$dirname/lib/libKF6BreezeIcons.so.5" ]; then
-        echo "  ✅ libKF6BreezeIcons.so.5 found in portable lib"
+    echo "KF5 Icon Support Check:"
+    if [ -f "$dirname/lib/libKF5BreezeIcons.so.5" ]; then
+        echo "  ✅ libKF5BreezeIcons.so.5 found in portable lib"
     else
-        echo "  ❌ libKF6BreezeIcons.so.5 NOT found in portable lib"
+        echo "  ❌ libKF5BreezeIcons.so.5 NOT found in portable lib"
     fi
 
     if [ -d "$dirname/share/icons/breeze" ]; then
@@ -527,7 +527,7 @@ exec "$dirname/Katalog" "$@"
 EOF
 
     chmod +x "$OUTPUT_DIR/Katalog.sh"
-    print_success "Launcher script with KF6 support created"
+    print_success "Launcher script with KF5 support created"
 }
 
 # Create test script
@@ -694,7 +694,7 @@ main() {
     copy_qt_libraries
     copy_other_dependencies
     copy_qt_plugins
-    copy_kf6_icon_themes
+    copy_kf5_icon_themes
     create_launcher
     create_test_script
     
