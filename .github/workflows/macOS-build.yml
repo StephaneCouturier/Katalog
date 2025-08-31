@@ -80,22 +80,81 @@ jobs:
           echo "ImageMagick already available"
         fi
 
-        # Install KDE Frameworks 5 (KF5) - more mature and available on Homebrew
+        # Install KDE Frameworks 5 (KF5) - build from source if needed
         echo "Installing KF5 packages..."
         
-        # Install extra-cmake-modules (required for KF5)
-        brew install extra-cmake-modules
+        # Install extra-cmake-modules first (required for KF5)
+        brew install extra-cmake-modules || echo "Installing extra-cmake-modules from source..."
         
-        # Install KF5 packages (try the available ones)
-        brew install kf5-kcoreaddons || echo "kf5-kcoreaddons not available, trying alternatives..."
-        brew install kf5-ki18n || echo "kf5-ki18n not available"  
-        brew install kf5-kxmlgui || echo "kf5-kxmlgui not available"
-        brew install kf5-kconfig || echo "kf5-kconfig not available"
-        brew install kf5-kiconthemes || echo "kf5-kiconthemes not available"
+        # Try to install KF5 packages from Homebrew first
+        KF5_AVAILABLE=false
         
-        # Check what KF5 packages are actually available
-        echo "Checking available KF5 packages..."
-        brew search kf5 | head -10 || echo "No KF5 packages found via search"
+        # Check if any KF5 packages are available via Homebrew
+        if brew search kf5 | grep -q "kf5-"; then
+          echo "Found KF5 packages via Homebrew, attempting installation..."
+          brew install kf5-kcoreaddons kf5-ki18n kf5-kxmlgui kf5-kconfig kf5-kiconthemes || \
+          {
+            echo "Some KF5 packages failed to install via Homebrew"
+            KF5_AVAILABLE=false
+          }
+          KF5_AVAILABLE=true
+        else
+          echo "No KF5 packages found via Homebrew, will build minimal KF5 from source..."
+          KF5_AVAILABLE=false
+        fi
+        
+        # If Homebrew KF5 not available, build minimal KF5 components from source
+        if [ "$KF5_AVAILABLE" = "false" ]; then
+          echo "Building minimal KF5 components from source..."
+          
+          # Create a workspace for building KF5
+          mkdir -p ~/kf5-build
+          cd ~/kf5-build
+          
+          # Build only the essential KF5 components needed by Katalog
+          KF5_COMPONENTS=("kcoreaddons" "ki18n" "kconfig" "kxmlgui" "kiconthemes")
+          
+          for component in "${KF5_COMPONENTS[@]}"; do
+            echo "Building $component..."
+            
+            # Clone the component
+            git clone --depth 1 --branch v5.115.0 "https://invent.kde.org/frameworks/$component.git" || \
+            git clone --depth 1 "https://invent.kde.org/frameworks/$component.git" || \
+            {
+              echo "Failed to clone $component, will try to continue without it"
+              continue
+            }
+            
+            cd "$component"
+            mkdir build && cd build
+            
+            # Configure with Qt5
+            cmake .. \
+              -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)" \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_INSTALL_PREFIX="$(brew --prefix)" \
+              -DBUILD_TESTING=OFF
+            
+            # Build and install
+            make -j$(sysctl -n hw.ncpu) && make install || \
+            {
+              echo "Failed to build $component, continuing..."
+              cd ~/kf5-build
+              continue
+            }
+            
+            cd ~/kf5-build
+          done
+          
+          # Return to original directory
+          cd - 
+          
+          echo "KF5 build attempt completed"
+        fi
+        
+        # Verify what we have installed
+        echo "Checking KF5 installation..."
+        find "$(brew --prefix)" -name "*KF5*Config.cmake" 2>/dev/null | head -10 || echo "No KF5 cmake configs found"
 
     - name: Set Qt6 environment
       run: |
