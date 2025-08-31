@@ -463,38 +463,6 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="Filters_pushButton_TreeExpand">
-                  <property name="maximumSize">
-                   <size>
-                    <width>35</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="toolTip">
-                   <string>Expand 1 level, 2 levels, or collapse</string>
-                  </property>
-                  <property name="statusTip">
-                   <string/>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">padding: 2px 10px;</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="expand"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QPushButton" name="Filters_pushButton_TreeCollapse">
                   <property name="maximumSize">
                    <size>
@@ -523,6 +491,38 @@
                   </property>
                   <property name="icon">
                    <iconset theme="collapse"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Filters_pushButton_TreeExpand">
+                  <property name="maximumSize">
+                   <size>
+                    <width>35</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans</family>
+                    <pointsize>9</pointsize>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Expand 1 level, 2 levels, or collapse</string>
+                  </property>
+                  <property name="statusTip">
+                   <string/>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">padding: 2px 10px;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="expand"/>
                   </property>
                  </widget>
                 </item>
@@ -6380,38 +6380,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="Devices_pushButton_TreeExpand">
-                   <property name="maximumSize">
-                    <size>
-                     <width>35</width>
-                     <height>22</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Noto Sans</family>
-                     <pointsize>9</pointsize>
-                     <kerning>true</kerning>
-                    </font>
-                   </property>
-                   <property name="toolTip">
-                    <string>Expand 1 level, 2 levels, or collapse</string>
-                   </property>
-                   <property name="statusTip">
-                    <string/>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 2px 10px;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="expand"/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
                   <widget class="QPushButton" name="Devices_pushButton_TreeCollapse">
                    <property name="maximumSize">
                     <size>
@@ -6440,6 +6408,38 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="icon">
                     <iconset theme="collapse"/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Devices_pushButton_TreeExpand">
+                   <property name="maximumSize">
+                    <size>
+                     <width>35</width>
+                     <height>22</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Noto Sans</family>
+                     <pointsize>9</pointsize>
+                     <kerning>true</kerning>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Expand 1 level, 2 levels, or collapse</string>
+                   </property>
+                   <property name="statusTip">
+                    <string/>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 2px 10px;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="expand"/>
                    </property>
                   </widget>
                  </item>
