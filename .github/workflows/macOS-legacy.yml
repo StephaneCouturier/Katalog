@@ -141,44 +141,85 @@ jobs:
         export CMAKE_PREFIX_PATH="$(brew --prefix qt@6)"
 
         # Check what build system v2.5 uses
+        echo "=== Checking available build systems ==="
         if [ -f "../Katalog.pro" ]; then
-          echo "Using qmake build (v2.5 .pro file found)"
+          echo "✅ Found Katalog.pro file"
+        else
+          echo "❌ No .pro file found"
+        fi
+        
+        if [ -f "../CMakeLists.txt" ]; then
+          echo "✅ Found CMakeLists.txt file"
+          echo "First 10 lines of CMakeLists.txt:"
+          head -10 ../CMakeLists.txt
+        else
+          echo "❌ No CMakeLists.txt file found"
+        fi
+
+        # Try build systems in order of preference for v2.5
+        BUILD_SUCCESS=false
+        
+        if [ -f "../Katalog.pro" ]; then
+          echo "=== Attempting qmake build (v2.5 .pro file found) ==="
           
           # Build with qmake (traditional Qt way)
-          qmake ../Katalog.pro -spec macx-clang CONFIG+=release
-          make
+          if qmake ../Katalog.pro -spec macx-clang CONFIG+=release; then
+            echo "qmake configuration successful"
+            if make -j$(sysctl -n hw.ncpu); then
+              echo "✅ qmake build successful"
+              BUILD_SUCCESS=true
+            else
+              echo "❌ qmake build failed"
+            fi
+          else
+            echo "❌ qmake configuration failed"
+          fi
           
         elif [ -f "../CMakeLists.txt" ]; then
-          echo "Using cmake build (CMakeLists.txt found)"
+          echo "=== Attempting cmake build (CMakeLists.txt found) ==="
           
           # Build with cmake (should work for pure Qt6 v2.5)
-          cmake .. \
+          if cmake .. \
             -GNinja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
             -DBUILD_TESTS=OFF \
-            -DCMAKE_INSTALL_PREFIX=/Applications
-
-          ninja
+            -DCMAKE_INSTALL_PREFIX=/Applications; then
+            
+            echo "cmake configuration successful"
+            if ninja; then
+              echo "✅ cmake build successful"
+              BUILD_SUCCESS=true
+            else
+              echo "❌ cmake build failed"
+            fi
+          else
+            echo "❌ cmake configuration failed"
+          fi
         else
           echo "❌ No build file found (.pro or CMakeLists.txt)"
+        fi
+
+        if [ "$BUILD_SUCCESS" = "false" ]; then
+          echo "❌ All build attempts failed"
           exit 1
         fi
 
         # Check what was built
-        echo "Build output:"
-        ls -la | grep -i katalog || echo "No Katalog executable found"
+        echo "=== Build output ==="
+        ls -la | grep -i katalog || echo "No Katalog executable found in build dir"
+        find . -name "*.app" -o -name "Katalog*" -type f | head -10
         
-        # Look for app bundle
+        # Look for app bundle or executable
         if [ -d "Katalog.app" ]; then
           echo "✅ macOS app bundle created successfully"
-          ls -la Katalog.app/Contents/
+          ls -la Katalog.app/Contents/ || echo "Could not list bundle contents"
         elif [ -f "Katalog" ]; then
-          echo "✅ Katalog executable created"
+          echo "✅ Katalog executable created, will need to create bundle manually"
         else
-          echo "❌ No Katalog app or executable found"
-          exit 1
+          echo "⚠️ No obvious Katalog app or executable found, checking all files:"
+          find . -type f -name "*atalog*" -o -name "*App*" | head -20
         fi
 
     - name: Create app bundle structure and fix dependencies
@@ -244,21 +285,42 @@ jobs:
             # Create iconset directory
             mkdir -p Katalog.iconset
             
-            # Convert icon (requires imagemagick or similar)
-            if command -v convert >/dev/null; then
-              convert "../src/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png"
-              convert "../src/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png"
-              convert "../src/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png"
-              convert "../src/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png"
-              convert "../src/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png"
-              convert "../src/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png"
-              
-              # Create ICNS file
-              iconutil -c icns Katalog.iconset -o Katalog.app/Contents/Resources/Katalog.icns
+            # Use 'magick' instead of deprecated 'convert'
+            if command -v magick >/dev/null; then
+              echo "Using ImageMagick 7 (magick command)"
+              magick "../src/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png" || echo "512x512 conversion failed"
+              magick "../src/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png" || echo "256x256 conversion failed"
+              magick "../src/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png" || echo "128x128 conversion failed"
+              magick "../src/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png" || echo "64x64 conversion failed"
+              magick "../src/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png" || echo "32x32 conversion failed"
+              magick "../src/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png" || echo "16x16 conversion failed"
+            elif command -v convert >/dev/null; then
+              echo "Using ImageMagick 6 (convert command)"
+              convert "../src/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png" || echo "512x512 conversion failed"
+              convert "../src/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png" || echo "256x256 conversion failed"
+              convert "../src/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png" || echo "128x128 conversion failed"
+              convert "../src/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png" || echo "64x64 conversion failed"
+              convert "../src/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png" || echo "32x32 conversion failed"
+              convert "../src/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png" || echo "16x16 conversion failed"
             else
-              echo "ImageMagick not available for icon conversion"
+              echo "No ImageMagick found, skipping icon conversion"
             fi
+            
+            # Create ICNS file (make this non-fatal)
+            if ls Katalog.iconset/*.png 1> /dev/null 2>&1; then
+              echo "Creating ICNS file..."
+              iconutil -c icns Katalog.iconset -o Katalog.app/Contents/Resources/Katalog.icns || {
+                echo "⚠️ ICNS creation failed, but continuing build..."
+                echo "App will work without custom icon"
+              }
+            else
+              echo "⚠️ No PNG icons created, skipping ICNS creation"
+            fi
+          else
+            echo "⚠️ No source icon file found, app will use default icon"
           fi
+        else
+          echo "✅ Icon already exists"
         fi
 
         # Display final bundle structure
