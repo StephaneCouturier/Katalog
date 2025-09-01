@@ -450,6 +450,16 @@ jobs:
               -e 's/KF6::IconThemes/#KF6::IconThemes # Not available on macOS/' \
               CMakeLists.txt.original > CMakeLists.txt
           
+          # Also modify source code to work without KXmlGuiWindow
+          echo "Modifying source code for macOS compatibility..."
+          
+          # Replace KXmlGuiWindow with QMainWindow in header
+          if [ -f "src/mainwindow.h" ]; then
+            sed -i.bak 's/#include <KXmlGuiWindow>/#include <QMainWindow>/' src/mainwindow.h
+            sed -i.bak 's/class MainWindow : public KXmlGuiWindow/class MainWindow : public QMainWindow/' src/mainwindow.h
+            echo "Modified src/mainwindow.h to use QMainWindow instead of KXmlGuiWindow"
+          fi
+          
           echo "Modified CMakeLists.txt - changes made:"
           diff CMakeLists.txt.original CMakeLists.txt || echo "Diff completed"
           
