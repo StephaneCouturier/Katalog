@@ -1,5 +1,5 @@
 name: Build macOS App Bundle (Qt6/KF6 Master)
-#v9 - macOS Qt6/KF6 build from master branch (full modern build)
+#v1 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
   workflow_dispatch:
@@ -223,8 +223,9 @@ jobs:
             if [ "$component" = "kxmlgui" ]; then
               echo "=== Verifying KF6XmlGui installation ==="
               find "$(brew --prefix)" -name "*KF6XmlGui*" -o -name "*kxmlgui*" | head -10
-              if find "$(brew --prefix)" -name "KF6XmlGuiConfig.cmake" 2>/dev/null; then
-                echo "✅ KF6XmlGui cmake config found"
+              xmlgui_config=$(find "$(brew --prefix)" -name "KF6XmlGuiConfig.cmake" 2>/dev/null | head -1)
+              if [ -n "$xmlgui_config" ]; then
+                echo "✅ KF6XmlGui cmake config found at: $xmlgui_config"
               else
                 echo "❌ KF6XmlGui cmake config NOT found after installation"
               fi
@@ -269,92 +270,77 @@ jobs:
           echo "✅ All required KF6 components built successfully"
         fi
         
-        echo "=== KF6 build summary ==="
-        echo "Checking installed KF6 packages..."
-        
-        echo "KF6 cmake files found:"
-        find "$(brew --prefix)" -name "*KF6*Config.cmake" 2>/dev/null | sort || echo "No KF6 cmake configs found"
+        echo "=== KF6 Installation Summary ==="
+        echo "Checking installed KF6 packages with exact locations..."
         
         echo ""
-        echo "KF6 directories in cmake:"
-        ls -la "$(brew --prefix)/lib/cmake" | grep -i kf6 || echo "No KF6 directories in cmake"
+        echo "KF6 cmake config files found:"
+        find "$(brew --prefix)" -name "*KF6*Config.cmake" 2>/dev/null | sort
         
         echo ""
-        echo "Specifically checking for KF6XmlGui:"
-        find "$(brew --prefix)" -name "*XmlGui*" -o -name "*xmlgui*" 2>/dev/null | head -10 || echo "No XmlGui files found"
+        echo "KF6 cmake directories:"
+        find "$(brew --prefix)/lib/cmake" -maxdepth 1 -name "KF6*" -type d 2>/dev/null | sort
         
-        # Update CMAKE_PREFIX_PATH with explicit KF6 paths
-        KF6_CMAKE_DIRS=""
+        echo ""
+        echo "Specific KF6XmlGui files:"
+        find "$(brew --prefix)" -name "*XmlGui*" -o -name "*xmlgui*" 2>/dev/null | head -20
+        
+        # Build final CMAKE_PREFIX_PATH for next steps
+        FINAL_CMAKE_PREFIX_PATH="$(brew --prefix qt@6)"
+        
+        # Add all found KF6 cmake directories
         for kf6_dir in "$(brew --prefix)"/lib/cmake/KF6*; do
           if [ -d "$kf6_dir" ]; then
-            KF6_CMAKE_DIRS="$KF6_CMAKE_DIRS:$(dirname "$kf6_dir")"
+            FINAL_CMAKE_PREFIX_PATH="$FINAL_CMAKE_PREFIX_PATH:$kf6_dir"
           fi
         done
         
-        if [ -n "$KF6_CMAKE_DIRS" ]; then
-          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)$KF6_CMAKE_DIRS:$(brew --prefix)" >> $GITHUB_ENV
-          echo "Updated CMAKE_PREFIX_PATH with KF6 directories: $KF6_CMAKE_DIRS"
-        else
-          echo "No KF6 cmake directories found to add to CMAKE_PREFIX_PATH"
-        fi
+        # Add base paths
+        FINAL_CMAKE_PREFIX_PATH="$FINAL_CMAKE_PREFIX_PATH:$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        
+        echo "CMAKE_PREFIX_PATH=$FINAL_CMAKE_PREFIX_PATH" >> $GITHUB_ENV
+        echo ""
+        echo "Set CMAKE_PREFIX_PATH for next steps: $FINAL_CMAKE_PREFIX_PATH"
 
     - name: Debug KF6 installation status
       run: |
         echo "=== Detailed KF6 Installation Debug ==="
         
-        # Check what actually got installed
+        # Check what actually got installed with full paths
         echo "All KF6 related files in brew prefix:"
-        find "$(brew --prefix)" -name "*KF6*" -o -name "*kf6*" | head -20
+        find "$(brew --prefix)" -name "*KF6*" -o -name "*kf6*" 2>/dev/null | sort
         
         echo ""
         echo "Contents of cmake directory:"
-        ls -la "$(brew --prefix)/lib/cmake/" | head -20
+        ls -la "$(brew --prefix)/lib/cmake/" | grep -i kf6 || echo "No KF6 directories in cmake"
         
         echo ""
-        echo "Checking specific KF6 cmake modules:"
-        for component in CoreAddons I18n XmlGui Config IconThemes; do
+        echo "Checking specific KF6 cmake modules with exact paths:"
+        for component in CoreAddons I18n XmlGui Config IconThemes WidgetsAddons ConfigWidgets GlobalAccel; do
           config_file="$(brew --prefix)/lib/cmake/KF6${component}/KF6${component}Config.cmake"
           if [ -f "$config_file" ]; then
-            echo "✅ Found KF6${component}Config.cmake"
+            echo "✅ Found KF6${component}Config.cmake at: $config_file"
           else
-            echo "❌ Missing KF6${component}Config.cmake"
-            # Look for alternative locations
-            find "$(brew --prefix)" -name "KF6${component}Config.cmake" 2>/dev/null || echo "  Not found anywhere"
+            echo "❌ Missing KF6${component}Config.cmake (expected: $config_file)"
+            # Search everywhere for this specific file
+            found_files=$(find "$(brew --prefix)" -name "KF6${component}Config.cmake" 2>/dev/null)
+            if [ -n "$found_files" ]; then
+              echo "  🔍 But found it at: $found_files"
+            else
+              echo "  🔍 Not found anywhere in $(brew --prefix)"
+            fi
           fi
         done
         
         echo ""
-        echo "Current CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
-
-    - name: Make KF6XmlGui optional (fallback approach)
-      run: |
-        echo "=== Creating fallback CMakeLists.txt ==="
+        echo "=== KF6XmlGui Specific Debug ==="
+        echo "Searching for ALL XmlGui related files:"
+        find "$(brew --prefix)" -name "*XmlGui*" -o -name "*xmlgui*" 2>/dev/null | sort
         
-        # Check if KF6XmlGui is actually available
-        if ! find "$(brew --prefix)" -name "KF6XmlGuiConfig.cmake" >/dev/null 2>&1; then
-          echo "KF6XmlGui not found - creating version without it"
-          
-          # Create a backup of original CMakeLists.txt
-          cp CMakeLists.txt CMakeLists.txt.original
-          
-          # Modify CMakeLists.txt to make KF6XmlGui optional
-          sed 's/find_package(KF6XmlGui REQUIRED)/find_package(KF6XmlGui QUIET)/' CMakeLists.txt > CMakeLists.txt.modified
-          
-          # Also comment out KF6::XmlGui linking if KF6XmlGui is not found
-          if ! find "$(brew --prefix)" -name "KF6XmlGuiConfig.cmake" >/dev/null 2>&1; then
-            echo "Modifying target_link_libraries to exclude KF6::XmlGui"
-            sed 's/KF6::XmlGui/#KF6::XmlGui # Not available on macOS/' CMakeLists.txt.modified > CMakeLists.txt.temp
-            mv CMakeLists.txt.temp CMakeLists.txt.modified
-          fi
-          
-          mv CMakeLists.txt.modified CMakeLists.txt
-          
-          echo "Modified CMakeLists.txt to work without KF6XmlGui:"
-          echo "Changes made:"
-          diff CMakeLists.txt.original CMakeLists.txt || echo "Diff complete"
-        else
-          echo "KF6XmlGui found - using original CMakeLists.txt"
-        fi
+        echo ""
+        echo "Current environment variables:"
+        echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
+        echo "PKG_CONFIG_PATH: $PKG_CONFIG_PATH"
 
     - name: Set version information
       run: |
@@ -371,54 +357,135 @@ jobs:
         mkdir build
         cd build
 
-        # Set up environment for KF6
-        export CMAKE_PREFIX_PATH="$(brew --prefix qt@6):$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        # Build comprehensive CMAKE_PREFIX_PATH with all found KF6 locations
+        echo "=== Setting up comprehensive CMAKE_PREFIX_PATH ==="
+        
+        BASE_PATHS="$(brew --prefix qt@6):$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        
+        # Add specific KF6 component directories
+        KF6_PATHS=""
+        for component in CoreAddons I18n XmlGui Config IconThemes WidgetsAddons ConfigWidgets GlobalAccel; do
+          kf6_dir="$(brew --prefix)/lib/cmake/KF6${component}"
+          if [ -d "$kf6_dir" ]; then
+            KF6_PATHS="${KF6_PATHS}:$kf6_dir"
+            echo "✅ Added KF6${component} path: $kf6_dir"
+          else
+            echo "❌ KF6${component} directory not found: $kf6_dir"
+          fi
+        done
+        
+        # Combine all paths
+        export CMAKE_PREFIX_PATH="${BASE_PATHS}${KF6_PATHS}"
         export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig:$PKG_CONFIG_PATH"
         
-        echo "=== CMake configuration ==="
-        echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
+        echo "Final CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
         
+        # Also set specific KF6 directories as fallback
+        for component in CoreAddons I18n XmlGui Config IconThemes; do
+          kf6_dir="$(brew --prefix)/lib/cmake/KF6${component}"
+          if [ -d "$kf6_dir" ]; then
+            export KF6${component}_DIR="$kf6_dir"
+            echo "Set KF6${component}_DIR=$kf6_dir"
+          fi
+        done
+        
+        echo ""
+        echo "=== Final verification before cmake ==="
         # Verify KF6 packages are findable
-        echo "Checking for KF6 packages..."
+        echo "Double-checking KF6 packages with current paths..."
         for pkg in KF6CoreAddons KF6I18n KF6XmlGui KF6Config KF6IconThemes; do
-          if find "$(brew --prefix)" -name "${pkg}Config.cmake" 2>/dev/null; then
-            echo "✅ Found $pkg"
+          config_file=$(find $(echo $CMAKE_PREFIX_PATH | tr ':' ' ') -name "${pkg}Config.cmake" 2>/dev/null | head -1)
+          if [ -n "$config_file" ]; then
+            echo "✅ Found $pkg at: $config_file"
           else
-            echo "❌ Missing $pkg"
+            echo "❌ Still missing $pkg"
           fi
         done
         
         # Configure with CMake
-        echo "Running cmake configuration..."
+        echo ""
+        echo "=== Running CMake configuration ==="
+        echo "Working directory: $(pwd)"
+        echo "Source directory contents:"
+        ls -la ../CMakeLists.txt ../src/ | head -5
+        
         if cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
           -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
           -DBUILD_TESTS=OFF \
-          -DCMAKE_INSTALL_PREFIX=/Applications; then
+          -DCMAKE_INSTALL_PREFIX=/Applications \
+          -DKF6XmlGui_DIR="$KF6XmlGui_DIR" \
+          -DKF6CoreAddons_DIR="$KF6CoreAddons_DIR" \
+          -DKF6I18n_DIR="$KF6I18n_DIR" \
+          -DKF6Config_DIR="$KF6Config_DIR" \
+          -DKF6IconThemes_DIR="$KF6IconThemes_DIR"; then
           echo "✅ CMake configuration successful"
         else
           echo "❌ CMake configuration failed"
-          echo "Checking for detailed error info..."
-          cat CMakeFiles/CMakeError.log || echo "No CMakeError.log found"
-          exit 1
+          echo ""
+          echo "=== Detailed CMake Error Analysis ==="
+          if [ -f "CMakeFiles/CMakeError.log" ]; then
+            echo "CMakeError.log contents:"
+            cat CMakeFiles/CMakeError.log
+          fi
+          if [ -f "CMakeFiles/CMakeOutput.log" ]; then
+            echo "CMakeOutput.log contents (last 50 lines):"
+            tail -50 CMakeFiles/CMakeOutput.log
+          fi
+          echo ""
+          echo "=== Trying with modified CMakeLists.txt (KF6XmlGui optional) ==="
+          
+          # Go back and modify CMakeLists.txt as fallback
+          cd ..
+          if [ ! -f "CMakeLists.txt.original" ]; then
+            cp CMakeLists.txt CMakeLists.txt.original
+          fi
+          
+          # Make KF6XmlGui optional and remove from linking
+          sed -e 's/find_package(KF6XmlGui REQUIRED)/find_package(KF6XmlGui QUIET)/' \
+              -e 's/KF6::XmlGui/#KF6::XmlGui # Not available on macOS/' \
+              CMakeLists.txt.original > CMakeLists.txt
+          
+          echo "Modified CMakeLists.txt - changes made:"
+          diff CMakeLists.txt.original CMakeLists.txt || echo "Diff completed"
+          
+          # Try cmake again
+          cd build
+          if cmake .. \
+            -GNinja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
+            -DBUILD_TESTS=OFF \
+            -DCMAKE_INSTALL_PREFIX=/Applications; then
+            echo "✅ CMake configuration successful with modified CMakeLists.txt"
+          else
+            echo "❌ CMake configuration still failed even with modifications"
+            exit 1
+          fi
         fi
 
         # Build translations first (may fail but continue)
+        echo ""
         echo "=== Building translations ==="
         ninja Katalog_lrelease || echo "Translation build failed, continuing..."
 
         # Build the main application
+        echo ""
         echo "=== Building main application ==="
         if ninja; then
           echo "✅ Build successful!"
         else
           echo "❌ Build failed"
+          echo "Build log (last 100 lines):"
+          ninja 2>&1 | tail -100
           exit 1
         fi
 
         # Check what was built
+        echo ""
         echo "=== Build output ==="
         find . -name "*.app" -o -name "Katalog*" -type f | head -10
         
