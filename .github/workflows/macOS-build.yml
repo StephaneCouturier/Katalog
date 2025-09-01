@@ -443,9 +443,11 @@ jobs:
             cp CMakeLists.txt CMakeLists.txt.original
           fi
           
-          # Make KF6XmlGui optional and remove from linking
+          # Make problematic KF6 components optional and remove from linking
           sed -e 's/find_package(KF6XmlGui REQUIRED)/find_package(KF6XmlGui QUIET)/' \
+              -e 's/find_package(KF6IconThemes REQUIRED)/find_package(KF6IconThemes QUIET)/' \
               -e 's/KF6::XmlGui/#KF6::XmlGui # Not available on macOS/' \
+              -e 's/KF6::IconThemes/#KF6::IconThemes # Not available on macOS/' \
               CMakeLists.txt.original > CMakeLists.txt
           
           echo "Modified CMakeLists.txt - changes made:"
