@@ -1,5 +1,5 @@
 name: Build macOS App Bundle (Qt6/KF6 Master)
-#v1 - macOS Qt6/KF6 build from master branch (full modern build)
+#v9 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
   workflow_dispatch:
@@ -371,113 +371,45 @@ jobs:
         mkdir build
         cd build
 
-        # Set up environment for KF6 - EXPLICIT paths
-        QT6_PATH="$(brew --prefix qt@6)"
-        BREW_PREFIX="$(brew --prefix)"
+        # Set up environment for KF6
+        export CMAKE_PREFIX_PATH="$(brew --prefix qt@6):$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig:$PKG_CONFIG_PATH"
         
-        # Build explicit CMAKE_PREFIX_PATH correctly (no duplicates)
-        CMAKE_PREFIX_PATH_FULL="${QT6_PATH}:${BREW_PREFIX}/lib/cmake:${BREW_PREFIX}"
+        echo "=== CMake configuration ==="
+        echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
         
-        echo ""
-        echo "=== CMake Environment Setup ==="
-        echo "QT6_PATH: $QT6_PATH"
-        echo "BREW_PREFIX: $BREW_PREFIX"
-        echo "CMAKE_PREFIX_PATH_FULL: $CMAKE_PREFIX_PATH_FULL"
-        
-        # Export environment variables for this step
-        export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH_FULL"
-        export PKG_CONFIG_PATH="${BREW_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
-        
-        # Set explicit KF6 directories for cmake
-        export KF6CoreAddons_DIR="${BREW_PREFIX}/lib/cmake/KF6CoreAddons"
-        export KF6I18n_DIR="${BREW_PREFIX}/lib/cmake/KF6I18n"
-        export KF6XmlGui_DIR="${BREW_PREFIX}/lib/cmake/KF6XmlGui"
-        export KF6Config_DIR="${BREW_PREFIX}/lib/cmake/KF6Config"
-        export KF6IconThemes_DIR="${BREW_PREFIX}/lib/cmake/KF6IconThemes"
-        
-        echo ""
-        echo "=== Explicit KF6 Directory Variables ==="
-        echo "KF6CoreAddons_DIR: $KF6CoreAddons_DIR"
-        echo "KF6I18n_DIR: $KF6I18n_DIR"
-        echo "KF6XmlGui_DIR: $KF6XmlGui_DIR"
-        echo "KF6Config_DIR: $KF6Config_DIR"
-        echo "KF6IconThemes_DIR: $KF6IconThemes_DIR"
-        
-        # Verify these directories actually exist
-        echo ""
-        echo "=== Verifying KF6 directories exist ==="
-        for var in KF6CoreAddons_DIR KF6I18n_DIR KF6XmlGui_DIR KF6Config_DIR KF6IconThemes_DIR; do
-          eval "dir=\$var"
-          if [ -d "$dir" ]; then
-            echo "✅ $var: $dir (exists)"
-            ls -la "$dir"/*.cmake | head -3 || echo "No cmake files in $dir"
-          else
-            echo "❌ $var: $dir (does not exist)"
-          fi
-        done
-        
-        # Verify KF6 packages are findable with explicit paths
-        echo ""
-        echo "=== Testing CMake find_package with explicit paths ==="
+        # Verify KF6 packages are findable
+        echo "Checking for KF6 packages..."
         for pkg in KF6CoreAddons KF6I18n KF6XmlGui KF6Config KF6IconThemes; do
-          eval "pkg_dir=\${pkg}_DIR"
-          if [ -f "${pkg_dir}/${pkg}Config.cmake" ]; then
-            echo "✅ $pkg: ${pkg_dir}/${pkg}Config.cmake exists"
+          if find "$(brew --prefix)" -name "${pkg}Config.cmake" 2>/dev/null; then
+            echo "✅ Found $pkg"
           else
-            echo "❌ $pkg: ${pkg_dir}/${pkg}Config.cmake missing"
+            echo "❌ Missing $pkg"
           fi
         done
         
-        # Configure with CMake using explicit paths
-        echo ""
-        echo "=== Running CMake Configuration ==="
-        echo "Final CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
-        
+        # Configure with CMake
+        echo "Running cmake configuration..."
         if cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
           -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
           -DBUILD_TESTS=OFF \
-          -DCMAKE_INSTALL_PREFIX=/Applications \
-          -DKF6CoreAddons_DIR="$KF6CoreAddons_DIR" \
-          -DKF6I18n_DIR="$KF6I18n_DIR" \
-          -DKF6XmlGui_DIR="$KF6XmlGui_DIR" \
-          -DKF6Config_DIR="$KF6Config_DIR" \
-          -DKF6IconThemes_DIR="$KF6IconThemes_DIR" \
-          -DCMAKE_VERBOSE_MAKEFILE=ON; then
+          -DCMAKE_INSTALL_PREFIX=/Applications; then
           echo "✅ CMake configuration successful"
         else
           echo "❌ CMake configuration failed"
-          echo ""
-          echo "=== Detailed CMake Error Analysis ==="
-          
-          # Show CMake cache for KF6 entries
-          echo "CMake cache entries for KF6:"
-          grep -i kf6 CMakeCache.txt || echo "No KF6 entries in CMakeCache.txt"
-          
-          # Show CMake error log if available
-          if [ -f "CMakeFiles/CMakeError.log" ]; then
-            echo "CMake error log:"
-            cat CMakeFiles/CMakeError.log
-          fi
-          
-          # Show CMake output log if available  
-          if [ -f "CMakeFiles/CMakeOutput.log" ]; then
-            echo "CMake output log (last 50 lines):"
-            tail -50 CMakeFiles/CMakeOutput.log
-          fi
-          
+          echo "Checking for detailed error info..."
+          cat CMakeFiles/CMakeError.log || echo "No CMakeError.log found"
           exit 1
         fi
 
         # Build translations first (may fail but continue)
-        echo ""
         echo "=== Building translations ==="
         ninja Katalog_lrelease || echo "Translation build failed, continuing..."
 
         # Build the main application
-        echo ""
         echo "=== Building main application ==="
         if ninja; then
           echo "✅ Build successful!"
@@ -487,7 +419,6 @@ jobs:
         fi
 
         # Check what was built
-        echo ""
         echo "=== Build output ==="
         find . -name "*.app" -o -name "Katalog*" -type f | head -10
         
