@@ -1,5 +1,5 @@
 name: Build macOS App Bundle (Qt6/KF6 Master)
-#v1 - macOS Qt6/KF6 build from master branch (full modern build)
+#v12 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
   workflow_dispatch:
