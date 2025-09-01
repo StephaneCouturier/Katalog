@@ -123,6 +123,9 @@ jobs:
           "kcoreaddons"         # Core utilities
           "ki18n"              # Internationalization  
           "kconfig"            # Configuration system
+          "kwidgetsaddons"     # Widget utilities (needed by kxmlgui)
+          "kconfigwidgets"     # Config widgets (needed by kxmlgui)
+          "kglobalaccel"       # Global shortcuts (needed by kxmlgui) 
           "kxmlgui"            # XML GUI framework
           "kiconthemes"        # Icon theme support
         )
@@ -141,6 +144,10 @@ jobs:
         echo "Building KF6 components: ${KF6_COMPONENTS[*]}"
         echo "CMake args: ${CMAKE_ARGS[*]}"
         
+        # Track successful builds
+        SUCCESSFUL_BUILDS=()
+        FAILED_BUILDS=()
+        
         for component in "${KF6_COMPONENTS[@]}"; do
           echo ""
           echo "=== Building $component ==="
@@ -156,7 +163,8 @@ jobs:
              git clone --depth 1 "$REPO_URL" "$component"; then
             echo "✅ Successfully cloned $component"
           else
-            echo "❌ Failed to clone $component, trying to continue..."
+            echo "❌ Failed to clone $component"
+            FAILED_BUILDS+=("$component (clone failed)")
             continue
           fi
           
@@ -165,37 +173,83 @@ jobs:
           
           # Configure
           echo "Configuring $component..."
-          if cmake .. "${CMAKE_ARGS[@]}"; then
+          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tee cmake_config.log; then
             echo "✅ Configuration successful for $component"
           else
             echo "❌ Configuration failed for $component"
+            echo "=== Configuration error details ==="
+            tail -20 cmake_config.log || echo "No config log available"
+            FAILED_BUILDS+=("$component (config failed)")
             cd ~/kf6-build
             continue
           fi
           
           # Build
           echo "Building $component..."
-          if make -j$(sysctl -n hw.ncpu); then
+          if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log; then
             echo "✅ Build successful for $component"
           else
             echo "❌ Build failed for $component"
+            echo "=== Build error details ==="
+            tail -20 build.log || echo "No build log available"
+            FAILED_BUILDS+=("$component (build failed)")
             cd ~/kf6-build
             continue
           fi
           
           # Install
           echo "Installing $component..."
-          if make install; then
+          if make install 2>&1 | tee install.log; then
             echo "✅ Installation successful for $component"
+            SUCCESSFUL_BUILDS+=("$component")
+            
+            # Verify installation for critical components
+            if [ "$component" = "kxmlgui" ]; then
+              echo "=== Verifying KF6XmlGui installation ==="
+              find "$(brew --prefix)" -name "*KF6XmlGui*" -o -name "*kxmlgui*" | head -10
+              if find "$(brew --prefix)" -name "KF6XmlGuiConfig.cmake" 2>/dev/null; then
+                echo "✅ KF6XmlGui cmake config found"
+              else
+                echo "❌ KF6XmlGui cmake config NOT found after installation"
+              fi
+            fi
+            
           else
             echo "❌ Installation failed for $component"
+            echo "=== Installation error details ==="
+            tail -20 install.log || echo "No install log available"
+            FAILED_BUILDS+=("$component (install failed)")
             cd ~/kf6-build
             continue
           fi
           
           cd ~/kf6-build
-          echo "✅ Completed $component"
+          echo "✅ Completed $component successfully"
         done
+        
+        echo ""
+        echo "=== KF6 Build Summary ==="
+        echo "Successful builds (${#SUCCESSFUL_BUILDS[@]}): ${SUCCESSFUL_BUILDS[*]}"
+        echo "Failed builds (${#FAILED_BUILDS[@]}): ${FAILED_BUILDS[*]}"
+        
+        # Check if we have the minimum required components
+        REQUIRED_COMPONENTS=("extra-cmake-modules" "kcoreaddons" "ki18n" "kconfig" "kxmlgui")
+        MISSING_REQUIRED=()
+        
+        for required in "${REQUIRED_COMPONENTS[@]}"; do
+          if [[ ! " ${SUCCESSFUL_BUILDS[*]} " =~ " $required " ]]; then
+            MISSING_REQUIRED+=("$required")
+          fi
+        done
+        
+        if [ ${#MISSING_REQUIRED[@]} -gt 0 ]; then
+          echo ""
+          echo "❌ CRITICAL: Missing required components: ${MISSING_REQUIRED[*]}"
+          echo "Cannot continue with Katalog build without these components"
+          exit 1
+        else
+          echo "✅ All required KF6 components built successfully"
+        fi
         
         echo "=== KF6 build summary ==="
         echo "Checking installed KF6 packages..."
