@@ -461,6 +461,7 @@ jobs:
             # Comment out other KF6 includes that aren't available
             sed -i.bak 's/#include <KActionCollection>/\/\/ #include <KActionCollection> \/\/ Not available on macOS/' src/mainwindow.h
             sed -i.bak 's/#include <KLocalizedString>/\/\/ #include <KLocalizedString> \/\/ Available via KF6I18n/' src/mainwindow.h
+            sed -i.bak 's/#include <KIconTheme>/\/\/ #include <KIconTheme> \/\/ Not available on macOS/' src/mainwindow.h
             
             echo "Modified src/mainwindow.h to use QMainWindow and comment out unavailable KF6 includes"
             
