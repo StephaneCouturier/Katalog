@@ -1,5 +1,206 @@
-name: Build macOS App Bundle (Qt6/KF6 Master)
-#v12 - macOS Qt6/KF6 build from master branch (full modern build)
+- name: Debug KF6 build execution  
+      run: |
+        echo "=== Checking if KF6 build actually ran ==="
+        
+        # Check if the KF6 build workspace exists
+        if [ -d ~/kf6-build ]; then
+          echo "✅ KF6 build workspace exists"
+          echo "Contents of KF6 build workspace:"
+          ls -la ~/kf6-build/ | head -10
+          
+          # Check individual component directories
+          for component in extra-cmake-modules kcoreaddons ki18n kconfig kxmlgui kiconthemes; do
+            if [ -d ~/kf6-build/$component ]; then
+              echo "✅ Found $component build directory"
+              if [ -d ~/kf6-build/$component/build ]; then
+                echo "  - Has build subdirectory"
+                # Check if install was attempted
+                if [ -f ~/kf6-build/$component/build/install.log ]; then
+                  echo "  - Install log exists"
+                  echo "  - Last 5 lines of install log:"
+                  tail -5 ~/kf6-build/$component/build/install.log
+                else
+                  echo "  - No install log found"
+                fi
+              else
+                echo "  - No build subdirectory"
+              fi
+            else
+              echo "❌ Missing $component build directory"
+            fi
+          done
+        else
+          echo "❌ KF6 build workspace does not exist - KF6 build step may have been skipped!"
+          echo "Checking current directory and previous step logs..."
+          pwd
+          ls -la ~/
+        fi
+        
+        echo ""
+        echo "=== Checking actual KF6 installation in brew prefix ==="
+        echo "Looking for any KF6-related files:"
+        find "$(brew --prefix)" -name "*KF6*" -type f | head -20 || echo "No KF6 files found"
+        
+        echo ""
+        echo "Checking cmake directory structure:"
+        ls -la "$(brew --prefix)/lib/cmake/" | grep KF6 || echo "No KF6 directories in cmake"name: Build macOS App Bundle (Qt6/KF6 Master)
+#v1 - macOS Qt6/KF6 build from master branch (full modern build)
+on:
+  # Allow manual triggering from GitHub web interface
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Version tag (e.g., v2.7-macos)'
+        required: false
+        default: 'dev-macos-qt6-kf6'
+      kf6_version:
+        description: 'KF6 version to build'
+        required: false
+        default: 'v6.7.0'
+
+  # Optional: trigger on push to master for testing
+  push:
+    branches: [ main, katalog_master ]
+    paths: 
+      - '.github/workflows/macos-qt6-kf6-build.yml'  # Only when workflow changes
+
+jobs:
+  build-macos-qt6-kf6:
+    runs-on: macos-14  # macOS Sonoma (Apple Silicon)
+
+    steps:
+    - name: Checkout master branch
+      uses: actions/checkout@v4
+      with:
+        # Use master branch (current codebase with KF6 dependencies)
+        submodules: recursive
+
+    - name: Verify master branch checkout
+      run: |
+        echo "Current commit: $(git rev-parse HEAD)"
+        echo "Current branch: $(git branch --show-current 2>/dev/null || echo 'detached HEAD')"
+        
+        # Show recent commits
+        git log --oneline -n 3
+        
+        echo "=== Verifying this is Qt6/KF6 code ==="
+        
+        # Check CMakeLists.txt for KF6 dependencies (should exist in master)
+        if grep -q "find_package.*KF6" CMakeLists.txt 2>/dev/null; then
+          echo "✅ Found KF6 dependencies in CMakeLists.txt - confirmed master branch"
+          echo "KF6 packages required:"
+          grep "find_package.*KF6" CMakeLists.txt
+        else
+          echo "⚠️  No KF6 dependencies found - may not be on the right branch"
+        fi
+        
+        # Check for modern features (KJob, etc.)
+        if find src -name "*job*" -type f | head -5; then
+          echo "✅ Found job-related files (modern KF6 features)"
+        else
+          echo "⚠️  No job files found"
+        fi
+
+    - name: Install base dependencies
+      run: |
+        echo "=== Installing base build tools ==="
+        
+        # Update Homebrew
+        brew update
+
+        # Install base build tools
+        echo "cmake: $(command -v cmake && cmake --version | head -1 || echo 'not found')"
+        if ! command -v cmake >/dev/null 2>&1; then
+          brew install cmake
+        fi
+
+        echo "ninja: $(command -v ninja && ninja --version || echo 'not found')"  
+        if ! command -v ninja >/dev/null 2>&1; then
+          brew install ninja
+        fi
+
+        # Install Qt6
+        echo "Installing Qt6..."
+        if ! brew list qt@6 >/dev/null 2>&1; then
+          brew install qt@6
+        else
+          echo "Qt6 already installed"
+        fi
+
+        # Install dependencies for building KF6
+        echo "Installing KF6 build dependencies..."
+        brew install extra-cmake-modules || echo "extra-cmake-modules install failed"
+        
+        # Install additional tools we'll need
+        brew install git wget python3 || echo "Some tools install failed"
+        
+        # Install imagemagick for icon conversion
+        if ! command -v magick >/dev/null 2>&1; then
+          brew install imagemagick
+        fi
+
+    - name: Set Qt6 environment
+      run: |
+        # Set up Qt6 paths
+        echo "$(brew --prefix qt@6)/bin" >> $GITHUB_PATH
+        echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
+        echo "Qt6_DIR=$(brew --prefix qt@6)/lib/cmake/Qt6" >> $GITHUB_ENV
+
+        # Display Qt6 version info
+        echo "Qt6 installation path: $(brew --prefix qt@6)"
+        echo "Qt6 version: $($(brew --prefix qt@6)/bin/qmake -version)"
+        
+        # Set up build environment
+        echo "CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
+        echo "MAKEFLAGS=-j$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
+
+- name: Debug KF6 build execution  
+      run: |
+        echo "=== Checking if KF6 build actually ran ==="
+        
+        # Check if the KF6 build workspace exists
+        if [ -d ~/kf6-build ]; then
+          echo "✅ KF6 build workspace exists"
+          echo "Contents of KF6 build workspace:"
+          ls -la ~/kf6-build/ | head -10
+          
+          # Check individual component directories
+          for component in extra-cmake-modules kcoreaddons ki18n kconfig kxmlgui kiconthemes; do
+            if [ -d ~/kf6-build/$component ]; then
+              echo "✅ Found $component build directory"
+              if [ -d ~/kf6-build/$component/build ]; then
+                echo "  - Has build subdirectory"
+                # Check if install was attempted
+                if [ -f ~/kf6-build/$component/build/install.log ]; then
+                  echo "  - Install log exists"
+                  echo "  - Last 5 lines of install log:"
+                  tail -5 ~/kf6-build/$component/build/install.log
+                else
+                  echo "  - No install log found"
+                fi
+              else
+                echo "  - No build subdirectory"
+              fi
+            else
+              echo "❌ Missing $component build directory"
+            fi
+          done
+        else
+          echo "❌ KF6 build workspace does not exist - KF6 build step may have been skipped!"
+          echo "Checking current directory and previous step logs..."
+          pwd
+          ls -la ~/
+        fi
+        
+        echo ""
+        echo "=== Checking actual KF6 installation in brew prefix ==="
+        echo "Looking for any KF6-related files:"
+        find "$(brew --prefix)" -name "*KF6*" -type f | head -20 || echo "No KF6 files found"
+        
+        echo ""
+        echo "Checking cmake directory structure:"
+        ls -la "$(brew --prefix)/lib/cmake/" | grep KF6 || echo "No KF6 directories in cmake"name: Build macOS App Bundle (Qt6/KF6 Master)
+#v1 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
   workflow_dispatch:
@@ -375,20 +576,13 @@ jobs:
         QT6_PATH="$(brew --prefix qt@6)"
         BREW_PREFIX="$(brew --prefix)"
         
-        # Build explicit CMAKE_PREFIX_PATH with all KF6 directories
-        KF6_PATHS=""
-        for kf6_dir in "${BREW_PREFIX}"/lib/cmake/KF6*; do
-          if [ -d "$kf6_dir" ]; then
-            KF6_PATHS="${KF6_PATHS}:$(dirname "$kf6_dir")"
-          fi
-        done
+        # Build explicit CMAKE_PREFIX_PATH correctly (no duplicates)
+        CMAKE_PREFIX_PATH_FULL="${QT6_PATH}:${BREW_PREFIX}/lib/cmake:${BREW_PREFIX}"
         
-        CMAKE_PREFIX_PATH_FULL="${QT6_PATH}${KF6_PATHS}:${BREW_PREFIX}"
-        
+        echo ""
         echo "=== CMake Environment Setup ==="
         echo "QT6_PATH: $QT6_PATH"
         echo "BREW_PREFIX: $BREW_PREFIX"
-        echo "KF6_PATHS: $KF6_PATHS"
         echo "CMAKE_PREFIX_PATH_FULL: $CMAKE_PREFIX_PATH_FULL"
         
         # Export environment variables for this step
