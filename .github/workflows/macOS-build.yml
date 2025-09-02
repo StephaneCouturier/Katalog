@@ -705,37 +705,7 @@ jobs:
         echo "✅ Using existing app bundle created by CMake"
         ls -la Katalog.app/Contents/MacOS/Katalog
         
-        # Create Info.plist
-        cat > "$APP_NAME/Contents/Info.plist" << EOF
-        <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-        <plist version="1.0">
-        <dict>
-            <key>CFBundleExecutable</key>
-            <string>Katalog</string>
-            <key>CFBundleIdentifier</key>
-            <string>com.github.stephanecouturier.katalog</string>
-            <key>CFBundleName</key>
-            <string>Katalog</string>
-            <key>CFBundleDisplayName</key>
-            <string>Katalog</string>
-            <key>CFBundleVersion</key>
-            <string>${VERSION_TAG}</string>
-            <key>CFBundleShortVersionString</key>
-            <string>${VERSION_TAG}</string>
-            <key>CFBundlePackageType</key>
-            <string>APPL</string>
-            <key>LSMinimumSystemVersion</key>
-            <string>11.0</string>
-            <key>NSHighResolutionCapable</key>
-            <true/>
-            <key>NSPrincipalClass</key>
-            <string>NSApplication</string>
-        </dict>
-        </plist>
-        EOF
-        
-        echo "✅ App bundle structure created"
+        echo "✅ App bundle structure verified"
 
     - name: Deploy Qt6 and KF6 dependencies
       run: |
