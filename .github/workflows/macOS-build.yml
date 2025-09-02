@@ -597,11 +597,7 @@ jobs:
             
             # Fix function name and KXmlGuiWindow calls
             sed -e 's/setupWindowsIconTheme();/setupIconTheme();/g' \
-                -e 's/KXmlGuiWindow::changeEvent(event);/#ifdef KATALOG_HAS_KXMLGUI\
-        KXmlGuiWindow::changeEvent(event);\
-#else\
-        QMainWindow::changeEvent(event);\
-#endif/' \
+                -e 's/KXmlGuiWindow::changeEvent(event);/#ifdef KATALOG_HAS_KXMLGUI\n        KXmlGuiWindow::changeEvent(event);\n#else\n        QMainWindow::changeEvent(event);\n#endif/' \
                 src/mainwindow_setup.cpp.backup > src/mainwindow_setup.cpp
                 
             echo "Fixed mainwindow_setup.cpp function calls"
