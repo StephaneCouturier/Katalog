@@ -679,11 +679,11 @@ jobs:
         echo "=== Build output ==="
         find . -name "Katalog*" -o -name "*.app" | sort
         
-        if [ -f "Katalog" ]; then
+        if [ -f "Katalog.app/Contents/MacOS/Katalog" ]; then
           echo "✅ Katalog executable found"
-          ls -la Katalog
+          ls -la Katalog.app/Contents/MacOS/Katalog
           echo "Executable dependencies:"
-          otool -L Katalog | head -20
+          otool -L Katalog.app/Contents/MacOS/Katalog | head -20
         else
           echo "❌ Katalog executable not found"
           exit 1
