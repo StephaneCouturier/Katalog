@@ -770,7 +770,11 @@ jobs:
         fi
         
         echo "DMG created: $DMG_NAME"
-        ls -lh "$DMG_NAME"
+        echo "DMG created: $DMG_NAME"
+            echo "Checking what files exist:"
+            ls -la
+            echo "Looking for DMG files:"
+            find . -name "*.dmg" -type f
 
     - name: Test app bundle
       run: |
