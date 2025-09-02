@@ -564,33 +564,47 @@ jobs:
             echo "Modified src/mainwindow.h for conditional compilation"
           fi
           
-          # Fix runtime code issues in .cpp files
-          echo "Fixing runtime code issues in .cpp files..."
+          # Fix runtime code issues in .cpp files - proper C++ syntax
+          echo "Fixing C++ syntax errors in .cpp files..."
           
-          # Fix mainwindow.cpp constructor and method calls
+          # Fix mainwindow.cpp constructor - use proper conditional compilation
           if [ -f "src/mainwindow.cpp" ]; then
             if [ ! -f "src/mainwindow.cpp.backup" ]; then
               cp src/mainwindow.cpp src/mainwindow.cpp.backup
             fi
             
-            sed -e 's/KXmlGuiWindow(parent)/#ifdef KATALOG_HAS_KXMLGUI\n    KXmlGuiWindow(parent)\n#else\n    QMainWindow(parent)\n#endif/' \
-                -e 's/KXmlGuiWindow::/#ifdef KATALOG_HAS_KXMLGUI\n        KXmlGuiWindow::\n#else\n        QMainWindow::\n#endif/' \
-                src/mainwindow.cpp.backup > src/mainwindow.cpp
+            # Fix constructor initialization list properly
+            awk '
+            /^MainWindow::MainWindow\(QWidget \*parent\) : KXmlGuiWindow\(parent\),/ {
+              print "#ifdef KATALOG_HAS_KXMLGUI"
+              print "MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),"
+              print "#else"  
+              print "MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),"
+              print "#endif"
+              next
+            }
+            { print }
+            ' src/mainwindow.cpp.backup > src/mainwindow.cpp
                 
-            echo "Fixed mainwindow.cpp constructor and method calls"
+            echo "Fixed mainwindow.cpp constructor syntax"
           fi
           
-          # Fix mainwindow_setup.cpp - conditional KXmlGuiWindow calls  
+          # Fix mainwindow_setup.cpp - function name and calls  
           if [ -f "src/mainwindow_setup.cpp" ]; then
             if [ ! -f "src/mainwindow_setup.cpp.backup" ]; then
               cp src/mainwindow_setup.cpp src/mainwindow_setup.cpp.backup
             fi
             
-            sed -e 's/KXmlGuiWindow::changeEvent(event);/#ifdef KATALOG_HAS_KXMLGUI\n        KXmlGuiWindow::changeEvent(event);\n#else\n        QMainWindow::changeEvent(event);\n#endif/' \
-                -e 's/setupWindowsIconThemeKF6Test();/#ifdef KATALOG_HAS_KICONTHEMES\n        setupWindowsIconThemeKF6Test();\n#else\n        \/\/ KF6IconThemes not available - using Qt fallback\n        setupIconTheme();\n#endif/' \
+            # Fix function name and KXmlGuiWindow calls
+            sed -e 's/setupWindowsIconTheme();/setupIconTheme();/g' \
+                -e 's/KXmlGuiWindow::changeEvent(event);/#ifdef KATALOG_HAS_KXMLGUI\
+        KXmlGuiWindow::changeEvent(event);\
+#else\
+        QMainWindow::changeEvent(event);\
+#endif/' \
                 src/mainwindow_setup.cpp.backup > src/mainwindow_setup.cpp
                 
-            echo "Fixed mainwindow_setup.cpp KXmlGuiWindow method calls"
+            echo "Fixed mainwindow_setup.cpp function calls"
           fi
           
           # Fix override warning in mainwindow.h
