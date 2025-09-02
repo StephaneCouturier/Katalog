@@ -171,37 +171,46 @@ jobs:
             REPO_URL="https://invent.kde.org/frameworks/$component.git"
           fi
           
-          echo "Cloning from: $REPO_URL"
-          if git clone --depth 1 --branch "${{ github.event.inputs.kf6_version || 'v6.7.0' }}" "$REPO_URL" "$component" 2>&1 || \
-             git clone --depth 1 "$REPO_URL" "$component" 2>&1; then
-            echo "✅ Successfully cloned $component"
+          echo "Cloning $REPO_URL"
+          
+          # Skip if directory already exists and has content
+          if [ -d "$component" ] && [ "$(ls -A $component 2>/dev/null)" ]; then
+            echo "Directory $component already exists and is not empty, using existing clone"
+            cd "$component"
           else
-            echo "❌ Failed to clone $component"
-            FAILED_BUILDS+=("$component (clone failed)")
-            continue
+            if git clone "$REPO_URL" "$component" --depth=1 --branch "${{ github.event.inputs.kf6_version || 'v6.7.0' }}" 2>&1; then
+              echo "✅ Successfully cloned $component"
+              cd "$component"
+            else
+              echo "❌ Failed to clone $component, trying master branch..."
+              if git clone "$REPO_URL" "$component" --depth=1 2>&1; then
+                echo "✅ Successfully cloned $component from master"
+                cd "$component"
+              else
+                echo "❌ Failed to clone $component entirely"
+                FAILED_BUILDS+=("$component (clone failed)")
+                continue
+              fi
+            fi
           fi
           
-          cd "$component"
-          echo "Component directory contents:"
-          ls -la | head -10
+          # Build and install
+          echo "Building $component..."
+          rm -rf build 2>/dev/null || true
+          mkdir build
+          cd build
           
-          mkdir -p build && cd build
-          
-          # Configure
-          echo "--- Configuring $component ---"
-          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tee cmake_config.log; then
-            echo "✅ Configuration successful for $component"
+          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tee cmake.log; then
+            echo "✅ CMake configuration successful for $component"
           else
-            echo "❌ Configuration failed for $component"
-            echo "=== Configuration error details ==="
-            tail -50 cmake_config.log || echo "No config log available"
-            FAILED_BUILDS+=("$component (config failed)")
+            echo "❌ CMake configuration failed for $component"
+            echo "=== CMake error details ==="
+            tail -20 cmake.log || echo "No cmake log available"
+            FAILED_BUILDS+=("$component (cmake failed)")
             cd ~/kf6-build
             continue
           fi
           
-          # Build
-          echo "--- Building $component ---"
           if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log; then
             echo "✅ Build successful for $component"
           else
@@ -213,8 +222,6 @@ jobs:
             continue
           fi
           
-          # Install
-          echo "--- Installing $component ---"
           if make install 2>&1 | tee install.log; then
             echo "✅ Installation successful for $component"
             SUCCESSFUL_BUILDS+=("$component")
@@ -256,7 +263,7 @@ jobs:
         MISSING_REQUIRED=()
         
         for required in "${REQUIRED_COMPONENTS[@]}"; do
-          if [[ ! " ${SUCCESSFUL_BUILDS[*]} " =~ " $required " ]]; then
+          if [[ ! "${SUCCESSFUL_BUILDS[*]} " =~ " $required " ]]; then
             MISSING_REQUIRED+=("$required")
           fi
         done
@@ -402,13 +409,14 @@ jobs:
           fi
         done
         
-        # Configure with CMake
+        # Configure with CMake - First attempt with all KF6 components
         echo ""
         echo "=== Running CMake configuration ==="
         echo "Working directory: $(pwd)"
         echo "Source directory contents:"
         ls -la ../CMakeLists.txt ../src/ | head -5
         
+        # First try: Standard configuration with all KF6 components
         if cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
@@ -425,17 +433,7 @@ jobs:
         else
           echo "❌ CMake configuration failed"
           echo ""
-          echo "=== Detailed CMake Error Analysis ==="
-          if [ -f "CMakeFiles/CMakeError.log" ]; then
-            echo "CMakeError.log contents:"
-            cat CMakeFiles/CMakeError.log
-          fi
-          if [ -f "CMakeFiles/CMakeOutput.log" ]; then
-            echo "CMakeOutput.log contents (last 50 lines):"
-            tail -50 CMakeFiles/CMakeOutput.log
-          fi
-          echo ""
-          echo "=== Trying with modified CMakeLists.txt (KF6XmlGui optional) ==="
+          echo "=== Applying enhanced macOS compatibility modifications ==="
           
           # Go back and modify CMakeLists.txt as fallback
           cd ..
@@ -443,46 +441,116 @@ jobs:
             cp CMakeLists.txt CMakeLists.txt.original
           fi
           
-          # Make problematic KF6 components optional and remove from linking
-          sed -e 's/find_package(KF6XmlGui REQUIRED)/find_package(KF6XmlGui QUIET)/' \
-              -e 's/find_package(KF6IconThemes REQUIRED)/find_package(KF6IconThemes QUIET)/' \
-              -e 's/KF6::XmlGui/#KF6::XmlGui # Not available on macOS/' \
-              -e 's/KF6::IconThemes/#KF6::IconThemes # Not available on macOS/' \
-              CMakeLists.txt.original > CMakeLists.txt
+          # Enhanced CMakeLists.txt modification with conditional compilation
+          awk '
+          BEGIN { print "# Enhanced CMakeLists.txt for macOS with conditional KF6 support" }
           
-          # Also modify source code to work without KXmlGuiWindow
-          echo "Modifying source code for macOS compatibility..."
+          /find_package\(KF6XmlGui REQUIRED\)/ {
+            print "find_package(KF6XmlGui QUIET)"
+            print "if(KF6XmlGui_FOUND)"
+            print "    add_definitions(-DKATALOG_HAS_KXMLGUI)"
+            print "    message(STATUS \"KF6XmlGui found - using KXmlGuiWindow\")"
+            print "else()"
+            print "    add_definitions(-DKATALOG_USE_QMAINWINDOW)"
+            print "    message(STATUS \"KF6XmlGui not found - using QMainWindow fallback\")"
+            print "endif()"
+            next
+          }
           
-          # Replace KXmlGuiWindow with QMainWindow in header
+          /find_package\(KF6IconThemes REQUIRED\)/ {
+            print "find_package(KF6IconThemes QUIET)"
+            print "if(KF6IconThemes_FOUND)"
+            print "    add_definitions(-DKATALOG_HAS_KICONTHEMES)"
+            print "    message(STATUS \"KF6IconThemes found - using KIconLoader\")"
+            print "else()"
+            print "    message(STATUS \"KF6IconThemes not found - using Qt fallback icons\")"
+            print "endif()"
+            next
+          }
+          
+          /KF6::XmlGui/ {
+            gsub(/KF6::XmlGui/, "$<$<BOOL:${KF6XmlGui_FOUND}>:KF6::XmlGui>")
+          }
+          
+          /KF6::IconThemes/ {
+            gsub(/KF6::IconThemes/, "$<$<BOOL:${KF6IconThemes_FOUND}>:KF6::IconThemes>")
+          }
+          
+          { print }
+          ' CMakeLists.txt.original > CMakeLists.txt
+          
+          # Enhanced mainwindow.h modification with proper conditional compilation
           if [ -f "src/mainwindow.h" ]; then
-            sed -i.bak 's/#include <KXmlGuiWindow>/#include <QMainWindow>/' src/mainwindow.h
-            sed -i.bak 's/class MainWindow : public KXmlGuiWindow/class MainWindow : public QMainWindow/' src/mainwindow.h
+            if [ ! -f "src/mainwindow.h.original" ]; then
+              cp src/mainwindow.h src/mainwindow.h.original
+            fi
             
-            # Comment out other KF6 includes that aren't available
-            sed -i.bak 's/#include <KActionCollection>/\/\/ #include <KActionCollection> \/\/ Not available on macOS/' src/mainwindow.h
-            sed -i.bak 's/#include <KLocalizedString>/\/\/ #include <KLocalizedString> \/\/ Available via KF6I18n/' src/mainwindow.h
-            sed -i.bak 's/#include <KIconTheme>/\/\/ #include <KIconTheme> \/\/ Not available on macOS/' src/mainwindow.h
+            awk '
+            BEGIN { in_kde_section = 0 }
             
-            echo "Modified src/mainwindow.h to use QMainWindow and comment out unavailable KF6 includes"
+            /\/\/KDE KF6/ { 
+              print $0
+              in_kde_section = 1
+              next
+            }
             
-            # Show what changes were made
-            echo "Changes made to mainwindow.h:"
-            diff src/mainwindow.h.bak src/mainwindow.h || echo "Diff completed"
+            /^#include <KXmlGuiWindow>/ && in_kde_section {
+              print "#ifdef KATALOG_HAS_KXMLGUI"
+              print $0
+              print "#endif"
+              print "#ifndef KATALOG_HAS_KXMLGUI"
+              print "#include <QMainWindow>"
+              print "#endif"
+              next
+            }
+            
+            /^#include <KIconTheme>/ && in_kde_section {
+              print "#ifdef KATALOG_HAS_KICONTHEMES"
+              print $0
+              print "#endif"
+              next
+            }
+            
+            /^#include <KIconLoader>/ && in_kde_section {
+              print "#ifdef KATALOG_HAS_KICONTHEMES"
+              print $0
+              print "#endif"
+              in_kde_section = 0
+              next
+            }
+            
+            /class MainWindow.*KXmlGuiWindow/ {
+              print "#ifdef KATALOG_HAS_KXMLGUI"
+              print $0
+              print "#else"
+              gsub(/KXmlGuiWindow/, "QMainWindow")
+              print $0
+              print "#endif"
+              next
+            }
+            
+            { print }
+            ' src/mainwindow.h.original > src/mainwindow.h
+            
+            echo "Modified src/mainwindow.h for conditional compilation"
           fi
           
           echo "Modified CMakeLists.txt - changes made:"
-          diff CMakeLists.txt.original CMakeLists.txt || echo "Diff completed"
+          diff CMakeLists.txt.original CMakeLists.txt | head -20 || echo "Diff completed"
           
-          # Try cmake again
+          # Try cmake again with enhanced configuration
           cd build
+          rm -rf CMakeCache.txt CMakeFiles/
+          
           if cmake .. \
             -GNinja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
             -DBUILD_TESTS=OFF \
-            -DCMAKE_INSTALL_PREFIX=/Applications; then
-            echo "✅ CMake configuration successful with modified CMakeLists.txt"
+            -DCMAKE_INSTALL_PREFIX=/Applications \
+            -DCMAKE_VERBOSE_MAKEFILE=ON; then
+            echo "✅ CMake configuration successful with conditional compilation"
           else
             echo "❌ CMake configuration still failed even with modifications"
             exit 1
@@ -525,108 +593,130 @@ jobs:
         # Check what was built
         echo ""
         echo "=== Build output ==="
-        find . -name "*.app" -o -name "Katalog*" -type f | head -10
+        find . -name "Katalog*" -o -name "*.app" | sort
         
-        if [ -d "Katalog.app" ]; then
-          echo "✅ macOS app bundle created successfully"
-          ls -la Katalog.app/Contents/ || echo "Could not list bundle contents"
-        elif [ -f "Katalog" ]; then
-          echo "✅ Katalog executable created"
+        if [ -f "Katalog" ]; then
+          echo "✅ Katalog executable found"
+          ls -la Katalog
+          echo "Executable dependencies:"
+          otool -L Katalog | head -20
         else
-          echo "❌ No Katalog app or executable found"
+          echo "❌ Katalog executable not found"
           exit 1
         fi
 
-    - name: Create app bundle and package
+    - name: Create macOS app bundle
       run: |
         cd build
         
-        # Ensure we have the app bundle
-        if [ ! -d "Katalog.app" ]; then
-          echo "Creating app bundle manually..."
-          mkdir -p Katalog.app/Contents/{MacOS,Resources,Frameworks}
-          
-          # Create Info.plist
-          cat > Katalog.app/Contents/Info.plist << 'EOF'
+        # Create app bundle structure
+        echo "=== Creating macOS app bundle ==="
+        
+        if [ ! -f "Katalog" ]; then
+          echo "❌ Katalog executable not found"
+          exit 1
+        fi
+        
+        # Create bundle structure
+        APP_NAME="Katalog.app"
+        mkdir -p "$APP_NAME/Contents/MacOS"
+        mkdir -p "$APP_NAME/Contents/Resources"
+        mkdir -p "$APP_NAME/Contents/Frameworks"
+        
+        # Copy executable
+        cp Katalog "$APP_NAME/Contents/MacOS/"
+        chmod +x "$APP_NAME/Contents/MacOS/Katalog"
+        
+        # Create Info.plist
+        cat > "$APP_NAME/Contents/Info.plist" << EOF
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
         <plist version="1.0">
         <dict>
-          <key>CFBundleExecutable</key>
-          <string>Katalog</string>
-          <key>CFBundleIdentifier</key>
-          <string>io.github.stephanecouturier.katalog</string>
-          <key>CFBundleName</key>
-          <string>Katalog</string>
-          <key>CFBundleDisplayName</key>
-          <string>Katalog</string>
-          <key>CFBundleVersion</key>
-          <string>2.7-dev</string>
-          <key>CFBundlePackageType</key>
-          <string>APPL</string>
-          <key>CFBundleSignature</key>
-          <string>KTLG</string>
-          <key>LSMinimumSystemVersion</key>
-          <string>11.0</string>
-          <key>NSHighResolutionCapable</key>
-          <true/>
-          <key>CFBundleIconFile</key>
-          <string>Katalog.icns</string>
+            <key>CFBundleExecutable</key>
+            <string>Katalog</string>
+            <key>CFBundleIdentifier</key>
+            <string>com.github.stephanecouturier.katalog</string>
+            <key>CFBundleName</key>
+            <string>Katalog</string>
+            <key>CFBundleDisplayName</key>
+            <string>Katalog</string>
+            <key>CFBundleVersion</key>
+            <string>${VERSION_TAG}</string>
+            <key>CFBundleShortVersionString</key>
+            <string>${VERSION_TAG}</string>
+            <key>CFBundlePackageType</key>
+            <string>APPL</string>
+            <key>LSMinimumSystemVersion</key>
+            <string>11.0</string>
+            <key>NSHighResolutionCapable</key>
+            <true/>
+            <key>NSPrincipalClass</key>
+            <string>NSApplication</string>
         </dict>
         </plist>
         EOF
-
-          # Copy executable
-          if [ -f "Katalog" ]; then
-            cp Katalog Katalog.app/Contents/MacOS/
-          fi
-        fi
-
-        # Use macdeployqt
-        echo "Running macdeployqt..."
-        MACDEPLOYQT="$(brew --prefix qt@6)/bin/macdeployqt"
         
-        if [ -f "$MACDEPLOYQT" ]; then
-          "$MACDEPLOYQT" Katalog.app -verbose=2 || echo "macdeployqt completed with warnings"
-        fi
+        echo "✅ App bundle structure created"
 
-        # Create icon (non-fatal)
-        if [ -f "../src/images/Katalog_logo_64.ico" ]; then
-          echo "Creating app icon..."
-          mkdir -p Katalog.iconset
+    - name: Deploy Qt6 and KF6 dependencies
+      run: |
+        cd build
+        
+        echo "=== Deploying Qt6 dependencies ==="
+        
+        # Use Qt6's macdeployqt to handle dependencies
+        QT_DEPLOY_TOOL="$(brew --prefix qt@6)/bin/macdeployqt"
+        
+        if [ -x "$QT_DEPLOY_TOOL" ]; then
+          echo "Using macdeployqt: $QT_DEPLOY_TOOL"
+          "$QT_DEPLOY_TOOL" Katalog.app -verbose=2
+        else
+          echo "macdeployqt not found, manual dependency deployment"
           
-          if command -v magick >/dev/null; then
-            magick "../src/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png" || echo "Icon conversion failed"
-            magick "../src/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png" || echo "Icon conversion failed"  
-            magick "../src/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png" || echo "Icon conversion failed"
-            magick "../src/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png" || echo "Icon conversion failed"
-            magick "../src/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png" || echo "Icon conversion failed"
-            magick "../src/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png" || echo "Icon conversion failed"
-            
-            iconutil -c icns Katalog.iconset -o Katalog.app/Contents/Resources/Katalog.icns || echo "ICNS creation failed"
-          fi
+          # Manual dependency handling
+          echo "Analyzing dependencies..."
+          otool -L Katalog.app/Contents/MacOS/Katalog | grep -E "(Qt6|KF6|$(brew --prefix))" > deps.txt || echo "No Qt/KF6 dependencies found"
+          
+          # Copy frameworks manually if needed
+          while read -r line; do
+            lib_path=$(echo "$line" | awk '{print $1}' | grep -E "(Qt6|KF6)")
+            if [ -n "$lib_path" ] && [ -f "$lib_path" ]; then
+              lib_name=$(basename "$lib_path")
+              echo "Copying $lib_name"
+              cp "$lib_path" Katalog.app/Contents/Frameworks/ || echo "Failed to copy $lib_name"
+            fi
+          done < deps.txt
         fi
+        
+        echo "✅ Dependency deployment completed"
 
-        # Create DMG
-        echo "Creating DMG..."
-        brew install create-dmg || echo "create-dmg not available"
+    - name: Create DMG package
+      run: |
+        cd build
         
-        DMG_NAME="Katalog-${{ env.VERSION_TAG }}-macOS.dmg"
+        echo "=== Creating DMG package ==="
         
-        if command -v create-dmg >/dev/null; then
+        DMG_NAME="Katalog-$VERSION_TAG-macOS.dmg"
+        
+        # Create temporary DMG directory
+        mkdir dmg_temp
+        cp -R Katalog.app dmg_temp/
+        
+        # Create DMG using macOS hdiutil
+        if command -v create-dmg >/dev/null 2>&1; then
+          echo "Using create-dmg for better DMG creation..."
           create-dmg \
-            --volname "Katalog" \
+            --volname "Katalog $VERSION_TAG" \
             --window-pos 200 120 \
-            --window-size 600 400 \
+            --window-size 600 300 \
             --icon-size 100 \
             --icon "Katalog.app" 175 120 \
             --hide-extension "Katalog.app" \
             --app-drop-link 425 120 \
             "$DMG_NAME" \
-            Katalog.app || echo "create-dmg failed, trying hdiutil"
-        fi
-        
-        if [ ! -f "$DMG_NAME" ]; then
+            "dmg_temp/"
+        elif [ -f "$DMG_NAME" ]; then
           echo "Using hdiutil fallback..."
           hdiutil create -srcfolder Katalog.app -format UDZO -o "$DMG_NAME"
         fi
