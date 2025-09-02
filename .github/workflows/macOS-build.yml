@@ -441,9 +441,9 @@ jobs:
             cp CMakeLists.txt CMakeLists.txt.original
           fi
           
-          # Enhanced CMakeLists.txt modification with conditional compilation
+          # Enhanced CMakeLists.txt modification with conditional compilation - focus on core libs
           awk '
-          BEGIN { print "# Enhanced CMakeLists.txt for macOS with conditional KF6 support" }
+          BEGIN { print "# Enhanced CMakeLists.txt for macOS - focus on essential core libraries" }
           
           /find_package\(KF6XmlGui REQUIRED\)/ {
             print "find_package(KF6XmlGui QUIET)"
@@ -468,12 +468,27 @@ jobs:
             next
           }
           
+          /find_package\(KF6I18n REQUIRED\)/ {
+            print "find_package(KF6I18n QUIET)"
+            print "if(KF6I18n_FOUND)"
+            print "    add_definitions(-DKATALOG_HAS_KI18N)"
+            print "    message(STATUS \"KF6I18n found - using KLocalizedString\")"
+            print "else()"
+            print "    message(STATUS \"KF6I18n not found - using tr() fallback\")"
+            print "endif()"
+            next
+          }
+          
           /KF6::XmlGui/ {
             gsub(/KF6::XmlGui/, "$<$<BOOL:${KF6XmlGui_FOUND}>:KF6::XmlGui>")
           }
           
           /KF6::IconThemes/ {
             gsub(/KF6::IconThemes/, "$<$<BOOL:${KF6IconThemes_FOUND}>:KF6::IconThemes>")
+          }
+          
+          /KF6::I18n/ {
+            gsub(/KF6::I18n/, "$<$<BOOL:${KF6I18n_FOUND}>:KF6::I18n>")
           }
           
           { print }
@@ -511,6 +526,13 @@ jobs:
               next
             }
             
+            /^#include <KLocalizedString>/ && in_kde_section {
+              print "#ifdef KATALOG_HAS_KI18N"
+              print $0
+              print "#endif"
+              next
+            }
+            
             /^#include <KIconTheme>/ && in_kde_section {
               print "#ifdef KATALOG_HAS_KICONTHEMES"
               print $0
@@ -542,8 +564,52 @@ jobs:
             echo "Modified src/mainwindow.h for conditional compilation"
           fi
           
+          # Fix runtime code issues in .cpp files
+          echo "Fixing runtime code issues in .cpp files..."
+          
+          # Fix mainwindow.cpp constructor and method calls
+          if [ -f "src/mainwindow.cpp" ]; then
+            if [ ! -f "src/mainwindow.cpp.backup" ]; then
+              cp src/mainwindow.cpp src/mainwindow.cpp.backup
+            fi
+            
+            sed -e 's/KXmlGuiWindow(parent)/#ifdef KATALOG_HAS_KXMLGUI\n    KXmlGuiWindow(parent)\n#else\n    QMainWindow(parent)\n#endif/' \
+                -e 's/KXmlGuiWindow::/#ifdef KATALOG_HAS_KXMLGUI\n        KXmlGuiWindow::\n#else\n        QMainWindow::\n#endif/' \
+                src/mainwindow.cpp.backup > src/mainwindow.cpp
+                
+            echo "Fixed mainwindow.cpp constructor and method calls"
+          fi
+          
+          # Fix mainwindow_setup.cpp - conditional KXmlGuiWindow calls  
+          if [ -f "src/mainwindow_setup.cpp" ]; then
+            if [ ! -f "src/mainwindow_setup.cpp.backup" ]; then
+              cp src/mainwindow_setup.cpp src/mainwindow_setup.cpp.backup
+            fi
+            
+            sed -e 's/KXmlGuiWindow::changeEvent(event);/#ifdef KATALOG_HAS_KXMLGUI\n        KXmlGuiWindow::changeEvent(event);\n#else\n        QMainWindow::changeEvent(event);\n#endif/' \
+                -e 's/setupWindowsIconThemeKF6Test();/#ifdef KATALOG_HAS_KICONTHEMES\n        setupWindowsIconThemeKF6Test();\n#else\n        \/\/ KF6IconThemes not available - using Qt fallback\n        setupIconTheme();\n#endif/' \
+                src/mainwindow_setup.cpp.backup > src/mainwindow_setup.cpp
+                
+            echo "Fixed mainwindow_setup.cpp KXmlGuiWindow method calls"
+          fi
+          
+          # Fix override warning in mainwindow.h
+          if [ -f "src/mainwindow.h" ]; then
+            sed -i.override 's/void closeEvent (QCloseEvent \*event);/void closeEvent (QCloseEvent *event) override;/' src/mainwindow.h
+            echo "Added override keyword to closeEvent"
+          fi
+          
           echo "Modified CMakeLists.txt - changes made:"
           diff CMakeLists.txt.original CMakeLists.txt | head -20 || echo "Diff completed"
+          
+          echo ""
+          echo "✅ Applied simplified macOS build strategy:"
+          echo "  - REQUIRED → QUIET: KF6XmlGui, KF6IconThemes, KF6I18n (optional)"
+          echo "  - FOCUS on core: KF6CoreAddons, KF6Config (essential for KJob)"
+          echo "  - Fixed KXmlGuiWindow constructor calls"
+          echo "  - Fixed KXmlGuiWindow::changeEvent calls"  
+          echo "  - Fixed setupWindowsIconThemeKF6Test calls"
+          echo "  - Added override keyword to closeEvent"
           
           # Try cmake again with enhanced configuration
           cd build
