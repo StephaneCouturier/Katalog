@@ -504,6 +504,13 @@ jobs:
               next
             }
             
+            /^#include <KActionCollection>/ && in_kde_section {
+              print "#ifdef KATALOG_HAS_KXMLGUI"
+              print $0
+              print "#endif"
+              next
+            }
+            
             /^#include <KIconTheme>/ && in_kde_section {
               print "#ifdef KATALOG_HAS_KICONTHEMES"
               print $0
