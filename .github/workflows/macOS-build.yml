@@ -764,9 +764,9 @@ jobs:
             --app-drop-link 425 120 \
             "$DMG_NAME" \
             "dmg_temp/"
-        elif [ -f "$DMG_NAME" ]; then
-          echo "Using hdiutil fallback..."
-          hdiutil create -srcfolder Katalog.app -format UDZO -o "$DMG_NAME"
+          else
+            echo "Using hdiutil fallback..."
+            hdiutil create -srcfolder Katalog.app -format UDZO -o "$DMG_NAME"
         fi
         
         echo "DMG created: $DMG_NAME"
