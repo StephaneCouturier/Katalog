@@ -696,20 +696,14 @@ jobs:
         # Create app bundle structure
         echo "=== Creating macOS app bundle ==="
         
-        if [ ! -f "Katalog" ]; then
+        if [ ! -f "Katalog.app/Contents/MacOS/Katalog" ]; then
           echo "❌ Katalog executable not found"
           exit 1
         fi
         
-        # Create bundle structure
-        APP_NAME="Katalog.app"
-        mkdir -p "$APP_NAME/Contents/MacOS"
-        mkdir -p "$APP_NAME/Contents/Resources"
-        mkdir -p "$APP_NAME/Contents/Frameworks"
-        
-        # Copy executable
-        cp Katalog "$APP_NAME/Contents/MacOS/"
-        chmod +x "$APP_NAME/Contents/MacOS/Katalog"
+        # App bundle already exists from CMake build, just verify it's there
+        echo "✅ Using existing app bundle created by CMake"
+        ls -la Katalog.app/Contents/MacOS/Katalog
         
         # Create Info.plist
         cat > "$APP_NAME/Contents/Info.plist" << EOF
