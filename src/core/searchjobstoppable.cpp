@@ -406,13 +406,24 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     // Build SQL query
     QSqlQuery getFilesQuery(QSqlDatabase::database(m_connectionName));
     QString getFilesQuerySQL = QLatin1String(R"(
-        SELECT  file_name,
-                file_folder_path,
-                file_size,
-                file_date_updated
-        FROM  file
-        WHERE file_catalog_id = :file_catalog_id
-    )");
+    SELECT  file_name,
+            file_folder_path,
+            file_size,
+            file_date_updated,
+            file_type,
+            mime_type,
+            image_width,
+            image_height,
+            video_duration_seconds,
+            video_width,
+            video_height,
+            audio_duration_seconds,
+            audio_artist,
+            audio_album,
+            audio_title
+    FROM  file
+    WHERE file_catalog_id = :file_catalog_id
+)");
 
     // Add size filter
     if (searchOnFileCriteria && searchOnSize) {
@@ -457,7 +468,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             break;
         }
 
-        // FIX: Add pause check every N files (simple approach)
+        // Add pause check every N files (simple approach)
         if (filesProcessed % 100 == 0) {  // Check every 100 files
             waitIfPaused();  // This will pause if needed
 
@@ -468,9 +479,24 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             }
         }
 
-        QString lineFileName = getFilesQuery.value(0).toString();
-        QString lineFileFolderPath = getFilesQuery.value(1).toString();
-        QString lineFileFullPath = lineFileFolderPath + "/" + lineFileName;
+        QString fileName = getFilesQuery.value(0).toString();
+        QString filePath = getFilesQuery.value(1).toString();
+        QString fileFullPath = filePath + "/" + fileName;
+        qint64 fileSize = getFilesQuery.value(2).toLongLong();
+        QString fileDateTime = getFilesQuery.value(3).toString();
+
+        // NEW METADATA FIELDS:
+        QString fileType = getFilesQuery.value(4).toString();
+        QString mimeType = getFilesQuery.value(5).toString();
+        int imageWidth = getFilesQuery.value(6).toInt();
+        int imageHeight = getFilesQuery.value(7).toInt();
+        int videoDuration = getFilesQuery.value(8).toInt();
+        int videoWidth = getFilesQuery.value(9).toInt();
+        int videoHeight = getFilesQuery.value(10).toInt();
+        int audioDuration = getFilesQuery.value(11).toInt();
+        QString audioArtist = getFilesQuery.value(12).toString();
+        QString audioAlbum = getFilesQuery.value(13).toString();
+        QString audioTitle = getFilesQuery.value(14).toString();
 
         filesProcessed++;
         batchCount++;
@@ -490,7 +516,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             queryTag.exec();
 
             while (queryTag.next()) {
-                if ((lineFileFolderPath + "/").contains(queryTag.value(0).toString() + "/")) {
+                if ((filePath + "/").contains(queryTag.value(0).toString() + "/")) {
                     fileIsMatchingTag = true;
                     break;
                 }
@@ -506,30 +532,42 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
         if (searchOnFileName) {
             if (selectedSearchIn == SEARCH_IN_FILE_NAMES) {
-                match = regex.match(lineFileName);
+                match = regex.match(fileName);
             } else if (selectedSearchIn == SEARCH_IN_FOLDER_PATH) {
                 regex.setPattern(regexSearchtext);
-                auto foldermatch = regex.match(lineFileFolderPath);
+                auto foldermatch = regex.match(filePath);
                 if (foldermatch.hasMatch() && searchOnType) {
                     regex.setPattern(regexFileType);
-                    match = regex.match(lineFileName);
+                    match = regex.match(fileName);
                 } else {
                     match = foldermatch;
                 }
             } else { // SEARCH_IN_FILES_AND_FOLDERS
-                match = regex.match(lineFileFullPath);
+                match = regex.match(fileFullPath);
             }
 
             if (match.hasMatch()) {
-                filesFoundList << lineFileFolderPath;
+                filesFoundList << filePath;
                 deviceFoundIDList.insert(0, QString::number(device->ID));
 
-                fileNames.append(lineFileName);
-                filePaths.append(lineFileFolderPath);
-                fileSizes.append(getFilesQuery.value(2).toLongLong());
-                fileDateTimes.append(getFilesQuery.value(3).toString());
+                fileNames.append(fileName);
+                filePaths.append(filePath);
+                fileSizes.append(fileSize);
+                fileDateTimes.append(fileDateTime);
                 fileCatalogs.append(device->name);
                 fileCatalogIDs.append(device->externalID);
+
+                fileTypes.append(fileType);
+                fileTypes.append(mimeType);
+                imageWidths.append(imageWidth);
+                imageHeights.append(imageHeight);
+                videoDurations.append(videoDuration);
+                videoWidths.append(videoWidth);
+                videoHeights.append(videoHeight);
+                audioDurations.append(audioDuration);
+                audioArtists.append(audioArtist);
+                audioAlbums.append(audioAlbum);
+                audioTitles.append(audioTitle);
             }
         }
 
@@ -899,7 +937,17 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
                 file_date_updated,
                 file_folder_path,
                 file_catalog,
-                file_catalog_id
+                file_catalog_id,
+                file_type,
+                image_width,
+                image_height,
+                video_duration_seconds,
+                video_width,
+                video_height,
+                audio_duration_seconds,
+                audio_artist,
+                audio_album,
+                audio_title
         FROM filetemp
         WHERE %1 IN
             (SELECT %1

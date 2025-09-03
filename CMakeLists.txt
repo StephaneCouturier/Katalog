@@ -39,6 +39,7 @@ find_package(KF6I18n REQUIRED)
 find_package(KF6XmlGui REQUIRED)
 find_package(KF6Config REQUIRED)
 find_package(KF6IconThemes REQUIRED)
+find_package(KF6FileMetaData REQUIRED)
 
 # Enable Qt's automatic processing
 set(CMAKE_AUTOMOC ON)
@@ -79,6 +80,7 @@ set(CORE_HEADERS
     src/core/devicejobstoppable.h
     src/core/devicemanager.h
     src/core/deviceupdatemanager.h
+    src/core/filemetadata.h
 )
 
 set(CORE_SOURCES
@@ -103,6 +105,7 @@ set(CORE_SOURCES
     src/core/devicejobstoppable.cpp
     src/core/devicemanager.cpp
     src/core/deviceupdatemanager.cpp
+    src/core/filemetadata.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately
@@ -266,6 +269,7 @@ target_link_libraries(katalog-core PUBLIC
     KF6::CoreAddons
     KF6::I18n
     KF6::XmlGui
+    KF6::FileMetaData
 )
 
 target_include_directories(katalog-core PUBLIC
@@ -298,6 +302,7 @@ target_link_libraries(Katalog PRIVATE
     KF6::XmlGui
     KF6::ConfigCore
     KF6::IconThemes
+    KF6::FileMetaData
 )
 
 # To avoid threat detection of a separate freetype dll.

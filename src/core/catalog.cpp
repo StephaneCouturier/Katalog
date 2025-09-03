@@ -289,6 +289,7 @@ void Catalog::saveCatalog()
     query.bindValue(":catalog_storage", storageName);
     query.bindValue(":catalog_file_type", fileType);
     query.bindValue(":catalog_include_hidden", includeHidden);
+    query.bindValue(":catalog_include_metadata", includeMetadata);
     query.bindValue(":catalog_include_symblinks", includeSymblinks);
     query.exec();
 }
@@ -430,6 +431,7 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
     qDebug() << "updateCatalogFiles: returning list with" << list.size() << "elements:" << list;
     return list;
 }
+
 void Catalog::loadCatalog(QString connectionName)
 {
     QSqlQuery query(QSqlDatabase::database(connectionName));

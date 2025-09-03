@@ -104,21 +104,32 @@ int Search::rowCount(const QModelIndex &parent) const
 int Search::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 6;
+    return 17;
 }
 
 QVariant Search::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || role != Qt::DisplayRole) {
-        return QVariant();
-    }
+    if (role != Qt::DisplayRole) return QVariant();
+
     switch (index.column()) {
     case 0: return QString(fileNames[index.row()]);
-    case 1: return qint64(fileSizes[index.row()]);
+    case 1: return QVariant(fileSizes[index.row()]);
     case 2: return QString(fileDateTimes[index.row()]);
     case 3: return QString(filePaths[index.row()]);
     case 4: return QString(fileCatalogs[index.row()]);
     case 5: return int(fileCatalogIDs[index.row()]);
+    // Metadata
+    case 6: return QString(fileTypes[index.row()]);
+    case 7: return QString(mimeTypes[index.row()]);
+    case 8: return imageWidths[index.row()] > 0 ? imageWidths[index.row()] : QVariant();
+    case 9: return imageHeights[index.row()] > 0 ? imageHeights[index.row()] : QVariant();
+    case 10: return videoDurations[index.row()] > 0 ? videoDurations[index.row()] : QVariant();
+    case 11: return videoWidths[index.row()] > 0 ? videoWidths[index.row()] : QVariant();
+    case 12: return videoHeights[index.row()] > 0 ? videoHeights[index.row()] : QVariant();
+    case 13: return audioDurations[index.row()] > 0 ? audioDurations[index.row()] : QVariant();
+    case 14: return QString(audioArtists[index.row()]);
+    case 15: return QString(audioAlbums[index.row()]);
+    case 16: return QString(audioTitles[index.row()]);
     }
     return QVariant();
 }
@@ -133,6 +144,18 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         case 3: return QString(tr("Folder"));
         case 4: return QString(tr("Catalog Name"));
         case 5: return QString(tr("Catalog ID"));
+        // Metadata
+        case 6: return QString(tr("Type"));
+        case 7: return QString(tr("MIME Type"));
+        case 8: return QString(tr("Image Width"));
+        case 9: return QString(tr("Image Height"));
+        case 10: return QString(tr("Video Duration"));
+        case 11: return QString(tr("Video Width"));
+        case 12: return QString(tr("Video Height"));
+        case 13: return QString(tr("Audio Duration"));
+        case 14: return QString(tr("Artist"));
+        case 15: return QString(tr("Album"));
+        case 16: return QString(tr("Title"));
         }
     }
     return QVariant();

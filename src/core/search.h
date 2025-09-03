@@ -134,6 +134,14 @@ public:
     QList<QString> filePaths;
     QList<QString> fileCatalogs;
     QList<int> fileCatalogIDs;
+
+    QStringList fileTypes;
+    QStringList mimeTypes;
+    QList<int> imageWidths, imageHeights;
+    QList<int> videoDurations, videoWidths, videoHeights;
+    QList<int> audioDurations;
+    QStringList audioArtists, audioAlbums, audioTitles;
+
     qint64 filesFoundNumber;
     qint64 filesFoundTotalSize;
     qint64 filesFoundAverageSize;

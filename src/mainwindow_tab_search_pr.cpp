@@ -580,11 +580,19 @@ void MainWindow::displaySearchResults()
         ui->Search_treeView_FilesFound->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents); // Name
         ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); // Size
         ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); // Date
-        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); // Path
-        ui->Search_treeView_FilesFound->header()->resizeSection(4, 140); // Catalog
-        ui->Search_treeView_FilesFound->header()->showSection(0);
-        ui->Search_treeView_FilesFound->header()->showSection(1);
-        ui->Search_treeView_FilesFound->header()->showSection(2);
+        ui->Search_treeView_FilesFound->header()->resizeSection(3, 300); // Path
+        ui->Search_treeView_FilesFound->header()->resizeSection(4, 120); // Catalog
+        // Metdata
+        ui->Search_treeView_FilesFound->header()->resizeSection(6, 60);   // Type
+        ui->Search_treeView_FilesFound->header()->resizeSection(7, 80);   // Image Width
+        ui->Search_treeView_FilesFound->header()->resizeSection(8, 80);   // Image Height
+        ui->Search_treeView_FilesFound->header()->resizeSection(9, 90);   // Video Duration (seconds)
+        ui->Search_treeView_FilesFound->header()->resizeSection(10, 80);  // Video Width
+        ui->Search_treeView_FilesFound->header()->resizeSection(11, 80);  // Video Height
+        ui->Search_treeView_FilesFound->header()->resizeSection(12, 90);  // Audio Duration (seconds)
+        ui->Search_treeView_FilesFound->header()->resizeSection(13, 120); // Artist
+        ui->Search_treeView_FilesFound->header()->resizeSection(14, 120); // Album
+        ui->Search_treeView_FilesFound->header()->resizeSection(15, 150); // Title
 
         // Update label based on search type
         if (currentSearch->searchOnFileCriteria == true && currentSearch->searchOnDuplicates == true) {

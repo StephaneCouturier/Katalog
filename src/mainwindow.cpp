@@ -32,9 +32,7 @@
 #include "ui_mainwindow.h"
 #include "core/database.h"
 #include "core/language.h"
-#include "core/catalogmanager.h"
 #include "core/catalogjobstoppable.h"
-#include "core/catalogprogressmanager.h"
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)

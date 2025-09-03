@@ -55,6 +55,11 @@
 #include <KLocalizedString>
 #include <KIconTheme>
 #include <KIconLoader>
+#include <KFileMetaData/ExtractorCollection>
+#include <KFileMetaData/SimpleExtractionResult>
+#include <KFileMetaData/Properties>
+#include <KFileMetaData/PropertyInfo>
+#include <QMimeDatabase>
 
 //QtWidget
 #include <QMainWindow>

@@ -45,8 +45,9 @@ FilesView::FilesView(QObject *parent)
 QVariant FilesView::data(const QModelIndex &index, int role) const
 {
     //Define list of columns per type of data
-    QList<int> filesizeColumnList, filecountColumnList;
+    QList<int> filesizeColumnList, filecountColumnList, durationColumnList;
       filesizeColumnList <<1;
+      durationColumnList <<12 <<15;
 
     //Definition of filetypes
     QStringList fileTypesPlain_Image, fileTypesPlain_Audio,fileTypesPlain_Video,fileTypesPlain_Text;
@@ -67,7 +68,29 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     else
                         return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
                 }
-
+                //Duration columns
+                else if (durationColumnList.contains(index.column())) {
+                    QVariant rawValue = QSortFilterProxyModel::data(index, role);
+                    int duration = rawValue.toInt();
+                    if (duration > 0) {
+                        if (index.column() == 10) { // Video Duration - show as H:MM:SS
+                            int hours = duration / 3600;
+                            int minutes = (duration % 3600) / 60;
+                            int seconds = duration % 60;
+                            return QString("%1:%2:%3")
+                                .arg(hours, 2, 10, QChar('0'))
+                                .arg(minutes, 2, 10, QChar('0'))
+                                .arg(seconds, 2, 10, QChar('0'));
+                        } else { // Audio Duration - show as MM:SS
+                            int minutes = duration / 60;
+                            int seconds = duration % 60;
+                            return QString("%1:%2")
+                                .arg(minutes, 2, 10, QChar('0'))
+                                .arg(seconds, 2, 10, QChar('0'));
+                        }
+                    }
+                    return "";
+                }
                 //Numbers columns (without units)
                 else if( filecountColumnList.contains(index.column()) ){
                     return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 0)  + "  ");

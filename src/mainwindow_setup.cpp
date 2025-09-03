@@ -269,8 +269,6 @@
             #endif
 
         //Devices
-            ui->Catalogs_checkBox_IncludeMetadata->hide();
-
             //Catalogs
                 //DEV: preparing catalog-device relation
                 ui->Catalogs_checkBox_isFullDevice->hide();
@@ -279,7 +277,7 @@
             //DEV: the option to include symblinks is not working yet
             ui->Create_checkBox_IncludeSymblinks->hide();
             ui->Create_checkBox_isFullDevice->hide();
-            ui->Create_checkBox_IncludeMetadata->hide();
+
             //DEV: Samba is not implemented yet
             ui->Create_label_TypeOfSource->hide();
             ui->Create_comboBox_SourceType->hide();

@@ -30,6 +30,7 @@
 */
 
 #include "catalogjobstoppable.h"
+#include "filemetadata.h"
 #include <QDebug>
 #include <QDir>
 #include <QDirIterator>
@@ -495,6 +496,17 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                     }
                 }
 
+                // Extract metadata if enabled
+                if (catalog->includeMetadata) {
+                    for (int i = 0; i < fileFullPaths.size(); ++i) {
+                        if (!shouldContinue()) break;
+                        const QString &filePath = fileFullPaths[i];
+                        if (FileMetadata::isMetadataSupported(filePath)) {
+                            FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID);
+                        }
+                    }
+                }
+
                 // Insert folders for this batch - Use folder paths, not full file paths
                 QStringList uniqueFolders = fileFolderPaths;
                 uniqueFolders.removeDuplicates();
@@ -552,6 +564,17 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
             }
         }
 
+        if (catalog->includeMetadata) {
+            for (int i = 0; i < fileFullPaths.size(); ++i) {
+                if (!shouldContinue()) break;
+
+                const QString &filePath = fileFullPaths[i];
+                if (FileMetadata::isMetadataSupported(filePath)) {
+                    FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID);
+                }
+            }
+        }
+
         // Insert remaining folders
         QStringList uniqueFolders = fileFolderPaths;
         uniqueFolders.removeDuplicates();
@@ -572,6 +595,8 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                 qDebug() << "Folder insert error:" << folderQuery.lastError().text();
             }
         }
+
+
     }
 
     // Final progress update for this directory
