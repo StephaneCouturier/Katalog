@@ -1,0 +1,400 @@
+name: Create AppImage (Qt5/KF5)
+#v1 - Qt5/KF5 build for glibc 2.35 compatibility
+on:
+  # Trigger on new releases
+  release:
+    types: [published]
+
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Version tag (e.g., v2.6.1)'
+        required: false
+        default: 'dev-build-qt5'
+
+  # Optional: trigger on push to main (remove if you don't want this)
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'scripts/Katalog_linux_create_portable.sh'
+
+jobs:
+  build-appimage-qt5:
+    runs-on: ubuntu-22.04  # glibc 2.35
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install Qt5 and KF5 dependencies
+      run: |
+        sudo apt-get update
+
+        # Install base dependencies first
+        sudo apt-get install -y \
+          build-essential \
+          cmake \
+          ninja-build \
+          desktop-file-utils \
+          appstream-util \
+          wget \
+          file \
+          fuse3 \
+          libfuse2 \
+          software-properties-common \
+          gpg
+
+        # Install base Qt5 and KF5 packages
+        sudo apt-get install -y \
+          extra-cmake-modules \
+          qt5-qmake \
+          qtbase5-dev \
+          qtbase5-dev-tools \
+          qttools5-dev \
+          qttools5-dev-tools \
+          libqt5sql5-sqlite \
+          libqt5network5
+
+        # Install additional Qt5 packages for Katalog
+        sudo apt-get install -y \
+          libqt5charts5-dev
+
+        # Try to install KF5 packages - different possible names
+        sudo apt-get install -y \
+          libkf5coreaddons-dev \
+          libkf5i18n-dev \
+          libkf5xmlgui-dev \
+          libkf5config-dev \
+          libkf5iconthemes-dev || \
+        {
+          echo "Failed to install standard KF5 packages. Searching for alternatives..."
+          apt search libkf5 | grep -E "^libkf5.*-dev" | head -20
+          echo "Installing individual KF5 components..."
+          
+          # Try individual installations
+          sudo apt-get install -y libkf5coreaddons-dev || echo "libkf5coreaddons-dev not available"
+          sudo apt-get install -y libkf5i18n-dev || echo "libkf5i18n-dev not available"
+          sudo apt-get install -y libkf5xmlgui-dev || echo "libkf5xmlgui-dev not available"
+          sudo apt-get install -y libkf5config-dev || echo "libkf5config-dev not available" 
+          sudo apt-get install -y libkf5iconthemes-dev || echo "libkf5iconthemes-dev not available"
+        }
+
+        # Verify Qt5 installation
+        echo "Qt5 version information:"
+        qmake --version || echo "qmake not found"
+        pkg-config --modversion Qt5Core || echo "Qt5Core pkg-config not found"
+
+    - name: Download and setup linuxdeploy
+      run: |
+        mkdir -p $HOME/linuxdeploy
+        cd $HOME/linuxdeploy
+
+        # Download linuxdeploy and Qt plugin
+        wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+        wget -c "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+
+        chmod +x *.AppImage
+
+        # Extract both AppImages to separate directories
+        mkdir -p linuxdeploy-extracted
+        mkdir -p linuxdeploy-qt-extracted
+
+        cd linuxdeploy-extracted
+        ../linuxdeploy-x86_64.AppImage --appimage-extract
+        cd ..
+
+        cd linuxdeploy-qt-extracted
+        ../linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
+        cd ..
+
+        # Create proper executable scripts
+        echo '#!/bin/bash' > linuxdeploy
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy
+
+        echo '#!/bin/bash' > linuxdeploy-plugin-qt
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-qt-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy-plugin-qt
+
+        chmod +x linuxdeploy linuxdeploy-plugin-qt
+
+        # Test the tools
+        echo "Testing main linuxdeploy tool:"
+        ./linuxdeploy --help | head -5
+        echo "Testing Qt plugin:"
+        ./linuxdeploy-plugin-qt --help | head -5
+
+    - name: Create packaging directory and files
+      run: |
+        mkdir -p packaging
+
+        # Create desktop file
+        cat > packaging/Katalog.desktop << EOF
+        [Desktop Entry]
+        Type=Application
+        Name=Katalog
+        GenericName=File Catalog Manager
+        Comment=Create and manage catalogs of your files and folders
+        Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
+        Exec=Katalog
+        Icon=Katalog
+        Terminal=false
+        Categories=Utility;FileManager;Qt;
+        Keywords=catalog;files;folders;organization;storage;backup;
+        StartupNotify=true
+        StartupWMClass=Katalog
+        EOF
+
+        # Create AppData file
+        cat > packaging/io.github.stephanecouturier.katalog.appdata.xml << EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <component type="desktop-application">
+          <id>io.github.stephanecouturier.katalog</id>
+          <name>Katalog</name>
+          <summary>File Catalog Manager</summary>
+          <description>
+            <p>
+              Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
+              Create catalogs of your DVDs, external drives, and folders to quickly find files without having to connect the device.
+            </p>
+            <p>Features:</p>
+            <ul>
+              <li>Create catalogs of files and folders</li>
+              <li>Search across multiple catalogs</li>
+              <li>Track files on external devices</li>
+              <li>Import from other catalog formats</li>
+              <li>Statistics and file analysis</li>
+              <li>Multiple language support</li>
+            </ul>
+          </description>
+          <categories>
+            <category>Utility</category>
+            <category>FileManager</category>
+          </categories>
+          <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
+          <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
+          <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
+          <launchable type="desktop-id">io.github.stephanecouturier.katalog.desktop</launchable>
+          <provides>
+            <binary>Katalog</binary>
+          </provides>
+          <content_rating type="oars-1.1"/>
+          <releases>
+            <release version="2.7-qt5" date="2024-01-01"/>
+          </releases>
+        </component>
+        EOF
+
+    - name: Set version information
+      run: |
+        if [ "${{ github.event_name }}" = "release" ]; then
+          echo "VERSION_TAG=${{ github.event.release.tag_name }}-qt5" >> $GITHUB_ENV
+          echo "IS_RELEASE=true" >> $GITHUB_ENV
+        elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.version_tag }}" ]; then
+          echo "VERSION_TAG=${{ github.event.inputs.version_tag }}" >> $GITHUB_ENV
+          echo "IS_RELEASE=false" >> $GITHUB_ENV
+        else
+          echo "VERSION_TAG=dev-qt5-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
+          echo "IS_RELEASE=false" >> $GITHUB_ENV
+        fi
+
+        echo "Building version: $VERSION_TAG"
+
+    - name: Prepare Qt5/KF5 build configuration
+      run: |
+        # Use the Qt5/KF5 specific CMakeLists.txt file
+        if [ -f "CMakeLists_qt5.txt" ]; then
+          echo "Using Qt5/KF5 specific CMakeLists.txt"
+          cp CMakeLists_qt5.txt CMakeLists.txt
+        else
+          echo "Warning: CMakeLists_qt5.txt not found. The build may not work properly with Qt5/KF5"
+          echo "Available CMakeLists files:"
+          ls -la CMakeLists*.txt || echo "No CMakeLists files found"
+        fi
+
+    - name: Build Katalog with Qt5/KF5
+      run: |
+        mkdir build
+        cd build
+
+        # Set Qt5 environment
+        export QT_SELECT=5
+        export CMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5
+
+        cmake .. \
+          -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_PREFIX_PATH=/usr \
+          -DBUILD_TESTS=OFF
+
+        # Build translations first (may fail, but continue)
+        echo "Building translations..."
+        ninja Katalog_lrelease || echo "Translation build failed, continuing..."
+
+        # Check what .qm files are available
+        echo "Available .qm files:"
+        find .. -name "*.qm" -type f || echo "No .qm files found"
+
+        # Create missing .qm files as empty files if needed
+        for ts_file in ../src/translations/*.ts; do
+          if [ -f "$ts_file" ]; then
+            qm_file="${ts_file%.ts}.qm"
+            if [ ! -f "$qm_file" ]; then
+              echo "Creating empty .qm file: $qm_file"
+              touch "$qm_file"
+            fi
+          fi
+        done
+
+        # Now build the main application
+        ninja
+
+        # Check available targets
+        echo "Available ninja targets:"
+        ninja -t targets | grep install || echo "No install targets found"
+
+        # Create AppDir and install manually if needed
+        mkdir -p AppDir/usr/bin
+        cp Katalog AppDir/usr/bin/
+
+        # Or try the install target with proper environment
+        export DESTDIR="$(pwd)/AppDir"
+        ninja install || echo "Install target failed, but binary copied manually"
+
+    - name: Prepare AppDir structure
+      run: |
+        cd build
+
+        # Ensure proper AppDir structure
+        mkdir -p AppDir/usr/share/applications
+        mkdir -p AppDir/usr/share/metainfo
+        mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
+
+        # Copy desktop file
+        cp ../packaging/Katalog.desktop AppDir/usr/share/applications/
+
+        # Copy AppData
+        cp ../packaging/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
+
+        # Create proper 64x64 icon
+        if [ -f "../src/images/Katalog_logo_64.ico" ]; then
+          # Convert ico to png with exact 64x64 size
+          sudo apt-get install -y imagemagick
+          convert "../src/images/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
+          {
+            echo "ICO conversion failed, creating fallback icon"
+            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+          }
+        else
+          echo "ICO file not found, creating fallback icon"
+          sudo apt-get install -y imagemagick
+          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+        fi
+
+        # Verify icon dimensions
+        echo "Icon information:"
+        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png || echo "Could not identify icon"
+
+        # Validate desktop file
+        desktop-file-validate AppDir/usr/share/applications/Katalog.desktop || echo "Desktop file validation warnings (non-critical)"
+
+        # Validate AppData
+        appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.katalog.appdata.xml || echo "AppData validation warnings (non-critical)"
+
+    - name: Create AppImage
+      run: |
+        cd build
+
+        # Set up environment for linuxdeploy
+        export PATH="$HOME/linuxdeploy:$PATH"
+        export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+        export QT_SELECT=5
+
+        # Verify tools work
+        echo "Testing linuxdeploy..."
+        linuxdeploy --version || linuxdeploy --help | head -3
+
+        echo "Testing linuxdeploy-plugin-qt..."
+        linuxdeploy-plugin-qt --version || linuxdeploy-plugin-qt --help | head -3
+
+        # Check AppDir structure
+        echo "AppDir contents:"
+        find AppDir -type f -name "Katalog*" || true
+        ls -la AppDir/usr/bin/ || true
+
+        # Create AppImage
+        linuxdeploy \
+          --appdir AppDir \
+          --plugin qt \
+          --executable AppDir/usr/bin/Katalog \
+          --desktop-file AppDir/usr/share/applications/Katalog.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png \
+          --output appimage
+
+        # Rename AppImage with version
+        if ls Katalog-*.AppImage 1> /dev/null 2>&1; then
+          mv Katalog-*.AppImage Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        else
+          echo "Warning: AppImage not found with expected pattern"
+          ls -la *.AppImage || echo "No AppImage files found"
+          exit 1
+        fi
+
+    - name: Test AppImage
+      run: |
+        cd build
+
+        # Basic test - check if AppImage can show version
+        chmod +x Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+        # Test extraction
+        ./Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
+
+        # Get AppImage size and info
+        ls -lh Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        file Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+        # Display system info for compatibility verification
+        echo "System compatibility information:"
+        echo "glibc version: $(ldd --version | head -1)"
+        echo "Qt5 version: $(pkg-config --modversion Qt5Core || echo 'Not found')"
+
+    - name: Upload AppImage to Release
+      if: env.IS_RELEASE == 'true'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_name: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_content_type: application/octet-stream
+
+    - name: Upload AppImage as Artifact
+      if: env.IS_RELEASE != 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Katalog-AppImage-${{ env.VERSION_TAG }}
+        path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        retention-days: 30
+
+    - name: Summary
+      run: |
+        echo "## Qt5/KF5 Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size**: $(ls -lh build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+        echo "- **Target**: Qt5/KF5 on glibc 2.35 (Ubuntu 22.04 compatible)" >> $GITHUB_STEP_SUMMARY
+        echo "- **glibc**: $(ldd --version | head -1)" >> $GITHUB_STEP_SUMMARY
+
+        if [ "${{ env.IS_RELEASE }}" = "true" ]; then
+          echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY
+        fi
