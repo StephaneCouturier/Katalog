@@ -280,7 +280,6 @@
                         q.exec(DatabaseSQL::SQL_CREATE_FILE);
                         q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
                         q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
-                        q.exec(DatabaseSQL::SQL_CREATE_METADATA);
                         q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
                         q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
                         q.exec(DatabaseSQL::SQL_CREATE_TAG);
@@ -389,7 +388,6 @@
                 q.exec(DatabaseSQL::SQL_CREATE_FILE);
                 q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
                 q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
-                q.exec(DatabaseSQL::SQL_CREATE_METADATA);
                 q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
                 q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
                 q.exec(DatabaseSQL::SQL_CREATE_TAG);

@@ -143,9 +143,6 @@ QSqlError Database::createAllTables(const QString &connectionName)
     error = createFolderTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createMetadataTable(connectionName);
-    if (error.type() != QSqlError::NoError) return error;
-
     error = createStatisticsDeviceTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
@@ -207,11 +204,6 @@ QSqlError Database::createFileTempTable(const QString &connectionName)
 QSqlError Database::createFolderTable(const QString &connectionName)
 {
     return executeSql(connectionName, DatabaseSQL::SQL_CREATE_FOLDER);
-}
-
-QSqlError Database::createMetadataTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_METADATA);
 }
 
 QSqlError Database::createStatisticsDeviceTable(const QString &connectionName)

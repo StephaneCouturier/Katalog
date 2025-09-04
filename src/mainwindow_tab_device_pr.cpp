@@ -1840,10 +1840,9 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
 
     //Hide development fields
-    ui->Devices_treeView_DeviceList->header()->hideSection(26); //catalog_include_metadata
     ui->Devices_treeView_DeviceList->header()->hideSection(28); //catalog_is_full_device
 
-
+    // Apply DisplayFullTable choice
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID

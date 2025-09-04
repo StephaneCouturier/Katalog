@@ -558,7 +558,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 fileCatalogIDs.append(device->externalID);
 
                 fileTypes.append(fileType);
-                fileTypes.append(mimeType);
+                mimeTypes.append(mimeType);
                 imageWidths.append(imageWidth);
                 imageHeights.append(imageHeight);
                 videoDurations.append(videoDuration);

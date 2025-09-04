@@ -171,17 +171,6 @@ const auto SQL_CREATE_FOLDER = QLatin1String(R"(
                             PRIMARY KEY(folder_catalog_id,folder_path))
             )");
 
-// METADATA -------------------------------------------------------------
-
-const auto SQL_CREATE_METADATA = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  metadata(
-                            catalog_name        TEXT,
-                            file_name           TEXT,
-                            file_path           TEXT,
-                            field               TEXT,
-                            value               TEXT)
-            )");
-
 // STATISTICS -----------------------------------------------------------
 
 const auto SQL_CREATE_STATISTICS_DEVICE = QLatin1String(R"(
@@ -346,7 +335,6 @@ public:
     static QSqlError createFileTable(const QString &connectionName);
     static QSqlError createFileTempTable(const QString &connectionName);
     static QSqlError createFolderTable(const QString &connectionName);
-    static QSqlError createMetadataTable(const QString &connectionName);
     static QSqlError createStatisticsDeviceTable(const QString &connectionName);
     static QSqlError createSearchTable(const QString &connectionName);
     static QSqlError createTagTable(const QString &connectionName);
