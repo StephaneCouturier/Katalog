@@ -566,7 +566,29 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                                                 file_size,
                                                 file_date_updated,
                                                 file_catalog,
-                                                file_full_path
+                                                file_full_path,
+                                                file_type               ,
+                                                mime_type               ,
+                                                image_width             ,
+                                                image_height            ,
+                                                image_orientation       ,
+                                                video_duration_seconds  ,
+                                                video_width             ,
+                                                video_height            ,
+                                                video_codec             ,
+                                                video_framerate         ,
+                                                video_bitrate           ,
+                                                audio_duration_seconds  ,
+                                                audio_artist            ,
+                                                audio_album             ,
+                                                audio_title             ,
+                                                audio_genre             ,
+                                                audio_year              ,
+                                                audio_track_number      ,
+                                                audio_bitrate           ,
+                                                audio_sample_rate       ,
+                                                metadata_extended       ,
+                                                metadata_extraction_date
                                                 )
                                         VALUES(
                                                 :file_catalog_id,
@@ -575,7 +597,29 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                                                 :file_size,
                                                 :file_date_updated,
                                                 :file_catalog,
-                                                :file_full_path )
+                                                :file_full_path,
+                                                :file_type               ,
+                                                :mime_type               ,
+                                                :image_width             ,
+                                                :image_height            ,
+                                                :image_orientation       ,
+                                                :video_duration_seconds  ,
+                                                :video_width             ,
+                                                :video_height            ,
+                                                :video_codec             ,
+                                                :video_framerate         ,
+                                                :video_bitrate           ,
+                                                :audio_duration_seconds  ,
+                                                :audio_artist            ,
+                                                :audio_album             ,
+                                                :audio_title             ,
+                                                :audio_genre             ,
+                                                :audio_year              ,
+                                                :audio_track_number      ,
+                                                :audio_bitrate           ,
+                                                :audio_sample_rate       ,
+                                                :metadata_extended       ,
+                                                :metadata_extraction_date  )
                                         )");
 
                 //Prepare insert query for folder
@@ -651,6 +695,29 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                     insertFileQuery.bindValue(":file_date_updated",lineFileDatetime);
                     insertFileQuery.bindValue(":file_catalog",     name);
                     insertFileQuery.bindValue(":file_full_path",   lineFilePath);
+                    // Metadata fields (if available)
+                    insertFileQuery.bindValue(":file_type",               lineFieldList[3]);
+                    insertFileQuery.bindValue(":mime_type",               lineFieldList[4]);
+                    insertFileQuery.bindValue(":image_width",             lineFieldList[5].toInt());
+                    insertFileQuery.bindValue(":image_height",            lineFieldList[6].toInt());
+                    insertFileQuery.bindValue(":image_orientation",       lineFieldList[7].toInt());
+                    insertFileQuery.bindValue(":video_duration_seconds",  lineFieldList[8].toDouble());
+                    insertFileQuery.bindValue(":video_width",             lineFieldList[9].toInt());
+                    insertFileQuery.bindValue(":video_height",            lineFieldList[10].toInt());
+                    insertFileQuery.bindValue(":video_codec",             lineFieldList[11]);
+                    insertFileQuery.bindValue(":video_framerate",         lineFieldList[12].toDouble());
+                    insertFileQuery.bindValue(":video_bitrate",           lineFieldList[13].toInt());
+                    insertFileQuery.bindValue(":audio_duration_seconds",  lineFieldList[14].toDouble());
+                    insertFileQuery.bindValue(":audio_artist",            lineFieldList[15]);
+                    insertFileQuery.bindValue(":audio_album",             lineFieldList[16]);
+                    insertFileQuery.bindValue(":audio_title",             lineFieldList[17]);
+                    insertFileQuery.bindValue(":audio_genre",             lineFieldList[18]);
+                    insertFileQuery.bindValue(":audio_year",              lineFieldList[19].toInt());
+                    insertFileQuery.bindValue(":audio_track_number",      lineFieldList[20].toInt());
+                    insertFileQuery.bindValue(":audio_bitrate",           lineFieldList[21].toInt());
+                    insertFileQuery.bindValue(":audio_sample_rate",       lineFieldList[22].toInt());
+                    insertFileQuery.bindValue(":metadata_extended",       lineFieldList[23]);
+                    insertFileQuery.bindValue(":metadata_extraction_date",lineFieldList[24]);
                     insertFileQuery.exec();
 
                     // Progress reporting using configurable rate
@@ -1171,7 +1238,31 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         // Get file data from database
         QSqlQuery queryFileList(QSqlDatabase::database("defaultConnection"));
         QString queryFileListSQL = QLatin1String(R"(
-                        SELECT file_full_path, file_size, file_date_updated
+                        SELECT file_full_path,
+                                file_size,
+                                file_date_updated,
+                                file_type               ,
+                                mime_type               ,
+                                image_width             ,
+                                image_height            ,
+                                image_orientation       ,
+                                video_duration_seconds  ,
+                                video_width             ,
+                                video_height            ,
+                                video_codec             ,
+                                video_framerate         ,
+                                video_bitrate           ,
+                                audio_duration_seconds  ,
+                                audio_artist            ,
+                                audio_album             ,
+                                audio_title             ,
+                                audio_genre             ,
+                                audio_year              ,
+                                audio_track_number      ,
+                                audio_bitrate           ,
+                                audio_sample_rate       ,
+                                metadata_extended       ,
+                                metadata_extraction_date
                         FROM file
                         WHERE file_catalog_id = :file_catalog_id
                         ORDER BY file_full_path
@@ -1190,7 +1281,29 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         while(queryFileList.next()){
             QString fileEntry = queryFileList.value(0).toString() + "\t" +
                                 queryFileList.value(1).toString() + "\t" +
-                                queryFileList.value(2).toString();
+                                queryFileList.value(2).toString() + "\t" +
+                                queryFileList.value(3).toString() + "\t" +
+                                queryFileList.value(4).toString() + "\t" +
+                                queryFileList.value(5).toString() + "\t" +
+                                queryFileList.value(6).toString() + "\t" +
+                                queryFileList.value(7).toString() + "\t" +
+                                queryFileList.value(8).toString() + "\t" +
+                                queryFileList.value(9).toString() + "\t" +
+                                queryFileList.value(10).toString() + "\t" +
+                                queryFileList.value(11).toString() + "\t" +
+                                queryFileList.value(12).toString() + "\t" +
+                                queryFileList.value(13).toString() + "\t" +
+                                queryFileList.value(14).toString() + "\t" +
+                                queryFileList.value(15).toString() + "\t" +
+                                queryFileList.value(16).toString() + "\t" +
+                                queryFileList.value(17).toString() + "\t" +
+                                queryFileList.value(18).toString() + "\t" +
+                                queryFileList.value(19).toString() + "\t" +
+                                queryFileList.value(20).toString() + "\t" +
+                                queryFileList.value(21).toString() + "\t" +
+                                queryFileList.value(22).toString() + "\t" +
+                                queryFileList.value(23).toString() + "\t" +
+                                queryFileList.value(24).toString() + "\t";
             fileList << fileEntry;
         }
 

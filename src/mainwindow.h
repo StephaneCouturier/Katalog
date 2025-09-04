@@ -262,7 +262,7 @@ class MainWindow : public KXmlGuiWindow
 
             QString selectedConnectedDrivePath;
 
-            int filtersTreeExpandState;
+            int filtersTreeExpandState = 3; //By default, expand to 4th level, showing Group / Virtual / Storage / Catalog
             //void changeFiltersTreeExpandLevel(int levelChange);
             void changeTreeExpandLevel(int levelChange,
                                        QTreeView* treeView,
