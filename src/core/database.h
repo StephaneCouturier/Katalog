@@ -131,7 +131,7 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
                             video_width             NUMERIC,
                             video_height            NUMERIC,
                             video_codec             TEXT,
-                            video_framerate         REAL,
+                            video_framerate         NUMERIC,
                             video_bitrate           NUMERIC,
                             -- Audio metadata (NULL if not audio)
                             audio_duration_seconds  NUMERIC,
@@ -153,13 +153,37 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
 
 const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  filetemp(
-                            file_catalog_id   NUMERIC,
-                            file_name         TEXT,
-                            file_folder_path  TEXT,
-                            file_size         NUMERIC,
-                            file_date_updated TEXT,
-                            file_catalog      TEXT,
-                            file_full_path    TEXT)
+                            file_catalog_id         NUMERIC,
+                            file_name               TEXT,
+                            file_folder_path        TEXT,
+                            file_size               NUMERIC,
+                            file_date_updated       TEXT,
+                            file_catalog            TEXT,
+                            file_full_path          TEXT,
+                            file_name_base          TEXT,
+                            file_extension          TEXT,
+                            file_type               TEXT,
+                            mime_type               TEXT,
+                            image_width             NUMERIC,
+                            image_height            NUMERIC,
+                            image_orientation       NUMERIC,
+                            video_duration_seconds  NUMERIC,
+                            video_width             NUMERIC,
+                            video_height            NUMERIC,
+                            video_codec             TEXT,
+                            video_framerate         NUMERIC,
+                            video_bitrate           NUMERIC,
+                            audio_duration_seconds  NUMERIC,
+                            audio_artist            TEXT,
+                            audio_album             TEXT,
+                            audio_title             TEXT,
+                            audio_genre             TEXT,
+                            audio_year              NUMERIC,
+                            audio_track_number      NUMERIC,
+                            audio_bitrate           NUMERIC,
+                            audio_sample_rate       NUMERIC,
+                            metadata_extended       TEXT,
+                            metadata_extraction_date TEXT)
             )");
 
 // FOLDER ---------------------------------------------------------------
@@ -350,10 +374,20 @@ public:
     // Utility methods
     static bool tableExists(const QString &connectionName, const QString &tableName);
     static QStringList listTables(const QString &connectionName);
+    // Updates
+    static QSqlError runMigration_2_6(const QString &connectionName);
+    static QSqlError runMigration_2_8(const QString &connectionName);
+    static QSqlError checkDatabaseIntegrity(const QString &connectionName);
+    static QSqlError attemptDatabaseRecovery(const QString &connectionName, const QString &backupPath);
+    static bool backupDatabaseBeforeMigration(const QString &connectionName, const QString &backupPath);
 
 private:
     // Helper method to execute SQL with error checking
     static QSqlError executeSql(const QString &connectionName, const QString &sql);
+    // Updates
+    static QSqlError dropTableIfExists(const QString &connectionName, const QString &tableName);
+    static QStringList getTableColumns(const QString &connectionName, const QString &tableName);
+
 };
 
 #endif // DATABASE_H

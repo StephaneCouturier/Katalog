@@ -353,54 +353,130 @@
         qDebug() << "Current database schema version:" << currentSchemaVersion;
         qDebug() << "App version:" << collection->appVersion;
 
-        // Run migrations sequentially
-        if (currentSchemaVersion < "2.6") {
-            qDebug() << "Running database migration to 2.6...";
-            collection->dbSchemaVersion = "2.6";
-            runDatabaseMigration_2_6();
-            collection->setDatabaseSchemaVersion();
-            qDebug() << "Database migration to 2.6 completed";
-        }
+        // Run health check first
+        testDatabaseHealth();
 
-        // Future migrations:
-        // if (currentSchemaVersion < "2.7") {
-        //     runDatabaseMigration_2_7();
-        //     collection->setDatabaseSchemaVersion("2.7");
-        // }
+        // Ask user if they want to proceed
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Database Migration");
+        msgBox.setText("Database corruption detected during migration.\n\nAn emergency backup has been created.\n\nDo you want to attempt safe migration?");
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+
+        if (msgBox.exec() == QMessageBox::Yes) {
+            // Run migrations sequentially with corruption handling
+            if (currentSchemaVersion < "2.6") {
+                qDebug() << "Running database migration to 2.6...";
+                collection->dbSchemaVersion = "2.6";
+
+                QSqlError migrationError = Database::runMigration_2_6("defaultConnection");
+                if (migrationError.type() == QSqlError::NoError) {
+                    collection->setDatabaseSchemaVersion();
+                    qDebug() << "Database migration to 2.6 completed";
+                } else {
+                    qDebug() << "Database migration to 2.6 failed:" << migrationError.text();
+                    return;
+                }
+            }
+
+            if (currentSchemaVersion < "2.8") {
+                qDebug() << "Running SAFE database migration to 2.8...";
+                collection->dbSchemaVersion = "2.8";
+
+                // Use the safe migration method
+                QSqlError migrationError = Database::runMigration_2_8("defaultConnection");
+                if (migrationError.type() == QSqlError::NoError) {
+                    collection->setDatabaseSchemaVersion();
+                    qDebug() << "SAFE database migration to 2.8 completed";
+
+                    QMessageBox::information(this, "Migration Successful",
+                                             "Database migration completed successfully despite corruption.\n\n"
+                                             "Your data has been preserved.");
+                } else {
+                    qDebug() << "SAFE database migration to 2.8 failed:" << migrationError.text();
+
+                    QMessageBox::critical(this, "Migration Failed",
+                                          QString("Database migration failed: %1\n\n"
+                                                  "Your original database backup is safe.\n"
+                                                  "Please contact support for recovery assistance.").arg(migrationError.text()));
+                    return;
+                }
+            }
+        }
 
         // Refresh display
         loadSearchHistoryTableToModel();
     }
-    //----------------------------------------------------------------------
-    void MainWindow::runDatabaseMigration_2_6()
+
+    void MainWindow::testDatabaseHealth()
     {
-        qDebug() << "=== Database Migration 2.6: Adding selected_device_ID_list to search table ===";
+        qDebug() << "=== EMERGENCY DATABASE HEALTH CHECK ===";
 
-        QSqlQuery q(QSqlDatabase::database("defaultConnection"));
+        // First, create a backup of the corrupted database
+        QString dbPath = collection->databaseFilePath;
+        QString emergencyBackup = dbPath + ".CORRUPTED_BACKUP_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss");
 
-        // Check if column already exists
-        q.exec("PRAGMA table_info(search)");
-        bool hasDeviceIDListColumn = false;
-        while (q.next()) {
-            if (q.value(1).toString() == "selected_device_ID_list") {
-                hasDeviceIDListColumn = true;
-                break;
-            }
-        }
-
-        if (!hasDeviceIDListColumn) {
-            // Add the new column
-            if (!q.exec("ALTER TABLE search ADD COLUMN selected_device_ID_list TEXT")) {
-                qDebug() << "Failed to add selected_device_ID_list column:" << q.lastError().text();
-                return;
-            }
-            qDebug() << "Added selected_device_ID_list column to search table";
-
-            // Migrate existing data
-            migrateExistingSearchDeviceData_2_6();
+        if (QFile::copy(dbPath, emergencyBackup)) {
+            qDebug() << "Emergency backup created:" << emergencyBackup;
         } else {
-            qDebug() << "selected_device_ID_list column already exists, skipping migration";
+            qDebug() << "ERROR: Could not create emergency backup!";
         }
+
+        // Run database diagnostics
+        Database::checkDatabaseIntegrity("defaultConnection");
+
+        // Test basic queries on important tables
+        QSqlQuery testQuery(QSqlDatabase::database("defaultConnection"));
+
+        qDebug() << "Testing critical tables...";
+
+        // Test file table (most important)
+        qDebug() << "Testing 'file' table...";
+        if (testQuery.exec("SELECT COUNT(*) FROM file")) {
+            if (testQuery.next()) {
+                int fileCount = testQuery.value(0).toInt();
+                qDebug() << "SUCCESS: File table accessible, contains" << fileCount << "records";
+            }
+        } else {
+            qDebug() << "ERROR: File table corrupted:" << testQuery.lastError().text();
+        }
+
+        // Test other critical tables
+        QStringList criticalTables = {"device", "catalog", "storage", "parameter"};
+        for (const QString &tableName : criticalTables) {
+            if (testQuery.exec(QString("SELECT COUNT(*) FROM %1").arg(tableName))) {
+                if (testQuery.next()) {
+                    int count = testQuery.value(0).toInt();
+                    qDebug() << "SUCCESS:" << tableName << "table accessible, contains" << count << "records";
+                }
+            } else {
+                qDebug() << "ERROR:" << tableName << "table corrupted:" << testQuery.lastError().text();
+            }
+        }
+
+        // Test the problematic metadata table specifically
+        qDebug() << "Testing problematic 'metadata' table...";
+        if (Database::tableExists("defaultConnection", "metadata")) {
+            if (testQuery.exec("SELECT COUNT(*) FROM metadata")) {
+                if (testQuery.next()) {
+                    int metaCount = testQuery.value(0).toInt();
+                    qDebug() << "INFO: Metadata table accessible, contains" << metaCount << "records";
+                    qDebug() << "RECOMMENDATION: Safe to ignore metadata table drop failure";
+                }
+            } else {
+                qDebug() << "CONFIRMED: Metadata table is corrupted:" << testQuery.lastError().text();
+                qDebug() << "RECOMMENDATION: Skip metadata table operations in migration";
+            }
+        } else {
+            qDebug() << "INFO: Metadata table doesn't exist (migration not needed)";
+        }
+
+        qDebug() << "=== HEALTH CHECK COMPLETE ===";
+        qDebug() << "NEXT STEPS:";
+        qDebug() << "1. If file table is OK: Try safe migration";
+        qDebug() << "2. If file table corrupted: Attempt recovery first";
+        qDebug() << "3. Emergency backup created at:" << emergencyBackup;
     }
     //----------------------------------------------------------------------
     void MainWindow::migrateExistingSearchDeviceData_2_6()

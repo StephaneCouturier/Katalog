@@ -38,8 +38,8 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)
 {
     //Set current version, release date, and development mode
-    currentVersion  = "2.7";
-    releaseDate     = "2025-08-31";
+    currentVersion  = "2.8";
+    releaseDate     = "2025-09-04";
 
     // Initialize objects first
     collection = new Collection();

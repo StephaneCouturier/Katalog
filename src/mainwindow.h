@@ -185,6 +185,9 @@ class MainWindow : public KXmlGuiWindow
         void setCatalogUpdateUIState(bool isRunning);
         void setCreateCatalogUIState(bool isRunning);
 
+
+        void testDatabaseHealth();
+
         void debugIconLoadingDetailed();
         void testIconSourceTracking();
         void setupIconThemeWithKF6Test();
@@ -417,7 +420,7 @@ class MainWindow : public KXmlGuiWindow
             bool optionDisplayPhysicalGroup;
             bool optionDisplayVirtualGroups;
             bool optionDisplayFullDeviceTable;
-            int  deviceTreeExpandState;
+            int  deviceTreeExpandState = 3; //By default, expand to 4th level, showing Group / Virtual / Storage / Catalog;
 
             void addDeviceVirtual();
             void addDeviceStorage(int parentID);
@@ -499,7 +502,6 @@ class MainWindow : public KXmlGuiWindow
             void displaySearchResults();
             void updateStatusBarFromSearchManager();
             void runDatabaseMigrations();
-            void runDatabaseMigration_2_6();
 
     private slots:
             // DeviceUpdateManager signal handlers

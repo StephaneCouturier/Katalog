@@ -289,7 +289,6 @@ void Collection::clearDatabaseData()
         queryDelete.exec("DELETE FROM device_mapping");
         queryDelete.exec("DELETE FROM tag");
         queryDelete.exec("DELETE FROM search");
-        queryDelete.exec("DELETE FROM metadata");
         queryDelete.exec("DELETE FROM folder");
         queryDelete.exec("DELETE FROM filetemp");
         queryDelete.exec("DELETE FROM file");
