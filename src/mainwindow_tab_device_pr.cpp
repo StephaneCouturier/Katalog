@@ -1674,8 +1674,8 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                  "22",                   //22
                                                  "23",                   //23
                                                  tr("File Type"),        //24
-                                                 tr("include hidden"),   //25
-                                                 tr("include metadata"), //26
+                                                 tr("Hidden"),           //25
+                                                 tr("Metadata"),         //26
                                                  tr("Parent storage"),   //27
                                                  tr("Fulldevice"),       //28
                                                  tr("Date Loaded"),      //29
@@ -1823,8 +1823,8 @@ void MainWindow::loadDevicesCatalogToModel(){
 
     //Catalog
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(24, QHeaderView::ResizeToContents); //File type
-    ui->Devices_treeView_DeviceList->header()->resizeSection(25,  50);  //Include Hidden
-    ui->Devices_treeView_DeviceList->header()->resizeSection(26,  50); //Include metadata
+    ui->Devices_treeView_DeviceList->header()->resizeSection(25,  75); //Include Hidden
+    ui->Devices_treeView_DeviceList->header()->resizeSection(26, 100); //Include metadata
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(27, QHeaderView::ResizeToContents); //Parent storage
     ui->Devices_treeView_DeviceList->header()->resizeSection(28,  50); //Is full device
     ui->Devices_treeView_DeviceList->header()->resizeSection(29, 150); //Date Loaded

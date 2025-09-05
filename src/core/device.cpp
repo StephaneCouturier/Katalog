@@ -113,6 +113,9 @@ void Device::loadDevice(QString connectionName){
     if(type == "Catalog"){
         catalog->ID = externalID;
         catalog->loadCatalog(connectionName);
+        if (catalog->includeMetadata == "false") {
+            catalog->includeMetadata = Catalog::METADATA_NONE;
+        }
         catalog->name = name;
         catalog->sourcePath = path;
         catalog->fileCount = totalFileCount;

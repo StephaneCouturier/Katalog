@@ -41,7 +41,6 @@ DeviceTreeView::DeviceTreeView(QObject *parent)
     initializeLists(); //Populate the lists of data types
 }
 
-
 void DeviceTreeView::initializeLists()
 {
     //Assign fields to data types.
@@ -58,7 +57,7 @@ void DeviceTreeView::initializeLists()
     //All text
 
     //Catalog fields
-    booleanColumnList   << 25 << 26 << 28;
+    booleanColumnList   << 25 << 28;
 }
 
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
@@ -88,6 +87,25 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                 //BooleanColumnList columns (display tick icon or nothing)
                 else if( booleanColumnList.contains(index.column()) ){
                     return QVariant("");
+                }
+                // Metadata column
+                else if (index.column() == 26) {
+                    QString internalValue = QSortFilterProxyModel::data(index, role).toString();
+
+                    // Translate internal values to user-friendly text
+                    if (internalValue == "None") {
+                        return QVariant(tr("None"));
+                    } else if (internalValue == "MimeOnly") {
+                        return QVariant(tr("MIME Type Only"));
+                    } else if (internalValue == "MediaBasic") {
+                        return QVariant(tr("Media Basic"));
+                    } else if (internalValue == "ExtendedCustom") {
+                        return QVariant(tr("Extended Custom"));
+                    } else if (internalValue == "ExtendedFull") {
+                        return QVariant(tr("Extended Full"));
+                    } else {
+                        return QVariant(internalValue);
+                    }
                 }
 
                 else QSortFilterProxyModel::data(index, role) ;

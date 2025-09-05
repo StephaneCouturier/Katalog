@@ -641,24 +641,16 @@
         ui->Catalogs_comboBox_MetaDataOption->setItemData(3, Catalog::METADATA_EXTENDED_CUSTOM, Qt::UserRole);
         ui->Catalogs_comboBox_MetaDataOption->setItemData(4, Catalog::METADATA_EXTENDED_FULL, Qt::UserRole);
 
-        // Create a model to hide specific items
+        // Hide items 1 and 3 as they are not available yet
         QStandardItemModel* createModel = qobject_cast<QStandardItemModel*>(ui->Create_comboBox_MetadataOption->model());
         QStandardItemModel* catalogModel = qobject_cast<QStandardItemModel*>(ui->Catalogs_comboBox_MetaDataOption->model());
-
         if (createModel) {
-            // Hide "MIME Type Only" (index 1) and "Extended Custom" (index 3)
-            QStandardItem* mimeItem = createModel->item(1);
-            QStandardItem* customItem = createModel->item(3);
-            if (mimeItem) mimeItem->setFlags(mimeItem->flags() & ~Qt::ItemIsEnabled);
-            if (customItem) customItem->setFlags(customItem->flags() & ~Qt::ItemIsEnabled);
+            createModel->item(1)->setFlags(createModel->item(1)->flags() & ~Qt::ItemIsEnabled);
+            createModel->item(3)->setFlags(createModel->item(3)->flags() & ~Qt::ItemIsEnabled);
         }
-
         if (catalogModel) {
-            // Hide "MIME Type Only" (index 1) and "Extended Custom" (index 3)
-            QStandardItem* mimeItem = catalogModel->item(1);
-            QStandardItem* customItem = catalogModel->item(3);
-            if (mimeItem) mimeItem->setFlags(mimeItem->flags() & ~Qt::ItemIsEnabled);
-            if (customItem) customItem->setFlags(customItem->flags() & ~Qt::ItemIsEnabled);
+            catalogModel->item(1)->setFlags(catalogModel->item(1)->flags() & ~Qt::ItemIsEnabled);
+            catalogModel->item(3)->setFlags(catalogModel->item(3)->flags() & ~Qt::ItemIsEnabled);
         }
 
         // Set default to None (index 0) to match your METADATA_NONE default

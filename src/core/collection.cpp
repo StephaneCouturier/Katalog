@@ -504,6 +504,9 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.includeSymblinks = catalogValues[6].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_symblinks
                 newCatalog.isFullDevice     = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
                 newCatalog.includeMetadata  = catalogValues[8];
+                if (newCatalog.includeMetadata == "false") {
+                    newCatalog.includeMetadata = Catalog::METADATA_NONE;
+                }
                 newCatalog.appVersion       = catalogValues[9]; //catalog_app_version
                 newCatalog.insertCatalog();
             }
