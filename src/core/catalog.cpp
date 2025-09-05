@@ -35,8 +35,14 @@
 #include <QDir>
 #include <QSqlError>
 
-Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
+const QString Catalog::METADATA_NONE = "None";
+const QString Catalog::METADATA_MIME_ONLY = "MimeOnly";
+const QString Catalog::METADATA_MEDIA_BASIC = "MediaBasic";
+const QString Catalog::METADATA_EXTENDED_CUSTOM = "ExtendedCustom";
+const QString Catalog::METADATA_EXTENDED_FULL = "ExtendedFull";
 
+Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
+    includeMetadata = METADATA_NONE;  // Simple default
 }
 
 Catalog::~Catalog() {
@@ -474,7 +480,7 @@ void Catalog::loadCatalog(QString connectionName)
         includeSymblinks   = query.value(10).toBool();
         isFullDevice       = query.value(11).toBool();
         dateLoaded         = query.value(12).toDateTime();
-        includeMetadata    = query.value(13).toBool();
+        includeMetadata    = query.value(13).toString();
         appVersion         = query.value(14).toString();
     }
 }

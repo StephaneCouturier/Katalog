@@ -31,6 +31,7 @@
 
 #include "collection.h"
 #include "device.h"
+#include "catalog.h"
 #include <QMutex>
 
 Collection::Collection(QObject *parent) : QObject(parent)
@@ -502,12 +503,10 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.storageName      = catalogValues[5]; //catalog_storage
                 newCatalog.includeSymblinks = catalogValues[6].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_symblinks
                 newCatalog.isFullDevice     = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
-                newCatalog.includeMetadata  = catalogValues[8].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_metadata
+                newCatalog.includeMetadata  = catalogValues[8];
                 newCatalog.appVersion       = catalogValues[9]; //catalog_app_version
-
                 newCatalog.insertCatalog();
             }
-
             catalogFile.close();
         }
     }

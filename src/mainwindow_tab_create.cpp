@@ -485,7 +485,7 @@
         newCatalogDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
         newCatalogDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
         newCatalogDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
-        newCatalogDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
+        newCatalogDevice->catalog->includeMetadata = ui->Create_comboBox_MetadataOption->itemData(ui->Create_comboBox_MetadataOption->currentIndex(), Qt::UserRole).toString();
         newCatalogDevice->catalog->appVersion = currentVersion;
 
         // Set file type from UI radio buttons
@@ -611,5 +611,58 @@
         ui->Create_pushButton_Stop->setEnabled(false);
 
         qDebug() << "=== cleanupFailedCatalogCreation() COMPLETE ===";
+    }
+
+    void MainWindow::initiateMetadataFields()
+    {
+        // Initialize Create combobox
+        ui->Create_comboBox_MetadataOption->addItem(tr("None"));
+        ui->Create_comboBox_MetadataOption->addItem(tr("MIME Type Only"));
+        ui->Create_comboBox_MetadataOption->addItem(tr("Media Basic"));
+        ui->Create_comboBox_MetadataOption->addItem(tr("Extended Custom"));
+        ui->Create_comboBox_MetadataOption->addItem(tr("Extended Full"));
+
+        ui->Create_comboBox_MetadataOption->setItemData(0, Catalog::METADATA_NONE, Qt::UserRole);
+        ui->Create_comboBox_MetadataOption->setItemData(1, Catalog::METADATA_MIME_ONLY, Qt::UserRole);
+        ui->Create_comboBox_MetadataOption->setItemData(2, Catalog::METADATA_MEDIA_BASIC, Qt::UserRole);
+        ui->Create_comboBox_MetadataOption->setItemData(3, Catalog::METADATA_EXTENDED_CUSTOM, Qt::UserRole);
+        ui->Create_comboBox_MetadataOption->setItemData(4, Catalog::METADATA_EXTENDED_FULL, Qt::UserRole);
+
+        // Initialize Catalogs combobox
+        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("None"));
+        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("MIME Type Only"));
+        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Media Basic"));
+        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Extended Custom"));
+        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Extended Full"));
+
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(0, Catalog::METADATA_NONE, Qt::UserRole);
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(1, Catalog::METADATA_MIME_ONLY, Qt::UserRole);
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(2, Catalog::METADATA_MEDIA_BASIC, Qt::UserRole);
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(3, Catalog::METADATA_EXTENDED_CUSTOM, Qt::UserRole);
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(4, Catalog::METADATA_EXTENDED_FULL, Qt::UserRole);
+
+        // Create a model to hide specific items
+        QStandardItemModel* createModel = qobject_cast<QStandardItemModel*>(ui->Create_comboBox_MetadataOption->model());
+        QStandardItemModel* catalogModel = qobject_cast<QStandardItemModel*>(ui->Catalogs_comboBox_MetaDataOption->model());
+
+        if (createModel) {
+            // Hide "MIME Type Only" (index 1) and "Extended Custom" (index 3)
+            QStandardItem* mimeItem = createModel->item(1);
+            QStandardItem* customItem = createModel->item(3);
+            if (mimeItem) mimeItem->setFlags(mimeItem->flags() & ~Qt::ItemIsEnabled);
+            if (customItem) customItem->setFlags(customItem->flags() & ~Qt::ItemIsEnabled);
+        }
+
+        if (catalogModel) {
+            // Hide "MIME Type Only" (index 1) and "Extended Custom" (index 3)
+            QStandardItem* mimeItem = catalogModel->item(1);
+            QStandardItem* customItem = catalogModel->item(3);
+            if (mimeItem) mimeItem->setFlags(mimeItem->flags() & ~Qt::ItemIsEnabled);
+            if (customItem) customItem->setFlags(customItem->flags() & ~Qt::ItemIsEnabled);
+        }
+
+        // Set default to None (index 0) to match your METADATA_NONE default
+        ui->Create_comboBox_MetadataOption->setCurrentIndex(0);
+        ui->Catalogs_comboBox_MetaDataOption->setCurrentIndex(0);
     }
     //--------------------------------------------------------------------------

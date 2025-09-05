@@ -245,6 +245,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             //Default path to scan
             ui->Create_lineEdit_NewCatalogPath->setText("/");
 
+            //Initiate comboboxes for metadata fields
+            initiateMetadataFields();
+
             //Always Load the file system for the treeview
             loadFileSystem("/");
 

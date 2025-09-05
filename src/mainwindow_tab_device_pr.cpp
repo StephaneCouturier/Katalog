@@ -557,7 +557,12 @@ void MainWindow::editDevice()
         ui->Devices_widget_EditStorageFields->hide();
         ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
         ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
-        ui->Catalogs_checkBox_IncludeMetadata->setChecked(activeDevice->catalog->includeMetadata);
+        for (int i = 0; i < ui->Catalogs_comboBox_MetaDataOption->count(); ++i) {
+            if (ui->Catalogs_comboBox_MetaDataOption->itemData(i, Qt::UserRole).toString() == activeDevice->catalog->includeMetadata) {
+                ui->Catalogs_comboBox_MetaDataOption->setCurrentIndex(i);
+                break;
+            }
+        }
         //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
     }
     else if(activeDevice->type =="Storage"){
@@ -2305,7 +2310,7 @@ void MainWindow::saveCatalogChanges()
     //Other values
     activeDevice->catalog->fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
     activeDevice->catalog->includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
-    activeDevice->catalog->includeMetadata  = ui->Catalogs_checkBox_IncludeMetadata->isChecked();
+    activeDevice->catalog->includeMetadata  = ui->Catalogs_comboBox_MetaDataOption->itemData(ui->Catalogs_comboBox_MetaDataOption->currentIndex(), Qt::UserRole).toString();
     activeDevice->catalog->isFullDevice     = ui->Catalogs_checkBox_isFullDevice->checkState();
     //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
@@ -2322,7 +2327,7 @@ void MainWindow::saveCatalogChanges()
         message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(previousCatalog.catalog->includeHidden).toString()   + "</td><td><b>" + QVariant(activeDevice->catalog->includeHidden).toString()   + "</b></td></tr>";
         changesMade = true;
     }
-    if(activeDevice->catalog->includeMetadata  != previousCatalog.catalog->includeMetadata){
+    if(activeDevice->catalog->includeMetadata != previousCatalog.catalog->includeMetadata){
         message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(previousCatalog.catalog->includeMetadata).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->includeMetadata).toString() + "</b></td></tr>";
         changesMade = true;
     }

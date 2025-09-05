@@ -608,7 +608,7 @@
         proxyModel2->setHeaderData(7, Qt::Horizontal, tr("Path"));
 
         // Metadata
-        if(exploreDevice->catalog->includeMetadata==true){
+        if(exploreDevice->catalog->includeMetadata != Catalog::METADATA_NONE){
             ui->Explore_treeView_FileList->showColumn(8);  // file_type
             ui->Explore_treeView_FileList->showColumn(9);  // MIME_type
             ui->Explore_treeView_FileList->showColumn(10); // image_width

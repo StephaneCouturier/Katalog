@@ -497,7 +497,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                 }
 
                 // Extract metadata if enabled
-                if (catalog->includeMetadata) {
+                if (catalog->includeMetadata != Catalog::METADATA_NONE) {
                     for (int i = 0; i < fileFullPaths.size(); ++i) {
                         if (!shouldContinue()) break;
                         const QString &filePath = fileFullPaths[i];
@@ -564,7 +564,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
             }
         }
 
-        if (catalog->includeMetadata) {
+        if (catalog->includeMetadata != Catalog::METADATA_NONE) {
             for (int i = 0; i < fileFullPaths.size(); ++i) {
                 if (!shouldContinue()) break;
 

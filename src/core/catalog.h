@@ -71,7 +71,7 @@ public:
         bool    includeSymblinks;
         bool    isFullDevice;
         QDateTime dateLoaded;
-        bool    includeMetadata;
+        QString includeMetadata;
         QString appVersion;
 
         //Temporary
@@ -132,6 +132,13 @@ public:
     void restoreFromTempID();
     void cleanupTempID();
     int getTempID() const;
+
+    //Metadata
+    static const QString METADATA_NONE;
+    static const QString METADATA_MIME_ONLY;
+    static const QString METADATA_MEDIA_BASIC;
+    static const QString METADATA_EXTENDED_CUSTOM;
+    static const QString METADATA_EXTENDED_FULL;
 
 private:
     QStringList fileExtensions;
