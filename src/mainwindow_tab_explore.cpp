@@ -606,18 +606,45 @@
         proxyModel2->setHeaderData(5, Qt::Horizontal, tr("Type"));
         proxyModel2->setHeaderData(6, Qt::Horizontal, tr("orderValue"));
         proxyModel2->setHeaderData(7, Qt::Horizontal, tr("Path"));
+
         // Metadata
-        proxyModel2->setHeaderData(8, Qt::Horizontal, tr("File Type"));
-        proxyModel2->setHeaderData(9, Qt::Horizontal, tr("MIME Type"));
-        proxyModel2->setHeaderData(10, Qt::Horizontal, tr("Image Width"));
-        proxyModel2->setHeaderData(11, Qt::Horizontal, tr("Image Height"));
-        proxyModel2->setHeaderData(12, Qt::Horizontal, tr("Video Duration"));
-        proxyModel2->setHeaderData(13, Qt::Horizontal, tr("Video Width"));
-        proxyModel2->setHeaderData(14, Qt::Horizontal, tr("Video Height"));
-        proxyModel2->setHeaderData(15, Qt::Horizontal, tr("Audio Duration"));
-        proxyModel2->setHeaderData(16, Qt::Horizontal, tr("Artist"));
-        proxyModel2->setHeaderData(17, Qt::Horizontal, tr("Album"));
-        proxyModel2->setHeaderData(18, Qt::Horizontal, tr("Title"));
+        if(exploreDevice->catalog->includeMetadata==true){
+            ui->Explore_treeView_FileList->showColumn(8);  // file_type
+            ui->Explore_treeView_FileList->showColumn(9);  // MIME_type
+            ui->Explore_treeView_FileList->showColumn(10); // image_width
+            ui->Explore_treeView_FileList->showColumn(11); // image_height
+            ui->Explore_treeView_FileList->showColumn(12); // video_duration_seconds
+            ui->Explore_treeView_FileList->showColumn(13); // video_width
+            ui->Explore_treeView_FileList->showColumn(14); // video_height
+            ui->Explore_treeView_FileList->showColumn(15); // audio_duration_seconds
+            ui->Explore_treeView_FileList->showColumn(16); // audio_artist
+            ui->Explore_treeView_FileList->showColumn(17); // audio_album
+            ui->Explore_treeView_FileList->showColumn(18); // audio_title
+            proxyModel2->setHeaderData(8, Qt::Horizontal, tr("File Type"));
+            proxyModel2->setHeaderData(9, Qt::Horizontal, tr("MIME Type"));
+            proxyModel2->setHeaderData(10, Qt::Horizontal, tr("Image Width"));
+            proxyModel2->setHeaderData(11, Qt::Horizontal, tr("Image Height"));
+            proxyModel2->setHeaderData(12, Qt::Horizontal, tr("Video Duration"));
+            proxyModel2->setHeaderData(13, Qt::Horizontal, tr("Video Width"));
+            proxyModel2->setHeaderData(14, Qt::Horizontal, tr("Video Height"));
+            proxyModel2->setHeaderData(15, Qt::Horizontal, tr("Audio Duration"));
+            proxyModel2->setHeaderData(16, Qt::Horizontal, tr("Artist"));
+            proxyModel2->setHeaderData(17, Qt::Horizontal, tr("Album"));
+            proxyModel2->setHeaderData(18, Qt::Horizontal, tr("Title"));
+        }
+        else{
+            ui->Explore_treeView_FileList->hideColumn(8);  // file_type
+            ui->Explore_treeView_FileList->hideColumn(9);  // MIME_type
+            ui->Explore_treeView_FileList->hideColumn(10); // image_width
+            ui->Explore_treeView_FileList->hideColumn(11); // image_height
+            ui->Explore_treeView_FileList->hideColumn(12); // video_duration_seconds
+            ui->Explore_treeView_FileList->hideColumn(13); // video_width
+            ui->Explore_treeView_FileList->hideColumn(14); // video_height
+            ui->Explore_treeView_FileList->hideColumn(15); // audio_duration_seconds
+            ui->Explore_treeView_FileList->hideColumn(16); // audio_artist
+            ui->Explore_treeView_FileList->hideColumn(17); // audio_album
+            ui->Explore_treeView_FileList->hideColumn(18); // audio_title
+        }
 
         // Connect model to tree/table view
         ui->Explore_treeView_FileList->setModel(proxyModel2);
