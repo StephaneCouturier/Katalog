@@ -377,9 +377,6 @@ public:
     // Updates
     static QSqlError runMigration_2_6(const QString &connectionName);
     static QSqlError runMigration_2_8(const QString &connectionName);
-    static QSqlError checkDatabaseIntegrity(const QString &connectionName);
-    static QSqlError attemptDatabaseRecovery(const QString &connectionName, const QString &backupPath);
-    static bool backupDatabaseBeforeMigration(const QString &connectionName, const QString &backupPath);
 
 private:
     // Helper method to execute SQL with error checking

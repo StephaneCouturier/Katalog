@@ -696,28 +696,30 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                     insertFileQuery.bindValue(":file_catalog",     name);
                     insertFileQuery.bindValue(":file_full_path",   lineFilePath);
                     // Metadata fields (if available)
-                    insertFileQuery.bindValue(":file_type",               lineFieldList[3]);
-                    insertFileQuery.bindValue(":mime_type",               lineFieldList[4]);
-                    insertFileQuery.bindValue(":image_width",             lineFieldList[5].toInt());
-                    insertFileQuery.bindValue(":image_height",            lineFieldList[6].toInt());
-                    insertFileQuery.bindValue(":image_orientation",       lineFieldList[7].toInt());
-                    insertFileQuery.bindValue(":video_duration_seconds",  lineFieldList[8].toDouble());
-                    insertFileQuery.bindValue(":video_width",             lineFieldList[9].toInt());
-                    insertFileQuery.bindValue(":video_height",            lineFieldList[10].toInt());
-                    insertFileQuery.bindValue(":video_codec",             lineFieldList[11]);
-                    insertFileQuery.bindValue(":video_framerate",         lineFieldList[12].toDouble());
-                    insertFileQuery.bindValue(":video_bitrate",           lineFieldList[13].toInt());
-                    insertFileQuery.bindValue(":audio_duration_seconds",  lineFieldList[14].toDouble());
-                    insertFileQuery.bindValue(":audio_artist",            lineFieldList[15]);
-                    insertFileQuery.bindValue(":audio_album",             lineFieldList[16]);
-                    insertFileQuery.bindValue(":audio_title",             lineFieldList[17]);
-                    insertFileQuery.bindValue(":audio_genre",             lineFieldList[18]);
-                    insertFileQuery.bindValue(":audio_year",              lineFieldList[19].toInt());
-                    insertFileQuery.bindValue(":audio_track_number",      lineFieldList[20].toInt());
-                    insertFileQuery.bindValue(":audio_bitrate",           lineFieldList[21].toInt());
-                    insertFileQuery.bindValue(":audio_sample_rate",       lineFieldList[22].toInt());
-                    insertFileQuery.bindValue(":metadata_extended",       lineFieldList[23]);
-                    insertFileQuery.bindValue(":metadata_extraction_date",lineFieldList[24]);
+                    if(lineFieldList.size()>3){
+                        insertFileQuery.bindValue(":file_type",               lineFieldList[3]);
+                        insertFileQuery.bindValue(":mime_type",               lineFieldList[4]);
+                        insertFileQuery.bindValue(":image_width",             lineFieldList[5].toInt());
+                        insertFileQuery.bindValue(":image_height",            lineFieldList[6].toInt());
+                        insertFileQuery.bindValue(":image_orientation",       lineFieldList[7].toInt());
+                        insertFileQuery.bindValue(":video_duration_seconds",  lineFieldList[8].toDouble());
+                        insertFileQuery.bindValue(":video_width",             lineFieldList[9].toInt());
+                        insertFileQuery.bindValue(":video_height",            lineFieldList[10].toInt());
+                        insertFileQuery.bindValue(":video_codec",             lineFieldList[11]);
+                        insertFileQuery.bindValue(":video_framerate",         lineFieldList[12].toDouble());
+                        insertFileQuery.bindValue(":video_bitrate",           lineFieldList[13].toInt());
+                        insertFileQuery.bindValue(":audio_duration_seconds",  lineFieldList[14].toDouble());
+                        insertFileQuery.bindValue(":audio_artist",            lineFieldList[15]);
+                        insertFileQuery.bindValue(":audio_album",             lineFieldList[16]);
+                        insertFileQuery.bindValue(":audio_title",             lineFieldList[17]);
+                        insertFileQuery.bindValue(":audio_genre",             lineFieldList[18]);
+                        insertFileQuery.bindValue(":audio_year",              lineFieldList[19].toInt());
+                        insertFileQuery.bindValue(":audio_track_number",      lineFieldList[20].toInt());
+                        insertFileQuery.bindValue(":audio_bitrate",           lineFieldList[21].toInt());
+                        insertFileQuery.bindValue(":audio_sample_rate",       lineFieldList[22].toInt());
+                        insertFileQuery.bindValue(":metadata_extended",       lineFieldList[23]);
+                        insertFileQuery.bindValue(":metadata_extraction_date",lineFieldList[24]);
+                    }
                     insertFileQuery.exec();
 
                     // Progress reporting using configurable rate

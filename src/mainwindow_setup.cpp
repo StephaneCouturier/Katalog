@@ -353,9 +353,6 @@
         qDebug() << "Current database schema version:" << currentSchemaVersion;
         qDebug() << "App version:" << collection->appVersion;
 
-        // Run health check first
-        testDatabaseHealth();
-
         // Ask user if they want to proceed
         QMessageBox msgBox;
         msgBox.setWindowTitle("Database Migration");
@@ -374,6 +371,7 @@
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
                     qDebug() << "Database migration to 2.6 completed";
+                    migrateExistingSearchDeviceData_2_6();
                 } else {
                     qDebug() << "Database migration to 2.6 failed:" << migrationError.text();
                     return;
@@ -408,77 +406,7 @@
         // Refresh display
         loadSearchHistoryTableToModel();
     }
-
-    void MainWindow::testDatabaseHealth()
-    {
-        qDebug() << "=== EMERGENCY DATABASE HEALTH CHECK ===";
-
-        // First, create a backup of the corrupted database
-        QString dbPath = collection->databaseFilePath;
-        QString emergencyBackup = dbPath + ".CORRUPTED_BACKUP_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss");
-
-        if (QFile::copy(dbPath, emergencyBackup)) {
-            qDebug() << "Emergency backup created:" << emergencyBackup;
-        } else {
-            qDebug() << "ERROR: Could not create emergency backup!";
-        }
-
-        // Run database diagnostics
-        Database::checkDatabaseIntegrity("defaultConnection");
-
-        // Test basic queries on important tables
-        QSqlQuery testQuery(QSqlDatabase::database("defaultConnection"));
-
-        qDebug() << "Testing critical tables...";
-
-        // Test file table (most important)
-        qDebug() << "Testing 'file' table...";
-        if (testQuery.exec("SELECT COUNT(*) FROM file")) {
-            if (testQuery.next()) {
-                int fileCount = testQuery.value(0).toInt();
-                qDebug() << "SUCCESS: File table accessible, contains" << fileCount << "records";
-            }
-        } else {
-            qDebug() << "ERROR: File table corrupted:" << testQuery.lastError().text();
-        }
-
-        // Test other critical tables
-        QStringList criticalTables = {"device", "catalog", "storage", "parameter"};
-        for (const QString &tableName : criticalTables) {
-            if (testQuery.exec(QString("SELECT COUNT(*) FROM %1").arg(tableName))) {
-                if (testQuery.next()) {
-                    int count = testQuery.value(0).toInt();
-                    qDebug() << "SUCCESS:" << tableName << "table accessible, contains" << count << "records";
-                }
-            } else {
-                qDebug() << "ERROR:" << tableName << "table corrupted:" << testQuery.lastError().text();
-            }
-        }
-
-        // Test the problematic metadata table specifically
-        qDebug() << "Testing problematic 'metadata' table...";
-        if (Database::tableExists("defaultConnection", "metadata")) {
-            if (testQuery.exec("SELECT COUNT(*) FROM metadata")) {
-                if (testQuery.next()) {
-                    int metaCount = testQuery.value(0).toInt();
-                    qDebug() << "INFO: Metadata table accessible, contains" << metaCount << "records";
-                    qDebug() << "RECOMMENDATION: Safe to ignore metadata table drop failure";
-                }
-            } else {
-                qDebug() << "CONFIRMED: Metadata table is corrupted:" << testQuery.lastError().text();
-                qDebug() << "RECOMMENDATION: Skip metadata table operations in migration";
-            }
-        } else {
-            qDebug() << "INFO: Metadata table doesn't exist (migration not needed)";
-        }
-
-        qDebug() << "=== HEALTH CHECK COMPLETE ===";
-        qDebug() << "NEXT STEPS:";
-        qDebug() << "1. If file table is OK: Try safe migration";
-        qDebug() << "2. If file table corrupted: Attempt recovery first";
-        qDebug() << "3. Emergency backup created at:" << emergencyBackup;
-    }
-    //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
     void MainWindow::migrateExistingSearchDeviceData_2_6()
     {
         qDebug() << "Migrating existing search history device data...";

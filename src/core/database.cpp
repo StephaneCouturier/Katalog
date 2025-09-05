@@ -4,6 +4,7 @@
 #include <QSettings>
 #include <QFile>
 #include <QDebug>
+#include <qapplication.h>
 
 QSqlError Database::initialize(const QString &connectionName, Collection *collection,
                                const QString &overrideDatabaseMode,
@@ -339,6 +340,7 @@ QSqlError Database::runMigration_2_6(const QString &connectionName)
     return QSqlError(); // Success
 }
 
+//----------------------------------------------------------------------
 QSqlError Database::runMigration_2_8(const QString &connectionName)
 {
     qDebug() << "=== Database Migration 2.8: Drop metadata table, update file/filetemp tables ===";
@@ -438,154 +440,3 @@ QStringList Database::getTableColumns(const QString &connectionName, const QStri
 
     return columns;
 }
-
-//----------------------------------------------------------------------
-// Diagnostics and recovery
-//----------------------------------------------------------------------
-QSqlError Database::checkDatabaseIntegrity(const QString &connectionName)
-{
-    qDebug() << "=== Checking Database Integrity ===";
-
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-
-    // 1. PRAGMA integrity_check - comprehensive check
-    qDebug() << "Running PRAGMA integrity_check...";
-    if (query.exec("PRAGMA integrity_check")) {
-        while (query.next()) {
-            QString result = query.value(0).toString();
-            qDebug() << "Integrity check result:" << result;
-            if (result != "ok") {
-                qDebug() << "DATABASE CORRUPTION DETECTED:" << result;
-            }
-        }
-    } else {
-        qDebug() << "Failed to run integrity_check:" << query.lastError().text();
-        return query.lastError();
-    }
-
-    // 2. PRAGMA quick_check - faster check
-    qDebug() << "Running PRAGMA quick_check...";
-    if (query.exec("PRAGMA quick_check")) {
-        while (query.next()) {
-            QString result = query.value(0).toString();
-            qDebug() << "Quick check result:" << result;
-        }
-    } else {
-        qDebug() << "Failed to run quick_check:" << query.lastError().text();
-    }
-
-    // 3. Check specific tables
-    qDebug() << "Checking table accessibility...";
-    QStringList tables = listTables(connectionName);
-    qDebug() << "Found tables:" << tables;
-
-    for (const QString &tableName : tables) {
-        QSqlQuery tableQuery(QSqlDatabase::database(connectionName));
-        QString countSQL = QString("SELECT COUNT(*) FROM %1").arg(tableName);
-
-        if (tableQuery.exec(countSQL)) {
-            if (tableQuery.next()) {
-                int count = tableQuery.value(0).toInt();
-                qDebug() << "Table" << tableName << "has" << count << "rows - ACCESSIBLE";
-            }
-        } else {
-            qDebug() << "Table" << tableName << "- ERROR:" << tableQuery.lastError().text();
-        }
-    }
-
-    // 4. Check for specific corruption patterns
-    qDebug() << "Checking for metadata table corruption...";
-    if (tableExists(connectionName, "metadata")) {
-        QSqlQuery metaQuery(QSqlDatabase::database(connectionName));
-        if (!metaQuery.exec("SELECT COUNT(*) FROM metadata")) {
-            qDebug() << "METADATA TABLE CORRUPTED:" << metaQuery.lastError().text();
-        } else {
-            qDebug() << "Metadata table accessible, safe to drop";
-        }
-    } else {
-        qDebug() << "Metadata table doesn't exist (already dropped or never existed)";
-    }
-
-    qDebug() << "=== Database Integrity Check Complete ===";
-    return QSqlError(); // Success
-}
-
-bool Database::backupDatabaseBeforeMigration(const QString &connectionName, const QString &backupPath)
-{
-    qDebug() << "=== Creating Database Backup Before Migration ===";
-    qDebug() << "Backup path:" << backupPath;
-
-    QSqlDatabase sourceDb = QSqlDatabase::database(connectionName);
-    if (!sourceDb.isOpen()) {
-        qDebug() << "Source database not open!";
-        return false;
-    }
-
-    QString sourceDbPath = sourceDb.databaseName();
-    qDebug() << "Source database path:" << sourceDbPath;
-
-    // Simple file copy backup
-    if (QFile::exists(backupPath)) {
-        QFile::remove(backupPath);
-    }
-
-    if (QFile::copy(sourceDbPath, backupPath)) {
-        qDebug() << "Database backup created successfully";
-        return true;
-    } else {
-        qDebug() << "Failed to create database backup";
-        return false;
-    }
-}
-
-QSqlError Database::attemptDatabaseRecovery(const QString &connectionName, const QString &backupPath)
-{
-    qDebug() << "=== Attempting Database Recovery ===";
-
-    // Create backup before attempting recovery
-    QString emergencyBackup = backupPath + ".emergency";
-    if (!backupDatabaseBeforeMigration(connectionName, emergencyBackup)) {
-        qDebug() << "Warning: Could not create emergency backup";
-    }
-
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-
-    // 1. Try REINDEX to fix index corruption
-    qDebug() << "Attempting REINDEX...";
-    if (query.exec("REINDEX")) {
-        qDebug() << "REINDEX completed successfully";
-    } else {
-        qDebug() << "REINDEX failed:" << query.lastError().text();
-    }
-
-    // 2. Try VACUUM to rebuild database
-    qDebug() << "Attempting VACUUM...";
-    if (query.exec("VACUUM")) {
-        qDebug() << "VACUUM completed successfully";
-    } else {
-        qDebug() << "VACUUM failed:" << query.lastError().text();
-    }
-
-    // 3. Try to salvage data by exporting and recreating
-    qDebug() << "Attempting data salvage...";
-
-    // Get list of accessible tables
-    QStringList tables = listTables(connectionName);
-    QStringList accessibleTables;
-
-    for (const QString &tableName : tables) {
-        QSqlQuery testQuery(QSqlDatabase::database(connectionName));
-        if (testQuery.exec(QString("SELECT COUNT(*) FROM %1").arg(tableName))) {
-            accessibleTables << tableName;
-            qDebug() << "Table" << tableName << "is accessible for salvage";
-        } else {
-            qDebug() << "Table" << tableName << "is corrupted, cannot salvage";
-        }
-    }
-
-    qDebug() << "Accessible tables for salvage:" << accessibleTables;
-    qDebug() << "=== Database Recovery Attempt Complete ===";
-
-    return QSqlError(); // Success
-}
-

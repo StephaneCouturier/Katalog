@@ -185,9 +185,6 @@ class MainWindow : public KXmlGuiWindow
         void setCatalogUpdateUIState(bool isRunning);
         void setCreateCatalogUIState(bool isRunning);
 
-
-        void testDatabaseHealth();
-
         void debugIconLoadingDetailed();
         void testIconSourceTracking();
         void setupIconThemeWithKF6Test();
