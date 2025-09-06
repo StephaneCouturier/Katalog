@@ -818,8 +818,36 @@ QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
             displayValue = "<span class='array-value'>[Complex Object]</span>";
         } else if (value.isString()) {
             displayValue = value.toString();
-        } else if (value.isDouble()) {
-            displayValue = QString::number(value.toDouble());
+        } else if (value.isDouble() || value.toVariant().canConvert<int>()) {
+            // Check if this is a duration field
+            if (key.contains("duration", Qt::CaseInsensitive) ) {
+                int duration = value.toVariant().toInt();
+                if (duration > 0) {
+                    // Determine if it's video or audio duration for formatting
+                    if (key.contains("video", Qt::CaseInsensitive)) {
+                        // Video Duration - show as H:MM:SS
+                        int hours = duration / 3600;
+                        int minutes = (duration % 3600) / 60;
+                        int seconds = duration % 60;
+                        displayValue = QString("%1:%2:%3")
+                                           .arg(hours, 2, 10, QChar('0'))
+                                           .arg(minutes, 2, 10, QChar('0'))
+                                           .arg(seconds, 2, 10, QChar('0'));
+                    } else {
+                        // Audio Duration - show as MM:SS
+                        int minutes = duration / 60;
+                        int seconds = duration % 60;
+                        displayValue = QString("%1:%2")
+                                           .arg(minutes, 2, 10, QChar('0'))
+                                           .arg(seconds, 2, 10, QChar('0'));
+                    }
+                } else {
+                    displayValue = QString::number(duration);
+                }
+            } else {
+                // Regular numeric value
+                displayValue = QString::number(value.toVariant().toDouble());
+            }
         } else if (value.isBool()) {
             displayValue = value.toBool() ? "Yes" : "No";
         } else {
