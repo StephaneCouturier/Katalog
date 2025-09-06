@@ -56,10 +56,12 @@ public:
     // Main extraction and storage method
     static bool extractAndStore(const QString &filePath,
                                 const QString &connectionName,
-                                int catalogId);
+                                int catalogId,
+                                QString includeMetadata);
 
     // Extract metadata without storing (for testing/preview)
-    static QVariantMap extractMetadata(const QString &filePath);
+    static QVariantMap extractMetadata(const QString &filePath, QString includeMetadata);
+    static QString getExtendedMetadataJson(const QString &filePath);
 
     // Update existing file record with metadata
     static bool updateFileMetadata(const QString &connectionName,
@@ -74,12 +76,16 @@ public:
     // Get supported file extensions
     static QStringList getSupportedExtensions();
 
+    static void testExtendedMetadata(const QString &filePath);
+
 private:
     // Helper methods
     static QString getFileType(const QString &mimeType);
     static QVariantMap processImageMetadata(const KFileMetaData::PropertyMultiMap &properties);
     static QVariantMap processVideoMetadata(const KFileMetaData::PropertyMultiMap &properties);
     static QVariantMap processAudioMetadata(const KFileMetaData::PropertyMultiMap &properties);
+    static QVariantMap extractExtendedMetadata(const KFileMetaData::PropertyMultiMap &properties);
+    static QString convertMetadataToJson(const QVariantMap &extendedMetadata);
 
     // Database helper
     static bool storeMetadataToDatabase(const QString &connectionName,

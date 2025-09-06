@@ -502,7 +502,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                         if (!shouldContinue()) break;
                         const QString &filePath = fileFullPaths[i];
                         if (FileMetadata::isMetadataSupported(filePath)) {
-                            FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID);
+                            FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID, catalog->includeMetadata);
                         }
                     }
                 }
@@ -570,7 +570,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
                 const QString &filePath = fileFullPaths[i];
                 if (FileMetadata::isMetadataSupported(filePath)) {
-                    FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID);
+                    FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID, catalog->includeMetadata);
                 }
             }
         }

@@ -35,15 +35,20 @@
 #include <QSqlDatabase>
 #include <QDebug>
 #include <QDateTime>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <qjsonarray.h>
+#include "catalog.h"
 
 FileMetadata::FileMetadata(QObject *parent) : QObject(parent)
 {
 }
 
-//Extract and store metadata in database
+// Manager to extract and store metadata in database
 bool FileMetadata::extractAndStore(const QString &filePath,
                                    const QString &connectionName,
-                                   int catalogId)
+                                   int catalogId,
+                                   QString includeMetadata)
 {
     QFileInfo fileInfo(filePath);
     if (!fileInfo.exists() || !fileInfo.isReadable()) {
@@ -51,18 +56,13 @@ bool FileMetadata::extractAndStore(const QString &filePath,
         return false;
     }
 
-    // Extract metadata
-    QVariantMap metadata = extractMetadata(filePath);
+    // Extract metadata using the main extraction method
+    QVariantMap metadata = extractMetadata(filePath, includeMetadata);
 
+    // Process is complete if no metadata was extracted (METADATA_NONE case)
     if (metadata.isEmpty()) {
-        // No metadata extracted, but that's not necessarily an error
         return true;
     }
-
-    // Get MIME type and file type
-    QMimeDatabase mimeDb;
-    QString mimeType = mimeDb.mimeTypeForFile(filePath).name();
-    QString fileType = getFileType(mimeType);
 
     // Store in database
     return updateFileMetadata(connectionName, catalogId,
@@ -71,10 +71,15 @@ bool FileMetadata::extractAndStore(const QString &filePath,
                               metadata);
 }
 
-//Extract metadata without storing (for testing/preview)
-QVariantMap FileMetadata::extractMetadata(const QString &filePath)
+//Extract metadata
+QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString includeMetadata)
 {
     QVariantMap result;
+
+    // Handle METADATA_NONE case - return empty
+    if (includeMetadata == Catalog::METADATA_NONE) {
+        return result;
+    }
 
     try {
         QFileInfo fileInfo(filePath);
@@ -82,68 +87,143 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath)
             return result;
         }
 
-        // Get MIME type - use this approach (not file path directly)
+        // Get MIME type once
         QMimeDatabase mimeDb;
         QString mimeType = mimeDb.mimeTypeForFile(filePath).name();
+        QString fileType = getFileType(mimeType);
 
-        // Use MIME-type based extraction (this is what works!)
-        KFileMetaData::ExtractorCollection extractors;
-        auto extractorsList = extractors.fetchExtractors(mimeType);
-
-        if (extractorsList.isEmpty()) {
-            return result; // No extractors available for this MIME type
-        }
-
-        // Extract metadata with metadata-only level for performance
-        KFileMetaData::SimpleExtractionResult extractionResult(filePath, mimeType,
-                                                               KFileMetaData::ExtractionResult::ExtractMetaData);
-
-        for (auto extractor : extractorsList) {
-            extractor->extract(&extractionResult);
-        }
-
-        auto properties = extractionResult.properties();
-        if (properties.isEmpty()) {
-            return result;
-        }
-
-        // Add basic info
-        result["file_type"] = getFileType(mimeType);
+        // Add basic info for all levels except NONE
+        result["file_type"] = fileType;
         result["mime_type"] = mimeType;
         result["metadata_extraction_date"] = QDateTime::currentDateTime().toString(Qt::ISODate);
 
-        // Process metadata based on file type
-        QString fileType = getFileType(mimeType);
+        // For METADATA_MIME_ONLY, just return basic info
+        if (includeMetadata == Catalog::METADATA_MIME_ONLY) {
+            return result;
+        }
 
-        if (fileType == "image") {
-            QVariantMap imageData = processImageMetadata(properties);
-            // Merge imageData into result
-            for (auto it = imageData.begin(); it != imageData.end(); ++it) {
-                result[it.key()] = it.value();
-            }
-        }
-        else if (fileType == "video") {
-            QVariantMap videoData = processVideoMetadata(properties);
-            // Merge videoData into result
-            for (auto it = videoData.begin(); it != videoData.end(); ++it) {
-                result[it.key()] = it.value();
-            }
-        }
-        else if (fileType == "audio") {
-            QVariantMap audioData = processAudioMetadata(properties);
-            // Merge audioData into result
-            for (auto it = audioData.begin(); it != audioData.end(); ++it) {
-                result[it.key()] = it.value();
+        // For MEDIA_BASIC, EXTENDED_CUSTOM, and EXTENDED_FULL: extract structured metadata
+        if (includeMetadata == Catalog::METADATA_MEDIA_BASIC ||
+            includeMetadata == Catalog::METADATA_EXTENDED_CUSTOM ||
+            includeMetadata == Catalog::METADATA_EXTENDED_FULL) {
+
+            // Try to extract metadata using KFileMetaData
+            KFileMetaData::ExtractorCollection extractors;
+            auto extractorsList = extractors.fetchExtractors(mimeType);
+
+            if (!extractorsList.isEmpty()) {
+                // Extract metadata with metadata-only level for performance
+                KFileMetaData::SimpleExtractionResult extractionResult(filePath, mimeType,
+                                                                       KFileMetaData::ExtractionResult::ExtractMetaData);
+
+                for (auto extractor : extractorsList) {
+                    extractor->extract(&extractionResult);
+                }
+
+                auto properties = extractionResult.properties();
+                if (!properties.isEmpty()) {
+                    // Process metadata based on file type
+                    if (fileType == "image") {
+                        QVariantMap imageData = processImageMetadata(properties);
+                        for (auto it = imageData.begin(); it != imageData.end(); ++it) {
+                            result[it.key()] = it.value();
+                        }
+                    }
+                    else if (fileType == "video") {
+                        QVariantMap videoData = processVideoMetadata(properties);
+                        for (auto it = videoData.begin(); it != videoData.end(); ++it) {
+                            result[it.key()] = it.value();
+                        }
+                    }
+                    else if (fileType == "audio") {
+                        QVariantMap audioData = processAudioMetadata(properties);
+                        for (auto it = audioData.begin(); it != audioData.end(); ++it) {
+                            result[it.key()] = it.value();
+                        }
+                    }
+
+                    // For EXTENDED_FULL level, also extract ALL metadata as JSON
+                    if (includeMetadata == Catalog::METADATA_EXTENDED_FULL) {
+                        QVariantMap extendedMetadata = extractExtendedMetadata(properties);
+                        if (!extendedMetadata.isEmpty()) {
+                            QString jsonMetadata = convertMetadataToJson(extendedMetadata);
+                            result["metadata_extended"] = jsonMetadata;
+                        }
+                    }
+                }
             }
         }
 
     } catch (const std::exception& e) {
-        qDebug() << "FileMetadata::extractMetadata - Exception:" << QString::fromStdString(e.what());
-    } catch (...) {
-        qDebug() << "FileMetadata::extractMetadata - Unknown exception";
+        qDebug() << "FileMetadata::extractMetadata - Exception:" << e.what();
     }
 
     return result;
+}
+
+QVariantMap FileMetadata::extractExtendedMetadata(const KFileMetaData::PropertyMultiMap &properties)
+{
+    QVariantMap extendedData;
+
+    // Extract ALL properties available from KFileMetaData
+    for (auto it = properties.begin(); it != properties.end(); ++it) {
+        KFileMetaData::Property::Property property = it.key();
+        QVariant value = it.value();
+
+        // Get property name using PropertyInfo
+        KFileMetaData::PropertyInfo info(property);
+        QString propertyName = info.name();
+
+        // Store the property with its name as key
+        if (!value.isNull() && !value.toString().isEmpty()) {
+            // Handle multiple values for the same property
+            if (extendedData.contains(propertyName)) {
+                // Convert to list if multiple values exist
+                QVariant existing = extendedData[propertyName];
+                if (existing.type() == QVariant::List) {
+                    QVariantList list = existing.toList();
+                    list.append(value);
+                    extendedData[propertyName] = list;
+                } else {
+                    QVariantList list;
+                    list.append(existing);
+                    list.append(value);
+                    extendedData[propertyName] = list;
+                }
+            } else {
+                extendedData[propertyName] = value;
+            }
+        }
+    }
+
+    return extendedData;
+}
+
+QString FileMetadata::convertMetadataToJson(const QVariantMap &extendedMetadata)
+{
+    QJsonObject jsonObject;
+
+    // Convert QVariantMap to QJsonObject
+    for (auto it = extendedMetadata.begin(); it != extendedMetadata.end(); ++it) {
+        QString key = it.key();
+        QVariant value = it.value();
+
+        // Convert different value types to appropriate JSON types
+        if (value.type() == QVariant::List) {
+            QJsonArray jsonArray;
+            QVariantList list = value.toList();
+            for (const QVariant &item : list) {
+                jsonArray.append(QJsonValue::fromVariant(item));
+            }
+            jsonObject[key] = jsonArray;
+        } else {
+            jsonObject[key] = QJsonValue::fromVariant(value);
+        }
+    }
+
+    // Convert to JSON string
+    QJsonDocument doc(jsonObject);
+    return doc.toJson(QJsonDocument::Compact);
 }
 
 //Update existing file record with metadata
@@ -311,6 +391,24 @@ QStringList FileMetadata::getSupportedExtensions()
             "mp3", "ogg", "flac", "wav", "aac", "m4a", "wma"};   // Audio
 }
 
+void FileMetadata::testExtendedMetadata(const QString &filePath)
+{
+    // Test all metadata levels
+    QStringList levels = {
+        Catalog::METADATA_NONE,
+        Catalog::METADATA_MIME_ONLY,
+        Catalog::METADATA_MEDIA_BASIC,
+        Catalog::METADATA_EXTENDED_CUSTOM,
+        Catalog::METADATA_EXTENDED_FULL
+    };
+
+    for (const QString &level : levels) {
+        qDebug() << "\n--- Testing metadata level:" << level << "---";
+
+        QVariantMap metadata = extractMetadata(filePath, level);
+    }
+}
+
 // Helper methods
 
 QString FileMetadata::getFileType(const QString &mimeType)
@@ -428,4 +526,15 @@ QVariantMap FileMetadata::processAudioMetadata(const KFileMetaData::PropertyMult
     }
 
     return result;
+}
+
+QString FileMetadata::getExtendedMetadataJson(const QString &filePath)
+{
+    QVariantMap metadata = extractMetadata(filePath, Catalog::METADATA_EXTENDED_FULL);
+
+    if (metadata.contains("metadata_extended")) {
+        return metadata["metadata_extended"].toString();
+    }
+
+    return QString("No extended metadata available for this file");
 }

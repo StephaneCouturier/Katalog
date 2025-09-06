@@ -353,16 +353,7 @@
         qDebug() << "Current database schema version:" << currentSchemaVersion;
         qDebug() << "App version:" << collection->appVersion;
 
-        // Ask user if they want to proceed
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Database Migration");
-        msgBox.setText("Database corruption detected during migration.\n\nAn emergency backup has been created.\n\nDo you want to attempt safe migration?");
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::No);
-
-        if (msgBox.exec() == QMessageBox::Yes) {
-            // Run migrations sequentially with corruption handling
+        //Run in ascending version order
             if (currentSchemaVersion < "2.6") {
                 qDebug() << "Running database migration to 2.6...";
                 collection->dbSchemaVersion = "2.6";
@@ -401,7 +392,6 @@
                     return;
                 }
             }
-        }
 
         // Refresh display
         loadSearchHistoryTableToModel();
