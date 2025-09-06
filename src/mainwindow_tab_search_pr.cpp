@@ -34,6 +34,26 @@
 #include "src/ui_mainwindow.h"
 #include "core/filemetadata.h"
 
+
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QTextBrowser>
+#include <QLabel>
+#include <QPushButton>
+#include <QMessageBox>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QJsonParseError>
+#include <QRegularExpression>
+#include <QClipboard>
+#include <QApplication>
+#include <QIcon>
+#include "core/filemetadata.h"
+
+
 //----------------------------------------------------------------------
 //--- Search management ------------------------------------------------
 //----------------------------------------------------------------------
@@ -532,6 +552,8 @@ void MainWindow::updateTooltips()
     ui->Search_pushButton_Stop->setToolTip(tr("Stop the current search"));
 }
 
+// Replace the displayExtendedMetadataJson method implementation with this updated version:
+
 void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folderPath, const QString &fileName)
 {
     QString jsonMetadata;
@@ -580,29 +602,65 @@ void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folde
         }
     }
 
-    // Format and display the JSON
-    QString formattedJson = formatJsonForDisplay(jsonMetadata);
+    // Convert JSON to HTML table
+    // Convert JSON to HTML table
+    QString htmlTable = convertJsonToHtmlTable(jsonMetadata);
 
-    // Create message box
-    QMessageBox msgBox(this);
-    msgBox.setWindowTitle("Extended Metadata - " + fileName);
-    msgBox.setTextFormat(Qt::PlainText);
-    msgBox.setDetailedText(formattedJson);
-    msgBox.setStandardButtons(QMessageBox::Close);
+    // Create custom dialog
+    QDialog *metadataDialog = new QDialog(this);
+    metadataDialog->setWindowTitle(QString("Extended Metadata - %1").arg(fileName));
+    metadataDialog->resize(600, 500);
+    metadataDialog->setModal(true);
 
-    QString mainText = QString("Extended metadata for:\n%1\n\nClick 'Show Details...' to view the complete JSON metadata.").arg(fileName);
-    msgBox.setText(mainText);
+    // Create main layout (pass dialog as parent immediately)
+    QVBoxLayout *mainLayout = new QVBoxLayout(metadataDialog);
 
-    // Add copy to clipboard button
-    QPushButton *copyButton = msgBox.addButton("Copy to Clipboard", QMessageBox::ActionRole);
+    // Add file info label
+    QLabel *fileInfoLabel = new QLabel(QString("<b>%1:</b> %2").arg(tr("File"), fileName));
+    fileInfoLabel->setStyleSheet("padding: 8px; background-color: #f8f9fa; border-radius: 4px;");
+    mainLayout->addWidget(fileInfoLabel);
 
-    msgBox.exec();
+    // Create text browser for HTML display
+    QTextBrowser *textBrowser = new QTextBrowser();
+    textBrowser->setHtml(htmlTable);
+    textBrowser->setOpenExternalLinks(false);
+    textBrowser->setStyleSheet("QTextBrowser { border: 1px solid #ddd; border-radius: 4px; }");
+    mainLayout->addWidget(textBrowser);
 
-    // Handle copy button
-    if (msgBox.clickedButton() == copyButton) {
-        QApplication::clipboard()->setText(formattedJson);
-        QMessageBox::information(this, "Copied", "Extended metadata copied to clipboard!");
-    }
+    // Create horizontal layout for buttons
+    QWidget *buttonWidget = new QWidget();
+    QHBoxLayout *buttonLayout = new QHBoxLayout(buttonWidget);
+    buttonLayout->addStretch(); // Push buttons to the right
+
+    // Copy button
+    QPushButton *copyButton = new QPushButton(tr("Copy JSON"));
+    copyButton->setIcon(QIcon::fromTheme("edit-copy"));
+    connect(copyButton, &QPushButton::clicked, [copyButton, jsonMetadata]() {
+        QApplication::clipboard()->setText(jsonMetadata);
+        copyButton->setIcon(QIcon::fromTheme("dialog-ok-apply"));
+        copyButton->setText(tr("Copied"));
+        QTimer::singleShot(2000, [copyButton]() {
+            copyButton->setIcon(QIcon::fromTheme("edit-copy"));
+            copyButton->setText(tr("Copy JSON"));
+        });
+    });
+
+    // Close button
+    QPushButton *closeButton = new QPushButton(tr("Close"));
+    closeButton->setIcon(QIcon::fromTheme("dialog-close"));
+    closeButton->setDefault(true);
+    connect(closeButton, &QPushButton::clicked, metadataDialog, &QDialog::accept);
+
+    // Add buttons to button layout
+    buttonLayout->addWidget(copyButton);
+    buttonLayout->addWidget(closeButton);
+
+    // Add button widget to main layout
+    mainLayout->addWidget(buttonWidget);
+
+    // Show dialog
+    metadataDialog->exec();
+    metadataDialog->deleteLater();
 }
 
 QString MainWindow::formatJsonForDisplay(const QString &jsonString)
@@ -617,6 +675,171 @@ QString MainWindow::formatJsonForDisplay(const QString &jsonString)
 
     // Return formatted JSON with indentation
     return doc.toJson(QJsonDocument::Indented);
+}
+
+// Replace the convertJsonToHtmlTable method implementation with this fixed version:
+
+QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
+{
+    // Parse JSON
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8(), &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        return QString("<p style='color: red;'>JSON Parse Error: %1</p><pre>%2</pre>").arg(error.errorString(), jsonString);
+    }
+
+    QJsonObject jsonObj = doc.object();
+    if (jsonObj.isEmpty()) {
+        return "<p>No metadata available.</p>";
+    }
+
+    // Start building HTML table with Gwenview-like styling
+    QString html = QString(R"(
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 13px;
+        }
+        th {
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            font-weight: 600;
+        }
+        td {
+            padding: 6px 12px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        tr:hover {
+            background-color: #f0f8ff;
+        }
+        .field-name {
+            font-weight: 500;
+            color: #2c3e50;
+            min-width: 180px;
+            max-width: 250px;
+        }
+        .field-value {
+            word-break: break-word;
+            color: #34495e;
+        }
+        .array-value {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        </style>
+        <table>
+        <thead>
+            <tr>
+                <th class="field-name">%1</th>
+                <th class="field-value">%2</th>
+            </tr>
+        </thead>
+        <tbody>
+    )").arg(tr("File Property"), tr("Value"));
+
+    // Sort keys for consistent display
+    QStringList keys = jsonObj.keys();
+    //keys.sort();
+    // Custom sorting function to group related fields
+    std::sort(keys.begin(), keys.end(), [](const QString &a, const QString &b) {
+        // Define priority groups
+        QStringList priority = {
+            "Title", "Artist", "Album", "Genre", "Year", "Track",  // Audio metadata first
+            "Duration", "Bitrate", "Sample Rate",                  // Audio technical
+            "Width", "Height", "Orientation",                      // Image/Video dimensions together
+            "Codec", "Framerate"                                   // Video technical
+        };
+
+        // Check if both keys are in priority list
+        int indexA = -1, indexB = -1;
+
+        for (int i = 0; i < priority.size(); ++i) {
+            QString cleanKeyA = a.split('_').last();  // Get last part (e.g., "width" from "image_width")
+            QString cleanKeyB = b.split('_').last();
+
+            if (cleanKeyA.compare(priority[i], Qt::CaseInsensitive) == 0) {
+                indexA = i;
+            }
+            if (cleanKeyB.compare(priority[i], Qt::CaseInsensitive) == 0) {
+                indexB = i;
+            }
+        }
+
+        // If both have priority, use priority order
+        if (indexA >= 0 && indexB >= 0) {
+            return indexA < indexB;
+        }
+
+        // If only one has priority, it comes first
+        if (indexA >= 0) return true;
+        if (indexB >= 0) return false;
+
+        // Otherwise, use alphabetical
+        return a < b;
+    });
+
+    // Add each key-value pair as table row
+    for (const QString &key : keys) {
+        QJsonValue value = jsonObj[key];
+        QString displayKey = key;
+        QString displayValue;
+
+        // Format the key name (make it more readable)
+        displayKey = displayKey.replace('_', ' ');
+
+        // Simple title case conversion
+        QStringList words = displayKey.split(' ');
+        for (QString &word : words) {
+            if (!word.isEmpty()) {
+                word[0] = word[0].toUpper();
+            }
+        }
+        displayKey = words.join(' ');
+
+        // Handle different value types
+        if (value.isArray()) {
+            QJsonArray array = value.toArray();
+            QStringList arrayItems;
+            for (const QJsonValue &item : array) {
+                arrayItems << item.toString();
+            }
+            displayValue = QString("<span class='array-value'>[%1]</span>").arg(arrayItems.join(", "));
+        } else if (value.isObject()) {
+            displayValue = "<span class='array-value'>[Complex Object]</span>";
+        } else if (value.isString()) {
+            displayValue = value.toString();
+        } else if (value.isDouble()) {
+            displayValue = QString::number(value.toDouble());
+        } else if (value.isBool()) {
+            displayValue = value.toBool() ? "Yes" : "No";
+        } else {
+            displayValue = value.toVariant().toString();
+        }
+
+        // Escape HTML characters in values
+        displayValue = displayValue.toHtmlEscaped();
+
+        // Add table row
+        html += QString(R"(
+            <tr>
+                <td class="field-name">%1</td>
+                <td class="field-value">%2</td>
+            </tr>
+        )").arg(displayKey, displayValue);
+    }
+
+    html += "</tbody></table>";
+    return html;
 }
 
 //----------------------------------------------------------------------

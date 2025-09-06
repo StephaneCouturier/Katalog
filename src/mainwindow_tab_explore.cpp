@@ -186,9 +186,9 @@
             fileContextMenu.addSeparator();
 
             // If the file's catalog has EXTENDED metadata enabled, display action to show them
-            QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
-            QString selectedResultFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            int catalogId = ui->Search_treeView_FilesFound->model()->index(index.row(), 5, QModelIndex()).data().toInt();
+            QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+            QString selectedResultFileCatalog = ui->Explore_treeView_FileList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            int catalogId = exploreDevice->catalog->ID;
 
             bool showExtendedMetadataAction = false;
             QString includeMetadata;
@@ -212,8 +212,8 @@
                 }
             } else {
                 // For connected drives, show action if file type supports metadata
-                QString fileName = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-                QString filePath = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString() + "/" + fileName;
+                QString fileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+                QString filePath = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString() + "/" + fileName;
                 if (FileMetadata::isMetadataSupported(filePath)) {
                     showExtendedMetadataAction = true;
                 }
@@ -221,8 +221,8 @@
 
             if (showExtendedMetadataAction) {
                 QAction *menuAction11 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Show extended metadata (JSON)")), this);
-                QString fileName = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-                QString folderPath = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+                QString fileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+                QString folderPath = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
 
                 // Store catalog_id as action data for later retrieval
                 menuAction11->setData(catalogId);
