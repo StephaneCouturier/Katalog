@@ -262,7 +262,7 @@ class MainWindow : public KXmlGuiWindow
 
             QString selectedConnectedDrivePath;
 
-            int filtersTreeExpandState = 3; //By default, expand to 4th level, showing Group / Virtual / Storage / Catalog
+            int filtersTreeExpandState = 4; //By default, expand to 4th level, showing Group / Virtual / Storage / Catalog
             //void changeFiltersTreeExpandLevel(int levelChange);
             void changeTreeExpandLevel(int levelChange,
                                        QTreeView* treeView,
@@ -422,7 +422,7 @@ class MainWindow : public KXmlGuiWindow
             bool optionDisplayPhysicalGroup;
             bool optionDisplayVirtualGroups;
             bool optionDisplayFullDeviceTable;
-            int  deviceTreeExpandState = 3; //By default, expand to 4th level, showing Group / Virtual / Storage / Catalog;
+            int  deviceTreeExpandState = 4; //By default, expand to 4th level, showing Group / Virtual / Storage / Catalog;
 
             void addDeviceVirtual();
             void addDeviceStorage(int parentID);
