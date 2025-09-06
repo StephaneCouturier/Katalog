@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "src/filesview.h"
 #include "src/ui_mainwindow.h"
+#include "core/filemetadata.h"
 
 //----------------------------------------------------------------------
 //--- Search management ------------------------------------------------
@@ -530,6 +531,94 @@ void MainWindow::updateTooltips()
     }
     ui->Search_pushButton_Stop->setToolTip(tr("Stop the current search"));
 }
+
+void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folderPath, const QString &fileName)
+{
+    QString jsonMetadata;
+    QString filePath = folderPath + "/" + fileName;
+
+    // Try to get stored JSON from database if we have a catalog
+    if (catalogId > 0) {
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QString querySQL = QLatin1String(R"(
+            SELECT metadata_extended
+            FROM file
+            WHERE file_name = :file_name
+            AND file_folder_path = :folder_path
+            AND file_catalog_id = :catalog_id
+            AND metadata_extended IS NOT NULL
+            AND metadata_extended != ''
+        )");
+
+        query.prepare(querySQL);
+        query.bindValue(":file_name", fileName);
+        query.bindValue(":folder_path", folderPath);
+        query.bindValue(":catalog_id", catalogId);
+
+        if (query.exec() && query.next()) {
+            jsonMetadata = query.value(0).toString();
+        }
+    }
+
+    // If no stored JSON found, try to extract it fresh from the file
+    if (jsonMetadata.isEmpty()) {
+        QFileInfo fileInfo(filePath);
+        if (fileInfo.exists() && fileInfo.isReadable()) {
+            jsonMetadata = FileMetadata::getExtendedMetadataJson(filePath);
+
+            if (jsonMetadata == "No extended metadata available for this file") {
+                QMessageBox::information(this, "Extended Metadata",
+                                         QString("No extended metadata available for:\n%1\n\nThis could mean:\n"
+                                                 "• The file type doesn't support metadata extraction\n"
+                                                 "• The file has no embedded metadata").arg(fileName));
+                return;
+            }
+        } else {
+            QMessageBox::information(this, "Extended Metadata",
+                                     QString("Cannot access file:\n%1\n\nThe file path may not be accessible.").arg(filePath));
+            return;
+        }
+    }
+
+    // Format and display the JSON
+    QString formattedJson = formatJsonForDisplay(jsonMetadata);
+
+    // Create message box
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Extended Metadata - " + fileName);
+    msgBox.setTextFormat(Qt::PlainText);
+    msgBox.setDetailedText(formattedJson);
+    msgBox.setStandardButtons(QMessageBox::Close);
+
+    QString mainText = QString("Extended metadata for:\n%1\n\nClick 'Show Details...' to view the complete JSON metadata.").arg(fileName);
+    msgBox.setText(mainText);
+
+    // Add copy to clipboard button
+    QPushButton *copyButton = msgBox.addButton("Copy to Clipboard", QMessageBox::ActionRole);
+
+    msgBox.exec();
+
+    // Handle copy button
+    if (msgBox.clickedButton() == copyButton) {
+        QApplication::clipboard()->setText(formattedJson);
+        QMessageBox::information(this, "Copied", "Extended metadata copied to clipboard!");
+    }
+}
+
+QString MainWindow::formatJsonForDisplay(const QString &jsonString)
+{
+    // Parse and reformat JSON with proper indentation
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8(), &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        return QString("JSON Parse Error: %1\n\nRaw content:\n%2").arg(error.errorString(), jsonString);
+    }
+
+    // Return formatted JSON with indentation
+    return doc.toJson(QJsonDocument::Indented);
+}
+
 //----------------------------------------------------------------------
 //--- Display results --------------------------------------------------
 //----------------------------------------------------------------------

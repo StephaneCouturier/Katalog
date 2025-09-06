@@ -330,6 +330,9 @@ class MainWindow : public KXmlGuiWindow
 
             void updateTooltips();
 
+            void displayExtendedMetadataJson( int catalogId, const QString &folderPath, const QString &fileName );
+            QString formatJsonForDisplay(const QString &jsonString);
+
         //TAB: Catalogs
             QStringListModel catalogListModel;
             QStringList catalogFileList;

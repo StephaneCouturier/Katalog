@@ -279,7 +279,6 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
         currentCatalog++;
 
         // Extract catalog device data
-        int deviceId = catalogDevicesQuery.value(0).toInt();
         QString deviceName = catalogDevicesQuery.value(1).toString();
         QString devicePath = catalogDevicesQuery.value(2).toString();
         qint64 fileCount = catalogDevicesQuery.value(3).toLongLong();
