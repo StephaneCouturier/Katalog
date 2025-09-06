@@ -439,7 +439,6 @@
 
         // Start animation while opening
         QApplication::setOverrideCursor(Qt::WaitCursor);
-        qDebug() << "Loading catalog to explore";
         //Check catalog's number of files and confirm load if too big
         if( collection->databaseMode == "Memory"
             and (exploreDevice->catalog->dateLoaded < exploreDevice->catalog->dateUpdated)){
@@ -469,23 +468,17 @@
             }
         }
 
-        qDebug() << "Loading catalog to explore: " << exploreDevice->name;
         //Load folders of the Selected Catalog
             if( collection->databaseMode == "Memory")
                 exploreDevice->catalog->loadFoldersToTable();
-        qDebug() << "Folders loaded for catalog: " << exploreDevice->name;
             loadCatalogDirectoriesToExplore();
-        qDebug() << "Directories loaded for catalog: " << exploreDevice->name;
         //Load the files of the Selected Catalog
             if( collection->databaseMode == "Memory"){
                 QMutex tempMutex;
                 bool tempStopRequested = false;
                 exploreDevice->catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
-
             }
-        qDebug() << "Files loaded for catalog: " << exploreDevice->name;
             loadSelectedDirectoryFilesToExplore();
-        qDebug() << "Files loaded for catalog: " << exploreDevice->name;
         //Go to the Explorer tab
         ui->Explore_label_CatalogNameDisplay->setText(exploreDevice->name);
         ui->Explore_label_CatalogPathDisplay->setText(exploreDevice->path);
@@ -715,8 +708,8 @@
         ui->Explore_treeView_FileList->hideColumn(7); //Path
 
         // Metadata
-        ui->Explore_treeView_FileList->header()->resizeSection(8,  80);  // file_type
-        ui->Explore_treeView_FileList->header()->resizeSection(9, 100);  // MIME_type
+        ui->Explore_treeView_FileList->header()->resizeSection( 8,  80); // file_type
+        ui->Explore_treeView_FileList->header()->resizeSection( 9, 125); // MIME_type
         ui->Explore_treeView_FileList->header()->resizeSection(10, 100); // image_width
         ui->Explore_treeView_FileList->header()->resizeSection(11, 100); // image_height
         ui->Explore_treeView_FileList->header()->resizeSection(12, 100); // video_duration_seconds

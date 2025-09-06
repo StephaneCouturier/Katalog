@@ -75,10 +75,19 @@ void CatalogJobStoppable::configureOperation(Device *device,
     filesProcessed = 0;
     currentCatalogName = device ? device->catalog->name : QString();
 
+    // Adapt refresh rate: lower refresh rate for metadata extraction
+    if (device && device->catalog && device->catalog->includeMetadata != Catalog::METADATA_NONE) {
+        setProgressRefreshRate(10);  // More frequent updates for slower metadata operations
+    } else {
+        setProgressRefreshRate(100); // Default rate for faster operations without metadata
+    }
+
     qDebug() << "CatalogJobStoppable configured:"
              << "Operation:" << (operationType == CreateCatalog ? "Create" : "Update")
              << "Catalog:" << currentCatalogName
-             << "DatabaseMode:" << databaseMode;
+             << "DatabaseMode:" << databaseMode
+             << "IncludeMetadata:" << (device && device->catalog ? device->catalog->includeMetadata : "N/A")
+             << "ProgressRefreshRate:" << progressRefreshRate;
 }
 
 void CatalogJobStoppable::processCatalog()
@@ -425,7 +434,15 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     QStringList fileNames, fileFolderPaths, fileFullPaths, fileDateTimes, fileCatalogs;
     QList<qint64> fileSizes;
 
-    int batchSize = 1000; // Database batch size
+    int batchSize;
+    if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+        batchSize = 10;  // Smaller batches for metadata-enabled catalogs
+        qDebug() << "Using small batch size for metadata extraction:" << batchSize;
+    } else {
+        batchSize = 1000; // Standard large batches for fast operations
+        qDebug() << "Using standard batch size:" << batchSize;
+    }
+
     int batchCount = 0;   // Database batch counter
 
     // Progress tracking (separate from database batching)
@@ -496,13 +513,25 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                     }
                 }
 
-                // Extract metadata if enabled
                 if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+                    qint64 metadataProcessedInBatch = 0;
                     for (int i = 0; i < fileFullPaths.size(); ++i) {
+                        // Check stop condition frequently during slow metadata extraction
                         if (!shouldContinue()) break;
+
                         const QString &filePath = fileFullPaths[i];
                         if (FileMetadata::isMetadataSupported(filePath)) {
+                            // Extract metadata (this is the slow operation)
                             FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID, catalog->includeMetadata);
+
+                            // Update progress every few metadata extractions for responsiveness
+                            metadataProcessedInBatch++;
+                            if (metadataProcessedInBatch % 1 == 0) {
+                                // Update progress during metadata extraction phase
+                                emitProgressUpdate(processedCount, countedTotalFiles,
+                                                   fileFullPaths[i]);
+                                QCoreApplication::processEvents(); // Allow UI updates and stop requests
+                            }
                         }
                     }
                 }
