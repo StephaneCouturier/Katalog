@@ -177,10 +177,10 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->setMultipliers();
 
     search->searchOnType = ui->Search_checkBox_Type->isChecked();
-    int fileTypeIndex = ui->Search_comboBox_FileType2->currentIndex();
+    int fileTypeIndex = ui->Search_comboBox_FileType->currentIndex();
     FileTypeMapping::UserCategory selectedCategory =
         static_cast<FileTypeMapping::UserCategory>(
-            ui->Search_comboBox_FileType2->itemData(fileTypeIndex).toInt()
+            ui->Search_comboBox_FileType->itemData(fileTypeIndex).toInt()
             );
     search->selectedFileType2Category = selectedCategory;
     // Map FileType to legacy selectedFileType for search history compatibility

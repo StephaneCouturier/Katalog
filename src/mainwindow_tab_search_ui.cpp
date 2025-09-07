@@ -413,10 +413,10 @@
         void MainWindow::on_Search_checkBox_Type_toggled(bool checked)
         {
             if(checked==1){
-                ui->Search_comboBox_FileType2->setEnabled(true);
+                ui->Search_comboBox_FileType->setEnabled(true);
             }
             else{
-                ui->Search_comboBox_FileType2->setDisabled(true);
+                ui->Search_comboBox_FileType->setDisabled(true);
             }
         }
         //----------------------------------------------------------------------
@@ -849,14 +849,14 @@
             ui->Search_comboBox_SearchIn->setItemData(2, Search::SEARCH_IN_FOLDER_PATH,       Qt::UserRole);
 
             //Add filetype English values additionally to the displayed/translated value
-            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("folder"), tr("All"), static_cast<int>(FileTypeMapping::ALL));
-            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
-            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
-            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("folder-text"), tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
-            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
-            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("document-open"), tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
-            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), static_cast<int>(FileTypeMapping::NONE));
-            ui->Search_comboBox_FileType2->setCurrentIndex(0);
+            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder"), tr("All"), static_cast<int>(FileTypeMapping::ALL));
+            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
+            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
+            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder-text"), tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
+            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
+            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("document-open"), tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
+            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), static_cast<int>(FileTypeMapping::NONE));
+            ui->Search_comboBox_FileType->setCurrentIndex(0);
 
             ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
             ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
@@ -922,18 +922,18 @@
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
 
             //ui->Search_comboBox_FileType->setCurrentText(tr("All"));
-            for (int i = 0; i < ui->Search_comboBox_FileType2->count(); i++) {
+            for (int i = 0; i < ui->Search_comboBox_FileType->count(); i++) {
                 FileTypeMapping::UserCategory itemCategory =
                     static_cast<FileTypeMapping::UserCategory>(
-                        ui->Search_comboBox_FileType2->itemData(i).toInt()
+                        ui->Search_comboBox_FileType->itemData(i).toInt()
                         );
                 if (itemCategory == FileTypeMapping::ALL) {
-                    ui->Search_comboBox_FileType2->setCurrentIndex(i);
+                    ui->Search_comboBox_FileType->setCurrentIndex(i);
                     break;
                 }
             }
 
-            ui->Search_comboBox_FileType2->setCurrentIndex(0);
+            ui->Search_comboBox_FileType->setCurrentIndex(0);
             ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicatesName->setChecked(true);
             ui->Search_checkBox_DuplicatesSize->setChecked(false);
@@ -1014,13 +1014,13 @@
             }
 
             // Set FileType2 combobox to the mapped category
-            for (int i = 0; i < ui->Search_comboBox_FileType2->count(); i++) {
+            for (int i = 0; i < ui->Search_comboBox_FileType->count(); i++) {
                 FileTypeMapping::UserCategory itemCategory =
                     static_cast<FileTypeMapping::UserCategory>(
-                        ui->Search_comboBox_FileType2->itemData(i).toInt()
+                        ui->Search_comboBox_FileType->itemData(i).toInt()
                         );
                 if (itemCategory == mappedCategory) {
-                    ui->Search_comboBox_FileType2->setCurrentIndex(i);
+                    ui->Search_comboBox_FileType->setCurrentIndex(i);
                     break;
                 }
             }
@@ -1130,10 +1130,10 @@
                 currentSearch->searchOnType             = ui->Search_checkBox_Type->isChecked();
 
                 // Map FileType2 category to legacy selectedFileType string for history compatibility
-                int fileType2Index = ui->Search_comboBox_FileType2->currentIndex();
+                int fileType2Index = ui->Search_comboBox_FileType->currentIndex();
                 FileTypeMapping::UserCategory selectedCategory =
                     static_cast<FileTypeMapping::UserCategory>(
-                        ui->Search_comboBox_FileType2->itemData(fileType2Index).toInt()
+                        ui->Search_comboBox_FileType->itemData(fileType2Index).toInt()
                         );
 
                 // Store in search object
