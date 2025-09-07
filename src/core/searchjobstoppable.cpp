@@ -331,7 +331,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         // Track loading progress (same as SearchMemory)
         emit searchProgress(-2); // Special signal to indicate catalog loading started
 
-        // ✅ SAFE: Use a simple approach with immediate disconnection on stop
+        // Use a simple approach with immediate disconnection on stop
         bool localStopRequested = false;
         QMutex csvMutex;
         QMetaObject::Connection progressConnection;
@@ -435,6 +435,15 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     if (searchOnFileCriteria && searchOnDate) {
         getFilesQuerySQL += " AND file_date_updated >= :file_date_updated_min ";
         getFilesQuerySQL += " AND file_date_updated <= :file_date_updated_max ";
+    }
+
+    // Add FileType2 filter using FileTypeMapping
+    if (searchOnFileType2 && selectedFileType2Category != FileTypeMapping::ALL) {
+        QString fileTypeFilter = FileTypeMapping::getSqlFilter(selectedFileType2Category);
+        if (!fileTypeFilter.isEmpty()) {
+            getFilesQuerySQL += " AND (" + fileTypeFilter + ") ";
+            qDebug() << "Applied FileType2 filter:" << fileTypeFilter;
+        }
     }
 
     getFilesQuery.prepare(getFilesQuerySQL);

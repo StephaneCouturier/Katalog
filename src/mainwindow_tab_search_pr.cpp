@@ -177,6 +177,19 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->setMultipliers();
     search->searchOnType = ui->Search_checkBox_Type->isChecked();
     search->selectedFileType = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(), Qt::UserRole).toString();
+
+    int fileType2Index = ui->Search_comboBox_FileType2->currentIndex();
+    FileTypeMapping::UserCategory selectedCategory =
+        static_cast<FileTypeMapping::UserCategory>(
+            ui->Search_comboBox_FileType2->itemData(fileType2Index).toInt()
+            );
+    search->selectedFileType2Category = selectedCategory;
+    search->searchOnFileType2 = (selectedCategory != FileTypeMapping::ALL);
+
+    qDebug() << "FileType2 parameters set:"
+             << "category=" << static_cast<int>(selectedCategory)
+             << "enabled=" << search->searchOnFileType2;
+
     search->searchOnDate = ui->Search_checkBox_Date->isChecked();
     search->selectedDateMin = ui->Search_dateTimeEdit_Min->dateTime();
     search->selectedDateMax = ui->Search_dateTimeEdit_Max->dateTime();
@@ -1234,29 +1247,6 @@ void MainWindow::updateStatusBarFromSearchManager()
     statusBar()->showMessage(statusMessage);
 }
 //----------------------------------------------------------------------
-/*
-void MainWindow::removeFileFromResults(QString fullFilePath)
-{//Remove the file from the list of results and refresh the UI
-    //Find the index of the file in the results
-    int index = currentSearch->filePaths.indexOf(QFileInfo(fullFilePath).absolutePath());
-    if (index != -1) {
-        //Remove the file from all lists
-        currentSearch->filePaths.removeAt(index);
-        currentSearch->fileNames.removeAt(index);
-        currentSearch->fileSizes.removeAt(index);
-        currentSearch->fileDateTimes.removeAt(index);
-        currentSearch->fileCatalogs.removeAt(index);
-
-        //Update the number of files found and their total size
-        currentSearch->filesFoundNumber = currentSearch->fileNames.size();
-        currentSearch->filesFoundTotalSize = 0;
-        for (const qint64 &size : currentSearch->fileSizes) {
-            currentSearch->filesFoundTotalSize += size;
-        }
-    }
-}
-*/
-
 void MainWindow::removeFileFromResults(QString fullFilePath)
 {
     // Remove the file from the list of results and refresh the UI

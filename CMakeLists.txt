@@ -40,6 +40,7 @@ find_package(KF6XmlGui REQUIRED)
 find_package(KF6Config REQUIRED)
 find_package(KF6IconThemes REQUIRED)
 find_package(KF6FileMetaData REQUIRED)
+find_package(KF6Completion REQUIRED)
 
 # Enable Qt's automatic processing
 set(CMAKE_AUTOMOC ON)
@@ -81,6 +82,7 @@ set(CORE_HEADERS
     src/core/devicemanager.h
     src/core/deviceupdatemanager.h
     src/core/filemetadata.h
+    src/core/filetypemapping.h
 )
 
 set(CORE_SOURCES
@@ -106,6 +108,7 @@ set(CORE_SOURCES
     src/core/devicemanager.cpp
     src/core/deviceupdatemanager.cpp
     src/core/filemetadata.cpp
+    src/core/filetypemapping.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately
@@ -270,6 +273,7 @@ target_link_libraries(katalog-core PUBLIC
     KF6::I18n
     KF6::XmlGui
     KF6::FileMetaData
+    KF6::Completion
 )
 
 target_include_directories(katalog-core PUBLIC

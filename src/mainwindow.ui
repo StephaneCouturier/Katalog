@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
+    <width>1456</width>
     <height>1132</height>
    </rect>
   </property>
@@ -2760,6 +2760,78 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QComboBox" name="Search_comboBox_FileType">
                         <property name="enabled">
                          <bool>false</bool>
+                        </property>
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>100</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>90</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Noto Sans</family>
+                          <pointsize>9</pointsize>
+                          <kerning>false</kerning>
+                         </font>
+                        </property>
+                        <property name="toolTip">
+                         <string>Select the type of files</string>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>All</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Audio</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="audio-x-mpeg"/>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Image</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="image-jpeg"/>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Text</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="folder-text"/>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Video</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="video-mp4"/>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="Search_comboBox_FileType2">
+                        <property name="enabled">
+                         <bool>true</bool>
                         </property>
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">

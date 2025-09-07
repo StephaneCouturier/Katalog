@@ -645,11 +645,9 @@
         QStandardItemModel* createModel = qobject_cast<QStandardItemModel*>(ui->Create_comboBox_MetadataOption->model());
         QStandardItemModel* catalogModel = qobject_cast<QStandardItemModel*>(ui->Catalogs_comboBox_MetaDataOption->model());
         if (createModel) {
-            createModel->item(1)->setFlags(createModel->item(1)->flags() & ~Qt::ItemIsEnabled);
             createModel->item(3)->setFlags(createModel->item(3)->flags() & ~Qt::ItemIsEnabled);
         }
         if (catalogModel) {
-            catalogModel->item(1)->setFlags(catalogModel->item(1)->flags() & ~Qt::ItemIsEnabled);
             catalogModel->item(3)->setFlags(catalogModel->item(3)->flags() & ~Qt::ItemIsEnabled);
         }
 

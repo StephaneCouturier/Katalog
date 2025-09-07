@@ -32,6 +32,9 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
+#include "device.h"
+#include "filetypemapping.h"
+
 #include <QAbstractTableModel>
 #include <QObject>
 #include <QRegularExpression>
@@ -39,7 +42,6 @@
 #include <QStringList>
 #include <QMutex>
 #include <QStandardItemModel>
-#include "device.h"
 
 class Search : public QAbstractTableModel
 {
@@ -91,6 +93,8 @@ public:
     qint64 sizeMultiplierMax;
     bool searchOnType;
     QString selectedFileType;
+    FileTypeMapping::UserCategory selectedFileType2Category = FileTypeMapping::ALL;
+    bool searchOnFileType2 = false;
     bool searchOnDate;
     QDateTime selectedDateMin;
     QDateTime selectedDateMax;
@@ -198,6 +202,15 @@ public:
      * @return true if stop was requested, false otherwise
      */
     virtual bool wasStopRequested() const { return false; }
+
+    void setFileType2Category(FileTypeMapping::UserCategory category) {
+        selectedFileType2Category = category;
+        searchOnFileType2 = (category != FileTypeMapping::ALL);
+    }
+
+    FileTypeMapping::UserCategory getFileType2Category() const {
+        return selectedFileType2Category;
+    }
 
 signals:
     void searchProgress(int filesProcessed);
