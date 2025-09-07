@@ -438,11 +438,10 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     }
 
     // Add FileType2 filter using FileTypeMapping
-    if (searchOnFileType2 && selectedFileType2Category != FileTypeMapping::ALL) {
+    if (searchOnType && selectedFileType2Category != FileTypeMapping::ALL) {
         QString fileTypeFilter = FileTypeMapping::getSqlFilter(selectedFileType2Category);
         if (!fileTypeFilter.isEmpty()) {
             getFilesQuerySQL += " AND (" + fileTypeFilter + ") ";
-            qDebug() << "Applied FileType2 filter:" << fileTypeFilter;
         }
     }
 

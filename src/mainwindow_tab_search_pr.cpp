@@ -184,11 +184,6 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
             ui->Search_comboBox_FileType2->itemData(fileType2Index).toInt()
             );
     search->selectedFileType2Category = selectedCategory;
-    search->searchOnFileType2 = (selectedCategory != FileTypeMapping::ALL);
-
-    qDebug() << "FileType2 parameters set:"
-             << "category=" << static_cast<int>(selectedCategory)
-             << "enabled=" << search->searchOnFileType2;
 
     search->searchOnDate = ui->Search_checkBox_Date->isChecked();
     search->selectedDateMin = ui->Search_dateTimeEdit_Min->dateTime();

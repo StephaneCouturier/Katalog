@@ -94,7 +94,6 @@ public:
     bool searchOnType;
     QString selectedFileType;
     FileTypeMapping::UserCategory selectedFileType2Category = FileTypeMapping::ALL;
-    bool searchOnFileType2 = false;
     bool searchOnDate;
     QDateTime selectedDateMin;
     QDateTime selectedDateMax;
@@ -205,7 +204,6 @@ public:
 
     void setFileType2Category(FileTypeMapping::UserCategory category) {
         selectedFileType2Category = category;
-        searchOnFileType2 = (category != FileTypeMapping::ALL);
     }
 
     FileTypeMapping::UserCategory getFileType2Category() const {

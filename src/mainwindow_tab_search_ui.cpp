@@ -414,9 +414,11 @@
         {
             if(checked==1){
                 ui->Search_comboBox_FileType->setEnabled(true);
+                ui->Search_comboBox_FileType2->setEnabled(true);
             }
             else{
                 ui->Search_comboBox_FileType->setDisabled(true);
+                ui->Search_comboBox_FileType2->setDisabled(true);
             }
         }
         //----------------------------------------------------------------------
@@ -855,33 +857,20 @@
             ui->Search_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
             ui->Search_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
 
+            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("folder"), tr("All"), static_cast<int>(FileTypeMapping::ALL));
+            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
+            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
+            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("folder-text"), tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
+            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
+            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("document-open"), tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
+            ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), static_cast<int>(FileTypeMapping::NONE));
+            ui->Search_comboBox_FileType2->setCurrentIndex(0);
+
             ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
             ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
             ui->Catalogs_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
             ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
             ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
-
-
-
-            // Initialize the NEW FileType2 combobox with FileTypeMapping categories
-            ui->Search_comboBox_FileType2->clear();
-
-            // Add user-friendly display names with internal enum values
-            ui->Search_comboBox_FileType2->addItem(tr("All"), static_cast<int>(FileTypeMapping::ALL));
-            ui->Search_comboBox_FileType2->addItem(tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
-            ui->Search_comboBox_FileType2->addItem(tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
-            ui->Search_comboBox_FileType2->addItem(tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
-            ui->Search_comboBox_FileType2->addItem(tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
-            ui->Search_comboBox_FileType2->addItem(tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
-            ui->Search_comboBox_FileType2->addItem(tr("None"), static_cast<int>(FileTypeMapping::NONE));
-
-            // Set default to "All"
-            ui->Search_comboBox_FileType2->setCurrentIndex(0);
-
-            qDebug() << "FileType2 combobox initialized with" << ui->Search_comboBox_FileType2->count() << "categories";
-
-
-
 
             ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
@@ -1112,10 +1101,6 @@
                 // Store in search object (you may need to add this field to Search class)
                 if (currentSearch) {
                     currentSearch->selectedFileType2Category = selectedCategory;
-                    currentSearch->searchOnFileType2 = (selectedCategory != FileTypeMapping::ALL);
-
-                    qDebug() << "Selected FileType2 category:" << selectedCategory
-                             << "Search enabled:" << currentSearch->searchOnFileType2;
                 }
 
                 currentSearch->searchOnDate             = ui->Search_checkBox_Date->isChecked();

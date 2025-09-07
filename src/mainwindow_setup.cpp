@@ -263,6 +263,7 @@
         //Filter
 
         //Search
+        ui->Search_comboBox_FileType->hide();
             //hide Krename if not linux
             #ifndef Q_OS_LINUX
                 ui->Search_comboBox_SelectProcess->removeItem(2);
