@@ -413,11 +413,9 @@
         void MainWindow::on_Search_checkBox_Type_toggled(bool checked)
         {
             if(checked==1){
-                ui->Search_comboBox_FileType->setEnabled(true);
                 ui->Search_comboBox_FileType2->setEnabled(true);
             }
             else{
-                ui->Search_comboBox_FileType->setDisabled(true);
                 ui->Search_comboBox_FileType2->setDisabled(true);
             }
         }
@@ -850,13 +848,7 @@
             ui->Search_comboBox_SearchIn->setItemData(1, Search::SEARCH_IN_FILES_AND_FOLDERS, Qt::UserRole);
             ui->Search_comboBox_SearchIn->setItemData(2, Search::SEARCH_IN_FOLDER_PATH,       Qt::UserRole);
 
-            //Add filetype English value additionally to the displayed/translated value
-            ui->Search_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
-            ui->Search_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
-            ui->Search_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
-            ui->Search_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
-            ui->Search_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
-
+            //Add filetype English values additionally to the displayed/translated value
             ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("folder"), tr("All"), static_cast<int>(FileTypeMapping::ALL));
             ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
             ui->Search_comboBox_FileType2->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
@@ -928,7 +920,20 @@
             ui->Search_checkBox_Date->setChecked(false);
             ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("1970-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
-            ui->Search_comboBox_FileType->setCurrentText(tr("All"));
+
+            //ui->Search_comboBox_FileType->setCurrentText(tr("All"));
+            for (int i = 0; i < ui->Search_comboBox_FileType2->count(); i++) {
+                FileTypeMapping::UserCategory itemCategory =
+                    static_cast<FileTypeMapping::UserCategory>(
+                        ui->Search_comboBox_FileType2->itemData(i).toInt()
+                        );
+                if (itemCategory == FileTypeMapping::ALL) {
+                    ui->Search_comboBox_FileType2->setCurrentIndex(i);
+                    break;
+                }
+            }
+
+            ui->Search_comboBox_FileType2->setCurrentIndex(0);
             ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicatesName->setChecked(true);
             ui->Search_checkBox_DuplicatesSize->setChecked(false);
@@ -978,7 +983,7 @@
             ui->Search_checkBox_CaseSensitive->setChecked(search->caseSensitive);
             ui->Search_lineEdit_Exclude->setText(search->selectedSearchExclude);
 
-            //File criteria
+            //File criteria Size
             ui->Search_checkBox_Size->setChecked(search->searchOnSize);
             ui->Search_spinBox_MinimumSize->setValue(search->selectedMinimumSize);
             ui->Search_spinBox_MaximumSize->setValue(search->selectedMaximumSize);
@@ -986,8 +991,40 @@
             ui->Search_comboBox_MinSizeUnit->setCurrentIndex(minSizeIndex);
             int maxSizeIndex = search->mapSizeUnitToComboBoxIndex(search->selectedMaxSizeUnit);
             ui->Search_comboBox_MaxSizeUnit->setCurrentIndex(maxSizeIndex);
+
+            //File criteria Type
             ui->Search_checkBox_Type->setChecked(search->searchOnType);
-            ui->Search_comboBox_FileType->setCurrentText(tr(search->selectedFileType.toUtf8()));
+            FileTypeMapping::UserCategory mappedCategory = FileTypeMapping::ALL;
+            QString legacyFileType = search->selectedFileType;
+
+            if (legacyFileType.compare("Audio", Qt::CaseInsensitive) == 0) {
+                mappedCategory = FileTypeMapping::AUDIO;
+            } else if (legacyFileType.compare("Image", Qt::CaseInsensitive) == 0) {
+                mappedCategory = FileTypeMapping::IMAGE;
+            } else if (legacyFileType.compare("Text", Qt::CaseInsensitive) == 0) {
+                mappedCategory = FileTypeMapping::TEXT;
+            } else if (legacyFileType.compare("Video", Qt::CaseInsensitive) == 0) {
+                mappedCategory = FileTypeMapping::VIDEO;
+            } else if (legacyFileType.compare("Other", Qt::CaseInsensitive) == 0) {
+                mappedCategory = FileTypeMapping::OTHER;
+            } else if (legacyFileType.compare("None", Qt::CaseInsensitive) == 0) {
+                mappedCategory = FileTypeMapping::NONE;
+            } else {
+                mappedCategory = FileTypeMapping::ALL;
+            }
+
+            // Set FileType2 combobox to the mapped category
+            for (int i = 0; i < ui->Search_comboBox_FileType2->count(); i++) {
+                FileTypeMapping::UserCategory itemCategory =
+                    static_cast<FileTypeMapping::UserCategory>(
+                        ui->Search_comboBox_FileType2->itemData(i).toInt()
+                        );
+                if (itemCategory == mappedCategory) {
+                    ui->Search_comboBox_FileType2->setCurrentIndex(i);
+                    break;
+                }
+            }
+
             ui->Search_checkBox_Date->setChecked(search->searchOnDate);
             ui->Search_dateTimeEdit_Min->setDateTime(search->selectedDateMin);
             ui->Search_dateTimeEdit_Max->setDateTime(search->selectedDateMax);
@@ -1089,18 +1126,47 @@
                     default: currentSearch->selectedMaxSizeUnit = Search::SIZE_UNIT_BYTES; break;
                 }
                 currentSearch->setMultipliers();
-                currentSearch->searchOnType             = ui->Search_checkBox_Type->isChecked();
-                currentSearch->selectedFileType         = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
 
+                currentSearch->searchOnType             = ui->Search_checkBox_Type->isChecked();
+
+                // Map FileType2 category to legacy selectedFileType string for history compatibility
                 int fileType2Index = ui->Search_comboBox_FileType2->currentIndex();
                 FileTypeMapping::UserCategory selectedCategory =
                     static_cast<FileTypeMapping::UserCategory>(
                         ui->Search_comboBox_FileType2->itemData(fileType2Index).toInt()
                         );
 
-                // Store in search object (you may need to add this field to Search class)
+                // Store in search object
                 if (currentSearch) {
                     currentSearch->selectedFileType2Category = selectedCategory;
+
+                    // Map FileType2 to selectedFileType string for search history (preserve all categories)
+                    switch (selectedCategory) {
+                    case FileTypeMapping::ALL:
+                        currentSearch->selectedFileType = "All";
+                        break;
+                    case FileTypeMapping::AUDIO:
+                        currentSearch->selectedFileType = "Audio";
+                        break;
+                    case FileTypeMapping::IMAGE:
+                        currentSearch->selectedFileType = "Image";
+                        break;
+                    case FileTypeMapping::TEXT:
+                        currentSearch->selectedFileType = "Text";
+                        break;
+                    case FileTypeMapping::VIDEO:
+                        currentSearch->selectedFileType = "Video";
+                        break;
+                    case FileTypeMapping::OTHER:
+                        currentSearch->selectedFileType = "Other";
+                        break;
+                    case FileTypeMapping::NONE:
+                        currentSearch->selectedFileType = "None";
+                        break;
+                    default:
+                        currentSearch->selectedFileType = "All";
+                        break;
+                    }
                 }
 
                 currentSearch->searchOnDate             = ui->Search_checkBox_Date->isChecked();

@@ -2757,41 +2757,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QComboBox" name="Search_comboBox_FileType">
-                        <property name="enabled">
-                         <bool>false</bool>
-                        </property>
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>100</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>90</width>
-                          <height>30</height>
-                         </size>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <family>Noto Sans</family>
-                          <pointsize>9</pointsize>
-                          <kerning>false</kerning>
-                         </font>
-                        </property>
-                        <property name="toolTip">
-                         <string>Select the type of files</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
                        <widget class="QComboBox" name="Search_comboBox_FileType2">
                         <property name="enabled">
                          <bool>false</bool>

@@ -175,15 +175,41 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->selectedMinSizeUnit = ui->Search_comboBox_MinSizeUnit->itemData(ui->Search_comboBox_MinSizeUnit->currentIndex(), Qt::UserRole).toString();
     search->selectedMaxSizeUnit = ui->Search_comboBox_MaxSizeUnit->itemData(ui->Search_comboBox_MaxSizeUnit->currentIndex(), Qt::UserRole).toString();
     search->setMultipliers();
-    search->searchOnType = ui->Search_checkBox_Type->isChecked();
-    search->selectedFileType = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(), Qt::UserRole).toString();
 
-    int fileType2Index = ui->Search_comboBox_FileType2->currentIndex();
+    search->searchOnType = ui->Search_checkBox_Type->isChecked();
+    int fileTypeIndex = ui->Search_comboBox_FileType2->currentIndex();
     FileTypeMapping::UserCategory selectedCategory =
         static_cast<FileTypeMapping::UserCategory>(
-            ui->Search_comboBox_FileType2->itemData(fileType2Index).toInt()
+            ui->Search_comboBox_FileType2->itemData(fileTypeIndex).toInt()
             );
     search->selectedFileType2Category = selectedCategory;
+    // Map FileType to legacy selectedFileType for search history compatibility
+    switch (selectedCategory) {
+        case FileTypeMapping::ALL:
+            search->selectedFileType = "All";
+            break;
+        case FileTypeMapping::AUDIO:
+            search->selectedFileType = "Audio";
+            break;
+        case FileTypeMapping::IMAGE:
+            search->selectedFileType = "Image";
+            break;
+        case FileTypeMapping::TEXT:
+            search->selectedFileType = "Text";
+            break;
+        case FileTypeMapping::VIDEO:
+            search->selectedFileType = "Video";
+            break;
+        case FileTypeMapping::OTHER:
+            search->selectedFileType = "Other";
+            break;
+        case FileTypeMapping::NONE:
+            search->selectedFileType = "None";
+            break;
+        default:
+            search->selectedFileType = "All";
+            break;
+    }
 
     search->searchOnDate = ui->Search_checkBox_Date->isChecked();
     search->selectedDateMin = ui->Search_dateTimeEdit_Min->dateTime();
