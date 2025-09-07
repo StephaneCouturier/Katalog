@@ -650,27 +650,29 @@
         proxyModel2->setHeaderData(6, Qt::Horizontal, tr("orderValue"));
         proxyModel2->setHeaderData(7, Qt::Horizontal, tr("Path"));
 
-        // Metadata
+        // Metadata headers
         if(exploreDevice->catalog->includeMetadata != Catalog::METADATA_NONE){
             ui->Explore_treeView_FileList->showColumn(8);  // file_type
             ui->Explore_treeView_FileList->showColumn(9);  // MIME_type
-            ui->Explore_treeView_FileList->showColumn(10); // image_width
-            ui->Explore_treeView_FileList->showColumn(11); // image_height
-            ui->Explore_treeView_FileList->showColumn(12); // video_duration_seconds
-            ui->Explore_treeView_FileList->showColumn(13); // video_width
-            ui->Explore_treeView_FileList->showColumn(14); // video_height
-            ui->Explore_treeView_FileList->showColumn(15); // audio_duration_seconds
+            ui->Explore_treeView_FileList->showColumn(10); // Width (merged)
+            ui->Explore_treeView_FileList->showColumn(11); // Height (merged)
+            ui->Explore_treeView_FileList->showColumn(12); // Duration (merged)
+            ui->Explore_treeView_FileList->hideColumn(13); // video_width (redundant)
+            ui->Explore_treeView_FileList->hideColumn(14); // video_height (redundant)
+            ui->Explore_treeView_FileList->hideColumn(15); // audio_duration (redundant)
             ui->Explore_treeView_FileList->showColumn(16); // audio_artist
             ui->Explore_treeView_FileList->showColumn(17); // audio_album
             ui->Explore_treeView_FileList->showColumn(18); // audio_title
+
+            // Update header labels for merged columns
             proxyModel2->setHeaderData(8, Qt::Horizontal, tr("File Type"));
             proxyModel2->setHeaderData(9, Qt::Horizontal, tr("MIME Type"));
-            proxyModel2->setHeaderData(10, Qt::Horizontal, tr("Image Width"));
-            proxyModel2->setHeaderData(11, Qt::Horizontal, tr("Image Height"));
-            proxyModel2->setHeaderData(12, Qt::Horizontal, tr("Video Duration"));
-            proxyModel2->setHeaderData(13, Qt::Horizontal, tr("Video Width"));
-            proxyModel2->setHeaderData(14, Qt::Horizontal, tr("Video Height"));
-            proxyModel2->setHeaderData(15, Qt::Horizontal, tr("Audio Duration"));
+            proxyModel2->setHeaderData(10, Qt::Horizontal, tr("Width"));      // Merged: Image/Video Width
+            proxyModel2->setHeaderData(11, Qt::Horizontal, tr("Height"));     // Merged: Image/Video Height
+            proxyModel2->setHeaderData(12, Qt::Horizontal, tr("Duration"));   // Merged: Video/Audio Duration
+            proxyModel2->setHeaderData(13, Qt::Horizontal, tr("Video Width")); // Hidden
+            proxyModel2->setHeaderData(14, Qt::Horizontal, tr("Video Height"));// Hidden
+            proxyModel2->setHeaderData(15, Qt::Horizontal, tr("Audio Duration"));// Hidden
             proxyModel2->setHeaderData(16, Qt::Horizontal, tr("Artist"));
             proxyModel2->setHeaderData(17, Qt::Horizontal, tr("Album"));
             proxyModel2->setHeaderData(18, Qt::Horizontal, tr("Title"));
@@ -678,12 +680,12 @@
         else{
             ui->Explore_treeView_FileList->hideColumn(8);  // file_type
             ui->Explore_treeView_FileList->hideColumn(9);  // MIME_type
-            ui->Explore_treeView_FileList->hideColumn(10); // image_width
-            ui->Explore_treeView_FileList->hideColumn(11); // image_height
-            ui->Explore_treeView_FileList->hideColumn(12); // video_duration_seconds
-            ui->Explore_treeView_FileList->hideColumn(13); // video_width
-            ui->Explore_treeView_FileList->hideColumn(14); // video_height
-            ui->Explore_treeView_FileList->hideColumn(15); // audio_duration_seconds
+            ui->Explore_treeView_FileList->hideColumn(10); // Width (merged)
+            ui->Explore_treeView_FileList->hideColumn(11); // Height (merged)
+            ui->Explore_treeView_FileList->hideColumn(12); // Duration (merged)
+            ui->Explore_treeView_FileList->hideColumn(13); // video_width (always hidden now)
+            ui->Explore_treeView_FileList->hideColumn(14); // video_height (always hidden now)
+            ui->Explore_treeView_FileList->hideColumn(15); // audio_duration (always hidden now)
             ui->Explore_treeView_FileList->hideColumn(16); // audio_artist
             ui->Explore_treeView_FileList->hideColumn(17); // audio_album
             ui->Explore_treeView_FileList->hideColumn(18); // audio_title
@@ -707,18 +709,16 @@
         ui->Explore_treeView_FileList->hideColumn(6); //orderValue
         ui->Explore_treeView_FileList->hideColumn(7); //Path
 
-        // Metadata
-        ui->Explore_treeView_FileList->header()->resizeSection( 8,  80); // file_type
-        ui->Explore_treeView_FileList->header()->resizeSection( 9, 125); // MIME_type
-        ui->Explore_treeView_FileList->header()->resizeSection(10, 100); // image_width
-        ui->Explore_treeView_FileList->header()->resizeSection(11, 100); // image_height
-        ui->Explore_treeView_FileList->header()->resizeSection(12, 100); // video_duration_seconds
-        ui->Explore_treeView_FileList->header()->resizeSection(13, 120); // video_width
-        ui->Explore_treeView_FileList->header()->resizeSection(14, 100); // video_height
-        ui->Explore_treeView_FileList->header()->resizeSection(15, 100); // audio_duration_seconds
-        ui->Explore_treeView_FileList->header()->resizeSection(16, 100); // audio_artist
-        ui->Explore_treeView_FileList->header()->resizeSection(17, 100); // audio_album
-        ui->Explore_treeView_FileList->header()->resizeSection(18, 100); // audio_title
+        // Metadata column sizing
+        ui->Explore_treeView_FileList->header()->resizeSection(8, 80);   // File Type
+        ui->Explore_treeView_FileList->header()->resizeSection(9, 100);  // MIME Type
+        ui->Explore_treeView_FileList->header()->resizeSection(10, 80);  // Width (merged)
+        ui->Explore_treeView_FileList->header()->resizeSection(11, 80);  // Height (merged)
+        ui->Explore_treeView_FileList->header()->resizeSection(12, 90);  // Duration (merged)
+        // Columns 13, 14, 15 are now hidden (redundant)
+        ui->Explore_treeView_FileList->header()->resizeSection(16, 120); // Artist
+        ui->Explore_treeView_FileList->header()->resizeSection(17, 120); // Album
+        ui->Explore_treeView_FileList->header()->resizeSection(18, 150); // Title
 
         //Display count of files and total size
         QString countSQL = QLatin1String(R"(

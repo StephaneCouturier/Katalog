@@ -48,7 +48,7 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
     //Define list of columns per type of data
     QList<int> filesizeColumnList, filecountColumnList, durationColumnList;
       filesizeColumnList <<1;
-      durationColumnList <<12 <<15;
+      durationColumnList <<12;
 
     //Definition of filetypes
     QStringList fileTypesPlain_Image, fileTypesPlain_Audio,fileTypesPlain_Video,fileTypesPlain_Text,fileTypesPlain_Other;
@@ -70,31 +70,76 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     else
                         return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
                 }
-                //Duration columns
+                //Duration columns (merged: video + audio duration)
                 else if (durationColumnList.contains(index.column())) {
-                    QVariant rawValue = QSortFilterProxyModel::data(index, role);
-                    int duration = rawValue.toInt();
-                    if (duration > 0) {
-                        if (index.column() == 12) {
-                            // Video Duration - show as H:MM:SS
-                            int hours = duration / 3600;
-                            int minutes = (duration % 3600) / 60;
-                            int seconds = duration % 60;
-                            return QString("%1:%2:%3")
-                                .arg(hours, 2, 10, QChar('0'))
-                                .arg(minutes, 2, 10, QChar('0'))
-                                .arg(seconds, 2, 10, QChar('0'));
-                        } else if (index.column() == 15) {
-                            // Audio Duration - show as MM:SS
-                            int minutes = duration / 60;
-                            int seconds = duration % 60;
-                            return QString("%1:%2")
-                                .arg(minutes, 2, 10, QChar('0'))
-                                .arg(seconds, 2, 10, QChar('0'));
+                    if (index.column() == 12) {
+                        // Merged Duration column - check both video and audio
+                        QVariant videoDuration = QSortFilterProxyModel::data(index.sibling(index.row(), 12), role);
+                        QVariant audioDuration = QSortFilterProxyModel::data(index.sibling(index.row(), 15), role);
+
+                        int duration = 0;
+                        bool isVideo = false;
+
+                        // Priority: video duration first, then audio duration
+                        if (videoDuration.isValid() && videoDuration.toInt() > 0) {
+                            duration = videoDuration.toInt();
+                            isVideo = true;
+                        } else if (audioDuration.isValid() && audioDuration.toInt() > 0) {
+                            duration = audioDuration.toInt();
+                            isVideo = false;
                         }
+
+                        if (duration > 0) {
+                            if (isVideo) {
+                                // Video Duration - show as H:MM:SS
+                                int hours = duration / 3600;
+                                int minutes = (duration % 3600) / 60;
+                                int seconds = duration % 60;
+                                return QString("%1:%2:%3")
+                                    .arg(hours, 2, 10, QChar('0'))
+                                    .arg(minutes, 2, 10, QChar('0'))
+                                    .arg(seconds, 2, 10, QChar('0'));
+                            } else {
+                                // Audio Duration - show as MM:SS
+                                int minutes = duration / 60;
+                                int seconds = duration % 60;
+                                return QString("%1:%2")
+                                    .arg(minutes, 2, 10, QChar('0'))
+                                    .arg(seconds, 2, 10, QChar('0'));
+                            }
+                        }
+                        return "";
+                    }
+                }
+                //Width columns (merged: image + video width)
+                else if (index.column() == 10) {
+                    // Merged Width column - check both image and video
+                    QVariant imageWidth = QSortFilterProxyModel::data(index.sibling(index.row(), 10), role);
+                    QVariant videoWidth = QSortFilterProxyModel::data(index.sibling(index.row(), 13), role);
+
+                    // Priority: image width first, then video width
+                    if (imageWidth.isValid() && imageWidth.toInt() > 0) {
+                        return QVariant(QLocale().toString(imageWidth.toInt()));
+                    } else if (videoWidth.isValid() && videoWidth.toInt() > 0) {
+                        return QVariant(QLocale().toString(videoWidth.toInt()));
                     }
                     return "";
                 }
+                //Height columns (merged: image + video height)
+                else if (index.column() == 11) {
+                    // Merged Height column - check both image and video
+                    QVariant imageHeight = QSortFilterProxyModel::data(index.sibling(index.row(), 11), role);
+                    QVariant videoHeight = QSortFilterProxyModel::data(index.sibling(index.row(), 14), role);
+
+                    // Priority: image height first, then video height
+                    if (imageHeight.isValid() && imageHeight.toInt() > 0) {
+                        return QVariant(QLocale().toString(imageHeight.toInt()));
+                    } else if (videoHeight.isValid() && videoHeight.toInt() > 0) {
+                        return QVariant(QLocale().toString(videoHeight.toInt()));
+                    }
+                    return "";
+                }
+
                 //Numbers columns (without units)
                 else if( filecountColumnList.contains(index.column()) ){
                     return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 0)  + "  ");

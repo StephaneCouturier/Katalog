@@ -151,9 +151,9 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         // Metadata - aligned with Explore
         case 8: return QString(tr("File Type"));
         case 9: return QString(tr("MIME Type"));
-        case 10: return QString(tr("Image Width"));
-        case 11: return QString(tr("Image Height"));
-        case 12: return QString(tr("Video Duration"));       // Now at column 12 like Explore
+        case 10: return QString(tr("Width"));           //Generic for Image and Video
+        case 11: return QString(tr("Height"));          //Generic for Image and Video
+        case 12: return QString(tr("Duration"));        //Generic for Audio and Video
         case 13: return QString(tr("Video Width"));
         case 14: return QString(tr("Video Height"));
         case 15: return QString(tr("Audio Duration"));       // Now at column 15 like Explore

@@ -956,17 +956,27 @@ void MainWindow::displaySearchResults()
         ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); // Date
         ui->Search_treeView_FilesFound->header()->resizeSection(3, 300); // Path
         ui->Search_treeView_FilesFound->header()->resizeSection(4, 120); // Catalog
-        // Metdata
-        ui->Search_treeView_FilesFound->header()->resizeSection(6, 60);   // Type
-        ui->Search_treeView_FilesFound->header()->resizeSection(7, 80);   // Image Width
-        ui->Search_treeView_FilesFound->header()->resizeSection(8, 80);   // Image Height
-        ui->Search_treeView_FilesFound->header()->resizeSection(9, 90);   // Video Duration (seconds)
-        ui->Search_treeView_FilesFound->header()->resizeSection(10, 80);  // Video Width
-        ui->Search_treeView_FilesFound->header()->resizeSection(11, 80);  // Video Height
-        ui->Search_treeView_FilesFound->header()->resizeSection(12, 90);  // Audio Duration (seconds)
-        ui->Search_treeView_FilesFound->header()->resizeSection(13, 120); // Artist
-        ui->Search_treeView_FilesFound->header()->resizeSection(14, 120); // Album
-        ui->Search_treeView_FilesFound->header()->resizeSection(15, 150); // Title
+        ui->Search_treeView_FilesFound->header()->resizeSection(5, 60);  // Type
+
+        // Metadata columns - updated for merged columns
+        ui->Search_treeView_FilesFound->header()->resizeSection(8, 80);   // File Type
+        ui->Search_treeView_FilesFound->header()->resizeSection(9, 100);  // MIME Type
+        ui->Search_treeView_FilesFound->header()->resizeSection(10, 80);  // Width (merged)
+        ui->Search_treeView_FilesFound->header()->resizeSection(11, 80);  // Height (merged)
+        ui->Search_treeView_FilesFound->header()->resizeSection(12, 90);  // Duration (merged)
+
+        // Hide redundant columns
+        ui->Search_treeView_FilesFound->hideColumn(6); // order (for explore only)
+        ui->Search_treeView_FilesFound->hideColumn(7); // path  (for explore only)
+
+        ui->Search_treeView_FilesFound->hideColumn(13); // video_width (merged)
+        ui->Search_treeView_FilesFound->hideColumn(14); // video_height (merged)
+        ui->Search_treeView_FilesFound->hideColumn(15); // audio_duration (merged)
+
+        // Audio metadata columns (shifted indices due to hidden columns)
+        ui->Search_treeView_FilesFound->header()->resizeSection(16, 120); // Artist
+        ui->Search_treeView_FilesFound->header()->resizeSection(17, 120); // Album
+        ui->Search_treeView_FilesFound->header()->resizeSection(18, 150); // Title
 
         // Update label based on search type
         if (currentSearch->searchOnFileCriteria == true && currentSearch->searchOnDuplicates == true) {
