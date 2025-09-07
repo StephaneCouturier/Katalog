@@ -241,8 +241,90 @@ QVariant FilesView::headerData(int section, Qt::Orientation orientation, int rol
         return QVariant();
 }
 
+// In src/filesview.cpp, update the lessThan() method to handle merged columns:
+
 bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+    int column = left.column();
+
+    // Special handling for merged metadata columns
+    if (column == 10) { // Width column (merged: image_width + video_width)
+        // Get width values from both image and video sources
+        QVariant leftImageWidth = sourceModel()->data(sourceModel()->index(left.row(), 10));
+        QVariant leftVideoWidth = sourceModel()->data(sourceModel()->index(left.row(), 13));
+        QVariant rightImageWidth = sourceModel()->data(sourceModel()->index(right.row(), 10));
+        QVariant rightVideoWidth = sourceModel()->data(sourceModel()->index(right.row(), 13));
+
+        // Determine actual width values (image takes priority)
+        int leftWidth = 0;
+        int rightWidth = 0;
+
+        if (leftImageWidth.isValid() && leftImageWidth.toInt() > 0) {
+            leftWidth = leftImageWidth.toInt();
+        } else if (leftVideoWidth.isValid() && leftVideoWidth.toInt() > 0) {
+            leftWidth = leftVideoWidth.toInt();
+        }
+
+        if (rightImageWidth.isValid() && rightImageWidth.toInt() > 0) {
+            rightWidth = rightImageWidth.toInt();
+        } else if (rightVideoWidth.isValid() && rightVideoWidth.toInt() > 0) {
+            rightWidth = rightVideoWidth.toInt();
+        }
+
+        return leftWidth < rightWidth;
+    }
+    else if (column == 11) { // Height column (merged: image_height + video_height)
+        // Get height values from both image and video sources
+        QVariant leftImageHeight = sourceModel()->data(sourceModel()->index(left.row(), 11));
+        QVariant leftVideoHeight = sourceModel()->data(sourceModel()->index(left.row(), 14));
+        QVariant rightImageHeight = sourceModel()->data(sourceModel()->index(right.row(), 11));
+        QVariant rightVideoHeight = sourceModel()->data(sourceModel()->index(right.row(), 14));
+
+        // Determine actual height values (image takes priority)
+        int leftHeight = 0;
+        int rightHeight = 0;
+
+        if (leftImageHeight.isValid() && leftImageHeight.toInt() > 0) {
+            leftHeight = leftImageHeight.toInt();
+        } else if (leftVideoHeight.isValid() && leftVideoHeight.toInt() > 0) {
+            leftHeight = leftVideoHeight.toInt();
+        }
+
+        if (rightImageHeight.isValid() && rightImageHeight.toInt() > 0) {
+            rightHeight = rightImageHeight.toInt();
+        } else if (rightVideoHeight.isValid() && rightVideoHeight.toInt() > 0) {
+            rightHeight = rightVideoHeight.toInt();
+        }
+
+        return leftHeight < rightHeight;
+    }
+    else if (column == 12) { // Duration column (merged: video_duration + audio_duration)
+        // Get duration values from both video and audio sources
+        QVariant leftVideoDuration = sourceModel()->data(sourceModel()->index(left.row(), 12));
+        QVariant leftAudioDuration = sourceModel()->data(sourceModel()->index(left.row(), 15));
+        QVariant rightVideoDuration = sourceModel()->data(sourceModel()->index(right.row(), 12));
+        QVariant rightAudioDuration = sourceModel()->data(sourceModel()->index(right.row(), 15));
+
+        // Determine actual duration values (video takes priority)
+        int leftDuration = 0;
+        int rightDuration = 0;
+
+        if (leftVideoDuration.isValid() && leftVideoDuration.toInt() > 0) {
+            leftDuration = leftVideoDuration.toInt();
+        } else if (leftAudioDuration.isValid() && leftAudioDuration.toInt() > 0) {
+            leftDuration = leftAudioDuration.toInt();
+        }
+
+        if (rightVideoDuration.isValid() && rightVideoDuration.toInt() > 0) {
+            rightDuration = rightVideoDuration.toInt();
+        } else if (rightAudioDuration.isValid() && rightAudioDuration.toInt() > 0) {
+            rightDuration = rightAudioDuration.toInt();
+        }
+
+        return leftDuration < rightDuration;
+    }
+
+    // Default sorting for all other columns
     QVariant leftData = sourceModel()->data(left);
     QVariant rightData = sourceModel()->data(right);
 
