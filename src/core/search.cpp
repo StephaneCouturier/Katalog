@@ -104,7 +104,7 @@ int Search::rowCount(const QModelIndex &parent) const
 int Search::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 17;
+    return 19; // Aligned with Explore model
 }
 
 QVariant Search::data(const QModelIndex &index, int role) const
@@ -115,21 +115,23 @@ QVariant Search::data(const QModelIndex &index, int role) const
     case 0: return QString(fileNames[index.row()]);
     case 1: return QVariant(fileSizes[index.row()]);
     case 2: return QString(fileDateTimes[index.row()]);
-    case 3: return QString(filePaths[index.row()]);
-    case 4: return QString(fileCatalogs[index.row()]);
-    case 5: return int(fileCatalogIDs[index.row()]);
-    // Metadata
-    case 6: return QString(fileTypes[index.row()]);
-    case 7: return QString(mimeTypes[index.row()]);
-    case 8: return imageWidths[index.row()] > 0 ? imageWidths[index.row()] : QVariant();
-    case 9: return imageHeights[index.row()] > 0 ? imageHeights[index.row()] : QVariant();
-    case 10: return videoDurations[index.row()] > 0 ? videoDurations[index.row()] : QVariant();
-    case 11: return videoWidths[index.row()] > 0 ? videoWidths[index.row()] : QVariant();
-    case 12: return videoHeights[index.row()] > 0 ? videoHeights[index.row()] : QVariant();
-    case 13: return audioDurations[index.row()] > 0 ? audioDurations[index.row()] : QVariant();
-    case 14: return QString(audioArtists[index.row()]);
-    case 15: return QString(audioAlbums[index.row()]);
-    case 16: return QString(audioTitles[index.row()]);
+    case 3: return QString(filePaths[index.row()]);        // Directory
+    case 4: return QString(fileCatalogs[index.row()]);     // Catalog
+    case 5: return int(fileCatalogIDs[index.row()]);       // Type (ID for now)
+    case 6: return QVariant(index.row());                  // orderValue (row index)
+    case 7: return QString(filePaths[index.row()] + "/" + fileNames[index.row()]); // Path (full path)
+    // Metadata - shifted by 2 positions to align with Explore
+    case 8: return QString(fileTypes[index.row()]);        // file_type
+    case 9: return QString(mimeTypes[index.row()]);        // MIME_type
+    case 10: return imageWidths[index.row()] > 0 ? imageWidths[index.row()] : QVariant();     // image_width
+    case 11: return imageHeights[index.row()] > 0 ? imageHeights[index.row()] : QVariant();   // image_height
+    case 12: return videoDurations[index.row()] > 0 ? videoDurations[index.row()] : QVariant(); // video_duration_seconds
+    case 13: return videoWidths[index.row()] > 0 ? videoWidths[index.row()] : QVariant();     // video_width
+    case 14: return videoHeights[index.row()] > 0 ? videoHeights[index.row()] : QVariant();   // video_height
+    case 15: return audioDurations[index.row()] > 0 ? audioDurations[index.row()] : QVariant(); // audio_duration_seconds
+    case 16: return QString(audioArtists[index.row()]);    // audio_artist
+    case 17: return QString(audioAlbums[index.row()]);     // audio_album
+    case 18: return QString(audioTitles[index.row()]);     // audio_title
     }
     return QVariant();
 }
@@ -141,21 +143,23 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         case 0: return QString(tr("Name"));
         case 1: return QString(tr("Size"));
         case 2: return QString(tr("Date"));
-        case 3: return QString(tr("Folder"));
-        case 4: return QString(tr("Catalog Name"));
-        case 5: return QString(tr("Catalog ID"));
-        // Metadata
-        case 6: return QString(tr("Type"));
-        case 7: return QString(tr("MIME Type"));
-        case 8: return QString(tr("Image Width"));
-        case 9: return QString(tr("Image Height"));
-        case 10: return QString(tr("Video Duration"));
-        case 11: return QString(tr("Video Width"));
-        case 12: return QString(tr("Video Height"));
-        case 13: return QString(tr("Audio Duration"));
-        case 14: return QString(tr("Artist"));
-        case 15: return QString(tr("Album"));
-        case 16: return QString(tr("Title"));
+        case 3: return QString(tr("Directory"));
+        case 4: return QString(tr("Catalog"));
+        case 5: return QString(tr("Type"));
+        case 6: return QString(tr("orderValue"));
+        case 7: return QString(tr("Path"));
+        // Metadata - aligned with Explore
+        case 8: return QString(tr("File Type"));
+        case 9: return QString(tr("MIME Type"));
+        case 10: return QString(tr("Image Width"));
+        case 11: return QString(tr("Image Height"));
+        case 12: return QString(tr("Video Duration"));       // Now at column 12 like Explore
+        case 13: return QString(tr("Video Width"));
+        case 14: return QString(tr("Video Height"));
+        case 15: return QString(tr("Audio Duration"));       // Now at column 15 like Explore
+        case 16: return QString(tr("Artist"));
+        case 17: return QString(tr("Album"));
+        case 18: return QString(tr("Title"));
         }
     }
     return QVariant();

@@ -75,7 +75,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     QVariant rawValue = QSortFilterProxyModel::data(index, role);
                     int duration = rawValue.toInt();
                     if (duration > 0) {
-                        if (index.column() == 10) { // Video Duration - show as H:MM:SS
+                        if (index.column() == 12) {
+                            // Video Duration - show as H:MM:SS
                             int hours = duration / 3600;
                             int minutes = (duration % 3600) / 60;
                             int seconds = duration % 60;
@@ -83,7 +84,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                                 .arg(hours, 2, 10, QChar('0'))
                                 .arg(minutes, 2, 10, QChar('0'))
                                 .arg(seconds, 2, 10, QChar('0'));
-                        } else { // Audio Duration - show as MM:SS
+                        } else if (index.column() == 15) {
+                            // Audio Duration - show as MM:SS
                             int minutes = duration / 60;
                             int seconds = duration % 60;
                             return QString("%1:%2")
