@@ -7447,6 +7447,35 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_Audio">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans</family>
+                    <pointsize>9</pointsize>
+                    <kerning>false</kerning>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string>Audio</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="audio-x-mpeg"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QRadioButton" name="Create_radioButton_FileType_Image">
                   <property name="enabled">
                    <bool>true</bool>
@@ -7476,7 +7505,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Audio">
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_Text">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -7497,10 +7526,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>Audio</string>
+                   <string>Text</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="audio-x-mpeg"/>
+                   <iconset theme="folder-text"/>
                   </property>
                  </widget>
                 </item>
@@ -7534,7 +7563,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Text">
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_Other">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -7555,10 +7584,39 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>Text</string>
+                   <string>Other</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="folder-text"/>
+                   <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_None">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans</family>
+                    <pointsize>9</pointsize>
+                    <kerning>false</kerning>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string>None</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="application-x-zerosize"/>
                   </property>
                  </widget>
                 </item>

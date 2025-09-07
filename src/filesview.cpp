@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "filesview.h"
+#include "core/filetypemapping.h"
 
 #include <QFont>
 #include <QBrush>
@@ -50,11 +51,12 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
       durationColumnList <<12 <<15;
 
     //Definition of filetypes
-    QStringList fileTypesPlain_Image, fileTypesPlain_Audio,fileTypesPlain_Video,fileTypesPlain_Text;
+    QStringList fileTypesPlain_Image, fileTypesPlain_Audio,fileTypesPlain_Video,fileTypesPlain_Text,fileTypesPlain_Other;
     fileTypesPlain_Image << "png" << "jpg" << "gif" << "xcf" << "tif" << "bmp";
     fileTypesPlain_Audio << "mp3" << "wav" << "ogg" << "aif";
     fileTypesPlain_Video << "wmv" << "avi" << "mp4" << "mkv" << "flv"  << "webm";
     fileTypesPlain_Text  << "txt" << "pdf" << "odt" << "idx" << "html" << "rtf" << "doc" << "docx" << "epub";
+    fileTypesPlain_Other << "7z" << "zip" << "rar" << "gz" << "tar.gz" ;
 
     switch ( role )
          {
@@ -117,30 +119,61 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                 if( index.column()==0 ){
 
                     //Identification of filetype
-                    QString fullFileName, fileName, fileType;
-                    fullFileName = QSortFilterProxyModel::data(index, Qt::DisplayRole).toString();
-                    fileName = fullFileName.left(fullFileName.lastIndexOf("."));
-                    fileType = fullFileName.remove(fileName+".");
+                    int fileTypeColumn = 6;
+                    int mimeTypeColumn = 7;
+                    QString fileType;
+                    QString mimeType;
 
                     //Assign the icon per filetype
-                    QModelIndex idx = index.sibling(index.row(), 5);
+                    QModelIndex idx = index.sibling(index.row(), fileTypeColumn);
+                    fileType = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
+                    QModelIndex idx2 = index.sibling(index.row(), mimeTypeColumn);
+                    mimeType = QSortFilterProxyModel::data(idx2, Qt::DisplayRole).toString();
+
                     if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" ){
                         return QIcon::fromTheme("folder");
                     }
-                    else if( fileTypesPlain_Image.contains(fileType,Qt::CaseInsensitive)){
-                        return QIcon::fromTheme("image-jpeg");
-                    }
-                    else if( fileTypesPlain_Audio.contains(fileType,Qt::CaseInsensitive)){
+                    else if( fileType == "audio" ){
                         return QIcon::fromTheme("audio-x-mpeg");
                     }
-                    else if( fileTypesPlain_Video.contains(fileType,Qt::CaseInsensitive)){
+                    else if( fileType == "image" ){
+                        return QIcon::fromTheme("image-jpeg");
+                    }
+                    else if( fileType == "video" ){
                         return QIcon::fromTheme("video-mp4");
                     }
-                    else if(  fileTypesPlain_Text.contains(fileType,Qt::CaseInsensitive)){
-                        return QIcon::fromTheme("view-list-text");
+                    else if( fileType == "other" ){
+                        if( FileTypeMapping::isUserTypeText(mimeType) ){
+                            return QIcon::fromTheme("view-list-text");
+                        }
+                        else
+                            return QIcon::fromTheme("document-open");
                     }
-                    else
+                    else //fileTypesPlain_None
                         return QIcon::fromTheme("application-x-zerosize");
+
+                    // Fallback on the file extension
+                    // QModelIndex idx = index.sibling(index.row(), 5);
+                    // if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" ){
+                    //     return QIcon::fromTheme("folder");
+                    // }
+                    // else if( fileTypesPlain_Audio.contains(fileType,Qt::CaseInsensitive)){
+                    //     return QIcon::fromTheme("audio-x-mpeg");
+                    // }
+                    // else if( fileTypesPlain_Image.contains(fileType,Qt::CaseInsensitive)){
+                    //     return QIcon::fromTheme("image-jpeg");
+                    // }
+                    // else if(  fileTypesPlain_Text.contains(fileType,Qt::CaseInsensitive)){
+                    //     return QIcon::fromTheme("view-list-text");
+                    // }
+                    // else if( fileTypesPlain_Video.contains(fileType,Qt::CaseInsensitive)){
+                    //     return QIcon::fromTheme("video-mp4");
+                    // }
+                    // else if( fileTypesPlain_Other.contains(fileType,Qt::CaseInsensitive)){
+                    //     return QIcon::fromTheme("document-open");
+                    // }
+                    // else //fileTypesPlain_None
+                    //     return QIcon::fromTheme("application-x-zerosize");
                 }
 
                 break;

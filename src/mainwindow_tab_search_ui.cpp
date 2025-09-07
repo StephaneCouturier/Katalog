@@ -868,10 +868,10 @@
 
             // Add user-friendly display names with internal enum values
             ui->Search_comboBox_FileType2->addItem(tr("All"), static_cast<int>(FileTypeMapping::ALL));
-            ui->Search_comboBox_FileType2->addItem(tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
-            ui->Search_comboBox_FileType2->addItem(tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
             ui->Search_comboBox_FileType2->addItem(tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
+            ui->Search_comboBox_FileType2->addItem(tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
             ui->Search_comboBox_FileType2->addItem(tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
+            ui->Search_comboBox_FileType2->addItem(tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
             ui->Search_comboBox_FileType2->addItem(tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
             ui->Search_comboBox_FileType2->addItem(tr("None"), static_cast<int>(FileTypeMapping::NONE));
 

@@ -1,5 +1,143 @@
-// filetypemapping.cpp
+/*LICENCE
+    This file is part of Katalog
+
+    Copyright (C) 2020, the Katalog Development team
+
+    Author: Stephane Couturier (Symbioxy)
+
+    Katalog is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    Katalog is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Katalog; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+/*FILE DESCRIPTION
+/////////////////////////////////////////////////////////////////////////////
+// Application: Katalog
+// File Name:   filetypemapping.cpp
+// Purpose:     Defines user file types for enhanced searching
+// Description:
+// Author:      Stephane Couturier
+/////////////////////////////////////////////////////////////////////////////
+*/
 #include "filetypemapping.h"
+#include <QMap>
+#include <QStringList>
+
+FileTypeMapping::TextCategory FileTypeMapping::selectedTextCategory = FileTypeMapping::TextCategory::All;
+
+// Add this overload for backward compatibility
+const QStringList& FileTypeMapping::getSpecificMimeTypeListForText() {
+    static QStringList allTextMimeTypes = getSpecificMimeTypeListForText(TextCategory::All);
+    return allTextMimeTypes;
+}
+
+QStringList FileTypeMapping::getSpecificMimeTypeListForText(TextCategory category) {
+    // Unified source of truth for MIME types grouped by category
+    static const QMap<TextCategory, QStringList> categoryToMimeTypes = {
+        {TextCategory::Documents, {
+                                      "application/pdf",
+                                      "application/rtf",
+                                      "application/msword",
+                                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                      "application/vnd.oasis.opendocument.text"
+                                  }},
+        {TextCategory::CodeScripts, {
+                                        "application/x-shellscript",
+                                        "application/javascript",
+                                        "application/x-python",
+                                        "application/x-php",
+                                        "application/json",
+                                        "application/xml",
+                                        "application/x-httpd-php",
+                                        "application/x-perl",
+                                        "application/x-ruby",
+                                        "application/x-bsh",
+                                        "application/x-csh",
+                                        "application/x-java-source",
+                                        "application/x-lua",
+                                        "application/x-tcl",
+                                        "application/x-sql",
+                                        "application/x-asp",
+                                        "application/x-jsp"
+                                    }},
+        {TextCategory::DataFiles, {
+                                      "application/yaml",
+                                      "application/x-yaml",
+                                      "text/csv",
+                                      "application/csv"
+                                  }},
+        {TextCategory::PlainText, {
+                                      "text/plain",
+                                      "text/markdown"
+                                  }},
+        {TextCategory::WebContent, {
+                                       "text/html",
+                                       "application/xhtml+xml",
+                                       "application/rss+xml",
+                                       "application/atom+xml"
+                                   }},
+        {TextCategory::Ebooks, {
+                                   "application/epub+zip",
+                                   "application/x-mobipocket-ebook"
+                               }}
+    };
+
+    if (category == TextCategory::All) {
+        // Combine all categories into one list
+        QStringList allMimeTypes;
+        for (auto it = categoryToMimeTypes.begin(); it != categoryToMimeTypes.end(); ++it) {
+            allMimeTypes += it.value();
+        }
+        // Remove duplicates (some MIME types appear in multiple categories)
+        allMimeTypes.removeDuplicates();
+        return allMimeTypes;
+    }
+
+    return categoryToMimeTypes.value(category);
+}
+
+bool FileTypeMapping::isUserTypeText(const QString &mimeType)
+{
+    // User type "Text" definition:
+    // * all type = "other" where mimetype starts with "text"
+    // * OR mimetype starts with "application" and mimetype in specificListForText
+
+    if (mimeType.startsWith("text")) {
+        return true;
+    }
+
+    if (mimeType.startsWith("application") && getSpecificMimeTypeListForText().contains(mimeType)) {
+        return true;
+    }
+
+    return false;
+}
+
+bool FileTypeMapping::isUserTypeOther(const QString &mimeType)
+{
+    // User type "Other" definition:
+    // * all type = "other" where mimetype does not start with "text"
+    // * AND mimetype starts with "application" and mimetype NOT in specificListForText
+
+    if (mimeType.startsWith("text")) {
+        return false;
+    }
+
+    if (mimeType.startsWith("application") && !getSpecificMimeTypeListForText().contains(mimeType)) {
+        return true;
+    }
+
+    return false;
+}
 
 QString FileTypeMapping::getSqlFilter(UserCategory category) {
     switch (category) {
@@ -12,9 +150,10 @@ QString FileTypeMapping::getSqlFilter(UserCategory category) {
     case AUDIO:
         return "file_type = 'audio'";
     case TEXT:
-        return QString("file_type = 'other' AND (%1)").arg(getTextMimeFilter());
+        // Automatically uses selectedTextCategory static field
+        return QString("file_type = 'other' AND %1").arg(getSQLforMimeTypesAsText());
     case OTHER:
-        return QString("file_type = 'other' AND NOT (%1)").arg(getTextMimeFilter());
+        return QString("file_type = 'other' AND %1").arg(getSQLforOtherNonTextMimeTypes());
     case NONE:
         return "(file_type IS NULL OR file_type = '' OR file_type = 'unknown')";
     default:
@@ -22,104 +161,43 @@ QString FileTypeMapping::getSqlFilter(UserCategory category) {
     }
 }
 
-QStringList FileTypeMapping::getMimeTypeSuggestions(UserCategory category) {
-    switch (category) {
-    case AUDIO:
-        // For UI purposes - user can filter within audio
-        return {"audio/mpeg", "audio/wav", "audio/flac", "audio/ogg", "audio/aac"};
-    case IMAGE:
-        // For UI purposes - user can filter within images
-        return {"image/jpeg", "image/png", "image/gif", "image/webp", "image/tiff"};
-    case TEXT:
-        // These are ACTUALLY needed because TEXT uses complex MIME filtering
-        return getTextMimeTypes();
-    case VIDEO:
-        // For UI purposes - user can filter within videos
-        return {"video/mp4", "video/avi", "video/quicktime", "video/webm", "video/x-matroska"};
-    case OTHER:
-        // These are ACTUALLY needed because OTHER uses complex MIME filtering
-        return getOtherMimeTypes();
-    default:
-        return QStringList(); // Empty for ALL and NONE
+QString FileTypeMapping::getSQLforMimeTypesAsText()
+{
+    // Use the static field - automatically uses current selection
+    const QStringList specificList = getSpecificMimeTypeListForText(selectedTextCategory);
+
+    QStringList conditions;
+
+    // Always include text/* pattern for any text category
+    conditions << "LOWER(mime_type) LIKE 'text%'";
+
+    // Add specific application types from currently selected category
+    for (const QString& mimeType : specificList) {
+        conditions << QString("mime_type = '%1'").arg(mimeType);
     }
+
+    return QString("(%1)").arg(conditions.join(" OR "));
 }
 
-QString FileTypeMapping::getTextMimeFilter() {
-    return R"(
-        LOWER(mime_type) LIKE 'text/%' OR
-        mime_type = 'application/pdf' OR
-        mime_type = 'application/rtf' OR
-        mime_type = 'application/msword' OR
-        mime_type LIKE 'application/vnd.openxmlformats-officedocument%' OR
-        mime_type LIKE 'application/vnd.ms-%' OR
-        mime_type LIKE 'application/vnd.oasis.opendocument%' OR
-        mime_type = 'application/epub+zip' OR
-        mime_type IN ('text/html', 'text/xml', 'application/xml', 'application/json') OR
-        mime_type LIKE 'text/x-%' OR
-        mime_type = 'application/x-shellscript'
-    )";
-}
+QString FileTypeMapping::getSQLforOtherNonTextMimeTypes()
+{
+    // User type "Other" definition:
+    // * all type = "other" where mimetype does NOT start with "text"
+    // * AND mimetype starts with "application" and mimetype NOT in specificListForText
+    const QStringList& specificList = getSpecificMimeTypeListForText();
+    QStringList conditions;
 
-QStringList FileTypeMapping::getImageMimeTypes() {
-    return {
-        "image/jpeg", "image/png", "image/gif", "image/bmp", "image/tiff",
-        "image/webp", "image/svg+xml", "image/x-icon", "image/heic", "image/avif",
-        "image/x-canon-cr2", "image/x-canon-crw", "image/x-nikon-nef",
-        "image/x-adobe-dng", "image/x-sony-arw"
-    };
-}
+    // NOT text/* types
+    conditions << "mime_type NOT LIKE 'text%'";
 
-QStringList FileTypeMapping::getVideoMimeTypes() {
-    return {
-        "video/mp4", "video/avi", "video/quicktime", "video/x-msvideo",
-        "video/x-ms-wmv", "video/x-flv", "video/webm", "video/x-matroska",
-        "video/3gpp", "video/mp2t", "video/x-m4v"
-    };
-}
+    // Application types but NOT in our specific text list
+    QStringList notInSpecificList;
+    for (const QString& mimeType : specificList) {
+        notInSpecificList << QString("mime_type != '%1'").arg(mimeType);
+    }
 
-QStringList FileTypeMapping::getAudioMimeTypes() {
-    return {
-        "audio/mpeg", "audio/ogg", "audio/wav", "audio/flac", "audio/aac",
-        "audio/x-ms-wma", "audio/x-aiff", "audio/mp4", "audio/x-m4a",
-        "audio/x-wav"
-    };
-}
+    conditions << QString("mime_type LIKE 'application%'");
+    conditions << QString("(%1)").arg(notInSpecificList.join(" AND "));
 
-QStringList FileTypeMapping::getTextMimeTypes() {
-    return {
-        // Plain text
-        "text/plain", "text/html", "text/xml", "text/css", "text/javascript",
-
-        // Documents
-        "application/pdf", "application/rtf", "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/vnd.oasis.opendocument.text",
-
-        // Ebooks
-        "application/epub+zip",
-
-        // Data formats
-        "application/json", "application/xml", "text/csv",
-
-        // Development
-        "text/x-c", "text/x-c++", "text/x-python", "text/x-java",
-        "application/x-shellscript"
-    };
-}
-
-QStringList FileTypeMapping::getOtherMimeTypes() {
-    return {
-        // Archives
-        "application/zip", "application/x-rar-compressed", "application/x-7z-compressed",
-        "application/x-tar", "application/gzip",
-
-        // Executables
-        "application/x-executable", "application/x-msdos-program",
-
-        // Data
-        "application/x-sqlite3", "application/octet-stream",
-
-        // Fonts
-        "font/ttf", "font/otf", "application/font-woff"
-    };
+    return QString("(%1)").arg(conditions.join(" AND "));
 }
