@@ -375,67 +375,59 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     qDebug() << "=== Database Migration 2.8: Drop metadata table, update file/filetemp tables ===";
 
     // Step 1: Drop the unused metadata table if it exists
-    QSqlError dropError = dropTableIfExists(connectionName, "metadata");
-    if (dropError.type() != QSqlError::NoError) {
+    if (auto dropError = dropTableIfExists(connectionName, "metadata");
+        dropError.type() != QSqlError::NoError)
+    {
         qDebug() << "Warning dropping metadata table:" << dropError.text();
         // Continue - not critical
     }
 
     // Step 2: Update "file" table structure with DEFAULT NULL for metadata columns
-    // Get current file table structure
     QStringList existingColumns = getTableColumns(connectionName, "file");
 
-    // List of metadata columns to add (if missing)
-    QStringList metadataColumns = {
-        "file_name_base", "file_extension", "file_type", "mime_type",
-        "image_width", "image_height", "image_orientation",
-        "video_duration_seconds", "video_width", "video_height", "video_codec",
-        "video_framerate", "video_bitrate",
-        "audio_duration_seconds", "audio_artist", "audio_album", "audio_title",
-        "audio_genre", "audio_year", "audio_track_number", "audio_bitrate", "audio_sample_rate",
-        "metadata_extended", "metadata_extraction_date"
+    // Define metadata columns and their types
+    // Define all columns, their types, and default values in a single QMap
+    const QMap<QString, QString> newColumns = {
+        {"file_name_base", "TEXT"}, {"file_extension", "TEXT"}, {"file_type", "TEXT"}, {"mime_type", "TEXT"},
+        {"image_width", "NUMERIC"}, {"image_height", "NUMERIC"}, {"image_orientation", "NUMERIC"},
+        {"video_duration_seconds", "NUMERIC"}, {"video_width", "NUMERIC"}, {"video_height", "NUMERIC"}, {"video_codec", "TEXT"},
+        {"video_framerate", "NUMERIC"}, {"video_bitrate", "NUMERIC"},
+        {"audio_duration_seconds", "NUMERIC"}, {"audio_artist", "TEXT"}, {"audio_album", "TEXT"}, {"audio_title", "TEXT"},
+        {"audio_genre", "TEXT"}, {"audio_year", "NUMERIC"}, {"audio_track_number", "NUMERIC"}, {"audio_bitrate", "NUMERIC"}, {"audio_sample_rate", "NUMERIC"},
+        {"metadata_extended", "TEXT"}, {"metadata_extraction_date", "TEXT"},
+        {"mime_verified", "BOOLEAN"}, {"type_mismatch", "BOOLEAN"}
     };
 
-    // Add missing columns one by one
-    for (const QString &columnName : metadataColumns) {
-        if (!existingColumns.contains(columnName)) {
-            qDebug() << "Adding column:" << columnName;
-
-            QString columnType = "TEXT";
-            if (columnName.contains("width") || columnName.contains("height") ||
-                columnName.contains("duration") || columnName.contains("year") ||
-                columnName.contains("track_number") || columnName.contains("orientation") ||
-                columnName.contains("bitrate") || columnName.contains("sample_rate") ||
-                columnName == "video_framerate") {
-                columnType = "NUMERIC";
-            }
-
-            QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2 DEFAULT NULL")
-                                   .arg(columnName, columnType);
-
-            QSqlError addColumnError = executeSql(connectionName, alterSQL);
-            if (addColumnError.type() != QSqlError::NoError) {
-                qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
+    // Add missing metadata columns
+    for (auto it = newColumns.constBegin(); it != newColumns.constEnd(); ++it) {
+        if (!existingColumns.contains(it.key())) {
+            qDebug() << "Adding column:" << it.key();
+            QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2 DEFAULT NULL").arg(it.key(), it.value());
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << it.key() << ":" << addColumnError.text();
                 return addColumnError;
             }
-            qDebug() << "Added column" << columnName << "to -file- table";
+            qDebug() << "Added column" << it.key() << "to -file- table";
         }
     }
 
     // Step 3: Update "filetemp" table structure to match file table
-    // Since filetemp is always cleared at startup, we can simply drop and recreate it
     qDebug() << "Recreating filetemp table with complete metadata structure...";
 
     // Drop existing table (don't worry about data - it's temporary)
-    QSqlError dropFiletempError = dropTableIfExists(connectionName, "filetemp");
-    if (dropFiletempError.type() != QSqlError::NoError) {
+    if (auto dropFiletempError = dropTableIfExists(connectionName, "filetemp");
+        dropFiletempError.type() != QSqlError::NoError)
+    {
         qDebug() << "Error dropping filetemp table:" << dropFiletempError.text();
         return dropFiletempError;
     }
 
     // Create new table with updated structure
-    QSqlError createError = createFileTempTable(connectionName);
-    if (createError.type() != QSqlError::NoError) {
+    if (auto createError = createFileTempTable(connectionName);
+        createError.type() != QSqlError::NoError)
+    {
         qDebug() << "Error creating new filetemp table:" << createError.text();
         return createError;
     }
@@ -444,6 +436,7 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     qDebug() << "=== Database Migration 2.8 completed ===";
     return QSqlError(); // Success
 }
+
 
 QSqlError Database::dropTableIfExists(const QString &connectionName, const QString &tableName)
 {

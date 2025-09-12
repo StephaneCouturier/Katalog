@@ -51,7 +51,6 @@ class Catalog : public QAbstractTableModel
 {
     Q_OBJECT
 
-
 public:
     explicit Catalog(QObject *parent = nullptr);
     ~Catalog();
@@ -135,10 +134,9 @@ public:
 
     //Metadata
     static const QString METADATA_NONE;
-    static const QString METADATA_MIME_ONLY;
     static const QString METADATA_MEDIA_BASIC;
-    static const QString METADATA_EXTENDED_CUSTOM;
-    static const QString METADATA_EXTENDED_FULL;
+    static const QString METADATA_MEDIA_EXTENDED;
+    static const QString METADATA_FULL;
 
 private:
     QStringList fileExtensions;

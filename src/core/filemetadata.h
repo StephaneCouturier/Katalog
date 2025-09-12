@@ -78,14 +78,33 @@ public:
 
     static void testExtendedMetadata(const QString &filePath);
 
+    // Cache initialization (existing)
+    static void initializeExtensionsCache();
+    static bool isExtensionSupported(const QString &extension);
+
+    // Type detection methods
+    static void initializeExtensionTypeCache();
+    static QString getFileTypeFromExtension(const QString &extension);
+    static QString getFileTypeFromMime(const QString &mimeType);
+    static QString getMimeTypeFromExtension(const QString &extension);
+
+    // MIME verification support
+    static QVariantMap verifyMimeType(const QString &filePath, const QString &currentFileType);
+
 private:
     // Helper methods
-    static QString getFileType(const QString &mimeType);
+    //static QString getFileType(const QString &mimeType);
     static QVariantMap processImageMetadata(const KFileMetaData::PropertyMultiMap &properties);
     static QVariantMap processVideoMetadata(const KFileMetaData::PropertyMultiMap &properties);
     static QVariantMap processAudioMetadata(const KFileMetaData::PropertyMultiMap &properties);
     static QVariantMap extractExtendedMetadata(const KFileMetaData::PropertyMultiMap &properties);
     static QString convertMetadataToJson(const QVariantMap &extendedMetadata);
+
+    // Cache members
+    static QSet<QString> s_supportedExtensionsCache;
+    static bool s_cacheInitialized;
+    static QHash<QString, QString> s_extensionToTypeCache;
+    static bool s_typeCacheInitialized;
 
     // Database helper
     static bool storeMetadataToDatabase(const QString &connectionName,

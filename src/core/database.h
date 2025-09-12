@@ -122,6 +122,8 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
                             -- Basic metadata (always extracted, fast)
                             file_type               TEXT,
                             mime_type               TEXT,
+                            mime_verified           BOOLEAN,
+                            type_mismatch           BOOLEAN,
                             -- Image metadata (NULL if not image)
                             image_width             NUMERIC,
                             image_height            NUMERIC,

@@ -271,15 +271,12 @@
                     ui->tabWidget->setCurrentIndex(0);
                 });
             }
-
+            deviceContextMenu.addSeparator();
             if(selectedDevice->active){
                 QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
                 deviceContextMenu.addAction(menuDeviceAction3);
                 connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-                    qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) CATALOG ===";
-
                     if (!deviceUpdateManager) {
-                        qDebug() << "DeviceUpdateManager not available - setting up now";
                         setupDeviceUpdateManager();
                     }
 
@@ -289,20 +286,70 @@
                         return;
                     }
 
-                    qDebug() << "Filters context menu catalog update for:" << selectedDevice->name;
-
                     // Set UI state for catalog operation
                     setCatalogUpdateUIState(true);
 
-                    // FIXED: Use DeviceUpdateManager instead of old CatalogManager
-                    // This ensures consistent behavior across all update paths
+                    // Use DeviceUpdateManager instead of old CatalogManager
                     deviceUpdateManager->updateDeviceHierarchy(selectedDevice,
                                                                collection->databaseMode,
-                                                               collection->folder);
+                                                               collection->folder,
+                                                               "update");
+                });
 
-                    qDebug() << "Filters context menu - DeviceUpdateManager operation started";
+                // MIME verification
+                QAction *actionVerifyMimeTypes = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Verify MIME types"), this);
+                actionVerifyMimeTypes->setToolTip(tr("Detect actual MIME types and identify mismatches"));
+                deviceContextMenu.addAction(actionVerifyMimeTypes);
+                connect(actionVerifyMimeTypes, &QAction::triggered, this, [this]() {
+                    if (!deviceUpdateManager) {
+                        setupDeviceUpdateManager();
+                    }
+
+                    if (deviceUpdateManager->operationRunning()) {
+                        QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+                        return;
+                    }
+
+                    // Use CatalogJobStoppable directly for MIME verification
+                    CatalogJobStoppable* catalogJob = new CatalogJobStoppable(this);
+                    catalogJob->configureOperation(selectedDevice,
+                                                   CatalogJobStoppable::VerifyMimeTypes,
+                                                   collection->databaseMode,
+                                                   collection->folder);
+
+                    // Connect completion signals
+                    connect(catalogJob, &CatalogJobStoppable::catalogOperationFinished,
+                            this, [this, catalogJob]() {
+                                catalogJob->deleteLater();
+                                setCatalogUpdateUIState(false);
+
+                                // Check if there were any mismatches
+                                // Show report if available
+                                QString reportPath = collection->folder + "/mime_mismatches_" +
+                                                     selectedDevice->name + "_*.txt";
+                                QDir dir(collection->folder);
+                                QStringList reports = dir.entryList(QStringList() << "mime_mismatches_*.txt",
+                                                                    QDir::Files, QDir::Time);
+                                if (!reports.isEmpty()) {
+                                    QMessageBox::information(this, "MIME Verification Complete",
+                                                             tr("MIME verification completed. Report saved to:\n%1")
+                                                                 .arg(reports.first()));
+                                }
+                            });
+
+                    connect(catalogJob, &CatalogJobStoppable::catalogOperationError,
+                            this, [this, catalogJob](const QString& error) {
+                                QMessageBox::warning(this, "Katalog", error);
+                                catalogJob->deleteLater();
+                                setCatalogUpdateUIState(false);
+                            });
+
+                    setCatalogUpdateUIState(true);
+                    catalogJob->processCatalog();
                 });
             }
+
+            deviceContextMenu.addSeparator();
 
             QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
             deviceContextMenu.addAction(menuDeviceAction2);

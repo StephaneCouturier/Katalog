@@ -247,6 +247,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
             //Initiate comboboxes for metadata fields
             initiateMetadataFields();
+            initializeMetadataCaches();
 
             //Always Load the file system for the treeview
             loadFileSystem("/");

@@ -50,7 +50,8 @@ class CatalogJobStoppable : public QObject
 public:
     enum OperationType {
         CreateCatalog,
-        UpdateCatalog
+        UpdateCatalog,
+        VerifyMimeTypes
     };
 
     explicit CatalogJobStoppable(QObject *parent = nullptr);
@@ -151,9 +152,9 @@ protected:
      * @param catalog Catalog object to populate
      * @param processedCount Running count of processed files
      */
+    void extracted(Catalog *&catalog, QString &fileFullPath, bool &isExcluded);
     void processDirectoryWithProgress(const QString &directory,
-                                      Catalog *catalog,
-                                      qint64 &processedCount);
+                                      Catalog *catalog, qint64 &processedCount);
 
     /**
      * @brief Count total files in directory for progress estimation
@@ -192,6 +193,15 @@ private:
     void updateRelatedCatalogDevices();
     Storage::UpdateResult m_storageUpdateResult;
     bool m_storageWasUpdated = false;
+
+    // MIME verification methods
+    void extractMissingMetadata();
+    bool shouldExtractMetadata(const QString &filePath, Catalog *catalog) const;
+    void verifyMimeTypes();
+    void saveMismatchReport(const QStringList &mismatches);
+
+    // Helper for fast type detection
+    QString getQuickFileType(const QFileInfo &fileInfo) const;
 
 signals:
     /**

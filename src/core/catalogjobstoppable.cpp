@@ -31,6 +31,7 @@
 
 #include "catalogjobstoppable.h"
 #include "filemetadata.h"
+
 #include <QDebug>
 #include <QDir>
 #include <QDirIterator>
@@ -41,6 +42,7 @@
 #include <QSqlDatabase>
 #include <QDateTime>
 #include <QThread>
+#include <QSettings>
 
 CatalogJobStoppable::CatalogJobStoppable(QObject *parent)
     : QObject(parent)
@@ -115,37 +117,30 @@ void CatalogJobStoppable::processCatalog()
         filesProcessed = 0;
         currentCatalogName = m_device->catalog->name;
 
-        qDebug() << "Starting" << (m_operationType == CreateCatalog ? "creation" : "update")
-                 << "of catalog:" << currentCatalogName;
+        qDebug() << "Starting operation type:" << m_operationType
+                 << "for catalog:" << currentCatalogName;
 
+        // For now, only handle the basic operations
         if (m_operationType == CreateCatalog) {
             createCatalogWithProgress();
-
-            // NEW: Complete the catalog creation with all backend tasks
             if (shouldContinue()) {
                 qDebug() << "Scanning completed, starting post-processing...";
                 completeCatalogCreation();
                 qDebug() << "Post-processing completed successfully";
             }
         } else {
+            // Treat all update operations as standard update for now
             updateCatalogWithProgress();
         }
 
         if (shouldContinue()) {
-            qDebug() << "=== DIAGNOSTIC: Catalog indexing completed, about to emit catalogOperationFinished ===";
+            qDebug() << "=== Operation completed, emitting catalogOperationFinished ===";
             emit catalogOperationFinished();
-            qDebug() << "=== DIAGNOSTIC: catalogOperationFinished signal emitted! ===";
         }
 
     } catch (const std::exception &e) {
         qDebug() << "=== EXCEPTION in processCatalog():" << e.what() << "===";
         emit catalogOperationError(QString("Catalog operation failed: %1").arg(e.what()));
-    }
-
-    if (shouldContinue()) {
-        qDebug() << "=== DIAGNOSTIC: Catalog indexing completed, about to emit catalogOperationFinished ===";
-        emit catalogOperationFinished();
-        qDebug() << "=== DIAGNOSTIC: catalogOperationFinished signal emitted! ===";
     }
 
     qDebug() << "=== CatalogJobStoppable::processCatalog() END ===";
@@ -398,6 +393,13 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                                                        Catalog *catalog,
                                                        qint64 &processedCount)
 {
+    // Right before the batch size decision:
+    qDebug() << "CatalogJobStoppable::processDirectoryWithProgress, Catalog includeMetadata value:" << catalog->includeMetadata
+             << "NONE:" << Catalog::METADATA_NONE
+             << "BASIC:" << Catalog::METADATA_MEDIA_BASIC
+             << "Comparison result:" << (catalog->includeMetadata == Catalog::METADATA_MEDIA_BASIC);
+
+
     if (!shouldContinue()) return;
 
     qDebug() << "Processing directory:" << directory;
@@ -432,10 +434,13 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
     // Database batching arrays - separate arrays for folder paths and full paths
     QStringList fileNames, fileFolderPaths, fileFullPaths, fileDateTimes, fileCatalogs;
+    QStringList fileExtensions;
+    QStringList fileTypes;
     QList<qint64> fileSizes;
 
     int batchSize;
-    if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+    if (!catalog->includeMetadata.isEmpty() &&
+        catalog->includeMetadata != Catalog::METADATA_NONE) {
         batchSize = 10;  // Smaller batches for metadata-enabled catalogs
         qDebug() << "Using small batch size for metadata extraction:" << batchSize;
     } else {
@@ -467,104 +472,108 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         }
         if (isExcluded) continue;
 
+        // Get file extension and quick type
+        QString extension = fileInfo.suffix().toLower();
+        QString quickFileType = FileMetadata::getFileTypeFromExtension(extension);
+
         // Process file - correctly separate folder path from full path
-        fileNames << fileInfo.fileName();                                    // Just the filename
-        fileFolderPaths << fileInfo.path();                                  // Just the directory path
-        fileFullPaths << fileFullPath;                                       // Complete file path
+        fileNames << fileInfo.fileName();
+        fileFolderPaths << fileInfo.path();
+        fileFullPaths << fileFullPath;
         fileDateTimes << fileInfo.lastModified().toString("yyyy/MM/dd hh:mm:ss");
-        fileCatalogs << catalog->name;                                       // Use catalog NAME, not ID
+        fileCatalogs << catalog->name;
         fileSizes << fileInfo.size();
+        fileExtensions << extension;     // Store extension
+        fileTypes << quickFileType;      // Store type based on extension ONLY
 
         // Update counters
-        processedCount++;           // Total files processed (passed by reference)
-        filesProcessedInThisCall++; // Files processed in this method call
-        batchCount++;              // Database batch counter
+        processedCount++;
+        filesProcessedInThisCall++;
+        batchCount++;
 
-        // Simple progress updates every 250 files (like working version) ***
+        // Progress updates
         if (filesProcessedInThisCall % progressRefreshRate == 0) {
             emitProgressUpdate(processedCount, countedTotalFiles, fileInfo.absoluteFilePath());
             QCoreApplication::processEvents();
         }
 
-        // Database batching (separate from progress reporting)
+        // Database batching
         if (batchCount >= batchSize) {
-            // Insert batch to database
-            if (!fileNames.isEmpty()) {
-                QSqlQuery query(QSqlDatabase::database(m_connectionName));
-                // Updated SQL to include file_catalog field
-                query.prepare(R"(
-                    INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path, file_size, file_date_updated, file_catalog)
-                    VALUES (:catalog_id, :name, :folder_path, :full_path, :size, :date, :catalog_name)
-                )");
+            // Insert files WITHOUT mime_type
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
+            query.prepare(R"(
+            INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
+                            file_size, file_date_updated, file_catalog,
+                            file_extension, file_type)
+            VALUES (:catalog_id, :name, :folder_path, :full_path,
+                    :size, :date, :catalog_name,
+                    :extension, :file_type)
+            )");
 
-                for (int i = 0; i < fileNames.size(); ++i) {
+            for (int i = 0; i < fileNames.size(); ++i) {
+                if (!shouldContinue()) break;
+
+                query.bindValue(":catalog_id", catalog->ID);
+                query.bindValue(":name", fileNames[i]);
+                query.bindValue(":folder_path", fileFolderPaths[i]);
+                query.bindValue(":full_path", fileFullPaths[i]);
+                query.bindValue(":size", fileSizes[i]);
+                query.bindValue(":date", fileDateTimes[i]);
+                query.bindValue(":catalog_name", fileCatalogs[i]);
+                query.bindValue(":extension", fileExtensions[i]);
+                query.bindValue(":file_type", fileTypes[i]);
+                // NOTE: NOT inserting mime_type - leave NULL
+
+                if (!query.exec()) {
+                    qDebug() << "Database insert error:" << query.lastError().text();
+                }
+            }
+
+            // Metadata extraction - ONLY for media files with metadata enabled
+            if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+                for (int i = 0; i < fileFullPaths.size(); ++i) {
                     if (!shouldContinue()) break;
 
-                    query.bindValue(":catalog_id", catalog->ID);
-                    query.bindValue(":name", fileNames[i]);                     // Just filename
-                    query.bindValue(":folder_path", fileFolderPaths[i]);        // Just directory path
-                    query.bindValue(":full_path", fileFullPaths[i]);            // Complete file path
-                    query.bindValue(":size", fileSizes[i]);
-                    query.bindValue(":date", fileDateTimes[i]);
-                    query.bindValue(":catalog_name", fileCatalogs[i]);          // Add catalog name
+                    const QString &filePath = fileFullPaths[i];
 
-                    if (!query.exec()) {
-                        qDebug() << "Database insert error:" << query.lastError().text();
+                    // Use the ORIGINAL isMetadataSupported that checks MIME
+                    if (FileMetadata::isMetadataSupported(filePath)) {
+                        FileMetadata::extractAndStore(filePath, m_connectionName,
+                                                      catalog->ID, catalog->includeMetadata);
                     }
                 }
+            }
 
-                if (catalog->includeMetadata != Catalog::METADATA_NONE) {
-                    qint64 metadataProcessedInBatch = 0;
-                    for (int i = 0; i < fileFullPaths.size(); ++i) {
-                        // Check stop condition frequently during slow metadata extraction
-                        if (!shouldContinue()) break;
+            // Insert folders for this batch - Use folder paths, not full file paths
+            QStringList uniqueFolders = fileFolderPaths;
+            uniqueFolders.removeDuplicates();
 
-                        const QString &filePath = fileFullPaths[i];
-                        if (FileMetadata::isMetadataSupported(filePath)) {
-                            // Extract metadata (this is the slow operation)
-                            FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID, catalog->includeMetadata);
+            QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
+            folderQuery.prepare(R"(
+                INSERT OR IGNORE INTO folder (folder_catalog_id, folder_path)
+                VALUES (:catalog_id, :path)
+            )");
 
-                            // Update progress every few metadata extractions for responsiveness
-                            metadataProcessedInBatch++;
-                            if (metadataProcessedInBatch % 1 == 0) {
-                                // Update progress during metadata extraction phase
-                                emitProgressUpdate(processedCount, countedTotalFiles,
-                                                   fileFullPaths[i]);
-                                QCoreApplication::processEvents(); // Allow UI updates and stop requests
-                            }
-                        }
-                    }
-                }
+            for (const QString &folderPath : uniqueFolders) {
+                if (!shouldContinue()) break;
 
-                // Insert folders for this batch - Use folder paths, not full file paths
-                QStringList uniqueFolders = fileFolderPaths;
-                uniqueFolders.removeDuplicates();
+                folderQuery.bindValue(":catalog_id", catalog->ID);
+                folderQuery.bindValue(":path", folderPath);
 
-                QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
-                folderQuery.prepare(R"(
-                    INSERT OR IGNORE INTO folder (folder_catalog_id, folder_path)
-                    VALUES (:catalog_id, :path)
-                )");
-
-                for (const QString &folderPath : uniqueFolders) {
-                    if (!shouldContinue()) break;
-
-                    folderQuery.bindValue(":catalog_id", catalog->ID);
-                    folderQuery.bindValue(":path", folderPath);
-
-                    if (!folderQuery.exec()) {
-                        qDebug() << "Folder insert error:" << folderQuery.lastError().text();
-                    }
+                if (!folderQuery.exec()) {
+                    qDebug() << "Folder insert error:" << folderQuery.lastError().text();
                 }
             }
 
             // Clear batch arrays
             fileNames.clear();
-            fileFolderPaths.clear();        // Clear new array
-            fileFullPaths.clear();          // Clear new array
+            fileFolderPaths.clear();
+            fileFullPaths.clear();
             fileDateTimes.clear();
-            fileCatalogs.clear();           // Contains catalog names
+            fileCatalogs.clear();
             fileSizes.clear();
+            fileExtensions.clear();
+            fileTypes.clear();
             batchCount = 0;
         }
     }
@@ -900,4 +909,367 @@ void CatalogJobStoppable::requestHardStop()
 
     // Also set the regular stop flag to exit processing loops
     m_stopRequested.storeRelease(1);
+}
+
+void CatalogJobStoppable::verifyMimeTypes()
+{
+    qDebug() << "=== Starting MIME type verification for catalog:" << m_device->catalog->name;
+
+    if (!m_device || !m_device->catalog) {
+        qDebug() << "No device or catalog configured";
+        emit catalogOperationError("No device or catalog configured");
+        return;
+    }
+
+    // Query for files without MIME verification
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(R"(
+        SELECT file_full_path, file_extension, file_type
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+        AND (mime_verified = FALSE OR mime_verified IS NULL)
+        ORDER BY file_size ASC
+    )");
+    query.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to query files for MIME verification:" << query.lastError().text();
+        emit catalogOperationError("Failed to query files for MIME verification");
+        return;
+    }
+
+    // Count total files to process
+    int totalFiles = 0;
+    QList<QVariantList> filesToProcess;
+    while (query.next()) {
+        QVariantList fileData;
+        fileData << query.value(0)  // file_full_path
+                 << query.value(1)  // file_extension
+                 << query.value(2);  // file_type
+        filesToProcess.append(fileData);
+        totalFiles++;
+    }
+
+    qDebug() << "Found" << totalFiles << "files to verify MIME types";
+
+    if (totalFiles == 0) {
+        emitProgressUpdate(0, 0, "No files need MIME verification");
+        return;
+    }
+
+    // Process files
+    int processedFiles = 0;
+    QStringList mismatches;
+    int mismatchCount = 0;
+
+    // Begin transaction for better performance
+    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
+    db.transaction();
+
+    for (const QVariantList &fileData : filesToProcess) {
+        if (!shouldContinue()) {
+            qDebug() << "MIME verification stopped by user";
+            db.rollback();
+            return;
+        }
+
+        // Check for pause
+        waitIfPaused();
+
+        //int fileId = fileData[0].toInt();
+        QString filePath = fileData[0].toString();
+        QString extension = fileData[1].toString();
+        QString extensionType = fileData[2].toString();
+
+        // Check if file still exists
+        QFileInfo fileInfo(filePath);
+        if (!fileInfo.exists()) {
+            qDebug() << "File no longer exists:" << filePath;
+            processedFiles++;
+            continue;
+        }
+
+        // Verify MIME type
+        QVariantMap verifyResult = FileMetadata::verifyMimeType(filePath, extensionType);
+
+        if (verifyResult.contains("error")) {
+            qDebug() << "Error verifying" << filePath << ":" << verifyResult["error"].toString();
+            processedFiles++;
+            continue;
+        }
+
+        QString mimeType = verifyResult["mime_type"].toString();
+        QString mimeBasedType = verifyResult["file_type"].toString();
+        bool hasMismatch = verifyResult["has_mismatch"].toBool();
+
+        // Track mismatches
+        if (hasMismatch) {
+            mismatchCount++;
+            QString mismatchInfo = QString("%1 [%2]: Extension suggests '%3', MIME detected '%4' (%5)")
+                                       .arg(fileInfo.fileName())
+                                       .arg(extension)
+                                       .arg(extensionType)
+                                       .arg(mimeBasedType)
+                                       .arg(mimeType);
+            mismatches << mismatchInfo;
+
+            // Log first few mismatches
+            if (mismatchCount <= 10) {
+                qDebug() << "Mismatch found:" << mismatchInfo;
+            }
+        }
+
+        // Update database
+        QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
+        updateQuery.prepare(R"(
+            UPDATE file
+            SET mime_type = :mime_type,
+                file_type = :file_type,
+                mime_verified = TRUE,
+                type_mismatch = :mismatch
+            WHERE file_full_path = :file_full_path
+        )");
+        updateQuery.bindValue(":mime_type", mimeType);
+        updateQuery.bindValue(":file_type", mimeBasedType);  // Update to accurate type
+        updateQuery.bindValue(":mismatch", hasMismatch);
+        updateQuery.bindValue(":file_full_path", filePath);
+
+        if (!updateQuery.exec()) {
+            qDebug() << "Failed to update file" << filePath << ":" << updateQuery.lastError().text();
+        }
+
+        processedFiles++;
+
+        // Progress update every 10 files
+        if (processedFiles % 10 == 0 || processedFiles == totalFiles) {
+            int percentComplete = (processedFiles * 100) / totalFiles;
+            QString progressMsg = QString("Verifying MIME types: %1/%2 (%3%) - %4 mismatches found")
+                                      .arg(processedFiles)
+                                      .arg(totalFiles)
+                                      .arg(percentComplete)
+                                      .arg(mismatchCount);
+
+            emitProgressUpdate(processedFiles, totalFiles, progressMsg);
+            QCoreApplication::processEvents();
+
+            // Commit every 100 files
+            if (processedFiles % 100 == 0) {
+                db.commit();
+                db.transaction();
+            }
+        }
+    }
+
+    // Final commit
+    db.commit();
+
+    // Save mismatch report if any
+    if (!mismatches.isEmpty()) {
+        qDebug() << "Total mismatches found:" << mismatchCount;
+        saveMismatchReport(mismatches);
+    }
+
+    // Final progress update
+    QString finalMsg = QString("MIME verification completed: %1 files processed, %2 mismatches found")
+                           .arg(processedFiles)
+                           .arg(mismatchCount);
+    emitProgressUpdate(processedFiles, totalFiles, finalMsg);
+
+    qDebug() << "=== MIME verification completed ===" << finalMsg;
+}
+
+void CatalogJobStoppable::saveMismatchReport(const QStringList &mismatches)
+{
+    // Save to a report file in the collection folder
+    QString reportPath = m_collectionFolder + "/mime_mismatches_" +
+                         m_device->catalog->name + "_" +
+                         QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".txt";
+
+    QFile reportFile(reportPath);
+    if (reportFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream stream(&reportFile);
+        stream << "MIME Type Verification Report\n";
+        stream << "Catalog: " << m_device->catalog->name << "\n";
+        stream << "Date: " << QDateTime::currentDateTime().toString() << "\n";
+        stream << "Total mismatches: " << mismatches.size() << "\n";
+        stream << "=====================================\n\n";
+
+        for (const QString &mismatch : mismatches) {
+            stream << mismatch << "\n";
+        }
+
+        reportFile.close();
+        qDebug() << "Mismatch report saved to:" << reportPath;
+    } else {
+        qDebug() << "Failed to save mismatch report to:" << reportPath;
+    }
+}
+
+bool CatalogJobStoppable::shouldExtractMetadata(const QString &filePath, Catalog *catalog) const
+{
+    // No metadata extraction if disabled
+    if (catalog->includeMetadata == Catalog::METADATA_NONE) {
+        return false;
+    }
+
+    // Get the file info
+    QFileInfo fileInfo(filePath);
+    QString extension = fileInfo.suffix().toLower();
+
+    // Get the quick file type (from extension cache)
+    QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+
+    // Check metadata level restrictions
+    if (catalog->includeMetadata == Catalog::METADATA_MEDIA_BASIC ||
+        catalog->includeMetadata == Catalog::METADATA_MEDIA_EXTENDED) {
+        // Only extract for media files
+        if (fileType != "Image" && fileType != "Audio" && fileType != "Video") {
+            return false;  // Skip non-media files
+        }
+    }
+    // For METADATA_FULL, extract for all supported files
+
+    // Now check extraction strategy (only for files that passed the above checks)
+    QSettings settings(m_collectionFolder + "/settings.ini", QSettings::IniFormat);
+    QString strategy = settings.value("Settings/MetadataExtractionStrategy", "Effective").toString();
+
+    if (strategy == "Thorough") {
+        // Always attempt extraction for files that pass the metadata level check
+        return true;
+    }
+    else if (strategy == "Fastest") {
+        // Use cached extension support check
+        return FileMetadata::isExtensionSupported(extension);
+    }
+    else { // "Effective" (default)
+        // Use MIME-based check (but only if MIME has been verified)
+        // First check if we have verified MIME for this file
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
+        query.prepare(R"(
+            SELECT mime_verified, mime_type
+            FROM file
+            WHERE file_catalog_id = :catalog_id
+            AND file_full_path = :path
+            LIMIT 1
+        )");
+        query.bindValue(":catalog_id", catalog->ID);
+        query.bindValue(":path", filePath);
+
+        if (query.exec() && query.next()) {
+            bool mimeVerified = query.value(0).toBool();
+            if (mimeVerified) {
+                // Use the verified MIME type
+                QString mimeType = query.value(1).toString();
+                KFileMetaData::ExtractorCollection extractors;
+                auto extractorsList = extractors.fetchExtractors(mimeType);
+                return !extractorsList.isEmpty();
+            }
+        }
+
+        // Fallback to file-based MIME detection if not verified
+        return FileMetadata::isMetadataSupported(filePath);
+    }
+}
+
+void CatalogJobStoppable::extractMissingMetadata()
+{
+    qDebug() << "=== Starting metadata extraction for files missing metadata ===";
+
+    if (!m_device || !m_device->catalog) {
+        qDebug() << "No device or catalog configured";
+        emit catalogOperationError("No device or catalog configured");
+        return;
+    }
+
+    // Query for files without metadata
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(R"(
+        SELECT file_id, file_full_path, file_name, file_folder_path, file_type
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+        AND (metadata_extraction_date IS NULL OR metadata_extraction_date = '')
+        AND file_type IN ('Image', 'Audio', 'Video')
+        ORDER BY file_size ASC
+    )");
+    query.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to query files for metadata extraction:" << query.lastError().text();
+        emit catalogOperationError("Failed to query files for metadata extraction");
+        return;
+    }
+
+    // Count total files to process
+    int totalFiles = 0;
+    QList<QVariantList> filesToProcess;
+    while (query.next()) {
+        QVariantList fileData;
+        fileData << query.value(0)  // file_id
+                 << query.value(1)  // file_full_path
+                 << query.value(2)  // file_name
+                 << query.value(3)  // file_folder_path
+                 << query.value(4); // file_type
+        filesToProcess.append(fileData);
+        totalFiles++;
+    }
+
+    qDebug() << "Found" << totalFiles << "files missing metadata";
+
+    if (totalFiles == 0) {
+        emitProgressUpdate(0, 0, "No files need metadata extraction");
+        return;
+    }
+
+    // Process files
+    int processedFiles = 0;
+
+    for (const QVariantList &fileData : filesToProcess) {
+        if (!shouldContinue()) {
+            qDebug() << "Metadata extraction stopped by user";
+            return;
+        }
+
+        waitIfPaused();
+
+        QString filePath = fileData[1].toString();
+        QString fileName = fileData[2].toString();
+        QString folderPath = fileData[3].toString();
+        QString fileType = fileData[4].toString();
+
+        // Check if file still exists
+        QFileInfo fileInfo(filePath);
+        if (!fileInfo.exists()) {
+            qDebug() << "File no longer exists:" << filePath;
+            processedFiles++;
+            continue;
+        }
+
+        // Extract metadata based on catalog settings
+        if (FileMetadata::isMetadataSupported(filePath)) {
+            FileMetadata::extractAndStore(filePath, m_connectionName,
+                                          m_device->catalog->ID,
+                                          m_device->catalog->includeMetadata);
+        }
+
+        processedFiles++;
+
+        // Progress update
+        if (processedFiles % 10 == 0 || processedFiles == totalFiles) {
+            int percentComplete = (processedFiles * 100) / totalFiles;
+            QString progressMsg = QString("Extracting metadata: %1/%2 (%3%)")
+                                      .arg(processedFiles)
+                                      .arg(totalFiles)
+                                      .arg(percentComplete);
+
+            emitProgressUpdate(processedFiles, totalFiles, progressMsg);
+            QCoreApplication::processEvents();
+        }
+    }
+
+    // Final progress update
+    QString finalMsg = QString("Metadata extraction completed: %1 files processed")
+                           .arg(processedFiles);
+    emitProgressUpdate(processedFiles, totalFiles, finalMsg);
+
+    qDebug() << "=== Metadata extraction completed ===" << finalMsg;
 }

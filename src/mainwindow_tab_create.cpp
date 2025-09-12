@@ -33,6 +33,8 @@
 #include "mainwindow_ui_wrapper_device.h"
 #include "src/ui_mainwindow.h"
 #include "src/core/catalogprogressmanager.h"
+#include "src/core/filemetadata.h"
+#include "src/core/catalog.h"
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
@@ -616,43 +618,47 @@
     void MainWindow::initiateMetadataFields()
     {
         // Initialize Create combobox
+        ui->Create_comboBox_MetadataOption->clear();
         ui->Create_comboBox_MetadataOption->addItem(tr("None"));
-        ui->Create_comboBox_MetadataOption->addItem(tr("MIME Type Only"));
         ui->Create_comboBox_MetadataOption->addItem(tr("Media Basic"));
-        ui->Create_comboBox_MetadataOption->addItem(tr("Extended Custom"));
-        ui->Create_comboBox_MetadataOption->addItem(tr("Extended Full"));
+        ui->Create_comboBox_MetadataOption->addItem(tr("Media Extended"));
+        ui->Create_comboBox_MetadataOption->addItem(tr("Full Extended"));
 
         ui->Create_comboBox_MetadataOption->setItemData(0, Catalog::METADATA_NONE, Qt::UserRole);
-        ui->Create_comboBox_MetadataOption->setItemData(1, Catalog::METADATA_MIME_ONLY, Qt::UserRole);
-        ui->Create_comboBox_MetadataOption->setItemData(2, Catalog::METADATA_MEDIA_BASIC, Qt::UserRole);
-        ui->Create_comboBox_MetadataOption->setItemData(3, Catalog::METADATA_EXTENDED_CUSTOM, Qt::UserRole);
-        ui->Create_comboBox_MetadataOption->setItemData(4, Catalog::METADATA_EXTENDED_FULL, Qt::UserRole);
+        ui->Create_comboBox_MetadataOption->setItemData(1, Catalog::METADATA_MEDIA_BASIC, Qt::UserRole);
+        ui->Create_comboBox_MetadataOption->setItemData(2, Catalog::METADATA_MEDIA_EXTENDED, Qt::UserRole);
+        ui->Create_comboBox_MetadataOption->setItemData(3, Catalog::METADATA_FULL, Qt::UserRole);
 
         // Initialize Catalogs combobox
+        ui->Catalogs_comboBox_MetaDataOption->clear();
         ui->Catalogs_comboBox_MetaDataOption->addItem(tr("None"));
-        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("MIME Type Only"));
         ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Media Basic"));
-        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Extended Custom"));
-        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Extended Full"));
+        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Media Extended"));
+        ui->Catalogs_comboBox_MetaDataOption->addItem(tr("Full Extended"));
 
         ui->Catalogs_comboBox_MetaDataOption->setItemData(0, Catalog::METADATA_NONE, Qt::UserRole);
-        ui->Catalogs_comboBox_MetaDataOption->setItemData(1, Catalog::METADATA_MIME_ONLY, Qt::UserRole);
-        ui->Catalogs_comboBox_MetaDataOption->setItemData(2, Catalog::METADATA_MEDIA_BASIC, Qt::UserRole);
-        ui->Catalogs_comboBox_MetaDataOption->setItemData(3, Catalog::METADATA_EXTENDED_CUSTOM, Qt::UserRole);
-        ui->Catalogs_comboBox_MetaDataOption->setItemData(4, Catalog::METADATA_EXTENDED_FULL, Qt::UserRole);
-
-        // Hide items 1 and 3 as they are not available yet
-        QStandardItemModel* createModel = qobject_cast<QStandardItemModel*>(ui->Create_comboBox_MetadataOption->model());
-        QStandardItemModel* catalogModel = qobject_cast<QStandardItemModel*>(ui->Catalogs_comboBox_MetaDataOption->model());
-        if (createModel) {
-            createModel->item(3)->setFlags(createModel->item(3)->flags() & ~Qt::ItemIsEnabled);
-        }
-        if (catalogModel) {
-            catalogModel->item(3)->setFlags(catalogModel->item(3)->flags() & ~Qt::ItemIsEnabled);
-        }
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(1, Catalog::METADATA_MEDIA_BASIC, Qt::UserRole);
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(2, Catalog::METADATA_MEDIA_EXTENDED, Qt::UserRole);
+        ui->Catalogs_comboBox_MetaDataOption->setItemData(3, Catalog::METADATA_FULL, Qt::UserRole);
 
         // Set default to None (index 0) to match your METADATA_NONE default
         ui->Create_comboBox_MetadataOption->setCurrentIndex(0);
         ui->Catalogs_comboBox_MetaDataOption->setCurrentIndex(0);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::initializeMetadataCaches()
+    {
+        // Initialize extension->type cache for fast file type detection
+        FileMetadata::initializeExtensionTypeCache();
+
+        // Initialize supported extensions cache if using "Fastest" strategy
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        QString strategy = settings.value("Settings/MetadataExtractionStrategy", "Effective").toString();
+
+        if (strategy == "Fastest") {
+            FileMetadata::initializeExtensionsCache();
+        }
+
+        qDebug() << "Metadata caches initialized";
     }
     //--------------------------------------------------------------------------

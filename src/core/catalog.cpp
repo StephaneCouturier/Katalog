@@ -36,10 +36,9 @@
 #include <QSqlError>
 
 const QString Catalog::METADATA_NONE = "None";
-const QString Catalog::METADATA_MIME_ONLY = "MimeOnly";
 const QString Catalog::METADATA_MEDIA_BASIC = "MediaBasic";
-const QString Catalog::METADATA_EXTENDED_CUSTOM = "ExtendedCustom";
-const QString Catalog::METADATA_EXTENDED_FULL = "ExtendedFull";
+const QString Catalog::METADATA_MEDIA_EXTENDED = "MediaExtended";
+const QString Catalog::METADATA_FULL = "FullExtended";
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
     includeMetadata = METADATA_NONE;  // Simple default

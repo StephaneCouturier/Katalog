@@ -401,6 +401,7 @@ class MainWindow : public KXmlGuiWindow
             void removeFileFromResults(QString fullFilePath);
             void cleanupStoppedCatalogCreation();
             void initiateMetadataFields();
+            void initializeMetadataCaches();
 
         //TAB: Storage
             int     selectedStorageIndexRow;
