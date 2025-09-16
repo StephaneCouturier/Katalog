@@ -34,9 +34,9 @@
 #include <QString>
 #include <QStringList>
 
-    class FileTypeMapping {
+class FileTypeMapping {
 public:
-    enum UserCategory {
+    enum UserFileType {
         ALL   = 0,
         AUDIO = 1,
         IMAGE = 2,
@@ -68,11 +68,8 @@ public:
     // Universal other type detection - implements user type "Other" definition
     static bool isUserTypeOther(const QString &mimeType);
 
-    // Get SQL WHERE clause for user category selection
-    static QString getSqlFilter(UserCategory category);
-
-    // Get MIME type suggestions for dropdown based on selected category
-    //static QStringList getMimeTypeSuggestions(UserCategory category);
+    // Get SQL WHERE clause for user file type selection
+    static QString getSqlFilter(UserFileType user_file_type);
 
 private:
     // Generate SQL for Text and Other user types

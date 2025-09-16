@@ -53,7 +53,6 @@
 #include <QIcon>
 #include "core/filemetadata.h"
 
-
 //----------------------------------------------------------------------
 //--- Search management ------------------------------------------------
 //----------------------------------------------------------------------
@@ -178,13 +177,13 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
 
     search->searchOnType = ui->Search_checkBox_Type->isChecked();
     int fileTypeIndex = ui->Search_comboBox_FileType->currentIndex();
-    FileTypeMapping::UserCategory selectedCategory =
-        static_cast<FileTypeMapping::UserCategory>(
+    FileTypeMapping::UserFileType selectedUserFileType =
+        static_cast<FileTypeMapping::UserFileType>(
             ui->Search_comboBox_FileType->itemData(fileTypeIndex).toInt()
             );
-    search->selectedFileType2Category = selectedCategory;
+    search->selectedUserFileType = selectedUserFileType;
     // Map FileType to legacy selectedFileType for search history compatibility
-    switch (selectedCategory) {
+    switch (selectedUserFileType) {
         case FileTypeMapping::ALL:
             search->selectedFileType = "All";
             break;

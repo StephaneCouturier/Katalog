@@ -923,11 +923,11 @@
 
             //ui->Search_comboBox_FileType->setCurrentText(tr("All"));
             for (int i = 0; i < ui->Search_comboBox_FileType->count(); i++) {
-                FileTypeMapping::UserCategory itemCategory =
-                    static_cast<FileTypeMapping::UserCategory>(
+                FileTypeMapping::UserFileType itemFileType =
+                    static_cast<FileTypeMapping::UserFileType>(
                         ui->Search_comboBox_FileType->itemData(i).toInt()
                         );
-                if (itemCategory == FileTypeMapping::ALL) {
+                if (itemFileType == FileTypeMapping::ALL) {
                     ui->Search_comboBox_FileType->setCurrentIndex(i);
                     break;
                 }
@@ -994,32 +994,32 @@
 
             //File criteria Type
             ui->Search_checkBox_Type->setChecked(search->searchOnType);
-            FileTypeMapping::UserCategory mappedCategory = FileTypeMapping::ALL;
+            FileTypeMapping::UserFileType mappedUserFileType = FileTypeMapping::ALL;
             QString legacyFileType = search->selectedFileType;
 
             if (legacyFileType.compare("Audio", Qt::CaseInsensitive) == 0) {
-                mappedCategory = FileTypeMapping::AUDIO;
+                mappedUserFileType = FileTypeMapping::AUDIO;
             } else if (legacyFileType.compare("Image", Qt::CaseInsensitive) == 0) {
-                mappedCategory = FileTypeMapping::IMAGE;
+                mappedUserFileType = FileTypeMapping::IMAGE;
             } else if (legacyFileType.compare("Text", Qt::CaseInsensitive) == 0) {
-                mappedCategory = FileTypeMapping::TEXT;
+                mappedUserFileType = FileTypeMapping::TEXT;
             } else if (legacyFileType.compare("Video", Qt::CaseInsensitive) == 0) {
-                mappedCategory = FileTypeMapping::VIDEO;
+                mappedUserFileType = FileTypeMapping::VIDEO;
             } else if (legacyFileType.compare("Other", Qt::CaseInsensitive) == 0) {
-                mappedCategory = FileTypeMapping::OTHER;
+                mappedUserFileType = FileTypeMapping::OTHER;
             } else if (legacyFileType.compare("None", Qt::CaseInsensitive) == 0) {
-                mappedCategory = FileTypeMapping::NONE;
+                mappedUserFileType = FileTypeMapping::NONE;
             } else {
-                mappedCategory = FileTypeMapping::ALL;
+                mappedUserFileType = FileTypeMapping::ALL;
             }
 
             // Set FileType2 combobox to the mapped category
             for (int i = 0; i < ui->Search_comboBox_FileType->count(); i++) {
-                FileTypeMapping::UserCategory itemCategory =
-                    static_cast<FileTypeMapping::UserCategory>(
+                FileTypeMapping::UserFileType itemCategory =
+                    static_cast<FileTypeMapping::UserFileType>(
                         ui->Search_comboBox_FileType->itemData(i).toInt()
                         );
-                if (itemCategory == mappedCategory) {
+                if (itemCategory == mappedUserFileType) {
                     ui->Search_comboBox_FileType->setCurrentIndex(i);
                     break;
                 }
@@ -1129,19 +1129,19 @@
 
                 currentSearch->searchOnType             = ui->Search_checkBox_Type->isChecked();
 
-                // Map FileType2 category to legacy selectedFileType string for history compatibility
+                // Map FileType category to legacy selectedFileType string for history compatibility
                 int fileType2Index = ui->Search_comboBox_FileType->currentIndex();
-                FileTypeMapping::UserCategory selectedCategory =
-                    static_cast<FileTypeMapping::UserCategory>(
+                FileTypeMapping::UserFileType selectedUserFileType =
+                    static_cast<FileTypeMapping::UserFileType>(
                         ui->Search_comboBox_FileType->itemData(fileType2Index).toInt()
                         );
 
                 // Store in search object
                 if (currentSearch) {
-                    currentSearch->selectedFileType2Category = selectedCategory;
+                    currentSearch->selectedUserFileType = selectedUserFileType;
 
                     // Map FileType2 to selectedFileType string for search history (preserve all categories)
-                    switch (selectedCategory) {
+                    switch (selectedUserFileType) {
                     case FileTypeMapping::ALL:
                         currentSearch->selectedFileType = "All";
                         break;

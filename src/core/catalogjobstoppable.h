@@ -51,7 +51,8 @@ public:
     enum OperationType {
         CreateCatalog,
         UpdateCatalog,
-        VerifyMimeTypes
+        VerifyMimeTypes,
+        ExtractMissingMetadata
     };
 
     explicit CatalogJobStoppable(QObject *parent = nullptr);
@@ -199,6 +200,9 @@ private:
     bool shouldExtractMetadata(const QString &filePath, Catalog *catalog) const;
     void verifyMimeTypes();
     void saveMismatchReport(const QStringList &mismatches);
+    int m_mismatchCount = 0;
+    QString m_reportFilePath;
+    QString saveMismatchReportAndReturnPath(const QStringList &mismatches);
 
     // Helper for fast type detection
     QString getQuickFileType(const QFileInfo &fileInfo) const;
@@ -222,6 +226,7 @@ signals:
      * @param errorMessage Description of the error
      */
     void catalogOperationError(const QString &errorMessage);
+    void mimeVerificationCompleted(int mismatchCount, const QString& reportPath);
 };
 
 #endif // CATALOGJOBSTOPPABLE_H

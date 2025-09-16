@@ -700,6 +700,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Catalogs_pushButton_UpdateAllActive_clicked();
             void on_Catalogs_pushButton_Import_clicked();
             void on_Catalogs_pushButton_Stop_clicked();
+            void on_Catalogs_pushButton_VerifyMIMETypes_clicked();
 
             //Storage
             void on_Storage_pushButton_UpdateStorage_clicked();

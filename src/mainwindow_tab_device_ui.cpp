@@ -214,6 +214,11 @@ void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index
         ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(true);
     else
         ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
+
+    if((activeDevice->type =="Catalog" && activeDevice->active))
+        ui->Catalogs_pushButton_VerifyMIMETypes->setEnabled(true);
+    else
+        ui->Catalogs_pushButton_VerifyMIMETypes->setEnabled(false);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos)
@@ -676,3 +681,73 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
         deviceUpdateManager->requestHardStop();
     }
 }
+//--------------------------------------------------------------------------
+void MainWindow::on_Catalogs_pushButton_VerifyMIMETypes_clicked()
+{
+    // MIME verification
+    if (!deviceUpdateManager) {
+        setupDeviceUpdateManager();
+    }
+
+    if (deviceUpdateManager->operationRunning()) {
+        QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+        return;
+    }
+
+    // Use CatalogJobStoppable directly for MIME verification
+    CatalogJobStoppable* catalogJob = new CatalogJobStoppable(this);
+    catalogJob->configureOperation(selectedDevice,
+                                   CatalogJobStoppable::VerifyMimeTypes,
+                                   collection->databaseMode,
+                                   collection->folder);
+
+    // Connect the specific MIME verification completion signal
+    connect(catalogJob, &CatalogJobStoppable::mimeVerificationCompleted,
+            this, [this, catalogJob](int mismatchCount, const QString& reportPath) {
+                catalogJob->deleteLater();
+                setCatalogUpdateUIState(false);
+
+                // Create appropriate message based on ACTUAL results from THIS run
+                QString title = tr("MIME Verification Complete");
+                QString message;
+                QMessageBox::StandardButtons buttons = QMessageBox::Ok;
+
+                if (mismatchCount == 0) {
+                    message = tr("MIME verification completed successfully.\nNo mismatches found between file extensions and actual content.");
+                } else {
+                    message = tr("MIME verification completed.\n%1 mismatch(es) found between file extensions and actual content.\n\nReport saved to:\n%2")
+                    .arg(mismatchCount)
+                        .arg(reportPath);
+                    buttons = QMessageBox::Ok | QMessageBox::Open;
+                }
+
+                QMessageBox msgBox;
+                msgBox.setWindowTitle(title);
+                msgBox.setText(message);
+                msgBox.setIcon(mismatchCount == 0 ? QMessageBox::Information : QMessageBox::Warning);
+                msgBox.setStandardButtons(buttons);
+
+                if (mismatchCount > 0) {
+                    msgBox.button(QMessageBox::Open)->setText(tr("Open Report"));
+                }
+
+                int result = msgBox.exec();
+
+                // Handle opening the report file
+                if (result == QMessageBox::Open && !reportPath.isEmpty()) {
+                    QDesktopServices::openUrl(QUrl::fromLocalFile(reportPath));
+                }
+            });
+
+    // Connect error signal
+    connect(catalogJob, &CatalogJobStoppable::catalogOperationError,
+            this, [this, catalogJob](const QString& error) {
+                QMessageBox::warning(this, "Katalog", tr("MIME verification failed:\n%1").arg(error));
+                catalogJob->deleteLater();
+                setCatalogUpdateUIState(false);
+            });
+
+    setCatalogUpdateUIState(true);
+    catalogJob->processCatalog();
+}
+//--------------------------------------------------------------------------

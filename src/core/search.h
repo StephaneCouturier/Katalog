@@ -93,7 +93,7 @@ public:
     qint64 sizeMultiplierMax;
     bool searchOnType;
     QString selectedFileType;
-    FileTypeMapping::UserCategory selectedFileType2Category = FileTypeMapping::ALL;
+    FileTypeMapping::UserFileType selectedUserFileType = FileTypeMapping::ALL;
     bool searchOnDate;
     QDateTime selectedDateMin;
     QDateTime selectedDateMax;
@@ -202,12 +202,12 @@ public:
      */
     virtual bool wasStopRequested() const { return false; }
 
-    void setFileType2Category(FileTypeMapping::UserCategory category) {
-        selectedFileType2Category = category;
+    void setFileTypeCategory(FileTypeMapping::UserFileType category) {
+        selectedUserFileType = category;
     }
 
-    FileTypeMapping::UserCategory getFileType2Category() const {
-        return selectedFileType2Category;
+    FileTypeMapping::UserFileType getFileType2Category() const {
+        return selectedUserFileType;
     }
 
 signals:

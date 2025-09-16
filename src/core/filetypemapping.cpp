@@ -139,8 +139,8 @@ bool FileTypeMapping::isUserTypeOther(const QString &mimeType)
     return false;
 }
 
-QString FileTypeMapping::getSqlFilter(UserCategory category) {
-    switch (category) {
+QString FileTypeMapping::getSqlFilter(UserFileType user_file_type) {
+    switch (user_file_type) {
     case ALL:
         return "";  // No filter
     case IMAGE:

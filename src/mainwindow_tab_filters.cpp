@@ -295,58 +295,6 @@
                                                                collection->folder,
                                                                "update");
                 });
-
-                // MIME verification
-                QAction *actionVerifyMimeTypes = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Verify MIME types"), this);
-                actionVerifyMimeTypes->setToolTip(tr("Detect actual MIME types and identify mismatches"));
-                deviceContextMenu.addAction(actionVerifyMimeTypes);
-                connect(actionVerifyMimeTypes, &QAction::triggered, this, [this]() {
-                    if (!deviceUpdateManager) {
-                        setupDeviceUpdateManager();
-                    }
-
-                    if (deviceUpdateManager->operationRunning()) {
-                        QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
-                        return;
-                    }
-
-                    // Use CatalogJobStoppable directly for MIME verification
-                    CatalogJobStoppable* catalogJob = new CatalogJobStoppable(this);
-                    catalogJob->configureOperation(selectedDevice,
-                                                   CatalogJobStoppable::VerifyMimeTypes,
-                                                   collection->databaseMode,
-                                                   collection->folder);
-
-                    // Connect completion signals
-                    connect(catalogJob, &CatalogJobStoppable::catalogOperationFinished,
-                            this, [this, catalogJob]() {
-                                catalogJob->deleteLater();
-                                setCatalogUpdateUIState(false);
-
-                                // Check if there were any mismatches
-                                // Show report if available
-                                QString reportPath = collection->folder + "/mime_mismatches_" +
-                                                     selectedDevice->name + "_*.txt";
-                                QDir dir(collection->folder);
-                                QStringList reports = dir.entryList(QStringList() << "mime_mismatches_*.txt",
-                                                                    QDir::Files, QDir::Time);
-                                if (!reports.isEmpty()) {
-                                    QMessageBox::information(this, "MIME Verification Complete",
-                                                             tr("MIME verification completed. Report saved to:\n%1")
-                                                                 .arg(reports.first()));
-                                }
-                            });
-
-                    connect(catalogJob, &CatalogJobStoppable::catalogOperationError,
-                            this, [this, catalogJob](const QString& error) {
-                                QMessageBox::warning(this, "Katalog", error);
-                                catalogJob->deleteLater();
-                                setCatalogUpdateUIState(false);
-                            });
-
-                    setCatalogUpdateUIState(true);
-                    catalogJob->processCatalog();
-                });
             }
 
             deviceContextMenu.addSeparator();

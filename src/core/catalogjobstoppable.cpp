@@ -120,26 +120,26 @@ void CatalogJobStoppable::processCatalog()
         qDebug() << "Starting operation type:" << m_operationType
                  << "for catalog:" << currentCatalogName;
 
-        // For now, only handle the basic operations
+        // Route to correct operation
         if (m_operationType == CreateCatalog) {
             createCatalogWithProgress();
             if (shouldContinue()) {
-                qDebug() << "Scanning completed, starting post-processing...";
                 completeCatalogCreation();
-                qDebug() << "Post-processing completed successfully";
             }
+        } else if (m_operationType == VerifyMimeTypes) {
+            verifyMimeTypes();
+        } else if (m_operationType == ExtractMissingMetadata) {
+            extractMissingMetadata();
         } else {
-            // Treat all update operations as standard update for now
+            // Treat all other operations as standard update
             updateCatalogWithProgress();
         }
 
         if (shouldContinue()) {
-            qDebug() << "=== Operation completed, emitting catalogOperationFinished ===";
             emit catalogOperationFinished();
         }
 
     } catch (const std::exception &e) {
-        qDebug() << "=== EXCEPTION in processCatalog():" << e.what() << "===";
         emit catalogOperationError(QString("Catalog operation failed: %1").arg(e.what()));
     }
 
@@ -921,13 +921,17 @@ void CatalogJobStoppable::verifyMimeTypes()
         return;
     }
 
+    // Reset counters
+    m_mismatchCount = 0;
+    m_reportFilePath.clear();
+
     // Query for files without MIME verification
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare(R"(
         SELECT file_full_path, file_extension, file_type
         FROM file
         WHERE file_catalog_id = :catalog_id
-        AND (mime_verified = FALSE OR mime_verified IS NULL)
+        AND (mime_verified = 0 OR mime_verified IS NULL)
         ORDER BY file_size ASC
     )");
     query.bindValue(":catalog_id", m_device->catalog->ID);
@@ -954,17 +958,20 @@ void CatalogJobStoppable::verifyMimeTypes()
 
     if (totalFiles == 0) {
         emitProgressUpdate(0, 0, "No files need MIME verification");
+        // Emit completion with 0 mismatches
+        emit mimeVerificationCompleted(0, QString());
         return;
     }
 
     // Process files
     int processedFiles = 0;
     QStringList mismatches;
-    int mismatchCount = 0;
 
     // Begin transaction for better performance
     QSqlDatabase db = QSqlDatabase::database(m_connectionName);
     db.transaction();
+
+    emitProgressUpdate(0, totalFiles, "Starting MIME verification...");
 
     for (const QVariantList &fileData : filesToProcess) {
         if (!shouldContinue()) {
@@ -976,7 +983,6 @@ void CatalogJobStoppable::verifyMimeTypes()
         // Check for pause
         waitIfPaused();
 
-        //int fileId = fileData[0].toInt();
         QString filePath = fileData[0].toString();
         QString extension = fileData[1].toString();
         QString extensionType = fileData[2].toString();
@@ -985,6 +991,18 @@ void CatalogJobStoppable::verifyMimeTypes()
         QFileInfo fileInfo(filePath);
         if (!fileInfo.exists()) {
             qDebug() << "File no longer exists:" << filePath;
+
+            // Mark as verified even if file doesn't exist
+            QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
+            updateQuery.prepare(R"(
+                UPDATE file
+                SET mime_verified = 1,
+                    type_mismatch = 0
+                WHERE file_full_path = :file_full_path
+            )");
+            updateQuery.bindValue(":file_full_path", filePath);
+            updateQuery.exec();
+
             processedFiles++;
             continue;
         }
@@ -994,6 +1012,18 @@ void CatalogJobStoppable::verifyMimeTypes()
 
         if (verifyResult.contains("error")) {
             qDebug() << "Error verifying" << filePath << ":" << verifyResult["error"].toString();
+
+            // Mark as verified with no mismatch on error
+            QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
+            updateQuery.prepare(R"(
+                UPDATE file
+                SET mime_verified = 1,
+                    type_mismatch = 0
+                WHERE file_full_path = :file_full_path
+            )");
+            updateQuery.bindValue(":file_full_path", filePath);
+            updateQuery.exec();
+
             processedFiles++;
             continue;
         }
@@ -1004,34 +1034,34 @@ void CatalogJobStoppable::verifyMimeTypes()
 
         // Track mismatches
         if (hasMismatch) {
-            mismatchCount++;
+            m_mismatchCount++;
             QString mismatchInfo = QString("%1 [%2]: Extension suggests '%3', MIME detected '%4' (%5)")
                                        .arg(fileInfo.fileName())
-                                       .arg(extension)
+                                       .arg(extension.isEmpty() ? "no ext" : extension)
                                        .arg(extensionType)
                                        .arg(mimeBasedType)
                                        .arg(mimeType);
             mismatches << mismatchInfo;
 
             // Log first few mismatches
-            if (mismatchCount <= 10) {
+            if (m_mismatchCount <= 10) {
                 qDebug() << "Mismatch found:" << mismatchInfo;
             }
         }
 
-        // Update database
+        // Update database - ALWAYS mark as verified
         QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
         updateQuery.prepare(R"(
             UPDATE file
             SET mime_type = :mime_type,
                 file_type = :file_type,
-                mime_verified = TRUE,
+                mime_verified = 1,
                 type_mismatch = :mismatch
             WHERE file_full_path = :file_full_path
         )");
         updateQuery.bindValue(":mime_type", mimeType);
         updateQuery.bindValue(":file_type", mimeBasedType);  // Update to accurate type
-        updateQuery.bindValue(":mismatch", hasMismatch);
+        updateQuery.bindValue(":mismatch", hasMismatch ? 1 : 0);
         updateQuery.bindValue(":file_full_path", filePath);
 
         if (!updateQuery.exec()) {
@@ -1047,13 +1077,13 @@ void CatalogJobStoppable::verifyMimeTypes()
                                       .arg(processedFiles)
                                       .arg(totalFiles)
                                       .arg(percentComplete)
-                                      .arg(mismatchCount);
+                                      .arg(m_mismatchCount);
 
             emitProgressUpdate(processedFiles, totalFiles, progressMsg);
             QCoreApplication::processEvents();
 
             // Commit every 100 files
-            if (processedFiles % 100 == 0) {
+            if (processedFiles % 100 == 0 && processedFiles < totalFiles) {
                 db.commit();
                 db.transaction();
             }
@@ -1063,19 +1093,22 @@ void CatalogJobStoppable::verifyMimeTypes()
     // Final commit
     db.commit();
 
-    // Save mismatch report if any
-    if (!mismatches.isEmpty()) {
-        qDebug() << "Total mismatches found:" << mismatchCount;
-        saveMismatchReport(mismatches);
+    // Save mismatch report ONLY if there are actual mismatches
+    if (m_mismatchCount > 0 && !mismatches.isEmpty()) {
+        qDebug() << "Total mismatches found:" << m_mismatchCount;
+        m_reportFilePath = saveMismatchReportAndReturnPath(mismatches);
+    } else {
+        m_reportFilePath.clear(); // Ensure empty path when no mismatches
     }
 
     // Final progress update
     QString finalMsg = QString("MIME verification completed: %1 files processed, %2 mismatches found")
                            .arg(processedFiles)
-                           .arg(mismatchCount);
+                           .arg(m_mismatchCount);
     emitProgressUpdate(processedFiles, totalFiles, finalMsg);
 
-    qDebug() << "=== MIME verification completed ===" << finalMsg;
+    // Emit completion with results
+    emit mimeVerificationCompleted(m_mismatchCount, m_reportFilePath);
 }
 
 void CatalogJobStoppable::saveMismatchReport(const QStringList &mismatches)
@@ -1272,4 +1305,33 @@ void CatalogJobStoppable::extractMissingMetadata()
     emitProgressUpdate(processedFiles, totalFiles, finalMsg);
 
     qDebug() << "=== Metadata extraction completed ===" << finalMsg;
+}
+
+QString CatalogJobStoppable::saveMismatchReportAndReturnPath(const QStringList &mismatches)
+{
+    // Save to a report file in the collection folder
+    QString reportPath = m_collectionFolder + "/mime_mismatches_" +
+                         m_device->catalog->name + "_" +
+                         QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".txt";
+
+    QFile reportFile(reportPath);
+    if (reportFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream stream(&reportFile);
+        stream << "MIME Type Verification Report\n";
+        stream << "Catalog: " << m_device->catalog->name << "\n";
+        stream << "Date: " << QDateTime::currentDateTime().toString() << "\n";
+        stream << "Total mismatches: " << mismatches.size() << "\n";
+        stream << "=====================================\n\n";
+
+        for (const QString &mismatch : mismatches) {
+            stream << mismatch << "\n";
+        }
+
+        reportFile.close();
+        qDebug() << "Mismatch report saved to:" << reportPath;
+        return reportPath;
+    } else {
+        qDebug() << "Failed to save mismatch report to:" << reportPath;
+        return QString();
+    }
 }

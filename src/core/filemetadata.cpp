@@ -310,7 +310,7 @@ QVariantMap FileMetadata::verifyMimeType(const QString &filePath, const QString 
         result["mime_type"] = mimeType;
         result["file_type"] = mimeBasedType;
         result["original_type"] = currentFileType;
-        result["has_mismatch"] = (currentFileType != mimeBasedType);
+        result["has_mismatch"] = (currentFileType.toLower() != mimeBasedType.toLower());
         result["verification_date"] = QDateTime::currentDateTime().toString(Qt::ISODate);
 
         if (result["has_mismatch"].toBool()) {

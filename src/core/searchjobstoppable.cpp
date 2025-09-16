@@ -437,9 +437,9 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         getFilesQuerySQL += " AND file_date_updated <= :file_date_updated_max ";
     }
 
-    // Add FileType2 filter using FileTypeMapping
-    if (searchOnType && selectedFileType2Category != FileTypeMapping::ALL) {
-        QString fileTypeFilter = FileTypeMapping::getSqlFilter(selectedFileType2Category);
+    // Add FileType filter using FileTypeMapping
+    if (searchOnType && selectedUserFileType != FileTypeMapping::ALL) {
+        QString fileTypeFilter = FileTypeMapping::getSqlFilter(selectedUserFileType);
         if (!fileTypeFilter.isEmpty()) {
             getFilesQuerySQL += " AND (" + fileTypeFilter + ") ";
         }
