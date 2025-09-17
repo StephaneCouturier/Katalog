@@ -31,6 +31,7 @@
 #include "filetypemapping.h"
 #include <QMap>
 #include <QStringList>
+#include <qdebug.h>
 
 FileTypeMapping::TextCategory FileTypeMapping::selectedTextCategory = FileTypeMapping::TextCategory::All;
 
@@ -149,11 +150,15 @@ QString FileTypeMapping::getSqlFilter(UserFileType user_file_type) {
         return "file_type = 'video'";
     case AUDIO:
         return "file_type = 'audio'";
-    case TEXT:
+    case TEXT:{
         // Automatically uses selectedTextCategory static field
-        return QString("file_type = 'other' AND %1").arg(getSQLforMimeTypesAsText());
-    case OTHER:
-        return QString("file_type = 'other' AND %1").arg(getSQLforOtherNonTextMimeTypes());
+        QString sql = QString("file_type = 'text' OR (%1)").arg(getSQLforMimeTypesAsText());
+        return sql;
+    }
+    case OTHER:{
+        QString sql = QString("file_type = 'other' AND %1").arg(getSQLforOtherNonTextMimeTypes());
+        return sql;
+    }
     case NONE:
         return "(file_type IS NULL OR file_type = '' OR file_type = 'unknown')";
     default:
@@ -165,18 +170,18 @@ QString FileTypeMapping::getSQLforMimeTypesAsText()
 {
     // Use the static field - automatically uses current selection
     const QStringList specificList = getSpecificMimeTypeListForText(selectedTextCategory);
-
     QStringList conditions;
 
     // Always include text/* pattern for any text category
-    conditions << "LOWER(mime_type) LIKE 'text%'";
+    //conditions << "LOWER(mime_type) LIKE 'text%'";
 
     // Add specific application types from currently selected category
     for (const QString& mimeType : specificList) {
         conditions << QString("mime_type = '%1'").arg(mimeType);
     }
+    QString generatedSQL = QString("(%1)").arg(conditions.join(" OR "));
 
-    return QString("(%1)").arg(conditions.join(" OR "));
+    return generatedSQL;
 }
 
 QString FileTypeMapping::getSQLforOtherNonTextMimeTypes()

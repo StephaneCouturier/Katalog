@@ -462,7 +462,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         qDebug() << "Query error:" << getFilesQuery.lastError().text();
         return;
     }
-    qDebug() << "  - SQL query executed successfully";
+    qDebug() << "  - SQL query executed successfully" << getFilesQuerySQL;
 
     emit searchProgress(-3); // Processing files
 
@@ -492,6 +492,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         QString fileFullPath = filePath + "/" + fileName;
         qint64 fileSize = getFilesQuery.value(2).toLongLong();
         QString fileDateTime = getFilesQuery.value(3).toString();
+
+        qDebug() << "Processing file:" << fileFullPath;
 
         // NEW METADATA FIELDS:
         QString fileType = getFilesQuery.value(4).toString();
@@ -529,7 +531,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                     break;
                 }
             }
-
             if (!fileIsMatchingTag) {
                 continue;
             }
@@ -540,7 +541,9 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
         if (searchOnFileName) {
             if (selectedSearchIn == SEARCH_IN_FILE_NAMES) {
+
                 match = regex.match(fileName);
+                qDebug() << "selectedSearchIn == SEARCH_IN_FILE_NAMES: match" << match;
             } else if (selectedSearchIn == SEARCH_IN_FOLDER_PATH) {
                 regex.setPattern(regexSearchtext);
                 auto foldermatch = regex.match(filePath);
@@ -555,6 +558,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             }
 
             if (match.hasMatch()) {
+
+                qDebug() << "Processing file:" << fileFullPath << "match.hasMatch()"<< match.hasMatch();
                 filesFoundList << filePath;
                 deviceFoundIDList.insert(0, QString::number(device->ID));
 

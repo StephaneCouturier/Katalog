@@ -74,7 +74,7 @@ public:
     static bool isMetadataSupported(const QString &filePath);
 
     // Get supported file extensions
-    static QStringList getSupportedExtensions();
+    //static QStringList getSupportedExtensions();
 
     static void testExtendedMetadata(const QString &filePath);
 

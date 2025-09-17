@@ -68,15 +68,15 @@ void FileMetadata::initializeExtensionTypeCache()
     // Build mapping from MIME types to file types
     for (const auto& mimeType : mimeDb.allMimeTypes()) {
         QString mimeTypeName = mimeType.name();
-        QString fileType = getFileTypeFromMime(mimeTypeName);
+        QString fileType = getFileTypeFromMime(mimeTypeName);  // This now returns lowercase
 
         // Add all extensions for this MIME type
         for (const QString& suffix : mimeType.suffixes()) {
             QString lowerSuffix = suffix.toLower();
 
-            // Only override if we have a more specific type (not "Other")
+            // Only override if we have a more specific type (not "other")
             if (!s_extensionToTypeCache.contains(lowerSuffix) ||
-                s_extensionToTypeCache[lowerSuffix] == "Other") {
+                s_extensionToTypeCache[lowerSuffix] == "other") {
                 s_extensionToTypeCache[lowerSuffix] = fileType;
             }
         }
@@ -86,7 +86,7 @@ void FileMetadata::initializeExtensionTypeCache()
     qDebug() << "Extension->Type cache initialized with" << s_extensionToTypeCache.size() << "mappings";
 
     // Debug output of some common extensions
-    QStringList sampleExts = {"jpg", "mp3", "mp4", "txt", "pdf", "doc"};
+    QStringList sampleExts = {"jpg", "mp3", "mp4", "txt", "pdf", "doc", "flac", "m4a"};
     for (const QString& ext : sampleExts) {
         if (s_extensionToTypeCache.contains(ext)) {
             qDebug() << "  " << ext << "->" << s_extensionToTypeCache[ext];
@@ -228,56 +228,31 @@ QString FileMetadata::getMimeTypeFromExtension(const QString &extension)
 //-----------------------------------------------------------------------------------------------------
 QString FileMetadata::getFileTypeFromExtension(const QString &extension)
 {
-    QString lowerExt = extension.toLower();
-
-    // Use static map for consistency
-    static QHash<QString, QString> extTypeMap;
-
-    // Initialize once if empty
-    if (extTypeMap.isEmpty()) {
-        // Images
-        QStringList imageExts = {"jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "webp", "svg", "ico", "heic", "heif", "raw", "xcf"};
-        for (const QString &ext : imageExts) {
-            extTypeMap[ext] = "image";
-        }
-
-        // Video
-        QStringList videoExts = {"mp4", "avi", "mkv", "mov", "wmv", "flv", "webm", "m4v", "mpg", "mpeg", "3gp", "ogv", "vob", "m2ts", "m2t", "ts", "mts"};
-        for (const QString &ext : videoExts) {
-            extTypeMap[ext] = "video";
-        }
-
-        // Audio
-        QStringList audioExts = {"mp3", "wav", "flac", "ogg", "oga", "m4a", "aac", "wma", "opus", "aiff", "aif", "mid", "midi", "amr"};
-        for (const QString &ext : audioExts) {
-            extTypeMap[ext] = "audio";
-        }
-
-        // Text/Documents
-        QStringList textExts = {"txt", "pdf", "doc", "docx", "odt", "rtf", "tex", "html", "htm", "xml", "md", "csv", "log"};
-        for (const QString &ext : textExts) {
-            extTypeMap[ext] = "text";
-        }
-
-        // Archives - explicitly set as "other"
-        QStringList archiveExts = {"zip", "rar", "7z", "tar", "gz", "bz2", "xz"};
-        for (const QString &ext : archiveExts) {
-            extTypeMap[ext] = "other";
-        }
+    // Initialize cache if needed
+    if (!s_typeCacheInitialized) {
+        initializeExtensionTypeCache();
     }
 
-    // Return from map or default to "other" (lowercase!)
-    return extTypeMap.value(lowerExt, "other");
+    QString lowerExt = extension.toLower();
+
+    // Use the cache built from KFileMetaData
+    if (s_extensionToTypeCache.contains(lowerExt)) {
+        return s_extensionToTypeCache.value(lowerExt);
+    }
+
+    // Fallback for unknown extensions
+    return "other";
 }
 //-----------------------------------------------------------------------------------------------------
 QString FileMetadata::getFileTypeFromMime(const QString &mimeType)
 {
+    // FIXED: Return lowercase types consistently
     if (mimeType.startsWith("image/")) {
-        return "Image";
+        return "image";
     } else if (mimeType.startsWith("video/")) {
-        return "Video";
+        return "video";
     } else if (mimeType.startsWith("audio/")) {
-        return "Audio";
+        return "audio";
     } else if (mimeType.startsWith("text/") ||
                mimeType == "application/pdf" ||
                mimeType == "application/msword" ||
@@ -285,12 +260,11 @@ QString FileMetadata::getFileTypeFromMime(const QString &mimeType)
                mimeType == "application/vnd.oasis.opendocument.text" ||
                mimeType == "application/rtf" ||
                mimeType == "application/epub+zip") {
-        return "Text";
+        return "text";
     } else {
-        return "Other";
+        return "other";
     }
-}
-//-----------------------------------------------------------------------------------------------------
+}//-----------------------------------------------------------------------------------------------------
 QVariantMap FileMetadata::verifyMimeType(const QString &filePath, const QString &currentFileType)
 {
     QVariantMap result;
@@ -787,14 +761,6 @@ bool FileMetadata::isMetadataSupported(const QString &filePath)
     return supportedExtensions.contains(extension);
 }
 //-----------------------------------------------------------------------------------------------------
-QStringList FileMetadata::getSupportedExtensions()
-{
-    // This is a simplified list - in practice you'd query KFileMetaData for all supported types
-    return {"jpg", "jpeg", "png", "gif", "bmp", "tiff", "webp",  // Images
-            "mp4", "mkv", "avi", "mov", "wmv", "flv", "webm",     // Videos
-            "mp3", "ogg", "flac", "wav", "aac", "m4a", "wma"};   // Audio
-}
-//-----------------------------------------------------------------------------------------------------
 void FileMetadata::initializeExtensionsCache() {
     if (s_cacheInitialized) return;
 
@@ -820,11 +786,12 @@ void FileMetadata::initializeExtensionsCache() {
 //-----------------------------------------------------------------------------------------------------
 bool FileMetadata::isExtensionSupported(const QString &extension)
 {
-    // if (!s_cacheInitialized) {
-    //     initializeExtensionsCache();
-    // }
+    // Use the cache instead of hardcoded logic
+    if (!s_cacheInitialized) {
+        initializeExtensionsCache();
+    }
 
-    //return s_supportedExtensionsCache.contains(extension.toLower());
+    return s_supportedExtensionsCache.contains(extension.toLower());
 }
 //-----------------------------------------------------------------------------------------------------
 QVariantMap FileMetadata::processImageMetadata(const KFileMetaData::PropertyMultiMap &properties)
