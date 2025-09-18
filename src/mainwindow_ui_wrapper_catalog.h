@@ -58,12 +58,6 @@ public:
         bool needsUserAction;
     };
 
-    // Static methods for UI-involved operations
-    static UpdateResult updateCatalogFilesWithUI(Catalog* catalog,
-                                          const QString& databaseMode,
-                                          const QString& collectionFolder,
-                                          bool reportCannotUpdate = true);
-
     bool updateCatalogFileHeadersWithUI(Catalog* catalog, const QString& databaseMode);
 
     bool saveCatalogToFileWithUI(Catalog* catalog,

@@ -101,8 +101,6 @@ public:
     void clearCatalogData();
 
     void loadExcludedFolders();
-    QList<qint64> updateCatalogFiles(QString databaseMode, QString collectionFolder, bool reportCannotUpdate);
-    void catalogDirectory(QString databaseMode, QString collectionFolder);
 
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
