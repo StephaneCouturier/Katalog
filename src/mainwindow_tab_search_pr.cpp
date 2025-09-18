@@ -237,12 +237,6 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
     search->connectedDirectory = ui->Filters_lineEdit_SeletedDirectory->text();
 
-    // Transfer file type lists
-    search->fileType_AudioS = fileType_AudioS;
-    search->fileType_ImageS = fileType_ImageS;
-    search->fileType_TextS = fileType_TextS;
-    search->fileType_VideoS = fileType_VideoS;
-
     // Initialize the differences devices
     if (search->diffDevice1 == nullptr) {
         search->diffDevice1 = new Device;

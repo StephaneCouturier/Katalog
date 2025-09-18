@@ -1195,11 +1195,6 @@
                 currentSearch->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
                 currentSearch->connectedDirectory       = ui->Filters_lineEdit_SeletedDirectory->text();
 
-                currentSearch->fileType_AudioS = fileType_AudioS;
-                currentSearch->fileType_ImageS = fileType_ImageS;
-                currentSearch->fileType_TextS  = fileType_TextS;
-                currentSearch->fileType_VideoS = fileType_VideoS;
-
                 currentSearch->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
                 currentSearch->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }

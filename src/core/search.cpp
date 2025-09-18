@@ -30,6 +30,7 @@
 */
 #include "search.h"
 #include "filemetadata.h"
+#include "filetypemapping.h"
 #include <algorithm>
 #include <QFileInfo>
 
@@ -166,37 +167,37 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
     return QVariant();
 }
 
-void Search::initializeFileTypeArrays(QStringList &audioTypes, QStringList &imageTypes,
-                                      QStringList &textTypes, QStringList &videoTypes)
-{
-    // Clear existing arrays
-    audioTypes.clear();
-    imageTypes.clear();
-    textTypes.clear();
-    videoTypes.clear();
+// QStringList Search::getExtensionsForSearchRegex(const QString &fileType)
+// {
+//     QStringList extensions = FileTypeMapping::getExtensionsForFileType(fileType.toLower());
+//     QStringList regexExtensions;
+//     for (const QString &ext : extensions) {
+//         regexExtensions << QString("*.%1$").arg(ext);
+//     }
+//     return regexExtensions;
+// }
 
-    // Populate file type arrays for searching (with regex endings)
-    audioTypes << "*.mp3$" << "*.wav$" << "*.ogg$" << "*.aif$";
-    imageTypes << "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
-    textTypes  << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
-    videoTypes << "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$" << "*.webm$" << "*.m4v$" << "*.vob$" << "*.ogv$" << "*.mov$";
-}
+// QStringList Search::getExtensionsForCataloging(const QString &fileType)
+// {
+//     QString lowerType = fileType.toLower();
 
-void Search::initializeFileTypesForCataloging(QStringList &audioTypes, QStringList &imageTypes,
-                                              QStringList &textTypes, QStringList &videoTypes)
-{
-    // Clear existing arrays
-    audioTypes.clear();
-    imageTypes.clear();
-    textTypes.clear();
-    videoTypes.clear();
+//     if (lowerType == "none") {
+//         // For "none" type, return empty list since we'll use manual filtering
+//         // The caller should use extensions << "*" and filter manually
+//         return QStringList();
+//     }
 
-    // Populate file type arrays for cataloging (without regex endings)
-    audioTypes << "*.mp3" << "*.wav" << "*.ogg" << "*.aif";
-    imageTypes << "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
-    textTypes  << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
-    videoTypes << "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv" << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
-}
+//     // For all other types (including "other"), get extensions from cache
+//     QStringList extensions = FileTypeMapping::getExtensionsForFileType(lowerType);
+//     QStringList wildcardExtensions;
+
+//     for (const QString &ext : extensions) {
+//         wildcardExtensions << QString("*.%1").arg(ext);
+//     }
+
+//     qDebug() << "getExtensionsForCataloging(" << fileType << ") returning:" << wildcardExtensions;
+//     return wildcardExtensions;
+// }
 
 //Search Processing
 void Search::prepareSearchPatterns()
@@ -260,21 +261,24 @@ void Search::prepareSearchPatterns()
 
 QStringList Search::getExtensionsForFileType(const QString &fileType)
 {
+    if (fileType.toLower() == "none") {
+        // "none" type represents extensionless files - return empty list
+        return QStringList();
+    }
+
     // Initialize FileMetadata cache if needed
     FileMetadata::initializeExtensionTypeCache();
 
     QStringList extensions;
-
-    // Get all extensions from the cache that match this file type
     const auto& cache = FileMetadata::getExtensionToTypeCache();
+
     for (auto it = cache.begin(); it != cache.end(); ++it) {
-        if (it.value() == fileType) {
+        if (it.value() == fileType.toLower()) {
             extensions.append(it.key());
         }
     }
 
     qDebug() << "getExtensionsForFileType(" << fileType << ") found extensions:" << extensions;
-
     return extensions;
 }
 
@@ -740,12 +744,7 @@ void Search::copyFrom(const Search* other)
     connectedDirectory = other->connectedDirectory;
     selectedDeviceIDList = other->selectedDeviceIDList;
 
-    fileType_AudioS = other->fileType_AudioS;
-    fileType_ImageS = other->fileType_ImageS;
-    fileType_TextS = other->fileType_TextS;
-    fileType_VideoS = other->fileType_VideoS;
-
-    // Note: we don't copy results or statistics
+    // Note: no copy of results or statistics
 }
 
 void Search::clearResults()

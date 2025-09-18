@@ -30,6 +30,7 @@
 */
 
 #include "catalog.h"
+#include "filetypemapping.h"
 
 #include <QApplication>
 #include <QDir>
@@ -875,26 +876,25 @@ void Catalog::populateFileData( const QList<QString> &cfileName,
 }
 
 void Catalog::getFileExtensions()
-{//Populate file type list
-
-    QStringList fileType_Image;
-    QStringList fileType_Audio;
-    QStringList fileType_Video;
-    QStringList fileType_Text;
-
-    fileType_Image<< "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
-    fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg" << "*.aif";
-    fileType_Video<< "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv"  << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
-    fileType_Text << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
-
-    if      ( fileType == "Image")
-        fileExtensions = fileType_Image;
-    else if ( fileType == "Audio")
-        fileExtensions = fileType_Audio;
-    else if ( fileType == "Video")
-        fileExtensions = fileType_Video;
-    else if ( fileType == "Text")
-        fileExtensions = fileType_Text;
+{
+    if (fileType == "Image") {
+        fileExtensions = FileTypeMapping::getExtensionsForCataloging("image");
+    } else if (fileType == "Audio") {
+        fileExtensions = FileTypeMapping::getExtensionsForCataloging("audio");
+    } else if (fileType == "Video") {
+        fileExtensions = FileTypeMapping::getExtensionsForCataloging("video");
+    } else if (fileType == "Text") {
+        fileExtensions = FileTypeMapping::getExtensionsForCataloging("text");
+    } else if (fileType == "Other") {
+        fileExtensions = FileTypeMapping::getExtensionsForCataloging("other");
+    } else if (fileType == "None") {
+        // For extensionless files, this method isn't the right approach
+        // The actual filtering happens in catalogjobstoppable.cpp
+        fileExtensions = QStringList(); // Empty - manual filtering used instead
+    } else {
+        // For "All" or any other type, include all extensions
+        fileExtensions << "*"; // Include all files
+    }
 }
 
 void Catalog::loadExcludedFolders()

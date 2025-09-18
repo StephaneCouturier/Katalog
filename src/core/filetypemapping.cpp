@@ -29,9 +29,9 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "filetypemapping.h"
+#include "filemetadata.h"
 #include <QMap>
 #include <QStringList>
-#include <qdebug.h>
 
 FileTypeMapping::TextCategory FileTypeMapping::selectedTextCategory = FileTypeMapping::TextCategory::All;
 
@@ -170,6 +170,59 @@ QString FileTypeMapping::getSqlFilter(UserFileType user_file_type) {
     default:
         return "";
     }
+}
+
+QStringList FileTypeMapping::getExtensionsForFileType(const QString &fileType)
+{
+    if (fileType.toLower() == "none") {
+        return QStringList();
+    }
+
+    // Initialize FileMetadata cache if needed
+    FileMetadata::initializeExtensionTypeCache();
+
+    QStringList extensions;
+    const auto& cache = FileMetadata::getExtensionToTypeCache();
+
+    for (auto it = cache.begin(); it != cache.end(); ++it) {
+        if (it.value() == fileType.toLower()) {
+            extensions.append(it.key());
+        }
+    }
+
+    qDebug() << "FileTypeMapping::getExtensionsForFileType(" << fileType << ") found:" << extensions;
+    return extensions;
+}
+
+QStringList FileTypeMapping::getExtensionsForCataloging(const QString &fileType)
+{
+    QString lowerType = fileType.toLower();
+
+    if (lowerType == "none") {
+        return QStringList(); // Manual filtering needed
+    }
+
+    QStringList extensions = getExtensionsForFileType(lowerType);
+    QStringList wildcardExtensions;
+
+    for (const QString &ext : extensions) {
+        wildcardExtensions << QString("*.%1").arg(ext);
+    }
+
+    qDebug() << "FileTypeMapping::getExtensionsForCataloging(" << fileType << ") returning:" << wildcardExtensions;
+    return wildcardExtensions;
+}
+
+QStringList FileTypeMapping::getExtensionsForSearchRegex(const QString &fileType)
+{
+    QStringList extensions = getExtensionsForFileType(fileType.toLower());
+    QStringList regexExtensions;
+
+    for (const QString &ext : extensions) {
+        regexExtensions << QString("*.%1$").arg(ext);
+    }
+
+    return regexExtensions;
 }
 
 QString FileTypeMapping::getSQLforMimeTypesAsText()

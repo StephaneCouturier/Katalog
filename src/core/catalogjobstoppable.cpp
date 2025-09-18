@@ -31,6 +31,7 @@
 
 #include "catalogjobstoppable.h"
 #include "filemetadata.h"
+#include "filetypemapping.h"
 
 #include <QDebug>
 #include <QDir>
@@ -393,29 +394,26 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                                                        Catalog *catalog,
                                                        qint64 &processedCount)
 {
-    // Right before the batch size decision:
-    qDebug() << "CatalogJobStoppable::processDirectoryWithProgress, Catalog includeMetadata value:" << catalog->includeMetadata
-             << "NONE:" << Catalog::METADATA_NONE
-             << "BASIC:" << Catalog::METADATA_MEDIA_BASIC
-             << "Comparison result:" << (catalog->includeMetadata == Catalog::METADATA_MEDIA_BASIC);
-
-
     if (!shouldContinue()) return;
-
-    qDebug() << "Processing directory:" << directory;
 
     // Get file extensions for filtering
     QStringList extensions;
     if (catalog->fileType == "Image") {
-        extensions << "*.png" << "*.jpg" << "*.jpeg" << "*.gif" << "*.xcf" << "*.tif" << "*.tiff" << "*.bmp";
+        extensions = FileTypeMapping::getExtensionsForCataloging("image");
     } else if (catalog->fileType == "Audio") {
-        extensions << "*.mp3" << "*.wav" << "*.ogg" << "*.aif" << "*.aiff" << "*.flac";
+        extensions = FileTypeMapping::getExtensionsForCataloging("audio");
     } else if (catalog->fileType == "Video") {
-        extensions << "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv" << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
+        extensions = FileTypeMapping::getExtensionsForCataloging("video");
     } else if (catalog->fileType == "Text") {
-        extensions << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
+        extensions = FileTypeMapping::getExtensionsForCataloging("text");
+    } else if (catalog->fileType == "Other") {
+        extensions = FileTypeMapping::getExtensionsForCataloging("other");
+        if (extensions.isEmpty()) {
+            qDebug() << "WARNING: Other type returned empty extensions list!";
+        }
+    } else if (catalog->fileType == "None") {
+        extensions << "*";
     } else {
-        // Default: include all files
         extensions << "*";
     }
 
@@ -461,6 +459,14 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
         QString fileFullPath = it.next();
         QFileInfo fileInfo(fileFullPath);
+
+        // Special handling for "None" type - manually filter extensionless files
+        if (catalog->fileType == "None") {
+            QString extension = fileInfo.suffix();
+            if (!extension.isEmpty()) {
+                continue; // Skip files that have extensions
+            }
+        }
 
         // Skip excluded folders
         bool isExcluded = false;
@@ -661,15 +667,21 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
     // Get file extensions for filtering (same logic as in processDirectoryWithProgress)
     QStringList extensions;
     if (catalog->fileType == "Image") {
-        extensions << "*.png" << "*.jpg" << "*.jpeg" << "*.gif" << "*.xcf" << "*.tif" << "*.tiff" << "*.bmp";
+        extensions = FileTypeMapping::getExtensionsForCataloging("image");
     } else if (catalog->fileType == "Audio") {
-        extensions << "*.mp3" << "*.wav" << "*.ogg" << "*.aif" << "*.aiff" << "*.flac";
+        extensions = FileTypeMapping::getExtensionsForCataloging("audio");
     } else if (catalog->fileType == "Video") {
-        extensions << "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv" << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
+        extensions = FileTypeMapping::getExtensionsForCataloging("video");
     } else if (catalog->fileType == "Text") {
-        extensions << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
+        extensions = FileTypeMapping::getExtensionsForCataloging("text");
+    } else if (catalog->fileType == "Other") {
+        extensions = FileTypeMapping::getExtensionsForCataloging("other");
+    } else if (catalog->fileType == "None") {
+        // Special case: for extensionless files, we need to scan all files
+        // and filter manually later (QDirIterator can't filter "no extension")
+        extensions << "*";
     } else {
-        // Default: include all files
+        // Default/All: include all files
         extensions << "*";
     }
 
@@ -687,6 +699,14 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
 
     while (it.hasNext() && shouldContinue()) {
         QString filePath = it.next();
+
+        if (catalog->fileType == "None") {
+            QFileInfo fileInfo(filePath);
+            QString extension = fileInfo.suffix();
+            if (!extension.isEmpty()) {
+                continue; // Skip files that have extensions
+            }
+        }
 
         // Skip excluded folders
         bool isExcluded = false;

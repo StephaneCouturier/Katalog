@@ -500,6 +500,10 @@
             fileType = "Text";
         } else if (ui->Create_radioButton_FileType_Video->isChecked()) {
             fileType = "Video";
+        } else if (ui->Create_radioButton_FileType_Other->isChecked()) {
+            fileType = "Other";
+        } else if (ui->Create_radioButton_FileType_None->isChecked()) {
+            fileType = "None";
         } else if (ui->Create_radioButton_FileType_Any->isChecked()) {
             fileType = "All";
         }

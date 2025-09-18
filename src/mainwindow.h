@@ -153,16 +153,6 @@ class MainWindow : public KXmlGuiWindow
         void launchSearch();
         void sendSearchParametersFromUI(Search *search);
 
-        //FileTypes
-        QStringList fileType_Image;
-        QStringList fileType_Audio;
-        QStringList fileType_Video;
-        QStringList fileType_Text;
-        QStringList fileType_ImageS;
-        QStringList fileType_AudioS;
-        QStringList fileType_VideoS;
-        QStringList fileType_TextS;
-
         QSqlError initializeDatabase(const QString &connectionName);
         bool backupMemoryDatabaseToFile(const QString &memoryConnectionName, const QString &filePath);
 
@@ -242,7 +232,6 @@ class MainWindow : public KXmlGuiWindow
 
             //FileTypes
             QStringList fileType_current;
-            void setFileTypes();
 
             //Database
             void selectDatabaseFilePath();

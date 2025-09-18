@@ -799,10 +799,6 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
             search->loadSearchHistoryCriteria("defaultConnection");
         }
 
-        // Initialize file type arrays for search functionality
-        Search::initializeFileTypeArrays(search->fileType_AudioS, search->fileType_ImageS,
-                                         search->fileType_TextS, search->fileType_VideoS);
-
         // Apply command line overrides (this overrides history values)
         if (searchCriteriaProvided) {
             if (verbose) {

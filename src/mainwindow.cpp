@@ -280,9 +280,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Settings_comboBox_DatabaseMode->setCurrentText(trMode);
             applyDatabaseModeToUI();
 
-            //Set file types
-            setFileTypes();
-
             //Set apply button to disabled
             ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
             ui->Settings_pushButton_ApplyFilepath->setEnabled(false);

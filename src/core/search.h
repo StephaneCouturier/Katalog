@@ -121,14 +121,10 @@ public:
     QString searchDateTime;
 
     // File type lists
-    QStringList fileType_AudioS;
-    QStringList fileType_ImageS;
-    QStringList fileType_TextS;
-    QStringList fileType_VideoS;
-    static void initializeFileTypeArrays(QStringList &audioTypes, QStringList &imageTypes,
-                                         QStringList &textTypes, QStringList &videoTypes);
-    static void initializeFileTypesForCataloging(QStringList &audioTypes, QStringList &imageTypes,
-                                                 QStringList &textTypes, QStringList &videoTypes);
+    // QStringList fileType_AudioS;
+    // QStringList fileType_ImageS;
+    // QStringList fileType_TextS;
+    // QStringList fileType_VideoS;
 
     // Results
     QList<QString> fileNames;
@@ -210,7 +206,7 @@ public:
         return selectedUserFileType;
     }
 private:
-    QStringList getExtensionsForFileType(const QString &fileType);
+    static QStringList getExtensionsForFileType(const QString &fileType);
 
 signals:
     void searchProgress(int filesProcessed);

@@ -71,6 +71,11 @@ public:
     // Get SQL WHERE clause for user file type selection
     static QString getSqlFilter(UserFileType user_file_type);
 
+    // File type to extension mapping
+    static QStringList getExtensionsForFileType(const QString &fileType);
+    static QStringList getExtensionsForCataloging(const QString &fileType);
+    static QStringList getExtensionsForSearchRegex(const QString &fileType);
+
 private:
     // Generate SQL for Text and Other user types
     static QString getSQLforMimeTypesAsText();

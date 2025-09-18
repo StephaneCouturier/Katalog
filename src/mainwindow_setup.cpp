@@ -249,14 +249,13 @@
 
     }
     //----------------------------------------------------------------------
-    void MainWindow::setFileTypes()
-    {
-        // Use static method for cataloging file types
-        Search::initializeFileTypesForCataloging(fileType_Audio, fileType_Image, fileType_Text, fileType_Video);
-
-        // Use static method for search file types
-        Search::initializeFileTypeArrays(fileType_AudioS, fileType_ImageS, fileType_TextS, fileType_VideoS);
-    }
+    // void MainWindow::setFileTypes()
+    // {
+    //     fileType_Audio = FileTypeMapping::getExtensionsForCataloging("audio");
+    //     fileType_Image = FileTypeMapping::getExtensionsForCataloging("image");
+    //     fileType_Text  = FileTypeMapping::getExtensionsForCataloging("text");
+    //     fileType_Video = FileTypeMapping::getExtensionsForCataloging("video");
+    // }
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
