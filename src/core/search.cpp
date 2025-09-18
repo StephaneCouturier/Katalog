@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "search.h"
+#include "filemetadata.h"
 #include <algorithm>
 #include <QFileInfo>
 
@@ -222,30 +223,29 @@ void Search::prepareSearchPatterns()
     else {
         regexSearchtext = "";
     }
-
     regexPattern = regexSearchtext;
 
-    // Prepare the regexFileType for file types
+    // FIXED: Prepare the regexFileType for file types using FileMetadata cache
     if (searchOnFileCriteria == true && searchOnType == true && selectedFileType != "All") {
-        // Get the list of file extensions and join it into one string
-        if (selectedFileType == "Audio") {
-            regexFileType = fileType_AudioS.join("|");
-        }
-        if (selectedFileType == "Image") {
-            regexFileType = fileType_ImageS.join("|");
-        }
-        if (selectedFileType == "Text") {
-            regexFileType = fileType_TextS.join("|");
-        }
-        if (selectedFileType == "Video") {
-            regexFileType = fileType_VideoS.join("|");
-        }
+        // Get extensions dynamically from FileMetadata cache
+        QStringList extensionsForType = getExtensionsForFileType(selectedFileType.toLower());
 
-        // Replace the *. by .* needed for regex
-        regexFileType = regexFileType.replace("*.", ".*");
+        if (!extensionsForType.isEmpty()) {
+            // Join extensions with | for regex alternation
+            regexFileType = extensionsForType.join("|");
+            // Convert to regex pattern (e.g. "mp3|flac|m4a" becomes ".*\\.(mp3|flac|m4a)$")
+            regexFileType = ".*\\.(" + regexFileType + ")$";
+        } else {
+            // Fallback if no extensions found
+            regexFileType = "";
+        }
 
         // Add the file type expression to the regex
-        regexPattern = regexSearchtext + "(" + regexFileType + ")";
+        if (!regexFileType.isEmpty()) {
+            regexPattern = regexSearchtext + regexFileType;
+        } else {
+            regexPattern = regexSearchtext;
+        }
     }
     else {
         regexPattern = regexSearchtext;
@@ -259,7 +259,6 @@ void Search::prepareSearchPatterns()
         QRegularExpression lineSplitExp(" ");
         QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
         int numberOfSearchWords = lineFieldList.count();
-
         // Build regex group to exclude all words
         // Generate first part = first characters + the first word
         excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
@@ -269,10 +268,29 @@ void Search::prepareSearchPatterns()
         }
         // Last part
         excludeGroupRegEx = excludeGroupRegEx + "))";
-
         // Add regex group to exclude to the global regexPattern
         regexPattern = excludeGroupRegEx + regexPattern;
     }
+}
+
+QStringList Search::getExtensionsForFileType(const QString &fileType)
+{
+    // Initialize FileMetadata cache if needed
+    FileMetadata::initializeExtensionTypeCache();
+
+    QStringList extensions;
+
+    // Get all extensions from the cache that match this file type
+    const auto& cache = FileMetadata::getExtensionToTypeCache();
+    for (auto it = cache.begin(); it != cache.end(); ++it) {
+        if (it.value() == fileType) {
+            extensions.append(it.key());
+        }
+    }
+
+    qDebug() << "getExtensionsForFileType(" << fileType << ") found extensions:" << extensions;
+
+    return extensions;
 }
 
 void Search::setMultipliers()

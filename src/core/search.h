@@ -209,6 +209,8 @@ public:
     FileTypeMapping::UserFileType getFileType2Category() const {
         return selectedUserFileType;
     }
+private:
+    QStringList getExtensionsForFileType(const QString &fileType);
 
 signals:
     void searchProgress(int filesProcessed);

@@ -91,6 +91,14 @@ public:
     // MIME verification support
     static QVariantMap verifyMimeType(const QString &filePath, const QString &currentFileType);
 
+    // Make extensions cache accessible
+    static const QHash<QString, QString>& getExtensionToTypeCache() {
+        if (!s_typeCacheInitialized) {
+            initializeExtensionTypeCache();
+        }
+        return s_extensionToTypeCache;
+    }
+
 private:
     // Helper methods
     //static QString getFileType(const QString &mimeType);
