@@ -87,17 +87,13 @@ public:
     static QString getFileTypeFromExtension(const QString &extension);
     static QString getFileTypeFromMime(const QString &mimeType);
     static QString getMimeTypeFromExtension(const QString &extension);
+    //QString detectFileTypeForExtensionlessFile(const QString &filePath);
 
     // MIME verification support
     static QVariantMap verifyMimeType(const QString &filePath, const QString &currentFileType);
 
     // Make extensions cache accessible
-    static const QHash<QString, QString>& getExtensionToTypeCache() {
-        if (!s_typeCacheInitialized) {
-            initializeExtensionTypeCache();
-        }
-        return s_extensionToTypeCache;
-    }
+    static const QHash<QString, QString>& getExtensionToTypeCache();
 
 private:
     // Helper methods

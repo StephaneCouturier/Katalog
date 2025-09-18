@@ -45,11 +45,8 @@ FileMetadata::FileMetadata(QObject *parent) : QObject(parent)
 {
 }
 //-----------------------------------------------------------------------------------------------------
-// If you also have s_extensionToTypeCache:
 QHash<QString, QString> FileMetadata::s_extensionToTypeCache;
 bool FileMetadata::s_typeCacheInitialized = false;
-
-// Static member definitions (required for linking)
 QSet<QString> FileMetadata::s_supportedExtensionsCache;
 bool FileMetadata::s_cacheInitialized = false;
 //-----------------------------------------------------------------------------------------------------
@@ -228,6 +225,11 @@ QString FileMetadata::getMimeTypeFromExtension(const QString &extension)
 //-----------------------------------------------------------------------------------------------------
 QString FileMetadata::getFileTypeFromExtension(const QString &extension)
 {
+    // Handle extensionless files or empty extensions
+    if (extension.isEmpty()) {
+        return "none";  // Default for extensionless files
+    }
+
     // Initialize cache if needed
     if (!s_typeCacheInitialized) {
         initializeExtensionTypeCache();
@@ -264,7 +266,8 @@ QString FileMetadata::getFileTypeFromMime(const QString &mimeType)
     } else {
         return "other";
     }
-}//-----------------------------------------------------------------------------------------------------
+}
+//-----------------------------------------------------------------------------------------------------
 QVariantMap FileMetadata::verifyMimeType(const QString &filePath, const QString &currentFileType)
 {
     QVariantMap result;
@@ -298,6 +301,16 @@ QVariantMap FileMetadata::verifyMimeType(const QString &filePath, const QString 
     }
 
     return result;
+}
+//-----------------------------------------------------------------------------------------------------
+const QHash<QString, QString>& FileMetadata::getExtensionToTypeCache()
+{
+    // Initialize cache if needed
+    if (!s_typeCacheInitialized) {
+        initializeExtensionTypeCache();
+    }
+
+    return s_extensionToTypeCache;
 }
 //-----------------------------------------------------------------------------------------------------
 bool FileMetadata::extractAndStore(const QString &filePath,

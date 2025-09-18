@@ -582,20 +582,26 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     if (!fileNames.isEmpty() && shouldContinue()) {
         QSqlQuery query(QSqlDatabase::database(m_connectionName));
         query.prepare(R"(
-            INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path, file_size, file_date_updated, file_catalog)
-            VALUES (:catalog_id, :name, :folder_path, :full_path, :size, :date, :catalog_name)
-        )");
+        INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
+                        file_size, file_date_updated, file_catalog,
+                        file_extension, file_type)
+        VALUES (:catalog_id, :name, :folder_path, :full_path,
+                :size, :date, :catalog_name,
+                :extension, :file_type)
+    )");
 
         for (int i = 0; i < fileNames.size(); ++i) {
             if (!shouldContinue()) break;
 
             query.bindValue(":catalog_id", catalog->ID);
-            query.bindValue(":name", fileNames[i]);                     // Just filename
-            query.bindValue(":folder_path", fileFolderPaths[i]);        // Just directory path
-            query.bindValue(":full_path", fileFullPaths[i]);            // Complete file path
+            query.bindValue(":name", fileNames[i]);
+            query.bindValue(":folder_path", fileFolderPaths[i]);
+            query.bindValue(":full_path", fileFullPaths[i]);
             query.bindValue(":size", fileSizes[i]);
             query.bindValue(":date", fileDateTimes[i]);
-            query.bindValue(":catalog_name", fileCatalogs[i]);          // Add catalog name
+            query.bindValue(":catalog_name", fileCatalogs[i]);
+            query.bindValue(":extension", fileExtensions[i]);
+            query.bindValue(":file_type", fileTypes[i]);
 
             if (!query.exec()) {
                 qDebug() << "Database insert error:" << query.lastError().text();

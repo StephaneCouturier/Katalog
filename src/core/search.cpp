@@ -225,27 +225,12 @@ void Search::prepareSearchPatterns()
     }
     regexPattern = regexSearchtext;
 
-    // FIXED: Prepare the regexFileType for file types using FileMetadata cache
+    // No regex-based file type filtering when using FileTypeMapping
+    // The SQL query already handles file type filtering via FileTypeMapping::getSqlFilter()
     if (searchOnFileCriteria == true && searchOnType == true && selectedFileType != "All") {
-        // Get extensions dynamically from FileMetadata cache
-        QStringList extensionsForType = getExtensionsForFileType(selectedFileType.toLower());
-
-        if (!extensionsForType.isEmpty()) {
-            // Join extensions with | for regex alternation
-            regexFileType = extensionsForType.join("|");
-            // Convert to regex pattern (e.g. "mp3|flac|m4a" becomes ".*\\.(mp3|flac|m4a)$")
-            regexFileType = ".*\\.(" + regexFileType + ")$";
-        } else {
-            // Fallback if no extensions found
-            regexFileType = "";
-        }
-
-        // Add the file type expression to the regex
-        if (!regexFileType.isEmpty()) {
-            regexPattern = regexSearchtext + regexFileType;
-        } else {
-            regexPattern = regexSearchtext;
-        }
+        // Skip regex-based file type filtering - rely on SQL filtering only
+        regexFileType = "";
+        regexPattern = regexSearchtext;
     }
     else {
         regexPattern = regexSearchtext;

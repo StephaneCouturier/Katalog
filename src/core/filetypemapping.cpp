@@ -151,16 +151,14 @@ QString FileTypeMapping::getSqlFilter(UserFileType user_file_type) {
     case AUDIO:
         return "file_type = 'audio'";
     case TEXT:{
-        // Automatically uses selectedTextCategory static field
         QString sql = QString("file_type = 'text' OR (%1)").arg(getSQLforMimeTypesAsText());
         return sql;
     }
     case OTHER:{
-        QString sql = QString("file_type = 'other' AND %1").arg(getSQLforOtherNonTextMimeTypes());
-        return sql;
+        return "file_type = 'other'";
     }
     case NONE:
-        return "(file_type IS NULL OR file_type = '' OR file_type = 'unknown')";
+        return "(file_type IS NULL OR file_type = '' OR file_type = 'none')";
     default:
         return "";
     }
@@ -171,9 +169,6 @@ QString FileTypeMapping::getSQLforMimeTypesAsText()
     // Use the static field - automatically uses current selection
     const QStringList specificList = getSpecificMimeTypeListForText(selectedTextCategory);
     QStringList conditions;
-
-    // Always include text/* pattern for any text category
-    //conditions << "LOWER(mime_type) LIKE 'text%'";
 
     // Add specific application types from currently selected category
     for (const QString& mimeType : specificList) {
