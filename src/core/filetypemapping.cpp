@@ -151,11 +151,19 @@ QString FileTypeMapping::getSqlFilter(UserFileType user_file_type) {
     case AUDIO:
         return "file_type = 'audio'";
     case TEXT:{
+        // Include files that are classified as text based on MIME type
         QString sql = QString("file_type = 'text' OR (%1)").arg(getSQLforMimeTypesAsText());
         return sql;
     }
     case OTHER:{
-        return "file_type = 'other'";
+        // Exclude files that are classified as text based on MIME type
+        // to prevent overlap with TEXT category
+        QString textMimeConditions = getSQLforMimeTypesAsText();
+        if (!textMimeConditions.isEmpty()) {
+            return QString("file_type = 'other' AND NOT (%1)").arg(textMimeConditions);
+        } else {
+            return "file_type = 'other'";
+        }
     }
     case NONE:
         return "(file_type IS NULL OR file_type = '' OR file_type = 'none')";
