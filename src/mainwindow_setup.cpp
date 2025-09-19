@@ -377,12 +377,12 @@
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
                     qDebug() << "SAFE database migration to 2.8 completed";
-
-                    QMessageBox::information(this, "Migration Successful",
-                                             "Database migration completed successfully despite corruption.\n\n"
-                                             "Your data has been preserved.");
+                    // Optional: Show user notification for this significant migration
+                    // QMessageBox::information(this, "Database Updated",
+                    //                          "File type information has been added to existing catalogs.\n"
+                    //                          "This improves search performance and enables enhanced file filtering.");
                 } else {
-                    qDebug() << "SAFE database migration to 2.8 failed:" << migrationError.text();
+                    qDebug() << "Database migration to 2.8 failed:" << migrationError.text();
 
                     QMessageBox::critical(this, "Migration Failed",
                                           QString("Database migration failed: %1\n\n"
@@ -392,7 +392,7 @@
                 }
             }
 
-        // Refresh display
+            // Refresh display
         loadSearchHistoryTableToModel();
     }
    //----------------------------------------------------------------------

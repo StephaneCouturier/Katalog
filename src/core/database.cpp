@@ -30,10 +30,11 @@
 */
 #include "database.h"
 #include "collection.h"
+#include "filemetadata.h"
 #include <QSettings>
 #include <QFile>
 #include <QDebug>
-#include <qapplication.h>
+#include <QApplication>
 
 QSqlError Database::initialize(const QString &connectionName, Collection *collection,
                                const QString &overrideDatabaseMode,
@@ -372,7 +373,7 @@ QSqlError Database::runMigration_2_6(const QString &connectionName)
 //----------------------------------------------------------------------
 QSqlError Database::runMigration_2_8(const QString &connectionName)
 {
-    qDebug() << "=== Database Migration 2.8: Drop metadata table, update file/filetemp tables ===";
+    qDebug() << "=== Database Migration 2.8: PART1 - Drop metadata table, update file/filetemp tables ===";
 
     // Step 1: Drop the unused metadata table if it exists
     if (auto dropError = dropTableIfExists(connectionName, "metadata");
@@ -431,8 +432,114 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
         qDebug() << "Error creating new filetemp table:" << createError.text();
         return createError;
     }
-
     qDebug() << "File and filetemp tables updated with metadata support";
+
+    qDebug() << "=== Database Migration 2.8: PART2 - Populate file_type fields ===";
+
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen()) {
+        qDebug() << "Database not open for migration 2.9";
+        return QSqlError("Database not open", "", QSqlError::ConnectionError);
+    }
+
+    // Count files needing migration
+    QSqlQuery countQuery(db);
+    countQuery.prepare("SELECT COUNT(*) FROM file WHERE file_type IS NULL OR file_type = ''");
+    if (!countQuery.exec() || !countQuery.next()) {
+        qDebug() << "Failed to count files for migration 2.9:" << countQuery.lastError().text();
+        return countQuery.lastError();
+    }
+
+    int totalFiles = countQuery.value(0).toInt();
+    qDebug() << "Found" << totalFiles << "files needing file_type population";
+
+    if (totalFiles == 0) {
+        qDebug() << "No migration needed - all files already have file_type populated";
+        return QSqlError(); // Success - nothing to do
+    }
+
+    // Begin transaction for better performance
+    if (!db.transaction()) {
+        qDebug() << "Failed to begin transaction for migration 2.9:" << db.lastError().text();
+        return db.lastError();
+    }
+
+    // Query files needing migration in batches
+    QSqlQuery selectQuery(db);
+    selectQuery.prepare(R"(
+        SELECT file_name, file_full_path, file_catalog_id
+        FROM file
+        WHERE file_type IS NULL OR file_type = ''
+        ORDER BY file_catalog_id
+    )");
+
+    if (!selectQuery.exec()) {
+        db.rollback();
+        qDebug() << "Failed to select files for migration 2.9:" << selectQuery.lastError().text();
+        return selectQuery.lastError();
+    }
+
+    // Prepare update query
+    QSqlQuery updateQuery(db);
+    updateQuery.prepare("UPDATE file SET file_type = ? WHERE file_catalog_id = ? AND file_full_path = ?");
+
+    int processedFiles = 0;
+    int batchSize = 1000;
+
+    while (selectQuery.next()) {
+        QString fileName = selectQuery.value(0).toString();
+        QString fileFullPath = selectQuery.value(1).toString();
+        int catalogId = selectQuery.value(2).toInt();
+
+        // Determine file type from extension
+        // Use filename if available, otherwise extract from full path
+        QString nameForExtraction = fileName.isEmpty() ? fileFullPath : fileName;
+        QFileInfo fileInfo(nameForExtraction);
+        QString extension = fileInfo.suffix();
+
+        QString fileType;
+        if (extension.isEmpty()) {
+            fileType = "none"; // Extensionless files
+        } else {
+            // Use FileMetadata system to determine type
+            fileType = FileMetadata::getFileTypeFromExtension(extension);
+        }
+
+        // Update the record
+        updateQuery.bindValue(0, fileType);
+        updateQuery.bindValue(1, catalogId);
+        updateQuery.bindValue(2, fileFullPath);
+
+        if (!updateQuery.exec()) {
+            qDebug() << "Failed to update file in migration 2.9:" << fileFullPath
+                     << updateQuery.lastError().text();
+            // Continue with other files instead of failing completely
+        }
+
+        processedFiles++;
+
+        // Progress reporting and batch commit
+        if (processedFiles % batchSize == 0) {
+            int percentComplete = (processedFiles * 100) / totalFiles;
+            qDebug() << "Migration 2.9 progress:" << processedFiles << "/" << totalFiles
+                     << "(" << percentComplete << "%)";
+
+            // Commit and restart transaction for large datasets
+            if (!db.commit() || !db.transaction()) {
+                qDebug() << "Transaction restart failed in migration 2.9:" << db.lastError().text();
+                return db.lastError();
+            }
+        }
+    }
+
+    // Commit final transaction
+    if (!db.commit()) {
+        db.rollback();
+        qDebug() << "Failed to commit migration 2.9 transaction:" << db.lastError().text();
+        return db.lastError();
+    }
+
+    qDebug() << "Populated file_type for" << processedFiles << "files";
     qDebug() << "=== Database Migration 2.8 completed ===";
     return QSqlError(); // Success
 }
