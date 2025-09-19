@@ -31,6 +31,8 @@
 
 #include "core/searchjobstoppable.h"
 #include "core/catalogmanager.h"
+#include "core/filemetadata.h"
+#include "core/filetypemapping.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QElapsedTimer>
@@ -628,9 +630,6 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
         regex.setPatternOptions(QRegularExpression::NoPatternOption);
     }
 
-    // Filetypes
-    QStringList fileTypes;
-
     // Scan directory and create a list of files
     QDirIterator iterator(sourceDirectory, fileTypes, QDir::Files | QDir::Hidden, QDirIterator::Subdirectories);
 
@@ -649,7 +648,7 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
             break;
         }
 
-        // FIX: Add pause check every N files (simple approach)
+        // Add pause check every N files (simple approach)
         if (filesProcessedCount % 100 == 0) {  // Check every 100 files
             waitIfPaused();  // This will pause if needed
 
@@ -792,7 +791,20 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
                 filePaths.append(file.path());
                 fileCatalogs.append(sourceDirectory);
                 fileCatalogIDs.append(0);
-
+                // metadata arrays
+                QString extension = file.suffix().toLower();
+                QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+                fileTypes.append(fileType);
+                mimeTypes.append(""); // Empty for connected drive search
+                imageWidths.append(0);
+                imageHeights.append(0);
+                videoDurations.append(0);
+                videoWidths.append(0);
+                videoHeights.append(0);
+                audioDurations.append(0);
+                audioArtists.append("");
+                audioAlbums.append("");
+                audioTitles.append("");
                 if (!deviceFoundIDList.contains(sourceDirectory)) {
                     deviceFoundIDList.append(sourceDirectory);
                 }
@@ -822,6 +834,23 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
                 filePaths.append(file.path());
                 fileCatalogs.append(sourceDirectory);
                 fileCatalogIDs.append(0);
+
+                // ADD metadata arrays to keep them in sync with connected drive search
+                QString extension = file.suffix().toLower();
+                QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+
+                fileTypes.append(fileType);
+                mimeTypes.append(""); // Empty for connected drive search
+                imageWidths.append(0);
+                imageHeights.append(0);
+                videoDurations.append(0);
+                videoWidths.append(0);
+                videoHeights.append(0);
+                audioDurations.append(0);
+                audioArtists.append("");
+                audioAlbums.append("");
+                audioTitles.append("");
+
 
                 if (!deviceFoundIDList.contains(sourceDirectory)) {
                     deviceFoundIDList.append(sourceDirectory);
@@ -999,6 +1028,24 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
         filePaths.append(duplicatesQuery.value(3).toString());
         fileCatalogs.append(duplicatesQuery.value(4).toString());
         fileCatalogIDs.append(duplicatesQuery.value(5).toInt());
+
+        // ADD metadata arrays to keep them in sync
+        QString fileName = duplicatesQuery.value(0).toString();
+        QFileInfo fileInfo(fileName);
+        QString extension = fileInfo.suffix().toLower();
+        QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+
+        fileTypes.append(fileType);
+        mimeTypes.append(""); // Empty for duplicates search
+        imageWidths.append(0);
+        imageHeights.append(0);
+        videoDurations.append(0);
+        videoWidths.append(0);
+        videoHeights.append(0);
+        audioDurations.append(0);
+        audioArtists.append("");
+        audioAlbums.append("");
+        audioTitles.append("");
 
         duplicateCount++;
     }
@@ -1218,6 +1265,24 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     fileDateTimes.clear();
     fileCatalogs.clear();
     fileCatalogIDs.clear();
+
+    // ADD metadata arrays to keep them in sync
+    QString fileName = differencesQuery.value(0).toString();
+    QFileInfo fileInfo(fileName);
+    QString extension = fileInfo.suffix().toLower();
+    QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+
+    fileTypes.append(fileType);
+    mimeTypes.append(""); // Empty for differences search
+    imageWidths.append(0);
+    imageHeights.append(0);
+    videoDurations.append(0);
+    videoWidths.append(0);
+    videoHeights.append(0);
+    audioDurations.append(0);
+    audioArtists.append("");
+    audioAlbums.append("");
+    audioTitles.append("");
 
     int differenceCount = 0;
     while (differencesQuery.next() && shouldContinue()) {

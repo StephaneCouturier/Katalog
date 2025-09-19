@@ -122,18 +122,18 @@ QVariant Search::data(const QModelIndex &index, int role) const
     case 5: return int(fileCatalogIDs[index.row()]);       // Type (ID for now)
     case 6: return QVariant(index.row());                  // orderValue (row index)
     case 7: return QString(filePaths[index.row()] + "/" + fileNames[index.row()]); // Path (full path)
-    // Metadata - shifted by 2 positions to align with Explore
-    case 8: return QString(fileTypes[index.row()]);        // file_type
-    case 9: return QString(mimeTypes[index.row()]);        // MIME_type
-    case 10: return imageWidths[index.row()] > 0 ? imageWidths[index.row()] : QVariant();     // image_width
-    case 11: return imageHeights[index.row()] > 0 ? imageHeights[index.row()] : QVariant();   // image_height
-    case 12: return videoDurations[index.row()] > 0 ? videoDurations[index.row()] : QVariant(); // video_duration_seconds
-    case 13: return videoWidths[index.row()] > 0 ? videoWidths[index.row()] : QVariant();     // video_width
-    case 14: return videoHeights[index.row()] > 0 ? videoHeights[index.row()] : QVariant();   // video_height
-    case 15: return audioDurations[index.row()] > 0 ? audioDurations[index.row()] : QVariant(); // audio_duration_seconds
-    case 16: return QString(audioArtists[index.row()]);    // audio_artist
-    case 17: return QString(audioAlbums[index.row()]);     // audio_album
-    case 18: return QString(audioTitles[index.row()]);     // audio_title
+    // Metadata - WITH BOUNDS CHECKING to prevent crashes
+    case 8: return (index.row() < fileTypes.size()) ? QString(fileTypes[index.row()]) : QString("");
+    case 9: return (index.row() < mimeTypes.size()) ? QString(mimeTypes[index.row()]) : QString("");
+    case 10: return (index.row() < imageWidths.size() && imageWidths[index.row()] > 0) ? imageWidths[index.row()] : QVariant();
+    case 11: return (index.row() < imageHeights.size() && imageHeights[index.row()] > 0) ? imageHeights[index.row()] : QVariant();
+    case 12: return (index.row() < videoDurations.size() && videoDurations[index.row()] > 0) ? videoDurations[index.row()] : QVariant();
+    case 13: return (index.row() < videoWidths.size() && videoWidths[index.row()] > 0) ? videoWidths[index.row()] : QVariant();
+    case 14: return (index.row() < videoHeights.size() && videoHeights[index.row()] > 0) ? videoHeights[index.row()] : QVariant();
+    case 15: return (index.row() < audioDurations.size() && audioDurations[index.row()] > 0) ? audioDurations[index.row()] : QVariant();
+    case 16: return (index.row() < audioArtists.size()) ? QString(audioArtists[index.row()]) : QString("");
+    case 17: return (index.row() < audioAlbums.size()) ? QString(audioAlbums[index.row()]) : QString("");
+    case 18: return (index.row() < audioTitles.size()) ? QString(audioTitles[index.row()]) : QString("");
     }
     return QVariant();
 }
