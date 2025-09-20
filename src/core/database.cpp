@@ -389,7 +389,7 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     // Define metadata columns and their types
     // Define all columns, their types, and default values in a single QMap
     const QMap<QString, QString> newColumns = {
-        {"file_name_base", "TEXT"}, {"file_extension", "TEXT"}, {"file_type", "TEXT"}, {"mime_type", "TEXT"},
+        {"file_extension", "TEXT"}, {"file_type", "TEXT"}, {"mime_type", "TEXT"},
         {"image_width", "NUMERIC"}, {"image_height", "NUMERIC"}, {"image_orientation", "NUMERIC"},
         {"video_duration_seconds", "NUMERIC"}, {"video_width", "NUMERIC"}, {"video_height", "NUMERIC"}, {"video_codec", "TEXT"},
         {"video_framerate", "NUMERIC"}, {"video_bitrate", "NUMERIC"},
@@ -521,12 +521,12 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
         // Progress reporting and batch commit
         if (processedFiles % batchSize == 0) {
             int percentComplete = (processedFiles * 100) / totalFiles;
-            qDebug() << "Migration 2.9 progress:" << processedFiles << "/" << totalFiles
+            qDebug() << "Migration 2.8 progress:" << processedFiles << "/" << totalFiles
                      << "(" << percentComplete << "%)";
 
             // Commit and restart transaction for large datasets
             if (!db.commit() || !db.transaction()) {
-                qDebug() << "Transaction restart failed in migration 2.9:" << db.lastError().text();
+                qDebug() << "Transaction restart failed in migration 2.8:" << db.lastError().text();
                 return db.lastError();
             }
         }

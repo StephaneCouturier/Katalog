@@ -111,31 +111,26 @@ const auto SQL_CREATE_STORAGE = QLatin1String(R"(
 const auto SQL_CREATE_FILE = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS file(
                             file_catalog_id   NUMERIC,
-                            file_name         TEXT,
-                            file_folder_path  TEXT,
+                            file_name         TEXT,     -- "/home/user/photos"
+                            file_folder_path  TEXT,     -- "home.jpg"
                             file_size         NUMERIC,
                             file_date_updated TEXT,
                             file_catalog      TEXT,
-                            file_full_path    TEXT,     -- "/home/user/photos"
-                            file_name_base    TEXT,     -- "vacation"
-                            file_extension    TEXT,      -- "jpg" (without dot, NULL for files without extension)
-                            -- Basic metadata (always extracted, fast)
+                            file_full_path    TEXT,     -- "/home/user/photos/home.jpg"
+                            file_extension    TEXT,      -- "jpg"
                             file_type               TEXT,
                             mime_type               TEXT,
                             mime_verified           BOOLEAN,
                             type_mismatch           BOOLEAN,
-                            -- Image metadata (NULL if not image)
                             image_width             NUMERIC,
                             image_height            NUMERIC,
                             image_orientation       NUMERIC,
-                            -- Video metadata (NULL if not video)
                             video_duration_seconds  NUMERIC,
                             video_width             NUMERIC,
                             video_height            NUMERIC,
                             video_codec             TEXT,
                             video_framerate         NUMERIC,
                             video_bitrate           NUMERIC,
-                            -- Audio metadata (NULL if not audio)
                             audio_duration_seconds  NUMERIC,
                             audio_artist            TEXT,
                             audio_album             TEXT,
@@ -145,8 +140,7 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
                             audio_track_number      NUMERIC,
                             audio_bitrate           NUMERIC,
                             audio_sample_rate       NUMERIC,
-                            -- Extended metadata (JSON for flexibility)
-                            metadata_extended       TEXT,              -- JSON for additional fields
+                            metadata_extended       TEXT,    -- JSON for additional fields
                             metadata_extraction_date TEXT
                 )
             )");
@@ -162,7 +156,6 @@ const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                             file_date_updated       TEXT,
                             file_catalog            TEXT,
                             file_full_path          TEXT,
-                            file_name_base          TEXT,
                             file_extension          TEXT,
                             file_type               TEXT,
                             mime_type               TEXT,
