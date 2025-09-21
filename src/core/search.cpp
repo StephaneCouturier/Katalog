@@ -78,6 +78,9 @@ Search::Search(QObject *parent) : QAbstractTableModel(parent)
     searchOnTags = false;
     searchInCatalogsChecked = true;
     searchInConnectedChecked = false;
+    searchOnFileMetadata = false;
+    searchOnMetadataText = false;
+    metadataTextSearch = "";
 
     // Initialize statistics
     filesFoundNumber = 0;
@@ -167,37 +170,47 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
     return QVariant();
 }
 
-// QStringList Search::getExtensionsForSearchRegex(const QString &fileType)
-// {
-//     QStringList extensions = FileTypeMapping::getExtensionsForFileType(fileType.toLower());
-//     QStringList regexExtensions;
-//     for (const QString &ext : extensions) {
-//         regexExtensions << QString("*.%1$").arg(ext);
-//     }
-//     return regexExtensions;
-// }
+QString Search::buildMetadataSearchConditions() const
+{
+    if (!searchOnFileMetadata || !searchOnMetadataText || metadataTextSearch.isEmpty()) {
+        return QString();
+    }
 
-// QStringList Search::getExtensionsForCataloging(const QString &fileType)
-// {
-//     QString lowerType = fileType.toLower();
+    // Simple text search - just "contains" logic
+    QString searchPattern = caseSensitive ? metadataTextSearch : metadataTextSearch.toLower();
 
-//     if (lowerType == "none") {
-//         // For "none" type, return empty list since we'll use manual filtering
-//         // The caller should use extensions << "*" and filter manually
-//         return QStringList();
-//     }
+    // Define basic metadata text fields to search in
+    QStringList basicMetadataFields = {
+        "audio_artist", "audio_album", "audio_title", "audio_genre",
+        "video_codec", "mime_type", "file_type"
+    };
 
-//     // For all other types (including "other"), get extensions from cache
-//     QStringList extensions = FileTypeMapping::getExtensionsForFileType(lowerType);
-//     QStringList wildcardExtensions;
+    // Build conditions for basic metadata fields
+    QStringList basicConditions;
+    for (const QString &field : basicMetadataFields) {
+        QString condition;
+        if (caseSensitive) {
+            condition = QString("%1 LIKE '%%2%'").arg(field, searchPattern);
+        } else {
+            condition = QString("LOWER(%1) LIKE '%%2%'").arg(field, searchPattern);
+        }
+        basicConditions.append(condition);
+    }
 
-//     for (const QString &ext : extensions) {
-//         wildcardExtensions << QString("*.%1").arg(ext);
-//     }
+    // Add condition for JSON metadata_extended field
+    QString jsonCondition;
+    if (caseSensitive) {
+        jsonCondition = QString("metadata_extended LIKE '%%1%'").arg(searchPattern);
+    } else {
+        jsonCondition = QString("LOWER(metadata_extended) LIKE '%%1%'").arg(searchPattern);
+    }
 
-//     qDebug() << "getExtensionsForCataloging(" << fileType << ") returning:" << wildcardExtensions;
-//     return wildcardExtensions;
-// }
+    // Combine all conditions with OR
+    QStringList allConditions = basicConditions;
+    allConditions.append(jsonCondition);
+
+    return "(" + allConditions.join(" OR ") + ")";
+}
 
 //Search Processing
 void Search::prepareSearchPatterns()
@@ -495,7 +508,10 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             selected_directory,
             selected_device_ID_list,
             text_exclude,
-            case_sensitive
+            case_sensitive,
+            metadata_checked,
+            metadata_text_checked,
+            metadata_text_search
         ) VALUES(
             :date_time,
             :text_checked,
@@ -534,7 +550,10 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             :selected_directory,
             :selected_device_ID_list,
             :text_exclude,
-            :case_sensitive
+            :case_sensitive,
+            :metadata_checked,
+            :metadata_text_checked,
+            :metadata_text_search
         )
     )");
 
@@ -576,7 +595,11 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":selected_device_ID_list", deviceListStr);
     query.bindValue(":text_exclude", selectedSearchExclude);
     query.bindValue(":case_sensitive", caseSensitive);
+    query.bindValue(":metadata_checked", searchOnFileMetadata);
+    query.bindValue(":metadata_text_checked", searchOnMetadataText);
+    query.bindValue(":metadata_text_search", metadataTextSearch);
     query.exec();
+    qDebug() << "Search::saveSearchHistoryToTable: lastError" << query.lastError();
 }
 
 void Search::loadSearchHistoryCriteria(const QString &connectionName)
@@ -622,7 +645,10 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
             search_catalog_checked,
             search_directory_checked,
             selected_directory,
-            selected_device_ID_list
+            selected_device_ID_list,
+            metadata_checked,
+            metadata_text_checked,
+            metadata_text_search
         FROM search
         WHERE date_time =:date_time
     )");
@@ -679,7 +705,10 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
                 selectedDeviceIDList.append(idStr.toInt());
             }
         }
-        qDebug() << "Loaded selectedDeviceIDs:" << selectedDeviceIDList;
+        searchOnFileMetadata = query.value("metadata_checked").toBool();
+        searchOnMetadataText = query.value("metadata_text_checked").toBool();
+        metadataTextSearch = query.value("metadata_text_search").toString();
+
         // Calculate multipliers based on loaded units
         setMultipliers();
     }
@@ -743,6 +772,10 @@ void Search::copyFrom(const Search* other)
     searchInConnectedChecked = other->searchInConnectedChecked;
     connectedDirectory = other->connectedDirectory;
     selectedDeviceIDList = other->selectedDeviceIDList;
+
+    searchOnFileMetadata =  other->searchOnFileMetadata;
+    searchOnMetadataText =  other->searchOnMetadataText;
+    metadataTextSearch =  other->metadataTextSearch;
 
     // Note: no copy of results or statistics
 }

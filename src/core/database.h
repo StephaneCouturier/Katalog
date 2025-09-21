@@ -120,8 +120,8 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
                             file_extension    TEXT,      -- "jpg"
                             file_type               TEXT,
                             mime_type               TEXT,
-                            mime_verified           BOOLEAN,
-                            type_mismatch           BOOLEAN,
+                            mime_verified           NUMERIC,
+                            type_mismatch           NUMERIC,
                             image_width             NUMERIC,
                             image_height            NUMERIC,
                             image_orientation       NUMERIC,
@@ -149,16 +149,18 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
 
 const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  filetemp(
-                            file_catalog_id         NUMERIC,
-                            file_name               TEXT,
-                            file_folder_path        TEXT,
-                            file_size               NUMERIC,
-                            file_date_updated       TEXT,
-                            file_catalog            TEXT,
-                            file_full_path          TEXT,
-                            file_extension          TEXT,
+                            file_catalog_id   NUMERIC,
+                            file_name         TEXT,     -- "/home/user/photos"
+                            file_folder_path  TEXT,     -- "home.jpg"
+                            file_size         NUMERIC,
+                            file_date_updated TEXT,
+                            file_catalog      TEXT,
+                            file_full_path    TEXT,     -- "/home/user/photos/home.jpg"
+                            file_extension    TEXT,      -- "jpg"
                             file_type               TEXT,
                             mime_type               TEXT,
+                            mime_verified           NUMERIC,
+                            type_mismatch           NUMERIC,
                             image_width             NUMERIC,
                             image_height            NUMERIC,
                             image_orientation       NUMERIC,
@@ -177,8 +179,9 @@ const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                             audio_track_number      NUMERIC,
                             audio_bitrate           NUMERIC,
                             audio_sample_rate       NUMERIC,
-                            metadata_extended       TEXT,
-                            metadata_extraction_date TEXT)
+                            metadata_extended       TEXT,    -- JSON for additional fields
+                            metadata_extraction_date TEXT
+                )
             )");
 
 // FOLDER ---------------------------------------------------------------
@@ -246,7 +249,10 @@ const auto SQL_CREATE_SEARCH = QLatin1String(R"(
                             selected_directory        TEXT,
                             selected_device_ID_list   TEXT,
                             text_exclude              TEXT,
-                            case_sensitive            NUMERIC)
+                            case_sensitive            NUMERIC,
+                            metadata_checked          NUMERIC,
+                            metadata_text_checked     NUMERIC,
+                            metadata_text_search      TEXT)
             )");
 
 // TAG ------------------------------------------------------------------

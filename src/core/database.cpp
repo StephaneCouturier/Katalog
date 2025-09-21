@@ -384,11 +384,11 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     }
 
     // Step 2: Update "file" table structure with DEFAULT NULL for metadata columns
-    QStringList existingColumns = getTableColumns(connectionName, "file");
+    QStringList existingFileColumns = getTableColumns(connectionName, "file");
 
     // Define metadata columns and their types
     // Define all columns, their types, and default values in a single QMap
-    const QMap<QString, QString> newColumns = {
+    const QMap<QString, QString> newFileColumns = {
         {"file_extension", "TEXT"}, {"file_type", "TEXT"}, {"mime_type", "TEXT"},
         {"image_width", "NUMERIC"}, {"image_height", "NUMERIC"}, {"image_orientation", "NUMERIC"},
         {"video_duration_seconds", "NUMERIC"}, {"video_width", "NUMERIC"}, {"video_height", "NUMERIC"}, {"video_codec", "TEXT"},
@@ -400,8 +400,8 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     };
 
     // Add missing metadata columns
-    for (auto it = newColumns.constBegin(); it != newColumns.constEnd(); ++it) {
-        if (!existingColumns.contains(it.key())) {
+    for (auto it = newFileColumns.constBegin(); it != newFileColumns.constEnd(); ++it) {
+        if (!existingFileColumns.contains(it.key())) {
             qDebug() << "Adding column:" << it.key();
             QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2 DEFAULT NULL").arg(it.key(), it.value());
             if (auto addColumnError = executeSql(connectionName, alterSQL);
@@ -433,6 +433,28 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
         return createError;
     }
     qDebug() << "File and filetemp tables updated with metadata support";
+
+
+    // Step 4: Update "search" table structure to store metadata serach history
+    QStringList existingSearchColumns = getTableColumns(connectionName, "search");
+    const QMap<QString, QString> newSearchColumns = {
+        {"metadata_checked", "NUMERIC"}, {"metadata_text_checked", "NUMERIC"}, {"metadata_text_search", "TEXT"}
+    };
+
+    // Add missing metadata columns
+    for (auto it = newSearchColumns.constBegin(); it != newSearchColumns.constEnd(); ++it) {
+        if (!existingSearchColumns.contains(it.key())) {
+            qDebug() << "Adding column:" << it.key();
+            QString alterSQL = QString("ALTER TABLE search ADD COLUMN %1 %2 DEFAULT NULL").arg(it.key(), it.value());
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << it.key() << ":" << addColumnError.text();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << it.key() << "to -file- table";
+        }
+    }
 
     qDebug() << "=== Database Migration 2.8: PART2 - Populate file_type fields ===";
 

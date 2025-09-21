@@ -97,6 +97,11 @@ public:
     bool searchOnDate;
     QDateTime selectedDateMin;
     QDateTime selectedDateMax;
+
+    bool searchOnFileMetadata;
+    bool searchOnMetadataText;
+    QString metadataTextSearch;
+
     bool searchOnDuplicates;
     bool searchDuplicatesOnName;
     bool searchDuplicatesOnSize;
@@ -120,11 +125,8 @@ public:
     QList<int> selectedDeviceIDList;  //stored in db as comma-separated device IDs ("1,2,3")
     QString searchDateTime;
 
-    // File type lists
-    // QStringList fileType_AudioS;
-    // QStringList fileType_ImageS;
-    // QStringList fileType_TextS;
-    // QStringList fileType_VideoS;
+    // Metadata
+    QString buildMetadataSearchConditions() const;
 
     // Results
     QList<QString> fileNames;

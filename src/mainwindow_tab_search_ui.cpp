@@ -410,6 +410,27 @@
             }
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_FileMetadata_toggled(bool checked)
+        {
+            if(checked==true){
+                ui->Search_widget_FileMetadata->setHidden(false);
+            }
+            else{
+                ui->Search_widget_FileMetadata->setHidden(true);
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_MetadataText_toggled(bool checked)
+        {
+            if(checked == true) {
+                ui->Search_lineEdit_MetadataText->setEnabled(true);
+            }
+            else {
+                ui->Search_lineEdit_MetadataText->setDisabled(true);
+            }
+        }
+
+        //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Type_toggled(bool checked)
         {
             if(checked==1){
@@ -982,6 +1003,11 @@
             ui->Search_comboBox_SearchIn->setCurrentIndex(comboIndex);
             ui->Search_checkBox_CaseSensitive->setChecked(search->caseSensitive);
             ui->Search_lineEdit_Exclude->setText(search->selectedSearchExclude);
+
+            // File metadata criteria
+            ui->Search_checkBox_FileMetadata->setChecked(search->searchOnFileMetadata);
+            ui->Search_checkBox_MetadataText->setChecked(search->searchOnMetadataText);
+            ui->Search_lineEdit_MetadataText->setText(search->metadataTextSearch);
 
             //File criteria Size
             ui->Search_checkBox_Size->setChecked(search->searchOnSize);

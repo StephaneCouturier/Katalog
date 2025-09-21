@@ -422,7 +422,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             audio_duration_seconds,
             audio_artist,
             audio_album,
-            audio_title
+            audio_title,
+            metadata_extended
     FROM  file
     WHERE file_catalog_id = :file_catalog_id
 )");
@@ -437,6 +438,14 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     if (searchOnFileCriteria && searchOnDate) {
         getFilesQuerySQL += " AND file_date_updated >= :file_date_updated_min ";
         getFilesQuerySQL += " AND file_date_updated <= :file_date_updated_max ";
+    }
+
+    // Add Metadata filter
+    if (searchOnFileMetadata && searchOnMetadataText && !metadataTextSearch.isEmpty()) {
+        QString metadataCondition = buildMetadataSearchConditions();
+        if (!metadataCondition.isEmpty()) {
+            getFilesQuerySQL += " AND " + metadataCondition + " ";
+        }
     }
 
     // Add FileType filter using FileTypeMapping
