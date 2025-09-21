@@ -458,7 +458,7 @@
                 currentSearch = new SearchJobStoppable(this);
             }
 
-            // Load directly into currentSearch - no temporary object needed!
+            // Load directly into currentSearch
             currentSearch->searchDateTime = ui->Search_treeView_History->model()->index(index.row(), 0, QModelIndex()).data().toString();
             currentSearch->loadSearchHistoryCriteria("defaultConnection");
 
@@ -1039,7 +1039,7 @@
                 mappedUserFileType = FileTypeMapping::ALL;
             }
 
-            // Set FileType2 combobox to the mapped category
+            // Set FileType combobox to the mapped category
             for (int i = 0; i < ui->Search_comboBox_FileType->count(); i++) {
                 FileTypeMapping::UserFileType itemCategory =
                     static_cast<FileTypeMapping::UserFileType>(
@@ -1050,6 +1050,10 @@
                     break;
                 }
             }
+
+            ui->Search_checkBox_FileMetadata->setChecked(false);
+            ui->Search_checkBox_MetadataText->setChecked(false);
+            ui->Search_lineEdit_MetadataText->clear();
 
             ui->Search_checkBox_Date->setChecked(search->searchOnDate);
             ui->Search_dateTimeEdit_Min->setDateTime(search->selectedDateMin);
