@@ -101,6 +101,14 @@ public:
     bool searchOnFileMetadata;
     bool searchOnMetadataText;
     QString metadataTextSearch;
+    bool searchOnMetadataSize;
+    int metadataMinimumHeight;
+    int metadataMaximumHeight;
+    int metadataMinimumWidth;
+    int metadataMaximumWidth;
+    bool searchOnMetadataDuration;
+    QDateTime metadataDurationMin;
+    QDateTime metadataDurationMax;
 
     bool searchOnDuplicates;
     bool searchDuplicatesOnName;

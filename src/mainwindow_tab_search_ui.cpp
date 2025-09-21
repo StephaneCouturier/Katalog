@@ -430,6 +430,34 @@
             }
         }
 
+        void MainWindow::on_Search_checkBox_MetadataSize_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_spinBox_MetadataMinimumHeight->setEnabled(true);
+                ui->Search_spinBox_MetadataMaximumHeight->setEnabled(true);
+                ui->Search_spinBox_MetadataMinimumWidth->setEnabled(true);
+                ui->Search_spinBox_MetadataMaximumWidth->setEnabled(true);
+            }
+            else{
+                ui->Search_spinBox_MetadataMinimumHeight->setDisabled(true);
+                ui->Search_spinBox_MetadataMaximumHeight->setDisabled(true);
+                ui->Search_spinBox_MetadataMinimumWidth->setDisabled(true);
+                ui->Search_spinBox_MetadataMaximumWidth->setDisabled(true);
+            }
+        }
+
+        void MainWindow::on_Search_checkBox_MetadataDuration_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_dateTimeEdit_MetadataDurationMin->setEnabled(true);
+                ui->Search_dateTimeEdit_MetadataDurationMax->setEnabled(true);
+            }
+            else{
+                ui->Search_dateTimeEdit_MetadataDurationMin->setDisabled(true);
+                ui->Search_dateTimeEdit_MetadataDurationMax->setDisabled(true);
+            }
+        }
+
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Type_toggled(bool checked)
         {
@@ -954,6 +982,25 @@
                 }
             }
 
+            // Reset metadata search criteria
+            ui->Search_checkBox_FileMetadata->setChecked(false);
+            ui->Search_checkBox_MetadataText->setChecked(false);
+            ui->Search_lineEdit_MetadataText->clear();
+            ui->Search_checkBox_MetadataSize->setChecked(false);
+            ui->Search_spinBox_MetadataMinimumHeight->setValue(0);
+            ui->Search_spinBox_MetadataMaximumHeight->setValue(10000);
+            ui->Search_spinBox_MetadataMinimumWidth->setValue(0);
+            ui->Search_spinBox_MetadataMaximumWidth->setValue(10000);
+            ui->Search_spinBox_MetadataMinimumHeight->setDisabled(true);
+            ui->Search_spinBox_MetadataMaximumHeight->setDisabled(true);
+            ui->Search_spinBox_MetadataMinimumWidth->setDisabled(true);
+            ui->Search_spinBox_MetadataMaximumWidth->setDisabled(true);
+            ui->Search_checkBox_MetadataDuration->setChecked(false);
+            ui->Search_dateTimeEdit_MetadataDurationMin->setDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)));
+            ui->Search_dateTimeEdit_MetadataDurationMax->setDateTime(QDateTime(QDate(2030, 1, 1), QTime(23, 59, 59)));
+            ui->Search_dateTimeEdit_MetadataDurationMin->setDisabled(true);
+            ui->Search_dateTimeEdit_MetadataDurationMax->setDisabled(true);
+
             ui->Search_comboBox_FileType->setCurrentIndex(0);
             ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicatesName->setChecked(true);
@@ -1008,6 +1055,18 @@
             ui->Search_checkBox_FileMetadata->setChecked(search->searchOnFileMetadata);
             ui->Search_checkBox_MetadataText->setChecked(search->searchOnMetadataText);
             ui->Search_lineEdit_MetadataText->setText(search->metadataTextSearch);
+
+            // Metadata size criteria
+            ui->Search_checkBox_MetadataSize->setChecked(search->searchOnMetadataSize);
+            ui->Search_spinBox_MetadataMinimumHeight->setValue(search->metadataMinimumHeight);
+            ui->Search_spinBox_MetadataMaximumHeight->setValue(search->metadataMaximumHeight);
+            ui->Search_spinBox_MetadataMinimumWidth->setValue(search->metadataMinimumWidth);
+            ui->Search_spinBox_MetadataMaximumWidth->setValue(search->metadataMaximumWidth);
+
+            // Metadata duration criteria
+            ui->Search_checkBox_MetadataDuration->setChecked(search->searchOnMetadataDuration);
+            ui->Search_dateTimeEdit_MetadataDurationMin->setDateTime(search->metadataDurationMin);
+            ui->Search_dateTimeEdit_MetadataDurationMax->setDateTime(search->metadataDurationMax);
 
             //File criteria Size
             ui->Search_checkBox_Size->setChecked(search->searchOnSize);

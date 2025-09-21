@@ -438,7 +438,10 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     // Step 4: Update "search" table structure to store metadata serach history
     QStringList existingSearchColumns = getTableColumns(connectionName, "search");
     const QMap<QString, QString> newSearchColumns = {
-        {"metadata_checked", "NUMERIC"}, {"metadata_text_checked", "NUMERIC"}, {"metadata_text_search", "TEXT"}
+        {"metadata_checked", "NUMERIC"}, {"metadata_text_checked", "NUMERIC"}, {"metadata_text_search", "TEXT"},
+        {"metadata_size_checked", "NUMERIC"}, {"metadata_size_min_height", "NUMERIC"}, {"metadata_size_max_height", "NUMERIC"},
+        {"metadata_size_min_width", "NUMERIC"}, {"metadata_size_max_width", "NUMERIC"}, {"metadata_duration_checked", "NUMERIC"},
+        {"metadata_duration_min", "TEXT"}, {"metadata_duration_max", "TEXT"}
     };
 
     // Add missing metadata columns

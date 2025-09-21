@@ -590,7 +590,8 @@ class MainWindow : public KXmlGuiWindow
 
             void on_Search_checkBox_FileMetadata_toggled(bool checked);
             void on_Search_checkBox_MetadataText_toggled(bool checked);
-
+            void on_Search_checkBox_MetadataSize_toggled(bool checked);
+            void on_Search_checkBox_MetadataDuration_toggled(bool checked);
             void on_Search_checkBox_FileCriteria_toggled(bool checked);
             void on_Search_checkBox_Date_toggled(bool checked);
             void on_Search_checkBox_Size_toggled(bool checked);

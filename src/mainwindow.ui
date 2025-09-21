@@ -2728,6 +2728,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
                         </property>
                         <property name="maximum">
+                         <number>99999</number>
+                        </property>
+                        <property name="singleStep">
                          <number>1000</number>
                         </property>
                        </widget>
@@ -2809,7 +2812,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </font>
                         </property>
                         <property name="maximum">
+                         <number>99999</number>
+                        </property>
+                        <property name="singleStep">
                          <number>1000</number>
+                        </property>
+                        <property name="stepType">
+                         <enum>QAbstractSpinBox::StepType::AdaptiveDecimalStepType</enum>
+                        </property>
+                        <property name="value">
+                         <number>10000</number>
                         </property>
                        </widget>
                       </item>
@@ -2934,6 +2946,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
                         </property>
                         <property name="maximum">
+                         <number>99999</number>
+                        </property>
+                        <property name="singleStep">
                          <number>1000</number>
                         </property>
                        </widget>
@@ -3015,7 +3030,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </font>
                         </property>
                         <property name="maximum">
+                         <number>99999</number>
+                        </property>
+                        <property name="singleStep">
                          <number>1000</number>
+                        </property>
+                        <property name="value">
+                         <number>10000</number>
                         </property>
                        </widget>
                       </item>

@@ -81,6 +81,17 @@ Search::Search(QObject *parent) : QAbstractTableModel(parent)
     searchOnFileMetadata = false;
     searchOnMetadataText = false;
     metadataTextSearch = "";
+    searchOnFileMetadata = false;
+    searchOnMetadataText = false;
+    metadataTextSearch = "";
+    searchOnMetadataSize = false;
+    metadataMinimumHeight = 0;
+    metadataMaximumHeight = 1000;
+    metadataMinimumWidth = 0;
+    metadataMaximumWidth = 1000;
+    searchOnMetadataDuration = false;
+    metadataDurationMin = QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0));
+    metadataDurationMax = QDateTime(QDate(2030, 1, 1), QTime(23, 59, 59));
 
     // Initialize statistics
     filesFoundNumber = 0;
@@ -511,7 +522,15 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             case_sensitive,
             metadata_checked,
             metadata_text_checked,
-            metadata_text_search
+            metadata_text_search,
+            metadata_size_checked,
+            metadata_size_min_height,
+            metadata_size_max_height,
+            metadata_size_min_width,
+            metadata_size_max_width,
+            metadata_duration_checked,
+            metadata_duration_min,
+            metadata_duration_max
         ) VALUES(
             :date_time,
             :text_checked,
@@ -553,7 +572,15 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             :case_sensitive,
             :metadata_checked,
             :metadata_text_checked,
-            :metadata_text_search
+            :metadata_text_search,
+            :metadata_size_checked,
+            :metadata_size_min_height,
+            :metadata_size_max_height,
+            :metadata_size_min_width,
+            :metadata_size_max_width,
+            :metadata_duration_checked,
+            :metadata_duration_min,
+            :metadata_duration_max
         )
     )");
 
@@ -598,6 +625,14 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":metadata_checked", searchOnFileMetadata);
     query.bindValue(":metadata_text_checked", searchOnMetadataText);
     query.bindValue(":metadata_text_search", metadataTextSearch);
+    query.bindValue(":metadata_size_checked", searchOnMetadataSize);
+    query.bindValue(":metadata_size_min_height", metadataMinimumHeight);
+    query.bindValue(":metadata_size_max_height", metadataMaximumHeight);
+    query.bindValue(":metadata_size_min_width", metadataMinimumWidth);
+    query.bindValue(":metadata_size_max_width", metadataMaximumWidth);
+    query.bindValue(":metadata_duration_checked", searchOnMetadataDuration);
+    query.bindValue(":metadata_duration_min", metadataDurationMin.toString("HH:mm:ss"));
+    query.bindValue(":metadata_duration_max", metadataDurationMax.toString("HH:mm:ss"));
     query.exec();
     qDebug() << "Search::saveSearchHistoryToTable: lastError" << query.lastError();
 }
@@ -648,7 +683,15 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
             selected_device_ID_list,
             metadata_checked,
             metadata_text_checked,
-            metadata_text_search
+            metadata_text_search,
+            metadata_size_checked,
+            metadata_size_min_height,
+            metadata_size_max_height,
+            metadata_size_min_width,
+            metadata_size_max_width,
+            metadata_duration_checked,
+            metadata_duration_min,
+            metadata_duration_max
         FROM search
         WHERE date_time =:date_time
     )");
@@ -708,6 +751,14 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
         searchOnFileMetadata = query.value(38).toBool();
         searchOnMetadataText = query.value(39).toBool();
         metadataTextSearch = query.value(40).toString();
+        searchOnMetadataSize = query.value(41).toBool();
+        metadataMinimumHeight = query.value(42).toInt();
+        metadataMaximumHeight = query.value(43).toInt();
+        metadataMinimumWidth = query.value(44).toInt();
+        metadataMaximumWidth = query.value(45).toInt();
+        searchOnMetadataDuration = query.value(46).toBool();
+        metadataDurationMin = QDateTime(QDate(1970, 1, 1), QTime::fromString(query.value(47).toString(), "HH:mm:ss"));
+        metadataDurationMax = QDateTime(QDate(2030, 1, 1), QTime::fromString(query.value(48).toString(), "HH:mm:ss"));
 
         // Calculate multipliers based on loaded units
         setMultipliers();

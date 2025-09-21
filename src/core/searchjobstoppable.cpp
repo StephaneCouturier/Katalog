@@ -447,6 +447,43 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             getFilesQuerySQL += " AND " + metadataCondition + " ";
         }
     }
+    // Add Metadata size filter
+    if (searchOnFileMetadata && searchOnMetadataSize) {
+        QStringList sizeConditions;
+
+        // Height condition - check both image and video height
+        QString heightCondition = QString("((image_height >= %1 AND image_height <= %2) OR (video_height >= %1 AND video_height <= %2))")
+                                      .arg(metadataMinimumHeight)
+                                      .arg(metadataMaximumHeight);
+        sizeConditions.append(heightCondition);
+
+        // Width condition - check both image and video width
+        QString widthCondition = QString("((image_width >= %1 AND image_width <= %2) OR (video_width >= %1 AND video_width <= %2))")
+                                     .arg(metadataMinimumWidth)
+                                     .arg(metadataMaximumWidth);
+        sizeConditions.append(widthCondition);
+
+        // Combine height and width with AND
+        getFilesQuerySQL += " AND (" + sizeConditions.join(" AND ") + ") ";
+    }
+
+    // Add Metadata duration filter
+    if (searchOnFileMetadata && searchOnMetadataDuration) {
+        // Convert QDateTime to seconds for comparison
+        int minSeconds = metadataDurationMin.time().hour() * 3600 +
+                         metadataDurationMin.time().minute() * 60 +
+                         metadataDurationMin.time().second();
+        int maxSeconds = metadataDurationMax.time().hour() * 3600 +
+                         metadataDurationMax.time().minute() * 60 +
+                         metadataDurationMax.time().second();
+
+        // Duration condition - check both video and audio duration
+        QString durationCondition = QString("((video_duration_seconds >= %1 AND video_duration_seconds <= %2) OR (audio_duration_seconds >= %1 AND audio_duration_seconds <= %2))")
+                                        .arg(minSeconds)
+                                        .arg(maxSeconds);
+
+        getFilesQuerySQL += " AND (" + durationCondition + ") ";
+    }
 
     // Add FileType filter using FileTypeMapping
     if (searchOnType && selectedUserFileType != FileTypeMapping::ALL) {

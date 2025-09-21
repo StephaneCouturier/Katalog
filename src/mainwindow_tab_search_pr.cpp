@@ -216,6 +216,14 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->searchOnFileMetadata = ui->Search_checkBox_FileMetadata->isChecked();
     search->searchOnMetadataText = ui->Search_checkBox_MetadataText->isChecked();
     search->metadataTextSearch = ui->Search_lineEdit_MetadataText->text();
+    search->searchOnMetadataSize = ui->Search_checkBox_MetadataSize->isChecked();
+    search->metadataMinimumHeight = ui->Search_spinBox_MetadataMinimumHeight->value();
+    search->metadataMaximumHeight = ui->Search_spinBox_MetadataMaximumHeight->value();
+    search->metadataMinimumWidth = ui->Search_spinBox_MetadataMinimumWidth->value();
+    search->metadataMaximumWidth = ui->Search_spinBox_MetadataMaximumWidth->value();
+    search->searchOnMetadataDuration = ui->Search_checkBox_MetadataDuration->isChecked();
+    search->metadataDurationMin = ui->Search_dateTimeEdit_MetadataDurationMin->dateTime();
+    search->metadataDurationMax = ui->Search_dateTimeEdit_MetadataDurationMax->dateTime();
     search->searchOnDuplicates = ui->Search_checkBox_Duplicates->isChecked();
     search->searchDuplicatesOnName = ui->Search_checkBox_DuplicatesName->isChecked();
     search->searchDuplicatesOnSize = ui->Search_checkBox_DuplicatesSize->isChecked();
