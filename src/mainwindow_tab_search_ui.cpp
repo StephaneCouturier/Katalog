@@ -1051,10 +1051,6 @@
                 }
             }
 
-            ui->Search_checkBox_FileMetadata->setChecked(false);
-            ui->Search_checkBox_MetadataText->setChecked(false);
-            ui->Search_lineEdit_MetadataText->clear();
-
             ui->Search_checkBox_Date->setChecked(search->searchOnDate);
             ui->Search_dateTimeEdit_Min->setDateTime(search->selectedDateMin);
             ui->Search_dateTimeEdit_Max->setDateTime(search->selectedDateMax);

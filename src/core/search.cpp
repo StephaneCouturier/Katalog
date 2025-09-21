@@ -705,9 +705,9 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
                 selectedDeviceIDList.append(idStr.toInt());
             }
         }
-        searchOnFileMetadata = query.value("metadata_checked").toBool();
-        searchOnMetadataText = query.value("metadata_text_checked").toBool();
-        metadataTextSearch = query.value("metadata_text_search").toString();
+        searchOnFileMetadata = query.value(38).toBool();
+        searchOnMetadataText = query.value(39).toBool();
+        metadataTextSearch = query.value(40).toString();
 
         // Calculate multipliers based on loaded units
         setMultipliers();
