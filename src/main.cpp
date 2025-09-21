@@ -37,7 +37,7 @@
 
 //#ifdef Q_OS_LINUX
 //    #include <KAboutData>
-#include <KLocalizedString>
+//#include <KLocalizedString>
 //#endif
 
 #include "mainwindow.h"
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
         }
 
     #ifdef Q_OS_LINUX
-        KLocalizedString::setApplicationDomain("Katalog");
+        //KLocalizedString::setApplicationDomain("Katalog");
 
 //        KAboutData aboutData(
 //             QStringLiteral("Katalog"),         // The program name used internally. (componentName)

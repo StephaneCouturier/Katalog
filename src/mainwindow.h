@@ -52,9 +52,9 @@
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KActionCollection>
-#include <KLocalizedString>
-#include <KIconTheme>
-#include <KIconLoader>
+//#include <KLocalizedString>
+//#include <KIconTheme>
+//#include <KIconLoader>
 #include <KFileMetaData/ExtractorCollection>
 #include <KFileMetaData/SimpleExtractionResult>
 #include <KFileMetaData/Properties>
