@@ -1,5 +1,21 @@
 cmake_minimum_required(VERSION 3.16)
-project(Katalog VERSION 2.7 LANGUAGES CXX)
+project(Katalog VERSION 2.8 LANGUAGES CXX)
+
+# Add this section immediately after project():
+set(KATALOG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(KATALOG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(KATALOG_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+
+# Generate build timestamp
+string(TIMESTAMP KATALOG_BUILD_DATE "%Y-%m-%d %H:%M:%S" UTC)
+string(TIMESTAMP KATALOG_BUILD_YEAR "%Y" UTC)
+
+# Configure version header
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/src/version.h"
+    @ONLY
+)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -35,10 +51,10 @@ qt_standard_project_setup()
 
 # Find KF6 components
 find_package(KF6CoreAddons REQUIRED)
-find_package(KF6I18n REQUIRED)
+#find_package(KF6I18n REQUIRED)
 find_package(KF6XmlGui REQUIRED)
 find_package(KF6Config REQUIRED)
-find_package(KF6IconThemes REQUIRED)
+#find_package(KF6IconThemes REQUIRED)
 find_package(KF6FileMetaData REQUIRED)
 find_package(KF6Completion REQUIRED)
 
@@ -160,6 +176,7 @@ set(MAIN_HEADERS
     src/mainwindow_ui_wrapper_device.h
     src/mainwindow_ui_wrapper_storage.h
     src/mainwindow_ui_wrapper_catalog.h
+    src/version.h.in
 )
 
 # UI files
@@ -270,18 +287,10 @@ target_link_libraries(katalog-core PUBLIC
     Qt6::Widgets # Temporarily needed for QApplication in catalog.cpp
     Qt6::Charts  # Required for QDateTimeAxis used in mainwindow.h
     KF6::CoreAddons
-    KF6::I18n
+    #KF6::I18n
     KF6::XmlGui
     KF6::FileMetaData
     KF6::Completion
-)
-
-target_include_directories(katalog-core PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${KF6CoreAddons_INCLUDE_DIRS}
-    ${KF6I18n_INCLUDE_DIRS}
-    ${KF6XmlGui_INCLUDE_DIRS}
 )
 
 # Create the main executable with all sources at once
@@ -302,11 +311,21 @@ target_link_libraries(Katalog PRIVATE
     Qt6::Charts
     Qt6::Network
     KF6::CoreAddons
-    KF6::I18n
+    #KF6::I18n
     KF6::XmlGui
     KF6::ConfigCore
-    KF6::IconThemes
+    #KF6::IconThemes
     KF6::FileMetaData
+)
+
+target_include_directories(katalog-core PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_BINARY_DIR}/src  # ADD THIS LINE ← Points to build/src/
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${KF6CoreAddons_INCLUDE_DIRS}
+    ${KF6I18n_INCLUDE_DIRS}
+    ${KF6XmlGui_INCLUDE_DIRS}
+    ${KF6Config_INCLUDE_DIRS}
 )
 
 # To avoid threat detection of a separate freetype dll.
@@ -325,6 +344,7 @@ set_target_properties(katalog-core PROPERTIES
 # Add include directories to help with relative paths
 target_include_directories(Katalog PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_BINARY_DIR}/src  # Add this line for generated version.h
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${KF6CoreAddons_INCLUDE_DIRS}
     ${KF6I18n_INCLUDE_DIRS}

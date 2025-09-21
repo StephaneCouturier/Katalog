@@ -1,6 +1,22 @@
 # CMakeList.txt version adapted to build Katalog on systems with Qt5/KF5
 cmake_minimum_required(VERSION 3.16)
-project(Katalog VERSION 2.7 LANGUAGES CXX)
+project(Katalog VERSION 2.8 LANGUAGES CXX)
+
+# Add this section immediately after project():
+set(KATALOG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(KATALOG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(KATALOG_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+
+# Generate build timestamp
+string(TIMESTAMP KATALOG_BUILD_DATE "%Y-%m-%d %H:%M:%S" UTC)
+string(TIMESTAMP KATALOG_BUILD_YEAR "%Y" UTC)
+
+# Configure version header
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/src/version.h"
+    @ONLY
+)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -300,6 +316,7 @@ set_target_properties(katalog-core PROPERTIES
 # Add include directories to help with relative paths
 target_include_directories(Katalog PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_BINARY_DIR}/src  # Add this line for generated version.h
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${KF5CoreAddons_INCLUDE_DIRS}
     ${KF5I18n_INCLUDE_DIRS}

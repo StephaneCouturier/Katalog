@@ -30,6 +30,7 @@
 */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "version.h"
 #include "core/database.h"
 #include "core/language.h"
 #include "core/catalogjobstoppable.h"
@@ -37,9 +38,9 @@
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)
 {
-    //Set current version, release date, and development mode
-    currentVersion  = "2.8";
-    releaseDate     = "2025-09-04";
+    //Set current version and release date from CMake-generated values
+    currentVersion  = KatalogVersion::string();
+    releaseDate     = KatalogVersion::buildDate();
 
     // Initialize objects first
     collection = new Collection();
