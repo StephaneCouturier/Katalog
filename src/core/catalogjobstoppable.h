@@ -32,7 +32,6 @@
 #define CATALOGJOBSTOPPABLE_H
 
 #pragma once
-
 #include <QObject>
 #include <QAtomicInt>
 #include <QMutex>
@@ -206,6 +205,14 @@ private:
 
     // Helper for fast type detection
     QString getQuickFileType(const QFileInfo &fileInfo) const;
+
+    void processBatch(QStringList& fileNames, QStringList& fileFolderPaths,
+                      QStringList& fileFullPaths, QStringList& fileDateTimes,
+                      QStringList& fileCatalogs, QList<qint64>& fileSizes,
+                      QStringList& fileExtensions, QStringList& fileTypes,
+                      QStringList& directoryPaths, Catalog* catalog);
+
+    void insertFolders(const QStringList& folderPaths, Catalog* catalog);
 
 signals:
     /**
