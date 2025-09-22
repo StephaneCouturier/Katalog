@@ -48,5 +48,7 @@ protected:
 private:
     QString percentBrush;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+    QIcon getAdvancedIcon(const QString &fileName, const QString &fileType) const;
+    QIcon getMimeBasedIcon(const QString &mimeType) const;
 };
 #endif // FILESVIEW_H

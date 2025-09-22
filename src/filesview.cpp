@@ -36,6 +36,7 @@
 #include <QDebug>
 #include <QFileIconProvider>
 #include <QStandardItem>
+#include <qmimedatabase.h>
 
 FilesView::FilesView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -166,21 +167,57 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                 if( index.column()==0 ){
 
                     //Identification of filetype
-                    int fileTypeColumn = 6;
-                    int mimeTypeColumn = 7;
+                    int fileTypeColumn = 8;
+                    int mimeTypeColumn = 9;
                     QString fileType;
                     QString mimeType;
+                    QString fileName;
 
-                    //Assign the icon per filetype
+                    //Get data from columns
                     QModelIndex idx = index.sibling(index.row(), fileTypeColumn);
                     fileType = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
                     QModelIndex idx2 = index.sibling(index.row(), mimeTypeColumn);
                     mimeType = QSortFilterProxyModel::data(idx2, Qt::DisplayRole).toString();
 
+                    // Get filename for extension-based icon lookup
+                    fileName = QSortFilterProxyModel::data(index, Qt::DisplayRole).toString();
+
+                    // Debug output
+                    //qDebug() << "Icon lookup: fileName=" << fileName << "fileType=" << fileType << "mimeType=" << mimeType;
+
+                    // Handle folders first
                     if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" ){
                         return QIcon::fromTheme("folder");
                     }
-                    else if( fileType == "audio" ){
+
+                    // TESTING: Advanced icon modes
+                    // TODO: Add settings check here for icon mode selection
+                    // For now, hardcoded & disabled, this will be replaced with settings check
+                    bool useAdvancedIcons = false;
+                    bool useMimeIcons = false;
+                    if (useAdvancedIcons) {
+                        if (useMimeIcons && !mimeType.isEmpty()) {
+                            // MIME MODE: Use QMimeDatabase for MIME-based icons
+                            QIcon mimeIcon = getMimeBasedIcon(mimeType);
+                            if (!mimeIcon.isNull()) {
+                                qDebug() << "Using MIME icon for" << fileName << "mimeType:" << mimeType;
+                                return mimeIcon;
+                            }
+                            qDebug() << "MIME icon failed for" << mimeType << ", falling back to extension mode";
+                        }
+
+                        // EXTENSION MODE: Extension-based system icons
+                        QIcon advancedIcon = getAdvancedIcon(fileName, fileType);
+                        if (!advancedIcon.isNull()) {
+                            qDebug() << "Using extension-based icon for" << fileName;
+                            return advancedIcon;
+                        }
+                        qDebug() << "Extension-based icon failed for" << fileName << ", falling back to simple mode";
+                        // Fall through to simple mode if advanced icon not found
+                    }
+
+                    // SIMPLE MODE (fallback): Generic 6 icons, 1 per user file type
+                    if( fileType == "audio" ){
                         return QIcon::fromTheme("audio-x-mpeg");
                     }
                     else if( fileType == "image" ){
@@ -196,31 +233,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                         else
                             return QIcon::fromTheme("document-open");
                     }
-                    else //fileTypesPlain_None
+                    else //fileType = none
                         return QIcon::fromTheme("application-x-zerosize");
-
-                    // Fallback on the file extension
-                    // QModelIndex idx = index.sibling(index.row(), 5);
-                    // if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" ){
-                    //     return QIcon::fromTheme("folder");
-                    // }
-                    // else if( fileTypesPlain_Audio.contains(fileType,Qt::CaseInsensitive)){
-                    //     return QIcon::fromTheme("audio-x-mpeg");
-                    // }
-                    // else if( fileTypesPlain_Image.contains(fileType,Qt::CaseInsensitive)){
-                    //     return QIcon::fromTheme("image-jpeg");
-                    // }
-                    // else if(  fileTypesPlain_Text.contains(fileType,Qt::CaseInsensitive)){
-                    //     return QIcon::fromTheme("view-list-text");
-                    // }
-                    // else if( fileTypesPlain_Video.contains(fileType,Qt::CaseInsensitive)){
-                    //     return QIcon::fromTheme("video-mp4");
-                    // }
-                    // else if( fileTypesPlain_Other.contains(fileType,Qt::CaseInsensitive)){
-                    //     return QIcon::fromTheme("document-open");
-                    // }
-                    // else //fileTypesPlain_None
-                    //     return QIcon::fromTheme("application-x-zerosize");
                 }
 
                 break;
@@ -240,8 +254,6 @@ QVariant FilesView::headerData(int section, Qt::Orientation orientation, int rol
         }
         return QVariant();
 }
-
-// In src/filesview.cpp, update the lessThan() method to handle merged columns:
 
 bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
@@ -344,4 +356,139 @@ bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) cons
     }
 
     return QSortFilterProxyModel::lessThan(left, right);
+}
+
+// Simplified debug version - add this to filesview.cpp
+QIcon FilesView::getAdvancedIcon(const QString &fileName, const QString &fileType) const
+{
+    // Extract file extension
+    QString extension = fileName;
+    int lastDot = extension.lastIndexOf('.');
+    if (lastDot > 0) {
+        extension = extension.mid(lastDot + 1).toLower();
+    } else {
+        return QIcon(); // No extension, return null icon
+    }
+
+    // Debug: Print what we're looking for
+    qDebug() << "getAdvancedIcon: fileName=" << fileName << "extension=" << extension << "fileType=" << fileType;
+
+    // Start with very common icons that should exist on most systems
+    QString iconName;
+
+    if (fileType == "image") {
+        if (extension == "pdf") {
+            iconName = "application-pdf";
+        } else if (extension == "png") {
+            iconName = "image-png";
+        } else if (extension == "jpg" || extension == "jpeg") {
+            iconName = "image-jpeg";
+        } else {
+            iconName = "image-x-generic";
+        }
+    }
+    else if (fileType == "audio") {
+        if (extension == "mp3") {
+            iconName = "audio-mpeg";
+        } else {
+            iconName = "audio-x-generic";
+        }
+    }
+    else if (fileType == "video") {
+        if (extension == "mp4") {
+            iconName = "video-mp4";
+        } else if (extension == "avi") {
+            iconName = "video-x-msvideo";
+        } else {
+            iconName = "video-x-generic";
+        }
+    }
+    else if (fileType == "other") {
+        if (extension == "pdf") {
+            iconName = "application-pdf";
+        } else if (extension == "txt") {
+            iconName = "text-plain";
+        } else if (extension == "zip") {
+            iconName = "application-zip";
+        } else if (extension == "html" || extension == "htm") {
+            iconName = "text-html";
+        } else {
+            iconName = "text-x-generic";
+        }
+    }
+
+    if (!iconName.isEmpty()) {
+        QIcon icon = QIcon::fromTheme(iconName);
+        qDebug() << "Trying icon:" << iconName << "isNull:" << icon.isNull();
+
+        if (!icon.isNull()) {
+            qDebug() << "SUCCESS: Using icon" << iconName;
+            return icon;
+        } else {
+            qDebug() << "FAILED: Icon" << iconName << "not found, trying fallback";
+
+            // Try some very basic fallbacks
+            QString fallback;
+            if (fileType == "image") fallback = "image-jpeg";
+            else if (fileType == "audio") fallback = "audio-x-mpeg";
+            else if (fileType == "video") fallback = "video-mp4";
+            else fallback = "text-x-generic";
+
+            QIcon fallbackIcon = QIcon::fromTheme(fallback);
+            qDebug() << "Fallback icon:" << fallback << "isNull:" << fallbackIcon.isNull();
+            return fallbackIcon;
+        }
+    }
+
+    qDebug() << "No icon mapping found for extension:" << extension;
+    return QIcon(); // Return null icon to use simple mode fallback
+}
+
+// Add this MIME-based icon method after getAdvancedIcon:
+QIcon FilesView::getMimeBasedIcon(const QString &mimeType) const
+{
+    if (mimeType.isEmpty()) {
+        return QIcon();
+    }
+
+    qDebug() << "getMimeBasedIcon: mimeType=" << mimeType;
+
+    // Use QMimeDatabase to get the icon name for this MIME type
+    QMimeDatabase mimeDb;
+    QMimeType mime = mimeDb.mimeTypeForName(mimeType);
+
+    if (!mime.isValid()) {
+        qDebug() << "Invalid MIME type:" << mimeType;
+        return QIcon();
+    }
+
+    QString iconName = mime.iconName();
+    qDebug() << "MIME icon name:" << iconName;
+
+    if (!iconName.isEmpty()) {
+        QIcon icon = QIcon::fromTheme(iconName);
+        qDebug() << "MIME icon" << iconName << "isNull:" << icon.isNull();
+
+        if (!icon.isNull()) {
+            qDebug() << "SUCCESS: Using MIME icon" << iconName;
+            return icon;
+        }
+    }
+
+    // Try generic icon for MIME type family
+    QString genericIconName = mime.genericIconName();
+    qDebug() << "MIME generic icon name:" << genericIconName;
+
+    if (!genericIconName.isEmpty()) {
+        QIcon genericIcon = QIcon::fromTheme(genericIconName);
+        qDebug() << "MIME generic icon" << genericIconName << "isNull:" << genericIcon.isNull();
+
+        if (!genericIcon.isNull()) {
+            qDebug() << "SUCCESS: Using MIME generic icon" << genericIconName;
+            return genericIcon;
+        }
+    }
+
+    qDebug() << "No MIME icon found for:" << mimeType;
+    return QIcon();
 }
