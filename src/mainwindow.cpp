@@ -94,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                 checkVersion();
 
     //Set up and start database (modes: "Memory", "File", or "Hosted")
-        Database::initialize("defaultConnection", collection);
+        Database::initialize(m_connectionName, collection);
 
     //Set up the interface globally
         //Set up the User Interface
@@ -219,7 +219,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
         //Load Collection
             loadCollection();
-            selectedDevice->loadDevice("defaultConnection");
+            selectedDevice->loadDevice(m_connectionName);
             filterFromSelectedDevice();
 
             //Load mapping to backup tab
@@ -228,7 +228,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
         //Restore last opened catalog to Explore tab
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
                 exploreDevice->ID = settings.value("Explore/lastExploreDeviceID").toInt();
-                exploreDevice->loadDevice("defaultConnection");
+                exploreDevice->loadDevice(m_connectionName);
                 exploreSelectedFolderFullPath = settings.value("Explore/lastExploreSelectedFolderFullPath").toString();
                 exploreSelectedDirectoryName  = settings.value("Explore/lastExploreSelectedDirectoryName").toString();
 
@@ -335,7 +335,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
 
             //Restore last Search values
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                                 SELECT MAX(date_time)
                                 FROM search
@@ -345,7 +345,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             query.next();
 
             lastSearch->searchDateTime = query.value(0).toString();
-            lastSearch->loadSearchHistoryCriteria("defaultConnection");
+            lastSearch->loadSearchHistoryCriteria(m_connectionName);
             loadSearchCriteria(lastSearch);
 
             //Restore last Search values

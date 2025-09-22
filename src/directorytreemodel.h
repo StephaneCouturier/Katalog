@@ -81,8 +81,8 @@ public:
     void setupModelData(DirectoryTreeItem *parent);
 
 private:
+    QString m_connectionName = "defaultConnection";
     DirectoryTreeItem *getItem(const QModelIndex &index) const;
-
     DirectoryTreeItem *rootItem;
 
 

@@ -117,6 +117,9 @@ public:
     bool insertPhysicalStorageGroup();
     void updateAllDeviceActive();
 
+private:
+    QString m_connectionName = "defaultConnection";
+
 };
 
 #endif // COLLECTION_H

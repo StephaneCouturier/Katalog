@@ -170,6 +170,7 @@ class MainWindow : public KXmlGuiWindow
         QList<Device*> collectActiveCatalogs();
 
     private:
+        QString m_connectionName = "defaultConnection";
         DeviceUpdateManager* deviceUpdateManager = nullptr;
         bool useUnifiedManager = false;
         void setCatalogUpdateUIState(bool isRunning);

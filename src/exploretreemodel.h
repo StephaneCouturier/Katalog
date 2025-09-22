@@ -65,6 +65,7 @@ public:
     void setupModelData(ExploreTreeItem *parent);
 
 private:
+    QString m_connectionName = "defaultConnection";
     int findNode(unsigned int& hash, const QList<ExploreTreeItem*>& tList);
 
 };

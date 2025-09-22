@@ -43,7 +43,7 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
     if( parentDevice->ID!=0 and catalogDevice->ID !=0){
 
         //Verif if catalog is not already assigned.
-        QSqlQuery queryCurrentCatalogsExternalID(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryCurrentCatalogsExternalID(QSqlDatabase::database(m_connectionName));
         QString queryCurrentCatalogsExternalIDSQL = QLatin1String(R"(
                             SELECT COUNT(*)
                             FROM device
@@ -70,7 +70,7 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
         }
         else{
             //Generate new ID
-            QSqlQuery queryID(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery queryID(QSqlDatabase::database(m_connectionName));
             QString queryIDSQL = QLatin1String(R"(
                                 SELECT MAX(device_id)
                                 FROM device
@@ -81,7 +81,7 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
             int newID = queryID.value(0).toInt()+1;
 
             //Insert catalog
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                                 INSERT INTO device(
                                             device_id,
@@ -144,7 +144,7 @@ void MainWindow::assignStorageToDevice(int storageID,int deviceID)
 {
     if( deviceID!=0 and storageID!=0){
         //Generate new ID
-        QSqlQuery queryID(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryID(QSqlDatabase::database(m_connectionName));
         QString queryIDSQL = QLatin1String(R"(
                             SELECT MAX(device_id)
                             FROM device
@@ -155,7 +155,7 @@ void MainWindow::assignStorageToDevice(int storageID,int deviceID)
         int newID = queryID.value(0).toInt()+1;
 
         //Insert storage
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
         QString querySQL = QLatin1String(R"(
                             INSERT INTO device(
                                         device_id,
@@ -213,7 +213,7 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 
         if( deviceID!=0 and deviceParentID!=0){
             //Insert catalog
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                                         DELETE FROM device
                                         WHERE device_id=:device_id
@@ -245,7 +245,7 @@ void MainWindow::deleteDeviceItem()
 
     Device parentDevice;
     parentDevice.ID = activeDevice->parentID;
-    parentDevice.loadDevice("defaultConnection");
+    parentDevice.loadDevice(m_connectionName);
     parentDevice.updateNumbersFromChildren();
     parentDevice.updateParentsNumbers();
 
@@ -275,7 +275,7 @@ void MainWindow::deleteDeviceItem()
 void MainWindow::recordDevicesSnapshot()
 {
     //Get the current total values
-    QSqlQuery queryLastCatalog(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryLastCatalog(QSqlDatabase::database(m_connectionName));
     QString queryLastCatalogSQL = QLatin1String(R"(
                                     SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
                                     FROM statistics_device
@@ -291,7 +291,7 @@ void MainWindow::recordDevicesSnapshot()
     qint64 lastCatalogTotalFileNumber = queryLastCatalog.value(0).toLongLong();
     qint64 lastCatalogTotalFileSize   = queryLastCatalog.value(1).toLongLong();
 
-    QSqlQuery queryLastStorage(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryLastStorage(QSqlDatabase::database(m_connectionName));
     QString queryLastStorageSQL = QLatin1String(R"(
                                     SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
                                     FROM statistics_device
@@ -312,7 +312,7 @@ void MainWindow::recordDevicesSnapshot()
     recordAllDeviceStats(nowDateTime);
 
     //Get the new total values
-    QSqlQuery queryNew(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryNew(QSqlDatabase::database(m_connectionName));
     QString queryNewSQL = QLatin1String(R"(
                                     SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
                                     FROM statistics_device
@@ -328,7 +328,7 @@ void MainWindow::recordDevicesSnapshot()
     qint64 newTotalFileCount  = queryNew.value(0).toLongLong();
     qint64 newTotalFileSize   = queryNew.value(1).toLongLong();
 
-    QSqlQuery queryNewStorage(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryNewStorage(QSqlDatabase::database(m_connectionName));
     QString queryNewStorageSQL = QLatin1String(R"(
                                     SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
                                     FROM statistics_device
@@ -400,7 +400,7 @@ void MainWindow::setDeviceTreeExpandState(bool toggle)
 //--------------------------------------------------------------------------
 void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
 
     // First, update the rows with parentID = 0 to keep them unchanged
     QString sql = "UPDATE device SET device_id = device_id + :shiftAmount "
@@ -431,7 +431,7 @@ void MainWindow::loadParentsList()
 
     //Get data
     //A device can only be moved within its group (0= Physical, 1= Virtual)
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                 SELECT device_name, device_id
                                 FROM device
@@ -487,7 +487,7 @@ void MainWindow::addDeviceVirtual()
 
     //Make it the activeDevice and edit
     activeDevice->ID = newDevice->ID;
-    activeDevice->loadDevice("defaultConnection");
+    activeDevice->loadDevice(m_connectionName);
     editDevice();
 }
 //--------------------------------------------------------------------------
@@ -529,7 +529,7 @@ void MainWindow::addDeviceStorage(int parentID)
 
     //Make it the activeDevice and edit
     activeDevice->ID = newDevice->ID;
-    activeDevice->loadDevice("defaultConnection");
+    activeDevice->loadDevice(m_connectionName);
     loadDevicesTreeToModel("Filters");
     loadDevicesView("");
     editDevice();
@@ -606,7 +606,7 @@ void MainWindow::editDevice()
     //Get parent and selected it the combobox
     Device *newDeviceItem = new Device();
     newDeviceItem->ID = activeDevice->parentID;
-    newDeviceItem->loadDevice("defaultConnection");
+    newDeviceItem->loadDevice(m_connectionName);
     ui->Devices_comboBox_Parent->setCurrentText(newDeviceItem->name+" ("+QString::number(newDeviceItem->ID)+")");
 }
 //--------------------------------------------------------------------------
@@ -614,13 +614,13 @@ void MainWindow::saveDeviceForm()
 {//Save the device values from the edit panel
 
     //Keep previous values
-    activeDevice->loadDevice("defaultConnection");
+    activeDevice->loadDevice(m_connectionName);
     int previousExternalID = activeDevice->externalID;
     QString previousName = activeDevice->name;
     QString previousPath = activeDevice->path;
     Device previousParentDevice;
     previousParentDevice.ID = activeDevice->parentID;
-    previousParentDevice.loadDevice("defaultConnection");
+    previousParentDevice.loadDevice(m_connectionName);
 
     //Get new values: name, parentID, externalID
     activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
@@ -665,7 +665,7 @@ void MainWindow::saveDeviceForm()
 
     Device newParentDevice;
     newParentDevice.ID = activeDevice->parentID;
-    newParentDevice.loadDevice("defaultConnection");
+    newParentDevice.loadDevice(m_connectionName);
 
     if (activeDevice->type == "Catalog" and activeDevice->groupID == 0 and newParentDevice.type !="Storage"){
         QMessageBox msgBox;
@@ -689,7 +689,7 @@ void MainWindow::saveDeviceForm()
     if(activeDevice->groupID != newGroupID){
         for(int i=0; i<activeDevice->deviceIDList.count(); i++) {
             loopDevice.ID = activeDevice->deviceIDList[i];
-            loopDevice.loadDevice("defaultConnection");
+            loopDevice.loadDevice(m_connectionName);
             loopDevice.groupID = newGroupID;
             loopDevice.saveDevice();
         }
@@ -731,7 +731,7 @@ void MainWindow::saveDeviceForm()
                                     WHERE storage_id =:storage_id
                                 )");
 
-        QSqlQuery updateQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
         updateQuery.prepare(queryUpdateStorageSQL);
         updateQuery.bindValue(":storage_name", activeDevice->name);
         updateQuery.bindValue(":new_storage_id", previousExternalID);
@@ -753,7 +753,7 @@ void MainWindow::saveDeviceForm()
                                     WHERE storage_id =:storage_id
                                 )");
 
-            QSqlQuery updateNameQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery updateNameQuery(QSqlDatabase::database(m_connectionName));
             updateNameQuery.prepare(updateNameQuerySQL);
             updateNameQuery.bindValue(":new_storage_name", newStorageName);
             updateNameQuery.bindValue(":storage_id", selectedDevice->storage->ID);
@@ -770,7 +770,7 @@ void MainWindow::saveDeviceForm()
                                     WHERE catalog_storage =:current_storage_name
                                 )");
 
-            QSqlQuery updateCatalogQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery updateCatalogQuery(QSqlDatabase::database(m_connectionName));
             updateCatalogQuery.prepare(updateCatalogQuerySQL);
             updateCatalogQuery.bindValue(":current_storage_name", currentStorageName);
             updateCatalogQuery.bindValue(":new_storage_name", newStorageName);
@@ -786,7 +786,7 @@ void MainWindow::saveDeviceForm()
                                     WHERE catalog_storage =:new_storage_name
                                 )");
 
-                QSqlQuery listCatalogQuery(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
                 listCatalogQuery.prepare(listCatalogQuerySQL);
                 listCatalogQuery.bindValue(":new_storage_name", newStorageName);
                 listCatalogQuery.exec();
@@ -796,7 +796,7 @@ void MainWindow::saveDeviceForm()
                 while (listCatalogQuery.next()){
                     loopCatalog.catalog = new Catalog;
                     loopCatalog.name = listCatalogQuery.value(0).toString();
-                    loopCatalog.catalog->loadCatalog("defaultConnection");
+                    loopCatalog.catalog->loadCatalog();
                     loopCatalog.catalog->storageName = newStorageName;
                     loopCatalog.catalog->updateCatalogFileHeaders(collection->databaseMode);
                 }
@@ -810,7 +810,7 @@ void MainWindow::saveDeviceForm()
         //Save changes to selected Storage device from the edition panel
 
         //Update storage
-        QSqlQuery queryStorage(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryStorage(QSqlDatabase::database(m_connectionName));
         QString queryStorageSQL = QLatin1String(R"(
                                     UPDATE storage
                                     SET storage_id =:new_storage_id,
@@ -877,7 +877,7 @@ void MainWindow::recordAllDeviceStats(QDateTime dateTime)
 {// Save the values (free space and total space) of all storage devices, completing a snapshop of the collection.
 
     //Get the list of storage devices
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                         SELECT
                                             device_id,
@@ -895,7 +895,7 @@ void MainWindow::recordAllDeviceStats(QDateTime dateTime)
     Device loopDevice;
     while(query.next()){
         loopDevice.ID = query.value(0).toInt();
-        loopDevice.loadDevice("defaultConnection");
+        loopDevice.loadDevice(m_connectionName);
         loopDevice.saveStatistics(dateTime,"snapshot");
     }
     collection->saveStatiticsTableToFile();
@@ -943,7 +943,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
     collection->updateAllDeviceActive();
 
     //Retrieve device hierarchy
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
 
 
@@ -1332,7 +1332,7 @@ void MainWindow::loadDevicesStorageToModel(){
     collection->updateAllDeviceActive();
 
     //Retrieve device hierarchy
-    QSqlQuery loadStorageQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery loadStorageQuery(QSqlDatabase::database(m_connectionName));
     QString loadStorageQuerySQL;
 
     loadStorageQuerySQL = QLatin1String(R"(
@@ -1585,7 +1585,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     collection->updateAllDeviceActive();
 
     //Retrieve device hierarchy
-    QSqlQuery loadCatalogQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery loadCatalogQuery(QSqlDatabase::database(m_connectionName));
     QString loadCatalogQuerySQL;
 
     loadCatalogQuerySQL = QLatin1String(R"(
@@ -1986,7 +1986,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
             loadDevicesView("");
             ui->Filters_label_DisplayCatalog->setText(reportDevice->name);
             selectedDevice->ID = reportDevice->ID;
-            selectedDevice->loadDevice("defaultConnection");
+            selectedDevice->loadDevice(m_connectionName);
             collection->loadDeviceFileToTable();
             loadDevicesTreeToModel("Filters");  // Key fix for Filters treeview
             loadDevicesView("");
@@ -2009,7 +2009,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 
         // Reload device statistics for updates
         if (selectedDevice) {
-            selectedDevice->loadDevice("defaultConnection");
+            selectedDevice->loadDevice(m_connectionName);
             updateCatalogsScreenStatistics();
         }
     }
@@ -2031,7 +2031,7 @@ QList<Device*> MainWindow::collectActiveCatalogs()
 {
     QList<Device*> activeCatalogs;
 
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
         SELECT device_id
         FROM device
@@ -2042,7 +2042,7 @@ QList<Device*> MainWindow::collectActiveCatalogs()
     while (query.next()) {
         Device* catalog = new Device();
         catalog->ID = query.value(0).toInt();
-        catalog->loadDevice("defaultConnection");
+        catalog->loadDevice(m_connectionName);
         activeCatalogs.append(catalog);
     }
 
@@ -2160,7 +2160,7 @@ void MainWindow::loadStorageList()
 {//Load Storage selection to comboBoxes
 
     //Get data
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                 SELECT device_id, device_name
                                 FROM   device
@@ -2225,7 +2225,7 @@ void MainWindow::displayStoragePicture()
 void MainWindow::updateStorageSelectionStatistics()
 {
     //Get storage statistics
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
 
     //Prepare the main part of the query
     QString querySQL = QLatin1String(R"(
@@ -2304,7 +2304,7 @@ void MainWindow::saveCatalogChanges()
 {
     Device previousCatalog;
     previousCatalog.ID = activeDevice->ID;
-    previousCatalog.loadDevice("defaultConnection");
+    previousCatalog.loadDevice(m_connectionName);
 
     //Get new values
     //Other values
@@ -2373,7 +2373,7 @@ void MainWindow::saveCatalogChanges()
                                                 , QMessageBox::Yes
                                                     | QMessageBox::No);
         if ( updatechoice == QMessageBox::Yes){
-            activeDevice->catalog->loadCatalog("defaultConnection");
+            activeDevice->catalog->loadCatalog();
             deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                        collection->databaseMode,
                                                        collection->folder,
@@ -2389,7 +2389,7 @@ void MainWindow::saveCatalogChanges()
 //--------------------------------------------------------------------------
 void MainWindow::updateCatalogsScreenStatistics()
 {
-    QSqlQuery querySumCatalogValues(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery querySumCatalogValues(QSqlDatabase::database(m_connectionName));
 
     //Prepare the query
     QString querySumCatalogValuesSQL  = QLatin1String(R"(
@@ -2473,11 +2473,11 @@ void MainWindow::importFromVVV()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     //clear database
-    QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery deleteQuery(QSqlDatabase::database(m_connectionName));
     deleteQuery.exec("DELETE FROM file");
 
     //prepare query to load file info
-    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
     QString insertSQL = QLatin1String(R"(
                                     INSERT INTO file (
                                                     file_name,
@@ -2495,7 +2495,7 @@ void MainWindow::importFromVVV()
     insertQuery.prepare(insertSQL);
 
     //Prepare insert query for folder
-    QSqlQuery insertFolderQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
     QString insertFolderSQL = QLatin1String(R"(
                                         INSERT OR IGNORE INTO folder(
                                             folder_catalog_name,
@@ -2574,7 +2574,7 @@ void MainWindow::importFromVVV()
                                     SELECT DISTINCT file_catalog
                                     FROM file
                                                 )");
-    QSqlQuery listCatalogQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
     listCatalogQuery.prepare(listCatalogSQL);
     listCatalogQuery.exec();
 
@@ -2623,7 +2623,7 @@ void MainWindow::importFromVVV()
                                                     FROM file
                                                     WHERE file_catalog =:file_catalog
                                             )");
-        QSqlQuery listCatalogQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
         listCatalogQuery.prepare(listCatalogSQL);
         listCatalogQuery.bindValue(":file_catalog", importedDevice.name);
         listCatalogQuery.exec();
@@ -2670,7 +2670,7 @@ void MainWindow::importFromVVV()
                                                 FROM file
                                                 WHERE file_catalog =:file_catalog
                                             )");
-        QSqlQuery listFilesQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery listFilesQuery(QSqlDatabase::database(m_connectionName));
         listFilesQuery.prepare(listFilesSQL);
         listFilesQuery.bindValue(":file_catalog", importedDevice.name);
         listFilesQuery.exec();
@@ -2708,7 +2708,7 @@ void MainWindow::importFromVVV()
                                             FROM folder
                                             WHERE folder_catalog_name =:folder_catalog_name
                                         )");
-            QSqlQuery listFoldersQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery listFoldersQuery(QSqlDatabase::database(m_connectionName));
             listFoldersQuery.prepare(listFoldersSQL);
             listFoldersQuery.bindValue(":folder_catalog_name", importedDevice.name);
             listFoldersQuery.exec();
@@ -2736,7 +2736,7 @@ void MainWindow::importFromVVV()
 }
 //--------------------------------------------------------------------------
 void MainWindow::createMissingParentDirectories() {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
 
     // Select distinct folder paths
     query.exec("SELECT DISTINCT folder_catalog_name, folder_path FROM folder");
@@ -2755,7 +2755,7 @@ void MainWindow::createMissingParentDirectories() {
             currentPath += '/' + folder;
 
             // Check if the current path exists in the table
-            QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
             checkQuery.prepare("SELECT 1 FROM folder WHERE folder_catalog_name = :catalog AND folder_path = :path");
             checkQuery.bindValue(":catalog", folderCatalogName);
             checkQuery.bindValue(":path", currentPath);
@@ -2766,7 +2766,7 @@ void MainWindow::createMissingParentDirectories() {
 
             // If the current path doesn't exist, insert it
             if (!checkQuery.next()) {
-                QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
                 insertQuery.prepare("INSERT INTO folder (folder_catalog_name, folder_path) VALUES (:catalog, :path)");
                 insertQuery.bindValue(":catalog", folderCatalogName);
                 insertQuery.bindValue(":path", currentPath);
@@ -2823,7 +2823,7 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
         if(list[7]==1){//Parent storage updated
             Device parentDevice;
             parentDevice.ID = device->parentID;
-            parentDevice.loadDevice("defaultConnection");
+            parentDevice.loadDevice(m_connectionName);
 
             message += "<br/>";
             message += "<table>";
@@ -2862,7 +2862,7 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
         if(list[7]==1){//Parent storage updated
             Device parentDevice;
             parentDevice.ID = device->parentID;
-            parentDevice.loadDevice("defaultConnection");
+            parentDevice.loadDevice(m_connectionName);
 
             message += "<br/>";
             message += "<table>";
@@ -3024,7 +3024,7 @@ void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
 
     //Set selected device to the one specified by catalogId
     selectedDevice->ID = deviceId;
-    selectedDevice->loadDevice("defaultConnection");
+    selectedDevice->loadDevice(m_connectionName);
 
     if(selectedDevice->type != "Catalog"){
         qDebug() << tr("The device selected must be a Catalog. Try with a different device ID");
@@ -3079,7 +3079,7 @@ void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
 void MainWindow::cmd_listGroup0Catalogs()
 {
     //Query the database for all devices of type catalog in the device group 0
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                     SELECT device_id, device_name, device_active
                                     FROM device
@@ -3109,7 +3109,7 @@ void MainWindow::cmd_listGroup0Catalogs()
 void MainWindow::cmd_updateAllActive(bool displayReport)
 {
     //Select all active catalog devices from database
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                            SELECT device_id
                            FROM device
@@ -3147,7 +3147,7 @@ void MainWindow::migrateCollectionFromV1toV2()
 
     //Devices
     //Delete default virtual and storage
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                         DELETE FROM device
                                         WHERE device_id ='2' OR device_id = '3'
@@ -3197,7 +3197,7 @@ void MainWindow::migrateCollectionFromV1toV2()
 
     //Close procedure
     //Add the current version
-    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
     QString insertSQL = QLatin1String(R"(
                                         INSERT INTO parameter (
                                                     parameter_name,
@@ -3231,7 +3231,7 @@ void MainWindow::migrateCollectionFromV1toV2()
 void MainWindow::importVirtualToDevices()
 {
     //Create Virtual device in Physical group from locations
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                     SELECT DISTINCT storage_location
                                     FROM storage
@@ -3254,7 +3254,7 @@ void MainWindow::importVirtualToDevices()
 void MainWindow::importStorageToDevices()
 {
     //Create from storage
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                     SELECT  storage_id,
                                             storage_name,
@@ -3280,7 +3280,7 @@ void MainWindow::importStorageToDevices()
         newDevice.groupID = 0;
 
         //Find parent id
-        QSqlQuery queryParent(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryParent(QSqlDatabase::database(m_connectionName));
         QString queryParentSQL = QLatin1String(R"(
                                         SELECT device_id
                                         FROM device
@@ -3302,7 +3302,7 @@ void MainWindow::importStorageToDevices()
 void MainWindow::importCatalogsToDevices()
 {
     //Create from catalogs
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                     SELECT  catalog_id,
                                             catalog_name,
@@ -3326,7 +3326,7 @@ void MainWindow::importCatalogsToDevices()
         newDevice.groupID = 0;
 
         //Find parent id
-        QSqlQuery queryParent(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryParent(QSqlDatabase::database(m_connectionName));
         QString queryParentSQL = QLatin1String(R"(
                                         SELECT device_id
                                         FROM device
@@ -3349,7 +3349,7 @@ void MainWindow::importCatalogsToDevices()
 void MainWindow::generateAndAssociateCatalogMissingIDs()
 {
     //Get catalogs with missing ID
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                     SELECT device_id
                                     FROM device
@@ -3362,13 +3362,13 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
     while(query.next()){
         Device device;
         device.ID = query.value(0).toInt();
-        device.loadDevice("defaultConnection");
+        device.loadDevice(m_connectionName);
 
         if (device.catalog->ID == 0){
             device.catalog->generateID();
 
             //Update database with catalog values
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                                     UPDATE catalog
                                     SET    catalog_id =:catalog_id
@@ -3382,7 +3382,7 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
 
         device.externalID = device.catalog->ID;
         device.saveDevice();
-        device.loadDevice("defaultConnection");
+        device.loadDevice(m_connectionName);
     }
 
     //Update all catalog devices external id
@@ -3398,7 +3398,7 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
 
 
     //Update all catalog files with their new ID
-    QSqlQuery queryUpdateFiles(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryUpdateFiles(QSqlDatabase::database(m_connectionName));
     QString queryUpdateFilesSQL = QLatin1String(R"(
                                     SELECT device_id, device_name
                                     FROM device
@@ -3410,7 +3410,7 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
     while(queryUpdateFiles.next()){
         Device tempDevice;
         tempDevice.ID = queryUpdateFiles.value(0).toInt();
-        tempDevice.loadDevice("defaultConnection");
+        tempDevice.loadDevice(m_connectionName);
         tempDevice.catalog->updateCatalogFileHeaders(collection->databaseMode);
     }
 }
@@ -3422,7 +3422,7 @@ void MainWindow::importVirtualAssignmentsToDevices()
     loadVirtualStorageCatalogFileToTable();
 
     //Virtual storage
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
 
     //Create a temporary table
@@ -3575,7 +3575,7 @@ void MainWindow::importVirtualAssignmentsToDevices()
     while(query.next()){
         Device tempCatalog;
         tempCatalog.ID = query.value(0).toInt();
-        tempCatalog.loadDevice("defaultConnection");
+        tempCatalog.loadDevice(m_connectionName);
         tempCatalog.updateParentsNumbers();
     }
 
@@ -3585,7 +3585,7 @@ void MainWindow::importVirtualAssignmentsToDevices()
 
 void MainWindow::importStatistics()
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
 
     //Load data from statistics_storage file
@@ -3705,7 +3705,7 @@ void MainWindow::loadStatisticsCatalogFileToTable()
     statisticsCatalogFilePath = collection->folder + "/statistics_catalog.csv";
 
     //clear database table
-    QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery deleteQuery(QSqlDatabase::database(m_connectionName));
     deleteQuery.exec("DELETE FROM statistics_catalog");
 
     // Get infos stored in the file
@@ -3717,7 +3717,7 @@ void MainWindow::loadStatisticsCatalogFileToTable()
     QTextStream textStream(&statisticsCatalogFile);
 
     //prepare query to load file info
-    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
     QString insertSQL = QLatin1String(R"(
                                 INSERT INTO statistics_catalog (
                                                 date_time,
@@ -3783,7 +3783,7 @@ void MainWindow::loadStatisticsStorageFileToTable()
     statisticsStorageFilePath = collection->folder + "/statistics_storage.csv";
 
     //clear database table
-    QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery deleteQuery(QSqlDatabase::database(m_connectionName));
     deleteQuery.exec("DELETE FROM statistics_storage");
 
     // Get infos stored in the file
@@ -3795,7 +3795,7 @@ void MainWindow::loadStatisticsStorageFileToTable()
     QTextStream textStream(&statisticsStorageFile);
 
     //prepare query to load file info
-    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
     QString insertSQL = QLatin1String(R"(
                                 INSERT INTO statistics_storage (
                                                 date_time,
@@ -3863,7 +3863,7 @@ void MainWindow::loadVirtualStorageFileToTable()
     QString virtualStorageFilePath;
     virtualStorageFilePath = collection->folder + "/virtual_storage.csv";
 
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
     querySQL = QLatin1String(R"(
                         DELETE FROM virtual_storage
@@ -3925,7 +3925,7 @@ void MainWindow::loadVirtualStorageFileToTable()
                                         :virtual_storage_name )
                                 )");
 
-                QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
                 insertQuery.prepare(querySQL);
                 insertQuery.bindValue(":virtual_storage_id",fieldList[0].toInt());
                 insertQuery.bindValue(":virtual_storage_parent_id",fieldList[1]);
@@ -3941,7 +3941,7 @@ void MainWindow::loadVirtualStorageCatalogFileToTable()
     QString virtualStorageCatalogFilePath;
     virtualStorageCatalogFilePath = collection->folder + "/virtual_storage_catalog.csv";
 
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
     querySQL = QLatin1String(R"(
                         DELETE FROM virtual_storage_catalog
@@ -4004,7 +4004,7 @@ void MainWindow::loadVirtualStorageCatalogFileToTable()
 
 void MainWindow::convertFoldersIdxFiles()
 {//Convert catalog folder.idx files
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                             SELECT device_id, device_external_id
                             FROM device
@@ -4022,7 +4022,7 @@ void MainWindow::convertFoldersIdxFiles()
     while(query.next()){
         Device tempDevice;
         tempDevice.ID = query.value(0).toInt();
-        tempDevice.loadDevice("defaultConnection");
+        tempDevice.loadDevice(m_connectionName);
 
         QFileInfo fileInfo(tempDevice.catalog->filePath);
         QString fileNameWithOutExtension = fileInfo.baseName();
@@ -4065,7 +4065,7 @@ void MainWindow::importExcludeIntoParameter()
     QString excludeFilePath;
     excludeFilePath = collection->folder + "/exclude.csv";
 
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
     querySQL = QLatin1String(R"(
                         INSERT INTO parameter (
@@ -4097,7 +4097,7 @@ void MainWindow::importExcludeIntoParameter()
             if (line.isNull())
                 break;
             else{
-                QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
                 insertQuery.prepare(querySQL);
                 insertQuery.bindValue(":parameter_name", "");
                 insertQuery.bindValue(":parameter_type", "exclude_directory");
@@ -4138,7 +4138,7 @@ void MainWindow::convertTags()
             //Split the string with tabulation into a list
             QStringList fieldList = line.split('\t');
             //qDebug()<<"fieldList"<<fieldList;
-            QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
             QString insertQuerySQL = QLatin1String(R"(
                                         INSERT INTO tag(
                                             ID,
@@ -4186,7 +4186,7 @@ void MainWindow::convertSearchHistory()
             //Split the string with tabulation into a list
             QStringList fieldList = line.split('\t');
             //qDebug()<<"fieldList"<<fieldList;
-            QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
             QString insertQuerySQL = QLatin1String(R"(
                                                 INSERT INTO search(
                                                     date_time,
@@ -4317,7 +4317,7 @@ void MainWindow::convertSearchHistory()
 
 void MainWindow::convertStorage()
 {//Convert Tags
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                         DELETE FROM storage
                                     )");
@@ -4342,7 +4342,7 @@ void MainWindow::convertStorage()
             //Split the string with tabulation into a list
             QStringList fieldList = line.split('\t');
             //qDebug()<<"fieldList"<<fieldList;
-            QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
             QString insertQuerySQL = QLatin1String(R"(
                                         INSERT INTO storage(
                                                 storage_id,

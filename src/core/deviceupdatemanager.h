@@ -85,6 +85,7 @@ private slots:
     void onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString& currentPath);
 
 private:
+    QString m_connectionName = "defaultConnection";
     enum ProcessingContext {
         RootDevice,           // Device is the root of the operation
         VirtualChild,         // Device is a child of Virtual device

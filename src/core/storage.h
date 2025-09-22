@@ -95,6 +95,7 @@ public:
     UpdateResult updateStorageInfo();
 
 private:
+    QString m_connectionName = "defaultConnection";
     // Helper methods
     bool isDirectoryEmpty(const QString &dirPath);
     bool getStorageInfo();

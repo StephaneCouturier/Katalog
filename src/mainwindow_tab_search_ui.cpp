@@ -98,7 +98,7 @@
             //Get file from selected row
             selectedDevice->type= "Catalog";
             selectedDevice->ID = ui->Search_treeView_CatalogsFound->model()->index(index.row(), 1, QModelIndex()).data().toInt();
-            selectedDevice->loadDevice("defaultConnection");
+            selectedDevice->loadDevice(m_connectionName);
             displaySelectedDeviceName();
 
             //Seach again but only on the selected catalog
@@ -488,7 +488,7 @@
 
             // Load directly into currentSearch
             currentSearch->searchDateTime = ui->Search_treeView_History->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            currentSearch->loadSearchHistoryCriteria("defaultConnection");
+            currentSearch->loadSearchHistoryCriteria(m_connectionName);
 
             // Update UI to reflect the loaded criteria
             loadSearchCriteria(currentSearch);
@@ -498,26 +498,26 @@
                 // No device selection stored, use "All"
                 selectedDevice->ID = 0;
                 selectedDevice->type = "All";
-                selectedDevice->loadDevice("defaultConnection");
+                selectedDevice->loadDevice(m_connectionName);
             }
             else {
                 // Use the first device ID from the list
                 int deviceID = currentSearch->selectedDeviceIDList.first();
 
                 // Validate device still exists
-                QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
                 checkQuery.prepare("SELECT device_type FROM device WHERE device_id = :id");
                 checkQuery.bindValue(":id", deviceID);
 
                 if (checkQuery.exec() && checkQuery.next()) {
                     selectedDevice->ID = deviceID;
-                    selectedDevice->loadDevice("defaultConnection");
+                    selectedDevice->loadDevice(m_connectionName);
                 }
                 else {
                     qDebug() << "Warning: Device ID" << deviceID << "no longer exists, using 'All'";
                     selectedDevice->ID = 0;
                     selectedDevice->type = "All";
-                    selectedDevice->loadDevice("defaultConnection");
+                    selectedDevice->loadDevice(m_connectionName);
                 }
             }
 
@@ -592,7 +592,7 @@
 
             if (!selectedResultFileCatalog.isEmpty() && selectedResultFileCatalog != "Connected") {
                 // For catalog files, check the catalog's metadata level using catalog_id
-                QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery query(QSqlDatabase::database(m_connectionName));
                 QString querySQL = QLatin1String(R"(
                                         SELECT catalog_include_metadata
                                         FROM catalog
@@ -699,7 +699,7 @@
             //Prepare inputs for the Explore tab
 
             //Get catalog id
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                                     SELECT device_id
                                     FROM device
@@ -713,7 +713,7 @@
 
             //load device to be used in explore
             exploreDevice->ID = query.value(0).toInt();
-            exploreDevice->loadDevice("defaultConnection");
+            exploreDevice->loadDevice(m_connectionName);
 
             //Pass selected directory name
             exploreSelectedDirectoryName = exploreSelectedFolderFullPath;
@@ -813,7 +813,7 @@
             QFile::moveToTrash(fileFullPath, &pathInTrash);
 
             // Remove file from database
-            // QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            // QSqlQuery query(QSqlDatabase::database(m_connectionName));
             // query.prepare("DELETE FROM file WHERE file_full_path = :file_full_path");
             // query.bindValue(":file_full_path", fileFullPath);
             // if (!query.exec()) {
@@ -1292,7 +1292,7 @@
             foreach(int ID, selectedDevice->deviceIDList)
             {
                 loopDevice.ID = ID;
-                loopDevice.loadDevice("defaultConnection");
+                loopDevice.loadDevice(m_connectionName);
                 ui->Search_comboBox_DifferencesDevice1->addItem(loopDevice.name,loopDevice.ID);
                 ui->Search_comboBox_DifferencesDevice2->addItem(loopDevice.name,loopDevice.ID);
             }
@@ -1495,7 +1495,7 @@
                     catalogMetadata.prepend("<catalogSourcePath>EXPORT");
 
                     selectedDevice->ID = newDevice->ID;
-                    selectedDevice->loadDevice("defaultConnection");
+                    selectedDevice->loadDevice(m_connectionName);
                     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Selection/SelectedDeviceID",   selectedDevice->ID);
                     filterFromSelectedDevice();
@@ -1534,7 +1534,7 @@
                     for (int i = 0; i < currentSearch->fileNames.size(); ++i)
                     {
                         //Prepare insert query for file
-                        QSqlQuery insertFileQuery(QSqlDatabase::database("defaultConnection"));
+                        QSqlQuery insertFileQuery(QSqlDatabase::database(m_connectionName));
                         QString insertFileSQL = QLatin1String(R"(
                                                     INSERT INTO file (
                                                                     file_catalog_id,
@@ -1557,7 +1557,7 @@
                         insertFileQuery.prepare(insertFileSQL);
 
                         //Prepare insert query for folder
-                        QSqlQuery insertFolderQuery(QSqlDatabase::database("defaultConnection"));
+                        QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
                         QString insertFolderSQL = QLatin1String(R"(
                                                     INSERT OR IGNORE INTO folder(
                                                         folder_catalog_id,
@@ -1626,12 +1626,12 @@
 
                 //Load files
                 QDateTime emptyDateTime = *new QDateTime;
-                selectedDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
+                selectedDevice->catalog->setDateLoaded(emptyDateTime);
                 selectedDevice->catalog->setDateUpdated(QDateTime::currentDateTime().addMSecs(100));
                 QMutex tempMutex;
                 bool tempStopRequested = false;
                 if(collection->databaseMode=="Memory")
-                    selectedDevice->catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
+                    selectedDevice->catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
                 //Refresh catalogs
                 loadCollection();
                 loadStorageList();
@@ -1645,7 +1645,7 @@
         //--------------------------------------------------------------------------
         void MainWindow::loadSearchHistoryTableToModel()
         {
-            QSqlQuery querySearchHistory(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery querySearchHistory(QSqlDatabase::database(m_connectionName));
             QString querySearchHistorySQL = QLatin1String(R"(
                                                 SELECT
                                                     date_time,

@@ -172,6 +172,7 @@ private slots:
     void onCatalogProgressUpdate(qint64 filesProcessed, qint64 totalFiles, const QString& currentPath);
 
 private:
+    QString m_connectionName = "defaultConnection";
     Storage::UpdateResult m_storageUpdateResult;
     /**
      * @brief Main recursive device processing entry point

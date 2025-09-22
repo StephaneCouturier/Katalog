@@ -77,7 +77,7 @@ void MainWindow::launchSearch()
 
     // Create SearchJobStoppable
     SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
-    searchJobStoppable->setDatabaseConnection("defaultConnection");
+    searchJobStoppable->setDatabaseConnection(m_connectionName);
 
     // Enable memory mode when in development mode and memory mode**
     if (collection->databaseMode == "Memory") {
@@ -599,7 +599,7 @@ void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folde
 
     // Try to get stored JSON from database if we have a catalog
     if (catalogId > 0) {
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
         QString querySQL = QLatin1String(R"(
             SELECT metadata_extended
             FROM file

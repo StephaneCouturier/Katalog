@@ -195,7 +195,7 @@
 
             if (!selectedResultFileCatalog.isEmpty() && selectedResultFileCatalog != "Connected") {
                 // For catalog files, check the catalog's metadata level using catalog_id
-                QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery query(QSqlDatabase::database(m_connectionName));
                 QString querySQL = QLatin1String(R"(
                                         SELECT catalog_include_metadata
                                         FROM catalog
@@ -442,7 +442,7 @@
         //Check catalog's number of files and confirm load if too big
         if( collection->databaseMode == "Memory"
             and (exploreDevice->catalog->dateLoaded < exploreDevice->catalog->dateUpdated)){
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                                     SELECT device_total_file_count
                                     FROM device
@@ -476,7 +476,7 @@
             if( collection->databaseMode == "Memory"){
                 QMutex tempMutex;
                 bool tempStopRequested = false;
-                exploreDevice->catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
+                exploreDevice->catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
             }
             loadSelectedDirectoryFilesToExplore();
         //Go to the Explorer tab
@@ -522,7 +522,7 @@
                                 FROM folder
                                 WHERE folder_catalog_id =:folder_catalog_id
                                )");
-            QSqlQuery countQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery countQuery(QSqlDatabase::database(m_connectionName));
             countQuery.prepare(countSQL);
             countQuery.bindValue(":folder_catalog_id", exploreDevice->externalID);
             countQuery.exec();
@@ -613,7 +613,7 @@
             exploreSelectedFolderFullPath.remove("EXPORT");
         }
 
-        QSqlQuery loadCatalogQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery loadCatalogQuery(QSqlDatabase::database(m_connectionName));
         loadCatalogQuery.prepare(selectSQL);
         loadCatalogQuery.bindValue(":folder_catalog_id", exploreDevice->externalID);
 
@@ -731,7 +731,7 @@
             countSQL = countSQL + " AND file_folder_path =:file_folder_path";
         }
 
-        QSqlQuery countQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery countQuery(QSqlDatabase::database(m_connectionName));
         countQuery.prepare(countSQL);
         countQuery.bindValue(":file_catalog_id", exploreDevice->externalID);
 

@@ -202,7 +202,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
     }
 
     // Initialize database transaction for efficiency
-    QSqlQuery transactionQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
     if (!transactionQuery.exec("BEGIN TRANSACTION")) {
         qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
     }
@@ -216,14 +216,14 @@ void CatalogJobStoppable::createCatalogWithProgress()
     processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
 
     if (!shouldContinue()) {
-        QSqlQuery rollbackQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery rollbackQuery(QSqlDatabase::database(m_connectionName));
         if (!rollbackQuery.exec("ROLLBACK")) {
             qDebug() << "Warning: Could not ROLLBACK transaction:" << rollbackQuery.lastError().text();
         }
     }
 
     // Commit transaction
-    QSqlQuery commitQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery commitQuery(QSqlDatabase::database(m_connectionName));
     if (!commitQuery.exec("COMMIT")) {
         qDebug() << "Warning: Could not COMMIT transaction:" << commitQuery.lastError().text();
     }
@@ -311,7 +311,7 @@ void CatalogJobStoppable::updateCatalogWithProgress()
 
     // FOR UPDATE: Clear existing catalog data first
     qDebug() << "Step 5: Clearing existing catalog data for update";
-    catalog->clearCatalogData(m_connectionName);
+    catalog->clearCatalogData();
 
     // Process files with progress (SAME AS CREATION)
     qint64 processedCount = 0;
@@ -640,7 +640,7 @@ void CatalogJobStoppable::updateRelatedCatalogDevices()
 
     try {
         // Update related devices (other catalog devices using the same catalog ID)
-        QSqlQuery queryRelatedDevice(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryRelatedDevice(QSqlDatabase::database(m_connectionName));
         QString queryRelatedDeviceSQL = QLatin1String(R"(
                             SELECT device_id
                             FROM device
@@ -657,7 +657,7 @@ void CatalogJobStoppable::updateRelatedCatalogDevices()
         while (queryRelatedDevice.next()) {
             Device relatedDevice;
             relatedDevice.ID = queryRelatedDevice.value(0).toInt();
-            relatedDevice.loadDevice("defaultConnection");
+            relatedDevice.loadDevice(m_connectionName);
 
             // Update related device with same file counts
             relatedDevice.totalFileCount = m_device->totalFileCount;
@@ -716,7 +716,7 @@ void CatalogJobStoppable::completeCatalogCreation()
         // Step 4: Update catalog loaded version
         qDebug() << "Step 4: Setting catalog loaded date";
         QDateTime currentDateTime = QDateTime::currentDateTime();
-        m_device->catalog->setDateLoaded(currentDateTime, m_connectionName);
+        m_device->catalog->setDateLoaded(currentDateTime);
 
         qDebug() << "=== Backend post-processing completed successfully ===";
 

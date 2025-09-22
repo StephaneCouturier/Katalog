@@ -65,7 +65,7 @@ void MainWindow::exportToSQLiteFile()
         bool tempStopRequested = false;
 
         // Get the total number of files for all devices
-        QSqlQuery fileCountQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery fileCountQuery(QSqlDatabase::database(m_connectionName));
         QString fileCountQuerySQL = QLatin1String(R"(
                     SELECT SUM(device_total_file_count)
                     FROM device
@@ -83,7 +83,7 @@ void MainWindow::exportToSQLiteFile()
         qint64 filesLoaded = 0;
 
         // List all Catalogs indexes to be loaded into memory
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
         QString querySQL = QLatin1String(R"(
                     SELECT device_id, device_name, device_total_file_count
                     FROM device
@@ -100,8 +100,8 @@ void MainWindow::exportToSQLiteFile()
             progress.setLabelText(QString("Loading all catalogs prior to export<br/> %1 <br/><br/> %2 files loaded out of %3" ).arg(deviceName, QLocale().toString(filesLoaded), QLocale().toString(totalFileCount)) );
 
             tempCatalogDevice.ID = deviceId;
-            tempCatalogDevice.loadDevice("defaultConnection");
-            tempCatalogDevice.catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
+            tempCatalogDevice.loadDevice(m_connectionName);
+            tempCatalogDevice.catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
 
             filesLoaded += deviceFileCount;
             progress.setValue(filesLoaded);
@@ -111,7 +111,7 @@ void MainWindow::exportToSQLiteFile()
         }
 
         //Dump all the database in Memory to the sql File
-        if (!backupMemoryDatabaseToFile("defaultConnection", backupFilePath)) {
+        if (!backupMemoryDatabaseToFile(m_connectionName, backupFilePath)) {
             msgBox.setText(QCoreApplication::translate("MainWindow",
                                                        "Failed to export in-memory database to file.<br/>"
                                                        "<br/> Export file path: <br/><b>%1</b><br/>"
@@ -243,7 +243,7 @@ void MainWindow::exportToMemoryMode()
 bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
 {
     // Get all catalog devices
-    QSqlQuery catalogDevicesQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery catalogDevicesQuery(QSqlDatabase::database(m_connectionName));
     QString catalogDevicesQuerySQL = QLatin1String(R"(
         SELECT d.device_id, d.device_name, d.device_path, d.device_total_file_count,
                d.device_total_file_size, d.device_external_id
@@ -258,7 +258,7 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
     }
 
     // Count total catalogs
-    QSqlQuery countQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery countQuery(QSqlDatabase::database(m_connectionName));
     countQuery.prepare("SELECT COUNT(*) FROM device WHERE device_type = 'Catalog'");
 
     if (!countQuery.exec() || !countQuery.next()) {
@@ -298,7 +298,7 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
         }
 
         // Get additional catalog metadata
-        QSqlQuery catalogMetaQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery catalogMetaQuery(QSqlDatabase::database(m_connectionName));
         QString catalogMetaQuerySQL = QLatin1String(R"(
             SELECT catalog_include_hidden, catalog_file_type, catalog_storage,
                    catalog_include_symblinks, catalog_is_full_device,
@@ -348,7 +348,7 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
         idxStream << "<catalogID>" << QString::number(catalogId) << "\n";
 
         // Get all files for this catalog
-        QSqlQuery fileQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery fileQuery(QSqlDatabase::database(m_connectionName));
         fileQuery.prepare("SELECT file_full_path, file_size, file_date_updated FROM file WHERE file_catalog_id = :catalog_id");
         fileQuery.bindValue(":catalog_id", catalogId);
 
@@ -377,7 +377,7 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
 bool MainWindow::exportSingleCatalogFoldersFile(int catalogId, const QString &filePath)
 {
     // Check if there are any folders for this catalog
-    QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
     checkQuery.prepare("SELECT COUNT(*) FROM folder WHERE folder_catalog_id = :catalog_id");
     checkQuery.bindValue(":catalog_id", catalogId);
 
@@ -394,7 +394,7 @@ bool MainWindow::exportSingleCatalogFoldersFile(int catalogId, const QString &fi
     }
 
     // Get folders
-    QSqlQuery folderQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
     folderQuery.prepare("SELECT folder_catalog_id, folder_path FROM folder WHERE folder_catalog_id = :catalog_id ORDER BY folder_path");
     folderQuery.bindValue(":catalog_id", catalogId);
 

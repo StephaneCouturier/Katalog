@@ -79,6 +79,7 @@ private slots:
     void handleSearchProgress(int filesProcessed);
 
 private:
+    QString m_connectionName = "defaultConnection";
     QString autoDetectDatabaseMode(const QString &path);
     QString formatDeviceIDList(const QList<int> &deviceIDs);
     // Command line parsing

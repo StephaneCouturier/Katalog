@@ -121,7 +121,7 @@
 
             selectedDevice->ID   = settings.value("Selection/SelectedDeviceID").toInt();
             if(selectedDevice->ID == 0) selectedDevice->type = "All";
-            selectedDevice->loadDevice("defaultConnection");
+            selectedDevice->loadDevice(m_connectionName);
 
             graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
 
@@ -357,7 +357,7 @@
                 qDebug() << "Running database migration to 2.6...";
                 collection->dbSchemaVersion = "2.6";
 
-                QSqlError migrationError = Database::runMigration_2_6("defaultConnection");
+                QSqlError migrationError = Database::runMigration_2_6(m_connectionName);
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
                     qDebug() << "Database migration to 2.6 completed";
@@ -373,7 +373,7 @@
                 collection->dbSchemaVersion = "2.8";
 
                 // Use the safe migration method
-                QSqlError migrationError = Database::runMigration_2_8("defaultConnection");
+                QSqlError migrationError = Database::runMigration_2_8(m_connectionName);
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
                     qDebug() << "SAFE database migration to 2.8 completed";
@@ -400,8 +400,8 @@
     {
         qDebug() << "Migrating existing search history device data...";
 
-        QSqlQuery updateQuery(QSqlDatabase::database("defaultConnection"));
-        QSqlQuery selectQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
+        QSqlQuery selectQuery(QSqlDatabase::database(m_connectionName));
 
         // Get all search records that need migration
         selectQuery.exec(R"(
@@ -420,7 +420,7 @@
 
             if (searchInCatalogs) {
                 // Find device ID by catalog or storage name
-                QSqlQuery deviceQuery(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery deviceQuery(QSqlDatabase::database(m_connectionName));
 
                 if (catalogName != tr("All") && !catalogName.isEmpty()) {
                     // Look for specific catalog (only Catalog type)
@@ -507,7 +507,7 @@
         //Prepare temporary variables
 
         // Get the total number of files for all devices
-        QSqlQuery tableCountQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery tableCountQuery(QSqlDatabase::database(m_connectionName));
         QString tableCountQuerySQL = QLatin1String(R"(
                         SELECT COUNT(*) FROM sqlite_master WHERE type='table'
                     )");

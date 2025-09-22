@@ -353,7 +353,7 @@ void Search::processResults(bool handleFoldersOnly)
         QString catalogName = it.value();
 
         // Query the device table to get the device ID for this catalog
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
         QString querySQL = QLatin1String(R"(
             SELECT device_id
             FROM device
@@ -867,7 +867,7 @@ void Search::initializeProgressTracking(Device *selectedDevice)
                 if (row.type == "Catalog") {
                     Device *device = new Device;
                     device->ID = row.ID;
-                    device->loadDevice("defaultConnection");
+                    device->loadDevice(m_connectionName);
                     estimatedTotalFiles += device->totalFileCount;
                     delete device;
                 }

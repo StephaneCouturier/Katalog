@@ -66,6 +66,7 @@ public:
     Search* getCurrentSearch() const;
 
 private:
+    QString m_connectionName = "defaultConnection";
     void setSearchRunning(bool running);
     void setProgress(int progress);
     void setStatus(const QString &status);

@@ -216,7 +216,7 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
 //    int countCatalog=0;
 
     //prepare query to load file info
-    QSqlQuery getDirectoriesQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery getDirectoriesQuery(QSqlDatabase::database(m_connectionName));
 
         //shorten the paths as they all start with the catalog path
         QString getDirectoriesSQL = QLatin1String(R"(

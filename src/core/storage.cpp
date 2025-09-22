@@ -37,7 +37,7 @@
 
 void Storage::generateID()
 {//Generate ID and add it to name
-    QSqlQuery queryDeviceNumber(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryDeviceNumber(QSqlDatabase::database(m_connectionName));
     QString queryDeviceNumberSQL = QLatin1String(R"(
                                         SELECT MAX (storage_id)
                                         FROM storage
@@ -88,7 +88,7 @@ void Storage::insertStorage()
                             "")
                     )");
 
-    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
     insertQuery.prepare(querySQL);
     insertQuery.bindValue(":new_id", ID);
     insertQuery.bindValue(":storage_name", name);
@@ -101,7 +101,7 @@ void Storage::insertStorage()
 void Storage::deleteStorage()
 {
     //Delete from the table
-    QSqlQuery queryDeviceNumber(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryDeviceNumber(QSqlDatabase::database(m_connectionName));
     QString queryDeviceNumberSQL = QLatin1String(R"(
                                                 DELETE FROM storage
                                                 WHERE storage_id = :storage_id
@@ -219,7 +219,7 @@ Storage::UpdateResult Storage::updateStorageInfo()
     dateTimeUpdated = QDateTime::currentDateTime();
 
     // Save to Storage table
-    QSqlQuery queryTotalSpace(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryTotalSpace(QSqlDatabase::database(m_connectionName));
     QString queryTotalSpaceSQL = QLatin1String(R"(
                                     UPDATE storage
                                     SET storage_total_space = :storage_total_space,

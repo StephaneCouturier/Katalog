@@ -538,11 +538,11 @@ bool CommandLineHandler::initializeDatabase()
     QSqlError err;
     if (!collectionPath.isEmpty()) {
         // Command line override - pass detected values to override settings
-        err = Database::initialize("defaultConnection", collection, databaseMode, databaseFilePath);
+        err = Database::initialize(m_connectionName, collection, databaseMode, databaseFilePath);
     } else {
         // No command line override - use normal settings-based initialization
         // Note: collection->folder was already set from settings above for Memory mode
-        err = Database::initialize("defaultConnection", collection);
+        err = Database::initialize(m_connectionName, collection);
     }
 
     if (err.type() != QSqlError::NoError) {
@@ -559,7 +559,7 @@ bool CommandLineHandler::initializeDatabase()
         stdout_stream << "  collection->folder: " << collection->folder << Qt::endl;
 
         // Check what database is actually connected
-        QSqlDatabase db = QSqlDatabase::database("defaultConnection");
+        QSqlDatabase db = QSqlDatabase::database(m_connectionName);
         stdout_stream << "  Actual database connected: " << db.databaseName() << Qt::endl;
         stdout_stream << "  Database is open: " << (db.isOpen() ? "Yes" : "No") << Qt::endl;
 
@@ -651,7 +651,7 @@ void CommandLineHandler::loadCollection()
         stdout_stream << "Loading collection..." << Qt::endl;
 
         // Debug: Check database connection
-        QSqlDatabase db = QSqlDatabase::database("defaultConnection");
+        QSqlDatabase db = QSqlDatabase::database(m_connectionName);
         stdout_stream << "Database is open: " << (db.isOpen() ? "Yes" : "No") << Qt::endl;
         stdout_stream << "Database type: " << db.driverName() << Qt::endl;
         stdout_stream << "Database name: " << db.databaseName() << Qt::endl;
@@ -672,7 +672,7 @@ void CommandLineHandler::loadCollection()
         }
 
         // Debug: Check if device table has any data
-        QSqlDatabase db = QSqlDatabase::database("defaultConnection");
+        QSqlDatabase db = QSqlDatabase::database(m_connectionName);
         if (db.isOpen()) {
             QSqlQuery debugQuery(db);
             if (debugQuery.exec("SELECT COUNT(*) FROM device")) {
@@ -722,10 +722,10 @@ void CommandLineHandler::loadLastSearchCriteria()
     }
 
     // Load criteria from the last search in the search history
-    searchEngine->loadSearchHistoryCriteria("defaultConnection");
+    searchEngine->loadSearchHistoryCriteria(m_connectionName);
 
     // Check if any search criteria were loaded
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
         SELECT date_time, text_phrase, search_catalog_checked, search_directory_checked
         FROM search
@@ -770,7 +770,7 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
         stdout_stream << "Setting search parameters from search history..." << Qt::endl;
 
         // Get the latest search date first and set it on the search object
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
         QString querySQL = QLatin1String(R"(
             SELECT date_time
             FROM search
@@ -796,7 +796,7 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
 
         // Load from search history (gets the ready-to-use fields)
         if (useSearchHistory) {
-            search->loadSearchHistoryCriteria("defaultConnection");
+            search->loadSearchHistoryCriteria(m_connectionName);
         }
 
         // Apply command line overrides (this overrides history values)
@@ -915,7 +915,7 @@ Device* CommandLineHandler::getSelectedDevice()
         device->name = "All Devices";
     }
 
-    device->loadDevice("defaultConnection");
+    device->loadDevice(m_connectionName);
 
     return device;
 }
@@ -930,8 +930,8 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
     // Load and validate the device
     selectedDevice = new Device();
     selectedDevice->ID = deviceId;
-    selectedDevice->loadDevice("defaultConnection");
-    selectedDevice->updateActiveState("defaultConnection");
+    selectedDevice->loadDevice(m_connectionName);
+    selectedDevice->updateActiveState(m_connectionName);
 
     if (selectedDevice->type != "Catalog") {
         qDebug() << "The device selected must be a Catalog. Try with a different device ID";
@@ -1001,7 +1001,7 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
         qDebug() << "Catalog operation completed";
 
         // Reload device to get updated statistics
-        selectedDevice->loadDevice("defaultConnection");
+        selectedDevice->loadDevice(m_connectionName);
 
         // Save collection data (same as UI)
         collection->saveDeviceTableToFile();
@@ -1028,7 +1028,7 @@ void CommandLineHandler::cmd_updateAllActive(bool displayReport)
     qDebug() << "Starting update of all active catalogs...";
 
     // Select all active catalog devices from database
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                            SELECT device_id
                            FROM device
@@ -1074,7 +1074,7 @@ void CommandLineHandler::cmd_updateAllActive(bool displayReport)
         // Load device info for logging
         Device tempDevice;
         tempDevice.ID = deviceID;
-        tempDevice.loadDevice("defaultConnection");
+        tempDevice.loadDevice(m_connectionName);
 
         qDebug() << "Catalog name:" << tempDevice.name;
 
@@ -1125,7 +1125,7 @@ void CommandLineHandler::cmd_listGroup0Catalogs()
     }
 
     // Check database connection first
-    QSqlDatabase db = QSqlDatabase::database("defaultConnection");
+    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
     if (!db.isOpen()) {
         qDebug() << "Database is not open!";
         return;
@@ -1206,7 +1206,7 @@ void CommandLineHandler::cmd_listGroup0Catalogs()
 
     // Create SearchJobStoppable (same as UI)
     searchEngine = new SearchJobStoppable(this);
-    searchEngine->setDatabaseConnection("defaultConnection");
+    searchEngine->setDatabaseConnection(m_connectionName);
 
     // Enable memory mode if collection is in Memory mode (same as UI)
     if (collection->databaseMode == "Memory") {
@@ -1227,7 +1227,7 @@ void CommandLineHandler::cmd_listGroup0Catalogs()
 
     if (selectedDevice->ID != 0) {
         // Validate that specific device exists
-        QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
         checkQuery.prepare("SELECT device_name, device_type FROM device WHERE device_id = :id");
         checkQuery.bindValue(":id", selectedDevice->ID);
 

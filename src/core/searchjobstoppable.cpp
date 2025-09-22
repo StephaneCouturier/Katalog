@@ -368,7 +368,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                                      }, Qt::DirectConnection); // Use DirectConnection for immediate callback
 
         // Load CSV files into database
-        device->catalog->loadCatalogFileListToTable(m_connectionName, csvMutex, localStopRequested);
+        device->catalog->loadCatalogFileListToTable(csvMutex, localStopRequested);
 
         // Ensure disconnection (in case not already disconnected by callback)
         if (progressConnection) {

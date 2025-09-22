@@ -158,7 +158,7 @@
     {//Get selected device data
         //Load selected device data
         selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
-        selectedDevice->loadDevice("defaultConnection");
+        selectedDevice->loadDevice(m_connectionName);
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
@@ -177,7 +177,7 @@
         //Get selection data
         QModelIndex index=ui->Filters_treeView_Devices->currentIndex();
         selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
-        selectedDevice->loadDevice("defaultConnection");
+        selectedDevice->loadDevice(m_connectionName);
 
         on_Filters_treeView_Devices_clicked(index);
 
@@ -303,7 +303,7 @@
             deviceContextMenu.addAction(menuDeviceAction2);
             connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
                 exploreDevice->ID = selectedDevice->ID;
-                exploreDevice->loadDevice("defaultConnection");
+                exploreDevice->loadDevice(m_connectionName);
 
                 exploreSelectedFolderFullPath = exploreDevice->path;
                 exploreSelectedDirectoryName  = exploreDevice->path;
@@ -361,7 +361,7 @@
         selectedDevice = new Device();
         selectedDevice->type = "All";
         selectedDevice->ID = 0;
-        selectedDevice->loadDevice("defaultConnection");
+        selectedDevice->loadDevice(m_connectionName);
 
         //Reset displayed values
         ui->Filters_label_DisplayStorage->setText(tr("All"));
@@ -409,7 +409,7 @@
         // Get max levels once and cache it (shared for both trees)
         static int maxTreeLevels = -1;
         if (maxTreeLevels == -1 || forceRefreshMaxLevels) {
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                 WITH RECURSIVE device_tree AS (
                   SELECT device_id, device_parent_id, 0 AS level

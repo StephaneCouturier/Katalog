@@ -273,7 +273,7 @@
                         if (!db.open())
                             qDebug()<< db.lastError();
 
-                        QSqlQuery q(QSqlDatabase::database("defaultConnection"));
+                        QSqlQuery q(QSqlDatabase::database(m_connectionName));
                         q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
                         q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
                         q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
@@ -309,13 +309,13 @@
             {
                 QSqlDatabase db = QSqlDatabase::database();
                 connectionName = db.connectionName();
-                connectionName = connectionName.isEmpty() ? "defaultConnection" : connectionName;
+                connectionName = connectionName.isEmpty() ? m_connectionName : connectionName;
                 db.close();
             }
             QSqlDatabase::removeDatabase(connectionName);
 
             //Open the new database file
-            Database::initialize("defaultConnection", collection);
+            Database::initialize(m_connectionName, collection);
 
             //Load the collection data from the new database
             loadCollection();
@@ -381,7 +381,7 @@
                 if (!db.open())
                     qDebug()<< db.lastError();
 
-                QSqlQuery q(QSqlDatabase::database("defaultConnection"));
+                QSqlQuery q(QSqlDatabase::database(m_connectionName));
                 q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
                 q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
                 q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
@@ -407,13 +407,13 @@
             {
                 QSqlDatabase db = QSqlDatabase::database();
                 connectionName = db.connectionName();
-                connectionName = connectionName.isEmpty() ? "defaultConnection" : connectionName;
+                connectionName = connectionName.isEmpty() ? m_connectionName : connectionName;
                 db.close();
             }
             QSqlDatabase::removeDatabase(connectionName);
 
             //Open the new database file
-            Database::initialize("defaultConnection", collection);
+            Database::initialize(m_connectionName, collection);
 
             //Load the collection data from the new database
             loadCollection();
@@ -559,7 +559,7 @@
         reloadTagsData();
 
         //Load directories to exclude
-        QSqlQuery queryLoad(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryLoad(QSqlDatabase::database(m_connectionName));
         QString queryLoadSQL = QLatin1String(R"(
                                         SELECT DISTINCT parameter_value2
                                         FROM parameter
@@ -692,13 +692,13 @@
             {
                 QSqlDatabase db = QSqlDatabase::database();
                 connectionName = db.connectionName();
-                connectionName = connectionName.isEmpty() ? "defaultConnection" : connectionName;
+                connectionName = connectionName.isEmpty() ? m_connectionName : connectionName;
                 db.close();
             }
             QSqlDatabase::removeDatabase(connectionName);
 
             //Open the new database file
-            Database::initialize("defaultConnection", collection);
+            Database::initialize(m_connectionName, collection);
 
             //Load the collection data from the new database
             loadCollection();
@@ -714,19 +714,19 @@
         // Update device with ID=1 (Physical Group)
         Device physicalGroup;
         physicalGroup.ID = 1;
-        physicalGroup.loadDevice("defaultConnection");
+        physicalGroup.loadDevice(m_connectionName);
         physicalGroup.name = tr(" Physical Group");
         physicalGroup.saveDevice();
 
         // Update device with ID=2 (Virtual device)
         Device virtualDevice;
         virtualDevice.ID = 2;
-        virtualDevice.loadDevice("defaultConnection");
+        virtualDevice.loadDevice(m_connectionName);
         virtualDevice.name = tr("Virtual device");
         virtualDevice.saveDevice();
 
         // Update default storage device (find the one created by insertPhysicalStorageGroup)
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
         QString querySQL = QLatin1String(R"(
                                 SELECT device_id
                                 FROM device
@@ -740,7 +740,7 @@
         if (query.next()) {
             Device localStorage;
             localStorage.ID = query.value(0).toInt();
-            localStorage.loadDevice("defaultConnection");
+            localStorage.loadDevice(m_connectionName);
             localStorage.name = tr("Local disk");
             localStorage.saveDevice();
         }

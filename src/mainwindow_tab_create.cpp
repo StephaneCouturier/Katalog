@@ -82,7 +82,7 @@
 
         if(newFolderToExclude!=""){
             //Insert new entry
-            QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
             QString insertSQL = QLatin1String(R"(
                                         INSERT INTO parameter (
                                                     parameter_name,
@@ -103,7 +103,7 @@
             collection->saveParameterTableToFile();
 
             //Reload to list view
-            QSqlQuery queryLoad(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery queryLoad(QSqlDatabase::database(m_connectionName));
             QString queryLoadSQL = QLatin1String(R"(
                                         SELECT DISTINCT parameter_value2
                                         FROM parameter
@@ -161,7 +161,7 @@
         excludeContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [ selectedDirectory, this]() {
             //Delete
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery query(QSqlDatabase::database(m_connectionName));
             QString querySQL = QLatin1String(R"(
                                     DELETE FROM parameter
                                     WHERE parameter_type ='exclude_directory'
@@ -173,7 +173,7 @@
             collection->saveParameterTableToFile();
 
             //Reload
-            QSqlQuery queryLoad(QSqlDatabase::database("defaultConnection"));
+            QSqlQuery queryLoad(QSqlDatabase::database(m_connectionName));
             QString queryLoadSQL = QLatin1String(R"(
                                         SELECT DISTINCT parameter_value2
                                         FROM parameter
@@ -516,7 +516,7 @@
         //Add path to parent Storage device if empty
         Device parentStorageDevice;
         parentStorageDevice.ID = newCatalogDevice->parentID;
-        parentStorageDevice.loadDevice("defaultConnection");
+        parentStorageDevice.loadDevice(m_connectionName);
         if(parentStorageDevice.path == ""){
             parentStorageDevice.path = newCatalogDevice->path;
             parentStorageDevice.saveDevice();

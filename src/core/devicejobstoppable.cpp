@@ -209,14 +209,14 @@ void DeviceJobStoppable::loadDeviceChildren(Device* device)
 
     try {
         // Load device which populates deviceIDList
-        device->loadDevice("defaultConnection");
+        device->loadDevice(m_connectionName);
 
         // Create actual Device objects from deviceIDList
         device->subDevices.clear();
         for (int childID : device->deviceIDList) {
             Device childDevice;
             childDevice.ID = childID;
-            childDevice.loadDevice("defaultConnection");
+            childDevice.loadDevice(m_connectionName);
             device->subDevices.append(childDevice);
         }
 
@@ -273,7 +273,7 @@ void DeviceJobStoppable::processDevice(Device* device)
     qDebug() << "Processing device:" << device->name << "Type:" << device->type;
 
     // Update device active state (same as original logic)
-    device->updateActiveState("defaultConnection");
+    device->updateActiveState(m_connectionName);
     device->dateTimeUpdated = QDateTime::currentDateTime();
 
     // Type-specific processing
@@ -570,7 +570,7 @@ void DeviceJobStoppable::updateRelatedDevices(Device* device)
     // Update related devices (same logic as Device::updateDevice)
     // This handles catalogs that share the same external ID
     try {
-        QSqlQuery queryRelatedDevice(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryRelatedDevice(QSqlDatabase::database(m_connectionName));
         QString queryRelatedDeviceSQL = R"(
             SELECT device_id
             FROM device
@@ -587,7 +587,7 @@ void DeviceJobStoppable::updateRelatedDevices(Device* device)
         while (queryRelatedDevice.next()) {
             Device relatedDevice;
             relatedDevice.ID = queryRelatedDevice.value(0).toInt();
-            relatedDevice.loadDevice("defaultConnection");
+            relatedDevice.loadDevice(m_connectionName);
             relatedDevice.totalFileCount = device->totalFileCount;
             relatedDevice.totalFileSize = device->totalFileSize;
             relatedDevice.saveDevice();
@@ -689,7 +689,7 @@ void DeviceJobStoppable::completeOperation()
         try {
             // First, reload the root device to get latest data from database
             qDebug() << "Reloading root device to get latest data";
-            m_rootDevice->loadDevice("defaultConnection");
+            m_rootDevice->loadDevice(m_connectionName);
 
             // Update numbers from children (aggregates from child devices)
             qDebug() << "Calling updateNumbersFromChildren on root device";

@@ -208,7 +208,7 @@ void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index
 {
     //Get selection data
     activeDevice->ID = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
-    activeDevice->loadDevice("defaultConnection");
+    activeDevice->loadDevice(m_connectionName);
 
     if((activeDevice->type =="Catalog" && activeDevice->active) || activeDevice->type == "Storage" || activeDevice->type == "Virtual")
         ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(true);
@@ -226,11 +226,11 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
     //Get selection data
     QModelIndex index=ui->Devices_treeView_DeviceList->currentIndex();
     activeDevice->ID   = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
-    activeDevice->loadDevice("defaultConnection");
+    activeDevice->loadDevice(m_connectionName);
 
     Device *tempParentDevice = new Device();
     tempParentDevice->ID = activeDevice->parentID;
-    tempParentDevice->loadDevice("defaultConnection");
+    tempParentDevice->loadDevice(m_connectionName);
 
     //Set actions for catalogs
     if(activeDevice->type=="Catalog"){
@@ -275,7 +275,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction5);
         connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
             exploreDevice->ID = activeDevice->ID;
-            exploreDevice->loadDevice("defaultConnection");
+            exploreDevice->loadDevice(m_connectionName);
 
             exploreSelectedFolderFullPath = exploreDevice->path;
             exploreSelectedDirectoryName  = exploreDevice->path;
@@ -596,7 +596,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 
         Device* loopDevice = new Device();
         loopDevice->ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 3)).toInt();
-        loopDevice->loadDevice("defaultConnection");
+        loopDevice->loadDevice(m_connectionName);
 
         qDebug() << "Found device:" << loopDevice->name << "Type:" << loopDevice->type;
 

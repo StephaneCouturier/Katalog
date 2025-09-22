@@ -216,6 +216,7 @@ public:
         return selectedUserFileType;
     }
 private:
+    QString m_connectionName = "defaultConnection";
     static QStringList getExtensionsForFileType(const QString &fileType);
 
 signals:

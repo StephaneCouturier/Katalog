@@ -72,7 +72,7 @@ void MainWindow::on_BackUp_pushButton_DeleteSelectedMapping_clicked()
     QString mappingID = selectedIndexes.at(0).data().toString();
 
     //Delete the mapping in the table device_mapping
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                             DELETE FROM device_mapping
                             WHERE mapping_id = :mapping_id
@@ -124,7 +124,7 @@ void MainWindow::loadBackUpMappingTotals()
     ui->BackUp_label_CurrentMappings_DeviceValue->setText(selectedDevice->name);
 
     //Load data from table device_mapping
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
     querySQL = QLatin1String(R"(
         SELECT
@@ -241,7 +241,7 @@ void MainWindow::loadBackUpMappingTotals()
 void MainWindow::loadBackUpMappingTable()
 {
     //Load data from table device_mapping
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
     querySQL = QLatin1String(R"(
                             SELECT
@@ -440,11 +440,11 @@ void MainWindow::loadBackUpDeviceLists(QString list)
         {   //Load device an its parent
             Device tempDevice;
             tempDevice.ID = selectedDevice->deviceListTable.at(i).ID;
-            tempDevice.loadDevice("defaultConnection");
+            tempDevice.loadDevice(m_connectionName);
 
             Device tempParentDevice;
             tempParentDevice.ID = tempDevice.parentID;
-            tempParentDevice.loadDevice("defaultConnection");
+            tempParentDevice.loadDevice(m_connectionName);
 
             //Add row if valid for the type of list
             if (list == "Source_without_mapping") {
@@ -568,7 +568,7 @@ void MainWindow::saveNewMapping()
         }
 
     //Insert mapping in the table device_mapping
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                             INSERT INTO device_mapping
                             (   mapping_name,

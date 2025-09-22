@@ -112,7 +112,7 @@ void Device::loadDevice(QString connectionName){
     //Load catalog values
     if(type == "Catalog"){
         catalog->ID = externalID;
-        catalog->loadCatalog(connectionName);
+        catalog->loadCatalog();
         if (catalog->includeMetadata == "false") {
             catalog->includeMetadata = Catalog::METADATA_NONE;
         }
@@ -195,7 +195,7 @@ void Device::loadSubDeviceList(QString connectionName)
 
 void Device::getCatalogStorageID(){
     //Retrieve device_parent_id for an item in the physical group
-    QSqlQuery queryGetCatalogStorageID(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryGetCatalogStorageID(QSqlDatabase::database(m_connectionName));
     QString queryGetCatalogStorageIDSQL = QLatin1String(R"(
                     WITH RECURSIVE find_special AS
                         (SELECT device_id, device_parent_id, device_name
@@ -227,7 +227,7 @@ void Device::getCatalogStorageID(){
 void Device::generateDeviceID()
 {//Generate new ID
     if(ID==0){
-        QSqlQuery queryGenerateDeviceID(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryGenerateDeviceID(QSqlDatabase::database(m_connectionName));
         QString queryGenerateDeviceIDSQL;
         queryGenerateDeviceIDSQL = QLatin1String(R"(
                             SELECT MAX(device_id)
@@ -243,7 +243,7 @@ void Device::generateDeviceID()
 void Device::insertDevice()
 {//Insert device in table
 
-    QSqlQuery queryInsertDevice(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryInsertDevice(QSqlDatabase::database(m_connectionName));
     QString queryInsertDeviceSQL;
     queryInsertDeviceSQL = QLatin1String(R"(
                             INSERT INTO device(
@@ -291,7 +291,7 @@ void Device::insertDevice()
 
 bool Device::verifyDeviceNameExists()
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                     SELECT COUNT(*)
                                     FROM   device
@@ -312,7 +312,7 @@ bool Device::verifyDeviceNameExists()
 
 bool Device::verifyParentDeviceExistsInPhysicalGroup()
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                                     SELECT COUNT(*)
                                     FROM   device
@@ -354,7 +354,7 @@ void Device::verifyHasSubDevice(QString connectionName)
 
 bool Device::verifyStorageExternalIDExists()
 {
-    QSqlQuery queryExternalID(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryExternalID(QSqlDatabase::database(m_connectionName));
     QString queryExternalIDSQL = QLatin1String(R"(
                                 SELECT COUNT(device_external_id)
                                 FROM device
@@ -370,7 +370,7 @@ bool Device::verifyStorageExternalIDExists()
 
 bool Device::verifyDeviceHasSourceMapping()
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare("SELECT COUNT(*) FROM device_mapping WHERE mapping_device_source_id = :deviceId");
     query.bindValue(":deviceId", ID);
 
@@ -388,7 +388,7 @@ bool Device::verifyDeviceHasSourceMapping()
 
 bool Device::verifyDeviceHasTargetMapping()
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare("SELECT COUNT(*) FROM device_mapping WHERE mapping_device_target_id = :deviceId");
     query.bindValue(":deviceId", ID);
 
@@ -406,7 +406,7 @@ bool Device::verifyDeviceHasTargetMapping()
 
 void Device::getIDFromDeviceName()
 {
-    QSqlQuery queryIDFromDeviceName(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery queryIDFromDeviceName(QSqlDatabase::database(m_connectionName));
     QString queryIDFromDeviceNameSQL = QLatin1String(R"(
                                 SELECT device_id
                                 FROM device
@@ -422,7 +422,7 @@ void Device::getIDFromDeviceName()
 
 void Device::saveDevice()
 {//Update database with device values
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                             UPDATE  device
                             SET     device_name =:device_name,
@@ -458,7 +458,7 @@ void Device::saveDevice()
 
 void Device::updateNumbersFromChildren()
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
 
     //Update file values
@@ -522,7 +522,7 @@ void Device::updateNumbersFromChildren()
 
 void Device::updateParentsNumbers()
 {//recursively update parent numbers, from bottom to top
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL;
 
     //Get List of parent items
@@ -556,7 +556,7 @@ void Device::updateParentsNumbers()
 
         Device tempCurrentDevice;
         tempCurrentDevice.ID = tempID;
-        tempCurrentDevice.loadDevice("defaultConnection");
+        tempCurrentDevice.loadDevice(m_connectionName);
         tempCurrentDevice.updateNumbersFromChildren();
     }
 }
@@ -585,7 +585,7 @@ void Device::updateActiveState(QString connectionName)
 
 void Device::saveStatistics(QDateTime dateTime, QString requestSource)
 {
-    QSqlQuery querySaveStatistics(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery querySaveStatistics(QSqlDatabase::database(m_connectionName));
     QString querySaveStatisticsSQL = QLatin1String(R"(
                                         INSERT INTO statistics_device(
                                                 date_time,
@@ -628,7 +628,7 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
     result.needsConfirmation = askConfirmation;
     result.result = DeleteSuccess;
 
-    verifyHasSubDevice("defaultConnection");
+    verifyHasSubDevice(m_connectionName);
 
     if (hasSubDevice) {
         result.result = DeleteHasSubDevices;
@@ -669,7 +669,7 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
     }
 
     // Perform the actual deletion
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                         DELETE FROM device
                         WHERE device_id=:device_id
@@ -721,7 +721,7 @@ QList<qint64> Device::updateStorageOnly(const QString& statisticsRequestSource)
     }
 
     // Update device state (same as original logic)
-    updateActiveState("defaultConnection");
+    updateActiveState(m_connectionName);
     dateTimeUpdated = QDateTime::currentDateTime();
 
     // === STORAGE UPDATE ONLY (extracted from Device::updateDevice) ===

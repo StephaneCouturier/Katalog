@@ -100,7 +100,7 @@ void DeviceUpdateManager::updateParentStorageAfterCatalogUpdate(Device *device)
         qDebug() << "Loading parent storage device...";
         Device parentDevice;
         parentDevice.ID = device->parentID;
-        parentDevice.loadDevice("defaultConnection");
+        parentDevice.loadDevice(m_connectionName);
 
         if (parentDevice.type == "Storage" && parentDevice.storage) {
             qDebug() << "Updating parent storage space info for:" << parentDevice.name;
@@ -361,7 +361,7 @@ void DeviceUpdateManager::processChildren(Device* device)
         // Add all children to remaining list
         for (const Device& childDevice : device->subDevices) {
             Device* childPtr = new Device(childDevice);
-            childPtr->updateActiveState("defaultConnection");
+            childPtr->updateActiveState(m_connectionName);
             m_remainingVirtualChildren.append(childPtr);
             qDebug() << "Added to remaining list:" << childPtr->name << "Type:" << childPtr->type << "Active:" << childPtr->active;
         }
@@ -408,7 +408,7 @@ void DeviceUpdateManager::updateDeviceRecursive(Device* device)
     emit deviceProcessingStarted(device->name, device->type);
 
     // Update device active state
-    device->updateActiveState("defaultConnection");
+    device->updateActiveState(m_connectionName);
     device->dateTimeUpdated = QDateTime::currentDateTime();
 
     // Type-specific processing with proper flow control
@@ -703,7 +703,7 @@ void DeviceUpdateManager::loadDeviceChildren(Device* device)
         device->deviceIDList.clear();
 
         // Force reload the device which populates deviceIDList
-        device->loadDevice("defaultConnection");
+        device->loadDevice(m_connectionName);
 
         qDebug() << "Device has" << device->deviceIDList.size() << "child IDs";
         qDebug() << "hasSubDevice flag:" << device->hasSubDevice;
@@ -711,7 +711,7 @@ void DeviceUpdateManager::loadDeviceChildren(Device* device)
         for (int childID : std::as_const(device->deviceIDList)) {
             Device childDevice;
             childDevice.ID = childID;
-            childDevice.loadDevice("defaultConnection");
+            childDevice.loadDevice(m_connectionName);
             device->subDevices.append(childDevice);
 
             qDebug() << "  Loaded child:" << childDevice.name << "Type:" << childDevice.type << "Active:" << childDevice.active;
@@ -854,7 +854,7 @@ void DeviceUpdateManager::updateRelatedDevices(Device* device)
     qDebug() << "Updating related devices for catalog:" << device->name;
 
     try {
-        QSqlQuery queryRelatedDevice(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery queryRelatedDevice(QSqlDatabase::database(m_connectionName));
         QString queryRelatedDeviceSQL = R"(
             SELECT device_id
             FROM device
@@ -871,7 +871,7 @@ void DeviceUpdateManager::updateRelatedDevices(Device* device)
         while (queryRelatedDevice.next()) {
             Device relatedDevice;
             relatedDevice.ID = queryRelatedDevice.value(0).toInt();
-            relatedDevice.loadDevice("defaultConnection");
+            relatedDevice.loadDevice(m_connectionName);
             relatedDevice.totalFileCount = device->totalFileCount;
             relatedDevice.totalFileSize = device->totalFileSize;
             relatedDevice.saveDevice();
@@ -1245,7 +1245,7 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
     m_processedCatalogs++;
     updateProgress();
 
-    m_currentDevice->loadDevice("defaultConnection");
+    m_currentDevice->loadDevice(m_connectionName);
     m_currentDevice->saveDevice();
     m_currentDevice->saveStatistics(m_currentDevice->dateTimeUpdated, "update");
     updateRelatedDevices(m_currentDevice);
@@ -1373,7 +1373,7 @@ Storage::UpdateResult DeviceUpdateManager::updateParentStorage(Device* catalogDe
         qDebug() << "Loading parent storage device...";
         Device parentDevice;
         parentDevice.ID = catalogDevice->parentID;
-        parentDevice.loadDevice("defaultConnection");
+        parentDevice.loadDevice(m_connectionName);
 
         if (parentDevice.type == "Storage" && parentDevice.storage) {
             qDebug() << "Updating parent storage space info for:" << parentDevice.name;
@@ -1489,7 +1489,7 @@ void DeviceUpdateManager::initializeStorageBatchProcessing(Device* storageDevice
         Device* childPtr = new Device(childDevice);
 
         // Ensure active state is correctly updated
-        childPtr->updateActiveState("defaultConnection");
+        childPtr->updateActiveState(m_connectionName);
 
         m_childrenToProcess.append(childPtr);
         qDebug() << "  Child to process:" << childPtr->name << "Type:" << childPtr->type << "Active:" << childPtr->active;
@@ -1659,7 +1659,7 @@ void DeviceUpdateManager::initializeVirtualProcessing(Device* virtualDevice)
     m_virtualChildrenToProcess.clear();
     for (const Device& childDevice : virtualDevice->subDevices) {
         Device* childPtr = new Device(childDevice);
-        childPtr->updateActiveState("defaultConnection");
+        childPtr->updateActiveState(m_connectionName);
         m_virtualChildrenToProcess.append(childPtr);
         qDebug() << "  Virtual child to process:" << childPtr->name << "Type:" << childPtr->type << "Active:" << childPtr->active;
     }
@@ -1761,7 +1761,7 @@ void DeviceUpdateManager::processNextVirtualChild()
     setCurrentDevice(nextChild);
     emit deviceProcessingStarted(nextChild->name, nextChild->type);
 
-    nextChild->updateActiveState("defaultConnection");
+    nextChild->updateActiveState(m_connectionName);
     nextChild->dateTimeUpdated = QDateTime::currentDateTime();
 
     if (nextChild->type == "Storage") {

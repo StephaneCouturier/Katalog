@@ -90,15 +90,15 @@ public:
     void updateFileCount();
     void updateTotalFileSize();
     void setStorageName(QString selectedStorageName);
-    void setDateLoaded(QDateTime dateTime, QString connectionName);
+    void setDateLoaded(QDateTime dateTime);
     void setDateUpdated(QDateTime dateTime);
 
     void generateID();
     void insertCatalog();
-    void loadCatalog(QString connectionName);
+    void loadCatalog();
     void deleteCatalog();
     void saveCatalog();
-    void clearCatalogData(const QString &connectionName = "defaultConnection");
+    void clearCatalogData();
 
     void loadExcludedFolders();
 
@@ -108,7 +108,7 @@ public:
     bool saveCatalogToFile(QString databaseMode, QString collectionFolder);
     bool saveFoldersToFile(QString databaseMode, QString collectionFolder);
 
-    void loadCatalogFileListToTable(QString connectionName, QMutex &mutex, bool &stopRequested);
+    void loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested);
     void loadFoldersToTable();
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
@@ -137,6 +137,7 @@ public:
     static const QString METADATA_FULL;
 
 private:
+    QString m_connectionName = "defaultConnection";
     QStringList fileExtensions;
     QList<QString> fileNames;
     QList<qint64>  fileSizes;

@@ -127,6 +127,7 @@ public:
         QList<qint64> updateStorageOnly(const QString& statisticsRequestSource);
 
 private:
+        QString m_connectionName = "defaultConnection";
         void loadSubDeviceList(QString connectionName);
 
 };
