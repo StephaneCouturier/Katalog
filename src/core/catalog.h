@@ -98,7 +98,7 @@ public:
     void loadCatalog(QString connectionName);
     void deleteCatalog();
     void saveCatalog();
-    void clearCatalogData();
+    void clearCatalogData(const QString &connectionName = "defaultConnection");
 
     void loadExcludedFolders();
 

@@ -111,13 +111,13 @@ const auto SQL_CREATE_STORAGE = QLatin1String(R"(
 const auto SQL_CREATE_FILE = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS file(
                             file_catalog_id   NUMERIC,
-                            file_name         TEXT,     -- "/home/user/photos"
-                            file_folder_path  TEXT,     -- "home.jpg"
+                            file_name         TEXT,     -- "home.jpg"
+                            file_folder_path  TEXT,     -- "/home/user/photos"
                             file_size         NUMERIC,
                             file_date_updated TEXT,
                             file_catalog      TEXT,
                             file_full_path    TEXT,     -- "/home/user/photos/home.jpg"
-                            file_extension    TEXT,      -- "jpg"
+                            file_extension    TEXT,     -- "jpg"
                             file_type               TEXT,
                             mime_type               TEXT,
                             mime_verified           NUMERIC,
@@ -150,8 +150,8 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
 const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  filetemp(
                             file_catalog_id   NUMERIC,
-                            file_name         TEXT,     -- "/home/user/photos"
-                            file_folder_path  TEXT,     -- "home.jpg"
+                            file_name         TEXT,     -- "home.jpg"
+                            file_folder_path  TEXT,     -- "/home/user/photos"
                             file_size         NUMERIC,
                             file_date_updated TEXT,
                             file_catalog      TEXT,

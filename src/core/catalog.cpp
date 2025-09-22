@@ -300,13 +300,13 @@ void Catalog::saveCatalog()
     query.exec();
 }
 
-void Catalog::clearCatalogData()
+void Catalog::clearCatalogData(const QString &connectionName)
 {
     qDebug() << "Clearing existing catalog data for update";
 
     // Clear files from database (use catalog ID, not name)
     QString deleteFilesSQL = "DELETE FROM file WHERE file_catalog_id = :file_catalog_id";
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QSqlQuery query(QSqlDatabase::database(connectionName));
     query.prepare(deleteFilesSQL);
     query.bindValue(":file_catalog_id", ID);  // Use ID, not name
 

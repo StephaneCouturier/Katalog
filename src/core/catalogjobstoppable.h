@@ -175,7 +175,7 @@ private:
     OperationType m_operationType = CreateCatalog;
     QString m_databaseMode;
     QString m_collectionFolder;
-    QString m_connectionName;
+    QString m_connectionName = "defaultConnection";
 
     // State management (atomic for thread safety)
     QAtomicInt m_stopRequested{0};
