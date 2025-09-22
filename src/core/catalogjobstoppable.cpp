@@ -394,31 +394,36 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                                                        Catalog *catalog,
                                                        qint64 &processedCount)
 {
+    // Right before the batch size decision:
+    qDebug() << "CatalogJobStoppable::processDirectoryWithProgress, Catalog includeMetadata value:" << catalog->includeMetadata
+             << "NONE:" << Catalog::METADATA_NONE
+             << "BASIC:" << Catalog::METADATA_MEDIA_BASIC
+             << "Comparison result:" << (catalog->includeMetadata == Catalog::METADATA_MEDIA_BASIC);
+
     if (!shouldContinue()) return;
 
-    // Get file extensions for filtering
+    qDebug() << "Processing directory:" << directory;
+
+    // Get file extensions for filtering (for files only)
     QStringList extensions;
     if (catalog->fileType == "Image") {
-        extensions = FileTypeMapping::getExtensionsForCataloging("image");
+        extensions << "*.png" << "*.jpg" << "*.jpeg" << "*.gif" << "*.xcf" << "*.tif" << "*.tiff" << "*.bmp";
     } else if (catalog->fileType == "Audio") {
-        extensions = FileTypeMapping::getExtensionsForCataloging("audio");
+        extensions << "*.mp3" << "*.wav" << "*.ogg" << "*.aif" << "*.aiff" << "*.flac";
     } else if (catalog->fileType == "Video") {
-        extensions = FileTypeMapping::getExtensionsForCataloging("video");
+        extensions << "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv" << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
     } else if (catalog->fileType == "Text") {
-        extensions = FileTypeMapping::getExtensionsForCataloging("text");
-    } else if (catalog->fileType == "Other") {
-        extensions = FileTypeMapping::getExtensionsForCataloging("other");
-        if (extensions.isEmpty()) {
-            qDebug() << "WARNING: Other type returned empty extensions list!";
-        }
+        extensions << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
     } else if (catalog->fileType == "None") {
         extensions << "*";
     } else {
+        // Default: include all files
         extensions << "*";
     }
 
-    // Use QDirIterator for efficient directory traversal
-    QDir::Filters filters = QDir::Files | QDir::Readable;
+    // Use QDirIterator for efficient directory traversal - RESTORE ORIGINAL APPROACH
+    // Changed from QDir::Files to QDir::AllEntries to include directories (like v2.6)
+    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Readable;
     if (catalog->includeHidden) {
         filters |= QDir::Hidden;
     }
@@ -435,6 +440,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     QStringList fileExtensions;
     QStringList fileTypes;
     QList<qint64> fileSizes;
+    QStringList directoryPaths; // NEW: Track directories separately
 
     int batchSize;
     if (!catalog->includeMetadata.isEmpty() &&
@@ -457,144 +463,168 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     while (it.hasNext() && shouldContinue()) {
         waitIfPaused();
 
-        QString fileFullPath = it.next();
-        QFileInfo fileInfo(fileFullPath);
+        QString entryPath = it.next();
+        QFileInfo entry(entryPath);
 
-        // Special handling for "None" type - manually filter extensionless files
-        if (catalog->fileType == "None") {
-            QString extension = fileInfo.suffix();
-            if (!extension.isEmpty()) {
-                continue; // Skip files that have extensions
-            }
-        }
-
-        // Skip excluded folders
+        // Skip excluded folders (same logic as original)
         bool isExcluded = false;
         for (const QString &excludedFolder : catalog->excludedFolders) {
-            if (fileFullPath.contains(excludedFolder)) {
+            if (entryPath.contains(excludedFolder)) {
                 isExcluded = true;
                 break;
             }
         }
         if (isExcluded) continue;
 
-        // Get file extension and quick type
-        QString extension = fileInfo.suffix().toLower();
-        QString quickFileType = FileMetadata::getFileTypeFromExtension(extension);
+        // RESTORE ORIGINAL LOGIC: Handle directories and files separately
+        if (entry.isDir()) {
+            // Insert directories (including empty ones) - RESTORED FROM v2.6
+            directoryPaths << entryPath;
+        }
+        else if (entry.isFile()) {
+            // Special handling for "None" type - manually filter extensionless files
+            if (catalog->fileType == "None") {
+                QString extension = entry.suffix();
+                if (!extension.isEmpty()) {
+                    continue; // Skip files that have extensions
+                }
+            }
 
-        // Process file - correctly separate folder path from full path
-        fileNames << fileInfo.fileName();
-        fileFolderPaths << fileInfo.path();
-        fileFullPaths << fileFullPath;
-        fileDateTimes << fileInfo.lastModified().toString("yyyy/MM/dd hh:mm:ss");
-        fileCatalogs << catalog->name;
-        fileSizes << fileInfo.size();
-        fileExtensions << extension;     // Store extension
-        fileTypes << quickFileType;      // Store type based on extension ONLY
+            // Get file extension and quick type
+            QString extension = entry.suffix().toLower();
+            QString quickFileType = FileMetadata::getFileTypeFromExtension(extension);
 
-        // Update counters
-        processedCount++;
-        filesProcessedInThisCall++;
-        batchCount++;
+            // Process file - correctly separate folder path from full path
+            fileNames << entry.fileName();
+            fileFolderPaths << entry.path();
+            fileFullPaths << entryPath;
+            fileDateTimes << entry.lastModified().toString("yyyy/MM/dd hh:mm:ss");
+            fileCatalogs << catalog->name;
+            fileSizes << entry.size();
+            fileExtensions << extension;     // Store extension
+            fileTypes << quickFileType;      // Store type based on extension ONLY
 
-        // Progress updates
-        if (filesProcessedInThisCall % progressRefreshRate == 0) {
-            emitProgressUpdate(processedCount, countedTotalFiles, fileInfo.absoluteFilePath());
-            QCoreApplication::processEvents();
+            // Update counters
+            processedCount++;
+            filesProcessedInThisCall++;
+            batchCount++;
+
+            // Progress updates
+            if (filesProcessedInThisCall % progressRefreshRate == 0) {
+                emitProgressUpdate(processedCount, countedTotalFiles, entry.absoluteFilePath());
+                QCoreApplication::processEvents();
+            }
         }
 
-        // Database batching
-        if (batchCount >= batchSize) {
-            // Insert files WITHOUT mime_type
-            QSqlQuery query(QSqlDatabase::database(m_connectionName));
-            query.prepare(R"(
-            INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
-                            file_size, file_date_updated, file_catalog,
-                            file_extension, file_type)
-            VALUES (:catalog_id, :name, :folder_path, :full_path,
-                    :size, :date, :catalog_name,
-                    :extension, :file_type)
-            )");
+        // Database batching (when we have enough files OR directories)
+        if ((batchCount >= batchSize && !fileNames.isEmpty()) || !directoryPaths.isEmpty() && directoryPaths.size() >= 100) {
+            // Insert files if we have any
+            if (!fileNames.isEmpty()) {
+                QSqlQuery query(QSqlDatabase::database(m_connectionName));
+                query.prepare(R"(
+                INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
+                                file_size, file_date_updated, file_catalog,
+                                file_extension, file_type)
+                VALUES (:catalog_id, :name, :folder_path, :full_path,
+                        :size, :date, :catalog_name,
+                        :extension, :file_type)
+                )");
 
-            for (int i = 0; i < fileNames.size(); ++i) {
-                if (!shouldContinue()) break;
-
-                query.bindValue(":catalog_id", catalog->ID);
-                query.bindValue(":name", fileNames[i]);
-                query.bindValue(":folder_path", fileFolderPaths[i]);
-                query.bindValue(":full_path", fileFullPaths[i]);
-                query.bindValue(":size", fileSizes[i]);
-                query.bindValue(":date", fileDateTimes[i]);
-                query.bindValue(":catalog_name", fileCatalogs[i]);
-                query.bindValue(":extension", fileExtensions[i]);
-                query.bindValue(":file_type", fileTypes[i]);
-                // NOTE: NOT inserting mime_type - leave NULL
-
-                if (!query.exec()) {
-                    qDebug() << "Database insert error:" << query.lastError().text();
-                }
-            }
-
-            // Metadata extraction - ONLY for media files with metadata enabled
-            if (catalog->includeMetadata != Catalog::METADATA_NONE) {
-                for (int i = 0; i < fileFullPaths.size(); ++i) {
+                for (int i = 0; i < fileNames.size(); ++i) {
                     if (!shouldContinue()) break;
 
-                    const QString &filePath = fileFullPaths[i];
+                    query.bindValue(":catalog_id", catalog->ID);
+                    query.bindValue(":name", fileNames[i]);
+                    query.bindValue(":folder_path", fileFolderPaths[i]);
+                    query.bindValue(":full_path", fileFullPaths[i]);
+                    query.bindValue(":size", fileSizes[i]);
+                    query.bindValue(":date", fileDateTimes[i]);
+                    query.bindValue(":catalog_name", fileCatalogs[i]);
+                    query.bindValue(":extension", fileExtensions[i]);
+                    query.bindValue(":file_type", fileTypes[i]);
 
-                    // Use the ORIGINAL isMetadataSupported that checks MIME
-                    if (FileMetadata::isMetadataSupported(filePath)) {
-                        FileMetadata::extractAndStore(filePath, m_connectionName,
-                                                      catalog->ID, catalog->includeMetadata);
+                    if (!query.exec()) {
+                        qDebug() << "Database insert error:" << query.lastError().text();
                     }
                 }
-            }
 
-            // Insert folders for this batch - Use folder paths, not full file paths
-            QStringList uniqueFolders = fileFolderPaths;
-            uniqueFolders.removeDuplicates();
+                // Metadata extraction - ONLY for media files with metadata enabled
+                if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+                    for (int i = 0; i < fileFullPaths.size(); ++i) {
+                        if (!shouldContinue()) break;
 
-            QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
-            folderQuery.prepare(R"(
-                INSERT OR IGNORE INTO folder (folder_catalog_id, folder_path)
-                VALUES (:catalog_id, :path)
-            )");
-
-            for (const QString &folderPath : uniqueFolders) {
-                if (!shouldContinue()) break;
-
-                folderQuery.bindValue(":catalog_id", catalog->ID);
-                folderQuery.bindValue(":path", folderPath);
-
-                if (!folderQuery.exec()) {
-                    qDebug() << "Folder insert error:" << folderQuery.lastError().text();
+                        const QString &filePath = fileFullPaths[i];
+                        if (FileMetadata::isMetadataSupported(filePath)) {
+                            FileMetadata::extractAndStore(filePath, m_connectionName,
+                                                          catalog->ID, catalog->includeMetadata);
+                        }
+                    }
                 }
+
+                // Insert folders from files
+                QStringList uniqueFolders = fileFolderPaths;
+                uniqueFolders.removeDuplicates();
+
+                QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
+                folderQuery.prepare(R"(
+                    INSERT OR IGNORE INTO folder (folder_catalog_id, folder_path)
+                    VALUES (:catalog_id, :path)
+                )");
+
+                for (const QString &folderPath : uniqueFolders) {
+                    if (!shouldContinue()) break;
+
+                    folderQuery.bindValue(":catalog_id", catalog->ID);
+                    folderQuery.bindValue(":path", folderPath);
+
+                    if (!folderQuery.exec()) {
+                        qDebug() << "Folder insert error:" << folderQuery.lastError().text();
+                    }
+                }
+
+                // Clear file batch arrays
+                fileNames.clear();
+                fileFolderPaths.clear();
+                fileFullPaths.clear();
+                fileDateTimes.clear();
+                fileCatalogs.clear();
+                fileSizes.clear();
+                fileExtensions.clear();
+                fileTypes.clear();
+                batchCount = 0;
             }
 
-            // Clear batch arrays
-            fileNames.clear();
-            fileFolderPaths.clear();
-            fileFullPaths.clear();
-            fileDateTimes.clear();
-            fileCatalogs.clear();
-            fileSizes.clear();
-            fileExtensions.clear();
-            fileTypes.clear();
-            batchCount = 0;
+            // Insert directories (including empty ones) - RESTORED FUNCTIONALITY
+            if (!directoryPaths.isEmpty()) {
+                QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
+                folderQuery.prepare(R"(
+                    INSERT OR IGNORE INTO folder (folder_catalog_id, folder_path)
+                    VALUES (:catalog_id, :path)
+                )");
+
+                for (const QString &dirPath : directoryPaths) {
+                    if (!shouldContinue()) break;
+
+                    folderQuery.bindValue(":catalog_id", catalog->ID);
+                    folderQuery.bindValue(":path", dirPath);
+
+                    if (!folderQuery.exec()) {
+                        qDebug() << "Directory insert error:" << folderQuery.lastError().text();
+                    }
+                }
+
+                directoryPaths.clear();
+            }
         }
     }
 
-    // Process remaining files in final batch
+    // Process remaining files and directories in final batch
     if (!fileNames.isEmpty() && shouldContinue()) {
         QSqlQuery query(QSqlDatabase::database(m_connectionName));
         query.prepare(R"(
-        INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
-                        file_size, file_date_updated, file_catalog,
-                        file_extension, file_type)
-        VALUES (:catalog_id, :name, :folder_path, :full_path,
-                :size, :date, :catalog_name,
-                :extension, :file_type)
-    )");
+            INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path, file_size, file_date_updated, file_catalog)
+            VALUES (:catalog_id, :name, :folder_path, :full_path, :size, :date, :catalog_name)
+        )");
 
         for (int i = 0; i < fileNames.size(); ++i) {
             if (!shouldContinue()) break;
@@ -606,8 +636,6 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
             query.bindValue(":size", fileSizes[i]);
             query.bindValue(":date", fileDateTimes[i]);
             query.bindValue(":catalog_name", fileCatalogs[i]);
-            query.bindValue(":extension", fileExtensions[i]);
-            query.bindValue(":file_type", fileTypes[i]);
 
             if (!query.exec()) {
                 qDebug() << "Database insert error:" << query.lastError().text();
@@ -645,8 +673,26 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
                 qDebug() << "Folder insert error:" << folderQuery.lastError().text();
             }
         }
+    }
 
+    // Process remaining directories in final batch
+    if (!directoryPaths.isEmpty() && shouldContinue()) {
+        QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
+        folderQuery.prepare(R"(
+            INSERT OR IGNORE INTO folder (folder_catalog_id, folder_path)
+            VALUES (:catalog_id, :path)
+        )");
 
+        for (const QString &dirPath : directoryPaths) {
+            if (!shouldContinue()) break;
+
+            folderQuery.bindValue(":catalog_id", catalog->ID);
+            folderQuery.bindValue(":path", dirPath);
+
+            if (!folderQuery.exec()) {
+                qDebug() << "Directory insert error:" << folderQuery.lastError().text();
+            }
+        }
     }
 
     // Final progress update for this directory
@@ -677,14 +723,14 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
     } else if (catalog->fileType == "Other") {
         extensions = FileTypeMapping::getExtensionsForCataloging("other");
     } else if (catalog->fileType == "None") {
-        // Special case: for extensionless files, we need to scan all files
-        // and filter manually later (QDirIterator can't filter "no extension")
         extensions << "*";
     } else {
         // Default/All: include all files
         extensions << "*";
     }
 
+    // FIXED: Use same approach as processDirectoryWithProgress - count FILES only, not directories
+    // We only count files for progress tracking, but directories will still be processed
     QDir::Filters filters = QDir::Files | QDir::Readable;
     if (catalog->includeHidden) {
         filters |= QDir::Hidden;
@@ -727,8 +773,7 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
         }
     }
 
-    emitProgressUpdate(totalFiles, totalFiles, QString("Found %1 files. Starting processing...").arg(totalFiles));
-
+    emitProgressUpdate(totalFiles, totalFiles, QString("Found %1 files.").arg(totalFiles));
     return totalFiles;
 }
 
