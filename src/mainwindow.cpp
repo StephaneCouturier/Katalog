@@ -439,32 +439,3 @@ void MainWindow::closeEvent (QCloseEvent *event)
     qDebug() << "Saved window state:" << size() << "at" << pos();
     event->accept();
 }
-
-//DEV: Templates
-/*
-qDebug()<<"DEBUG value: " << value <<QDateTime::currentDateTime();
-
-QMessageBox msgBox;
-msgBox.setWindowTitle("Katalog");
-msgBox.setText(tr("anyVariable")+": <br/>" + QVariant(anyVariable).toString());
-msgBox.setText(QCoreApplication::translate("MainWindow",
-                                    "Text<br/>"
-                                    "<br/> Text with first parameter<br/><b>%1</b><br/>"
-                                    "<br/> Text with first parameter<br/><b>%2</b><br/>"
-                                    ).arg( parameter1, tempText.toUtf8() ));
-msgBox.setIcon(QMessageBox::Information);
-msgBox.exec();
-
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-        QString querySQL = QLatin1String(R"(
-                                    SELECT *
-                                    FROM table
-                                    WHERE 1=1
-                                )");
-        query.prepare(querySQL);
-        query.exec();
-        qDebug()<<"DEBUG: query: "<<query.lastError();
-        while(query.next()){
-            qDebug()<<query.value(0).toString()<<query.value(1).toString();
-        }
-*/
