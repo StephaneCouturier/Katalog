@@ -150,6 +150,20 @@ public:
     QList<int> videoDurations, videoWidths, videoHeights;
     QList<int> audioDurations;
     QStringList audioArtists, audioAlbums, audioTitles;
+    QStringList fileExtensions;
+    QList<bool> mimeVerified;
+    QList<bool> typeMismatch;
+    QList<int> imageOrientations;
+    QStringList videoCodecs;
+    QList<double> videoFramerates;
+    QList<int> videoBitrates;
+    QStringList audioGenres;
+    QList<int> audioYears;
+    QList<int> audioTrackNumbers;
+    QList<int> audioBitrates;
+    QList<int> audioSampleRates;
+    QStringList metadataExtendeds;
+    QStringList metadataExtractionDates;
 
     qint64 filesFoundNumber;
     qint64 filesFoundTotalSize;

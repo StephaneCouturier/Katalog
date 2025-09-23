@@ -423,7 +423,20 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             audio_artist,
             audio_album,
             audio_title,
-            metadata_extended
+            file_extension,
+            mime_verified,
+            type_mismatch,
+            image_orientation,
+            video_codec,
+            video_framerate,
+            video_bitrate,
+            audio_genre,
+            audio_year,
+            audio_track_number,
+            audio_bitrate,
+            audio_sample_rate,
+            metadata_extended,
+            metadata_extraction_date
     FROM  file
     WHERE file_catalog_id = :file_catalog_id
 )");
@@ -555,6 +568,20 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         QString audioArtist = getFilesQuery.value(12).toString();
         QString audioAlbum = getFilesQuery.value(13).toString();
         QString audioTitle = getFilesQuery.value(14).toString();
+        QString fileExtension = getFilesQuery.value(15).toString();
+        bool mimeVerifiedValue = getFilesQuery.value(16).toBool();
+        bool typeMismatchValue = getFilesQuery.value(17).toBool();
+        int imageOrientation = getFilesQuery.value(18).toInt();
+        QString videoCodec = getFilesQuery.value(19).toString();
+        double videoFramerate = getFilesQuery.value(20).toDouble();
+        int videoBitrate = getFilesQuery.value(21).toInt();
+        QString audioGenre = getFilesQuery.value(22).toString();
+        int audioYear = getFilesQuery.value(23).toInt();
+        int audioTrackNumber = getFilesQuery.value(24).toInt();
+        int audioBitrate = getFilesQuery.value(25).toInt();
+        int audioSampleRate = getFilesQuery.value(26).toInt();
+        QString metadataExtended = getFilesQuery.value(27).toString();
+        QString metadataExtractionDate = getFilesQuery.value(28).toString();
 
         filesProcessed++;
         batchCount++;
@@ -617,7 +644,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 fileDateTimes.append(fileDateTime);
                 fileCatalogs.append(device->name);
                 fileCatalogIDs.append(device->externalID);
-
                 fileTypes.append(fileType);
                 mimeTypes.append(mimeType);
                 imageWidths.append(imageWidth);
@@ -629,6 +655,20 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 audioArtists.append(audioArtist);
                 audioAlbums.append(audioAlbum);
                 audioTitles.append(audioTitle);
+                fileExtensions.append(fileExtension);
+                mimeVerified.append(mimeVerifiedValue);
+                typeMismatch.append(typeMismatchValue);
+                imageOrientations.append(imageOrientation);
+                videoCodecs.append(videoCodec);
+                videoFramerates.append(videoFramerate);
+                videoBitrates.append(videoBitrate);
+                audioGenres.append(audioGenre);
+                audioYears.append(audioYear);
+                audioTrackNumbers.append(audioTrackNumber);
+                audioBitrates.append(audioBitrate);
+                audioSampleRates.append(audioSampleRate);
+                metadataExtendeds.append(metadataExtended);
+                metadataExtractionDates.append(metadataExtractionDate);
             }
         }
 

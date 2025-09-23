@@ -50,25 +50,25 @@
             qDebug() << "Current state:" << static_cast<int>(searchButtonState);
 
             switch (searchButtonState) {
-            case SearchButtonState::Idle:
-                qDebug() << "Starting search from idle state";
-                launchSearch();  // Let launchSearch() handle state updates
-                break;
+                case SearchButtonState::Idle:
+                    qDebug() << "Starting search from idle state";
+                    launchSearch();  // Let launchSearch() handle state updates
+                    break;
 
-            case SearchButtonState::Running:
-                qDebug() << "Pausing search";
-                pauseCurrentSearch();  // This should call setSearchStatePaused()
-                break;
+                case SearchButtonState::Running:
+                    qDebug() << "Pausing search";
+                    pauseCurrentSearch();  // This should call setSearchStatePaused()
+                    break;
 
-            case SearchButtonState::Paused:
-                qDebug() << "Resuming search";
-                resumeCurrentSearch();  // This should call setSearchStateRunning()
-                break;
+                case SearchButtonState::Paused:
+                    qDebug() << "Resuming search";
+                    resumeCurrentSearch();  // This should call setSearchStateRunning()
+                    break;
 
-            case SearchButtonState::Searching:
-                // Memory mode - button disabled, nothing to do
-                qDebug() << "Button clicked during memory search (should be disabled)";
-                break;
+                case SearchButtonState::Searching:
+                    // Memory mode - button disabled, nothing to do
+                    qDebug() << "Button clicked during memory search (should be disabled)";
+                    break;
             }
         }
         //----------------------------------------------------------------------
@@ -1536,24 +1536,74 @@
                         //Prepare insert query for file
                         QSqlQuery insertFileQuery(QSqlDatabase::database(m_connectionName));
                         QString insertFileSQL = QLatin1String(R"(
-                                                    INSERT INTO file (
-                                                                    file_catalog_id,
-                                                                    file_name,
-                                                                    file_folder_path,
-                                                                    file_size,
-                                                                    file_date_updated,
-                                                                    file_catalog,
-                                                                    file_full_path
-                                                                    )
-                                                    VALUES(
-                                                                    :file_catalog_id,
-                                                                    :file_name,
-                                                                    :file_folder_path,
-                                                                    :file_size,
-                                                                    :file_date_updated,
-                                                                    :file_catalog,
-                                                                    :file_full_path )
-                                                    )");
+                                INSERT INTO file(
+                                    file_catalog_id,
+                                    file_name,
+                                    file_folder_path,
+                                    file_size,
+                                    file_date_updated,
+                                    file_catalog,
+                                    file_full_path,
+                                    file_extension,
+                                    file_type,
+                                    mime_type,
+                                    mime_verified,
+                                    type_mismatch,
+                                    image_width,
+                                    image_height,
+                                    image_orientation,
+                                    video_duration_seconds,
+                                    video_width,
+                                    video_height,
+                                    video_codec,
+                                    video_framerate,
+                                    video_bitrate,
+                                    audio_duration_seconds,
+                                    audio_artist,
+                                    audio_album,
+                                    audio_title,
+                                    audio_genre,
+                                    audio_year,
+                                    audio_track_number,
+                                    audio_bitrate,
+                                    audio_sample_rate,
+                                    metadata_extended,
+                                    metadata_extraction_date
+                                )
+                                VALUES(
+                                    :file_catalog_id,
+                                    :file_name,
+                                    :file_folder_path,
+                                    :file_size,
+                                    :file_date_updated,
+                                    :file_catalog,
+                                    :file_full_path,
+                                    :file_extension,
+                                    :file_type,
+                                    :mime_type,
+                                    :mime_verified,
+                                    :type_mismatch,
+                                    :image_width,
+                                    :image_height,
+                                    :image_orientation,
+                                    :video_duration_seconds,
+                                    :video_width,
+                                    :video_height,
+                                    :video_codec,
+                                    :video_framerate,
+                                    :video_bitrate,
+                                    :audio_duration_seconds,
+                                    :audio_artist,
+                                    :audio_album,
+                                    :audio_title,
+                                    :audio_genre,
+                                    :audio_year,
+                                    :audio_track_number,
+                                    :audio_bitrate,
+                                    :audio_sample_rate,
+                                    :metadata_extended,
+                                    :metadata_extraction_date )
+                              )");
                         insertFileQuery.prepare(insertFileSQL);
 
                         //Prepare insert query for folder
@@ -1582,7 +1632,7 @@
                             insertFolderQuery.exec();
 
                         //Insert files
-                            //QFile file(currentSearch->filePaths[i]);
+
                             insertFileQuery.bindValue(":file_catalog_id",   newDevice->catalog->ID);
                             insertFileQuery.bindValue(":file_name",         currentSearch->fileNames[i]);
                             insertFileQuery.bindValue(":file_size",         QLocale().toString(currentSearch->fileSizes[i]));
@@ -1590,13 +1640,53 @@
                             insertFileQuery.bindValue(":file_date_updated", currentSearch->fileDateTimes[i]);
                             insertFileQuery.bindValue(":file_catalog",      currentSearch->fileCatalogs[i]);
                             insertFileQuery.bindValue(":file_full_path",    currentSearch->filePaths[i]);
+                            insertFileQuery.bindValue(":file_extension",
+                                                      (i < currentSearch->fileExtensions.size()) ? currentSearch->fileExtensions[i] : QVariant());
+                            insertFileQuery.bindValue(":mime_verified",
+                                                      (i < currentSearch->mimeVerified.size()) ? currentSearch->mimeVerified[i] : QVariant());
+                            insertFileQuery.bindValue(":type_mismatch",
+                                                      (i < currentSearch->typeMismatch.size()) ? currentSearch->typeMismatch[i] : QVariant());
+                            insertFileQuery.bindValue(":image_width",
+                                                      (i < currentSearch->imageWidths.size()) ? currentSearch->imageWidths[i] : QVariant());
+                            insertFileQuery.bindValue(":image_height",
+                                                      (i < currentSearch->imageHeights.size()) ? currentSearch->imageHeights[i] : QVariant());
+                            insertFileQuery.bindValue(":image_orientation",
+                                                      (i < currentSearch->imageOrientations.size()) ? currentSearch->imageOrientations[i] : QVariant());
+                            insertFileQuery.bindValue(":video_duration_seconds",
+                                                      (i < currentSearch->videoDurations.size()) ? currentSearch->videoDurations[i] : QVariant());
+                            insertFileQuery.bindValue(":video_width",
+                                                      (i < currentSearch->videoWidths.size()) ? currentSearch->videoWidths[i] : QVariant());
+                            insertFileQuery.bindValue(":video_height",
+                                                      (i < currentSearch->videoHeights.size()) ? currentSearch->videoHeights[i] : QVariant());
+                            insertFileQuery.bindValue(":video_codec",
+                                                      (i < currentSearch->videoCodecs.size()) ? currentSearch->videoCodecs[i] : QVariant());
+                            insertFileQuery.bindValue(":video_framerate",
+                                                      (i < currentSearch->videoFramerates.size()) ? currentSearch->videoFramerates[i] : QVariant());
+                            insertFileQuery.bindValue(":video_bitrate",
+                                                      (i < currentSearch->videoBitrates.size()) ? currentSearch->videoBitrates[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_duration_seconds",
+                                                      (i < currentSearch->audioDurations.size()) ? currentSearch->audioDurations[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_artist",
+                                                      (i < currentSearch->audioArtists.size()) ? currentSearch->audioArtists[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_album",
+                                                      (i < currentSearch->audioAlbums.size()) ? currentSearch->audioAlbums[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_title",
+                                                      (i < currentSearch->audioTitles.size()) ? currentSearch->audioTitles[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_genre",
+                                                      (i < currentSearch->audioGenres.size()) ? currentSearch->audioGenres[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_year",
+                                                      (i < currentSearch->audioYears.size()) ? currentSearch->audioYears[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_track_number",
+                                                      (i < currentSearch->audioTrackNumbers.size()) ? currentSearch->audioTrackNumbers[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_bitrate",
+                                                      (i < currentSearch->audioBitrates.size()) ? currentSearch->audioBitrates[i] : QVariant());
+                            insertFileQuery.bindValue(":audio_sample_rate",
+                                                      (i < currentSearch->audioSampleRates.size()) ? currentSearch->audioSampleRates[i] : QVariant());
+                            insertFileQuery.bindValue(":metadata_extended",
+                                                      (i < currentSearch->metadataExtendeds.size()) ? currentSearch->metadataExtendeds[i] : QVariant());
+                            insertFileQuery.bindValue(":metadata_extraction_date",
+                                                      (i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : QVariant());
                             insertFileQuery.exec();
-
-                            //Media File Metadata
-                            //DEV: includeMetadata
-                            //     if(includeMetadata == true){
-                            //         setMediaFile(entryPath);
-                            //     }
                     }
                 }
 
@@ -1604,6 +1694,15 @@
                 if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
 
                     QTextStream stream(&exportFile);
+
+                    QString csvHeader = "file_full_path\tfile_size\tfile_date_updated\tfile_catalog\t"
+                                        "file_extension\tfile_type\tmime_type\tmime_verified\ttype_mismatch\t"
+                                        "image_width\timage_height\timage_orientation\t"
+                                        "video_duration_seconds\tvideo_width\tvideo_height\tvideo_codec\tvideo_framerate\tvideo_bitrate\t"
+                                        "audio_duration_seconds\taudio_artist\taudio_album\taudio_title\taudio_genre\taudio_year\t"
+                                        "audio_track_number\taudio_bitrate\taudio_sample_rate\t"
+                                        "metadata_extended\tmetadata_extraction_date";
+                    stream << csvHeader << '\n';
 
                     //Export file metadata
                     for (int i = 0; i < catalogMetadata.size(); ++i)
@@ -1618,9 +1717,36 @@
                         QString line = currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i] + "\t"
                                        + QLocale().toString(currentSearch->fileSizes[i]) + "\t"
                                        + currentSearch->fileDateTimes[i] + "\t"
-                                       + currentSearch->fileCatalogs[i];
+                                       + currentSearch->fileCatalogs[i] + "\t"
+                                       + ((i < currentSearch->fileExtensions.size()) ? currentSearch->fileExtensions[i] : "") + "\t"  // Use the array
+                                       + ((i < currentSearch->fileTypes.size()) ? currentSearch->fileTypes[i] : "") + "\t"
+                                       + ((i < currentSearch->mimeTypes.size()) ? currentSearch->mimeTypes[i] : "") + "\t"
+                                       + ((i < currentSearch->mimeVerified.size()) ? (currentSearch->mimeVerified[i] ? "1" : "0") : "") + "\t"
+                                       + ((i < currentSearch->typeMismatch.size()) ? (currentSearch->typeMismatch[i] ? "1" : "0") : "") + "\t"
+                                       + ((i < currentSearch->imageWidths.size()) ? QString::number(currentSearch->imageWidths[i]) : "") + "\t"
+                                       + ((i < currentSearch->imageHeights.size()) ? QString::number(currentSearch->imageHeights[i]) : "") + "\t"
+                                       + ((i < currentSearch->imageOrientations.size()) ? QString::number(currentSearch->imageOrientations[i]) : "") + "\t"
+                                       + ((i < currentSearch->videoDurations.size()) ? QString::number(currentSearch->videoDurations[i]) : "") + "\t"
+                                       + ((i < currentSearch->videoWidths.size()) ? QString::number(currentSearch->videoWidths[i]) : "") + "\t"
+                                       + ((i < currentSearch->videoHeights.size()) ? QString::number(currentSearch->videoHeights[i]) : "") + "\t"
+                                       + ((i < currentSearch->videoCodecs.size()) ? currentSearch->videoCodecs[i] : "") + "\t"
+                                       + ((i < currentSearch->videoFramerates.size()) ? QString::number(currentSearch->videoFramerates[i]) : "") + "\t"
+                                       + ((i < currentSearch->videoBitrates.size()) ? QString::number(currentSearch->videoBitrates[i]) : "") + "\t"
+                                       + ((i < currentSearch->audioDurations.size()) ? QString::number(currentSearch->audioDurations[i]) : "") + "\t"
+                                       + ((i < currentSearch->audioArtists.size()) ? currentSearch->audioArtists[i] : "") + "\t"
+                                       + ((i < currentSearch->audioAlbums.size()) ? currentSearch->audioAlbums[i] : "") + "\t"
+                                       + ((i < currentSearch->audioTitles.size()) ? currentSearch->audioTitles[i] : "") + "\t"
+                                       + ((i < currentSearch->audioGenres.size()) ? currentSearch->audioGenres[i] : "") + "\t"
+                                       + ((i < currentSearch->audioYears.size()) ? QString::number(currentSearch->audioYears[i]) : "") + "\t"
+                                       + ((i < currentSearch->audioTrackNumbers.size()) ? QString::number(currentSearch->audioTrackNumbers[i]) : "") + "\t"
+                                       + ((i < currentSearch->audioBitrates.size()) ? QString::number(currentSearch->audioBitrates[i]) : "") + "\t"
+                                       + ((i < currentSearch->audioSampleRates.size()) ? QString::number(currentSearch->audioSampleRates[i]) : "") + "\t"
+                                       + ((i < currentSearch->metadataExtendeds.size()) ? currentSearch->metadataExtendeds[i] : "") + "\t"
+                                       + ((i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : "");
                         stream << line << '\n';
                     }
+
+
                 }
                 exportFile.close();
 

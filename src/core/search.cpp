@@ -160,8 +160,8 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         case 1: return QString(tr("Size"));
         case 2: return QString(tr("Date"));
         case 3: return QString(tr("Directory"));
-        case 4: return QString(tr("Catalog"));
-        case 5: return QString(tr("Type"));
+        case 4: return QString(tr("Catalog Name"));
+        case 5: return QString(tr("Catalog ID"));
         case 6: return QString(tr("orderValue"));
         case 7: return QString(tr("Path"));
         // Metadata - aligned with Explore
@@ -172,7 +172,7 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         case 12: return QString(tr("Duration"));        //Generic for Audio and Video
         case 13: return QString(tr("Video Width"));
         case 14: return QString(tr("Video Height"));
-        case 15: return QString(tr("Audio Duration"));       // Now at column 15 like Explore
+        case 15: return QString(tr("Audio Duration"));
         case 16: return QString(tr("Artist"));
         case 17: return QString(tr("Album"));
         case 18: return QString(tr("Title"));
