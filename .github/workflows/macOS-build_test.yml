@@ -17,7 +17,7 @@ on:
   push:
     branches: [ main, katalog_development ]
     paths: 
-      - '.github/workflows/macos-qt6-kf6-build.yml'  # Only when workflow changes
+      - '.github/workflows/macOS-build_test.yml'
 
 jobs:
   build-macos-qt6-kf6:
