@@ -129,17 +129,18 @@ jobs:
         
         # KF6 components needed by Katalog (in dependency order)
         KF6_COMPONENTS=(
-            "extra-cmake-modules"
-            "kcoreaddons"
-            "ki18n"
-            "kconfig"
-            "kwidgetsaddons"
-            "kconfigwidgets"
-            "kglobalaccel"
-            "kxmlgui"
-            "kiconthemes"
-            "kfilemetadata"    # ← Add this
-            "kcompletion"      # ← And this
+          "extra-cmake-modules"
+          "kcoreaddons"
+          "ki18n"
+          "kconfig"
+          "kitemviews"        # ← Add this (needed by kxmlgui)
+          "kwidgetsaddons"
+          "kconfigwidgets"
+          "kglobalaccel"
+          "kxmlgui"
+          "kiconthemes"
+          "kfilemetadata"
+          "kcompletion"
         )
         
         # Set up common cmake args
