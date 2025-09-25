@@ -214,37 +214,23 @@ jobs:
             continue
           fi
           
-          if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log; then
+          if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log && [ -f "Makefile" ] && make -j$(sysctl -n hw.ncpu); then
             echo "✅ Build successful for $component"
           else
             echo "❌ Build failed for $component"
-            echo "=== Build error details ==="
-            tail -50 build.log || echo "No build log available"
-            FAILED_BUILDS+=("$component (build failed)")
+            echo "Build log contents:"
+            cat build.log | tail -20
+            FAILED_BUILDS+=("$component (actual build failed)")
             cd ~/kf6-build
             continue
           fi
           
-          if make install 2>&1 | tee install.log; then
+          if make install 2>&1 | tee install.log && [ $? -eq 0 ]; then
             echo "✅ Installation successful for $component"
-            SUCCESSFUL_BUILDS+=("$component")
-            
-            # Verify installation for critical components
-            if [ "$component" = "kxmlgui" ]; then
-              echo "=== Verifying KF6XmlGui installation ==="
-              find "$(brew --prefix)" -name "*KF6XmlGui*" -o -name "*kxmlgui*" | head -10
-              xmlgui_config=$(find "$(brew --prefix)" -name "KF6XmlGuiConfig.cmake" 2>/dev/null | head -1)
-              if [ -n "$xmlgui_config" ]; then
-                echo "✅ KF6XmlGui cmake config found at: $xmlgui_config"
-              else
-                echo "❌ KF6XmlGui cmake config NOT found after installation"
-              fi
-            fi
-            
           else
             echo "❌ Installation failed for $component"
-            echo "=== Installation error details ==="
-            tail -50 install.log || echo "No install log available"
+            echo "Install log contents:"
+            cat install.log | tail -20
             FAILED_BUILDS+=("$component (install failed)")
             cd ~/kf6-build
             continue
