@@ -311,6 +311,19 @@ jobs:
         echo ""
         echo "Set CMAKE_PREFIX_PATH for next steps: $FINAL_CMAKE_PREFIX_PATH"
 
+        echo ""
+        echo "=== Verifying KF6FileMetaData build ==="
+        find "$(brew --prefix)" -name "*FileMetaData*" -o -name "*filemetadata*" 2>/dev/null | head -10
+        
+        kfilemetadata_config="$(brew --prefix)/lib/cmake/KF6FileMetaData/KF6FileMetaDataConfig.cmake"
+        if [ -f "$kfilemetadata_config" ]; then
+          echo "✅ KF6FileMetaData found at: $kfilemetadata_config"
+        else
+          echo "❌ KF6FileMetaData not found - build failed"
+          echo "Available KF6 components:"
+          ls "$(brew --prefix)/lib/cmake/" | grep KF6 || echo "No KF6 components found"
+        fi
+
     - name: Debug KF6 installation status
       run: |
         echo "=== Detailed KF6 Installation Debug ==="
