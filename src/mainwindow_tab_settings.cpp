@@ -114,12 +114,10 @@
         QApplication::exit();
     }
     //----------------------------------------------------------------------
-
-    //Memory ---------------------------------------------------------------
     void MainWindow::changeCollectionFolder(QString newDirectory)
     {
         //Test the new directory path is not empty
-        if ( newDirectory !=""){
+        if (newDirectory != "") {
             //Test if the directory exists, and propose to create it otherwise. If refused, set back the current folder.
             if (!QDir(newDirectory).exists()) {
 
@@ -135,16 +133,54 @@
                 msgBox.exec();
 
                 if (msgBox.clickedButton() == createButton) {
-
                     //Create the folder and set it as the new collection folder
                     QDir().mkdir(newDirectory);
-
                 } else if (msgBox.clickedButton() == cancelButton) {
                     //Reset the former folder path and exit procedure
                     ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
                     ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
                     return;
                 }
+            }
+
+            // Validate folder before attempting to load
+            Collection::CollectionFolderStatus status = collection->validateCollectionFolder(newDirectory, collection->databaseMode);
+
+            switch (status) {
+            case Collection::VALID_EMPTY:
+            case Collection::VALID_MEMORY_MODE:
+            case Collection::VALID_FILE_MODE:
+                // Valid folder - proceed with loading
+                break;
+
+            case Collection::INVALID_MEMORY_FILES:
+            case Collection::INVALID_FILE_FILES:
+            case Collection::INVALID_USER_DATA:
+            case Collection::INVALID_MIXED_DATA: {
+                // Invalid folder - show user options
+                MainWindow::InvalidFolderAction action = showInvalidFolderDialog(newDirectory, status, false);
+
+                switch (action) {
+                case MainWindow::ACTION_CREATE_SUBFOLDER: {
+                    // Create new collection in subfolder
+                    QString newCollectionPath = newDirectory + "/Katalog_Collection_" +
+                                                QDateTime::currentDateTime().toString("yyyyMMdd");
+                    QDir().mkpath(newCollectionPath);
+                    changeCollectionFolder(newCollectionPath); // Recursive call with empty folder
+                    return;
+                }
+                case MainWindow::ACTION_SELECT_DIFFERENT:
+                    on_Settings_pushButton_SelectFolder_clicked(); // Let user pick again
+                    return;
+
+                case MainWindow::ACTION_CANCEL:
+                default:
+                    // Cancel: restore previous folder and return
+                    ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+                    ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
+                    return;
+                }
+            }
             }
 
             //Set the new collection folder
@@ -155,7 +191,7 @@
             ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
 
             //Save Settings for the new collection folder value
-            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
             settings.setValue("LastCollectionFolder", collection->folder);
 
             //Load the collection from this new folder;
@@ -167,6 +203,66 @@
             ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
         }
     }
+
+    MainWindow::InvalidFolderAction MainWindow::showInvalidFolderDialog(const QString& folderPath,
+                                                                        Collection::CollectionFolderStatus status,
+                                                                        bool isFirstRun)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Invalid Collection Folder"));
+
+        QString message = collection->getValidationMessage(status);
+        message += tr("<br/><br/>Selected folder: <i>%1</i>").arg(folderPath);
+
+        if (isFirstRun) {
+            message += tr("<br/><br/>For your first collection, please choose a suitable folder.");
+        }
+
+        // Enable HTML rendering
+        msgBox.setTextFormat(Qt::RichText);
+        msgBox.setInformativeText(message);
+        msgBox.setIcon(QMessageBox::Warning);
+
+        QPushButton *createButton = nullptr;
+        QPushButton *selectButton = nullptr;
+        QPushButton *defaultOrCancelButton = nullptr;
+
+        if (collection->databaseMode == "Memory") {
+            createButton = msgBox.addButton(tr("Create New Collection Here"), QMessageBox::YesRole);
+            selectButton = msgBox.addButton(tr("Select Different Folder"), QMessageBox::NoRole);
+
+            if (isFirstRun) {
+                defaultOrCancelButton = msgBox.addButton(tr("Use Application Folder"), QMessageBox::AcceptRole);
+            } else {
+                defaultOrCancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+            }
+        }
+        else { // File mode
+            selectButton = msgBox.addButton(tr("Select Different Folder"), QMessageBox::AcceptRole);
+
+            if (isFirstRun) {
+                defaultOrCancelButton = msgBox.addButton(tr("Use Application Folder"), QMessageBox::RejectRole);
+            } else {
+                defaultOrCancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+            }
+        }
+
+        msgBox.exec();
+
+        if (createButton && msgBox.clickedButton() == createButton) {
+            return ACTION_CREATE_SUBFOLDER;
+        }
+        else if (msgBox.clickedButton() == selectButton) {
+            return ACTION_SELECT_DIFFERENT;
+        }
+        else if (msgBox.clickedButton() == defaultOrCancelButton) {
+            return isFirstRun ? ACTION_USE_DEFAULT : ACTION_CANCEL;
+        }
+
+        return isFirstRun ? ACTION_USE_DEFAULT : ACTION_CANCEL;
+    }
+    //Memory ---------------------------------------------------------------
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
     {

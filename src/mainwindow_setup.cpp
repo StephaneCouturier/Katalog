@@ -87,16 +87,68 @@
                 //Language
                 ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
-                //Collection folder choice
+                //Collection folder choice - with validation
+                bool folderSelected = false;
+                while (!folderSelected) {
                     //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-                    collection->folder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                                collection->folder,
-                                                                QFileDialog::ShowDirsOnly
-                                                                | QFileDialog::DontResolveSymlinks);
+                    QString selectedFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                                               collection->folder,
+                                                                               QFileDialog::ShowDirsOnly
+                                                                                   | QFileDialog::DontResolveSymlinks);
 
-                    //set the location of the application as a default value if a folder was not provided
-                    if (collection->folder =="")
-                        collection->folder = QApplication::applicationDirPath();
+                    //Handle user cancellation
+                    if (selectedFolder.isEmpty()) {
+                        //set the location of the application as a default value if a folder was not provided
+                        selectedFolder = QApplication::applicationDirPath();
+                    }
+
+                    // Validate the selected folder
+                    Collection::CollectionFolderStatus status = collection->validateCollectionFolder(selectedFolder, collection->databaseMode);
+
+                    switch (status) {
+                    case Collection::VALID_EMPTY:
+                    case Collection::VALID_MEMORY_MODE:
+                    case Collection::VALID_FILE_MODE:
+                        // Valid folder - accept and continue
+                        collection->folder = selectedFolder;
+                        folderSelected = true;
+                        break;
+
+                    case Collection::INVALID_MEMORY_FILES:
+                    case Collection::INVALID_FILE_FILES:
+                    case Collection::INVALID_USER_DATA:
+                    case Collection::INVALID_MIXED_DATA: {
+                        // Invalid folder - show options to user
+                        InvalidFolderAction action = showInvalidFolderDialog(selectedFolder, status, true);
+
+                        switch (action) {
+                        case ACTION_CREATE_SUBFOLDER: {
+                            // Create new collection in subfolder
+                            QString newCollectionPath = selectedFolder + "/Katalog_Collection_" +
+                                                        QDateTime::currentDateTime().toString("yyyyMMdd");
+                            if (QDir().mkpath(newCollectionPath)) {
+                                collection->folder = newCollectionPath;
+                                folderSelected = true;
+                            }
+                            // If creation failed, continue loop
+                            break;
+                        }
+                        case ACTION_SELECT_DIFFERENT:
+                            // Continue loop to let user select again
+                            break;
+
+                        case ACTION_USE_DEFAULT:
+                            // Use application folder as fallback
+                            collection->folder = QApplication::applicationDirPath();
+                            folderSelected = true;
+                            break;
+                        case ACTION_CANCEL:
+                            break;
+                        }
+                        break;
+                    }
+                    }
+                }
 
                     //save setting
                     settings.setValue("LastCollectionFolder", collection->folder);

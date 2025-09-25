@@ -1663,4 +1663,85 @@ void Collection::updateAllDeviceActive()
         loopDevice.updateActiveState(m_connectionName);
     }
 }
+
+Collection::CollectionFolderStatus Collection::validateCollectionFolder(const QString& folderPath, const QString& targetMode) const
+{
+    QDir dir(folderPath);
+    if (!dir.exists()) {
+        return INVALID_USER_DATA; // Caller should handle non-existent dirs
+    }
+
+    // Check if empty
+    QStringList entries = dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries);
+    if (entries.isEmpty()) {
+        return VALID_EMPTY;
+    }
+
+    // Check for Memory mode indicators
+    bool hasDeviceCsv = QFile::exists(folderPath + "/device.csv");
+    bool hasStorageCsv = QFile::exists(folderPath + "/storage.csv");
+    bool hasParametersCsv = QFile::exists(folderPath + "/parameters.csv");
+    bool hasMemoryModeFiles = hasDeviceCsv || hasStorageCsv || hasParametersCsv;
+
+    // Check for File mode indicators
+    QStringList dbFiles = dir.entryList(QStringList() << "*.db", QDir::Files);
+    bool hasDbFiles = !dbFiles.isEmpty();
+
+    // Check for Katalog auxiliary files (storage pictures, etc.)
+    QStringList idxFiles = dir.entryList(QStringList() << "*.idx", QDir::Files);
+    bool hasIdxFiles = !idxFiles.isEmpty();
+    bool hasKatalogAux = hasIdxFiles; // Add other auxiliary file patterns as needed
+
+    // Determine folder content type
+    bool isMemoryCollection = hasMemoryModeFiles;
+    bool isFileCollection = hasDbFiles || (hasKatalogAux && !hasMemoryModeFiles);
+    bool hasUserData = !isMemoryCollection && !isFileCollection && !entries.isEmpty();
+
+    // Validate against target mode
+    if (targetMode == "Memory") {
+        if (isMemoryCollection) return VALID_MEMORY_MODE;
+        if (isFileCollection) return INVALID_FILE_FILES;
+        if (hasUserData) return INVALID_USER_DATA;
+    }
+    else if (targetMode == "File") {
+        if (isFileCollection) return VALID_FILE_MODE;
+        if (isMemoryCollection) return INVALID_MEMORY_FILES;
+        if (hasUserData) return INVALID_USER_DATA;
+    }
+
+    return INVALID_USER_DATA;
+}
+
+// Add this to collection.cpp
+
+QString Collection::getValidationMessage(CollectionFolderStatus status) const
+{
+    switch (status) {
+    case VALID_EMPTY:
+        return tr("This folder is empty and can be used for a new collection.");
+
+    case VALID_MEMORY_MODE:
+        return tr("This folder contains a valid Memory mode collection.");
+
+    case VALID_FILE_MODE:
+        return tr("This folder contains File mode collection auxiliary files.");
+
+    case INVALID_MEMORY_FILES:
+        return tr("This folder contains Memory mode collection files, but you are currently in File mode.<br/>"
+                  "Switch to Memory mode or select a different folder.");
+
+    case INVALID_FILE_FILES:
+        return tr("This folder contains File mode collection files, but you are currently in Memory mode.<br/>"
+                  "Switch to File mode or select a different folder.");
+
+    case INVALID_MIXED_DATA:
+        return tr("This folder contains both collection and user data.<br/>"
+                  "To avoid mixing data types, please select a dedicated folder for collections.");
+
+    case INVALID_USER_DATA:
+    default:
+        return tr("This folder contains user data and is not suitable for a collection.<br/>"
+                  "Collections should be stored in dedicated folders to avoid mixing with personal files.");
+    }
+}
 //----------------------------------------------------------------------

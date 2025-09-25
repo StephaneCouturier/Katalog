@@ -117,6 +117,19 @@ public:
     bool insertPhysicalStorageGroup();
     void updateAllDeviceActive();
 
+    enum CollectionFolderStatus {
+        VALID_EMPTY,           // Empty folder - can create new collection
+        VALID_MEMORY_MODE,     // Contains Memory mode files (CSV)
+        VALID_FILE_MODE,       // Contains File mode auxiliary files
+        INVALID_MEMORY_FILES,  // Contains Memory mode files but we're in File mode
+        INVALID_FILE_FILES,    // Contains File mode files but we're in Memory mode
+        INVALID_MIXED_DATA,    // Contains user/system data mixed with collection data
+        INVALID_USER_DATA      // Contains user data, not a collection folder
+    };
+
+    CollectionFolderStatus validateCollectionFolder(const QString& folderPath, const QString& targetMode) const;
+    QString getValidationMessage(CollectionFolderStatus status) const; // For UI messages
+
 private:
     QString m_connectionName = "defaultConnection";
 

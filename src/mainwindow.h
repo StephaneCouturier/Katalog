@@ -483,6 +483,15 @@ class MainWindow : public KXmlGuiWindow
 
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);
+            enum InvalidFolderAction {
+                ACTION_CREATE_SUBFOLDER,
+                ACTION_SELECT_DIFFERENT,
+                ACTION_USE_DEFAULT,      // For first run
+                ACTION_CANCEL           // For regular settings
+            };
+            InvalidFolderAction showInvalidFolderDialog(const QString& folderPath,
+                                                        Collection::CollectionFolderStatus status,
+                                                        bool isFirstRun = false);
             void changeDatabaseFilePath(QString newDatabaseFilePath);
 
             //Export
