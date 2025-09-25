@@ -56,7 +56,7 @@ find_package(KF6XmlGui QUIET)
 find_package(KF6Config REQUIRED)
 #find_package(KF6IconThemes REQUIRED)
 find_package(KF6FileMetaData REQUIRED)
-find_package(KF6Completion REQUIRED)
+find_package(KF6Completion QUIET)
 
 # Enable Qt's automatic processing
 set(CMAKE_AUTOMOC ON)
