@@ -52,7 +52,7 @@ qt_standard_project_setup()
 # Find KF6 components
 find_package(KF6CoreAddons REQUIRED)
 #find_package(KF6I18n REQUIRED)
-find_package(KF6XmlGui REQUIRED)
+find_package(KF6XmlGui QUIET)
 find_package(KF6Config REQUIRED)
 #find_package(KF6IconThemes REQUIRED)
 find_package(KF6FileMetaData REQUIRED)
