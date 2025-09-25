@@ -1,11 +1,11 @@
-name: Build macOS App Bundle (Qt6/KF6 Master)
+name: Build macOS App Bundle (Qt6/KF6 Development)
 #v1 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
   workflow_dispatch:
     inputs:
       version_tag:
-        description: 'Version tag (e.g., v2.7-macos)'
+        description: 'Version tag (e.g., v2.8-macos)'
         required: false
         default: 'dev-macos-qt6-kf6'
       kf6_version:
@@ -15,7 +15,7 @@ on:
 
   # Optional: trigger on push to master for testing
   push:
-    branches: [ main, katalog_master ]
+    branches: [ main, katalog_development ]
     paths: 
       - '.github/workflows/macos-qt6-kf6-build.yml'  # Only when workflow changes
 
