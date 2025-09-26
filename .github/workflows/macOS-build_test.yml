@@ -1,7 +1,6 @@
-name: Build macOS (Qt6/KF6) Development
-#v1 - macOS Qt6/KF6 build from master branch (full modern build)
+name: Build macOS (Qt6/KF6) dev
+# Improved build strategy focusing on essential KF6 components with proper fallbacks
 on:
-  # Allow manual triggering from GitHub web interface
   workflow_dispatch:
     inputs:
       version_tag:
@@ -12,12 +11,16 @@ on:
         description: 'KF6 version to build'
         required: false
         default: 'v6.7.0'
+      use_source_build:
+        description: 'Force build KF6 from source'
+        required: false
+        default: 'false'
+        type: boolean
 
-  # Optional: trigger on push to master for testing
   push:
     branches: [ main, katalog_development ]
     paths: 
-      - '.github/workflows/macOS-build_test.yml'
+      - '.github/workflows/macOS-build_improved.yml'
 
 jobs:
   build-macos-qt6-kf6:
@@ -27,166 +30,102 @@ jobs:
     - name: Checkout master branch
       uses: actions/checkout@v4
       with:
-        # Use master branch (current codebase with KF6 dependencies)
         submodules: recursive
 
-    - name: Verify master branch checkout
+    - name: Verify Qt6/KF6 codebase
       run: |
         echo "Current commit: $(git rev-parse HEAD)"
         echo "Current branch: $(git branch --show-current 2>/dev/null || echo 'detached HEAD')"
         
-        # Show recent commits
-        git log --oneline -n 3
-        
-        echo "=== Verifying this is Qt6/KF6 code ==="
-        
-        # Check CMakeLists.txt for KF6 dependencies (should exist in master)
+        # Verify this is Qt6/KF6 code
         if grep -q "find_package.*KF6" CMakeLists.txt 2>/dev/null; then
-          echo "✅ Found KF6 dependencies in CMakeLists.txt - confirmed master branch"
+          echo "✅ Found KF6 dependencies in CMakeLists.txt"
           echo "KF6 packages required:"
           grep "find_package.*KF6" CMakeLists.txt
         else
           echo "⚠️  No KF6 dependencies found - may not be on the right branch"
         fi
-        
-        # Check for modern features (KJob, etc.)
-        if find src -name "*job*" -type f | head -5; then
-          echo "✅ Found job-related files (modern KF6 features)"
-        else
-          echo "⚠️  No job files found"
-        fi
 
-    - name: Install base dependencies
+    - name: Install base dependencies and Qt6
       run: |
-        echo "=== Installing base build tools ==="
+        echo "=== Installing base build tools and Qt6 ==="
         
         # Update Homebrew
         brew update
 
-        # Install base build tools
-        echo "cmake: $(command -v cmake && cmake --version | head -1 || echo 'not found')"
-        if ! command -v cmake >/dev/null 2>&1; then
-          brew install cmake
-        fi
+        # Install essential build tools
+        brew install cmake ninja
 
-        echo "ninja: $(command -v ninja && ninja --version || echo 'not found')"  
-        if ! command -v ninja >/dev/null 2>&1; then
-          brew install ninja
-        fi
-
-        # Install Qt6
+        # Install Qt6 - this should always work via Homebrew
         echo "Installing Qt6..."
-        if ! brew list qt@6 >/dev/null 2>&1; then
-          brew install qt@6
+        brew install qt@6
+        
+        # Verify Qt6 installation
+        QT6_PREFIX=$(brew --prefix qt@6)
+        echo "Qt6 installed at: $QT6_PREFIX"
+        
+        if [ ! -f "$QT6_PREFIX/lib/cmake/Qt6/Qt6Config.cmake" ]; then
+          echo "❌ Qt6 installation incomplete"
+          exit 1
         else
-          echo "Qt6 already installed"
+          echo "✅ Qt6 installation verified"
         fi
 
-        # Install dependencies for building KF6
-        echo "Installing KF6 build dependencies..."
-        brew install extra-cmake-modules || echo "extra-cmake-modules install failed"
-        
-        # Install additional tools we'll need
-        brew install git wget python3 || echo "Some tools install failed"
-        
-        # Install imagemagick for icon conversion
-        if ! command -v magick >/dev/null 2>&1; then
-          brew install imagemagick
-        fi
-
-    - name: Set Qt6 environment
+    - name: Try Homebrew KF6 packages (best case scenario)
+      id: homebrew_kf6
+      continue-on-error: true
       run: |
-        # Set up Qt6 paths
-        echo "$(brew --prefix qt@6)/bin" >> $GITHUB_PATH
-        echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
-        echo "Qt6_DIR=$(brew --prefix qt@6)/lib/cmake/Qt6" >> $GITHUB_ENV
-
-        # Display Qt6 version info
-        echo "Qt6 installation path: $(brew --prefix qt@6)"
-        echo "Qt6 version: $($(brew --prefix qt@6)/bin/qmake -version)"
+        echo "=== Attempting to install KF6 via Homebrew ==="
         
-        # Set up build environment
-        echo "CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
-        echo "MAKEFLAGS=-j$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
-    
-    - name: Try installing KF6 via homebrew first
-      run: |
-        echo "=== Attempting KF6 installation via homebrew ==="
-        
-        # Try to install KF6 components via homebrew (may fail, that's ok)
-        # Export failures for next step
-        echo "HOMEBREW_FAILURES=${HOMEBREW_FAILURES[*]}" >> $GITHUB_ENV
-        KF6_HOMEBREW_PACKAGES=(
-            "karchive"         # Not kf6-karchive
-            "kcodecs"          # Not kf6-kcodecs  
-            "kcoreaddons"      # Not kf6-kcoreaddons
-            "kconfig"          # Not kf6-kconfig
-            "ki18n"            # Not kf6-ki18n
-            "kitemviews"       # Not kf6-kitemviews
-            "kwidgetsaddons"   # Not kf6-kwidgetsaddons
-            "kconfigwidgets"   # Not kf6-kconfigwidgets
-            "kglobalaccel"     # Not kf6-kglobalaccel
-            "kxmlgui"          # Not kf6-kxmlgui
-            "kiconthemes"      # Not kf6-kiconthemes
-            "kfilemetadata"    # Not kf6-kfilemetadata
-            "kcompletion"      # Not kf6-kcompletion
+        # Try to install KF6 packages via Homebrew
+        # Note: These may not be available, but worth trying
+        KF6_PACKAGES=(
+          "extra-cmake-modules"
+          "kf6-kcoreaddons"
+          "kf6-ki18n"
+          "kf6-kconfig"
+          "kf6-kxmlgui"
+          "kf6-kiconthemes"
         )
         
-        HOMEBREW_SUCCESSES=()
-        HOMEBREW_FAILURES=()
+        HOMEBREW_SUCCESS=0
+        AVAILABLE_PACKAGES=()
         
-        for pkg in "${KF6_HOMEBREW_PACKAGES[@]}"; do
-          echo "Trying to install $pkg via homebrew..."
-          if brew install "$pkg" 2>/dev/null; then
-            echo "✅ Successfully installed $pkg via homebrew"
-            HOMEBREW_SUCCESSES+=("$pkg")
+        for pkg in "${KF6_PACKAGES[@]}"; do
+          echo "Checking if $pkg is available..."
+          if brew search "$pkg" | grep -q "^$pkg\$"; then
+            echo "  ✅ $pkg found in Homebrew"
+            if brew install "$pkg"; then
+              AVAILABLE_PACKAGES+=("$pkg")
+              echo "  ✅ $pkg installed successfully"
+            else
+              echo "  ❌ $pkg installation failed"
+            fi
           else
-            echo "❌ $pkg not available via homebrew"
-            HOMEBREW_FAILURES+=("$pkg")
+            echo "  ⚠️  $pkg not available in Homebrew"
           fi
         done
         
-        echo ""
-        echo "Homebrew installation summary:"
-        echo "Successes: ${HOMEBREW_SUCCESSES[*]}"
-        echo "Failures (will try source build): ${HOMEBREW_FAILURES[*]}"
+        echo "HOMEBREW_KF6_PACKAGES=${AVAILABLE_PACKAGES[*]}" >> $GITHUB_ENV
         
-        # Update CMAKE_PREFIX_PATH with any homebrew-installed components
-        if [ ${#HOMEBREW_SUCCESSES[@]} -gt 0 ]; then
-          echo "Adding homebrew KF6 paths to CMAKE_PREFIX_PATH"
-          export CMAKE_PREFIX_PATH="$(brew --prefix)/lib/cmake:$CMAKE_PREFIX_PATH"
+        if [ ${#AVAILABLE_PACKAGES[@]} -gt 0 ]; then
+          echo "✅ Some KF6 packages installed via Homebrew: ${AVAILABLE_PACKAGES[*]}"
+          echo "HOMEBREW_KF6_SUCCESS=true" >> $GITHUB_ENV
+        else
+          echo "❌ No KF6 packages available via Homebrew"
+          echo "HOMEBREW_KF6_SUCCESS=false" >> $GITHUB_ENV
         fi
 
-
-    - name: Build KF6 from source
+    - name: Build essential KF6 components from source
+      if: env.HOMEBREW_KF6_SUCCESS == 'false' || github.event.inputs.use_source_build == 'true'
       run: |
-        echo "=== Building KF6 from source ==="
-        echo "Starting KF6 build process at $(date)"
+        echo "=== Building essential KF6 components from source ==="
         
-        # Verify we have the necessary tools
-        echo "Checking build tools:"
-        echo "cmake: $(cmake --version | head -1)"
-        echo "make: $(make --version | head -1)"
-        echo "git: $(git --version)"
-        
-        # Create workspace
+        # Create build directory
         mkdir -p ~/kf6-build
         cd ~/kf6-build
         
-        echo "Working directory: $(pwd)"
-        echo "Available space: $(df -h . | tail -1)"
-        
-        # KF6 components needed by Katalog (in dependency order)
-        # Only build components that failed homebrew installation
-        # Convert space-separated string back to array
-        if [ -n "$HOMEBREW_FAILURES" ]; then
-          IFS=' ' read -ra FAILURE_ARRAY <<< "$HOMEBREW_FAILURES"
-          KF6_COMPONENTS=("${FAILURE_ARRAY[@]}")
-        else
-          KF6_COMPONENTS=()
-        fi
-        
-        # Set up common cmake args
+        # Set up cmake arguments - simplified for essential components only
         CMAKE_ARGS=(
           "-DCMAKE_PREFIX_PATH=$(brew --prefix qt@6)"
           "-DCMAKE_BUILD_TYPE=Release"
@@ -197,17 +136,24 @@ jobs:
           "-DQT_MAJOR_VERSION=6"
         )
         
-        echo "Building KF6 components: ${KF6_COMPONENTS[*]}"
-        echo "CMake args: ${CMAKE_ARGS[*]}"
+        # Essential KF6 components only - in correct dependency order
+        # Focus on what Katalog actually needs to function
+        ESSENTIAL_COMPONENTS=(
+          "extra-cmake-modules"  # Build system (required first)
+          "kcoreaddons"         # Core utilities (KJob, etc) - ESSENTIAL
+          "kconfig"             # Configuration system - ESSENTIAL  
+          "ki18n"               # Internationalization - NICE TO HAVE
+        )
         
-        # Track successful builds
+        echo "Building essential KF6 components: ${ESSENTIAL_COMPONENTS[*]}"
+        
         SUCCESSFUL_BUILDS=()
         FAILED_BUILDS=()
         
-        for component in "${KF6_COMPONENTS[@]}"; do
+        for component in "${ESSENTIAL_COMPONENTS[@]}"; do
           echo ""
           echo "========================================="
-          echo "=== Building $component ($(date)) ==="
+          echo "=== Building $component ==="
           echo "========================================="
           
           # Clone the component
@@ -219,61 +165,48 @@ jobs:
           
           echo "Cloning $REPO_URL"
           
-          # Skip if directory already exists and has content
-          if [ -d "$component" ] && [ "$(ls -A $component 2>/dev/null)" ]; then
-            echo "Directory $component already exists and is not empty, using existing clone"
-            cd "$component"
+          if git clone --depth=1 --branch "${{ github.event.inputs.kf6_version }}" "$REPO_URL" "$component" 2>/dev/null; then
+            echo "✅ Cloned $component successfully"
           else
-            if git clone "$REPO_URL" "$component" --depth=1 --branch "${{ github.event.inputs.kf6_version || 'v6.7.0' }}" 2>&1; then
-              echo "✅ Successfully cloned $component"
-              cd "$component"
+            echo "⚠️  Failed to clone specific version, trying master..."
+            if git clone --depth=1 "$REPO_URL" "$component"; then
+              echo "✅ Cloned $component from master"
             else
-              echo "❌ Failed to clone $component, trying master branch..."
-              if git clone "$REPO_URL" "$component" --depth=1 2>&1; then
-                echo "✅ Successfully cloned $component from master"
-                cd "$component"
-              else
-                echo "❌ Failed to clone $component entirely"
-                FAILED_BUILDS+=("$component (clone failed)")
-                continue
-              fi
+              echo "❌ Failed to clone $component"
+              FAILED_BUILDS+=("$component (clone failed)")
+              continue
             fi
           fi
           
+          cd "$component"
+          
           # Build and install
           echo "Building $component..."
-          rm -rf build 2>/dev/null || true
-          mkdir build
-          cd build
+          mkdir build && cd build
           
-          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tee cmake.log; then
+          if cmake .. "${CMAKE_ARGS[@]}"; then
             echo "✅ CMake configuration successful for $component"
           else
             echo "❌ CMake configuration failed for $component"
-            echo "=== CMake error details ==="
-            tail -20 cmake.log || echo "No cmake log available"
             FAILED_BUILDS+=("$component (cmake failed)")
             cd ~/kf6-build
             continue
           fi
           
-          if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log && [ -f "Makefile" ] && make -j$(sysctl -n hw.ncpu); then
+          if make -j$(sysctl -n hw.ncpu); then
             echo "✅ Build successful for $component"
           else
             echo "❌ Build failed for $component"
-            echo "Build log contents:"
-            cat build.log | tail -20
-            FAILED_BUILDS+=("$component (actual build failed)")
+            FAILED_BUILDS+=("$component (build failed)")
             cd ~/kf6-build
             continue
           fi
           
-          if make install 2>&1 | tee install.log && [ $? -eq 0 ]; then
+          if make install; then
             echo "✅ Installation successful for $component"
+            SUCCESSFUL_BUILDS+=("$component")
           else
             echo "❌ Installation failed for $component"
-            echo "Install log contents:"
-            cat install.log | tail -20
             FAILED_BUILDS+=("$component (install failed)")
             cd ~/kf6-build
             continue
@@ -285,183 +218,145 @@ jobs:
         
         echo ""
         echo "========================================="
-        echo "=== KF6 Build Summary ==="
+        echo "=== Essential KF6 Build Summary ==="
         echo "========================================="
-        echo "Successful builds (${#SUCCESSFUL_BUILDS[@]}): ${SUCCESSFUL_BUILDS[*]}"
-        echo "Failed builds (${#FAILED_BUILDS[@]}): ${FAILED_BUILDS[*]}"
+        echo "Successful builds: ${SUCCESSFUL_BUILDS[*]}"
+        echo "Failed builds: ${FAILED_BUILDS[*]}"
         
-        # Check if we have the minimum required components
-        REQUIRED_COMPONENTS=("extra-cmake-modules" "kcoreaddons" "ki18n" "kconfig" "kxmlgui")
-        MISSING_REQUIRED=()
-        
-        for required in "${REQUIRED_COMPONENTS[@]}"; do
-          if [[ ! "${SUCCESSFUL_BUILDS[*]} " =~ " $required " ]]; then
-            MISSING_REQUIRED+=("$required")
-          fi
-        done
-        
-        if [ ${#MISSING_REQUIRED[@]} -gt 0 ]; then
-          echo ""
-          echo "❌ CRITICAL: Missing required components: ${MISSING_REQUIRED[*]}"
-          echo "Will try to continue with partial KF6 installation..."
-          echo "Katalog may build with reduced functionality"
+        # Check minimum requirements
+        if [[ " ${SUCCESSFUL_BUILDS[*]} " =~ " extra-cmake-modules " ]] && \
+           [[ " ${SUCCESSFUL_BUILDS[*]} " =~ " kcoreaddons " ]] && \
+           [[ " ${SUCCESSFUL_BUILDS[*]} " =~ " kconfig " ]]; then
+          echo "✅ Minimum KF6 requirements met (ECM + CoreAddons + Config)"
+          echo "ESSENTIAL_KF6_READY=true" >> $GITHUB_ENV
         else
-          echo "✅ All required KF6 components built successfully"
+          echo "❌ Minimum KF6 requirements not met"
+          echo "ESSENTIAL_KF6_READY=false" >> $GITHUB_ENV
+        fi
+
+    - name: Configure build environment
+      run: |
+        echo "=== Configuring build environment ==="
+        
+        # Build CMAKE_PREFIX_PATH with all available components
+        CMAKE_PREFIX_PATH="$(brew --prefix qt@6)"
+        
+        # Add Homebrew KF6 components if available  
+        if [ "$HOMEBREW_KF6_SUCCESS" = "true" ]; then
+          CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$(brew --prefix)/lib/cmake"
         fi
         
-        echo "=== KF6 Installation Summary ==="
-        echo "Checking installed KF6 packages with exact locations..."
-        
-        echo ""
-        echo "KF6 cmake config files found:"
-        find "$(brew --prefix)" -name "*KF6*Config.cmake" 2>/dev/null | sort
-        
-        echo ""
-        echo "KF6 cmake directories:"
-        find "$(brew --prefix)/lib/cmake" -maxdepth 1 -name "KF6*" -type d 2>/dev/null | sort
-        
-        echo ""
-        echo "Specific KF6XmlGui files:"
-        find "$(brew --prefix)" -name "*XmlGui*" -o -name "*xmlgui*" 2>/dev/null | head -20
-        
-        # Build final CMAKE_PREFIX_PATH for next steps
-        FINAL_CMAKE_PREFIX_PATH="$(brew --prefix qt@6)"
-        
-        # Add all found KF6 cmake directories
-        for kf6_dir in "$(brew --prefix)"/lib/cmake/KF6*; do
-          if [ -d "$kf6_dir" ]; then
-            FINAL_CMAKE_PREFIX_PATH="$FINAL_CMAKE_PREFIX_PATH:$kf6_dir"
-          fi
-        done
+        # Add built-from-source KF6 components
+        if [ "$ESSENTIAL_KF6_READY" = "true" ]; then
+          for kf6_dir in "$(brew --prefix)"/lib/cmake/KF6*; do
+            if [ -d "$kf6_dir" ]; then
+              CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$kf6_dir"
+            fi
+          done
+        fi
         
         # Add base paths
-        FINAL_CMAKE_PREFIX_PATH="$FINAL_CMAKE_PREFIX_PATH:$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$(brew --prefix)/lib/cmake:$(brew --prefix)"
         
-        echo "CMAKE_PREFIX_PATH=$FINAL_CMAKE_PREFIX_PATH" >> $GITHUB_ENV
-        echo ""
-        echo "Set CMAKE_PREFIX_PATH for next steps: $FINAL_CMAKE_PREFIX_PATH"
-
-        echo ""
-        echo "=== Verifying KF6FileMetaData build ==="
-        find "$(brew --prefix)" -name "*FileMetaData*" -o -name "*filemetadata*" 2>/dev/null | head -10
-        
-        kfilemetadata_config="$(brew --prefix)/lib/cmake/KF6FileMetaData/KF6FileMetaDataConfig.cmake"
-        if [ -f "$kfilemetadata_config" ]; then
-          echo "✅ KF6FileMetaData found at: $kfilemetadata_config"
-        else
-          echo "❌ KF6FileMetaData not found - build failed"
-          echo "Available KF6 components:"
-          ls "$(brew --prefix)/lib/cmake/" | grep KF6 || echo "No KF6 components found"
-        fi
-
-    - name: Debug KF6 installation status
-      run: |
-        echo "=== Detailed KF6 Installation Debug ==="
-        
-        # Check what actually got installed with full paths
-        echo "All KF6 related files in brew prefix:"
-        find "$(brew --prefix)" -name "*KF6*" -o -name "*kf6*" 2>/dev/null | sort
-        
-        echo ""
-        echo "Contents of cmake directory:"
-        ls -la "$(brew --prefix)/lib/cmake/" | grep -i kf6 || echo "No KF6 directories in cmake"
-        
-        echo ""
-        echo "Checking specific KF6 cmake modules with exact paths:"
-        for component in CoreAddons I18n XmlGui Config IconThemes WidgetsAddons ConfigWidgets GlobalAccel; do
-          config_file="$(brew --prefix)/lib/cmake/KF6${component}/KF6${component}Config.cmake"
-          if [ -f "$config_file" ]; then
-            echo "✅ Found KF6${component}Config.cmake at: $config_file"
-          else
-            echo "❌ Missing KF6${component}Config.cmake (expected: $config_file)"
-            # Search everywhere for this specific file
-            found_files=$(find "$(brew --prefix)" -name "KF6${component}Config.cmake" 2>/dev/null)
-            if [ -n "$found_files" ]; then
-              echo "  🔍 But found it at: $found_files"
-            else
-              echo "  🔍 Not found anywhere in $(brew --prefix)"
-            fi
-          fi
-        done
-        
-        echo ""
-        echo "=== KF6XmlGui Specific Debug ==="
-        echo "Searching for ALL XmlGui related files:"
-        find "$(brew --prefix)" -name "*XmlGui*" -o -name "*xmlgui*" 2>/dev/null | sort
-        
-        echo ""
-        echo "Current environment variables:"
-        echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
-        echo "PKG_CONFIG_PATH: $PKG_CONFIG_PATH"
-
-    - name: Set version information
-      run: |
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.version_tag }}" ]; then
-          echo "VERSION_TAG=${{ github.event.inputs.version_tag }}" >> $GITHUB_ENV
-        else
-          echo "VERSION_TAG=master-qt6-kf6-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
-        fi
-
-        echo "Building version: $VERSION_TAG"
-
-    - name: Build Katalog with Qt6/KF6
-      run: |
-        mkdir build
-        cd build
-
-        # Build comprehensive CMAKE_PREFIX_PATH with all found KF6 locations
-        echo "=== Setting up comprehensive CMAKE_PREFIX_PATH ==="
-        
-        BASE_PATHS="$(brew --prefix qt@6):$(brew --prefix)/lib/cmake:$(brew --prefix)"
-        
-        # Add specific KF6 component directories
-        KF6_PATHS=""
-        for component in CoreAddons I18n XmlGui Config IconThemes WidgetsAddons ConfigWidgets GlobalAccel; do
-          kf6_dir="$(brew --prefix)/lib/cmake/KF6${component}"
-          if [ -d "$kf6_dir" ]; then
-            KF6_PATHS="${KF6_PATHS}:$kf6_dir"
-            echo "✅ Added KF6${component} path: $kf6_dir"
-          else
-            echo "❌ KF6${component} directory not found: $kf6_dir"
-          fi
-        done
-        
-        # Combine all paths
-        export CMAKE_PREFIX_PATH="${BASE_PATHS}${KF6_PATHS}"
-        export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig:$PKG_CONFIG_PATH"
-        
+        echo "CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH" >> $GITHUB_ENV
         echo "Final CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
         
-        # Also set specific KF6 directories as fallback
-        for component in CoreAddons I18n XmlGui Config IconThemes; do
-          kf6_dir="$(brew --prefix)/lib/cmake/KF6${component}"
-          if [ -d "$kf6_dir" ]; then
-            export KF6${component}_DIR="$kf6_dir"
-            echo "Set KF6${component}_DIR=$kf6_dir"
-          fi
-        done
-        
+        # Verify available KF6 components
         echo ""
-        echo "=== Final verification before cmake ==="
-        # Verify KF6 packages are findable
-        echo "Double-checking KF6 packages with current paths..."
-        for pkg in KF6CoreAddons KF6I18n KF6XmlGui KF6Config KF6IconThemes; do
-          config_file=$(find $(echo $CMAKE_PREFIX_PATH | tr ':' ' ') -name "${pkg}Config.cmake" 2>/dev/null | head -1)
-          if [ -n "$config_file" ]; then
-            echo "✅ Found $pkg at: $config_file"
-          else
-            echo "❌ Still missing $pkg"
-          fi
-        done
+        echo "=== Available KF6 components ==="
+        find "$(brew --prefix)" -name "*KF6*Config.cmake" 2>/dev/null | sort || echo "No KF6 Config files found"
+
+    - name: Prepare conditional CMakeLists.txt
+      run: |
+        echo "=== Preparing conditional CMakeLists.txt for available components ==="
         
-        # Configure with CMake - First attempt with all KF6 components
-        echo ""
-        echo "=== Running CMake configuration ==="
-        echo "Working directory: $(pwd)"
-        echo "Source directory contents:"
-        ls -la ../CMakeLists.txt ../src/ | head -5
+        # Create backup
+        if [ ! -f "CMakeLists.txt.original" ]; then
+          cp CMakeLists.txt CMakeLists.txt.original
+        fi
         
-        # First try: Standard configuration with all KF6 components
+        # Create a conditional CMakeLists.txt that adapts to available components
+        cat > CMakeLists_conditional.txt << 'EOF'
+        # Enhanced conditional KF6 detection
+        
+        # Essential components (required for core functionality)
+        find_package(KF6CoreAddons REQUIRED)
+        find_package(KF6Config REQUIRED)
+        
+        # Optional components (graceful degradation)
+        find_package(KF6I18n QUIET)
+        find_package(KF6XmlGui QUIET)
+        find_package(KF6IconThemes QUIET)
+        find_package(KF6FileMetaData QUIET)
+        find_package(KF6Completion QUIET)
+        
+        # Set up conditional compilation flags
+        if(KF6I18n_FOUND)
+            add_definitions(-DKATALOG_HAS_KI18N)
+            message(STATUS "✅ KF6I18n found - using KLocalizedString")
+        else()
+            message(STATUS "⚠️  KF6I18n not found - using Qt tr() fallback")
+        endif()
+        
+        if(KF6XmlGui_FOUND)
+            add_definitions(-DKATALOG_HAS_KXMLGUI)
+            message(STATUS "✅ KF6XmlGui found - using KXmlGuiWindow")
+        else()
+            add_definitions(-DKATALOG_USE_QMAINWINDOW)
+            message(STATUS "⚠️  KF6XmlGui not found - using QMainWindow fallback")
+        endif()
+        
+        if(KF6IconThemes_FOUND)
+            add_definitions(-DKATALOG_HAS_KICONTHEMES)
+            message(STATUS "✅ KF6IconThemes found - using KIconLoader")
+        else()
+            message(STATUS "⚠️  KF6IconThemes not found - using Qt standard icons")
+        endif()
+        
+        if(KF6FileMetaData_FOUND)
+            add_definitions(-DKATALOG_HAS_KFILEMETADATA)
+            message(STATUS "✅ KF6FileMetaData found - enhanced metadata support")
+        else()
+            message(STATUS "⚠️  KF6FileMetaData not found - basic metadata only")
+        endif()
+        
+        if(KF6Completion_FOUND)
+            add_definitions(-DKATALOG_HAS_KCOMPLETION)
+            message(STATUS "✅ KF6Completion found - enhanced auto-completion")
+        else()
+            message(STATUS "⚠️  KF6Completion not found - basic completion")
+        endif()
+        EOF
+        
+        # Insert conditional detection after the original find_package statements
+        awk '
+        /find_package\(KF6/ { skip = 1 }
+        /find_package\(KF6.*REQUIRED\)/ && skip { 
+          # Skip all KF6 find_package statements
+          next
+        }
+        !skip || /^[[:space:]]*$/ { 
+          if (skip) {
+            # Insert our conditional detection
+            system("cat CMakeLists_conditional.txt")
+            skip = 0
+          }
+          print
+        }
+        ' CMakeLists.txt.original > CMakeLists.txt
+        
+        echo "✅ Created conditional CMakeLists.txt"
+
+    - name: Build Katalog
+      run: |
+        echo "=== Building Katalog with available KF6 components ==="
+        
+        # Create build directory
+        mkdir -p build
+        cd build
+        
+        # Configure with CMake
+        echo "Running CMake configuration..."
         if cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
@@ -469,415 +364,71 @@ jobs:
           -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
           -DBUILD_TESTS=OFF \
           -DCMAKE_INSTALL_PREFIX=/Applications \
-          -DKF6XmlGui_DIR="$KF6XmlGui_DIR" \
-          -DKF6CoreAddons_DIR="$KF6CoreAddons_DIR" \
-          -DKF6I18n_DIR="$KF6I18n_DIR" \
-          -DKF6Config_DIR="$KF6Config_DIR" \
-          -DKF6IconThemes_DIR="$KF6IconThemes_DIR"; then
+          -DCMAKE_VERBOSE_MAKEFILE=ON; then
           echo "✅ CMake configuration successful"
         else
           echo "❌ CMake configuration failed"
-          echo ""
-          echo "=== Applying enhanced macOS compatibility modifications ==="
-          
-          # Go back and modify CMakeLists.txt as fallback
-          cd ..
-          if [ ! -f "CMakeLists.txt.original" ]; then
-            cp CMakeLists.txt CMakeLists.txt.original
-          fi
-          
-          # Enhanced CMakeLists.txt modification with conditional compilation - focus on core libs
-          awk '
-          BEGIN { print "# Enhanced CMakeLists.txt for macOS - focus on essential core libraries" }
-          
-          /find_package\(KF6XmlGui REQUIRED\)/ {
-            print "find_package(KF6XmlGui QUIET)"
-            print "if(KF6XmlGui_FOUND)"
-            print "    add_definitions(-DKATALOG_HAS_KXMLGUI)"
-            print "    message(STATUS \"KF6XmlGui found - using KXmlGuiWindow\")"
-            print "else()"
-            print "    add_definitions(-DKATALOG_USE_QMAINWINDOW)"
-            print "    message(STATUS \"KF6XmlGui not found - using QMainWindow fallback\")"
-            print "endif()"
-            next
-          }
-          
-          /find_package\(KF6IconThemes REQUIRED\)/ {
-            print "find_package(KF6IconThemes QUIET)"
-            print "if(KF6IconThemes_FOUND)"
-            print "    add_definitions(-DKATALOG_HAS_KICONTHEMES)"
-            print "    message(STATUS \"KF6IconThemes found - using KIconLoader\")"
-            print "else()"
-            print "    message(STATUS \"KF6IconThemes not found - using Qt fallback icons\")"
-            print "endif()"
-            next
-          }
-          
-          /find_package\(KF6I18n REQUIRED\)/ {
-            print "find_package(KF6I18n QUIET)"
-            print "if(KF6I18n_FOUND)"
-            print "    add_definitions(-DKATALOG_HAS_KI18N)"
-            print "    message(STATUS \"KF6I18n found - using KLocalizedString\")"
-            print "else()"
-            print "    message(STATUS \"KF6I18n not found - using tr() fallback\")"
-            print "endif()"
-            next
-          }
-          
-          /KF6::XmlGui/ {
-            gsub(/KF6::XmlGui/, "$<$<BOOL:${KF6XmlGui_FOUND}>:KF6::XmlGui>")
-          }
-          
-          /KF6::IconThemes/ {
-            gsub(/KF6::IconThemes/, "$<$<BOOL:${KF6IconThemes_FOUND}>:KF6::IconThemes>")
-          }
-          
-          /KF6::I18n/ {
-            gsub(/KF6::I18n/, "$<$<BOOL:${KF6I18n_FOUND}>:KF6::I18n>")
-          }
-          
-          { print }
-          ' CMakeLists.txt.original > CMakeLists.txt
-          
-          # Enhanced mainwindow.h modification with proper conditional compilation
-          if [ -f "src/mainwindow.h" ]; then
-            if [ ! -f "src/mainwindow.h.original" ]; then
-              cp src/mainwindow.h src/mainwindow.h.original
-            fi
-            
-            awk '
-            BEGIN { in_kde_section = 0 }
-            
-            /\/\/KDE KF6/ { 
-              print $0
-              in_kde_section = 1
-              next
-            }
-            
-            /^#include <KXmlGuiWindow>/ && in_kde_section {
-              print "#ifdef KATALOG_HAS_KXMLGUI"
-              print $0
-              print "#endif"
-              print "#ifndef KATALOG_HAS_KXMLGUI"
-              print "#include <QMainWindow>"
-              print "#endif"
-              next
-            }
-            
-            /^#include <KActionCollection>/ && in_kde_section {
-              print "#ifdef KATALOG_HAS_KXMLGUI"
-              print $0
-              print "#endif"
-              next
-            }
-            
-            /^#include <KLocalizedString>/ && in_kde_section {
-              print "#ifdef KATALOG_HAS_KI18N"
-              print $0
-              print "#endif"
-              next
-            }
-            
-            /^#include <KIconTheme>/ && in_kde_section {
-              print "#ifdef KATALOG_HAS_KICONTHEMES"
-              print $0
-              print "#endif"
-              next
-            }
-            
-            /^#include <KIconLoader>/ && in_kde_section {
-              print "#ifdef KATALOG_HAS_KICONTHEMES"
-              print $0
-              print "#endif"
-              in_kde_section = 0
-              next
-            }
-            
-            /class MainWindow.*KXmlGuiWindow/ {
-              print "#ifdef KATALOG_HAS_KXMLGUI"
-              print $0
-              print "#else"
-              gsub(/KXmlGuiWindow/, "QMainWindow")
-              print $0
-              print "#endif"
-              next
-            }
-            
-            { print }
-            ' src/mainwindow.h.original > src/mainwindow.h
-            
-            echo "Modified src/mainwindow.h for conditional compilation"
-          fi
-          
-          # Fix runtime code issues in .cpp files - proper C++ syntax
-          echo "Fixing C++ syntax errors in .cpp files..."
-          
-          # Fix mainwindow.cpp constructor - use proper conditional compilation
-          if [ -f "src/mainwindow.cpp" ]; then
-            if [ ! -f "src/mainwindow.cpp.backup" ]; then
-              cp src/mainwindow.cpp src/mainwindow.cpp.backup
-            fi
-            
-            # Fix constructor initialization list properly
-            awk '
-            /^MainWindow::MainWindow\(QWidget \*parent\) : KXmlGuiWindow\(parent\),/ {
-              print "#ifdef KATALOG_HAS_KXMLGUI"
-              print "MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),"
-              print "#else"  
-              print "MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),"
-              print "#endif"
-              next
-            }
-            { print }
-            ' src/mainwindow.cpp.backup > src/mainwindow.cpp
-                
-            echo "Fixed mainwindow.cpp constructor syntax"
-          fi
-          
-          # Fix mainwindow_setup.cpp - function name and calls  
-          if [ -f "src/mainwindow_setup.cpp" ]; then
-            if [ ! -f "src/mainwindow_setup.cpp.backup" ]; then
-              cp src/mainwindow_setup.cpp src/mainwindow_setup.cpp.backup
-            fi
-            
-            # Fix function name and KXmlGuiWindow calls
-            sed -e 's/setupWindowsIconTheme();/setupIconTheme();/g' \
-                -e 's/setupWindowsIconThemeKF6Test();/setupIconTheme();/g' \
-                -e 's/KXmlGuiWindow::changeEvent(event);/#ifdef KATALOG_HAS_KXMLGUI\n        KXmlGuiWindow::changeEvent(event);\n#else\n        QMainWindow::changeEvent(event);\n#endif/' \
-                src/mainwindow_setup.cpp.backup > src/mainwindow_setup.cpp
-                
-            echo "Fixed mainwindow_setup.cpp function calls"
-          fi
-          
-          # Fix override warning in mainwindow.h
-          if [ -f "src/mainwindow.h" ]; then
-            sed -i.override 's/void closeEvent (QCloseEvent \*event);/void closeEvent (QCloseEvent *event) override;/' src/mainwindow.h
-            echo "Added override keyword to closeEvent"
-          fi
-          
-          echo "Modified CMakeLists.txt - changes made:"
-          diff CMakeLists.txt.original CMakeLists.txt | head -20 || echo "Diff completed"
-          
-          echo ""
-          echo "✅ Applied simplified macOS build strategy:"
-          echo "  - REQUIRED → QUIET: KF6XmlGui, KF6IconThemes, KF6I18n (optional)"
-          echo "  - FOCUS on core: KF6CoreAddons, KF6Config (essential for KJob)"
-          echo "  - Fixed KXmlGuiWindow constructor calls"
-          echo "  - Fixed KXmlGuiWindow::changeEvent calls"  
-          echo "  - Fixed setupWindowsIconThemeKF6Test calls"
-          echo "  - Added override keyword to closeEvent"
-          
-          # Try cmake again with enhanced configuration
-          cd build
-          rm -rf CMakeCache.txt CMakeFiles/
-          
-          if cmake .. \
-            -GNinja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
-            -DBUILD_TESTS=OFF \
-            -DCMAKE_INSTALL_PREFIX=/Applications \
-            -DCMAKE_VERBOSE_MAKEFILE=ON; then
-            echo "✅ CMake configuration successful with conditional compilation"
-          else
-            echo "❌ CMake configuration still failed even with modifications"
-            exit 1
-          fi
+          echo "=== CMake Error Log ==="
+          cat CMakeFiles/CMakeError.log 2>/dev/null || echo "No CMake error log available"
+          exit 1
         fi
-
-        # Build translations first (may fail but continue)
-        echo ""
-        echo "=== Building translations ==="
         
-        # Check what translation files exist
-        echo "Available .ts files:"
-        find ../src/translations -name "*.ts" | sort
-        
-        # Create any missing .qm files as empty to avoid build failures
-        for ts_file in ../src/translations/*.ts; do
-          if [ -f "$ts_file" ]; then
-            qm_file="${ts_file%.ts}.qm"
-            if [ ! -f "$qm_file" ]; then
-              echo "Creating empty .qm file: $qm_file"
-              touch "$qm_file"
-            fi
-          fi
-        done
-        
-        ninja Katalog_lrelease || echo "Translation build failed, continuing with empty files..."
-
-        # Build the main application
-        echo ""
-        echo "=== Building main application ==="
-        if ninja; then
-          echo "✅ Build successful!"
+        # Build the project
+        echo "Building Katalog..."
+        if ninja -v; then
+          echo "✅ Build successful"
         else
           echo "❌ Build failed"
-          echo "Build log (last 100 lines):"
-          ninja 2>&1 | tail -100
+          exit 1
+        fi
+        
+        # Verify the binary was created
+        if [ -f "Katalog" ] || [ -f "Katalog.app/Contents/MacOS/Katalog" ]; then
+          echo "✅ Katalog binary created successfully"
+        else
+          echo "❌ Katalog binary not found"
+          ls -la . | head -20
           exit 1
         fi
 
-        # Check what was built
+    - name: Create macOS App Bundle (optional)
+      continue-on-error: true
+      run: |
+        echo "=== Creating macOS App Bundle ==="
+        cd build
+        
+        # Install to create app bundle
+        if ninja install; then
+          echo "✅ App bundle created successfully"
+          ls -la /Applications/Katalog* 2>/dev/null || echo "App bundle not found in Applications"
+        else
+          echo "⚠️  App bundle creation failed, but binary is available"
+        fi
+
+    - name: Build Summary
+      run: |
+        echo "========================================="
+        echo "=== Final Build Summary ==="
+        echo "========================================="
+        echo "Homebrew KF6 Success: $HOMEBREW_KF6_SUCCESS"
+        echo "Essential KF6 Ready: $ESSENTIAL_KF6_READY"
+        echo "Available Homebrew KF6 Packages: $HOMEBREW_KF6_PACKAGES"
+        
         echo ""
-        echo "=== Build output ==="
-        find . -name "Katalog*" -o -name "*.app" | sort
+        echo "KF6 Components Status:"
+        find "$(brew --prefix)" -name "*KF6*Config.cmake" 2>/dev/null | while read config; do
+          component=$(basename "$config" | sed 's/KF6//g' | sed 's/Config.cmake//g')
+          echo "  ✅ $component"
+        done
         
-        if [ -f "Katalog.app/Contents/MacOS/Katalog" ]; then
-          echo "✅ Katalog executable found"
-          ls -la Katalog.app/Contents/MacOS/Katalog
-          echo "Executable dependencies:"
-          otool -L Katalog.app/Contents/MacOS/Katalog | head -20
-        else
-          echo "❌ Katalog executable not found"
-          exit 1
+        echo ""
+        echo "Build artifacts:"
+        if [ -f "build/Katalog" ]; then
+          echo "  ✅ Katalog binary: build/Katalog"
         fi
-
-    - name: Create macOS app bundle
-      run: |
-        cd build
-        
-        # Create app bundle structure
-        echo "=== Creating macOS app bundle ==="
-        
-        if [ ! -f "Katalog.app/Contents/MacOS/Katalog" ]; then
-          echo "❌ Katalog executable not found"
-          exit 1
+        if [ -d "/Applications/Katalog.app" ]; then
+          echo "  ✅ App bundle: /Applications/Katalog.app"
         fi
         
-        # App bundle already exists from CMake build, just verify it's there
-        echo "✅ Using existing app bundle created by CMake"
-        ls -la Katalog.app/Contents/MacOS/Katalog
-        
-        echo "✅ App bundle structure verified"
-
-    - name: Deploy Qt6 and KF6 dependencies
-      run: |
-        cd build
-        
-        echo "=== Deploying Qt6 dependencies ==="
-        
-        # Use Qt6's macdeployqt to handle dependencies
-        QT_DEPLOY_TOOL="$(brew --prefix qt@6)/bin/macdeployqt"
-        
-        if [ -x "$QT_DEPLOY_TOOL" ]; then
-          echo "Using macdeployqt: $QT_DEPLOY_TOOL"
-          "$QT_DEPLOY_TOOL" Katalog.app -verbose=2
-        else
-          echo "macdeployqt not found, manual dependency deployment"
-          
-          # Manual dependency handling
-          echo "Analyzing dependencies..."
-          otool -L Katalog.app/Contents/MacOS/Katalog | grep -E "(Qt6|KF6|$(brew --prefix))" > deps.txt || echo "No Qt/KF6 dependencies found"
-          
-          # Copy frameworks manually if needed
-          while read -r line; do
-            lib_path=$(echo "$line" | awk '{print $1}' | grep -E "(Qt6|KF6)")
-            if [ -n "$lib_path" ] && [ -f "$lib_path" ]; then
-              lib_name=$(basename "$lib_path")
-              echo "Copying $lib_name"
-              cp "$lib_path" Katalog.app/Contents/Frameworks/ || echo "Failed to copy $lib_name"
-            fi
-          done < deps.txt
-        fi
-        
-        echo "✅ Dependency deployment completed"
-
-    - name: Create DMG package
-      run: |
-        cd build
-        
-        echo "=== Creating DMG package ==="
-        
-        DMG_NAME="Katalog-$VERSION_TAG-macOS.dmg"
-        
-        # Create temporary DMG directory
-        mkdir dmg_temp
-        cp -R Katalog.app dmg_temp/
-        
-        # Create DMG using macOS hdiutil
-        if command -v create-dmg >/dev/null 2>&1; then
-          echo "Using create-dmg for better DMG creation..."
-          create-dmg \
-            --volname "Katalog $VERSION_TAG" \
-            --window-pos 200 120 \
-            --window-size 600 300 \
-            --icon-size 100 \
-            --icon "Katalog.app" 175 120 \
-            --hide-extension "Katalog.app" \
-            --app-drop-link 425 120 \
-            "$DMG_NAME" \
-            "dmg_temp/"
-          else
-            echo "Using hdiutil fallback..."
-            hdiutil create -srcfolder Katalog.app -format UDZO -o "$DMG_NAME"
-        fi
-        
-        echo "DMG created: $DMG_NAME"
-        echo "DMG created: $DMG_NAME"
-            echo "Checking what files exist:"
-            ls -la
-            echo "Looking for DMG files:"
-            find . -name "*.dmg" -type f
-
-    - name: Test app bundle
-      run: |
-        cd build
-        
-        if [ -d "Katalog.app" ]; then
-          echo "✅ App bundle exists"
-          
-          if [ -x "Katalog.app/Contents/MacOS/Katalog" ]; then
-            echo "✅ Executable found and is executable"
-            
-            # Check dependencies
-            echo "Dependencies:"
-            otool -L Katalog.app/Contents/MacOS/Katalog | head -15
-            
-            # Check for KF6 libraries
-            echo "Checking for KF6 libraries in bundle..."
-            find Katalog.app -name "*KF6*" || echo "No KF6 libraries found in bundle"
-            
-          else
-            echo "❌ Executable not found or not executable"
-          fi
-        else
-          echo "❌ No app bundle found"
-        fi
-
-    - name: Upload DMG as Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: Katalog-Qt6-KF6-macOS-${{ env.VERSION_TAG }}
-        path: build/Katalog-${{ env.VERSION_TAG }}-macOS.dmg
-        retention-days: 30
-
-    - name: Upload App Bundle as Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: Katalog-Qt6-KF6-AppBundle-${{ env.VERSION_TAG }}
-        path: build/Katalog.app
-        retention-days: 7
-
-    - name: Summary
-      run: |
-        echo "## macOS Qt6/KF6 Build Complete! 🍎" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-macOS.dmg" >> $GITHUB_STEP_SUMMARY
-        echo "- **Size**: $(ls -lh build/Katalog-*.dmg 2>/dev/null | awk '{print $5}' || echo 'N/A')" >> $GITHUB_STEP_SUMMARY
-        echo "- **Target**: macOS 11.0+ (Big Sur and later)" >> $GITHUB_STEP_SUMMARY
-        echo "- **Architecture**: $(uname -m)" >> $GITHUB_STEP_SUMMARY
-        echo "- **Qt Version**: $($(brew --prefix qt@6)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY
-        echo "- **KF6 Version**: ${{ github.event.inputs.kf6_version || 'v6.7.0' }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Codebase**: master (Qt6 + KF6 with all modern features)" >> $GITHUB_STEP_SUMMARY
-        echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Notes:" >> $GITHUB_STEP_SUMMARY
-        echo "- Built from master branch with full Qt6/KF6 stack" >> $GITHUB_STEP_SUMMARY
-        echo "- Includes KJob and all modern Katalog features" >> $GITHUB_STEP_SUMMARY
-        echo "- KF6 components built from source" >> $GITHUB_STEP_SUMMARY
-        echo "- Compatible with Apple Silicon and Intel Macs" >> $GITHUB_STEP_SUMMARY
-        echo "- May require 'Allow apps from anywhere' on first run" >> $GITHUB_STEP_SUMMARY
+        echo ""
+        echo "✅ macOS Qt6/KF6 build completed successfully!"
