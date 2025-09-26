@@ -1,4 +1,4 @@
-name: Build macOS (Qt6/KF6) (Development)
+name: Build macOS (Qt6/KF6) Development
 #v1 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
