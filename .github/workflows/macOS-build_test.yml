@@ -131,6 +131,8 @@ jobs:
             "kfilemetadata"    # Not kf6-kfilemetadata
             "kcompletion"      # Not kf6-kcompletion
         )
+
+        brew install extra-cmake-modules kf6-coreaddons kf6-i18n kf6-config kf6-kxmlgui
         
         HOMEBREW_SUCCESSES=()
         HOMEBREW_FAILURES=()
@@ -156,7 +158,15 @@ jobs:
           echo "Adding homebrew KF6 paths to CMAKE_PREFIX_PATH"
           export CMAKE_PREFIX_PATH="$(brew --prefix)/lib/cmake:$CMAKE_PREFIX_PATH"
         fi
+        export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:/opt/homebrew/lib/cmake/KF6CoreAddons:/opt/homebrew/lib/cmake/KF6I18n:/opt/homebrew/lib/cmake/KF6Config:/opt/homebrew/lib/cmake/KF6XmlGui"
 
+- name: Install KDE Frameworks 6 dependencies
+  run: |
+    brew update
+    brew install extra-cmake-modules kf6-coreaddons kf6-i18n kf6-config kf6-kxmlgui
+
+- name: Set up CMAKE_PREFIX_PATH
+  run: echo "CMAKE_PREFIX_PATH=/opt/homebrew/opt/qt:/opt/homebrew/lib/cmake:/opt/homebrew/lib/cmake/KF6CoreAddons:/opt/homebrew/lib/cmake/KF6I18n:/opt/homebrew/lib/cmake/KF6Config:/opt/homebrew/lib/cmake/KF6XmlGui:/opt/homebrew" >> $GITHUB_ENV
 
     - name: Build KF6 from source
       run: |
