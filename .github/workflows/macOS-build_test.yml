@@ -115,19 +115,19 @@ jobs:
         
         # Try to install KF6 components via homebrew (may fail, that's ok)
         KF6_HOMEBREW_PACKAGES=(
-          "kf6-karchive"
-          "kf6-kcodecs" 
-          "kf6-kcoreaddons"
-          "kf6-kconfig"
-          "kf6-ki18n"
-          "kf6-kitemviews"
-          "kf6-kwidgetsaddons"
-          "kf6-kconfigwidgets"
-          "kf6-kglobalaccel"
-          "kf6-kxmlgui"
-          "kf6-kiconthemes"
-          "kf6-kfilemetadata"
-          "kf6-kcompletion"
+            "karchive"         # Not kf6-karchive
+            "kcodecs"          # Not kf6-kcodecs  
+            "kcoreaddons"      # Not kf6-kcoreaddons
+            "kconfig"          # Not kf6-kconfig
+            "ki18n"            # Not kf6-ki18n
+            "kitemviews"       # Not kf6-kitemviews
+            "kwidgetsaddons"   # Not kf6-kwidgetsaddons
+            "kconfigwidgets"   # Not kf6-kconfigwidgets
+            "kglobalaccel"     # Not kf6-kglobalaccel
+            "kxmlgui"          # Not kf6-kxmlgui
+            "kiconthemes"      # Not kf6-kiconthemes
+            "kfilemetadata"    # Not kf6-kfilemetadata
+            "kcompletion"      # Not kf6-kcompletion
         )
         
         HOMEBREW_SUCCESSES=()
