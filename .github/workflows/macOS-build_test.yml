@@ -110,50 +110,50 @@ jobs:
         echo "MAKEFLAGS=-j$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
     
     - name: Try installing KF6 via homebrew first
-          run: |
-            echo "=== Attempting KF6 installation via homebrew ==="
-            
-            # Try to install KF6 components via homebrew (may fail, that's ok)
-            KF6_HOMEBREW_PACKAGES=(
-              "kf6-karchive"
-              "kf6-kcodecs" 
-              "kf6-kcoreaddons"
-              "kf6-kconfig"
-              "kf6-ki18n"
-              "kf6-kitemviews"
-              "kf6-kwidgetsaddons"
-              "kf6-kconfigwidgets"
-              "kf6-kglobalaccel"
-              "kf6-kxmlgui"
-              "kf6-kiconthemes"
-              "kf6-kfilemetadata"
-              "kf6-kcompletion"
-            )
-            
-            HOMEBREW_SUCCESSES=()
-            HOMEBREW_FAILURES=()
-            
-            for pkg in "${KF6_HOMEBREW_PACKAGES[@]}"; do
-              echo "Trying to install $pkg via homebrew..."
-              if brew install "$pkg" 2>/dev/null; then
-                echo "✅ Successfully installed $pkg via homebrew"
-                HOMEBREW_SUCCESSES+=("$pkg")
-              else
-                echo "❌ $pkg not available via homebrew"
-                HOMEBREW_FAILURES+=("$pkg")
-              fi
-            done
-            
-            echo ""
-            echo "Homebrew installation summary:"
-            echo "Successes: ${HOMEBREW_SUCCESSES[*]}"
-            echo "Failures (will try source build): ${HOMEBREW_FAILURES[*]}"
-            
-            # Update CMAKE_PREFIX_PATH with any homebrew-installed components
-            if [ ${#HOMEBREW_SUCCESSES[@]} -gt 0 ]; then
-              echo "Adding homebrew KF6 paths to CMAKE_PREFIX_PATH"
-              export CMAKE_PREFIX_PATH="$(brew --prefix)/lib/cmake:$CMAKE_PREFIX_PATH"
-            fi
+      run: |
+        echo "=== Attempting KF6 installation via homebrew ==="
+        
+        # Try to install KF6 components via homebrew (may fail, that's ok)
+        KF6_HOMEBREW_PACKAGES=(
+          "kf6-karchive"
+          "kf6-kcodecs" 
+          "kf6-kcoreaddons"
+          "kf6-kconfig"
+          "kf6-ki18n"
+          "kf6-kitemviews"
+          "kf6-kwidgetsaddons"
+          "kf6-kconfigwidgets"
+          "kf6-kglobalaccel"
+          "kf6-kxmlgui"
+          "kf6-kiconthemes"
+          "kf6-kfilemetadata"
+          "kf6-kcompletion"
+        )
+        
+        HOMEBREW_SUCCESSES=()
+        HOMEBREW_FAILURES=()
+        
+        for pkg in "${KF6_HOMEBREW_PACKAGES[@]}"; do
+          echo "Trying to install $pkg via homebrew..."
+          if brew install "$pkg" 2>/dev/null; then
+            echo "✅ Successfully installed $pkg via homebrew"
+            HOMEBREW_SUCCESSES+=("$pkg")
+          else
+            echo "❌ $pkg not available via homebrew"
+            HOMEBREW_FAILURES+=("$pkg")
+          fi
+        done
+        
+        echo ""
+        echo "Homebrew installation summary:"
+        echo "Successes: ${HOMEBREW_SUCCESSES[*]}"
+        echo "Failures (will try source build): ${HOMEBREW_FAILURES[*]}"
+        
+        # Update CMAKE_PREFIX_PATH with any homebrew-installed components
+        if [ ${#HOMEBREW_SUCCESSES[@]} -gt 0 ]; then
+          echo "Adding homebrew KF6 paths to CMAKE_PREFIX_PATH"
+          export CMAKE_PREFIX_PATH="$(brew --prefix)/lib/cmake:$CMAKE_PREFIX_PATH"
+        fi
 
 
     - name: Build KF6 from source
