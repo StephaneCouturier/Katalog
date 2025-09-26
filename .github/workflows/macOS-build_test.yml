@@ -114,6 +114,8 @@ jobs:
         echo "=== Attempting KF6 installation via homebrew ==="
         
         # Try to install KF6 components via homebrew (may fail, that's ok)
+        # Export failures for next step
+        echo "HOMEBREW_FAILURES=${HOMEBREW_FAILURES[*]}" >> $GITHUB_ENV
         KF6_HOMEBREW_PACKAGES=(
             "karchive"         # Not kf6-karchive
             "kcodecs"          # Not kf6-kcodecs  
@@ -176,17 +178,11 @@ jobs:
         
         # KF6 components needed by Katalog (in dependency order)
         # Only build components that failed homebrew installation
-        if [ ${#HOMEBREW_FAILURES[@]} -gt 0 ]; then
-          echo "Building remaining components from source: ${HOMEBREW_FAILURES[*]}"
-          # Convert homebrew package names back to component names
-          # (remove kf6- prefix)
-          KF6_COMPONENTS=()
-          for pkg in "${HOMEBREW_FAILURES[@]}"; do
-            component="${pkg#kf6-}"  # Remove kf6- prefix
-            KF6_COMPONENTS+=("$component")
-          done
+        # Convert space-separated string back to array
+        if [ -n "$HOMEBREW_FAILURES" ]; then
+          IFS=' ' read -ra FAILURE_ARRAY <<< "$HOMEBREW_FAILURES"
+          KF6_COMPONENTS=("${FAILURE_ARRAY[@]}")
         else
-          echo "All KF6 components installed via homebrew, skipping source build"
           KF6_COMPONENTS=()
         fi
         
