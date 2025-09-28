@@ -210,7 +210,7 @@ jobs:
           
           # Special handling for kcodecs C++17 compatibility issue
           if [ "$component" = "kcodecs" ]; then
-            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_STANDARD=14")
+            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_FLAGS=-std=c++14 -Wno-register")
           else
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}")
           fi
