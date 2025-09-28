@@ -213,7 +213,7 @@ jobs:
           mkdir build
           cd build
           
-          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tee cmake.log; then
+          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tee cmake.log && ! grep -q "CMake Error\|Configuring incomplete" cmake.log; then
             echo "✅ CMake configuration successful for $component"
           else
             echo "❌ CMake configuration failed for $component"
