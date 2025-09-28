@@ -220,6 +220,14 @@ set(TS_FILES
 # Make sure LinguistTools is found (should already be in your find_package)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
+# Add custom target for refreshing timestamps
+add_custom_target(refresh_timestamps
+    COMMAND ${CMAKE_COMMAND} -E remove -f CMakeCache.txt
+    COMMAND ${CMAKE_COMMAND} -E remove -f src/version.h
+    COMMENT "Clearing cache to refresh build timestamps"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
 # Set up translations with both lupdate and lrelease support
 if(${Qt6_VERSION} VERSION_GREATER_EQUAL "6.2")
     # Modern Qt6 approach with lupdate support

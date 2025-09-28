@@ -11,7 +11,7 @@ on:
       version_tag:
         description: 'Version tag (e.g., v2.6.1)'
         required: false
-        default: 'dev-build'
+        default: 'dev-build-qt6'
 
   # Optional: trigger on push to main (remove if you don't want this)
   push:
@@ -22,7 +22,7 @@ on:
       - 'scripts/Katalog_linux_create_portable.sh'
 
 jobs:
-  build-appimage:
+  build-appimage-qt6:
     runs-on: ubuntu-24.04
 
     steps:
