@@ -71,20 +71,19 @@ jobs:
           echo "✅ Qt6 installation verified"
         fi
 
+        # Try to add kde repo and install
+        echo "brew tap kde/kde..."
+        # brew tap kde/kde
+        echo "brew install extra-cmake-modules kf6-kcoreaddons..."
+        # brew install extra-cmake-modules kf6-kcoreaddons kf6-ki18n kf6-kconfig kf6-kxmlgui kf6-kfilemetadata
+        echo "= Update and install attempted ="
+        
+
     - name: Try Homebrew KF6 packages (best case scenario)
       id: homebrew_kf6
       continue-on-error: true
       run: |
         echo "=== Attempting to install KF6 via Homebrew ==="
-
-        # Try to update brew, add kde repo and install
-        echo "brew update..."
-        brew update
-        echo "brew tap kde/kde..."
-        brew tap kde/kde
-        echo "brew install extra-cmake-modules kf6-kcoreaddons..."
-        brew install extra-cmake-modules kf6-kcoreaddons kf6-ki18n kf6-kconfig kf6-kxmlgui kf6-kfilemetadata
-        echo "= Update and install attempted ="
                 
         # Try to install KF6 packages via Homebrew
         # Note: These may not be available, but worth trying
