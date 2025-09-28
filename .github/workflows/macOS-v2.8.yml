@@ -89,6 +89,19 @@ jobs:
         # Install additional tools we'll need
         brew install git wget python3 || echo "Some tools install failed"
         
+        # Try installing KF6 via official KDE Homebrew tap first
+        echo "=== Attempting KF6 installation via KDE Homebrew tap ==="
+        brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git --force-auto-update || echo "KDE tap failed"
+        
+        # Try installing essential KF6 packages
+        for kf6_pkg in kf6-kcoreaddons kf6-ki18n kf6-kxmlgui kf6-kconfig kf6-kiconthemes; do
+          if brew install "$kf6_pkg" 2>/dev/null; then
+            echo "✅ Installed $kf6_pkg via Homebrew"
+          else
+            echo "❌ Failed to install $kf6_pkg via Homebrew - will build from source"
+          fi
+        done
+        
         # Install imagemagick for icon conversion
         if ! command -v magick >/dev/null 2>&1; then
           brew install imagemagick
