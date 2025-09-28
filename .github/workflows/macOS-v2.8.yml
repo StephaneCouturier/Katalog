@@ -7,7 +7,7 @@ on:
       version_tag:
         description: 'Version tag (e.g., v2.7-macos)'
         required: false
-        default: 'dev-macos-qt6-kf6'
+        default: 'macos-2.8'
       kf6_version:
         description: 'KF6 version to build'
         required: false
@@ -17,7 +17,7 @@ on:
   push:
     branches: [ main, katalog_development ]
     paths: 
-      - '.github/workflows/macos-qt6-kf6-build.yml'  # Only when workflow changes
+      - '.github/workflows/macOS-v2.8.yml'  # Only when workflow changes
 
 jobs:
   build-macos-qt6-kf6:
