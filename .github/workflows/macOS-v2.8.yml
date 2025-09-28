@@ -212,7 +212,7 @@ jobs:
           if [ "$component" = "kcodecs" ]; then
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_FLAGS=-std=c++14 -Wno-register")
           elif [ "$component" = "kiconthemes" ]; then
-            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DWITH_BREEZE_ICONS=OFF")
+            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_DISABLE_FIND_PACKAGE_KF6BreezeIcons=ON")
           elif [ "$component" = "kbreezeicons" ]; then
             echo "⚠️  Skipping kbreezeicons due to access issues"
             continue
