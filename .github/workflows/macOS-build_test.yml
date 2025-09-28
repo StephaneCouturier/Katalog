@@ -82,7 +82,7 @@ jobs:
         brew tap kde/kde
         brew install extra-cmake-modules kf6-kcoreaddons kf6-ki18n kf6-kconfig kf6-kxmlgui kf6-kfilemetadata
         echo "= Update and install attempted ="
-        export CMAKE_PREFIX_PATH="$(brew --prefix)/lib/cmake:$(brew --prefix qt6):$CMAKE_PREFIX_PATH"
+        # export CMAKE_PREFIX_PATH="$(brew --prefix)/lib/cmake:$(brew --prefix qt6):$CMAKE_PREFIX_PATH"
         
         # Try to install KF6 packages via Homebrew
         # Note: These may not be available, but worth trying
