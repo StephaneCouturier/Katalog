@@ -219,7 +219,7 @@ jobs:
             continue
           fi
           
-          if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log; then
+          if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log && ! grep -q "Error\|error:" build.log; then
             echo "✅ Build successful for $component"
           else
             echo "❌ Build failed for $component"
