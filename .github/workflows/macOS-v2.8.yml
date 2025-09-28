@@ -222,7 +222,7 @@ jobs:
             continue
           fi
           
-          if make install 2>&1 | tee install.log; then
+          if make -j$(sysctl -n hw.ncpu) 2>&1 | tee build.log && make install 2>&1 | tee install.log; then
             echo "✅ Installation successful for $component"
             SUCCESSFUL_BUILDS+=("$component")
             
