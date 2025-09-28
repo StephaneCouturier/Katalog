@@ -211,6 +211,11 @@ jobs:
           # Special handling for kcodecs C++17 compatibility issue
           if [ "$component" = "kcodecs" ]; then
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_FLAGS=-std=c++14 -Wno-register")
+          elif [ "$component" = "kiconthemes" ]; then
+            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DWITH_BREEZE_ICONS=OFF")
+          elif [ "$component" = "kbreezeicons" ]; then
+            echo "⚠️  Skipping kbreezeicons due to access issues"
+            continue
           else
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}")
           fi
