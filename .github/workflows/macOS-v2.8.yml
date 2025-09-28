@@ -208,7 +208,14 @@ jobs:
           mkdir build
           cd build
           
-          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tee cmake.log && ! grep -q "CMake Error\|Configuring incomplete" cmake.log; then
+          # Special handling for kcodecs C++17 compatibility issue
+          if [ "$component" = "kcodecs" ]; then
+            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_STANDARD=14")
+          else
+            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}")
+          fi
+          
+          if cmake .. "${COMPONENT_CMAKE_ARGS[@]}" 2>&1 | tee cmake.log && ! grep -q "CMake Error\|Configuring incomplete" cmake.log; then
             echo "✅ CMake configuration successful for $component"
           else
             echo "❌ CMake configuration failed for $component"
