@@ -207,6 +207,7 @@ jobs:
             echo "=== Patching kiconthemes to skip BreezeIcons ==="
             sed -i.bak 's/find_package(KF6BreezeIcons/# PATCHED: find_package(KF6BreezeIcons/g' CMakeLists.txt
             sed -i.bak2 's/#include <BreezeIcons>/\/\/ PATCHED: #include <BreezeIcons>/g' src/kicontheme.cpp
+            sed -i.bak3 's/BreezeIcons::initIcons();/\/\/ PATCHED: BreezeIcons::initIcons();/g' src/kicontheme.cpp
             echo "Patches applied"
           fi
           # Build and install
