@@ -211,7 +211,9 @@ jobs:
           # Special handling for kcodecs C++17 compatibility issue
           # Patch kiconthemes to make BreezeIcons optional
           if [ "$component" = "kiconthemes" ] && [ -f "CMakeLists.txt" ]; then
-            sed -i.bak 's/find_package(KF6BreezeIcons REQUIRED/find_package(KF6BreezeIcons/g' CMakeLists.txt
+            sed -i.bak 's/find_package(KF6BreezeIcons/# PATCHED: find_package(KF6BreezeIcons/g' CMakeLists.txt
+            echo "Patched kiconthemes CMakeLists.txt to skip BreezeIcons"
+            grep -n "BreezeIcons" CMakeLists.txt || echo "No BreezeIcons references found"
           fi
           if [ "$component" = "kcodecs" ]; then
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_FLAGS=-std=c++14 -Wno-register")
