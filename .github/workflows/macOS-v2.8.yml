@@ -145,7 +145,7 @@ jobs:
           "extra-cmake-modules"
           "kcoreaddons" "ki18n" "kconfig" "kwidgetsaddons" 
           "kcodecs" "kguiaddons" "kcolorscheme" "karchive" "kitemviews" "kfilemetadata"
-          "kconfigwidgets" "kglobalaccel" "kxmlgui"
+          "kconfigwidgets" "kiconthemes" "kglobalaccel" "kxmlgui"
         )
         
         # Set up common cmake args
@@ -209,6 +209,10 @@ jobs:
           cd build
           
           # Special handling for kcodecs C++17 compatibility issue
+          # Patch kiconthemes to make BreezeIcons optional
+          if [ "$component" = "kiconthemes" ] && [ -f "CMakeLists.txt" ]; then
+            sed -i.bak 's/find_package(KF6BreezeIcons REQUIRED/find_package(KF6BreezeIcons/g' CMakeLists.txt
+          fi
           if [ "$component" = "kcodecs" ]; then
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_FLAGS=-std=c++14 -Wno-register")
           elif [ "$component" = "kiconthemes" ]; then
