@@ -203,12 +203,12 @@ jobs:
             fi
           fi
           # Patch kiconthemes to make BreezeIcons optional
-            if [ "$component" = "kiconthemes" ]; then
-              echo "=== Patching kiconthemes to skip BreezeIcons ==="
-              sed -i.bak 's/find_package(KF6BreezeIcons/# PATCHED: find_package(KF6BreezeIcons/g' CMakeLists.txt
-              echo "Patch applied, checking result:"
-              grep -n "BreezeIcons" CMakeLists.txt | head -5
-            fi
+          if [ "$component" = "kiconthemes" ]; then
+            echo "=== Patching kiconthemes to skip BreezeIcons ==="
+            sed -i.bak 's/find_package(KF6BreezeIcons/# PATCHED: find_package(KF6BreezeIcons/g' CMakeLists.txt
+            sed -i.bak2 's/#include <BreezeIcons>/\/\/ PATCHED: #include <BreezeIcons>/g' src/kicontheme.cpp
+            echo "Patches applied"
+          fi
           # Build and install
           echo "Building $component..."
           rm -rf build 2>/dev/null || true
