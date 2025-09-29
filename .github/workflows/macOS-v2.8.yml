@@ -622,6 +622,12 @@ jobs:
                 
             echo "Fixed mainwindow.cpp constructor syntax"
           fi
+
+          # Fix filemetadata.cpp - remove unsupported VideoCodec property
+          if [ -f "src/core/filemetadata.cpp" ]; then
+            sed -i.bak '/VideoCodec/s/^/\/\/ PATCHED: /' src/core/filemetadata.cpp
+            echo "Patched filemetadata.cpp to remove VideoCodec references"
+          fi
           
           # Fix mainwindow_setup.cpp - function name and calls  
           if [ -f "src/mainwindow_setup.cpp" ]; then
