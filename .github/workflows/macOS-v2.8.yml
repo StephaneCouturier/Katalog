@@ -145,7 +145,7 @@ jobs:
           "extra-cmake-modules"
           "kcoreaddons" "ki18n" "kconfig" "kwidgetsaddons" 
           "kcodecs" "kguiaddons" "kcolorscheme" "karchive" "kitemviews" "kfilemetadata"
-          "kconfigwidgets" "kbreezeicons" "kiconthemes" "kglobalaccel" "kxmlgui"
+          "kconfigwidgets" "kglobalaccel" "kxmlgui"
         )
         
         # Set up common cmake args
