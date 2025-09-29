@@ -144,7 +144,7 @@ jobs:
         KF6_COMPONENTS=(
           "extra-cmake-modules"
           "kcoreaddons" "ki18n" "kconfig" "kwidgetsaddons" 
-          "kcodecs" "kguiaddons" "kcolorscheme" "karchive" "kitemviews" "kfilemetadata"
+          "kcodecs" "kguiaddons" "kcolorscheme" "kcompletion" "karchive" "kitemviews" "kfilemetadata"
           "kconfigwidgets" "kiconthemes" "kglobalaccel" "kxmlgui"
         )
         
