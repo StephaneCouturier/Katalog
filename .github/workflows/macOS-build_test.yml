@@ -10,7 +10,7 @@ on:
       kf6_version:
         description: 'KF6 version to build'
         required: false
-        default: 'v6.13.0'
+        default: 'v6.7.0'
       use_source_build:
         description: 'Force build KF6 from source'
         required: false
