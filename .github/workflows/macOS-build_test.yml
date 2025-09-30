@@ -1,4 +1,4 @@
-name: Build macOS (Qt6/KF6) dev
+name: Build macOS (Qt6/KF6) dev1
 # Improved build strategy focusing on essential KF6 components with proper fallbacks
 on:
   workflow_dispatch:
