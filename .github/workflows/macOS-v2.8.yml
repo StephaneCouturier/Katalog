@@ -183,7 +183,8 @@ jobs:
           
           # Skip if directory already exists and has content
           # Force specific version for kfilemetadata
-          if [ "$component" = "kfilemetadata" ]; then
+          # Force v6.13.0 for components that need newer APIs
+          if [ "$component" = "extra-cmake-modules" ] || [ "$component" = "kfilemetadata" ]; then
             rm -rf "$component" 2>/dev/null || true
             if git clone "$REPO_URL" "$component" --depth=1 --branch v6.13.0 2>&1; then
               echo "✅ Successfully cloned $component v6.13.0"
