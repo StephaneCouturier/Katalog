@@ -196,6 +196,9 @@ jobs:
           elif [ -d "$component" ] && [ "$(ls -A $component 2>/dev/null)" ]; then
             echo "Directory $component already exists and is not empty, using existing clone"
             cd "$component"
+          elif [ -d "$component" ] && [ "$(ls -A $component 2>/dev/null)" ]; then
+            echo "Directory $component already exists and is not empty, using existing clone"
+            cd "$component"
 
           else
             if git clone "$REPO_URL" "$component" --depth=1 --branch "${{ github.event.inputs.kf6_version || 'v6.7.0' }}" 2>&1; then
