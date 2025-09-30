@@ -657,6 +657,14 @@ jobs:
           echo "✅ Applied simplified macOS build strategy:"
           echo "  - REQUIRED → QUIET: KF6XmlGui, KF6IconThemes, KF6I18n (optional)"
           echo "  - FOCUS on core: KF6CoreAddons, KF6Config (essential for KJob)"
+          
+          # Patch filemetadata.cpp for KF6FileMetaData API compatibility
+          if [ -f "src/core/filemetadata.cpp" ]; then
+            echo "Patching filemetadata.cpp to remove VideoCodec..."
+            sed -i.bak '/VideoCodec/d' src/core/filemetadata.cpp
+            echo "VideoCodec lines removed"
+          fi
+
           echo "  - Fixed KXmlGuiWindow constructor calls"
           echo "  - Fixed KXmlGuiWindow::changeEvent calls"  
           echo "  - Fixed setupWindowsIconThemeKF6Test calls"
