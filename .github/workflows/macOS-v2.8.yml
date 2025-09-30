@@ -225,6 +225,18 @@ jobs:
           fi
           if [ "$component" = "kcodecs" ]; then
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DCMAKE_CXX_FLAGS=-std=c++14 -Wno-register")
+          elif [ "$component" = "kfilemetadata" ]; then
+            # Use newer kfilemetadata version with VideoCodec support
+            cd ~/kf6-build
+            rm -rf kfilemetadata 2>/dev/null || true
+            if git clone --depth=1 --branch v6.13.0 https://invent.kde.org/frameworks/kfilemetadata.git kfilemetadata 2>&1; then
+              cd kfilemetadata
+            else
+              echo "Failed to get v6.13.0, trying master"
+              git clone --depth=1 https://invent.kde.org/frameworks/kfilemetadata.git kfilemetadata
+              cd kfilemetadata
+            fi
+            COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}")  
           elif [ "$component" = "kglobalaccel" ]; then
             COMPONENT_CMAKE_ARGS=("${CMAKE_ARGS[@]}" "-DKF_IGNORE_PLATFORM_CHECK=TRUE")
           elif [ "$component" = "kbreezeicons" ]; then
