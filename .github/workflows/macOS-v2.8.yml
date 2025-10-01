@@ -188,18 +188,14 @@ jobs:
           
           echo "Cloning $REPO_URL"
           
-          # Skip if directory already exists and has content
-          # Force specific version for kfilemetadata
-          if [ -d "$component" ] && [ "$(ls -A $component 2>/dev/null)" ]; then
-            echo "Directory $component already exists and is not empty, using existing clone"
+          # All components use KF6_BUILD_VERSION for consistency
+          rm -rf "$component" 2>/dev/null || true
+          if git clone "$REPO_URL" "$component" --depth=1 --branch "$KF6_BUILD_VERSION" 2>&1; then
+            echo "✅ Successfully cloned $component $KF6_BUILD_VERSION"
             cd "$component"
           else
-            if git clone "$REPO_URL" "$component" --depth=1 --branch "${{ github.event.inputs.kf6_version || 'v6.7.0' }}" 2>&1; then
-              echo "✅ Successfully cloned $component"
-              cd "$component"
-            else
-              echo "❌ Failed to clone $component, trying master branch..."
-              if git clone "$REPO_URL" "$component" --depth=1 2>&1; then
+            echo "❌ $KF6_BUILD_VERSION not available, trying master"
+            if git clone "$REPO_URL" "$component" --depth=1 2>&1; then
                 echo "✅ Successfully cloned $component from master"
                 cd "$component"
               else
