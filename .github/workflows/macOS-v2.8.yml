@@ -198,11 +198,10 @@ jobs:
             if git clone "$REPO_URL" "$component" --depth=1 2>&1; then
                 echo "✅ Successfully cloned $component from master"
                 cd "$component"
-              else
+            else
                 echo "❌ Failed to clone $component entirely"
                 FAILED_BUILDS+=("$component (clone failed)")
                 continue
-              fi
             fi
           fi
           # Patch kiconthemes to make BreezeIcons optional
