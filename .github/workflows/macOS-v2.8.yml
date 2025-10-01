@@ -169,13 +169,16 @@ jobs:
         # Track successful builds
         SUCCESSFUL_BUILDS=()
         FAILED_BUILDS=()
+
+        # Force clean rebuild - remove all cached v6.7.0 components
+        rm -rf ~/kf6-build/* 2>/dev/null || true
         
         for component in "${KF6_COMPONENTS[@]}"; do
           echo ""
           echo "========================================="
           echo "=== Building $component ($(date)) ==="
           echo "========================================="
-          
+         
           # Clone the component
           if [ "$component" = "extra-cmake-modules" ]; then
             REPO_URL="https://invent.kde.org/frameworks/extra-cmake-modules.git"
