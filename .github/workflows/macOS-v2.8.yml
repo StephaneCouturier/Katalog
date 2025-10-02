@@ -387,13 +387,18 @@ jobs:
 
     - name: Set version information
       run: |
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.version_tag }}" ]; then
-          echo "VERSION_TAG=${{ github.event.inputs.version_tag }}" >> $GITHUB_ENV
-        else
-          echo "VERSION_TAG=master-qt6-kf6-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
+        # Extract version from CMakeLists.txt
+        KATALOG_VERSION=$(grep -E "^project\(Katalog VERSION" CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
+
+        if [ -z "$KATALOG_VERSION" ]; then
+          echo "Warning: Could not extract version from CMakeLists.txt, using default"
+          KATALOG_VERSION="2.x"
         fi
 
-        echo "Building version: $VERSION_TAG"
+        # Build VERSION_TAG: platform_vX.X
+        echo "VERSION_TAG=macos_v${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "Building version: macos_v${KATALOG_VERSION}"
 
     - name: Build Katalog with Qt6/KF6
       run: |
