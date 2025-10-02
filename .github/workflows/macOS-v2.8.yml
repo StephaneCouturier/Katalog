@@ -671,10 +671,13 @@ jobs:
           echo "  - Fixed KXmlGuiWindow::changeEvent calls"  
           echo "  - Fixed setupWindowsIconThemeKF6Test calls"
           echo "  - Added override keyword to closeEvent"
+
+          # Force ninja to recognize source file changes
+          rm -rf build 2>/dev/null || true
+          mkdir -p build
           
           # Try cmake again with enhanced configuration
           cd build
-          rm -rf CMakeCache.txt CMakeFiles/
           
           if cmake .. \
             -GNinja \
