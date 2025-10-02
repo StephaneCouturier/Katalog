@@ -1159,7 +1159,7 @@
         setupWindowsIconTheme();
 #else
         // macOS or other: Use Windows approach as fallback
-        setupWindowsIconTheme();
+        // setupWindowsIconTheme();
 #endif
     }
     //----------------------------------------------------------------------
@@ -1495,7 +1495,7 @@
 #elif defined(Q_OS_WIN)
         setupWindowsIconThemeKF6Test();
 #else
-        setupWindowsIconThemeKF6Test();
+        //setupWindowsIconThemeKF6Test();
 #endif
 
         // Run detailed diagnostics after setup
