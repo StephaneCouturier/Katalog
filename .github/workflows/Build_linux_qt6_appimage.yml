@@ -1,5 +1,5 @@
 name: Build linux Qt6
-#v21
+#v2025-10-02 13:24
 on:
   # Trigger on new releases
   release:
