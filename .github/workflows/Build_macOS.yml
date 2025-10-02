@@ -13,11 +13,11 @@ on:
         required: false
         default: 'v6.15.0'
 
-  # Optional: trigger on push to master for testing
+  # Optional, trigger on push
   push:
-    branches: [ main, katalog_master , katalog_development ]
-    paths: 
-    #  - '.github/workflows/macOS-v2.8.yml'  # Only when workflow changes
+    branches: [ main, katalog_master, katalog_development ]
+    paths:
+      - '.github/workflows/Build_macOS.yml'   # Only triggers if THIS file changes
 
 jobs:
   build-macos-qt6-kf6:
