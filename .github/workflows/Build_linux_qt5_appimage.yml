@@ -13,13 +13,11 @@ on:
         required: false
         default: 'dev-build-qt5'
 
-  # Optional: trigger on push to main (remove if you don't want this)
+  # Optional, trigger on push
   push:
     branches: [ main, katalog_master, katalog_development ]
-  #  paths-ignore:
-  #    - 'docs/**'
-  #    - '*.md'
-  #    - 'scripts/Katalog_linux_create_portable.sh'
+    paths:
+      - '.github/workflows/Build_linux_qt5_appimage.yml'   # Only triggers if THIS file changes
 
 jobs:
   build-appimage-qt5:
