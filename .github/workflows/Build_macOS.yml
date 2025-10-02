@@ -862,14 +862,14 @@ jobs:
     - name: Upload DMG as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog_macos_${{ env.VERSION_TAG }}_dmg
+        name: Katalog_${{ env.VERSION_TAG }}_dmg
         path: build/Katalog-${{ env.VERSION_TAG }}-macOS.dmg
         retention-days: 30
 
     - name: Upload App Bundle as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog_macos_${{ env.VERSION_TAG }}_bundle
+        name: Katalog_${{ env.VERSION_TAG }}_bundle
         path: build/Katalog.app
         retention-days: 7
 
