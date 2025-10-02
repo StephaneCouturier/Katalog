@@ -15,7 +15,7 @@ on:
 
   # Optional: trigger on push to main (remove if you don't want this)
   push:
-    branches: [ main ]
+    branches: [ main, katalog_master, katalog_development ]
     paths-ignore:
       - 'docs/**'
       - '*.md'
