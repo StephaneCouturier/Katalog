@@ -1,4 +1,4 @@
-name: Build macOS v2.8 03
+name: Build macOS
 #v1 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
@@ -15,9 +15,9 @@ on:
 
   # Optional: trigger on push to master for testing
   push:
-    branches: [ main, katalog_development ]
+    branches: [ main, katalog_master , katalog_development ]
     paths: 
-      - '.github/workflows/macOS-v2.8.yml'  # Only when workflow changes
+    #  - '.github/workflows/macOS-v2.8.yml'  # Only when workflow changes
 
 jobs:
   build-macos-qt6-kf6:

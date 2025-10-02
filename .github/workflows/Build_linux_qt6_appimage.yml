@@ -1,4 +1,4 @@
-name: Create AppImage
+name: Build linux Qt6
 #v21
 on:
   # Trigger on new releases

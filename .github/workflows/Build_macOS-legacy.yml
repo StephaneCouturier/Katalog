@@ -1,4 +1,4 @@
-name: Build macOS App Bundle (v2.5 Legacy)
+name: Build macOS Legacy (v2.5 Qt only)
 #v1 - Force v2.5 checkout (pure Qt6, no KDF dependencies)
 on:
   # Allow manual triggering from GitHub web interface

@@ -1,4 +1,4 @@
-name: Create AppImage (Qt5/KF5)
+name: Build linux Qt5
 #v1 - Qt5/KF5 build for glibc 2.35 compatibility
 on:
   # Trigger on new releases
