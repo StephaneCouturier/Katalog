@@ -63,12 +63,14 @@ jobs:
           libqt5charts5-dev
 
         # Try to install KF5 packages - different possible names
+        # UPDATED: Added libkf5filemetadata-dev for metadata extraction
         sudo apt-get install -y \
           libkf5coreaddons-dev \
           libkf5i18n-dev \
           libkf5xmlgui-dev \
           libkf5config-dev \
-          libkf5iconthemes-dev || \
+          libkf5iconthemes-dev \
+          libkf5filemetadata-dev || \
         {
           echo "Failed to install standard KF5 packages. Searching for alternatives..."
           apt search libkf5 | grep -E "^libkf5.*-dev" | head -20
@@ -80,12 +82,27 @@ jobs:
           sudo apt-get install -y libkf5xmlgui-dev || echo "libkf5xmlgui-dev not available"
           sudo apt-get install -y libkf5config-dev || echo "libkf5config-dev not available" 
           sudo apt-get install -y libkf5iconthemes-dev || echo "libkf5iconthemes-dev not available"
+          sudo apt-get install -y libkf5filemetadata-dev || echo "libkf5filemetadata-dev not available"
         }
 
         # Verify Qt5 installation
         echo "Qt5 version information:"
         qmake --version || echo "qmake not found"
         pkg-config --modversion Qt5Core || echo "Qt5Core pkg-config not found"
+        
+        # Verify KF5 packages are installed
+        echo "=== Verifying KF5 installations ==="
+        for pkg in KF5CoreAddons KF5Config KF5FileMetaData; do
+          if pkg-config --exists ${pkg}; then
+            echo "✅ ${pkg} found: $(pkg-config --modversion ${pkg})"
+          else
+            echo "⚠️  ${pkg} not found via pkg-config"
+          fi
+        done
+
+        # List installed KF5 packages
+        echo "=== Installed KF5 packages ==="
+        dpkg -l | grep -i 'kf5\|libkf5' || echo "No KF5 packages pattern match"
 
     - name: Download and setup linuxdeploy
       run: |
