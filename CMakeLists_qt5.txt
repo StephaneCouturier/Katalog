@@ -54,6 +54,7 @@ find_package(KF5I18n REQUIRED)
 find_package(KF5XmlGui REQUIRED)
 find_package(KF5Config REQUIRED)
 find_package(KF5IconThemes REQUIRED)
+find_package(KF5FileMetaData REQUIRED)
 
 find_package(Qt5Charts REQUIRED)
 add_definitions(-DQTCHARTS_USE_NAMESPACE)
@@ -265,6 +266,7 @@ target_link_libraries(katalog-core PUBLIC
     KF5::CoreAddons
     KF5::I18n
     KF5::XmlGui
+    KF5::FileMetaData
 )
 
 target_include_directories(katalog-core PUBLIC
@@ -298,6 +300,7 @@ target_link_libraries(Katalog PRIVATE
     KF5::XmlGui
     KF5::ConfigCore
     KF5::IconThemes
+    KF5::FileMetaData
 )
 
 # Windows-specific settings to avoid freetype dll detection issues
