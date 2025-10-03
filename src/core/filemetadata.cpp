@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
+#include "catalog.h"
 #include "filemetadata.h"
 #include <QFileInfo>
 #include <QSqlQuery>
@@ -38,7 +39,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <qjsonarray.h>
-#include "catalog.h"
 
 //-----------------------------------------------------------------------------------------------------
 FileMetadata::FileMetadata(QObject *parent) : QObject(parent)
