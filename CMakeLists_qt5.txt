@@ -97,6 +97,8 @@ set(CORE_HEADERS
     src/core/devicejobstoppable.h
     src/core/devicemanager.h
     src/core/deviceupdatemanager.h
+    src/core/filemetadata.h
+    src/core/filetypemapping.h
 )
 
 set(CORE_SOURCES
@@ -121,6 +123,8 @@ set(CORE_SOURCES
     src/core/devicejobstoppable.cpp
     src/core/devicemanager.cpp
     src/core/deviceupdatemanager.cpp
+    src/core/filemetadata.cpp
+    src/core/filetypemapping.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately
