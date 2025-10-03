@@ -19,7 +19,6 @@ on:
     paths:
       - '.github/workflows/Build_linux_qt6_appimage.yml'   # Only triggers if THIS file changes
 
-
 jobs:
   build-appimage-qt6:
     runs-on: ubuntu-24.04
@@ -66,25 +65,45 @@ jobs:
           qt6-networkauth-dev
 
         # Install KF6 packages - try different possible names
+        # UPDATED: Added libkf6filemetadata-dev for metadata extraction
         sudo apt-get install -y \
           libkf6coreaddons-dev \
           libkf6i18n-dev \
           libkf6xmlgui-dev \
           libkf6config-dev \
-          libkf6iconthemes-dev || \
+          libkf6iconthemes-dev \
+          libkf6filemetadata-dev \
+          libkf6completion-dev || \
         sudo apt-get install -y \
           kf6-kcoreaddons-dev \
           kf6-ki18n-dev \
           kf6-kxmlgui-dev \
           kf6-kconfig-dev \
-          kf6-kiconthemes-dev || \
+          kf6-kiconthemes-dev \
+          kf6-kfilemetadata-dev \
+          kf6-kcompletion-dev || \
         {
-          echo "Failed to install KF6 packages. Searching for available KF6 packages..."
-          apt search kf6 | grep -E "^(libkf6|kf6-)" | head -20
-          echo "Checking what's available in the neon repository..."
-          grep -r "kf6\|KF6" /var/lib/apt/lists/*neon* | head -10 || true
+          echo "Failed to install KF6 packages from KDE neon repository"
+          echo "Attempting alternative installation methods..."
+          
+          # Fallback: Try building from source or use alternative repos
+          echo "This might require manual KF6 installation"
           exit 1
         }
+
+        # Verify critical KF6 packages are installed
+        echo "=== Verifying KF6 installations ==="
+        for pkg in KF6CoreAddons KF6Config KF6FileMetaData; do
+          if pkg-config --exists ${pkg}; then
+            echo "✅ ${pkg} found: $(pkg-config --modversion ${pkg})"
+          else
+            echo "⚠️  ${pkg} not found via pkg-config"
+          fi
+        done
+
+        # List installed KF6 packages
+        echo "=== Installed KF6 packages ==="
+        dpkg -l | grep -i 'kf6\|libkf6' || echo "No KF6 packages pattern match"
 
     - name: Download and setup linuxdeploy
       run: |
