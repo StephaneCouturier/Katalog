@@ -32,6 +32,7 @@
 #include "filemetadata.h"
 #include <QMap>
 #include <QStringList>
+#include <QDebug>
 
 FileTypeMapping::TextCategory FileTypeMapping::selectedTextCategory = FileTypeMapping::TextCategory::All;
 
