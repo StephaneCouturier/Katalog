@@ -2613,7 +2613,7 @@ void MainWindow::importFromVVV()
         importedDevice.catalog->includeHidden = 1;
         importedDevice.catalog->includeSymblinks = 0;
         importedDevice.catalog->isFullDevice = 0;
-        importedDevice.catalog->includeMetadata = 0;
+        importedDevice.catalog->includeMetadata = Catalog::METADATA_NONE;
         importedDevice.catalog->appVersion = currentVersion;
         importedDevice.catalog->insertCatalog();
 
