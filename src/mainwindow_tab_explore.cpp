@@ -481,7 +481,7 @@
 
             // Ensure file types are populated for File mode catalogs
             if (collection->databaseMode == "File" && exploreDevice->catalog) {
-                exploreDevice->catalog->ensureFileTypesPopulated();
+                exploreDevice->catalog->populateFileTypes();
             }
             loadSelectedDirectoryFilesToExplore();
 

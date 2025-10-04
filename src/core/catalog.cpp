@@ -961,7 +961,7 @@ void Catalog::getFileExtensions()
     }
 }
 
-void Catalog::ensureFileTypesPopulated()
+void Catalog::populateFileTypes()
 {
     // Check if this catalog needs file type migration
     QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));

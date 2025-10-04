@@ -407,7 +407,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
     // Ensure file types are populated for File mode catalogs
     if (!memoryModeEnabled && device->catalog) {
-        device->catalog->ensureFileTypesPopulated();
+        device->catalog->populateFileTypes();
     }
 
     // Build SQL query
