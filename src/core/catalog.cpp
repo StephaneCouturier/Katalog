@@ -31,10 +31,11 @@
 
 #include "catalog.h"
 #include "filetypemapping.h"
-
+#include "filemetadata.h"
 #include <QApplication>
 #include <QDir>
 #include <QSqlError>
+#include <qmessagebox.h>
 
 const QString Catalog::METADATA_NONE = "None";
 const QString Catalog::METADATA_MEDIA_BASIC = "MediaBasic";
@@ -486,6 +487,14 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
             QFile catalogFile(filePath);
             if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
 
+                // Detect if this is an older catalog t oversion 2.8 that needs migration
+                bool needsMigration = (appVersion < "2.8");
+                bool catalogWasMigrated = false;
+
+                if (needsMigration) {
+                    qDebug() << "Loading v2.6 catalog:" << name << "- will migrate to v2.8 format";
+                }
+
                 //Set up a text stream from the file's data
                 QTextStream streamCatalogFile(&catalogFile);
                 QString lineCatalogFile;
@@ -511,6 +520,7 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                                                 file_date_updated,
                                                 file_catalog,
                                                 file_full_path,
+                                                file_extension          ,
                                                 file_type               ,
                                                 mime_type               ,
                                                 image_width             ,
@@ -542,6 +552,7 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                                                 :file_date_updated,
                                                 :file_catalog,
                                                 :file_full_path,
+                                                :file_extension,
                                                 :file_type               ,
                                                 :mime_type               ,
                                                 :image_width             ,
@@ -635,34 +646,75 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                     insertFileQuery.bindValue(":file_catalog_id",  ID);
                     insertFileQuery.bindValue(":file_name",        fileInfo.fileName());
                     insertFileQuery.bindValue(":file_size",        lineFileSize);
-                    insertFileQuery.bindValue(":file_folder_path", folder );
+                    insertFileQuery.bindValue(":file_folder_path", folder);
                     insertFileQuery.bindValue(":file_date_updated",lineFileDatetime);
                     insertFileQuery.bindValue(":file_catalog",     name);
                     insertFileQuery.bindValue(":file_full_path",   lineFilePath);
-                    // Metadata fields (if available)
-                    if(lineFieldList.size()>3){
-                        insertFileQuery.bindValue(":file_type",               lineFieldList[3]);
-                        insertFileQuery.bindValue(":mime_type",               lineFieldList[4]);
-                        insertFileQuery.bindValue(":image_width",             lineFieldList[5].toInt());
-                        insertFileQuery.bindValue(":image_height",            lineFieldList[6].toInt());
-                        insertFileQuery.bindValue(":image_orientation",       lineFieldList[7].toInt());
-                        insertFileQuery.bindValue(":video_duration_seconds",  lineFieldList[8].toDouble());
-                        insertFileQuery.bindValue(":video_width",             lineFieldList[9].toInt());
-                        insertFileQuery.bindValue(":video_height",            lineFieldList[10].toInt());
-                        insertFileQuery.bindValue(":video_codec",             lineFieldList[11]);
-                        insertFileQuery.bindValue(":video_framerate",         lineFieldList[12].toDouble());
-                        insertFileQuery.bindValue(":video_bitrate",           lineFieldList[13].toInt());
-                        insertFileQuery.bindValue(":audio_duration_seconds",  lineFieldList[14].toDouble());
-                        insertFileQuery.bindValue(":audio_artist",            lineFieldList[15]);
-                        insertFileQuery.bindValue(":audio_album",             lineFieldList[16]);
-                        insertFileQuery.bindValue(":audio_title",             lineFieldList[17]);
-                        insertFileQuery.bindValue(":audio_genre",             lineFieldList[18]);
-                        insertFileQuery.bindValue(":audio_year",              lineFieldList[19].toInt());
-                        insertFileQuery.bindValue(":audio_track_number",      lineFieldList[20].toInt());
-                        insertFileQuery.bindValue(":audio_bitrate",           lineFieldList[21].toInt());
-                        insertFileQuery.bindValue(":audio_sample_rate",       lineFieldList[22].toInt());
-                        insertFileQuery.bindValue(":metadata_extended",       lineFieldList[23]);
-                        insertFileQuery.bindValue(":metadata_extraction_date",lineFieldList[24]);
+
+                    // Handle v2.6 vs v2.8 format differences
+                    if (needsMigration) {
+                        // v2.6 format: only 3 columns (path, size, date)
+                        // Generate file_extension and file_type from the filename
+                        QString extension = fileInfo.suffix().toLower();
+                        QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+
+                        insertFileQuery.bindValue(":file_extension", extension);
+                        insertFileQuery.bindValue(":file_type", fileType);
+                        catalogWasMigrated = true;
+
+                        // All metadata fields are NULL for v2.6 files
+                        insertFileQuery.bindValue(":mime_type", QVariant());
+                        insertFileQuery.bindValue(":image_width", QVariant());
+                        insertFileQuery.bindValue(":image_height", QVariant());
+                        insertFileQuery.bindValue(":image_orientation", QVariant());
+                        insertFileQuery.bindValue(":video_duration_seconds", QVariant());
+                        insertFileQuery.bindValue(":video_width", QVariant());
+                        insertFileQuery.bindValue(":video_height", QVariant());
+                        insertFileQuery.bindValue(":video_codec", QVariant());
+                        insertFileQuery.bindValue(":video_framerate", QVariant());
+                        insertFileQuery.bindValue(":video_bitrate", QVariant());
+                        insertFileQuery.bindValue(":audio_duration_seconds", QVariant());
+                        insertFileQuery.bindValue(":audio_artist", QVariant());
+                        insertFileQuery.bindValue(":audio_album", QVariant());
+                        insertFileQuery.bindValue(":audio_title", QVariant());
+                        insertFileQuery.bindValue(":audio_genre", QVariant());
+                        insertFileQuery.bindValue(":audio_year", QVariant());
+                        insertFileQuery.bindValue(":audio_track_number", QVariant());
+                        insertFileQuery.bindValue(":audio_bitrate", QVariant());
+                        insertFileQuery.bindValue(":audio_sample_rate", QVariant());
+                        insertFileQuery.bindValue(":metadata_extended", QVariant());
+                        insertFileQuery.bindValue(":metadata_extraction_date", QVariant());
+                    } else {
+                        // v2.8 format: 28 columns including extension, type, and metadata
+                        QString extension = fileInfo.suffix().toLower();
+
+                        // Read file_extension from column 3, or fall back to extracting from filename
+                        insertFileQuery.bindValue(":file_extension", fieldListCount > 3 ? lineFieldList[3] : extension);
+                        // Read file_type from column 4
+                        insertFileQuery.bindValue(":file_type", fieldListCount > 4 ? lineFieldList[4] : QVariant());
+                        // Read mime_type from column 5
+                        insertFileQuery.bindValue(":mime_type", fieldListCount > 5 ? lineFieldList[5] : QVariant());
+                        // Metadata starts at column 6
+                        insertFileQuery.bindValue(":image_width", fieldListCount > 6 ? lineFieldList[6].toInt() : QVariant());
+                        insertFileQuery.bindValue(":image_height", fieldListCount > 7 ? lineFieldList[7].toInt() : QVariant());
+                        insertFileQuery.bindValue(":image_orientation", fieldListCount > 8 ? lineFieldList[8].toInt() : QVariant());
+                        insertFileQuery.bindValue(":video_duration_seconds", fieldListCount > 9 ? lineFieldList[9].toDouble() : QVariant());
+                        insertFileQuery.bindValue(":video_width", fieldListCount > 10 ? lineFieldList[10].toInt() : QVariant());
+                        insertFileQuery.bindValue(":video_height", fieldListCount > 11 ? lineFieldList[11].toInt() : QVariant());
+                        insertFileQuery.bindValue(":video_codec", fieldListCount > 12 ? lineFieldList[12] : QVariant());
+                        insertFileQuery.bindValue(":video_framerate", fieldListCount > 13 ? lineFieldList[13].toDouble() : QVariant());
+                        insertFileQuery.bindValue(":video_bitrate", fieldListCount > 14 ? lineFieldList[14].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_duration_seconds", fieldListCount > 15 ? lineFieldList[15].toDouble() : QVariant());
+                        insertFileQuery.bindValue(":audio_artist", fieldListCount > 16 ? lineFieldList[16] : QVariant());
+                        insertFileQuery.bindValue(":audio_album", fieldListCount > 17 ? lineFieldList[17] : QVariant());
+                        insertFileQuery.bindValue(":audio_title", fieldListCount > 18 ? lineFieldList[18] : QVariant());
+                        insertFileQuery.bindValue(":audio_genre", fieldListCount > 19 ? lineFieldList[19] : QVariant());
+                        insertFileQuery.bindValue(":audio_year", fieldListCount > 20 ? lineFieldList[20].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_track_number", fieldListCount > 21 ? lineFieldList[21].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_bitrate", fieldListCount > 22 ? lineFieldList[22].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_sample_rate", fieldListCount > 23 ? lineFieldList[23].toInt() : QVariant());
+                        insertFileQuery.bindValue(":metadata_extended", fieldListCount > 24 ? lineFieldList[24] : QVariant());
+                        insertFileQuery.bindValue(":metadata_extraction_date", fieldListCount > 25 ? lineFieldList[25] : QVariant());
                     }
                     insertFileQuery.exec();
 
@@ -682,6 +734,18 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
 
                 //Close file
                 catalogFile.close();
+
+                if (catalogWasMigrated) {
+                    qDebug() << "Catalog migrated, saving to v2.8 format...";
+                    appVersion = "2.8";
+
+                    QFileInfo catalogFileInfo(filePath);
+                    QString collectionFolder = catalogFileInfo.absolutePath();
+
+                    if (saveCatalogToFile("Memory", collectionFolder)) {
+                        qDebug() << "Catalog successfully saved in v2.8 format";
+                    }
+                }
             }
         }
     }
@@ -933,6 +997,7 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
                         SELECT file_full_path,
                                 file_size,
                                 file_date_updated,
+                                file_extension          ,
                                 file_type               ,
                                 mime_type               ,
                                 image_width             ,
@@ -995,7 +1060,8 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
                                 queryFileList.value(21).toString() + "\t" +
                                 queryFileList.value(22).toString() + "\t" +
                                 queryFileList.value(23).toString() + "\t" +
-                                queryFileList.value(24).toString() + "\t";
+                                queryFileList.value(24).toString() + "\t" +
+                                queryFileList.value(25).toString() + "\t";
             fileList << fileEntry;
         }
 

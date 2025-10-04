@@ -31,6 +31,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "version.h"
+#include "core/filemetadata.h""
 #include "core/database.h"
 #include "core/language.h"
 #include "core/catalogjobstoppable.h"
@@ -92,6 +93,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             checkVersionChoice = settings.value("Settings/CheckVersion", true).toBool();
             if ( checkVersionChoice == true)
                 checkVersion();
+
+        //Prepare file extension cache
+            FileMetadata::initializeExtensionTypeCache();
 
     //Set up and start database (modes: "Memory", "File", or "Hosted")
         Database::initialize(m_connectionName, collection);
@@ -248,7 +252,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
             //Initiate comboboxes for metadata fields
             initiateMetadataFields();
-            initializeMetadataCaches();
 
             //Always Load the file system for the treeview
             loadFileSystem("/");
