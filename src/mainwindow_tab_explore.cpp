@@ -478,7 +478,13 @@
                 bool tempStopRequested = false;
                 exploreDevice->catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
             }
+
+            // Ensure file types are populated for File mode catalogs
+            if (collection->databaseMode == "File" && exploreDevice->catalog) {
+                exploreDevice->catalog->ensureFileTypesPopulated();
+            }
             loadSelectedDirectoryFilesToExplore();
+
         //Go to the Explorer tab
         ui->Explore_label_CatalogNameDisplay->setText(exploreDevice->name);
         ui->Explore_label_CatalogPathDisplay->setText(exploreDevice->path);

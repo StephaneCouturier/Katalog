@@ -405,6 +405,11 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
     }
 
+    // Ensure file types are populated for File mode catalogs
+    if (!memoryModeEnabled && device->catalog) {
+        device->catalog->ensureFileTypesPopulated();
+    }
+
     // Build SQL query
     QSqlQuery getFilesQuery(QSqlDatabase::database(m_connectionName));
     QString getFilesQuerySQL = QLatin1String(R"(

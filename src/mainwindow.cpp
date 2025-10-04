@@ -31,7 +31,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "version.h"
-#include "core/filemetadata.h""
+#include "core/filemetadata.h"
 #include "core/database.h"
 #include "core/language.h"
 #include "core/catalogjobstoppable.h"

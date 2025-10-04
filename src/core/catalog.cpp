@@ -961,6 +961,93 @@ void Catalog::getFileExtensions()
     }
 }
 
+void Catalog::ensureFileTypesPopulated()
+{
+    // Check if this catalog needs file type migration
+    QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
+    checkQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = ? AND (file_type IS NULL OR file_type = '')");
+    checkQuery.bindValue(0, ID);
+
+    if (!checkQuery.exec() || !checkQuery.next()) {
+        qDebug() << "Failed to check file type status for catalog:" << name;
+        return;
+    }
+
+    int filesToMigrate = checkQuery.value(0).toInt();
+
+    if (filesToMigrate == 0) {
+        // Already migrated or no files
+        return;
+    }
+
+    qDebug() << "Catalog" << name << "needs file type migration for" << filesToMigrate << "files";
+
+    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
+
+    // Begin transaction
+    if (!db.transaction()) {
+        qDebug() << "Failed to begin transaction for catalog migration";
+        return;
+    }
+
+    // Get files for this catalog only
+    QSqlQuery selectQuery(db);
+    selectQuery.prepare(R"(
+        SELECT file_name, file_full_path
+        FROM file
+        WHERE file_catalog_id = ?
+        AND (file_type IS NULL OR file_type = '')
+    )");
+    selectQuery.bindValue(0, ID);
+
+    if (!selectQuery.exec()) {
+        db.rollback();
+        qDebug() << "Failed to select files for catalog migration:" << selectQuery.lastError().text();
+        return;
+    }
+
+    // Prepare update query
+    QSqlQuery updateQuery(db);
+    updateQuery.prepare(R"(
+        UPDATE file
+        SET file_extension = ?, file_type = ?
+        WHERE file_catalog_id = ? AND file_full_path = ?
+    )");
+
+    int processed = 0;
+    while (selectQuery.next()) {
+        QString fileName = selectQuery.value(0).toString();
+        QString fileFullPath = selectQuery.value(1).toString();
+
+        // Determine extension and type
+        QString nameForExtraction = fileName.isEmpty() ? fileFullPath : fileName;
+        QFileInfo fileInfo(nameForExtraction);
+        QString extension = fileInfo.suffix().toLower();
+        QString fileType = extension.isEmpty() ? "none" : FileMetadata::getFileTypeFromExtension(extension);
+
+        // Update the record
+        updateQuery.bindValue(0, extension);
+        updateQuery.bindValue(1, fileType);
+        updateQuery.bindValue(2, ID);
+        updateQuery.bindValue(3, fileFullPath);
+
+        if (!updateQuery.exec()) {
+            qDebug() << "Failed to update file type:" << fileFullPath;
+        }
+
+        processed++;
+    }
+
+    // Commit transaction
+    if (!db.commit()) {
+        db.rollback();
+        qDebug() << "Failed to commit catalog migration:" << db.lastError().text();
+        return;
+    }
+
+    qDebug() << "Migrated" << processed << "files for catalog:" << name;
+}
+
 void Catalog::loadExcludedFolders()
 {
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
