@@ -252,7 +252,15 @@ const auto SQL_CREATE_SEARCH = QLatin1String(R"(
                             case_sensitive            NUMERIC,
                             metadata_checked          NUMERIC,
                             metadata_text_checked     NUMERIC,
-                            metadata_text_search      TEXT)
+                            metadata_text_search      TEXT,
+                            metadata_size_checked     NUMERIC,
+                            metadata_size_min_height  NUMERIC,
+                            metadata_size_max_height  NUMERIC,
+                            metadata_size_min_width   NUMERIC,
+                            metadata_size_max_width   NUMERIC,
+                            metadata_duration_checked NUMERIC,
+                            metadata_duration_min     TEXT,
+                            metadata_duration_max     TEXT)
             )");
 
 // TAG ------------------------------------------------------------------
