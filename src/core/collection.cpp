@@ -766,7 +766,7 @@ void Collection::loadParameterFileToTable()
                     insertQuery.bindValue(":parameter_name", fieldList[0]);
                     insertQuery.bindValue(":parameter_type", fieldList[1]);
                     insertQuery.bindValue(":parameter_value1", fieldList[2]);
-                    insertQuery.bindValue(":parameter_value2", fieldList[3]);
+                    insertQuery.bindValue(":parameter_value2", fieldList.size() > 3 ? fieldList[3] : "");
                     insertQuery.exec();
                 }
             }
