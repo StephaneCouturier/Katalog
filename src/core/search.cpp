@@ -407,11 +407,37 @@ void Search::processResults(bool handleFoldersOnly)
         fileNames.clear();
         fileSizes.clear();
         fileDateTimes.clear();
+        fileTypes.clear();
+        mimeTypes.clear();
+
+        // Clear metadata arrays too
+        imageWidths.clear();
+        imageHeights.clear();
+        videoDurations.clear();
+        videoWidths.clear();
+        videoHeights.clear();
+        audioDurations.clear();
+        audioArtists.clear();
+        audioAlbums.clear();
+        audioTitles.clear();
 
         for (int i = 0; i < filePaths.size(); ++i) {
             fileNames.append("");
             fileSizes.append(0);
             fileDateTimes.append("");
+            fileTypes.append("folder");  // Mark as folder for icon display
+            mimeTypes.append("");        // No mime type for folders
+
+            // Append empty metadata values
+            imageWidths.append(0);
+            imageHeights.append(0);
+            videoDurations.append(0);
+            videoWidths.append(0);
+            videoHeights.append(0);
+            audioDurations.append(0);
+            audioArtists.append("");
+            audioAlbums.append("");
+            audioTitles.append("");
         }
     }
 }
@@ -843,7 +869,18 @@ void Search::clearResults()
     deviceFoundIDList.clear();
     deviceFoundModel->clear();
 
-    // Reset statistics
+    fileTypes.clear();
+    mimeTypes.clear();
+    imageWidths.clear();
+    imageHeights.clear();
+    videoDurations.clear();
+    videoWidths.clear();
+    videoHeights.clear();
+    audioDurations.clear();
+    audioArtists.clear();
+    audioAlbums.clear();
+    audioTitles.clear();
+
     filesFoundNumber = 0;
     filesFoundTotalSize = 0;
     filesFoundAverageSize = 0;

@@ -954,6 +954,10 @@ void MainWindow::displaySearchResults()
     }
     else {
         // File view setup
+        ui->Search_treeView_FilesFound->header()->showSection(0); // Name
+        ui->Search_treeView_FilesFound->header()->showSection(1); // Size
+        ui->Search_treeView_FilesFound->header()->showSection(2); // Date
+
         ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Search_treeView_FilesFound->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents); // Name
         ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); // Size

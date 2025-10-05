@@ -263,7 +263,7 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
     }
 
     // Process results
-    processResults();
+    processResults(showFoldersOnly);
 
     // Process DUPLICATES
     if (shouldContinue() && searchOnFileCriteria && searchOnDuplicates &&

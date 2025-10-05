@@ -51,14 +51,6 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
       filesizeColumnList <<1;
       durationColumnList <<12;
 
-    //Definition of filetypes
-    QStringList fileTypesPlain_Image, fileTypesPlain_Audio,fileTypesPlain_Video,fileTypesPlain_Text,fileTypesPlain_Other;
-    fileTypesPlain_Image << "png" << "jpg" << "gif" << "xcf" << "tif" << "bmp";
-    fileTypesPlain_Audio << "mp3" << "wav" << "ogg" << "aif";
-    fileTypesPlain_Video << "wmv" << "avi" << "mp4" << "mkv" << "flv"  << "webm";
-    fileTypesPlain_Text  << "txt" << "pdf" << "odt" << "idx" << "html" << "rtf" << "doc" << "docx" << "epub";
-    fileTypesPlain_Other << "7z" << "zip" << "rar" << "gz" << "tar.gz" ;
-
     switch ( role )
          {
             case Qt::DisplayRole:
@@ -167,13 +159,17 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                 if( index.column()==0 ){
 
                     //Identification of filetype
-                    int fileTypeColumn = 8;
+                    int entryTypeColumn = 5;  // For Explore view: "folder" or "file"
+                    int fileTypeColumn = 8;   // For both views: file_type or "folder" for search results
                     int mimeTypeColumn = 9;
+                    QString entryType;
                     QString fileType;
                     QString mimeType;
                     QString fileName;
 
                     //Get data from columns
+                    QModelIndex entryTypeIdx = index.sibling(index.row(), entryTypeColumn);
+                    entryType = QSortFilterProxyModel::data(entryTypeIdx, Qt::DisplayRole).toString();
                     QModelIndex idx = index.sibling(index.row(), fileTypeColumn);
                     fileType = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
                     QModelIndex idx2 = index.sibling(index.row(), mimeTypeColumn);
@@ -182,11 +178,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     // Get filename for extension-based icon lookup
                     fileName = QSortFilterProxyModel::data(index, Qt::DisplayRole).toString();
 
-                    // Debug output
-                    //qDebug() << "Icon lookup: fileName=" << fileName << "fileType=" << fileType << "mimeType=" << mimeType;
-
                     // Handle folders first
-                    if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" ){
+                    if( entryType == "folder" || fileType == "folder" ){
                         return QIcon::fromTheme("folder");
                     }
 
@@ -235,6 +228,20 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     }
                     else //fileType = none
                         return QIcon::fromTheme("application-x-zerosize");
+                }
+                else if( index.column()==3 ){
+                    // Column 3 - Path column, ONLY show icon for folders (when column 0 is hidden in folder view)
+
+                    int fileTypeColumn = 8;
+                    QModelIndex fileTypeIdx = index.sibling(index.row(), fileTypeColumn);
+                    QString fileType = QSortFilterProxyModel::data(fileTypeIdx, Qt::DisplayRole).toString();
+
+                    // Only show folder icon in column 3 for folder entries
+                    if( fileType == "folder" ){
+                        return QIcon::fromTheme("folder");
+                    }
+                    // For files, return no icon in column 3
+                    return QVariant();
                 }
 
                 break;
