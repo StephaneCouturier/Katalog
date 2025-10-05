@@ -348,8 +348,42 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
         idxStream << "<catalogID>" << QString::number(catalogId) << "\n";
 
         // Get all files for this catalog
+        // Get all files for this catalog
         QSqlQuery fileQuery(QSqlDatabase::database(m_connectionName));
-        fileQuery.prepare("SELECT file_full_path, file_size, file_date_updated FROM file WHERE file_catalog_id = :catalog_id");
+        QString fileQuerySQL = QLatin1String(R"(
+                                SELECT file_full_path,
+                                       file_size,
+                                       file_date_updated,
+                                       file_extension,
+                                       file_type,
+                                       mime_type,
+                                       mime_verified,
+                                       type_mismatch,
+                                       image_width,
+                                       image_height,
+                                       image_orientation,
+                                       video_duration_seconds,
+                                       video_width,
+                                       video_height,
+                                       video_codec,
+                                       video_framerate,
+                                       video_bitrate,
+                                       audio_duration_seconds,
+                                       audio_artist,
+                                       audio_album,
+                                       audio_title,
+                                       audio_genre,
+                                       audio_year,
+                                       audio_track_number,
+                                       audio_bitrate,
+                                       audio_sample_rate,
+                                       metadata_extended,
+                                       metadata_extraction_date
+                                FROM file
+                                WHERE file_catalog_id = :catalog_id
+                                ORDER BY file_full_path
+                            )");
+        fileQuery.prepare(fileQuerySQL);
         fileQuery.bindValue(":catalog_id", catalogId);
 
         if (!fileQuery.exec()) {
@@ -360,9 +394,34 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
 
         // Write all file entries
         while (fileQuery.next()) {
-            idxStream << fileQuery.value(0).toString() << "\t"
-                      << fileQuery.value(1).toString() << "\t"
-                      << fileQuery.value(2).toString() << "\n";
+            idxStream << fileQuery.value(0).toString() << "\t"   // file_full_path
+                      << fileQuery.value(1).toString() << "\t"   // file_size
+                      << fileQuery.value(2).toString() << "\t"   // file_date_updated
+                      << fileQuery.value(3).toString() << "\t"   // file_extension
+                      << fileQuery.value(4).toString() << "\t"   // file_type
+                      << fileQuery.value(5).toString() << "\t"   // mime_type
+                      << fileQuery.value(6).toString() << "\t"   // mime_verified
+                      << fileQuery.value(7).toString() << "\t"   // type_mismatch
+                      << fileQuery.value(8).toString() << "\t"   // image_width
+                      << fileQuery.value(9).toString() << "\t"   // image_height
+                      << fileQuery.value(10).toString() << "\t"  // image_orientation
+                      << fileQuery.value(11).toString() << "\t"  // video_duration_seconds
+                      << fileQuery.value(12).toString() << "\t"  // video_width
+                      << fileQuery.value(13).toString() << "\t"  // video_height
+                      << fileQuery.value(14).toString() << "\t"  // video_codec
+                      << fileQuery.value(15).toString() << "\t"  // video_framerate
+                      << fileQuery.value(16).toString() << "\t"  // video_bitrate
+                      << fileQuery.value(17).toString() << "\t"  // audio_duration_seconds
+                      << fileQuery.value(18).toString() << "\t"  // audio_artist
+                      << fileQuery.value(19).toString() << "\t"  // audio_album
+                      << fileQuery.value(20).toString() << "\t"  // audio_title
+                      << fileQuery.value(21).toString() << "\t"  // audio_genre
+                      << fileQuery.value(22).toString() << "\t"  // audio_year
+                      << fileQuery.value(23).toString() << "\t"  // audio_track_number
+                      << fileQuery.value(24).toString() << "\t"  // audio_bitrate
+                      << fileQuery.value(25).toString() << "\t"  // audio_sample_rate
+                      << fileQuery.value(26).toString() << "\t"  // metadata_extended
+                      << fileQuery.value(27).toString() << "\n";  // metadata_extraction_date
         }
 
         idxFile.close();

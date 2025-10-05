@@ -512,70 +512,75 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                 //Prepare insert query for file
                 QSqlQuery insertFileQuery(QSqlDatabase::database(m_connectionName));
                 QString insertFileSQL = QLatin1String(R"(
-                                        INSERT INTO file (
-                                                file_catalog_id,
-                                                file_name,
-                                                file_folder_path,
-                                                file_size,
-                                                file_date_updated,
-                                                file_catalog,
-                                                file_full_path,
-                                                file_extension          ,
-                                                file_type               ,
-                                                mime_type               ,
-                                                image_width             ,
-                                                image_height            ,
-                                                image_orientation       ,
-                                                video_duration_seconds  ,
-                                                video_width             ,
-                                                video_height            ,
-                                                video_codec             ,
-                                                video_framerate         ,
-                                                video_bitrate           ,
-                                                audio_duration_seconds  ,
-                                                audio_artist            ,
-                                                audio_album             ,
-                                                audio_title             ,
-                                                audio_genre             ,
-                                                audio_year              ,
-                                                audio_track_number      ,
-                                                audio_bitrate           ,
-                                                audio_sample_rate       ,
-                                                metadata_extended       ,
-                                                metadata_extraction_date
-                                                )
-                                        VALUES(
-                                                :file_catalog_id,
-                                                :file_name,
-                                                :file_folder_path,
-                                                :file_size,
-                                                :file_date_updated,
-                                                :file_catalog,
-                                                :file_full_path,
-                                                :file_extension,
-                                                :file_type               ,
-                                                :mime_type               ,
-                                                :image_width             ,
-                                                :image_height            ,
-                                                :image_orientation       ,
-                                                :video_duration_seconds  ,
-                                                :video_width             ,
-                                                :video_height            ,
-                                                :video_codec             ,
-                                                :video_framerate         ,
-                                                :video_bitrate           ,
-                                                :audio_duration_seconds  ,
-                                                :audio_artist            ,
-                                                :audio_album             ,
-                                                :audio_title             ,
-                                                :audio_genre             ,
-                                                :audio_year              ,
-                                                :audio_track_number      ,
-                                                :audio_bitrate           ,
-                                                :audio_sample_rate       ,
-                                                :metadata_extended       ,
-                                                :metadata_extraction_date  )
-                                        )");
+                                    INSERT INTO file(
+                                            file_catalog_id         ,
+                                            file_name               ,
+                                            file_folder_path        ,
+                                            file_size               ,
+                                            file_date_updated       ,
+                                            file_catalog            ,
+                                            file_full_path          ,
+                                            file_extension          ,
+                                            file_type               ,
+                                            mime_type               ,
+                                            mime_verified           ,
+                                            type_mismatch           ,
+                                            image_width             ,
+                                            image_height            ,
+                                            image_orientation       ,
+                                            video_duration_seconds  ,
+                                            video_width             ,
+                                            video_height            ,
+                                            video_codec             ,
+                                            video_framerate         ,
+                                            video_bitrate           ,
+                                            audio_duration_seconds  ,
+                                            audio_artist            ,
+                                            audio_album             ,
+                                            audio_title             ,
+                                            audio_genre             ,
+                                            audio_year              ,
+                                            audio_track_number      ,
+                                            audio_bitrate           ,
+                                            audio_sample_rate       ,
+                                            metadata_extended       ,
+                                            metadata_extraction_date
+                                            )
+                                    VALUES(
+                                            :file_catalog_id        ,
+                                            :file_name              ,
+                                            :file_folder_path       ,
+                                            :file_size              ,
+                                            :file_date_updated      ,
+                                            :file_catalog           ,
+                                            :file_full_path         ,
+                                            :file_extension         ,
+                                            :file_type               ,
+                                            :mime_type               ,
+                                            :mime_verified           ,
+                                            :type_mismatch           ,
+                                            :image_width             ,
+                                            :image_height            ,
+                                            :image_orientation       ,
+                                            :video_duration_seconds  ,
+                                            :video_width             ,
+                                            :video_height            ,
+                                            :video_codec             ,
+                                            :video_framerate         ,
+                                            :video_bitrate           ,
+                                            :audio_duration_seconds  ,
+                                            :audio_artist            ,
+                                            :audio_album             ,
+                                            :audio_title             ,
+                                            :audio_genre             ,
+                                            :audio_year              ,
+                                            :audio_track_number      ,
+                                            :audio_bitrate           ,
+                                            :audio_sample_rate       ,
+                                            :metadata_extended       ,
+                                            :metadata_extraction_date
+                                            )
+                                    )");
 
                 //Prepare insert query for folder
                 QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
@@ -688,34 +693,37 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                         // v2.8 format: 28 columns including extension, type, and metadata
                         QString extension = fileInfo.suffix().toLower();
 
-                        // Read file_extension from column 3, or fall back to extracting from filename
+                        // Read file_extension from column 3
                         insertFileQuery.bindValue(":file_extension", fieldListCount > 3 ? lineFieldList[3] : extension);
                         // Read file_type from column 4
                         insertFileQuery.bindValue(":file_type", fieldListCount > 4 ? lineFieldList[4] : QVariant());
                         // Read mime_type from column 5
                         insertFileQuery.bindValue(":mime_type", fieldListCount > 5 ? lineFieldList[5] : QVariant());
-                        // Metadata starts at column 6
-                        insertFileQuery.bindValue(":image_width", fieldListCount > 6 ? lineFieldList[6].toInt() : QVariant());
-                        insertFileQuery.bindValue(":image_height", fieldListCount > 7 ? lineFieldList[7].toInt() : QVariant());
-                        insertFileQuery.bindValue(":image_orientation", fieldListCount > 8 ? lineFieldList[8].toInt() : QVariant());
-                        insertFileQuery.bindValue(":video_duration_seconds", fieldListCount > 9 ? lineFieldList[9].toDouble() : QVariant());
-                        insertFileQuery.bindValue(":video_width", fieldListCount > 10 ? lineFieldList[10].toInt() : QVariant());
-                        insertFileQuery.bindValue(":video_height", fieldListCount > 11 ? lineFieldList[11].toInt() : QVariant());
-                        insertFileQuery.bindValue(":video_codec", fieldListCount > 12 ? lineFieldList[12] : QVariant());
-                        insertFileQuery.bindValue(":video_framerate", fieldListCount > 13 ? lineFieldList[13].toDouble() : QVariant());
-                        insertFileQuery.bindValue(":video_bitrate", fieldListCount > 14 ? lineFieldList[14].toInt() : QVariant());
-                        insertFileQuery.bindValue(":audio_duration_seconds", fieldListCount > 15 ? lineFieldList[15].toDouble() : QVariant());
-                        insertFileQuery.bindValue(":audio_artist", fieldListCount > 16 ? lineFieldList[16] : QVariant());
-                        insertFileQuery.bindValue(":audio_album", fieldListCount > 17 ? lineFieldList[17] : QVariant());
-                        insertFileQuery.bindValue(":audio_title", fieldListCount > 18 ? lineFieldList[18] : QVariant());
-                        insertFileQuery.bindValue(":audio_genre", fieldListCount > 19 ? lineFieldList[19] : QVariant());
-                        insertFileQuery.bindValue(":audio_year", fieldListCount > 20 ? lineFieldList[20].toInt() : QVariant());
-                        insertFileQuery.bindValue(":audio_track_number", fieldListCount > 21 ? lineFieldList[21].toInt() : QVariant());
-                        insertFileQuery.bindValue(":audio_bitrate", fieldListCount > 22 ? lineFieldList[22].toInt() : QVariant());
-                        insertFileQuery.bindValue(":audio_sample_rate", fieldListCount > 23 ? lineFieldList[23].toInt() : QVariant());
-                        insertFileQuery.bindValue(":metadata_extended", fieldListCount > 24 ? lineFieldList[24] : QVariant());
-                        insertFileQuery.bindValue(":metadata_extraction_date", fieldListCount > 25 ? lineFieldList[25] : QVariant());
-                    }
+                        // Read mime_verified from column 6 (NEW)
+                        insertFileQuery.bindValue(":mime_verified", fieldListCount > 6 ? lineFieldList[6].toInt() : QVariant());
+                        // Read type_mismatch from column 7 (NEW)
+                        insertFileQuery.bindValue(":type_mismatch", fieldListCount > 7 ? lineFieldList[7].toInt() : QVariant());
+                        // Metadata starts at column 8 (shifted from column 6)
+                        insertFileQuery.bindValue(":image_width", fieldListCount > 8 ? lineFieldList[8].toInt() : QVariant());
+                        insertFileQuery.bindValue(":image_height", fieldListCount > 9 ? lineFieldList[9].toInt() : QVariant());
+                        insertFileQuery.bindValue(":image_orientation", fieldListCount > 10 ? lineFieldList[10].toInt() : QVariant());
+                        insertFileQuery.bindValue(":video_duration_seconds", fieldListCount > 11 ? lineFieldList[11].toDouble() : QVariant());
+                        insertFileQuery.bindValue(":video_width", fieldListCount > 12 ? lineFieldList[12].toInt() : QVariant());
+                        insertFileQuery.bindValue(":video_height", fieldListCount > 13 ? lineFieldList[13].toInt() : QVariant());
+                        insertFileQuery.bindValue(":video_codec", fieldListCount > 14 ? lineFieldList[14] : QVariant());
+                        insertFileQuery.bindValue(":video_framerate", fieldListCount > 15 ? lineFieldList[15].toDouble() : QVariant());
+                        insertFileQuery.bindValue(":video_bitrate", fieldListCount > 16 ? lineFieldList[16].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_duration_seconds", fieldListCount > 17 ? lineFieldList[17].toDouble() : QVariant());
+                        insertFileQuery.bindValue(":audio_artist", fieldListCount > 18 ? lineFieldList[18] : QVariant());
+                        insertFileQuery.bindValue(":audio_album", fieldListCount > 19 ? lineFieldList[19] : QVariant());
+                        insertFileQuery.bindValue(":audio_title", fieldListCount > 20 ? lineFieldList[20] : QVariant());
+                        insertFileQuery.bindValue(":audio_genre", fieldListCount > 21 ? lineFieldList[21] : QVariant());
+                        insertFileQuery.bindValue(":audio_year", fieldListCount > 22 ? lineFieldList[22].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_track_number", fieldListCount > 23 ? lineFieldList[23].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_bitrate", fieldListCount > 24 ? lineFieldList[24].toInt() : QVariant());
+                        insertFileQuery.bindValue(":audio_sample_rate", fieldListCount > 25 ? lineFieldList[25].toInt() : QVariant());
+                        insertFileQuery.bindValue(":metadata_extended", fieldListCount > 26 ? lineFieldList[26] : QVariant());
+                        insertFileQuery.bindValue(":metadata_extraction_date", fieldListCount > 27 ? lineFieldList[27] : QVariant());      }
                     insertFileQuery.exec();
 
                     // Progress reporting using configurable rate
@@ -1081,12 +1089,14 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         // Get file data from database
         QSqlQuery queryFileList(QSqlDatabase::database(m_connectionName));
         QString queryFileListSQL = QLatin1String(R"(
-                        SELECT file_full_path,
-                                file_size,
-                                file_date_updated,
+                        SELECT  file_full_path          ,
+                                file_size               ,
+                                file_date_updated       ,
                                 file_extension          ,
                                 file_type               ,
                                 mime_type               ,
+                                mime_verified           ,
+                                type_mismatch           ,
                                 image_width             ,
                                 image_height            ,
                                 image_orientation       ,
@@ -1123,32 +1133,34 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
 
         // Build the file list (same format as original)
         while(queryFileList.next()){
-            QString fileEntry = queryFileList.value(0).toString() + "\t" +
-                                queryFileList.value(1).toString() + "\t" +
-                                queryFileList.value(2).toString() + "\t" +
-                                queryFileList.value(3).toString() + "\t" +
-                                queryFileList.value(4).toString() + "\t" +
-                                queryFileList.value(5).toString() + "\t" +
-                                queryFileList.value(6).toString() + "\t" +
-                                queryFileList.value(7).toString() + "\t" +
-                                queryFileList.value(8).toString() + "\t" +
-                                queryFileList.value(9).toString() + "\t" +
-                                queryFileList.value(10).toString() + "\t" +
-                                queryFileList.value(11).toString() + "\t" +
-                                queryFileList.value(12).toString() + "\t" +
-                                queryFileList.value(13).toString() + "\t" +
-                                queryFileList.value(14).toString() + "\t" +
-                                queryFileList.value(15).toString() + "\t" +
-                                queryFileList.value(16).toString() + "\t" +
-                                queryFileList.value(17).toString() + "\t" +
-                                queryFileList.value(18).toString() + "\t" +
-                                queryFileList.value(19).toString() + "\t" +
-                                queryFileList.value(20).toString() + "\t" +
-                                queryFileList.value(21).toString() + "\t" +
-                                queryFileList.value(22).toString() + "\t" +
-                                queryFileList.value(23).toString() + "\t" +
-                                queryFileList.value(24).toString() + "\t" +
-                                queryFileList.value(25).toString() + "\t";
+            QString fileEntry = queryFileList.value(0).toString() + "\t" +   // file_full_path
+                                queryFileList.value(1).toString() + "\t" +   // file_size
+                                queryFileList.value(2).toString() + "\t" +   // file_date_updated
+                                queryFileList.value(3).toString() + "\t" +   // file_extension
+                                queryFileList.value(4).toString() + "\t" +   // file_type
+                                queryFileList.value(5).toString() + "\t" +   // mime_type
+                                queryFileList.value(6).toString() + "\t" +   // mime_verified
+                                queryFileList.value(7).toString() + "\t" +   // type_mismatch
+                                queryFileList.value(8).toString() + "\t" +   // image_width
+                                queryFileList.value(9).toString() + "\t" +   // image_height
+                                queryFileList.value(10).toString() + "\t" +  // image_orientation
+                                queryFileList.value(11).toString() + "\t" +  // video_duration_seconds
+                                queryFileList.value(12).toString() + "\t" +  // video_width
+                                queryFileList.value(13).toString() + "\t" +  // video_height
+                                queryFileList.value(14).toString() + "\t" +  // video_codec
+                                queryFileList.value(15).toString() + "\t" +  // video_framerate
+                                queryFileList.value(16).toString() + "\t" +  // video_bitrate
+                                queryFileList.value(17).toString() + "\t" +  // audio_duration_seconds
+                                queryFileList.value(18).toString() + "\t" +  // audio_artist
+                                queryFileList.value(19).toString() + "\t" +  // audio_album
+                                queryFileList.value(20).toString() + "\t" +  // audio_title
+                                queryFileList.value(21).toString() + "\t" +  // audio_genre
+                                queryFileList.value(22).toString() + "\t" +  // audio_year
+                                queryFileList.value(23).toString() + "\t" +  // audio_track_number
+                                queryFileList.value(24).toString() + "\t" +  // audio_bitrate
+                                queryFileList.value(25).toString() + "\t" +  // audio_sample_rate
+                                queryFileList.value(26).toString() + "\t" +  // metadata_extended
+                                queryFileList.value(27).toString() + "\t";   // metadata_extraction_date
             fileList << fileEntry;
         }
 
@@ -1259,7 +1271,6 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
         return false;
     }
 }
-
 //--------------------------------------------------------------------------
 int Catalog::countFileLines(const QString &filePath)
 {//For counting lines in a file
