@@ -301,14 +301,6 @@
 
     }
     //----------------------------------------------------------------------
-    // void MainWindow::setFileTypes()
-    // {
-    //     fileType_Audio = FileTypeMapping::getExtensionsForCataloging("audio");
-    //     fileType_Image = FileTypeMapping::getExtensionsForCataloging("image");
-    //     fileType_Text  = FileTypeMapping::getExtensionsForCataloging("text");
-    //     fileType_Video = FileTypeMapping::getExtensionsForCataloging("video");
-    // }
-    //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
         //Filter
@@ -429,18 +421,8 @@
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
                     qDebug() << "SAFE database migration to 2.8 completed";
-
-                    if (collection->databaseMode == "File") {
-                        // For File mode, inform user about lazy migration
-                        QMessageBox::information(this, "Database Updated",
-                                                 "Database structure updated successfully.\n\n"
-                                                 "File type information will be added automatically\n"
-                                                 "when you first use each catalog.\n\n"
-                                                 "This ensures fast startup.");
-                    }
                 } else {
                     qDebug() << "Database migration to 2.8 failed:" << migrationError.text();
-
                     QMessageBox::critical(this, "Migration Failed",
                                           QString("Database migration failed: %1\n\n"
                                                   "Your original database backup is safe.\n"
@@ -1490,7 +1472,6 @@
 
     // Modified setupIconTheme methods to test KF6 icon loading
     // Add these as test methods to MainWindow class
-
     void MainWindow::setupIconThemeWithKF6Test()
     {
         qDebug() << "=== TESTING KF6 ICON LOADING ===";
@@ -1682,4 +1663,3 @@
 
         qDebug() << "=== FALLBACK TEST COMPLETED, ORIGINAL SETUP RESTORED ===";
     }
-

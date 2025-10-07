@@ -34,6 +34,7 @@
 #include <QBrush>
 #include <QDebug>
 #include <QFileIconProvider>
+#include <qapplication.h>
 
 DeviceTreeView::DeviceTreeView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -94,15 +95,15 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
 
                     // Translate internal values to user-friendly text
                     if (internalValue == "None") {
-                        return QVariant(tr("None"));
+                        return QVariant(QApplication::translate("MainWindow","None"));
                     } else if (internalValue == "MimeOnly") {
-                        return QVariant(tr("MIME Type Only"));
+                        return QVariant(QApplication::translate("MainWindow","MIME Type Only"));
                     } else if (internalValue == "MediaBasic") {
-                        return QVariant(tr("Media Basic"));
+                        return QVariant(QApplication::translate("MainWindow","Media Basic"));
                     } else if (internalValue == "ExtendedCustom") {
-                        return QVariant(tr("Extended Custom"));
+                        return QVariant(QApplication::translate("MainWindow","Extended Custom"));
                     } else if (internalValue == "ExtendedFull") {
-                        return QVariant(tr("Extended Full"));
+                        return QVariant(QApplication::translate("MainWindow","Extended Full"));
                     } else {
                         return QVariant(internalValue);
                     }

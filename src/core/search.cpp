@@ -33,6 +33,7 @@
 #include "filetypemapping.h"
 #include <algorithm>
 #include <QFileInfo>
+#include <qapplication.h>
 
 // Constants
 const QString Search::SEARCH_IN_FILE_NAMES = "FileNamesOnly";
@@ -156,26 +157,26 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
-        case 0: return QString(tr("Name"));
-        case 1: return QString(tr("Size"));
-        case 2: return QString(tr("Date"));
-        case 3: return QString(tr("Directory"));
-        case 4: return QString(tr("Catalog Name"));
-        case 5: return QString(tr("Catalog ID"));
-        case 6: return QString(tr("orderValue"));
-        case 7: return QString(tr("Path"));
+        case 0: return QString(QApplication::translate("MainWindow","Name"));
+        case 1: return QString(QApplication::translate("MainWindow","Size"));
+        case 2: return QString(QApplication::translate("MainWindow","Date"));
+        case 3: return QString(QApplication::translate("MainWindow","Directory"));
+        case 4: return QString(QApplication::translate("MainWindow","Catalog Name"));
+        case 5: return QString(QApplication::translate("MainWindow","Catalog ID"));
+        case 6: return QString(QApplication::translate("MainWindow","orderValue"));
+        case 7: return QString(QApplication::translate("MainWindow","Path"));
         // Metadata - aligned with Explore
-        case 8: return QString(tr("File Type"));
-        case 9: return QString(tr("MIME Type"));
-        case 10: return QString(tr("Width"));           //Generic for Image and Video
-        case 11: return QString(tr("Height"));          //Generic for Image and Video
-        case 12: return QString(tr("Duration"));        //Generic for Audio and Video
-        case 13: return QString(tr("Video Width"));
-        case 14: return QString(tr("Video Height"));
-        case 15: return QString(tr("Audio Duration"));
-        case 16: return QString(tr("Artist"));
-        case 17: return QString(tr("Album"));
-        case 18: return QString(tr("Title"));
+        case 8: return QString(QApplication::translate("MainWindow","File Type"));
+        case 9: return QString(QApplication::translate("MainWindow","MIME Type"));
+        case 10: return QString(QApplication::translate("MainWindow","Width"));           //Generic for Image and Video
+        case 11: return QString(QApplication::translate("MainWindow","Height"));          //Generic for Image and Video
+        case 12: return QString(QApplication::translate("MainWindow","Duration"));        //Generic for Audio and Video
+        case 13: return QString(QApplication::translate("MainWindow","Video Width"));
+        case 14: return QString(QApplication::translate("MainWindow","Video Height"));
+        case 15: return QString(QApplication::translate("MainWindow","Audio Duration"));
+        case 16: return QString(QApplication::translate("MainWindow","Artist"));
+        case 17: return QString(QApplication::translate("MainWindow","Album"));
+        case 18: return QString(QApplication::translate("MainWindow","Title"));
         }
     }
     return QVariant();

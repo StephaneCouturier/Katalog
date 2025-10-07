@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+82"/>
+        <location filename="../core/catalog.cpp" line="+89"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
@@ -27,6 +27,24 @@
         <location line="+1"/>
         <source>Catalog</source>
         <translation>Kataloog</translation>
+    </message>
+</context>
+<context>
+    <name>Collection</name>
+    <message>
+        <location filename="../core/collection.cpp" line="+1722"/>
+        <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
+        <translation>See kaust sisaldab mälu režiimi kogumisfaile, kuid olete praegu faili režiimis.&lt;br/&gt;Lülituge mälu režiimi või valige teine kaust.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
+        <translation>See kaust sisaldab faili režiimi kogumisfaile, kuid olete praegu mälu režiimis.&lt;br/&gt;Lülituge faili režiimi või valige teine kaust.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
+        <translation>See kaust sisaldab kasutaja andmeid ja ei sobi kogumi jaoks.&lt;br/&gt;Kogumeid tuleks hoida spetsiaalsetes kaustades, et vältida segamist isiklike failidega.</translation>
     </message>
 </context>
 <context>
@@ -56,7 +74,7 @@
         <translation>Failide loendamine</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+645"/>
+        <location filename="../core/device.cpp" line="+650"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Kas soovite selle %1 seadme &lt;span style=&apos;color: red&apos;;&gt;kustutada&lt;/span&gt;?</translation>
     </message>
@@ -76,7 +94,7 @@
         <translation>Edenemine</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2939"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2941"/>
         <location line="+50"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Kataloogid uuendatud:&lt;b&gt; %1 &lt;/b&gt;(%2 vahele jäetud)</translation>
@@ -87,29 +105,30 @@
         <translation>Virtuaalne seade uuendatud: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4972"/>
+        <location filename="../mainwindow.ui" line="+6215"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klõps: Peata kohe (kõva stopp)&lt;/p&gt;&lt;p&gt;Ctrl+Klõps: Peata pärast praegust kataloogi (pehme stopp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+437"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+439"/>
         <source>The source directory does not exist.</source>
         <translation>Lähtekaust ei eksisteeri.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+155"/>
+        <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../mainwindow_tab_create.cpp" line="+6"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Lähtekaust ei sisalda ühtegi faili.&lt;br/&gt;See võib tähendada, et allikas on tühi või seade ei ole sellesse kausta ühendatud.&lt;br/&gt;Kas soovite seda siiski salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+88"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+251"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+92"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+256"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
+        <location line="+161"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+245"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>Seadme operatsioon on juba käimas.</translation>
     </message>
@@ -134,7 +153,7 @@
         <translation>Peatumine pärast praeguse kataloogi lõpetamist...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4937"/>
+        <location filename="../mainwindow.ui" line="-6180"/>
         <source>Katalog</source>
         <translation>Kataloog</translation>
     </message>
@@ -146,13 +165,13 @@
     </message>
     <message>
         <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1491"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1493"/>
         <source>Virtual</source>
         <translation>Virtuaalne</translation>
     </message>
     <message>
         <location line="+59"/>
-        <location line="+6187"/>
+        <location line="+7384"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+361"/>
         <location line="+2"/>
@@ -161,28 +180,28 @@
     </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="-17"/>
-        <location filename="../mainwindow.ui" line="-6158"/>
-        <location line="+6707"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+583"/>
+        <location filename="../mainwindow.ui" line="-7355"/>
+        <location line="+7904"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+654"/>
         <source>Catalog</source>
         <translation>Kataloog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6623"/>
-        <location line="+4579"/>
+        <location filename="../mainwindow.ui" line="-7820"/>
+        <location line="+5764"/>
         <source>Device tree</source>
         <translation>Seadmepuu</translation>
     </message>
     <message>
-        <location line="-4536"/>
+        <location line="-5721"/>
         <location line="+32"/>
-        <location line="+5885"/>
+        <location line="+7082"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Laienda 1 tase, 2 taset või ahenda</translation>
     </message>
     <message>
-        <location line="-5812"/>
+        <location line="-7009"/>
         <source>Search in file catalogs</source>
         <translation>Otsi failikataloogidest</translation>
     </message>
@@ -193,20 +212,20 @@
     </message>
     <message>
         <location line="+64"/>
-        <location line="+7863"/>
+        <location line="+9144"/>
         <source>Select the path</source>
         <translation>Vali tee</translation>
     </message>
     <message>
-        <location line="-7860"/>
-        <location line="+4820"/>
-        <location line="+3043"/>
+        <location line="-9141"/>
+        <location line="+5956"/>
+        <location line="+3188"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Vali</translation>
     </message>
     <message>
-        <location line="-8214"/>
+        <location line="-9495"/>
         <source>Selection</source>
         <translation>Valik</translation>
     </message>
@@ -223,10 +242,10 @@
     <message>
         <location line="+126"/>
         <location line="+436"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+239"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+298"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
@@ -262,12 +281,13 @@
     <message>
         <location line="+77"/>
         <location line="+1022"/>
-        <location line="+1700"/>
+        <location line="+1196"/>
+        <location line="+1640"/>
         <source>Use the Text criteria in the Search</source>
         <translation>Kasuta otsingus teksti kriteeriume</translation>
     </message>
     <message>
-        <location line="-2719"/>
+        <location line="-3855"/>
         <source>File name</source>
         <translation>Faili nimi</translation>
     </message>
@@ -294,13 +314,13 @@
     </message>
     <message>
         <location line="+6"/>
-        <location line="+3457"/>
-        <location line="+3095"/>
+        <location line="+4700"/>
+        <location line="+3133"/>
         <source>Stop</source>
         <translation>Peata</translation>
     </message>
     <message>
-        <location line="-6369"/>
+        <location line="-7650"/>
         <source>with</source>
         <translation>koos</translation>
     </message>
@@ -312,7 +332,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+855"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+957"/>
         <source>All Words</source>
         <translation>Kõik sõnad</translation>
     </message>
@@ -338,22 +358,22 @@
     </message>
     <message>
         <location line="+32"/>
-        <location line="+1889"/>
+        <location line="+3025"/>
         <location line="+67"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>Määra, kas otsingu teksti kasutada ainult failinimedes, kaustateedes või mõlemas.</translation>
     </message>
     <message>
-        <location line="-1952"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-713"/>
+        <location line="-3088"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-814"/>
         <location line="+3"/>
-        <location line="+711"/>
+        <location line="+812"/>
         <source>File names only</source>
         <translation>Ainult failinimed</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-710"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-811"/>
         <source>File names or Folder paths</source>
         <translation>Failinimed või kaustide teed</translation>
     </message>
@@ -379,13 +399,15 @@
         <translation>välista</translation>
     </message>
     <message>
-        <location line="+194"/>
+        <location line="+1390"/>
         <source>File criteria</source>
         <translation>Faili kriteeriumid</translation>
     </message>
     <message>
-        <location line="+160"/>
-        <location line="+862"/>
+        <location filename="../core/search.cpp" line="+161"/>
+        <location filename="../mainwindow.ui" line="-878"/>
+        <location line="+1038"/>
+        <location line="+802"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-3"/>
@@ -394,48 +416,53 @@
         <translation>Suurus</translation>
     </message>
     <message>
-        <location line="-1065"/>
-        <location line="+488"/>
+        <location filename="../mainwindow.ui" line="-2002"/>
+        <location line="+218"/>
+        <location line="+283"/>
+        <location line="+496"/>
+        <location line="+451"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-424"/>
+        <location line="-387"/>
         <source>File size unit for minimum value</source>
         <translation>Faili suuruse ühik minimaalväärtuse jaoks</translation>
     </message>
     <message>
-        <location line="+49"/>
-        <location line="+463"/>
+        <location line="-974"/>
+        <location line="+218"/>
+        <location line="+290"/>
+        <location line="+515"/>
+        <location line="+426"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-402"/>
+        <location line="-365"/>
         <source>File size unit for maximum value</source>
         <translation>Faili suuruse ühik maksimaalväärtuse jaoks</translation>
     </message>
     <message>
         <location line="+81"/>
-        <location line="+3047"/>
+        <location line="+3010"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+908"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+913"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tüüp</translation>
     </message>
     <message>
-        <location line="-3009"/>
+        <location line="-2972"/>
         <source>Select the type of files</source>
         <translation>Vali failide tüüp</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+2834"/>
-        <location line="+1719"/>
-        <location filename="../mainwindow_setup.cpp" line="+434"/>
+        <location line="+2768"/>
+        <location line="+1790"/>
+        <location filename="../mainwindow_setup.cpp" line="+464"/>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+105"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
@@ -450,51 +477,53 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+723"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+753"/>
         <source>All</source>
         <translation>Kõik</translation>
     </message>
     <message>
-        <location line="-4548"/>
-        <location line="+2834"/>
-        <location line="+1772"/>
+        <location line="-1785"/>
+        <location line="+1814"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-4598"/>
-        <location line="+2834"/>
-        <location line="+1735"/>
+        <location line="-1806"/>
+        <location line="+1835"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Image</source>
         <translation>Pilt</translation>
     </message>
     <message>
-        <location line="-4561"/>
-        <location line="+2834"/>
-        <location line="+1814"/>
+        <location line="-6134"/>
+        <location line="+4307"/>
+        <location line="+1856"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Text</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <location line="-4640"/>
-        <location line="+2834"/>
-        <location line="+1777"/>
+        <location line="-1848"/>
+        <location line="+1877"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location line="-4478"/>
-        <location line="+7112"/>
+        <location filename="../core/search.cpp" line="+1"/>
+        <location filename="../mainwindow.ui" line="-4545"/>
+        <location line="+7234"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-3"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+609"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+919"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Kuupäev</translation>
     </message>
     <message>
-        <location line="-6877"/>
+        <location filename="../mainwindow.ui" line="-7022"/>
         <location line="+232"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Vali duplikaatide otsing järgmiste kriteeriumide alusel</translation>
@@ -506,6 +535,7 @@
     </message>
     <message>
         <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <location filename="../mainwindow.ui" line="+49"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-253"/>
@@ -576,7 +606,7 @@
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="-31"/>
         <location filename="../mainwindow.ui" line="+32"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+295"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+636"/>
         <source>Files found</source>
         <translation>Leitud failid</translation>
     </message>
@@ -587,13 +617,13 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+866"/>
+        <location line="+889"/>
         <location line="+45"/>
         <location line="+38"/>
-        <location line="+458"/>
+        <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2377"/>
+        <location line="+2461"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -611,8 +641,8 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-5196"/>
-        <location line="+2358"/>
+        <location line="-5341"/>
+        <location line="+2419"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-484"/>
         <location line="+239"/>
         <location line="+252"/>
@@ -620,14 +650,14 @@
         <translation>Kogusuurus</translation>
     </message>
     <message>
-        <location line="-2279"/>
+        <location line="-2340"/>
         <location line="+3"/>
         <source>Define which batch process to execute on all results</source>
         <translation>Määra, millist pakett-protsessi kõigile tulemustele rakendada</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-412"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-538"/>
         <source>Select...</source>
         <translation>Vali...</translation>
     </message>
@@ -645,14 +675,14 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-573"/>
-        <location line="+579"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-693"/>
+        <location line="+699"/>
         <source>Move to Trash</source>
         <translation>Liiguta prügikasti</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-77"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-238"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
         <source>Delete</source>
         <translation>Kustuta</translation>
@@ -679,33 +709,33 @@
         <translation>Seadmed</translation>
     </message>
     <message>
-        <location line="-144"/>
+        <location line="-209"/>
         <source>Edit List</source>
         <translation>Muuda nimekirja</translation>
     </message>
     <message>
-        <location line="-51"/>
-        <location line="+4144"/>
+        <location line="+123"/>
+        <location line="+4180"/>
         <source>Full Table</source>
         <translation>Täielik tabel</translation>
     </message>
     <message>
-        <location line="-4058"/>
+        <location line="-4274"/>
         <source>View</source>
         <translation>Vaade</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+7"/>
         <source>Catalogs list</source>
         <translation>Kataloogide nimekiri</translation>
     </message>
     <message>
-        <location line="-116"/>
+        <location line="-26"/>
         <source>Storage list</source>
         <translation>Salvestusruumide nimekiri</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+84"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Salvesta kõigi seadmete väärtused kogu kogu statistika jaoks.</translation>
     </message>
@@ -715,14 +745,14 @@
         <translation>Hetktõmmis</translation>
     </message>
     <message>
-        <location line="+172"/>
-        <location line="+622"/>
+        <location line="+153"/>
+        <location line="+645"/>
         <location line="+28"/>
         <source>Total Space</source>
         <translation>Koguruum</translation>
     </message>
     <message>
-        <location line="-615"/>
+        <location line="-638"/>
         <source>Used</source>
         <translation>Kasutatud</translation>
     </message>
@@ -738,12 +768,12 @@
     </message>
     <message>
         <location line="+17"/>
-        <location line="+2439"/>
+        <location line="+2584"/>
         <source>Add Storage</source>
         <translation>Lisa salvestusruum</translation>
     </message>
     <message>
-        <location line="-2394"/>
+        <location line="-2539"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+67"/>
         <source>Device Name</source>
         <translation>Seadme nimi</translation>
@@ -771,12 +801,12 @@
     </message>
     <message>
         <location line="+29"/>
-        <location line="+1529"/>
+        <location line="+1590"/>
         <source>Source Path</source>
         <translation>Lähte tee</translation>
     </message>
     <message>
-        <location line="-1503"/>
+        <location line="-1564"/>
         <source>The change will be applied only when Saving</source>
         <translation>Muudatus rakendatakse ainult salvestamisel</translation>
     </message>
@@ -786,26 +816,27 @@
         <translation>Kaasa peidetud failid</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+681"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+678"/>
         <source>Include Metadata</source>
         <translation>Kaasa metaandmed</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location filename="../mainwindow.ui" line="+48"/>
         <source>is full device</source>
         <translation>on täielik seade</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-658"/>
-        <location line="+650"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+317"/>
+        <location filename="../core/search.cpp" line="+9"/>
+        <location filename="../mainwindow.ui" line="+13"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-655"/>
+        <location line="+647"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+24"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+443"/>
         <source>File Type</source>
         <translation>Faili tüüp</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location filename="../mainwindow.ui" line="+48"/>
         <source>Catalog fields</source>
         <translation>Kataloogi väljad</translation>
     </message>
@@ -816,7 +847,7 @@
     </message>
     <message>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-921"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-918"/>
         <source>Storage ID</source>
         <translation>Salvestusruumi ID</translation>
     </message>
@@ -844,18 +875,18 @@
         <translation>Salvestusruumi väljad</translation>
     </message>
     <message>
-        <location line="-707"/>
-        <location line="+717"/>
+        <location line="-914"/>
+        <location line="+924"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Värskenda valitud kataloogi faile, kui seade on saadaval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-714"/>
-        <location line="+717"/>
+        <location line="-921"/>
+        <location line="+924"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-212"/>
         <location line="+87"/>
         <location line="+63"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-280"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-275"/>
         <location line="+36"/>
         <location line="+40"/>
         <source>Update</source>
@@ -910,42 +941,92 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="+133"/>
-        <location line="+126"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+131"/>
+        <location line="+107"/>
+        <location line="+9"/>
+        <location line="+108"/>
         <source>Cancel</source>
         <translation>Tühista</translation>
     </message>
     <message>
         <location line="+42"/>
-        <location line="+339"/>
+        <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-38"/>
         <source>Catalogs</source>
         <translation>Kataloogid</translation>
     </message>
     <message>
-        <location line="-294"/>
-        <location line="+2556"/>
+        <location line="-332"/>
+        <location line="+2678"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Failide kogusuurus</translation>
     </message>
     <message>
-        <location line="-2518"/>
+        <location line="-2640"/>
         <source>Total Number of Files</source>
         <translation>Failide koguarv</translation>
     </message>
     <message>
-        <location line="-1230"/>
+        <location line="-1144"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Värskenda kõik aktiivsed kataloogid, kui seade on saadaval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-3984"/>
+        <source>File metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+3"/>
+        <location filename="../mainwindow.ui" line="+356"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
+        <source>Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location filename="../mainwindow.ui" line="+218"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
+        <source>Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow.ui" line="+286"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+74"/>
+        <location line="+94"/>
+        <source>HH:mm:ss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2959"/>
         <source>All active</source>
         <translation>Kõik aktiivsed</translation>
     </message>
     <message>
-        <location line="+1277"/>
+        <location line="+545"/>
+        <location line="+1921"/>
+        <source>Include files metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1275"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Verify MIME types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Impordi köidete nimekiri VVV-st&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1022,7 +1103,7 @@
     <message>
         <location line="+65"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+31"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+26"/>
         <source>Explore</source>
         <translation>Sirvi</translation>
     </message>
@@ -1038,7 +1119,7 @@
     </message>
     <message>
         <location line="+100"/>
-        <location line="+1962"/>
+        <location line="+2046"/>
         <location line="+620"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
@@ -1047,14 +1128,14 @@
         <translation>Failide arv</translation>
     </message>
     <message>
-        <location line="-2466"/>
+        <location line="-2550"/>
         <source>Click to open the file</source>
         <translation>Klõpsa faili avamiseks</translation>
     </message>
     <message>
         <location line="+218"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="-128"/>
-        <location line="+126"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="-226"/>
+        <location line="+224"/>
         <source>Create</source>
         <translation>Loo</translation>
     </message>
@@ -1079,12 +1160,27 @@
         <translation>kaasa failitüüp</translation>
     </message>
     <message>
-        <location line="+178"/>
+        <location line="+174"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-927"/>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../devicetreeview.cpp" line="+98"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+89"/>
+        <location line="+12"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Other options</source>
         <translation>Muud suvandid</translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+113"/>
         <source>Directories to exclude from catalogs</source>
         <translation>Kataloogidest välja jäetavad kaustad</translation>
     </message>
@@ -1155,18 +1251,19 @@
         <translation>Vali lähte tee</translation>
     </message>
     <message>
-        <location line="+349"/>
+        <location filename="../core/search.cpp" line="-6"/>
+        <location filename="../mainwindow.ui" line="+349"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-62"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
         <location line="+239"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+7"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-21"/>
         <source>Path</source>
         <translation>Tee</translation>
     </message>
     <message>
-        <location line="+1883"/>
+        <location filename="../mainwindow.ui" line="+1883"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+15"/>
         <location line="+66"/>
         <location line="+63"/>
@@ -1400,7 +1497,7 @@
         <translation>Failide järjestamine on tõstutundlik</translation>
     </message>
     <message>
-        <location line="-3003"/>
+        <location line="-3087"/>
         <source>Display folders</source>
         <translation>Kuva kaustad</translation>
     </message>
@@ -1415,7 +1512,7 @@
         <translation>ja kõik alamkaustad</translation>
     </message>
     <message>
-        <location line="+3039"/>
+        <location line="+3123"/>
         <source>Documentation</source>
         <translation>Dokumentatsioon</translation>
     </message>
@@ -1514,7 +1611,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow.cpp" line="+278"/>
+        <location filename="../mainwindow.cpp" line="+281"/>
         <source>Hosted</source>
         <translation>Majutatud</translation>
     </message>
@@ -1526,27 +1623,29 @@
     <message>
         <location line="+13"/>
         <location filename="../mainwindow.cpp" line="-1"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-340"/>
         <source>File</source>
         <translation>Fail</translation>
     </message>
     <message>
-        <location line="-3848"/>
-        <location line="+1365"/>
+        <location filename="../core/search.cpp" line="-4"/>
+        <location filename="../mainwindow.ui" line="-3932"/>
+        <location line="+1449"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-4"/>
         <source>Directory</source>
         <translation>Kaust</translation>
     </message>
     <message>
-        <location line="+576"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-405"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-967"/>
+        <location filename="../mainwindow.ui" line="+576"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-336"/>
         <source>Open file</source>
         <translation>Ava fail</translation>
     </message>
     <message>
         <location line="+1695"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+34"/>
+        <location line="+83"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Ava kaust</translation>
@@ -1675,12 +1774,11 @@
         <translation>Kontrolli ühendust</translation>
     </message>
     <message>
-        <location line="-960"/>
         <source>Include Media files metadata</source>
-        <translation>Kaasa meediafailide metaandmed</translation>
+        <translation type="vanished">Kaasa meediafailide metaandmed</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-943"/>
         <source>Follow symbolic links</source>
         <translation>Järgi sümboolseid linke</translation>
     </message>
@@ -1695,12 +1793,12 @@
         <translation>kataloog on terve seadme jaoks</translation>
     </message>
     <message>
-        <location line="-346"/>
+        <location line="-332"/>
         <source>Include Hidden files</source>
         <translation>Kaasa peidetud failid</translation>
     </message>
     <message>
-        <location line="+1797"/>
+        <location line="+1783"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-6"/>
         <location line="+7"/>
         <source>File Size</source>
@@ -1817,12 +1915,12 @@
     <message>
         <location line="-316"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-360"/>
+        <location filename="../mainwindow_setup.cpp" line="-390"/>
         <source>Settings</source>
         <translation>Seaded</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-470"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-575"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1830,7 +1928,7 @@
         <translation>Vali kaust, mida selles uues kataloogis kataloogida</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+10"/>
+        <location filename="../mainwindow_setup.cpp" line="+12"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>Vali kaust selle kogu jaoks</translation>
@@ -1838,7 +1936,7 @@
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
         <location line="+34"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+10"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+59"/>
         <source>Copy folder path</source>
         <translation>Kopeeri kausta tee</translation>
     </message>
@@ -1871,26 +1969,74 @@
         <translation>Liiguta kaust prügikasti</translation>
     </message>
     <message>
-        <location line="+180"/>
+        <location line="+179"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Valitud kataloog sisaldab rohkem kui %1 faili.&lt;br/&gt;Avamine võib võtta mitu minutit.&lt;br/&gt;Jätka?</translation>
     </message>
     <message>
-        <location line="-77"/>
+        <location filename="../core/search.cpp" line="+7"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+215"/>
+        <source>MIME Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
+        <source>Video Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Video Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Audio Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Artist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Album</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="-300"/>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+139"/>
         <location line="+64"/>
-        <location line="+389"/>
+        <location line="+509"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Kinnitus</translation>
     </message>
     <message>
-        <location line="-29"/>
+        <location line="-194"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-777"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+165"/>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-480"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+177"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Hoiatus</translation>
@@ -1945,12 +2091,13 @@ prügikasti?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;KUSTUTA&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-270"/>
         <source>Tag this folder</source>
         <translation>Märgista see kaust</translation>
     </message>
     <message>
-        <location line="+438"/>
+        <location filename="../core/search.cpp" line="-13"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+508"/>
         <source>orderValue</source>
         <translation>järjestusVäärtus</translation>
     </message>
@@ -1986,7 +2133,41 @@ prügikasti?</translation>
         <translation>Vali teine nimi ja proovi uuesti.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-571"/>
+        <location filename="../devicetreeview.cpp" line="+2"/>
+        <source>MIME Type Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+161"/>
+        <location line="+12"/>
+        <source>Media Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Extended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Full Extended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-576"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Kataloog on juba sellele virtuaalsele seadmele määratud.</translation>
     </message>
@@ -2006,7 +2187,7 @@ prügikasti?</translation>
         <translation>&lt;br/&gt;Selle kogu hetktõmmis salvestati:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Kataloogid&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Failide arv: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Failide kogusuurus: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Salvestusruum&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Vaba ruum: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Koguruum: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+278"/>
+        <location line="+283"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Selle nimega kataloog on juba olemas:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2091,20 +2272,29 @@ prügikasti?</translation>
         <translation>Rühma ID</translation>
     </message>
     <message>
-        <location line="-8"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-295"/>
+        <location filename="../core/search.cpp" line="-1"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-8"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Catalog ID</source>
         <translation>Kataloogi ID</translation>
     </message>
     <message>
-        <location line="+20"/>
         <source>include hidden</source>
-        <translation>kaasa peidetud</translation>
+        <translation type="vanished">kaasa peidetud</translation>
+    </message>
+    <message>
+        <source>include metadata</source>
+        <translation type="vanished">kaasa metaandmed</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+20"/>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>include metadata</source>
-        <translation>kaasa metaandmed</translation>
+        <source>Metadata</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2132,7 +2322,7 @@ prügikasti?</translation>
         <translation>Faili tee</translation>
     </message>
     <message>
-        <location line="+639"/>
+        <location line="+636"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Salvesta muudatused kataloogi definitsioonis?&lt;br/&gt;</translation>
     </message>
@@ -2287,7 +2477,7 @@ prügikasti?</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 uuendatud kataloogi, %2 vahele jäetud kataloogi</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-78"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-253"/>
         <source>Update all active catalogs</source>
         <translation>Uuenda kõik aktiivsed kataloogid</translation>
     </message>
@@ -2317,7 +2507,7 @@ prügikasti?</translation>
         <translation>/</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+264"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+267"/>
         <location line="+11"/>
         <location line="+34"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
@@ -2339,18 +2529,18 @@ prügikasti?</translation>
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-304"/>
+        <location line="-356"/>
         <source>Explore folder</source>
         <translation>Sirvi kausta</translation>
     </message>
     <message>
-        <location line="+158"/>
-        <location line="+453"/>
+        <location line="+207"/>
+        <location line="+573"/>
         <source>MOVE</source>
         <translation>LIIGUTA</translation>
     </message>
     <message>
-        <location line="-452"/>
+        <location line="-572"/>
         <source>Move this file to the trash?</source>
         <translation>Liiguta see fail prügikasti?</translation>
     </message>
@@ -2367,12 +2557,12 @@ prügikasti?</translation>
     </message>
     <message>
         <location line="+46"/>
-        <location line="+428"/>
+        <location line="+548"/>
         <source>DELETE</source>
         <translation>KUSTUTA</translation>
     </message>
     <message>
-        <location line="-427"/>
+        <location line="-547"/>
         <source>Delete this file?</source>
         <translation>Kustuta see fail?</translation>
     </message>
@@ -2382,7 +2572,7 @@ prügikasti?</translation>
         <translation>Kausta kustutamine ei ole saadaval.</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+54"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-8"/>
         <source>TiB</source>
@@ -2396,7 +2586,7 @@ prügikasti?</translation>
         <translation>Baiti</translation>
     </message>
     <message>
-        <location line="+234"/>
+        <location line="+351"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>Vali esmalt protsess, mida rakendada kõigile allolevatele tulemustele.</translation>
     </message>
@@ -2461,7 +2651,7 @@ prügikasti?</translation>
         <translation>Otsingu tulemused</translation>
     </message>
     <message>
-        <location line="+246"/>
+        <location line="+372"/>
         <source>Text Phrase selected</source>
         <translation>Tekstifraas valitud</translation>
     </message>
@@ -2636,7 +2826,7 @@ prügikasti?</translation>
         <translation>Valitud seadme ID nimekiri</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-13"/>
+        <location filename="../mainwindow_setup.cpp" line="-15"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Tere tulemast Kataloogi!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Tundub, et see on esimene käivitus.&lt;br/&gt;&lt;br/&gt;Järgmised seaded on rakendatud:&lt;br/&gt; - Keel: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Teema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Saad neid muuta vahekaardil %3.</translation>
     </message>
@@ -2646,7 +2836,7 @@ prügikasti?</translation>
         <translation>&lt;br/&gt;&lt;br/&gt;Järgmisel ekraanil vali olemasolev kogu kaust või loo uus.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+76"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Valmis looma failikataloogi:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -2656,32 +2846,32 @@ prügikasti?</translation>
         <translation>1- Vali terve ketas või kaust, &lt;br/&gt;2- vali suvandid, ja &lt;br/&gt;3- klõpsa &apos;Loo&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+216"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>See on versioon: v%1 &lt;br/&gt;&lt;br/&gt;Saadaval on uus versioon: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Leia uued funktsioonid &lt;a href=&apos;%3&apos;&gt;väljalaskemärkmetest&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Kas soovid selle alla laadida?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+132"/>
+        <location filename="../mainwindow.cpp" line="+129"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Mõned muudatused salvestusseadmete nimekirjas ei ole salvestatud.&lt;br/&gt;Salvesta ja välju, hülga ja välju või tühista väljumine?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="-64"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="-162"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Kaust ei eksisteeri. Kas luua see?</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+224"/>
         <source>The database file does not exist. Create it?</source>
         <translation>Andmebaasi fail ei eksisteeri. Kas luua see?</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+113"/>
         <source>Select the database to create and open:</source>
         <translation>Vali andmebaas, mida luua ja avada:</translation>
     </message>
     <message>
-        <location line="+310"/>
+        <location line="+309"/>
         <source>Select the database to open:</source>
         <translation>Vali andmebaas, mida avada:</translation>
     </message>
@@ -2691,7 +2881,39 @@ prügikasti?</translation>
         <translation>Kogu uuendamine vajalik</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-474"/>
+        <source>Invalid Collection Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Create New Collection Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+9"/>
+        <source>Select Different Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+9"/>
+        <source>Use Application Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+444"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
         <translation>See &apos;Kataloogi&apos; rakendus on versioonis: </translation>
     </message>
@@ -2768,7 +2990,7 @@ prügikasti?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="-71"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+243"/>
+        <location line="+562"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+14"/>
         <source>Catalog with results</source>
@@ -2777,7 +2999,7 @@ prügikasti?</translation>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-12"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1869"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1866"/>
         <location line="+239"/>
         <location line="+252"/>
         <source>ID</source>
@@ -2888,7 +3110,7 @@ prügikasti?</translation>
         <translation>Vali teine allikas või sihtmärk (seadet ei saa iseendale vastendada).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-485"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-490"/>
         <source>Virtual Group</source>
         <translation>Virtuaalne rühm</translation>
     </message>
@@ -2898,7 +3120,7 @@ prügikasti?</translation>
         <translation>Virtuaalset seadet saab lisada ainult teisele virtuaalsele seadmele.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+194"/>
+        <location line="+199"/>
         <location line="+66"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
@@ -2944,8 +3166,39 @@ prügikasti?</translation>
         <translation>See rühm on vajalik salvestusruumi ja kataloogide majutamiseks.&lt;br/&gt;Seda ei saa kustutada.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-428"/>
-        <location line="+284"/>
+        <location line="+248"/>
+        <source>MIME Verification Complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>MIME verification completed successfully.
+No mismatches found between file extensions and actual content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>MIME verification completed.
+%1 mismatch(es) found between file extensions and actual content.
+
+Report saved to:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Open Report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>MIME verification failed:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
+        <location line="+323"/>
         <source>Search Error</source>
         <translation>Otsingu viga</translation>
     </message>
@@ -2955,12 +3208,13 @@ prügikasti?</translation>
         <translation>Kaust</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Catalog Name</source>
         <translation>Kataloogi nimi</translation>
     </message>
     <message>
-        <location line="+178"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+178"/>
         <location line="+46"/>
         <source>Pause</source>
         <translation>Peata</translation>
@@ -2997,12 +3251,38 @@ prügikasti?</translation>
         <translation>Peata praegune otsing</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+84"/>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Copied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>File Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+167"/>
         <source>Folders found</source>
         <translation>Leitud kaustad</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+38"/>
         <source>Duplicates found</source>
         <translation>Leitud duplikaadid</translation>
     </message>
@@ -3197,34 +3477,44 @@ prügikasti?</translation>
 <context>
     <name>Search</name>
     <message>
-        <location filename="../core/search.cpp" line="+130"/>
         <source>Name</source>
-        <translation>Nimi</translation>
+        <translation type="vanished">Nimi</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Size</source>
-        <translation>Suurus</translation>
+        <translation type="vanished">Suurus</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Date</source>
-        <translation>Kuupäev</translation>
+        <translation type="vanished">Kuupäev</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <source>Directory</source>
+        <translation type="obsolete">Kaust</translation>
+    </message>
+    <message>
+        <source>orderValue</source>
+        <translation type="obsolete">järjestusVäärtus</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="obsolete">Tee</translation>
+    </message>
+    <message>
+        <source>File Type</source>
+        <translation type="obsolete">Faili tüüp</translation>
+    </message>
+    <message>
         <source>Folder</source>
-        <translation>Kaust</translation>
+        <translation type="vanished">Kaust</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Catalog Name</source>
-        <translation>Kataloogi nimi</translation>
+        <translation type="vanished">Kataloogi nimi</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Catalog ID</source>
-        <translation>Kataloogi ID</translation>
+        <translation type="vanished">Kataloogi ID</translation>
     </message>
 </context>
 <context>

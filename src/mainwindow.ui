@@ -3225,6 +3225,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <kerning>false</kerning>
                          </font>
                         </property>
+                        <property name="toolTip">
+                         <string notr="true"/>
+                        </property>
                         <property name="alignment">
                          <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
@@ -3315,6 +3318,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <pointsize>9</pointsize>
                           <kerning>false</kerning>
                          </font>
+                        </property>
+                        <property name="toolTip">
+                         <string notr="true"/>
                         </property>
                         <property name="alignment">
                          <set>Qt::AlignmentFlag::AlignCenter</set>
