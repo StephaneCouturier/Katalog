@@ -42,7 +42,7 @@
         <translation>Tato složka obsahuje soubory kolekce v režimu Soubor, ale aktuálně jste v režimu Paměť.&lt;br/&gt;Přepněte do režimu Soubor nebo vyberte jinou složku.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
         <translation>Tato složka obsahuje uživatelská data a není vhodná pro kolekci.&lt;br/&gt;Kolekce by měly být uloženy ve vyhrazených složkách, aby nedocházelo k míchání s osobními soubory.</translation>
     </message>
@@ -67,6 +67,263 @@
 </context>
 <context>
     <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+711"/>
+        <source>MIME Verification Complete</source>
+        <translation>Ověření MIME dokončeno</translation>
+    </message>
+    <message>
+        <source>MIME verification completed successfully.
+    No mismatches found between file extensions and actual content.</source>
+        <translation>Ověření MIME dokončeno úspěšně.
+    Nebyly nalezeny žádné nesrovnalosti mezi příponami souborů a skutečným obsahem.</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+
+    Report saved to:
+    %2</source>
+        <translation>Ověření MIME dokončeno.
+    Nalezeno %1 nesrovnalostí mezi příponami souborů a skutečným obsahem.
+
+    Zpráva uložena do:
+    %2</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Open Report</source>
+        <translation>Otevřít zprávu</translation>
+    </message>
+    <message>
+        <source>MIME verification failed:
+    %1</source>
+        <translation>Ověření MIME selhalo:
+    %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
+        <source>Hidden</source>
+        <translation>Skrytý</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metadata</source>
+        <translation>Metadata</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+2308"/>
+        <source>File metadata</source>
+        <translation>Metadata souboru</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../mainwindow.ui" line="+356"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+677"/>
+        <source>Height</source>
+        <translation>Výška</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location filename="../mainwindow.ui" line="+218"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
+        <source>Width</source>
+        <translation>Šířka</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow.ui" line="+286"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
+        <source>Duration</source>
+        <translation>Délka</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+74"/>
+        <location line="+94"/>
+        <source>HH:mm:ss</source>
+        <translation>HH:mm:ss</translation>
+    </message>
+    <message>
+        <location line="+3504"/>
+        <location line="+1921"/>
+        <source>Include files metadata</source>
+        <translation>Zahrnout metadata souborů</translation>
+    </message>
+    <message>
+        <location line="-1275"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detekovat skutečné typy MIME a identifikovat nesrovnalosti (dlouhý proces)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Verify MIME types</source>
+        <translation>Ověřit typy MIME</translation>
+    </message>
+    <message>
+        <location line="+1200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <source>Other</source>
+        <translation>Jiné</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../devicetreeview.cpp" line="+98"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+626"/>
+        <location line="+12"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <source>None</source>
+        <translation>Žádné</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="-455"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation>Zobrazit rozšířená metadata (JSON)</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="-3"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+452"/>
+        <source>MIME Type</source>
+        <translation>Typ MIME</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
+        <source>Video Width</source>
+        <translation>Šířka videa</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Video Height</source>
+        <translation>Výška videa</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Audio Duration</source>
+        <translation>Délka zvuku</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Artist</source>
+        <translation>Umělec</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Album</source>
+        <translation>Album</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Title</source>
+        <translation>Název</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+674"/>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation>Kopírovat JSON</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Copied</source>
+        <translation>Zkopírováno</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Close</source>
+        <translation>Zavřít</translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>File Property</source>
+        <translation>Vlastnost souboru</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation>Hodnota</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+    Report saved to:
+    %2</source>
+        <translation type="vanished">Ověření MIME dokončeno.
+    Nalezeno %1 nesrovnalostí mezi příponami souborů a skutečným obsahem.
+    Zpráva uložena do:
+    %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <source>Invalid Collection Folder</source>
+        <translation>Neplatná složka kolekce</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Vybraná složka: &lt;i&gt;%1&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Pro první kolekci vyberte vhodnou složku.</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Create New Collection Here</source>
+        <translation>Vytvořit novou kolekci zde</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+9"/>
+        <source>Select Different Folder</source>
+        <translation>Vybrat jinou složku</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+9"/>
+        <source>Use Application Folder</source>
+        <translation>Použít složku aplikace</translation>
+    </message>
+    <message>
+        <location filename="../devicetreeview.cpp" line="+2"/>
+        <source>MIME Type Only</source>
+        <translation>Pouze typ MIME</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Basic</source>
+        <translation>Média základní</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Custom</source>
+        <translation>Rozšířené vlastní</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Full</source>
+        <translation>Rozšířené úplné</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Extended</source>
+        <translation>Média rozšířené</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Full Extended</source>
+        <translation>Úplné rozšířené</translation>
+    </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
         <location line="+3"/>
@@ -94,7 +351,7 @@
         <translation>Průběh</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2941"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1263"/>
         <location line="+50"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalogy aktualizovány:&lt;b&gt; %1 &lt;/b&gt;(%2 přeskočeno)</translation>
@@ -105,12 +362,12 @@
         <translation>Virtuální zařízení aktualizováno: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+6215"/>
+        <location filename="../mainwindow.ui" line="-2503"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik: Zastavit okamžitě (tvrdé zastavení)&lt;/p&gt;&lt;p&gt;Ctrl+Klik: Zastavit po aktuálním katalogu (jemné zastavení)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
         <source>The source directory does not exist.</source>
         <translation>Zdrojový adresář neexistuje.</translation>
     </message>
@@ -122,7 +379,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+256"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -163,7 +420,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+298"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
@@ -180,7 +437,7 @@
         <location line="+1421"/>
         <location line="+4307"/>
         <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+904"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
@@ -320,39 +577,7 @@
         <translation>citlivý na velká písmena</translation>
     </message>
     <message>
-        <location line="+285"/>
-        <source>File metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/search.cpp" line="+172"/>
-        <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+677"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1"/>
-        <location filename="../mainwindow.ui" line="+218"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow.ui" line="+286"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="+74"/>
-        <location line="+94"/>
-        <source>HH:mm:ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4236"/>
+        <location line="+5549"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Použijte možnosti na strom Výběr zařízení.</translation>
     </message>
@@ -472,13 +697,13 @@
         <translation>Použijte textová kritéria ve vyhledávání</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="-12"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <location filename="../mainwindow.ui" line="-2515"/>
         <location line="+1038"/>
         <location line="+802"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-27"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-33"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Size</source>
         <translation>Velikost</translation>
@@ -645,13 +870,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-4170"/>
-        <location line="+1921"/>
-        <source>Include files metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1408"/>
+        <location line="-3657"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+57"/>
         <source>Catalogs</source>
@@ -670,39 +889,14 @@
         <translation>Celkový počet souborů</translation>
     </message>
     <message>
-        <location line="+50"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Verify MIME types</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+387"/>
+        <location line="+440"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-419"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
         <source>Explore</source>
         <translation>Prozkoumat</translation>
     </message>
     <message>
-        <location line="+813"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-416"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+89"/>
-        <location line="+12"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+146"/>
+        <location line="+988"/>
         <source>Directories to exclude from catalogs</source>
         <translation>Adresáře k vyloučení z katalogů</translation>
     </message>
@@ -881,7 +1075,7 @@
     <message>
         <location line="-511"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+62"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+483"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Vymazat</translation>
     </message>
@@ -1028,7 +1222,7 @@
     </message>
     <message>
         <location line="+289"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="+131"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="-114"/>
         <location line="+107"/>
         <location line="+9"/>
         <location line="+108"/>
@@ -2034,33 +2228,7 @@
         <translation>Zastavit aktuální vyhledávání</translation>
     </message>
     <message>
-        <location line="+84"/>
-        <location line="+8"/>
-        <source>Copy JSON</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-3"/>
-        <source>Copied</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>File Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+208"/>
+        <location line="+404"/>
         <source>Differences found</source>
         <translation>Nalezené rozdíly</translation>
     </message>
@@ -2499,7 +2667,7 @@ do koše?</translation>
         <translation>Nalezeny duplikáty</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-575"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-474"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+133"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -2532,46 +2700,12 @@ do koše?</translation>
         <translation>Katalog s tímto názvem již existuje:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
-        <source>MIME Type Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+163"/>
-        <location line="+12"/>
-        <source>Media Basic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Full</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
-        <location line="+12"/>
-        <source>Media Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-11"/>
-        <location line="+12"/>
-        <source>Full Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+102"/>
         <source>Error opening output file.</source>
         <translation>Chyba při otevírání výstupního souboru.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-175"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+2"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-778"/>
         <source>Choose a different name and try again.</source>
         <translation>Vyberte jiné jméno a zkuste to znovu.</translation>
@@ -2590,17 +2724,7 @@ do koše?</translation>
         <translation>Katalogové ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+20"/>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+26"/>
         <source>File Path</source>
         <translation>Cesta k souboru</translation>
     </message>
@@ -3087,37 +3211,6 @@ do koše?</translation>
         <translation>Tato skupina je nezbytná pro hostování úložiště a katalogů.&lt;br/&gt;Nelze ji smazat.</translation>
     </message>
     <message>
-        <location line="+248"/>
-        <source>MIME Verification Complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>MIME verification completed successfully.
-No mismatches found between file extensions and actual content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MIME verification completed.
-%1 mismatch(es) found between file extensions and actual content.
-
-Report saved to:
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Open Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>MIME verification failed:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-254"/>
         <source>External ID</source>
         <translation>Externí ID</translation>
@@ -3181,13 +3274,7 @@ Report saved to:
         <translation>Složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-430"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-231"/>
-        <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+32"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-398"/>
         <source>Move file to Trash</source>
         <translation>Přesunout soubor do koše</translation>
     </message>
@@ -3213,49 +3300,7 @@ Report saved to:
         <translation>orderValue</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+19"/>
-        <source>MIME Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <source>Video Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Video Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Audio Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Artist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-536"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-508"/>
         <source>Tag this folder</source>
         <translation>Označte tuto složku</translation>
     </message>
@@ -3316,39 +3361,7 @@ Report saved to:
         <translation>Export se nezdařil: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+87"/>
-        <source>Invalid Collection Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Create New Collection Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+9"/>
-        <source>Select Different Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-6"/>
-        <location line="+9"/>
-        <source>Use Application Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+105"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+224"/>
         <source>The database file does not exist. Create it?</source>
         <translation>Soubor databáze neexistuje. Vytvořit to?</translation>
     </message>
@@ -3462,7 +3475,7 @@ Report saved to:
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+562"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1255"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1024"/>
         <source>Catalog with results</source>
         <translation>Katalog s výsledky</translation>
     </message>

@@ -42,7 +42,7 @@
         <translation>此文件夹包含文件模式的收藏文件，但您当前处于内存模式。&lt;br/&gt;切换到文件模式或选择其他文件夹。</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
         <translation>此文件夹包含用户数据，不适合用于收藏。&lt;br/&gt;收藏应存储在专用文件夹中，以避免与个人文件混合。</translation>
     </message>
@@ -67,6 +67,253 @@
 </context>
 <context>
     <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+711"/>
+        <source>MIME Verification Complete</source>
+        <translation>MIME验证完成</translation>
+    </message>
+    <message>
+        <source>MIME verification completed successfully.
+    No mismatches found between file extensions and actual content.</source>
+        <translation>MIME验证成功完成。
+    未发现文件扩展名与实际内容之间的不匹配。</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+
+    Report saved to:
+    %2</source>
+        <translation>MIME验证完成。
+    发现文件扩展名与实际内容之间存在%1个不匹配。
+
+    报告已保存至：
+    %2</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Open Report</source>
+        <translation>打开报告</translation>
+    </message>
+    <message>
+        <source>MIME verification failed:
+    %1</source>
+        <translation>MIME验证失败：
+    %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
+        <source>Hidden</source>
+        <translation>隐藏</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metadata</source>
+        <translation>元数据</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+2308"/>
+        <source>File metadata</source>
+        <translation>文件元数据</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../mainwindow.ui" line="+356"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+677"/>
+        <source>Height</source>
+        <translation>高度</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location filename="../mainwindow.ui" line="+218"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
+        <source>Width</source>
+        <translation>宽度</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow.ui" line="+286"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
+        <source>Duration</source>
+        <translation>时长</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+74"/>
+        <location line="+94"/>
+        <source>HH:mm:ss</source>
+        <translation>HH:mm:ss</translation>
+    </message>
+    <message>
+        <location line="+3504"/>
+        <location line="+1921"/>
+        <source>Include files metadata</source>
+        <translation>包含文件元数据</translation>
+    </message>
+    <message>
+        <location line="-1275"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;检测实际MIME类型并识别不匹配项（耗时较长）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Verify MIME types</source>
+        <translation>验证MIME类型</translation>
+    </message>
+    <message>
+        <location line="+1200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <source>Other</source>
+        <translation>其他</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../devicetreeview.cpp" line="+98"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+626"/>
+        <location line="+12"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="-455"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation>显示扩展元数据（JSON）</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="-3"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+452"/>
+        <source>MIME Type</source>
+        <translation>MIME类型</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
+        <source>Video Width</source>
+        <translation>视频宽度</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Video Height</source>
+        <translation>视频高度</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Audio Duration</source>
+        <translation>音频时长</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Artist</source>
+        <translation>艺术家</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Album</source>
+        <translation>专辑</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Title</source>
+        <translation>标题</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+674"/>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation>复制JSON</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Copied</source>
+        <translation>已复制</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>File Property</source>
+        <translation>文件属性</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation>值</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <source>Invalid Collection Folder</source>
+        <translation>无效的收藏夹</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;所选文件夹：&lt;i&gt;%1&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;对于您的第一个收藏，请选择一个合适的文件夹。</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Create New Collection Here</source>
+        <translation>在此创建新收藏</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+9"/>
+        <source>Select Different Folder</source>
+        <translation>选择不同的文件夹</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+9"/>
+        <source>Use Application Folder</source>
+        <translation>使用应用程序文件夹</translation>
+    </message>
+    <message>
+        <location filename="../devicetreeview.cpp" line="+2"/>
+        <source>MIME Type Only</source>
+        <translation>仅MIME类型</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Basic</source>
+        <translation>媒体基本</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Custom</source>
+        <translation>扩展自定义</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Full</source>
+        <translation>扩展完整</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Extended</source>
+        <translation>媒体扩展</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Full Extended</source>
+        <translation>完整扩展</translation>
+    </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
         <location line="+3"/>
@@ -94,7 +341,7 @@
         <translation>进度</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2941"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1263"/>
         <location line="+50"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>目录已更新：&lt;b&gt; %1 &lt;/b&gt;（%2 个跳过）</translation>
@@ -105,12 +352,12 @@
         <translation>虚拟设备已更新： </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+6215"/>
+        <location filename="../mainwindow.ui" line="-2503"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;点击：立即停止（强制停止）&lt;/p&gt;&lt;p&gt;Ctrl+点击：当前目录完成后停止（温和停止）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
         <source>The source directory does not exist.</source>
         <translation>源目录不存在。</translation>
     </message>
@@ -122,7 +369,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+256"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -163,7 +410,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+298"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
@@ -180,7 +427,7 @@
         <location line="+1421"/>
         <location line="+4307"/>
         <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+904"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
         <source>Text</source>
         <translation>文本</translation>
     </message>
@@ -295,13 +542,13 @@
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+161"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <location filename="../mainwindow.ui" line="-9528"/>
         <location line="+1038"/>
         <location line="+802"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+651"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-33"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Size</source>
         <translation>大小</translation>
@@ -576,39 +823,7 @@
         <translation>停止</translation>
     </message>
     <message>
-        <location line="-7043"/>
-        <source>File metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/search.cpp" line="+5"/>
-        <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1"/>
-        <location filename="../mainwindow.ui" line="+218"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow.ui" line="+286"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="+74"/>
-        <location line="+94"/>
-        <source>HH:mm:ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2419"/>
+        <location line="-3596"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>选择...</translation>
@@ -642,13 +857,7 @@
         <translation>更改仅在保存时应用</translation>
     </message>
     <message>
-        <location line="+133"/>
-        <location line="+1921"/>
-        <source>Include files metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1787"/>
+        <location line="+267"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+948"/>
         <source>Comment 1</source>
         <translation>注释 1</translation>
@@ -678,17 +887,7 @@
         <translation>型号</translation>
     </message>
     <message>
-        <location line="+317"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Verify MIME types</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+86"/>
+        <location line="+406"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
@@ -739,7 +938,7 @@
     </message>
     <message>
         <location line="+218"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="+129"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
         <source>Create</source>
         <translation>创建</translation>
@@ -765,22 +964,7 @@
         <translation>包括文件类型</translation>
     </message>
     <message>
-        <location line="+174"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-445"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+89"/>
-        <location line="+12"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+33"/>
+        <location line="+236"/>
         <source>Other options</source>
         <translation>其他选项</translation>
     </message>
@@ -1420,8 +1604,8 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-500"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-336"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-479"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
         <source>Open file</source>
         <translation>打开文件</translation>
     </message>
@@ -1460,7 +1644,7 @@
     </message>
     <message>
         <location filename="../core/device.cpp" line="+2"/>
-        <location filename="../core/search.cpp" line="-13"/>
+        <location filename="../core/search.cpp" line="-7"/>
         <location filename="../mainwindow.ui" line="-7499"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+660"/>
@@ -1484,7 +1668,7 @@
         <translation>日期</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-575"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-474"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1668,17 +1852,7 @@
         <translation type="vanished">包括元数据</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+20"/>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
         <translation>父存储</translation>
     </message>
@@ -2304,40 +2478,6 @@
         <translation>选择不同的名称并重试。</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
-        <source>MIME Type Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+161"/>
-        <location line="+12"/>
-        <source>Media Basic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Full</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
-        <location line="+12"/>
-        <source>Media Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-11"/>
-        <location line="+12"/>
-        <source>Full Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+5009"/>
         <source>Check at start up</source>
         <translation>启动时检查</translation>
@@ -2581,61 +2721,13 @@
         <translation>删除失败。</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+246"/>
-        <source>MIME Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <source>Video Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Video Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Audio Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Artist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-425"/>
+        <location line="-170"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
         <source>Delete file</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location line="-36"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-36"/>
-        <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+162"/>
+        <location line="+126"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2765,7 +2857,7 @@ to the trash?</source>
         <translation>移动文件夹到回收站</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="-13"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+375"/>
         <source>orderValue</source>
         <translation>排序值</translation>
@@ -2858,39 +2950,7 @@ to the trash?</source>
         <translation>目录不存在。创建它？</translation>
     </message>
     <message>
-        <location line="+87"/>
-        <source>Invalid Collection Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Create New Collection Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+9"/>
-        <source>Select Different Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-6"/>
-        <location line="+9"/>
-        <source>Use Application Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+105"/>
+        <location line="+224"/>
         <source>The database file does not exist. Create it?</source>
         <translation>数据库文件不存在。创建它？</translation>
     </message>
@@ -2989,7 +3049,7 @@ to the trash?</source>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+562"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1255"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1219"/>
         <source>Catalog with results</source>
         <translation>有结果的目录</translation>
     </message>
@@ -3166,37 +3226,6 @@ to the trash?</source>
         <translation>此组是托管存储和目录所必需的。&lt;br/&gt;无法删除。</translation>
     </message>
     <message>
-        <location line="+248"/>
-        <source>MIME Verification Complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>MIME verification completed successfully.
-No mismatches found between file extensions and actual content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MIME verification completed.
-%1 mismatch(es) found between file extensions and actual content.
-
-Report saved to:
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Open Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>MIME verification failed:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3251,33 +3280,7 @@ Report saved to:
         <translation>停止当前搜索</translation>
     </message>
     <message>
-        <location line="+84"/>
-        <location line="+8"/>
-        <source>Copy JSON</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-3"/>
-        <source>Copied</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>File Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+167"/>
+        <location line="+363"/>
         <source>Folders found</source>
         <translation>找到的文件夹</translation>
     </message>

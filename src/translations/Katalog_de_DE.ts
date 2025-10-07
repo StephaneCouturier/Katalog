@@ -42,7 +42,7 @@
         <translation>Dieser Ordner enthält Sammlungsdateien im Dateimodus, aber Sie befinden sich derzeit im Speichermodus.&lt;br/&gt;Wechseln Sie in den Dateimodus oder wählen Sie einen anderen Ordner.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
         <translation>Dieser Ordner enthält Benutzerdaten und ist nicht für eine Sammlung geeignet.&lt;br/&gt;Sammlungen sollten in speziellen Ordnern gespeichert werden, um eine Vermischung mit persönlichen Dateien zu vermeiden.</translation>
     </message>
@@ -67,6 +67,263 @@
 </context>
 <context>
     <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+711"/>
+        <source>MIME Verification Complete</source>
+        <translation>MIME-Überprüfung abgeschlossen</translation>
+    </message>
+    <message>
+        <source>MIME verification completed successfully.
+    No mismatches found between file extensions and actual content.</source>
+        <translation>MIME-Überprüfung erfolgreich abgeschlossen.
+    Keine Diskrepanzen zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+
+    Report saved to:
+    %2</source>
+        <translation>MIME-Überprüfung abgeschlossen.
+    %1 Diskrepanz(en) zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.
+
+    Bericht gespeichert in:
+    %2</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Open Report</source>
+        <translation>Bericht öffnen</translation>
+    </message>
+    <message>
+        <source>MIME verification failed:
+    %1</source>
+        <translation>MIME-Überprüfung fehlgeschlagen:
+    %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
+        <source>Hidden</source>
+        <translation>Versteckt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metadata</source>
+        <translation>Metadaten</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+2308"/>
+        <source>File metadata</source>
+        <translation>Datei-Metadaten</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../mainwindow.ui" line="+356"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+677"/>
+        <source>Height</source>
+        <translation>Höhe</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location filename="../mainwindow.ui" line="+218"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
+        <source>Width</source>
+        <translation>Breite</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow.ui" line="+286"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
+        <source>Duration</source>
+        <translation>Dauer</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+74"/>
+        <location line="+94"/>
+        <source>HH:mm:ss</source>
+        <translation>HH:mm:ss</translation>
+    </message>
+    <message>
+        <location line="+3504"/>
+        <location line="+1921"/>
+        <source>Include files metadata</source>
+        <translation>Datei-Metadaten einbeziehen</translation>
+    </message>
+    <message>
+        <location line="-1275"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tatsächliche MIME-Typen erkennen und Diskrepanzen identifizieren (langer Prozess)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Verify MIME types</source>
+        <translation>MIME-Typen überprüfen</translation>
+    </message>
+    <message>
+        <location line="+1200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <source>Other</source>
+        <translation>Andere</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../devicetreeview.cpp" line="+98"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+626"/>
+        <location line="+12"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <source>None</source>
+        <translation>Keine</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="-455"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation>Erweiterte Metadaten anzeigen (JSON)</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="-3"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+452"/>
+        <source>MIME Type</source>
+        <translation>MIME-Typ</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
+        <source>Video Width</source>
+        <translation>Videobreite</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Video Height</source>
+        <translation>Videohöhe</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Audio Duration</source>
+        <translation>Audiodauer</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Artist</source>
+        <translation>Künstler</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Album</source>
+        <translation>Album</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+674"/>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation>JSON kopieren</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Copied</source>
+        <translation>Kopiert</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>File Property</source>
+        <translation>Dateieigenschaft</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation>Wert</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+    Report saved to:
+    %2</source>
+        <translation type="vanished">MIME-Überprüfung abgeschlossen.
+    %1 Diskrepanz(en) zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.
+    Bericht gespeichert in:
+    %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <source>Invalid Collection Folder</source>
+        <translation>Ungültiger Sammlungsordner</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Ausgewählter Ordner: &lt;i&gt;%1&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Für Ihre erste Sammlung wählen Sie bitte einen geeigneten Ordner.</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Create New Collection Here</source>
+        <translation>Neue Sammlung hier erstellen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+9"/>
+        <source>Select Different Folder</source>
+        <translation>Anderen Ordner auswählen</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+9"/>
+        <source>Use Application Folder</source>
+        <translation>Anwendungsordner verwenden</translation>
+    </message>
+    <message>
+        <location filename="../devicetreeview.cpp" line="+2"/>
+        <source>MIME Type Only</source>
+        <translation>Nur MIME-Typ</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Basic</source>
+        <translation>Medien einfach</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Custom</source>
+        <translation>Erweitert benutzerdefiniert</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Full</source>
+        <translation>Erweitert vollständig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Extended</source>
+        <translation>Medien erweitert</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Full Extended</source>
+        <translation>Vollständig erweitert</translation>
+    </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
         <location line="+3"/>
@@ -94,7 +351,7 @@
         <translation>Fortschritt</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2941"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1263"/>
         <location line="+50"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Kataloge aktualisiert:&lt;b&gt; %1 &lt;/b&gt;(%2 übersprungen)</translation>
@@ -105,12 +362,12 @@
         <translation>Virtuelles Gerät aktualisiert: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+6215"/>
+        <location filename="../mainwindow.ui" line="-2503"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klick: Sofort stoppen (harter Stopp)&lt;/p&gt;&lt;p&gt;Strg+Klick: Nach aktuellem Katalog stoppen (sanfter Stopp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
         <source>The source directory does not exist.</source>
         <translation>Das Quellverzeichnis existiert nicht.</translation>
     </message>
@@ -122,7 +379,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+256"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -175,7 +432,7 @@
         <location filename="../core/catalogprogressmanager.cpp" line="-17"/>
         <location filename="../mainwindow.ui" line="-7355"/>
         <location line="+7904"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+654"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-30"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -246,13 +503,13 @@
         <translation>Ausführung</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+162"/>
+        <location filename="../core/search.cpp" line="-17"/>
         <location filename="../mainwindow.ui" line="-7322"/>
         <location line="+7234"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-2"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+361"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1824"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-425"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1204"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+95"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -831,13 +1088,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-4170"/>
-        <location line="+1921"/>
-        <source>Include files metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1408"/>
+        <location line="-3657"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-38"/>
         <source>Catalogs</source>
@@ -856,39 +1107,14 @@
         <translation>Gesamtzahl der Dateien</translation>
     </message>
     <message>
-        <location line="+50"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Verify MIME types</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+387"/>
+        <location line="+440"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-419"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
         <source>Explore</source>
         <translation>Entdecken</translation>
     </message>
     <message>
-        <location line="+813"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-416"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+89"/>
-        <location line="+12"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+146"/>
+        <location line="+988"/>
         <source>Directories to exclude from catalogs</source>
         <translation>Aus Katalogen auszuschließende Verzeichnisse</translation>
     </message>
@@ -1068,7 +1294,7 @@
     <message>
         <location line="-511"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+62"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+483"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
@@ -1175,7 +1401,7 @@
     </message>
     <message>
         <location line="+289"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="+131"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="-114"/>
         <location line="+107"/>
         <location line="+9"/>
         <location line="+108"/>
@@ -1259,39 +1485,7 @@
         <translation>Stoppen</translation>
     </message>
     <message>
-        <location line="-7043"/>
-        <source>File metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/search.cpp" line="+5"/>
-        <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1"/>
-        <location filename="../mainwindow.ui" line="+218"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow.ui" line="+286"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="+74"/>
-        <location line="+94"/>
-        <source>HH:mm:ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+168"/>
+        <location line="-5847"/>
         <source>File criteria</source>
         <translation>Critères de fichier</translation>
     </message>
@@ -1887,7 +2081,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-16"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-500"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-479"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-761"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
@@ -1985,7 +2179,7 @@
         <translation> (%1%)</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="-9"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-775"/>
         <source>Catalog Name</source>
         <translation>Katalogname</translation>
@@ -2034,33 +2228,7 @@
         <translation>Beenden Sie die aktuelle Suche</translation>
     </message>
     <message>
-        <location line="+84"/>
-        <location line="+8"/>
-        <source>Copy JSON</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-3"/>
-        <source>Copied</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>File Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+208"/>
+        <location line="+404"/>
         <source>Differences found</source>
         <translation>Unterschiede festgestellt</translation>
     </message>
@@ -2499,7 +2667,7 @@ in den Papierkorb?</translation>
         <translation>Duplikate gefunden</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-575"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-474"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+133"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -2532,46 +2700,12 @@ in den Papierkorb?</translation>
         <translation>Es gibt bereits einen Katalog mit diesem Namen:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
-        <source>MIME Type Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+163"/>
-        <location line="+12"/>
-        <source>Media Basic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Full</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
-        <location line="+12"/>
-        <source>Media Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-11"/>
-        <location line="+12"/>
-        <source>Full Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+102"/>
         <source>Error opening output file.</source>
         <translation>Fehler beim Öffnen der Ausgabedatei.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-175"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+2"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-778"/>
         <source>Choose a different name and try again.</source>
         <translation>Wählen Sie einen anderen Namen und versuchen Sie es erneut.</translation>
@@ -2781,17 +2915,7 @@ in den Papierkorb?</translation>
         <translation>Löschen fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="+1415"/>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+641"/>
+        <location line="+2057"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Änderungen an der Definition des Katalogs speichern?&lt;br/&gt;</translation>
     </message>
@@ -3091,37 +3215,6 @@ in den Papierkorb?</translation>
         <translation>Diese Gruppe ist zum Hosten von Speicher und Katalogen erforderlich.&lt;br/&gt;Sie kann nicht gelöscht werden.</translation>
     </message>
     <message>
-        <location line="+248"/>
-        <source>MIME Verification Complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>MIME verification completed successfully.
-No mismatches found between file extensions and actual content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MIME verification completed.
-%1 mismatch(es) found between file extensions and actual content.
-
-Report saved to:
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Open Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>MIME verification failed:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-254"/>
         <source>External ID</source>
         <translation>Externe ID</translation>
@@ -3177,13 +3270,7 @@ Report saved to:
         <translation>von</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-430"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-231"/>
-        <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+32"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-398"/>
         <source>Move file to Trash</source>
         <translation>Datei in den Papierkorb verschieben</translation>
     </message>
@@ -3209,49 +3296,7 @@ Report saved to:
         <translation>orderValue</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+19"/>
-        <source>MIME Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <source>Video Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Video Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Audio Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Artist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-536"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-508"/>
         <source>Tag this folder</source>
         <translation>Markieren Sie diesen Ordner</translation>
     </message>
@@ -3312,39 +3357,7 @@ Report saved to:
         <translation>Export fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+87"/>
-        <source>Invalid Collection Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Create New Collection Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+9"/>
-        <source>Select Different Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-6"/>
-        <location line="+9"/>
-        <source>Use Application Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+105"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+224"/>
         <source>The database file does not exist. Create it?</source>
         <translation>Die Datenbankdatei existiert nicht. Soll sie erstellt werden?</translation>
     </message>
@@ -3458,7 +3471,7 @@ Report saved to:
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+562"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1255"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1024"/>
         <source>Catalog with results</source>
         <translation>Katalog mit Ergebnissen</translation>
     </message>

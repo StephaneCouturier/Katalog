@@ -42,7 +42,7 @@
         <translation>इस फ़ोल्डर में फ़ाइल मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में मेमोरी मोड में हैं।&lt;br/&gt;फ़ाइल मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
         <translation>इस फ़ोल्डर में उपयोगकर्ता डेटा है और यह संग्रह के लिए उपयुक्त नहीं है।&lt;br/&gt;व्यक्तिगत फ़ाइलों के साथ मिश्रण से बचने के लिए संग्रह को समर्पित फ़ोल्डर में संग्रहीत किया जाना चाहिए।</translation>
     </message>
@@ -67,6 +67,263 @@
 </context>
 <context>
     <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+711"/>
+        <source>MIME Verification Complete</source>
+        <translation>MIME सत्यापन पूर्ण</translation>
+    </message>
+    <message>
+        <source>MIME verification completed successfully.
+    No mismatches found between file extensions and actual content.</source>
+        <translation>MIME सत्यापन सफलतापूर्वक पूर्ण हुआ।
+    फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच कोई बेमेल नहीं मिला।</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+
+    Report saved to:
+    %2</source>
+        <translation>MIME सत्यापन पूर्ण हुआ।
+    फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच %1 बेमेल मिले।
+
+    रिपोर्ट यहाँ सहेजी गई:
+    %2</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Open Report</source>
+        <translation>रिपोर्ट खोलें</translation>
+    </message>
+    <message>
+        <source>MIME verification failed:
+    %1</source>
+        <translation>MIME सत्यापन विफल:
+    %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
+        <source>Hidden</source>
+        <translation>छुपा हुआ</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metadata</source>
+        <translation>मेटाडेटा</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+2308"/>
+        <source>File metadata</source>
+        <translation>फ़ाइल मेटाडेटा</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../mainwindow.ui" line="+356"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+677"/>
+        <source>Height</source>
+        <translation>ऊंचाई</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location filename="../mainwindow.ui" line="+218"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
+        <source>Width</source>
+        <translation>चौड़ाई</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow.ui" line="+286"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
+        <source>Duration</source>
+        <translation>अवधि</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+74"/>
+        <location line="+94"/>
+        <source>HH:mm:ss</source>
+        <translation>HH:mm:ss</translation>
+    </message>
+    <message>
+        <location line="+3504"/>
+        <location line="+1921"/>
+        <source>Include files metadata</source>
+        <translation>फ़ाइल मेटाडेटा शामिल करें</translation>
+    </message>
+    <message>
+        <location line="-1275"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;वास्तविक MIME प्रकारों का पता लगाएं और बेमेल की पहचान करें (लंबी प्रक्रिया)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Verify MIME types</source>
+        <translation>MIME प्रकारों को सत्यापित करें</translation>
+    </message>
+    <message>
+        <location line="+1200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <source>Other</source>
+        <translation>अन्य</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../devicetreeview.cpp" line="+98"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+626"/>
+        <location line="+12"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <source>None</source>
+        <translation>कोई नहीं</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="-455"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation>विस्तारित मेटाडेटा दिखाएं (JSON)</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="-3"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+452"/>
+        <source>MIME Type</source>
+        <translation>MIME प्रकार</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
+        <source>Video Width</source>
+        <translation>वीडियो चौड़ाई</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Video Height</source>
+        <translation>वीडियो ऊंचाई</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Audio Duration</source>
+        <translation>ऑडियो अवधि</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Artist</source>
+        <translation>कलाकार</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Album</source>
+        <translation>एल्बम</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Title</source>
+        <translation>शीर्षक</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+674"/>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation>JSON कॉपी करें</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Copied</source>
+        <translation>कॉपी किया गया</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Close</source>
+        <translation>बंद करें</translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>File Property</source>
+        <translation>फ़ाइल गुण</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation>मान</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+    Report saved to:
+    %2</source>
+        <translation type="vanished">MIME सत्यापन पूर्ण हुआ।
+    फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच %1 बेमेल मिले।
+    रिपोर्ट यहाँ सहेजी गई:
+    %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <source>Invalid Collection Folder</source>
+        <translation>अमान्य संग्रह फ़ोल्डर</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;चयनित फ़ोल्डर: &lt;i&gt;%1&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;अपने पहले संग्रह के लिए, कृपया उपयुक्त फ़ोल्डर चुनें।</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Create New Collection Here</source>
+        <translation>यहाँ नया संग्रह बनाएं</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+9"/>
+        <source>Select Different Folder</source>
+        <translation>भिन्न फ़ोल्डर चुनें</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+9"/>
+        <source>Use Application Folder</source>
+        <translation>एप्लिकेशन फ़ोल्डर का उपयोग करें</translation>
+    </message>
+    <message>
+        <location filename="../devicetreeview.cpp" line="+2"/>
+        <source>MIME Type Only</source>
+        <translation>केवल MIME प्रकार</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Basic</source>
+        <translation>मीडिया बुनियादी</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Custom</source>
+        <translation>विस्तारित कस्टम</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Full</source>
+        <translation>विस्तारित पूर्ण</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Extended</source>
+        <translation>मीडिया विस्तारित</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Full Extended</source>
+        <translation>पूर्ण विस्तारित</translation>
+    </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
         <location line="+3"/>
@@ -94,7 +351,7 @@
         <translation>प्रगति</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2941"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1263"/>
         <location line="+50"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>कैटलॉग अपडेट किए गए:&lt;b&gt; %1 &lt;/b&gt;(%2 छोड़े गए)</translation>
@@ -105,12 +362,12 @@
         <translation>वर्चुअल डिवाइस अपडेट किया गया: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+6215"/>
+        <location filename="../mainwindow.ui" line="-2503"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;क्लिक: तुरंत रोकें (हार्ड स्टॉप)&lt;/p&gt;&lt;p&gt;Ctrl+क्लिक: वर्तमान कैटलॉग के बाद रोकें (जेंटल स्टॉप)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
         <source>The source directory does not exist.</source>
         <translation>स्रोत डायरेक्टरी मौजूद नहीं है।</translation>
     </message>
@@ -122,7 +379,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+256"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -163,7 +420,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+298"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
@@ -180,7 +437,7 @@
         <location line="+1421"/>
         <location line="+4307"/>
         <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+904"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
         <source>Text</source>
         <translation>टेक्स्ट</translation>
     </message>
@@ -295,13 +552,13 @@
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+161"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <location filename="../mainwindow.ui" line="-9528"/>
         <location line="+1038"/>
         <location line="+802"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+651"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-33"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Size</source>
         <translation>आकार</translation>
@@ -576,39 +833,7 @@
         <translation>रोकें</translation>
     </message>
     <message>
-        <location line="-7043"/>
-        <source>File metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/search.cpp" line="+5"/>
-        <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1"/>
-        <location filename="../mainwindow.ui" line="+218"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow.ui" line="+286"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="+74"/>
-        <location line="+94"/>
-        <source>HH:mm:ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2419"/>
+        <location line="-3596"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>चुनें...</translation>
@@ -642,13 +867,7 @@
         <translation>परिवर्तन केवल सेव करते समय लागू होगा</translation>
     </message>
     <message>
-        <location line="+133"/>
-        <location line="+1921"/>
-        <source>Include files metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1787"/>
+        <location line="+267"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+948"/>
         <source>Comment 1</source>
         <translation>टिप्पणी 1</translation>
@@ -678,17 +897,7 @@
         <translation>मॉडल</translation>
     </message>
     <message>
-        <location line="+317"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Verify MIME types</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+86"/>
+        <location line="+406"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
@@ -739,7 +948,7 @@
     </message>
     <message>
         <location line="+218"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="+129"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
         <source>Create</source>
         <translation>बनाएं</translation>
@@ -765,22 +974,7 @@
         <translation>फ़ाइल प्रकार शामिल करें</translation>
     </message>
     <message>
-        <location line="+174"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-445"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+89"/>
-        <location line="+12"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+33"/>
+        <location line="+236"/>
         <source>Other options</source>
         <translation>अन्य विकल्प</translation>
     </message>
@@ -1420,8 +1614,8 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-500"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-336"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-479"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
         <source>Open file</source>
         <translation>फ़ाइल खोलें</translation>
     </message>
@@ -1460,7 +1654,7 @@
     </message>
     <message>
         <location filename="../core/device.cpp" line="+2"/>
-        <location filename="../core/search.cpp" line="-13"/>
+        <location filename="../core/search.cpp" line="-7"/>
         <location filename="../mainwindow.ui" line="-7499"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+660"/>
@@ -1484,7 +1678,7 @@
         <translation>दिनांक</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-575"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-474"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1668,17 +1862,7 @@
         <translation type="vanished">मेटाडेटा शामिल करें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+20"/>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
         <translation>पैरेंट स्टोरेज</translation>
     </message>
@@ -2304,40 +2488,6 @@
         <translation>एक अलग नाम चुनें और फिर से कोशिश करें।</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
-        <source>MIME Type Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+161"/>
-        <location line="+12"/>
-        <source>Media Basic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Full</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
-        <location line="+12"/>
-        <source>Media Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-11"/>
-        <location line="+12"/>
-        <source>Full Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+5009"/>
         <source>Check at start up</source>
         <translation>स्टार्ट अप पर जांचें</translation>
@@ -2581,61 +2731,13 @@
         <translation>डिलीट करने में असफल।</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+246"/>
-        <source>MIME Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <source>Video Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Video Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Audio Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Artist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-425"/>
+        <location line="-170"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
         <source>Delete file</source>
         <translation>फ़ाइल डिलीट करें</translation>
     </message>
     <message>
-        <location line="-36"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-36"/>
-        <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+162"/>
+        <location line="+126"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2764,7 +2866,7 @@ to the trash?</source>
         <translation>फ़ोल्डर को ट्रैश में भेजें</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="-13"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+375"/>
         <source>orderValue</source>
         <translation>क्रम मान</translation>
@@ -2857,39 +2959,7 @@ to the trash?</source>
         <translation>डायरेक्टरी मौजूद नहीं है। इसे बनाएं?</translation>
     </message>
     <message>
-        <location line="+87"/>
-        <source>Invalid Collection Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Create New Collection Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+9"/>
-        <source>Select Different Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-6"/>
-        <location line="+9"/>
-        <source>Use Application Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+105"/>
+        <location line="+224"/>
         <source>The database file does not exist. Create it?</source>
         <translation>डेटाबेस फ़ाइल मौजूद नहीं है। इसे बनाएं?</translation>
     </message>
@@ -2988,7 +3058,7 @@ to the trash?</source>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+562"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1255"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1219"/>
         <source>Catalog with results</source>
         <translation>परिणामों के साथ कैटलॉग</translation>
     </message>
@@ -3165,37 +3235,6 @@ to the trash?</source>
         <translation>यह ग्रुप स्टोरेज और कैटलॉग होस्ट करने के लिए आवश्यक है।&lt;br/&gt;इसे डिलीट नहीं किया जा सकता।</translation>
     </message>
     <message>
-        <location line="+248"/>
-        <source>MIME Verification Complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>MIME verification completed successfully.
-No mismatches found between file extensions and actual content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MIME verification completed.
-%1 mismatch(es) found between file extensions and actual content.
-
-Report saved to:
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Open Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>MIME verification failed:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3250,33 +3289,7 @@ Report saved to:
         <translation>वर्तमान खोज बंद करें</translation>
     </message>
     <message>
-        <location line="+84"/>
-        <location line="+8"/>
-        <source>Copy JSON</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-3"/>
-        <source>Copied</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>File Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+167"/>
+        <location line="+363"/>
         <source>Folders found</source>
         <translation>फ़ोल्डर मिले</translation>
     </message>

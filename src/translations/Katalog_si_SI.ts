@@ -42,7 +42,7 @@
         <translation>Ta mapa vsebuje datoteke zbirke v načinu datoteke, vendar ste trenutno v načinu pomnilnika.&lt;br/&gt;Preklopite v način datoteke ali izberite drugo mapo.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
         <translation>Ta mapa vsebuje uporabniške podatke in ni primerna za zbirko.&lt;br/&gt;Zbirke je treba shraniti v namenskih mapah, da se izognete mešanju z osebnimi datotekami.</translation>
     </message>
@@ -67,6 +67,253 @@
 </context>
 <context>
     <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+711"/>
+        <source>MIME Verification Complete</source>
+        <translation>Preverjanje MIME Končano</translation>
+    </message>
+    <message>
+        <source>MIME verification completed successfully.
+    No mismatches found between file extensions and actual content.</source>
+        <translation type="vanished">Preverjanje MIME uspešno končano.
+    Najdena ni bila nobena neskladnost med priponami datotek in dejansko vsebino.</translation>
+    </message>
+    <message>
+        <source>MIME verification completed.
+    %1 mismatch(es) found between file extensions and actual content.
+
+    Report saved to:
+    %2</source>
+        <translation type="vanished">Preverjanje MIME končano.
+    Najdenih %1 neskladnosti med priponami datotek in dejansko vsebino.
+
+    Poročilo shranjeno v:
+    %2</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Open Report</source>
+        <translation>Odpri Poročilo</translation>
+    </message>
+    <message>
+        <source>MIME verification failed:
+    %1</source>
+        <translation type="vanished">Preverjanje MIME ni uspelo:
+    %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
+        <source>Hidden</source>
+        <translation>Skrito</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metadata</source>
+        <translation>Metapodatki</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+2308"/>
+        <source>File metadata</source>
+        <translation>Metapodatki datoteke</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../mainwindow.ui" line="+356"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+677"/>
+        <source>Height</source>
+        <translation>Višina</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location filename="../mainwindow.ui" line="+218"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
+        <source>Width</source>
+        <translation>Širina</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow.ui" line="+286"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
+        <source>Duration</source>
+        <translation>Trajanje</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+74"/>
+        <location line="+94"/>
+        <source>HH:mm:ss</source>
+        <translation>HH:mm:ss</translation>
+    </message>
+    <message>
+        <location line="+3504"/>
+        <location line="+1921"/>
+        <source>Include files metadata</source>
+        <translation>Vključi metapodatke datotek</translation>
+    </message>
+    <message>
+        <location line="-1275"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zazna dejanske tipe MIME in prepozna neskladnosti (dolg postopek)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Verify MIME types</source>
+        <translation>Preveri tipe MIME</translation>
+    </message>
+    <message>
+        <location line="+1200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <source>Other</source>
+        <translation>Drugo</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../devicetreeview.cpp" line="+98"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+626"/>
+        <location line="+12"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <source>None</source>
+        <translation>Brez</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="-455"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation>Prikaži razširjene metapodatke (JSON)</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="-3"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+452"/>
+        <source>MIME Type</source>
+        <translation>Tip MIME</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
+        <source>Video Width</source>
+        <translation>Širina Videoposnetka</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Video Height</source>
+        <translation>Višina Videoposnetka</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Audio Duration</source>
+        <translation>Trajanje Zvoka</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Artist</source>
+        <translation>Izvajalec</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Album</source>
+        <translation>Album</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
+        <source>Title</source>
+        <translation>Naslov</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+674"/>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation>Kopiraj JSON</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Copied</source>
+        <translation>Kopirano</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Close</source>
+        <translation>Zapri</translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>File Property</source>
+        <translation>Lastnost Datoteke</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation>Vrednost</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <source>Invalid Collection Folder</source>
+        <translation>Neveljavna Mapa Zbirke</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Izbrana mapa: &lt;i&gt;%1&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Za vašo prvo zbirko izberite primerno mapo.</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Create New Collection Here</source>
+        <translation>Ustvari Novo Zbirko Tukaj</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+9"/>
+        <source>Select Different Folder</source>
+        <translation>Izberi Drugo Mapo</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <location line="+9"/>
+        <source>Use Application Folder</source>
+        <translation>Uporabi Mapo Aplikacije</translation>
+    </message>
+    <message>
+        <location filename="../devicetreeview.cpp" line="+2"/>
+        <source>MIME Type Only</source>
+        <translation>Samo Tip MIME</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Basic</source>
+        <translation>Mediji Osnovno</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Custom</source>
+        <translation>Razširjeno Po Meri</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Extended Full</source>
+        <translation>Razširjeno Polno</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="+12"/>
+        <source>Media Extended</source>
+        <translation>Mediji Razširjeno</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+12"/>
+        <source>Full Extended</source>
+        <translation>Polno Razširjeno</translation>
+    </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
         <location line="+3"/>
@@ -94,7 +341,7 @@
         <translation>Napredek</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2941"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1263"/>
         <location line="+50"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalogi posodobljeni:&lt;b&gt; %1 &lt;/b&gt;(%2 preskočenih)</translation>
@@ -105,12 +352,12 @@
         <translation>Navidezna naprava posodobljena: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+6215"/>
+        <location filename="../mainwindow.ui" line="-2503"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik: Ustavi takoj (trda ustavitev)&lt;/p&gt;&lt;p&gt;Ctrl+Klik: Ustavi po trenutnem katalogu (mehka ustavitev)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
         <source>The source directory does not exist.</source>
         <translation>Izvorna mapa ne obstaja.</translation>
     </message>
@@ -122,7 +369,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+256"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -163,7 +410,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+298"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
@@ -180,7 +427,7 @@
         <location line="+1421"/>
         <location line="+4307"/>
         <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+904"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
         <source>Text</source>
         <translation>Besedilo</translation>
     </message>
@@ -295,13 +542,13 @@
         <translation>Datoteka</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+161"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <location filename="../mainwindow.ui" line="-9528"/>
         <location line="+1038"/>
         <location line="+802"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+651"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-33"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Size</source>
         <translation>Velikost</translation>
@@ -826,7 +1073,7 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="+131"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="-114"/>
         <location line="+107"/>
         <location line="+9"/>
         <location line="+108"/>
@@ -1402,75 +1649,12 @@
         <translation>Način podatkov &quot;SQLite lokalna datoteka&quot;</translation>
     </message>
     <message>
-        <location line="-9290"/>
-        <source>File metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/search.cpp" line="+9"/>
-        <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+24"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1"/>
-        <location filename="../mainwindow.ui" line="+218"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow.ui" line="+286"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="+74"/>
-        <location line="+94"/>
-        <source>HH:mm:ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3504"/>
-        <location line="+1921"/>
-        <source>Include files metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1275"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Verify MIME types</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+83"/>
+        <location line="-4026"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Uporabi možnosti na drevo naprav izbire.</translation>
     </message>
     <message>
-        <location line="+1117"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-445"/>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+89"/>
-        <location line="+12"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+422"/>
+        <location line="+1568"/>
         <source>catalog is for the full device</source>
         <translation>katalog je za celotno napravo</translation>
     </message>
@@ -1773,8 +1957,8 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-500"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-336"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
         <source>Open file</source>
         <translation>Odpri datoteko</translation>
     </message>
@@ -1792,15 +1976,9 @@
         <translation>Označi to mapo</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+45"/>
-        <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+89"/>
         <location line="+34"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+14"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+59"/>
         <source>Copy folder path</source>
         <translation>Kopiraj pot mape</translation>
     </message>
@@ -1907,62 +2085,20 @@ v koš?</translation>
         <translation>Izbrani katalog vsebuje več kot %1 datotek.&lt;br/&gt;Odpiranje lahko traja več minut.&lt;br/&gt;Nadaljuj?</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="-7"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+196"/>
         <source>orderValue</source>
         <translation>vrednostVrstnega reda</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+19"/>
-        <source>MIME Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <source>Video Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Video Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Audio Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Artist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+1"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/device.cpp" line="+2"/>
-        <location filename="../core/search.cpp" line="-19"/>
+        <location filename="../core/search.cpp" line="-6"/>
         <location filename="../mainwindow.ui" line="-7499"/>
         <location line="+232"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+660"/>
         <location line="+239"/>
         <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-34"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-6"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-636"/>
         <source>Name</source>
         <translation>Ime</translation>
@@ -1980,7 +2116,7 @@ v koš?</translation>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-575"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-474"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -2017,40 +2153,6 @@ v koš?</translation>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-1012"/>
         <source>Choose a different name and try again.</source>
         <translation>Izberite drugo ime in poskusite znova.</translation>
-    </message>
-    <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
-        <source>MIME Type Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+161"/>
-        <location line="+12"/>
-        <source>Media Basic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extended Full</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
-        <location line="+12"/>
-        <source>Media Extended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-11"/>
-        <location line="+12"/>
-        <source>Full Extended</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="-3"/>
@@ -2254,17 +2356,7 @@ v koš?</translation>
         <translation type="vanished">vključi metapodatke</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+20"/>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Metadata</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
         <translation>Nadrejeno shranjevanje</translation>
     </message>
@@ -2444,7 +2536,7 @@ v koš?</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 posodobljenih katalogov, %2 preskočenih katalogov</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-253"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <source>Update all active catalogs</source>
         <translation>Posodobi vse aktivne kataloge</translation>
     </message>
@@ -3072,37 +3164,6 @@ v koš?</translation>
         <translation>Ta skupina je potrebna za gostovanje shranjevanja in katalogov.&lt;br/&gt;Ni je mogoče izbrisati.</translation>
     </message>
     <message>
-        <location line="+248"/>
-        <source>MIME Verification Complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>MIME verification completed successfully.
-No mismatches found between file extensions and actual content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MIME verification completed.
-%1 mismatch(es) found between file extensions and actual content.
-
-Report saved to:
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Open Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>MIME verification failed:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3157,33 +3218,7 @@ Report saved to:
         <translation>Ustavi trenutno iskanje</translation>
     </message>
     <message>
-        <location line="+84"/>
-        <location line="+8"/>
-        <source>Copy JSON</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-3"/>
-        <source>Copied</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>File Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+167"/>
+        <location line="+363"/>
         <source>Folders found</source>
         <translation>Najdene mape</translation>
     </message>
@@ -3311,39 +3346,7 @@ Report saved to:
         <translation>Imenik ne obstaja. Ga ustvarim?</translation>
     </message>
     <message>
-        <location line="+87"/>
-        <source>Invalid Collection Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Create New Collection Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+9"/>
-        <source>Select Different Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-6"/>
-        <location line="+9"/>
-        <source>Use Application Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+105"/>
+        <location line="+224"/>
         <source>The database file does not exist. Create it?</source>
         <translation>Datoteka podatkovne baze ne obstaja. Jo ustvarim?</translation>
     </message>
