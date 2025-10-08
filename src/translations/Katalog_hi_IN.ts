@@ -73,33 +73,9 @@
         <translation>MIME सत्यापन पूर्ण</translation>
     </message>
     <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME सत्यापन सफलतापूर्वक पूर्ण हुआ।
-    फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच कोई बेमेल नहीं मिला।</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation>MIME सत्यापन पूर्ण हुआ।
-    फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच %1 बेमेल मिले।
-
-    रिपोर्ट यहाँ सहेजी गई:
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>रिपोर्ट खोलें</translation>
-    </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME सत्यापन विफल:
-    %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
@@ -249,16 +225,6 @@
         <translation>मान</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME सत्यापन पूर्ण हुआ।
-    फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच %1 बेमेल मिले।
-    रिपोर्ट यहाँ सहेजी गई:
-    %2</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
         <translation>अमान्य संग्रह फ़ोल्डर</translation>
@@ -379,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1854,14 +1820,6 @@
         <translation>कैटलॉग ID</translation>
     </message>
     <message>
-        <source>include hidden</source>
-        <translation type="vanished">छुपी हुई शामिल करें</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">मेटाडेटा शामिल करें</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
         <translation>पैरेंट स्टोरेज</translation>
@@ -2036,10 +1994,6 @@
         <location line="+79"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt; से चयनित सक्रिय कैटलॉग अपडेट किए गए हैं।&amp;nbsp;&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 अपडेट किए गए कैटलॉग, %2 छोड़े गए कैटलॉग</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
@@ -2945,10 +2899,6 @@ to the trash?</source>
         <translation>मेटाडेटा शामिल करें</translation>
     </message>
     <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">मीडिया फ़ाइल मेटाडेटा शामिल करें</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
         <translation>स्थानीय डिस्क</translation>
@@ -3235,6 +3185,21 @@ to the trash?</source>
         <translation>यह ग्रुप स्टोरेज और कैटलॉग होस्ट करने के लिए आवश्यक है।&lt;br/&gt;इसे डिलीट नहीं किया जा सकता।</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME सत्यापन सफलतापूर्वक पूर्ण हुआ।&lt;br/&gt;फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच कोई बेमेल नहीं मिला।</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME सत्यापन पूर्ण हुआ।&lt;br/&gt;फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच %1 बेमेल मिले।&lt;br/&gt;&lt;br/&gt;रिपोर्ट यहाँ सहेजी गई:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME सत्यापन विफल:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3489,18 +3454,6 @@ to the trash?</source>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">नाम</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">आकार</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">दिनांक</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">डायरेक्टरी</translation>
     </message>
@@ -3515,18 +3468,6 @@ to the trash?</source>
     <message>
         <source>File Type</source>
         <translation type="obsolete">फ़ाइल प्रकार</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">फ़ोल्डर</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">कैटलॉग नाम</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">कैटलॉग ID</translation>
     </message>
 </context>
 <context>

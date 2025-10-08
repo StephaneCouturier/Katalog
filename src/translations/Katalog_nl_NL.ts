@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>MIME-verificatie voltooid</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME-verificatie succesvol voltooid.
-    Geen verschillen gevonden tussen bestandsextensies en daadwerkelijke inhoud.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>MIME-verificatie voltooid.
-    %1 verschil(len) gevonden tussen bestandsextensies en daadwerkelijke inhoud.
 
-    Rapport opgeslagen in:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Rapport openen</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME-verificatie mislukt:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -248,16 +227,7 @@
         <source>Value</source>
         <translation>Waarde</translation>
     </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME-verificatie voltooid.
-    %1 verschil(len) gevonden tussen bestandsextensies en daadwerkelijke inhoud.
-    Rapport opgeslagen in:
-    %2</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
@@ -379,7 +349,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1853,14 +1823,7 @@
         <source>Catalog ID</source>
         <translation>Catalogus-ID</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">verborgen opnemen</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">metadata opnemen</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2037,10 +2000,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Geselecteerde actieve catalogi van &lt;b&gt;%1&lt;/b&gt; zijn bijgewerkt.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 bijgewerkte catalogi, %2 overgeslagen catalogi</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2944,10 +2904,7 @@ naar de prullenbak verplaatsen?</translation>
         <source>Include Metadata</source>
         <translation>Metadata opnemen</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Metagegevens van mediabestanden opnemen</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3235,6 +3192,21 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Deze groep is nodig om opslag en catalogi te hosten.&lt;br/&gt;Deze kan niet worden verwijderd.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME-verificatie succesvol voltooid.&lt;br/&gt;Geen verschillen gevonden tussen bestandsextensies en werkelijke inhoud.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME-verificatie voltooid.&lt;br/&gt;%1 verschil(len) gevonden tussen bestandsextensies en werkelijke inhoud.&lt;br/&gt;&lt;br/&gt;Rapport opgeslagen in:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME-verificatie mislukt:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3488,18 +3460,7 @@ naar de prullenbak verplaatsen?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Naam</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Grootte</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Datum</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Map</translation>
@@ -3516,18 +3477,7 @@ naar de prullenbak verplaatsen?</translation>
         <source>File Type</source>
         <translation type="obsolete">Bestandstype</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Map</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Catalogusnaam</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">Catalogus-ID</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

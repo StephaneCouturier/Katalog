@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>MIME-Verifiering Slutförd</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME-verifiering slutfördes framgångsrikt.
-    Inga avvikelser hittades mellan filtillägg och faktiskt innehåll.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>MIME-verifiering slutförd.
-    %1 avvikelser hittades mellan filtillägg och faktiskt innehåll.
 
-    Rapport sparad i:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Öppna Rapport</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME-verifiering misslyckades:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -369,7 +348,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1843,14 +1822,7 @@
         <source>Catalog ID</source>
         <translation>Katalog-ID</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">inkludera dolda</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">inkludera metadata</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2027,10 +1999,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Valda aktiva kataloger från &lt;b&gt;%1&lt;/b&gt; uppdateras.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 uppdaterade kataloger, %2 överhoppade kataloger</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2851,10 +2820,7 @@ till papperskorgen?</translation>
         <source>Copy folder name</source>
         <translation>Kopiera mappnamn</translation>
     </message>
-    <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Ta bort mapp</translation>
-    </message>
+
     <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
@@ -2939,10 +2905,7 @@ till papperskorgen?</translation>
         <source>Include Metadata</source>
         <translation>Inkludera metadata</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Inkludera metadata för mediafiler</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3230,6 +3193,21 @@ till papperskorgen?</translation>
         <translation>Denna grupp är nödvändig för att hålla lagring och kataloger.&lt;br/&gt;Den kan inte tas bort.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME-verifiering slutförd framgångsrikt.&lt;br/&gt;Inga avvikelser hittades mellan filtillägg och faktiskt innehåll.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME-verifiering slutförd.&lt;br/&gt;%1 avvikelse(r) hittades mellan filtillägg och faktiskt innehåll.&lt;br/&gt;&lt;br/&gt;Rapport sparad i:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME-verifiering misslyckades:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3483,18 +3461,7 @@ till papperskorgen?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Namn</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Storlek</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Datum</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Katalog</translation>
@@ -3511,18 +3478,7 @@ till papperskorgen?</translation>
         <source>File Type</source>
         <translation type="obsolete">Filtyp</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Mapp</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Katalognamn</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">Katalog-ID</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

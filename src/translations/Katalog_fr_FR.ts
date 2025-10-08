@@ -73,19 +73,7 @@
         <translation>Vérification MIME terminée</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation type="vanished">Vérification MIME terminée.
-    %1 incohérence(s) trouvée(s) entre les extensions de fichier et le contenu réel.
-
-    Rapport enregistré dans :
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Ouvrir le rapport</translation>
     </message>
@@ -357,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1079,26 +1067,20 @@
         <translation>Ce groupe est nécessaire pour héberger le stockage et les catalogues.&lt;br/&gt;Il ne peut pas être supprimé.</translation>
     </message>
     <message>
-        <location line="+253"/>
-        <source>MIME verification completed successfully.
-No mismatches found between file extensions and actual content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MIME verification completed.
-%1 mismatch(es) found between file extensions and actual content.
-
-Report saved to:
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>MIME verification failed:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>Vérification MIME terminée avec succès.&lt;br/&gt;Aucune incohérence trouvée entre les extensions de fichiers et le contenu réel.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>Vérification MIME terminée.&lt;br/&gt;%1 incohérence(s) trouvée(s) entre les extensions de fichiers et le contenu réel.&lt;br/&gt;&lt;br/&gt;Rapport enregistré dans :&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>Échec de la vérification MIME :&lt;br/&gt;%1</translation>
+        </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-254"/>
         <source>External ID</source>
@@ -2013,7 +1995,7 @@ Report saved to:
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="-474"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-250"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-254"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-131"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
@@ -2505,14 +2487,6 @@ Report saved to:
         <location filename="../mainwindow_tab_device_pr.cpp" line="-260"/>
         <source>Storage ID</source>
         <translation>ID de stockage</translation>
-    </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">inclure caché</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">inclure des métadonnées</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+274"/>
@@ -3313,10 +3287,6 @@ to the trash?</source>
         <translation>Inclure les metadonnées</translation>
     </message>
     <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Inclure les metadonnées des fichiers média</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
         <translation>Disque local</translation>
@@ -3486,14 +3456,6 @@ to the trash?</source>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Nom</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Taille</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Répertoire</translation>
     </message>
@@ -3508,22 +3470,6 @@ to the trash?</source>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Type de Fichier</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Dossier</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Nom du catalogue</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID du catalogue</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Date</translation>
     </message>
 </context>
 <context>

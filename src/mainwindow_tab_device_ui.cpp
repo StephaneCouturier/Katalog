@@ -713,9 +713,13 @@ void MainWindow::on_Catalogs_pushButton_VerifyMIMETypes_clicked()
                 QMessageBox::StandardButtons buttons = QMessageBox::Ok;
 
                 if (mismatchCount == 0) {
-                    message = tr("MIME verification completed successfully.\nNo mismatches found between file extensions and actual content.");
+                    message = tr("MIME verification completed successfully.<br/>"
+                                 "No mismatches found between file extensions and actual content.");
                 } else {
-                    message = tr("MIME verification completed.\n%1 mismatch(es) found between file extensions and actual content.\n\nReport saved to:\n%2")
+                    message = tr("MIME verification completed.<br/>"
+                                 "%1 mismatch(es) found between file extensions and actual content.<br/><br/>"
+                                 "Report saved to:<br/>"
+                                 "%2")
                     .arg(mismatchCount)
                         .arg(reportPath);
                     buttons = QMessageBox::Ok | QMessageBox::Open;
@@ -742,7 +746,8 @@ void MainWindow::on_Catalogs_pushButton_VerifyMIMETypes_clicked()
     // Connect error signal
     connect(catalogJob, &CatalogJobStoppable::catalogOperationError,
             this, [this, catalogJob](const QString& error) {
-                QMessageBox::warning(this, "Katalog", tr("MIME verification failed:\n%1").arg(error));
+                QMessageBox::warning(this, "Katalog", tr("MIME verification failed:<br/>"
+                                                 "%1").arg(error));
                 catalogJob->deleteLater();
                 setCatalogUpdateUIState(false);
             });

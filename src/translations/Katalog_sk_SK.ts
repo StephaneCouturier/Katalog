@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>Overenie MIME Dokončené</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Overenie MIME úspešne dokončené.
-    Nenašli sa žiadne nezrovnalosti medzi príponami súborov a skutočným obsahom.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>Overenie MIME dokončené.
-    Nájdených %1 nezrovnalostí medzi príponami súborov a skutočným obsahom.
 
-    Správa uložená do:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Otvoriť Správu</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Overenie MIME zlyhalo:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -369,7 +348,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1843,14 +1822,8 @@
         <source>Catalog ID</source>
         <translation>ID katalógu</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">zahrnúť skryté</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">zahrnúť metadáta</translation>
-    </message>
+
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2027,10 +2000,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Vybrané aktívne katalógy z &lt;b&gt;%1&lt;/b&gt; sú aktualizované.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 aktualizovaných katalógov, %2 preskočených katalógov</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2935,10 +2905,7 @@ do koša?</translation>
         <source>Include Metadata</source>
         <translation>Zahrnúť metadáta</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Zahrnúť metadáta mediálnych súborov</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3226,6 +3193,21 @@ do koša?</translation>
         <translation>Táto skupina je potrebná na hosťovanie úložísk a katalógov.&lt;br/&gt;Nemožno ju zmazať.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME overenie úspešne dokončené.&lt;br/&gt;Nenašli sa žiadne nezrovnalosti medzi príponami súborov a skutočným obsahom.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME overenie dokončené.&lt;br/&gt;Našlo sa %1 nezrovnalosť(-í) medzi príponami súborov a skutočným obsahom.&lt;br/&gt;&lt;br/&gt;Správa uložená do:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME overenie zlyhalo:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3479,18 +3461,7 @@ do koša?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Názov</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Veľkosť</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Dátum</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Adresár</translation>
@@ -3507,18 +3478,7 @@ do koša?</translation>
         <source>File Type</source>
         <translation type="obsolete">Typ súboru</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Priečinok</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Názov katalógu</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID katalógu</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

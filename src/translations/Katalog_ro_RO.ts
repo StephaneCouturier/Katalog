@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>Verificare MIME Completă</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Verificarea MIME s-a finalizat cu succes.
-    Nu au fost găsite neconcordanțe între extensiile fișierelor și conținutul real.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>Verificare MIME finalizată.
-    %1 neconcordanță(e) găsită(e) între extensiile fișierelor și conținutul real.
 
-    Raport salvat în:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Deschide Raportul</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Verificarea MIME a eșuat:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -369,7 +348,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1843,14 +1822,7 @@
         <source>Catalog ID</source>
         <translation>ID-ul catalogului</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">include ascunse</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">include metadate</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2027,10 +1999,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Cataloagele active selectate din &lt;b&gt;%1&lt;/b&gt; sunt actualizate.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 cataloage actualizate, %2 cataloage sărite</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2935,10 +2904,7 @@ la coșul de gunoi?</translation>
         <source>Include Metadata</source>
         <translation>Include metadatele</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Include metadatele fișierelor media</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3226,6 +3192,21 @@ la coșul de gunoi?</translation>
         <translation>Acest grup este necesar pentru a găzdui stocarea și cataloagele.&lt;br/&gt;Nu poate fi șters.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>Verificarea MIME finalizată cu succes.&lt;br/&gt;Nu s-au găsit neconcordanțe între extensiile fișierelor și conținutul real.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>Verificarea MIME finalizată.&lt;br/&gt;S-au găsit %1 neconcordanță(e) între extensiile fișierelor și conținutul real.&lt;br/&gt;&lt;br/&gt;Raport salvat în:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>Verificarea MIME a eșuat:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3479,18 +3460,7 @@ la coșul de gunoi?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Nume</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Dimensiune</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Dată</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Director</translation>
@@ -3507,18 +3477,7 @@ la coșul de gunoi?</translation>
         <source>File Type</source>
         <translation type="obsolete">Tipul fișierului</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Dosar</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Numele catalogului</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID-ul catalogului</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

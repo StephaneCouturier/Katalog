@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>MIME Провера Завршена</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME провера успешно завршена.
-    Нису пронађене неподударности између екстензија датотека и стварног садржаја.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>MIME провера завршена.
-    Пронађено %1 неподударности између екстензија датотека и стварног садржаја.
 
-    Извештај сачуван у:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Отвори Извештај</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME провера неуспела:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -369,7 +348,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1843,14 +1822,7 @@
         <source>Catalog ID</source>
         <translation>ID kataloga</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">uključi skrivene</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">uključi metapodatke</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2027,10 +1999,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Izabrani aktivni katalozi iz &lt;b&gt;%1&lt;/b&gt; su ažurirani.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 ažuriranih kataloga, %2 preskočenih kataloga</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2935,10 +2904,7 @@ u smeće?</translation>
         <source>Include Metadata</source>
         <translation>Uključi metapodatke</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Uključi metapodatke medijskih datoteka</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3226,6 +3192,21 @@ u smeće?</translation>
         <translation>Ova grupa je potrebna za hostovanje skladišta i kataloga.&lt;br/&gt;Ne može biti obrisana.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME провера успешно завршена.&lt;br/&gt;Нису пронађена неслагања између екстензија датотека и стварног садржаја.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME провера завршена.&lt;br/&gt;Пронађено %1 неслагање(а) између екстензија датотека и стварног садржаја.&lt;br/&gt;&lt;br/&gt;Извештај сачуван у:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME провера није успела:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3479,18 +3460,7 @@ u smeće?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Ime</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Veličina</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Datum</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Direktorijum</translation>
@@ -3507,18 +3477,7 @@ u smeće?</translation>
         <source>File Type</source>
         <translation type="obsolete">Tip datoteke</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Fascikla</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Ime kataloga</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID kataloga</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

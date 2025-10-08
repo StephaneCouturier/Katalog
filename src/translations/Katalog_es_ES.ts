@@ -73,33 +73,9 @@
         <translation>Verificación MIME completada</translation>
     </message>
     <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Verificación MIME completada con éxito.
-    No se encontraron discrepancias entre las extensiones de archivo y el contenido real.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation>Verificación MIME completada.
-    Se encontraron %1 discrepancia(s) entre las extensiones de archivo y el contenido real.
-
-    Informe guardado en:
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Abrir informe</translation>
-    </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Falló la verificación MIME:
-    %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
@@ -249,16 +225,6 @@
         <translation>Valor</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">Verificación MIME completada.
-    Se encontraron %1 discrepancia(s) entre las extensiones de archivo y el contenido real.
-    Informe guardado en:
-    %2</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
         <translation>Carpeta de colección no válida</translation>
@@ -379,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -528,14 +494,6 @@
         <translation>ID del catálogo</translation>
     </message>
     <message>
-        <source>include hidden</source>
-        <translation type="vanished">incluir ocultos</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">incluir metadatos</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
         <translation>Almacenamiento principal</translation>
@@ -656,10 +614,6 @@
         <location line="-53"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Los catálogos activos seleccionados de &lt;b&gt;%1&lt;/b&gt; están actualizados.&amp;nbsp;&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 catálogos actualizados, %2 catálogos omitidos</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="-149"/>
@@ -1745,10 +1699,6 @@
         <translation>Incluir archivos ocultos</translation>
     </message>
     <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Incluir metadatos de archivos multimedia</translation>
-    </message>
-    <message>
         <location line="+17"/>
         <source>Follow symbolic links</source>
         <translation>Seguir enlaces simbólicos</translation>
@@ -2724,6 +2674,21 @@
         <translation>Este grupo es necesario para hospedar almacenamiento y catálogos.&lt;br/&gt;No puede eliminarse.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>Verificación MIME completada con éxito.&lt;br/&gt;No se encontraron discrepancias entre las extensiones de archivo y el contenido real.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>Verificación MIME completada.&lt;br/&gt;Se encontraron %1 discrepancia(s) entre las extensiones de archivo y el contenido real.&lt;br/&gt;&lt;br/&gt;Informe guardado en:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>Verificación MIME fallida:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-117"/>
         <source>Tag this folder</source>
         <translation>Etiquetar esta carpeta</translation>
@@ -3490,18 +3455,6 @@ a la papelera?</translation>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Nombre</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Tamaño</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Fecha</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Directorio</translation>
     </message>
@@ -3516,18 +3469,6 @@ a la papelera?</translation>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Tipo de archivo</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Carpeta</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Nombre del catálogo</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID del catálogo</translation>
     </message>
 </context>
 <context>

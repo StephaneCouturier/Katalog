@@ -73,33 +73,9 @@
         <translation>MIME-verifikation fuldført</translation>
     </message>
     <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME-verifikation fuldført med succes.
-    Ingen uoverensstemmelser fundet mellem filudvidelser og faktisk indhold.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation>MIME-verifikation fuldført.
-    %1 uoverensstemmelse(r) fundet mellem filudvidelser og faktisk indhold.
-
-    Rapport gemt i:
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Åbn rapport</translation>
-    </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME-verifikation mislykkedes:
-    %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
@@ -249,16 +225,6 @@
         <translation>Værdi</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME-verifikation fuldført.
-    %1 uoverensstemmelse(r) fundet mellem filudvidelser og faktisk indhold.
-    Rapport gemt i:
-    %2</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
         <translation>Ugyldig samlingsmappe</translation>
@@ -379,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1854,14 +1820,6 @@
         <translation>Katalog-ID</translation>
     </message>
     <message>
-        <source>include hidden</source>
-        <translation type="vanished">inkluder skjulte</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">inkluder metadata</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
         <translation>Forældrelager</translation>
@@ -2036,10 +1994,6 @@
         <location line="+79"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Udvalgte aktive kataloger fra &lt;b&gt;%1&lt;/b&gt; bliver opdateret.&amp;nbsp;&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 opdaterede kataloger, %2 oversprungne kataloger</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
@@ -2946,10 +2900,6 @@ til papirkurven?</translation>
         <translation>Inkluder metadata</translation>
     </message>
     <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Inkluder mediefiler metadata</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
         <translation>Lokal disk</translation>
@@ -3236,6 +3186,21 @@ til papirkurven?</translation>
         <translation>Denne gruppe er nødvendig for at hoste lager og kataloger.&lt;br/&gt;Den kan ikke slettes.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME-verifikation gennemført med succes.&lt;br/&gt;Ingen uoverensstemmelser fundet mellem filtyper og faktisk indhold.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME-verifikation gennemført.&lt;br/&gt;%1 uoverensstemmelse(r) fundet mellem filtyper og faktisk indhold.&lt;br/&gt;&lt;br/&gt;Rapport gemt i:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME-verifikation mislykkedes:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3490,18 +3455,6 @@ til papirkurven?</translation>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Navn</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Størrelse</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Dato</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Mappe</translation>
     </message>
@@ -3516,18 +3469,6 @@ til papirkurven?</translation>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Filtype</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Mappe</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Katalognavn</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">Katalog-ID</translation>
     </message>
 </context>
 <context>

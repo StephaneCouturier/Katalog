@@ -73,33 +73,9 @@
         <translation>MIME-Überprüfung abgeschlossen</translation>
     </message>
     <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME-Überprüfung erfolgreich abgeschlossen.
-    Keine Diskrepanzen zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation>MIME-Überprüfung abgeschlossen.
-    %1 Diskrepanz(en) zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.
-
-    Bericht gespeichert in:
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Bericht öffnen</translation>
-    </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME-Überprüfung fehlgeschlagen:
-    %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
@@ -249,16 +225,6 @@
         <translation>Wert</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME-Überprüfung abgeschlossen.
-    %1 Diskrepanz(en) zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.
-    Bericht gespeichert in:
-    %2</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
         <translation>Ungültiger Sammlungsordner</translation>
@@ -379,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1634,10 +1600,6 @@
         <translation>Versteckte Dateien einschließen</translation>
     </message>
     <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Metadaten von Mediendateien einschließen</translation>
-    </message>
-    <message>
         <location line="+17"/>
         <source>Follow symbolic links</source>
         <translation>Folgen Sie symbolischen Links</translation>
@@ -2778,14 +2740,6 @@ in den Papierkorb?</translation>
         <translation>Speicher-ID</translation>
     </message>
     <message>
-        <source>include hidden</source>
-        <translation type="vanished">Versteckt einschließen</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">Metadaten einbeziehen</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+274"/>
         <source>Parent storage</source>
         <translation>Übergeordneter Speicher</translation>
@@ -3215,10 +3169,20 @@ in den Papierkorb?</translation>
         <translation>Diese Gruppe ist zum Hosten von Speicher und Katalogen erforderlich.&lt;br/&gt;Sie kann nicht gelöscht werden.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-254"/>
-        <source>External ID</source>
-        <translation>Externe ID</translation>
-    </message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME-Überprüfung erfolgreich abgeschlossen.&lt;br/&gt;Keine Unstimmigkeiten zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME-Überprüfung abgeschlossen.&lt;br/&gt;%1 Unstimmigkeit(en) zwischen Dateierweiterungen und tatsächlichem Inhalt gefunden.&lt;br/&gt;&lt;br/&gt;Bericht gespeichert in:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME-Überprüfung fehlgeschlagen:&lt;br/&gt;%1</translation>
+        </message>
     <message>
         <location line="+1"/>
         <location line="+239"/>
@@ -3437,7 +3401,7 @@ in den Papierkorb?</translation>
         <translation>Einige Änderungen in der Speichergeräteliste wurden nicht gespeichert.&lt;br/&gt;Speichern und beenden, verwerfen und beenden oder Beenden abbrechen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-439"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-443"/>
         <source>Unassign this catalog</source>
         <translation>Heben Sie die Zuweisung dieses Katalogs auf</translation>
     </message>
@@ -3486,14 +3450,6 @@ in den Papierkorb?</translation>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Name</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Größe</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Verzeichnis</translation>
     </message>
@@ -3508,22 +3464,6 @@ in den Papierkorb?</translation>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Dateityp</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Ordner</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Katalogname</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">Katalog-ID</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Datum</translation>
     </message>
 </context>
 <context>

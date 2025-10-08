@@ -73,33 +73,9 @@
         <translation>MIME kontroll lõpetatud</translation>
     </message>
     <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME kontroll lõpetati edukalt.
-    Failide laiendite ja tegeliku sisu vahel ei leitud vastuolusid.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation>MIME kontroll lõpetatud.
-    Failide laiendite ja tegeliku sisu vahel leiti %1 vastuolu(d).
-
-    Aruanne salvestatud:
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Ava aruanne</translation>
-    </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME kontroll ebaõnnestus:
-    %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
@@ -249,16 +225,6 @@
         <translation>Väärtus</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME kontroll lõpetatud.
-    Failide laiendite ja tegeliku sisu vahel leiti %1 vastuolu(d).
-    Aruanne salvestatud:
-    %2</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
         <translation>Kehtetu kollektsiooni kaust</translation>
@@ -379,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1968,10 +1934,6 @@
         <translation>Kontrolli ühendust</translation>
     </message>
     <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Kaasa meediafailide metaandmed</translation>
-    </message>
-    <message>
         <location line="-943"/>
         <source>Follow symbolic links</source>
         <translation>Järgi sümboolseid linke</translation>
@@ -2391,19 +2353,6 @@ prügikasti?</translation>
         <translation>Kataloogi ID</translation>
     </message>
     <message>
-        <source>include hidden</source>
-        <translation type="vanished">kaasa peidetud</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">kaasa metaandmed</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
-        <source>Parent storage</source>
-        <translation>Vanem salvestusruum</translation>
-    </message>
-    <message>
         <location line="+1"/>
         <source>Fulldevice</source>
         <translation>Täisseade</translation>
@@ -2573,10 +2522,6 @@ prügikasti?</translation>
         <location line="+79"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Valitud aktiivsed kataloogid &lt;b&gt;%1&lt;/b&gt;-st on uuendatud.&amp;nbsp;&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 uuendatud kataloogi, %2 vahele jäetud kataloogi</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="-78"/>
@@ -3236,6 +3181,21 @@ prügikasti?</translation>
         <translation>See rühm on vajalik salvestusruumi ja kataloogide majutamiseks.&lt;br/&gt;Seda ei saa kustutada.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME kontrollimine lõpetatud edukalt.&lt;br/&gt;Failide laiendite ja tegeliku sisu vahel ei leitud vastuolusid.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME kontrollimine lõpetatud.&lt;br/&gt;Leiti %1 vastuolu failide laiendite ja tegeliku sisu vahel.&lt;br/&gt;&lt;br/&gt;Aruanne salvestatud asukohta:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME kontrollimine ebaõnnestus:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3490,18 +3450,6 @@ prügikasti?</translation>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Nimi</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Suurus</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Kuupäev</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Kaust</translation>
     </message>
@@ -3516,18 +3464,6 @@ prügikasti?</translation>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Faili tüüp</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Kaust</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Kataloogi nimi</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">Kataloogi ID</translation>
     </message>
 </context>
 <context>

@@ -72,35 +72,13 @@
         <source>MIME Verification Complete</source>
         <translation>Weryfikacja MIME zakończona</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Weryfikacja MIME zakończona pomyślnie.
-    Nie znaleziono niezgodności między rozszerzeniami plików a rzeczywistą zawartością.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>Weryfikacja MIME zakończona.
-    Znaleziono %1 niezgodność(ci) między rozszerzeniami plików a rzeczywistą zawartością.
-
-    Raport zapisany w:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Otwórz raport</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Weryfikacja MIME nie powiodła się:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -248,16 +226,7 @@
         <source>Value</source>
         <translation>Wartość</translation>
     </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">Weryfikacja MIME zakończona.
-    Znaleziono %1 niezgodność(ci) między rozszerzeniami plików a rzeczywistą zawartością.
-    Raport zapisany w:
-    %2</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
@@ -379,7 +348,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1853,14 +1822,7 @@
         <source>Catalog ID</source>
         <translation>ID katalogu</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">uwzględnij ukryte</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">uwzględnij metadane</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2037,10 +1999,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Wybrane aktywne katalogi z &lt;b&gt;%1&lt;/b&gt; zostały zaktualizowane.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 zaktualizowanych katalogów, %2 pominiętych katalogów</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2945,10 +2904,7 @@ do kosza?</translation>
         <source>Include Metadata</source>
         <translation>Uwzględnij metadane</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Uwzględnij metadane plików multimedialnych</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3236,6 +3192,21 @@ do kosza?</translation>
         <translation>Ta grupa jest niezbędna do hostowania miejsc przechowywania i katalogów.&lt;br/&gt;Nie może zostać usunięta.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>Weryfikacja MIME zakończona pomyślnie.&lt;br/&gt;Nie znaleziono niezgodności między rozszerzeniami plików a rzeczywistą zawartością.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>Weryfikacja MIME zakończona.&lt;br/&gt;Znaleziono %1 niezgodność(-ci) między rozszerzeniami plików a rzeczywistą zawartością.&lt;br/&gt;&lt;br/&gt;Raport zapisany w:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>Weryfikacja MIME nie powiodła się:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3489,18 +3460,7 @@ do kosza?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Nazwa</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Rozmiar</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Data</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Katalog</translation>
@@ -3517,18 +3477,7 @@ do kosza?</translation>
         <source>File Type</source>
         <translation type="obsolete">Typ pliku</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Folder</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Nazwa katalogu</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID katalogu</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

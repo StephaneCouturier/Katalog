@@ -73,33 +73,9 @@
         <translation>Ověření MIME dokončeno</translation>
     </message>
     <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Ověření MIME dokončeno úspěšně.
-    Nebyly nalezeny žádné nesrovnalosti mezi příponami souborů a skutečným obsahem.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation>Ověření MIME dokončeno.
-    Nalezeno %1 nesrovnalostí mezi příponami souborů a skutečným obsahem.
-
-    Zpráva uložena do:
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Otevřít zprávu</translation>
-    </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Ověření MIME selhalo:
-    %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
@@ -249,16 +225,6 @@
         <translation>Hodnota</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">Ověření MIME dokončeno.
-    Nalezeno %1 nesrovnalostí mezi příponami souborů a skutečným obsahem.
-    Zpráva uložena do:
-    %2</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
         <translation>Neplatná složka kolekce</translation>
@@ -379,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1479,10 +1445,6 @@
         <location line="+57"/>
         <source>Include Hidden files</source>
         <translation>Zahrnout skryté soubory</translation>
-    </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Zahrnout metadata mediálního souboru</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2976,14 +2938,6 @@ do koše?</translation>
         <translation>ID úložiště</translation>
     </message>
     <message>
-        <source>include hidden</source>
-        <translation type="vanished">zahrnovat skryté</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">obsahovat metadata</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+274"/>
         <source>Parent storage</source>
         <translation>Rodičovské úložiště</translation>
@@ -3091,10 +3045,6 @@ do koše?</translation>
         <location line="+79"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Ausgewählte aktive Kataloge von &lt;b&gt;%1&lt;/b&gt; werden aktualisiert.&amp;nbsp;&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 aktualisierte Kataloge, %2 übersprungene Kataloge</translation>
     </message>
     <message>
         <location line="+289"/>
@@ -3210,6 +3160,21 @@ do koše?</translation>
         <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
         <translation>Tato skupina je nezbytná pro hostování úložiště a katalogů.&lt;br/&gt;Nelze ji smazat.</translation>
     </message>
+    <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME ověření bylo úspěšně dokončeno.&lt;br/&gt;Nebyly nalezeny žádné nesrovnalosti mezi příponami souborů a skutečným obsahem.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME ověření dokončeno.&lt;br/&gt;Nalezeno %1 nesrovnalostí mezi příponami souborů a skutečným obsahem.&lt;br/&gt;&lt;br/&gt;Zpráva uložena do:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME ověření selhalo:&lt;br/&gt;%1</translation>
+        </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-254"/>
         <source>External ID</source>
@@ -3441,7 +3406,7 @@ do koše?</translation>
         <translation>Některé změny v seznamu úložných zařízení nebyly uloženy.&lt;br/&gt;Uložit a ukončit, zahodit a ukončit nebo zrušit ukončení?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-439"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-443"/>
         <source>Unassign this catalog</source>
         <translation>Zrušit přiřazení tohoto katalogu</translation>
     </message>
@@ -3483,14 +3448,6 @@ do koše?</translation>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Název</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Velikost</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Složku</translation>
     </message>
@@ -3505,22 +3462,6 @@ do koše?</translation>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Typ souboru</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Složka</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Název katalogu</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">Katalogové ID</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Datum</translation>
     </message>
 </context>
 <context>

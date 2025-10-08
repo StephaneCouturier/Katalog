@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>MIME pārbaude pabeigta</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME pārbaude veiksmīgi pabeigta.
-    Nav atrasti neatbilstības starp failu paplašinājumiem un faktisko saturu.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>MIME pārbaude pabeigta.
-    Atrastas %1 neatbilstības starp failu paplašinājumiem un faktisko saturu.
 
-    Ziņojums saglabāts:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Atvērt ziņojumu</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME pārbaude neizdevās:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -248,16 +227,7 @@
         <source>Value</source>
         <translation>Vērtība</translation>
     </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME pārbaude pabeigta.
-    Atrastas %1 neatbilstības starp failu paplašinājumiem un faktisko saturu.
-    Ziņojums saglabāts:
-    %2</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
@@ -379,7 +349,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1853,14 +1823,7 @@
         <source>Catalog ID</source>
         <translation>Kataloga ID</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">iekļaut slēptos</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">iekļaut metadatus</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2037,10 +2000,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Izvēlētie aktīvie katalogi no &lt;b&gt;%1&lt;/b&gt; tiek atjaunināti.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 atjaunināti katalogi, %2 izlaisti katalogi</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2945,10 +2905,7 @@ uz miskasti?</translation>
         <source>Include Metadata</source>
         <translation>Iekļaut metadatus</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Iekļaut multivides failu metadatus</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3236,6 +3193,21 @@ uz miskasti?</translation>
         <translation>Šī grupa ir nepieciešama krātuvju un katalogu izvietošanai.&lt;br/&gt;To nevar dzēst.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME pārbaude veiksmīgi pabeigta.&lt;br/&gt;Neatbilstības starp failu paplašinājumiem un faktisko saturu nav atrastas.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME pārbaude pabeigta.&lt;br/&gt;Atrastas %1 neatbilstība(-s) starp failu paplašinājumiem un faktisko saturu.&lt;br/&gt;&lt;br/&gt;Ziņojums saglabāts:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME pārbaude neizdevās:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3489,18 +3461,7 @@ uz miskasti?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Nosaukums</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Izmērs</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Datums</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Direktorija</translation>
@@ -3517,18 +3478,7 @@ uz miskasti?</translation>
         <source>File Type</source>
         <translation type="obsolete">Faila tips</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Mape</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Kataloga nosaukums</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">Kataloga ID</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

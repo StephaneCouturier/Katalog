@@ -72,35 +72,13 @@
         <source>MIME Verification Complete</source>
         <translation>MIME provjera dovršena</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME provjera uspješno dovršena.
-    Nisu pronađene neusklađenosti između ekstenzija datoteka i stvarnog sadržaja.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>MIME provjera dovršena.
-    Pronađeno %1 neusklađenost(i) između ekstenzija datoteka i stvarnog sadržaja.
-
-    Izvješće spremljeno u:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Otvori izvješće</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME provjera nije uspjela:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -248,16 +226,7 @@
         <source>Value</source>
         <translation>Vrijednost</translation>
     </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME provjera dovršena.
-    Pronađeno %1 neusklađenost(i) između ekstenzija datoteka i stvarnog sadržaja.
-    Izvješće spremljeno u:
-    %2</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
@@ -373,7 +342,7 @@
     </message>
     <message>
         <location line="+98"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1847,14 +1816,7 @@
         <source>Catalog ID</source>
         <translation>ID kataloga</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">uključi skrivene</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">uključi metapodatke</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2031,10 +1993,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Odabrani aktivni katalozi iz &lt;b&gt;%1&lt;/b&gt; su ažurirani.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 ažurirani katalozi, %2 preskočeni katalozi</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2939,10 +2898,7 @@ u smeće?</translation>
         <source>Include Metadata</source>
         <translation>Uključi metapodatke</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Uključi metapodatke medijskih datoteka</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3189,10 +3145,7 @@ u smeće?</translation>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Prvo odaberite katalog (nedostaju neke informacije).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
     </message>
-    <message>
-        <source>The source folder does not contain any file&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="vanished">Izvorna mapa ne sadrži nijednu datoteku.&amp;lt;br/&amp;gt;To bi moglo značiti da je izvor prazan ili da uređaj nije montiran u ovu mapu.&amp;lt;br/&amp;gt;Želite li ga ipak spremiti (katalog bi bio prazan)?</translation>
-    </message>
+
     <message>
         <location line="-39"/>
         <location filename="../mainwindow_tab_create.cpp" line="-21"/>
@@ -3276,6 +3229,21 @@ u smeće?</translation>
         <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
         <translation>Ova grupa je potrebna za hostiranje pohraništa i kataloga.&lt;br/&gt;Ne može se obrisati.</translation>
     </message>
+    <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME provjera uspješno završena.&lt;br/&gt;Nisu pronađena nepodudaranja između ekstenzija datoteka i stvarnog sadržaja.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME provjera završena.&lt;br/&gt;Pronađeno %1 nepodudaranje(a) između ekstenzija datoteka i stvarnog sadržaja.&lt;br/&gt;&lt;br/&gt;Izvješće spremljeno u:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME provjera neuspjela:&lt;br/&gt;%1</translation>
+        </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
@@ -3494,18 +3462,6 @@ u smeće?</translation>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Naziv</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Veličina</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Datum</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Direktorij</translation>
     </message>
@@ -3520,18 +3476,6 @@ u smeće?</translation>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Tip datoteke</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Mapa</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Naziv kataloga</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID kataloga</translation>
     </message>
 </context>
 <context>

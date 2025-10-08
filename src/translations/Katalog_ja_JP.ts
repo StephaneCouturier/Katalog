@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>MIME検証完了</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME検証が正常に完了しました。
-    ファイル拡張子と実際のコンテンツの間に不一致は見つかりませんでした。</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>MIME検証が完了しました。
-    ファイル拡張子と実際のコンテンツの間に%1個の不一致が見つかりました。
 
-    レポートの保存先:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>レポートを開く</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME検証に失敗しました:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -248,16 +227,7 @@
         <source>Value</source>
         <translation>値</translation>
     </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME検証が完了しました。
-    ファイル拡張子と実際のコンテンツの間に%1個の不一致が見つかりました。
-    レポートの保存先:
-    %2</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
@@ -379,7 +349,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1853,14 +1823,7 @@
         <source>Catalog ID</source>
         <translation>カタログID</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">隠しファイルを含む</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">メタデータを含む</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2037,10 +2000,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;から選択されたアクティブなカタログが更新されました。&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 個のカタログが更新されました、%2 個のカタログがスキップされました</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2944,10 +2904,7 @@ to the trash?</source>
         <source>Include Metadata</source>
         <translation>メタデータを含める</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">メディアファイルのメタデータを含める</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3235,6 +3192,21 @@ to the trash?</source>
         <translation>このグループはストレージとカタログをホストするために必要です。&lt;br/&gt;削除できません。</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME検証が正常に完了しました。&lt;br/&gt;ファイル拡張子と実際のコンテンツの間に不一致は見つかりませんでした。</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME検証が完了しました。&lt;br/&gt;ファイル拡張子と実際のコンテンツの間に%1件の不一致が見つかりました。&lt;br/&gt;&lt;br/&gt;レポートの保存先：&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME検証に失敗しました：&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3488,18 +3460,7 @@ to the trash?</source>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">名前</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">サイズ</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">日付</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">ディレクトリ</translation>
@@ -3516,18 +3477,7 @@ to the trash?</source>
         <source>File Type</source>
         <translation type="obsolete">ファイルタイプ</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">フォルダ</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">カタログ名</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">カタログID</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

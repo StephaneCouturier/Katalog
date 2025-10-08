@@ -73,33 +73,9 @@
         <translation>MIME проверката завърши</translation>
     </message>
     <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>MIME проверката завърши успешно.
-    Не са открити несъответствия между файловите разширения и действителното съдържание.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-
-    Report saved to:
-    %2</source>
-        <translation>MIME проверката завърши.
-    Открити са %1 несъответствия между файловите разширения и действителното съдържание.
-
-    Докладът е записан в:
-    %2</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Отвори доклада</translation>
-    </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>MIME проверката се провали:
-    %1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
@@ -249,16 +225,6 @@
         <translation>Стойност</translation>
     </message>
     <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">MIME проверката завърши.
-    Открити са %1 несъответствия между файловите разширения и действителното съдържание.
-    Докладът е записан в:
-    %2</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
         <translation>Невалидна папка на колекция</translation>
@@ -379,7 +345,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1922,10 +1888,6 @@
         <translation>Включи метаданни</translation>
     </message>
     <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Включи метаданни на медийните файлове</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="+1839"/>
         <source>Always keep one back of each catalog</source>
         <translation>Винаги пази едно резервно копие от всеки каталог</translation>
@@ -2310,14 +2272,6 @@
         <translation>ID на каталога</translation>
     </message>
     <message>
-        <source>include hidden</source>
-        <translation type="vanished">включи скритите</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">включи метаданни</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
         <translation>Родителско съхранение</translation>
@@ -2522,10 +2476,6 @@
         <translation>Използвано пространство</translation>
     </message>
     <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Премести файла в друга папка</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-398"/>
         <source>Move file to Trash</source>
         <translation>Премести файла в кошчето</translation>
@@ -2541,10 +2491,6 @@
         <translation>Потвърждение</translation>
     </message>
     <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Избери папката, в която да преместиш този файл</translation>
-    </message>
-    <message>
         <location line="-29"/>
         <location line="+3"/>
         <location line="+35"/>
@@ -2553,10 +2499,6 @@
         <location line="+64"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
-    </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Преместено в папка:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -2581,10 +2523,6 @@
         <location filename="../mainwindow_tab_search_ui.cpp" line="+3"/>
         <source>Failed to delete.</source>
         <translation>Неуспешно изтриване.</translation>
-    </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Преместването в папка неуспешно.</translation>
     </message>
     <message>
         <location line="-170"/>
@@ -2615,10 +2553,6 @@ to the trash?</source>
         <location line="+127"/>
         <source>Copy folder name</source>
         <translation>Копирай името на папката</translation>
-    </message>
-    <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Изтрий папката</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2951,6 +2885,21 @@ to the trash?</source>
         <location line="+22"/>
         <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
         <translation>Тази група е необходима за хостване на съхранения и каталози.&lt;br/&gt;Не може да бъде изтрита.</translation>
+    </message>
+    <message>
+        <location line="+253"/>
+        <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+        <translation>MIME проверката завърши успешно.&lt;br/&gt;Не са открити несъответствия между файловите разширения и действителното съдържание.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+        <translation>MIME проверката завърши.&lt;br/&gt;Открити са %1 несъответствия между файловите разширения и действителното съдържание.&lt;br/&gt;&lt;br/&gt;Отчетът е запазен в:&lt;br/&gt;%2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>MIME verification failed:&lt;br/&gt;%1</source>
+        <translation>MIME проверката се провали:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
@@ -3506,18 +3455,6 @@ to the trash?</source>
 <context>
     <name>Search</name>
     <message>
-        <source>Name</source>
-        <translation type="vanished">Име</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Размер</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Дата</translation>
-    </message>
-    <message>
         <source>Directory</source>
         <translation type="obsolete">Директория</translation>
     </message>
@@ -3532,18 +3469,6 @@ to the trash?</source>
     <message>
         <source>File Type</source>
         <translation type="obsolete">Тип файл</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Папка</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Име на каталог</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID на каталог</translation>
     </message>
 </context>
 <context>

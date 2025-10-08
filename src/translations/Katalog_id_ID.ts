@@ -72,35 +72,13 @@
         <source>MIME Verification Complete</source>
         <translation>Verifikasi MIME selesai</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Verifikasi MIME berhasil diselesaikan.
-    Tidak ditemukan ketidakcocokan antara ekstensi file dan konten sebenarnya.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>Verifikasi MIME selesai.
-    Ditemukan %1 ketidakcocokan antara ekstensi file dan konten sebenarnya.
-
-    Laporan disimpan di:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Buka laporan</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Verifikasi MIME gagal:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -248,16 +226,7 @@
         <source>Value</source>
         <translation>Nilai</translation>
     </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">Verifikasi MIME selesai.
-    Ditemukan %1 ketidakcocokan antara ekstensi file dan konten sebenarnya.
-    Laporan disimpan di:
-    %2</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
@@ -379,7 +348,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1853,14 +1822,7 @@
         <source>Catalog ID</source>
         <translation>ID Katalog</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">sertakan tersembunyi</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">sertakan metadata</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2037,10 +1999,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Katalog aktif yang dipilih dari &lt;b&gt;%1&lt;/b&gt; diperbarui.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 Katalog diperbarui, %2 Katalog dilewati</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2154,26 +2113,7 @@
         <source>Explore folder</source>
         <translation>Jelajahi folder</translation>
     </message>
-    <message>
-        <source>Move
-%1
-to another folder?</source>
-        <translation type="vanished">Pindahkan
-%1
-ke folder lain?</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Overwrite it?</source>
-        <translation type="vanished">File %&amp; sudah ada. Timpa file tersebut?</translation>
-    </message>
-    <message>
-        <source>Cancelled move to folder.</source>
-        <translation type="vanished">Dibatalkan pindah ke folder.</translation>
-    </message>
-    <message>
-        <source>This file cannot be moved (offline or not existing).</source>
-        <translation type="vanished">File ini tidak dapat dipindahkan (offline atau tidak ada).</translation>
-    </message>
+
     <message>
         <location line="+207"/>
         <location line="+573"/>
@@ -2507,10 +2447,7 @@ ke folder lain?</translation>
         <source>Choose a different name and try again.</source>
         <translation>Pilih nama yang berbeda dan coba lagi.</translation>
     </message>
-    <message>
-        <source>Resolution</source>
-        <translation type="vanished">Resolusi</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow.ui" line="+5009"/>
         <source>Check at start up</source>
@@ -2705,10 +2642,7 @@ ke folder lain?</translation>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Pramuat katalog terakhir yang dipilih saat startup untuk mempercepat pencarian berikutnya</translation>
     </message>
-    <message>
-        <source>Move file to other folder</source>
-        <translation type="vanished">Pindah file ke folder lain</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-398"/>
         <source>Move file to Trash</source>
@@ -2724,10 +2658,7 @@ ke folder lain?</translation>
         <source>Confirmation</source>
         <translation>Konfirmasi</translation>
     </message>
-    <message>
-        <source>Select the folder to move this file</source>
-        <translation type="vanished">Pilih folder untuk memindahkan file ini</translation>
-    </message>
+
     <message>
         <location line="-29"/>
         <location line="+3"/>
@@ -2738,10 +2669,7 @@ ke folder lain?</translation>
         <source>Warning</source>
         <translation>Peringatan</translation>
     </message>
-    <message>
-        <source>Moved to folder:&lt;br/&gt;</source>
-        <translation type="vanished">Dipindah ke folder:&lt;br/&gt;</translation>
-    </message>
+
     <message>
         <location line="-41"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-67"/>
@@ -2766,10 +2694,7 @@ ke folder lain?</translation>
         <source>Failed to delete.</source>
         <translation>Gagal menghapus.</translation>
     </message>
-    <message>
-        <source>Move to folder failed.</source>
-        <translation type="vanished">Pindah ke folder gagal.</translation>
-    </message>
+
     <message>
         <location line="-170"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
@@ -2901,10 +2826,7 @@ ke sampah?</translation>
         <source>Copy folder name</source>
         <translation>Salin nama folder</translation>
     </message>
-    <message>
-        <source>Delete folder</source>
-        <translation type="vanished">Hapus folder</translation>
-    </message>
+
     <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
@@ -2989,18 +2911,7 @@ ke sampah?</translation>
         <source>Include Metadata</source>
         <translation>Sertakan Metadata</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Sertakan metadata file Media</translation>
-    </message>
-    <message>
-        <source>TESTS</source>
-        <translation type="vanished">TES</translation>
-    </message>
-    <message>
-        <source>TEST MEDIA</source>
-        <translation type="vanished">TES MEDIA</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3288,6 +3199,21 @@ ke sampah?</translation>
         <translation>Grup ini diperlukan untuk meng-host Penyimpanan dan Katalog.&lt;br/&gt;Tidak dapat dihapus.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>Verifikasi MIME berhasil diselesaikan.&lt;br/&gt;Tidak ditemukan ketidaksesuaian antara ekstensi file dan konten sebenarnya.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>Verifikasi MIME selesai.&lt;br/&gt;Ditemukan %1 ketidaksesuaian antara ekstensi file dan konten sebenarnya.&lt;br/&gt;&lt;br/&gt;Laporan disimpan di:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>Verifikasi MIME gagal:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3541,18 +3467,7 @@ ke sampah?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Nama</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Ukuran</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Tanggal</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Direktori</translation>
@@ -3569,18 +3484,7 @@ ke sampah?</translation>
         <source>File Type</source>
         <translation type="obsolete">Tipe File</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Folder</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Nama Katalog</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID Katalog</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

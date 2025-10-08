@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>Перевірка MIME Завершена</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Перевірка MIME успішно завершена.
-    Невідповідностей між розширеннями файлів та фактичним вмістом не знайдено.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>Перевірка MIME завершена.
-    Знайдено %1 невідповідностей між розширеннями файлів та фактичним вмістом.
 
-    Звіт збережено у:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Відкрити Звіт</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Перевірка MIME не вдалася:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -369,7 +348,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -1843,14 +1822,7 @@
         <source>Catalog ID</source>
         <translation>ID каталогу</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">включити приховані</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">включити метадані</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -2027,10 +1999,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Вибрані активні каталоги з &lt;b&gt;%1&lt;/b&gt; оновлено.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 оновлених каталогів, %2 пропущених каталогів</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+325"/>
         <source>Update all active catalogs</source>
@@ -2935,10 +2904,7 @@ to the trash?</source>
         <source>Include Metadata</source>
         <translation>Включити метадані</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Включити метадані медіафайлів</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3226,6 +3192,21 @@ to the trash?</source>
         <translation>Ця група необхідна для розміщення сховищ та каталогів.&lt;br/&gt;Її не можна видалити.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>MIME перевірку успішно завершено.&lt;br/&gt;Невідповідностей між розширеннями файлів та фактичним вмістом не знайдено.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>MIME перевірку завершено.&lt;br/&gt;Знайдено %1 невідповідність(-ей) між розширеннями файлів та фактичним вмістом.&lt;br/&gt;&lt;br/&gt;Звіт збережено в:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>MIME перевірка не вдалася:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
         <source>Search Error</source>
@@ -3479,18 +3460,7 @@ to the trash?</source>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Назва</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Розмір</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Дата</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Каталог</translation>
@@ -3507,18 +3477,7 @@ to the trash?</source>
         <source>File Type</source>
         <translation type="obsolete">Тип файлу</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Папка</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Назва каталогу</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID каталогу</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>

@@ -72,35 +72,14 @@
         <source>MIME Verification Complete</source>
         <translation>Verifica MIME completata</translation>
     </message>
-    <message>
-        <source>MIME verification completed successfully.
-    No mismatches found between file extensions and actual content.</source>
-        <translation>Verifica MIME completata con successo.
-    Nessuna discrepanza trovata tra le estensioni dei file e il contenuto effettivo.</translation>
-    </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
 
-    Report saved to:
-    %2</source>
-        <translation>Verifica MIME completata.
-    %1 discrepanza/e trovata/e tra le estensioni dei file e il contenuto effettivo.
 
-    Rapporto salvato in:
-    %2</translation>
-    </message>
     <message>
-        <location line="+20"/>
+        <location line="+24"/>
         <source>Open Report</source>
         <translation>Apri rapporto</translation>
     </message>
-    <message>
-        <source>MIME verification failed:
-    %1</source>
-        <translation>Verifica MIME fallita:
-    %1</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
         <source>Hidden</source>
@@ -248,16 +227,7 @@
         <source>Value</source>
         <translation>Valore</translation>
     </message>
-    <message>
-        <source>MIME verification completed.
-    %1 mismatch(es) found between file extensions and actual content.
-    Report saved to:
-    %2</source>
-        <translation type="vanished">Verifica MIME completata.
-    %1 discrepanza/e trovata/e tra le estensioni dei file e il contenuto effettivo.
-    Rapporto salvato in:
-    %2</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
         <source>Invalid Collection Folder</source>
@@ -379,7 +349,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-475"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
         <location line="+83"/>
         <location line="+63"/>
         <location line="+130"/>
@@ -527,14 +497,7 @@
         <source>Catalog ID</source>
         <translation>ID catalogo</translation>
     </message>
-    <message>
-        <source>include hidden</source>
-        <translation type="vanished">includi nascosti</translation>
-    </message>
-    <message>
-        <source>include metadata</source>
-        <translation type="vanished">includi metadati</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -657,10 +620,7 @@
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;I cataloghi attivi selezionati da &lt;b&gt;%1&lt;/b&gt; sono aggiornati.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-    <message>
-        <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs, %2 skipped Catalogs</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt; %1 cataloghi aggiornati, %2 cataloghi saltati</translation>
-    </message>
+
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="-149"/>
         <source>Update all active catalogs</source>
@@ -1744,10 +1704,7 @@
         <source>Include Hidden files</source>
         <translation>Includi file nascosti</translation>
     </message>
-    <message>
-        <source>Include Media files metadata</source>
-        <translation type="vanished">Includi metadati file multimediali</translation>
-    </message>
+
     <message>
         <location line="+17"/>
         <source>Follow symbolic links</source>
@@ -2724,6 +2681,21 @@
         <translation>Questo gruppo è necessario per ospitare archiviazione e cataloghi.&lt;br/&gt;Non può essere eliminato.</translation>
     </message>
     <message>
+            <location line="+253"/>
+            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+            <translation>Verifica MIME completata con successo.&lt;br/&gt;Nessuna discrepanza trovata tra le estensioni dei file e il contenuto effettivo.</translation>
+        </message>
+        <message>
+            <location line="+3"/>
+            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+            <translation>Verifica MIME completata.&lt;br/&gt;Trovata/e %1 discrepanza/e tra le estensioni dei file e il contenuto effettivo.&lt;br/&gt;&lt;br/&gt;Report salvato in:&lt;br/&gt;%2</translation>
+        </message>
+        <message>
+            <location line="+30"/>
+            <source>MIME verification failed:&lt;br/&gt;%1</source>
+            <translation>Verifica MIME non riuscita:&lt;br/&gt;%1</translation>
+        </message>
+    <message>
         <location filename="../mainwindow_tab_explore.cpp" line="-117"/>
         <source>Tag this folder</source>
         <translation>Etichetta questa cartella</translation>
@@ -3489,18 +3461,7 @@ nel cestino?</translation>
 </context>
 <context>
     <name>Search</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Nome</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Dimensione</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation type="vanished">Data</translation>
-    </message>
+
     <message>
         <source>Directory</source>
         <translation type="obsolete">Directory</translation>
@@ -3517,18 +3478,7 @@ nel cestino?</translation>
         <source>File Type</source>
         <translation type="obsolete">Tipo file</translation>
     </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Cartella</translation>
-    </message>
-    <message>
-        <source>Catalog Name</source>
-        <translation type="vanished">Nome catalogo</translation>
-    </message>
-    <message>
-        <source>Catalog ID</source>
-        <translation type="vanished">ID catalogo</translation>
-    </message>
+
 </context>
 <context>
     <name>SearchProgressManager</name>
