@@ -2240,7 +2240,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <number>8</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="Search_label_LinkImage311">
+                    <widget class="QLabel" name="Search_label_LinkImage24">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                        <horstretch>0</horstretch>
@@ -2377,7 +2377,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLabel" name="Search_label_LinkImage2939">
+                       <widget class="QLabel" name="Search_label_LinkImage30">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                           <horstretch>0</horstretch>
@@ -2535,7 +2535,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLabel" name="Search_label_LinkImage239">
+                       <widget class="QLabel" name="Search_label_LinkImage31">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                           <horstretch>0</horstretch>
@@ -3077,7 +3077,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLabel" name="Search_label_LinkImage059">
+                       <widget class="QLabel" name="Search_label_LinkImage32">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                           <horstretch>0</horstretch>
@@ -3371,7 +3371,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <number>8</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="Search_label_LinkImage32">
+                    <widget class="QLabel" name="Search_label_LinkImage33">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                        <horstretch>0</horstretch>
