@@ -631,28 +631,41 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         return;
     }
 
+    // Create dummy Virtual device containing the active catalogs
+    Device* dummyVirtualDevice = deviceUpdateManager->createDummyDeviceFromList(collectedCatalogs);
+    currentUpdateDevice = dummyVirtualDevice;
+    setCatalogUpdateUIState(true);
+
+    // Use DeviceUpdateManager
+    deviceUpdateManager->updateDeviceHierarchy(
+        dummyVirtualDevice,
+        collection->databaseMode,
+        collection->folder,
+        "update"
+        );
+
     // Initialize batch operation in CatalogManager (instead of setting MainWindow properties)
-    if (catalogManager) {
-        qDebug() << "Initializing batch operation in CatalogManager";
-        catalogManager->initializeBatchOperation(collectedCatalogs, collection->databaseMode, collection->folder);
+    // if (catalogManager) {
+    //     qDebug() << "Initializing batch operation in CatalogManager";
+    //     catalogManager->initializeBatchOperation(collectedCatalogs, collection->databaseMode, collection->folder);
 
-        // Set baseline: skipped count starts with inactive catalogs
-        catalogManager->setInitialSkippedCount(inactiveCatalogs);
-        qDebug() << "Set initial skipped count to:" << inactiveCatalogs;
+    //     // Set baseline: skipped count starts with inactive catalogs
+    //     catalogManager->setInitialSkippedCount(inactiveCatalogs);
+    //     qDebug() << "Set initial skipped count to:" << inactiveCatalogs;
 
-        // Disable the button during batch operation
-        ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
-        qDebug() << "Disabled UpdateAllActive button during batch";
+    //     // Disable the button during batch operation
+    //     ui->Catalogs_pushButton_UpdateAllActive->setEnabled(false);
+    //     qDebug() << "Disabled UpdateAllActive button during batch";
 
-        // Start the batch operation
-        qDebug() << "Starting batch operation via CatalogManager";
-        catalogManager->startCurrentBatchCatalog();
+    //     // Start the batch operation
+    //     qDebug() << "Starting batch operation via CatalogManager";
+    //     catalogManager->startCurrentBatchCatalog();
 
-    } else {
-        qDebug() << "ERROR: catalogManager is null!";
-        // Clean up collected catalogs if we can't proceed
-        qDeleteAll(collectedCatalogs);
-    }
+    // } else {
+    //     qDebug() << "ERROR: catalogManager is null!";
+    //     // Clean up collected catalogs if we can't proceed
+    //     qDeleteAll(collectedCatalogs);
+    // }
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_Stop_clicked()
