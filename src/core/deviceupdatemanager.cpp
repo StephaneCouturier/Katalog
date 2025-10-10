@@ -1500,14 +1500,6 @@ void DeviceUpdateManager::initializeStorageBatchProcessing(Device* storageDevice
 
 void DeviceUpdateManager::completeStorageBatchOperation()
 {
-    qDebug() << "=== DeviceUpdateManager::completeStorageBatchOperation ===";
-    qDebug() << "Final batch summary:";
-    qDebug() << "  Updated catalogs:" << m_updatedCatalogs;
-    qDebug() << "  Skipped catalogs:" << m_skippedCatalogs;
-    qDebug() << "  Total catalog files:" << m_totalCatalogFiles;
-    qDebug() << "  Total catalog size:" << m_totalCatalogSize;
-    qDebug() << "  Storage was updated:" << m_storageWasUpdated;
-
     // Update parent numbers for the entire storage hierarchy
     if (m_currentStorageDevice) {
         try {
@@ -1525,16 +1517,6 @@ void DeviceUpdateManager::completeStorageBatchOperation()
     // Build final results for the storage batch
     QList<qint64> results = buildStorageBatchResults(m_currentStorageDevice);
 
-    qDebug() << "*** EMITTING operationCompleted for Storage batch ***";
-    qDebug() << "Results[0] (success):" << results[0];
-    qDebug() << "Results[1] (total files):" << results[1];
-    qDebug() << "Results[5] (updated catalogs):" << results[5];
-    qDebug() << "Results[6] (skipped catalogs):" << results[6];
-    qDebug() << "Results[7] (storage updated):" << results[7];
-
-    // For Storage batch operations, report storage update and catalog summary
-    m_updateType = "list";
-
     emit operationCompleted(results);
     emit operationRunningChanged();
 
@@ -1546,9 +1528,6 @@ void DeviceUpdateManager::completeStorageBatchOperation()
 
 void DeviceUpdateManager::processNextStorageChild()
 {
-    qDebug() << "=== DeviceUpdateManager::processNextStorageChild ===";
-    qDebug() << "Current child index:" << m_currentChildIndex << "/ Total children:" << m_childrenToProcess.size();
-
     // Check stop conditions first
     if (!shouldContinue()) {
         qDebug() << "Stop requested during batch processing";

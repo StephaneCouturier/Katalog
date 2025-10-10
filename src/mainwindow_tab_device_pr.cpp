@@ -2901,12 +2901,10 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
     //Storage updates
     if (device->type=="Storage" and updateType=="update"){
         //Storage
-        message += "<br/>";
         message += "<table>";
         message += "<tr><td>"+tr("Storage updated: ")+ "</td><td align='center'><b>" + device->name + "</b></td></tr>";
         message += "<tr><td>"+tr("Path: ")           + "</td><td align='right'> <b>" + device->path + "</b></td></tr>";
         message += "</table>";
-        message += "<br/>";
 
         //Catalogs
         message += "<br/>";
