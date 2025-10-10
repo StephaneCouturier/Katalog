@@ -77,6 +77,7 @@ signals:
     void deviceProcessingStarted(const QString& deviceName, const QString& deviceType);
     void deviceProcessingCompleted(const QString& deviceName);
     void catalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString& currentPath);
+    void catalogCompletedInBatch(Device* catalogDevice, const QList<qint64>& results);
 
 private slots:
     void onCatalogOperationCompleted();

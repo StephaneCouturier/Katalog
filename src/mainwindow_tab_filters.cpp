@@ -206,12 +206,15 @@
                 for (int i = 0; i < selectedDevice->deviceIDList.size(); ++i) {
                     qDebug() << "  Child ID" << i << ":" << selectedDevice->deviceIDList[i];
                 }
-setCatalogUpdateUIState(true);
+
+                setCatalogUpdateUIState(true);
+
                 // Use unified DeviceUpdateManager for Storage devices
                 deviceUpdateManager->updateDeviceHierarchy(
                     selectedDevice,
                     collection->databaseMode,
-                    collection->folder
+                    collection->folder,
+                    "update"
                     );
                 qDebug() << "Device operation started using DeviceUpdateManager";
             });

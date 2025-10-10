@@ -1272,9 +1272,9 @@ void DeviceUpdateManager::onCatalogOperationCompleted()
         m_totalCatalogFiles += m_currentDevice->totalFileCount;
         m_totalCatalogSize += m_currentDevice->totalFileSize;
 
-        // DEBUG: Show values after incrementing
-        qDebug() << "AFTER increment - m_updatedCatalogs:" << m_updatedCatalogs;
-        qDebug() << "AFTER accumulate - m_totalCatalogFiles:" << m_totalCatalogFiles << "m_totalCatalogSize:" << m_totalCatalogSize;
+        // Emit individual report signal for this catalog
+        QList<qint64> catalogResults = buildCatalogUpdateResults(m_currentDevice, m_storageUpdateResult);
+        emit catalogCompletedInBatch(m_currentDevice, catalogResults);
 
         // Continue with next Virtual child
         QTimer::singleShot(50, this, [this]() {
