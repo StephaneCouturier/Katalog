@@ -504,7 +504,7 @@ void MainWindow::addDeviceStorage(int parentID)
     newDevice->externalID = newDevice->storage->ID;
     newDevice->groupID = 0;
     newDevice->insertDevice();
-    newDevice->storage->name = newDevice->name; //REMOVE
+    newDevice->storage->name = newDevice->name;
     newDevice->storage->insertStorage();
 
     //Save data to file
@@ -2718,11 +2718,11 @@ void MainWindow::importFromVVV()
                                                 folder_catalog_name,
                                                 folder_path
                                             FROM folder
-                                            WHERE folder_catalog_name =:folder_catalog_name
+                                            WHERE folder_catalog_id =:folder_catalog_id
                                         )");
             QSqlQuery listFoldersQuery(QSqlDatabase::database(m_connectionName));
             listFoldersQuery.prepare(listFoldersSQL);
-            listFoldersQuery.bindValue(":folder_catalog_name", importedDevice.name);
+            listFoldersQuery.bindValue(":folder_catalog_id", importedDevice.externalID);
             listFoldersQuery.exec();
 
             //Write the results in the file
@@ -2751,11 +2751,11 @@ void MainWindow::createMissingParentDirectories() {
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
 
     // Select distinct folder paths
-    query.exec("SELECT DISTINCT folder_catalog_name, folder_path FROM folder");
+    query.exec("SELECT DISTINCT folder_catalog_id, folder_path FROM folder");
 
     // Iterate through the result set
     while (query.next()) {
-        QString folderCatalogName = query.value(0).toString();
+        int folderCatalogID = query.value(0).toInt();
         QString folderPath = query.value(1).toString();
 
         // Split the folder path into components
@@ -2768,8 +2768,8 @@ void MainWindow::createMissingParentDirectories() {
 
             // Check if the current path exists in the table
             QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
-            checkQuery.prepare("SELECT 1 FROM folder WHERE folder_catalog_name = :catalog AND folder_path = :path");
-            checkQuery.bindValue(":catalog", folderCatalogName);
+            checkQuery.prepare("SELECT 1 FROM folder WHERE folder_catalog_id = :catalog_id AND folder_path = :path");
+            checkQuery.bindValue(":folder_catalog_id", folderCatalogID);
             checkQuery.bindValue(":path", currentPath);
 
             if (!checkQuery.exec()) {
@@ -2779,8 +2779,8 @@ void MainWindow::createMissingParentDirectories() {
             // If the current path doesn't exist, insert it
             if (!checkQuery.next()) {
                 QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
-                insertQuery.prepare("INSERT INTO folder (folder_catalog_name, folder_path) VALUES (:catalog, :path)");
-                insertQuery.bindValue(":catalog", folderCatalogName);
+                insertQuery.prepare("INSERT INTO folder (folder_catalog_id, folder_path) VALUES (:folder_catalog_id, :path)");
+                insertQuery.bindValue(":folder_catalog_id", folderCatalogID);
                 insertQuery.bindValue(":path", currentPath);
 
                 if (!insertQuery.exec()) {

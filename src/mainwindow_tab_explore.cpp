@@ -609,7 +609,7 @@
                                         audio_album,
                                         audio_title
                                 FROM    file
-                                WHERE   file_catalog =:file_catalog
+                                WHERE   file_catalog_id =:file_catalog_id
                                 AND     file_folder_path =:file_folder_path
 
                                 ORDER BY order_value ASC
@@ -624,7 +624,7 @@
         loadCatalogQuery.bindValue(":folder_catalog_id", exploreDevice->externalID);
 
         // fill lists depending on directory selection source
-        loadCatalogQuery.bindValue(":file_catalog", exploreDevice->name);
+        loadCatalogQuery.bindValue(":file_catalog_id", exploreDevice->externalID);
 
         if(exploreDevice->path == exploreSelectedDirectoryName){
             loadCatalogQuery.bindValue(":file_folder_path",exploreSelectedDirectoryName);

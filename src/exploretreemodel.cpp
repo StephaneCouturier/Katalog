@@ -147,8 +147,15 @@ void ExploreTreeModel::setCatalog(int newCatalogID, QString newCatalogSourcePath
 
     catalogSourcePath = newCatalogSourcePath;
 
+    // Handle special case for EXPORT catalogs or paths without separators
     int pos = newCatalogSourcePath.lastIndexOf(QChar('/'));
-    catalogSourcePathRoot = newCatalogSourcePath.left(pos);
+    if (pos >= 0) {
+        catalogSourcePathRoot = newCatalogSourcePath.left(pos);
+    } else {
+        // For paths like "EXPORT" with no separator, use empty string
+        // This will make REPLACE work correctly in setupModelData
+        catalogSourcePathRoot = "";
+    }
 }
 
 void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)

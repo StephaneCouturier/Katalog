@@ -1619,11 +1619,14 @@
                                                     )");
                         insertFolderQuery.prepare(insertFolderSQL);
 
-                        //Insert root folder (so that it is displayed even when there are no sub-folders)
-                        insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_catalog_id", newDevice->catalog->ID);
-                        insertFolderQuery.bindValue(":folder_path", newDevice->catalog->sourcePath);
-                        insertFolderQuery.exec();
+                        //Insert root folder (so that it is displayed even when there are no sub-folders, except for search exports)
+                        if (newDevice->catalog->sourcePath != "EXPORT" &&
+                            newDevice->catalog->sourcePath.contains("/")) {
+                            insertFolderQuery.prepare(insertFolderSQL);
+                            insertFolderQuery.bindValue(":folder_catalog_id", newDevice->catalog->ID);
+                            insertFolderQuery.bindValue(":folder_path", newDevice->catalog->sourcePath);
+                            insertFolderQuery.exec();
+                        }
 
                         //Insert dirs
                             insertFolderQuery.prepare(insertFolderSQL);
@@ -1745,8 +1748,6 @@
                                        + ((i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : "");
                         stream << line << '\n';
                     }
-
-
                 }
                 exportFile.close();
 

@@ -169,11 +169,11 @@ void Catalog::setDateUpdated(QDateTime dateTime)
         QString catalogQuerySQL = QLatin1String(R"(
                                             UPDATE catalog
                                             SET catalog_date_updated =:catalog_date_updated
-                                            WHERE catalog_name =:catalog_name
+                                            WHERE catalog_id =:catalog_id
                                           )");
         catalogQuery.prepare(catalogQuerySQL);
         catalogQuery.bindValue(":catalog_date_updated", dateUpdated.toString("yyyy-MM-dd hh:mm:ss"));
-        catalogQuery.bindValue(":catalog_name",        name);
+        catalogQuery.bindValue(":catalog_name", ID);
         catalogQuery.exec();
     }
     else
@@ -259,18 +259,18 @@ void Catalog::deleteCatalog()
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
                             DELETE FROM catalog
-                            WHERE catalog_name=:catalog_name
+                            WHERE catalog_id=:catalog_id
                         )");
     query.prepare(querySQL);
-    query.bindValue(":catalog_name", name);
+    query.bindValue(":catalog_id", ID);
     query.exec();
 
     querySQL = QLatin1String(R"(
                         DELETE FROM file
-                        WHERE file_catalog =:file_catalog
+                        WHERE file_catalog_id =:file_catalog_id
                     )");
     query.prepare(querySQL);
-    query.bindValue(":file_catalog ", name);
+    query.bindValue(":file_catalog_id ", ID);
     query.exec();
 
 }
@@ -432,11 +432,11 @@ void Catalog::renameCatalog(QString newCatalogName)
     QString querySQL = QLatin1String(R"(
                                 UPDATE catalog
                                 SET   catalog_name=:new_catalog_name
-                                WHERE catalog_name=:catalog_name
+                                WHERE catalog_id=:catalog_id
                             )");
     query.prepare(querySQL);
     query.bindValue(":new_catalog_name",newCatalogName);
-    query.bindValue(":catalog_name",name);
+    query.bindValue(":catalog_id",ID);
     query.exec();
     query.next();
 
@@ -912,11 +912,11 @@ bool Catalog::catalogNameExists()
     QString querySQL = QLatin1String(R"(
                                     SELECT COUNT(*)
                                     FROM   catalog
-                                    WHERE  catalog_name = :catalog_name
+                                    WHERE  catalog_id = :catalog_id
                                 )");
 
     query.prepare(querySQL);
-    query.bindValue(":catalog_name", name);
+    query.bindValue(":catalog_id", ID);
 
     if (!query.exec()) {
         // Handle SQL error
