@@ -922,7 +922,7 @@ void MainWindow::displaySearchResults()
     currentSearch->calculateStatistics();
 
     // Process results to populate the catalog model
-    currentSearch->processResults(currentSearch->showFoldersOnly);
+    currentSearch->processResults();
 
     // List of catalogs in which results were found
     if (currentSearch->deviceFoundModel) {

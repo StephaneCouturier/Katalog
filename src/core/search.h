@@ -193,7 +193,7 @@ public:
     // Core search functionality
     void prepareSearchPatterns();
     void setMultipliers();
-    void processResults(bool handleFoldersOnly = true);
+    void processResults();
     void calculateStatistics();
     virtual void processDuplicates(const QString &connectionName);
     virtual void processDifferences(const QString &connectionName);

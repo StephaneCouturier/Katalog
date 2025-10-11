@@ -331,7 +331,7 @@ void Search::setMultipliers()
         sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024 * 1024 * 1024;
 }
 
-void Search::processResults(bool handleFoldersOnly)
+void Search::processResults()
 {
     // Process search results: list of catalogs with results
     deviceFoundModel->clear();
@@ -382,7 +382,7 @@ void Search::processResults(bool handleFoldersOnly)
     }
 
     // Process folders only if this option is selected
-    if (handleFoldersOnly && searchOnFolderCriteria == true && showFoldersOnly == true) {
+    if (searchOnFolderCriteria == true && showFoldersOnly == true) {
         QMap<QString, QPair<QString, int>> uniqueFilePaths;
 
         for (int i = 0; i < filePaths.size(); ++i) {
