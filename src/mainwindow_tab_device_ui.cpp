@@ -302,7 +302,9 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         deviceContextMenu.addSeparator();
 
-        if(activeDevice->groupID !=0){
+        // Show "Unassign" only for assigned catalogs (not exports)
+        // Show "Delete" for exports and physical group catalogs
+        if(activeDevice->groupID != 0 && activeDevice->path != "EXPORT"){
             QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this catalog"), this);
             deviceContextMenu.addAction(menuDeviceAction3);
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
@@ -314,7 +316,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             deviceContextMenu.addAction(menuDeviceAction4);
             connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
                 deleteDeviceItem();
-
             });
         }
 
