@@ -1642,7 +1642,7 @@
 
                             insertFileQuery.bindValue(":file_catalog_id",   newDevice->catalog->ID);
                             insertFileQuery.bindValue(":file_name",         currentSearch->fileNames[i]);
-                            insertFileQuery.bindValue(":file_size",         QLocale().toString(currentSearch->fileSizes[i]));
+                            insertFileQuery.bindValue(":file_size",         currentSearch->fileSizes[i]);
                             insertFileQuery.bindValue(":file_folder_path",  currentSearch->filePaths[i]);
                             insertFileQuery.bindValue(":file_date_updated", currentSearch->fileDateTimes[i]);
                             insertFileQuery.bindValue(":file_catalog",      currentSearch->fileCatalogs[i]);
@@ -1713,7 +1713,8 @@
                     {
                         //Export to file
                         QString line = currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i] + "\t"
-                                       + QLocale().toString(currentSearch->fileSizes[i]) + "\t"
+                                       + QString::number(currentSearch->fileSizes[i]) + "\t"
+                                       + currentSearch->fileDateTimes[i] + "\t"
                                        + currentSearch->fileDateTimes[i] + "\t"
                                        + currentSearch->fileCatalogs[i] + "\t"
                                        + ((i < currentSearch->fileExtensions.size()) ? currentSearch->fileExtensions[i] : "") + "\t"  // Use the array
