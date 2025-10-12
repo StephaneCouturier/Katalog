@@ -629,12 +629,10 @@
         if(exploreDevice->path == exploreSelectedDirectoryName){
             loadCatalogQuery.bindValue(":file_folder_path",exploreSelectedDirectoryName);
             loadCatalogQuery.bindValue(":selectedCatalogPath", exploreSelectedDirectoryName);
-            //loadCatalogQuery.bindValue(":selected_directory_full_path",selectedDirectoryFullPath);
         }
         else{
             loadCatalogQuery.bindValue(":file_folder_path", exploreSelectedFolderFullPath);
             loadCatalogQuery.bindValue(":selectedCatalogPath", exploreSelectedFolderFullPath);
-            //loadCatalogQuery.bindValue(":selected_directory_full_path",selectedDirectoryFullPath);
         }
 
         loadCatalogQuery.bindValue(":selected_directory_full_path", exploreSelectedFolderFullPath);

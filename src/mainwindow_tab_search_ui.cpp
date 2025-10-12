@@ -1472,6 +1472,10 @@
                     newDevice->externalID = newDevice->catalog->ID;
                     newDevice->groupID = 1;
                     newDevice->path = "EXPORT"; //there is not 1 path for a given search that can be multi-catalog
+
+                    newDevice->catalog->setDateUpdated(QDateTime());  // Sets to current time and updates DB
+                    newDevice->catalog->setDateLoaded(QDateTime().addMSecs(100));   // Sets to current time and updates DB
+
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the new Catalog
@@ -1698,15 +1702,6 @@
 
                     QTextStream stream(&exportFile);
 
-                    QString csvHeader = "file_full_path\tfile_size\tfile_date_updated\tfile_catalog\t"
-                                        "file_extension\tfile_type\tmime_type\tmime_verified\ttype_mismatch\t"
-                                        "image_width\timage_height\timage_orientation\t"
-                                        "video_duration_seconds\tvideo_width\tvideo_height\tvideo_codec\tvideo_framerate\tvideo_bitrate\t"
-                                        "audio_duration_seconds\taudio_artist\taudio_album\taudio_title\taudio_genre\taudio_year\t"
-                                        "audio_track_number\taudio_bitrate\taudio_sample_rate\t"
-                                        "metadata_extended\tmetadata_extraction_date";
-                    stream << csvHeader << '\n';
-
                     //Export file metadata
                     for (int i = 0; i < catalogMetadata.size(); ++i)
                     {
@@ -1751,16 +1746,16 @@
                 }
                 exportFile.close();
 
-                //Load files
-                QDateTime emptyDateTime = *new QDateTime;
-                selectedDevice->catalog->setDateLoaded(emptyDateTime);
-                selectedDevice->catalog->setDateUpdated(QDateTime::currentDateTime().addMSecs(100));
-                QMutex tempMutex;
-                bool tempStopRequested = false;
-                if(collection->databaseMode=="Memory")
-                    selectedDevice->catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
+                QFileInfo exportFileInfo(fullFileName);
+
+                selectedDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->folder);
+
                 //Refresh catalogs
                 loadCollection();
+                //Reload this catalog as it was cleared
+                selectedDevice->ID = newDevice->ID;
+                selectedDevice->loadDevice(m_connectionName);
+
                 loadStorageList();
 
                 //Select new catalog with results
