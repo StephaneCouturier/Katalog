@@ -1464,11 +1464,21 @@ void MainWindow::loadDevicesStorageToModel(){
         rowItems << new QStandardItem(QString::number(id));         //3
         rowItems << new QStandardItem(QString::number(parentId));   //4
         rowItems << new QStandardItem(QString::number(externalId)); //5
-        rowItems << new QStandardItem(QString::number(number));     //6
-        rowItems << new QStandardItem(QString::number(size));       //7
-        rowItems << new QStandardItem(QString::number(used_space)); //8
-        rowItems << new QStandardItem(QString::number(free_space)); //9
-        rowItems << new QStandardItem(QString::number(total_space));//10
+        QStandardItem *numberItem = new QStandardItem();
+        numberItem->setData(number, Qt::DisplayRole);
+        rowItems << numberItem;                                     //6
+        QStandardItem *sizeItem = new QStandardItem();
+        sizeItem->setData(size, Qt::DisplayRole);
+        rowItems << sizeItem;                                       //7
+        QStandardItem *usedSpaceItem = new QStandardItem();
+        usedSpaceItem->setData(used_space, Qt::DisplayRole);
+        rowItems << usedSpaceItem;                                  //8
+        QStandardItem *freeSpaceItem = new QStandardItem();
+        freeSpaceItem->setData(free_space, Qt::DisplayRole);
+        rowItems << freeSpaceItem;                                  //9
+        QStandardItem *totalSpaceItem = new QStandardItem();
+        totalSpaceItem->setData(total_space, Qt::DisplayRole);
+        rowItems << totalSpaceItem;                                 //10
         rowItems << new QStandardItem(dateTimeUpdated);             //11
         rowItems << new QStandardItem(path);                        //12
         rowItems << new QStandardItem(QString::number(groupID));    //13
