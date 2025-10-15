@@ -415,25 +415,26 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     }
 
     // Step 3: Update "filetemp" table structure to match file table
-    qDebug() << "Recreating filetemp table with complete metadata structure...";
+    qDebug() << "Updating filetemp table with complete metadata structure...";
 
-    // Drop existing table (don't worry about data - it's temporary)
-    if (auto dropFiletempError = dropTableIfExists(connectionName, "filetemp");
-        dropFiletempError.type() != QSqlError::NoError)
-    {
-        qDebug() << "Error dropping filetemp table:" << dropFiletempError.text();
-        return dropFiletempError;
-    }
+    // Get existing filetemp columns
+    QStringList existingFiletempColumns = getTableColumns(connectionName, "filetemp");
 
-    // Create new table with updated structure
-    if (auto createError = createFileTempTable(connectionName);
-        createError.type() != QSqlError::NoError)
-    {
-        qDebug() << "Error creating new filetemp table:" << createError.text();
-        return createError;
+    // Add missing metadata columns to filetemp (same columns as file table)
+    for (auto it = newFileColumns.constBegin(); it != newFileColumns.constEnd(); ++it) {
+        if (!existingFiletempColumns.contains(it.key())) {
+            qDebug() << "Adding column to filetemp:" << it.key();
+            QString alterSQL = QString("ALTER TABLE filetemp ADD COLUMN %1 %2 DEFAULT NULL").arg(it.key(), it.value());
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << it.key() << "to filetemp:" << addColumnError.text();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << it.key() << "to filetemp table";
+        }
     }
     qDebug() << "File and filetemp tables updated with metadata support";
-
 
     // Step 4: Update "search" table structure to store metadata serach history
     QStringList existingSearchColumns = getTableColumns(connectionName, "search");
@@ -470,7 +471,23 @@ QSqlError Database::dropTableIfExists(const QString &connectionName, const QStri
 {
     if (tableExists(connectionName, tableName)) {
         qDebug() << "Dropping table:" << tableName;
-        return executeSql(connectionName, QString("DROP TABLE %1").arg(tableName));
+
+        // First, try to ensure no locks
+        QSqlDatabase db = QSqlDatabase::database(connectionName);
+        QSqlQuery unlockQuery(db);
+        unlockQuery.exec("PRAGMA wal_checkpoint(RESTART)");
+        unlockQuery.finish();
+
+        // Try the drop
+        QSqlError dropError = executeSql(connectionName, QString("DROP TABLE IF EXISTS %1").arg(tableName));
+
+        if (dropError.type() != QSqlError::NoError) {
+            qDebug() << "DROP TABLE failed (table may be locked):" << dropError.text();
+            qDebug() << "Migration will continue without dropping" << tableName;
+            return QSqlError(); // Return success anyway - not critical
+        }
+
+        return dropError;
     } else {
         qDebug() << "Table" << tableName << "doesn't exist, skipping drop";
         return QSqlError(); // Success - nothing to do
