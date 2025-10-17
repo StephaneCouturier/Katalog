@@ -860,8 +860,6 @@
             }
         }
 
-<<<<<<< Updated upstream
-=======
         //Filters widget
         ui->main_widget_ShowFilters->setStyleSheet(
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
@@ -894,8 +892,6 @@
             "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
             );
 
-
->>>>>>> Stashed changes
         //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
             "QPushButton           { background-color: #81d41a; } "
