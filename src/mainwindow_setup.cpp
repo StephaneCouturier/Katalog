@@ -645,15 +645,19 @@
         themeColor="blue";
         if(themeColor=="dev"){
             QFile file(":styles/tabwidget_dev_light.css");
-            file.open(QFile::ReadOnly);
-            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
-            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+            if (file.open(QFile::ReadOnly)) {
+                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+                file.close();
+            }
         }
         else if(themeColor=="blue"){
             QFile file(":styles/tabwidget_blue_light.css");
-            file.open(QFile::ReadOnly);
-            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
-            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+            if (file.open(QFile::ReadOnly)) {
+                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+                file.close();
+            }
         }
 
         //Filters widget
@@ -832,16 +836,20 @@
         //Tab widget, including combo boxes and buttons
         themeColor="blue";
         if(themeColor=="dev"){
-            QFile file(":styles/tabwidget_dev.css");
-            file.open(QFile::ReadOnly);
-            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
-            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+            QFile file(":styles/tabwidget_dev_light.css");
+            if (file.open(QFile::ReadOnly)) {
+                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+                file.close();
+            }
         }
         else if(themeColor=="blue"){
             QFile file(":styles/tabwidget_blue_dark.css");
-            file.open(QFile::ReadOnly);
-            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
-            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+            if (file.open(QFile::ReadOnly)) {
+                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+                file.close();
+            }
         }
 
         //Colored buttons
