@@ -32,6 +32,7 @@
 #include "device.h"
 #include <QSqlError>
 #include <QApplication>
+#include <qelapsedtimer.h>
 
 void Device::loadDevice(QString connectionName){
     QElapsedTimer totalTimer;

@@ -430,13 +430,12 @@
             if (query.next()) {
                 maxTreeLevels = query.value(0).toInt();
             }
-            if (maxTreeLevels == 0) maxTreeLevels = 3; // fallback
+            if (maxTreeLevels == 0) maxTreeLevels = 4; // fallback
         }
 
         // Bounds checking
         if (expandState < -1) expandState = -1;
-        if (expandState >= maxTreeLevels) expandState = maxTreeLevels - 1;
-
+        if (expandState >= maxTreeLevels) expandState = maxTreeLevels; // Did not put - 1 to let it 1 level beyond max, so that 1 first catalog created is displayed in blank collection
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
         settings.setValue(settingsKey, expandState);
 

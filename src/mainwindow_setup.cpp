@@ -642,15 +642,15 @@
         //purple dark	8b1871
 
         //Tab widget, including combo boxes and buttons
-
+        themeColor="blue";
         if(themeColor=="dev"){
-            QFile file(":styles/tabwidget_dev.css");
+            QFile file(":styles/tabwidget_dev_light.css");
             file.open(QFile::ReadOnly);
             QString tabwidgetStyleSheet = QLatin1String(file.readAll());
             ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
         }
         else if(themeColor=="blue"){
-            QFile file(":styles/tabwidget_blue.css");
+            QFile file(":styles/tabwidget_blue_light.css");
             file.open(QFile::ReadOnly);
             QString tabwidgetStyleSheet = QLatin1String(file.readAll());
             ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
@@ -830,36 +830,19 @@
         //purple dark	8b1871
 
         //Tab widget, including combo boxes and buttons
-
-        QString styleSheetText = QLatin1String(R"(
-                        QTabWidget            { padding: 10px; margin: 0px; background-color: #095676; }
-                        QTabWidget::tab-bar   { left: 0px; height: 38px;}
-
-                        QTabBar               { background:  url(:images/Appname_Logo.png) no-repeat right; background-color: #0D79A6;
-                                                border-top-left-radius:  3px;
-                                                border-top-right-radius: 3px;
-                                              }
-                        QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
-
-                        QTabBar:tab:first     { margin-left:  6px; }
-                        QTabBar::tab          { background-color: #0D79A6; color: #000;
-                                                padding-top: 3px; padding-bottom: 6px; padding-left:  6px; padding-right: 10px;
-                                                margin-top: 6px; margin-bottom: 0px;
-                                                border-top-left-radius:  3px;
-                                                border-top-right-radius: 3px;
-                        }
-
-                        QTabBar::tab::hover   { background-color: #095676; color: #FFF; }
-
-                        QTabBar::tab:selected { background-color: #2a2e32; color: #FFF;
-                                                /*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #8b1871, stop: 1 #eff0f1); */
-                        }
-
-                        QTabBar::tab:!selected{  }
-
-            )");
-
-        ui->tabWidget->setStyleSheet(styleSheetText);
+        themeColor="blue";
+        if(themeColor=="dev"){
+            QFile file(":styles/tabwidget_dev.css");
+            file.open(QFile::ReadOnly);
+            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+        }
+        else if(themeColor=="blue"){
+            QFile file(":styles/tabwidget_blue_dark.css");
+            file.open(QFile::ReadOnly);
+            QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+            ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
+        }
 
         //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
