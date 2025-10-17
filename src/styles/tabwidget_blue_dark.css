@@ -32,3 +32,5 @@ QComboBox             { padding: 0px 0px; margin: 0px; }
 QComboBox             { padding-left: 6px; }
 
 QFrame                { color: #333; }
+
+QTabWidget QLabel     { color: #39b2e5; }
