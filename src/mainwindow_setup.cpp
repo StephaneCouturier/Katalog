@@ -679,8 +679,9 @@
             );
 
         ui->Filters_widget->setStyleSheet(
-            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
-            "QLabel                { color: #095676; }"
+            "QComboBox             { background-color: #333; padding-left: 6px; }"
+            "QLabel                { color: #095676; }"        // Title labels (blue)
+            "QLabel[objectName*=\"Display\"] { color: #333; }"
             "QTabBar::tab          { height: 30px; }"
             "QTabWidget::tab-bar   { left: 0px; }"
             "QTabWidget            { padding: 0px; margin: 0px; }"
@@ -819,6 +820,12 @@
         ui->BackUp_treeView_List2->setStyleSheet(
             "QTreeView { alternate-background-color: #e9f7fc;}"
             );
+
+        QString additionalStyles = ui->tabWidget->styleSheet() +
+                                   "QTabWidget QLabel { color: #095676; }"
+                                   "QTabWidget QLabel[objectName*=\"Value\"], "
+                                   "QTabWidget QLabel[objectName*=\"Display\"] { color: #333; }";
+        ui->tabWidget->setStyleSheet(additionalStyles);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeDark()
@@ -853,6 +860,42 @@
             }
         }
 
+<<<<<<< Updated upstream
+=======
+        //Filters widget
+        ui->main_widget_ShowFilters->setStyleSheet(
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+            );
+
+        ui->Filters_widget_Hide->setStyleSheet(
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+
+            );
+
+        ui->Filters_label_Selection->setStyleSheet(
+            "color: #39b2e5;"
+            );
+
+        ui->Filters_widget->setStyleSheet(
+            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
+            "QLabel                { color: #39b2e5; }"        // Title labels (blue)
+            "QLabel[objectName*=\"Display\"] { color: #FFF; }"
+
+            "QTabBar::tab          { height: 30px; }"
+            "QTabWidget::tab-bar   { left: 0px; }"
+            "QTabWidget            { padding: 0px; margin: 0px; }"
+
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+            );
+
+
+>>>>>>> Stashed changes
         //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
             "QPushButton           { background-color: #81d41a; } "
@@ -983,6 +1026,12 @@
         ui->BackUp_treeView_List2->setStyleSheet(
             "QTreeView { alternate-background-color: #161b1d; }"
             );
+
+        QString additionalStyles = ui->tabWidget->styleSheet() +
+                                   "QTabWidget QLabel { color: #39b2e5; }"
+                                   "QTabWidget QLabel[objectName*=\"Value\"], "
+                                   "QTabWidget QLabel[objectName*=\"Display\"] { color: #fff; }";
+        ui->tabWidget->setStyleSheet(additionalStyles);
     }
     //----------------------------------------------------------------------
     bool MainWindow::isDarkTheme() const

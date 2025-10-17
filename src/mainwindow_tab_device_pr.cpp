@@ -2309,8 +2309,8 @@ void MainWindow::updateStorageSelectionStatistics()
     //Get the percent of free space
     if ( totalSpace !=0){
         float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;
-        ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");}
-    else ui->Storage_label_PercentFree->setText("");
+        ui->Storage_label_PercentFreeValue->setText(QString::number(round(freepercent))+"%");}
+    else ui->Storage_label_PercentFreeValue->setText("");
 }
 //--------------------------------------------------------------------------
 
@@ -2454,8 +2454,8 @@ void MainWindow::updateCatalogsScreenStatistics()
     querySumCatalogValues.next();
 
     ui->Catalogs_label_Catalogs->setText(QString::number(querySumCatalogValues.value(0).toInt()));
-    ui->Catalogs_label_TotalSize->setText(QLocale().formattedDataSize(querySumCatalogValues.value(1).toLongLong()));
-    ui->Catalogs_label_TotalNumber->setText(QLocale().toString(querySumCatalogValues.value(2).toInt()));
+    ui->Catalogs_label_TotalSizeValue->setText(QLocale().formattedDataSize(querySumCatalogValues.value(1).toLongLong()));
+    ui->Catalogs_label_TotalNumberValue->setText(QLocale().toString(querySumCatalogValues.value(2).toInt()));
 }
 //--------------------------------------------------------------------------
 void MainWindow::backupFile(QString filePath)
@@ -3902,13 +3902,14 @@ void MainWindow::loadVirtualStorageFileToTable()
     if(!virtualStorageFile.open(QIODevice::ReadOnly)) {
         // Create it, if it does not exist
         QFile newVirtualStorageFile(virtualStorageFilePath);
-        newVirtualStorageFile.open(QFile::WriteOnly | QFile::Text);
-        QTextStream stream(&newVirtualStorageFile);
-        stream << "ID"            << "\t"
-               << "Parent ID"     << "\t"
-               << "Name"          << "\t"
-               << '\n';
-        newVirtualStorageFile.close();
+        if (newVirtualStorageFile.open(QFile::WriteOnly | QFile::Text)) {
+            QTextStream stream(&newVirtualStorageFile);
+            stream << "ID"            << "\t"
+                   << "Parent ID"     << "\t"
+                   << "Name"          << "\t"
+                   << '\n';
+            newVirtualStorageFile.close();
+        }
     }
 
     //Test file validity (application breaks between v0.13 and v0.14)
@@ -3917,7 +3918,7 @@ void MainWindow::loadVirtualStorageFileToTable()
     //Load virtualStorage device lines to table
     while (true)
     {
-        QString line = textStream.readLine();
+        line = textStream.readLine();
         if (line.isNull())
             break;
         else

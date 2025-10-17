@@ -221,7 +221,7 @@ void MainWindow::loadBackUpMappingTotals()
     float coverage = static_cast<float>(selectedDevice->totalFileSize - difference) / static_cast<float>(selectedDevice->totalFileSize) * 100;
 
     ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeValue->setText(QLocale().formattedDataSize(selectedDevice->totalFileSize));
-    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeMapped->setText(QLocale().formattedDataSize(mapped));
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeMappedValue->setText(QLocale().formattedDataSize(mapped));
     ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue->setText(QLocale().toString(coverage, 'f', 2) + " %");
     ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeDiffValue->setText(QLocale().formattedDataSize((selectedDevice->totalFileSize - query.value(2).toLongLong())) + "  ");
     ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentUnlinkedValue->setText(QLocale().toString(100-coverage, 'f', 2) + " %");
