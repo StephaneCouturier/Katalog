@@ -361,7 +361,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         });
 
         if(activeDevice->active==true){
-            QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("gparted"), tr("Filelight"), this);
+            QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("view-statistics"), tr("Filelight"), this);
             deviceContextMenu.addAction(menuDeviceAction5);
             connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
                 QProcess::startDetached("filelight", QStringList() << activeDevice->path);
