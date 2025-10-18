@@ -702,6 +702,9 @@ void MainWindow::saveDeviceForm()
     activeDevice->saveDevice();
     //Update Storage values if path was changed
     if (activeDevice->path != previousPath){
+        // Set UI state for operation
+        setCatalogUpdateUIState(true);
+        //Update catalog
         deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                    collection->databaseMode,
                                                    collection->folder,
@@ -2396,6 +2399,7 @@ void MainWindow::saveCatalogChanges()
                                                     | QMessageBox::No);
         if ( updatechoice == QMessageBox::Yes){
             activeDevice->catalog->loadCatalog();
+            setCatalogUpdateUIState(true);
             deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                        collection->databaseMode,
                                                        collection->folder,
