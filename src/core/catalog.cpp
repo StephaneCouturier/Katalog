@@ -422,6 +422,8 @@ void Catalog::loadCatalog()
         includeMetadata    = query.value(13).toString();
         appVersion         = query.value(14).toString();
     }
+
+    if (includeMetadata.isEmpty()) { includeMetadata = METADATA_NONE; }
 }
 
 void Catalog::renameCatalog(QString newCatalogName)

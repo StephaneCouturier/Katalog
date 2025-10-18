@@ -436,7 +436,11 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     }
     qDebug() << "File and filetemp tables updated with metadata support";
 
-    // Step 4: Update "search" table structure to store metadata serach history
+    qDebug() << "=== Database Migration 2.8: PART2 - File type population. DEFERRED ===";
+    // qDebug() << "File types will be populated on-demand when each catalog is first used";
+    // qDebug() << "This ensures fast startup and processes only catalogs you actually use";
+
+    qDebug() << "=== Database Migration 2.8: PART3 - Update search table ===";
     QStringList existingSearchColumns = getTableColumns(connectionName, "search");
     const QMap<QString, QString> newSearchColumns = {
         {"metadata_checked", "NUMERIC"}, {"metadata_text_checked", "NUMERIC"}, {"metadata_text_search", "TEXT"},
@@ -459,9 +463,23 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
             qDebug() << "Added column" << it.key() << "to -file- table";
         }
     }
-    qDebug() << "=== Database Migration 2.8: PART2 - File type population deferred ===";
-    qDebug() << "File types will be populated on-demand when each catalog is first used";
-    qDebug() << "This ensures fast startup and processes only catalogs you actually use";
+
+    qDebug() << "=== Database Migration 2.8: PART4 - Normalize catalog_include_metadata ===";
+    QSqlQuery updateCatalogMetadataQuery(QSqlDatabase::database(connectionName));
+    updateCatalogMetadataQuery.exec(R"(
+        UPDATE catalog
+        SET catalog_include_metadata = 'None'
+        WHERE catalog_include_metadata IS NULL
+           OR catalog_include_metadata = ''
+    )");
+
+    int updatedCatalogs = updateCatalogMetadataQuery.numRowsAffected();
+    if (updatedCatalogs > 0) {
+        qDebug() << "Updated" << updatedCatalogs << "catalog(s) with NULL/empty metadata field to 'None'";
+    } else {
+        qDebug() << "No catalogs needed metadata field normalization";
+    }
+
     qDebug() << "=== Database Migration 2.8 completed ===";
     return QSqlError(); // Success
 }
