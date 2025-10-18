@@ -103,10 +103,21 @@ void SearchJob::start()
 //----------------------------------------------------------------------
 void SearchJob::executeSearch()
 {
+    qDebug() << "=== SearchJob::executeSearch() START ===";
+
+    // Check if search was killed before doing anything else
+    if (m_isKilled.loadAcquire()) {
+        qDebug() << "Job was killed before executeSearch started - exiting without emitResult()";
+        return;
+    }
+
     if (!m_searchEngine || !m_targetDevice) {
         setError(UserDefinedError);
         setErrorText("Search configuration invalid");
-        emitResult();
+        // Only emit if not killed
+        if (!m_isKilled.loadAcquire()) {
+            emitResult();
+        }
         return;
     }
 
@@ -115,33 +126,62 @@ void SearchJob::executeSearch()
         SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
         searchJobStoppable->searchFiles(m_targetDevice);
 
-        // Check if search was stopped
+        // After searchFiles() returns, check if search was killed
+        // If search was killed, doKill() will have already set the error and KJob will handle cleanup
+        // DO NOT call emitResult() - let KJob's own machinery handle it
+        if (m_isKilled.loadAcquire()) {
+            qDebug() << "Job was killed during search - exiting without emitResult()";
+            return;
+        }
+
+        // Check if search was stopped normally
         if (searchJobStoppable->wasStopRequested()) {
             setError(KilledJobError);
             setErrorText("Search was cancelled");
-            emitResult();
+            // Only emit if not killed
+            if (!m_isKilled.loadAcquire()) {
+                emitResult();
+            }
             return;
         }
 
         // If we get here, search completed successfully
         qDebug() << "Search job completed successfully!";
-        emit searchFinished();
-        emitResult();
+
+        // Only emit signals if not killed
+        if (!m_isKilled.loadAcquire()) {
+            emit searchFinished();
+            emitResult();
+        }
 
     } catch (const std::exception &e) {
+        qDebug() << "Exception in executeSearch:" << e.what();
         setError(UserDefinedError);
         setErrorText(QString("Search failed: %1").arg(e.what()));
-        emitResult();
+        // Only emit if not killed
+        if (!m_isKilled.loadAcquire()) {
+            emitResult();
+        }
     } catch (...) {
+        qDebug() << "Unknown exception in executeSearch";
         setError(UserDefinedError);
         setErrorText("Search failed with unknown error");
-        emitResult();
+        // Only emit if not killed
+        if (!m_isKilled.loadAcquire()) {
+            emitResult();
+        }
     }
+
+    qDebug() << "=== SearchJob::executeSearch() END ===";
 }
 //----------------------------------------------------------------------
 bool SearchJob::doKill()
 {
     qDebug() << "=== SearchJob::doKill() called ===";
+
+    // Set the killed flag FIRST before doing anything else
+    m_isKilled.storeRelease(1);
+    qDebug() << "Killed flag set to 1";
 
     if (m_executeTimer) {
         qDebug() << "Stopping execute timer";
@@ -151,15 +191,22 @@ bool SearchJob::doKill()
     }
 
     // Stop the search engine
-    qDebug() << "Stopping SearchJobStoppable engine";
-    SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
-    searchJobStoppable->stopSearch();
-    qDebug() << "SearchJobStoppable::stopSearch() called";
+    if (m_searchEngine) {
+        qDebug() << "Stopping SearchJobStoppable engine";
+        SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
+        if (searchJobStoppable) {
+            searchJobStoppable->stopSearch();
+            qDebug() << "SearchJobStoppable::stopSearch() called";
+        }
+    }
 
     setError(KilledJobError);
     setErrorText("Search was cancelled by user");
 
     qDebug() << "=== SearchJob::doKill() complete ===";
+
+    // Return true to indicate kill was successful
+    // KJob will handle calling finishJob() and emitting signals
     return true;
 }
 //----------------------------------------------------------------------
@@ -188,6 +235,12 @@ bool SearchJob::doResume()
 //----------------------------------------------------------------------
 void SearchJob::onSearchProgress(int filesProcessed)
 {
+    // If search kill was requested, do not emit anything
+    if (m_isKilled.loadAcquire()) {
+        qDebug() << "SearchJob::onSearchProgress - job killed, ignoring progress update";
+        return;
+    }
+
     qDebug() << "SearchJob::onSearchProgress received:" << filesProcessed;
 
     // Emit our own signal for SearchManager to handle
@@ -198,7 +251,10 @@ void SearchJob::onSearchProgress(int filesProcessed)
         // Search interrupted
         setError(KilledJobError);
         setErrorText("Search was interrupted");
-        emitResult();
+        // Only emit if not killed
+        if (!m_isKilled.loadAcquire()) {
+            emitResult();
+        }
         return;
     }
 

@@ -37,6 +37,7 @@ class SearchJobStoppable;
 #include <KJob>
 #include <QTimer>
 #include <QMutex>
+#include <QAtomicInt>
 #include "search.h"
 #include "device.h"
 
@@ -68,6 +69,7 @@ private:
     QMutex m_mutex;
     bool m_suspended = false;
     int m_lastFilesProcessed = 0;
+    QAtomicInt m_isKilled{0};
 
 protected:
     void start() override;
