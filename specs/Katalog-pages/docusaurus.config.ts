@@ -135,7 +135,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Katalog. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Katalog (Pages built with Docusaurus)`,
     },
     prism: {
       theme: prismThemes.github,

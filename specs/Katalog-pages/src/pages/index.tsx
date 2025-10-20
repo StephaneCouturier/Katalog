@@ -14,24 +14,28 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <img src="img/Banner_1.20_2.png" width="900"></img>
+        <img src="img/Banner_1.20_3.png" width="900"></img>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
             to="https://sourceforge.net/projects/katalogg/files/latest/download">
-            <Translate id="homepage.header.downloadButton" description="The text for the download button on the homepage header">
+            <Translate id="homepage.header.downloadButton" description="Download Katalog from sourceforge">
               Download
             </Translate>&nbsp;&#10176;
           </Link>
-        </div>
-        <p></p>
-        <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
             to="/docs/tutorial">
-            <Translate id="homepage.header.tutorialButton" description="The text for the tutorial button on the homepage header">
-              Tutorial - 5min
+            <Translate id="homepage.header.tutorialButton" description="Get started with Katalog in 5 minutes">
+            Tutorial - 5min
             </Translate> ⏱️
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/Overview">
+            <Translate id="homepage.header.overviewButton" description="Discover Katalog's features'">
+            Features Overview
+            </Translate>
           </Link>
         </div>
       </div>

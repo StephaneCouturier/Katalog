@@ -89,6 +89,15 @@ As opposed to the "Text", this will exclude results if _any_ of the words provid
 Set the range of file size by entering a number and unit for the minimum and maximum file size.
 
 #### File Types
+
+KFileMetadata Intelligence
+File types are now dynamically detected using:
+
+MIME Database Integration: Leverages system MIME type database
+KFileMetadata Framework: Uses KDE's metadata extraction system
+Intelligent Caching: Builds optimized type detection cache on startup
+Extensible Detection: Automatically supports new formats as system updates
+
         | Type  | Extensions                                        |
         | ------| --------------------------------------------------|
         | Audio | aif, mp3, ogg, wav                                |

@@ -7,20 +7,24 @@
     "message": "Tutoriál - 5min",
     "description": "The text for the tutorial button on the homepage header"
   },
+  "homepage.header.overviewButton": {
+    "message": "Přehled funkcí",
+    "description": "The text for the tutorial button on the homepage header"
+  },
   "feature.deviceManagement.title": {
     "message": "Možnosti správy zařízení a souborů",
     "description": "The title of the first feature"
   },
   "feature.deviceManagement.description": {
-    "message": "Katalog přináší rozsáhlé možnosti vyhledávání a porovnávání souborů a správu zařízení ukládajících data.",
+    "message": "Katalog nabízí rozsáhlé možnosti vyhledávání a porovnávání souborů a správu zařízení ukládajících data.",
     "description": "The first part of the description of the first feature"
   },
   "feature.multiPlatform.title": {
-    "message": "Více desktopových platforem, více jazyků",
+    "message": "Více platforem, více jazyků",
     "description": "The title of the first feature"
   },
   "feature.multiPlatform.description": {
-    "message": "Katalog je aktuálně dostupný pro Linux a Windows a v angličtině, francouzštině, češtině a němčině.",
+    "message": "Katalog je k dispozici pro Linux, Windows a macOS a ve 30 jazycích.",
     "description": "The first part of the description of the first feature"
   },
   "feature.openSource.title": {
@@ -28,7 +32,7 @@
     "description": "The title of the first feature"
   },
   "feature.openSource.description": {
-    "message": "Katalog je navržen s Qt a jeho zdrojový kód je dostupný na GitHubu.",
+    "message": "Katalog je navržen s knihovnami Qt a KDE KF6 a jeho zdrojový kód je k dispozici na GitHubu.",
     "description": "The first part of the description of the first feature"
   },
   "theme.ErrorPageContent.title": {

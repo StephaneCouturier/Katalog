@@ -29,6 +29,7 @@ const sidebars: SidebarsConfig = {
 
 export default {
   tutorialSidebar: [
+    'Overview',
     'tutorial',
     {
       type: 'category',
@@ -38,7 +39,7 @@ export default {
     {
       type: 'category',
       label: 'Development',
-      items: ['Build-from-source', 'Code-structure', 'Roadmap'],
+      items: ['Development-process', 'Build-from-source', 'Code-structure', 'Roadmap'],
     },
   ],
 };

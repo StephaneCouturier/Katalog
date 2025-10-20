@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Tutorial
+# Tutoriál
 
 Pojďme objevit **Katalog za méně než 5 minut**.
 

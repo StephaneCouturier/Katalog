@@ -4,8 +4,8 @@ import styles from './styles.module.css';
 import Translate, {translate} from '@docusaurus/Translate';
 
 import deviceImage from '@site/static/img/features.png';
-import platformImage from '@site/static/img/linux_windows.png';
-import openSourceImage from '@site/static/img/qt-seeklogo.png';
+import platformImage from '@site/static/img/linux_windows_macos.png';
+import openSourceImage from '@site/static/img/qt-kde.png';
 
 // import translations from '@site/i18n/fr/HomepageFeatures.json';
 // console.log(translations);
@@ -22,26 +22,26 @@ const FeatureList: FeatureItem[] = [
   {
     title: translate({
       id: 'feature.deviceManagement.title',
-      message: 'Devices and Files management capabilities',
-      description: 'The title of the first feature'
+      message: 'Files and Devices capabilities',
+      description: 'Main Katalog purpose'
     }),
     image: deviceImage,
     description: translate({
       id: 'feature.deviceManagement.description',
       message: 'Katalog brings extensive file search and comparison capabilities and management of devices storing data.',
-      description: 'The first part of the description of the first feature'
+      description: 'Main features'
     })
   },
   {
     title: translate({
       id: 'feature.multiPlatform.title',
-      message: 'Multi desktop platforms, multi languages',
+      message: 'Multi platforms, multi languages',
       description: 'The title of the first feature'
     }),
     image: platformImage,
     description: translate({
       id: 'feature.multiPlatform.description',
-      message: 'Katalog is currently available for Linux and Windows, and in many languages.',
+      message: 'Katalog is available for Linux, Windows, and macOS, and in 30 languages.',
       description: 'The first part of the description of the first feature'
     })
   },
@@ -54,7 +54,7 @@ const FeatureList: FeatureItem[] = [
     image: openSourceImage,
     description: translate({
       id: 'feature.openSource.description',
-      message: 'Katalog is designed with Qt and its source code is available on GitHub.',
+      message: 'Katalog is designed with Qt and KDE KF6 libraries, and its source code is available on GitHub.',
       description: 'The first part of the description of the first feature'
     })
   }
