@@ -38,6 +38,7 @@
 #include <QDateTime>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <qelapsedtimer.h>
 #include <qjsonarray.h>
 
 //-----------------------------------------------------------------------------------------------------
@@ -45,10 +46,27 @@ FileMetadata::FileMetadata(QObject *parent) : QObject(parent)
 {
 }
 //-----------------------------------------------------------------------------------------------------
+// Extensions to File Type cache - created once at first use
 QHash<QString, QString> FileMetadata::s_extensionToTypeCache;
 bool FileMetadata::s_typeCacheInitialized = false;
 QSet<QString> FileMetadata::s_supportedExtensionsCache;
 bool FileMetadata::s_cacheInitialized = false;
+
+// ExtractorCollection cache - created once at first use
+KFileMetaData::ExtractorCollection* FileMetadata::s_extractorCollection = nullptr;
+QMutex FileMetadata::s_extractorMutex;
+//-----------------------------------------------------------------------------------------------------
+KFileMetaData::ExtractorCollection* FileMetadata::getCachedExtractorCollection()
+{
+    QMutexLocker lock(&s_extractorMutex);
+
+    if (!s_extractorCollection) {
+        s_extractorCollection = new KFileMetaData::ExtractorCollection();
+        qDebug() << "ExtractorCollection created and cached for performance";
+    }
+
+    return s_extractorCollection;
+}
 //-----------------------------------------------------------------------------------------------------
 void FileMetadata::initializeExtensionTypeCache()
 {
@@ -63,12 +81,14 @@ void FileMetadata::initializeExtensionTypeCache()
     qDebug() << "Building extension->type cache from MIME database...";
 
     // Build mapping from MIME types to file types
-    for (const auto& mimeType : mimeDb.allMimeTypes()) {
+    const auto allMimeTypes = mimeDb.allMimeTypes();
+    for (const auto& mimeType : allMimeTypes) {
         QString mimeTypeName = mimeType.name();
-        QString fileType = getFileTypeFromMime(mimeTypeName);  // This now returns lowercase
+        QString fileType = getFileTypeFromMime(mimeTypeName);
 
         // Add all extensions for this MIME type
-        for (const QString& suffix : mimeType.suffixes()) {
+        const auto suffixes = mimeType.suffixes();
+        for (const QString& suffix : suffixes) {
             QString lowerSuffix = suffix.toLower();
 
             // Only override if we have a more specific type (not "other")
@@ -313,14 +333,104 @@ const QHash<QString, QString>& FileMetadata::getExtensionToTypeCache()
     return s_extensionToTypeCache;
 }
 //-----------------------------------------------------------------------------------------------------
+bool FileMetadata::batchUpdateFileMetadata(const QString &connectionName,
+                                           int catalogId,
+                                           const QStringList &fileNames,
+                                           const QStringList &folderPaths,
+                                           const QList<QVariantMap> &metadataList)
+{
+    if (fileNames.isEmpty() || fileNames.size() != metadataList.size()) {
+        return false;
+    }
+
+    QSqlDatabase database = QSqlDatabase::database(connectionName);
+    if (!database.isOpen()) {
+        qDebug() << "FileMetadata::batchUpdateFileMetadata - Database not open";
+        return false;
+    }
+
+    // Collect all unique metadata keys across all files
+    QSet<QString> allKeys;
+    for (const auto& metadata : metadataList) {
+        for (auto it = metadata.begin(); it != metadata.end(); ++it) {
+            allKeys.insert(it.key());
+        }
+    }
+
+    if (allKeys.isEmpty()) {
+        return true;  // Nothing to update
+    }
+
+    // Start transaction for batch update
+    QSqlQuery txQuery(database);
+    if (!txQuery.exec("BEGIN TRANSACTION")) {
+        qDebug() << "Could not start transaction:" << txQuery.lastError().text();
+    }
+
+    // Update each metadata field with CASE statement covering all files
+    for (const QString& key : allKeys) {
+        // Skip if this is a basic field we handle specially
+        if (key == "file_type" || key == "mime_type" || key == "metadata_extraction_date") {
+            continue;  // These are updated during initial INSERT
+        }
+        
+        QString caseClause = QString("CASE");
+        QVariantList bindValues;
+
+        for (int i = 0; i < fileNames.size(); ++i) {
+            if (metadataList[i].contains(key)) {
+                caseClause += " WHEN (file_catalog_id = ? AND file_name = ? AND file_folder_path = ?) THEN ?";
+                bindValues << catalogId << fileNames[i] << folderPaths[i] << metadataList[i][key];
+            }
+        }
+
+        if (bindValues.isEmpty()) {
+            continue;  // No values for this key, skip
+        }
+
+        caseClause += QString(" ELSE %1 END").arg(key);
+
+        QString updateQuery = QString("UPDATE file SET %1 = %2 WHERE file_catalog_id = ?")
+                                  .arg(key, caseClause);
+        bindValues << catalogId;
+
+        QSqlQuery query(database);
+        query.prepare(updateQuery);
+
+        const QVariantList& constBindValues = bindValues;
+        for (const QVariant& value : constBindValues) {
+            query.addBindValue(value);
+        }
+
+        if (!query.exec()) {
+            qDebug() << "Batch update failed for key" << key << ":" << query.lastError().text();
+            txQuery.exec("ROLLBACK");
+            return false;
+        }
+    }
+
+    // Commit transaction
+    if (!txQuery.exec("COMMIT")) {
+        qDebug() << "Could not commit transaction:" << txQuery.lastError().text();
+        return false;
+    }
+
+    qDebug() << "Batch metadata update: completed for" << fileNames.size() << "files";
+    return true;
+}
+//-----------------------------------------------------------------------------------------------------
 bool FileMetadata::extractAndStore(const QString &filePath,
                                    const QString &connectionName,
                                    int catalogId,
                                    QString includeMetadata)
 {
-    qDebug() << "=== FileMetadata::extractAndStore ===";
-    qDebug() << "  File:" << filePath;
-    qDebug() << "  IncludeMetadata:" << includeMetadata;
+    static QElapsedTimer timer;
+    static int callCount = 0;
+
+    if (callCount == 0) {
+        timer.start();
+    }
+    callCount++;
 
     QFileInfo fileInfo(filePath);
     if (!fileInfo.exists() || !fileInfo.isReadable()) {
@@ -328,35 +438,47 @@ bool FileMetadata::extractAndStore(const QString &filePath,
         return false;
     }
 
-    // Extract metadata using the main extraction method
+    // Extract metadata
+    QElapsedTimer extractTimer;
+    extractTimer.start();
     QVariantMap metadata = extractMetadata(filePath, includeMetadata);
+    int extractMs = extractTimer.elapsed();
 
-    qDebug() << "  Extracted metadata keys:" << metadata.keys();
-    qDebug() << "  Metadata values:" << metadata;
-
-    // Process is complete if no metadata was extracted
     if (metadata.isEmpty()) {
-        qDebug() << "  No metadata extracted (empty map)";
         return true;
     }
 
     // Store in database
+    QElapsedTimer updateTimer;
+    updateTimer.start();
     bool result = updateFileMetadata(connectionName, catalogId,
                                      fileInfo.fileName(),
                                      fileInfo.absolutePath(),
                                      metadata);
+    int updateMs = updateTimer.elapsed();
 
-    qDebug() << "  Database update result:" << result;
+    if (callCount % 100 == 0) {
+        qDebug() << "Progress:" << callCount << "Extract:" << extractMs << "ms Database:" << updateMs << "ms";
+    }
+
+    if (callCount == 5745) {
+        qDebug() << "TOTAL TIME:" << timer.elapsed() << "ms for 5745 files";
+        qDebug() << "Average per file:" << (timer.elapsed() / 5745) << "ms";
+    }
+
     return result;
 }
 //-----------------------------------------------------------------------------------------------------
 QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString includeMetadata)
 {
-    QVariantMap result;
+    static QElapsedTimer timer;
+    static int callCount = 0;
+    static int totalExtractMs = 0;//, totalUpdateMs = 0;
 
-    qDebug() << "=== FileMetadata::extractMetadata ===";
-    qDebug() << "  File:" << filePath;
-    qDebug() << "  Level:" << includeMetadata;
+    if (callCount == 0) timer.start();
+    callCount++;
+
+    QVariantMap result;
 
     // No metadata extraction
     if (includeMetadata == Catalog::METADATA_NONE) {
@@ -376,8 +498,6 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         QString fileType = getFileTypeFromExtension(extension);
         QString guessMimeType = getMimeTypeFromExtension(extension);
 
-        qDebug() << "  Extension:" << extension << "Type:" << fileType << "Guessed MIME:" << guessMimeType;
-
         // Always store these basic fields
         result["file_type"] = fileType;
         result["mime_type"] = guessMimeType;
@@ -390,25 +510,20 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
             includeMetadata == Catalog::METADATA_MEDIA_EXTENDED) {
             // Only extract for media files
             shouldExtractMetadata = (fileType == "image" || fileType == "audio" || fileType == "video");
-            qDebug() << "  Media mode - should extract:" << shouldExtractMetadata;
         } else if (includeMetadata == Catalog::METADATA_FULL) {
             // For FULL mode, only extract for known supported types
             // Avoid trying to extract from archives, executables, etc.
             shouldExtractMetadata = (fileType == "image" || fileType == "audio" ||
                                      fileType == "video" || fileType == "text");
-            qDebug() << "  FULL mode - should extract:" << shouldExtractMetadata;
         }
 
         if (!shouldExtractMetadata) {
-            qDebug() << "  Skipping extraction for this file type";
             return result;
         }
-
+        int extractStartMs = timer.elapsed();
         // Try to extract metadata using KFileMetaData
-        KFileMetaData::ExtractorCollection extractors;
-        auto extractorsList = extractors.fetchExtractors(guessMimeType);
-
-        qDebug() << "  Found" << extractorsList.size() << "extractors for MIME type";
+        KFileMetaData::ExtractorCollection* extractors = getCachedExtractorCollection();
+        const auto extractorsList = extractors->fetchExtractors(guessMimeType);
 
         if (extractorsList.isEmpty()) {
             qDebug() << "  No extractors available";
@@ -434,7 +549,6 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
             }
 
             properties = extractionResult.properties();
-            qDebug() << "  Extracted" << properties.size() << "properties";
 
         } catch (const std::exception& e) {
             qDebug() << "  ERROR: Extraction failed:" << e.what();
@@ -455,7 +569,6 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         // Process metadata based on file type
         if (fileType == "image") {
             QVariantMap imageData = processImageMetadata(properties);
-            qDebug() << "  Image metadata:" << imageData;
 
             if (includeMetadata == Catalog::METADATA_MEDIA_BASIC) {
                 // Only essential fields
@@ -474,7 +587,7 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         }
         else if (fileType == "video") {
             QVariantMap videoData = processVideoMetadata(properties);
-            qDebug() << "  Video metadata:" << videoData;
+            //qDebug() << "  Video metadata:" << videoData;
 
             if (includeMetadata == Catalog::METADATA_MEDIA_BASIC) {
                 // Only essential fields
@@ -493,7 +606,7 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         }
         else if (fileType == "audio") {
             QVariantMap audioData = processAudioMetadata(properties);
-            qDebug() << "  Audio metadata:" << audioData;
+            //qDebug() << "  Audio metadata:" << audioData;
 
             if (includeMetadata == Catalog::METADATA_MEDIA_BASIC) {
                 // Only essential fields
@@ -535,7 +648,15 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         }
 
         qDebug() << "  Final result keys:" << result.keys();
+        int extractEndMs = timer.elapsed();
+        totalExtractMs += (extractEndMs - extractStartMs);
 
+        if (callCount % 500 == 0 || callCount == 5745) {
+            qDebug() << "=== TIMING ===" << callCount << "files extracted,"
+                     << "avg extract time:" << (totalExtractMs / callCount) << "ms per file";
+        }
+
+        return result;
     } catch (const std::exception& e) {
         qDebug() << "ERROR: Exception in extractMetadata:" << e.what();
         result["metadata_extended"] = "FAILED";
@@ -566,7 +687,11 @@ QVariantMap FileMetadata::extractExtendedMetadata(const KFileMetaData::PropertyM
             if (extendedData.contains(propertyName)) {
                 // Convert to list if multiple values exist
                 QVariant existing = extendedData[propertyName];
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                 if (existing.type() == QVariant::List) {
+#else
+                if (existing.typeId() == QMetaType::QVariantList) {
+#endif
                     QVariantList list = existing.toList();
                     list.append(value);
                     extendedData[propertyName] = list;
@@ -595,9 +720,13 @@ QString FileMetadata::convertMetadataToJson(const QVariantMap &extendedMetadata)
         QVariant value = it.value();
 
         // Convert different value types to appropriate JSON types
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         if (value.type() == QVariant::List) {
+#else
+        if (value.typeId() == QMetaType::QVariantList) {
+#endif
             QJsonArray jsonArray;
-            QVariantList list = value.toList();
+            const QVariantList list = value.toList();  // Make const to avoid detachment
             for (const QVariant &item : list) {
                 jsonArray.append(QJsonValue::fromVariant(item));
             }
@@ -742,7 +871,8 @@ bool FileMetadata::updateFileMetadata(const QString &connectionName,
     QSqlQuery query(database);
     query.prepare(queryString);
 
-    for (const QVariant &value : values) {
+    const QVariantList& constValues = values;
+    for (const QVariant &value : constValues) {
         query.addBindValue(value);
     }
 
@@ -782,11 +912,13 @@ void FileMetadata::initializeExtensionsCache() {
     QMimeDatabase mimeDb;
 
     // Get all MIME types that have extractors
-    for (const auto& mimeType : mimeDb.allMimeTypes()) {
+    const auto allMimeTypes = mimeDb.allMimeTypes();
+    for (const auto& mimeType : allMimeTypes) {
         auto extractorsList = extractors.fetchExtractors(mimeType.name());
         if (!extractorsList.isEmpty()) {
             // Add all suffixes for this MIME type
-            for (const QString& suffix : mimeType.suffixes()) {
+            const auto suffixes = mimeType.suffixes();
+            for (const QString& suffix : suffixes) {
                 s_supportedExtensionsCache.insert(suffix.toLower());
             }
         }

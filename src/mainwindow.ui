@@ -6845,7 +6845,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </size>
                       </property>
                       <property name="text">
-                       <string>Include files metadata</string>
+                       <string>Include files metadata (20x slower)</string>
                       </property>
                      </widget>
                     </item>
@@ -8766,7 +8766,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <widget class="QLabel" name="Create_label_IncludeMetadata">
                   <property name="text">
-                   <string>Include files metadata</string>
+                   <string>Include files metadata (20x slower)</string>
                   </property>
                  </widget>
                 </item>

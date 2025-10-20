@@ -41,6 +41,7 @@
 #include <KFileMetaData/SimpleExtractionResult>
 #include <KFileMetaData/Properties>
 #include <KFileMetaData/PropertyInfo>
+#include <qmutex.h>
 
 /**
  * @brief The FileMetadata class
@@ -95,6 +96,13 @@ public:
     // Make extensions cache accessible
     static const QHash<QString, QString>& getExtensionToTypeCache();
 
+    // Batch update metadata for multiple files
+    static bool batchUpdateFileMetadata(const QString &connectionName,
+                                        int catalogId,
+                                        const QStringList &fileNames,
+                                        const QStringList &folderPaths,
+                                        const QList<QVariantMap> &metadataList);
+
 private:
     // Helper methods
     //static QString getFileType(const QString &mimeType);
@@ -109,6 +117,11 @@ private:
     static bool s_cacheInitialized;
     static QHash<QString, QString> s_extensionToTypeCache;
     static bool s_typeCacheInitialized;
+
+    // Cached ExtractorCollection (created once, reused for all metadata extractions)
+    static KFileMetaData::ExtractorCollection* s_extractorCollection;
+    static QMutex s_extractorMutex;
+    static KFileMetaData::ExtractorCollection* getCachedExtractorCollection();
 
     // Database helper
     static bool storeMetadataToDatabase(const QString &connectionName,

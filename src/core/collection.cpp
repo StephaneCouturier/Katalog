@@ -351,12 +351,16 @@ void Collection::loadDeviceFileToTable()
         if(!deviceFile.open(QIODevice::ReadOnly)) {
             // Create it, if it does not exist
             QFile newDeviceFile(deviceFilePath);
-            newDeviceFile.open(QFile::WriteOnly | QFile::Text);
-            QTextStream stream(&newDeviceFile);
-            stream << "ID\tParent ID\tName\tType\tExternalID\tPath\t"
-                   << "total_file_size\ttotal_file_count\ttotal_space\t"
-                   << "free_space\tactive\tgroupID\tdate updated\torder\n";
-            newDeviceFile.close();
+            if (newDeviceFile.open(QFile::WriteOnly | QFile::Text)) {
+                QTextStream stream(&newDeviceFile);
+                stream << "ID\tParent ID\tName\tType\tExternalID\tPath\t"
+                       << "total_file_size\ttotal_file_count\ttotal_space\t"
+                       << "free_space\tactive\tgroupID\tdate updated\torder\n";
+                newDeviceFile.close();
+            } else {
+                qDebug() << "DEBUG: Failed to create device file:" << newDeviceFile.errorString();
+                // Optionally: return early or handle the error appropriately
+            }
         }
 
         // Load Device lines to table
@@ -672,7 +676,6 @@ void Collection::loadStatisticsDeviceFileToTable()
         qint64      deviceFreeSpace = 0;
         qint64      deviceTotalSpace = 0;
         QString     recordType;
-        QRegularExpression tagExp("\t");
 
         //Skip first header line
         line = textStream.readLine();
@@ -687,7 +690,7 @@ void Collection::loadStatisticsDeviceFileToTable()
             {
                 //Split the string with \t (tabulation) into a list
                 fieldList.clear();
-                fieldList = line.split(tagExp);
+                fieldList = line.split('\t');
 
                 if(fieldList.count()==9){
                     dateTime            = fieldList[0];

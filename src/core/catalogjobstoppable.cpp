@@ -32,6 +32,7 @@
 #include "catalogjobstoppable.h"
 #include "filemetadata.h"
 #include "filetypemapping.h"
+#include "parallelmetadataextractor.h"
 
 #include <QDebug>
 #include <QDir>
@@ -44,6 +45,7 @@
 #include <QDateTime>
 #include <QThread>
 #include <QSettings>
+#include <qelapsedtimer.h>
 
 CatalogJobStoppable::CatalogJobStoppable(QObject *parent)
     : QObject(parent)
@@ -80,7 +82,7 @@ void CatalogJobStoppable::configureOperation(Device *device,
 
     // Adapt refresh rate: lower refresh rate for metadata extraction
     if (device && device->catalog && device->catalog->includeMetadata != Catalog::METADATA_NONE) {
-        setProgressRefreshRate(10);  // More frequent updates for slower metadata operations
+        setProgressRefreshRate(100);  // More frequent updates for slower metadata operations
     } else {
         setProgressRefreshRate(100); // Default rate for faster operations without metadata
     }
@@ -439,7 +441,19 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     QList<qint64> fileSizes;
     QStringList directoryPaths;
 
-    int batchSize = (catalog->includeMetadata != Catalog::METADATA_NONE) ? 10 : 1000;
+    //int batchSize = (catalog->includeMetadata != Catalog::METADATA_NONE) ? 10 : 1000;
+    // Batch size depends on database mode and whether metadata extraction is enabled
+    int batchSize;
+    if (catalog->includeMetadata == Catalog::METADATA_NONE) {
+        batchSize = 1000;  // No metadata extraction - can batch more
+    } else {
+        // With metadata extraction, batch size depends on database mode
+        if (m_databaseMode == "Memory") {
+            batchSize = 100;   // Memory mode can handle larger batches
+        } else {
+            batchSize = 100;   // File/SQLite mode - smaller batches
+        }
+    }
 
     while (it.hasNext() && shouldContinue()) {
         waitIfPaused();
@@ -1244,13 +1258,147 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
             }
         }
 
-        // Metadata extraction
+        // Metadata extraction - BATCHED for performance
+
+/*        // Metadata extraction - BATCHED for performance
         if (catalog->includeMetadata != Catalog::METADATA_NONE) {
-            for (const QString& filePath : fileFullPaths) {
+            QElapsedTimer batchTimer;
+            batchTimer.start();
+
+            QStringList batchFileNames;
+            QStringList batchFolderPaths;
+            QList<QVariantMap> batchMetadata;
+
+            QElapsedTimer extractTimer;
+            extractTimer.start();
+
+            for (int i = 0; i < fileFullPaths.size(); ++i) {
                 if (!shouldContinue()) break;
-                if (FileMetadata::isMetadataSupported(filePath)) {
-                    FileMetadata::extractAndStore(filePath, m_connectionName, catalog->ID, catalog->includeMetadata);
+
+                QString filePath = fileFullPaths[i];
+                if (!FileMetadata::isMetadataSupported(filePath)) {
+                    continue;
                 }
+
+                // Extract metadata (without storing)
+                QVariantMap metadata = FileMetadata::extractMetadata(filePath, catalog->includeMetadata);
+
+                if (!metadata.isEmpty()) {
+                    batchFileNames << fileNames[i];
+                    batchFolderPaths << fileFolderPaths[i];
+                    batchMetadata << metadata;
+                }
+            }
+
+            int extractDurationMs = extractTimer.elapsed();
+
+            // Batch update all metadata at once (much faster than individual updates)
+            QElapsedTimer updateTimer;
+            updateTimer.start();
+
+            if (!batchFileNames.isEmpty()) {
+                FileMetadata::batchUpdateFileMetadata(m_connectionName, catalog->ID,
+                                                      batchFileNames, batchFolderPaths,
+                                                      batchMetadata);
+            }
+
+            int updateDurationMs = updateTimer.elapsed();
+            int totalBatchMs = batchTimer.elapsed();
+
+            // DETAILED TIMING OUTPUT
+            qDebug() << "=== BATCH TIMING ==="
+                     << "Files:" << batchFileNames.size()
+                     << "| Extract:" << extractDurationMs << "ms"
+                     << "(" << (extractDurationMs / qMax(1, (int)batchFileNames.size())) << "ms/file)"
+                     << "| Update:" << updateDurationMs << "ms"
+                     << "| Total batch:" << totalBatchMs << "ms";
+        }
+*/
+
+        // Metadata extraction - PARALLEL for performance
+        if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+            QElapsedTimer batchTimer;
+            batchTimer.start();
+
+            QStringList extractFilePaths;
+            QStringList extractFileNames;
+            QStringList extractFolderPaths;
+
+            for (int i = 0; i < fileFullPaths.size(); ++i) {
+                QString filePath = fileFullPaths[i];
+                if (!FileMetadata::isMetadataSupported(filePath)) {
+                    continue;
+                }
+
+                extractFilePaths << filePath;
+                extractFileNames << fileNames[i];
+                extractFolderPaths << fileFolderPaths[i];
+            }
+
+            if (!extractFilePaths.isEmpty()) {
+                QElapsedTimer extractTimer;
+                extractTimer.start();
+
+                // Determine thread count based on system and database mode
+                int optimalThreads = 4;  // Safe default
+
+                int availableCores = QThread::idealThreadCount();
+                if (availableCores > 0) {
+                    // Use formula: min(available_cores - 1, 8) for safety
+                    // Leave 1 core for UI thread and system
+                    optimalThreads = qMin(availableCores - 1, 8);
+
+                    // For file-based DBs, be more conservative (I/O bound)
+                    if (m_databaseMode != "Memory") {
+                        optimalThreads = qMin(optimalThreads, 4);
+                    }
+                }
+
+                qDebug() << "Parallel extraction:" << optimalThreads << "threads"
+                         << "(" << availableCores << "cores available)"
+                         << "Database mode:" << m_databaseMode;
+
+                ParallelMetadataExtractor extractor;
+                QList<MetadataExtractionResult> results = extractor.extractBatch(
+                    extractFilePaths,
+                    extractFileNames,
+                    extractFolderPaths,
+                    catalog->includeMetadata,
+                    optimalThreads  // Use calculated nb of threads
+                    );
+
+                int extractDurationMs = extractTimer.elapsed();
+
+                QStringList batchFileNames;
+                QStringList batchFolderPaths;
+                QList<QVariantMap> batchMetadata;
+
+                for (const auto& result : results) {
+                    if (!result.metadata.isEmpty()) {
+                        batchFileNames << result.fileName;
+                        batchFolderPaths << result.folderPath;
+                        batchMetadata << result.metadata;
+                    }
+                }
+
+                QElapsedTimer updateTimer;
+                updateTimer.start();
+
+                if (!batchFileNames.isEmpty()) {
+                    FileMetadata::batchUpdateFileMetadata(m_connectionName, catalog->ID,
+                                                          batchFileNames, batchFolderPaths,
+                                                          batchMetadata);
+                }
+
+                int updateDurationMs = updateTimer.elapsed();
+                int totalBatchMs = batchTimer.elapsed();
+
+                qDebug() << "=== PARALLEL BATCH ==="
+                         << "Files:" << extractFileNames.size()
+                         << "| Extract:" << extractDurationMs << "ms"
+                         << "(" << (extractDurationMs / qMax(1, (int)extractFileNames.size())) << "ms/file)"
+                         << "| Update:" << updateDurationMs << "ms"
+                         << "| Total batch:" << totalBatchMs << "ms";
             }
         }
 
