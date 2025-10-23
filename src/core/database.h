@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   database.h
 // Purpose:     Database management
-// Description: Handles connection, creation, and modification
+// Description: Handles connection, creation, and updates of the database
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
@@ -361,29 +361,11 @@ public:
     // Create all database tables
     static QSqlError createAllTables(const QString &connectionName);
 
-    // Individual table creation methods
-    static QSqlError createDeviceTable(const QString &connectionName);
-    static QSqlError createStorageTable(const QString &connectionName);
-    static QSqlError createCatalogTable(const QString &connectionName);
-    static QSqlError createFileTable(const QString &connectionName);
-    static QSqlError createFileTempTable(const QString &connectionName);
-    static QSqlError createFolderTable(const QString &connectionName);
-    static QSqlError createStatisticsDeviceTable(const QString &connectionName);
-    static QSqlError createSearchTable(const QString &connectionName);
-    static QSqlError createTagTable(const QString &connectionName);
-    static QSqlError createFileTagTable(const QString &connectionName);
-    static QSqlError createParameterTable(const QString &connectionName);
-    static QSqlError createSchemaTable(const QString &connectionName);
-    static QSqlError createBackupMappingTable(const QString &connectionName);
-    static QSqlError createStatisticsCatalogTable(const QString &connectionName);
-    static QSqlError createStatisticsStorageTable(const QString &connectionName);
-    static QSqlError createVirtualStorageTable(const QString &connectionName);
-    static QSqlError createVirtualStorageCatalogTable(const QString &connectionName);
-    static QSqlError createDeviceCatalogTable(const QString &connectionName);
     // Utility methods
     static bool tableExists(const QString &connectionName, const QString &tableName);
     static QStringList listTables(const QString &connectionName);
-    // Updates
+
+    // Updates per Version
     static QSqlError runMigration_2_6(const QString &connectionName);
     static QSqlError runMigration_2_8(const QString &connectionName);
 

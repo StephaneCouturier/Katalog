@@ -492,31 +492,35 @@ void DeviceUpdateManager::startCatalogOperation(Device* device)
     qDebug() << "=== DeviceUpdateManager::startCatalogOperation ===";
     qDebug() << "Starting catalog operation for:" << device->name;
 
-    // CRITICAL: Set waiting flag and current device
     m_waitingForCatalogCompletion = true;
     m_currentDevice = device;
 
-    // Pass device values for catalog operations (same as Device::updateDevice logic)
     device->catalog->name = device->name;
     device->catalog->sourcePath = device->path;
 
-    // Clean up any existing catalog job
     cleanupCatalogJob();
     m_currentCatalogJob = new CatalogJobStoppable(this);
 
-    // Forward catalog progress properly
     connect(m_currentCatalogJob, &CatalogJobStoppable::catalogProgress,
             this, [this](qint64 filesProcessed, qint64 totalFiles, const QString& currentPath) {
                 emit catalogProgress(filesProcessed, totalFiles, currentPath);
             });
 
-    qDebug() << "Starting catalog operation for:" << device->name;
+    //Determine correct operation type based on m_updateType
+    CatalogJobStoppable::OperationType operationType;
+    if (m_updateType == "create") {
+        operationType = CatalogJobStoppable::CreateCatalog;
+        qDebug() << "Using CreateCatalog operation type";
+    } else {
+        operationType = CatalogJobStoppable::UpdateCatalog;
+        qDebug() << "Using UpdateCatalog operation type";
+    }
 
     // Start the actual catalog operation
     m_catalogManager->startCatalogJobStoppable(
         m_currentCatalogJob,
         device,
-        CatalogJobStoppable::UpdateCatalog,
+        operationType,
         m_databaseMode,
         m_collectionFolder
         );

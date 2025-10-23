@@ -45,7 +45,7 @@
 #include <QDateTime>
 #include <QThread>
 #include <QSettings>
-#include <qelapsedtimer.h>
+#include <QElapsedTimer>
 
 CatalogJobStoppable::CatalogJobStoppable(QObject *parent)
     : QObject(parent)
@@ -147,6 +147,31 @@ void CatalogJobStoppable::processCatalog()
     }
 
     qDebug() << "=== CatalogJobStoppable::processCatalog() END ===";
+}
+
+bool CatalogJobStoppable::shouldUseFullRescan() const
+{
+    if (!m_device || !m_device->catalog) {
+        return true;  // Safety: use full rescan if no catalog
+    }
+
+    // Check if metadata setting changed
+    QString currentMetadataSetting = m_device->catalog->includeMetadata;
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare("SELECT catalog_include_metadata FROM catalog WHERE catalog_id = ?");
+    query.bindValue(0, m_device->catalog->ID);
+
+    if (query.exec() && query.next()) {
+        QString previousMetadataSetting = query.value(0).toString();
+
+        // Full rescan if metadata level changed
+        if (previousMetadataSetting != currentMetadataSetting) {
+            qDebug() << "Metadata setting changed - full rescan required";
+            return true;
+        }
+    }
+    return false;  // Default to incremental update
 }
 
 void CatalogJobStoppable::createCatalogWithProgress()
@@ -437,7 +462,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
     // Single set of arrays for batching
     QStringList fileNames, fileFolderPaths, fileFullPaths, fileDateTimes, fileCatalogs;
-    QStringList fileExtensions, fileTypes;
+    QStringList fileExtensions, fileTypes, mimeTypes;
     QList<qint64> fileSizes;
     QStringList directoryPaths;
 
@@ -478,6 +503,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
             // Add file to batch arrays
             QString extension = entry.suffix().toLower();
             QString quickFileType = FileMetadata::getFileTypeFromExtension(extension);
+            QString quickMimeType = FileMetadata::getMimeTypeFromExtension(extension);
 
             fileNames << entry.fileName();
             fileFolderPaths << entry.path();
@@ -487,6 +513,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
             fileSizes << entry.size();
             fileExtensions << extension;
             fileTypes << quickFileType;
+            mimeTypes << quickMimeType;
 
             processedCount++;
 
@@ -500,7 +527,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         // Process batch when full (SINGLE CONDITION)
         if (fileNames.size() >= batchSize) {
             processBatch(fileNames, fileFolderPaths, fileFullPaths, fileDateTimes,
-                         fileCatalogs, fileSizes, fileExtensions, fileTypes,
+                         fileCatalogs, fileSizes, fileExtensions, fileTypes, mimeTypes,
                          directoryPaths, catalog);
         }
     }
@@ -508,7 +535,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     // Process any remaining items (SINGLE FINAL CALL)
     if (!fileNames.isEmpty() || !directoryPaths.isEmpty()) {
         processBatch(fileNames, fileFolderPaths, fileFullPaths, fileDateTimes,
-                     fileCatalogs, fileSizes, fileExtensions, fileTypes,
+                     fileCatalogs, fileSizes, fileExtensions, fileTypes, mimeTypes,
                      directoryPaths, catalog);
     }
 
@@ -1228,6 +1255,7 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
                                        QStringList& fileFullPaths, QStringList& fileDateTimes,
                                        QStringList& fileCatalogs, QList<qint64>& fileSizes,
                                        QStringList& fileExtensions, QStringList& fileTypes,
+                                       QStringList& mimeTypes,
                                        QStringList& directoryPaths, Catalog* catalog)
 {
     // Insert files if any
@@ -1235,9 +1263,9 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
         QSqlQuery query(QSqlDatabase::database(m_connectionName));
         query.prepare(R"(
             INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
-                            file_size, file_date_updated, file_catalog, file_extension, file_type)
+                            file_size, file_date_updated, file_catalog, file_extension, file_type, mime_type)
             VALUES (:catalog_id, :name, :folder_path, :full_path,
-                    :size, :date, :catalog_name, :extension, :file_type)
+                    :size, :date, :catalog_name, :extension, :file_type, :mime_type)
         )");
 
         for (int i = 0; i < fileNames.size(); ++i) {
@@ -1252,13 +1280,12 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
             query.bindValue(":catalog_name", fileCatalogs[i]);
             query.bindValue(":extension", fileExtensions[i]);
             query.bindValue(":file_type", fileTypes[i]);
+            query.bindValue(":mime_type", mimeTypes[i]);
 
             if (!query.exec()) {
                 qDebug() << "Database insert error:" << query.lastError().text();
             }
         }
-
-        // Metadata extraction - BATCHED for performance
 
 /*        // Metadata extraction - BATCHED for performance
         if (catalog->includeMetadata != Catalog::METADATA_NONE) {
@@ -1422,6 +1449,7 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
     fileSizes.clear();
     fileExtensions.clear();
     fileTypes.clear();
+    mimeTypes.clear();
     directoryPaths.clear();
 }
 
@@ -1444,3 +1472,909 @@ void CatalogJobStoppable::insertFolders(const QStringList& folderPaths, Catalog*
         }
     }
 }
+
+void CatalogJobStoppable::updateCatalogIncremental()
+{
+    qDebug() << "=== INCREMENTAL CATALOG UPDATE STARTED ===";
+    qDebug() << "Device ID:" << m_device->ID;
+    qDebug() << "Catalog Name:" << m_device->catalog->name;
+    qDebug() << "Source Path:" << m_device->catalog->sourcePath;
+    qDebug() << "Database Mode:" << m_databaseMode;
+
+    if (!m_device || !m_device->catalog) {
+        qDebug() << "ERROR: No device or catalog configured";
+        emit catalogOperationError("No device or catalog configured");
+        return;
+    }
+
+    Catalog *catalog = m_device->catalog;
+    m_updateStats.clear();
+
+    m_originalFileCount = catalog->fileCount;
+    m_originalTotalFileSize = catalog->totalFileSize;
+    qDebug() << "Captured original values - Files:" << m_originalFileCount << "Size:" << m_originalTotalFileSize;
+
+    // Step 1: Clear filetemp table
+    qDebug() << "Step 1: Clearing filetemp table";
+    QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
+    if (!clearQuery.exec("DELETE FROM filetemp")) {
+        qDebug() << "ERROR: Could not clear filetemp:" << clearQuery.lastError().text();
+        emit catalogOperationError("Failed to prepare temporary table");
+        return;
+    }
+
+    // Step 2: Estimate total files for progress
+    qDebug() << "Step 2: Estimating file count";
+    QDateTime startTime = QDateTime::currentDateTime();
+    qint64 countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
+    QDateTime endTime = QDateTime::currentDateTime();
+    qDebug() << "Counting completed in" << startTime.msecsTo(endTime) << "ms";
+    qDebug() << "Estimated total files:" << countedTotalFiles;
+
+    if (!shouldContinue()) {
+        qDebug() << "Stop requested during estimation";
+        return;
+    }
+
+    // Step 3: Scan filesystem and populate filetemp
+    qDebug() << "Step 3: Scanning filesystem into temporary table";
+    emitProgressUpdate(0, countedTotalFiles, "Scanning filesystem...");
+
+    QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
+    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
+        qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
+    }
+
+    qint64 scannedCount = 0;
+    scanDirectoryIntoFiletemp(catalog->sourcePath, catalog, scannedCount);
+
+    if (!shouldContinue()) {
+        transactionQuery.exec("ROLLBACK");
+        qDebug() << "Scan cancelled, transaction rolled back";
+        return;
+    }
+
+    if (!transactionQuery.exec("COMMIT")) {
+        qDebug() << "Warning: Could not COMMIT scan transaction:" << transactionQuery.lastError().text();
+    }
+
+    qDebug() << "Scanned" << scannedCount << "files into filetemp";
+
+    // Step 4: Analyze differences using SQL
+    qDebug() << "Step 4: Analyzing differences with SQL";
+    emitProgressUpdate(scannedCount, countedTotalFiles, "Analyzing file changes...");
+
+    QList<QVariantList> newFiles = findNewFiles();
+    QList<QVariantList> modifiedFiles = findModifiedFiles();
+    QStringList deletedFiles = findDeletedFiles();
+    int unchangedCount = countUnchangedFiles();
+
+    m_updateStats.newFiles = newFiles.size();
+    m_updateStats.modifiedFiles = modifiedFiles.size();
+    m_updateStats.deletedFiles = deletedFiles.size();
+    m_updateStats.unchangedFiles = unchangedCount;
+
+    qDebug() << "=== UPDATE ANALYSIS RESULTS ===";
+    qDebug() << "  New files:       " << m_updateStats.newFiles;
+    qDebug() << "  Modified files:  " << m_updateStats.modifiedFiles;
+    qDebug() << "  Deleted files:   " << m_updateStats.deletedFiles;
+    qDebug() << "  Unchanged files: " << m_updateStats.unchangedFiles;
+    qDebug() << "  Total changes:   " << m_updateStats.totalChanges();
+
+    if (!shouldContinue()) {
+        qDebug() << "Stop requested during analysis";
+        return;
+    }
+
+    // Step 5: Begin transaction for database updates
+    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
+        qDebug() << "Warning: Could not BEGIN update transaction:" << transactionQuery.lastError().text();
+    }
+
+    // Step 6: Process NEW files
+    if (!newFiles.isEmpty()) {
+        qDebug() << "Step 6a: Inserting" << newFiles.size() << "new files";
+        emitProgressUpdate(0, m_updateStats.totalChanges(),
+                           QString("Inserting %1 new files...").arg(newFiles.size()));
+        insertNewFilesFromFiletemp(newFiles);
+    }
+
+    // Step 7: Process MODIFIED files
+    if (!modifiedFiles.isEmpty()) {
+        qDebug() << "Step 7: Updating" << modifiedFiles.size() << "modified files";
+        emitProgressUpdate(newFiles.size(), m_updateStats.totalChanges(),
+                           QString("Updating %1 modified files...").arg(modifiedFiles.size()));
+        updateModifiedFilesFromFiletemp(modifiedFiles);
+    }
+
+    // Step 8: Process DELETED files
+    if (!deletedFiles.isEmpty()) {
+        qDebug() << "Step 8: Deleting" << deletedFiles.size() << "removed files";
+        emitProgressUpdate(newFiles.size() + modifiedFiles.size(), m_updateStats.totalChanges(),
+                           QString("Deleting %1 removed files...").arg(deletedFiles.size()));
+        deleteRemovedFiles(deletedFiles);
+    }
+
+    if (!shouldContinue()) {
+        transactionQuery.exec("ROLLBACK");
+        qDebug() << "Update cancelled, transaction rolled back";
+        return;
+    }
+
+    // Commit database changes
+    if (!transactionQuery.exec("COMMIT")) {
+        qDebug() << "Warning: Could not COMMIT update transaction:" << transactionQuery.lastError().text();
+    }
+
+    // One-time migration for existing files without mime_type ***
+    qDebug() << "Step 8a: Checking for mime_type migration";
+    migrateMimeTypesForExistingFiles();
+
+    // Step 9: Extract metadata for new/modified files (if enabled)
+    if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+        QList<QVariantList> filesToExtract;
+        filesToExtract.append(newFiles);
+        filesToExtract.append(modifiedFiles);
+
+        if (!filesToExtract.isEmpty()) {
+            qDebug() << "Step 9: Extracting metadata for" << filesToExtract.size() << "files";
+            m_updateStats.metadataExtracted = filesToExtract.size();
+            extractMetadataForChangedFiles(filesToExtract);
+        }
+    }
+
+    if (!shouldContinue()) {
+        qDebug() << "Update cancelled during metadata extraction";
+        return;
+    }
+
+    // Step 10: Update catalog metadata
+    qDebug() << "Step 10: Updating catalog metadata";
+    catalog->updateFileCount();
+    catalog->updateTotalFileSize();
+    catalog->saveCatalog();
+
+    // Step 11: Update Device object
+    m_device->dateTimeUpdated = QDateTime::currentDateTime();
+    m_device->totalFileCount = catalog->fileCount;
+    m_device->totalFileSize = catalog->totalFileSize;
+    m_device->saveStatistics(m_device->dateTimeUpdated, "update");
+    m_device->saveDevice();
+
+    // Step 12: Update parent hierarchy
+    qDebug() << "Step 11: Updating parent device hierarchy";
+    try {
+        m_device->updateParentsNumbers();
+    } catch (const std::exception& e) {
+        qDebug() << "Error updating parent numbers:" << e.what();
+    }
+
+    // Step 13: Update related catalog devices
+    updateRelatedCatalogDevices();
+
+    // Step 14: Save catalog files to disk (Memory mode)
+    if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
+        qDebug() << "Warning: Failed to save updated catalog to file";
+    }
+    if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
+        qDebug() << "Warning: Failed to save updated folders to file";
+    }
+
+    // Step 15: Complete catalog update (same as creation)
+    qDebug() << "Step 15: Completing catalog update";
+
+    // Save catalog files to disk (Memory mode)
+    if (m_databaseMode == "Memory") {
+        if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
+            qDebug() << "Warning: Failed to save updated catalog to file";
+        }
+        if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
+            qDebug() << "Warning: Failed to save updated folders to file";
+        }
+    }
+
+    // Set catalog loaded date
+    catalog->setDateLoaded(QDateTime::currentDateTime());
+
+    qDebug() << "=== INCREMENTAL CATALOG UPDATE COMPLETED SUCCESSFULLY ===";
+    qDebug() << "Summary:" << m_updateStats.newFiles << "new,"
+             << m_updateStats.modifiedFiles << "modified,"
+             << m_updateStats.deletedFiles << "deleted,"
+             << m_updateStats.unchangedFiles << "unchanged";
+}
+
+void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
+                                                    Catalog *catalog,
+                                                    qint64 &processedCount)
+{
+    if (!shouldContinue()) return;
+
+    // Get file extensions for filtering
+    QStringList extensions;
+    if (catalog->fileType == "Image") {
+        extensions = FileTypeMapping::getExtensionsForCataloging("image");
+    } else if (catalog->fileType == "Audio") {
+        extensions = FileTypeMapping::getExtensionsForCataloging("audio");
+    } else if (catalog->fileType == "Video") {
+        extensions = FileTypeMapping::getExtensionsForCataloging("video");
+    } else if (catalog->fileType == "Text") {
+        extensions = FileTypeMapping::getExtensionsForCataloging("text");
+    } else if (catalog->fileType == "Other") {
+        extensions = FileTypeMapping::getExtensionsForCataloging("other");
+    } else if (catalog->fileType == "None") {
+        extensions << "*";
+    } else {
+        extensions << "*";
+    }
+
+    // Setup directory iterator
+    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Readable;
+    if (catalog->includeHidden) {
+        filters |= QDir::Hidden;
+    }
+
+    QDirIterator::IteratorFlags iteratorFlags = QDirIterator::Subdirectories;
+    if (catalog->includeSymblinks) {
+        iteratorFlags |= QDirIterator::FollowSymlinks;
+    }
+
+    QDirIterator it(directory, extensions, filters, iteratorFlags);
+
+    // Batch arrays for efficient inserts
+    QStringList fileNames, fileFolderPaths, fileFullPaths, fileDateTimes, fileCatalogs;
+    QStringList fileExtensions, fileTypes, mimeTypes;
+    QList<qint64> fileSizes;
+
+    int batchSize = 1000;  // Adjust based on performance testing
+
+    // Prepare insert query
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
+    insertQuery.prepare(R"(
+        INSERT INTO filetemp (file_catalog_id, file_name, file_folder_path, file_full_path,
+                             file_size, file_date_updated, file_catalog, file_extension, file_type, mime_type)
+        VALUES (:catalog_id, :name, :folder_path, :full_path,
+                :size, :date, :catalog_name, :extension, :file_type, :mime_type)
+    )");
+
+    while (it.hasNext() && shouldContinue()) {
+        waitIfPaused();
+
+        QString entryPath = it.next();
+        QFileInfo entry(entryPath);
+
+        // Skip excluded folders
+        bool isExcluded = false;
+        for (const QString &excludedFolder : catalog->excludedFolders) {
+            if (entryPath.contains(excludedFolder)) {
+                isExcluded = true;
+                break;
+            }
+        }
+        if (isExcluded) continue;
+
+        // Only process files (skip directories for now)
+        if (entry.isFile()) {
+            QString extension = entry.suffix().toLower();
+            QString quickFileType = FileMetadata::getFileTypeFromExtension(extension);
+            QString quickMimeType = FileMetadata::getMimeTypeFromExtension(extension);
+
+            fileNames << entry.fileName();
+            fileFolderPaths << entry.path();
+            fileFullPaths << entryPath;
+            fileDateTimes << entry.lastModified().toString("yyyy/MM/dd hh:mm:ss");
+            fileCatalogs << catalog->name;
+            fileSizes << entry.size();
+            fileExtensions << extension;
+            fileTypes << quickFileType;
+            mimeTypes << quickMimeType;
+
+            processedCount++;
+
+            if (processedCount % progressRefreshRate == 0) {
+                emitProgressUpdate(processedCount, countedTotalFiles, entryPath);
+                QCoreApplication::processEvents();
+            }
+
+            // Batch insert when batch is full
+            if (fileNames.size() >= batchSize) {
+                for (int i = 0; i < fileNames.size(); ++i) {
+                    if (!shouldContinue()) break;
+
+                    insertQuery.bindValue(":catalog_id", catalog->ID);
+                    insertQuery.bindValue(":name", fileNames[i]);
+                    insertQuery.bindValue(":folder_path", fileFolderPaths[i]);
+                    insertQuery.bindValue(":full_path", fileFullPaths[i]);
+                    insertQuery.bindValue(":size", fileSizes[i]);
+                    insertQuery.bindValue(":date", fileDateTimes[i]);
+                    insertQuery.bindValue(":catalog_name", fileCatalogs[i]);
+                    insertQuery.bindValue(":extension", fileExtensions[i]);
+                    insertQuery.bindValue(":file_type", fileTypes[i]);
+                    insertQuery.bindValue(":mime_type", mimeTypes[i]);
+
+                    if (!insertQuery.exec()) {
+                        qDebug() << "Error inserting into filetemp:" << insertQuery.lastError().text();
+                    }
+                }
+
+                // Clear arrays for next batch
+                fileNames.clear();
+                fileFolderPaths.clear();
+                fileFullPaths.clear();
+                fileDateTimes.clear();
+                fileCatalogs.clear();
+                fileSizes.clear();
+                fileExtensions.clear();
+                fileTypes.clear();
+                mimeTypes.clear();
+            }
+        }
+    }
+
+    // Insert remaining files
+    if (!fileNames.isEmpty() && shouldContinue()) {
+        for (int i = 0; i < fileNames.size(); ++i) {
+            insertQuery.bindValue(":catalog_id", catalog->ID);
+            insertQuery.bindValue(":name", fileNames[i]);
+            insertQuery.bindValue(":folder_path", fileFolderPaths[i]);
+            insertQuery.bindValue(":full_path", fileFullPaths[i]);
+            insertQuery.bindValue(":size", fileSizes[i]);
+            insertQuery.bindValue(":date", fileDateTimes[i]);
+            insertQuery.bindValue(":catalog_name", fileCatalogs[i]);
+            insertQuery.bindValue(":extension", fileExtensions[i]);
+            insertQuery.bindValue(":file_type", fileTypes[i]);
+            insertQuery.bindValue(":mime_type", mimeTypes[i]);
+
+            if (!insertQuery.exec()) {
+                qDebug() << "Error inserting into filetemp:" << insertQuery.lastError().text();
+            }
+        }
+    }
+}
+
+QList<QVariantList> CatalogJobStoppable::findNewFiles()
+{
+    QList<QVariantList> newFiles;
+
+    // ADD DIAGNOSTIC: Check what's in filetemp
+    qDebug() << "=== DIAGNOSTIC: findNewFiles() ===";
+    qDebug() << "Catalog ID:" << m_device->catalog->ID;
+
+    QSqlQuery diagQuery(QSqlDatabase::database(m_connectionName));
+    diagQuery.prepare("SELECT COUNT(*) FROM filetemp WHERE file_catalog_id = :catalog_id");
+    diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
+    if (diagQuery.exec() && diagQuery.next()) {
+        qDebug() << "Files in filetemp for this catalog:" << diagQuery.value(0).toInt();
+    }
+
+    diagQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :catalog_id");
+    diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
+    if (diagQuery.exec() && diagQuery.next()) {
+        qDebug() << "Files in file table for this catalog:" << diagQuery.value(0).toInt();
+    }
+
+    // Show first few file paths from each table
+    diagQuery.prepare("SELECT file_full_path FROM filetemp WHERE file_catalog_id = :catalog_id LIMIT 3");
+    diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
+    if (diagQuery.exec()) {
+        qDebug() << "Sample paths in filetemp:";
+        while (diagQuery.next()) {
+            qDebug() << "  " << diagQuery.value(0).toString();
+        }
+    }
+
+    diagQuery.prepare("SELECT file_full_path FROM file WHERE file_catalog_id = :catalog_id LIMIT 3");
+    diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
+    if (diagQuery.exec()) {
+        qDebug() << "Sample paths in file table:";
+        while (diagQuery.next()) {
+            qDebug() << "  " << diagQuery.value(0).toString();
+        }
+    }
+
+    // Original query
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(R"(
+        SELECT ft.file_full_path, ft.file_name, ft.file_folder_path,
+               ft.file_size, ft.file_extension, ft.file_type, ft.mime_type
+        FROM filetemp ft
+        LEFT JOIN file f ON f.file_catalog_id = :catalog_id
+                        AND f.file_full_path = ft.file_full_path
+        WHERE ft.file_catalog_id = :catalog_id
+          AND f.file_full_path IS NULL
+    )");
+    query.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR finding new files:" << query.lastError().text();
+        return newFiles;
+    }
+
+    // ADD DIAGNOSTIC: Show what the query returns
+    qDebug() << "New files query returned" << query.size() << "rows";
+
+    while (query.next()) {
+        QVariantList fileData;
+        fileData << query.value(0)  // file_full_path
+                 << query.value(1)  // file_name
+                 << query.value(2)  // file_folder_path
+                 << query.value(3)  // file_size
+                 << query.value(4)  // file_extension
+                 << query.value(5)  // file_type
+                 << query.value(6); // mime_type
+
+        // ADD DIAGNOSTIC: Show each new file found
+        qDebug() << "  New file:" << fileData[0].toString();
+
+        newFiles.append(fileData);
+    }
+
+    qDebug() << "=== END DIAGNOSTIC: findNewFiles() found" << newFiles.size() << "new files ===";
+    return newFiles;
+}
+
+QList<QVariantList> CatalogJobStoppable::findModifiedFiles()
+{
+    QList<QVariantList> modifiedFiles;
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(R"(
+        SELECT ft.file_full_path, ft.file_name, ft.file_folder_path,
+               ft.file_size, ft.file_date_updated, ft.file_extension, ft.file_type
+        FROM filetemp ft
+        INNER JOIN file f ON f.file_catalog_id = :catalog_id
+                         AND f.file_full_path = ft.file_full_path
+        WHERE ft.file_catalog_id = :catalog_id
+          AND (f.file_size != ft.file_size
+               OR f.file_date_updated != ft.file_date_updated)
+    )");
+    query.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR finding modified files:" << query.lastError().text();
+        return modifiedFiles;
+    }
+
+    while (query.next()) {
+        QVariantList fileData;
+        fileData << query.value(0)  // file_full_path
+                 << query.value(1)  // file_name
+                 << query.value(2)  // file_folder_path
+                 << query.value(3)  // file_size
+                 << query.value(4)  // file_date_updated
+                 << query.value(5)  // file_extension
+                 << query.value(6); // file_type
+        modifiedFiles.append(fileData);
+    }
+
+    return modifiedFiles;
+}
+
+QStringList CatalogJobStoppable::findDeletedFiles()
+{
+    QStringList deletedFiles;
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(R"(
+        SELECT f.file_full_path
+        FROM file f
+        LEFT JOIN filetemp ft ON ft.file_catalog_id = :catalog_id
+                             AND ft.file_full_path = f.file_full_path
+        WHERE f.file_catalog_id = :catalog_id
+          AND ft.file_full_path IS NULL
+    )");
+    query.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR finding deleted files:" << query.lastError().text();
+        return deletedFiles;
+    }
+
+    while (query.next()) {
+        deletedFiles << query.value(0).toString();
+    }
+
+    return deletedFiles;
+}
+
+int CatalogJobStoppable::countUnchangedFiles()
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(R"(
+        SELECT COUNT(*)
+        FROM filetemp ft
+        INNER JOIN file f ON f.file_catalog_id = :catalog_id
+                         AND f.file_full_path = ft.file_full_path
+        WHERE ft.file_catalog_id = :catalog_id
+          AND f.file_size = ft.file_size
+          AND f.file_date_updated = ft.file_date_updated
+    )");
+    query.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!query.exec() || !query.next()) {
+        qDebug() << "ERROR counting unchanged files:" << query.lastError().text();
+        return 0;
+    }
+
+    return query.value(0).toInt();
+}
+
+void CatalogJobStoppable::insertNewFilesFromFiletemp(const QList<QVariantList> &newFiles)
+{
+    if (newFiles.isEmpty()) return;
+
+    qDebug() << "Inserting" << newFiles.size() << "new files from filetemp";
+
+    // Use a single INSERT SELECT statement for efficiency
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+
+    // Build list of file paths for WHERE IN clause
+    QStringList paths;
+    for (const auto &fileData : newFiles) {
+        QString escapedPath = fileData[0].toString();
+        escapedPath.replace("'", "''");  // SQL escaping
+        paths << "'" + escapedPath + "'";
+    }
+
+    QString pathList = paths.join(", ");
+
+    QString insertSQL = QString(R"(
+        INSERT INTO file (
+            file_catalog_id, file_name, file_folder_path, file_full_path,
+            file_size, file_date_updated, file_catalog, file_extension, file_type, mime_type
+        )
+        SELECT
+            file_catalog_id, file_name, file_folder_path, file_full_path,
+            file_size, file_date_updated, file_catalog, file_extension, file_type, mime_type
+        FROM filetemp
+        WHERE file_catalog_id = %1
+          AND file_full_path IN (%2)
+    )").arg(m_device->catalog->ID).arg(pathList);
+
+    if (!query.exec(insertSQL)) {
+        qDebug() << "ERROR: Bulk insert of new files failed:" << query.lastError().text();
+
+        // Fallback: Insert one by one
+        qDebug() << "Attempting individual inserts...";
+        QSqlQuery individualQuery(QSqlDatabase::database(m_connectionName));
+        individualQuery.prepare(R"(
+            INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
+                            file_size, file_date_updated, file_catalog, file_extension, file_type, mime_type)
+            VALUES (:catalog_id, :name, :folder_path, :full_path,
+                    :size, :date, :catalog_name, :extension, :file_type, :mime_type)
+        )");
+
+        int successCount = 0;
+        for (const auto &fileData : newFiles) {
+            if (!shouldContinue()) break;
+
+            individualQuery.bindValue(":catalog_id", m_device->catalog->ID);
+            individualQuery.bindValue(":name", fileData[1]);  // file_name
+            individualQuery.bindValue(":folder_path", fileData[2]);  // file_folder_path
+            individualQuery.bindValue(":full_path", fileData[0]);  // file_full_path
+            individualQuery.bindValue(":size", fileData[3]);  // file_size
+
+            // Get date_updated from filetemp
+            QSqlQuery dateQuery(QSqlDatabase::database(m_connectionName));
+            dateQuery.prepare("SELECT file_date_updated FROM filetemp WHERE file_full_path = ?");
+            dateQuery.bindValue(0, fileData[0]);
+            QString dateUpdated;
+            if (dateQuery.exec() && dateQuery.next()) {
+                dateUpdated = dateQuery.value(0).toString();
+            }
+
+            individualQuery.bindValue(":date", dateUpdated);
+            individualQuery.bindValue(":catalog_name", m_device->catalog->name);
+            individualQuery.bindValue(":extension", fileData[4]);  // file_extension
+            individualQuery.bindValue(":file_type", fileData[5]);  // file_type
+            individualQuery.bindValue(":mime_type", fileData[6]);  // mime_type
+
+            if (individualQuery.exec()) {
+                successCount++;
+            } else {
+                qDebug() << "Failed to insert file:" << fileData[0].toString()
+                << "Error:" << individualQuery.lastError().text();
+            }
+        }
+        qDebug() << "Individual insert completed:" << successCount << "of" << newFiles.size() << "files";
+    } else {
+        qDebug() << "Bulk insert successful:" << query.numRowsAffected() << "rows";
+    }
+
+    // Insert folder entries for new files
+    QStringList uniqueFolders;
+    for (const auto &fileData : newFiles) {
+        QString folderPath = fileData[2].toString();  // file_folder_path
+        if (!uniqueFolders.contains(folderPath)) {
+            uniqueFolders << folderPath;
+        }
+    }
+
+    if (!uniqueFolders.isEmpty()) {
+        insertFolders(uniqueFolders, m_device->catalog);
+    }
+}
+
+void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantList> &modifiedFiles)
+{
+    if (modifiedFiles.isEmpty()) return;
+
+    qDebug() << "Updating" << modifiedFiles.size() << "modified files from filetemp";
+
+    // Build list of file paths for WHERE IN clause
+    QStringList paths;
+    for (const auto &fileData : modifiedFiles) {
+        QString escapedPath = fileData[0].toString();
+        escapedPath.replace("'", "''");  // SQL escaping
+        paths << "'" + escapedPath + "'";
+    }
+
+    QString pathList = paths.join(", ");
+
+    // Bulk update using subqueries
+    QString updateSQL = QString(R"(
+        UPDATE file
+        SET file_size = (SELECT ft.file_size FROM filetemp ft
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+            file_date_updated = (SELECT ft.file_date_updated FROM filetemp ft
+                                 WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+            file_extension = (SELECT ft.file_extension FROM filetemp ft
+                              WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+            file_type = (SELECT ft.file_type FROM filetemp ft
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+            mime_type = (SELECT ft.mime_type FROM filetemp ft
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+            metadata_extraction_date = NULL
+        WHERE file_catalog_id = %1
+          AND file_full_path IN (%2)
+    )").arg(m_device->catalog->ID).arg(pathList);
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    if (!query.exec(updateSQL)) {
+        qDebug() << "ERROR: Bulk update of modified files failed:" << query.lastError().text();
+
+        // Fallback: Update one by one
+        qDebug() << "Attempting individual updates...";
+        QSqlQuery individualQuery(QSqlDatabase::database(m_connectionName));
+        individualQuery.prepare(R"(
+            UPDATE file
+            SET file_size = :size,
+                file_date_updated = :date,
+                file_extension = :extension,
+                file_type = :file_type,
+                mime_type = :mime_type,
+                metadata_extraction_date = NULL
+            WHERE file_catalog_id = :catalog_id
+              AND file_full_path = :full_path
+        )");
+
+        int successCount = 0;
+        for (const auto &fileData : modifiedFiles) {
+            if (!shouldContinue()) break;
+            individualQuery.bindValue(":size", fileData[3]);  // file_size
+            individualQuery.bindValue(":date", fileData[4]);  // file_date_updated
+            individualQuery.bindValue(":extension", fileData[5]);  // file_extension
+            individualQuery.bindValue(":file_type", fileData[6]);  // file_type
+            individualQuery.bindValue(":catalog_id", m_device->catalog->ID);
+            individualQuery.bindValue(":full_path", fileData[0]);  // file_full_path
+            individualQuery.bindValue(":mime_type", fileData[7]);  // mime_type
+
+            if (individualQuery.exec()) {
+                successCount++;
+            } else {
+                qDebug() << "Failed to update file:" << fileData[0].toString()
+                << "Error:" << individualQuery.lastError().text();
+            }
+        }
+        qDebug() << "Individual update completed:" << successCount << "of" << modifiedFiles.size() << "files";
+    } else {
+        qDebug() << "Bulk update successful:" << query.numRowsAffected() << "rows";
+    }
+}
+
+void CatalogJobStoppable::deleteRemovedFiles(const QStringList &deletedFiles)
+{
+    if (deletedFiles.isEmpty()) return;
+
+    qDebug() << "Deleting" << deletedFiles.size() << "removed files";
+
+    // Build list of file paths for WHERE IN clause
+    QStringList paths;
+    for (const QString &path : deletedFiles) {
+        QString escapedPath = path;
+        escapedPath.replace("'", "''");  // SQL escaping
+        paths << "'" + escapedPath + "'";
+    }
+
+    QString pathList = paths.join(", ");
+
+    QString deleteSQL = QString(R"(
+        DELETE FROM file
+        WHERE file_catalog_id = %1
+          AND file_full_path IN (%2)
+    )").arg(m_device->catalog->ID).arg(pathList);
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    if (!query.exec(deleteSQL)) {
+        qDebug() << "ERROR: Bulk delete of removed files failed:" << query.lastError().text();
+    } else {
+        qDebug() << "Bulk delete successful:" << query.numRowsAffected() << "rows";
+    }
+}
+
+void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantList> &changedFiles)
+{
+    if (changedFiles.isEmpty()) return;
+
+    qDebug() << "Extracting metadata for" << changedFiles.size() << "changed files";
+
+    int processedFiles = 0;
+    int totalFiles = changedFiles.size();
+
+    // Use parallel extraction (same as existing implementation)
+    if (m_device->catalog->includeMetadata != Catalog::METADATA_NONE) {
+        QStringList extractFileNames, extractFolderPaths, extractFullPaths;
+
+        for (const auto &fileData : changedFiles) {
+            QString filePath = fileData[0].toString();  // file_full_path
+
+            if (FileMetadata::isMetadataSupported(filePath)) {
+                QFileInfo fileInfo(filePath);
+                extractFileNames << fileInfo.fileName();
+                extractFolderPaths << fileInfo.absolutePath();
+                extractFullPaths << filePath;
+            }
+        }
+
+        if (!extractFullPaths.isEmpty()) {
+            // Use parallel metadata extractor
+            QElapsedTimer batchTimer;
+            batchTimer.start();
+
+            // Determine thread count based on system and database mode
+            int optimalThreads = 4;  // Safe default
+            int availableCores = QThread::idealThreadCount();
+            if (availableCores > 0) {
+                optimalThreads = qMin(availableCores - 1, 8);
+                if (m_databaseMode != "Memory") {
+                    optimalThreads = qMin(optimalThreads, 4);
+                }
+            }
+
+            ParallelMetadataExtractor extractor;
+            auto results = extractor.extractBatch(extractFullPaths, extractFileNames, extractFolderPaths,
+                                                  m_device->catalog->includeMetadata, optimalThreads);
+
+            QStringList batchFileNames, batchFolderPaths;
+            QList<QVariantMap> batchMetadata;
+
+            for (const auto &result : results) {
+                if (!result.metadata.isEmpty()) {
+                    batchFileNames << result.fileName;
+                    batchFolderPaths << result.folderPath;
+                    batchMetadata << result.metadata;
+                }
+            }
+
+            if (!batchFileNames.isEmpty()) {
+                FileMetadata::batchUpdateFileMetadata(m_connectionName, m_device->catalog->ID,
+                                                      batchFileNames, batchFolderPaths,
+                                                      batchMetadata);
+            }
+
+            int totalBatchMs = batchTimer.elapsed();
+            qDebug() << "=== METADATA EXTRACTION COMPLETE ==="
+                     << "Files:" << extractFullPaths.size()
+                     << "| Total time:" << totalBatchMs << "ms";
+
+            processedFiles = extractFullPaths.size();
+        }
+    }
+
+    // Progress update
+    emitProgressUpdate(totalFiles, totalFiles,
+                       QString("Metadata extraction completed: %1 files").arg(processedFiles));
+}
+
+// Add this method to catalogjobstoppable.cpp
+void CatalogJobStoppable::migrateMimeTypesForExistingFiles()
+{
+    qDebug() << "=== Checking if mime_type migration is needed ===";
+
+    // Check if any files have NULL mime_type
+    QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
+    checkQuery.prepare(R"(
+        SELECT COUNT(*)
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+        AND (mime_type IS NULL OR mime_type = '')
+    )");
+    checkQuery.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!checkQuery.exec() || !checkQuery.next()) {
+        qDebug() << "Failed to check mime_type status";
+        return;
+    }
+
+    int filesWithoutMimeType = checkQuery.value(0).toInt();
+
+    if (filesWithoutMimeType == 0) {
+        qDebug() << "All files already have mime_type - no migration needed";
+        return;
+    }
+
+    qDebug() << "Found" << filesWithoutMimeType << "files without mime_type - performing one-time migration";
+    emitProgressUpdate(0, filesWithoutMimeType, "Migrating MIME types for existing files...");
+
+    // Get files that need mime_type populated
+    QSqlQuery filesQuery(QSqlDatabase::database(m_connectionName));
+    filesQuery.prepare(R"(
+        SELECT file_name, file_folder_path, file_extension
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+        AND (mime_type IS NULL OR mime_type = '')
+    )");
+    filesQuery.bindValue(":catalog_id", m_device->catalog->ID);
+
+    if (!filesQuery.exec()) {
+        qDebug() << "Failed to query files for migration:" << filesQuery.lastError().text();
+        return;
+    }
+
+    // Collect files to update
+    QStringList fileNames, folderPaths, extensions;
+    while (filesQuery.next()) {
+        fileNames << filesQuery.value(0).toString();
+        folderPaths << filesQuery.value(1).toString();
+        extensions << filesQuery.value(2).toString();
+    }
+
+    // Begin transaction for batch update
+    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
+    db.transaction();
+
+    QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
+    updateQuery.prepare(R"(
+        UPDATE file
+        SET mime_type = :mime_type,
+            file_type = :file_type
+        WHERE file_catalog_id = :catalog_id
+        AND file_name = :file_name
+        AND file_folder_path = :folder_path
+    )");
+
+    int updated = 0;
+    for (int i = 0; i < fileNames.size(); ++i) {
+        if (!shouldContinue()) {
+            db.rollback();
+            return;
+        }
+
+        // Calculate mime_type and file_type from extension
+        QString mimeType = FileMetadata::getMimeTypeFromExtension(extensions[i]);
+        QString fileType = FileMetadata::getFileTypeFromExtension(extensions[i]);
+
+        updateQuery.bindValue(":mime_type", mimeType);
+        updateQuery.bindValue(":file_type", fileType);
+        updateQuery.bindValue(":catalog_id", m_device->catalog->ID);
+        updateQuery.bindValue(":file_name", fileNames[i]);
+        updateQuery.bindValue(":folder_path", folderPaths[i]);
+
+        if (updateQuery.exec()) {
+            updated++;
+        }
+
+        // Progress update
+        if (updated % 1000 == 0) {
+            emitProgressUpdate(updated, filesWithoutMimeType,
+                               QString("Migrated %1 files...").arg(updated));
+            QCoreApplication::processEvents();
+        }
+    }
+
+    db.commit();
+
+    qDebug() << "MIME type migration completed:" << updated << "files updated";
+    emitProgressUpdate(updated, filesWithoutMimeType, "Migration completed");
+}
+
+

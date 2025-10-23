@@ -24,18 +24,20 @@
 // Application: Katalog
 // File Name:   database.cpp
 // Purpose:     Database management
-// Description: Handles connection, creation, and modification
+// Description: Handles connection, creation, and updates of the database
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "database.h"
 #include "collection.h"
-#include "filemetadata.h"
 #include <QSettings>
 #include <QFile>
 #include <QDebug>
 #include <QApplication>
 
+//----------------------------------------------------------------------
+// Core database functions
+//----------------------------------------------------------------------
 QSqlError Database::initialize(const QString &connectionName, Collection *collection,
                                const QString &overrideDatabaseMode,
                                const QString &overrideDatabaseFilePath)
@@ -98,11 +100,7 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
         return db.lastError();
     }
 
-    // Open the database connection
-    if (!db.open()) {
-        return db.lastError();
-    }
-
+    // SQLite pragmas for corruption prevention
     if (db.driverName() == "QSQLITE") {
         QSqlQuery pragmaQuery(db);
 
@@ -136,7 +134,7 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
             qDebug() << "Failed to set temp store:" << pragmaQuery.lastError().text();
         }
 
-        qDebug() << "SQLite pragmas set successfully for corruption prevention";
+        //qDebug() << "SQLite pragmas set successfully for corruption prevention";
     }
 
     // Create all necessary tables
@@ -153,141 +151,64 @@ QSqlError Database::createAllTables(const QString &connectionName)
     QSqlError error;
 
     // Create all tables in order
-    // error = createSchemaTable(connectionName);
+    // error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_SCHEMA);
     // if (error.type() != QSqlError::NoError) return error;
 
-    error = createDeviceTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createCatalogTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_CATALOG);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createStorageTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STORAGE);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createFileTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILE);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createFileTempTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILETEMP);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createFolderTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_FOLDER);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createStatisticsDeviceTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createSearchTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_SEARCH);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createTagTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_TAG);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createParameterTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_PARAMETER);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createBackupMappingTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_BACKUP_MAPPING);
     if (error.type() != QSqlError::NoError) return error;
 
     //Migrate
-    error = createStatisticsCatalogTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_CATALOG);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createStatisticsStorageTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_STORAGE);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createVirtualStorageTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createVirtualStorageCatalogTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE_CATALOG);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createDeviceCatalogTable(connectionName);
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE_CATALOG);
     if (error.type() != QSqlError::NoError) return error;
+
     return QSqlError(); // Success
 }
 
-QSqlError Database::createDeviceTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE);
-}
-
-QSqlError Database::createStorageTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_STORAGE);
-}
-
-QSqlError Database::createCatalogTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_CATALOG);
-}
-
-QSqlError Database::createFileTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILE);
-}
-
-QSqlError Database::createFileTempTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILETEMP);
-}
-
-QSqlError Database::createFolderTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_FOLDER);
-}
-
-QSqlError Database::createStatisticsDeviceTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
-}
-
-QSqlError Database::createSearchTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_SEARCH);
-}
-
-QSqlError Database::createTagTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_TAG);
-}
-
-QSqlError Database::createParameterTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_PARAMETER);
-}
-
-QSqlError Database::createBackupMappingTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_BACKUP_MAPPING);
-}
-
-//Migrate
-QSqlError Database::createStatisticsCatalogTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_CATALOG);
-}
-
-QSqlError Database::createStatisticsStorageTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_STORAGE);
-}
-
-QSqlError Database::createVirtualStorageTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE);
-}
-
-QSqlError Database::createVirtualStorageCatalogTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE_CATALOG);
-}
-
-QSqlError Database::createDeviceCatalogTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE_CATALOG);
-}
-
+//----------------------------------------------------------------------
+// Utility methods
+//----------------------------------------------------------------------
 
 bool Database::tableExists(const QString &connectionName, const QString &tableName)
 {
@@ -315,6 +236,20 @@ QStringList Database::listTables(const QString &connectionName)
     return tables;
 }
 
+QStringList Database::getTableColumns(const QString &connectionName, const QString &tableName)
+{
+    QStringList columns;
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+
+    if (query.exec(QString("PRAGMA table_info(%1)").arg(tableName))) {
+        while (query.next()) {
+            columns << query.value(1).toString(); // column name is at index 1
+        }
+    }
+
+    return columns;
+}
+
 QSqlError Database::executeSql(const QString &connectionName, const QString &sql)
 {
     QSqlQuery query(QSqlDatabase::database(connectionName));
@@ -328,9 +263,37 @@ QSqlError Database::executeSql(const QString &connectionName, const QString &sql
     return QSqlError(); // Success
 }
 
+QSqlError Database::dropTableIfExists(const QString &connectionName, const QString &tableName)
+{
+    if (tableExists(connectionName, tableName)) {
+        qDebug() << "Dropping table:" << tableName;
+
+        // First, try to ensure no locks
+        QSqlDatabase db = QSqlDatabase::database(connectionName);
+        QSqlQuery unlockQuery(db);
+        unlockQuery.exec("PRAGMA wal_checkpoint(RESTART)");
+        unlockQuery.finish();
+
+        // Try the drop
+        QSqlError dropError = executeSql(connectionName, QString("DROP TABLE IF EXISTS %1").arg(tableName));
+
+        if (dropError.type() != QSqlError::NoError) {
+            qDebug() << "DROP TABLE failed (table may be locked):" << dropError.text();
+            qDebug() << "Migration will continue without dropping" << tableName;
+            return QSqlError(); // Return success anyway - not critical
+        }
+
+        return dropError;
+    } else {
+        qDebug() << "Table" << tableName << "doesn't exist, skipping drop";
+        return QSqlError(); // Success - nothing to do
+    }
+}
+
 //----------------------------------------------------------------------
-// Updates
+// Updates per Version
 //----------------------------------------------------------------------
+
 QSqlError Database::runMigration_2_6(const QString &connectionName)
 {
     qDebug() << "=== Database Migration 2.6: Adding selected_device_ID_list to search table ===";
@@ -370,158 +333,191 @@ QSqlError Database::runMigration_2_6(const QString &connectionName)
     return QSqlError(); // Success
 }
 
-//----------------------------------------------------------------------
 QSqlError Database::runMigration_2_8(const QString &connectionName)
 {
+    //change cursor
+    QApplication::setOverrideCursor(Qt::BusyCursor);
+
+
     qDebug() << "=== Database Migration 2.8: PART1 - Drop metadata table, update file/filetemp tables ===";
 
-    // Step 1: Drop the unused metadata table if it exists
-    if (auto dropError = dropTableIfExists(connectionName, "metadata");
-        dropError.type() != QSqlError::NoError)
-    {
-        qDebug() << "Warning dropping metadata table:" << dropError.text();
-        // Continue - not critical
-    }
-
-    // Step 2: Update "file" table structure with DEFAULT NULL for metadata columns
-    QStringList existingFileColumns = getTableColumns(connectionName, "file");
-
-    // Define metadata columns and their types
-    // Define all columns, their types, and default values in a single QMap
-    const QMap<QString, QString> newFileColumns = {
-        {"file_extension", "TEXT"}, {"file_type", "TEXT"}, {"mime_type", "TEXT"},
-        {"image_width", "NUMERIC"}, {"image_height", "NUMERIC"}, {"image_orientation", "NUMERIC"},
-        {"video_duration_seconds", "NUMERIC"}, {"video_width", "NUMERIC"}, {"video_height", "NUMERIC"}, {"video_codec", "TEXT"},
-        {"video_framerate", "NUMERIC"}, {"video_bitrate", "NUMERIC"},
-        {"audio_duration_seconds", "NUMERIC"}, {"audio_artist", "TEXT"}, {"audio_album", "TEXT"}, {"audio_title", "TEXT"},
-        {"audio_genre", "TEXT"}, {"audio_year", "NUMERIC"}, {"audio_track_number", "NUMERIC"}, {"audio_bitrate", "NUMERIC"}, {"audio_sample_rate", "NUMERIC"},
-        {"metadata_extended", "TEXT"}, {"metadata_extraction_date", "TEXT"},
-        {"mime_verified", "BOOLEAN"}, {"type_mismatch", "BOOLEAN"}
-    };
-
-    // Add missing metadata columns
-    for (auto it = newFileColumns.constBegin(); it != newFileColumns.constEnd(); ++it) {
-        if (!existingFileColumns.contains(it.key())) {
-            qDebug() << "Adding column:" << it.key();
-            QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2 DEFAULT NULL").arg(it.key(), it.value());
-            if (auto addColumnError = executeSql(connectionName, alterSQL);
-                addColumnError.type() != QSqlError::NoError)
-            {
-                qDebug() << "Error adding column" << it.key() << ":" << addColumnError.text();
-                return addColumnError;
-            }
-            qDebug() << "Added column" << it.key() << "to -file- table";
+        // Step 1: Drop the unused metadata table if it exists
+        if (auto dropError = dropTableIfExists(connectionName, "metadata");
+            dropError.type() != QSqlError::NoError)
+        {
+            qDebug() << "Warning dropping metadata table:" << dropError.text();
+            // Continue - not critical
         }
-    }
 
-    // Step 3: Update "filetemp" table structure to match file table
-    qDebug() << "Updating filetemp table with complete metadata structure...";
+        // Step 2: Update "file" table structure with DEFAULT NULL for metadata columns
+        QStringList existingFileColumns = getTableColumns(connectionName, "file");
 
-    // Get existing filetemp columns
-    QStringList existingFiletempColumns = getTableColumns(connectionName, "filetemp");
+        // Define metadata columns and their types
+        // Define all columns, their types, and default values in an ordered list
+        const QList<QPair<QString, QString>> newFileColumns = {
+            {"file_extension", "TEXT"}, {"file_type", "TEXT"}, {"mime_type", "TEXT"},
+            {"image_width", "NUMERIC"}, {"image_height", "NUMERIC"}, {"image_orientation", "NUMERIC"},
+            {"video_duration_seconds", "NUMERIC"}, {"video_width", "NUMERIC"}, {"video_height", "NUMERIC"}, {"video_codec", "TEXT"},
+            {"video_framerate", "NUMERIC"}, {"video_bitrate", "NUMERIC"},
+            {"audio_duration_seconds", "NUMERIC"}, {"audio_artist", "TEXT"}, {"audio_album", "TEXT"}, {"audio_title", "TEXT"},
+            {"audio_genre", "TEXT"}, {"audio_year", "NUMERIC"}, {"audio_track_number", "NUMERIC"}, {"audio_bitrate", "NUMERIC"}, {"audio_sample_rate", "NUMERIC"},
+            {"metadata_extended", "TEXT"}, {"metadata_extraction_date", "TEXT"},
+            {"mime_verified", "BOOLEAN"}, {"type_mismatch", "BOOLEAN"}
+        };
 
-    // Add missing metadata columns to filetemp (same columns as file table)
-    for (auto it = newFileColumns.constBegin(); it != newFileColumns.constEnd(); ++it) {
-        if (!existingFiletempColumns.contains(it.key())) {
-            qDebug() << "Adding column to filetemp:" << it.key();
-            QString alterSQL = QString("ALTER TABLE filetemp ADD COLUMN %1 %2 DEFAULT NULL").arg(it.key(), it.value());
-            if (auto addColumnError = executeSql(connectionName, alterSQL);
-                addColumnError.type() != QSqlError::NoError)
-            {
-                qDebug() << "Error adding column" << it.key() << "to filetemp:" << addColumnError.text();
-                return addColumnError;
+        // Add missing metadata columns
+        for (const auto& [columnName, columnType] : newFileColumns) {
+            if (!existingFileColumns.contains(columnName)) {
+                qDebug() << "Adding column:" << columnName;
+                QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2").arg(columnName, columnType);
+                if (auto addColumnError = executeSql(connectionName, alterSQL);
+                    addColumnError.type() != QSqlError::NoError)
+                {
+                    qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
+                    return addColumnError;
+                }
+                qDebug() << "Added column" << columnName << "to -file- table";
             }
-            qDebug() << "Added column" << it.key() << "to filetemp table";
         }
-    }
-    qDebug() << "File and filetemp tables updated with metadata support";
+
+        // Step 3: Update "filetemp" table structure to match file table
+        qDebug() << "Updating filetemp table with complete metadata structure...";
+
+        // Get existing filetemp columns
+        QStringList existingFiletempColumns = getTableColumns(connectionName, "filetemp");
+
+        // Add missing metadata columns to filetemp (same columns as file table)
+        for (const auto& [columnName, columnType] : newFileColumns) {
+            if (!existingFiletempColumns.contains(columnName)) {
+                qDebug() << "Adding column to filetemp:" << columnName;
+                QString alterSQL = QString("ALTER TABLE filetemp ADD COLUMN %1 %2").arg(columnName, columnType);
+                if (auto addColumnError = executeSql(connectionName, alterSQL);
+                    addColumnError.type() != QSqlError::NoError)
+                {
+                    qDebug() << "Error adding column" << columnName << "to filetemp:" << addColumnError.text();
+                    return addColumnError;
+                }
+                qDebug() << "Added column" << columnName << "to filetemp table";
+            }
+        }
+        qDebug() << "File and filetemp tables updated with metadata support";
+
 
     qDebug() << "=== Database Migration 2.8: PART2 - File type population. DEFERRED ===";
-    // qDebug() << "File types will be populated on-demand when each catalog is first used";
-    // qDebug() << "This ensures fast startup and processes only catalogs you actually use";
+        // qDebug() << "File types will be populated on-demand when each catalog is first used";
+        // qDebug() << "This ensures fast startup and processes only catalogs you actually use";
+
 
     qDebug() << "=== Database Migration 2.8: PART3 - Update search table ===";
-    QStringList existingSearchColumns = getTableColumns(connectionName, "search");
-    const QMap<QString, QString> newSearchColumns = {
-        {"metadata_checked", "NUMERIC"}, {"metadata_text_checked", "NUMERIC"}, {"metadata_text_search", "TEXT"},
-        {"metadata_size_checked", "NUMERIC"}, {"metadata_size_min_height", "NUMERIC"}, {"metadata_size_max_height", "NUMERIC"},
-        {"metadata_size_min_width", "NUMERIC"}, {"metadata_size_max_width", "NUMERIC"}, {"metadata_duration_checked", "NUMERIC"},
-        {"metadata_duration_min", "TEXT"}, {"metadata_duration_max", "TEXT"}
-    };
+        QStringList existingSearchColumns = getTableColumns(connectionName, "search");
+        const QList<QPair<QString, QString>> newSearchColumns = {
+            {"metadata_checked", "NUMERIC"}, {"metadata_text_checked", "NUMERIC"}, {"metadata_text_search", "TEXT"},
+            {"metadata_size_checked", "NUMERIC"}, {"metadata_size_min_height", "NUMERIC"}, {"metadata_size_max_height", "NUMERIC"},
+            {"metadata_size_min_width", "NUMERIC"}, {"metadata_size_max_width", "NUMERIC"}, {"metadata_duration_checked", "NUMERIC"},
+            {"metadata_duration_min", "TEXT"}, {"metadata_duration_max", "TEXT"}
+        };
 
-    // Add missing metadata columns
-    for (auto it = newSearchColumns.constBegin(); it != newSearchColumns.constEnd(); ++it) {
-        if (!existingSearchColumns.contains(it.key())) {
-            qDebug() << "Adding column:" << it.key();
-            QString alterSQL = QString("ALTER TABLE search ADD COLUMN %1 %2 DEFAULT NULL").arg(it.key(), it.value());
-            if (auto addColumnError = executeSql(connectionName, alterSQL);
-                addColumnError.type() != QSqlError::NoError)
-            {
-                qDebug() << "Error adding column" << it.key() << ":" << addColumnError.text();
-                return addColumnError;
+        // Add missing metadata columns
+        for (const auto& [columnName, columnType] : newSearchColumns) {
+            if (!existingSearchColumns.contains(columnName)) {
+                qDebug() << "Adding column:" << columnName;
+                QString alterSQL = QString("ALTER TABLE search ADD COLUMN %1 %2 DEFAULT NULL").arg(columnName, columnType);
+                if (auto addColumnError = executeSql(connectionName, alterSQL);
+                    addColumnError.type() != QSqlError::NoError)
+                {
+                    qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
+                    return addColumnError;
+                }
+                qDebug() << "Added column" << columnName << "to -search- table";
             }
-            qDebug() << "Added column" << it.key() << "to -file- table";
         }
-    }
 
     qDebug() << "=== Database Migration 2.8: PART4 - Normalize catalog_include_metadata ===";
-    QSqlQuery updateCatalogMetadataQuery(QSqlDatabase::database(connectionName));
-    updateCatalogMetadataQuery.exec(R"(
-        UPDATE catalog
-        SET catalog_include_metadata = 'None'
-        WHERE catalog_include_metadata IS NULL
-           OR catalog_include_metadata = ''
-    )");
+        QSqlQuery updateCatalogMetadataQuery(QSqlDatabase::database(connectionName));
+        updateCatalogMetadataQuery.exec(R"(
+            UPDATE catalog
+            SET catalog_include_metadata = 'None'
+            WHERE catalog_include_metadata IS NULL
+               OR catalog_include_metadata = ''
+               OR catalog_include_metadata = 0
+        )");
 
-    int updatedCatalogs = updateCatalogMetadataQuery.numRowsAffected();
-    if (updatedCatalogs > 0) {
-        qDebug() << "Updated" << updatedCatalogs << "catalog(s) with NULL/empty metadata field to 'None'";
-    } else {
-        qDebug() << "No catalogs needed metadata field normalization";
-    }
+        int updatedCatalogs = updateCatalogMetadataQuery.numRowsAffected();
+        if (updatedCatalogs > 0) {
+            qDebug() << "Updated" << updatedCatalogs << "catalog(s) with NULL/empty metadata field to 'None'";
+        } else {
+            qDebug() << "No catalogs needed metadata field normalization";
+        }
 
+/*
+    qDebug() << "=== Database Migration 2.8: PART5 - MimeTypesForExistingFiles ===";
+
+        // Check if any files have NULL mime_type
+        QSqlQuery checkQuery(QSqlDatabase::database(connectionName));
+        checkQuery.prepare(R"(
+            SELECT COUNT(*)
+            FROM file
+            WHERE (mime_type IS NULL OR mime_type = '')
+        )");
+
+        int filesWithoutMimeType = checkQuery.value(0).toInt();
+        qDebug() << "Found" << filesWithoutMimeType << "Migration_2_8: files without mime_type - performing one-time migration";
+
+        // Get files that need mime_type populated
+        QSqlQuery filesQuery(QSqlDatabase::database(connectionName));
+        filesQuery.prepare(R"(
+            SELECT file_name, file_folder_path, file_extension
+            FROM file
+            WHERE (mime_type IS NULL OR mime_type = '')
+        )");
+
+        if (!filesQuery.exec()) {
+            qDebug() << "Failed to query files for migration:" << filesQuery.lastError().text();
+            return filesQuery.lastError();
+        }
+
+        // Collect files to update
+        QStringList fileNames, folderPaths, extensions;
+        while (filesQuery.next()) {
+            fileNames << filesQuery.value(0).toString();
+            folderPaths << filesQuery.value(1).toString();
+            extensions << filesQuery.value(2).toString();
+        }
+
+        // Begin transaction for batch update
+        QSqlDatabase db = QSqlDatabase::database(connectionName);
+        db.transaction();
+
+        QSqlQuery updateQuery(QSqlDatabase::database(connectionName));
+        updateQuery.prepare(R"(
+            UPDATE file
+            SET mime_type = :mime_type,
+                file_type = :file_type
+            WHERE file_name = :file_name
+            AND file_folder_path = :folder_path
+        )");
+
+        for (int i = 0; i < fileNames.size(); ++i) {
+            // Calculate mime_type and file_type from extension
+            QString fileType = FileMetadata::getFileTypeFromExtension(extensions[i]);
+            QString mimeType = FileMetadata::getMimeTypeFromExtension(extensions[i]);
+            updateQuery.bindValue(":mime_type", mimeType);
+            updateQuery.bindValue(":file_type", fileType);
+            updateQuery.bindValue(":file_name", fileNames[i]);
+            updateQuery.bindValue(":folder_path", folderPaths[i]);
+
+            qDebug() << "Updating file:" << folderPaths[i] + "/" + fileNames[i]
+                     << "  -> mime_type:" << mimeType << ", file_type:" << fileType;
+        }
+
+        db.commit();
+*/
     qDebug() << "=== Database Migration 2.8 completed ===";
+
+    //reset cursor
+    QApplication::restoreOverrideCursor();
+
     return QSqlError(); // Success
 }
 
-
-QSqlError Database::dropTableIfExists(const QString &connectionName, const QString &tableName)
-{
-    if (tableExists(connectionName, tableName)) {
-        qDebug() << "Dropping table:" << tableName;
-
-        // First, try to ensure no locks
-        QSqlDatabase db = QSqlDatabase::database(connectionName);
-        QSqlQuery unlockQuery(db);
-        unlockQuery.exec("PRAGMA wal_checkpoint(RESTART)");
-        unlockQuery.finish();
-
-        // Try the drop
-        QSqlError dropError = executeSql(connectionName, QString("DROP TABLE IF EXISTS %1").arg(tableName));
-
-        if (dropError.type() != QSqlError::NoError) {
-            qDebug() << "DROP TABLE failed (table may be locked):" << dropError.text();
-            qDebug() << "Migration will continue without dropping" << tableName;
-            return QSqlError(); // Return success anyway - not critical
-        }
-
-        return dropError;
-    } else {
-        qDebug() << "Table" << tableName << "doesn't exist, skipping drop";
-        return QSqlError(); // Success - nothing to do
-    }
-}
-
-QStringList Database::getTableColumns(const QString &connectionName, const QString &tableName)
-{
-    QStringList columns;
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-
-    if (query.exec(QString("PRAGMA table_info(%1)").arg(tableName))) {
-        while (query.next()) {
-            columns << query.value(1).toString(); // column name is at index 1
-        }
-    }
-
-    return columns;
-}
+//----------------------------------------------------------------------

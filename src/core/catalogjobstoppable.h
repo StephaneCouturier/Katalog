@@ -54,6 +54,30 @@ public:
         ExtractMissingMetadata
     };
 
+    // Update statistics structure
+    struct UpdateStatistics {
+        int newFiles = 0;
+        int modifiedFiles = 0;
+        int deletedFiles = 0;
+        int unchangedFiles = 0;
+        int metadataExtracted = 0;
+
+        void clear() {
+            newFiles = 0;
+            modifiedFiles = 0;
+            deletedFiles = 0;
+            unchangedFiles = 0;
+            metadataExtracted = 0;
+        }
+
+        int totalChanges() const {
+            return newFiles + modifiedFiles + deletedFiles;
+        }
+    };
+
+    // Get update statistics from last operation
+    UpdateStatistics getUpdateStatistics() const { return m_updateStats; }
+
     explicit CatalogJobStoppable(QObject *parent = nullptr);
     ~CatalogJobStoppable();
 
@@ -207,12 +231,36 @@ private:
     QString getQuickFileType(const QFileInfo &fileInfo) const;
 
     void processBatch(QStringList& fileNames, QStringList& fileFolderPaths,
-                      QStringList& fileFullPaths, QStringList& fileDateTimes,
-                      QStringList& fileCatalogs, QList<qint64>& fileSizes,
-                      QStringList& fileExtensions, QStringList& fileTypes,
-                      QStringList& directoryPaths, Catalog* catalog);
+                                           QStringList& fileFullPaths, QStringList& fileDateTimes,
+                                           QStringList& fileCatalogs, QList<qint64>& fileSizes,
+                                           QStringList& fileExtensions, QStringList& fileTypes,
+                                           QStringList& mimeTypes,
+                                           QStringList& directoryPaths, Catalog* catalog);
 
     void insertFolders(const QStringList& folderPaths, Catalog* catalog);
+
+    // Incremental update methods
+    void updateCatalogIncremental();
+    void scanDirectoryIntoFiletemp(const QString &directory, Catalog *catalog, qint64 &processedCount);
+
+    // SQL-based difference detection
+    QList<QVariantList> findNewFiles();
+    QList<QVariantList> findModifiedFiles();
+    QStringList findDeletedFiles();
+    int countUnchangedFiles();
+
+    // Bulk operations
+    void insertNewFilesFromFiletemp(const QList<QVariantList> &newFiles);
+    void updateModifiedFilesFromFiletemp(const QList<QVariantList> &modifiedFiles);
+    void deleteRemovedFiles(const QStringList &deletedFiles);
+    void extractMetadataForChangedFiles(const QList<QVariantList> &changedFiles);
+
+    // Update statistics tracking
+    UpdateStatistics m_updateStats;
+
+    bool shouldUseFullRescan() const;
+
+    void migrateMimeTypesForExistingFiles();
 
 signals:
     /**

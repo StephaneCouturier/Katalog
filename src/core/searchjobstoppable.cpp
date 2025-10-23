@@ -559,7 +559,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         qint64 fileSize = getFilesQuery.value(2).toLongLong();
         QString fileDateTime = getFilesQuery.value(3).toString();
 
-        qDebug() << "Processing file:" << fileFullPath;
+        //qDebug() << "Processing file:" << fileFullPath;
 
         // NEW METADATA FIELDS:
         QString fileType = getFilesQuery.value(4).toString();
@@ -638,8 +638,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             }
 
             if (match.hasMatch()) {
-
-                qDebug() << "Processing file:" << fileFullPath << "match.hasMatch()"<< match.hasMatch();
+                //qDebug() << "Processing file:" << fileFullPath << "match.hasMatch()"<< match.hasMatch();
                 filesFoundList << filePath;
                 deviceFoundIDList.insert(0, QString::number(device->ID));
 
