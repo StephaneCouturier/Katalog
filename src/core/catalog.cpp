@@ -664,13 +664,14 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                         // Generate file_extension and file_type from the filename
                         QString extension = fileInfo.suffix().toLower();
                         QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+                        QString mimeType = FileMetadata::getMimeTypeFromExtension(extension);
 
                         insertFileQuery.bindValue(":file_extension", extension);
                         insertFileQuery.bindValue(":file_type", fileType);
+                        insertFileQuery.bindValue(":mime_type", mimeType);
                         catalogWasMigrated = true;
 
                         // All metadata fields are NULL for v2.6 files
-                        insertFileQuery.bindValue(":mime_type", QVariant());
                         insertFileQuery.bindValue(":image_width", QVariant());
                         insertFileQuery.bindValue(":image_height", QVariant());
                         insertFileQuery.bindValue(":image_orientation", QVariant());
@@ -973,40 +974,43 @@ void Catalog::getFileExtensions()
 
 void Catalog::populateFileTypes()
 {
-    // Check if this catalog needs file type migration
+    // Check if this catalog needs migration
     QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
-    checkQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = ? AND (file_type IS NULL OR file_type = '')");
+    checkQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = ? "
+                       "AND (file_type IS NULL OR file_type = '' "
+                       "OR file_extension IS NULL OR file_extension = '' "
+                       "OR mime_type IS NULL OR mime_type = '')");  // ADD mime_type check
     checkQuery.bindValue(0, ID);
 
     if (!checkQuery.exec() || !checkQuery.next()) {
-        qDebug() << "Failed to check file type status for catalog:" << name;
+        qDebug() << "Failed to check migration status for catalog:" << name;
         return;
     }
 
     int filesToMigrate = checkQuery.value(0).toInt();
 
     if (filesToMigrate == 0) {
-        // Already migrated or no files
-        return;
+        return;  // Already migrated
     }
 
-    qDebug() << "Catalog" << name << "needs file type migration for" << filesToMigrate << "files";
+    qDebug() << "Catalog" << name << "needs migration for" << filesToMigrate << "files";
 
     QSqlDatabase db = QSqlDatabase::database(m_connectionName);
 
-    // Begin transaction
     if (!db.transaction()) {
         qDebug() << "Failed to begin transaction for catalog migration";
         return;
     }
 
-    // Get files for this catalog only
+    // Select files needing migration
     QSqlQuery selectQuery(db);
     selectQuery.prepare(R"(
         SELECT file_name, file_full_path
         FROM file
         WHERE file_catalog_id = ?
-        AND (file_type IS NULL OR file_type = '')
+        AND (file_type IS NULL OR file_type = ''
+             OR file_extension IS NULL OR file_extension = ''
+             OR mime_type IS NULL OR mime_type = '')
     )");
     selectQuery.bindValue(0, ID);
 
@@ -1020,7 +1024,7 @@ void Catalog::populateFileTypes()
     QSqlQuery updateQuery(db);
     updateQuery.prepare(R"(
         UPDATE file
-        SET file_extension = ?, file_type = ?
+        SET file_extension = ?, file_type = ?, mime_type = ?
         WHERE file_catalog_id = ? AND file_full_path = ?
     )");
 
@@ -1029,20 +1033,22 @@ void Catalog::populateFileTypes()
         QString fileName = selectQuery.value(0).toString();
         QString fileFullPath = selectQuery.value(1).toString();
 
-        // Determine extension and type
+        // Determine extension, type, and mime_type from extension
         QString nameForExtraction = fileName.isEmpty() ? fileFullPath : fileName;
         QFileInfo fileInfo(nameForExtraction);
         QString extension = fileInfo.suffix().toLower();
         QString fileType = extension.isEmpty() ? "none" : FileMetadata::getFileTypeFromExtension(extension);
+        QString mimeType = extension.isEmpty() ? "" : FileMetadata::getMimeTypeFromExtension(extension);  // ADD
 
         // Update the record
         updateQuery.bindValue(0, extension);
         updateQuery.bindValue(1, fileType);
-        updateQuery.bindValue(2, ID);
-        updateQuery.bindValue(3, fileFullPath);
+        updateQuery.bindValue(2, mimeType);
+        updateQuery.bindValue(3, ID);
+        updateQuery.bindValue(4, fileFullPath);
 
         if (!updateQuery.exec()) {
-            qDebug() << "Failed to update file type:" << fileFullPath;
+            qDebug() << "Failed to update file:" << fileFullPath;
         }
 
         processed++;
