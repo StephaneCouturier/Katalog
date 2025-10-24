@@ -122,7 +122,7 @@ public:
 
     int countFileLines(const QString &filePath);
     void getFileExtensions();
-    void populateFileTypes();
+    void populateFileTypes(QMutex &mutex, bool &stopRequested);
 
     // Update management
     void generateTempID();

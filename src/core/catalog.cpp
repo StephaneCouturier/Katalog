@@ -972,7 +972,7 @@ void Catalog::getFileExtensions()
     }
 }
 
-void Catalog::populateFileTypes()
+void Catalog::populateFileTypes(QMutex &mutex, bool &stopRequested)
 {
     // Check if this catalog needs migration
     QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
@@ -1036,6 +1036,14 @@ qDebug() << "= loadProgress:";
     int progressRefreshRate = qMax(100, filesToMigrate / 100);  // Update every 1% or at least every 100 files
 
     while (selectQuery.next()) {
+        // Check stop flag
+        if (stopRequested) {
+            db.rollback();
+            qDebug() << "Migration stopped by user at" << processed << "/" << filesToMigrate;
+            emit loadProgress(processed, filesToMigrate);
+            return;
+        }
+
         QString fileName = selectQuery.value(0).toString();
         QString fileFullPath = selectQuery.value(1).toString();
 
@@ -1097,7 +1105,7 @@ void Catalog::loadExcludedFolders()
         excludedFolders<<query.value(0).toString();
     }
 }
-//--------------------------------------------------------------------------
+
 bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
 {
     if(databaseMode != "Memory") {
@@ -1235,7 +1243,7 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         return false;
     }
 }
-//--------------------------------------------------------------------------
+
 bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
 {
     if(databaseMode != "Memory") {
@@ -1296,7 +1304,7 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
         return false;
     }
 }
-//--------------------------------------------------------------------------
+
 int Catalog::countFileLines(const QString &filePath)
 {//For counting lines in a file
     QFile file(filePath);

@@ -442,10 +442,22 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 // Emit start signal
                 emit searchProgress(-2); // Catalog loading started
 
+                // Create Stop flag for migration
+                bool localStopRequested = false;
+                QMutex dummyMutex;
+
                 // Connect to migration progress
                 QMetaObject::Connection progressConnection = connect(
                     device->catalog, &Catalog::loadProgress,
-                    this, [this](int filesLoaded, int totalFiles) {
+                    this, [this, &localStopRequested, &progressConnection](int filesLoaded, int totalFiles) {
+                        // Stop check
+                        if (!shouldContinue()) {
+                            qDebug() << "Stop detected in migration callback";
+                            QObject::disconnect(progressConnection);
+                            localStopRequested = true;
+                            return;
+                        }
+
                         currentCatalogFilesLoaded = filesLoaded;
                         currentCatalogTotalFiles = totalFiles;
                         waitIfPaused();
@@ -454,7 +466,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                     Qt::DirectConnection);
 
                 // Perform migration
-                device->catalog->populateFileTypes();
+                device->catalog->populateFileTypes(dummyMutex, localStopRequested);
 
                 // Disconnect
                 disconnect(progressConnection);
@@ -463,6 +475,12 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 currentOperationVerb = "Loading";
                 currentOperationUnit = "files loaded";
                 showSearchStatistics = true;
+
+                // Check if stopped
+                if (localStopRequested || !shouldContinue()) {
+                    qDebug() << "Migration was stopped";
+                    return;
+                }
 
                 // Emit finished signal
                 emit searchProgress(-3);

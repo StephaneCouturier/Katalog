@@ -481,38 +481,95 @@
 
             // Ensure file types are populated for File mode catalogs
             if (collection->databaseMode == "File" && exploreDevice->catalog) {
-                statusBar()->show();
-                statusBar()->showMessage(tr("Preparing catalog..."));
+                qDebug() << "File mode: Checking if migration needed for" << exploreDevice->name;
 
-                // Track progress variables
-                int filesProcessed = 0;
-                int totalFiles = 0;
+                // Check if migration is actually needed
+                QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
+                checkQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = ? "
+                                   "AND (file_type IS NULL OR file_type = '' "
+                                   "OR file_extension IS NULL OR file_extension = '' "
+                                   "OR mime_type IS NULL OR mime_type = '')");
+                checkQuery.bindValue(0, exploreDevice->catalog->ID);
 
-                // Connect to progress signal
-                QMetaObject::Connection progressConnection = connect(
-                    exploreDevice->catalog, &Catalog::loadProgress,
-                    this, [this, &filesProcessed, &totalFiles](int processed, int total) {
-                        filesProcessed = processed;
-                        totalFiles = total;
+                bool needsMigration = false;
+                int filesToMigrate = 0;
 
-                        double percent = (total > 0) ? ((double)processed / total * 100.0) : 0.0;
+                if (checkQuery.exec() && checkQuery.next()) {
+                    filesToMigrate = checkQuery.value(0).toInt();
+                    needsMigration = (filesToMigrate > 0);
+                }
 
-                        QString statusMessage = tr("Migrating catalog metadata: %1/%2 files (%3%)")
-                                                    .arg(QLocale().toString(processed))
-                                                    .arg(QLocale().toString(total))
-                                                    .arg(QString::number(percent, 'f', 1));
+                if (needsMigration) {
+                    qDebug() << "Migration needed for" << filesToMigrate << "files";
 
-                        statusBar()->show();
-                        statusBar()->showMessage(statusMessage);
-                        QCoreApplication::processEvents();
-                    },
-                    Qt::DirectConnection);
+                    // Set up temporary search-like context for message generation
+                    int tempCatalogIndex = 1;
+                    int tempTotalCatalogs = 1;
+                    QString tempCatalogName = exploreDevice->name;
+                    int tempFilesLoaded = 0;
+                    int tempTotalFiles = filesToMigrate;
 
-                exploreDevice->catalog->populateFileTypes();
+                    // Show initial message
+                    statusBar()->show();
+                    QString statusMessage = tr("Converting Catalog %1 of %2 (%3) | %4 files converted (%5%)")
+                                                .arg(tempCatalogIndex)
+                                                .arg(tempTotalCatalogs)
+                                                .arg(tempCatalogName)
+                                                .arg(QLocale().toString(0))
+                                                .arg(QString::number(0.0, 'f', 1));
+                    statusBar()->showMessage(statusMessage);
+                    QCoreApplication::processEvents();
 
-                // Disconnect
-                disconnect(progressConnection);
+                    // Create Local Stop flag
+                    bool localStopRequested = false;
+                    QMutex dummyMutex;
+
+                    // Connect to migration progress
+                    QMetaObject::Connection progressConnection = connect(
+                        exploreDevice->catalog, &Catalog::loadProgress,
+                        this, [this, &tempFilesLoaded, &tempTotalFiles, &tempCatalogIndex,
+                         &tempTotalCatalogs, &tempCatalogName](int filesLoaded, int totalFiles) {
+
+                            tempFilesLoaded = filesLoaded;
+                            tempTotalFiles = totalFiles;
+
+                            double percentLoaded = 0;
+                            if (totalFiles > 0) {
+                                percentLoaded = (double)filesLoaded / totalFiles * 100.0;
+                            }
+
+                            // Reuse same message format as Search
+                            QString statusMessage = tr("Converting Catalog %1 of %2 (%3) | %4 files converted (%5%)")
+                                                        .arg(tempCatalogIndex)
+                                                        .arg(tempTotalCatalogs)
+                                                        .arg(tempCatalogName)
+                                                        .arg(QLocale().toString(filesLoaded))
+                                                        .arg(QString::number(percentLoaded, 'f', 1));
+
+                            statusBar()->show();
+                            statusBar()->showMessage(statusMessage);
+                            QCoreApplication::processEvents();
+                        },
+                        Qt::DirectConnection);
+
+                    // Perform migration
+                    exploreDevice->catalog->populateFileTypes(dummyMutex, localStopRequested);
+
+                    // Disconnect
+                    disconnect(progressConnection);
+
+                    // Check if stopped
+                    if (localStopRequested) {
+                        qDebug() << "Migration was stopped";
+                        statusBar()->showMessage(tr("Migration cancelled"), 2000);
+                    } else {
+                        qDebug() << "Migration completed";
+                        statusBar()->showMessage(tr("Catalog ready"), 2000);
+                    }
+                }
             }
+
+            loadSelectedDirectoryFilesToExplore();
 
             loadSelectedDirectoryFilesToExplore();
 
