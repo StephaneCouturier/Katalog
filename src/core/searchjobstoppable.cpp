@@ -397,7 +397,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     }
 
     // Emit signal to indicate catalog processing started
-    emit searchProgress(-2);
+        emit searchProgress(-2);
 
     // Initialize Regular Expression
     QRegularExpression regex(regexPattern);
@@ -407,7 +407,61 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
     // Ensure file types are populated for File mode catalogs
     if (!memoryModeEnabled && device->catalog) {
-        device->catalog->populateFileTypes();
+        qDebug() << "File mode: Checking if migration needed for" << device->name;
+
+        // Check if migration is actually needed
+        QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
+        checkQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = ? "
+                           "AND (file_type IS NULL OR file_type = '' "
+                           "OR file_extension IS NULL OR file_extension = '' "
+                           "OR mime_type IS NULL OR mime_type = '')");
+        checkQuery.bindValue(0, device->catalog->ID);
+
+        bool needsMigration = false;
+        if (checkQuery.exec() && checkQuery.next()) {
+            int filesToMigrate = checkQuery.value(0).toInt();
+            needsMigration = (filesToMigrate > 0);
+
+            if (needsMigration) {
+                qDebug() << "Migration needed for" << filesToMigrate << "files";
+
+                // Reset counters for migration progress
+                currentCatalogFilesLoaded = 0;
+                currentCatalogTotalFiles = filesToMigrate;
+
+                // Emit start signal
+                emit searchProgress(-2); // Catalog loading started
+
+                // Connect to migration progress - SAME PATTERN AS CSV LOADING
+                QMetaObject::Connection progressConnection = connect(
+                    device->catalog, &Catalog::loadProgress,
+                    this, [this](int filesLoaded, int totalFiles) {
+                        // Update counters
+                        currentCatalogFilesLoaded = filesLoaded;
+                        currentCatalogTotalFiles = totalFiles;
+
+                        // Handle pause requests
+                        waitIfPaused();
+
+                        // Send progress signal (-4 = catalog loading progress)
+                        emit searchProgress(-4);
+                    },
+                    Qt::DirectConnection);
+
+                // Perform migration
+                device->catalog->populateFileTypes();
+
+                // Disconnect
+                disconnect(progressConnection);
+
+                // Emit finished signal
+                emit searchProgress(-3); // Catalog loading finished
+
+                qDebug() << "Migration completed";
+            } else {
+                qDebug() << "No migration needed - all files already have metadata";
+            }
+        }
     }
 
     // Build SQL query

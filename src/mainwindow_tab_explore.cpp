@@ -481,8 +481,39 @@
 
             // Ensure file types are populated for File mode catalogs
             if (collection->databaseMode == "File" && exploreDevice->catalog) {
+                statusBar()->show();
+                statusBar()->showMessage(tr("Preparing catalog..."));
+
+                // Track progress variables
+                int filesProcessed = 0;
+                int totalFiles = 0;
+
+                // Connect to progress signal
+                QMetaObject::Connection progressConnection = connect(
+                    exploreDevice->catalog, &Catalog::loadProgress,
+                    this, [this, &filesProcessed, &totalFiles](int processed, int total) {
+                        filesProcessed = processed;
+                        totalFiles = total;
+
+                        double percent = (total > 0) ? ((double)processed / total * 100.0) : 0.0;
+
+                        QString statusMessage = tr("Migrating catalog metadata: %1/%2 files (%3%)")
+                                                    .arg(QLocale().toString(processed))
+                                                    .arg(QLocale().toString(total))
+                                                    .arg(QString::number(percent, 'f', 1));
+
+                        statusBar()->show();
+                        statusBar()->showMessage(statusMessage);
+                        QCoreApplication::processEvents();
+                    },
+                    Qt::DirectConnection);
+
                 exploreDevice->catalog->populateFileTypes();
+
+                // Disconnect
+                disconnect(progressConnection);
             }
+
             loadSelectedDirectoryFilesToExplore();
 
         //Go to the Explorer tab

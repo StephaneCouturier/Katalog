@@ -979,7 +979,7 @@ void Catalog::populateFileTypes()
     checkQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = ? "
                        "AND (file_type IS NULL OR file_type = '' "
                        "OR file_extension IS NULL OR file_extension = '' "
-                       "OR mime_type IS NULL OR mime_type = '')");  // ADD mime_type check
+                       "OR mime_type IS NULL OR mime_type = '')");
     checkQuery.bindValue(0, ID);
 
     if (!checkQuery.exec() || !checkQuery.next()) {
@@ -995,6 +995,10 @@ void Catalog::populateFileTypes()
 
     qDebug() << "Catalog" << name << "needs migration for" << filesToMigrate << "files";
 
+    // Emit initial progress
+    emit loadProgress(0, filesToMigrate);
+    QCoreApplication::processEvents();  // Keep UI responsive
+qDebug() << "= loadProgress:";
     QSqlDatabase db = QSqlDatabase::database(m_connectionName);
 
     if (!db.transaction()) {
@@ -1029,6 +1033,8 @@ void Catalog::populateFileTypes()
     )");
 
     int processed = 0;
+    int progressRefreshRate = qMax(100, filesToMigrate / 100);  // Update every 1% or at least every 100 files
+
     while (selectQuery.next()) {
         QString fileName = selectQuery.value(0).toString();
         QString fileFullPath = selectQuery.value(1).toString();
@@ -1038,7 +1044,7 @@ void Catalog::populateFileTypes()
         QFileInfo fileInfo(nameForExtraction);
         QString extension = fileInfo.suffix().toLower();
         QString fileType = extension.isEmpty() ? "none" : FileMetadata::getFileTypeFromExtension(extension);
-        QString mimeType = extension.isEmpty() ? "" : FileMetadata::getMimeTypeFromExtension(extension);  // ADD
+        QString mimeType = extension.isEmpty() ? "" : FileMetadata::getMimeTypeFromExtension(extension);
 
         // Update the record
         updateQuery.bindValue(0, extension);
@@ -1052,6 +1058,13 @@ void Catalog::populateFileTypes()
         }
 
         processed++;
+
+        // Emit progress periodically
+        if (processed % progressRefreshRate == 0) {
+            emit loadProgress(processed, filesToMigrate);
+            QCoreApplication::processEvents();  // Keep UI responsive
+            qDebug() << &"= processed:"[processed]+filesToMigrate;
+        }
     }
 
     // Commit transaction
@@ -1060,6 +1073,10 @@ void Catalog::populateFileTypes()
         qDebug() << "Failed to commit catalog migration:" << db.lastError().text();
         return;
     }
+
+    // Final progress update
+    emit loadProgress(processed, filesToMigrate);
+    QCoreApplication::processEvents();
 
     qDebug() << "Migrated" << processed << "files for catalog:" << name;
 }
