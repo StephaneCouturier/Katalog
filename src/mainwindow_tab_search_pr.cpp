@@ -1072,21 +1072,27 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                             searchJobStoppable->currentCatalogTotalFiles * 100.0;
         }
 
-        statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7")
+        // Build message based on operation context
+        statusMessage = tr("%1 Catalog %2 of %3 (%4) | %5 %6 (%7%)")
+                            .arg(searchJobStoppable->currentOperationVerb)  // "Loading" or "Converting"
                             .arg(searchJobStoppable->currentCatalogIndex)
                             .arg(searchJobStoppable->totalCatalogs)
                             .arg(searchJobStoppable->currentCatalogName)
                             .arg(QLocale().toString(searchJobStoppable->currentCatalogFilesLoaded))
-                            .arg(QString::number(percentLoaded, 'f', 1))
-                            .arg(QLocale().toString(currentSearch->fileNames.size()))
-                            .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+                            .arg(searchJobStoppable->currentOperationUnit)  // "files loaded" or "files converted"
+                            .arg(QString::number(percentLoaded, 'f', 1));
+
+        // Optionally append search statistics
+        if (searchJobStoppable->showSearchStatistics) {
+            statusMessage += tr(" | Files found: %1 | Files processed: %2")
+            .arg(QLocale().toString(currentSearch->fileNames.size()))
+                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+        }
 
         // Append PAUSED status if search is paused
         if (searchJobStoppable->isPaused()) {
             statusMessage += tr(" | CATALOG LOADING PAUSED");
         }
-
-
 
         statusBar()->show();
         statusBar()->showMessage(statusMessage);

@@ -326,6 +326,11 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     if (memoryModeEnabled) {
         qDebug() << "Memory mode: Loading catalog CSV file for" << device->name;
 
+        // Set opeartion context for csv loading
+        currentOperationVerb = "Loading";
+        currentOperationUnit = "files loaded";
+        showSearchStatistics = true;
+
         // Reset catalog file loading counters (same as SearchMemory)
         currentCatalogFilesLoaded = 0;
         currentCatalogTotalFiles = device->totalFileCount;
@@ -425,6 +430,11 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             if (needsMigration) {
                 qDebug() << "Migration needed for" << filesToMigrate << "files";
 
+                // Set operation context for migration
+                currentOperationVerb = "Converting";
+                currentOperationUnit = "files converted";
+                showSearchStatistics = false;  // Don't show "Files found/processed" during migration
+
                 // Reset counters for migration progress
                 currentCatalogFilesLoaded = 0;
                 currentCatalogTotalFiles = filesToMigrate;
@@ -432,18 +442,13 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 // Emit start signal
                 emit searchProgress(-2); // Catalog loading started
 
-                // Connect to migration progress - SAME PATTERN AS CSV LOADING
+                // Connect to migration progress
                 QMetaObject::Connection progressConnection = connect(
                     device->catalog, &Catalog::loadProgress,
                     this, [this](int filesLoaded, int totalFiles) {
-                        // Update counters
                         currentCatalogFilesLoaded = filesLoaded;
                         currentCatalogTotalFiles = totalFiles;
-
-                        // Handle pause requests
                         waitIfPaused();
-
-                        // Send progress signal (-4 = catalog loading progress)
                         emit searchProgress(-4);
                     },
                     Qt::DirectConnection);
@@ -454,11 +459,17 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 // Disconnect
                 disconnect(progressConnection);
 
+                // Restore normal operation context
+                currentOperationVerb = "Loading";
+                currentOperationUnit = "files loaded";
+                showSearchStatistics = true;
+
                 // Emit finished signal
-                emit searchProgress(-3); // Catalog loading finished
+                emit searchProgress(-3);
 
                 qDebug() << "Migration completed";
-            } else {
+            }
+             else {
                 qDebug() << "No migration needed - all files already have metadata";
             }
         }
