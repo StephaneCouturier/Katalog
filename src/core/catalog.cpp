@@ -1460,3 +1460,72 @@ int Catalog::getTempID() const
 {
     return m_tempID;
 }
+
+bool Catalog::clearMetadataFields()
+{
+    qDebug() << "Clearing all metadata fields for catalog:" << name << "(ID:" << ID << ")";
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        UPDATE file
+        SET image_width = NULL,
+            image_height = NULL,
+            image_orientation = NULL,
+            video_duration_seconds = NULL,
+            video_width = NULL,
+            video_height = NULL,
+            video_codec = NULL,
+            video_framerate = NULL,
+            video_bitrate = NULL,
+            audio_duration_seconds = NULL,
+            audio_artist = NULL,
+            audio_album = NULL,
+            audio_title = NULL,
+            audio_genre = NULL,
+            audio_year = NULL,
+            audio_track_number = NULL,
+            audio_bitrate = NULL,
+            audio_sample_rate = NULL,
+            metadata_extended = NULL,
+            metadata_extraction_date = NULL
+        WHERE file_catalog_id = :catalog_id
+    )");
+
+    query.prepare(querySQL);
+    query.bindValue(":catalog_id", ID);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Failed to clear metadata fields:" << query.lastError().text();
+        return false;
+    }
+
+    int rowsAffected = query.numRowsAffected();
+    qDebug() << "Cleared metadata for" << rowsAffected << "files";
+
+    return true;
+}
+
+bool Catalog::clearMetadataExtractionDate()
+{
+    qDebug() << "Clearing metadata_extraction_date for catalog:" << name << "(ID:" << ID << ")";
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        UPDATE file
+        SET metadata_extraction_date = NULL
+        WHERE file_catalog_id = :catalog_id
+    )");
+
+    query.prepare(querySQL);
+    query.bindValue(":catalog_id", ID);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Failed to clear metadata_extraction_date:" << query.lastError().text();
+        return false;
+    }
+
+    int rowsAffected = query.numRowsAffected();
+    qDebug() << "Cleared metadata_extraction_date for" << rowsAffected << "files";
+
+    return true;
+}

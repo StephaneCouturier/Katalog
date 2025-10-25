@@ -369,11 +369,10 @@ bool FileMetadata::batchUpdateFileMetadata(const QString &connectionName,
 
     // Update each metadata field with CASE statement covering all files
     for (const QString& key : allKeys) {
-        // Skip if this is a basic field we handle specially
-        if (key == "file_type" || key == "mime_type" || key == "metadata_extraction_date") {
-            continue;  // These are updated during initial INSERT
-        }
-        
+        // NOTE: This used to skip file_type, mime_type, metadata_extraction_date
+        // But these need to be updated for existing files getting metadata for the first time
+        // Only truly skip if it's empty/not needed
+
         QString caseClause = QString("CASE");
         QVariantList bindValues;
 
@@ -647,7 +646,7 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
             }
         }
 
-        qDebug() << "  Final result keys:" << result.keys();
+        //qDebug() << "  Final result keys:" << result.keys();
         int extractEndMs = timer.elapsed();
         totalExtractMs += (extractEndMs - extractStartMs);
 

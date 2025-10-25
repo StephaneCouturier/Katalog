@@ -242,6 +242,7 @@ private:
     // Incremental update methods
     void updateCatalogIncremental();
     void scanDirectoryIntoFiletemp(const QString &directory, Catalog *catalog, qint64 &processedCount);
+    QList<QVariantList> findFilesWithoutMetadata();
 
     // SQL-based difference detection
     QList<QVariantList> findNewFiles();
@@ -257,8 +258,6 @@ private:
 
     // Update statistics tracking
     UpdateStatistics m_updateStats;
-
-    bool shouldUseFullRescan() const;
 
     void migrateMimeTypesForExistingFiles();
 

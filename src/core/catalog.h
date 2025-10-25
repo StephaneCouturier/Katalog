@@ -137,6 +137,10 @@ public:
     static const QString METADATA_MEDIA_EXTENDED;
     static const QString METADATA_FULL;
 
+    // Metadata management
+    bool clearMetadataFields();
+    bool clearMetadataExtractionDate();
+
 private:
     QString m_connectionName = "defaultConnection";
     QStringList fileExtensions;
