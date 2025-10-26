@@ -2128,77 +2128,125 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
 {
     if (changedFiles.isEmpty()) return;
 
-    qDebug() << "Extracting metadata for" << changedFiles.size() << "changed files";
+    qDebug() << "=== Starting metadata extraction for" << changedFiles.size() << "files ===";
 
-    int processedFiles = 0;
-    int totalFiles = changedFiles.size();
+    // Collect files that need metadata extraction
+    QStringList extractFileNames, extractFolderPaths, extractFullPaths;
 
-    // Use parallel extraction (same as existing implementation)
-    if (m_device->catalog->includeMetadata != Catalog::METADATA_NONE) {
-        QStringList extractFileNames, extractFolderPaths, extractFullPaths;
+    for (const auto &fileData : changedFiles) {
+        QString filePath = fileData[0].toString();  // file_full_path
 
-        for (const auto &fileData : changedFiles) {
-            QString filePath = fileData[0].toString();  // file_full_path
-
-            if (FileMetadata::isMetadataSupported(filePath)) {
-                QFileInfo fileInfo(filePath);
-                extractFileNames << fileInfo.fileName();
-                extractFolderPaths << fileInfo.absolutePath();
-                extractFullPaths << filePath;
-            }
-        }
-
-        if (!extractFullPaths.isEmpty()) {
-            // Use parallel metadata extractor
-            QElapsedTimer batchTimer;
-            batchTimer.start();
-
-            // Determine thread count based on system and database mode
-            int optimalThreads = 4;  // Safe default
-            int availableCores = QThread::idealThreadCount();
-            if (availableCores > 0) {
-                optimalThreads = qMin(availableCores - 1, 8);
-                if (m_databaseMode != "Memory") {
-                    optimalThreads = qMin(optimalThreads, 4);
-                }
-            }
-
-            ParallelMetadataExtractor extractor;
-            auto results = extractor.extractBatch(extractFullPaths, extractFileNames, extractFolderPaths,
-                                                  m_device->catalog->includeMetadata, optimalThreads);
-
-            QStringList batchFileNames, batchFolderPaths;
-            QList<QVariantMap> batchMetadata;
-
-            for (const auto &result : results) {
-                if (!result.metadata.isEmpty()) {
-                    batchFileNames << result.fileName;
-                    batchFolderPaths << result.folderPath;
-                    batchMetadata << result.metadata;
-                }
-            }
-
-            if (!batchFileNames.isEmpty()) {
-                FileMetadata::batchUpdateFileMetadata(m_connectionName, m_device->catalog->ID,
-                                                      batchFileNames, batchFolderPaths,
-                                                      batchMetadata);
-            }
-
-            int totalBatchMs = batchTimer.elapsed();
-            qDebug() << "=== METADATA EXTRACTION COMPLETE ==="
-                     << "Files:" << extractFullPaths.size()
-                     << "| Total time:" << totalBatchMs << "ms";
-
-            processedFiles = extractFullPaths.size();
+        if (FileMetadata::isMetadataSupported(filePath)) {
+            QFileInfo fileInfo(filePath);
+            extractFileNames << fileInfo.fileName();
+            extractFolderPaths << fileInfo.absolutePath();
+            extractFullPaths << filePath;
         }
     }
 
-    // Progress update
-    emitProgressUpdate(totalFiles, totalFiles,
-                       QString("Metadata extraction completed: %1 files").arg(processedFiles));
+    if (extractFullPaths.isEmpty()) {
+        qDebug() << "No files require metadata extraction";
+        return;
+    }
+
+    int totalFiles = extractFullPaths.size();
+    int processedFiles = 0;
+
+    qDebug() << "Total files needing metadata extraction:" << totalFiles;
+
+    // Determine thread count based on system and database mode
+    int optimalThreads = 4;  // Safe default
+    int availableCores = QThread::idealThreadCount();
+    if (availableCores > 0) {
+        optimalThreads = qMin(availableCores - 1, 8);
+        if (m_databaseMode != "Memory") {
+            optimalThreads = qMin(optimalThreads, 4);
+        }
+    }
+
+    qDebug() << "Using" << optimalThreads << "threads for parallel extraction";
+
+    // Process in batches of files (progressRefreshRate)
+    for (int batchStart = 0; batchStart < totalFiles; batchStart += progressRefreshRate) {
+        // Check if stop requested between batches
+        if (!shouldContinue()) {
+            qDebug() << "Metadata extraction stopped by user after" << processedFiles << "files";
+            QString stopMsg = QString("Metadata extraction stopped: %1/%2 files processed")
+                                  .arg(processedFiles)
+                                  .arg(totalFiles);
+            emitProgressUpdate(processedFiles, totalFiles, stopMsg);
+            return;
+        }
+
+        waitIfPaused();
+
+        int batchEnd = qMin(batchStart + progressRefreshRate, totalFiles);
+        int batchSize = batchEnd - batchStart;
+
+        qDebug() << "Processing batch:" << batchStart << "to" << batchEnd << "(" << batchSize << "files)";
+
+        // Extract batch slice
+        QStringList batchFullPaths = extractFullPaths.mid(batchStart, batchSize);
+        QStringList batchFileNames = extractFileNames.mid(batchStart, batchSize);
+        QStringList batchFolderPaths = extractFolderPaths.mid(batchStart, batchSize);
+
+        QElapsedTimer batchTimer;
+        batchTimer.start();
+
+        // Parallel extraction for this batch
+        ParallelMetadataExtractor extractor;
+        auto results = extractor.extractBatch(batchFullPaths, batchFileNames, batchFolderPaths,
+                                              m_device->catalog->includeMetadata, optimalThreads);
+
+        // Collect results
+        QStringList updateFileNames, updateFolderPaths;
+        QList<QVariantMap> updateMetadata;
+
+        const auto& constResults = results;
+        for (const auto &result : constResults) {
+            if (!result.metadata.isEmpty()) {
+                updateFileNames << result.fileName;
+                updateFolderPaths << result.folderPath;
+                updateMetadata << result.metadata;
+            }
+        }
+
+        // Batch update to database
+        if (!updateFileNames.isEmpty()) {
+            FileMetadata::batchUpdateFileMetadata(m_connectionName, m_device->catalog->ID,
+                                                  updateFileNames, updateFolderPaths,
+                                                  updateMetadata);
+        }
+
+        int batchDurationMs = batchTimer.elapsed();
+        processedFiles += batchSize;
+
+        // Calculate progress percentage
+        int percentComplete = (processedFiles * 100) / totalFiles;
+
+        // Emit progress update
+        QString progressMsg = QString("Extracting metadata");
+
+        emitProgressUpdate(processedFiles, totalFiles, progressMsg);
+
+        // Log batch performance
+        qDebug() << "Batch completed:" << batchSize << "files in" << batchDurationMs << "ms"
+                 << "(" << (batchDurationMs / qMax(1, batchSize)) << "ms/file)"
+                 << "| Total progress:" << processedFiles << "/" << totalFiles
+                 << "(" << percentComplete << "%)";
+
+        // Allow UI to process events between batches
+        QCoreApplication::processEvents();
+    }
+
+    // Final completion message
+    QString finalMsg = QString("Metadata extraction completed: %1 files processed")
+                           .arg(processedFiles);
+    emitProgressUpdate(processedFiles, totalFiles, finalMsg);
+
+    qDebug() << "=== Metadata extraction completed ===" << finalMsg;
 }
 
-// Add this method to catalogjobstoppable.cpp
 void CatalogJobStoppable::migrateMimeTypesForExistingFiles()
 {
     qDebug() << "=== Checking if mime_type migration is needed ===";
@@ -2299,5 +2347,3 @@ void CatalogJobStoppable::migrateMimeTypesForExistingFiles()
     qDebug() << "MIME type migration completed:" << updated << "files updated";
     emitProgressUpdate(updated, filesWithoutMimeType, "Migration completed");
 }
-
-
