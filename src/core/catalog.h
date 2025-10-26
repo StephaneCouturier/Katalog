@@ -144,6 +144,7 @@ public:
     bool clearMetadataExtractionDateForNonMedia();
     void handleMetadataTransition(const QString& previousIncludeMetadata,
                                   const QString& newIncludeMetadata);
+    bool hasFilesNeedingMigration() const;
 
 private:
     QString m_connectionName = "defaultConnection";

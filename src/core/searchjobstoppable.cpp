@@ -486,6 +486,12 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 emit searchProgress(-3);
 
                 qDebug() << "Migration completed";
+
+                if (!device->catalog->hasFilesNeedingMigration() && device->catalog->appVersion < "2.8") {
+                    device->catalog->appVersion = "2.8";
+                    device->catalog->saveCatalog();
+                    qDebug() << "✓ Catalog fully migrated to v2.8 via search";
+                }
             }
              else {
                 qDebug() << "No migration needed - all files already have metadata";

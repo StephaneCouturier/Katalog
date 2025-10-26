@@ -248,7 +248,7 @@ void CatalogJobStoppable::updateCatalogWithProgress()
     qDebug() << "=== CATALOG UPDATE STARTED ===";
     qDebug() << "Device ID:" << m_device->ID;
     qDebug() << "Catalog Name:" << m_device->catalog->name;
-    bool shouldUseFullRescan = false;
+    bool shouldUseFullRescan = false;  //Full Rescan is not used, keeping for later user/test option
     // Decide between full rescan and incremental update
     if (shouldUseFullRescan) {
         // Clear existing files since we're doing a full rescan
@@ -1463,6 +1463,12 @@ void CatalogJobStoppable::updateCatalogIncremental()
         // One-time migration for existing files without mime_type ***
         qDebug() << "Step 8a: Checking for mime_type migration";
         migrateMimeTypesForExistingFiles();
+
+        // After migration completes, update catalog to current version
+        if (!catalog->hasFilesNeedingMigration() && catalog->appVersion < "2.8") {
+            qDebug() << "✓ All files migrated - updating catalog version to 2.8";
+            catalog->appVersion = "2.8";
+        }
 
     // Step 9: Extract metadata for new/modified/missing files (if enabled)
         if (catalog->includeMetadata != Catalog::METADATA_NONE) {

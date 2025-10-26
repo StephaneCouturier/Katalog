@@ -276,19 +276,20 @@ void Catalog::deleteCatalog()
 }
 
 void Catalog::saveCatalog()
-{//Update database with catalog values
+{
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
-                            UPDATE catalog
-                            SET     catalog_name             =:catalog_name,
-                                    catalog_source_path      =:catalog_source_path,
-                                    catalog_storage          =:catalog_storage,
-                                    catalog_file_type        =:catalog_file_type,
-                                    catalog_include_hidden   =:catalog_include_hidden,
-                                    catalog_include_metadata =:catalog_include_metadata,
-                                    catalog_include_metadata =:catalog_include_metadata
-                            WHERE  catalog_id=:catalog_id
-                                )");
+        UPDATE catalog
+        SET catalog_name             =:catalog_name,
+            catalog_source_path      =:catalog_source_path,
+            catalog_storage          =:catalog_storage,
+            catalog_file_type        =:catalog_file_type,
+            catalog_include_hidden   =:catalog_include_hidden,
+            catalog_include_metadata =:catalog_include_metadata,
+            catalog_include_symblinks=:catalog_include_symblinks,
+            catalog_app_version      =:catalog_app_version
+        WHERE catalog_id=:catalog_id
+    )");
     query.prepare(querySQL);
     query.bindValue(":catalog_id", ID);
     query.bindValue(":catalog_name", name);
@@ -298,9 +299,9 @@ void Catalog::saveCatalog()
     query.bindValue(":catalog_include_hidden", includeHidden);
     query.bindValue(":catalog_include_metadata", includeMetadata);
     query.bindValue(":catalog_include_symblinks", includeSymblinks);
+    query.bindValue(":catalog_app_version", appVersion);
     query.exec();
 }
-
 void Catalog::clearCatalogData()
 {
     qDebug() << "Clearing existing catalog data for update";
@@ -757,6 +758,13 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
 
                     if (saveCatalogToFile("Memory", collectionFolder)) {
                         qDebug() << "Catalog successfully saved in v2.8 format";
+                    }
+
+                    // After saving, check if migration is 100% complete
+                    if (!hasFilesNeedingMigration() && appVersion < "2.8") {
+                        appVersion = "2.8";
+                        saveCatalog();  // Update database
+                        qDebug() << "✓ Catalog fully migrated to v2.8";
                     }
                 }
             }
@@ -1666,4 +1674,26 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
 
     // Log unhandled transition (for future-proofing)
     qDebug() << "Warning: Unhandled metadata transition - no action taken";
+}
+
+bool Catalog::hasFilesNeedingMigration() const
+{
+    QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
+    checkQuery.prepare(R"(
+        SELECT COUNT(*)
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+        AND (file_extension IS NULL OR file_extension = ''
+             OR file_type IS NULL OR file_type = ''
+             OR mime_type IS NULL OR mime_type = '')
+    )");
+    checkQuery.bindValue(":catalog_id", ID);
+
+    if (!checkQuery.exec() || !checkQuery.next()) {
+        qDebug() << "ERROR: Failed to check migration status:" << checkQuery.lastError().text();
+        return true;  // Assume needs migration if query fails (safe default)
+    }
+
+    int filesNeedingMigration = checkQuery.value(0).toInt();
+    return (filesNeedingMigration > 0);
 }
