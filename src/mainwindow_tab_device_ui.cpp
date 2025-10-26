@@ -608,7 +608,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
             // Check if active (has "dialog-ok-apply" icon)
             if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
                 // Active catalog - add to processing list
-                loopDevice->catalog->appVersion = currentVersion;
                 collectedCatalogs.append(loopDevice);
                 qDebug() << "Added active catalog to batch:" << loopDevice->name;
             } else {

@@ -1683,9 +1683,7 @@ bool Catalog::hasFilesNeedingMigration() const
         SELECT COUNT(*)
         FROM file
         WHERE file_catalog_id = :catalog_id
-        AND (file_extension IS NULL OR file_extension = ''
-             OR file_type IS NULL OR file_type = ''
-             OR mime_type IS NULL OR mime_type = '')
+        AND file_type IS NULL OR (file_type IS NOT NULL AND mime_type IS NULL)
     )");
     checkQuery.bindValue(":catalog_id", ID);
 

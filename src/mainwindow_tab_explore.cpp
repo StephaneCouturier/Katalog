@@ -564,6 +564,15 @@
                         statusBar()->showMessage(tr("Migration cancelled"), 2000);
                     } else {
                         qDebug() << "Migration completed";
+
+                        // Check if migration is complete and update version
+                        if (!exploreDevice->catalog->hasFilesNeedingMigration() &&
+                            exploreDevice->catalog->appVersion < "2.8") {
+                            exploreDevice->catalog->appVersion = "2.8";
+                            exploreDevice->catalog->saveCatalog();
+                            qDebug() << "✓ Catalog fully migrated to v2.8 via explore";
+                        }
+
                         statusBar()->showMessage(tr("Catalog ready"), 2000);
                     }
                 }
@@ -744,8 +753,6 @@
 
         // Metadata headers
         if(exploreDevice->catalog->includeMetadata != Catalog::METADATA_NONE){
-            ui->Explore_treeView_FileList->showColumn(8);  // file_type
-            ui->Explore_treeView_FileList->showColumn(9);  // MIME_type
             ui->Explore_treeView_FileList->showColumn(10); // Width (merged)
             ui->Explore_treeView_FileList->showColumn(11); // Height (merged)
             ui->Explore_treeView_FileList->showColumn(12); // Duration (merged)
@@ -770,8 +777,6 @@
             proxyModel2->setHeaderData(18, Qt::Horizontal, tr("Title"));
         }
         else{
-            ui->Explore_treeView_FileList->hideColumn(8);  // file_type
-            ui->Explore_treeView_FileList->hideColumn(9);  // MIME_type
             ui->Explore_treeView_FileList->hideColumn(10); // Width (merged)
             ui->Explore_treeView_FileList->hideColumn(11); // Height (merged)
             ui->Explore_treeView_FileList->hideColumn(12); // Duration (merged)

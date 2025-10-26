@@ -3062,8 +3062,6 @@ void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
                                                   collection->folder,
                                                   "update");
 
-        selectedDevice->catalog->appVersion = currentVersion;
-
         //Save data
         collection->saveDeviceTableToFile();
         collection->saveStatiticsTableToFile();
