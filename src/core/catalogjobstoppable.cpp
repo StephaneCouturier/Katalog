@@ -1561,7 +1561,7 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutMetadata()
     if (catalog->includeMetadata == Catalog::METADATA_MEDIA_BASIC ||
         catalog->includeMetadata == Catalog::METADATA_MEDIA_EXTENDED) {
         // Only media files
-        fileTypeFilter = "AND file_type IN ('Image', 'Audio', 'Video')";
+        fileTypeFilter = "AND file_type IN ('image', 'audio', 'video')";
     } else if (catalog->includeMetadata == Catalog::METADATA_FULL) {
         // All supported types - no additional filter needed
         // (files with unsupported types will be skipped by FileMetadata::isMetadataSupported)
