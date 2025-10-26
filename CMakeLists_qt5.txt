@@ -99,6 +99,7 @@ set(CORE_HEADERS
     src/core/deviceupdatemanager.h
     src/core/filemetadata.h
     src/core/filetypemapping.h
+    src/core/parallelmetadataextractor.h
 )
 
 set(CORE_SOURCES
@@ -125,6 +126,7 @@ set(CORE_SOURCES
     src/core/deviceupdatemanager.cpp
     src/core/filemetadata.cpp
     src/core/filetypemapping.cpp
+    src/core/parallelmetadataextractor.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately
