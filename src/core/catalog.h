@@ -138,8 +138,12 @@ public:
     static const QString METADATA_FULL;
 
     // Metadata management
-    bool clearMetadataFields();
+    bool clearMetadataBasicFields();
+    bool clearMetadataExtendedField();
     bool clearMetadataExtractionDate();
+    bool clearMetadataExtractionDateForNonMedia();
+    void handleMetadataTransition(const QString& previousIncludeMetadata,
+                                  const QString& newIncludeMetadata);
 
 private:
     QString m_connectionName = "defaultConnection";

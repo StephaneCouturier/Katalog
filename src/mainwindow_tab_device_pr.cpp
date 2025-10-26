@@ -2370,17 +2370,22 @@ void MainWindow::saveCatalogChanges()
         }
     }
 
+    // Write all changes to database
     activeDevice->catalog->saveCatalog();
+
+    // (for Memory mode) Update catalog file headers and Rename catalog file if device name changed
     activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
     activeDevice->catalog->renameCatalogFile(activeDevice->name);
 
-    //Write all changes to database (except change of name)
-    activeDevice->catalog->saveCatalog();
+    // Handle metadata field transitions based on includeMetadata change
+    if (activeDevice->catalog->includeMetadata != previousCatalog.catalog->includeMetadata) {
+        activeDevice->catalog->handleMetadataTransition(
+            previousCatalog.catalog->includeMetadata,
+            activeDevice->catalog->includeMetadata
+            );
+    }
 
-    //Write changes to catalog file (update headers only)
-    activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
-
-    //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
+    // Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
     if( changesToFileSelectionMade){
         int updatechoice = QMessageBox::warning(this, "Katalog",
                                                 tr("Update the catalog content with the new criteria?\n")

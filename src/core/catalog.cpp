@@ -335,46 +335,48 @@ void Catalog::clearCatalogData()
 
 bool Catalog::updateCatalogFileHeaders(QString databaseMode)
 {
-    if(databaseMode != "Memory") {
-        return true; // Nothing to do for non-Memory mode
-    }
+    if(databaseMode == "Memory") {
 
-    QFile catalogFile(filePath);
-    if(!catalogFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
-        return false; // Return false to indicate failure
-    }
-
-    QString fullFileText;
-    QTextStream textStream(&catalogFile);
-
-    // Build the header content
-    fullFileText.append("<catalogSourcePath>" + sourcePath +"\n");
-    fullFileText.append("<catalogFileCount>" + QVariant(fileCount).toString() +"\n");
-    fullFileText.append("<catalogTotalFileSize>" + QVariant(totalFileSize).toString() +"\n");
-    fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
-    fullFileText.append("<catalogFileType>" + fileType +"\n");
-    fullFileText.append("<catalogStorage>" + storageName +"\n");
-    fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
-    fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
-    fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
-    fullFileText.append("<catalogAppVersion>" + QVariant(appVersion).toString() +"\n");
-    fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
-
-    // Copy existing file data (non-header lines)
-    while(!textStream.atEnd())
-    {
-        QString line = textStream.readLine();
-        if(!line.startsWith("<catalog")) {
-            fullFileText.append(line + "\n");
+        QFile catalogFile(filePath);
+        if(!catalogFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            return false; // Return false to indicate failure
         }
+
+        QString fullFileText;
+        QTextStream textStream(&catalogFile);
+
+        // Build the header content
+        fullFileText.append("<catalogSourcePath>" + sourcePath +"\n");
+        fullFileText.append("<catalogFileCount>" + QVariant(fileCount).toString() +"\n");
+        fullFileText.append("<catalogTotalFileSize>" + QVariant(totalFileSize).toString() +"\n");
+        fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
+        fullFileText.append("<catalogFileType>" + fileType +"\n");
+        fullFileText.append("<catalogStorage>" + storageName +"\n");
+        fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
+        fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
+        fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
+        fullFileText.append("<catalogAppVersion>" + QVariant(appVersion).toString() +"\n");
+        fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
+
+        // Copy existing file data (non-header lines)
+        while(!textStream.atEnd())
+        {
+            QString line = textStream.readLine();
+            if(!line.startsWith("<catalog")) {
+                fullFileText.append(line + "\n");
+            }
+        }
+
+        // Rewrite the file with updated headers
+        catalogFile.resize(0);
+        textStream << fullFileText;
+        catalogFile.close();
+
+        return true;
     }
-
-    // Rewrite the file with updated headers
-    catalogFile.resize(0);
-    textStream << fullFileText;
-    catalogFile.close();
-
-    return true;
+    else {
+        return false;
+    }
 }
 
 void Catalog::loadCatalog()
@@ -455,7 +457,7 @@ void Catalog::renameCatalogFile(QString newCatalogName)
     QString currentFolderFilePath = filePath;
 
     if (currentFolderFilePath.right(4)==".idx"){
-        currentFolderFilePath = currentFolderFilePath.chopped(4); //remove the .idx extension
+        currentFolderFilePath = currentFolderFilePath.chopped(4); //remove the .idx extension for now
         currentFolderFilePath +=".folders.idx"; //add the .folder.idx one for the folders file
         QString newFoldersFilePath = catalogFileInfo.absolutePath() + "/" + newCatalogName + ".folders.idx";
         QFile::rename(currentFolderFilePath, newFoldersFilePath);
@@ -1461,7 +1463,8 @@ int Catalog::getTempID() const
     return m_tempID;
 }
 
-bool Catalog::clearMetadataFields()
+// Metadata fields management for tranistions in this catalog
+bool Catalog::clearMetadataBasicFields()
 {
     qDebug() << "Clearing all metadata fields for catalog:" << name << "(ID:" << ID << ")";
 
@@ -1485,9 +1488,32 @@ bool Catalog::clearMetadataFields()
             audio_year = NULL,
             audio_track_number = NULL,
             audio_bitrate = NULL,
-            audio_sample_rate = NULL,
-            metadata_extended = NULL,
-            metadata_extraction_date = NULL
+            audio_sample_rate = NULL
+        WHERE file_catalog_id = :catalog_id
+    )");
+
+    query.prepare(querySQL);
+    query.bindValue(":catalog_id", ID);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Failed to clear metadata fields:" << query.lastError().text();
+        return false;
+    }
+
+    int rowsAffected = query.numRowsAffected();
+    qDebug() << "Cleared metadata for" << rowsAffected << "files";
+
+    return true;
+}
+
+bool Catalog::clearMetadataExtendedField()
+{
+    qDebug() << "Clearing all metadata fields for catalog:" << name << "(ID:" << ID << ")";
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        UPDATE file
+        SET metadata_extended = NULL
         WHERE file_catalog_id = :catalog_id
     )");
 
@@ -1528,4 +1554,116 @@ bool Catalog::clearMetadataExtractionDate()
     qDebug() << "Cleared metadata_extraction_date for" << rowsAffected << "files";
 
     return true;
+}
+
+bool Catalog::clearMetadataExtractionDateForNonMedia()
+{
+    qDebug() << "Clearing metadata_extraction_date for NON-MEDIA files in catalog:" << name << "(ID:" << ID << ")";
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        UPDATE file
+        SET metadata_extraction_date = NULL
+        WHERE file_catalog_id = :catalog_id
+          AND file_type NOT IN ('image', 'audio', 'video')
+    )");
+
+    query.prepare(querySQL);
+    query.bindValue(":catalog_id", ID);
+
+    if (!query.exec()) {
+        qDebug() << "ERROR: Failed to clear metadata_extraction_date for non-media:" << query.lastError().text();
+        return false;
+    }
+
+    int rowsAffected = query.numRowsAffected();
+    qDebug() << "Cleared metadata_extraction_date for" << rowsAffected << "non-media files";
+
+    return true;
+}
+
+void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
+                                       const QString& newIncludeMetadata)
+{
+    // No transition - nothing to do
+    if (previousIncludeMetadata == newIncludeMetadata) {
+        return;
+    }
+
+    qDebug() << "Handling metadata transition from" << previousIncludeMetadata
+             << "to" << newIncludeMetadata << "for catalog:" << name;
+
+    // Scenario 2.1: None → any other value
+    // Files already have NULL metadata_extraction_date
+    if (previousIncludeMetadata == METADATA_NONE) {
+        qDebug() << "Scenario 2.1: Transition from None - no clearing needed";
+        return;
+    }
+
+    // Scenario 2.2: Media_Basic → Media_Extended
+    // Re-extract all media with extended metadata
+    if (previousIncludeMetadata == METADATA_MEDIA_BASIC &&
+        newIncludeMetadata == METADATA_MEDIA_EXTENDED) {
+        qDebug() << "Scenario 2.2: Media_Basic → Media_Extended - clearing extraction date";
+        clearMetadataExtractionDate();
+        return;
+    }
+
+    // Scenario 2.3: Media_Extended → Media_Basic
+    // Keep basic metadata, discard extended
+    if (previousIncludeMetadata == METADATA_MEDIA_EXTENDED &&
+        newIncludeMetadata == METADATA_MEDIA_BASIC) {
+        qDebug() << "Scenario 2.3: Media_Extended → Media_Basic - clearing extended field only";
+        clearMetadataExtendedField();
+        return;
+    }
+
+    // Scenario 2.5: Media_Basic → Full_Extended
+    // Re-extract media with extended + extract non-media
+    if (previousIncludeMetadata == METADATA_MEDIA_BASIC &&
+        newIncludeMetadata == METADATA_FULL) {
+        qDebug() << "Scenario 2.5: Media_Basic → Full_Extended - clearing extraction date";
+        clearMetadataExtractionDate();
+        return;
+    }
+
+    // Scenario 2.4: Media_Extended → Full_Extended
+    // Media already have extended, non-media will be found automatically
+    if (previousIncludeMetadata == METADATA_MEDIA_EXTENDED &&
+        newIncludeMetadata == METADATA_FULL) {
+        qDebug() << "Scenario 2.4: Media_Extended → Full_Extended - no clearing needed";
+        return;
+    }
+
+    // Scenario 2.6: Full_Extended → Media_Basic
+    // Clear extended field + clear extraction date for non-media only
+    if (previousIncludeMetadata == METADATA_FULL &&
+        newIncludeMetadata == METADATA_MEDIA_BASIC) {
+        qDebug() << "Scenario 2.6: Full_Extended → Media_Basic - clearing extended field and non-media extraction dates";
+        clearMetadataExtendedField();
+        clearMetadataExtractionDateForNonMedia();
+        return;
+    }
+
+    // Scenario 2.7: Full_Extended → Media_Extended
+    // Clear extraction date for non-media only
+    if (previousIncludeMetadata == METADATA_FULL &&
+        newIncludeMetadata == METADATA_MEDIA_EXTENDED) {
+        qDebug() << "Scenario 2.7: Full_Extended → Media_Extended - clearing non-media extraction dates";
+        clearMetadataExtractionDateForNonMedia();
+        return;
+    }
+
+    // Scenario 2.8: Any → None
+    // Clear all metadata fields to reduce DB size
+    if (newIncludeMetadata == METADATA_NONE) {
+        qDebug() << "Scenario 2.8: Transition to None - clearing all metadata";
+        clearMetadataBasicFields();
+        clearMetadataExtendedField();
+        clearMetadataExtractionDate();
+        return;
+    }
+
+    // Log unhandled transition (for future-proofing)
+    qDebug() << "Warning: Unhandled metadata transition - no action taken";
 }
