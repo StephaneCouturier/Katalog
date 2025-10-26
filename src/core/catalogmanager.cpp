@@ -32,6 +32,7 @@
 
 #include "catalogmanager.h"
 #include <QDebug>
+#include <QApplication>
 
 CatalogManager::CatalogManager(QObject *parent)
     : QObject(parent)
@@ -130,6 +131,7 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
     });
 
     setCatalogOperationRunning(true);
+    setStatus(QApplication::translate("MainWindow","Operation started"));
     setProgress(0);
     setFilesProcessed(0);
     setTotalFiles(0);
