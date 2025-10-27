@@ -1,5 +1,5 @@
 name: Build macOS
-#v1 - macOS Qt6/KF6 build from master branch (full modern build)
+#v1 run2 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
   # Allow manual triggering from GitHub web interface
   workflow_dispatch:
