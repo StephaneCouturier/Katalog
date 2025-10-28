@@ -103,6 +103,12 @@ public:
                                         const QStringList &folderPaths,
                                         const QList<QVariantMap> &metadataList);
 
+    // file_type migration
+    static void migrateFileTypesForCatalog(const QString &connectionName,
+                                           int catalogId,
+                                           std::function<void(int, int, QString)> progressCallback = nullptr,
+                                           std::function<bool()> shouldContinueCallback = nullptr);
+
 private:
     // Helper methods
     //static QString getFileType(const QString &mimeType);

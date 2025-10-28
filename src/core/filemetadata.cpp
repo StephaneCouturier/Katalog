@@ -418,6 +418,212 @@ bool FileMetadata::batchUpdateFileMetadata(const QString &connectionName,
     return true;
 }
 //-----------------------------------------------------------------------------------------------------
+void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
+                                              int catalogId,
+                                              std::function<void(int, int, QString)> progressCallback,
+                                              std::function<bool()> shouldContinueCallback)
+{
+    QSqlDatabase database = QSqlDatabase::database(connectionName);
+    if (!database.isOpen()) {
+        qDebug() << "FileMetadata::migrateFileTypesForCatalog - Database not open";
+        return;
+    }
+
+    qDebug() << "=== FILE TYPE MIGRATION (extension-based) - NO metadata extraction ===";
+
+    // Step 1: Check if migration is needed
+    QSqlQuery checkQuery(database);
+    checkQuery.prepare(R"(
+        SELECT COUNT(*)
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+        AND (mime_type IS NULL OR mime_type = ''
+             OR file_type IS NULL OR file_type = ''
+             OR file_extension IS NULL OR file_extension = '')
+    )");
+    checkQuery.bindValue(":catalog_id", catalogId);
+
+    if (!checkQuery.exec() || !checkQuery.next()) {
+        qDebug() << "Failed to check migration status";
+        return;
+    }
+
+    int totalFiles = checkQuery.value(0).toInt();
+    if (totalFiles == 0) {
+        qDebug() << "No files need migration";
+        return;
+    }
+
+    qDebug() << "Starting migration for" << totalFiles << "files (file types only, NO metadata)";
+    if (progressCallback) {
+        progressCallback(0, totalFiles, "Starting file type conversion...");
+    }
+
+    // Step 2: Get all file names that need migration and extract extensions in Qt
+    QSqlQuery filesQuery(database);
+    filesQuery.prepare(R"(
+        SELECT file_name
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+        AND (mime_type IS NULL OR mime_type = ''
+             OR file_type IS NULL OR file_type = ''
+             OR file_extension IS NULL OR file_extension = '')
+    )");
+    filesQuery.bindValue(":catalog_id", catalogId);
+
+    if (!filesQuery.exec()) {
+        qDebug() << "Failed to query files:" << filesQuery.lastError().text();
+        return;
+    }
+
+    // Build map of extensions to count
+    QHash<QString, int> extensionCounts;
+    int extensionlessCount = 0;
+
+    while (filesQuery.next()) {
+        QString fileName = filesQuery.value(0).toString();
+        QFileInfo fileInfo(fileName);
+        QString extension = fileInfo.suffix().toLower();
+
+        if (extension.isEmpty()) {
+            extensionlessCount++;
+        } else {
+            extensionCounts[extension]++;
+        }
+    }
+
+    // Sort extensions by count (most common first)
+    QList<QPair<QString, int>> extensions;
+    QHashIterator<QString, int> it(extensionCounts);
+    while (it.hasNext()) {
+        it.next();
+        extensions.append(qMakePair(it.key(), it.value()));
+    }
+    std::sort(extensions.begin(), extensions.end(),
+              [](const QPair<QString, int>& a, const QPair<QString, int>& b) {
+                  return a.second > b.second; // Sort by count descending
+              });
+
+    qDebug() << "Found" << extensions.size() << "distinct extensions and"
+             << extensionlessCount << "extensionless files";
+
+    // Step 3: Begin transaction
+    if (!database.transaction()) {
+        qDebug() << "Failed to begin transaction";
+        return;
+    }
+
+    int processedFiles = 0;
+
+    // Step 4: Update files by extension (ONE UPDATE per extension using LIKE pattern)
+    for (const auto &extPair : extensions) {
+        // Check if we should continue
+        if (shouldContinueCallback && !shouldContinueCallback()) {
+            database.rollback();
+            qDebug() << "Migration stopped by user";
+            return;
+        }
+
+        QString extension = extPair.first;
+        int fileCount = extPair.second;
+
+        // Calculate type and MIME from extension
+        QString fileType = getFileTypeFromExtension(extension);
+        QString mimeType = getMimeTypeFromExtension(extension);
+
+        // Build LIKE pattern for this extension (case-insensitive)
+        QString likePattern = QString("%.%1").arg(extension);
+
+        // Single UPDATE for all files ending with this extension
+        QSqlQuery updateQuery(database);
+        updateQuery.prepare(R"(
+            UPDATE file
+            SET file_extension = :extension,
+                file_type = :file_type,
+                mime_type = :mime_type
+            WHERE file_catalog_id = :catalog_id
+            AND (mime_type IS NULL OR mime_type = ''
+                 OR file_type IS NULL OR file_type = ''
+                 OR file_extension IS NULL OR file_extension = '')
+            AND LOWER(file_name) LIKE LOWER(:like_pattern)
+        )");
+
+        updateQuery.bindValue(":extension", extension);
+        updateQuery.bindValue(":file_type", fileType);
+        updateQuery.bindValue(":mime_type", mimeType);
+        updateQuery.bindValue(":catalog_id", catalogId);
+        updateQuery.bindValue(":like_pattern", likePattern);
+
+        if (!updateQuery.exec()) {
+            qDebug() << "Failed to update extension" << extension << ":"
+                     << updateQuery.lastError().text();
+            database.rollback();
+            return;
+        }
+
+        int rowsAffected = updateQuery.numRowsAffected();
+        processedFiles += rowsAffected;
+
+        // Progress callback
+        if (progressCallback) {
+            QString msg = QString("Converted .%1 files (%2)")
+            .arg(extension)
+                .arg(rowsAffected);
+            progressCallback(processedFiles, totalFiles, msg);
+        }
+    }
+
+    // Step 5: Handle extensionless files
+    if (extensionlessCount > 0) {
+        if (shouldContinueCallback && !shouldContinueCallback()) {
+            database.rollback();
+            qDebug() << "Migration stopped by user";
+            return;
+        }
+
+        QSqlQuery updateExtensionlessQuery(database);
+        updateExtensionlessQuery.prepare(R"(
+            UPDATE file
+            SET file_extension = '',
+                file_type = 'none',
+                mime_type = 'application/octet-stream'
+            WHERE file_catalog_id = :catalog_id
+            AND file_name NOT LIKE '%.%'
+            AND (mime_type IS NULL OR mime_type = ''
+                 OR file_type IS NULL OR file_type = ''
+                 OR file_extension IS NULL OR file_extension = '')
+        )");
+        updateExtensionlessQuery.bindValue(":catalog_id", catalogId);
+
+        if (!updateExtensionlessQuery.exec()) {
+            qDebug() << "Failed to update extensionless files:"
+                     << updateExtensionlessQuery.lastError().text();
+            database.rollback();
+            return;
+        }
+
+        int rowsAffected = updateExtensionlessQuery.numRowsAffected();
+        processedFiles += rowsAffected;
+
+        if (progressCallback) {
+            progressCallback(processedFiles, totalFiles, "Converted extensionless files");
+        }
+    }
+
+    // Step 6: Commit
+    if (!database.commit()) {
+        qDebug() << "Failed to commit migration";
+        database.rollback();
+        return;
+    }
+
+    qDebug() << "=== FILE TYPE MIGRATION COMPLETED: " << processedFiles
+             << "files (NO metadata was extracted) ===";
+    if (progressCallback) {
+        progressCallback(processedFiles, totalFiles, "File type conversion completed");
+    }
+}
+//-----------------------------------------------------------------------------------------------------
 bool FileMetadata::extractAndStore(const QString &filePath,
                                    const QString &connectionName,
                                    int catalogId,

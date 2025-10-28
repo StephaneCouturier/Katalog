@@ -2255,101 +2255,22 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
 
 void CatalogJobStoppable::migrateMimeTypesForExistingFiles()
 {
-    qDebug() << "=== Checking if mime_type migration is needed ===";
+    qDebug() << "=== Starting MIME type migration (by extension) ===";
 
-    // Check if any files have NULL mime_type
-    QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
-    checkQuery.prepare(R"(
-        SELECT COUNT(*)
-        FROM file
-        WHERE file_catalog_id = :catalog_id
-        AND (mime_type IS NULL OR mime_type = '')
-    )");
-    checkQuery.bindValue(":catalog_id", m_device->catalog->ID);
-
-    if (!checkQuery.exec() || !checkQuery.next()) {
-        qDebug() << "Failed to check mime_type status";
-        return;
-    }
-
-    int filesWithoutMimeType = checkQuery.value(0).toInt();
-
-    if (filesWithoutMimeType == 0) {
-        qDebug() << "All files already have mime_type - no migration needed";
-        return;
-    }
-
-    qDebug() << "Found" << filesWithoutMimeType << "files without mime_type - performing one-time migration";
-    emitProgressUpdate(0, filesWithoutMimeType, "Migrating MIME types for existing files...");
-
-    // Get files that need mime_type populated
-    QSqlQuery filesQuery(QSqlDatabase::database(m_connectionName));
-    filesQuery.prepare(R"(
-        SELECT file_name, file_folder_path, file_extension
-        FROM file
-        WHERE file_catalog_id = :catalog_id
-        AND (mime_type IS NULL OR mime_type = '')
-    )");
-    filesQuery.bindValue(":catalog_id", m_device->catalog->ID);
-
-    if (!filesQuery.exec()) {
-        qDebug() << "Failed to query files for migration:" << filesQuery.lastError().text();
-        return;
-    }
-
-    // Collect files to update
-    QStringList fileNames, folderPaths, extensions;
-    while (filesQuery.next()) {
-        fileNames << filesQuery.value(0).toString();
-        folderPaths << filesQuery.value(1).toString();
-        extensions << filesQuery.value(2).toString();
-    }
-
-    // Begin transaction for batch update
-    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
-    db.transaction();
-
-    QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
-    updateQuery.prepare(R"(
-        UPDATE file
-        SET mime_type = :mime_type,
-            file_type = :file_type
-        WHERE file_catalog_id = :catalog_id
-        AND file_name = :file_name
-        AND file_folder_path = :folder_path
-    )");
-
-    int updated = 0;
-    for (int i = 0; i < fileNames.size(); ++i) {
-        if (!shouldContinue()) {
-            db.rollback();
-            return;
-        }
-
-        // Calculate mime_type and file_type from extension
-        QString mimeType = FileMetadata::getMimeTypeFromExtension(extensions[i]);
-        QString fileType = FileMetadata::getFileTypeFromExtension(extensions[i]);
-
-        updateQuery.bindValue(":mime_type", mimeType);
-        updateQuery.bindValue(":file_type", fileType);
-        updateQuery.bindValue(":catalog_id", m_device->catalog->ID);
-        updateQuery.bindValue(":file_name", fileNames[i]);
-        updateQuery.bindValue(":folder_path", folderPaths[i]);
-
-        if (updateQuery.exec()) {
-            updated++;
-        }
-
-        // Progress update
-        if (updated % 1000 == 0) {
-            emitProgressUpdate(updated, filesWithoutMimeType,
-                               QString("Migrated %1 files...").arg(updated));
+    // Use the unified method with progress callback
+    FileMetadata::migrateFileTypesForCatalog(
+        m_connectionName,
+        m_device->catalog->ID,
+        // Progress callback
+        [this](int processed, int total, QString message) {
+            emitProgressUpdate(processed, total, message);
             QCoreApplication::processEvents();
+        },
+        // Should continue callback
+        [this]() -> bool {
+            return shouldContinue();
         }
-    }
+        );
 
-    db.commit();
-
-    qDebug() << "MIME type migration completed:" << updated << "files updated";
-    emitProgressUpdate(updated, filesWithoutMimeType, "Migration completed");
+    qDebug() << "=== MIME type migration completed ===";
 }

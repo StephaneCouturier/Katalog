@@ -439,6 +439,7 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
             SET catalog_include_metadata = 'None'
             WHERE catalog_include_metadata IS NULL
                OR catalog_include_metadata = ''
+               OR catalog_include_metadata = '0'
                OR catalog_include_metadata = 0
         )");
 
@@ -449,70 +450,7 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
             qDebug() << "No catalogs needed metadata field normalization";
         }
 
-/*
-    qDebug() << "=== Database Migration 2.8: PART5 - MimeTypesForExistingFiles ===";
-
-        // Check if any files have NULL mime_type
-        QSqlQuery checkQuery(QSqlDatabase::database(connectionName));
-        checkQuery.prepare(R"(
-            SELECT COUNT(*)
-            FROM file
-            WHERE (mime_type IS NULL OR mime_type = '')
-        )");
-
-        int filesWithoutMimeType = checkQuery.value(0).toInt();
-        qDebug() << "Found" << filesWithoutMimeType << "Migration_2_8: files without mime_type - performing one-time migration";
-
-        // Get files that need mime_type populated
-        QSqlQuery filesQuery(QSqlDatabase::database(connectionName));
-        filesQuery.prepare(R"(
-            SELECT file_name, file_folder_path, file_extension
-            FROM file
-            WHERE (mime_type IS NULL OR mime_type = '')
-        )");
-
-        if (!filesQuery.exec()) {
-            qDebug() << "Failed to query files for migration:" << filesQuery.lastError().text();
-            return filesQuery.lastError();
-        }
-
-        // Collect files to update
-        QStringList fileNames, folderPaths, extensions;
-        while (filesQuery.next()) {
-            fileNames << filesQuery.value(0).toString();
-            folderPaths << filesQuery.value(1).toString();
-            extensions << filesQuery.value(2).toString();
-        }
-
-        // Begin transaction for batch update
-        QSqlDatabase db = QSqlDatabase::database(connectionName);
-        db.transaction();
-
-        QSqlQuery updateQuery(QSqlDatabase::database(connectionName));
-        updateQuery.prepare(R"(
-            UPDATE file
-            SET mime_type = :mime_type,
-                file_type = :file_type
-            WHERE file_name = :file_name
-            AND file_folder_path = :folder_path
-        )");
-
-        for (int i = 0; i < fileNames.size(); ++i) {
-            // Calculate mime_type and file_type from extension
-            QString fileType = FileMetadata::getFileTypeFromExtension(extensions[i]);
-            QString mimeType = FileMetadata::getMimeTypeFromExtension(extensions[i]);
-            updateQuery.bindValue(":mime_type", mimeType);
-            updateQuery.bindValue(":file_type", fileType);
-            updateQuery.bindValue(":file_name", fileNames[i]);
-            updateQuery.bindValue(":folder_path", folderPaths[i]);
-
-            qDebug() << "Updating file:" << folderPaths[i] + "/" + fileNames[i]
-                     << "  -> mime_type:" << mimeType << ", file_type:" << fileType;
-        }
-
-        db.commit();
-*/
-    qDebug() << "=== Database Migration 2.8 completed ===";
+        qDebug() << "=== Database Migration 2.8 completed ===";
 
     //reset cursor
     QApplication::restoreOverrideCursor();
