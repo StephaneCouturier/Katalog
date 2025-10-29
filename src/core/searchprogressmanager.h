@@ -36,6 +36,7 @@
 #include <QStatusBar>
 #include <QString>
 #include <QLocale>
+#include <QLabel>
 
 // Forward declarations
 class SearchManager;
@@ -46,8 +47,8 @@ class SearchProgressManager : public QObject
     Q_OBJECT
 
 public:
-    explicit SearchProgressManager(QStatusBar *statusBar, QTimer *timer, QObject *parent = nullptr)
-        : QObject(parent), m_statusBar(statusBar), m_statusBarTimer(timer) {}
+    explicit SearchProgressManager(QStatusBar *statusBar, QTimer *timer, QLabel *statusLabel, QObject *parent = nullptr)
+        : QObject(parent), m_statusBar(statusBar), m_statusBarTimer(timer), m_statusBarLabel(statusLabel) {}
 
     void connectToSearchManager(SearchManager *searchManager);
     void setCurrentSearch(Search *currentSearch);
@@ -62,6 +63,7 @@ signals:
 private:
     QStatusBar *m_statusBar = nullptr;
     QTimer *m_statusBarTimer = nullptr;
+    QLabel *m_statusBarLabel = nullptr;
     SearchManager *m_searchManager = nullptr;
     Search *m_currentSearch = nullptr;
 };

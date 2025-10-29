@@ -511,7 +511,7 @@
 
                     // Show initial message
                     statusBar()->show();
-                    statusBar()->showMessage(builder.build());
+                    statusBarLabel->setText(builder.build());
                     QCoreApplication::processEvents();
 
                     bool localStopRequested = false;
@@ -528,7 +528,7 @@
                                 .setDeviceContext(1, 1, deviceName)
                                 .setProcess(tr("Update file types"), filesLoaded, totalFiles);
 
-                            statusBar()->showMessage(builder.build());
+                            statusBarLabel->setText(builder.build());
                             QCoreApplication::processEvents();
                         },
                         Qt::DirectConnection);
@@ -539,11 +539,11 @@
                     disconnect(progressConnection);
 
                     if (localStopRequested) {
-                        statusBar()->showMessage(tr("File type update cancelled"), 2000);
+                        statusBarLabel->setText(tr("File type update cancelled"));
                         return;
                     }
 
-                    statusBar()->showMessage(tr("Catalog ready"), 2000);
+                    statusBarLabel->setText(tr("Catalog ready"));
                     QTimer::singleShot(2000, this, [this]() { statusBar()->hide(); });
                 } else {
                     qDebug() << "No file type update needed - catalog already up to date";

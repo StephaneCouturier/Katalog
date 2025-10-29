@@ -254,7 +254,7 @@
         catalogManager = new CatalogManager(this);
 
         // Create catalog progress manager with timer reference
-        catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, this);
+        catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, statusBarLabel, this);
         catalogProgressManager->connectToCatalogManager(catalogManager);
 
         // Connect signals for main operations
@@ -495,7 +495,7 @@
             ui->Create_pushButton_CreateCatalog->setEnabled(true);
             ui->Create_pushButton_Stop->setEnabled(false);
             QApplication::restoreOverrideCursor();
-            statusBar()->clearMessage();
+            statusBarLabel->clear();
         }
     }
     //--------------------------------------------------------------------------

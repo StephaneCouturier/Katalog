@@ -119,12 +119,8 @@ void MainWindow::setupSearchManager()
     searchManager = new SearchManager(this);
 
     // Create progress manager with timer reference
-    searchProgressManager = new SearchProgressManager(statusBar(), statusBarTimer, this);
+    searchProgressManager = new SearchProgressManager(statusBar(), statusBarTimer, statusBarLabel, this);
     searchProgressManager->connectToSearchManager(searchManager);
-
-    // Remove old timer connections since SearchProgressManager handles it internally now
-    // connect(searchManager, &SearchManager::searchCompleted, this, &MainWindow::startStatusBarTimer);
-    // connect(searchManager, &SearchManager::searchCancelled, this, &MainWindow::startStatusBarTimer);
 
     // Keep existing search lifecycle connections:
     connect(searchManager, &SearchManager::searchCompleted,       this, &MainWindow::onSearchCompleted);
@@ -1039,9 +1035,9 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             builder.setResult(tr("Files found"), currentSearch->fileNames.size());
             builder.setProcess(tr("Processed"), currentSearch->totalFilesProcessed);
 
-            statusBar()->showMessage(tr("Search interrupted") + " | " + builder.build(), 5000);
+            statusBarLabel->setText(tr("Search interrupted") + " | " + builder.build());
         } else {
-            statusBar()->showMessage(tr("Search interrupted. No results available."), 5000);
+            statusBarLabel->setText(tr("Search interrupted. No results available."));
         }
         return;
     }
@@ -1057,7 +1053,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             builder.setResult(tr("Files found"), currentSearch->fileNames.size());
             builder.setProcess(tr("Processed"), currentSearch->totalFilesProcessed);
 
-            statusBar()->showMessage(builder.build());
+            statusBarLabel->setText(builder.build());
         }
         return;
     }
@@ -1103,7 +1099,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         }
 
         statusBar()->show();
-        statusBar()->showMessage(message);
+        statusBarLabel->setText(message);
         QCoreApplication::processEvents();
         return;
     }
@@ -1120,7 +1116,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             builder.setProcess(tr("Processing files"), 0, 0);
 
             statusBar()->show();
-            statusBar()->showMessage(builder.build(), 5000);
+            statusBarLabel->setText(builder.build());
             statusBarTimer->start(5000);
         }
         return;
@@ -1148,7 +1144,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     }
 
     statusBar()->show();
-    statusBar()->showMessage(builder.build(), 5000);
+    statusBarLabel->setText(builder.build());
     statusBarTimer->start(5000);
     QCoreApplication::processEvents();
 }
@@ -1251,7 +1247,7 @@ void MainWindow::reportSearchStatistics()
 void MainWindow::updateStatusBarFromSearchManager()
 {
     if (!searchManager) {
-        statusBar()->showMessage(tr("Ready"));
+        statusBarLabel->setText(tr("Ready"));
         return;
     }
 
@@ -1291,7 +1287,7 @@ void MainWindow::updateStatusBarFromSearchManager()
     }
 
     // Update the status bar
-    statusBar()->showMessage(statusMessage);
+    statusBarLabel->setText(statusMessage);
 }
 //----------------------------------------------------------------------
 void MainWindow::removeFileFromResults(QString fullFilePath)

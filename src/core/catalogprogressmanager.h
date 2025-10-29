@@ -41,6 +41,7 @@
 #include <QTimer>
 #include <QString>
 #include <QLocale>
+#include <QLabel>
 
 /**
  * @brief The CatalogProgressManager class
@@ -53,7 +54,7 @@ class CatalogProgressManager : public QObject
 
 public:
     // Declare constructor - implement in cpp file
-    explicit CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QObject *parent = nullptr);
+    explicit CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QLabel *statusLabel, QObject *parent = nullptr);
 
     /**
      * @brief Set the catalog manager to monitor
@@ -87,6 +88,7 @@ private:
     CatalogJobStoppable *m_currentCatalogEngine = nullptr;
     QStatusBar *m_statusBar = nullptr;
     QTimer *m_statusBarTimer = nullptr;
+    QLabel *m_statusBarLabel = nullptr;
 };
 
 #endif // CATALOGPROGRESSMANAGER_H

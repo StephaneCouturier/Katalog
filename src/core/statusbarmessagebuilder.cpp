@@ -151,17 +151,18 @@ QString StatusBarMessageBuilder::formatOperation() const
     QString opText = m_operation.toHtmlEscaped();
 
     // Apply formatting
-    // if (m_formatOptions.operationBold && m_formatOptions.operationColor.isEmpty()) {
-    //     // Bold only
-    //     return QString("<b>%1</b>").arg(opText);
-    // } else if (!m_formatOptions.operationColor.isEmpty()) {
-    //     // Color with optional bold
-    //     QString style = QString("color:%1;").arg(m_formatOptions.operationColor);
-    //     if (m_formatOptions.operationBold) {
-    //         style += " font-weight:bold;";
-    //     }
-    //     return QString("<span style='%1'>%2</span>").arg(style, opText);
-    // }
+    if (m_formatOptions.operationBold && m_formatOptions.operationColor.isEmpty()) {
+        // Bold only
+        return QString("<b>%1</b>").arg(opText);
+    }
+    else if (!m_formatOptions.operationColor.isEmpty()) {
+        // Color with optional bold
+        QString style = QString("color:%1;").arg(m_formatOptions.operationColor);
+        if (m_formatOptions.operationBold) {
+            style += " font-weight:bold;";
+        }
+        return QString("<span style='%1'>%2</span>").arg(style, opText);
+    }
 
     return opText;
 }
@@ -180,13 +181,13 @@ QString StatusBarMessageBuilder::formatDeviceContext() const
     if (!m_catalogName.isEmpty()) {
         QString safeName = m_catalogName.toHtmlEscaped();
 
-        // if (!m_formatOptions.catalogNameColor.isEmpty()) {
-        //     // Apply catalog name color
-        //     deviceText += QString(" (<span style='color:%1;'>%2</span>)")
-        //                       .arg(m_formatOptions.catalogNameColor, safeName);
-        // } else {
+        if (!m_formatOptions.catalogNameColor.isEmpty()) {
+            // Apply catalog name color
+            deviceText += QString(" (<span style='color:%1;'>%2</span>)")
+                              .arg(m_formatOptions.catalogNameColor, safeName);
+        } else {
             deviceText += QString(" (%1)").arg(safeName);
-        // }
+        }
     }
 
     return deviceText;
@@ -230,9 +231,9 @@ QString StatusBarMessageBuilder::formatResult() const
     QString resultValue = QLocale().toString(m_resultCount);
 
     // Apply optional bold
-    // if (m_formatOptions.resultsBold) {
-    //     resultValue = QString("<b>%1</b>").arg(resultValue);
-    // }
+    if (m_formatOptions.resultsBold) {
+        resultValue = QString("<b>%1</b>").arg(resultValue);
+    }
 
     return QString("%1: %2")
         .arg(m_resultTitle.toHtmlEscaped(), resultValue);
@@ -246,10 +247,10 @@ QString StatusBarMessageBuilder::formatCurrentItem() const
 
     QString safeItem = m_currentItem.toHtmlEscaped();
 
-    // Apply optional italic
-    // if (m_formatOptions.currentItemItalic) {
-    //     return QString("<i>%1</i>").arg(safeItem);
-    // }
+    //Apply optional italic
+    if (m_formatOptions.currentItemItalic) {
+        return QString("<i>%1</i>").arg(safeItem);
+    }
 
     return safeItem;
 }

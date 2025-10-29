@@ -37,8 +37,8 @@
 #include <QDebug>
 #include <qapplication.h>
 
-CatalogProgressManager::CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QObject *parent)
-    : QObject(parent), m_statusBar(statusBar), m_statusBarTimer(timer)
+CatalogProgressManager::CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QLabel *statusLabel, QObject *parent)
+    : QObject(parent), m_statusBar(statusBar), m_statusBarTimer(timer), m_statusBarLabel(statusLabel)
 {
     qDebug() << "CatalogProgressManager created with statusBar and timer";
 }
@@ -74,7 +74,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                 this, [this]() {
                     qDebug() << "CatalogProgressManager: Operation cancelled - clearing status immediately";
                     if (m_statusBar) {
-                        m_statusBar->showMessage(QApplication::translate("MainWindow", "Operation cancelled"));
+                        m_statusBarLabel->setText(QApplication::translate("MainWindow", "Operation cancelled"));
                         if (m_statusBarTimer) {
                             m_statusBarTimer->start(5000);
                         }
@@ -130,7 +130,7 @@ void CatalogProgressManager::updateFromCatalogManager()
         }
 
         m_statusBar->show();
-        m_statusBar->showMessage(builder.build());
+        m_statusBarLabel->setText(builder.build());
 
         if (m_statusBarTimer) {
             m_statusBarTimer->stop();
@@ -142,7 +142,7 @@ void CatalogProgressManager::updateFromCatalogManager()
 
         if (status.contains("stopped", Qt::CaseInsensitive) ||
             status.contains("cancelled", Qt::CaseInsensitive)) {
-            m_statusBar->showMessage(QApplication::translate("MainWindow", "Operation cancelled"));
+            m_statusBarLabel->setText(QApplication::translate("MainWindow", "Operation cancelled"));
         }
         else if (status.contains("completed successfully", Qt::CaseInsensitive)) {
             QString message = status;
@@ -150,10 +150,10 @@ void CatalogProgressManager::updateFromCatalogManager()
                 message += QString(" | %1 files processed")
                 .arg(QLocale().toString(m_catalogManager->filesProcessed()));
             }
-            m_statusBar->showMessage(message);
+            m_statusBarLabel->setText(message);
         }
         else {
-            m_statusBar->showMessage(status);
+            m_statusBarLabel->setText(status);
         }
 
         if (m_statusBarTimer) {
@@ -165,6 +165,6 @@ void CatalogProgressManager::updateFromCatalogManager()
 void CatalogProgressManager::showMessage(const QString &message, int timeout)
 {
     if (m_statusBar) {
-        m_statusBar->showMessage(message, timeout);
+        m_statusBarLabel->setText(message);
     }
 }

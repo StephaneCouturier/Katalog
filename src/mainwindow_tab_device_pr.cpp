@@ -1989,7 +1989,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 
     // Show success message
     QString message = tr("Operation completed");
-    statusBar()->showMessage(message, 5000);
+    statusBarLabel->setText(message);
 
     // STEP 1: Call reportAllUpdates with correct parameters
     if (reportDevice) {
@@ -2105,7 +2105,7 @@ void MainWindow::setCatalogUpdateUIState(bool isRunning)
         QApplication::restoreOverrideCursor();
 
         // Clear status
-        statusBar()->clearMessage();
+        statusBarLabel->clear();
     }
 }
 //--------------------------------------------------------------------------
@@ -2135,7 +2135,7 @@ void MainWindow::onDeviceUpdateError(const QString& error)
 
     // Show error message
     //QMessageBox::warning(this, "Katalog", tr("Catalog operation failed:\n%1").arg(error));
-    statusBar()->showMessage(tr("Operation cancelled"), 5000);
+    statusBarLabel->setText(tr("Operation cancelled"));
 }
 //--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateCancelled()
@@ -2148,11 +2148,11 @@ void MainWindow::onDeviceUpdateCancelled()
         // Call the existing cleanup method for creation cancellation
         cleanupStoppedCatalogCreation();
 
-        statusBar()->showMessage(tr("Operation cancelled"), 3000);
+        statusBarLabel->setText(tr("Operation cancelled"));
     } else {
         qDebug() << "UPDATE CANCELLED: Standard UI restoration";
         setCatalogUpdateUIState(false);  // Use Catalog context restoration
-        statusBar()->showMessage(tr("Operation cancelled"), 3000);
+        statusBarLabel->setText(tr("Operation cancelled"));
     }
 
     qDebug() << "Operation cancelled by user";
@@ -2169,9 +2169,9 @@ void MainWindow::onDeviceUpdateProgress()
 
     // Update status bar with current progress
     if (!currentDevice.isEmpty()) {
-        statusBar()->showMessage(QString("%1 - %2").arg(status, currentDevice));
+        statusBarLabel->setText(QString("%1 - %2").arg(status, currentDevice));
     } else {
-        statusBar()->showMessage(status);
+        statusBarLabel->setText(status);
     }
 
     // Log progress for debugging

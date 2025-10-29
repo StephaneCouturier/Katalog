@@ -82,7 +82,7 @@ void SearchProgressManager::updateFromSearchManager()
             QString pauseIndicator = isLoadingCatalog ?
                                          tr(" | CATALOG LOADING PAUSED") : tr(" | SEARCH PAUSED");
 
-            m_statusBar->showMessage(cleanMessage + pauseIndicator);
+            m_statusBarLabel->setText(cleanMessage + pauseIndicator);
             m_statusBarTimer->stop();
             return;
         }
@@ -134,7 +134,7 @@ void SearchProgressManager::updateFromSearchManager()
         }
 
         m_statusBar->show();
-        m_statusBar->showMessage(builder.build());
+        m_statusBarLabel->setText(builder.build());
         m_statusBarTimer->stop();
 
     } else {
@@ -149,20 +149,27 @@ void SearchProgressManager::updateFromSearchManager()
                 .setResult(resultTitle, m_currentSearch->fileNames.size());
         } else {
             // Just show "Ready"
-            m_statusBar->showMessage(tr("Ready"));
+            m_statusBarLabel->setText(tr("Ready"));
             m_statusBarTimer->start(5000);
             return;
         }
 
         m_statusBar->show();
-        m_statusBar->showMessage(builder.build());
+        m_statusBarLabel->setText(builder.build());
         m_statusBarTimer->start(5000);
     }
 }
 
 void SearchProgressManager::showMessage(const QString &message, int timeout)
 {
-    if (m_statusBar) {
-        m_statusBar->showMessage(message, timeout);
+    if (m_statusBarLabel) {
+        m_statusBarLabel->setText(message);
+        m_statusBar->show();
+
+        if (timeout > 0 && m_statusBarTimer) {
+            m_statusBarTimer->start(timeout);
+        } else if (m_statusBarTimer) {
+            m_statusBarTimer->stop();
+        }
     }
 }
