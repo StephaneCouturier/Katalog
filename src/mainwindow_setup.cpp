@@ -1364,7 +1364,23 @@
     }
     //----------------------------------------------------------------------
 
+    // Progress Reporting
     //----------------------------------------------------------------------
+    void MainWindow::updateStatusBarMessage(const QString& htmlMessage, int timeout)
+    {
+        if (statusBarLabel) {
+            statusBarLabel->setText(htmlMessage);
+            statusBar()->show();
+
+            if (timeout > 0 && statusBarTimer) {
+                statusBarTimer->start(timeout);
+            } else if (statusBarTimer) {
+                statusBarTimer->stop();
+            }
+        }
+    }
+    //----------------------------------------------------------------------
+
     // Icon & Theme testing
     //----------------------------------------------------------------------
     void MainWindow::debugIconLoadingDetailed()

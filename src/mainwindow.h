@@ -205,6 +205,8 @@ class MainWindow : public KXmlGuiWindow
             bool unsavedChanges;
             void closeEvent (QCloseEvent *event);
             QTimer* statusBarTimer;
+            QLabel* statusBarLabel;
+            void updateStatusBarMessage(const QString& htmlMessage, int timeout = 0);
 
             // Theme management
             int themeID;

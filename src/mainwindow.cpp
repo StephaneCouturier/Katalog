@@ -110,6 +110,8 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
             // Hide status bar initially
             statusBar()->hide();
+            statusBarLabel = new QLabel(this);
+            statusBar()->addWidget(statusBarLabel);
 
             //Splitter widget, invisible
             ui->splitter->setHandleWidth(0);
