@@ -33,7 +33,7 @@
 #include "src/filesview.h"
 #include "src/ui_mainwindow.h"
 #include "core/filemetadata.h"
-
+#include "core/statusbarmessagebuilder.h"
 
 #include <QDialog>
 #include <QVBoxLayout>
@@ -1019,138 +1019,140 @@ void MainWindow::displaySearchResults()
 //--- Reporting --------------------------------------------------------
 //----------------------------------------------------------------------
 void MainWindow::updateSearchProgress(int filesProcessed)
-{    // Special values for different states:
+{
+    // Special values:
     // -1: Search interrupted
     // -2: Catalog loading started
-    // -3: Catalog loading finished, processing files
+    // -3: Catalog loading finished
     // -4: Catalog loading progress update
 
-    // Update totalFilesProcessed for statistics
     if (filesProcessed >= 0) {
         currentSearch->totalFilesProcessed = filesProcessed;
     }
 
-    // Build status message
-    QString statusMessage;
+    StatusBarMessageBuilder builder;
+    builder.setOperation(tr("SEARCH"));
 
-    // Special case for interrupted search (-1)
+    // SPECIAL CASE: Search interrupted (-1)
     if (filesProcessed == -1) {
         if (currentSearch) {
-            statusMessage = tr("Search interrupted | Files found: %1 | Files processed: %2")
-            .arg(QLocale().toString(currentSearch->fileNames.size()))
-                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+            builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+            builder.setProcess(tr("Processed"), currentSearch->totalFilesProcessed);
+
+            statusBar()->showMessage(tr("Search interrupted") + " | " + builder.build(), 5000);
         } else {
-            statusMessage = tr("Search interrupted. No results available.");
+            statusBar()->showMessage(tr("Search interrupted. No results available."), 5000);
         }
-
-        statusBar()->showMessage(statusMessage, 5000);
         return;
     }
 
-    // Special case for catalog loading started (-2)
+    // SPECIAL CASE: Catalog loading started (-2)
     if (filesProcessed == -2) {
-        if (currentSearch) {
-            statusMessage = tr("Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5")
-            .arg(currentSearch->currentCatalogIndex)
-                .arg(currentSearch->totalCatalogs)
-                .arg(currentSearch->currentCatalogName)
-                .arg(QLocale().toString(currentSearch->fileNames.size())
-                         .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
+        if (currentSearch && currentSearch->totalCatalogs > 0) {
+            builder.setDeviceContext(
+                currentSearch->currentCatalogIndex,
+                currentSearch->totalCatalogs,
+                currentSearch->currentCatalogName
+                );
+            builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+            builder.setProcess(tr("Processed"), currentSearch->totalFilesProcessed);
 
-            statusBar()->showMessage(statusMessage);
+            statusBar()->showMessage(builder.build());
         }
         return;
     }
 
-    // Special case for catalog loading progress update (-4) - used by both SearchMemory and SearchJobStoppable
+    // SPECIAL CASE: File type update progress (-4)
     if (filesProcessed == -4) {
         SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
+        if (!searchJobStoppable) return;
 
-        double percentLoaded = 0;
-        if (searchJobStoppable->currentCatalogTotalFiles > 0) {
-            percentLoaded = (double)searchJobStoppable->currentCatalogFilesLoaded /
-                            searchJobStoppable->currentCatalogTotalFiles * 100.0;
+        // double percentLoaded = 0;
+        // if (searchJobStoppable->currentCatalogTotalFiles > 0) {
+        //     percentLoaded = (double)searchJobStoppable->currentCatalogFilesLoaded /
+        //                     searchJobStoppable->currentCatalogTotalFiles * 100.0;
+        // }
+
+        // Build device context
+        if (currentSearch->totalCatalogs > 0) {
+            builder.setDeviceContext(
+                searchJobStoppable->currentCatalogIndex,
+                searchJobStoppable->totalCatalogs,
+                searchJobStoppable->currentCatalogName
+                );
         }
 
-        // Build message based on operation context
-        statusMessage = tr("%1 Catalog %2 of %3 (%4) | %5 %6 (%7%)")
-                            .arg(searchJobStoppable->currentOperationVerb)  // "Loading" or "Converting"
-                            .arg(searchJobStoppable->currentCatalogIndex)
-                            .arg(searchJobStoppable->totalCatalogs)
-                            .arg(searchJobStoppable->currentCatalogName)
-                            .arg(QLocale().toString(searchJobStoppable->currentCatalogFilesLoaded))
-                            .arg(searchJobStoppable->currentOperationUnit)  // "files loaded" or "files converted"
-                            .arg(QString::number(percentLoaded, 'f', 1));
+        // Use operation verb and unit from search engine
+        builder.setProcess(
+            searchJobStoppable->currentOperationVerb,  // "Loading" or "Update file types"
+            searchJobStoppable->currentCatalogFilesLoaded,
+            searchJobStoppable->currentCatalogTotalFiles
+            );
 
-        // Optionally append search statistics
+        // Optionally show search statistics
         if (searchJobStoppable->showSearchStatistics) {
-            statusMessage += tr(" | Files found: %1 | Files processed: %2")
-            .arg(QLocale().toString(currentSearch->fileNames.size()))
-                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+            builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+            // Note: Can't show two results, so "Files processed" is omitted
         }
 
-        // Append PAUSED status if search is paused
+        QString message = builder.build();
+
+        // Append PAUSED status if needed
         if (searchJobStoppable->isPaused()) {
-            statusMessage += tr(" | CATALOG LOADING PAUSED");
+            message += tr(" | CATALOG LOADING PAUSED");
         }
 
         statusBar()->show();
-        statusBar()->showMessage(statusMessage);
+        statusBar()->showMessage(message);
         QCoreApplication::processEvents();
-
         return;
     }
 
-    // Special case for catalog loading finished (-3)
+    // SPECIAL CASE: Catalog loading finished (-3)
     if (filesProcessed == -3) {
-        if (currentSearch) {
-            statusMessage = tr("Processing Catalog %1 of %2 | Files found: %3 | Processing files...")
-            .arg(currentSearch->currentCatalogIndex)
-                .arg(currentSearch->totalCatalogs)
-                .arg(QLocale().toString(currentSearch->fileNames.size()));
+        if (currentSearch && currentSearch->totalCatalogs > 0) {
+            builder.setDeviceContext(
+                currentSearch->currentCatalogIndex,
+                currentSearch->totalCatalogs,
+                currentSearch->currentCatalogName
+                );
+            builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+            builder.setProcess(tr("Processing files"), 0, 0);
 
             statusBar()->show();
-            statusBar()->showMessage(statusMessage, 5000);
+            statusBar()->showMessage(builder.build(), 5000);
             statusBarTimer->start(5000);
         }
         return;
     }
 
-    // Regular progress update
-    if (currentSearch) {
-        // If we have catalog information, show it
-        if (currentSearch->totalCatalogs > 0) {
-            if (!ui->Filters_checkBox_SearchInConnectedDrives->isChecked()){
-                statusMessage = tr("Searching in Catalog %1 of %2 | ")
-                .arg(currentSearch->currentCatalogIndex)
-                    .arg(currentSearch->totalCatalogs);
-            }
-            statusMessage += tr("Files found: %1 | Files processed: %2")
-                                 .arg(QLocale().toString(currentSearch->fileNames.size()))
-                                 .arg(QLocale().toString(filesProcessed));
-        } else {
-            // Otherwise just show files
-            statusMessage = tr("Files found: %1 | Files processed: %2")
-                                .arg(QLocale().toString(currentSearch->fileNames.size()))
-                                .arg(QLocale().toString(filesProcessed));
+    // REGULAR PROGRESS UPDATE
+    if (!currentSearch) return;
+
+    if (currentSearch->totalCatalogs > 0) {
+        // Multiple catalogs
+        if (!ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
+            builder.setDeviceContext(
+                currentSearch->currentCatalogIndex,
+                currentSearch->totalCatalogs,
+                currentSearch->currentCatalogName
+                );
         }
 
-        // Calculate percentage if we have an estimate
-        if (currentSearch->estimatedTotalFiles > 0) {
-            int percentComplete = qMin(100,
-                                       static_cast<int>((filesProcessed * 100) / currentSearch->estimatedTotalFiles));
-            statusMessage += tr(" (%1%)").arg(percentComplete);
-        }
+        builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+        builder.setProcess(tr("Processed"), filesProcessed, currentSearch->estimatedTotalFiles);
+    } else {
+        // Single catalog or no catalog info
+        builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+        builder.setProcess(tr("Processed"), filesProcessed, currentSearch->estimatedTotalFiles);
     }
 
-    // Show status message with 5 second timeout
     statusBar()->show();
-    statusBar()->showMessage(statusMessage, 5000);
+    statusBar()->showMessage(builder.build(), 5000);
     statusBarTimer->start(5000);
-
-    // Process events to keep UI responsive
     QCoreApplication::processEvents();
 }
+
 //----------------------------------------------------------------------
 void MainWindow::reportSearchStatistics()
 {

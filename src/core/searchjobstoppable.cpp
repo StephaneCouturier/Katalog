@@ -428,21 +428,21 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             needsMigration = (filesToMigrate > 0);
 
             if (needsMigration) {
-                qDebug() << "Migration needed for" << filesToMigrate << "files";
+                qDebug() << "File type update needed for" << filesToMigrate << "files";
 
-                // Set operation context for migration
-                currentOperationVerb = "Converting";
-                currentOperationUnit = "files converted";
-                showSearchStatistics = false;  // Don't show "Files found/processed" during migration
+                // Set operation context for file type update
+                currentOperationVerb = tr("Update file types");  // NEW - translated
+                currentOperationUnit = tr("files updated");       // NEW - translated
+                showSearchStatistics = false;
 
-                // Reset counters for migration progress
+                // Reset counters for file type update progress
                 currentCatalogFilesLoaded = 0;
                 currentCatalogTotalFiles = filesToMigrate;
 
                 // Emit start signal
-                emit searchProgress(-2); // Catalog loading started
+                emit searchProgress(-2);
 
-                // Create Stop flag for migration
+                // Create Stop flag
                 bool localStopRequested = false;
                 QMutex dummyMutex;
 
@@ -450,9 +450,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 QMetaObject::Connection progressConnection = connect(
                     device->catalog, &Catalog::loadProgress,
                     this, [this, &localStopRequested, &progressConnection](int filesLoaded, int totalFiles) {
-                        // Stop check
                         if (!shouldContinue()) {
-                            qDebug() << "Stop detected in migration callback";
+                            qDebug() << "Stop detected in file type update callback";
                             QObject::disconnect(progressConnection);
                             localStopRequested = true;
                             return;
@@ -465,35 +464,25 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                     },
                     Qt::DirectConnection);
 
-                // Perform migration
+                // Perform file type update
                 device->catalog->populateFileTypes(dummyMutex, localStopRequested);
 
-                // Disconnect
                 disconnect(progressConnection);
 
                 // Restore normal operation context
-                currentOperationVerb = "Loading";
-                currentOperationUnit = "files loaded";
+                currentOperationVerb = tr("Loading");
+                currentOperationUnit = tr("files loaded");
                 showSearchStatistics = true;
 
                 // Check if stopped
-                if (localStopRequested || !shouldContinue()) {
-                    qDebug() << "Migration was stopped";
+                if (!shouldContinue() || localStopRequested) {
+                    qDebug() << "Stop requested during file type update";
                     return;
                 }
 
-                // Emit finished signal
                 emit searchProgress(-3);
-
-                qDebug() << "Migration completed";
-
-                if (!device->catalog->hasFilesNeedingMigration() && device->catalog->appVersion < "2.8") {
-                    device->catalog->appVersion = "2.8";
-                    device->catalog->saveCatalog();
-                    qDebug() << "✓ Catalog fully migrated to v2.8 via search";
-                }
-            }
-             else {
+                qDebug() << "File type update complete for" << device->name;
+            } else {
                 qDebug() << "No migration needed - all files already have metadata";
             }
         }

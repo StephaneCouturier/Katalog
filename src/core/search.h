@@ -190,8 +190,8 @@ public:
     int totalCatalogs;
     QString currentCatalogName;
     // Operation context for progress display
-    QString currentOperationVerb = "Loading";        // "Loading", "Converting", "Updating"
-    QString currentOperationUnit = "files loaded";   // "files loaded", "files converted", "files updated"
+    QString currentOperationVerb = "Loading";        // "Loading", "Update file types", "Processing"
+    QString currentOperationUnit = "files loaded";   // "files loaded", "files updated", "files processed"
     bool showSearchStatistics = true;                // Show "Files found: X | Files processed: Y"
 
     // Core search functionality

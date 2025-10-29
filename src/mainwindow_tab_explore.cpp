@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
+#include "core/statusbarmessagebuilder.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -496,85 +497,56 @@
 
                 if (checkQuery.exec() && checkQuery.next()) {
                     filesToMigrate = checkQuery.value(0).toInt();
+                    qDebug()<< "==Files needing migration:" << filesToMigrate;
                     needsMigration = (filesToMigrate > 0);
+                    qDebug()<< "==Files needing migration:" << needsMigration;
                 }
 
-                if (needsMigration) {
-                    qDebug() << "Migration needed for" << filesToMigrate << "files";
+                if (needsMigration && filesToMigrate > 0) {
+                    qDebug() << "File type update needed for" << filesToMigrate << "files";
 
-                    // Set up temporary search-like context for message generation
-                    int tempCatalogIndex = 1;
-                    int tempTotalCatalogs = 1;
-                    QString tempCatalogName = exploreDevice->name;
-                    int tempFilesLoaded = 0;
-                    int tempTotalFiles = filesToMigrate;
+                    StatusBarMessageBuilder builder;
+                    builder.setOperation(tr("EXPLORE"));
+                    builder.setDeviceContext(1, 1, exploreDevice->name);
 
                     // Show initial message
                     statusBar()->show();
-                    QString statusMessage = tr("Converting Catalog %1 of %2 (%3) | %4 files converted (%5%)")
-                                                .arg(tempCatalogIndex)
-                                                .arg(tempTotalCatalogs)
-                                                .arg(tempCatalogName)
-                                                .arg(QLocale().toString(0))
-                                                .arg(QString::number(0.0, 'f', 1));
-                    statusBar()->showMessage(statusMessage);
+                    statusBar()->showMessage(builder.build());
                     QCoreApplication::processEvents();
 
-                    // Create Local Stop flag
                     bool localStopRequested = false;
                     QMutex dummyMutex;
 
+                    QString deviceName = exploreDevice->name;
                     // Connect to migration progress
                     QMetaObject::Connection progressConnection = connect(
                         exploreDevice->catalog, &Catalog::loadProgress,
-                        this, [this, &tempFilesLoaded, &tempTotalFiles, &tempCatalogIndex,
-                         &tempTotalCatalogs, &tempCatalogName](int filesLoaded, int totalFiles) {
+                        this, [this, deviceName](int filesLoaded, int totalFiles) {
 
-                            tempFilesLoaded = filesLoaded;
-                            tempTotalFiles = totalFiles;
+                            StatusBarMessageBuilder builder;
+                            builder.setOperation(tr("EXPLORE"))
+                                .setDeviceContext(1, 1, deviceName)
+                                .setProcess(tr("Update file types"), filesLoaded, totalFiles);
 
-                            double percentLoaded = 0;
-                            if (totalFiles > 0) {
-                                percentLoaded = (double)filesLoaded / totalFiles * 100.0;
-                            }
-
-                            // Reuse same message format as Search
-                            QString statusMessage = tr("Converting Catalog %1 of %2 (%3) | %4 files converted (%5%)")
-                                                        .arg(tempCatalogIndex)
-                                                        .arg(tempTotalCatalogs)
-                                                        .arg(tempCatalogName)
-                                                        .arg(QLocale().toString(filesLoaded))
-                                                        .arg(QString::number(percentLoaded, 'f', 1));
-
-                            statusBar()->show();
-                            statusBar()->showMessage(statusMessage);
+                            statusBar()->showMessage(builder.build());
                             QCoreApplication::processEvents();
                         },
                         Qt::DirectConnection);
 
-                    // Perform migration
-                    exploreDevice->catalog->populateFileTypes(dummyMutex, localStopRequested);
 
-                    // Disconnect
+                    // Perform file type update
+                    exploreDevice->catalog->populateFileTypes(dummyMutex, localStopRequested);
                     disconnect(progressConnection);
 
-                    // Check if stopped
                     if (localStopRequested) {
-                        qDebug() << "Migration was stopped";
-                        statusBar()->showMessage(tr("Migration cancelled"), 2000);
-                    } else {
-                        qDebug() << "Migration completed";
-
-                        // Check if migration is complete and update version
-                        if (!exploreDevice->catalog->hasFilesNeedingMigration() &&
-                            exploreDevice->catalog->appVersion < "2.8") {
-                            exploreDevice->catalog->appVersion = "2.8";
-                            exploreDevice->catalog->saveCatalog();
-                            qDebug() << "✓ Catalog fully migrated to v2.8 via explore";
-                        }
-
-                        statusBar()->showMessage(tr("Catalog ready"), 2000);
+                        statusBar()->showMessage(tr("File type update cancelled"), 2000);
+                        return;
                     }
+
+                    statusBar()->showMessage(tr("Catalog ready"), 2000);
+                    QTimer::singleShot(2000, this, [this]() { statusBar()->hide(); });
+                } else {
+                    qDebug() << "No file type update needed - catalog already up to date";
                 }
             }
 

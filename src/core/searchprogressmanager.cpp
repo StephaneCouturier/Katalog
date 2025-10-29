@@ -33,6 +33,7 @@
 #include "searchmanager.h"
 #include "search.h"
 #include "searchjobstoppable.h"
+#include "statusbarmessagebuilder.h"
 
 void SearchProgressManager::connectToSearchManager(SearchManager *searchManager)
 {
@@ -61,8 +62,6 @@ void SearchProgressManager::updateFromSearchManager()
 {
     if (!m_searchManager || !m_statusBar) return;
 
-    QString message;
-
     if (m_searchManager->searchRunning()) {
         SearchJobStoppable* searchJobStoppable = nullptr;
         if (m_currentSearch) {
@@ -72,133 +71,92 @@ void SearchProgressManager::updateFromSearchManager()
         // Handle paused state
         if (searchJobStoppable && searchJobStoppable->isPaused()) {
             QString currentMessage = m_statusBar->currentMessage();
-
-            // Remove any existing pause indicators first, then add the correct one
             QString cleanMessage = currentMessage;
             cleanMessage.remove(tr(" | SEARCH PAUSED"));
             cleanMessage.remove(tr(" | CATALOG LOADING PAUSED"));
 
-            // Check if we're in catalog loading mode for specific pause message
             bool isLoadingCatalog = searchJobStoppable->memoryModeEnabled &&
                                     searchJobStoppable->currentCatalogFilesLoaded > 0 &&
                                     searchJobStoppable->currentCatalogFilesLoaded < searchJobStoppable->currentCatalogTotalFiles;
 
-            if (isLoadingCatalog) {
-                message = cleanMessage + tr(" | CATALOG LOADING PAUSED");
-            } else {
-                message = cleanMessage + tr(" | SEARCH PAUSED");
-            }
+            QString pauseIndicator = isLoadingCatalog ?
+                                         tr(" | CATALOG LOADING PAUSED") : tr(" | SEARCH PAUSED");
 
-            // Update status bar with NO timeout during search
-            m_statusBar->showMessage(message);
-
-            // Stop any existing timer during search
-            if (m_statusBarTimer) {
-                m_statusBarTimer->stop();
-            }
-
-            return; // Don't rebuild the message
+            m_statusBar->showMessage(cleanMessage + pauseIndicator);
+            m_statusBarTimer->stop();
+            return;
         }
 
-        // For SearchJobStoppable, let MainWindow::updateSearchProgress handle regular search progress
+        // For SearchJobStoppable, let MainWindow::updateSearchProgress handle it
         if (searchJobStoppable) {
-            // Only handle special cases for SearchJobStoppable, not regular progress
-            // MainWindow::updateSearchProgress will handle regular search progress with detailed info
-            return; // Don't compete with MainWindow progress reporting
+            return;
         }
 
-        // Regular message building for SearchMemory and other cases
+        // BUILD MESSAGE USING StatusBarMessageBuilder
+        StatusBarMessageBuilder builder;
+        builder.setOperation(tr("SEARCH"));
+
+        // Handle different search contexts
         if (m_currentSearch && m_currentSearch->searchInConnectedChecked) {
-            message = tr("Searching in directory %1").arg(m_currentSearch->connectedDirectory);
+            // Searching in directory - no device context
+            builder.setProcess(tr("Searching in directory"), 0, 0);
         }
         else if (m_currentSearch && m_currentSearch->searchInCatalogsChecked) {
-            // Handle catalog search display
+            // Searching in catalogs
             if (m_currentSearch->totalCatalogs > 0) {
-                // Start with catalog name
                 if (!m_searchManager->currentCatalogName().isEmpty()) {
-                    message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
-                } else {
-                    message = tr("Searching in catalog");
-                }
-
-                // Add catalog position if multiple catalogs
-                if (m_currentSearch->totalCatalogs > 1) {
-                    message += tr(" | Catalog %1 of %2")
-                    .arg(m_currentSearch->currentCatalogIndex)
-                        .arg(m_currentSearch->totalCatalogs);
-                }
-            } else {
-                // Single catalog or no catalog info
-                if (!m_searchManager->currentCatalogName().isEmpty()) {
-                    message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
-                } else {
-                    message = tr("Searching");
+                    builder.setDeviceContext(
+                        m_currentSearch->currentCatalogIndex,
+                        m_currentSearch->totalCatalogs,
+                        m_searchManager->currentCatalogName()
+                        );
                 }
             }
         }
-        else {
-            message = tr("Searching");
-        }
 
-        // Add total files/folders found
+        // Add files/folders found
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            if (m_currentSearch->showFoldersOnly) {
-                message += tr(" | Total folders found: %1")
-                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
-            } else {
-                message += tr(" | Total files found: %1")
-                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
-            }
-        } else {
-            if (m_currentSearch && m_currentSearch->showFoldersOnly) {
-                message += tr(" | Total folders found: 0");
-            } else {
-                message += tr(" | Total files found: 0");
-            }
+            QString resultTitle = m_currentSearch->showFoldersOnly ?
+                                      tr("Folders found") : tr("Files found");
+            builder.setResult(resultTitle, m_currentSearch->fileNames.size());
         }
 
-        // Add total files processed with percentage
-        int actualFilesProcessed = m_currentSearch ? m_currentSearch->totalFilesProcessed : 0;
+        // Add files processed with percentage
+        int actualFilesProcessed = m_currentSearch ?
+                                       m_currentSearch->totalFilesProcessed : 0;
+
         if (actualFilesProcessed > 0) {
-            message += tr(" | Total files processed: %1")
-            .arg(QLocale().toString(actualFilesProcessed));
-
             if (m_searchManager->progress() > 0) {
-                message += tr(" (%1%)").arg(m_searchManager->progress());
+                builder.setProcess(tr("Processed"),
+                                   actualFilesProcessed,
+                                   100 * actualFilesProcessed / m_searchManager->progress());
             }
         }
 
-        // Show status bar without timeout during search
         m_statusBar->show();
-        m_statusBar->showMessage(message);
-
-        // Stop any existing timer during search
-        if (m_statusBarTimer) {
-            m_statusBarTimer->stop();
-        }
+        m_statusBar->showMessage(builder.build());
+        m_statusBarTimer->stop();
 
     } else {
-        // Search completed or ready - existing code unchanged
+        // Search completed or ready
+        StatusBarMessageBuilder builder;
+
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            if (m_currentSearch->showFoldersOnly) {
-                message = tr("Search completed | Total folders found: %1")
-                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
-            } else {
-                message = tr("Search completed | Total files found: %1")
-                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
-            }
+            QString resultTitle = m_currentSearch->showFoldersOnly ?
+                                      tr("Folders found") : tr("Files found");
+
+            builder.setOperation(tr("Search completed"))
+                .setResult(resultTitle, m_currentSearch->fileNames.size());
         } else {
-            message = m_searchManager->status();
-        }
-
-        // Show completion message
-        m_statusBar->show();
-        m_statusBar->showMessage(message);
-
-        // Start timer ONLY when search is complete
-        if (m_statusBarTimer) {
+            // Just show "Ready"
+            m_statusBar->showMessage(tr("Ready"));
             m_statusBarTimer->start(5000);
+            return;
         }
+
+        m_statusBar->show();
+        m_statusBar->showMessage(builder.build());
+        m_statusBarTimer->start(5000);
     }
 }
 

@@ -31,6 +31,7 @@
 */
 
 #include "catalogprogressmanager.h"
+#include "core/statusbarmessagebuilder.h"
 #include <QStatusBar>
 #include <QLocale>
 #include <QDebug>
@@ -91,92 +92,74 @@ void CatalogProgressManager::updateFromCatalogManager()
 {
     if (!m_catalogManager || !m_statusBar) return;
 
-    QString message;
-
     if (m_catalogManager->catalogOperationRunning()) {
-        // Operation is running, show progress
+        StatusBarMessageBuilder builder;
+        builder.setOperation(QApplication::translate("MainWindow", "UPDATE"));
 
-        // COUNTING FILES - Show dynamic counting
+        // COUNTING FILES state
         if (m_catalogManager->totalFiles() == 0 &&
             !m_catalogManager->currentPath().isEmpty() &&
             m_catalogManager->currentPath().startsWith("__COUNTING_STATE__|")) {
 
-            // Extract file count from the marker and create translated message
             QString pathData = m_catalogManager->currentPath();
             QStringList parts = pathData.split("|");
             if (parts.size() >= 2) {
-                QString fileCount = parts[1];
-                // FORMAT: "Counting... X files found" - NOW PROPERLY TRANSLATABLE
-                message = QApplication::translate("MainWindow", "Counting files") + ": "+ fileCount + " "+ QApplication::translate("MainWindow", "Files found");
-            } else {
-                // Fallback
-                message = QApplication::translate("MainWindow", "Counting files");
+                int fileCount = parts[1].toInt();
+                builder.setProcess(QApplication::translate("MainWindow", "Counting files"), fileCount);
             }
 
         } else if (m_catalogManager->totalFiles() > 0) {
-
-            // PROCESSING FILES - Show detailed progress
-            message = QString("%1: %2 | %3: %4 | %5: %6%")
-                          .arg(QApplication::translate("MainWindow", "Files processed"),
-                               QLocale().toString(m_catalogManager->filesProcessed()),
-                               QApplication::translate("MainWindow", "Total files"),
-                               QLocale().toString(m_catalogManager->totalFiles()),
-                               QApplication::translate("MainWindow", "Progress"))
-                          .arg(m_catalogManager->progress());
+            // PROCESSING FILES state
+            builder.setProcess(
+                QApplication::translate("MainWindow", "Processed"),
+                m_catalogManager->filesProcessed(),
+                m_catalogManager->totalFiles()
+                );
 
             // Add current file path
             if (!m_catalogManager->currentPath().isEmpty() &&
                 !m_catalogManager->currentPath().contains("__COUNTING_STATE__|")) {
-                QString displayPath = m_catalogManager->currentPath();
-                message += QString(" | %1").arg(displayPath);
+                builder.setCurrentItem(m_catalogManager->currentPath());
             }
-
-        } else {
-            // Fallback
-            message = m_catalogManager->status();
         }
 
         // Add catalog name prefix
         if (!m_catalogManager->currentCatalogName().isEmpty()) {
-            message = QString(QApplication::translate("MainWindow","Catalog")+": %1 | %2")
-            .arg(m_catalogManager->currentCatalogName(), message);
+            // For single catalog, show name without "1 of 1"
+            builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
         }
 
         m_statusBar->show();
-        m_statusBar->showMessage(message);
+        m_statusBar->showMessage(builder.build());
 
         if (m_statusBarTimer) {
             m_statusBarTimer->stop();
         }
 
     } else {
-        // OPERATION NOT RUNNING - Show final status
+        // OPERATION NOT RUNNING
         QString status = m_catalogManager->status();
 
         if (status.contains("stopped", Qt::CaseInsensitive) ||
             status.contains("cancelled", Qt::CaseInsensitive)) {
-            message = QApplication::translate("MainWindow", "Operation cancelled");
+            m_statusBar->showMessage(QApplication::translate("MainWindow", "Operation cancelled"));
         }
         else if (status.contains("completed successfully", Qt::CaseInsensitive)) {
-            message = status;
+            QString message = status;
             if (m_catalogManager->filesProcessed() > 0) {
                 message += QString(" | %1 files processed")
                 .arg(QLocale().toString(m_catalogManager->filesProcessed()));
             }
+            m_statusBar->showMessage(message);
         }
         else {
-            message = status;
+            m_statusBar->showMessage(status);
         }
-
-        m_statusBar->show();
-        m_statusBar->showMessage(message);
 
         if (m_statusBarTimer) {
             m_statusBarTimer->start(5000);
         }
     }
-
-    qDebug() << "CatalogProgressManager updated status bar:" << message;
 }
 
 void CatalogProgressManager::showMessage(const QString &message, int timeout)
