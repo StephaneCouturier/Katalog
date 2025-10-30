@@ -437,9 +437,7 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
         SELECT COUNT(*)
         FROM file
         WHERE file_catalog_id = :catalog_id
-        AND (mime_type IS NULL OR mime_type = ''
-             OR file_type IS NULL OR file_type = ''
-             OR file_extension IS NULL OR file_extension = '')
+        AND (file_type IS NULL OR mime_type IS NULL)
     )");
     checkQuery.bindValue(":catalog_id", catalogId);
 
@@ -465,9 +463,7 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
         SELECT file_name
         FROM file
         WHERE file_catalog_id = :catalog_id
-        AND (mime_type IS NULL OR mime_type = ''
-             OR file_type IS NULL OR file_type = ''
-             OR file_extension IS NULL OR file_extension = '')
+        AND (file_type IS NULL OR mime_type IS NULL)
     )");
     filesQuery.bindValue(":catalog_id", catalogId);
 
@@ -542,9 +538,7 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
                 file_type = :file_type,
                 mime_type = :mime_type
             WHERE file_catalog_id = :catalog_id
-            AND (mime_type IS NULL OR mime_type = ''
-                 OR file_type IS NULL OR file_type = ''
-                 OR file_extension IS NULL OR file_extension = '')
+            AND (file_type IS NULL OR mime_type IS NULL)
             AND LOWER(file_name) LIKE LOWER(:like_pattern)
         )");
 
@@ -589,9 +583,7 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
                 mime_type = 'application/octet-stream'
             WHERE file_catalog_id = :catalog_id
             AND file_name NOT LIKE '%.%'
-            AND (mime_type IS NULL OR mime_type = ''
-                 OR file_type IS NULL OR file_type = ''
-                 OR file_extension IS NULL OR file_extension = '')
+            AND (file_type IS NULL OR mime_type IS NULL)
         )");
         updateExtensionlessQuery.bindValue(":catalog_id", catalogId);
 
