@@ -131,7 +131,6 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
     });
 
     setCatalogOperationRunning(true);
-    setStatus(QApplication::translate("MainWindow","Operation started"));
     setProgress(0);
     setFilesProcessed(0);
     setTotalFiles(0);

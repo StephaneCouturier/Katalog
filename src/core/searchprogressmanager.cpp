@@ -34,6 +34,7 @@
 #include "search.h"
 #include "searchjobstoppable.h"
 #include "statusbarmessagebuilder.h"
+#include <QApplication>
 
 void SearchProgressManager::connectToSearchManager(SearchManager *searchManager)
 {
@@ -72,14 +73,16 @@ void SearchProgressManager::updateFromSearchManager()
         if (searchJobStoppable && searchJobStoppable->isPaused()) {
             // Rebuild message with paused status
             StatusBarMessageBuilder builder;
-            builder.setOperation(tr("Search"));
+            builder.setOperation(QApplication::translate("MainWindow","Search"));
+            builder.setStatus(QApplication::translate("MainWindow","Running"));
 
-            // Determine pause type
+            // Determine pause type, Checking if catalog loading mode (loading not yet complete)
             bool isLoadingCatalog = searchJobStoppable->memoryModeEnabled &&
                                     searchJobStoppable->currentCatalogFilesLoaded > 0 &&
+                                    searchJobStoppable->currentCatalogTotalFiles > 0 &&
                                     searchJobStoppable->currentCatalogFilesLoaded < searchJobStoppable->currentCatalogTotalFiles;
 
-            builder.setStatus(tr("Paused"));
+            builder.setStatus(QApplication::translate("MainWindow","Paused"));
 
             // Add device context if multiple catalogs
             if (m_currentSearch && m_currentSearch->totalCatalogs > 1) {
@@ -95,7 +98,7 @@ void SearchProgressManager::updateFromSearchManager()
             // Add files found if available
             if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
                 QString resultTitle = m_currentSearch->showFoldersOnly ?
-                                          tr("Folders found") : tr("Files found");
+                                          QApplication::translate("MainWindow","Folders found") : QApplication::translate("MainWindow","Files found");
                 builder.setResult(resultTitle, m_currentSearch->fileNames.size());
             }
 
@@ -114,7 +117,7 @@ void SearchProgressManager::updateFromSearchManager()
                 int actualFilesProcessed = m_currentSearch ?
                                                m_currentSearch->totalFilesProcessed : 0;
                 if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
-                    builder.setProcess(tr("Processed"),
+                    builder.setProcess(QApplication::translate("MainWindow","Processed"),
                                        actualFilesProcessed,
                                        100 * actualFilesProcessed / m_searchManager->progress());
                 }
@@ -135,12 +138,15 @@ void SearchProgressManager::updateFromSearchManager()
 
         // BUILD MESSAGE USING StatusBarMessageBuilder
         StatusBarMessageBuilder builder;
-        builder.setOperation(tr("Search"));
+        builder.setOperation(QApplication::translate("MainWindow","Search"));
 
         // Handle different search contexts
         if (m_currentSearch && m_currentSearch->searchInConnectedChecked) {
-            // Searching in directory - no device context
-            builder.setProcess(tr("Searching in directory"), 0, 0);
+            // Searching in directory - no device context, show processed count
+            int actualFilesProcessed = m_currentSearch->totalFilesProcessed;
+            if (actualFilesProcessed > 0) {
+                builder.setProcess(tr("Processed"), actualFilesProcessed, 0);  // No total for directory
+            }
         }
         else if (m_currentSearch && m_currentSearch->searchInCatalogsChecked) {
             // Searching in catalogs
@@ -153,6 +159,14 @@ void SearchProgressManager::updateFromSearchManager()
                         );
                 }
             }
+
+            // Add files processed with percentage for catalogs
+            int actualFilesProcessed = m_currentSearch->totalFilesProcessed;
+            if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
+                builder.setProcess(tr("Processed"),
+                                   actualFilesProcessed,
+                                   100 * actualFilesProcessed / m_searchManager->progress());
+            }
         }
 
         // Add files/folders found
@@ -160,18 +174,6 @@ void SearchProgressManager::updateFromSearchManager()
             QString resultTitle = m_currentSearch->showFoldersOnly ?
                                       tr("Folders found") : tr("Files found");
             builder.setResult(resultTitle, m_currentSearch->fileNames.size());
-        }
-
-        // Add files processed with percentage
-        int actualFilesProcessed = m_currentSearch ?
-                                       m_currentSearch->totalFilesProcessed : 0;
-
-        if (actualFilesProcessed > 0) {
-            if (m_searchManager->progress() > 0) {
-                builder.setProcess(tr("Processed"),
-                                   actualFilesProcessed,
-                                   100 * actualFilesProcessed / m_searchManager->progress());
-            }
         }
 
         m_statusBar->show();
@@ -184,14 +186,14 @@ void SearchProgressManager::updateFromSearchManager()
 
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
             QString resultTitle = m_currentSearch->showFoldersOnly ?
-                                      tr("Folders found") : tr("Files found");
+                                      QApplication::translate("MainWindow","Folders found") : QApplication::translate("MainWindow","Files found");
 
-            builder.setOperation(tr("Search"))
-                .setStatus(tr("Completed"))
+            builder.setOperation(QApplication::translate("MainWindow","Search"))
+                .setStatus(QApplication::translate("MainWindow","Completed"))
                 .setResult(resultTitle, m_currentSearch->fileNames.size());
         } else {
             // Just show "Ready"
-            m_statusBarLabel->setText(tr("Ready"));
+            m_statusBarLabel->setText(QApplication::translate("MainWindow","Ready"));
             m_statusBarTimer->start(5000);
             return;
         }

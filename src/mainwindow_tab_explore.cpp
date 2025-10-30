@@ -506,7 +506,7 @@
                     qDebug() << "File type update needed for" << filesToMigrate << "files";
 
                     StatusBarMessageBuilder builder;
-                    builder.setOperation(tr("EXPLORE"));
+                    builder.setOperation(tr("Explore"));
                     builder.setDeviceContext(1, 1, exploreDevice->name);
 
                     // Show initial message
@@ -524,7 +524,7 @@
                         this, [this, deviceName](int filesLoaded, int totalFiles) {
 
                             StatusBarMessageBuilder builder;
-                            builder.setOperation(tr("EXPLORE"))
+                            builder.setOperation(tr("Explore"))
                                 .setDeviceContext(1, 1, deviceName)
                                 .setProcess(tr("Update file types"), filesLoaded, totalFiles);
 
@@ -532,7 +532,6 @@
                             QCoreApplication::processEvents();
                         },
                         Qt::DirectConnection);
-
 
                     // Perform file type update
                     exploreDevice->catalog->populateFileTypes(dummyMutex, localStopRequested);
@@ -542,15 +541,10 @@
                         statusBarLabel->setText(tr("File type update cancelled"));
                         return;
                     }
-
-                    statusBarLabel->setText(tr("Catalog ready"));
-                    QTimer::singleShot(2000, this, [this]() { statusBar()->hide(); });
                 } else {
                     qDebug() << "No file type update needed - catalog already up to date";
                 }
             }
-
-            loadSelectedDirectoryFilesToExplore();
 
             loadSelectedDirectoryFilesToExplore();
 

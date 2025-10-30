@@ -1027,7 +1027,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     }
 
     StatusBarMessageBuilder builder;
-    builder.setOperation(tr("SEARCH"));
+    builder.setOperation(tr("Search"));
 
     // SPECIAL CASE: Search interrupted (-1)
     if (filesProcessed == -1) {
@@ -1089,12 +1089,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     if (filesProcessed == -4) {
         SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
         if (!searchJobStoppable) return;
-
-        // double percentLoaded = 0;
-        // if (searchJobStoppable->currentCatalogTotalFiles > 0) {
-        //     percentLoaded = (double)searchJobStoppable->currentCatalogFilesLoaded /
-        //                     searchJobStoppable->currentCatalogTotalFiles * 100.0;
-        // }
+        builder.setStatus(tr("Running"));
 
         // Build device context
         if (currentSearch->totalCatalogs > 0) {
@@ -1152,6 +1147,8 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     // REGULAR PROGRESS UPDATE
     if (!currentSearch) return;
 
+    builder.setStatus(tr("Running"));
+
     if (currentSearch->totalCatalogs > 0) {
         // Multiple catalogs
         if (!ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
@@ -1168,6 +1165,12 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         // Single catalog or no catalog info
         builder.setResult(tr("Files found"), currentSearch->fileNames.size());
         builder.setProcess(tr("Processed"), filesProcessed, currentSearch->estimatedTotalFiles);
+    }
+
+    // Add current file path if available (for directory searches)
+    SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
+    if (searchJobStoppable && !searchJobStoppable->currentFilePath.isEmpty()) {
+        builder.setCurrentItem(searchJobStoppable->currentFilePath);
     }
 
     statusBar()->show();

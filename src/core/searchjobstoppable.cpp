@@ -38,6 +38,7 @@
 #include <QElapsedTimer>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QApplication>
 
 SearchJobStoppable::SearchJobStoppable(QObject *parent)
     : Search(parent)
@@ -431,8 +432,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 qDebug() << "File type update needed for" << filesToMigrate << "files";
 
                 // Set operation context for file type update
-                currentOperationVerb = tr("Update file types");  // NEW - translated
-                currentOperationUnit = tr("files updated");       // NEW - translated
+                currentOperationVerb = QApplication::translate("MainWindow","Update file types");  // NEW - translated
+                currentOperationUnit = QApplication::translate("MainWindow","files updated");       // NEW - translated
                 showSearchStatistics = false;
 
                 // Reset counters for file type update progress
@@ -470,8 +471,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 disconnect(progressConnection);
 
                 // Restore normal operation context
-                currentOperationVerb = tr("Loading");
-                currentOperationUnit = tr("files loaded");
+                currentOperationVerb = QApplication::translate("MainWindow","Loading");
+                currentOperationUnit = QApplication::translate("MainWindow","files loaded");
                 showSearchStatistics = true;
 
                 // Check if stopped
@@ -1029,9 +1030,10 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
             }
         }
 
-        // Progress reporting based on FILES PROCESSED (not found)
+        // Progress reporting based on FILES PROCESSED (not files found)
         if (batchProcessedCount >= progressRefreshRate) {
-            totalFilesProcessed += batchProcessedCount;  // This now represents files actually processed
+            totalFilesProcessed += batchProcessedCount;
+            currentFilePath = iterator.filePath();  // Store current file path
             emit searchProgress(totalFilesProcessed);
             batchProcessedCount = 0;
 

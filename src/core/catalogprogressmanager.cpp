@@ -94,7 +94,7 @@ void CatalogProgressManager::updateFromCatalogManager()
 
     if (m_catalogManager->catalogOperationRunning()) {
         StatusBarMessageBuilder builder;
-        builder.setOperation(QApplication::translate("MainWindow", "UPDATE"));
+        builder.setOperation(QApplication::translate("MainWindow", "Update"));
 
         // COUNTING FILES state
         if (m_catalogManager->totalFiles() == 0 &&

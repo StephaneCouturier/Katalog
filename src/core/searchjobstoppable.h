@@ -96,6 +96,7 @@ public:
     int currentCatalogTotalFiles = 0;
 
     bool memoryModeEnabled = false;
+    QString currentFilePath;
 
     /**
      * @brief Enable memory mode (loads CSV files during search)

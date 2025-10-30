@@ -231,9 +231,9 @@ QString StatusBarMessageBuilder::formatProcess() const
         // Show "X of Y (Z%)"
         double percent = calculatePercent();
         processText += QString("%1 of %2 (%3%)")
-                           .arg(QLocale().toString(m_processCurrentCount))
-                           .arg(QLocale().toString(m_processTotalCount))
-                           .arg(QString::number(percent, 'f', 1));
+                           .arg(QLocale().toString(m_processCurrentCount),
+                                QLocale().toString(m_processTotalCount),
+                                QString::number(percent, 'f', 0));
     } else {
         // Show only "X" (total unknown)
         processText += QLocale().toString(m_processCurrentCount);
