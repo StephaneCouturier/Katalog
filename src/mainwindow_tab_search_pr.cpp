@@ -1031,14 +1031,41 @@ void MainWindow::updateSearchProgress(int filesProcessed)
 
     // SPECIAL CASE: Search interrupted (-1)
     if (filesProcessed == -1) {
-        if (currentSearch) {
-            builder.setResult(tr("Files found"), currentSearch->fileNames.size());
-            builder.setProcess(tr("Processed"), currentSearch->totalFilesProcessed);
+        builder.setOperation(tr("Search"));
+        builder.setStatus(tr("Stopped"));
 
-            statusBarLabel->setText(tr("Search interrupted") + " | " + builder.build());
+        if (currentSearch) {
+            // Add device context if multiple catalogs
+            if (currentSearch->totalCatalogs > 1 && !currentSearch->currentCatalogName.isEmpty()) {
+                builder.setDeviceContext(
+                    currentSearch->currentCatalogIndex,
+                    currentSearch->totalCatalogs,
+                    currentSearch->currentCatalogName
+                    );
+            }
+
+            // Add progress information
+            if (currentSearch->totalFilesProcessed > 0 && currentSearch->estimatedTotalFiles > 0) {
+                builder.setProcess(tr("Processed"),
+                                   currentSearch->totalFilesProcessed,
+                                   currentSearch->estimatedTotalFiles);
+            }
+
+            // Add results
+            if (currentSearch->fileNames.size() > 0) {
+                builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+            }
+
+            if (statusBarLabel) {
+                statusBarLabel->setText(builder.build());
+            }
         } else {
-            statusBarLabel->setText(tr("Search interrupted. No results available."));
+            if (statusBarLabel) {
+                statusBarLabel->setText(builder.build());  // Just "SEARCH | Interrupted"
+            }
         }
+        statusBar()->show();
+        statusBarTimer->start(5000);
         return;
     }
 

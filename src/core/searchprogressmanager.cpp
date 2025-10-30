@@ -79,11 +79,7 @@ void SearchProgressManager::updateFromSearchManager()
                                     searchJobStoppable->currentCatalogFilesLoaded > 0 &&
                                     searchJobStoppable->currentCatalogFilesLoaded < searchJobStoppable->currentCatalogTotalFiles;
 
-            if (isLoadingCatalog) {
-                builder.setStatus(tr("Catalog loading paused"));
-            } else {
-                builder.setStatus(tr("Paused"));
-            }
+            builder.setStatus(tr("Paused"));
 
             // Add device context if multiple catalogs
             if (m_currentSearch && m_currentSearch->totalCatalogs > 1) {
@@ -103,13 +99,25 @@ void SearchProgressManager::updateFromSearchManager()
                 builder.setResult(resultTitle, m_currentSearch->fileNames.size());
             }
 
-            // Add files processed if available
-            int actualFilesProcessed = m_currentSearch ?
-                                           m_currentSearch->totalFilesProcessed : 0;
-            if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
-                builder.setProcess(tr("Processed"),
-                                   actualFilesProcessed,
-                                   100 * actualFilesProcessed / m_searchManager->progress());
+            // Check if we're in catalog loading mode
+            isLoadingCatalog = searchJobStoppable->memoryModeEnabled &&
+                                    searchJobStoppable->currentCatalogFilesLoaded > 0 &&
+                                    searchJobStoppable->currentCatalogTotalFiles > 0;
+
+            if (isLoadingCatalog) {
+                // Show catalog loading progress
+                builder.setProcess(searchJobStoppable->currentOperationVerb,  // "Loading" or similar
+                                   searchJobStoppable->currentCatalogFilesLoaded,
+                                   searchJobStoppable->currentCatalogTotalFiles);
+            } else {
+                // Show search processing progress
+                int actualFilesProcessed = m_currentSearch ?
+                                               m_currentSearch->totalFilesProcessed : 0;
+                if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
+                    builder.setProcess(tr("Processed"),
+                                       actualFilesProcessed,
+                                       100 * actualFilesProcessed / m_searchManager->progress());
+                }
             }
 
             if (m_statusBarLabel) {
