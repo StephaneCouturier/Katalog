@@ -49,6 +49,12 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::setOperation(const QString& op
     return *this;
 }
 
+StatusBarMessageBuilder& StatusBarMessageBuilder::setStatus(const QString& status)
+{
+    m_status = status;
+    return *this;
+}
+
 StatusBarMessageBuilder& StatusBarMessageBuilder::setDeviceContext(int currentIndex, int totalCount, const QString& catalogName)
 {
     m_deviceCurrentIndex = currentIndex;
@@ -81,6 +87,7 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::setCurrentItem(const QString& 
 StatusBarMessageBuilder& StatusBarMessageBuilder::reset()
 {
     m_operation.clear();
+    m_status.clear();
     m_deviceCurrentIndex = 0;
     m_deviceTotalCount = 0;
     m_catalogName.clear();
@@ -103,25 +110,30 @@ QString StatusBarMessageBuilder::build() const
         parts << operation;
     }
 
-    // Part 2: Device Context
+    // Part 2: Status
+    QString status = formatStatus();
+    if (!status.isEmpty()) {
+        parts << status;
+    }
+    // Part 3: Device Context
     QString deviceContext = formatDeviceContext();
     if (!deviceContext.isEmpty()) {
         parts << deviceContext;
     }
 
-    // Part 3: Process
+    // Part 4: Process
     QString process = formatProcess();
     if (!process.isEmpty()) {
         parts << process;
     }
 
-    // Part 4: Result
+    // Part 5: Result
     QString result = formatResult();
     if (!result.isEmpty()) {
         parts << result;
     }
 
-    // Part 5: Current Item
+    // Part 6: Current Item
     QString currentItem = formatCurrentItem();
     if (!currentItem.isEmpty()) {
         parts << currentItem;
@@ -150,6 +162,11 @@ QString StatusBarMessageBuilder::formatOperation() const
 
     QString opText = m_operation.toHtmlEscaped();
 
+    // Convert to uppercase if enabled
+    if (m_formatOptions.operationUppercase) {
+        opText = opText.toUpper();
+    }
+
     // Apply formatting
     if (m_formatOptions.operationBold && m_formatOptions.operationColor.isEmpty()) {
         // Bold only
@@ -165,6 +182,15 @@ QString StatusBarMessageBuilder::formatOperation() const
     }
 
     return opText;
+}
+
+QString StatusBarMessageBuilder::formatStatus() const
+{
+    if (m_status.isEmpty()) {
+        return QString();
+    }
+
+    return m_status.toHtmlEscaped();
 }
 
 QString StatusBarMessageBuilder::formatDeviceContext() const

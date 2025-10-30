@@ -69,6 +69,7 @@ public:
     struct FormatOptions {
         bool operationBold = true;           // Make operation text bold
         QString operationColor = "";         // Operation text color (empty = default)
+        bool operationUppercase = true;      // Auto-convert operation to uppercase
         QString catalogNameColor = "#39b2e5"; // Catalog name color (Katalog theme blue)
         bool resultsBold = true;             // Make result numbers bold
         QString processColor = "";           // Process text color (empty = default)
@@ -93,6 +94,15 @@ public:
      * @return Reference to this builder for chaining
      */
     StatusBarMessageBuilder& setOperation(const QString& operation);
+
+    /**
+     * @brief Set the status (e.g., "Completed", "Paused", "Running")
+     * @param status Status text (will be translated by caller)
+     * @return Reference to this builder for chaining
+     *
+     * Generates: "Status" as second part
+     */
+    StatusBarMessageBuilder& setStatus(const QString& status);
 
     /**
      * @brief Set device context for multi-device operations
@@ -160,6 +170,7 @@ public:
 private:
     // Message components
     QString m_operation;
+    QString m_status;
     int m_deviceCurrentIndex = 0;
     int m_deviceTotalCount = 0;
     QString m_catalogName;
@@ -175,6 +186,7 @@ private:
 
     // Helper methods
     QString formatOperation() const;
+    QString formatStatus() const;
     QString formatDeviceContext() const;
     QString formatProcess() const;
     QString formatResult() const;

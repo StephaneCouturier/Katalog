@@ -70,19 +70,52 @@ void SearchProgressManager::updateFromSearchManager()
 
         // Handle paused state
         if (searchJobStoppable && searchJobStoppable->isPaused()) {
-            QString currentMessage = m_statusBar->currentMessage();
-            QString cleanMessage = currentMessage;
-            cleanMessage.remove(tr(" | SEARCH PAUSED"));
-            cleanMessage.remove(tr(" | CATALOG LOADING PAUSED"));
+            // Rebuild message with paused status
+            StatusBarMessageBuilder builder;
+            builder.setOperation(tr("Search"));
 
+            // Determine pause type
             bool isLoadingCatalog = searchJobStoppable->memoryModeEnabled &&
                                     searchJobStoppable->currentCatalogFilesLoaded > 0 &&
                                     searchJobStoppable->currentCatalogFilesLoaded < searchJobStoppable->currentCatalogTotalFiles;
 
-            QString pauseIndicator = isLoadingCatalog ?
-                                         tr(" | CATALOG LOADING PAUSED") : tr(" | SEARCH PAUSED");
+            if (isLoadingCatalog) {
+                builder.setStatus(tr("Catalog loading paused"));
+            } else {
+                builder.setStatus(tr("Paused"));
+            }
 
-            m_statusBarLabel->setText(cleanMessage + pauseIndicator);
+            // Add device context if multiple catalogs
+            if (m_currentSearch && m_currentSearch->totalCatalogs > 1) {
+                if (!m_searchManager->currentCatalogName().isEmpty()) {
+                    builder.setDeviceContext(
+                        m_currentSearch->currentCatalogIndex,
+                        m_currentSearch->totalCatalogs,
+                        m_searchManager->currentCatalogName()
+                        );
+                }
+            }
+
+            // Add files found if available
+            if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
+                QString resultTitle = m_currentSearch->showFoldersOnly ?
+                                          tr("Folders found") : tr("Files found");
+                builder.setResult(resultTitle, m_currentSearch->fileNames.size());
+            }
+
+            // Add files processed if available
+            int actualFilesProcessed = m_currentSearch ?
+                                           m_currentSearch->totalFilesProcessed : 0;
+            if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
+                builder.setProcess(tr("Processed"),
+                                   actualFilesProcessed,
+                                   100 * actualFilesProcessed / m_searchManager->progress());
+            }
+
+            if (m_statusBarLabel) {
+                m_statusBarLabel->setText(builder.build());
+            }
+            m_statusBar->show();
             m_statusBarTimer->stop();
             return;
         }
@@ -94,7 +127,7 @@ void SearchProgressManager::updateFromSearchManager()
 
         // BUILD MESSAGE USING StatusBarMessageBuilder
         StatusBarMessageBuilder builder;
-        builder.setOperation(tr("SEARCH"));
+        builder.setOperation(tr("Search"));
 
         // Handle different search contexts
         if (m_currentSearch && m_currentSearch->searchInConnectedChecked) {
@@ -145,7 +178,8 @@ void SearchProgressManager::updateFromSearchManager()
             QString resultTitle = m_currentSearch->showFoldersOnly ?
                                       tr("Folders found") : tr("Files found");
 
-            builder.setOperation(tr("Search completed"))
+            builder.setOperation(tr("Search"))
+                .setStatus(tr("Completed"))
                 .setResult(resultTitle, m_currentSearch->fileNames.size());
         } else {
             // Just show "Ready"
