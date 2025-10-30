@@ -153,7 +153,7 @@ QString StatusBarMessageBuilder::formatOperation() const
     // Apply formatting
     if (m_formatOptions.operationBold && m_formatOptions.operationColor.isEmpty()) {
         // Bold only
-        return QString("<b>%1</b>").arg(opText);
+        return QString("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>%1</b>").arg(opText);
     }
     else if (!m_formatOptions.operationColor.isEmpty()) {
         // Color with optional bold
@@ -183,7 +183,7 @@ QString StatusBarMessageBuilder::formatDeviceContext() const
 
         if (!m_formatOptions.catalogNameColor.isEmpty()) {
             // Apply catalog name color
-            deviceText += QString(" (<span style='color:%1;'>%2</span>)")
+            deviceText += " | "+ QString("<span style='color:%1;'>%2</span>")
                               .arg(m_formatOptions.catalogNameColor, safeName);
         } else {
             deviceText += QString(" (%1)").arg(safeName);
