@@ -222,6 +222,14 @@ CatalogJobStoppable* CatalogManager::getCurrentCatalogEngine() const
     return nullptr;
 }
 
+CatalogJobStoppable::OperationType CatalogManager::currentOperationType() const
+{
+    if (m_currentJob) {
+        return m_currentJob->getOperationType();
+    }
+    return CatalogJobStoppable::UpdateCatalog;  // Default
+}
+
 void CatalogManager::requestGentleStop()
 {
     qDebug() << "CatalogManager::requestGentleStop() - Gentle stop requested";
@@ -235,19 +243,17 @@ void CatalogManager::onJobResult(KJob *job)
     qDebug() << "=== DIAGNOSTIC: Job error code:" << job->error();
     qDebug() << "=== DIAGNOSTIC: KilledJobError constant:" << KJob::KilledJobError;
 
+    // Clean up and reset state
+    setCatalogOperationRunning(false);
+
     try {
         if (job->error() == KJob::KilledJobError) {
-            setStatus("Catalog operation cancelled");
             emit catalogOperationCancelled();
         } else if (job->error()) {
             QString errorMsg = QString("Catalog operation failed: %1").arg(job->errorString());
-            setStatus(errorMsg);
             emit catalogOperationError(errorMsg);
         } else {
             // Success, emit signals before any cleanup
-            QString operationType = (m_currentJob && m_currentJob->getOperationType() == CatalogJobStoppable::CreateCatalog) ?
-                                        "creation" : "update";
-            setStatus(QString("Catalog %1 completed successfully!").arg(operationType));
 
             // Emit individual report here (before cleanup, while job is still valid)
             if (m_inBatchMode) {
@@ -255,7 +261,6 @@ void CatalogManager::onJobResult(KJob *job)
                 if (catalogEngine) {
                     QList<qint64> results = catalogEngine->getResults();
                     if (results.size() >= 5 && results[0] == 1) {
-                        // Get current device BEFORE any index changes
                         m_updatedCatalogs++;
                     } else {
                         m_skippedCatalogs++;
@@ -264,7 +269,6 @@ void CatalogManager::onJobResult(KJob *job)
                     m_skippedCatalogs++;
                 }
 
-                // Increment and continue batch
                 m_batchCurrentIndex++;
             }
 
@@ -272,12 +276,12 @@ void CatalogManager::onJobResult(KJob *job)
         }
 
         // Clean up and reset state
-        setCatalogOperationRunning(false);
-        setProgress(0);
-        setCurrentCatalogName("");
-        setFilesProcessed(0);
-        setTotalFiles(0);
-        setCurrentPath("");
+        // setCatalogOperationRunning(false);
+        // setProgress(0);
+        // setCurrentCatalogName("");
+        // setFilesProcessed(0);
+        // setTotalFiles(0);
+        // setCurrentPath("");
         m_isPaused = false;
         cleanupJob();
 

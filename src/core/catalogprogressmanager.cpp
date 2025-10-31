@@ -94,7 +94,23 @@ void CatalogProgressManager::updateFromCatalogManager()
 
     if (m_catalogManager->catalogOperationRunning()) {
         StatusBarMessageBuilder builder;
-        builder.setOperation(QApplication::translate("MainWindow", "Update"));
+
+        // Detect CREATE vs UPDATE
+        QString operation = (m_catalogManager->currentOperationType() == CatalogJobStoppable::CreateCatalog) ?
+                                "Create" : "Update";
+
+        // Detect CREATE vs UPDATE
+        if (m_catalogManager->currentOperationType() == CatalogJobStoppable::CreateCatalog) {
+            builder.setOperation(QApplication::translate("MainWindow", "Create"));
+        } else {
+            builder.setOperation(QApplication::translate("MainWindow", "Update"));
+        }
+        builder.setStatus(QApplication::translate("MainWindow", "In Progress"));
+
+        // Add catalog name context (always show for catalogs, even 1 of 1)
+        if (!m_catalogManager->currentCatalogName().isEmpty()) {
+            builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
+        }
 
         // COUNTING FILES state
         if (m_catalogManager->totalFiles() == 0 &&
@@ -105,13 +121,13 @@ void CatalogProgressManager::updateFromCatalogManager()
             QStringList parts = pathData.split("|");
             if (parts.size() >= 2) {
                 int fileCount = parts[1].toInt();
-                builder.setProcess(QApplication::translate("MainWindow", "Counting files"), fileCount);
+                builder.setProcess(QApplication::translate("MainWindow", "Counting files"), fileCount, 0);
             }
 
         } else if (m_catalogManager->totalFiles() > 0) {
-            // PROCESSING FILES state
+            // PROCESSING FILES state - use "Indexed" for catalog operations
             builder.setProcess(
-                QApplication::translate("MainWindow", "Processed"),
+                QApplication::translate("MainWindow", "Indexed"),
                 m_catalogManager->filesProcessed(),
                 m_catalogManager->totalFiles()
                 );
@@ -121,12 +137,6 @@ void CatalogProgressManager::updateFromCatalogManager()
                 !m_catalogManager->currentPath().contains("__COUNTING_STATE__|")) {
                 builder.setCurrentItem(m_catalogManager->currentPath());
             }
-        }
-
-        // Add catalog name prefix
-        if (!m_catalogManager->currentCatalogName().isEmpty()) {
-            // For single catalog, show name without "1 of 1"
-            builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
         }
 
         m_statusBar->show();

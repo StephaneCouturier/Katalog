@@ -71,6 +71,7 @@ public:
 
     // Get the current catalog operation results
     CatalogJobStoppable* getCurrentCatalogEngine() const;
+    CatalogJobStoppable::OperationType currentOperationType() const;
 
     QString getEffectiveCatalogID(int catalogID) const;
     bool isCatalogBeingUpdated(int catalogID) const;

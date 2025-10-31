@@ -1987,10 +1987,6 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
 
-    // Show success message
-    QString message = tr("Operation completed");
-    statusBarLabel->setText(message);
-
     // STEP 1: Call reportAllUpdates with correct parameters
     if (reportDevice) {
         qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name
