@@ -1089,7 +1089,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     if (filesProcessed == -4) {
         SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
         if (!searchJobStoppable) return;
-        builder.setStatus(tr("Running"));
+        builder.setStatus(tr("In Progress"));
 
         // Build device context
         if (currentSearch->totalCatalogs > 0) {
@@ -1147,7 +1147,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     // REGULAR PROGRESS UPDATE
     if (!currentSearch) return;
 
-    builder.setStatus(tr("Running"));
+    builder.setStatus(tr("In Progress"));
 
     if (currentSearch->totalCatalogs > 0) {
         // Multiple catalogs
@@ -1340,8 +1340,10 @@ void MainWindow::removeFileFromResults(QString fullFilePath)
         currentSearch->filesFoundNumber = currentSearch->fileNames.size();
         currentSearch->filesFoundTotalSize = 0;
 
-        for (const qint64 &size : currentSearch->fileSizes) {
+        const QList<qint64> &sizes = currentSearch->fileSizes;
+        for (const qint64 &size : sizes) {
             currentSearch->filesFoundTotalSize += size;
         }
+
     }
 }

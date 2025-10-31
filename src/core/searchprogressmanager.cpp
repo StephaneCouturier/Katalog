@@ -145,7 +145,7 @@ void SearchProgressManager::updateFromSearchManager()
             // Searching in directory - no device context, show processed count
             int actualFilesProcessed = m_currentSearch->totalFilesProcessed;
             if (actualFilesProcessed > 0) {
-                builder.setProcess(tr("Processed"), actualFilesProcessed, 0);  // No total for directory
+                builder.setProcess(QApplication::translate("MainWindow","Processed"), actualFilesProcessed, 0);  // No total for directory
             }
         }
         else if (m_currentSearch && m_currentSearch->searchInCatalogsChecked) {
@@ -163,7 +163,7 @@ void SearchProgressManager::updateFromSearchManager()
             // Add files processed with percentage for catalogs
             int actualFilesProcessed = m_currentSearch->totalFilesProcessed;
             if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
-                builder.setProcess(tr("Processed"),
+                builder.setProcess(QApplication::translate("MainWindow","Processed"),
                                    actualFilesProcessed,
                                    100 * actualFilesProcessed / m_searchManager->progress());
             }
@@ -172,7 +172,7 @@ void SearchProgressManager::updateFromSearchManager()
         // Add files/folders found
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
             QString resultTitle = m_currentSearch->showFoldersOnly ?
-                                      tr("Folders found") : tr("Files found");
+                                      QApplication::translate("MainWindow","Folders found") : QApplication::translate("MainWindow","Files found");
             builder.setResult(resultTitle, m_currentSearch->fileNames.size());
         }
 

@@ -433,7 +433,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
                 // Set operation context for file type update
                 currentOperationVerb = QApplication::translate("MainWindow","Update file types");  // NEW - translated
-                currentOperationUnit = QApplication::translate("MainWindow","files updated");       // NEW - translated
+                currentOperationUnit = QApplication::translate("MainWindow","updated");       // NEW - translated
                 showSearchStatistics = false;
 
                 // Reset counters for file type update progress
@@ -472,7 +472,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
                 // Restore normal operation context
                 currentOperationVerb = QApplication::translate("MainWindow","Loading");
-                currentOperationUnit = QApplication::translate("MainWindow","files loaded");
+                currentOperationUnit = QApplication::translate("MainWindow","loaded");
                 showSearchStatistics = true;
 
                 // Check if stopped

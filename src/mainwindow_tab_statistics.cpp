@@ -358,9 +358,9 @@
                     loadSeries3 = false;
                 }
 
-                series2->setName(tr("Storage") + " / " + tr("Used space"));
+                series2->setName(tr("Storage") + " / " + tr("Used Space"));
                 series2->setPen(penStorageUsedSpace);
-                series3->setName(tr("Storage") + " / " + tr("Total space"));
+                series3->setName(tr("Storage") + " / " + tr("Total Space"));
                 series3->setPen(penStorageTotalSpace);
 
         //Prepare the chart

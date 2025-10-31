@@ -3005,7 +3005,7 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
         if(list[7]==1){
             message += "<br/>";
             message += "<table>";
-            message += "<tr><td>" + tr("Storage information:") + "</td></tr>";
+            message += "<tr><td>" + tr("Storage") + "</td></tr>";
             message += "<tr><td>" + tr("Used Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[8])  + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[9])  + "</b>)</td></tr>";
             message += "<tr><td>" + tr("Free Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[10]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[11]) + "</b>)</td></tr>";
             message += "<tr><td>" + tr("Total Space: ") + "</td><td align='right'><b>" + QLocale().formattedDataSize(list[12]) + "</b></td><td>&nbsp; &nbsp; " + tr("(added: ") + "&nbsp; &nbsp; </td><td align='right'><b>" + QLocale().formattedDataSize(list[13]) + "</b>)</td></tr>";

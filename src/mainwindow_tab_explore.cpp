@@ -538,7 +538,11 @@
                     disconnect(progressConnection);
 
                     if (localStopRequested) {
-                        statusBarLabel->setText(tr("File type update cancelled"));
+                        builder.setOperation(tr("Explore"))
+                            .setDeviceContext(1, 1, deviceName)
+                            .setStatus(tr("Cancelled"));
+
+                        statusBarLabel->setText(builder.build());
                         return;
                     }
                 } else {
