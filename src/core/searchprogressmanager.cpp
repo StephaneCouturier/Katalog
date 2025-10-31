@@ -83,24 +83,16 @@ void SearchProgressManager::updateFromSearchManager()
                                     searchJobStoppable->currentCatalogFilesLoaded < searchJobStoppable->currentCatalogTotalFiles;
 
             builder.setStatus(QApplication::translate("MainWindow","Paused"));
-
-            // Add device context if multiple catalogs
-            if (m_currentSearch && m_currentSearch->totalCatalogs > 1) {
-                if (!m_searchManager->currentCatalogName().isEmpty()) {
-                    builder.setDeviceContext(
-                        m_currentSearch->currentCatalogIndex,
-                        m_currentSearch->totalCatalogs,
-                        m_searchManager->currentCatalogName()
-                        );
-                }
-            }
+            builder.setDeviceContext(
+                    m_currentSearch->currentCatalogIndex,
+                    m_currentSearch->totalCatalogs,
+                    m_searchManager->currentCatalogName()
+                    );
 
             // Add files found if available
-            if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-                QString resultTitle = m_currentSearch->showFoldersOnly ?
-                                          QApplication::translate("MainWindow","Folders found") : QApplication::translate("MainWindow","Files found");
-                builder.setResult(resultTitle, m_currentSearch->fileNames.size());
-            }
+            QString resultTitle = m_currentSearch->showFoldersOnly ?
+                                      QApplication::translate("MainWindow","Folders found") : QApplication::translate("MainWindow","Files found");
+            builder.setResult(resultTitle, m_currentSearch->fileNames.size());
 
             // Check if we're in catalog loading mode
             isLoadingCatalog = searchJobStoppable->memoryModeEnabled &&
@@ -117,7 +109,7 @@ void SearchProgressManager::updateFromSearchManager()
                 int actualFilesProcessed = m_currentSearch ?
                                                m_currentSearch->totalFilesProcessed : 0;
                 if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
-                    builder.setProcess(QApplication::translate("MainWindow","Processed"),
+                    builder.setProcess(QApplication::translate("MainWindow","Evaluated"),
                                        actualFilesProcessed,
                                        100 * actualFilesProcessed / m_searchManager->progress());
                 }
@@ -145,7 +137,7 @@ void SearchProgressManager::updateFromSearchManager()
             // Searching in directory - no device context, show processed count
             int actualFilesProcessed = m_currentSearch->totalFilesProcessed;
             if (actualFilesProcessed > 0) {
-                builder.setProcess(QApplication::translate("MainWindow","Processed"), actualFilesProcessed, 0);  // No total for directory
+                builder.setProcess(QApplication::translate("MainWindow","Evaluated"), actualFilesProcessed, 0);  // No total for directory
             }
         }
         else if (m_currentSearch && m_currentSearch->searchInCatalogsChecked) {
@@ -163,7 +155,7 @@ void SearchProgressManager::updateFromSearchManager()
             // Add files processed with percentage for catalogs
             int actualFilesProcessed = m_currentSearch->totalFilesProcessed;
             if (actualFilesProcessed > 0 && m_searchManager->progress() > 0) {
-                builder.setProcess(QApplication::translate("MainWindow","Processed"),
+                builder.setProcess(QApplication::translate("MainWindow","Evaluated"),
                                    actualFilesProcessed,
                                    100 * actualFilesProcessed / m_searchManager->progress());
             }
@@ -185,17 +177,29 @@ void SearchProgressManager::updateFromSearchManager()
         StatusBarMessageBuilder builder;
 
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            QString resultTitle = m_currentSearch->showFoldersOnly ?
-                                      QApplication::translate("MainWindow","Folders found") : QApplication::translate("MainWindow","Files found");
+            builder.setOperation(QCoreApplication::translate("MainWindow", "Search"))
+            .setStatus(QCoreApplication::translate("MainWindow", "Completed"));
 
-            builder.setOperation(QApplication::translate("MainWindow","Search"))
-                .setStatus(QApplication::translate("MainWindow","Completed"))
-                .setResult(resultTitle, m_currentSearch->fileNames.size());
-        } else {
-            // Just show "Ready"
-            m_statusBarLabel->setText(QApplication::translate("MainWindow","Ready"));
-            m_statusBarTimer->start(5000);
-            return;
+            // Add device context if we have catalog info
+            if (m_currentSearch->totalCatalogs > 0 && !m_currentSearch->currentCatalogName.isEmpty()) {
+                builder.setDeviceContext(
+                    m_currentSearch->currentCatalogIndex,
+                    m_currentSearch->totalCatalogs,
+                    m_currentSearch->currentCatalogName
+                    );
+            }
+
+            // Add files evaluated
+            if (m_currentSearch->totalFilesProcessed > 0) {
+                builder.setProcess(QCoreApplication::translate("MainWindow", "Evaluated"),
+                                   m_currentSearch->totalFilesProcessed);
+            }
+
+            // Add results
+            QString resultTitle = m_currentSearch->showFoldersOnly ?
+                                      QCoreApplication::translate("MainWindow", "Folders found") :
+                                      QCoreApplication::translate("MainWindow", "Files found");
+            builder.setResult(resultTitle, m_currentSearch->fileNames.size());
         }
 
         m_statusBar->show();

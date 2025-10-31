@@ -195,8 +195,8 @@ QString StatusBarMessageBuilder::formatStatus() const
 
 QString StatusBarMessageBuilder::formatDeviceContext() const
 {
-    // Only show if multiple devices
-    if (m_deviceTotalCount <= 1) {
+    // Show if we have a catalog name (even for single catalog)
+    if (m_deviceTotalCount == 0 || m_catalogName.isEmpty()) {
         return QString();
     }
 

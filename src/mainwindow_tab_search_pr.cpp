@@ -1017,9 +1017,9 @@ void MainWindow::displaySearchResults()
 void MainWindow::updateSearchProgress(int filesProcessed)
 {
     // Special values:
-    // -1: Search interrupted
+    // -1: Search stopped
     // -2: Catalog loading started
-    // -3: Catalog loading finished
+    // -3: Catalog loading completed
     // -4: Catalog loading progress update
 
     if (filesProcessed >= 0) {
@@ -1029,14 +1029,14 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     StatusBarMessageBuilder builder;
     builder.setOperation(tr("Search"));
 
-    // SPECIAL CASE: Search interrupted (-1)
+    // SPECIAL CASE: Search stopped (-1)
     if (filesProcessed == -1) {
         builder.setOperation(tr("Search"));
         builder.setStatus(tr("Stopped"));
 
         if (currentSearch) {
             // Add device context if multiple catalogs
-            if (currentSearch->totalCatalogs > 1 && !currentSearch->currentCatalogName.isEmpty()) {
+            if (!currentSearch->currentCatalogName.isEmpty()) {
                 builder.setDeviceContext(
                     currentSearch->currentCatalogIndex,
                     currentSearch->totalCatalogs,
@@ -1044,11 +1044,26 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                     );
             }
 
-            // Add progress information
-            if (currentSearch->totalFilesProcessed > 0 && currentSearch->estimatedTotalFiles > 0) {
-                builder.setProcess(tr("Processed"),
-                                   currentSearch->totalFilesProcessed,
-                                   currentSearch->estimatedTotalFiles);
+            builder.setResult(tr("Files found"), currentSearch->fileNames.size());
+
+            // Use the actual operation that was interrupted
+            SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
+            if (searchJobStoppable) {
+                // Check if we're actually still in loading phase
+                bool isStillLoading = (searchJobStoppable->currentCatalogFilesLoaded > 0 &&
+                                       searchJobStoppable->currentCatalogFilesLoaded < searchJobStoppable->currentCatalogTotalFiles);
+
+                if (isStillLoading) {
+                    // Interrupted during loading
+                    builder.setProcess(searchJobStoppable->currentOperationVerb,
+                                       searchJobStoppable->currentCatalogFilesLoaded);
+                } else {
+                    // Interrupted during evaluation/matching
+                    builder.setProcess(tr("Evaluated"), currentSearch->totalFilesProcessed);
+                }
+            } else {
+                // Fallback to generic
+                builder.setProcess(tr("Evaluated"), currentSearch->totalFilesProcessed);
             }
 
             // Add results
@@ -1061,7 +1076,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             }
         } else {
             if (statusBarLabel) {
-                statusBarLabel->setText(builder.build());  // Just "SEARCH | Interrupted"
+                statusBarLabel->setText(builder.build());  // Just "SEARCH | Stopped"
             }
         }
         statusBar()->show();
@@ -1078,7 +1093,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                 currentSearch->currentCatalogName
                 );
             builder.setResult(tr("Files found"), currentSearch->fileNames.size());
-            builder.setProcess(tr("Processed"), currentSearch->totalFilesProcessed);
+            builder.setProcess(tr("Evaluated"), currentSearch->totalFilesProcessed);
 
             statusBarLabel->setText(builder.build());
         }
@@ -1160,11 +1175,11 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         }
 
         builder.setResult(tr("Files found"), currentSearch->fileNames.size());
-        builder.setProcess(tr("Processed"), filesProcessed, currentSearch->estimatedTotalFiles);
+        builder.setProcess(tr("Evaluated"), filesProcessed, currentSearch->estimatedTotalFiles);
     } else {
         // Single catalog or no catalog info
         builder.setResult(tr("Files found"), currentSearch->fileNames.size());
-        builder.setProcess(tr("Processed"), filesProcessed, currentSearch->estimatedTotalFiles);
+        builder.setProcess(tr("Evaluated"), filesProcessed, currentSearch->estimatedTotalFiles);
     }
 
     // Add current file path if available (for directory searches)
