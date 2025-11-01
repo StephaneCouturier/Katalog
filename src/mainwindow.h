@@ -145,7 +145,6 @@ class MainWindow : public KXmlGuiWindow
         SearchProgressManager *searchProgressManager = nullptr;
         SearchResultsThrottler *searchResultsThrottler = nullptr;
         SearchProcess *searchProcess  = nullptr;
-        CatalogManager *catalogManager;
         CatalogJobStoppable *catalogJobStoppable = nullptr;
         CatalogProgressManager *catalogProgressManager = nullptr;
 
@@ -649,7 +648,6 @@ class MainWindow : public KXmlGuiWindow
             void on_Create_pushButton_CreateCatalog_clicked();
             void on_Create_pushButton_Stop_clicked();
             void on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos);
-            void setupCatalogManager();
 
         //Explore
             void on_Explore_splitter_splitterMoved();

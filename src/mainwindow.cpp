@@ -58,7 +58,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     isSearchRunning = false;
 
     // Initialize catalog-related pointers
-    catalogManager = nullptr;
     catalogProgressManager = nullptr;
     catalogJobStoppable = nullptr;
 
@@ -262,7 +261,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             loadStorageList();
 
             //Set up a catalog manager for creation and updates, and device manager for udpate
-            setupCatalogManager();
+            // Create catalog progress manager (will be connected to DeviceUpdateManager's CatalogManager)
+            catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, statusBarLabel, this);
+            qDebug() << "CatalogProgressManager created (will connect to DeviceUpdateManager)";
             setupDeviceUpdateManager();
 
         //Setup tab: Tags

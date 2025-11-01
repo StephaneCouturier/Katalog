@@ -55,6 +55,10 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
                                               const QString &databaseMode,
                                               const QString &collectionFolder)
 {
+    // Save for cancelled/completed messages
+    m_lastOperationType = operationType;
+    m_lastCatalogName = targetDevice->catalog->name;
+
     if (operationType == CatalogJobStoppable::UpdateCatalog) {
         m_catalogUpdateInProgress = true;
         m_updatingCatalogID = targetDevice->catalog->ID;
@@ -147,9 +151,6 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
 void CatalogManager::stopCatalogOperation()
 {
     qDebug() << "=== CatalogManager::stopCatalogOperation() called ===";
-    qDebug() << "Current job exists:" << (m_currentJob != nullptr);
-    qDebug() << "Catalog operation running:" << m_catalogOperationRunning;
-    qDebug() << "In batch mode:" << m_inBatchMode;  // ADD THIS DEBUG
 
     if (!m_currentJob || !m_catalogOperationRunning) {
         qDebug() << "No operation to stop";
@@ -157,16 +158,20 @@ void CatalogManager::stopCatalogOperation()
     }
 
     qDebug() << "Stopping catalog operation...";
-    setStatus("Catalog operation stopped");
 
-    // Disconnect signals first to prevent double handling
+    // SAVE STATE for cancelled message (before reset)
+    CatalogJobStoppable::OperationType savedOperationType = m_currentOperationType;
+    QString savedCatalogName = m_currentCatalogName;
+    qint64 savedFilesProcessed = m_filesProcessed;
+    qint64 savedTotalFiles = m_totalFiles;
+
+    setStatus("Catalog operation stopped");
     disconnect(m_currentJob, nullptr, this, nullptr);
 
-    // Kill the job
     qDebug() << "Calling m_currentJob->kill()";
     m_currentJob->kill();
 
-    // Force immediate cleanup since result signal might not be emitted
+    // Force immediate cleanup
     qDebug() << "Force cleanup after kill...";
     setCatalogOperationRunning(false);
     setProgress(0);
@@ -176,18 +181,29 @@ void CatalogManager::stopCatalogOperation()
     setCurrentPath("");
     m_isPaused = false;
 
-    // Clean up immediately
     if (m_currentJob) {
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
         qDebug() << "Forced cleanup complete";
     }
 
+    // RESTORE state temporarily so signal handlers can read it
+    m_currentOperationType = savedOperationType;
+    m_currentCatalogName = savedCatalogName;
+    m_filesProcessed = savedFilesProcessed;
+    m_totalFiles = savedTotalFiles;
+
+    emit catalogOperationCancelled();
+
+    // NOW clear the restored state
+    m_currentCatalogName = "";
+    m_filesProcessed = 0;
+    m_totalFiles = 0;
+
     // Reset stop flags
     m_gentleStopRequested.storeRelease(0);
     m_hardStopRequested.storeRelease(0);
 
-    emit catalogOperationCancelled();
     qDebug() << "=== CatalogManager::stopCatalogOperation() complete ===";
 }
 
@@ -245,9 +261,6 @@ void CatalogManager::onJobResult(KJob *job)
     qDebug() << "=== DIAGNOSTIC: Job error code:" << job->error();
     qDebug() << "=== DIAGNOSTIC: KilledJobError constant:" << KJob::KilledJobError;
 
-    // Clean up and reset state
-    setCatalogOperationRunning(false);
-
     try {
         if (job->error() == KJob::KilledJobError) {
             emit catalogOperationCancelled();
@@ -277,8 +290,8 @@ void CatalogManager::onJobResult(KJob *job)
             emit catalogOperationCompleted();
         }
 
-        // Clean up and reset state
-        // setCatalogOperationRunning(false);
+        //Clean up and reset state
+        setCatalogOperationRunning(false);
         // setProgress(0);
         // setCurrentCatalogName("");
         // setFilesProcessed(0);
@@ -360,6 +373,7 @@ void CatalogManager::setFilesProcessed(qint64 processed)
 {
     if (m_filesProcessed != processed) {
         m_filesProcessed = processed;
+        m_lastFilesProcessed = processed;  // Keep last value
         emit filesProcessedChanged();
     }
 }
@@ -368,6 +382,7 @@ void CatalogManager::setTotalFiles(qint64 total)
 {
     if (m_totalFiles != total) {
         m_totalFiles = total;
+        m_lastTotalFiles = total;  // Keep last value
         emit totalFilesChanged();
     }
 }

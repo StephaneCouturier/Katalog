@@ -87,6 +87,16 @@ public:
     int updatedCatalogs() const { return m_updatedCatalogs; }
     int skippedCatalogs() const { return m_skippedCatalogs; }
 
+    CatalogJobStoppable::OperationType m_lastOperationType;
+    QString m_lastCatalogName;
+    qint64 m_lastFilesProcessed = 0;
+    qint64 m_lastTotalFiles = 0;
+
+    CatalogJobStoppable::OperationType lastOperationType() const { return m_lastOperationType; }
+    QString lastCatalogName() const { return m_lastCatalogName; }
+    qint64 lastFilesProcessed() const { return m_lastFilesProcessed; }
+    qint64 lastTotalFiles() const { return m_lastTotalFiles; }
+
 private:
     void setCatalogOperationRunning(bool running);
     void setProgress(int progress);

@@ -189,8 +189,6 @@ void CatalogJobStoppable::createCatalogWithProgress()
 
     // Count total files for progress calculation
     qDebug() << "Step 3: Counting total files...";
-    //emitProgressUpdate(0, 0, "Starting file counting...");
-
     auto startTime = QDateTime::currentDateTime();
     countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
     auto endTime = QDateTime::currentDateTime();
@@ -237,7 +235,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
 
     // Final progress update
     qDebug() << "About to emit final progress update";
-    emitProgressUpdate(processedCount, countedTotalFiles, "Catalog creation completed");
+    //emitProgressUpdate(processedCount, countedTotalFiles, "temp_text_for_test2");
     qDebug() << "Final progress update emitted";
 
     qDebug() << "=== CatalogJobStoppable::createCatalogWithProgress() completed successfully ===";
@@ -395,7 +393,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
     // Final progress update for this directory
     if (shouldContinue()) {
-        emitProgressUpdate(processedCount, countedTotalFiles, "Processing completed");
+        emitProgressUpdate(processedCount, countedTotalFiles, "");
         QCoreApplication::processEvents(); // Final UI update
     }
 

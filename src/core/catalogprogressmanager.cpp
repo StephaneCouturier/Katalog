@@ -72,14 +72,79 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                 this, &CatalogProgressManager::updateFromCatalogManager);
         connect(m_catalogManager, &CatalogManager::catalogOperationCancelled,
                 this, [this]() {
-                    qDebug() << "CatalogProgressManager: Operation cancelled - clearing status immediately";
-                    if (m_statusBar) {
-                        m_statusBarLabel->setText(QApplication::translate("MainWindow", "Operation cancelled"));
-                        if (m_statusBarTimer) {
-                            m_statusBarTimer->start(5000);
-                        }
+                    qDebug() << "=== CANCELLED LAMBDA CALLED ===";
+                    qDebug() << "lastOperationType:" << m_catalogManager->lastOperationType();
+                    qDebug() << "lastCatalogName:" << m_catalogManager->lastCatalogName();
+                    qDebug() << "lastFilesProcessed:" << m_catalogManager->lastFilesProcessed();
+                    qDebug() << "lastTotalFiles:" << m_catalogManager->lastTotalFiles();
+
+                    StatusBarMessageBuilder builder;
+
+                    if (m_catalogManager->lastOperationType() == CatalogJobStoppable::CreateCatalog) {
+                        builder.setOperation(QApplication::translate("MainWindow", "Create"));
+                    } else {
+                        builder.setOperation(QApplication::translate("MainWindow", "Update"));
+                    }
+
+                    builder.setStatus(QApplication::translate("MainWindow", "Cancelled"));
+
+                    if (!m_catalogManager->lastCatalogName().isEmpty()) {
+                        builder.setDeviceContext(1, 1, m_catalogManager->lastCatalogName());
+                    }
+
+                    if (m_catalogManager->lastFilesProcessed() > 0) {
+                        builder.setProcess(
+                            QApplication::translate("MainWindow", "Indexed"),
+                            m_catalogManager->lastFilesProcessed(),
+                            m_catalogManager->lastTotalFiles()
+                            );
+                    }
+
+                    QString message = builder.build();
+                    qDebug() << "Built message:" << message;
+
+                    m_statusBarLabel->setText(message);
+                    qDebug() << "Message set to label";
+
+                    if (m_statusBarTimer) {
+                        m_statusBarTimer->start(5000);
                     }
                 });
+        connect(m_catalogManager, &CatalogManager::catalogOperationCompleted,
+                this, [this]() {
+                    qDebug() << "CatalogProgressManager: Operation completed";
+
+                    StatusBarMessageBuilder builder;
+
+                    // Detect operation type (data still valid here)
+                    if (m_catalogManager->currentOperationType() == CatalogJobStoppable::CreateCatalog) {
+                        builder.setOperation(QApplication::translate("MainWindow", "Create"));
+                    } else {
+                        builder.setOperation(QApplication::translate("MainWindow", "Update"));
+                    }
+
+                    builder.setStatus(QApplication::translate("MainWindow", "Completed"));
+
+                    // Add catalog name
+                    if (!m_catalogManager->currentCatalogName().isEmpty()) {
+                        builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
+                    }
+
+                    // Add final count
+                    if (m_catalogManager->filesProcessed() > 0) {
+                        builder.setProcess(
+                            QApplication::translate("MainWindow", "Indexed"),
+                            m_catalogManager->filesProcessed(),
+                            m_catalogManager->totalFiles()
+                            );
+                    }
+
+                    m_statusBarLabel->setText(builder.build());
+                    if (m_statusBarTimer) {
+                        m_statusBarTimer->start(5000);
+                    }
+                });
+
     }
 }
 
@@ -121,7 +186,7 @@ void CatalogProgressManager::updateFromCatalogManager()
             QStringList parts = pathData.split("|");
             if (parts.size() >= 2) {
                 int fileCount = parts[1].toInt();
-                builder.setProcess(QApplication::translate("MainWindow", "Counting files"), fileCount, 0);
+                builder.setProcess(QApplication::translate("MainWindow", "Counted"), fileCount, 0);
             }
 
         } else if (m_catalogManager->totalFiles() > 0) {
@@ -148,39 +213,39 @@ void CatalogProgressManager::updateFromCatalogManager()
 
     } else {
         // OPERATION NOT RUNNING - Build completion message
-        StatusBarMessageBuilder builder;
+        // StatusBarMessageBuilder builder;
 
-        // Detect CREATE vs UPDATE
-        if (m_catalogManager->currentOperationType() == CatalogJobStoppable::CreateCatalog) {
-            builder.setOperation(QApplication::translate("MainWindow", "Create"));
-        } else {
-            builder.setOperation(QApplication::translate("MainWindow", "Update"));
-        }
+        // // Detect CREATE vs UPDATE
+        // if (m_catalogManager->currentOperationType() == CatalogJobStoppable::CreateCatalog) {
+        //     builder.setOperation(QApplication::translate("MainWindow", "Create"));
+        // } else {
+        //     builder.setOperation(QApplication::translate("MainWindow", "Update"));
+        // }
 
-        // Set status to Completed or Stopped
-        QString status = m_catalogManager->status();
-        if (status.contains("stopped", Qt::CaseInsensitive) ||
-            status.contains("cancelled", Qt::CaseInsensitive)) {
-            builder.setStatus(QApplication::translate("MainWindow", "Stopped"));
-        } else {
-            builder.setStatus(QApplication::translate("MainWindow", "Completed"));
-        }
+        // // Set status to Completed or Stopped
+        // QString status = m_catalogManager->status();
+        // if (status.contains("stopped", Qt::CaseInsensitive) ||
+        //     status.contains("cancelled", Qt::CaseInsensitive)) {
+        //     builder.setStatus(QApplication::translate("MainWindow", "Stopped"));
+        // } else {
+        //     builder.setStatus(QApplication::translate("MainWindow", "Completed"));
+        // }
 
-        // Add catalog name
-        if (!m_catalogManager->currentCatalogName().isEmpty()) {
-            builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
-        }
+        // // Add catalog name
+        // if (!m_catalogManager->currentCatalogName().isEmpty()) {
+        //     builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
+        // }
 
-        // Add final file count
-        if (m_catalogManager->filesProcessed() > 0) {
-            builder.setProcess(
-                QApplication::translate("MainWindow", "Indexed"),
-                m_catalogManager->filesProcessed(),
-                m_catalogManager->totalFiles()
-                );
-        }
+        // // Add final file count
+        // if (m_catalogManager->filesProcessed() > 0) {
+        //     builder.setProcess(
+        //         QApplication::translate("MainWindow", "Indexed"),
+        //         m_catalogManager->filesProcessed(),
+        //         m_catalogManager->totalFiles()
+        //         );
+        // }
 
-        m_statusBarLabel->setText(builder.build());
+        //m_statusBarLabel->setText(builder.build());
 
         if (m_statusBarTimer) {
             m_statusBarTimer->start(5000);
