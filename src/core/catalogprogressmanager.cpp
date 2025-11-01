@@ -147,24 +147,40 @@ void CatalogProgressManager::updateFromCatalogManager()
         }
 
     } else {
-        // OPERATION NOT RUNNING
-        QString status = m_catalogManager->status();
+        // OPERATION NOT RUNNING - Build completion message
+        StatusBarMessageBuilder builder;
 
+        // Detect CREATE vs UPDATE
+        if (m_catalogManager->currentOperationType() == CatalogJobStoppable::CreateCatalog) {
+            builder.setOperation(QApplication::translate("MainWindow", "Create"));
+        } else {
+            builder.setOperation(QApplication::translate("MainWindow", "Update"));
+        }
+
+        // Set status to Completed or Stopped
+        QString status = m_catalogManager->status();
         if (status.contains("stopped", Qt::CaseInsensitive) ||
             status.contains("cancelled", Qt::CaseInsensitive)) {
-            m_statusBarLabel->setText(QApplication::translate("MainWindow", "Operation cancelled"));
+            builder.setStatus(QApplication::translate("MainWindow", "Stopped"));
+        } else {
+            builder.setStatus(QApplication::translate("MainWindow", "Completed"));
         }
-        else if (status.contains("completed successfully", Qt::CaseInsensitive)) {
-            QString message = status;
-            if (m_catalogManager->filesProcessed() > 0) {
-                message += QString(" | %1 files processed")
-                .arg(QLocale().toString(m_catalogManager->filesProcessed()));
-            }
-            m_statusBarLabel->setText(message);
+
+        // Add catalog name
+        if (!m_catalogManager->currentCatalogName().isEmpty()) {
+            builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
         }
-        else {
-            m_statusBarLabel->setText(status);
+
+        // Add final file count
+        if (m_catalogManager->filesProcessed() > 0) {
+            builder.setProcess(
+                QApplication::translate("MainWindow", "Indexed"),
+                m_catalogManager->filesProcessed(),
+                m_catalogManager->totalFiles()
+                );
         }
+
+        m_statusBarLabel->setText(builder.build());
 
         if (m_statusBarTimer) {
             m_statusBarTimer->start(5000);

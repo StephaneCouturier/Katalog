@@ -495,7 +495,6 @@
             ui->Create_pushButton_CreateCatalog->setEnabled(true);
             ui->Create_pushButton_Stop->setEnabled(false);
             QApplication::restoreOverrideCursor();
-            statusBarLabel->clear();
         }
     }
     //--------------------------------------------------------------------------

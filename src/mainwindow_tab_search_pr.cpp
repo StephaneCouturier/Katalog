@@ -1132,7 +1132,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
 
         // Append PAUSED status if needed
         if (searchJobStoppable->isPaused()) {
-            message += tr(" | CATALOG LOADING PAUSED");
+            message += tr(" | CATALOG LOADING PAUSED /DEV /FIX THIS");
         }
 
         statusBar()->show();
@@ -1150,7 +1150,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                 currentSearch->currentCatalogName
                 );
             builder.setResult(tr("Files found"), currentSearch->fileNames.size());
-            builder.setProcess(tr("Processing files"), 0, 0);
+            builder.setProcess(tr("Processing files /DEV /FIX THIS"), 0, 0);
 
             statusBar()->show();
             statusBarLabel->setText(builder.build());
@@ -1291,11 +1291,6 @@ void MainWindow::reportSearchStatistics()
 //----------------------------------------------------------------------
 void MainWindow::updateStatusBarFromSearchManager()
 {
-    if (!searchManager) {
-        statusBarLabel->setText(tr("Ready"));
-        return;
-    }
-
     QString statusMessage;
 
     if (searchManager->searchRunning()) {
@@ -1323,8 +1318,6 @@ void MainWindow::updateStatusBarFromSearchManager()
             if (currentSearch && currentSearch->fileNames.size() > 0) {
                 statusMessage = tr("Search completed | Files found: %1")
                 .arg(QLocale().toString(currentSearch->fileNames.size()));
-            } else {
-                statusMessage = tr("Ready");
             }
         } else {
             statusMessage = searchManager->status();

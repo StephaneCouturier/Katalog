@@ -74,7 +74,7 @@ void SearchProgressManager::updateFromSearchManager()
             // Rebuild message with paused status
             StatusBarMessageBuilder builder;
             builder.setOperation(QApplication::translate("MainWindow","Search"));
-            builder.setStatus(QApplication::translate("MainWindow","Running"));
+            builder.setStatus(QApplication::translate("MainWindow","In Progress"));
 
             // Determine pause type, Checking if catalog loading mode (loading not yet complete)
             bool isLoadingCatalog = searchJobStoppable->memoryModeEnabled &&

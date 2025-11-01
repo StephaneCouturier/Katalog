@@ -101,7 +101,7 @@ private:
     QAtomicInt m_hardStopRequested{0};
     int m_updatingCatalogID = 0;
     bool m_catalogUpdateInProgress = false;
-
+    CatalogJobStoppable::OperationType m_currentOperationType = CatalogJobStoppable::UpdateCatalog;
     CatalogJob *m_currentJob = nullptr;
     bool m_catalogOperationRunning = false;
     int m_progress = 0;

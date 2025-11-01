@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
+#include "core/statusbarmessagebuilder.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
@@ -2164,11 +2165,14 @@ void MainWindow::onDeviceUpdateProgress()
     QString currentDevice = deviceUpdateManager->currentDeviceName();
 
     // Update status bar with current progress
+    StatusBarMessageBuilder builder;
+    builder.setOperation(tr("Update"))
+        .setStatus(tr("In Progress"));
     if (!currentDevice.isEmpty()) {
-        statusBarLabel->setText(QString("%1 - %2").arg(status, currentDevice));
-    } else {
-        statusBarLabel->setText(status);
+        builder.setDeviceContext(1, 1, currentDevice);
     }
+    // Add process info from deviceUpdateManager if available
+    statusBarLabel->setText(builder.build());
 
     // Log progress for debugging
     qDebug() << "Progress:" << progress << "%" << "Status:" << status;

@@ -90,6 +90,7 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
     m_currentJob->setCatalogJobStoppable(catalogEngine);
     m_currentJob->setTargetDevice(targetDevice);
     m_currentJob->setOperationType(operationType);
+    m_currentOperationType = operationType;
     m_currentJob->setDatabaseMode(databaseMode);
     m_currentJob->setCollectionFolder(collectionFolder);
 
@@ -224,10 +225,11 @@ CatalogJobStoppable* CatalogManager::getCurrentCatalogEngine() const
 
 CatalogJobStoppable::OperationType CatalogManager::currentOperationType() const
 {
-    if (m_currentJob) {
-        return m_currentJob->getOperationType();
-    }
-    return CatalogJobStoppable::UpdateCatalog;  // Default
+    // if (m_currentJob) {
+    //     return m_currentJob->getOperationType();
+    // }
+    // return CatalogJobStoppable::UpdateCatalog;  // Default
+    return m_currentOperationType;
 }
 
 void CatalogManager::requestGentleStop()
