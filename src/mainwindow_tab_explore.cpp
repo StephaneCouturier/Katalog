@@ -540,7 +540,7 @@
                     if (localStopRequested) {
                         builder.setOperation(tr("Explore"))
                             .setDeviceContext(1, 1, deviceName)
-                            .setStatus(tr("Cancelled"));
+                            .setStatus(tr("Stopped"));
 
                         statusBarLabel->setText(builder.build());
                         return;
