@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1722"/>
+        <location filename="../core/collection.cpp" line="+1725"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Denna mapp innehåller samlingar i minnesläge, men du är för närvarande i filläge.&lt;br/&gt;Byt till minnesläge eller välj en annan mapp.</translation>
     </message>
@@ -68,20 +68,93 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+711"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+107"/>
+        <location line="+64"/>
+        <location line="+79"/>
+        <source>Indexed</source>
+        <translation>Indexerad</translation>
+    </message>
+    <message>
+        <location filename="../core/searchjobstoppable.cpp" line="+435"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-135"/>
+        <location line="+126"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+529"/>
+        <source>File Types Updated</source>
+        <translation>Filtyper uppdaterade</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-142"/>
+        <location line="+129"/>
+        <source>Counted</source>
+        <translation>Räknad</translation>
+    </message>
+    <message>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
+        <source>Paused</source>
+        <translation>Pausad</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+28"/>
+        <location line="+18"/>
+        <location line="+36"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+1062"/>
+        <location line="+4"/>
+        <location line="+30"/>
+        <location line="+57"/>
+        <location line="+25"/>
+        <location line="+4"/>
+        <source>Evaluated</source>
+        <translation>Utvärderad</translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-82"/>
+        <source>Completed</source>
+        <translation>Slutförd</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_statistics.cpp" line="+361"/>
+        <source>Used Space</source>
+        <translation>Använt utrymme</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-65"/>
+        <source>Cancelled</source>
+        <translation>Avbruten</translation>
+    </message>
+    <message>
+        <location filename="../core/searchjobstoppable.cpp" line="+39"/>
+        <source>Loaded</source>
+        <translation>Laddad</translation>
+    </message>
+    <message>
+        <location filename="../core/searchprogressmanager.cpp" line="-104"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+124"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2160"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-75"/>
+        <location line="+58"/>
+        <source>In Progress</source>
+        <translation>Pågår</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="+14"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-130"/>
+        <source>Stopped</source>
+        <translation>Stoppad</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+695"/>
         <source>MIME Verification Complete</source>
         <translation>MIME-Verifiering Slutförd</translation>
     </message>
-
-
     <message>
         <location line="+24"/>
         <source>Open Report</source>
         <translation>Öppna Rapport</translation>
     </message>
-
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1677"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-469"/>
         <source>Hidden</source>
         <translation>Dold</translation>
     </message>
@@ -91,14 +164,14 @@
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+2308"/>
+        <location filename="../mainwindow.ui" line="+3949"/>
         <source>File metadata</source>
         <translation>Filmetadata</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+172"/>
         <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+677"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+197"/>
         <source>Height</source>
         <translation>Höjd</translation>
     </message>
@@ -123,7 +196,7 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+3504"/>
+        <location line="+1872"/>
         <location line="+1921"/>
         <source>Include files metadata</source>
         <translation>Inkludera filmetadata</translation>
@@ -147,21 +220,21 @@
     <message>
         <location line="+29"/>
         <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+626"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+472"/>
         <location line="+12"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-455"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-517"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Visa utökad metadata (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+452"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+514"/>
         <source>MIME Type</source>
         <translation>MIME-Typ</translation>
     </message>
@@ -202,7 +275,7 @@
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+674"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-365"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>Kopiera JSON</translation>
@@ -294,49 +367,28 @@
         <translation>Fullständig Utökad</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+110"/>
-        <location line="+3"/>
-        <source>Counting files</source>
-        <translation>Räknar filer</translation>
-    </message>
-    <message>
-        <location filename="../core/device.cpp" line="+650"/>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Vill du &lt;span style=&apos;color: red&apos;;&gt;ta bort&lt;/span&gt; denna %1 enhet?</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+7"/>
-        <source>Files processed</source>
-        <translation>Filer behandlade</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Total files</source>
-        <translation>Totalt filer</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Progress</source>
-        <translation>Framsteg</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1263"/>
-        <location line="+50"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1257"/>
+        <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Kataloger uppdaterade:&lt;b&gt; %1 &lt;/b&gt;(%2 hoppade över)</translation>
     </message>
     <message>
-        <location line="-24"/>
+        <location line="-14"/>
         <source>Virtual device updated: </source>
         <translation>Virtuell enhet uppdaterad: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-2503"/>
+        <location filename="../mainwindow.ui" line="-2511"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klick: Stoppa omedelbart (hårt stopp)&lt;/p&gt;&lt;p&gt;Ctrl+Klick: Stoppa efter nuvarande katalog (mjukt stopp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-201"/>
         <source>The source directory does not exist.</source>
         <translation>Källkatalogen finns inte.</translation>
     </message>
@@ -348,70 +400,66 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-479"/>
-        <location line="+83"/>
-        <location line="+63"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-463"/>
+        <location line="+84"/>
+        <location line="+64"/>
         <location line="+130"/>
-        <location line="+161"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+245"/>
+        <location line="+143"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+248"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>En enhetsoperation körs redan.</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-48"/>
-        <location line="+82"/>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1085"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-854"/>
-        <location line="+13"/>
-        <location line="+4"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1084"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-861"/>
         <source>Operation cancelled</source>
         <translation>Operation avbruten</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-164"/>
-        <source>Operation completed</source>
-        <translation>Operation slutförd</translation>
-    </message>
-    <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="-59"/>
+        <location line="-59"/>
         <source>Stopping after current catalog completes...</source>
         <translation>Stoppar efter nuvarande katalog slutförs...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6180"/>
+        <location filename="../mainwindow.ui" line="-6181"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+1009"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+57"/>
+        <location line="+47"/>
+        <location filename="../mainwindow.ui" line="+1009"/>
         <location line="+436"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-94"/>
-        <location line="+37"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
+        <location line="+40"/>
         <location line="+39"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
+        <location line="+451"/>
+        <location line="+4"/>
         <source>Search</source>
         <translation>Sök</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location filename="../mainwindow.ui" line="-433"/>
         <source>Search for files or folders</source>
         <translation>Sök efter filer eller mappar</translation>
     </message>
     <message>
-        <location line="+1421"/>
-        <location line="+4307"/>
+        <location line="+3062"/>
+        <location line="+2675"/>
         <location line="+1856"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location line="-7270"/>
+        <location line="-7279"/>
         <source>Paste the text from the clipboard</source>
         <translation>Klistra in text från urklipp</translation>
     </message>
@@ -478,12 +526,12 @@
         <translation>Endast mappsökväg</translation>
     </message>
     <message>
-        <location line="+3390"/>
+        <location line="+3391"/>
         <source>Choose to only show folders as results</source>
         <translation>Välj att endast visa mappar som resultat</translation>
     </message>
     <message>
-        <location line="-4077"/>
+        <location line="-4078"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>Återställ alla kriterier till standardvärden och rensa tidigare resultat.</translation>
     </message>
@@ -493,7 +541,7 @@
         <translation>Återställ</translation>
     </message>
     <message>
-        <location line="+11161"/>
+        <location line="+11170"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
@@ -515,78 +563,78 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+280"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+74"/>
+        <location filename="../mainwindow.cpp" line="+283"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-381"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-9528"/>
-        <location line="+1038"/>
+        <location filename="../mainwindow.ui" line="-9694"/>
         <location line="+802"/>
         <location line="+232"/>
+        <location line="+764"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-33"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Size</source>
         <translation>Storlek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4260"/>
-        <location line="+5764"/>
+        <location filename="../mainwindow.ui" line="-3829"/>
+        <location line="+5765"/>
         <source>Device tree</source>
         <translation>Enhetsträd</translation>
     </message>
     <message>
-        <location line="-5284"/>
+        <location line="-5285"/>
         <source>Reload all collection&apos;s data</source>
         <translation>Ladda om all samlingsdata</translation>
     </message>
     <message>
-        <location line="+1778"/>
+        <location line="+1580"/>
+        <location line="+451"/>
+        <location line="+1388"/>
         <location line="+218"/>
         <location line="+283"/>
-        <location line="+496"/>
-        <location line="+451"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-387"/>
+        <location line="-2276"/>
         <source>File size unit for minimum value</source>
         <translation>Filstorleksenhet för minimivärde</translation>
     </message>
     <message>
-        <location line="-974"/>
+        <location line="+49"/>
+        <location line="+426"/>
+        <location line="+1387"/>
         <location line="+218"/>
         <location line="+290"/>
-        <location line="+515"/>
-        <location line="+426"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-365"/>
+        <location line="-2260"/>
         <source>File size unit for maximum value</source>
         <translation>Filstorleksenhet för maximivärde</translation>
     </message>
     <message>
         <location line="+81"/>
-        <location line="+3010"/>
+        <location line="+4214"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-552"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-696"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-2972"/>
+        <location line="-4176"/>
         <source>Select the type of files</source>
         <translation>Välj filtyp</translation>
     </message>
     <message>
-        <location line="+2768"/>
+        <location line="+3972"/>
         <location line="+1790"/>
         <location filename="../mainwindow_setup.cpp" line="+464"/>
         <location line="+8"/>
@@ -595,7 +643,7 @@
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+77"/>
+        <location line="+76"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -631,7 +679,7 @@
         <translation>Video</translation>
     </message>
     <message>
-        <location line="-3377"/>
+        <location line="-3385"/>
         <source>only list folders in results</source>
         <translation>visa endast mappar i resultaten</translation>
     </message>
@@ -653,9 +701,18 @@
         <translation>Visa/dölj kataloger med resultat</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-48"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-86"/>
+        <location line="+73"/>
+        <location line="+34"/>
         <location filename="../mainwindow.ui" line="+129"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+636"/>
+        <location line="+54"/>
+        <location line="+24"/>
+        <location line="+24"/>
+        <location line="+32"/>
+        <location line="+25"/>
+        <location line="+25"/>
+        <location line="+4"/>
         <source>Files found</source>
         <translation>Filer hittade</translation>
     </message>
@@ -666,7 +723,7 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+889"/>
+        <location line="+897"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
@@ -692,7 +749,7 @@
     <message>
         <location line="-3657"/>
         <location line="+377"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="+345"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
         <translation>Kataloger</translation>
     </message>
@@ -709,59 +766,65 @@
         <translation>Totalt antal filer</translation>
     </message>
     <message>
-        <location line="-1141"/>
+        <location line="-1149"/>
         <source>All active</source>
         <translation>Alla aktiva</translation>
     </message>
     <message>
-        <location line="+1232"/>
+        <location line="+1240"/>
         <source>Import</source>
         <translation>Importera</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-419"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-403"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-211"/>
+        <location line="+18"/>
+        <location line="+14"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-172"/>
         <source>Explore</source>
         <translation>Utforska</translation>
     </message>
     <message>
-        <location line="-1765"/>
-        <location line="+924"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-127"/>
+        <location line="+65"/>
+        <location line="+59"/>
+        <location filename="../mainwindow.ui" line="-1773"/>
+        <location line="+932"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+741"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+87"/>
-        <location line="+63"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-102"/>
-        <location line="+36"/>
+        <location line="+88"/>
+        <location line="+64"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
+        <location line="+39"/>
         <location line="+40"/>
         <source>Update</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location line="+4682"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-104"/>
-        <location line="+66"/>
+        <location filename="../mainwindow.ui" line="+4682"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-106"/>
+        <location line="+68"/>
         <location line="+63"/>
         <source>Edit</source>
         <translation>Redigera</translation>
     </message>
     <message>
-        <location line="-5933"/>
+        <location line="-5941"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location line="+2095"/>
+        <location line="+2103"/>
         <source>Explore a catalog</source>
         <translation>Utforska en katalog</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+31"/>
-        <location filename="../mainwindow.ui" line="-7525"/>
-        <location line="+7904"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-1"/>
+        <location line="-7534"/>
+        <location line="+7913"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+178"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -770,9 +833,9 @@
         <location filename="../mainwindow.ui" line="+1576"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-241"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-982"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
         <translation>Sökväg</translation>
@@ -783,26 +846,26 @@
         <translation>Kataloger</translation>
     </message>
     <message>
-        <location line="-7815"/>
+        <location line="-7824"/>
         <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>Visa/dölj filter</translation>
     </message>
     <message>
         <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1191"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
         <source>Virtual</source>
         <translation>Virtuell</translation>
     </message>
     <message>
         <location line="+1252"/>
-        <location line="+4700"/>
-        <location line="+3133"/>
+        <location line="+4701"/>
+        <location line="+3141"/>
         <source>Stop</source>
         <translation>Stoppa</translation>
     </message>
     <message>
-        <location line="-3596"/>
+        <location line="-3604"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Välj...</translation>
@@ -831,13 +894,13 @@
         <translation>Kataloglista</translation>
     </message>
     <message>
-        <location line="+515"/>
+        <location line="+523"/>
         <source>The change will be applied only when Saving</source>
         <translation>Ändringen tillämpas endast vid sparande</translation>
     </message>
     <message>
         <location line="+267"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+948"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+951"/>
         <source>Comment 1</source>
         <translation>Kommentar 1</translation>
     </message>
@@ -916,14 +979,17 @@
         <translation>Klicka för att öppna filen</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-126"/>
+        <location line="+65"/>
+        <location line="+59"/>
+        <location filename="../mainwindow.ui" line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
         <source>Create</source>
         <translation>Skapa</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location filename="../mainwindow.ui" line="+3"/>
         <source>Create a catalog</source>
         <translation>Skapa en katalog</translation>
     </message>
@@ -1045,7 +1111,7 @@
         <translation>Infoga virtuell grupp</translation>
     </message>
     <message>
-        <location line="-1613"/>
+        <location line="-1621"/>
         <source>View</source>
         <translation>Visa</translation>
     </message>
@@ -1055,7 +1121,7 @@
         <translation>Lagringslista</translation>
     </message>
     <message>
-        <location line="+689"/>
+        <location line="+697"/>
         <source>Catalog fields</source>
         <translation>Katalogfält</translation>
     </message>
@@ -1071,12 +1137,12 @@
         <translation>Enhetsbild</translation>
     </message>
     <message>
-        <location line="-650"/>
+        <location line="-658"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Registrera värden för alla enheter för statistik över hela samlingen.</translation>
     </message>
     <message>
-        <location line="+772"/>
+        <location line="+780"/>
         <source>Storage fields</source>
         <translation>Lagringsfält</translation>
     </message>
@@ -1127,23 +1193,24 @@
         <translation>Datahantering</translation>
     </message>
     <message>
-        <location line="-11386"/>
-        <location line="+9144"/>
+        <location line="-11395"/>
+        <location line="+9153"/>
         <source>Select the path</source>
         <translation>Välj sökvägen</translation>
     </message>
     <message>
-        <location line="-9141"/>
-        <location line="+5956"/>
+        <location line="-9150"/>
+        <location line="+5965"/>
         <location line="+3188"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Välj</translation>
     </message>
     <message>
-        <location line="-10007"/>
-        <location line="+7384"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-917"/>
+        <location line="-10016"/>
+        <location line="+7393"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
+        <location line="+2496"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -1155,15 +1222,16 @@
         <translation>Ny</translation>
     </message>
     <message>
-        <location line="-5639"/>
+        <location line="-5647"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>Enheter</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+645"/>
+        <location line="+653"/>
         <location line="+28"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>Totalt utrymme</translation>
     </message>
@@ -1209,13 +1277,13 @@
         <translation>Lägg till virtuell</translation>
     </message>
     <message>
-        <location line="-1655"/>
+        <location line="-1663"/>
         <source>Edit List</source>
         <translation>Redigera lista</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4180"/>
+        <location line="+4188"/>
         <source>Full Table</source>
         <translation>Fullständig tabell</translation>
     </message>
@@ -1583,7 +1651,7 @@
     </message>
     <message>
         <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-479"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-543"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
         <source>Open file</source>
         <translation>Öppna fil</translation>
@@ -1624,30 +1692,30 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-7499"/>
+        <location filename="../mainwindow.ui" line="-8703"/>
         <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+660"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1833"/>
         <location line="+239"/>
-        <location line="+252"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+401"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-636"/>
+        <location line="+262"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+465"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-824"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
         <location filename="../mainwindow.ui" line="-560"/>
-        <location line="+7234"/>
+        <location line="+8438"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1178"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1175"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-474"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-321"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1661,11 +1729,11 @@
         <translation>Välj katalogen för denna samling</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5744"/>
-        <location line="+2419"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-484"/>
+        <location filename="../mainwindow.ui" line="-5752"/>
+        <location line="+2427"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-494"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Total Size</source>
         <translation>Total storlek</translation>
     </message>
@@ -1679,8 +1747,8 @@
         <location filename="../core/search.cpp" line="+7"/>
         <location filename="../mainwindow.ui" line="-1464"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+647"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+22"/>
+        <location line="+648"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Filtyp</translation>
@@ -1694,7 +1762,7 @@
     </message>
     <message>
         <location line="-3356"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-908"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-919"/>
         <source>Label</source>
         <translation>Etikett</translation>
     </message>
@@ -1711,12 +1779,12 @@
         <translation>Totalt</translation>
     </message>
     <message>
-        <location line="-4395"/>
+        <location line="-4403"/>
         <source>Free</source>
         <translation>Ledigt</translation>
     </message>
     <message>
-        <location line="+721"/>
+        <location line="+729"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>Serienummer</translation>
@@ -1728,7 +1796,7 @@
         <translation>Byggdatum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1356"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1359"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalogen är redan tilldelad denna virtuella enhet.</translation>
     </message>
@@ -1768,50 +1836,49 @@
         <translation>En katalog i den fysiska gruppen kan endast placeras under en lagring eller denna grupp. Välj en lagring i denna grupp.&lt;br/&gt;&lt;br/&gt;För att använda denna katalog under en enhet i en virtuell grupp, använd kommandot Tilldela.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+492"/>
+        <location line="+495"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Parent ID</source>
         <translation>Förälder-ID</translation>
     </message>
     <message>
-        <location line="-490"/>
+        <location line="-500"/>
         <source>External ID</source>
         <translation>Externt ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Number of files</source>
         <translation>Antal filer</translation>
     </message>
     <message>
-        <location line="-488"/>
+        <location line="-498"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Free space</source>
         <translation>Ledigt utrymme</translation>
     </message>
     <message>
-        <location line="-490"/>
+        <location line="-500"/>
         <location line="+239"/>
-        <location line="+252"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="-24"/>
+        <location line="+262"/>
         <source>Total space</source>
         <translation>Totalt utrymme</translation>
     </message>
     <message>
-        <location line="-490"/>
+        <location line="-500"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Date updated</source>
         <translation>Datum uppdaterad</translation>
     </message>
     <message>
-        <location line="-489"/>
+        <location line="-499"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Group ID</source>
         <translation>Grupp-ID</translation>
     </message>
@@ -1822,7 +1889,6 @@
         <source>Catalog ID</source>
         <translation>Katalog-ID</translation>
     </message>
-
     <message>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
         <source>Parent storage</source>
@@ -1849,7 +1915,7 @@
         <translation>Filsökväg</translation>
     </message>
     <message>
-        <location line="+636"/>
+        <location line="+637"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Spara ändringar av katalogdefinitionen?&lt;br/&gt;</translation>
     </message>
@@ -1879,19 +1945,19 @@
         <translation>Är hellenhet</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+6"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Katalogen måste uppdateras för att återspegla dessa ändringar)</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+25"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation>Uppdatera kataloginnehållet med de nya kriterierna?
 </translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>Select the csv file to be imported</source>
         <translation>Välj csv-filen som ska importeras</translation>
     </message>
@@ -1915,13 +1981,13 @@
         <location line="+17"/>
         <location line="+22"/>
         <location line="+17"/>
-        <location line="+25"/>
         <location line="+24"/>
+        <location line="+23"/>
         <source>Path: </source>
         <translation>Sökväg: </translation>
     </message>
     <message>
-        <location line="-102"/>
+        <location line="-100"/>
         <location line="+39"/>
         <source>Number of files: </source>
         <translation>Antal filer: </translation>
@@ -1935,20 +2001,20 @@
         <location line="+37"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+26"/>
+        <location line="+24"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+19"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+59"/>
+        <location line="+66"/>
         <location line="+1"/>
         <location line="+1"/>
         <source>(added: </source>
         <translation>(tillagt: </translation>
     </message>
     <message>
-        <location line="-168"/>
+        <location line="-173"/>
         <location line="+39"/>
         <source>Total file size: </source>
         <translation>Total filstorlek: </translation>
@@ -1956,80 +2022,72 @@
     <message>
         <location line="-27"/>
         <location line="+39"/>
-        <location line="+25"/>
         <location line="+24"/>
-        <location line="+60"/>
+        <location line="+23"/>
         <source>Storage updated: </source>
         <translation>Lagring uppdaterad: </translation>
     </message>
     <message>
-        <location line="-143"/>
+        <location line="-81"/>
         <location line="+39"/>
-        <location line="+28"/>
+        <location line="+26"/>
         <location line="+21"/>
-        <location line="+61"/>
+        <location line="+68"/>
         <source>Used Space: </source>
         <translation>Använt utrymme: </translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-153"/>
         <location line="+39"/>
-        <location line="+28"/>
+        <location line="+26"/>
         <location line="+21"/>
-        <location line="+61"/>
+        <location line="+68"/>
         <source>Free Space: </source>
         <translation>Ledigt utrymme: </translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-153"/>
         <location line="+39"/>
-        <location line="+28"/>
+        <location line="+26"/>
         <location line="+21"/>
-        <location line="+61"/>
+        <location line="+68"/>
         <source>Total Space: </source>
         <translation>Totalt utrymme: </translation>
     </message>
     <message>
-        <location line="-134"/>
+        <location line="-139"/>
         <source>Catalog created: </source>
         <translation>Katalog skapad: </translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+77"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation>&lt;table&gt;&lt;br/&gt;Valda aktiva kataloger från &lt;b&gt;%1&lt;/b&gt; uppdateras.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
-
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+325"/>
-        <source>Update all active catalogs</source>
-        <translation>Uppdatera alla aktiva kataloger</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+70"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+60"/>
         <source>Do you want a the summary of updates for each catalog?</source>
         <translation>Vill du ha sammanfattningen av uppdateringar för varje katalog?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+289"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+279"/>
         <source>Upgraded collection to v2.0.</source>
         <translation>Uppgraderade samling till v2.0.</translation>
     </message>
     <message>
-        <location line="-190"/>
+        <location line="-188"/>
         <source>The device selected must be a Catalog. Try with a different device ID</source>
         <translation>Den valda enheten måste vara en katalog. Försök med ett annat enhets-ID</translation>
     </message>
     <message>
-        <location line="-1861"/>
+        <location line="-1857"/>
         <location line="+239"/>
-        <location line="+252"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="-2"/>
+        <location line="+262"/>
         <source>Used space</source>
         <translation>Använt utrymme</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_statistics.cpp" line="-173"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="-199"/>
         <source>All device records</source>
         <translation>Alla enhetsposter</translation>
     </message>
@@ -2039,20 +2097,20 @@
         <translation>av</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5337"/>
-        <location line="+3025"/>
+        <location filename="../mainwindow.ui" line="-5346"/>
+        <location line="+1830"/>
         <location line="+67"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>Definiera om söktexten ska användas för att leta endast i filnamn, mappsökvägar eller båda.</translation>
     </message>
     <message>
-        <location line="-3235"/>
+        <location line="-2040"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>Definiera hur söktexten ska användas.</translation>
     </message>
     <message>
-        <location line="+7072"/>
+        <location line="+7081"/>
         <source>Include Hidden files</source>
         <translation>Inkludera dolda filer</translation>
     </message>
@@ -2067,12 +2125,12 @@
         <translation>Generera ett katalognamn baserat på sökvägen.</translation>
     </message>
     <message>
-        <location line="-8342"/>
+        <location line="-8351"/>
         <source>Reset all filters</source>
         <translation>Återställ alla filter</translation>
     </message>
     <message>
-        <location line="+10417"/>
+        <location line="+10426"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
@@ -2087,7 +2145,7 @@
         <translation>Behåll register över filer och storlek för statistik</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-910"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-907"/>
         <location line="+11"/>
         <location line="+34"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
@@ -2231,7 +2289,7 @@
         <translation>Sökresultat</translation>
     </message>
     <message>
-        <location line="+372"/>
+        <location line="+369"/>
         <source>Text Phrase selected</source>
         <translation>Textfras vald</translation>
     </message>
@@ -2411,17 +2469,17 @@
         <translation>Behåll alltid en säkerhetskopia av varje katalog</translation>
     </message>
     <message>
-        <location line="-5566"/>
+        <location line="-5574"/>
         <source>Used</source>
         <translation>Använt</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-228"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+97"/>
         <source>Remove this directory</source>
         <translation>Ta bort denna katalog</translation>
     </message>
     <message>
-        <location line="+250"/>
+        <location line="+97"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Ange ett namn för denna nya katalog.&lt;br/&gt;</translation>
     </message>
@@ -2442,12 +2500,12 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1020"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1033"/>
         <source>Choose a different name and try again.</source>
         <translation>Välj ett annat namn och försök igen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5009"/>
+        <location filename="../mainwindow.ui" line="+5017"/>
         <source>Check at start up</source>
         <translation>Kontrollera vid uppstart</translation>
     </message>
@@ -2467,23 +2525,23 @@
         <translation>&lt;br/&gt;&lt;b&gt;Välkommen till Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Det verkar som detta är första körningen.&lt;br/&gt;&lt;br/&gt;Följande inställningar har tillämpats:&lt;br/&gt; - Språk: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Du kan ändra dessa i fliken %3.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1045"/>
+        <location filename="../mainwindow.ui" line="-1053"/>
         <source>Snapshot</source>
         <translation>Ögonblicksbild</translation>
     </message>
     <message>
-        <location line="+3746"/>
+        <location line="+3754"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Källa</translation>
     </message>
     <message>
-        <location line="-3707"/>
+        <location line="-3715"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uppdatera alla kataloger som är aktiva, om enheten är tillgänglig.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1232"/>
+        <location line="+1240"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importera en lista med volymer från VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2503,13 +2561,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-375"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+765"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+768"/>
         <source>Storage ID</source>
         <translation>Lagrings-ID</translation>
     </message>
     <message>
-        <location line="-828"/>
-        <location line="+924"/>
+        <location line="-836"/>
+        <location line="+932"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uppdatera den valda katalogens filer, om enheten är tillgänglig&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2517,17 +2575,17 @@
         <location filename="../core/search.cpp" line="-2"/>
         <location filename="../mainwindow.ui" line="+1190"/>
         <location line="+1449"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-21"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-8252"/>
+        <location filename="../mainwindow.ui" line="-8261"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Rensa söktexten från tecken som _ - . ,</translation>
     </message>
     <message>
-        <location line="+2975"/>
+        <location line="+1780"/>
         <source>Duplicates on</source>
         <translation>Dubbletter på</translation>
     </message>
@@ -2538,22 +2596,22 @@
         <translation>Ändringsdatum</translation>
     </message>
     <message>
-        <location line="+6726"/>
+        <location line="+7930"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Kontrollera om en ny version av Katalog är tillgänglig när appen startas.</translation>
     </message>
     <message>
-        <location line="-5455"/>
+        <location line="-5463"/>
         <source>Show/Hide search history</source>
         <translation>Visa/dölj sökhistorik</translation>
     </message>
     <message>
-        <location line="-4832"/>
+        <location line="-4833"/>
         <source>Search criteria</source>
         <translation>Sökkriterier</translation>
     </message>
     <message>
-        <location line="+4225"/>
+        <location line="+4226"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
         <source>Tag</source>
         <translation>Tagg</translation>
@@ -2584,7 +2642,7 @@
         <translation>1- Välj en hel enhet eller katalog, &lt;br/&gt;2- välj alternativ, och &lt;br/&gt;3- klicka &apos;Skapa&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4908"/>
+        <location filename="../mainwindow.ui" line="-4909"/>
         <source>Show/Hide search criteria</source>
         <translation>Visa/dölj sökkriterier</translation>
     </message>
@@ -2604,7 +2662,7 @@
         <translation>uteslut</translation>
     </message>
     <message>
-        <location line="+4680"/>
+        <location line="+4689"/>
         <source>is full device</source>
         <translation>är hellenhet</translation>
     </message>
@@ -2614,18 +2672,18 @@
         <translation>katalogen är för hela enheten</translation>
     </message>
     <message>
-        <location line="-4749"/>
+        <location line="-5953"/>
         <location line="+232"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Välj att söka dubbletter baserat på nästa kriterier</translation>
     </message>
     <message>
-        <location line="+759"/>
+        <location line="+1955"/>
         <source>Choose to use Tags to filter results</source>
         <translation>Välj att använda taggar för att filtrera resultat</translation>
     </message>
     <message>
-        <location line="-3359"/>
+        <location line="-3360"/>
         <source>case sensitive</source>
         <translation>skiftlägeskänslig</translation>
     </message>
@@ -2635,20 +2693,20 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resultaten ska matcha texten exakt (känslig för versaler och gemener)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+9974"/>
+        <location line="+9983"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Förladda senast valda kataloger vid uppstart för att påskynda nästa sökning</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-398"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-462"/>
         <source>Move file to Trash</source>
         <translation>Flytta fil till papperskorg</translation>
     </message>
     <message>
         <location line="+129"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-1069"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1066"/>
         <location line="+64"/>
         <location line="+509"/>
         <location line="+39"/>
@@ -2715,14 +2773,14 @@ till papperskorgen?</translation>
         <translation>Tagga denna mapp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-11201"/>
+        <location filename="../mainwindow.ui" line="-11210"/>
         <source>Selection</source>
         <translation>Urval</translation>
     </message>
     <message>
         <location line="-356"/>
         <location line="+32"/>
-        <location line="+7082"/>
+        <location line="+7091"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Expandera 1 nivå, 2 nivåer eller kollaps</translation>
@@ -2820,7 +2878,6 @@ till papperskorgen?</translation>
         <source>Copy folder name</source>
         <translation>Kopiera mappnamn</translation>
     </message>
-
     <message>
         <location line="+6"/>
         <source>Move folder to Trash</source>
@@ -2828,7 +2885,7 @@ till papperskorgen?</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+375"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+439"/>
         <source>orderValue</source>
         <translation>ordningsvärde</translation>
     </message>
@@ -2837,12 +2894,12 @@ till papperskorgen?</translation>
         <location line="+21"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Device Type</source>
         <translation>Enhetstyp</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-196"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-260"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Den valda katalogen innehåller mer än %1 filer.&lt;br/&gt;Det kan ta flera minuter att öppna.&lt;br/&gt;Fortsätt?</translation>
     </message>
@@ -2853,15 +2910,15 @@ till papperskorgen?</translation>
         <translation>Minne</translation>
     </message>
     <message>
-        <location line="-10866"/>
-        <location line="+1022"/>
-        <location line="+1196"/>
+        <location line="-10875"/>
+        <location line="+1023"/>
         <location line="+1640"/>
+        <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
         <translation>Använd textkriterier i sökningen</translation>
     </message>
     <message>
-        <location line="-515"/>
+        <location line="-1711"/>
         <source>Differences on</source>
         <translation>Skillnader på</translation>
     </message>
@@ -2876,22 +2933,22 @@ till papperskorgen?</translation>
         <translation>Katalog2</translation>
     </message>
     <message>
-        <location line="-3650"/>
+        <location line="-2455"/>
         <source>File name</source>
         <translation>Filnamn</translation>
     </message>
     <message>
-        <location line="+2218"/>
+        <location line="+1023"/>
         <source>File criteria</source>
         <translation>Filkriterier</translation>
     </message>
     <message>
-        <location line="+1640"/>
+        <location line="+2836"/>
         <source>Folder criteria</source>
         <translation>Mappkriterier</translation>
     </message>
     <message>
-        <location line="+4994"/>
+        <location line="+5002"/>
         <source>Graphic Start Date</source>
         <translation>Grafik startdatum</translation>
     </message>
@@ -2901,11 +2958,10 @@ till papperskorgen?</translation>
         <translation>Välj datum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+678"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+679"/>
         <source>Include Metadata</source>
         <translation>Inkludera metadata</translation>
     </message>
-
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
         <source>Local disk</source>
@@ -3016,16 +3072,16 @@ till papperskorgen?</translation>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+562"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1219"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
         <source>Catalog with results</source>
         <translation>Katalog med resultat</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1167"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1178"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3042,9 +3098,9 @@ till papperskorgen?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-492"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-502"/>
         <location line="+239"/>
-        <location line="+252"/>
+        <location line="+262"/>
         <source>Active</source>
         <translation>Aktiv</translation>
     </message>
@@ -3137,7 +3193,7 @@ till papperskorgen?</translation>
         <translation>Välj en annan källa eller mål (en enhet ska inte mappas till sig själv).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-490"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-482"/>
         <source>Virtual Group</source>
         <translation>Virtuell grupp</translation>
     </message>
@@ -3148,7 +3204,7 @@ till papperskorgen?</translation>
     </message>
     <message>
         <location line="+199"/>
-        <location line="+66"/>
+        <location line="+68"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
@@ -3193,20 +3249,20 @@ till papperskorgen?</translation>
         <translation>Denna grupp är nödvändig för att hålla lagring och kataloger.&lt;br/&gt;Den kan inte tas bort.</translation>
     </message>
     <message>
-            <location line="+253"/>
-            <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
-            <translation>MIME-verifiering slutförd framgångsrikt.&lt;br/&gt;Inga avvikelser hittades mellan filtillägg och faktiskt innehåll.</translation>
-        </message>
-        <message>
-            <location line="+3"/>
-            <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
-            <translation>MIME-verifiering slutförd.&lt;br/&gt;%1 avvikelse(r) hittades mellan filtillägg och faktiskt innehåll.&lt;br/&gt;&lt;br/&gt;Rapport sparad i:&lt;br/&gt;%2</translation>
-        </message>
-        <message>
-            <location line="+30"/>
-            <source>MIME verification failed:&lt;br/&gt;%1</source>
-            <translation>MIME-verifiering misslyckades:&lt;br/&gt;%1</translation>
-        </message>
+        <location line="+235"/>
+        <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+        <translation>MIME-verifiering slutförd framgångsrikt.&lt;br/&gt;Inga avvikelser hittades mellan filtillägg och faktiskt innehåll.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+        <translation>MIME-verifiering slutförd.&lt;br/&gt;%1 avvikelse(r) hittades mellan filtillägg och faktiskt innehåll.&lt;br/&gt;&lt;br/&gt;Rapport sparad i:&lt;br/&gt;%2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>MIME verification failed:&lt;br/&gt;%1</source>
+        <translation>MIME-verifiering misslyckades:&lt;br/&gt;%1</translation>
+    </message>
     <message>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
         <location line="+323"/>
@@ -3262,12 +3318,15 @@ till papperskorgen?</translation>
         <translation>Stoppa aktuell sökning</translation>
     </message>
     <message>
-        <location line="+363"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-107"/>
+        <location line="+73"/>
+        <location line="+33"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+363"/>
         <source>Folders found</source>
         <translation>Mappar hittade</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+38"/>
         <source>Duplicates found</source>
         <translation>Dubbletter hittade</translation>
     </message>
@@ -3277,53 +3336,7 @@ till papperskorgen?</translation>
         <translation>Skillnader hittade</translation>
     </message>
     <message>
-        <location line="+45"/>
-        <source>Search interrupted | Files found: %1 | Files processed: %2</source>
-        <translation>Sökning avbruten | Filer hittade: %1 | Filer behandlade: %2</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Search interrupted. No results available.</source>
-        <translation>Sökning avbruten. Inga resultat tillgängliga.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5</source>
-        <translation>Laddar katalog %1 av %2 (%3) | Filer hittade: %4 | Filer behandlade: %5</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7</source>
-        <translation>Laddar katalog %1 av %2 (%3) | %4 filer laddade (%5%) | Filer hittade: %6 | Filer behandlade: %7</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source> | CATALOG LOADING PAUSED</source>
-        <translation> | KATALOGLADDNING PAUSAD</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Processing Catalog %1 of %2 | Files found: %3 | Processing files...</source>
-        <translation>Behandlar katalog %1 av %2 | Filer hittade: %3 | Behandlar filer...</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Searching in Catalog %1 of %2 | </source>
-        <translation>Söker i katalog %1 av %2 | </translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location line="+5"/>
-        <source>Files found: %1 | Files processed: %2</source>
-        <translation>Filer hittade: %1 | Filer behandlade: %2</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source> (%1%)</source>
-        <translation> (%1%)</translation>
-    </message>
-    <message>
-        <location line="+18"/>
+        <location line="+213"/>
         <source>No search results available.</source>
         <translation>Inga sökresultat tillgängliga.</translation>
     </message>
@@ -3374,13 +3387,7 @@ till papperskorgen?</translation>
         <translation>&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total storlek:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min storlek:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max storlek:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Genomsnittlig storlek: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max datum:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <location line="+32"/>
-        <source>Ready</source>
-        <translation>Redo</translation>
-    </message>
-    <message>
-        <location line="-3"/>
+        <location line="+51"/>
         <source>Search completed | Files found: %1</source>
         <translation>Sökning slutförd | Filer hittade: %1</translation>
     </message>
@@ -3450,116 +3457,6 @@ till papperskorgen?</translation>
         <location filename="../mainwindow_ui_wrapper_storage.cpp" line="+62"/>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
         <translation>Lagring: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Källmappen innehåller ingen fil:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Detta kan betyda att enheten inte är monterad till denna mapp,&lt;br/&gt;eller att mappen helt enkelt är tom.&lt;br/&gt;&lt;br/&gt;Tvinga försök att hämta värden ändå?</translation>
-    </message>
-</context>
-<context>
-    <name>Mainwindow</name>
-    <message>
-        <source>Catalog</source>
-        <translation type="obsolete">Katalog</translation>
-    </message>
-</context>
-<context>
-    <name>Search</name>
-
-    <message>
-        <source>Directory</source>
-        <translation type="obsolete">Katalog</translation>
-    </message>
-    <message>
-        <source>orderValue</source>
-        <translation type="obsolete">ordningsvärde</translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation type="obsolete">Sökväg</translation>
-    </message>
-    <message>
-        <source>File Type</source>
-        <translation type="obsolete">Filtyp</translation>
-    </message>
-
-</context>
-<context>
-    <name>SearchProgressManager</name>
-    <message>
-        <location filename="../core/searchprogressmanager.cpp" line="+78"/>
-        <location line="+11"/>
-        <source> | SEARCH PAUSED</source>
-        <translation> | SÖKNING PAUSAD</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <location line="+8"/>
-        <source> | CATALOG LOADING PAUSED</source>
-        <translation> | KATALOGLADDNING PAUSAD</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Searching in directory %1</source>
-        <translation>Söker i katalog %1</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+14"/>
-        <source>Searching in catalog %1</source>
-        <translation>Söker i katalog %1</translation>
-    </message>
-    <message>
-        <location line="-12"/>
-        <source>Searching in catalog</source>
-        <translation>Söker i katalog</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source> | Catalog %1 of %2</source>
-        <translation> | Katalog %1 av %2</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <location line="+5"/>
-        <source>Searching</source>
-        <translation>Söker</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source> | Total folders found: %1</source>
-        <translation> | Totalt mappar hittade: %1</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source> | Total files found: %1</source>
-        <translation> | Totalt filer hittade: %1</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source> | Total folders found: 0</source>
-        <translation> | Totalt mappar hittade: 0</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source> | Total files found: 0</source>
-        <translation> | Totalt filer hittade: 0</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source> | Total files processed: %1</source>
-        <translation> | Totalt filer behandlade: %1</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source> (%1%)</source>
-        <translation> (%1%)</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Search completed | Total folders found: %1</source>
-        <translation>Sökning slutförd | Totalt mappar hittade: %1</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Search completed | Total files found: %1</source>
-        <translation>Sökning slutförd | Totalt filer hittade: %1</translation>
     </message>
 </context>
 <context>

@@ -526,7 +526,7 @@
                             StatusBarMessageBuilder builder;
                             builder.setOperation(tr("Explore"))
                                 .setDeviceContext(1, 1, deviceName)
-                                .setProcess(tr("File Types updated"), filesLoaded, totalFiles);
+                                .setProcess(tr("File Types Updated"), filesLoaded, totalFiles);
 
                             statusBarLabel->setText(builder.build());
                             QCoreApplication::processEvents();

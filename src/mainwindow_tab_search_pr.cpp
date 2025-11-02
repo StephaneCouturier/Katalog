@@ -1128,15 +1128,6 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             // Note: Can't show two results, so "Files processed" is omitted
         }
 
-        QString message = builder.build();
-
-        // Append PAUSED status if needed
-        if (searchJobStoppable->isPaused()) {
-            message += tr(" | CATALOG LOADING PAUSED /DEV /FIX THIS");
-        }
-
-        statusBar()->show();
-        statusBarLabel->setText(message);
         QCoreApplication::processEvents();
         return;
     }
@@ -1150,7 +1141,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                 currentSearch->currentCatalogName
                 );
             builder.setResult(tr("Files found"), currentSearch->fileNames.size());
-            builder.setProcess(tr("Processing files /DEV /FIX THIS"), 0, 0);
+            builder.setProcess(tr("Evaluated"), 0, 0);
 
             statusBar()->show();
             statusBarLabel->setText(builder.build());

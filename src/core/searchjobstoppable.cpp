@@ -432,7 +432,7 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 qDebug() << "File type update needed for" << filesToMigrate << "files";
 
                 // Set operation context for file type update
-                currentOperationVerb = QApplication::translate("MainWindow","File Types updated");
+                currentOperationVerb = QApplication::translate("MainWindow","File Types Updated");
                 //currentOperationUnit = QApplication::translate("MainWindow","updated");
                 showSearchStatistics = false;
 
