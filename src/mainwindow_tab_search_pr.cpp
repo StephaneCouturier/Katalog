@@ -1117,7 +1117,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
 
         // Use operation verb and unit from search engine
         builder.setProcess(
-            searchJobStoppable->currentOperationVerb,  // "Loading" or "Update file types"
+            searchJobStoppable->currentOperationVerb,  // "Loaded" or "File types updated"
             searchJobStoppable->currentCatalogFilesLoaded,
             searchJobStoppable->currentCatalogTotalFiles
             );

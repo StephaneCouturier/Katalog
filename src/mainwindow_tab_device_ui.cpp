@@ -551,16 +551,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 {
     qDebug() << "=== UPDATE ALL ACTIVE CLICKED ===";
 
-    if (!catalogManager) {
-        qDebug() << "ERROR: Catalog manager not initialized";
-        return;
-    }
-
-    if (catalogManager->catalogOperationRunning()) {
-        qDebug() << "ERROR: Catalog operation already running";
-        return;
-    }
-
     // Ask user for report choice
     QMessageBox msgBox;
     msgBox.setWindowTitle("Katalog");

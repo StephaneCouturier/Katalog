@@ -1909,31 +1909,10 @@ void MainWindow::setupDeviceUpdateManager()
     connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
             this, &MainWindow::onDeviceUpdateCancelled);
 
-    // For catalog operations, let CatalogProgressManager handle the progress
-    // Only connect generic progress for non-catalog operations
-    connect(deviceUpdateManager, &DeviceUpdateManager::progressChanged,
-            this, [this]() {
-                // Only update progress if CatalogProgressManager is not handling it
-                if (!catalogProgressManager || !catalogManager || !catalogManager->catalogOperationRunning()) {
-                    onDeviceUpdateProgress();
-                }
-            });
-
-    connect(deviceUpdateManager, &DeviceUpdateManager::statusChanged,
-            this, [this]() {
-                // Only update status if CatalogProgressManager is not handling it
-                if (!catalogProgressManager || !catalogManager || !catalogManager->catalogOperationRunning()) {
-                    onDeviceUpdateProgress();
-                }
-            });
-
-    connect(deviceUpdateManager, &DeviceUpdateManager::currentDeviceNameChanged,
-            this, [this]() {
-                // Only update device name if CatalogProgressManager is not handling it
-                if (!catalogProgressManager || !catalogManager || !catalogManager->catalogOperationRunning()) {
-                    onDeviceUpdateProgress();
-                }
-            });
+    // Connect CatalogProgressManager to DeviceUpdateManager's CatalogManager
+    if (catalogProgressManager && deviceUpdateManager) {
+        deviceUpdateManager->setCatalogProgressManager(catalogProgressManager);
+    }
 
     // Connect individual catalog batch reports
     connect(deviceUpdateManager, &DeviceUpdateManager::catalogCompletedInBatch,
@@ -2102,7 +2081,7 @@ void MainWindow::setCatalogUpdateUIState(bool isRunning)
         QApplication::restoreOverrideCursor();
 
         // Clear status
-        statusBarLabel->clear();
+        //statusBarLabel->clear();
     }
 }
 //--------------------------------------------------------------------------
@@ -2139,20 +2118,31 @@ void MainWindow::onDeviceUpdateCancelled()
 {
     qDebug() << "=== MainWindow::onDeviceUpdateCancelled ===";
 
+    // PREVENT DOUBLE CALL
+    static bool alreadyHandling = false;
+    if (alreadyHandling) {
+        qDebug() << "Already handling cancellation, ignoring duplicate call";
+        return;
+    }
+    alreadyHandling = true;
+
     if (deviceUpdateManager->m_updateType == "create") {
         qDebug() << "CREATION CANCELLED: Performing database cleanup";
 
         // Call the existing cleanup method for creation cancellation
         cleanupStoppedCatalogCreation();
 
-        statusBarLabel->setText(tr("Operation cancelled"));
+        //statusBarLabel->setText(tr("Operation cancelled"));
     } else {
         qDebug() << "UPDATE CANCELLED: Standard UI restoration";
         setCatalogUpdateUIState(false);  // Use Catalog context restoration
-        statusBarLabel->setText(tr("Operation cancelled"));
+        //statusBarLabel->setText(tr("Operation cancelled"));
     }
 
     qDebug() << "Operation cancelled by user";
+
+    // Reset flag at end
+    alreadyHandling = false;
 }
 //--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateProgress()

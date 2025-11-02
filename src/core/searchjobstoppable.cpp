@@ -328,8 +328,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         qDebug() << "Memory mode: Loading catalog CSV file for" << device->name;
 
         // Set opeartion context for csv loading
-        currentOperationVerb = "Loading";
-        currentOperationUnit = "files loaded";
+        currentOperationVerb = "Loaded";
+        //currentOperationUnit = "files loaded";
         showSearchStatistics = true;
 
         // Reset catalog file loading counters (same as SearchMemory)
@@ -432,8 +432,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 qDebug() << "File type update needed for" << filesToMigrate << "files";
 
                 // Set operation context for file type update
-                currentOperationVerb = QApplication::translate("MainWindow","Update file types");
-                currentOperationUnit = QApplication::translate("MainWindow","updated");
+                currentOperationVerb = QApplication::translate("MainWindow","File Types updated");
+                //currentOperationUnit = QApplication::translate("MainWindow","updated");
                 showSearchStatistics = false;
 
                 // Reset counters for file type update progress
@@ -471,8 +471,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 disconnect(progressConnection);
 
                 // Restore normal operation context
-                currentOperationVerb = QApplication::translate("MainWindow","Loading");
-                currentOperationUnit = QApplication::translate("MainWindow","loaded");
+                currentOperationVerb = QApplication::translate("MainWindow","Loaded");
+                //currentOperationUnit = QApplication::translate("MainWindow","loaded");
                 showSearchStatistics = true;
 
                 // Check if stopped
