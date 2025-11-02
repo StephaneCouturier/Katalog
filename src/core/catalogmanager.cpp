@@ -101,39 +101,57 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
     // Connect job signals with enhanced progress handling (same pattern as SearchManager)
     connect(m_currentJob, &KJob::result, this, &CatalogManager::onJobResult);
 
+    setOperationPhase(PHASE_IDLE);
+
     // Enhanced progress connection that handles catalog progress updates
-    connect(m_currentJob, &CatalogJob::catalogProgress, this, [this](qint64 filesProcessed, qint64 totalFiles, const QString &currentPath) {
-        if (m_currentJob && m_currentJob->getCatalogEngine()) {
-            CatalogJobStoppable* engine = m_currentJob->getCatalogEngine();
+    connect(m_currentJob, &CatalogJob::catalogProgress,
+            this, [this](qint64 filesProcessed, qint64 totalFiles, const QString &currentPath) {
+                if (m_currentJob && m_currentJob->getCatalogEngine()) {
+                    CatalogJobStoppable* engine = m_currentJob->getCatalogEngine();
 
-            // Regular progress updates
-            if (filesProcessed >= 0) {
-                setFilesProcessed(filesProcessed);
-                setTotalFiles(totalFiles);
-                setCurrentPath(currentPath);
+                    // Phase detection
+                    if (currentPath.startsWith("__COUNTING_STATE__|")) {
+                        setOperationPhase(PHASE_COUNTING);
+                    } else if (currentPath.startsWith("Found ") && currentPath.endsWith(" files.")) {
+                        // Counting finished - stay in COUNTING phase
+                        if (m_currentPhase != PHASE_COUNTING) {
+                            setOperationPhase(PHASE_COUNTING);
+                        }
+                    } else if (currentPath.startsWith("__FILETYPE_MIGRATION__|")) {
+                        setOperationPhase(PHASE_MIGRATING);
+                    } else if (totalFiles > 0 && !currentPath.startsWith("__") &&
+                               !currentPath.startsWith("Found ") && currentPath.contains("/")) {
+                        setOperationPhase(PHASE_INDEXING);
+                    }
 
-                if (totalFiles > 0) {
-                    int percent = qMin(100, static_cast<int>((filesProcessed * 100) / totalFiles));
-                    setProgress(percent);
+                    // Update progress
+                    if (filesProcessed >= 0) {
+                        setFilesProcessed(filesProcessed);
+                        setTotalFiles(totalFiles);
+                        setCurrentPath(currentPath);
+
+                        if (totalFiles > 0) {
+                            int percent = qMin(100, static_cast<int>((filesProcessed * 100) / totalFiles));
+                            setProgress(percent);
+                        }
+
+                        setCurrentCatalogName(engine->getCurrentCatalogName());
+
+                        QString operationType = (m_currentJob->getOperationType() == CatalogJobStoppable::CreateCatalog) ?
+                                                    "Creating" : "Updating";
+                        if (totalFiles > 0) {
+                            setStatus(QString("%1 catalog - %2 of %3 files processed")
+                                          .arg(operationType)
+                                          .arg(filesProcessed)
+                                          .arg(totalFiles));
+                        } else {
+                            setStatus(QString("%1 catalog - %2 files processed")
+                                          .arg(operationType)
+                                          .arg(filesProcessed));
+                        }
+                    }
                 }
-
-                setCurrentCatalogName(engine->getCurrentCatalogName());
-
-                // Set status based on current operation
-                QString operationType = (m_currentJob->getOperationType() == CatalogJobStoppable::CreateCatalog) ? "Creating" : "Updating";
-                if (totalFiles > 0) {
-                    setStatus(QString("%1 catalog - %2 of %3 files processed")
-                                  .arg(operationType)
-                                  .arg(filesProcessed)
-                                  .arg(totalFiles));
-                } else {
-                    setStatus(QString("%1 catalog - %2 files processed")
-                                  .arg(operationType)
-                                  .arg(filesProcessed));
-                }
-            }
-        }
-    });
+            });
 
     setCatalogOperationRunning(true);
     setProgress(0);
@@ -194,6 +212,8 @@ void CatalogManager::stopCatalogOperation()
     m_totalFiles = savedTotalFiles;
 
     emit catalogOperationCancelled();
+
+    setOperationPhase(PHASE_IDLE);
 
     // NOW clear the restored state
     m_currentCatalogName = "";
@@ -263,14 +283,41 @@ void CatalogManager::onJobResult(KJob *job)
 
     try {
         if (job->error() == KJob::KilledJobError) {
+            // Phase is already set correctly from where cancel was triggered
+            // Don't change it - just emit signal so handlers can read lastPhase
+            qDebug() << "Job cancelled - lastPhase:" << m_lastPhase << "currentPhase:" << m_currentPhase;
             emit catalogOperationCancelled();
+
         } else if (job->error()) {
             QString errorMsg = QString("Catalog operation failed: %1").arg(job->errorString());
             emit catalogOperationError(errorMsg);
-        } else {
-            // Success, emit signals before any cleanup
 
-            // Emit individual report here (before cleanup, while job is still valid)
+        } else {
+            // SUCCESS - save final state BEFORE emitting signals
+
+            // Get final counts from job results
+            if (m_currentJob && m_currentJob->getCatalogEngine()) {
+                CatalogJobStoppable* engine = m_currentJob->getCatalogEngine();
+                QList<qint64> results = engine->getResults();
+
+                if (results.size() >= 2 && results[1] > 0) {
+                    m_lastFilesProcessed = results[1];
+                    m_lastTotalFiles = results[1];
+                }
+            }
+
+            // Fallback to current values if results unavailable
+            if (m_lastFilesProcessed == 0) {
+                m_lastFilesProcessed = m_filesProcessed;
+                m_lastTotalFiles = m_totalFiles;
+            }
+
+            m_lastCurrentPath = m_currentPath;
+            setOperationPhase(PHASE_COMPLETING);
+
+            qDebug() << "Saved final state:" << m_lastFilesProcessed << "/" << m_lastTotalFiles;
+
+            // Handle batch mode
             if (m_inBatchMode) {
                 CatalogJobStoppable* catalogEngine = getCurrentCatalogEngine();
                 if (catalogEngine) {
@@ -290,13 +337,8 @@ void CatalogManager::onJobResult(KJob *job)
             emit catalogOperationCompleted();
         }
 
-        //Clean up and reset state
+        // Clean up and reset state
         setCatalogOperationRunning(false);
-        // setProgress(0);
-        // setCurrentCatalogName("");
-        // setFilesProcessed(0);
-        // setTotalFiles(0);
-        // setCurrentPath("");
         m_isPaused = false;
         cleanupJob();
 
@@ -314,11 +356,11 @@ void CatalogManager::onJobResult(KJob *job)
         m_updatingCatalogID = 0;
     }
 
-    // Reset hard stop flag
+    // Reset hard stop flag and phase
     m_hardStopRequested.storeRelease(0);
+    setOperationPhase(PHASE_IDLE);  // Reset phase after all handlers have run
 
     qDebug() << "=== CatalogManager::onJobResult() EXIT ===";
-
 }
 
 void CatalogManager::onJobPercent()
@@ -391,6 +433,7 @@ void CatalogManager::setCurrentPath(const QString &path)
 {
     if (m_currentPath != path) {
         m_currentPath = path;
+        m_lastCurrentPath = path;
         emit currentPathChanged();
     }
 }
@@ -465,6 +508,19 @@ void CatalogManager::requestHardStop()
     setStatus("Hard stopping catalog operation...");
     if (m_currentJob) {
         m_currentJob->requestHardStop();
+    }
+}
+
+void CatalogManager::setOperationPhase(OperationPhase phase)
+{
+    if (m_currentPhase != phase) {
+        m_lastPhase = m_currentPhase;  // Remember previous phase
+        m_currentPhase = phase;
+
+        // Debug output with readable names
+        QStringList phaseNames = {"IDLE", "COUNTING", "INDEXING", "MIGRATING", "COMPLETING"};
+        qDebug() << "Operation phase changed:"
+                 << phaseNames[m_lastPhase] << "->" << phaseNames[m_currentPhase];
     }
 }
 

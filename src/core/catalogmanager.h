@@ -60,6 +60,17 @@ public:
     explicit CatalogManager(QObject *parent = nullptr);
     ~CatalogManager();
 
+    enum OperationPhase {
+        PHASE_IDLE,
+        PHASE_COUNTING,      // Counting files
+        PHASE_INDEXING,      // Scanning/indexing files
+        PHASE_MIGRATING,     // File type migration
+        PHASE_COMPLETING     // Finalizing
+    };
+
+    OperationPhase currentPhase() const { return m_currentPhase; }
+    OperationPhase lastPhase() const { return m_lastPhase; }
+
     // Properties
     bool catalogOperationRunning() const { return m_catalogOperationRunning; }
     int progress() const { return m_progress; }
@@ -97,7 +108,13 @@ public:
     qint64 lastFilesProcessed() const { return m_lastFilesProcessed; }
     qint64 lastTotalFiles() const { return m_lastTotalFiles; }
 
+    QString lastCurrentPath() const { return m_lastCurrentPath; }
+
 private:
+    OperationPhase m_currentPhase = PHASE_IDLE;
+    OperationPhase m_lastPhase = PHASE_IDLE;
+    void setOperationPhase(OperationPhase phase);
+
     void setCatalogOperationRunning(bool running);
     void setProgress(int progress);
     void setStatus(const QString &status);
@@ -138,6 +155,8 @@ private:
     qint64 m_globalUpdateDeltaSize = 0;
     int m_updatedCatalogs = 0;
     int m_skippedCatalogs = 0;
+
+    QString m_lastCurrentPath;
 
 public slots:
     void startCatalogJobStoppable(CatalogJobStoppable *catalogEngine,

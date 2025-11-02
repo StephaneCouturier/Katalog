@@ -2261,7 +2261,9 @@ void CatalogJobStoppable::migrateMimeTypesForExistingFiles()
         m_device->catalog->ID,
         // Progress callback
         [this](int processed, int total, QString message) {
-            emitProgressUpdate(processed, total, message);
+            // Set marker for file type migration state
+            QString marker = QString("__FILETYPE_MIGRATION__|%1|%2").arg(processed).arg(total);
+            emitProgressUpdate(processed, total, marker);
             QCoreApplication::processEvents();
         },
         // Should continue callback
