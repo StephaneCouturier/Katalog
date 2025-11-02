@@ -68,6 +68,18 @@ public:
      */
     void setCurrentCatalogEngine(CatalogJobStoppable *currentCatalogEngine);
 
+    /**
+     * @brief Set batch context for multi-catalog operations
+     * @param currentIndex Current catalog being processed (1-based)
+     * @param totalCatalogs Total number of catalogs in batch
+     */
+    void setBatchContext(int currentIndex, int totalCatalogs);
+
+    /**
+     * @brief Clear batch context (return to single-catalog mode)
+     */
+    void clearBatchContext();
+
 public slots:
     /**
      * @brief Update progress display from catalog manager
@@ -89,6 +101,10 @@ private:
     QStatusBar *m_statusBar = nullptr;
     QTimer *m_statusBarTimer = nullptr;
     QLabel *m_statusBarLabel = nullptr;
+
+    // Batch operation context (set by DeviceUpdateManager)
+    int m_batchCurrentIndex = 0;
+    int m_batchTotalCatalogs = 0;
 };
 
 #endif // CATALOGPROGRESSMANAGER_H

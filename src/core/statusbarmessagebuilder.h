@@ -105,14 +105,26 @@ public:
     StatusBarMessageBuilder& setStatus(const QString& status);
 
     /**
-     * @brief Set device context for multi-device operations
+     * @brief Set catalog index for batch operations
+     * @param currentIndex Current catalog index (1-based)
+     * @param totalCount Total number of catalogs
+     * @return Reference to this builder for chaining
+     */
+    StatusBarMessageBuilder& setCatalogIndex(int currentIndex, int totalCount);
+
+    /**
+     * @brief Set catalog name
+     * @param catalogName Name of current catalog
+     * @return Reference to this builder for chaining
+     */
+    StatusBarMessageBuilder& setCatalogName(const QString& catalogName);
+
+    /**
+     * @brief Set device context (convenience method for single catalogs)
      * @param currentIndex Current device/catalog index (1-based)
      * @param totalCount Total number of devices/catalogs
      * @param catalogName Name of current catalog
      * @return Reference to this builder for chaining
-     *
-     * Generates: "Catalog X of Y (CatalogName)"
-     * If totalCount <= 1, this part is hidden
      */
     StatusBarMessageBuilder& setDeviceContext(int currentIndex, int totalCount, const QString& catalogName);
 

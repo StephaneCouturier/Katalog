@@ -194,8 +194,6 @@ void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
     updateDeviceRecursive(rootDevice);
 }
 
-
-
 Device* DeviceUpdateManager::createDummyDeviceFromList(const QList<Device*>& filteredDevices)
 {
     qDebug() << "Creating temporary virtual device for" << filteredDevices.size() << "filtered devices";
@@ -530,15 +528,12 @@ void DeviceUpdateManager::startCatalogOperation(Device* device)
 
 void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
 {
-    if (catalogProgressManager && m_catalogManager) {
-        // Connect CatalogProgressManager to our internal CatalogManager
-        // This ensures the working progress chain is preserved:
-        // CatalogJobStoppable → CatalogManager → CatalogProgressManager → StatusBar
-        catalogProgressManager->connectToCatalogManager(m_catalogManager);
-        qDebug() << "CatalogProgressManager connected to DeviceUpdateManager's CatalogManager";
+    m_catalogProgressManager = catalogProgressManager;
 
-        // IMPORTANT: The catalog progress signals from DeviceUpdateManager should be
-        // transparent - they exist for consistency but CatalogProgressManager handles the UI
+    if (catalogProgressManager && m_catalogManager) {
+        // Connect the existing CatalogProgressManager to our CatalogManager
+        m_catalogProgressManager->connectToCatalogManager(m_catalogManager);
+        qDebug() << "CatalogProgressManager connected to DeviceUpdateManager's CatalogManager";
     }
 }
 
@@ -1095,8 +1090,6 @@ void DeviceUpdateManager::handleOperationCancellation()
     cleanupOperation();
 }
 
-// In DeviceUpdateManager::completeOperation() - add Virtual device statistics saving:
-
 void DeviceUpdateManager::completeOperation()
 {
     qDebug() << "=== DeviceUpdateManager::completeOperation ===";
@@ -1587,6 +1580,21 @@ void DeviceUpdateManager::processNextStorageChild()
 
     qDebug() << "Processing active child:" << nextChild->name;
 
+    // Set batch context for catalogs
+    if (nextChild->type == "Catalog") {
+        // m_currentChildIndex has already been incremented, so it's the current position
+        int currentIndex = m_currentChildIndex;
+        int totalCatalogs = 0;
+
+        // Count total catalogs in storage children
+        for (Device* child : m_childrenToProcess) {
+            if (child->type == "Catalog") totalCatalogs++;
+        }
+
+        qDebug() << "Setting batch context:" << currentIndex << "of" << totalCatalogs;
+        updateCatalogProgressContext(currentIndex, totalCatalogs);
+    }
+
     // Process this child (will be either active catalog or other device type)
     updateDeviceRecursive(nextChild);
 
@@ -1764,6 +1772,23 @@ void DeviceUpdateManager::processNextVirtualChild()
         qDebug() << "=== PROCESSING CATALOG DEVICE:" << nextChild->name << "Active:" << nextChild->active << "===";
 
         if (nextChild->active) {
+            // Calculate current catalog index in the batch
+            int processedCatalogs = m_updatedCatalogs + m_skippedCatalogs;
+            int totalCatalogs = 0;
+
+            // Count total catalogs in this virtual device
+            for (const Device* child : m_remainingVirtualChildren) {
+                if (child->type == "Catalog") totalCatalogs++;
+            }
+            totalCatalogs += processedCatalogs; // Add already processed
+
+            // Count current catalog
+            totalCatalogs += 1;
+            int currentIndex = processedCatalogs + 1;
+
+            qDebug() << "Setting batch context:" << currentIndex << "of" << totalCatalogs;
+            updateCatalogProgressContext(currentIndex, totalCatalogs);
+
             updateCatalogDevice(nextChild);
             if (!m_waitingForCatalogCompletion) {
                 qDebug() << "Catalog completed synchronously - continuing";
@@ -1782,5 +1807,13 @@ void DeviceUpdateManager::processNextVirtualChild()
         qDebug() << "=== PROCESSING OTHER DEVICE TYPE:" << nextChild->type << "===";
         updateVirtualDevice(nextChild);
         processNextVirtualChild();
+    }
+}
+
+void DeviceUpdateManager::updateCatalogProgressContext(int currentCatalogIndex, int totalCatalogs)
+{
+    if (m_catalogProgressManager) {
+        m_catalogProgressManager->setBatchContext(currentCatalogIndex, totalCatalogs);
+        qDebug() << "Updated catalog progress context:" << currentCatalogIndex << "of" << totalCatalogs;
     }
 }

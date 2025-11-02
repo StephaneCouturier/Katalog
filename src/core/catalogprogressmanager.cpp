@@ -80,9 +80,16 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 builder.setStatus(QApplication::translate("MainWindow", "Cancelled"));
 
+                // Catalog index (batch context)
+                if (m_batchTotalCatalogs > 1) {
+                    builder.setCatalogIndex(m_batchCurrentIndex, m_batchTotalCatalogs);
+                } else {
+                    builder.setCatalogIndex(1, 1);
+                }
+
                 // Catalog name
                 if (!m_catalogManager->lastCatalogName().isEmpty()) {
-                    builder.setDeviceContext(1, 1, m_catalogManager->lastCatalogName());
+                    builder.setCatalogName(m_catalogManager->lastCatalogName());
                 }
 
                 // Process info based on PHASE
@@ -138,9 +145,16 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 builder.setStatus(QApplication::translate("MainWindow", "Completed"));
 
+                // Catalog index (batch context)
+                if (m_batchTotalCatalogs > 1) {
+                    builder.setCatalogIndex(m_batchCurrentIndex, m_batchTotalCatalogs);
+                } else {
+                    builder.setCatalogIndex(1, 1);
+                }
+
                 // Catalog name
                 if (!m_catalogManager->lastCatalogName().isEmpty()) {
-                    builder.setDeviceContext(1, 1, m_catalogManager->lastCatalogName());
+                    builder.setCatalogName(m_catalogManager->lastCatalogName());
                 }
 
                 // ALWAYS show final count
@@ -190,9 +204,16 @@ void CatalogProgressManager::updateFromCatalogManager()
 
         builder.setStatus(QApplication::translate("MainWindow", "In Progress"));
 
+        // Catalog index (batch context)
+        if (m_batchTotalCatalogs > 1) {
+            builder.setCatalogIndex(m_batchCurrentIndex, m_batchTotalCatalogs);
+        } else {
+            builder.setCatalogIndex(1, 1);
+        }
+
         // Catalog name
         if (!m_catalogManager->currentCatalogName().isEmpty()) {
-            builder.setDeviceContext(1, 1, m_catalogManager->currentCatalogName());
+            builder.setCatalogName(m_catalogManager->currentCatalogName());
         }
 
         // Detect phase from currentPath
@@ -256,4 +277,18 @@ void CatalogProgressManager::showMessage(const QString &message, int timeout)
     if (m_statusBar) {
         m_statusBarLabel->setText(message);
     }
+}
+
+void CatalogProgressManager::setBatchContext(int currentIndex, int totalCatalogs)
+{
+    m_batchCurrentIndex = currentIndex;
+    m_batchTotalCatalogs = totalCatalogs;
+    qDebug() << "CatalogProgressManager: Batch context set to" << currentIndex << "of" << totalCatalogs;
+}
+
+void CatalogProgressManager::clearBatchContext()
+{
+    m_batchCurrentIndex = 0;
+    m_batchTotalCatalogs = 0;
+    qDebug() << "CatalogProgressManager: Batch context cleared";
 }

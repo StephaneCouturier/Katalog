@@ -57,7 +57,12 @@ public:
     int processedCatalogs() const { return m_processedCatalogs; }
     int totalCatalogs() const { return m_totalCatalogs; }
 
+    /**
+     * @brief Connect to existing CatalogProgressManager for status bar updates
+     * @param catalogProgressManager The progress manager from MainWindow
+     */
     void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
+
     int getProcessedStorageDevices() const { return m_processedStorageDevices; }
 
 signals:
@@ -110,7 +115,6 @@ private:
     void initializeVirtualProcessing(Device* virtualDevice);
     void processNextVirtualChild();
     void completeVirtualProcessing();
-
 
     // ===== HIERARCHY ANALYSIS =====
     void analyzeHierarchy(Device* rootDevice);
@@ -204,6 +208,8 @@ private:
 
     // ===== CATALOG OPERATION INTEGRATION =====
     CatalogManager* m_catalogManager = nullptr;
+    CatalogProgressManager* m_catalogProgressManager = nullptr;
+
     CatalogJobStoppable* m_currentCatalogJob = nullptr;
     bool m_waitingForCatalogCompletion = false;
 
@@ -212,6 +218,8 @@ private:
 
     // ===== TIMING =====
     QDateTime m_operationStartTime;
+
+    void updateCatalogProgressContext(int currentCatalogIndex, int totalCatalogs);
 };
 
 #endif // DEVICEUPDATEMANAGER_H

@@ -55,11 +55,24 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::setStatus(const QString& statu
     return *this;
 }
 
-StatusBarMessageBuilder& StatusBarMessageBuilder::setDeviceContext(int currentIndex, int totalCount, const QString& catalogName)
+StatusBarMessageBuilder& StatusBarMessageBuilder::setCatalogIndex(int currentIndex, int totalCount)
 {
     m_deviceCurrentIndex = currentIndex;
     m_deviceTotalCount = totalCount;
+    return *this;
+}
+
+StatusBarMessageBuilder& StatusBarMessageBuilder::setCatalogName(const QString& catalogName)
+{
     m_catalogName = catalogName;
+    return *this;
+}
+
+StatusBarMessageBuilder& StatusBarMessageBuilder::setDeviceContext(int currentIndex, int totalCount, const QString& catalogName)
+{
+    // Convenience method that sets both
+    setCatalogIndex(currentIndex, totalCount);
+    setCatalogName(catalogName);
     return *this;
 }
 
