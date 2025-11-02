@@ -1,41 +1,70 @@
-# Catalog Update System - Complete Specification v2.8
+# Updates with metadata
 
-## **Target Users**
-- Users transitioning from Katalog v2.7 (or earlier) to v2.8
-- Users changing catalog includeMetadata options at any time
+## **Introduction**
+This document specifices the use and Implementation of catalog and related files updates in the context of the use of File Metadata.
 
-## **Key Changes in v2.8**
+### Key features & technical changes in v2.8
 
-### **1. File Type Conversion**
-New database columns: `file_extension`, `file_type`, `mime_type` (plus `mime_verified`, `type_mismatch`)
-- Required for Search functionality to work
-- Automatically applied to all files (old and new)
+#### 1. File Type fields
+- Feature: enhanced file type management using KFileMetadata extension list.
+- `file_type` has a specific definition in Katalog: see [Create#enhanced-file-type-filtering](Create#enhanced-file-type-filtering)
+- New database columns: `file_extension`, `file_type`, `mime_type`, `mime_verified`, `type_mismatch`
+- `file_extension` and `file_type` are required for Search functionality to work
 
-### **2. Incremental Indexing**
-New mechanism limiting metadata extraction processing:
-- **includeMetadata = "None"**: Only updates  exact file changes (unchanged/deleted/added/modified)
-- **includeMetadata != "None"**: also extracts metadata for changed files or files missing `metadata_extraction_date`
+
+#### 2. Metadata Fields
+- To be populated based on `includeMetadata` field of the table `catalog`.
+- see settings: **None, Media_Basic, Media_Extended, Full_Extended** [Create#metadata-extraction](Create#metadata-extraction)
+- New database columns in `file` and `filetemp` tables for Media_Basic: 
+<br/>- Image: `image_width`, `image_height`, `image_orientation`
+<br/>- Video: `video_duration_seconds`, `video_width`, `video_height`, `video_codec`, `video_framerate`, `video_bitrate`
+<br/>- Audio: `audio_duration_seconds`, `audio_bitrate`, `audio_sample_rate`, `audio_artist`, `audio_album`,`audio_title`, `audio_genre`, `audio_year`, `audio_track_number`
+- New database columns in `file` and `filetemp` tables for Media_Extended and Full_Extended: 
+<br/>- `metadata_extended` TEXT (JSON)
+- New database columns in `file` and `filetemp` tables for overall metadata management: 
+- `metadata_extraction_date` TEXT (ISO format timestamp)
+
+
+### 3. Main user needs
+- The User shall be able to transition from Katalog v2.7 (or earlier) to v2.8 without being forced to run long batch process immediately
+- The User shall be able to see when Katalog is running specific conversion processes and their progress
+- The User shall be able to change a catalog includeMetadata option at any time and to decide when to run the updates
+
+
+
+
+
+
+
+
+
 
 ---
 
+
+
+
+
+#### 2. Incremental Indexing
+- New mechanism limiting metadata extraction processing:
+- **includeMetadata = "None"**: Only updates  exact file changes (unchanged/deleted/added/modified)
+- **includeMetadata != "None"**: also extracts metadata for changed files or files missing `metadata_extraction_date`
+
+
+
+
 ## **Database Schema: Metadata Fields**
 
-### **File Type Fields** (always populated, never cleared):
-- `file_extension` TEXT
-- `file_type` TEXT
-- `mime_type` TEXT
-- `mime_verified` NUMERIC
-- `type_mismatch` NUMERIC
 
-### **Metadata Fields** (populated based on includeMetadata setting):
-- `image_width`, `image_height`, `image_orientation` NUMERIC
-- `video_duration_seconds`, `video_width`, `video_height` NUMERIC
-- `video_codec` TEXT, `video_framerate`, `video_bitrate` NUMERIC
-- `audio_duration_seconds`, `audio_bitrate`, `audio_sample_rate` NUMERIC
-- `audio_artist`, `audio_album`, `audio_title`, `audio_genre` TEXT
-- `audio_year`, `audio_track_number` NUMERIC
-- `metadata_extended` TEXT (JSON)
-- **`metadata_extraction_date` TEXT** (ISO format timestamp)
+
+
+
+#### 2. Incremental Indexing
+- New mechanism limiting metadata extraction processing:
+- **includeMetadata = "None"**: Only updates  exact file changes (unchanged/deleted/added/modified)
+- **includeMetadata != "None"**: also extracts metadata for changed files or files missing `metadata_extraction_date`
+
+
 
 ---
 
@@ -157,7 +186,7 @@ Automatically during:
 - Checks `shouldContinue()` between batches
 - If stopped:
   - Current batch transaction commits (files 0-100 have metadata_extraction_date set)
-  - Remaining files (101-43000) still have NULL metadata_extraction_date
+  - Remaining files (ex 101-43000) still have NULL metadata_extraction_date
 - **Resumable**: Next update/search automatically finds files with NULL metadata_extraction_date and processes them
 
 ### **What Gets Written Per Batch**
@@ -192,55 +221,73 @@ All fields including:
 
 ### **Scenario 2: Changing includeMetadata Option**
 
-#### **2.1: "None" → "Media_Basic", no file changes**
-- **Expected**: Extract metadata for all existing media files (~43k files)
+#### **2.1: "None" → "any other includeMetadata value", no file changes**
+- **Expected**: Extract metadata for all existing media files
 - **Process**:
-  1. Catalog saved with includeMetadata = "Media_Basic"
+  1. Catalog saved with includeMetadata = "Media_Basic" or "Media_Extended" or "Full_Extended"
   2. Scan filesystem → 0 changes
-  3. Step 9: Query `WHERE metadata_extraction_date IS NULL AND file_type IN ('Image','Audio','Video')`
-  4. Extract metadata for ~43k files in batches of 100
+  3. Specific for "Media_Basic" or "Media_Extended", step 9 query `WHERE metadata_extraction_date IS NULL AND file_type IN ('image','audio','video')`
+  4. Extract metadata in batches of 100
   5. All files now have metadata_extraction_date populated
 
 #### **2.2: "Media_Basic" → "Media_Extended"**, no file changes**
 - **Expected**: Re-extract all media files with extended metadata
 - **Process**:
-  1. **In UI (`saveCatalogChanges`)**: Clear `metadata_extraction_date` for all files
-  2. Save catalog with includeMetadata = "Media_Extended"
-  3. Next update: Query finds all files with NULL metadata_extraction_date
-  4. Re-extract with extended level
+  1. Save catalog with includeMetadata = "Media_Extended" and clear `metadata_extraction_date` for all the catalog's files
+  2. Next update: same specific for "Media_Basic" or "Media_Extended",  step 9 query `WHERE metadata_extraction_date IS NULL AND file_type IN ('image','audio','video')`
+  3. Re-extract with extended level
 
 #### **2.3: "Media_Extended" → "Media_Basic"**, no file changes**
 - **Expected**: Clear extended metadata, keep basic
 - **Process**:
-  1. **In UI**: Clear `metadata_extended` column only
-  2. Save catalog
-  3. Next update runs normally (metadata_extraction_date still populated, no re-extraction)
+  1. Save catalog  with includeMetadata = "Media_Basic" and clear `metadata_extended` column only
+  2. Next update runs normally (metadata_extraction_date still populated, no re-extraction)
 
-#### **2.4: "Media_Basic" → "Full_Extended"**, no file changes**
-- **Expected**: Extract metadata for non-media files (media files already have metadata)
-- **Process**:
-  1. **In UI**: Clear `metadata_extraction_date` for all files
-  2. Save catalog
-  3. Next update: Extract for ALL supported file types (not just media)
-
-#### **2.5: "Media_Extended" → "Full_Extended"**, no file changes**
+#### **2.4: "Media_Extended" → "Full_Extended"**, no file changes**
 - **Expected**: Extract metadata only for non-media files (media already have extended)
 - **Process**:
-  1. **In UI**: Do NOT clear metadata_extraction_date
-  2. Save catalog
-  3. Next update: Query finds files WHERE `metadata_extraction_date IS NULL` (only non-media files)
-  4. Extract for those files only
+  1. Save catalog  with includeMetadata = "Full_Extended". DO NOT clear metadata_extraction_date
+  2. Next update: Query finds files WHERE `metadata_extraction_date IS NULL` (only non-media files)
+  3. Extract for those files only
 
-#### **2.6: Any level → "None"**
+#### **2.5: "Media_Basic" → "Full_Extended"**, no file changes**
+- **Expected**: Extract metadata for non-media files (Media files already have metadata)
+- **Process**:
+  1. Save catalog with includeMetadata = "Full_Extended", and clear `metadata_extraction_date` for all files (so as to trigger extended metadata extraction for existing files with Media_Basic)
+  2. Next update: Extract for ALL supported file types (not just media)
+
+  Note: we could imagine only extracting extended metadata for existing files, but that would complexify the process for low benefits (anyhow those files are to be processed and extracting the basic info again should not be that much longer as already dealing with the extended part).
+  
+  
+  
+  
+#### **2.6: "Full_Extended" → "Media_Basic"**, no file changes**
+- **Expected**: Extract metadata only for non-media files (media already have extended)
+- **Process**:
+  1. Save catalog  with includeMetadata = "Full_Extended". Clear metadata_extended, clear metadata_extraction_date for non Media files.
+  2. Next update: Query finds files WHERE `metadata_extraction_date IS NULL` (only for Media files)
+  3. Extract for those new files only
+  
+#### **2.7: "Full_Extended" → "Media_Extended"**, no file changes**
+- **Expected**: Extract metadata only for non-media files (media already have extended)
+- **Process**:
+  1. Save catalog  with includeMetadata = "Full_Extended". Clear metadata_extraction_date for non Media files.
+  2. Next update: Query finds files WHERE `metadata_extraction_date IS NULL` (only for Media files)
+  3. Extract for those new files only
+  
+  
+  
+  
+  
+#### **2.8: Any level → "None"**
 - **Expected**: Clear all metadata fields to reduce DB size
 - **Process**:
-  1. **In UI**: Clear all metadata fields:
+  1. Save catalog with includeMetadata = "None", and clear all metadata fields:
      - `metadata_extraction_date = NULL`
      - All image_*, video_*, audio_* fields = NULL
      - `metadata_extended = NULL`
   2. **Keep**: `file_extension`, `file_type`, `mime_type` (never cleared)
-  3. Save catalog
-  4. Next update: includeMetadata = "None" → skip extraction entirely
+  3. Next update: includeMetadata = "None" → skip extraction entirely
 
 ---
 
@@ -261,18 +308,34 @@ All fields including:
   3. Step 9: Query finds only new files
   4. Extract metadata for new files only
 
----
+  
+  ---
+  
+## Sequencing
+  
+  Robustness & Incremental Philosophy
+Option B aligns perfectly with your incremental design:
 
-## **QUESTIONS FOR YOU**
+File changes are incremental (only new/modified)
+Metadata extraction is incremental (only files with NULL extraction date)
+Each phase can be stopped and resumed independently
+Database state is always consistent (all files indexed, metadata is additive)
 
-1. **Scenario 2 metadata clearing**: WHERE exactly should the clearing happen?
-   - In `saveCatalogChanges()` immediately after saving to DB?
-   - Or add methods like `catalog->clearMetadataFields()` and call before `saveCatalog()`?
+My Strong Recommendation
+Option B (Sequential) for these reasons:
 
-2. **Scenario 2.2, 2.4**: Clearing metadata_extraction_date for ALL files - should this happen in UI or be detected automatically during update?
+✅ Already your design - just needs progress reporting
+✅ Search availability - usable after Phase 1
+✅ Simple stop/resume - clean phase boundaries
+✅ User flexibility - can postpone metadata
+✅ Clear progress - two distinct phases
+✅ Database consistency - no mixed states
+✅ Matches incremental philosophy
 
-3. **Search-triggered conversion**: Currently shows "Converting" progress - is this acceptable UX or should it be silent?
+The only thing needed is: Add progress reporting to Phase 2 (metadata extraction)
+Should we proceed with Option B and discuss the progress reporting implementation?
 
-4. **Order of operations** (section above) - is this accurate?
 
-Is this specification now complete and clear for implementation?
+
+    const int BATCH_SIZE = 100;  // Process 100 files per batch as per spec
+  

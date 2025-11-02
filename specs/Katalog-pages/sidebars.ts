@@ -39,7 +39,15 @@ export default {
     {
       type: 'category',
       label: 'Development',
-      items: ['Development-process', 'Build-from-source', 'Code-structure', 'Roadmap'],
+      items: ['Development-process',
+      {
+        type: 'category',
+        label: 'Specifications',
+        items: ['SpecCatalogUpdate','SpecProgressReport','SpecVersions'],
+      },
+      'Build-from-source', 'Code-structure', 'Roadmap',
+
+              ],
     },
   ],
 };
