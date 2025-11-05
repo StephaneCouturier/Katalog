@@ -1100,7 +1100,8 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         return;
     }
 
-    // SPECIAL CASE: File type update progress (-4)
+    // SPECIAL CASE: Catalog loading/file type update progress (-4)
+    // Used for both: CSV loading (Memory mode) and file type migration
     if (filesProcessed == -4) {
         SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
         if (!searchJobStoppable) return;
@@ -1127,6 +1128,11 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             builder.setResult(tr("Files found"), currentSearch->fileNames.size());
             // Note: Can't show two results, so "Files processed" is omitted
         }
+
+        //Update the status bar
+        statusBar()->show();
+        statusBarLabel->setText(builder.build());
+        statusBarTimer->stop();  // Keep showing during loading - no timeout
 
         QCoreApplication::processEvents();
         return;

@@ -70,10 +70,11 @@ public slots:
     /**
      * @brief Handle search progress updates
      * @param filesProcessed Number of files processed, or special values:
-     *        -1: Search interrupted
-     *        -2: Catalog loading started
-     *        -3: Catalog loading finished
-     *        -4: Catalog loading progress update
+     *        -1: Search interrupted (immediate display update)
+     *        -2: Catalog loading started (immediate display update)
+     *        -3: Catalog loading finished (immediate display update)
+     *        -4: Catalog loading progress (IGNORED - status bar only, no display update)
+     *        >= 0: Files evaluated against criteria (throttled display updates)
      */
     void onSearchProgress(int filesProcessed);
 

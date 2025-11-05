@@ -78,8 +78,18 @@ void SearchResultsThrottler::setCurrentSearch(Search *search)
 void SearchResultsThrottler::onSearchProgress(int filesProcessed)
 {
     if (!m_enabled) {
-        // When disabled, pass through immediately
-        emit updateDisplay();
+        // When disabled, pass through immediately (except for loading progress)
+        if (filesProcessed != -4) {
+            emit updateDisplay();
+        }
+        return;
+    }
+
+    // Ignore catalog loading progress (-4)
+    // These are handled by MainWindow::updateSearchProgress() for status bar updates only
+    // SearchResultsThrottler should ONLY trigger displaySearchResults() for actual search evaluation
+    if (filesProcessed == -4) {
+        // Silently ignore - no debug output needed for normal operation
         return;
     }
 
@@ -88,8 +98,6 @@ void SearchResultsThrottler::onSearchProgress(int filesProcessed)
 
     // Check if this requires immediate update
     if (shouldUpdateImmediately(filesProcessed)) {
-        qDebug() << "SearchResultsThrottler: Immediate update for special progress value:" << filesProcessed;
-
         // Stop any pending timer and update immediately
         m_updateTimer->stop();
         m_pendingUpdate = false;
@@ -97,11 +105,10 @@ void SearchResultsThrottler::onSearchProgress(int filesProcessed)
         return;
     }
 
-    // For regular progress updates, use throttling
+    // For regular progress updates (search evaluation), use throttling
     m_pendingUpdate = true;
 
     if (!m_updateTimer->isActive()) {
-        qDebug() << "SearchResultsThrottler: Starting throttled update timer (" << m_updateInterval << "ms)";
         m_updateTimer->start(m_updateInterval);
     }
 }
@@ -123,7 +130,7 @@ void SearchResultsThrottler::reset()
 void SearchResultsThrottler::performPendingUpdate()
 {
     if (m_pendingUpdate) {
-        qDebug() << "SearchResultsThrottler: Performing throttled update (files processed:" << m_lastFilesProcessed << ")";
+        //qDebug() << "SearchResultsThrottler: Performing throttled update (files processed:" << m_lastFilesProcessed << ")";
         m_pendingUpdate = false;
         emit updateDisplay();
     }
