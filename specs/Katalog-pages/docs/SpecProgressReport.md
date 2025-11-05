@@ -39,7 +39,8 @@ CREATE | Completed   | Catalog 1 of 1 | MyPhotos | Indexed: 2000 of 2000 (100%)
 
 * DEV: consider spliting the DeviceContext (%3) in 2: DeviceList & DeviceName
 * Note about Cancelled vs Stopped: "Cancelled" will be used for operations that would not have changed data when interrupted (ex: Create, Update), while "Stopped" is used when some data has been modified or generated (ex: "Search").
-
+* DEV: make the hide delay a global parameter (5 seconds at the moment)
+ 
 ### Examples for all possible Operations, states, & steps
 
 ```
@@ -74,9 +75,103 @@ UPDATE | Completed | Catalog 1 of 1 | MyPhotos | Indexed: 1000 of 1000 (100%)
 * DEV: normalize the parts size with spaces (Operation, State)
 * DEV: color code the opeartion states
 
+### Other Notes
+* when triggering an update on a catalog from odler version (before 2.8), the step "File Types updated" is not the first step. It happens after the indexing step so that only remaining files are processed for file type update.
+
 ---
 
 
+## **STATE MACHINE & ARCHITECTURE**
+
+### Operation Phase State Machine
+
+Catalog operations progress through explicit phases tracked by `CatalogManager`:
+```
+PHASE_IDLE
+    ↓ (operation starts)
+PHASE_COUNTING → (cancel) → emit catalogOperationCancelled() → PHASE_IDLE
+    ↓ (counting completes)
+PHASE_INDEXING → (cancel) → emit catalogOperationCancelled() → PHASE_IDLE
+    ↓ (indexing completes, if needed)
+PHASE_MIGRATING → (cancel) → emit catalogOperationCancelled() → PHASE_IDLE
+    ↓ (all complete)
+PHASE_COMPLETING
+    ↓ (emit catalogOperationCompleted)
+PHASE_IDLE
+```
+
+**Phase Detection Rules:**
+- `PHASE_COUNTING`: When currentPath starts with `__COUNTING_STATE__|` or ends with `" files."`
+- `PHASE_INDEXING`: When totalFiles > 0 and currentPath contains real file paths
+- `PHASE_MIGRATING`: When currentPath starts with `__FILETYPE_MIGRATION__|`
+- `PHASE_COMPLETING`: Set just before emitting catalogOperationCompleted
+
+**Phase Persistence:**
+- `m_currentPhase`: Current phase during operation
+- `m_lastPhase`: Preserved when operation ends (for cancelled messages)
+
+### Signal Flow & Responsibilities
+```
+CatalogJobStoppable
+    ↓ (emits catalogProgress)
+CatalogManager
+    ├─ Updates: m_filesProcessed, m_totalFiles, m_currentPath
+    ├─ Detects phase transitions → setOperationPhase()
+    ├─ On completion: saves m_lastFilesProcessed, m_lastTotalFiles
+    └─ Emits: catalogOperationCompleted / catalogOperationCancelled
+        ↓
+CatalogProgressManager
+    ├─ Listens to progress signals → calls updateFromCatalogManager()
+    ├─ Builds IN-PROGRESS messages (only when operation running)
+    ├─ Listens to completion/cancelled signals
+    └─ Builds FINAL messages using lastX values
+```
+
+**Message Building Responsibility:**
+- **In-Progress**: `CatalogProgressManager::updateFromCatalogManager()` - uses current values
+- **Cancelled**: `catalogOperationCancelled` lambda - uses `lastPhase()`, `lastFilesProcessed()`, `lastTotalFiles()`
+- **Completed**: `catalogOperationCompleted` lambda - uses `lastFilesProcessed()`, `lastTotalFiles()`
+
+**Critical Rule**: `updateFromCatalogManager()` does NOTHING when operation not running to prevent message replacement.
+
+### State Preservation Pattern
+
+The "last" value pattern ensures message data survives operation cleanup:
+```cpp
+// During operation:
+setFilesProcessed(100);  // Updates both m_filesProcessed and m_lastFilesProcessed
+
+// On completion (before cleanup):
+m_lastFilesProcessed = results[1];  // Explicit save from job results
+m_lastTotalFiles = results[1];
+
+// After cleanup:
+m_filesProcessed = 0;        // Cleared
+// But m_lastFilesProcessed = 100  // Preserved for completion message
+
+// Signal handlers use:
+m_catalogManager->lastFilesProcessed()  // Always available
+```
+
+### Multi-Catalog Context (TBD)
+
+For operations processing multiple catalogs (Virtual/Storage devices):
+- **Catalog Index**: Managed by DeviceUpdateManager (knows "processing 2 of 5")
+- **Catalog Name**: Managed by CatalogManager (knows "MyPhotos")
+- **Message Building**: CatalogProgressManager combines both
+
+*Architecture to be refined - see Issue #3 below.*
+```
+
+## 3. Multi-Catalog Index Issue - Recommendation
+
+**Current Problem:**
+```
+UPDATE | In Progress | Catalog 1 of 1 | MyPhotos | ...  (processing catalog 1)
+UPDATE | In Progress | Catalog 1 of 1 | Videos | ...    (processing catalog 2) ← WRONG
+UPDATE | In Progress | Catalog 1 of 1 | Docs | ...      (processing catalog 3) ← WRONG
+
+---
 ## **MESSAGE SOURCES TABLE**
 This section documents all status bar messages in Katalog, tracking their implementation status and MessageBuilder adoption.
 
@@ -429,6 +524,32 @@ struct FormatOptions {
 * continue to unify the use of the class for all messages
 * Add color coding for different operation states (running=blue, completed=green, error=red, paused=orange)
 * Add progress bar widget alongside text messages for long-running operations
+
+### **QUESTIONS FOR CLARIFICATION:**
+
+Before proceeding with implementation, I need to understand your requirements better:
+
+1. **Scope of Unification:**
+   - Should we unify ALL status bar messages through a single system, including the direct MainWindow calls?
+   - Or maintain the existing manager pattern but ensure consistency?
+
+2. **Message Priority:**
+   - When multiple operations could report simultaneously, what priority should they have?
+   - Should newer messages always override, or should some operations "lock" the status bar?
+
+3. **Timeout Behavior:**
+   - Should all messages have configurable timeouts?
+   - Current pattern: running operations have no timeout, completions have 5s timeout. Keep this?
+
+4. **Progress Manager Pattern:**
+   - The existing `SearchProgressManager` and `CatalogProgressManager` work well. Should we:
+     - Create a base `StatusBarProgressManager` class they inherit from?
+     - Create a unified `StatusBarManager` that all components use?
+     - Keep separate managers but standardize their interface?
+
+5. **DeviceUpdateManager Integration:**
+   - Should `DeviceUpdateManager` have its own `DeviceProgressManager`?
+   - Or route its messages through `CatalogProgressManager` (as it currently partially does)?
 
 
 

@@ -40,7 +40,7 @@ zypper install cmake kf6-extra-cmake-modules kf6-kirigami-devel kf6-ki18n-devel 
 #### Additional devel packages for Katalog
 For openSUSE:
 ```
-zypper install qt-charts-devel qt6-linguist-devel kf6-kxmlgui-devel
+zypper install qt6-charts-devel qt6-linguist-devel kf6-kxmlgui-devel
 ```
 
 ### cmake Qt5 KF5 glibc before 2.38
@@ -103,30 +103,32 @@ stephane@vbox:~/Documents/_Source_Katalog2> cmake -DCMAKE_BUILD_TYPE=Debug .
 -- Generating done (0.2s)
 -- Build files have been written to: /home/stephane/Documents/_Source_Katalog2
 ```
+### Translation build commands
 
-### compile
+#### Update .ts files (not needed to build)
+```
+cmake --build . --target translations_lupdate
+```
+#### Compile .qm files
+```
+cmake --build . --target translations_lrelease
+```
+#### Copy .qm files to source
+```
+cmake --build . --target translations_copy
+```
+
+
+### Compile the program
 ```
 make
 ```
 
 ### QtCreator or other IDE
-Once the first build is successful, new Katalog builds can usually be launched from your QtCreator or the IDE of your choice.
+Once the first build is successful, new Katalog builds can usually be launched directly from your QtCreator or the IDE of your choice.
 
 
-## **Translation build commands**
 
-### Update .ts files (not needed to build)
-```
-cmake --build . --target translations_lupdate
-```
-### Compile .qm files
-```
-cmake --build . --target translations_lrelease
-```
-### Copy .qm files to source
-```
-cmake --build . --target translations_copy
-```
 ## **Other tool**
 
 ### Memory check tool:
