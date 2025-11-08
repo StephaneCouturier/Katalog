@@ -1346,193 +1346,279 @@ void CatalogJobStoppable::updateCatalogIncremental()
     m_originalTotalFileSize = catalog->totalFileSize;
     qDebug() << "Captured original values - Files:" << m_originalFileCount << "Size:" << m_originalTotalFileSize;
 
-    // Step 1: Clear filetemp table
-        qDebug() << "Step 1: Clearing filetemp table";
-        QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
-        if (!clearQuery.exec("DELETE FROM filetemp")) {
-            qDebug() << "ERROR: Could not clear filetemp:" << clearQuery.lastError().text();
-            emit catalogOperationError("Failed to prepare temporary table");
-            return;
+    // Step 1a: Clear filetemp table
+    qDebug() << "Step 1: Clearing filetemp table";
+    QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
+    if (!clearQuery.exec("DELETE FROM filetemp")) {
+        qDebug() << "ERROR: Could not clear filetemp:" << clearQuery.lastError().text();
+        emit catalogOperationError("Failed to prepare temporary table");
+        return;
+    }
+
+    // Step 1b: Load existing catalog data for incremental comparison (conditional)
+    bool shouldLoadCatalog = false;
+
+    if (m_databaseMode == "Memory") {
+        // Determine if we need to load the catalog
+        bool metadataEnabled = (catalog->includeMetadata != Catalog::METADATA_NONE);
+        bool userForcedLoad = false;
+
+        // Check user setting for forced loading (for metadata = None case)
+        QSqlQuery settingQuery(QSqlDatabase::database(m_connectionName));
+        if (settingQuery.exec("SELECT setting_value FROM parameter WHERE setting_name = 'LoadCatalogBeforeUpdate'")) {
+            if (settingQuery.next()) {
+                userForcedLoad = (settingQuery.value(0).toString() == "true");
+            }
         }
+
+        // Load catalog if: (1) metadata extraction enabled, OR (2) user enabled the setting
+        shouldLoadCatalog = metadataEnabled || userForcedLoad;
+
+        qDebug() << "Step 1a: Checking if catalog loading needed";
+        qDebug() << "  Metadata enabled:" << metadataEnabled;
+        qDebug() << "  User forced load:" << userForcedLoad;
+        qDebug() << "  Will load catalog:" << shouldLoadCatalog;
+
+        if (shouldLoadCatalog) {
+            qDebug() << "Loading existing catalog data for incremental comparison";
+            qDebug() << "Catalog dateLoaded:" << catalog->dateLoaded.toString("yyyy-MM-dd hh:mm:ss");
+            qDebug() << "Catalog dateUpdated:" << catalog->dateUpdated.toString("yyyy-MM-dd hh:mm:ss");
+
+            // Check if catalog needs loading
+            if (catalog->dateLoaded < catalog->dateUpdated || catalog->dateLoaded.isNull()) {
+                qDebug() << "Catalog data needs loading from .idx file";
+
+                // Count existing files before loading
+                QSqlQuery countBeforeQuery(QSqlDatabase::database(m_connectionName));
+                countBeforeQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :catalog_id");
+                countBeforeQuery.bindValue(":catalog_id", catalog->ID);
+                if (countBeforeQuery.exec() && countBeforeQuery.next()) {
+                    qDebug() << "Files in file table before loading:" << countBeforeQuery.value(0).toInt();
+                }
+
+                QMutex tempMutex;
+                bool tempStopRequested = false;
+                catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
+
+                if (tempStopRequested || !shouldContinue()) {
+                    qDebug() << "Stop requested during catalog loading";
+                    return;
+                }
+
+                // Count after loading
+                QSqlQuery countAfterQuery(QSqlDatabase::database(m_connectionName));
+                countAfterQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :catalog_id");
+                countAfterQuery.bindValue(":catalog_id", catalog->ID);
+                if (countAfterQuery.exec() && countAfterQuery.next()) {
+                    qDebug() << "Files in file table after loading:" << countAfterQuery.value(0).toInt();
+                }
+
+                qDebug() << "Existing catalog data loaded successfully";
+            } else {
+                qDebug() << "Catalog data already loaded (dateLoaded >= dateUpdated)";
+
+                // Still verify we have data
+                QSqlQuery verifyQuery(QSqlDatabase::database(m_connectionName));
+                verifyQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :catalog_id");
+                verifyQuery.bindValue(":catalog_id", catalog->ID);
+                if (verifyQuery.exec() && verifyQuery.next()) {
+                    int fileCount = verifyQuery.value(0).toInt();
+                    qDebug() << "Files already in memory:" << fileCount;
+
+                    if (fileCount == 0 && catalog->fileCount > 0) {
+                        qDebug() << "WARNING: Expected" << catalog->fileCount << "files but found 0 - forcing load";
+                        QMutex tempMutex;
+                        bool tempStopRequested = false;
+                        catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
+                    }
+                }
+            }
+        } else {
+            qDebug() << "Step 1a: Skipped catalog loading (metadata=None and user setting disabled)";
+            qDebug() << "  Note: If all files show as 'new', enable 'Load Catalog Before Update' in Settings";
+        }
+    } else {
+        qDebug() << "Step 1a: Skipped (File database mode - data already in database)";
+    }
 
     // Step 2: Estimate total files for progress
-        qDebug() << "Step 2: Estimating file count";
-        QDateTime startTime = QDateTime::currentDateTime();
-        qint64 countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
-        QDateTime endTime = QDateTime::currentDateTime();
-        qDebug() << "Counting completed in" << startTime.msecsTo(endTime) << "ms";
-        qDebug() << "Estimated total files:" << countedTotalFiles;
+    qDebug() << "Step 2: Estimating file count";
+    QDateTime startTime = QDateTime::currentDateTime();
+    qint64 countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
+    QDateTime endTime = QDateTime::currentDateTime();
+    qDebug() << "Counting completed in" << startTime.msecsTo(endTime) << "ms";
+    qDebug() << "Estimated total files:" << countedTotalFiles;
 
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested during estimation";
-            return;
-        }
+    if (!shouldContinue()) {
+        qDebug() << "Stop requested during estimation";
+        return;
+    }
 
     // Step 3: Scan filesystem and populate filetemp
-        qDebug() << "Step 3: Scanning filesystem into temporary table";
-        emitProgressUpdate(0, countedTotalFiles, "Scanning filesystem...");
+    qDebug() << "Step 3: Scanning filesystem into temporary table";
+    emitProgressUpdate(0, countedTotalFiles, "Scanning filesystem...");
 
-        QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
-        if (!transactionQuery.exec("BEGIN TRANSACTION")) {
-            qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
-        }
+    QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
+    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
+        qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
+    }
 
-        qint64 scannedCount = 0;
-        scanDirectoryIntoFiletemp(catalog->sourcePath, catalog, scannedCount);
+    qint64 scannedCount = 0;
+    scanDirectoryIntoFiletemp(catalog->sourcePath, catalog, scannedCount);
 
-        if (!shouldContinue()) {
-            transactionQuery.exec("ROLLBACK");
-            qDebug() << "Scan cancelled, transaction rolled back";
-            return;
-        }
+    if (!shouldContinue()) {
+        transactionQuery.exec("ROLLBACK");
+        qDebug() << "Scan cancelled, transaction rolled back";
+        return;
+    }
 
-        if (!transactionQuery.exec("COMMIT")) {
-            qDebug() << "Warning: Could not COMMIT scan transaction:" << transactionQuery.lastError().text();
-        }
+    if (!transactionQuery.exec("COMMIT")) {
+        qDebug() << "Warning: Could not COMMIT scan transaction:" << transactionQuery.lastError().text();
+    }
 
-        qDebug() << "Scanned" << scannedCount << "files into filetemp";
+    qDebug() << "Scanned" << scannedCount << "files into filetemp";
 
     // Step 4: Analyze differences using SQL
-        qDebug() << "Step 4: Analyzing differences with SQL";
-        emitProgressUpdate(scannedCount, countedTotalFiles, "Analyzing file changes...");
+    qDebug() << "Step 4: Analyzing differences with SQL";
+    emitProgressUpdate(scannedCount, countedTotalFiles, "Analyzing file changes...");
 
-        QList<QVariantList> newFiles = findNewFiles();
-        QList<QVariantList> modifiedFiles = findModifiedFiles();
-        QStringList deletedFiles = findDeletedFiles();
-        int unchangedCount = countUnchangedFiles();
+    QList<QVariantList> newFiles = findNewFiles();
+    QList<QVariantList> modifiedFiles = findModifiedFiles();
+    QStringList deletedFiles = findDeletedFiles();
+    int unchangedCount = countUnchangedFiles();
 
-        m_updateStats.newFiles = newFiles.size();
-        m_updateStats.modifiedFiles = modifiedFiles.size();
-        m_updateStats.deletedFiles = deletedFiles.size();
-        m_updateStats.unchangedFiles = unchangedCount;
+    m_updateStats.newFiles = newFiles.size();
+    m_updateStats.modifiedFiles = modifiedFiles.size();
+    m_updateStats.deletedFiles = deletedFiles.size();
+    m_updateStats.unchangedFiles = unchangedCount;
 
-        qDebug() << "=== UPDATE ANALYSIS RESULTS ===";
-        qDebug() << "  New files:       " << m_updateStats.newFiles;
-        qDebug() << "  Modified files:  " << m_updateStats.modifiedFiles;
-        qDebug() << "  Deleted files:   " << m_updateStats.deletedFiles;
-        qDebug() << "  Unchanged files: " << m_updateStats.unchangedFiles;
-        qDebug() << "  Total changes:   " << m_updateStats.totalChanges();
+    qDebug() << "=== UPDATE ANALYSIS RESULTS ===";
+    qDebug() << "  New files:       " << m_updateStats.newFiles;
+    qDebug() << "  Modified files:  " << m_updateStats.modifiedFiles;
+    qDebug() << "  Deleted files:   " << m_updateStats.deletedFiles;
+    qDebug() << "  Unchanged files: " << m_updateStats.unchangedFiles;
+    qDebug() << "  Total changes:   " << m_updateStats.totalChanges();
 
-        if (!shouldContinue()) {
-            qDebug() << "Stop requested during analysis";
-            return;
-        }
+    if (!shouldContinue()) {
+        qDebug() << "Stop requested during analysis";
+        return;
+    }
 
     // Step 5: Begin transaction for database updates
-        if (!transactionQuery.exec("BEGIN TRANSACTION")) {
-            qDebug() << "Warning: Could not BEGIN update transaction:" << transactionQuery.lastError().text();
-        }
+    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
+        qDebug() << "Warning: Could not BEGIN update transaction:" << transactionQuery.lastError().text();
+    }
 
     // Step 6: Process NEW files
-        if (!newFiles.isEmpty()) {
-            qDebug() << "Step 6a: Inserting" << newFiles.size() << "new files";
-            emitProgressUpdate(0, m_updateStats.totalChanges(),
-                               QString("Inserting %1 new files...").arg(newFiles.size()));
-            insertNewFilesFromFiletemp(newFiles);
-        }
+    if (!newFiles.isEmpty()) {
+        qDebug() << "Step 6a: Inserting" << newFiles.size() << "new files";
+        emitProgressUpdate(0, m_updateStats.totalChanges(),
+                           QString("Inserting %1 new files...").arg(newFiles.size()));
+        insertNewFilesFromFiletemp(newFiles);
+    }
 
     // Step 7: Process MODIFIED files
-        if (!modifiedFiles.isEmpty()) {
-            qDebug() << "Step 7: Updating" << modifiedFiles.size() << "modified files";
-            emitProgressUpdate(newFiles.size(), m_updateStats.totalChanges(),
-                               QString("Updating %1 modified files...").arg(modifiedFiles.size()));
-            updateModifiedFilesFromFiletemp(modifiedFiles);
-        }
+    if (!modifiedFiles.isEmpty()) {
+        qDebug() << "Step 7: Updating" << modifiedFiles.size() << "modified files";
+        emitProgressUpdate(newFiles.size(), m_updateStats.totalChanges(),
+                           QString("Updating %1 modified files...").arg(modifiedFiles.size()));
+        updateModifiedFilesFromFiletemp(modifiedFiles);
+    }
 
     // Step 8: Process DELETED files
-        if (!deletedFiles.isEmpty()) {
-            qDebug() << "Step 8: Deleting" << deletedFiles.size() << "removed files";
-            emitProgressUpdate(newFiles.size() + modifiedFiles.size(), m_updateStats.totalChanges(),
-                               QString("Deleting %1 removed files...").arg(deletedFiles.size()));
-            deleteRemovedFiles(deletedFiles);
-        }
+    if (!deletedFiles.isEmpty()) {
+        qDebug() << "Step 8: Deleting" << deletedFiles.size() << "removed files";
+        emitProgressUpdate(newFiles.size() + modifiedFiles.size(), m_updateStats.totalChanges(),
+                           QString("Deleting %1 removed files...").arg(deletedFiles.size()));
+        deleteRemovedFiles(deletedFiles);
+    }
 
-        if (!shouldContinue()) {
-            transactionQuery.exec("ROLLBACK");
-            qDebug() << "Update cancelled, transaction rolled back";
-            return;
-        }
+    if (!shouldContinue()) {
+        transactionQuery.exec("ROLLBACK");
+        qDebug() << "Update cancelled, transaction rolled back";
+        return;
+    }
 
-        // Commit database changes
-        if (!transactionQuery.exec("COMMIT")) {
-            qDebug() << "Warning: Could not COMMIT update transaction:" << transactionQuery.lastError().text();
-        }
+    // Commit database changes
+    if (!transactionQuery.exec("COMMIT")) {
+        qDebug() << "Warning: Could not COMMIT update transaction:" << transactionQuery.lastError().text();
+    }
 
-        // One-time migration for existing files without mime_type ***
-        qDebug() << "Step 8a: Checking for mime_type migration";
-        migrateMimeTypesForExistingFiles();
+    // One-time migration for existing files without mime_type
+    qDebug() << "Step 8a: Checking for mime_type migration";
+    migrateMimeTypesForExistingFiles();
 
-        // After migration completes, update catalog to current version
-        if (!catalog->hasFilesNeedingMigration() && catalog->appVersion < "2.8") {
-            qDebug() << "✓ All files migrated - updating catalog version to 2.8";
-            catalog->appVersion = "2.8";
-        }
+    // After migration completes, update catalog to current version
+    if (!catalog->hasFilesNeedingMigration() && catalog->appVersion < "2.8") {
+        qDebug() << "✓ All files migrated - updating catalog version to 2.8";
+        catalog->appVersion = "2.8";
+    }
 
     // Step 9: Extract metadata for new/modified/missing files (if enabled)
-        if (catalog->includeMetadata != Catalog::METADATA_NONE) {
-            QList<QVariantList> filesToExtract;
+    if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+        QList<QVariantList> filesToExtract;
 
-            // Add modified files (need re-extraction because content changed)
-            filesToExtract.append(modifiedFiles);
+        // Add modified files (need re-extraction because content changed)
+        filesToExtract.append(modifiedFiles);
 
-            // Find existing files without metadata (excludes files just inserted in Step 6)
-            // This handles transition case: None → Media_Basic
-            QList<QVariantList> filesNeedingMetadata = findFilesWithoutMetadata();
-            if (!filesNeedingMetadata.isEmpty()) {
-                qDebug() << "Step 9a: Found" << filesNeedingMetadata.size() << "existing files without metadata";
-                filesToExtract.append(filesNeedingMetadata);
-            }
-
-            if (!filesToExtract.isEmpty()) {
-                qDebug() << "Step 9: Extracting metadata for" << filesToExtract.size() << "files";
-                m_updateStats.metadataExtracted = filesToExtract.size();
-                extractMetadataForChangedFiles(filesToExtract);
-            }
+        // Find existing files without metadata (excludes files just inserted in Step 6)
+        // This handles transition case: None → Media_Basic
+        QList<QVariantList> filesNeedingMetadata = findFilesWithoutMetadata();
+        if (!filesNeedingMetadata.isEmpty()) {
+            qDebug() << "Step 9a: Found" << filesNeedingMetadata.size() << "existing files without metadata";
+            filesToExtract.append(filesNeedingMetadata);
         }
+
+        if (!filesToExtract.isEmpty()) {
+            qDebug() << "Step 9: Extracting metadata for" << filesToExtract.size() << "files";
+            m_updateStats.metadataExtracted = filesToExtract.size();
+            extractMetadataForChangedFiles(filesToExtract);
+        }
+    }
 
     // Step 10: Update catalog's file statistics
-        qDebug() << "Step 10: Updating catalog's file statistics";
-        catalog->updateFileCount();
-        catalog->updateTotalFileSize();
-        catalog->saveCatalog();
+    qDebug() << "Step 10: Updating catalog's file statistics";
+    catalog->updateFileCount();
+    catalog->updateTotalFileSize();
+    catalog->saveCatalog();
 
     // Step 11: Update Device object
-        m_device->dateTimeUpdated = QDateTime::currentDateTime();
-        m_device->totalFileCount = catalog->fileCount;
-        m_device->totalFileSize = catalog->totalFileSize;
-        m_device->saveStatistics(m_device->dateTimeUpdated, "update");
-        m_device->saveDevice();
+    m_device->dateTimeUpdated = QDateTime::currentDateTime();
+    m_device->totalFileCount = catalog->fileCount;
+    m_device->totalFileSize = catalog->totalFileSize;
+    m_device->saveStatistics(m_device->dateTimeUpdated, "update");
+    m_device->saveDevice();
 
     // Step 12: Update parent hierarchy
-        qDebug() << "Step 12: Updating parent device hierarchy";
-        try {
-            m_device->updateParentsNumbers();
-        } catch (const std::exception& e) {
-            qDebug() << "Error updating parent numbers:" << e.what();
-        }
+    qDebug() << "Step 12: Updating parent device hierarchy";
+    try {
+        m_device->updateParentsNumbers();
+    } catch (const std::exception& e) {
+        qDebug() << "Error updating parent numbers:" << e.what();
+    }
 
     // Step 13: Update related catalog devices
-        updateRelatedCatalogDevices();
+    updateRelatedCatalogDevices();
 
     // Step 14: Save catalog files to disk (Memory mode)
+    if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
+        qDebug() << "Warning: Failed to save updated catalog to file";
+    }
+    if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
+        qDebug() << "Warning: Failed to save updated folders to file";
+    }
+
+    // Step 15: Complete catalog update (same as creation)
+    qDebug() << "Step 15: Completing catalog update";
+    // Save catalog files to disk (Memory mode)
+    if (m_databaseMode == "Memory") {
         if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
             qDebug() << "Warning: Failed to save updated catalog to file";
         }
         if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
             qDebug() << "Warning: Failed to save updated folders to file";
         }
-
-    // Step 15: Complete catalog update (same as creation)
-        qDebug() << "Step 15: Completing catalog update";
-        // Save catalog files to disk (Memory mode)
-        if (m_databaseMode == "Memory") {
-            if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
-                qDebug() << "Warning: Failed to save updated catalog to file";
-            }
-            if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
-                qDebug() << "Warning: Failed to save updated folders to file";
-            }
-        }
+    }
 
     // Set catalog loaded date
     catalog->setDateLoaded(QDateTime::currentDateTime());
