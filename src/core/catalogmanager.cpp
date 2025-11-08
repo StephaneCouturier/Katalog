@@ -119,6 +119,8 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
                         }
                     } else if (currentPath.startsWith("__FILETYPE_MIGRATION__|")) {
                         setOperationPhase(PHASE_MIGRATING);
+                    } else if (currentPath.startsWith("__METADATA_EXTRACTION__|")) {
+                        setOperationPhase(PHASE_METADATA_EXTRACTION);
                     } else if (totalFiles > 0 && !currentPath.startsWith("__") &&
                                !currentPath.startsWith("Found ") && currentPath.contains("/")) {
                         setOperationPhase(PHASE_INDEXING);
@@ -518,7 +520,7 @@ void CatalogManager::setOperationPhase(OperationPhase phase)
         m_currentPhase = phase;
 
         // Debug output with readable names
-        QStringList phaseNames = {"IDLE", "COUNTING", "INDEXING", "MIGRATING", "COMPLETING"};
+        QStringList phaseNames = {"IDLE", "COUNTING", "INDEXING", "MIGRATING", "METADATA_EXTRACTION", "COMPLETING"};
         qDebug() << "Operation phase changed:"
                  << phaseNames[m_lastPhase] << "->" << phaseNames[m_currentPhase];
     }

@@ -62,10 +62,11 @@ public:
 
     enum OperationPhase {
         PHASE_IDLE,
-        PHASE_COUNTING,      // Counting files
-        PHASE_INDEXING,      // Scanning/indexing files
-        PHASE_MIGRATING,     // File type migration
-        PHASE_COMPLETING     // Finalizing
+        PHASE_COUNTING,            // Counting files
+        PHASE_INDEXING,            // Scanning/indexing files
+        PHASE_MIGRATING,           // File type migration
+        PHASE_METADATA_EXTRACTION, // Extracting file metadata
+        PHASE_COMPLETING           // Finalizing
     };
 
     OperationPhase currentPhase() const { return m_currentPhase; }

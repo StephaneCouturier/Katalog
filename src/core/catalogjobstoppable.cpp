@@ -1055,23 +1055,19 @@ void CatalogJobStoppable::extractMissingMetadata()
 
         // Progress update
         if (processedFiles % 10 == 0 || processedFiles == totalFiles) {
-            int percentComplete = (processedFiles * 100) / totalFiles;
-            QString progressMsg = QString("Extracting metadata: %1/%2 (%3%)")
-                                      .arg(processedFiles)
-                                      .arg(totalFiles)
-                                      .arg(percentComplete);
-
-            emitProgressUpdate(processedFiles, totalFiles, progressMsg);
+            QString marker = QString("__METADATA_EXTRACTION__|%1|%2").arg(processedFiles).arg(totalFiles);
+            emitProgressUpdate(processedFiles, totalFiles, marker);
             QCoreApplication::processEvents();
         }
     }
 
     // Final progress update
-    QString finalMsg = QString("Metadata extraction completed: %1 files processed")
-                           .arg(processedFiles);
-    emitProgressUpdate(processedFiles, totalFiles, finalMsg);
+    QString marker = QString("__METADATA_EXTRACTION__|%1|%2").arg(processedFiles).arg(totalFiles);
+    emitProgressUpdate(processedFiles, totalFiles, marker);
 
-    qDebug() << "=== Metadata extraction completed ===" << finalMsg;
+    qDebug() << "=== Metadata extraction completed: %1 files processed ===" << processedFiles;
+
+    //qDebug() << "=== Metadata extraction completed ===" << finalMsg;
 }
 
 QString CatalogJobStoppable::saveMismatchReportAndReturnPath(const QStringList &mismatches)
@@ -1603,9 +1599,6 @@ void CatalogJobStoppable::updateCatalogIncremental()
     // Step 14: Save catalog files to disk (Memory mode)
     if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
         qDebug() << "Warning: Failed to save updated catalog to file";
-    }
-    if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
-        qDebug() << "Warning: Failed to save updated folders to file";
     }
 
     // Step 15: Complete catalog update (same as creation)
@@ -2315,9 +2308,12 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
         int percentComplete = (processedFiles * 100) / totalFiles;
 
         // Emit progress update
-        QString progressMsg = QString("Extracting metadata");
+        //QString progressMsg = QString("Extracting metadata");
+        // Emit progress update with metadata extraction marker
+        QString marker = QString("__METADATA_EXTRACTION__|%1|%2").arg(processedFiles).arg(totalFiles);
+        emitProgressUpdate(processedFiles, totalFiles, marker);
 
-        emitProgressUpdate(processedFiles, totalFiles, progressMsg);
+        //emitProgressUpdate(processedFiles, totalFiles, progressMsg);
 
         // Log batch performance
         qDebug() << "Batch completed:" << batchSize << "files in" << batchDurationMs << "ms"
@@ -2329,12 +2325,13 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
         QCoreApplication::processEvents();
     }
 
-    // Final completion message
-    QString finalMsg = QString("Metadata extraction completed: %1 files processed")
-                           .arg(processedFiles);
-    emitProgressUpdate(processedFiles, totalFiles, finalMsg);
+    // Final completion message with metadata extraction marker
+    QString marker = QString("__METADATA_EXTRACTION__|%1|%2").arg(processedFiles).arg(totalFiles);
+    emitProgressUpdate(processedFiles, totalFiles, marker);
 
-    qDebug() << "=== Metadata extraction completed ===" << finalMsg;
+    qDebug() << "=== Metadata extraction completed: %1 files processed ===" << processedFiles;
+
+    //qDebug() << "=== Metadata extraction completed ===" << finalMsg;
 }
 
 void CatalogJobStoppable::migrateMimeTypesForExistingFiles()

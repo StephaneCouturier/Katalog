@@ -118,6 +118,14 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                         );
                     break;
 
+                case CatalogManager::PHASE_METADATA_EXTRACTION:
+                    builder.setProcess(
+                        QApplication::translate("MainWindow", "Metadata Extracted"),
+                        m_catalogManager->lastFilesProcessed(),
+                        m_catalogManager->lastTotalFiles()
+                        );
+                    break;
+
                 default:
                     break;
                 }
@@ -239,6 +247,19 @@ void CatalogProgressManager::updateFromCatalogManager()
                 int total = parts[2].toInt();
                 builder.setProcess(
                     QApplication::translate("MainWindow", "File Types Updated"),
+                    processed,
+                    total
+                    );
+            }
+
+        } else if (currentPath.startsWith("__METADATA_EXTRACTION__|")) {
+            // METADATA EXTRACTION
+            QStringList parts = currentPath.split("|");
+            if (parts.size() >= 3) {
+                int processed = parts[1].toInt();
+                int total = parts[2].toInt();
+                builder.setProcess(
+                    QApplication::translate("MainWindow", "Metadata Extracted"),
                     processed,
                     total
                     );
