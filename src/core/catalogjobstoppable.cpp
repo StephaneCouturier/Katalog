@@ -1396,21 +1396,14 @@ void CatalogJobStoppable::updateCatalogIncremental()
                 emitProgressUpdate(0, catalog->fileCount, QString("__LOADING_CATALOG__|0|%1").arg(catalog->fileCount));
                 QCoreApplication::processEvents();
 
-                // QMutex tempMutex;
-                // bool tempStopRequested = false;
-                // catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
-
-                // // Emit loading completion progress
-                // emitProgressUpdate(catalog->fileCount, catalog->fileCount, QString("__LOADING_CATALOG__|%1|%1").arg(catalog->fileCount));
-                // QCoreApplication::processEvents();
-
-                // if (tempStopRequested || !shouldContinue()) {
-                //     qDebug() << "Stop requested during catalog loading";
-                //     return;
-                // }
                 bool localStopRequested = false;
                 QMutex catalogMutex;
                 QMetaObject::Connection progressConnection;
+
+                // Emit initial loading marker BEFORE loading starts
+                QString initialMarker = QString("__CATALOG_LOADING__|0|%1").arg(catalog->fileCount);
+                emitProgressUpdate(0, catalog->fileCount, initialMarker);
+                QCoreApplication::processEvents();
 
                 // Connect to catalog loading progress (same pattern as search)
                 progressConnection = connect(catalog, &Catalog::loadProgress, this,
