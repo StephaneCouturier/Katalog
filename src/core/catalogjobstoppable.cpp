@@ -469,7 +469,7 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
         }
     }
 
-    emitProgressUpdate(totalFiles, totalFiles, QString("Found %1 files.").arg(totalFiles));
+    emitProgressUpdate(0, totalFiles, QString("__COUNTING_STATE__|%1").arg(totalFiles));
     return totalFiles;
 }
 
@@ -1392,11 +1392,51 @@ void CatalogJobStoppable::updateCatalogIncremental()
                     qDebug() << "Files in file table before loading:" << countBeforeQuery.value(0).toInt();
                 }
 
-                QMutex tempMutex;
-                bool tempStopRequested = false;
-                catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
+                // Emit loading start progress
+                emitProgressUpdate(0, catalog->fileCount, QString("__LOADING_CATALOG__|0|%1").arg(catalog->fileCount));
+                QCoreApplication::processEvents();
 
-                if (tempStopRequested || !shouldContinue()) {
+                // QMutex tempMutex;
+                // bool tempStopRequested = false;
+                // catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
+
+                // // Emit loading completion progress
+                // emitProgressUpdate(catalog->fileCount, catalog->fileCount, QString("__LOADING_CATALOG__|%1|%1").arg(catalog->fileCount));
+                // QCoreApplication::processEvents();
+
+                // if (tempStopRequested || !shouldContinue()) {
+                //     qDebug() << "Stop requested during catalog loading";
+                //     return;
+                // }
+                bool localStopRequested = false;
+                QMutex catalogMutex;
+                QMetaObject::Connection progressConnection;
+
+                // Connect to catalog loading progress (same pattern as search)
+                progressConnection = connect(catalog, &Catalog::loadProgress, this,
+                                             [this, &localStopRequested, &progressConnection](int filesLoaded, int totalFiles) {
+                                                 if (!shouldContinue()) {
+                                                     qDebug() << "Stop detected during catalog loading - disconnecting";
+                                                     QObject::disconnect(progressConnection);
+                                                     localStopRequested = true;
+                                                     return;
+                                                 }
+
+                                                 // Emit loading progress using marker pattern
+                                                 QString marker = QString("__CATALOG_LOADING__|%1|%2").arg(filesLoaded).arg(totalFiles);
+                                                 emitProgressUpdate(filesLoaded, totalFiles, marker);
+
+                                                 QCoreApplication::processEvents();
+                                             }, Qt::DirectConnection);
+
+                catalog->loadCatalogFileListToTable(catalogMutex, localStopRequested);
+
+                // Disconnect after loading completes
+                if (progressConnection) {
+                    disconnect(progressConnection);
+                }
+
+                if (localStopRequested || !shouldContinue()) {
                     qDebug() << "Stop requested during catalog loading";
                     return;
                 }
@@ -1452,7 +1492,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 3: Scan filesystem and populate filetemp
     qDebug() << "Step 3: Scanning filesystem into temporary table";
-    emitProgressUpdate(0, countedTotalFiles, "Scanning filesystem...");
+    //emitProgressUpdate(0, countedTotalFiles, "Scanning filesystem...");
 
     QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
     if (!transactionQuery.exec("BEGIN TRANSACTION")) {

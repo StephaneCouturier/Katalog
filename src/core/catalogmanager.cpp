@@ -110,7 +110,9 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
                     CatalogJobStoppable* engine = m_currentJob->getCatalogEngine();
 
                     // Phase detection
-                    if (currentPath.startsWith("__COUNTING_STATE__|")) {
+                    if (currentPath.startsWith("__CATALOG_LOADING__|")) {
+                        setOperationPhase(PHASE_LOADING);
+                    } else if (currentPath.startsWith("__COUNTING_STATE__|")) {
                         setOperationPhase(PHASE_COUNTING);
                     } else if (currentPath.startsWith("Found ") && currentPath.endsWith(" files.")) {
                         // Counting finished - stay in COUNTING phase
@@ -520,7 +522,7 @@ void CatalogManager::setOperationPhase(OperationPhase phase)
         m_currentPhase = phase;
 
         // Debug output with readable names
-        QStringList phaseNames = {"IDLE", "COUNTING", "INDEXING", "MIGRATING", "METADATA_EXTRACTION", "COMPLETING"};
+        QStringList phaseNames = {"IDLE", "LOADING", "COUNTING", "INDEXING", "MIGRATING", "COMPLETING"};
         qDebug() << "Operation phase changed:"
                  << phaseNames[m_lastPhase] << "->" << phaseNames[m_currentPhase];
     }

@@ -62,6 +62,7 @@ public:
 
     enum OperationPhase {
         PHASE_IDLE,
+        PHASE_LOADING,             // Loading catalog from file
         PHASE_COUNTING,            // Counting files
         PHASE_INDEXING,            // Scanning/indexing files
         PHASE_MIGRATING,           // File type migration

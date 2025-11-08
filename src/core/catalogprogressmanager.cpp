@@ -94,6 +94,14 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 // Process info based on PHASE
                 switch (m_catalogManager->lastPhase()) {
+                case CatalogManager::PHASE_LOADING:
+                    builder.setProcess(
+                        QApplication::translate("MainWindow", "Loaded"),
+                        m_catalogManager->lastFilesProcessed(),
+                        m_catalogManager->lastTotalFiles()
+                        );
+                    break;
+
                 case CatalogManager::PHASE_COUNTING:
                     builder.setProcess(
                         QApplication::translate("MainWindow", "Counted"),
@@ -227,7 +235,19 @@ void CatalogProgressManager::updateFromCatalogManager()
         // Detect phase from currentPath
         QString currentPath = m_catalogManager->currentPath();
 
-        if (currentPath.startsWith("__COUNTING_STATE__|")) {
+        if (currentPath.startsWith("__CATALOG_LOADING__|")) {
+            // CATALOG LOADING
+            QStringList parts = currentPath.split("|");
+            if (parts.size() >= 3) {
+                int loaded = parts[1].toInt();
+                int total = parts[2].toInt();
+                builder.setProcess(
+                    QApplication::translate("MainWindow", "Loaded"),
+                    loaded,
+                    total
+                    );
+            }
+        } else if (currentPath.startsWith("__COUNTING_STATE__|")) {
             // COUNTING
             QStringList parts = currentPath.split("|");
             if (parts.size() >= 2) {
