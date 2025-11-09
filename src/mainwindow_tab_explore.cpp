@@ -473,11 +473,48 @@
             if( collection->databaseMode == "Memory")
                 exploreDevice->catalog->loadFoldersToTable();
             loadCatalogDirectoriesToExplore();
+
         //Load the files of the Selected Catalog
             if( collection->databaseMode == "Memory"){
-                QMutex tempMutex;
-                bool tempStopRequested = false;
-                exploreDevice->catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
+                bool localStopRequested = false;
+                QMutex catalogMutex;
+                QMetaObject::Connection progressConnection;
+
+                QString deviceName = exploreDevice->name;  // Capture the name
+
+                // Connect to catalog loading progress
+                progressConnection = connect(exploreDevice->catalog, &Catalog::loadProgress, this,
+                                             [this, deviceName](int filesLoaded, int totalFiles) {
+                                                 StatusBarMessageBuilder builder;
+                                                 builder.setOperation(tr("Explore"))
+                                                     .setStatus(tr("In Progress"))
+                                                     .setDeviceContext(1, 1, deviceName)
+                                                     .setProcess(tr("Loaded"), filesLoaded, totalFiles);
+
+                                                 statusBarLabel->setText(builder.build());
+                                                 statusBar()->show();
+                                                 statusBarTimer->stop();
+                                                 QCoreApplication::processEvents();
+
+                                                 qDebug() << "EXPLORE loading progress:" << filesLoaded << "/" << totalFiles;  // DEBUG
+                                             }, Qt::DirectConnection);
+
+                exploreDevice->catalog->loadCatalogFileListToTable(catalogMutex, localStopRequested);
+
+                // Disconnect after loading completes
+                if (progressConnection) {
+                    disconnect(progressConnection);
+                }
+
+                // Show completion message with timeout
+                StatusBarMessageBuilder builder;
+                builder.setOperation(tr("Explore"))
+                    .setStatus(tr("Completed"))
+                    .setDeviceContext(1, 1, deviceName)
+                    .setProcess(tr("Loaded"), exploreDevice->catalog->fileCount, exploreDevice->catalog->fileCount);
+
+                statusBarLabel->setText(builder.build());
+                statusBarTimer->start(5000);  // Clear after 5 seconds
             }
 
             // Ensure file types are populated for File mode catalogs
