@@ -609,7 +609,7 @@ void CatalogJobStoppable::completeCatalogCreation()
         // Step 4: Update catalog loaded version
         qDebug() << "Step 4: Setting catalog loaded date";
         QDateTime currentDateTime = QDateTime::currentDateTime();
-        m_device->catalog->setDateLoaded(currentDateTime);
+        m_device->catalog->setDateLoaded(QDateTime());
 
         qDebug() << "=== Backend post-processing completed successfully ===";
 
@@ -1647,7 +1647,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
     }
 
     // Set catalog loaded date
-    catalog->setDateLoaded(QDateTime::currentDateTime());
+    catalog->setDateLoaded(QDateTime());
 
     qDebug() << "=== INCREMENTAL CATALOG UPDATE COMPLETED SUCCESSFULLY ===";
     qDebug() << "Summary:" << m_updateStats.newFiles << "new,"

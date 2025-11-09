@@ -173,7 +173,7 @@ void Catalog::setDateUpdated(QDateTime dateTime)
                                           )");
         catalogQuery.prepare(catalogQuerySQL);
         catalogQuery.bindValue(":catalog_date_updated", dateUpdated.toString("yyyy-MM-dd hh:mm:ss"));
-        catalogQuery.bindValue(":catalog_name", ID);
+        catalogQuery.bindValue(":catalog_id", ID);
         catalogQuery.exec();
     }
     else
