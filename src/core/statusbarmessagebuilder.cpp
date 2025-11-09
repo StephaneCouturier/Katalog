@@ -91,6 +91,12 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::setResult(const QString& title
     return *this;
 }
 
+StatusBarMessageBuilder &StatusBarMessageBuilder::setTimeToCompletion(const QString &timeString)
+{
+    m_timeToCompletion = timeString;
+    return *this;
+}
+
 StatusBarMessageBuilder& StatusBarMessageBuilder::setCurrentItem(const QString& itemPath)
 {
     m_currentItem = itemPath;
@@ -109,6 +115,7 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::reset()
     m_processTotalCount = -1;
     m_resultTitle.clear();
     m_resultCount = -1;
+    m_timeToCompletion.clear();
     m_currentItem.clear();
     return *this;
 }
@@ -146,7 +153,13 @@ QString StatusBarMessageBuilder::build() const
         parts << result;
     }
 
-    // Part 6: Current Item
+    // Part 10: Time to completion
+    QString timeToCompletion = formatTimeToCompletion();
+    if (!timeToCompletion.isEmpty()) {
+        parts << timeToCompletion;
+    }
+
+    // Part 11: Current Item
     QString currentItem = formatCurrentItem();
     if (!currentItem.isEmpty()) {
         parts << currentItem;
@@ -276,6 +289,16 @@ QString StatusBarMessageBuilder::formatResult() const
 
     return QString("%1: %2")
         .arg(m_resultTitle.toHtmlEscaped(), resultValue);
+}
+
+QString StatusBarMessageBuilder::formatTimeToCompletion() const
+{
+    if (m_timeToCompletion.isEmpty()) {
+        return QString();
+    }
+
+    // Return the time value directly (no label/prefix)
+    return m_timeToCompletion;
 }
 
 QString StatusBarMessageBuilder::formatCurrentItem() const

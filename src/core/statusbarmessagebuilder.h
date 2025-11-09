@@ -150,6 +150,15 @@ public:
     StatusBarMessageBuilder& setResult(const QString& title, int count);
 
     /**
+     * @brief Set time to completion
+     * @param timeString Time string (e.g., "5m 23s", "1h 25m 10s")
+     * @return Reference to this builder for chaining
+     *
+     * Displays the estimated time remaining
+     */
+    StatusBarMessageBuilder& setTimeToCompletion(const QString& timeString);
+
+    /**
      * @brief Set current item being processed
      * @param itemPath Path or name of current item
      * @return Reference to this builder for chaining
@@ -191,6 +200,7 @@ private:
     int m_processTotalCount = -1;
     QString m_resultTitle;
     int m_resultCount = -1;
+    QString m_timeToCompletion;
     QString m_currentItem;
 
     // Formatting
@@ -202,6 +212,7 @@ private:
     QString formatDeviceContext() const;
     QString formatProcess() const;
     QString formatResult() const;
+    QString formatTimeToCompletion() const;
     QString formatCurrentItem() const;
     double calculatePercent() const;
 };

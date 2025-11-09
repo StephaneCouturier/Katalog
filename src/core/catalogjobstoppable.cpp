@@ -2270,6 +2270,10 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
 
     qDebug() << "Total files needing metadata extraction:" << totalFiles;
 
+    // ETA tracking
+    QElapsedTimer totalTimer;
+    totalTimer.start();
+
     // Determine thread count based on system and database mode
     int optimalThreads = 4;  // Safe default
     int availableCores = QThread::idealThreadCount();
@@ -2337,22 +2341,41 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
         int batchDurationMs = batchTimer.elapsed();
         processedFiles += batchSize;
 
-        // Calculate progress percentage
-        int percentComplete = (processedFiles * 100) / totalFiles;
+        // Calculate time to completion
+        QString timeToCompletionString;
+        if (processedFiles > 0 && processedFiles < totalFiles) {
+            qint64 elapsedMs = totalTimer.elapsed();
+            double avgMsPerFile = static_cast<double>(elapsedMs) / processedFiles;
+            int remainingFiles = totalFiles - processedFiles;
+            qint64 remainingMs = static_cast<qint64>(avgMsPerFile * remainingFiles);
 
-        // Emit progress update
-        //QString progressMsg = QString("Extracting metadata");
-        // Emit progress update with metadata extraction marker
-        QString marker = QString("__METADATA_EXTRACTION__|%1|%2").arg(processedFiles).arg(totalFiles);
+            int totalSeconds = remainingMs / 1000;
+            int hours = totalSeconds / 3600;
+            int minutes = (totalSeconds % 3600) / 60;
+            int seconds = totalSeconds % 60;
+
+            if (hours > 0) {
+                timeToCompletionString = QString("%1h %2m %3s").arg(hours).arg(minutes).arg(seconds);
+            } else if (minutes > 0) {
+                timeToCompletionString = QString("%1m %2s").arg(minutes).arg(seconds);
+            } else {
+                timeToCompletionString = QString("%1s").arg(seconds);
+            }
+        }
+
+        // Emit progress update with marker and time to completion
+        QString marker = QString("__METADATA_EXTRACTION__|%1|%2|%3")
+                             .arg(processedFiles)
+                             .arg(totalFiles)
+                             .arg(timeToCompletionString);
         emitProgressUpdate(processedFiles, totalFiles, marker);
-
-        //emitProgressUpdate(processedFiles, totalFiles, progressMsg);
 
         // Log batch performance
         qDebug() << "Batch completed:" << batchSize << "files in" << batchDurationMs << "ms"
                  << "(" << (batchDurationMs / qMax(1, batchSize)) << "ms/file)"
                  << "| Total progress:" << processedFiles << "/" << totalFiles
-                 << "(" << percentComplete << "%)";
+                 << "(" << (processedFiles * 100) / totalFiles << "%)"
+                 << "| Time to completion:" << timeToCompletionString;
 
         // Allow UI to process events between batches
         QCoreApplication::processEvents();

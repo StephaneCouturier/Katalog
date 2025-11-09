@@ -278,11 +278,17 @@ void CatalogProgressManager::updateFromCatalogManager()
             if (parts.size() >= 3) {
                 int processed = parts[1].toInt();
                 int total = parts[2].toInt();
+
                 builder.setProcess(
                     QApplication::translate("MainWindow", "Metadata Extracted"),
                     processed,
                     total
                     );
+
+                // Add time to completion if present (Part 10)
+                if (parts.size() >= 4 && !parts[3].isEmpty()) {
+                    builder.setTimeToCompletion(parts[3]);
+                }
             }
 
         } else if (m_catalogManager->totalFiles() > 0) {
