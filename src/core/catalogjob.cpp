@@ -241,10 +241,10 @@ bool CatalogJob::doResume()
 
 void CatalogJob::onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, const QString &currentPath)
 {
-    qDebug() << "CatalogJob::onCatalogProgress received:"
-             << "processed=" << filesProcessed
-             << "total=" << totalFiles
-             << "path=" << currentPath;
+    // qDebug() << "CatalogJob::onCatalogProgress received:"
+    //          << "processed=" << filesProcessed
+    //          << "total=" << totalFiles
+    //          << "path=" << currentPath;
 
     // Emit our own signal for CatalogManager to handle
     emit catalogProgress(filesProcessed, totalFiles, currentPath);

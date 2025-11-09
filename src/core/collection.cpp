@@ -149,24 +149,6 @@ void Collection::generateCollectionFiles()
                 qDebug() << "DEBUG: Failed to create Parameters file:" << parametersFile.errorString();
             }
 
-            //Add the current version
-            QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
-            QString insertSQL = QLatin1String(R"(
-                                        INSERT INTO parameter (
-                                                    parameter_name,
-                                                    parameter_type,
-                                                    parameter_value1)
-                                        VALUES(
-                                                    :parameter_name,
-                                                    :parameter_type,
-                                                    :parameter_value1)
-                                )");
-            insertQuery.prepare(insertSQL);
-            insertQuery.bindValue(":parameter_name", "version");
-            insertQuery.bindValue(":parameter_type", "collection");
-            insertQuery.bindValue(":parameter_value1", dbSchemaVersion);
-            insertQuery.exec();
-
             //Save
             saveParameterTableToFile();
         }

@@ -1942,7 +1942,7 @@ QList<QVariantList> CatalogJobStoppable::findNewFiles()
                  << query.value(6); // mime_type
 
         // ADD DIAGNOSTIC: Show each new file found
-        qDebug() << "  New file:" << fileData[0].toString();
+        //qDebug() << "  New file:" << fileData[0].toString();
 
         newFiles.append(fileData);
     }
