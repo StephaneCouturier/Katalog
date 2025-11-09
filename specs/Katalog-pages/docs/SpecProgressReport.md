@@ -29,13 +29,14 @@ CREATE | Completed   | Catalog 1 of 1 | MyPhotos | Indexed: 2000 of 2000 (100%)
 | **1** | **Operation** | • "Create" (→ "CREATE")<br/>• "Search" (→ "SEARCH")<br/>• "Explore" (→ "EXPLORE")<br/>• "Update" (→ "UPDATE") | Translated as normal case,<br/>auto-converted to uppercase by builder |
 | **2** | **State** | • "In Progress"<br/>• "Paused"<br/>• "Stopped"<br/>• "Cancelled"<br/>• "Completed" | Current state of operation | * note: cancelled = no data saved (create, update), while stopped = some data saved or displayed (search)
 | **3** | **Device Context** | • "Catalog X of Y \| CatalogName"<br/> | Format: "Catalog 1 of 5 \| MyPhotos"<br/>CatalogName displayed in HTML color (#39b2e5 blue)<br/>Shown for all catalog operations (even 1 of 1) |
-| **4** | **Process Title** | **Search Operations:**<br/>• "File Types Updated" (populate file type)<br/>• "Loaded" (catalog index loading)<br/>• "Evaluated" (file criteria matching)<br/><br/>**Update Operations:**<br/>• "File Types Updated"<br/>• "Counted"<br/>• "Indexed" (files scanned/updated in catalog)<br/><br/>**Create Operations:**<br/>• "Counted"<br/>• "Indexed" (files added to new catalog)<br/><br/>**Explore Operations:**<br/>• "File Types Updated"<br/>• "Loaded" (catalog loading) | Process being executed, dynamically set by operation |
+| **4** | **Process Title** | **Search Operations:**<br/>• "File Types Updated" (populate file type)<br/>• "Loaded" (catalog index loading)<br/>• "Evaluated" (file criteria matching)<br/><br/>**Update Operations:**<br/>• "Loaded" (only for Memory mode and catalogs that include Metadata)<br/>• "Counted"<br/>• "Indexed" (files scanned/updated in catalog)<br/>• "File Types Updated"<br/>• "Metadata Extracted"<br/><br/>**Create Operations:**<br/>• "Counted"<br/>• "Indexed" (files added to new catalog)<br/>• "Metadata Extracted"<br/><br/>**Explore Operations:**<br/>• "File Types Updated"<br/>• "Loaded" (catalog loading) | Process being executed, dynamically set by operation |
 | **5** | **Current Count** | Any integer ≥ 0 |  Items processed so far |
 | **6** | **Total Count** | Any integer > 0, or 0 (unknown) |  Total items (0 = unknown, shows only current) |
 | **7** | **Percent** | 0-100 (integer) | Calculated from Part 5 / Part 6 |
 | **8** | **Result Title** | • "Files found"<br/>• "Folders found"<br/>• "Found" (generic) |  Files or folders being counted |
 | **9** | **Result Count** | Any integer ≥ 0 |  Result accumulator |
-| **10** | **Current Item** | File path string |  Current file being processed<br/>Updates every ~50-100 files (batched) |
+| **10** | **Time to Completion** | Duration string (e.g., "5m 23s", "1h 25m 20s") |  Estimated time to completion<br/>Only used for Extract Metadata process<br/>Updates every batch (~100 files) |
+| **11** | **Current Item** | File path string |  Current file being processed<br/>Updates every ~50-100 files (batched) |
 
 * DEV: consider spliting the DeviceContext (%3) in 2: DeviceList & DeviceName
 * Note about Cancelled vs Stopped: "Cancelled" will be used for operations that would not have changed data when interrupted (ex: Create, Update), while "Stopped" is used when some data has been modified or generated (ex: "Search").
@@ -64,10 +65,13 @@ EXPLORE | In Progress | Catalog 1 of 1 | MyPhotos | Update file types: 200 of 20
 (note: Pause or Stop is not available)
 
 //UPDATE
+UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Loaded: 100 of 1000 (10%)
+UPDATE | In Progress | Catalog 1 of 1 | MyPhotos | Counted: 2000
 UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Update file types: 200 of 2000 (10%)
 UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Indexed: 200 of 2000 (10%) | /home/stephane/Document/test.odt
+UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Extracted: 200 of 2000 (10%) | 1h 25m 10s | /home/stephane/Document/test.odt
 (note: Pause is not available)
-UPDATE | Cancelled | Catalog 1 of 1 | Documents | Evaluated: 2500 of 10000 (25%) | Found: 125
+UPDATE | Cancelled | Catalog 1 of 1 | MyPhotos | Indexed: 2500 of 10000 (25%)
 UPDATE | Completed | Catalog 1 of 1 | MyPhotos | Indexed: 1000 of 1000 (100%)
 ```
 
