@@ -521,10 +521,21 @@ void CatalogManager::setOperationPhase(OperationPhase phase)
         m_lastPhase = m_currentPhase;  // Remember previous phase
         m_currentPhase = phase;
 
-        // Debug output with readable names
-        QStringList phaseNames = {"IDLE", "LOADING", "COUNTING", "INDEXING", "MIGRATING", "COMPLETING"};
-        qDebug() << "Operation phase changed:"
-                 << phaseNames[m_lastPhase] << "->" << phaseNames[m_currentPhase];
+        // Debug output with readable names - WITH BOUNDS CHECKING
+        QStringList phaseNames = {"IDLE", "LOADING", "COUNTING", "INDEXING", "MIGRATING", "METADATA_EXTRACTION", "COMPLETING"};
+
+        // Bounds check to prevent crash
+        int lastPhaseIndex = static_cast<int>(m_lastPhase);
+        int currentPhaseIndex = static_cast<int>(m_currentPhase);
+
+        QString lastPhaseName = (lastPhaseIndex >= 0 && lastPhaseIndex < phaseNames.size())
+                                    ? phaseNames[lastPhaseIndex]
+                                    : QString("UNKNOWN(%1)").arg(lastPhaseIndex);
+        QString currentPhaseName = (currentPhaseIndex >= 0 && currentPhaseIndex < phaseNames.size())
+                                       ? phaseNames[currentPhaseIndex]
+                                       : QString("UNKNOWN(%1)").arg(currentPhaseIndex);
+
+        qDebug() << "Operation phase changed:" << lastPhaseName << "->" << currentPhaseName;
     }
 }
 
