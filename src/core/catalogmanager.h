@@ -67,6 +67,7 @@ public:
         PHASE_INDEXING,            // Scanning/indexing files
         PHASE_MIGRATING,           // File type migration
         PHASE_METADATA_EXTRACTION, // Extracting file metadata
+        PHASE_SAVING,              // Saving to database
         PHASE_COMPLETING           // Finalizing
     };
 

@@ -1485,15 +1485,13 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 3: Scan filesystem and populate filetemp
     qDebug() << "Step 3: Scanning filesystem into temporary table";
-    //emitProgressUpdate(0, countedTotalFiles, "Scanning filesystem...");
-
     QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
     if (!transactionQuery.exec("BEGIN TRANSACTION")) {
         qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
     }
 
-    qint64 scannedCount = 0;
-    scanDirectoryIntoFiletemp(catalog->sourcePath, catalog, scannedCount);
+    qint64 indexedCount = 0;
+    scanDirectoryIntoFiletemp(catalog->sourcePath, catalog, indexedCount);
 
     if (!shouldContinue()) {
         transactionQuery.exec("ROLLBACK");
@@ -1501,15 +1499,20 @@ void CatalogJobStoppable::updateCatalogIncremental()
         return;
     }
 
+    qDebug() << "Step 3b: Scan completed - showing Indexed 100% | Saving";
+    emitProgressUpdate(countedTotalFiles, countedTotalFiles,
+                       QCoreApplication::translate("MainWindow", "Saving"));
+    QCoreApplication::processEvents();
+
     if (!transactionQuery.exec("COMMIT")) {
         qDebug() << "Warning: Could not COMMIT scan transaction:" << transactionQuery.lastError().text();
     }
 
-    qDebug() << "Scanned" << scannedCount << "files into filetemp";
+    qDebug() << "Indexed" << indexedCount << "files into filetemp";
 
     // Step 4: Analyze differences using SQL
-    qDebug() << "Step 4: Analyzing differences with SQL";
-    emitProgressUpdate(scannedCount, countedTotalFiles, "Analyzing file changes...");
+    //qDebug() << "Step 4: Analyzing differences with SQL";
+    //emitProgressUpdate(indexedCount, countedTotalFiles, "Analyzing file changes...");
 
     QList<QVariantList> newFiles = findNewFiles();
     QList<QVariantList> modifiedFiles = findModifiedFiles();

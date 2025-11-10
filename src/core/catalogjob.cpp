@@ -251,7 +251,7 @@ void CatalogJob::onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, con
 
     // Update KJob progress tracking
     if (filesProcessed >= 0) {
-        qDebug() << "CatalogJob updating progress to:" << filesProcessed;
+        //qDebug() << "CatalogJob updating progress to:" << filesProcessed;
         m_lastFilesProcessed = filesProcessed;
         setProcessedAmount(KJob::Files, filesProcessed);
 

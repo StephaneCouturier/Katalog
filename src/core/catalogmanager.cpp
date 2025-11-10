@@ -119,6 +119,8 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
                         if (m_currentPhase != PHASE_COUNTING) {
                             setOperationPhase(PHASE_COUNTING);
                         }
+                    } else if (currentPath.startsWith("__SAVING__|")) {
+                        setOperationPhase(PHASE_SAVING);
                     } else if (currentPath.startsWith("__FILETYPE_MIGRATION__|")) {
                         setOperationPhase(PHASE_MIGRATING);
                     } else if (currentPath.startsWith("__METADATA_EXTRACTION__|")) {

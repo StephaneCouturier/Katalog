@@ -272,6 +272,10 @@ void CatalogProgressManager::updateFromCatalogManager()
                     );
             }
 
+        } else if (currentPath.startsWith("__SAVING__|")) {
+            // Show simple "Saving" indicator without progress numbers
+            builder.setCurrentItem(QApplication::translate("MainWindow", "Saving"));
+
         } else if (currentPath.startsWith("__METADATA_EXTRACTION__|")) {
             // METADATA EXTRACTION
             QStringList parts = currentPath.split("|");
