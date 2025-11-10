@@ -47,10 +47,15 @@ public:
     QString m_selectedDeviceType;
     void setSelectedDeviceInfo(QString selectedName,QString selectedType);
     void initializeLists();
+    void setColorizeFullRow(bool fullRow);
+    void setKatalogTheme(bool katalogTheme);
 
 private:
-    QVariant data( const QModelIndex &index, int role ) const;
+    QVariant extracted() const;
+    QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    bool m_colorizeFullRow = true;
+    bool m_katalogTheme;
 
 };
 

@@ -35,6 +35,7 @@
 #include <QDebug>
 #include <QFileIconProvider>
 #include <qapplication.h>
+#include <qpalette.h>
 
 DeviceTreeView::DeviceTreeView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -59,6 +60,16 @@ void DeviceTreeView::initializeLists()
 
     //Catalog fields
     booleanColumnList   << 25 << 28;
+}
+
+void DeviceTreeView::setColorizeFullRow(bool fullRow)
+{
+    m_colorizeFullRow = fullRow;
+}
+
+void DeviceTreeView::setKatalogTheme(bool katalogTheme)
+{
+    m_katalogTheme = katalogTheme;
 }
 
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
@@ -175,6 +186,29 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                 else if ( booleanColumnList.contains(index.column()) ){
                     if( QSortFilterProxyModel::data(index, Qt::DisplayRole).toBool() == true ){
                         return QIcon(QIcon::fromTheme("dialog-ok-apply"));
+                    }
+                }
+                break;
+            }
+
+            case Qt::ForegroundRole:
+            {
+                // Get the device type from column 1
+                QModelIndex typeIndex = index.sibling(index.row(), 1);
+                QString type = QSortFilterProxyModel::data(typeIndex, Qt::DisplayRole).toString();
+                bool isDark = QApplication::palette().color(QPalette::Window).lightness() < 128;
+
+                // Apply grey color to Virtual devices
+                if (m_katalogTheme && type == "Virtual") {
+                    // Check if we should color full row or only device name column
+                    if (m_colorizeFullRow || index.column() == 0){
+                        return isDark ? QColor("#999") : QColor("#666");
+                    }
+                }
+                else if (m_katalogTheme && type == "Storage") {
+                    // Check if we should color full row or only device name column
+                    if (m_colorizeFullRow || index.column() == 0){
+                        return isDark ? QColor("#CCC") : QColor("#444");
                     }
                 }
                 break;

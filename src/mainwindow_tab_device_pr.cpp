@@ -1245,6 +1245,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
         //Load Model to treeview (Devices tab)
         DeviceTreeView *deviceTreeViewForDeviceTab = new DeviceTreeView(this);
         deviceTreeViewForDeviceTab->setSourceModel(devicesTreeModel);
+        deviceTreeViewForDeviceTab->setKatalogTheme(themeID > 0);
         ui->Devices_treeView_DeviceList->setModel(deviceTreeViewForDeviceTab);
 
         //Customize tree display
@@ -1292,6 +1293,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
         filtersTreeModel = devicesTreeModel;
         //Load Model to treeview (Filters/Device tree)
         DeviceTreeView *deviceTreeViewForSelectionPanel = new DeviceTreeView(this);
+        deviceTreeViewForSelectionPanel->setKatalogTheme(themeID > 0);
         deviceTreeViewForSelectionPanel->setSourceModel(filtersTreeModel);
         ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
         ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
@@ -1525,6 +1527,7 @@ void MainWindow::loadDevicesStorageToModel(){
     //Load Model to treeview (Virtual tab)
     DeviceTreeView *deviceTreeViewForDeviceTab = new DeviceTreeView(this);
     deviceTreeViewForDeviceTab->setSourceModel(storageTreeModel);
+    deviceTreeViewForDeviceTab->setKatalogTheme(themeID > 0);
     ui->Devices_treeView_DeviceList->setModel(deviceTreeViewForDeviceTab);
 
     //Customize tree display
@@ -1812,6 +1815,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     //Load Model to treeview (Virtual tab)
     DeviceTreeView *deviceTreeViewForDeviceTab = new DeviceTreeView(this);
     deviceTreeViewForDeviceTab->setSourceModel(catalogTreeModel);
+    deviceTreeViewForDeviceTab->setKatalogTheme(themeID > 0);
     ui->Devices_treeView_DeviceList->setModel(deviceTreeViewForDeviceTab);
 
     //Customize tree display
