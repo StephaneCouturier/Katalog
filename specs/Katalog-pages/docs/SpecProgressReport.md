@@ -69,11 +69,16 @@ UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Loaded: 100 of 1000 (10%)
 UPDATE | In Progress | Catalog 1 of 1 | MyPhotos | Counted: 2000
 UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Update file types: 200 of 2000 (10%)
 UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Indexed: 200 of 2000 (10%) | /home/stephane/Document/test.odt
+UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Indexed: 2000 of 2000 (100%)
+UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Indexed: 2000 of 2000 (100%) | Saving
 UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Extracted: 200 of 2000 (10%) | 1h 25m 10s | /home/stephane/Document/test.odt
 (note: Pause is not available)
 UPDATE | Cancelled | Catalog 1 of 1 | MyPhotos | Indexed: 2500 of 10000 (25%)
 UPDATE | Completed | Catalog 1 of 1 | MyPhotos | Indexed: 1000 of 1000 (100%)
 ```
+### Other requirements
+* Each phase of an Update operation shall refresh the status bar to display 100% when reaching this stage, so that if there is another phase or process starting just after, the waiting time is not perceived by the user as part of the previous phase
+
 
 ### Ideas for UI improvements
 * DEV: normalize the parts size with spaces (Operation, State)

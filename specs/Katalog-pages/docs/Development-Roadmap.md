@@ -3,7 +3,7 @@ This page documents the ideas and sub projects for the future of Katalog.<br/>
 
 ## Vision
 
-Katalog aims at providing the most features in device & file management across as many platform as possbile.
+Katalog aims at providing the most features for device & file management across as many platforms as possbile.
 
 
 ## Some ideas and directions

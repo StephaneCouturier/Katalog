@@ -2,11 +2,62 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://StephaneCouturier.github.io/Katalog/cs/blog</id>
     <title>Katalog Blog</title>
-    <updated>2024-09-05T00:00:00.000Z</updated>
+    <updated>2025-11-09T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://StephaneCouturier.github.io/Katalog/cs/blog"/>
     <subtitle>Katalog Blog</subtitle>
     <icon>https://StephaneCouturier.github.io/Katalog/cs/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 2.8]]></title>
+        <id>https://StephaneCouturier.github.io/Katalog/cs/blog/release-2-8</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/cs/blog/release-2-8"/>
+        <updated>2025-11-09T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[✨ Main improvements:]]></summary>
+        <content type="html"><![CDATA[<p>✨ Main improvements:</p>
+<ul>
+<li>
+<p>#379 CREATE/ SEARCH: <strong>File Types</strong> management
+Instead of hard-coded and limited list, Katalog now uses a <strong>standard database, with more than 1200 known types</strong>, to determine the type from the extension and it can also verify the real mime type and report gaps.
+The definition of main types "Images, Audio, Video" is strictly related, only the type "Text" was customized to include types such as PDF. see <a href="https://stephanecouturier.github.io/Katalog/docs/Create#file-type-categories" target="_blank" rel="noopener noreferrer">Create#file-type-categories</a></p>
+</li>
+<li>
+<p>#379 CREATE/ SEARCH: <strong>File Metadata</strong> management
+Basic Media (Image size, Video duration, Music artist, etc.) or Extended (all available) metadata can be scanned, stored, and used in searching. see <a href="https://stephanecouturier.github.io/Katalog/docs/Create#metadata-extraction" target="_blank" rel="noopener noreferrer">Create#metadata-extraction</a> for the different options.
+<strong>Important</strong>: indexing metadata is a much, <strong>much slower process</strong> than just indexing them. (ex: 45minutes for 100 000 files)
+Which is why it comes with another new major feature:</p>
+</li>
+<li>
+<p>#662 DEVICES: <strong>Incremental update</strong>
+Updating a device will only process new or modified files, which is a critical need to save time when using File Metadata and avoid re-scanning them when files have not changed.</p>
+</li>
+<li>
+<p>#660 CREATE/ SEARCH/DEVICES: consistent operations <strong>progress reporting</strong> in  status bar</p>
+</li>
+</ul>
+<p>⚠️ Technical changes:</p>
+<ul>
+<li>As for any new version, it is highly recommended to <strong>backup the collections</strong> 💾, and test the new version on other copies.</li>
+<li><strong>Database update</strong>: significant changes have been made as fields were added to store metadata</li>
+<li><strong>Catalogs migration</strong>: all catalog will require an operation to populate the new file_types &amp; mime-types. This will happen only once, per catalog, and when using Search or Explore for the first time.</li>
+</ul>
+<p>📦 Distribution Formats:</p>
+<ul>
+<li>New!  Katalog is now provided for <strong>Apple macOS</strong> (dmg file or zip)  note: <strong>⚠️ Katalog was not tested on macOS</strong>, feedback is very welcome</li>
+<li>Reminder: AppImage is available for easier Linux deployment, including one for older/LTS distributions with glibc 2.35 (ex: Ubuntu 22..04) It is now the default version when downloading from on SourceForge. It is still possible to use the Command Line Interface with AppImage</li>
+</ul>
+<p>📋 Release details:</p>
+<ul>
+<li>Full list of updates: <a href="https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.8+sort%3Acreated-asc" target="_blank" rel="noopener noreferrer">https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.8+sort%3Acreated-asc</a></li>
+<li>Full code changelog: <a href="https://github.com/StephaneCouturier/Katalog/compare/v2.7...v2.8" target="_blank" rel="noopener noreferrer">https://github.com/StephaneCouturier/Katalog/compare/v2.7...v2.8</a></li>
+<li>📥 <strong>Download Katalog</strong>: <a href="https://sourceforge.net/projects/katalogg" target="_blank" rel="noopener noreferrer">https://sourceforge.net/projects/katalogg</a></li>
+<li>📚 <strong>Documentation</strong>: <a href="https://stephanecouturier.github.io/Katalog" target="_blank" rel="noopener noreferrer">https://stephanecouturier.github.io/Katalog</a></li>
+</ul>]]></content>
+        <author>
+            <name>StephaneCouturier</name>
+            <uri>https://github.com/StephaneCouturier</uri>
+        </author>
+        <category label="release" term="release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[A test of QML and Kirigami for Katalog]]></title>
         <id>https://StephaneCouturier.github.io/Katalog/cs/blog/2024/09/05/Testing-QML-and-Kirigam</id>

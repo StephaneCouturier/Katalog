@@ -47,6 +47,19 @@ This provides information about how the source code is organized and any common 
 * variables:  first word lower cap, all other starting with capital letter:    thisIsAVariableName.
 * database fields: to help with compatibility between SQLite and Postgres, fields are named in lower case, words separated by underscore: this_is_a_fied_name
 
+
+## **Build**
+
+GitHub workflows:
+- AppImage Qt5 (gblic 2.35)
+- AppImage Qt6 (gblic 2.38)
+- macOS latest version
+- macOS legacy version (2.5 no KF6)
+
+
+
+
+
 ## **Testing**
 * all manual
 
