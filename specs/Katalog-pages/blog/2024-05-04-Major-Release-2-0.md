@@ -1,6 +1,6 @@
 ---
 slug: release-2-0
-title: Major Release 2.0
+title: Release 2.0 (Major)
 authors:
   name: StephaneCouturier
   title: Developer of Katalog
