@@ -81,7 +81,7 @@ const auto SQL_CREATE_CATALOG = QLatin1String(R"(
                             catalog_date_loaded           TEXT,
                             catalog_include_metadata      TEXT,
                             catalog_app_version           TEXT,
-                            PRIMARY KEY("catalog_name"))
+                            PRIMARY KEY(catalog_name))
             )");
 
 // STORAGE --------------------------------------------------------------
@@ -353,6 +353,96 @@ const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
 class Database
 {
 public:
+
+    enum class DatabaseType {
+        SQLite,
+        MySQL,
+        PostgreSQL
+    };
+    static DatabaseType getDatabaseType(const QString &connectionName);
+
+    // Get CREATE statements for compatibility with different database systems
+    /**
+     * @brief Generate CREATE TABLE SQL for device_mapping based on database type
+     * @param dbType The type of database (SQLite, MySQL, PostgreSQL)
+     * @return SQL string for creating device_mapping table
+     */
+    static QString getCreateBackupMappingSQL(DatabaseType dbType);
+
+    /**
+     * @brief Generate CREATE TABLE SQL for tag based on database type
+     * @param dbType The type of database (SQLite, MySQL, PostgreSQL)
+     * @return SQL string for creating tag table
+     */
+    static QString getCreateTagSQL(DatabaseType dbType);
+    /**
+     * @brief Generate CREATE TABLE SQL for catalog based on database type
+     * @param dbType The type of database (SQLite, MySQL, PostgreSQL)
+     * @return SQL string for creating catalog table
+     */
+    static QString getCreateCatalogSQL(DatabaseType dbType);
+
+    /**
+     * @brief Generate CREATE TABLE SQL for folder based on database type
+     * @param dbType The type of database (SQLite, MySQL, PostgreSQL)
+     * @return SQL string for creating folder table
+     */
+    static QString getCreateFolderSQL(DatabaseType dbType);
+
+    /**
+     * @brief Get database-specific SQL for starting a transaction
+     * @param dbType The type of database
+     * @return SQL string to begin transaction
+     */
+    static QString getBeginTransactionSQL(DatabaseType dbType);
+
+    /**
+     * @brief Get database-specific SQL for INSERT OR IGNORE
+     * @param dbType The type of database
+     * @return SQL prefix for insert or ignore syntax
+     */
+    static QString getInsertOrIgnorePrefix(DatabaseType dbType);
+
+    /**
+     * @brief Execute BEGIN TRANSACTION with correct syntax for database type
+     * @param connectionName Database connection name
+     * @return true if successful, false otherwise
+     */
+    static bool beginTransaction(const QString &connectionName);
+
+    /**
+     * @brief Execute COMMIT with error handling
+     * @param connectionName Database connection name
+     * @return true if successful, false otherwise
+     */
+    static bool commitTransaction(const QString &connectionName);
+
+    /**
+     * @brief Execute ROLLBACK with error handling
+     * @param connectionName Database connection name
+     * @return true if successful, false otherwise
+     */
+    static bool rollbackTransaction(const QString &connectionName);
+
+    /**
+     * @brief Format time difference for backup mapping display
+     * @param dbType Database type
+     * @param d1DateField Source device date field name
+     * @param d2DateField Target device date field name
+     * @return SQL expression for formatted time difference
+     */
+    static QString getFormattedTimeDifference(DatabaseType dbType,
+                                              const QString &d1DateField,
+                                              const QString &d2DateField);
+
+    /**
+     * @brief search table has file_size_min_unit defined as NUMERIC, but the code is inserting text
+     * @param the code is inserting text values like "Bytes", "KB", "MB", etc.
+     * @param SQLite allows this (it's flexible with types), but MySQL/MariaDB enforces strict typing.
+     * @return Temporary fix, db defintion should be fixed to TEXT
+     */
+    static QString getCreateSearchSQL(DatabaseType databaseType);
+
     // Main initialization method - creates connection and sets up database
     // Optional overrides allow command line to bypass settings file values
     static QSqlError initialize(const QString &connectionName, Collection *collection,
@@ -363,7 +453,7 @@ public:
 
     // Utility methods
     static bool tableExists(const QString &connectionName, const QString &tableName);
-    static QStringList listTables(const QString &connectionName);
+    static QStringList listTables(const QString &connectionName); // Make DB-aware
 
     // Updates per Version
     static QSqlError runMigration_2_6(const QString &connectionName);

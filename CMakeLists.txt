@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Katalog VERSION 2.8 LANGUAGES CXX)
+project(Katalog VERSION 2.9 LANGUAGES CXX)
 
 # Add this section immediately after project():
 set(KATALOG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})

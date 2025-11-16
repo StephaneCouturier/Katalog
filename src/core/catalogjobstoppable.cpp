@@ -33,6 +33,7 @@
 #include "filemetadata.h"
 #include "filetypemapping.h"
 #include "parallelmetadataextractor.h"
+#include "database.h"
 
 #include <QDebug>
 #include <QDir>
@@ -202,10 +203,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
     }
 
     // Initialize database transaction for efficiency
-    QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
-    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
-        qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
-    }
+    Database::beginTransaction(m_connectionName);
 
     qDebug() << "Step 4: Starting database transaction";
     // Save catalog to database first
@@ -216,17 +214,12 @@ void CatalogJobStoppable::createCatalogWithProgress()
     processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
 
     if (!shouldContinue()) {
-        QSqlQuery rollbackQuery(QSqlDatabase::database(m_connectionName));
-        if (!rollbackQuery.exec("ROLLBACK")) {
-            qDebug() << "Warning: Could not ROLLBACK transaction:" << rollbackQuery.lastError().text();
-        }
+        Database::rollbackTransaction(m_connectionName);
     }
 
     // Commit transaction
     QSqlQuery commitQuery(QSqlDatabase::database(m_connectionName));
-    if (!commitQuery.exec("COMMIT")) {
-        qDebug() << "Warning: Could not COMMIT transaction:" << commitQuery.lastError().text();
-    }
+    Database::commitTransaction(m_connectionName);
 
     // Update catalog metadata
     catalog->updateFileCount();
@@ -1305,11 +1298,26 @@ void CatalogJobStoppable::insertFolders(const QStringList& folderPaths, Catalog*
 {
     if (folderPaths.isEmpty()) return;
 
-    QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
-    folderQuery.prepare(R"(
-        INSERT OR IGNORE INTO folder (folder_catalog_id, folder_path)
+    Database::DatabaseType databaseType = Database::getDatabaseType(m_connectionName);
+    QString insertPrefix = Database::getInsertOrIgnorePrefix(databaseType);
+    QString insertSQL;
+
+    if (databaseType == Database::DatabaseType::PostgreSQL) {
+        // PostgreSQL requires ON CONFLICT clause
+        insertSQL = QString(R"(
+        %1 INTO folder (folder_catalog_id, folder_path)
         VALUES (:catalog_id, :path)
-    )");
+        ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING
+    )").arg(insertPrefix);
+    } else {
+        insertSQL = QString(R"(
+        %1 INTO folder (folder_catalog_id, folder_path)
+        VALUES (:catalog_id, :path)
+    )").arg(insertPrefix);
+    }
+
+    QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
+    folderQuery.prepare(insertSQL);
 
     for (const QString& folderPath : folderPaths) {
         if (!shouldContinue()) break;
@@ -1485,17 +1493,13 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 3: Scan filesystem and populate filetemp
     qDebug() << "Step 3: Scanning filesystem into temporary table";
-    QSqlQuery transactionQuery(QSqlDatabase::database(m_connectionName));
-    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
-        qDebug() << "Warning: Could not BEGIN transaction:" << transactionQuery.lastError().text();
-    }
+    Database::beginTransaction(m_connectionName);
 
     qint64 indexedCount = 0;
     scanDirectoryIntoFiletemp(catalog->sourcePath, catalog, indexedCount);
 
     if (!shouldContinue()) {
-        transactionQuery.exec("ROLLBACK");
-        qDebug() << "Scan cancelled, transaction rolled back";
+        Database::rollbackTransaction(m_connectionName);
         return;
     }
 
@@ -1504,9 +1508,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
                        QCoreApplication::translate("MainWindow", "Saving"));
     QCoreApplication::processEvents();
 
-    if (!transactionQuery.exec("COMMIT")) {
-        qDebug() << "Warning: Could not COMMIT scan transaction:" << transactionQuery.lastError().text();
-    }
+    Database::commitTransaction(m_connectionName);
 
     qDebug() << "Indexed" << indexedCount << "files into filetemp";
 
@@ -1537,9 +1539,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
     }
 
     // Step 5: Begin transaction for database updates
-    if (!transactionQuery.exec("BEGIN TRANSACTION")) {
-        qDebug() << "Warning: Could not BEGIN update transaction:" << transactionQuery.lastError().text();
-    }
+    Database::beginTransaction(m_connectionName);
 
     // Step 6: Process NEW files
     if (!newFiles.isEmpty()) {
@@ -1566,15 +1566,12 @@ void CatalogJobStoppable::updateCatalogIncremental()
     }
 
     if (!shouldContinue()) {
-        transactionQuery.exec("ROLLBACK");
-        qDebug() << "Update cancelled, transaction rolled back";
+        Database::rollbackTransaction(m_connectionName);
         return;
     }
 
     // Commit database changes
-    if (!transactionQuery.exec("COMMIT")) {
-        qDebug() << "Warning: Could not COMMIT update transaction:" << transactionQuery.lastError().text();
-    }
+    Database::commitTransaction(m_connectionName);
 
     // One-time migration for existing files without mime_type
     qDebug() << "Step 8a: Checking for mime_type migration";

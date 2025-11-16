@@ -628,7 +628,14 @@ QSqlError CommandLineHandler::initializeDatabaseConnection(const QString &connec
         }
     }
     else if (collection->databaseMode == "Hosted") {
-        db = QSqlDatabase::addDatabase("QPSQL", connectionName);
+        QString driver;
+        if (collection->databaseType == "PostgreSQL") {
+            driver = "QPSQL";
+        } else {
+            driver = "QMYSQL";  // Default to MySQL
+        }
+
+        db = QSqlDatabase::addDatabase(driver, connectionName);
         db.setHostName(collection->databaseHostName);
         db.setDatabaseName(collection->databaseName);
         db.setPort(collection->databasePort);

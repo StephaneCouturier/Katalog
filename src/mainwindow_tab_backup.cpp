@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "devicemappingview.h"
 #include "ui_mainwindow.h"
+#include "core/database.h"
 
 //UI----------------------------------------------------------------------------
 
@@ -240,10 +241,17 @@ void MainWindow::loadBackUpMappingTotals()
 
 void MainWindow::loadBackUpMappingTable()
 {
+    // Get database type for time difference formatting
+    Database::DatabaseType databaseType = Database::getDatabaseType(m_connectionName);
+    QString timeDiffSQL = Database::getFormattedTimeDifference(databaseType,
+                                                               "d1.device_date_updated",
+                                                               "d2.device_date_updated");
+
     //Load data from table device_mapping
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL;
-    querySQL = QLatin1String(R"(
+
+    // Build query WITHOUT using .arg() because SQL has % for percentage calculations
+    QString querySQL = QLatin1String(R"(
                             SELECT
                                 dm.mapping_id,
                                 dm.mapping_name,
@@ -277,17 +285,12 @@ void MainWindow::loadBackUpMappingTable()
                                     ELSE NULL
                                 END AS file_count_difference_percentage,
 
-                                (
-                                    PRINTF('%02d:%02d:%02d %02d:%02d:%02d',
-                                        CAST(ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 / 31536000) AS INTEGER),
-                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 31536000) / 2592000) AS INTEGER),
-                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 2592000) / 86400) AS INTEGER),
-                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 86400) / 3600) AS INTEGER),
-                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 3600) / 60) AS INTEGER),
-                                        CAST(ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 60) AS INTEGER)
-                                    )
-                                ) AS formatted_time_difference
+)");
 
+    // NOW append the time difference SQL (which was generated database-specifically)
+    querySQL += "                                (" + timeDiffSQL + ") AS formatted_time_difference\n";
+
+    querySQL += QLatin1String(R"(
                             FROM device_mapping dm,
                                 device d1,
                                 device d2
@@ -295,6 +298,7 @@ void MainWindow::loadBackUpMappingTable()
                             AND   dm.mapping_device_target_id = d2.device_id
                         )");
 
+    // Add device filtering based on radio button selection
     if(ui->BackUp_radioButton_Target->isChecked()==true){
         if (      selectedDevice->type == "Storage" ){
             querySQL += " AND d2.device_parent_id =:device_parent_id ";

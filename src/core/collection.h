@@ -58,6 +58,7 @@ public:
 
     //Database management
     QString databaseMode;
+    QString databaseType;
     QString databaseHostName;
     QString databaseName;
     int     databasePort;

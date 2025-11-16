@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1456</width>
-    <height>1321</height>
+    <width>1080</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -7305,6 +7305,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <property name="text">
                     <string>Save</string>
                    </property>
+                   <property name="icon">
+                    <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -7317,6 +7320,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="text">
                     <string>Cancel</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="QIcon::ThemeIcon::ProcessStop"/>
                    </property>
                   </widget>
                  </item>

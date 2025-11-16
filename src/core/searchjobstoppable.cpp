@@ -33,6 +33,8 @@
 #include "core/catalogmanager.h"
 #include "core/filemetadata.h"
 #include "core/filetypemapping.h"
+#include "core/database.h"
+
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QElapsedTimer>
@@ -1354,8 +1356,7 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     if (!shouldContinue()) return;
 
     // Begin transaction for better performance
-    QSqlQuery transactionQuery(QSqlDatabase::database(connectionName));
-    transactionQuery.exec("BEGIN TRANSACTION");
+    Database::beginTransaction(connectionName);
 
     // Generate SQL based on grouping of fields
     selectSQL = QString(R"(
@@ -1409,7 +1410,7 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     )").arg(groupingFieldsDifferences, listOfCatalogDeviceIDs1, listOfCatalogDeviceIDs2);
 
     if (!shouldContinue()) {
-        transactionQuery.exec("ROLLBACK");
+        Database::commitTransaction(connectionName);
         return;
     }
 
@@ -1419,12 +1420,12 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
 
     if (!differencesQuery.exec()) {
         qWarning() << "SearchJobStoppable::processDifferences - Query error:" << differencesQuery.lastError().text();
-        transactionQuery.exec("ROLLBACK");
+        Database::rollbackTransaction(connectionName);
         return;
     }
 
     // Commit transaction
-    transactionQuery.exec("COMMIT");
+    Database::commitTransaction(connectionName);
 
     if (!shouldContinue()) return;
 
