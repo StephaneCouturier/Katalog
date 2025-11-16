@@ -1732,7 +1732,7 @@ void MainWindow::loadDevicesCatalogToModel(){
         rowItems << new QStandardItem(name);                        //0
         rowItems << new QStandardItem(type);                        //1
         rowItems << new QStandardItem(QString::number(isActive));   //2
-        rowItems << addNumericItem(groupID);                        //3
+        rowItems << addNumericItem(id);                             //3
         rowItems << addNumericItem(parentId);                       //4
         rowItems << addNumericItem(externalId);                     //5
         rowItems << addNumericItem(number);                         //6
@@ -1742,7 +1742,7 @@ void MainWindow::loadDevicesCatalogToModel(){
         rowItems << addNumericItem(total_space);                    //10
         rowItems << new QStandardItem(dateTimeUpdated);             //11
         rowItems << new QStandardItem(path);                        //12
-        rowItems << new QStandardItem(groupID);                     //13
+        rowItems << addNumericItem(groupID);                        //13
 
         //Storage fields: add empty rows
         for (int var = 0; var < 10; ++var) {
