@@ -234,23 +234,30 @@ QString Database::getFormattedTimeDifference(DatabaseType databaseType,
 {
     switch (databaseType) {
     case DatabaseType::SQLite:
+    {
         // SQLite version using PRINTF and julianday
-        return QString(R"(
-                PRINTF('%%02d:%%02d:%%02d %%02d:%%02d:%%02d',
-                    CAST(ABS((julianday(%2) - julianday(%1)) * 24 * 60 * 60 / 31536000) AS INTEGER),
-                    CAST(ABS(((julianday(%2) - julianday(%1)) * 24 * 60 * 60 %% 31536000) / 2592000) AS INTEGER),
-                    CAST(ABS(((julianday(%2) - julianday(%1)) * 24 * 60 * 60 %% 2592000) / 86400) AS INTEGER),
-                    CAST(ABS(((julianday(%2) - julianday(%1)) * 24 * 60 * 60 %% 86400) / 3600) AS INTEGER),
-                    CAST(ABS(((julianday(%2) - julianday(%1)) * 24 * 60 * 60 %% 3600) / 60) AS INTEGER),
-                    CAST(ABS((julianday(%2) - julianday(%1)) * 24 * 60 * 60 %% 60) AS INTEGER)
+        // NOT using .arg() because PRINTF has % signs that conflict with QString placeholders
+        // Use direct string replacement instead
+        QString sql = R"(
+                PRINTF('%02d:%02d:%02d %02d:%02d:%02d',
+                    CAST(ABS((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 / 31536000) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 31536000) / 2592000) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 2592000) / 86400) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 86400) / 3600) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 3600) / 60) AS INTEGER),
+                    CAST(ABS((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 60) AS INTEGER)
                 )
-            )").arg(d1DateField, d2DateField);
+            )";
+        // Replace placeholders with actual field names (avoiding QString::arg())
+        sql.replace("FIELD1", d1DateField);
+        sql.replace("FIELD2", d2DateField);
+        return sql;
+    }
 
     case DatabaseType::MySQL:
     case DatabaseType::PostgreSQL:
     {
         // MySQL/PostgreSQL version using TIMESTAMPDIFF and MOD() function
-        // Use MOD() instead of % operator to avoid QString issues
         QString sql = QString(R"(
                 CONCAT(
                     LPAD(FLOOR(ABS(TIMESTAMPDIFF(SECOND, %1, %2)) / 31536000), 2, '0'), ':',

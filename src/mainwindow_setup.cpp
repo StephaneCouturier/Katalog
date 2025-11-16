@@ -306,7 +306,7 @@
         //Filter
 
         //Search
-            //hide Krename if not linux
+            //hide KRename if not linux
             #ifndef Q_OS_LINUX
                 ui->Search_comboBox_SelectProcess->removeItem(2);
             #endif
@@ -325,9 +325,6 @@
             ui->Create_label_TypeOfSource->hide();
             ui->Create_comboBox_SourceType->hide();
             ui->Create_label_Path->hide();
-
-        //Settings
-            ui->Settings_comboBox_DatabaseMode->removeItem(2);
 
     }
     //----------------------------------------------------------------------

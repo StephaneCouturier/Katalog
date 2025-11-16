@@ -247,10 +247,15 @@ void MainWindow::loadBackUpMappingTable()
                                                                "d1.device_date_updated",
                                                                "d2.device_date_updated");
 
+    // DEBUG: Print the generated time diff SQL
+    qDebug() << "=== DEBUG loadBackUpMappingTable ===";
+    qDebug() << "Database type:" << (int)databaseType;
+    qDebug() << "Time diff SQL:" << timeDiffSQL;
+
     //Load data from table device_mapping
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
 
-    // Build query WITHOUT using .arg() because SQL has % for percentage calculations
+    // Build the complete SELECT statement
     QString querySQL = QLatin1String(R"(
                             SELECT
                                 dm.mapping_id,
@@ -287,9 +292,10 @@ void MainWindow::loadBackUpMappingTable()
 
 )");
 
-    // NOW append the time difference SQL (which was generated database-specifically)
+    // Append the database-specific time difference calculation
     querySQL += "                                (" + timeDiffSQL + ") AS formatted_time_difference\n";
 
+    // Add FROM and WHERE clauses
     querySQL += QLatin1String(R"(
                             FROM device_mapping dm,
                                 device d1,
@@ -351,6 +357,7 @@ void MainWindow::loadBackUpMappingTable()
     }
 
     querySQL +=" ORDER BY dm.mapping_name ASC ";
+
     query.prepare(querySQL);
     query.bindValue(":device_id",        selectedDevice->ID);
     query.bindValue(":device_parent_id", selectedDevice->ID);
@@ -389,7 +396,6 @@ void MainWindow::loadBackUpMappingTable()
     queryModel->setHeaderData(21, Qt::Horizontal, tr("Date Diff."));
 
     DeviceMappingView *proxyModel = new DeviceMappingView(this);
-    //proxyModel->caseSensitive = fileSortCaseSensitive;
     proxyModel->setSourceModel(queryModel);
 
     //Load model to the view
@@ -399,7 +405,7 @@ void MainWindow::loadBackUpMappingTable()
 
     //If the setting is checked, display all columns
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-    if (optionDisplayFullMappingTable == false)// ui->BackUp_checkBox_DisplayFullTable->isChecked() == false )
+    if (optionDisplayFullMappingTable == false)
     {
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, true);
