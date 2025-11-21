@@ -10468,9 +10468,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </spacer>
               </item>
               <item>
-               <widget class="QCheckBox" name="BackUp_checkBox_DisplayFullTable">
+               <widget class="QPushButton" name="BackUp_pushButton_GenerateLuckyBackupProfile">
                 <property name="text">
-                 <string>Full Table</string>
+                 <string>Generate Profile</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
                 </property>
                </widget>
               </item>
@@ -10824,6 +10827,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="BackUp_checkBox_DisplayFullTable">
+                <property name="text">
+                 <string>Full Table</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>

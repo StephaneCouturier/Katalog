@@ -718,6 +718,7 @@ class MainWindow : public KXmlGuiWindow
             void on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1);
             void on_BackUp_radioButton_Source_clicked();
             void on_BackUp_radioButton_Target_clicked();
+            void on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();

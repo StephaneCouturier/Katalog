@@ -101,6 +101,7 @@ set(CORE_HEADERS
     src/core/filetypemapping.h
     src/core/parallelmetadataextractor.h
     src/core/statusbarmessagebuilder.h
+    src/core/backupprofilegenerator.h
 )
 
 set(CORE_SOURCES
@@ -129,6 +130,7 @@ set(CORE_SOURCES
     src/core/filetypemapping.cpp
     src/core/parallelmetadataextractor.cpp
     src/core/statusbarmessagebuilder.cpp
+    src/core/backupprofilegenerator.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
+#include "core/backupprofilegenerator.h"
 #include "mainwindow.h"
 #include "devicemappingview.h"
 #include "ui_mainwindow.h"
@@ -110,6 +111,35 @@ void MainWindow::on_BackUp_radioButton_Target_clicked()
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("BackUp/FilterMappingTable", "Target");
+}
+
+void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
+{
+    // Create profile generator
+    BackupProfileGenerator generator(m_connectionName);
+
+    // Generate profile
+    BackupProfileResult result = generator.generateProfile();
+
+    // Show result to user
+    if (result.success) {
+        QMessageBox::information(
+            this,
+            "Katalog",
+            tr("Backup profile created successfully:\n\n"
+               "File: %1\n"
+               "Tasks: %2")
+                .arg(result.profilePath)
+                .arg(result.taskCount)
+            );
+    } else {
+        QMessageBox::critical(
+            this,
+            "Katalog",
+            tr("Failed to generate Backup profile:\n\n%1")
+                .arg(result.errorMessage)
+            );
+    }
 }
 
 //Methods-----------------------------------------------------------------------
@@ -248,9 +278,9 @@ void MainWindow::loadBackUpMappingTable()
                                                                "d2.device_date_updated");
 
     // DEBUG: Print the generated time diff SQL
-    qDebug() << "=== DEBUG loadBackUpMappingTable ===";
-    qDebug() << "Database type:" << (int)databaseType;
-    qDebug() << "Time diff SQL:" << timeDiffSQL;
+    // qDebug() << "=== DEBUG loadBackUpMappingTable ===";
+    // qDebug() << "Database type:" << (int)databaseType;
+    // qDebug() << "Time diff SQL:" << timeDiffSQL;
 
     //Load data from table device_mapping
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
