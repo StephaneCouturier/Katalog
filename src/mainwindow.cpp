@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "mainwindow.h"
+#include "core/backupmappingmanager.h"
 #include "ui_mainwindow.h"
 #include "version.h"
 #include "core/filemetadata.h"
@@ -60,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     // Initialize catalog-related pointers
     catalogProgressManager = nullptr;
     catalogJobStoppable = nullptr;
+
+    // Initialize backup management
+    backupMappingManager = nullptr;
 
     //Default UI settings
         themeID = 1; //default theme is Katalog Colors
@@ -367,6 +371,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
         //Setup tab: BackUp
             ui->BackUp_checkBox_DisplayFullTable->setChecked(optionDisplayFullMappingTable);
+            setupBackUpManager();
 
     //Context menu and other slots and signals
             setupFileContextMenus();

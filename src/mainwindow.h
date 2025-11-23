@@ -45,6 +45,7 @@
 #include "core/catalogmanager.h"
 #include "core/catalogjobstoppable.h"
 #include "core/catalogprogressmanager.h"
+#include "core/backupmappingmanager.h"
 
 //KDE KF6
 #include <KFormat>
@@ -147,6 +148,7 @@ class MainWindow : public KXmlGuiWindow
         SearchProcess *searchProcess  = nullptr;
         CatalogJobStoppable *catalogJobStoppable = nullptr;
         CatalogProgressManager *catalogProgressManager = nullptr;
+        BackupMappingManager *backupMappingManager = nullptr;
 
         void extracted();
         void launchSearch();
@@ -481,6 +483,7 @@ class MainWindow : public KXmlGuiWindow
             void loadBackUpMappingTable();
             void loadBackUpDeviceLists(QString list);
             void saveNewMapping();
+            void setupBackUpManager();
 
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);
@@ -719,6 +722,7 @@ class MainWindow : public KXmlGuiWindow
             void on_BackUp_radioButton_Source_clicked();
             void on_BackUp_radioButton_Target_clicked();
             void on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked();
+            void on_BackUp_checkBox_OnlySelectedLinks_checkStateChanged(const Qt::CheckState &arg1);
 
         //Statistics
             void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();

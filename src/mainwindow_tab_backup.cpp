@@ -115,31 +115,113 @@ void MainWindow::on_BackUp_radioButton_Target_clicked()
 
 void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
 {
-    // Create profile generator
-    BackupProfileGenerator generator(m_connectionName);
+    // Initialization
+    if (!backupMappingManager) {
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    }
 
-    // Generate profile
-    BackupProfileResult result = generator.generateProfile();
-
-    // Show result to user
-    if (result.success) {
+    // Check if we have any mappings first
+    if (backupMappingManager->getMappingCount() == 0) {
         QMessageBox::information(
             this,
             "Katalog",
-            tr("Backup profile created successfully:\n\n"
-               "File: %1\n"
-               "Tasks: %2")
-                .arg(result.profilePath)
-                .arg(result.taskCount)
+            tr("No backup mappings found.")
             );
-    } else {
-        QMessageBox::critical(
-            this,
-            "Katalog",
-            tr("Failed to generate Backup profile:\n\n%1")
-                .arg(result.errorMessage)
-            );
+        return;
     }
+
+    // Determine which mappings to use
+    QList<int> mappingIds;
+    bool useSelectedLinks = ui->BackUp_checkBox_OnlySelectedLinks->isChecked();
+
+    if (useSelectedLinks) {
+        // Use only filtered mappings based on current radio button selection
+        MappingFilter filter;
+
+        if (ui->BackUp_radioButton_Source->isChecked()) {
+            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID);
+            qDebug() << "Filtering by Source device:" << selectedDevice->ID;
+        } else if (ui->BackUp_radioButton_Target->isChecked()) {
+            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID);
+            qDebug() << "Filtering by Target device:" << selectedDevice->ID;
+        } else {
+            // No radio button selected - use all
+            qDebug() << "No filter radio button checked, using all mappings";
+        }
+
+        mappingIds = backupMappingManager->getFilteredMappingIds(filter);
+
+        if (mappingIds.isEmpty()) {
+            QMessageBox::information(
+                this,
+                "Katalog",
+                tr("No backup mappings found.")
+                );
+            return;
+        }
+
+        qDebug() << "Generating profile from" << mappingIds.size() << "filtered mapping(s)";
+    } else {
+        // Empty list = ALL mappings
+        qDebug() << "Generating profile from ALL mappings (checkbox not checked)";
+    }
+
+    // Rest of method unchanged...
+    QString scopeDescription = useSelectedLinks
+                                   ? tr("%1 selected mapping(s)").arg(mappingIds.isEmpty() ? backupMappingManager->getMappingCount() : mappingIds.size())
+                                   : tr("all mappings");
+
+    // Create profile generator
+    BackupProfileGenerator* generator = new BackupProfileGenerator(m_connectionName, this);
+
+    connect(generator, &BackupProfileGenerator::profileGenerationCompleted,
+            this, [this](const QString& profilePath, int taskCount) {
+
+                ui->BackUp_pushButton_GenerateLuckyBackupProfile->setEnabled(true);
+
+                QMessageBox msgBox(this);
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.setText(tr("Backup profile created."));
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.exec();
+
+                qDebug() << "LuckyBackup profile generated successfully:";
+                qDebug() << "  Path:" << profilePath;
+                qDebug() << "  Tasks:" << taskCount;
+            });
+
+    connect(generator, &BackupProfileGenerator::profileGenerationFailed,
+            this, [this](const QString& errorMessage) {
+
+                ui->BackUp_pushButton_GenerateLuckyBackupProfile->setEnabled(true);
+
+                QMessageBox msgBox(this);
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Critical);
+                msgBox.setText(tr("Failed to generate Backup profile"));
+                msgBox.setInformativeText(errorMessage);
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.exec();
+
+                qDebug() << "ERROR: Failed to generate LuckyBackup profile:";
+                qDebug() << "Common causes:\n"
+                            "• Directory ~/.luckyBackup/profiles/ is not writable\n"
+                            "• No backup mappings exist in the database\n"
+                            "• Source or destination paths are empty\n\n"
+                            "Please check the error message above and try again.";
+                qDebug() << "  Error:" << errorMessage;
+            });
+
+    BackupProfileResult result = generator->generateProfile(mappingIds);
+
+    generator->deleteLater();
+}
+
+void MainWindow::on_BackUp_checkBox_OnlySelectedLinks_checkStateChanged(const Qt::CheckState &arg1)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("BackUp/OnlySelectedLinks", arg1 == Qt::Checked);
 }
 
 //Methods-----------------------------------------------------------------------
@@ -151,122 +233,77 @@ void MainWindow::loadBackUpMapping()
 
 void MainWindow::loadBackUpMappingTotals()
 {
+    // Create manager if not exists
+    if (!backupMappingManager) {
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    }
 
     ui->BackUp_label_CurrentMappings_DeviceValue->setText(selectedDevice->name);
 
-    //Load data from table device_mapping
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL;
-    querySQL = QLatin1String(R"(
-        SELECT
-            COUNT(*) AS total_mappings,
-
-            SUM(d1.device_total_file_size) AS total_source_file_size,
-            SUM(d2.device_total_file_size) AS total_target_file_size,
-            SUM(d2.device_total_file_size - d1.device_total_file_size) AS total_size_difference,
-            ROUND(SUM(d2.device_total_file_size) * 100.0 / NULLIF(SUM(d1.device_total_file_size), 0), 2) AS total_size_difference_percentage,
-
-            SUM(d1.device_total_file_count) AS total_source_file_count,
-            SUM(d2.device_total_file_count) AS total_target_file_count,
-            SUM(d2.device_total_file_count - d1.device_total_file_count) AS total_file_count_difference,
-            ROUND(SUM(d2.device_total_file_count) * 100.0 / NULLIF(SUM(d1.device_total_file_count), 0), 2) AS total_file_count_difference_percentage,
-
-            ROUND(AVG(d2.device_total_file_size) * 100.0 / NULLIF(AVG(d1.device_total_file_size), 0), 2) AS avg_size_difference_percentage,
-            ROUND(AVG(d2.device_total_file_count) * 100.0 / NULLIF(AVG(d1.device_total_file_count), 0), 2) AS avg_file_count_difference_percentage
-        FROM
-            device_mapping dm,
-            device d1,
-            device d2
-        WHERE
-            dm.mapping_device_source_id = d1.device_id
-            AND dm.mapping_device_target_id = d2.device_id
-                        )");
-
-    if(ui->BackUp_radioButton_Target->isChecked()==true){
-        if (      selectedDevice->type == "Storage" ){
-            querySQL += " AND d2.device_parent_id =:device_parent_id ";
-        }
-        else if ( selectedDevice->type == "Catalog" ){
-            querySQL += " AND d2.device_id =:device_id ";
-        }
-        else if ( selectedDevice->type == "Virtual" ){
-            QString prepareSQL = QLatin1String(R"(
-                                            AND d2.device_id IN (
-                                            WITH RECURSIVE hierarchy AS (
-                                                 SELECT device_id, device_parent_id, device_name
-                                                 FROM device
-                                                 WHERE device_id = :device_id
-                                                 UNION ALL
-                                                 SELECT t.device_id, t.device_parent_id, t.device_name
-                                                 FROM device t
-                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                            )
-                                            SELECT device_id
-                                            FROM hierarchy)
-                                        )");
-            querySQL += prepareSQL;
-        }
-    }
-    else{
-        if (      selectedDevice->type == "Storage" ){
-            querySQL += " AND d1.device_parent_id =:device_parent_id ";
-        }
-        else if ( selectedDevice->type == "Catalog" ){
-            querySQL += " AND d1.device_id =:device_id ";
-        }
-        else if ( selectedDevice->type == "Virtual" ){
-            QString prepareSQL = QLatin1String(R"(
-                                            AND d1.device_id IN (
-                                            WITH RECURSIVE hierarchy AS (
-                                                 SELECT device_id, device_parent_id, device_name
-                                                 FROM device
-                                                 WHERE device_id = :device_id
-                                                 UNION ALL
-                                                 SELECT t.device_id, t.device_parent_id, t.device_name
-                                                 FROM device t
-                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                            )
-                                            SELECT device_id
-                                            FROM hierarchy)
-                                        )");
-            querySQL += prepareSQL;
+    // Determine current filter
+    MappingFilter filter;
+    if (!optionDisplayFullMappingTable) {
+        if (ui->BackUp_radioButton_Source->isChecked()) {
+            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID);
+        } else if (ui->BackUp_radioButton_Target->isChecked()) {
+            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID);
         }
     }
 
-    //querySQL +=" ORDER BY dm.mapping_name ASC ";
-    query.prepare(querySQL);
-    query.bindValue(":device_id",        selectedDevice->ID);
-    query.bindValue(":device_parent_id", selectedDevice->ID);
+    // Calculate totals through manager
+    MappingTotals totals = backupMappingManager->calculateTotals(filter);
 
-    if (!query.exec())
-    {
-        qDebug() << "Error loading device_mapping: " << query.lastError();
-        return;
-    }
+    // Update UI labels with EXISTING elements only
+    ui->BackUp_label_TotalMappings_Value->setText(QString::number(totals.totalMappings));
 
-    query.next();
-    ui->BackUp_label_TotalMappings_Value->setText(query.value(0).toString());
-
-    qint64 mapped = query.value(2).toLongLong();
+    // Device coverage (using existing labels)
+    qint64 mapped = totals.totalSourceSize;
     qint64 difference = selectedDevice->totalFileSize - mapped;
     float coverage = static_cast<float>(selectedDevice->totalFileSize - difference) / static_cast<float>(selectedDevice->totalFileSize) * 100;
 
-    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeValue->setText(QLocale().formattedDataSize(selectedDevice->totalFileSize));
-    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeMappedValue->setText(QLocale().formattedDataSize(mapped));
-    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue->setText(QLocale().toString(coverage, 'f', 2) + " %");
-    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeDiffValue->setText(QLocale().formattedDataSize((selectedDevice->totalFileSize - query.value(2).toLongLong())) + "  ");
-    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentUnlinkedValue->setText(QLocale().toString(100-coverage, 'f', 2) + " %");
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeValue->setText(
+        QLocale().formattedDataSize(selectedDevice->totalFileSize)
+        );
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeMappedValue->setText(
+        QLocale().formattedDataSize(mapped)
+        );
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue->setText(
+        QLocale().toString(coverage, 'f', 2) + " %"
+        );
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeDiffValue->setText(
+        QLocale().formattedDataSize(selectedDevice->totalFileSize - mapped) + "  "
+        );
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentUnlinkedValue->setText(
+        QLocale().toString(100 - coverage, 'f', 2) + " %"
+        );
 
-    ui->BackUp_label_TotalMappings_SizeSourceValue->setText(QLocale().formattedDataSize((query.value(1).toLongLong())) + "  ");
-    ui->BackUp_label_TotalMappings_SizeTargetValue->setText(QLocale().formattedDataSize((query.value(2).toLongLong())) + "  ");
-    ui->BackUp_label_TotalMappings_SizeDiffValue->setText(QLocale().formattedDataSize(query.value(3).toLongLong()) + "  ");
-    ui->BackUp_label_TotalMappings_SizePercentValue->setText(QLocale().toString(query.value(4).toDouble(), 'f', 2) + " %");
+    // Size comparison
+    ui->BackUp_label_TotalMappings_SizeSourceValue->setText(
+        QLocale().formattedDataSize(totals.totalSourceSize) + "  "
+        );
+    ui->BackUp_label_TotalMappings_SizeTargetValue->setText(
+        QLocale().formattedDataSize(totals.totalTargetSize) + "  "
+        );
+    ui->BackUp_label_TotalMappings_SizeDiffValue->setText(
+        QLocale().formattedDataSize(totals.totalSizeDifference) + "  "
+        );
+    ui->BackUp_label_TotalMappings_SizePercentValue->setText(
+        QLocale().toString(totals.totalSizeDifferencePercentage, 'f', 2) + " %"
+        );
 
-    ui->BackUp_label_TotalMappings_FilesSourceTotal->setText(query.value(5).toString());
-    ui->BackUp_label_TotalMappings_FilesTargetTotal->setText(query.value(6).toString());
-    ui->BackUp_label_TotalMappings_FilesDiffValue->setText(QLocale().toString(query.value(7).toLongLong()) + "  ");
-    ui->BackUp_label_TotalMappings_FilesPercentValue->setText(QLocale().toString(query.value(8).toDouble(), 'f', 2) + " %");
-
+    // File count comparison
+    ui->BackUp_label_TotalMappings_FilesSourceTotal->setText(
+        QString::number(totals.totalSourceFileCount)
+        );
+    ui->BackUp_label_TotalMappings_FilesTargetTotal->setText(
+        QString::number(totals.totalTargetFileCount)
+        );
+    ui->BackUp_label_TotalMappings_FilesDiffValue->setText(
+        QLocale().toString(totals.totalFileCountDifference) + "  "
+        );
+    ui->BackUp_label_TotalMappings_FilesPercentValue->setText(
+        QLocale().toString(totals.totalFileCountDifferencePercentage, 'f', 2) + " %"
+        );
 }
 
 void MainWindow::loadBackUpMappingTable()
@@ -645,4 +682,9 @@ void MainWindow::saveNewMapping()
     ui->BackUp_treeView_List1->clearSelection();
     ui->BackUp_treeView_List2->clearSelection();
 
+}
+
+void MainWindow::setupBackUpManager()
+{
+    backupMappingManager = new BackupMappingManager(m_connectionName, this);
 }

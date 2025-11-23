@@ -298,7 +298,9 @@
             if(filterMappingTable=="Target"){
                 ui->BackUp_radioButton_Target->setChecked(true);
             }
-
+            ui->BackUp_checkBox_OnlySelectedLinks->setChecked(
+                settings.value("BackUp/OnlySelectedLinks", false).toBool()
+                );
     }
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()

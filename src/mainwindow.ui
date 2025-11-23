@@ -10477,6 +10477,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QCheckBox" name="BackUp_checkBox_OnlySelectedLinks">
+                <property name="text">
+                 <string>Only selected</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item row="7" column="0" colspan="2">
