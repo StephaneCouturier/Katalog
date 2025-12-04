@@ -74,6 +74,9 @@ public:
                                         const QStringList &folderPaths,
                                         const QStringList &checksumValues);
 
+    //Utility to get algorithm from string
+    static QCryptographicHash::Algorithm getAlgorithmFromString(const QString &algorithmName);
+
 signals:
     void checksumCalculated(const QString &filePath);
     void calculationError(const QString &filePath, const QString &error);

@@ -244,6 +244,9 @@ private:
     void scanDirectoryIntoFiletemp(const QString &directory, Catalog *catalog, qint64 &processedCount);
     QList<QVariantList> findFilesWithoutMetadata();
 
+    QList<QVariantList> findFilesWithoutChecksum();
+    void extractChecksumsForFiles(const QList<QVariantList> &files);
+
     // SQL-based difference detection
     QList<QVariantList> findNewFiles();
     QList<QVariantList> findModifiedFiles();

@@ -84,22 +84,35 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
 
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "FileChecksum::calculateChecksum - Cannot open file:" << filePath;
+        qDebug() << "  Error:" << file.errorString();
         return QString();
     }
 
+    qint64 fileSize = file.size();
+    qDebug() << "FileChecksum::calculateChecksum - Processing:" << filePath;
+    qDebug() << "  File size:" << QLocale().formattedDataSize(fileSize);
+
     QCryptographicHash hash(algorithm);
 
-    // Read file in chunks for better memory efficiency
-    const qint64 bufferSize = 1024 * 1024; // 1 MB chunks
+    const qint64 bufferSize = 1024 * 1024; // 1 MB buffer
+    qint64 totalRead = 0;
+
     while (!file.atEnd()) {
         QByteArray buffer = file.read(bufferSize);
+        if (buffer.isEmpty()) {
+            break;
+        }
         hash.addData(buffer);
+        totalRead += buffer.size();
     }
 
     file.close();
 
-    // Return hex-encoded checksum
-    return QString(hash.result().toHex());
+    QString checksum = hash.result().toHex().toLower();
+    qDebug() << "  Checksum:" << checksum;
+    qDebug() << "  Bytes processed:" << QLocale().formattedDataSize(totalRead);
+
+    return checksum;
 }
 
 //-----------------------------------------------------------------------------------------------------
@@ -204,4 +217,18 @@ bool FileChecksum::batchUpdateFileChecksum(const QString &connectionName,
     qDebug() << "FileChecksum::batchUpdateFileChecksum - Updated" << fileNames.size() << "files";
 
     return true;
+}
+
+QCryptographicHash::Algorithm FileChecksum::getAlgorithmFromString(const QString &algorithmName)
+{
+    if (algorithmName == Catalog::CHECKSUM_SHA256 || algorithmName == "SHA256") {
+        return QCryptographicHash::Sha256;
+    }
+    // else if (algorithmName == "SHA512") {
+    //     return QCryptographicHash::Sha512;
+    // }
+
+    // Default fallback
+    qDebug() << "WARNING: Unknown checksum algorithm:" << algorithmName << "- defaulting to SHA256";
+    return QCryptographicHash::Sha256;
 }

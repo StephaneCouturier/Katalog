@@ -295,6 +295,25 @@ void CatalogProgressManager::updateFromCatalogManager()
                 }
             }
 
+        } else if (currentPath.startsWith("__CHECKSUM_CALCULATION__|")) {
+            // CHECKSUM CALCULATION
+            QStringList parts = currentPath.split("|");
+            if (parts.size() >= 3) {
+                int processed = parts[1].toInt();
+                int total = parts[2].toInt();
+
+                builder.setProcess(
+                    QApplication::translate("MainWindow", "Checksums Calculated"),
+                    processed,
+                    total
+                    );
+
+                // Add time to completion if present
+                if (parts.size() >= 4 && !parts[3].isEmpty()) {
+                    builder.setTimeToCompletion(parts[3]);
+                }
+            }
+
         } else if (m_catalogManager->totalFiles() > 0) {
             // INDEXING
             builder.setProcess(
