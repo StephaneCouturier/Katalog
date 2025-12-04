@@ -1845,27 +1845,27 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
 
     //Hide development fields
-    ui->Devices_treeView_DeviceList->header()->hideSection(28); //catalog_is_full_device
+    ui->Devices_treeView_DeviceList->header()->hideSection(29); //catalog_is_full_device
 
     // Apply DisplayFullTable choice
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->showSection(29); //Date loaded
-        ui->Devices_treeView_DeviceList->header()->showSection(30); //app version
-        ui->Devices_treeView_DeviceList->header()->showSection(31); //File path
+        ui->Devices_treeView_DeviceList->header()->showSection(30); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->showSection(31); //app version
+        ui->Devices_treeView_DeviceList->header()->showSection(32); //File path
 
     } else {
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->hideSection(29); //Date loaded
-        ui->Devices_treeView_DeviceList->header()->hideSection(30); //app version
-        ui->Devices_treeView_DeviceList->header()->hideSection(31); //File path
+        ui->Devices_treeView_DeviceList->header()->hideSection(30); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(31); //app version
+        ui->Devices_treeView_DeviceList->header()->hideSection(32); //File path
     }
 
     if (collection->databaseMode !="Memory") { //Fields that are only relevant in Memory mode
-        ui->Devices_treeView_DeviceList->header()->hideSection(29); //Date loaded
-        ui->Devices_treeView_DeviceList->header()->hideSection(31); //File path
+        ui->Devices_treeView_DeviceList->header()->hideSection(30); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(32); //File path
     }
 
     ui->Devices_treeView_DeviceList->expandAll();
