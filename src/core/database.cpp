@@ -36,90 +36,45 @@
 #include <QApplication>
 
 //----------------------------------------------------------------------
-// Core database functions
+// Core database definition
 //----------------------------------------------------------------------
-Database::DatabaseType Database::getDatabaseType(const QString &connectionName)
+QString Database::getSQLCreateTableDevice(DatabaseType dbType)
 {
-    QSqlDatabase db = QSqlDatabase::database(connectionName);
-    QString driver = db.driverName();
-
-    if (driver == "QSQLITE") return DatabaseType::SQLite;
-    if (driver == "QMYSQL" || driver == "QMYSQL3") return DatabaseType::MySQL;
-    if (driver == "QPSQL") return DatabaseType::PostgreSQL;
-
-    return DatabaseType::SQLite; // default fallback
+    return R"(
+                CREATE TABLE IF NOT EXISTS device(
+                    device_id                  NUMERIC PRIMARY KEY,
+                    device_parent_id           NUMERIC,
+                    device_name                TEXT,
+                    device_type                TEXT,
+                    device_external_id         NUMERIC,
+                    device_path                TEXT,
+                    device_total_file_size     NUMERIC default 0,
+                    device_total_file_count    NUMERIC default 0,
+                    device_total_space         NUMERIC default 0,
+                    device_free_space          NUMERIC default 0,
+                    device_active              NUMERIC,
+                    device_group_id            NUMERIC,
+                    device_date_updated        TEXT,
+                    device_order               NUMERIC)
+            )";
 }
 
-QString Database::getCreateBackupMappingSQL(DatabaseType databaseType)
-{
-    QString autoIncrementSyntax;
-
-    switch (databaseType) {
-        case DatabaseType::SQLite:
-            autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
-            break;
-        case DatabaseType::MySQL:
-            autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
-            break;
-        case DatabaseType::PostgreSQL:
-            autoIncrementSyntax = "SERIAL PRIMARY KEY";
-            break;
-    }
-
-    return QString(R"(
-                CREATE TABLE IF NOT EXISTS device_mapping(
-                    mapping_id                  %1,
-                    mapping_name                TEXT,
-                    mapping_type                TEXT,
-                    mapping_device_source_id    NUMERIC,
-                    mapping_device_target_id    NUMERIC,
-                    mapping_backup_last_date    TEXT,
-                    mapping_backup_last_size    TEXT)
-    )").arg(autoIncrementSyntax);
-}
-
-QString Database::getCreateTagSQL(DatabaseType databaseType)
-{
-    QString autoIncrementSyntax;
-
-    switch (databaseType) {
-        case DatabaseType::SQLite:
-            autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
-            break;
-        case DatabaseType::MySQL:
-            autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
-            break;
-        case DatabaseType::PostgreSQL:
-            autoIncrementSyntax = "SERIAL PRIMARY KEY";
-            break;
-    }
-
-    return QString(R"(
-                CREATE TABLE IF NOT EXISTS tag(
-                    ID          %1,
-                    name        TEXT,
-                    path        TEXT,
-                    type        TEXT,
-                    date_time   TEXT)
-    )").arg(autoIncrementSyntax);
-}
-
-QString Database::getCreateCatalogSQL(DatabaseType databaseType)
+QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
 {
     // For MySQL/PostgreSQL, use VARCHAR with specific length for PRIMARY KEY
     // SQLite allows TEXT in PRIMARY KEY
     QString catalogNameType;
 
     switch (databaseType) {
-        case DatabaseType::SQLite:
-            catalogNameType = "TEXT";
-            break;
-        case DatabaseType::MySQL:
-            catalogNameType = "VARCHAR(500)";
-            break;
-        case DatabaseType::PostgreSQL:
-            catalogNameType = "VARCHAR(500)";
-            break;
+    case DatabaseType::SQLite:
+        catalogNameType = "TEXT";
+        break;
+    case DatabaseType::MySQL:
+        catalogNameType = "VARCHAR(500)";
+        break;
+    case DatabaseType::PostgreSQL:
+        catalogNameType = "VARCHAR(500)";
+        break;
     }
 
     return QString(R"(
@@ -145,7 +100,112 @@ QString Database::getCreateCatalogSQL(DatabaseType databaseType)
     )").arg(catalogNameType);
 }
 
-QString Database::getCreateFolderSQL(DatabaseType databaseType)
+QString Database::getSQLCreateTableStorage(DatabaseType dbType)
+{
+    return R"(
+                CREATE TABLE IF NOT EXISTS storage(
+                    storage_id            NUMERIC  primary key default 0,
+                    storage_name          TEXT,
+                    storage_type          TEXT,
+                    storage_location      TEXT,
+                    storage_path          TEXT,
+                    storage_label         TEXT,
+                    storage_file_system   TEXT,
+                    storage_total_space   NUMERIC default 0,
+                    storage_free_space    NUMERIC default 0,
+                    storage_brand         TEXT,
+                    storage_model         TEXT,
+                    storage_serial_number TEXT,
+                    storage_build_date    TEXT,
+                    storage_comment1      TEXT,
+                    storage_comment2      TEXT,
+                    storage_comment3      TEXT)
+            )";
+}
+
+QString Database::getSQLCreateTableFile(DatabaseType dbType)
+{
+    return R"(
+                CREATE TABLE IF NOT EXISTS file(
+                    file_catalog_id   NUMERIC,
+                    file_name         TEXT,     -- "home.jpg"
+                    file_folder_path  TEXT,     -- "/home/user/photos"
+                    file_size         NUMERIC,
+                    file_date_updated TEXT,
+                    file_catalog      TEXT,
+                    file_full_path    TEXT,     -- "/home/user/photos/home.jpg"
+                    file_extension    TEXT,     -- "jpg"
+                    file_type               TEXT,
+                    mime_type               TEXT,
+                    mime_verified           NUMERIC,
+                    type_mismatch           NUMERIC,
+                    image_width             NUMERIC,
+                    image_height            NUMERIC,
+                    image_orientation       NUMERIC,
+                    video_duration_seconds  NUMERIC,
+                    video_width             NUMERIC,
+                    video_height            NUMERIC,
+                    video_codec             TEXT,
+                    video_framerate         NUMERIC,
+                    video_bitrate           NUMERIC,
+                    audio_duration_seconds  NUMERIC,
+                    audio_artist            TEXT,
+                    audio_album             TEXT,
+                    audio_title             TEXT,
+                    audio_genre             TEXT,
+                    audio_year              NUMERIC,
+                    audio_track_number      NUMERIC,
+                    audio_bitrate           NUMERIC,
+                    audio_sample_rate       NUMERIC,
+                    metadata_extended       TEXT,    -- JSON for additional fields
+                    metadata_extraction_date TEXT,
+                    checksum_sha256          TEXT,
+                    checksum_extraction_date TEXT)
+            )";
+}
+
+QString Database::getSQLCreateTableFileTemp(DatabaseType dbType)
+{
+    return R"(
+                CREATE TABLE IF NOT EXISTS  filetemp(
+                    file_catalog_id   NUMERIC,
+                    file_name         TEXT,     -- "home.jpg"
+                    file_folder_path  TEXT,     -- "/home/user/photos"
+                    file_size         NUMERIC,
+                    file_date_updated TEXT,
+                    file_catalog      TEXT,
+                    file_full_path    TEXT,     -- "/home/user/photos/home.jpg"
+                    file_extension    TEXT,      -- "jpg"
+                    file_type               TEXT,
+                    mime_type               TEXT,
+                    mime_verified           NUMERIC,
+                    type_mismatch           NUMERIC,
+                    image_width             NUMERIC,
+                    image_height            NUMERIC,
+                    image_orientation       NUMERIC,
+                    video_duration_seconds  NUMERIC,
+                    video_width             NUMERIC,
+                    video_height            NUMERIC,
+                    video_codec             TEXT,
+                    video_framerate         NUMERIC,
+                    video_bitrate           NUMERIC,
+                    audio_duration_seconds  NUMERIC,
+                    audio_artist            TEXT,
+                    audio_album             TEXT,
+                    audio_title             TEXT,
+                    audio_genre             TEXT,
+                    audio_year              NUMERIC,
+                    audio_track_number      NUMERIC,
+                    audio_bitrate           NUMERIC,
+                    audio_sample_rate       NUMERIC,
+                    metadata_extended       TEXT,    -- JSON for additional fields
+                    metadata_extraction_date TEXT,
+                    checksum_sha256          TEXT,
+                    checksum_extraction_date TEXT)
+            )";
+}
+
+QString Database::getSQLCreateTableFolder(DatabaseType databaseType)
 {
     switch (databaseType) {
     case DatabaseType::SQLite:
@@ -170,112 +230,23 @@ QString Database::getCreateFolderSQL(DatabaseType databaseType)
     return ""; // Should never reach here
 }
 
-QString Database::getBeginTransactionSQL(DatabaseType databaseType)
+QString Database::getSQLCreateTableStatisticsDevice(DatabaseType dbType)
 {
-    switch (databaseType) {
-    case DatabaseType::SQLite:
-        return "BEGIN TRANSACTION";
-    case DatabaseType::MySQL:
-    case DatabaseType::PostgreSQL:
-        return "START TRANSACTION";
-    }
-    return "START TRANSACTION"; // Safe default
-}
-
-QString Database::getInsertOrIgnorePrefix(DatabaseType databaseType)
-{
-    switch (databaseType) {
-    case DatabaseType::SQLite:
-        return "INSERT OR IGNORE";
-    case DatabaseType::MySQL:
-        return "INSERT IGNORE";
-    case DatabaseType::PostgreSQL:
-        return "INSERT"; // PostgreSQL uses ON CONFLICT DO NOTHING at the end
-    }
-    return "INSERT";
-}
-
-bool Database::beginTransaction(const QString &connectionName)
-{
-    DatabaseType databaseType = getDatabaseType(connectionName);
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-
-    if (!query.exec(getBeginTransactionSQL(databaseType))) {
-        qDebug() << "Failed to BEGIN transaction:" << query.lastError().text();
-        return false;
-    }
-    return true;
-}
-
-bool Database::commitTransaction(const QString &connectionName)
-{
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-
-    if (!query.exec("COMMIT")) {
-        qDebug() << "Failed to COMMIT transaction:" << query.lastError().text();
-        return false;
-    }
-    return true;
-}
-
-bool Database::rollbackTransaction(const QString &connectionName)
-{
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-
-    if (!query.exec("ROLLBACK")) {
-        qDebug() << "Failed to ROLLBACK transaction:" << query.lastError().text();
-        return false;
-    }
-    return true;
-}
-
-QString Database::getFormattedTimeDifference(DatabaseType databaseType,
-                                             const QString &d1DateField,
-                                             const QString &d2DateField)
-{
-    switch (databaseType) {
-    case DatabaseType::SQLite:
-    {
-        // SQLite version using PRINTF and julianday
-        // NOT using .arg() because PRINTF has % signs that conflict with QString placeholders
-        // Use direct string replacement instead
-        QString sql = R"(
-                PRINTF('%02d:%02d:%02d %02d:%02d:%02d',
-                    CAST(ABS((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 / 31536000) AS INTEGER),
-                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 31536000) / 2592000) AS INTEGER),
-                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 2592000) / 86400) AS INTEGER),
-                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 86400) / 3600) AS INTEGER),
-                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 3600) / 60) AS INTEGER),
-                    CAST(ABS((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 60) AS INTEGER)
-                )
+    return R"(
+                CREATE TABLE IF NOT EXISTS  statistics_device(
+                    date_time               TEXT,
+                    device_id               TEXT,
+                    device_name             TEXT,
+                    device_type             TEXT,
+                    device_file_count       NUMERIC,
+                    device_total_file_size  NUMERIC,
+                    device_free_space       NUMERIC,
+                    device_total_space      NUMERIC,
+                    record_type             TEXT)
             )";
-        // Replace placeholders with actual field names (avoiding QString::arg())
-        sql.replace("FIELD1", d1DateField);
-        sql.replace("FIELD2", d2DateField);
-        return sql;
-    }
-
-    case DatabaseType::MySQL:
-    case DatabaseType::PostgreSQL:
-    {
-        // MySQL/PostgreSQL version using TIMESTAMPDIFF and MOD() function
-        QString sql = QString(R"(
-                CONCAT(
-                    LPAD(FLOOR(ABS(TIMESTAMPDIFF(SECOND, %1, %2)) / 31536000), 2, '0'), ':',
-                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 31536000) / 2592000), 2, '0'), ':',
-                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 2592000) / 86400), 2, '0'), ' ',
-                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 86400) / 3600), 2, '0'), ':',
-                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 3600) / 60), 2, '0'), ':',
-                    LPAD(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 60), 2, '0')
-                )
-            )").arg(d1DateField, d2DateField);
-        return sql;
-    }
-    }
-    return "''"; // Empty string fallback
 }
 
-QString Database::getCreateSearchSQL(DatabaseType databaseType)
+QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
 {
     // For MySQL/PostgreSQL, file size unit fields must be TEXT (not NUMERIC)
     // because they store values like "Bytes", "KB", "MB", "GB", "TB"
@@ -343,6 +314,86 @@ QString Database::getCreateSearchSQL(DatabaseType databaseType)
                     metadata_duration_min     TEXT,
                     metadata_duration_max     TEXT)
     )").arg(sizeUnitType);
+}
+
+QString Database::getSQLCreateTableTag(DatabaseType databaseType)
+{
+    QString autoIncrementSyntax;
+
+    switch (databaseType) {
+        case DatabaseType::SQLite:
+            autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
+            break;
+        case DatabaseType::MySQL:
+            autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
+            break;
+        case DatabaseType::PostgreSQL:
+            autoIncrementSyntax = "SERIAL PRIMARY KEY";
+            break;
+    }
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS tag(
+                    ID          %1,
+                    name        TEXT,
+                    path        TEXT,
+                    type        TEXT,
+                    date_time   TEXT)
+    )").arg(autoIncrementSyntax);
+}
+
+QString Database::getSQLCreateTableParameter(DatabaseType dbType)
+{
+    return R"(
+            CREATE TABLE IF NOT EXISTS parameter(
+                    parameter_name      TEXT,
+                    parameter_type      TEXT,
+                    parameter_value1    TEXT,
+                    parameter_value2    TEXT)
+            )";
+}
+
+QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
+{
+    QString autoIncrementSyntax;
+
+    switch (databaseType) {
+    case DatabaseType::SQLite:
+        autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
+        break;
+    case DatabaseType::MySQL:
+        autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
+        break;
+    case DatabaseType::PostgreSQL:
+        autoIncrementSyntax = "SERIAL PRIMARY KEY";
+        break;
+    }
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS device_mapping(
+                    mapping_id                  %1,
+                    mapping_name                TEXT,
+                    mapping_type                TEXT,
+                    mapping_device_source_id    NUMERIC,
+                    mapping_device_target_id    NUMERIC,
+                    mapping_backup_last_date    TEXT,
+                    mapping_backup_last_size    TEXT)
+    )").arg(autoIncrementSyntax);
+}
+
+//----------------------------------------------------------------------
+// Core database functions
+//----------------------------------------------------------------------
+Database::DatabaseType Database::getDatabaseType(const QString &connectionName)
+{
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    QString driver = db.driverName();
+
+    if (driver == "QSQLITE") return DatabaseType::SQLite;
+    if (driver == "QMYSQL" || driver == "QMYSQL3") return DatabaseType::MySQL;
+    if (driver == "QPSQL") return DatabaseType::PostgreSQL;
+
+    return DatabaseType::SQLite; // default fallback
 }
 
 QSqlError Database::initialize(const QString &connectionName, Collection *collection,
@@ -468,37 +519,37 @@ QSqlError Database::createAllTables(const QString &connectionName)
     DatabaseType databaseType = getDatabaseType(connectionName);
 
     // Create all tables in order
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE);
+    error = executeSql(connectionName, getSQLCreateTableDevice(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, getCreateCatalogSQL(databaseType));
+    error = executeSql(connectionName, getSQLCreateTableCatalog(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STORAGE);
+    error = executeSql(connectionName, getSQLCreateTableStorage(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILE);
+    error = executeSql(connectionName, getSQLCreateTableFile(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILETEMP);
+    error = executeSql(connectionName, getSQLCreateTableFileTemp(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, getCreateFolderSQL(databaseType));
+    error = executeSql(connectionName, getSQLCreateTableFolder(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
+    error = executeSql(connectionName, getSQLCreateTableStatisticsDevice(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, getCreateSearchSQL(databaseType));
+    error = executeSql(connectionName, getSQLCreateTableSearch(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, getCreateTagSQL(databaseType));
+    error = executeSql(connectionName, getSQLCreateTableTag(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_PARAMETER);
+    error = executeSql(connectionName, getSQLCreateTableParameter(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, getCreateBackupMappingSQL(databaseType));
+    error = executeSql(connectionName, getSQLCreateTableBackupMapping(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
     //Migrate
@@ -524,6 +575,111 @@ QSqlError Database::createAllTables(const QString &connectionName)
 //----------------------------------------------------------------------
 // Utility methods
 //----------------------------------------------------------------------
+QString Database::getBeginTransactionSQL(DatabaseType databaseType)
+{
+    switch (databaseType) {
+    case DatabaseType::SQLite:
+        return "BEGIN TRANSACTION";
+    case DatabaseType::MySQL:
+    case DatabaseType::PostgreSQL:
+        return "START TRANSACTION";
+    }
+    return "START TRANSACTION"; // Safe default
+}
+
+QString Database::getInsertOrIgnorePrefix(DatabaseType databaseType)
+{
+    switch (databaseType) {
+    case DatabaseType::SQLite:
+        return "INSERT OR IGNORE";
+    case DatabaseType::MySQL:
+        return "INSERT IGNORE";
+    case DatabaseType::PostgreSQL:
+        return "INSERT"; // PostgreSQL uses ON CONFLICT DO NOTHING at the end
+    }
+    return "INSERT";
+}
+
+bool Database::beginTransaction(const QString &connectionName)
+{
+    DatabaseType databaseType = getDatabaseType(connectionName);
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+
+    if (!query.exec(getBeginTransactionSQL(databaseType))) {
+        qDebug() << "Failed to BEGIN transaction:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Database::commitTransaction(const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+
+    if (!query.exec("COMMIT")) {
+        qDebug() << "Failed to COMMIT transaction:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Database::rollbackTransaction(const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+
+    if (!query.exec("ROLLBACK")) {
+        qDebug() << "Failed to ROLLBACK transaction:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+QString Database::getFormattedTimeDifference(DatabaseType databaseType,
+                                             const QString &d1DateField,
+                                             const QString &d2DateField)
+{
+    switch (databaseType) {
+    case DatabaseType::SQLite:
+    {
+        // SQLite version using PRINTF and julianday
+        // NOT using .arg() because PRINTF has % signs that conflict with QString placeholders
+        // Use direct string replacement instead
+        QString sql = R"(
+                PRINTF('%02d:%02d:%02d %02d:%02d:%02d',
+                    CAST(ABS((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 / 31536000) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 31536000) / 2592000) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 2592000) / 86400) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 86400) / 3600) AS INTEGER),
+                    CAST(ABS(((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 3600) / 60) AS INTEGER),
+                    CAST(ABS((julianday(FIELD2) - julianday(FIELD1)) * 24 * 60 * 60 % 60) AS INTEGER)
+                )
+            )";
+        // Replace placeholders with actual field names (avoiding QString::arg())
+        sql.replace("FIELD1", d1DateField);
+        sql.replace("FIELD2", d2DateField);
+        return sql;
+    }
+
+    case DatabaseType::MySQL:
+    case DatabaseType::PostgreSQL:
+    {
+        // MySQL/PostgreSQL version using TIMESTAMPDIFF and MOD() function
+        QString sql = QString(R"(
+                CONCAT(
+                    LPAD(FLOOR(ABS(TIMESTAMPDIFF(SECOND, %1, %2)) / 31536000), 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 31536000) / 2592000), 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 2592000) / 86400), 2, '0'), ' ',
+                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 86400) / 3600), 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 3600) / 60), 2, '0'), ':',
+                    LPAD(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 60), 2, '0')
+                )
+            )").arg(d1DateField, d2DateField);
+        return sql;
+    }
+    }
+    return "''"; // Empty string fallback
+}
+
 
 bool Database::tableExists(const QString &connectionName, const QString &tableName)
 {
