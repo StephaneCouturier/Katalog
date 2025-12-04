@@ -430,7 +430,25 @@
                 }
             }
 
-            // Refresh display
+            if (currentSchemaVersion < "2.9") {
+                qDebug() << "Running database migration to 2.9...";
+                collection->dbSchemaVersion = "2.9";
+
+                QSqlError migrationError = Database::runMigration_2_9(m_connectionName);
+                if (migrationError.type() == QSqlError::NoError) {
+                    collection->setDatabaseSchemaVersion();
+                    qDebug() << "Database migration to 2.9 completed";
+                } else {
+                    qDebug() << "Database migration to 2.9 failed:" << migrationError.text();
+                    QMessageBox::critical(this, "Migration Failed",
+                                          QString("Database migration to 2.9 failed: %1\n\n"
+                                                  "Please check the logs and contact support if needed.")
+                                              .arg(migrationError.text()));
+                    return;
+                }
+            }
+
+        // Refresh display
         loadSearchHistoryTableToModel();
     }
    //----------------------------------------------------------------------

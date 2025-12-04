@@ -103,6 +103,7 @@ set(CORE_HEADERS
     src/core/statusbarmessagebuilder.h
     src/core/backupprofilegenerator.h
     src/core/backupmappingmanager.h
+    src/core/filechecksum.h
 )
 
 set(CORE_SOURCES
@@ -133,6 +134,7 @@ set(CORE_SOURCES
     src/core/statusbarmessagebuilder.cpp
     src/core/backupprofilegenerator.cpp
     src/core/backupmappingmanager.cpp
+    src/core/filechecksum.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

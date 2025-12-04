@@ -805,4 +805,105 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
     return QSqlError(); // Success
 }
 
+QSqlError Database::runMigration_2_9(const QString &connectionName)
+{
+    // Change cursor to busy
+    QApplication::setOverrideCursor(Qt::BusyCursor);
+
+    qDebug() << "=== Database Migration 2.9: Adding checksum support ===";
+
+    // Step 1: Add checksum columns to file table
+    qDebug() << "Step 1: Adding checksum columns to file table";
+
+    const QList<QPair<QString, QString>> newFileColumns = {
+        {"checksum_sha256", "TEXT"},
+        {"checksum_extraction_date", "TEXT"}
+    };
+
+    // Get existing file columns
+    QStringList existingFileColumns = getTableColumns(connectionName, "file");
+
+    // Add missing checksum columns to file table
+    for (const auto& [columnName, columnType] : newFileColumns) {
+        if (!existingFileColumns.contains(columnName)) {
+            qDebug() << "Adding column to file:" << columnName;
+            QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2").arg(columnName, columnType);
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
+                QApplication::restoreOverrideCursor();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << columnName << "to file table";
+        }
+    }
+
+    // Step 2: Add checksum columns to filetemp table
+    qDebug() << "Step 2: Adding checksum columns to filetemp table";
+
+    // Get existing filetemp columns
+    QStringList existingFiletempColumns = getTableColumns(connectionName, "filetemp");
+
+    // Add missing checksum columns to filetemp (same columns as file table)
+    for (const auto& [columnName, columnType] : newFileColumns) {
+        if (!existingFiletempColumns.contains(columnName)) {
+            qDebug() << "Adding column to filetemp:" << columnName;
+            QString alterSQL = QString("ALTER TABLE filetemp ADD COLUMN %1 %2").arg(columnName, columnType);
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << columnName << "to filetemp:" << addColumnError.text();
+                QApplication::restoreOverrideCursor();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << columnName << "to filetemp table";
+        }
+    }
+
+    qDebug() << "File and filetemp tables updated with checksum support";
+
+    // Step 3: Add checksum column to catalog table
+    qDebug() << "Step 3: Adding catalog_include_checksum to catalog table";
+
+    QStringList existingCatalogColumns = getTableColumns(connectionName, "catalog");
+
+    if (!existingCatalogColumns.contains("catalog_include_checksum")) {
+        QString alterSQL = "ALTER TABLE catalog ADD COLUMN catalog_include_checksum TEXT";
+        if (auto addColumnError = executeSql(connectionName, alterSQL);
+            addColumnError.type() != QSqlError::NoError)
+        {
+            qDebug() << "Error adding catalog_include_checksum column:" << addColumnError.text();
+            QApplication::restoreOverrideCursor();
+            return addColumnError;
+        }
+        qDebug() << "Added catalog_include_checksum column to catalog table";
+    }
+
+    // Step 4: Normalize catalog_include_checksum (set default to 'None' for existing catalogs)
+    qDebug() << "Step 4: Normalizing catalog_include_checksum values";
+
+    QSqlQuery updateCatalogChecksumQuery(QSqlDatabase::database(connectionName));
+    updateCatalogChecksumQuery.exec(R"(
+        UPDATE catalog
+        SET catalog_include_checksum = 'None'
+        WHERE catalog_include_checksum IS NULL
+           OR catalog_include_checksum = ''
+    )");
+
+    int updatedCatalogs = updateCatalogChecksumQuery.numRowsAffected();
+    if (updatedCatalogs > 0) {
+        qDebug() << "Updated" << updatedCatalogs << "catalog(s) with NULL/empty checksum field to 'None'";
+    } else {
+        qDebug() << "No catalogs needed checksum field normalization";
+    }
+
+    qDebug() << "=== Database Migration 2.9 completed ===";
+
+    // Restore cursor
+    QApplication::restoreOverrideCursor();
+
+    return QSqlError(); // Success
+}
+
 //----------------------------------------------------------------------

@@ -41,9 +41,12 @@ const QString Catalog::METADATA_NONE = "None";
 const QString Catalog::METADATA_MEDIA_BASIC = "MediaBasic";
 const QString Catalog::METADATA_MEDIA_EXTENDED = "MediaExtended";
 const QString Catalog::METADATA_FULL = "FullExtended";
+const QString Catalog::CHECKSUM_NONE = "None";
+const QString Catalog::CHECKSUM_SHA256 = "SHA256";
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
-    includeMetadata = METADATA_NONE;  // Simple default
+    includeMetadata = METADATA_NONE;
+    includeChecksum = CHECKSUM_NONE;
 }
 
 Catalog::~Catalog() {
@@ -198,10 +201,10 @@ void Catalog::generateID()
 }
 
 void Catalog::insertCatalog()
-{//Insert new catalog entry
+{
     QSqlQuery insertCatalogQuery(QSqlDatabase::database(m_connectionName));
     QString insertCatalogQuerySQL = QLatin1String(R"(
-                                        INSERT OR IGNORE INTO catalog (
+                                INSERT INTO catalog(
                                                         catalog_id,
                                                         catalog_file_path,
                                                         catalog_name,
@@ -216,6 +219,7 @@ void Catalog::insertCatalog()
                                                         catalog_is_full_device,
                                                         catalog_date_loaded,
                                                         catalog_include_metadata,
+                                                        catalog_include_checksum,
                                                         catalog_app_version
                                                         )
                                         VALUES(         :catalog_id,
@@ -232,6 +236,7 @@ void Catalog::insertCatalog()
                                                         :catalog_is_full_device,
                                                         :catalog_date_loaded,
                                                         :catalog_include_metadata,
+                                                        :catalog_include_checksum,
                                                         :catalog_app_version )
                                     )");
 
@@ -250,6 +255,7 @@ void Catalog::insertCatalog()
     insertCatalogQuery.bindValue(":catalog_is_full_device", isFullDevice);
     insertCatalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
     insertCatalogQuery.bindValue(":catalog_include_metadata", includeMetadata);
+    insertCatalogQuery.bindValue(":catalog_include_checksum", includeChecksum);
     insertCatalogQuery.bindValue(":catalog_app_version", appVersion);
     insertCatalogQuery.exec();
 }
@@ -280,14 +286,15 @@ void Catalog::saveCatalog()
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
         UPDATE catalog
-        SET catalog_name             =:catalog_name,
-            catalog_source_path      =:catalog_source_path,
-            catalog_storage          =:catalog_storage,
-            catalog_file_type        =:catalog_file_type,
-            catalog_include_hidden   =:catalog_include_hidden,
-            catalog_include_metadata =:catalog_include_metadata,
-            catalog_include_symblinks=:catalog_include_symblinks,
-            catalog_app_version      =:catalog_app_version
+        SET catalog_name              =:catalog_name,
+            catalog_source_path       =:catalog_source_path,
+            catalog_storage           =:catalog_storage,
+            catalog_file_type         =:catalog_file_type,
+            catalog_include_hidden    =:catalog_include_hidden,
+            catalog_include_metadata  =:catalog_include_metadata,
+            catalog_include_checksum  =:catalog_include_checksum,
+            catalog_include_symblinks =:catalog_include_symblinks,
+            catalog_app_version       =:catalog_app_version
         WHERE catalog_id=:catalog_id
     )");
     query.prepare(querySQL);
@@ -298,10 +305,12 @@ void Catalog::saveCatalog()
     query.bindValue(":catalog_file_type", fileType);
     query.bindValue(":catalog_include_hidden", includeHidden);
     query.bindValue(":catalog_include_metadata", includeMetadata);
+    query.bindValue(":catalog_include_checksum", includeChecksum);
     query.bindValue(":catalog_include_symblinks", includeSymblinks);
     query.bindValue(":catalog_app_version", appVersion);
     query.exec();
 }
+
 void Catalog::clearCatalogData()
 {
     qDebug() << "Clearing existing catalog data for update";
@@ -340,7 +349,7 @@ bool Catalog::updateCatalogFileHeaders(QString databaseMode)
 
         QFile catalogFile(filePath);
         if(!catalogFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
-            return false; // Return false to indicate failure
+            return false;
         }
 
         QString fullFileText;
@@ -356,6 +365,7 @@ bool Catalog::updateCatalogFileHeaders(QString databaseMode)
         fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
         fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
         fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
+        fullFileText.append("<catalogIncludeChecksum>" + QVariant(includeChecksum).toString() +"\n");  // ADD THIS LINE
         fullFileText.append("<catalogAppVersion>" + QVariant(appVersion).toString() +"\n");
         fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
 
@@ -399,6 +409,7 @@ void Catalog::loadCatalog()
                                 catalog_is_full_device       ,
                                 catalog_date_loaded          ,
                                 catalog_include_metadata     ,
+                                catalog_include_checksum     ,
                                 catalog_app_version
                             FROM catalog
                             WHERE catalog_id=:catalog_id
@@ -423,10 +434,9 @@ void Catalog::loadCatalog()
         isFullDevice       = query.value(11).toBool();
         dateLoaded         = query.value(12).toDateTime();
         includeMetadata    = query.value(13).toString();
-        appVersion         = query.value(14).toString();
+        includeChecksum    = query.value(14).toString();
+        appVersion         = query.value(15).toString();
     }
-
-    if (includeMetadata.isEmpty()) { includeMetadata = METADATA_NONE; }
 }
 
 void Catalog::renameCatalog(QString newCatalogName)

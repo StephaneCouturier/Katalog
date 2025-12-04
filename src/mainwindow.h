@@ -395,6 +395,7 @@ class MainWindow : public KXmlGuiWindow
             void cleanupStoppedCatalogCreation();
             void initiateMetadataFields();
             void initializeMetadataCaches();
+            void initiateChecksumFields();
 
         //TAB: Storage
             int     selectedStorageIndexRow;

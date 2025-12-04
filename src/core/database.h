@@ -80,6 +80,7 @@ const auto SQL_CREATE_CATALOG = QLatin1String(R"(
                             catalog_is_full_device        TEXT,
                             catalog_date_loaded           TEXT,
                             catalog_include_metadata      TEXT,
+                            catalog_include_checksum      TEXT,
                             catalog_app_version           TEXT,
                             PRIMARY KEY(catalog_name))
             )");
@@ -141,7 +142,9 @@ const auto SQL_CREATE_FILE = QLatin1String(R"(
                             audio_bitrate           NUMERIC,
                             audio_sample_rate       NUMERIC,
                             metadata_extended       TEXT,    -- JSON for additional fields
-                            metadata_extraction_date TEXT
+                            metadata_extraction_date TEXT,
+                            checksum_sha256          TEXT,
+                            checksum_extraction_date TEXT
                 )
             )");
 
@@ -180,7 +183,9 @@ const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                             audio_bitrate           NUMERIC,
                             audio_sample_rate       NUMERIC,
                             metadata_extended       TEXT,    -- JSON for additional fields
-                            metadata_extraction_date TEXT
+                            metadata_extraction_date TEXT,
+                            checksum_sha256          TEXT,
+                            checksum_extraction_date TEXT
                 )
             )");
 
@@ -458,6 +463,7 @@ public:
     // Updates per Version
     static QSqlError runMigration_2_6(const QString &connectionName);
     static QSqlError runMigration_2_8(const QString &connectionName);
+    static QSqlError runMigration_2_9(const QString &connectionName);
 
 private:
     // Helper method to execute SQL with error checking

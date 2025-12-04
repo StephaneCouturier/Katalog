@@ -492,7 +492,7 @@
         ui->Catalogs_comboBox_MetaDataOption->setItemData(3, Catalog::METADATA_FULL, Qt::UserRole);
 
         // Set default to None (index 0) to match your METADATA_NONE default
-        ui->Create_comboBox_MetadataOption->setCurrentIndex(0);
+        ui->Create_comboBox_ChecksumOption->setCurrentIndex(0);
         ui->Catalogs_comboBox_MetaDataOption->setCurrentIndex(0);
     }
     //--------------------------------------------------------------------------
@@ -510,5 +510,28 @@
         }
 
         qDebug() << "Metadata caches initialized";
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::initiateChecksumFields()
+    {
+        // Initialize Create combobox
+        ui->Create_comboBox_ChecksumOption->clear();
+        ui->Create_comboBox_ChecksumOption->addItem(tr("None"));
+        ui->Create_comboBox_ChecksumOption->addItem(tr("SHA-256"));
+
+        ui->Create_comboBox_ChecksumOption->setItemData(0, Catalog::CHECKSUM_NONE, Qt::UserRole);
+        ui->Create_comboBox_ChecksumOption->setItemData(1, Catalog::CHECKSUM_SHA256, Qt::UserRole);
+
+        // Initialize Catalogs combobox (for editing existing catalogs)
+        ui->Catalogs_comboBox_ChecksumOption->clear();
+        ui->Catalogs_comboBox_ChecksumOption->addItem(tr("None"));
+        ui->Catalogs_comboBox_ChecksumOption->addItem(tr("SHA-256"));
+
+        ui->Catalogs_comboBox_ChecksumOption->setItemData(0, Catalog::CHECKSUM_NONE, Qt::UserRole);
+        ui->Catalogs_comboBox_ChecksumOption->setItemData(1, Catalog::CHECKSUM_SHA256, Qt::UserRole);
+
+        // Set default to None (index 0) to match CHECKSUM_NONE default
+        ui->Create_comboBox_ChecksumOption->setCurrentIndex(0);
+        ui->Catalogs_comboBox_ChecksumOption->setCurrentIndex(0);
     }
     //--------------------------------------------------------------------------

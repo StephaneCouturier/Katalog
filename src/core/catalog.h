@@ -71,6 +71,7 @@ public:
         bool    isFullDevice;
         QDateTime dateLoaded;
         QString includeMetadata;
+        QString includeChecksum;
         QString appVersion;
 
         //Temporary
@@ -136,6 +137,10 @@ public:
     static const QString METADATA_MEDIA_BASIC;
     static const QString METADATA_MEDIA_EXTENDED;
     static const QString METADATA_FULL;
+
+    //Checksum
+    static const QString CHECKSUM_NONE;
+    static const QString CHECKSUM_SHA256;
 
     // Metadata management
     bool clearMetadataBasicFields();
