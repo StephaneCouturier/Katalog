@@ -297,12 +297,12 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
             return false;
         }
 
-        // Get additional catalog metadata
+        // Get additional catalog metadata & checksum settings
         QSqlQuery catalogMetaQuery(QSqlDatabase::database(m_connectionName));
         QString catalogMetaQuerySQL = QLatin1String(R"(
             SELECT catalog_include_hidden, catalog_file_type, catalog_storage,
                    catalog_include_symblinks, catalog_is_full_device,
-                   catalog_include_metadata, catalog_app_version
+                   catalog_include_metadata, catalog_include_checksum, catalog_app_version
             FROM catalog
             WHERE catalog_id = :catalog_id
         )");
@@ -321,7 +321,8 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
         QString includeSymblinks = catalogMetaQuery.value(3).toString();
         QString isFullDevice = catalogMetaQuery.value(4).toString();
         QString includeMetadata = catalogMetaQuery.value(5).toString();
-        QString appVersion = catalogMetaQuery.value(6).toString();
+        QString includeChecksum = catalogMetaQuery.value(6).toString();
+        QString appVersion = catalogMetaQuery.value(7).toString();
 
         // Create the idx file
         QString idxFilePath = collection->folder + "/" + deviceName + ".idx";
@@ -344,6 +345,7 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
         idxStream << "<catalogIncludeSymblinks>" << includeSymblinks << "\n";
         idxStream << "<catalogIsFullDevice>" << isFullDevice << "\n";
         idxStream << "<catalogIncludeMetadata>" << includeMetadata << "\n";
+        idxStream << "<catalogIncludeChecksum>" << includeChecksum << "\n";
         idxStream << "<catalogAppVersion>" << appVersion << "\n";
         idxStream << "<catalogID>" << QString::number(catalogId) << "\n";
 

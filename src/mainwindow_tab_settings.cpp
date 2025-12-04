@@ -368,18 +368,6 @@
                         db.setDatabaseName(collection->databaseFilePath);
                         if (!db.open())
                             qDebug()<< db.lastError();
-
-                        QSqlQuery q(QSqlDatabase::database(m_connectionName));
-                        q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
-                        q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
-                        q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
-                        q.exec(DatabaseSQL::SQL_CREATE_FILE);
-                        q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
-                        q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
-                        q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
-                        q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
-                        q.exec(DatabaseSQL::SQL_CREATE_TAG);
-                        q.exec(DatabaseSQL::SQL_CREATE_PARAMETER);
                     }
                     fileOut.close();
 
@@ -476,18 +464,6 @@
                 db.setDatabaseName(collection->databaseFilePath);
                 if (!db.open())
                     qDebug()<< db.lastError();
-
-                QSqlQuery q(QSqlDatabase::database(m_connectionName));
-                q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
-                q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
-                q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
-                q.exec(DatabaseSQL::SQL_CREATE_FILE);
-                q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
-                q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
-                q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
-                q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
-                q.exec(DatabaseSQL::SQL_CREATE_TAG);
-                q.exec(DatabaseSQL::SQL_CREATE_PARAMETER);
             }
             fileOut.close();
 

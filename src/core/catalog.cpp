@@ -1129,6 +1129,7 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         // Prepare the catalog file data, adding headers at the beginning (same as original)
         fileList.prepend("<catalogID>"              + QString::number(ID));
         fileList.prepend("<catalogAppVersion>"      + appVersion);
+        fileList.prepend("<catalogIncludeChecksum>" + QVariant(includeChecksum).toString());
         fileList.prepend("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString());
         fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());

@@ -456,11 +456,11 @@ void Collection::loadCatalogFilesToTable()
             //Prepare a textsteam for the file
             QTextStream textStreamCatalogs(&catalogFile);
 
-            //Read the first 10 lines and put values in a stringlist
+            //Read the first 12 lines and put values in a stringlist
             QStringList catalogValues;
             QString line;
             QString value;
-            for (int i=0; i<11; i++) {
+            for (int i=0; i<12; i++) {
                 line = textStreamCatalogs.readLine();
                 if (line !="" and QVariant(line.at(0)).toString()=="<"){
                     value = line.right(line.size() - line.indexOf(">") - 1);
@@ -469,15 +469,16 @@ void Collection::loadCatalogFilesToTable()
                 }
             }
             if (catalogValues.count()== 7) catalogValues << "false"; //for older catalog without isFullDevice
-            if (catalogValues.count()== 8) catalogValues << "false"; //for older catalog without includeMetadata
-            if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion
-            if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID
+            if (catalogValues.count()== 8) catalogValues << "false"; //for older catalog without includeMetadata (v2.7)
+            if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion (v2.7)
+            if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID (v2.8)
+            if (catalogValues.count()==11) catalogValues.insert(9, "None");  //for older catalog without includeChecksum (v2.9)
 
             if(catalogValues.length()>0){
                 //Insert a line in the table with available data
 
                 Catalog newCatalog;
-                newCatalog.ID               = catalogValues[10].toInt(); //catalog_id
+                newCatalog.ID               = catalogValues[11].toInt(); //catalog_id
                 newCatalog.filePath         = path; //catalog_file_path
                 newCatalog.name             = catalogFileInfo.completeBaseName(); //catalog_name
                 newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
@@ -493,7 +494,11 @@ void Collection::loadCatalogFilesToTable()
                 if (newCatalog.includeMetadata == "false") {
                     newCatalog.includeMetadata = Catalog::METADATA_NONE;
                 }
-                newCatalog.appVersion       = catalogValues[9]; //catalog_app_version
+                newCatalog.includeChecksum  = catalogValues[9]; //catalog_include_checksum
+                if (newCatalog.includeChecksum == "false" || newCatalog.includeChecksum.isEmpty()) {
+                    newCatalog.includeChecksum = Catalog::CHECKSUM_NONE;
+                }
+                newCatalog.appVersion       = catalogValues[10]; //catalog_app_version
                 newCatalog.insertCatalog();
             }
             catalogFile.close();

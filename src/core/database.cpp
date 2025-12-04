@@ -139,6 +139,7 @@ QString Database::getCreateCatalogSQL(DatabaseType databaseType)
                     catalog_is_full_device        TEXT,
                     catalog_date_loaded           TEXT,
                     catalog_include_metadata      TEXT,
+                    catalog_include_checksum      TEXT,
                     catalog_app_version           TEXT,
                     PRIMARY KEY(catalog_name))
     )").arg(catalogNameType);
