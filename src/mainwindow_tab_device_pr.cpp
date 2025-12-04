@@ -570,6 +570,12 @@ void MainWindow::editDevice()
                 break;
             }
         }
+        for (int i = 0; i < ui->Catalogs_comboBox_ChecksumOption->count(); ++i) {
+            if (ui->Catalogs_comboBox_ChecksumOption->itemData(i, Qt::UserRole).toString() == activeDevice->catalog->includeChecksum) {
+                ui->Catalogs_comboBox_ChecksumOption->setCurrentIndex(i);
+                break;
+            }
+        }
         //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
     }
     else if(activeDevice->type =="Storage"){
@@ -1619,6 +1625,7 @@ void MainWindow::loadDevicesCatalogToModel(){
                             c.catalog_file_type            ,
                             c.catalog_include_hidden       ,
                             c.catalog_include_metadata     ,
+                            c.catalog_include_checksum     ,
                             (SELECT e.device_name FROM device e WHERE e.device_id = d.device_parent_id),
                             c.catalog_is_full_device       ,
                             c.catalog_date_loaded          ,
@@ -1689,11 +1696,12 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                  tr("File Type"),        //24
                                                  tr("Hidden"),           //25
                                                  tr("Metadata"),         //26
-                                                 tr("Parent storage"),   //27
-                                                 tr("Fulldevice"),       //28
-                                                 tr("Date Loaded"),      //29
-                                                 tr("App Version"),      //30
-                                                 tr("File Path"),        //31
+                                                 tr("Checksum"),         //27
+                                                 tr("Parent storage"),   //28
+                                                 tr("Fulldevice"),       //29
+                                                 tr("Date Loaded"),      //30
+                                                 tr("App Version"),      //31
+                                                 tr("File Path"),        //32
                                                  "" });
 
     //Create a map to store items by ID for easy access
@@ -1721,10 +1729,11 @@ void MainWindow::loadDevicesCatalogToModel(){
         QString catalog_file_type = loadCatalogQuery.value(14).toString();
         QString catalog_include_hidden = loadCatalogQuery.value(15).toString();
         QString catalog_include_metadata = loadCatalogQuery.value(16).toString();
-        QString parent_storage = loadCatalogQuery.value(17).toString();
-        QString catalog_is_full_device = loadCatalogQuery.value(18).toString();
-        QString catalog_date_loaded = loadCatalogQuery.value(19).toString();
-        QString catalog_app_version = loadCatalogQuery.value(20).toString();
+        QString catalog_include_checksum = loadCatalogQuery.value(17).toString();
+        QString parent_storage = loadCatalogQuery.value(18).toString();
+        QString catalog_is_full_device = loadCatalogQuery.value(19).toString();
+        QString catalog_date_loaded = loadCatalogQuery.value(20).toString();
+        QString catalog_app_version = loadCatalogQuery.value(21).toString();
 
         //Create the item for this row
         //Device fields
@@ -1753,11 +1762,12 @@ void MainWindow::loadDevicesCatalogToModel(){
         rowItems << new QStandardItem(catalog_file_type);           //24
         rowItems << new QStandardItem(catalog_include_hidden);      //25
         rowItems << new QStandardItem(catalog_include_metadata);    //26
-        rowItems << new QStandardItem(parent_storage);              //27
-        rowItems << new QStandardItem(catalog_is_full_device);      //28
-        rowItems << new QStandardItem(catalog_date_loaded);         //29
-        rowItems << new QStandardItem(catalog_app_version);         //30
-        rowItems << new QStandardItem(catalog_file_path);           //31
+        rowItems << new QStandardItem(catalog_include_checksum);    //27
+        rowItems << new QStandardItem(parent_storage);              //28
+        rowItems << new QStandardItem(catalog_is_full_device);      //29
+        rowItems << new QStandardItem(catalog_date_loaded);         //30
+        rowItems << new QStandardItem(catalog_app_version);         //31
+        rowItems << new QStandardItem(catalog_file_path);           //32
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -1814,11 +1824,12 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(24, QHeaderView::ResizeToContents); //File type
     ui->Devices_treeView_DeviceList->header()->resizeSection(25,  75); //Include Hidden
     ui->Devices_treeView_DeviceList->header()->resizeSection(26, 100); //Include metadata
-    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(27, QHeaderView::ResizeToContents); //Parent storage
-    ui->Devices_treeView_DeviceList->header()->resizeSection(28,  50); //Is full device
-    ui->Devices_treeView_DeviceList->header()->resizeSection(29, 150); //Date Loaded
-    ui->Devices_treeView_DeviceList->header()->resizeSection(30,  50); //App Version
-    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(31, QHeaderView::ResizeToContents); //File path
+    ui->Devices_treeView_DeviceList->header()->resizeSection(27, 100); //Include checksum
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(28, QHeaderView::ResizeToContents); //Parent storage
+    ui->Devices_treeView_DeviceList->header()->resizeSection(29,  50); //Is full device
+    ui->Devices_treeView_DeviceList->header()->resizeSection(30, 150); //Date Loaded
+    ui->Devices_treeView_DeviceList->header()->resizeSection(31,  50); //App Version
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(32, QHeaderView::ResizeToContents); //File path
 
     //Show and Hide
     for (int var = 14; var < 24; ++var) {
@@ -2301,6 +2312,7 @@ void MainWindow::saveCatalogChanges()
     activeDevice->catalog->fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
     activeDevice->catalog->includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
     activeDevice->catalog->includeMetadata  = ui->Catalogs_comboBox_MetaDataOption->itemData(ui->Catalogs_comboBox_MetaDataOption->currentIndex(), Qt::UserRole).toString();
+    activeDevice->catalog->includeChecksum  = ui->Catalogs_comboBox_ChecksumOption->itemData(ui->Catalogs_comboBox_ChecksumOption->currentIndex(), Qt::UserRole).toString();
     activeDevice->catalog->isFullDevice     = ui->Catalogs_checkBox_isFullDevice->checkState();
     //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 

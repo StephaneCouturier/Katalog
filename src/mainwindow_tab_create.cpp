@@ -335,6 +335,7 @@
         newCatalogDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
         newCatalogDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
         newCatalogDevice->catalog->includeMetadata = ui->Create_comboBox_MetadataOption->itemData(ui->Create_comboBox_MetadataOption->currentIndex(), Qt::UserRole).toString();
+        newCatalogDevice->catalog->includeChecksum = ui->Create_comboBox_ChecksumOption->itemData(ui->Create_comboBox_ChecksumOption->currentIndex(), Qt::UserRole).toString();  // ADD THIS LINE
         newCatalogDevice->catalog->appVersion = currentVersion;
 
         // Set file type from UI radio buttons
