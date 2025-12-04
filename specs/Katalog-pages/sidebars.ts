@@ -39,13 +39,13 @@ export default {
     {
       type: 'category',
       label: 'Development',
-      items: ['Development-Roadmap', 'Development-Process',
+      items: ['Development-Overview', 'Development-Roadmap',
       {
         type: 'category',
         label: 'Specifications',
-        items: ['SpecCatalogUpdate','SpecProgressReport','SpecVersions'],
+        items: ['SpecBackUp','SpecCatalogUpdate','SpecChecksum', 'SpecProgressReport','SpecVersions'],
       },
-      'Build-from-source',
+       'Development-Build-from-source',
 
               ],
     },

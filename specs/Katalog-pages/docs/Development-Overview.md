@@ -1,4 +1,4 @@
-# Development process
+# Overview
 This page documents the practices for developing Katalog.<br/>
 
 ## Features management
@@ -17,7 +17,6 @@ Documentation of the implementation of specific features & code:
 * [Updates with metadata](SpecCatalogUpdate) (v2.8)
 * [Progress Reporting](SpecProgressReport) (v2.8)
 * [Version Numbers](SpecVersions) (v2.8)
-
 
 ## **Code**
 
@@ -49,7 +48,7 @@ This provides information about how the source code is organized and any common 
 
 
 ## **Build**
-
+see page [Build from source](Development-Build-from-source)
 GitHub workflows:
 - AppImage Qt5 (gblic 2.35)
 - AppImage Qt6 (gblic 2.38)
@@ -88,3 +87,9 @@ see [SpecVersions](http://localhost:3000/Katalog/docs/SpecVersions)
 - **Schema version = App version** when DB changes occur
 - **Schema version unchanged** when no DB changes (like 2.7 staying at 2.6)
 
+
+### Load files to SourceForge
+and set default version per OS
+### Post release notes on SourceForge
+### Post release notes on Facebook
+### Close issues & close Milestone
