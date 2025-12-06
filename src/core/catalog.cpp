@@ -559,8 +559,10 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                                             audio_bitrate           ,
                                             audio_sample_rate       ,
                                             metadata_extended       ,
-                                            metadata_extraction_date
-                                            )
+                                            metadata_extraction_date,
+                                            checksum_sha256         ,
+                                            checksum_extraction_date
+                                    )
                                     VALUES(
                                             :file_catalog_id        ,
                                             :file_name              ,
@@ -570,32 +572,34 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                                             :file_catalog           ,
                                             :file_full_path         ,
                                             :file_extension         ,
-                                            :file_type               ,
-                                            :mime_type               ,
-                                            :mime_verified           ,
-                                            :type_mismatch           ,
-                                            :image_width             ,
-                                            :image_height            ,
-                                            :image_orientation       ,
-                                            :video_duration_seconds  ,
-                                            :video_width             ,
-                                            :video_height            ,
-                                            :video_codec             ,
-                                            :video_framerate         ,
-                                            :video_bitrate           ,
-                                            :audio_duration_seconds  ,
-                                            :audio_artist            ,
-                                            :audio_album             ,
-                                            :audio_title             ,
-                                            :audio_genre             ,
-                                            :audio_year              ,
-                                            :audio_track_number      ,
-                                            :audio_bitrate           ,
-                                            :audio_sample_rate       ,
-                                            :metadata_extended       ,
-                                            :metadata_extraction_date
-                                            )
-                                    )");
+                                            :file_type              ,
+                                            :mime_type              ,
+                                            :mime_verified          ,
+                                            :type_mismatch          ,
+                                            :image_width            ,
+                                            :image_height           ,
+                                            :image_orientation      ,
+                                            :video_duration_seconds ,
+                                            :video_width            ,
+                                            :video_height           ,
+                                            :video_codec            ,
+                                            :video_framerate        ,
+                                            :video_bitrate          ,
+                                            :audio_duration_seconds ,
+                                            :audio_artist           ,
+                                            :audio_album            ,
+                                            :audio_title            ,
+                                            :audio_genre            ,
+                                            :audio_year             ,
+                                            :audio_track_number     ,
+                                            :audio_bitrate          ,
+                                            :audio_sample_rate      ,
+                                            :metadata_extended      ,
+                                            :metadata_extraction_date,
+                                            :checksum_sha256        ,
+                                            :checksum_extraction_date
+                                    )
+                            )");
 
                 //Prepare insert query for folder
                 QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
@@ -705,6 +709,8 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                         insertFileQuery.bindValue(":audio_sample_rate", QVariant());
                         insertFileQuery.bindValue(":metadata_extended", QVariant());
                         insertFileQuery.bindValue(":metadata_extraction_date", QVariant());
+                        insertFileQuery.bindValue(":checksum_sha256", QVariant());
+                        insertFileQuery.bindValue(":checksum_extraction_date", QVariant());
                     } else {
                         // v2.8 format: 28 columns including extension, type, and metadata
                         QString extension = fileInfo.suffix().toLower();
@@ -739,7 +745,10 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                         insertFileQuery.bindValue(":audio_bitrate", fieldListCount > 24 ? lineFieldList[24].toInt() : QVariant());
                         insertFileQuery.bindValue(":audio_sample_rate", fieldListCount > 25 ? lineFieldList[25].toInt() : QVariant());
                         insertFileQuery.bindValue(":metadata_extended", fieldListCount > 26 ? lineFieldList[26] : QVariant());
-                        insertFileQuery.bindValue(":metadata_extraction_date", fieldListCount > 27 ? lineFieldList[27] : QVariant());      }
+                        insertFileQuery.bindValue(":metadata_extraction_date", fieldListCount > 27 ? lineFieldList[27] : QVariant());
+                        insertFileQuery.bindValue(":checksum_sha256", fieldListCount > 28 ? lineFieldList[28] : QVariant());
+                        insertFileQuery.bindValue(":checksum_extraction_date", fieldListCount > 29 ? lineFieldList[29] : QVariant());
+                    }
                     insertFileQuery.exec();
 
                     // Progress reporting using configurable rate
