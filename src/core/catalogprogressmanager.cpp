@@ -308,9 +308,14 @@ void CatalogProgressManager::updateFromCatalogManager()
                     total
                     );
 
-                // Add time to completion if present
+                // Add time to completion if present (part 3)
                 if (parts.size() >= 4 && !parts[3].isEmpty()) {
                     builder.setTimeToCompletion(parts[3]);
+                }
+
+                // Add current file info if present (part 4)
+                if (parts.size() >= 5 && !parts[4].isEmpty()) {
+                    builder.setCurrentItem(parts[4]);
                 }
             }
 

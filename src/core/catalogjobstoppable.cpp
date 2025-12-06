@@ -160,7 +160,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
     qDebug() << "Database Mode:" << m_databaseMode;
     qDebug() << "Collection Folder:" << m_collectionFolder;
 
-        if (!m_device || !m_device->catalog) {
+    if (!m_device || !m_device->catalog) {
         qDebug() << "ERROR: Invalid device or catalog";
         throw std::runtime_error("Invalid device or catalog");
     }
@@ -215,7 +215,29 @@ void CatalogJobStoppable::createCatalogWithProgress()
     processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
 
     if (!shouldContinue()) {
+        qDebug() << "Catalog creation STOPPED - cleaning up...";
+
+        // Rollback file insertions
         Database::rollbackTransaction(m_connectionName);
+
+        // ALSO delete any committed files for this catalog
+        QSqlQuery cleanupQuery(QSqlDatabase::database(m_connectionName));
+        cleanupQuery.prepare("DELETE FROM file WHERE file_catalog_id = :catalog_id");
+        cleanupQuery.bindValue(":catalog_id", catalog->ID);
+        if (cleanupQuery.exec()) {
+            qDebug() << "Deleted" << cleanupQuery.numRowsAffected() << "files for stopped catalog";
+        } else {
+            qDebug() << "Failed to cleanup files:" << cleanupQuery.lastError().text();
+        }
+
+        // Delete folders too
+        QSqlQuery cleanupFoldersQuery(QSqlDatabase::database(m_connectionName));
+        cleanupFoldersQuery.prepare("DELETE FROM folder WHERE folder_catalog_id = :catalog_id");
+        cleanupFoldersQuery.bindValue(":catalog_id", catalog->ID);
+        cleanupFoldersQuery.exec();
+
+        qDebug() << "Catalog creation cleanup complete";
+        return; // Exit without completing
     }
 
     // Commit transaction
@@ -1854,7 +1876,7 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
     qDebug() << "Total files to process:" << files.size();
     qDebug() << "Catalog includeChecksum setting:" << m_device->catalog->includeChecksum;
 
-    const int BATCH_SIZE = 100;
+    const int BATCH_SIZE = 1;
     int totalFiles = files.size();
     int processedFiles = 0;
 
@@ -1910,12 +1932,19 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
         QStringList updateFolderPaths;
         QStringList checksums;
 
+        QString currentFileName;  // Track for status bar
+        qint64 currentFileSize = 0;
+
         for (int i = 0; i < batchFullPaths.size(); ++i) {
             if (!shouldContinue()) break;
 
             QString filePath = batchFullPaths[i];
             QString fileName = batchFileNames[i];
             qint64 fileSize = batchFileSizes[i];
+
+            // Store for status bar display
+            currentFileName = fileName;
+            currentFileSize = fileSize;
 
             qDebug() << "  [" << (processedFiles + i + 1) << "/" << totalFiles << "]"
                      << fileName << "(" << QLocale().formattedDataSize(fileSize) << ")";
@@ -1962,25 +1991,48 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
         int batchDurationMs = batchTimer.elapsed();
         processedFiles += batchSize;
 
-        // Calculate time to completion
+        // Calculate bytes processed in this batch
+        qint64 batchBytesProcessed = 0;
+        for (int i = 0; i < batchFileSizes.size(); ++i) {
+            batchBytesProcessed += batchFileSizes[i];
+        }
+
+        static qint64 totalBytesProcessed = 0;  // Track across all batches
+        totalBytesProcessed += batchBytesProcessed;
+
+        // Calculate time to completion based on BYTES, not file count
         QString timeToCompletionString;
         if (processedFiles > 0 && processedFiles < totalFiles) {
             qint64 elapsedMs = totalTimer.elapsed();
-            double avgMsPerFile = static_cast<double>(elapsedMs) / processedFiles;
-            int remainingFiles = totalFiles - processedFiles;
-            qint64 remainingMs = static_cast<qint64>(avgMsPerFile * remainingFiles);
 
-            int totalSeconds = remainingMs / 1000;
-            int hours = totalSeconds / 3600;
-            int minutes = (totalSeconds % 3600) / 60;
-            int seconds = totalSeconds % 60;
+            // Calculate bytes/second rate
+            double bytesPerSecond = static_cast<double>(totalBytesProcessed) / (elapsedMs / 1000.0);
 
-            if (hours > 0) {
-                timeToCompletionString = QString("%1h %2m %3s").arg(hours).arg(minutes).arg(seconds);
-            } else if (minutes > 0) {
-                timeToCompletionString = QString("%1m %2s").arg(minutes).arg(seconds);
-            } else {
-                timeToCompletionString = QString("%1s").arg(seconds);
+            // Calculate remaining bytes
+            qint64 remainingBytes = 0;
+            for (int i = processedFiles; i < totalFiles; ++i) {
+                const QVariantList &fileData = files[i];
+                remainingBytes += fileData[3].toLongLong();
+            }
+
+            // Estimate remaining time
+            if (bytesPerSecond > 0) {
+                qint64 remainingSeconds = static_cast<qint64>(remainingBytes / bytesPerSecond);
+
+                int hours = remainingSeconds / 3600;
+                int minutes = (remainingSeconds % 3600) / 60;
+                int seconds = remainingSeconds % 60;
+
+                if (hours > 0) {
+                    timeToCompletionString = QString("%1h %2m %3s").arg(hours).arg(minutes).arg(seconds);
+                } else if (minutes > 0) {
+                    timeToCompletionString = QString("%1m %2s").arg(minutes).arg(seconds);
+                } else {
+                    timeToCompletionString = QString("%1s").arg(seconds);
+                }
+
+                qDebug() << "Bytes/second:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
+                qDebug() << "Remaining bytes:" << QLocale().formattedDataSize(remainingBytes);
             }
         }
 
@@ -1991,13 +2043,21 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
         }
 
         // Emit progress with marker for status bar
-        QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2|%3")
+        // Emit progress with marker INCLUDING current file info
+        QString fileInfo = QString("%1 (%2)")
+                               .arg(currentFileName)
+                               .arg(QLocale().formattedDataSize(currentFileSize));
+
+        QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2|%3|%4")
                              .arg(processedFiles)
                              .arg(totalFiles)
-                             .arg(timeToCompletionString);
+                             .arg(timeToCompletionString)
+                             .arg(fileInfo);  // Add file info as 4th part
+
+        qDebug() << "DEBUG: Emitting progress with file info:" << marker;
+
         emitProgressUpdate(processedFiles, totalFiles, marker);
 
-        // Allow UI to process events between batches
         QCoreApplication::processEvents();
     }
 

@@ -94,7 +94,7 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
 
     QCryptographicHash hash(algorithm);
 
-    const qint64 bufferSize = 1024 * 1024; // 1 MB buffer
+    const qint64 bufferSize = 1024 * 1024 * 1024; // 8 MB buffer
     qint64 totalRead = 0;
 
     while (!file.atEnd()) {
