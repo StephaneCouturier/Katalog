@@ -1874,7 +1874,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
 
     qDebug() << "=== CatalogJobStoppable::extractChecksumsForFiles START ===";
     qDebug() << "Total files to process:" << files.size();
-    qDebug() << "Catalog includeChecksum setting:" << m_device->catalog->includeChecksum;
 
     const int BATCH_SIZE = 1;
     int totalFiles = files.size();
@@ -1884,6 +1883,14 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
     QCryptographicHash::Algorithm algorithm = FileChecksum::getAlgorithmFromString(m_device->catalog->includeChecksum);
     qDebug() << "Using algorithm:" << m_device->catalog->includeChecksum;
 
+    // PRE-CALCULATE total bytes to process (do once at start)
+    qint64 totalBytes = 0;
+    for (const QVariantList &fileData : files) {
+        totalBytes += fileData[3].toLongLong();
+    }
+    qDebug() << "Total bytes to process:" << QLocale().formattedDataSize(totalBytes);
+
+    qint64 processedBytes = 0;  // ✅ NOT static - resets each time
     QElapsedTimer totalTimer;
     totalTimer.start();
 
@@ -1932,8 +1939,8 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
         QStringList updateFolderPaths;
         QStringList checksums;
 
-        QString currentFileName;  // Track for status bar
-        qint64 currentFileSize = 0;
+        QString lastFileName;
+        qint64 lastFileSize = 0;
 
         for (int i = 0; i < batchFullPaths.size(); ++i) {
             if (!shouldContinue()) break;
@@ -1942,21 +1949,18 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
             QString fileName = batchFileNames[i];
             qint64 fileSize = batchFileSizes[i];
 
-            // Store for status bar display
-            currentFileName = fileName;
-            currentFileSize = fileSize;
+            lastFileName = fileName;
+            lastFileSize = fileSize;
 
             qDebug() << "  [" << (processedFiles + i + 1) << "/" << totalFiles << "]"
                      << fileName << "(" << QLocale().formattedDataSize(fileSize) << ")";
 
-            // Check file exists
             QFileInfo fileInfo(filePath);
             if (!fileInfo.exists()) {
                 qDebug() << "    SKIP: File no longer exists";
                 continue;
             }
 
-            // Calculate checksum
             QString checksum = FileChecksum::calculateChecksum(filePath, algorithm);
 
             if (!checksum.isEmpty()) {
@@ -1964,6 +1968,9 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                 updateFileNames << batchFileNames[i];
                 updateFolderPaths << batchFolderPaths[i];
                 checksums << checksum;
+
+                // ✅ Add bytes for this successfully processed file
+                processedBytes += fileSize;
             } else {
                 qDebug() << "    ERROR: Checksum calculation failed";
             }
@@ -1991,73 +1998,54 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
         int batchDurationMs = batchTimer.elapsed();
         processedFiles += batchSize;
 
-        // Calculate bytes processed in this batch
-        qint64 batchBytesProcessed = 0;
-        for (int i = 0; i < batchFileSizes.size(); ++i) {
-            batchBytesProcessed += batchFileSizes[i];
-        }
-
-        static qint64 totalBytesProcessed = 0;  // Track across all batches
-        totalBytesProcessed += batchBytesProcessed;
-
-        // Calculate time to completion based on BYTES, not file count
+        // Time estimation based on bytes
         QString timeToCompletionString;
-        if (processedFiles > 0 && processedFiles < totalFiles) {
+        if (processedBytes > 0 && processedFiles < totalFiles) {
             qint64 elapsedMs = totalTimer.elapsed();
 
             // Calculate bytes/second rate
-            double bytesPerSecond = static_cast<double>(totalBytesProcessed) / (elapsedMs / 1000.0);
+            double bytesPerSecond = (static_cast<double>(processedBytes) * 1000.0) / elapsedMs;
 
-            // Calculate remaining bytes
-            qint64 remainingBytes = 0;
-            for (int i = processedFiles; i < totalFiles; ++i) {
-                const QVariantList &fileData = files[i];
-                remainingBytes += fileData[3].toLongLong();
-            }
+            // Calculate remaining bytes (simple subtraction now!)
+            qint64 remainingBytes = totalBytes - processedBytes;
 
             // Estimate remaining time
             if (bytesPerSecond > 0) {
-                qint64 remainingSeconds = static_cast<qint64>(remainingBytes / bytesPerSecond);
+                double remainingSeconds = remainingBytes / bytesPerSecond;
 
-                int hours = remainingSeconds / 3600;
-                int minutes = (remainingSeconds % 3600) / 60;
-                int seconds = remainingSeconds % 60;
+                int hours = static_cast<int>(remainingSeconds / 3600);
+                int minutes = static_cast<int>((remainingSeconds - hours * 3600) / 60);
+                int seconds = static_cast<int>(remainingSeconds) % 60;
 
                 if (hours > 0) {
-                    timeToCompletionString = QString("%1h %2m %3s").arg(hours).arg(minutes).arg(seconds);
+                    timeToCompletionString = QString("%1h %2m").arg(hours).arg(minutes);
                 } else if (minutes > 0) {
                     timeToCompletionString = QString("%1m %2s").arg(minutes).arg(seconds);
                 } else {
                     timeToCompletionString = QString("%1s").arg(seconds);
                 }
 
-                qDebug() << "Bytes/second:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
-                qDebug() << "Remaining bytes:" << QLocale().formattedDataSize(remainingBytes);
+                qDebug() << "Progress:" << processedFiles << "/" << totalFiles << "files";
+                qDebug() << "Processed:" << QLocale().formattedDataSize(processedBytes)
+                         << "/" << QLocale().formattedDataSize(totalBytes);
+                qDebug() << "Speed:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
+                qDebug() << "Remaining:" << QLocale().formattedDataSize(remainingBytes);
+                qDebug() << "Est. time:" << timeToCompletionString;
             }
         }
 
-        qDebug() << "Batch completed in" << batchDurationMs << "ms";
-        qDebug() << "Progress:" << processedFiles << "/" << totalFiles;
-        if (!timeToCompletionString.isEmpty()) {
-            qDebug() << "Estimated time remaining:" << timeToCompletionString;
-        }
-
-        // Emit progress with marker for status bar
-        // Emit progress with marker INCLUDING current file info
+        // Emit progress with file info
         QString fileInfo = QString("%1 (%2)")
-                               .arg(currentFileName)
-                               .arg(QLocale().formattedDataSize(currentFileSize));
+                               .arg(lastFileName)
+                               .arg(QLocale().formattedDataSize(lastFileSize));
 
         QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2|%3|%4")
                              .arg(processedFiles)
                              .arg(totalFiles)
                              .arg(timeToCompletionString)
-                             .arg(fileInfo);  // Add file info as 4th part
-
-        qDebug() << "DEBUG: Emitting progress with file info:" << marker;
+                             .arg(fileInfo);
 
         emitProgressUpdate(processedFiles, totalFiles, marker);
-
         QCoreApplication::processEvents();
     }
 
@@ -2067,9 +2055,9 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
 
     qDebug() << "=== CatalogJobStoppable::extractChecksumsForFiles COMPLETE ===";
     qDebug() << "Total files processed:" << processedFiles;
+    qDebug() << "Total bytes processed:" << QLocale().formattedDataSize(processedBytes);
     qDebug() << "Total time:" << (totalTimer.elapsed() / 1000.0) << "seconds";
 }
-
 void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
                                                     Catalog *catalog,
                                                     qint64 &processedCount)
