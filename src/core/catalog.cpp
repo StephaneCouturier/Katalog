@@ -1076,7 +1076,9 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
                                 audio_bitrate           ,
                                 audio_sample_rate       ,
                                 metadata_extended       ,
-                                metadata_extraction_date
+                                metadata_extraction_date,
+                                checksum_sha256         ,
+                                checksum_extraction_date
                         FROM file
                         WHERE file_catalog_id = :file_catalog_id
                         ORDER BY file_full_path
@@ -1120,7 +1122,9 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
                                 queryFileList.value(24).toString() + "\t" +  // audio_bitrate
                                 queryFileList.value(25).toString() + "\t" +  // audio_sample_rate
                                 queryFileList.value(26).toString() + "\t" +  // metadata_extended
-                                queryFileList.value(27).toString() + "\t";   // metadata_extraction_date
+                                queryFileList.value(27).toString() + "\t" +  // metadata_extraction_date
+                                queryFileList.value(28).toString() + "\t" +  // checksum_sha256
+                                queryFileList.value(29).toString() + "\t";   // checksum_extraction_date
             fileList << fileEntry;
         }
 

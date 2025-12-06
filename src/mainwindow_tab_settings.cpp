@@ -605,6 +605,11 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
+        qDebug() << "=== MainWindow::loadCollection() START ===";
+        qDebug() << "Collection database mode:" << collection->databaseMode;
+        qDebug() << "Collection folder:" << collection->folder;
+        qDebug() << "Database file path:" << collection->databaseFilePath;
+
         bool defaultsCreated = collection->load();
 
         if (defaultsCreated) {
@@ -707,28 +712,18 @@
             }
 
             if ( collection->dbSchemaVersion < collection->appVersion and collection->dbSchemaVersion >= "2.0"){
-                //Apply db or file changes since 2.0
-                //No changes yet.
-
                 //Update collection version
                 collection->dbSchemaVersion = collection->appVersion;
                 collection->setDatabaseSchemaVersion();
                 collection->saveParameterTableToFile();
-
-                //Inform
-                // QMessageBox msgBox;
-                // msgBox.setWindowTitle("Katalog");
-                // msgBox.setText(QCoreApplication::translate("MainWindow",
-                //                                            "Updated collection to v2.1."
-                //                                            ).arg( collection->version, collection->appVersion));
-                // msgBox.setIcon(QMessageBox::Information);
-                // msgBox.exec();
             }
         }
 
         if(collection->databaseMode != "Memory"){
-            qDebug() << "File database mode - checking for migrations";
+            qDebug() << "=== File database mode detected ===";
+            qDebug() << "runDatabaseMigrations()...";
             runDatabaseMigrations();
+            qDebug() << "runDatabaseMigrations() completed";
         }
 
         // Refresh UI views to show updated data
