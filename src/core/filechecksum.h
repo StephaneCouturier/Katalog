@@ -37,6 +37,7 @@
 #include <QVariant>
 #include <QSqlError>
 #include <QCryptographicHash>
+#include <functional>
 
 /**
  * @brief The FileChecksum class
@@ -57,7 +58,8 @@ public:
 
     // Calculate checksum without storing (for testing/preview)
     static QString calculateChecksum(const QString &filePath,
-                                     QCryptographicHash::Algorithm algorithm);
+                                     QCryptographicHash::Algorithm algorithm,
+                                     std::function<void(qint64, qint64)> progressCallback = nullptr);
 
     // Update existing file record with checksum
     static bool updateFileChecksum(const QString &connectionName,

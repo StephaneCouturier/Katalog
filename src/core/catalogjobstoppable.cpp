@@ -1952,7 +1952,8 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
             lastFileName = fileName;
             lastFileSize = fileSize;
 
-            qDebug() << "  [" << (processedFiles + i + 1) << "/" << totalFiles << "]"
+            int currentFileNumber = processedFiles + i + 1;
+            qDebug() << "  [" << currentFileNumber << "/" << totalFiles << "]"
                      << fileName << "(" << QLocale().formattedDataSize(fileSize) << ")";
 
             QFileInfo fileInfo(filePath);
@@ -1961,7 +1962,86 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                 continue;
             }
 
-            QString checksum = FileChecksum::calculateChecksum(filePath, algorithm);
+            // Calculate checksum with progress callback for large files
+            qint64 bytesProcessedInFile = 0;
+
+            auto progressCallback = [&](qint64 processed, qint64 total) {
+                if (!shouldContinue()) {
+                    qDebug() << "      CALLBACK: Stop requested, throwing exception";
+                    throw std::runtime_error("Stop requested");
+                }
+
+                bytesProcessedInFile = processed;
+
+                qDebug() << "      CALLBACK triggered for" << fileName;
+                qDebug() << "        File progress:" << QLocale().formattedDataSize(processed)
+                         << "/" << QLocale().formattedDataSize(total);
+
+
+                qDebug() << "      CALLBACK triggered for" << fileName;
+                qDebug() << "        File progress:" << QLocale().formattedDataSize(processed)
+                         << "/" << QLocale().formattedDataSize(total);
+
+                // Calculate temporary total bytes (includes partial progress of current file)
+                qint64 tempTotalProcessed = processedBytes + processed;
+
+                qDebug() << "        Total processed:" << QLocale().formattedDataSize(tempTotalProcessed)
+                         << "/" << QLocale().formattedDataSize(totalBytes);
+
+                // Update time estimate with partial file progress
+                qint64 elapsedMs = totalTimer.elapsed();
+                if (elapsedMs > 0 && tempTotalProcessed > 0) {
+                    double bytesPerSecond = (static_cast<double>(tempTotalProcessed) * 1000.0) / elapsedMs;
+                    qint64 remainingBytes = totalBytes - tempTotalProcessed;
+
+                    qDebug() << "        Speed:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
+                    qDebug() << "        Remaining:" << QLocale().formattedDataSize(remainingBytes);
+
+                    QString timeString;
+                    if (bytesPerSecond > 0) {
+                        double remainingSeconds = remainingBytes / bytesPerSecond;
+                        int hours = static_cast<int>(remainingSeconds / 3600);
+                        int minutes = static_cast<int>((remainingSeconds - hours * 3600) / 60);
+                        int seconds = static_cast<int>(remainingSeconds) % 60;
+
+                        if (hours > 0) {
+                            timeString = QString("%1h %2m").arg(hours).arg(minutes);
+                        } else if (minutes > 0) {
+                            timeString = QString("%1m %2s").arg(minutes).arg(seconds);
+                        } else {
+                            timeString = QString("%1s").arg(seconds);
+                        }
+
+                        qDebug() << "        Estimated time remaining:" << timeString;
+                    }
+
+                    // Emit progress with current file info
+                    QString fileInfo = QString("%1 (%2 of %3)")
+                                           .arg(fileName)
+                                           .arg(QLocale().formattedDataSize(processed))
+                                           .arg(QLocale().formattedDataSize(total));
+
+                    QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2|%3|%4")
+                                         .arg(currentFileNumber)
+                                         .arg(totalFiles)
+                                         .arg(timeString)
+                                         .arg(fileInfo);
+
+                    qDebug() << "        Emitting marker:" << marker;
+
+                    // CHANGED: Use BYTE-based progress instead of file count
+                    emitProgressUpdate(tempTotalProcessed, totalBytes, marker);
+                    QCoreApplication::processEvents();
+                }
+            };
+
+            QString checksum = FileChecksum::calculateChecksum(filePath, algorithm, progressCallback);
+
+            // Check if checksum is empty (stopped during calculation)
+            if (checksum.isEmpty()) {
+                qDebug() << "    INTERRUPTED: Checksum calculation was stopped";
+                break; // Exit the file loop
+            }
 
             if (!checksum.isEmpty()) {
                 qDebug() << "    SUCCESS: Checksum =" << checksum;
@@ -1969,7 +2049,7 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                 updateFolderPaths << batchFolderPaths[i];
                 checksums << checksum;
 
-                // ✅ Add bytes for this successfully processed file
+                // Add full file size to processed bytes (not partial)
                 processedBytes += fileSize;
             } else {
                 qDebug() << "    ERROR: Checksum calculation failed";
@@ -2034,6 +2114,14 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
             }
         }
 
+        qDebug() << "Batch completed in" << batchDurationMs << "ms";
+        qDebug() << "Progress:" << processedFiles << "/" << totalFiles << "files";
+        qDebug() << "Processed:" << QLocale().formattedDataSize(processedBytes)
+                 << "/" << QLocale().formattedDataSize(totalBytes);
+        if (!timeToCompletionString.isEmpty()) {
+            qDebug() << "Est. time:" << timeToCompletionString;
+        }
+
         // Emit progress with file info
         QString fileInfo = QString("%1 (%2)")
                                .arg(lastFileName)
@@ -2045,13 +2133,14 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                              .arg(timeToCompletionString)
                              .arg(fileInfo);
 
-        emitProgressUpdate(processedFiles, totalFiles, marker);
+        // CHANGED: Use BYTE-based progress
+        emitProgressUpdate(processedBytes, totalBytes, marker);
         QCoreApplication::processEvents();
     }
 
-    // Final completion marker
-    QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2").arg(processedFiles).arg(totalFiles);
-    emitProgressUpdate(processedFiles, totalFiles, marker);
+    // Final completion marker - CHANGED to use bytes
+    QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2").arg(totalFiles).arg(totalFiles);
+    emitProgressUpdate(totalBytes, totalBytes, marker);
 
     qDebug() << "=== CatalogJobStoppable::extractChecksumsForFiles COMPLETE ===";
     qDebug() << "Total files processed:" << processedFiles;

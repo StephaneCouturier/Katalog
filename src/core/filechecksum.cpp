@@ -78,7 +78,8 @@ bool FileChecksum::calculateAndStore(const QString &filePath,
 
 //-----------------------------------------------------------------------------------------------------
 QString FileChecksum::calculateChecksum(const QString &filePath,
-                                        QCryptographicHash::Algorithm algorithm)
+                                        QCryptographicHash::Algorithm algorithm,
+                                        std::function<void(qint64, qint64)> progressCallback)
 {
     QFile file(filePath);
 
@@ -94,8 +95,10 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
 
     QCryptographicHash hash(algorithm);
 
-    const qint64 bufferSize = 1024 * 1024 * 1024; // 8 MB buffer
+    const qint64 bufferSize = 8 * 1024 * 1024; // 8 MB buffer
+    const qint64 progressInterval = 25 * 1024 * 1024; // Report every 25 MB
     qint64 totalRead = 0;
+    qint64 lastProgressReport = 0;
 
     while (!file.atEnd()) {
         QByteArray buffer = file.read(bufferSize);
@@ -104,11 +107,42 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
         }
         hash.addData(buffer);
         totalRead += buffer.size();
+
+        // Call progress callback if provided
+        if (progressCallback && (totalRead - lastProgressReport) >= progressInterval) {
+            qDebug() << "    Progress callback: Read"
+                     << QLocale().formattedDataSize(totalRead)
+                     << "of" << QLocale().formattedDataSize(fileSize);
+
+            // Call the callback - it will throw or return false if we should stop
+            try {
+                progressCallback(totalRead, fileSize);
+            } catch (...) {
+                // Callback indicated we should stop
+                qDebug() << "    Progress callback indicated stop - aborting checksum";
+                file.close();
+                return QString(); // Return empty to indicate interrupted
+            }
+
+            lastProgressReport = totalRead;
+        }
     }
 
     file.close();
 
+    // Finalize the hash
     QString checksum = hash.result().toHex().toLower();
+
+    // Final progress callback AFTER hash is complete
+    if (progressCallback && totalRead > 0) {
+        qDebug() << "    Final progress callback: Checksum complete";
+        try {
+            progressCallback(totalRead, fileSize);
+        } catch (...) {
+            // Ok if stop requested now, work is done
+        }
+    }
+
     qDebug() << "  Checksum:" << checksum;
     qDebug() << "  Bytes processed:" << QLocale().formattedDataSize(totalRead);
 
