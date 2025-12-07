@@ -1405,6 +1405,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
     if (m_databaseMode == "Memory") {
         // Determine if we need to load the catalog
         bool metadataEnabled = (catalog->includeMetadata != Catalog::METADATA_NONE);
+        bool checksumsEnabled = (catalog->includeChecksum != Catalog::CHECKSUM_NONE);
         bool userForcedLoad = false;
 
         // Check user setting for forced loading (for metadata = None case)
@@ -1416,7 +1417,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
         }
 
         // Load catalog if: (1) metadata extraction enabled, OR (2) user enabled the setting
-        shouldLoadCatalog = metadataEnabled || userForcedLoad;
+        shouldLoadCatalog = metadataEnabled || checksumsEnabled || userForcedLoad;
 
         qDebug() << "Step 1a: Checking if catalog loading needed";
         qDebug() << "  Metadata enabled:" << metadataEnabled;

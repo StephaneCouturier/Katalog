@@ -769,21 +769,21 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                 catalogFile.close();
 
                 if (catalogWasMigrated) {
-                    qDebug() << "Catalog migrated, saving to v2.8 format...";
-                    appVersion = "2.8";
+                    qDebug() << "Catalog migrated, saving to v2.9 format...";
+                    appVersion = "2.9";
 
                     QFileInfo catalogFileInfo(filePath);
                     QString collectionFolder = catalogFileInfo.absolutePath();
 
                     if (saveCatalogToFile("Memory", collectionFolder)) {
-                        qDebug() << "Catalog successfully saved in v2.8 format";
+                        qDebug() << "Catalog successfully saved in v2.9 format";
                     }
 
                     // After saving, check if migration is 100% complete
-                    if (!hasFilesNeedingMigration() && appVersion < "2.8") {
-                        appVersion = "2.8";
+                    if (!hasFilesNeedingMigration() && appVersion < "2.9") {
+                        appVersion = "2.9";
                         saveCatalog();  // Update database
-                        qDebug() << "✓ Catalog fully migrated to v2.8";
+                        qDebug() << "✓ Catalog fully migrated to v2.9";
                     }
                 }
             }
