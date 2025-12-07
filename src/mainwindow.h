@@ -636,6 +636,7 @@ class MainWindow : public KXmlGuiWindow
             void searchContextOpenFile();
             void searchContextOpenFolder();
             void searchContextOpenExplore();
+            void searchContextCopyFileChecksum();
             void searchContextCopyAbsolutePath();
             void searchContextCopyFolderPath();
             void searchContextCopyFileNameWithExtension();
@@ -671,6 +672,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
             void exploreContextOpenFile();
             void exploreContextOpenFolder();
+            void exploreContextCopyFileChecksum();
             void exploreContextCopyAbsolutePath();
             void exploreContextCopyFolderPath();
             void exploreContextCopyFileNameWithExtension();

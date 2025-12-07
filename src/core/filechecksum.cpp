@@ -176,7 +176,7 @@ bool FileChecksum::updateFileChecksum(const QString &connectionName,
     QSqlQuery query(database);
     query.prepare(queryString);
 
-    QString currentDateTime = QDateTime::currentDateTime().toString(Qt::ISODate);
+    QString currentDateTime = QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss");
 
     query.addBindValue(checksumValue);
     query.addBindValue(currentDateTime);
@@ -215,7 +215,7 @@ bool FileChecksum::batchUpdateFileChecksum(const QString &connectionName,
         return false;
     }
 
-    QString currentDateTime = QDateTime::currentDateTime().toString(Qt::ISODate);
+    QString currentDateTime = QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss");;
 
     QString queryString = QLatin1String(R"(
         UPDATE file

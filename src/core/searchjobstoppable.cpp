@@ -522,7 +522,9 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             audio_bitrate,
             audio_sample_rate,
             metadata_extended,
-            metadata_extraction_date
+            metadata_extraction_date,
+            checksum_sha256,
+            checksum_extraction_date
     FROM  file
     WHERE file_catalog_id = :file_catalog_id
 )");
@@ -668,6 +670,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         int audioSampleRate = getFilesQuery.value(26).toInt();
         QString metadataExtended = getFilesQuery.value(27).toString();
         QString metadataExtractionDate = getFilesQuery.value(28).toString();
+        QString checksumSha256 = getFilesQuery.value(29).toString();
+        QString checksumExtractionDate = getFilesQuery.value(30).toString();
 
         filesProcessed++;
         batchCount++;
@@ -754,6 +758,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 audioSampleRates.append(audioSampleRate);
                 metadataExtendeds.append(metadataExtended);
                 metadataExtractionDates.append(metadataExtractionDate);
+                checksumSha256s.append(checksumSha256);
+                checksumExtractionDates.append(checksumExtractionDate);
             }
         }
 
@@ -1021,6 +1027,8 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
                 audioArtists.append("");
                 audioAlbums.append("");
                 audioTitles.append("");
+                checksumSha256s.append("");
+                checksumExtractionDates.append(""); // No checksum for connected drive search
 
 
                 if (!deviceFoundIDList.contains(sourceDirectory)) {
@@ -1218,6 +1226,8 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
         audioArtists.append("");
         audioAlbums.append("");
         audioTitles.append("");
+        checksumSha256s.append("");
+        checksumExtractionDates.append("");
 
         duplicateCount++;
     }
@@ -1454,6 +1464,8 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     audioArtists.append("");
     audioAlbums.append("");
     audioTitles.append("");
+    checksumSha256s.append("");
+    checksumExtractionDates.append("");
 
     int differenceCount = 0;
     while (differencesQuery.next() && shouldContinue()) {

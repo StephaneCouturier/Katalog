@@ -582,11 +582,12 @@
 
             fileContextMenu.addSeparator();
 
-            // If the file's catalog has EXTENDED metadata enabled, display action to show them
+            //Catalog dependent actions
             QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
             QString selectedResultFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
             int catalogId = ui->Search_treeView_FilesFound->model()->index(index.row(), 5, QModelIndex()).data().toInt();
 
+            // If the file's catalog has EXTENDED metadata enabled, display action to show them
             bool showExtendedMetadataAction = false;
             QString includeMetadata;
 
@@ -630,6 +631,26 @@
                 fileContextMenu.addSeparator();
             }
 
+            // Check if the file's catalog has checksum enabled - only for catalog files
+            bool showCopyChecksumAction = false;
+            if (!selectedResultFileCatalog.isEmpty() && selectedResultFileCatalog != "Connected") {
+                QSqlQuery checksumQuery(QSqlDatabase::database(m_connectionName));
+                QString checksumQuerySQL = QLatin1String(R"(
+                    SELECT catalog_include_checksum
+                    FROM catalog
+                    WHERE catalog_id = :catalog_id
+                )");
+                checksumQuery.prepare(checksumQuerySQL);
+                checksumQuery.bindValue(":catalog_id", catalogId);
+                checksumQuery.exec();
+                if (checksumQuery.next()) {
+                    QString includeChecksum = checksumQuery.value(0).toString();
+                    if (includeChecksum != "None" && !includeChecksum.isEmpty()) {
+                        showCopyChecksumAction = true;
+                    }
+                }
+            }
+
             // Copy actions
             QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
             connect( menuAction3,&QAction::triggered, this, &MainWindow::searchContextCopyFolderPath);
@@ -646,6 +667,12 @@
             QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
             connect( menuAction6,&QAction::triggered, this, &MainWindow::searchContextCopyFileNameWithoutExtension);
             fileContextMenu.addAction(menuAction6);
+
+            if (showCopyChecksumAction) {
+                QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy file checksum"), this);
+                connect(menuActionChecksum, &QAction::triggered, this, &MainWindow::searchContextCopyFileChecksum);
+                fileContextMenu.addAction(menuActionChecksum);
+            }
 
             fileContextMenu.addSeparator();
 
@@ -722,6 +749,15 @@
             //Open the catalog into the Explore tab and display selected directory contents
             openCatalogToExplore();
             ui->tabWidget->setCurrentIndex(2);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::searchContextCopyFileChecksum()
+        {
+            QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
+            // Column 19 contains the checksum
+            QString checksum = ui->Search_treeView_FilesFound->model()->index(index.row(), 19, QModelIndex()).data().toString();
+            QClipboard *clipboard = QGuiApplication::clipboard();
+            clipboard->setText(checksum);
         }
         //----------------------------------------------------------------------
         void MainWindow::searchContextCopyAbsolutePath()
@@ -1487,7 +1523,7 @@
                     collection->saveDeviceTableToFile();
 
                     catalogMetadata.prepend("<catalogID>" + QLocale().toString(newDevice->catalog->ID));
-                    catalogMetadata.prepend("<catalogAppVersion>");
+                    catalogMetadata.prepend("<catalogAppVersion>" + currentVersion);
                     catalogMetadata.prepend("<catalogIncludeMetadata>");
                     catalogMetadata.prepend("<catalogIsFullDevice>");
                     catalogMetadata.prepend("<catalogIncludeSymblinks>");
@@ -1572,7 +1608,9 @@
                                     audio_bitrate,
                                     audio_sample_rate,
                                     metadata_extended,
-                                    metadata_extraction_date
+                                    metadata_extraction_date,
+                                    checksum_sha256,
+                                    checksum_extraction_date
                                 )
                                 VALUES(
                                     :file_catalog_id,
@@ -1606,7 +1644,9 @@
                                     :audio_bitrate,
                                     :audio_sample_rate,
                                     :metadata_extended,
-                                    :metadata_extraction_date )
+                                    :metadata_extraction_date,
+                                    :checksum_sha256,
+                                    :checksum_extraction_date )
                               )");
                         insertFileQuery.prepare(insertFileSQL);
 
@@ -1639,7 +1679,6 @@
                             insertFolderQuery.exec();
 
                         //Insert files
-
                             insertFileQuery.bindValue(":file_catalog_id",   newDevice->catalog->ID);
                             insertFileQuery.bindValue(":file_name",         currentSearch->fileNames[i]);
                             insertFileQuery.bindValue(":file_size",         currentSearch->fileSizes[i]);
@@ -1649,6 +1688,10 @@
                             insertFileQuery.bindValue(":file_full_path",    currentSearch->filePaths[i]);
                             insertFileQuery.bindValue(":file_extension",
                                                       (i < currentSearch->fileExtensions.size()) ? currentSearch->fileExtensions[i] : QVariant());
+                            insertFileQuery.bindValue(":file_type",
+                                                      (i < currentSearch->fileTypes.size()) ? currentSearch->fileTypes[i] : QVariant());
+                            insertFileQuery.bindValue(":mime_type",
+                                                      (i < currentSearch->mimeTypes.size()) ? currentSearch->mimeTypes[i] : QVariant());
                             insertFileQuery.bindValue(":mime_verified",
                                                       (i < currentSearch->mimeVerified.size()) ? currentSearch->mimeVerified[i] : QVariant());
                             insertFileQuery.bindValue(":type_mismatch",
@@ -1693,6 +1736,10 @@
                                                       (i < currentSearch->metadataExtendeds.size()) ? currentSearch->metadataExtendeds[i] : QVariant());
                             insertFileQuery.bindValue(":metadata_extraction_date",
                                                       (i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : QVariant());
+                            insertFileQuery.bindValue(":checksum_sha256",
+                                                      (i < currentSearch->checksumSha256s.size()) ? currentSearch->checksumSha256s[i] : QVariant());
+                            insertFileQuery.bindValue(":checksum_extraction_date",
+                                                      (i < currentSearch->checksumExtractionDates.size()) ? currentSearch->checksumExtractionDates[i] : QVariant());
                             insertFileQuery.exec();
                     }
                 }
@@ -1715,8 +1762,6 @@
                         QString line = currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i] + "\t"
                                        + QString::number(currentSearch->fileSizes[i]) + "\t"
                                        + currentSearch->fileDateTimes[i] + "\t"
-                                       + currentSearch->fileDateTimes[i] + "\t"
-                                       + currentSearch->fileCatalogs[i] + "\t"
                                        + ((i < currentSearch->fileExtensions.size()) ? currentSearch->fileExtensions[i] : "") + "\t"  // Use the array
                                        + ((i < currentSearch->fileTypes.size()) ? currentSearch->fileTypes[i] : "") + "\t"
                                        + ((i < currentSearch->mimeTypes.size()) ? currentSearch->mimeTypes[i] : "") + "\t"
@@ -1741,7 +1786,9 @@
                                        + ((i < currentSearch->audioBitrates.size()) ? QString::number(currentSearch->audioBitrates[i]) : "") + "\t"
                                        + ((i < currentSearch->audioSampleRates.size()) ? QString::number(currentSearch->audioSampleRates[i]) : "") + "\t"
                                        + ((i < currentSearch->metadataExtendeds.size()) ? currentSearch->metadataExtendeds[i] : "") + "\t"
-                                       + ((i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : "");
+                                       + ((i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : "") + "\t"
+                                       + ((i < currentSearch->checksumSha256s.size()) ? currentSearch->checksumSha256s[i] : "") + "\t"
+                                       + ((i < currentSearch->checksumExtractionDates.size()) ? currentSearch->checksumExtractionDates[i] : "");
                         stream << line << '\n';
                     }
                 }

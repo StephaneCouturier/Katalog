@@ -164,6 +164,8 @@ public:
     QList<int> audioSampleRates;
     QStringList metadataExtendeds;
     QStringList metadataExtractionDates;
+    QStringList checksumSha256s;
+    QStringList checksumExtractionDates;
 
     qint64 filesFoundNumber;
     qint64 filesFoundTotalSize;

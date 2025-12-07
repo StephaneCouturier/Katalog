@@ -121,7 +121,7 @@ int Search::rowCount(const QModelIndex &parent) const
 int Search::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 19; // Aligned with Explore model
+    return 21; // Aligned with Explore model
 }
 
 QVariant Search::data(const QModelIndex &index, int role) const
@@ -149,6 +149,8 @@ QVariant Search::data(const QModelIndex &index, int role) const
     case 16: return (index.row() < audioArtists.size()) ? QString(audioArtists[index.row()]) : QString("");
     case 17: return (index.row() < audioAlbums.size()) ? QString(audioAlbums[index.row()]) : QString("");
     case 18: return (index.row() < audioTitles.size()) ? QString(audioTitles[index.row()]) : QString("");
+    case 19: return (index.row() < checksumSha256s.size()) ? QString(checksumSha256s[index.row()]) : QString("");
+    case 20: return (index.row() < checksumExtractionDates.size()) ? QString(checksumExtractionDates[index.row()]) : QString("");
     }
     return QVariant();
 }
@@ -177,6 +179,8 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         case 16: return QString(QApplication::translate("MainWindow","Artist"));
         case 17: return QString(QApplication::translate("MainWindow","Album"));
         case 18: return QString(QApplication::translate("MainWindow","Title"));
+        case 19: return QString(QApplication::translate("MainWindow","Checksum (SHA256)"));
+        case 20: return QString(QApplication::translate("MainWindow","Checksum Date"));
         }
     }
     return QVariant();

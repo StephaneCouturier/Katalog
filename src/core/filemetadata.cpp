@@ -308,7 +308,7 @@ QVariantMap FileMetadata::verifyMimeType(const QString &filePath, const QString 
         result["file_type"] = mimeBasedType;
         result["original_type"] = currentFileType;
         result["has_mismatch"] = (currentFileType.toLower() != mimeBasedType.toLower());
-        result["verification_date"] = QDateTime::currentDateTime().toString(Qt::ISODate);
+        result["verification_date"] = QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss");
 
         if (result["has_mismatch"].toBool()) {
             qDebug() << "Type mismatch for" << filePath
@@ -698,7 +698,7 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         // Always store these basic fields
         result["file_type"] = fileType;
         result["mime_type"] = guessMimeType;
-        result["metadata_extraction_date"] = QDateTime::currentDateTime().toString(Qt::ISODate);
+        result["metadata_extraction_date"] = QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss");
 
         // Check if we should continue with metadata extraction
         bool shouldExtractMetadata = false;

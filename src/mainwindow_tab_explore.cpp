@@ -234,6 +234,25 @@
                 fileContextMenu.addSeparator();
             }
 
+            // Check if the catalog has checksum enabled
+            bool showCopyChecksumAction = false;
+            if (!selectedResultFileCatalog.isEmpty() && selectedResultFileCatalog != "Connected") {
+                QSqlQuery checksumQuery(QSqlDatabase::database(m_connectionName));
+                QString checksumQuerySQL = QLatin1String(R"(
+                    SELECT catalog_include_checksum
+                    FROM catalog
+                    WHERE catalog_id = :catalog_id
+                )");
+                checksumQuery.prepare(checksumQuerySQL);
+                checksumQuery.bindValue(":catalog_id", catalogId);
+                checksumQuery.exec();
+                if (checksumQuery.next()) {
+                    QString includeChecksum = checksumQuery.value(0).toString();
+                    if (includeChecksum != "None" && !includeChecksum.isEmpty()) {
+                        showCopyChecksumAction = true;
+                    }
+                }
+            }
 
             QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
             connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
@@ -250,6 +269,12 @@
             QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
             connect( menuAction6,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithoutExtension);
             fileContextMenu.addAction(menuAction6);
+
+            if (showCopyChecksumAction) {
+                QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy file checksum"), this);
+                connect(menuActionChecksum, &QAction::triggered, this, &MainWindow::exploreContextCopyFileChecksum);
+                fileContextMenu.addAction(menuActionChecksum);
+            }
 
             fileContextMenu.addSeparator();
 
@@ -307,6 +332,36 @@
         QString selectedFile = selectedFileFolder+"/"+selectedFileName;
         QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
         QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextCopyFileChecksum()
+    {
+        QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+        // Get checksum from database since Explore model may not have it loaded
+        QString fileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString folderPath = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        int catalogId = exploreDevice->catalog->ID;
+
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
+        QString querySQL = QLatin1String(R"(
+            SELECT checksum_sha256
+            FROM file
+            WHERE file_catalog_id = :catalog_id
+              AND file_name = :file_name
+              AND file_folder_path = :folder_path
+        )");
+        query.prepare(querySQL);
+        query.bindValue(":catalog_id", catalogId);
+        query.bindValue(":file_name", fileName);
+        query.bindValue(":folder_path", folderPath);
+
+        QString checksum;
+        if (query.exec() && query.next()) {
+            checksum = query.value(0).toString();
+        }
+
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        clipboard->setText(checksum);
     }
     //--------------------------------------------------------------------------
     void MainWindow::exploreContextCopyAbsolutePath()
