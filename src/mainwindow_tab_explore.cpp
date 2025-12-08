@@ -234,26 +234,6 @@
                 fileContextMenu.addSeparator();
             }
 
-            // Check if the catalog has checksum enabled
-            bool showCopyChecksumAction = false;
-            if (!selectedResultFileCatalog.isEmpty() && selectedResultFileCatalog != "Connected") {
-                QSqlQuery checksumQuery(QSqlDatabase::database(m_connectionName));
-                QString checksumQuerySQL = QLatin1String(R"(
-                    SELECT catalog_include_checksum
-                    FROM catalog
-                    WHERE catalog_id = :catalog_id
-                )");
-                checksumQuery.prepare(checksumQuerySQL);
-                checksumQuery.bindValue(":catalog_id", catalogId);
-                checksumQuery.exec();
-                if (checksumQuery.next()) {
-                    QString includeChecksum = checksumQuery.value(0).toString();
-                    if (includeChecksum != "None" && !includeChecksum.isEmpty()) {
-                        showCopyChecksumAction = true;
-                    }
-                }
-            }
-
             QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
             connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
             fileContextMenu.addAction(menuAction3);
@@ -270,6 +250,9 @@
             connect( menuAction6,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithoutExtension);
             fileContextMenu.addAction(menuAction6);
 
+            // Check if the file has a checksum
+            QString checksum = ui->Explore_treeView_FileList->model()->index(index.row(), 19).data().toString();
+            bool showCopyChecksumAction = !checksum.isEmpty();
             if (showCopyChecksumAction) {
                 QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy file checksum"), this);
                 connect(menuActionChecksum, &QAction::triggered, this, &MainWindow::exploreContextCopyFileChecksum);
@@ -723,7 +706,9 @@
                                             NULL                    AS audio_duration_seconds,
                                             NULL                    AS audio_artist,
                                             NULL                    AS audio_album,
-                                            NULL                    AS audio_title
+                                            NULL                    AS audio_title,
+                                            NULL                    AS checksum_sha256,
+                                            NULL                    AS checksum_extraction_date
                                 FROM  folder
                                 WHERE folder_catalog_id=:folder_catalog_id
                         )");
@@ -766,11 +751,12 @@
                                         audio_duration_seconds,
                                         audio_artist,
                                         audio_album,
-                                        audio_title
+                                        audio_title,
+                                        checksum_sha256,
+                                        checksum_extraction_date
                                 FROM    file
                                 WHERE   file_catalog_id =:file_catalog_id
                                 AND     file_folder_path =:file_folder_path
-
                                 ORDER BY order_value ASC
                             )");
 

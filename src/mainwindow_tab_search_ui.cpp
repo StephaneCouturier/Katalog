@@ -631,26 +631,6 @@
                 fileContextMenu.addSeparator();
             }
 
-            // Check if the file's catalog has checksum enabled - only for catalog files
-            bool showCopyChecksumAction = false;
-            if (!selectedResultFileCatalog.isEmpty() && selectedResultFileCatalog != "Connected") {
-                QSqlQuery checksumQuery(QSqlDatabase::database(m_connectionName));
-                QString checksumQuerySQL = QLatin1String(R"(
-                    SELECT catalog_include_checksum
-                    FROM catalog
-                    WHERE catalog_id = :catalog_id
-                )");
-                checksumQuery.prepare(checksumQuerySQL);
-                checksumQuery.bindValue(":catalog_id", catalogId);
-                checksumQuery.exec();
-                if (checksumQuery.next()) {
-                    QString includeChecksum = checksumQuery.value(0).toString();
-                    if (includeChecksum != "None" && !includeChecksum.isEmpty()) {
-                        showCopyChecksumAction = true;
-                    }
-                }
-            }
-
             // Copy actions
             QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
             connect( menuAction3,&QAction::triggered, this, &MainWindow::searchContextCopyFolderPath);
@@ -668,6 +648,9 @@
             connect( menuAction6,&QAction::triggered, this, &MainWindow::searchContextCopyFileNameWithoutExtension);
             fileContextMenu.addAction(menuAction6);
 
+            // Check if the file has a checksum
+            QString checksum = ui->Explore_treeView_FileList->model()->index(index.row(), 19).data().toString();
+            bool showCopyChecksumAction = !checksum.isEmpty();
             if (showCopyChecksumAction) {
                 QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy file checksum"), this);
                 connect(menuActionChecksum, &QAction::triggered, this, &MainWindow::searchContextCopyFileChecksum);
