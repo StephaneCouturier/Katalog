@@ -284,10 +284,14 @@ QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
                     duplicates_name           NUMERIC,
                     duplicates_size           NUMERIC,
                     duplicates_date_modified  NUMERIC,
+                    duplicates_checksum       NUMERIC,
+                    duplicates_checksum_equal NUMERIC,
                     differences_checked       NUMERIC,
                     differences_name          NUMERIC,
                     differences_size          NUMERIC,
                     differences_date_modified NUMERIC,
+                    differences_checksum      NUMERIC,
+                    differences_checksum_equal NUMERIC,
                     differences_catalogs      TEXT,
                     folder_criteria_checked   NUMERIC,
                     show_folders              NUMERIC,
@@ -969,6 +973,7 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
 
     qDebug() << "=== Database Migration 2.9: Adding checksum support ===";
 
+
     // Step 1: Add checksum columns to file table
     qDebug() << "Step 1: Adding checksum columns to file table";
 
@@ -996,6 +1001,7 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
         }
     }
 
+
     // Step 2: Add checksum columns to filetemp table
     qDebug() << "Step 2: Adding checksum columns to filetemp table";
 
@@ -1020,6 +1026,7 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
 
     qDebug() << "File and filetemp tables updated with checksum support";
 
+
     // Step 3: Add checksum column to catalog table
     qDebug() << "Step 3: Adding catalog_include_checksum to catalog table";
 
@@ -1036,6 +1043,7 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
         }
         qDebug() << "Added catalog_include_checksum column to catalog table";
     }
+
 
     // Step 4: Normalize catalog_include_checksum (set default to 'None' for existing catalogs)
     qDebug() << "Step 4: Normalizing catalog_include_checksum values";
@@ -1054,6 +1062,36 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
     } else {
         qDebug() << "No catalogs needed checksum field normalization";
     }
+
+
+    // Step 5: Add checksum search columns to search table
+    qDebug() << "Step 5: Adding checksum search columns to search table";
+
+    QStringList existingSearchColumns = getTableColumns(connectionName, "search");
+
+    const QList<QPair<QString, QString>> newSearchColumns = {
+        {"duplicates_checksum", "NUMERIC"},
+        {"duplicates_checksum_equal", "NUMERIC"},
+        {"differences_checksum", "NUMERIC"},
+        {"differences_checksum_equal", "NUMERIC"}
+    };
+
+    for (const auto& [columnName, columnType] : newSearchColumns) {
+        if (!existingSearchColumns.contains(columnName)) {
+            qDebug() << "Adding column to search:" << columnName;
+            QString alterSQL = QString("ALTER TABLE search ADD COLUMN %1 %2 DEFAULT NULL").arg(columnName, columnType);
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << columnName << "to search:" << addColumnError.text();
+                QApplication::restoreOverrideCursor();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << columnName << "to search table";
+        }
+    }
+
+    qDebug() << "Search table updated with checksum search support";
 
     qDebug() << "=== Database Migration 2.9 completed ===";
 

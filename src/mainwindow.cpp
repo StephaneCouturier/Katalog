@@ -452,3 +452,27 @@ void MainWindow::closeEvent (QCloseEvent *event)
     qDebug() << "Saved window state:" << size() << "at" << pos();
     event->accept();
 }
+
+void MainWindow::on_Search_comboBox_DuplicateChecksumSign_currentIndexChanged(int index)
+{
+    // If ≠ selected (index 1) and no other fields checked, auto-check Name
+    if (index == 1) {
+        if (!ui->Search_checkBox_DuplicatesName->isChecked() &&
+            !ui->Search_checkBox_DuplicatesSize->isChecked() &&
+            !ui->Search_checkBox_DuplicatesDateModified->isChecked()) {
+            ui->Search_checkBox_DuplicatesName->setChecked(true);
+        }
+    }
+}
+
+void MainWindow::on_Search_comboBox_DifferenceChecksumSign_currentIndexChanged(int index)
+{
+    // If ≠ selected (index 1) and no other fields checked, auto-check Name
+    if (index == 1) {
+        if (!ui->Search_checkBox_DifferencesName->isChecked() &&
+            !ui->Search_checkBox_DifferencesSize->isChecked() &&
+            !ui->Search_checkBox_DifferencesDateModified->isChecked()) {
+            ui->Search_checkBox_DifferencesName->setChecked(true);
+        }
+    }
+}

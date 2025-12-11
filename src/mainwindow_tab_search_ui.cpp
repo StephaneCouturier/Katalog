@@ -246,51 +246,96 @@
                 ui->Search_checkBox_DuplicatesName->setEnabled(true);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(true);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(true);
+                ui->Search_checkBox_DuplicatesChecksum->setEnabled(true);
+                ui->Search_comboBox_DuplicateChecksumSign->setEnabled(ui->Search_checkBox_DuplicatesChecksum->isChecked());
                 ui->Search_checkBox_ShowFolders->setChecked(false);
                 ui->Search_checkBox_Differences->setChecked(false);
                 ui->Search_checkBox_DifferencesName->setEnabled(false);
                 ui->Search_checkBox_DifferencesSize->setEnabled(false);
                 ui->Search_checkBox_DifferencesDateModified->setEnabled(false);
+                ui->Search_checkBox_DifferencesChecksum->setEnabled(false);
+                ui->Search_comboBox_DifferenceChecksumSign->setEnabled(false);
             }
             else{
                 ui->Search_checkBox_DuplicatesName->setDisabled(true);
                 ui->Search_checkBox_DuplicatesSize->setDisabled(true);
                 ui->Search_checkBox_DuplicatesDateModified->setDisabled(true);
+                ui->Search_checkBox_DuplicatesChecksum->setDisabled(true);
+                ui->Search_comboBox_DuplicateChecksumSign->setDisabled(true);
             }
 
             //Ensure at least 1 checkbox is checked, by default the first one
             if(checked==1 and ui->Search_checkBox_DuplicatesName->isChecked() == false and
-               ui->Search_checkBox_DuplicatesSize->isChecked() == false and
-               ui->Search_checkBox_DuplicatesDateModified->isChecked() == false){
+                ui->Search_checkBox_DuplicatesSize->isChecked() == false and
+                ui->Search_checkBox_DuplicatesDateModified->isChecked() == false and
+                ui->Search_checkBox_DuplicatesChecksum->isChecked() == false){
                 ui->Search_checkBox_DuplicatesName->setChecked(true);
             }
         }
         void MainWindow::on_Search_checkBox_DuplicatesName_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if size and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DuplicatesSize->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesDateModified->checkState()==Qt::Unchecked){
+                bool sizeChecked = ui->Search_checkBox_DuplicatesSize->isChecked();
+                bool dateChecked = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = sizeChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DuplicatesName->setCheckState(Qt::Checked);
                 }
             }
         }
+
         void MainWindow::on_Search_checkBox_DuplicatesSize_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DuplicatesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesDateModified->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DuplicatesName->isChecked();
+                bool dateChecked = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DuplicatesSize->setCheckState(Qt::Checked);
                 }
             }
         }
+
         void MainWindow::on_Search_checkBox_DuplicatesDateModified_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and size are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DuplicatesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesSize->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DuplicatesName->isChecked();
+                bool sizeChecked = ui->Search_checkBox_DuplicatesSize->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || sizeChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DuplicatesDateModified->setCheckState(Qt::Checked);
                 }
             }
+        }
+        void MainWindow::on_Search_checkBox_DuplicatesChecksum_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            if(arg1==Qt::Unchecked){
+                if(!ui->Search_checkBox_DuplicatesName->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesSize->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesDateModified->isChecked()){
+                    ui->Search_checkBox_DuplicatesChecksum->setCheckState(Qt::Checked);
+                }
+            }
+        }
+
+        void MainWindow::on_Search_checkBox_DuplicatesChecksum_toggled(bool checked)
+        {
+            ui->Search_comboBox_DuplicateChecksumSign->setEnabled(checked);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Differences_toggled(bool checked)
@@ -299,12 +344,16 @@
                 ui->Search_checkBox_DifferencesName->setEnabled(true);
                 ui->Search_checkBox_DifferencesSize->setEnabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setEnabled(true);
+                ui->Search_checkBox_DifferencesChecksum->setEnabled(true);
+                ui->Search_comboBox_DifferenceChecksumSign->setEnabled(ui->Search_checkBox_DifferencesChecksum->isChecked());
                 ui->Search_widget_DifferencesDevices->setHidden(false);
                 ui->Search_checkBox_ShowFolders->setChecked(false);
                 ui->Search_checkBox_Duplicates->setChecked(false);
                 ui->Search_checkBox_DuplicatesName->setEnabled(false);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(false);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(false);
+                ui->Search_checkBox_DuplicatesChecksum->setEnabled(false);
+                ui->Search_comboBox_DuplicateChecksumSign->setEnabled(false);
                 ui->Search_treeView_CatalogsFound->setEnabled(false);
             }
             else{
@@ -312,43 +361,85 @@
                 ui->Search_checkBox_DifferencesName->setDisabled(true);
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setDisabled(true);
+                ui->Search_checkBox_DifferencesChecksum->setDisabled(true);
+                ui->Search_comboBox_DifferenceChecksumSign->setDisabled(true);
                 ui->Search_treeView_CatalogsFound->setEnabled(true);
             }
 
             //ensure at least 1 checkbox is checked, by default the first one
             if(checked==1 and ui->Search_checkBox_DifferencesName->isChecked() == false and
                 ui->Search_checkBox_DifferencesSize->isChecked() == false and
-                ui->Search_checkBox_DifferencesDateModified->isChecked() == false){
+                ui->Search_checkBox_DifferencesDateModified->isChecked() == false and
+                ui->Search_checkBox_DifferencesChecksum->isChecked() == false){
                 ui->Search_checkBox_DifferencesName->setChecked(true);
             }
         }
         void MainWindow::on_Search_checkBox_DifferencesName_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if size and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DifferencesSize->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesDateModified->checkState()==Qt::Unchecked){
+                bool sizeChecked = ui->Search_checkBox_DifferencesSize->isChecked();
+                bool dateChecked = ui->Search_checkBox_DifferencesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = sizeChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DifferencesName->setCheckState(Qt::Checked);
                 }
             }
         }
+
         void MainWindow::on_Search_checkBox_DifferencesSize_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DifferencesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesDateModified->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DifferencesName->isChecked();
+                bool dateChecked = ui->Search_checkBox_DifferencesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DifferencesSize->setCheckState(Qt::Checked);
                 }
             }
         }
+
         void MainWindow::on_Search_checkBox_DifferencesDateModified_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and size are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DifferencesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesSize->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DifferencesName->isChecked();
+                bool sizeChecked = ui->Search_checkBox_DifferencesSize->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || sizeChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DifferencesDateModified->setCheckState(Qt::Checked);
                 }
             }
         }
+        void MainWindow::on_Search_checkBox_DifferencesChecksum_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            if(arg1==Qt::Unchecked){
+                if(!ui->Search_checkBox_DifferencesName->isChecked() &&
+                    !ui->Search_checkBox_DifferencesSize->isChecked() &&
+                    !ui->Search_checkBox_DifferencesDateModified->isChecked()){
+                    ui->Search_checkBox_DifferencesChecksum->setCheckState(Qt::Checked);
+                }
+            }
+        }
+
+        void MainWindow::on_Search_checkBox_DifferencesChecksum_toggled(bool checked)
+        {
+            ui->Search_comboBox_DifferenceChecksumSign->setEnabled(checked);
+        }
+
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Size_toggled(bool checked)
         {
@@ -1137,11 +1228,15 @@
             ui->Search_checkBox_DuplicatesName->setChecked(search->searchDuplicatesOnName);
             ui->Search_checkBox_DuplicatesSize->setChecked(search->searchDuplicatesOnSize);
             ui->Search_checkBox_DuplicatesDateModified->setChecked(search->searchDuplicatesOnDate);
+            ui->Search_checkBox_DuplicatesChecksum->setChecked(search->searchDuplicatesOnChecksum);
+            ui->Search_comboBox_DuplicateChecksumSign->setCurrentIndex(search->searchDuplicatesChecksumEqual ? 0 : 1);
             ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
 
             ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName);
             ui->Search_checkBox_DifferencesSize->setChecked(search->differencesOnSize);
             ui->Search_checkBox_DifferencesDateModified->setChecked(search->differencesOnDate);
+            ui->Search_checkBox_DifferencesChecksum->setChecked(search->differencesOnChecksum);
+            ui->Search_comboBox_DifferenceChecksumSign->setCurrentIndex(search->differencesChecksumEqual ? 0 : 1);
             ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName); //Re-apply the state
 
             //Select the element in ui->Search_comboBox_DifferencesCatalog1 matching the differencesDeviceID1
@@ -1280,10 +1375,14 @@
                 currentSearch->searchDuplicatesOnName   = ui->Search_checkBox_DuplicatesName->isChecked();
                 currentSearch->searchDuplicatesOnSize   = ui->Search_checkBox_DuplicatesSize->isChecked();
                 currentSearch->searchDuplicatesOnDate   = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+                currentSearch->searchDuplicatesOnChecksum    = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                currentSearch->searchDuplicatesChecksumEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
                 currentSearch->searchOnDifferences      = ui->Search_checkBox_Differences->isChecked();
                 currentSearch->differencesOnName        = ui->Search_checkBox_DifferencesName->checkState();
                 currentSearch->differencesOnSize        = ui->Search_checkBox_DifferencesSize->checkState();
                 currentSearch->differencesOnDate        = ui->Search_checkBox_DifferencesDateModified->checkState();
+                currentSearch->differencesOnChecksum      = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                currentSearch->differencesChecksumEqual   = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
                 currentSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
                 currentSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
                 currentSearch->differencesDevices << QString::number(currentSearch->differencesDeviceID1) << QString::number(currentSearch->differencesDeviceID2);

@@ -121,6 +121,10 @@ public:
     QStringList differencesDevices;
     int differencesDeviceID1;
     int differencesDeviceID2;
+    bool searchDuplicatesOnChecksum;
+    bool searchDuplicatesChecksumEqual;  // true = "=", false = "≠"
+    bool differencesOnChecksum;
+    bool differencesChecksumEqual;       // true = "=", false = "≠"
     bool searchOnFolderCriteria;
     bool showFoldersOnly;
     bool searchOnTags;
