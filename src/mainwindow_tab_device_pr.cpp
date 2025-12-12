@@ -4389,3 +4389,140 @@ void MainWindow::convertStorage()
 
     collection->saveStorageTableToFile();
 }
+
+
+
+QStandardItemModel* MainWindow::buildFilteredDeviceTreeModel(QObject *parent)
+{
+    // Build a device tree model filtered by selectedDevice->deviceIDList
+    // This reuses the same SQL logic as loadDevicesTreeToModel() but returns the model
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL;
+
+    // Use recursive CTE to get device hierarchy
+    querySQL = QLatin1String(R"(
+        WITH RECURSIVE device_tree AS (
+            -- Base case: start with root devices (Physical Group and Virtual Groups)
+            SELECT
+                device_id,
+                device_parent_id,
+                device_name,
+                device_type,
+                device_external_id,
+                device_path,
+                device_total_file_size,
+                device_total_file_count,
+                device_total_space,
+                device_free_space,
+                device_active,
+                device_group_id,
+                device_date_updated,
+                0 AS level
+            FROM device
+            WHERE device_parent_id = 0
+
+            UNION ALL
+
+            -- Recursive case: children
+            SELECT
+                child.device_id,
+                child.device_parent_id,
+                child.device_name,
+                child.device_type,
+                child.device_external_id,
+                child.device_path,
+                child.device_total_file_size,
+                child.device_total_file_count,
+                child.device_total_space,
+                child.device_free_space,
+                child.device_active,
+                child.device_group_id,
+                child.device_date_updated,
+                parent.level + 1 AS level
+            FROM device_tree parent
+            JOIN device child ON child.device_parent_id = parent.device_id
+        )
+        SELECT
+            device_id,
+            device_parent_id,
+            device_name,
+            device_type,
+            device_external_id,
+            device_active
+        FROM device_tree
+        WHERE 1=1
+    )");
+
+    // Apply filtering based on selectedDevice->deviceIDList if not empty
+    if (!selectedDevice->deviceIDList.isEmpty() && selectedDevice->ID != 0) {
+        // Build IN clause for filtering
+        QStringList idStrings;
+        for (int id : selectedDevice->deviceIDList) {
+            idStrings << QString::number(id);
+        }
+
+        // Include the devices and their ancestors to maintain tree structure
+        querySQL += QString(" AND (device_id IN (%1) OR device_id IN ("
+                            "    WITH RECURSIVE ancestors AS ("
+                            "        SELECT device_parent_id FROM device WHERE device_id IN (%1)"
+                            "        UNION"
+                            "        SELECT d.device_parent_id FROM device d"
+                            "        JOIN ancestors a ON d.device_id = a.device_parent_id"
+                            "    )"
+                            "    SELECT device_parent_id FROM ancestors WHERE device_parent_id > 0"
+                            "))").arg(idStrings.join(","));
+    }
+
+    querySQL += " ORDER BY level ASC, device_type DESC, device_parent_id ASC, device_id ASC";
+
+    query.prepare(querySQL);
+    query.exec();
+
+    // Create the model with minimal columns: Name, Type, Active, ID, ParentID
+    QStandardItemModel *model = new QStandardItemModel(parent);
+    model->setHorizontalHeaderLabels({
+        tr("Name"),         // 0
+        tr("Device Type"),  // 1
+        tr("Active"),       // 2
+        tr("ID"),           // 3
+        tr("Parent ID")     // 4
+    });
+
+    // Map to store items by ID for building hierarchy
+    QMap<int, QStandardItem*> itemMap;
+
+    while (query.next()) {
+        int id = query.value(0).toInt();
+        int parentId = query.value(1).toInt();
+        QString name = query.value(2).toString();
+        QString type = query.value(3).toString();
+        int externalId = query.value(4).toInt();
+        bool isActive = query.value(5).toBool();
+
+        // Create row items
+        QList<QStandardItem*> rowItems;
+        rowItems << new QStandardItem(name);                        // 0 - Name
+        rowItems << new QStandardItem(type);                        // 1 - Type
+        rowItems << new QStandardItem(QString::number(isActive));   // 2 - Active
+        rowItems << new QStandardItem(QString::number(id));         // 3 - ID
+        rowItems << new QStandardItem(QString::number(parentId));   // 4 - Parent ID
+
+        QStandardItem* item = rowItems.at(0);
+        QStandardItem* parentItem = itemMap.value(parentId);
+
+        // Add to model
+        if (parentId == 0) {
+            model->appendRow(rowItems);
+        } else if (parentItem) {
+            parentItem->appendRow(rowItems);
+        } else {
+            // Parent not found, add at root level
+            model->appendRow(rowItems);
+        }
+
+        itemMap.insert(id, item);
+    }
+
+    return model;
+}

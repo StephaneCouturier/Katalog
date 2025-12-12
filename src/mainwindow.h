@@ -46,6 +46,7 @@
 #include "core/catalogjobstoppable.h"
 #include "core/catalogprogressmanager.h"
 #include "core/backupmappingmanager.h"
+#include "widgets/treecombobox.h"
 
 //KDE KF6
 #include <KFormat>
@@ -173,6 +174,8 @@ class MainWindow : public KXmlGuiWindow
     private:
         QString m_connectionName = "defaultConnection";
         DeviceUpdateManager* deviceUpdateManager = nullptr;
+        QStandardItemModel* buildFilteredDeviceTreeModel(QObject *parent = nullptr);
+
         bool useUnifiedManager = false;
         void setCatalogUpdateUIState(bool isRunning);
         void setCreateCatalogUIState(bool isRunning);

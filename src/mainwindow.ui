@@ -3971,7 +3971,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                             </widget>
                            </item>
                            <item>
-                            <widget class="QComboBox" name="Search_comboBox_DifferencesDevice1">
+                            <widget class="TreeComboBox" name="Search_comboBox_DifferencesDevice1">
                              <property name="minimumSize">
                               <size>
                                <width>200</width>
@@ -4079,7 +4079,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                             </widget>
                            </item>
                            <item>
-                            <widget class="QComboBox" name="Search_comboBox_DifferencesDevice2">
+                            <widget class="TreeComboBox" name="Search_comboBox_DifferencesDevice2">
                              <property name="minimumSize">
                               <size>
                                <width>200</width>
@@ -13108,6 +13108,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
    <class>QChartView</class>
    <extends>QGraphicsView</extends>
    <header location="global">QChartView</header>
+  </customwidget>
+  <customwidget>
+   <class>TreeComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">widgets/treecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -170,6 +170,7 @@ set(MAIN_SOURCES
     src/mainwindow_ui_wrapper_device.cpp
     src/mainwindow_ui_wrapper_storage.cpp
     src/mainwindow_ui_wrapper_catalog.cpp
+    src/widgets/treecombobox.cpp
     ${MAINWINDOW_IMPL_SOURCES}  # Always include these as separate compilation units
 )
 
@@ -186,6 +187,7 @@ set(MAIN_HEADERS
     src/mainwindow_ui_wrapper_device.h
     src/mainwindow_ui_wrapper_storage.h
     src/mainwindow_ui_wrapper_catalog.h
+    src/widgets/treecombobox.h
     src/version.h.in
 )
 

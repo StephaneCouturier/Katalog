@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
+#include "devicetreeview.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/catalog.h"
@@ -1240,18 +1241,8 @@
             ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName); //Re-apply the state
 
             //Select the element in ui->Search_comboBox_DifferencesCatalog1 matching the differencesDeviceID1
-            for (int i = 0; i < ui->Search_comboBox_DifferencesDevice1->count(); i++) {
-                if (ui->Search_comboBox_DifferencesDevice1->itemData(i).toInt() == search->differencesDeviceID1) {
-                    ui->Search_comboBox_DifferencesDevice1->setCurrentIndex(i);
-                    break;
-                }
-            }
-            for (int i = 0; i < ui->Search_comboBox_DifferencesDevice2->count(); i++) {
-                if (ui->Search_comboBox_DifferencesDevice2->itemData(i).toInt() == search->differencesDeviceID2) {
-                    ui->Search_comboBox_DifferencesDevice2->setCurrentIndex(i);
-                    break;
-                }
-            }
+            ui->Search_comboBox_DifferencesDevice1->setSelectedDeviceId(search->differencesDeviceID1);
+            ui->Search_comboBox_DifferencesDevice2->setSelectedDeviceId(search->differencesDeviceID2);
 
             //Restore the type of search (in catalogs or in connected drives
             if (lastSearch->searchInCatalogsChecked == true){
@@ -1383,8 +1374,8 @@
                 currentSearch->differencesOnDate        = ui->Search_checkBox_DifferencesDateModified->checkState();
                 currentSearch->differencesOnChecksum      = ui->Search_checkBox_DifferencesChecksum->isChecked();
                 currentSearch->differencesChecksumEqual   = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
-                currentSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
-                currentSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+                currentSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->selectedDeviceId();
+                currentSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->selectedDeviceId();
                 currentSearch->differencesDevices << QString::number(currentSearch->differencesDeviceID1) << QString::number(currentSearch->differencesDeviceID2);
 
                 currentSearch->searchOnFolderCriteria   = ui->Search_checkBox_FolderCriteria->isChecked();
@@ -1402,18 +1393,28 @@
                 currentSearch->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }
         //----------------------------------------------------------------------
-        void MainWindow::refreshDifferencesCatalogSelection(){
-            ui->Search_comboBox_DifferencesDevice1->clear();
-            ui->Search_comboBox_DifferencesDevice2->clear();
+        void MainWindow::refreshDifferencesCatalogSelection()
+        {
+            // Build a filtered device tree model
+            QStandardItemModel *treeModel = buildFilteredDeviceTreeModel(this);
 
-            Device loopDevice;
-            foreach(int ID, selectedDevice->deviceIDList)
-            {
-                loopDevice.ID = ID;
-                loopDevice.loadDevice(m_connectionName);
-                ui->Search_comboBox_DifferencesDevice1->addItem(loopDevice.name,loopDevice.ID);
-                ui->Search_comboBox_DifferencesDevice2->addItem(loopDevice.name,loopDevice.ID);
-            }
+            // Create proxy model with icons/formatting for first combobox
+            DeviceTreeView *proxyModel1 = new DeviceTreeView(this);
+            proxyModel1->setSourceModel(treeModel);
+            proxyModel1->setKatalogTheme(themeID > 0);
+
+            // Create a second copy for the second combobox (they need independent proxies)
+            QStandardItemModel *treeModel2 = buildFilteredDeviceTreeModel(this);
+            DeviceTreeView *proxyModel2 = new DeviceTreeView(this);
+            proxyModel2->setSourceModel(treeModel2);
+            proxyModel2->setKatalogTheme(themeID > 0);
+
+            // Set models on the tree comboboxes
+            ui->Search_comboBox_DifferencesDevice1->setTreeModel(proxyModel1);
+            ui->Search_comboBox_DifferencesDevice1->expandToDepth(2);
+
+            ui->Search_comboBox_DifferencesDevice2->setTreeModel(proxyModel2);
+            ui->Search_comboBox_DifferencesDevice2->expandToDepth(2);
         }
         //----------------------------------------------------------------------
         void MainWindow::batchProcessSearchResults()

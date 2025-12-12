@@ -232,8 +232,8 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->differencesOnDate = ui->Search_checkBox_DifferencesDateModified->checkState();
     search->differencesOnChecksum    = ui->Search_checkBox_DifferencesChecksum->isChecked();
     search->differencesChecksumEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
-    search->differencesDeviceID1 = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
-    search->differencesDeviceID2 = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+    search->differencesDeviceID1 = ui->Search_comboBox_DifferencesDevice1->selectedDeviceId();
+    search->differencesDeviceID2 = ui->Search_comboBox_DifferencesDevice2->selectedDeviceId();
     search->differencesDevices.clear();
     search->differencesDevices << QString::number(search->differencesDeviceID1) << QString::number(search->differencesDeviceID2);
 
@@ -252,12 +252,12 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     if (search->diffDevice1 == nullptr) {
         search->diffDevice1 = new Device;
     }
-    search->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
+    search->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->selectedDeviceId();
 
     if (search->diffDevice2 == nullptr) {
         search->diffDevice2 = new Device;
     }
-    search->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+    search->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->selectedDeviceId();
 
     // Populate the selectedDeviceList
     search->selectedDeviceIDList.clear();
