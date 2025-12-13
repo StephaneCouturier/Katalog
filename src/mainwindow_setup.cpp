@@ -267,6 +267,10 @@
             //Restore Statistics settings
             ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate.toString("yyyy-mm-dd"));
 
+            // Duplicates: default to "Within selected device", hide device selection
+            ui->Search_radioButton_DuplicatesWithinSelectedDevice->setChecked(true);
+            ui->Search_widget_DuplicatesDevices->setHidden(true);
+
             //Restore last sort order for the catalogs and storage
             lastDevicesSortSection        = settings.value("Devices/lastDevicesSortSection").toInt();
             lastDevicesSortOrder          = settings.value("Devices/lastDevicesSortOrder").toInt();
@@ -305,14 +309,6 @@
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
-        //Filter
-
-        //Search
-            //hide KRename if not linux
-            #ifndef Q_OS_LINUX
-                ui->Search_comboBox_SelectProcess->removeItem(2);
-            #endif
-
         //Devices
             //Catalogs
                 //DEV: preparing catalog-device relation
@@ -327,7 +323,6 @@
             ui->Create_label_TypeOfSource->hide();
             ui->Create_comboBox_SourceType->hide();
             ui->Create_label_Path->hide();
-
     }
     //----------------------------------------------------------------------
     void MainWindow::checkVersion()
@@ -782,6 +777,15 @@
         ui->Search_label_LinkImage31->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage32->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage33->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_7->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_8->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_3->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_9->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_2->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage26->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage27->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage28->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
 
         //Change the alternate color of treeview lines
         ui->Filters_treeView_Devices->setStyleSheet(
@@ -967,6 +971,16 @@
         ui->Search_label_LinkImage31->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage32->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage33->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_7->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_8->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_3->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_9->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_2->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16_15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage26->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage27->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage28->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+
 
         //Change the alternate color of treeview lines
         ui->Filters_treeView_Devices->setStyleSheet(

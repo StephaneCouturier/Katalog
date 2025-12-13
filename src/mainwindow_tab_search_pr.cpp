@@ -226,6 +226,25 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->searchDuplicatesOnDate = ui->Search_checkBox_DuplicatesDateModified->isChecked();
     search->searchDuplicatesOnChecksum    = ui->Search_checkBox_DuplicatesChecksum->isChecked();
     search->searchDuplicatesChecksumEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+    search->duplicatesCompareDevices = ui->Search_radioButton_DuplicatesCompareTwoDevices->isChecked();
+    if (search->duplicatesCompareDevices) {
+        search->duplicatesDeviceID1 = ui->Search_comboBox_DuplicatesDevice1->selectedDeviceId();
+        search->duplicatesDeviceID2 = ui->Search_comboBox_DuplicatesDevice2->selectedDeviceId();
+
+        // Initialize device objects
+        if (search->duplicatesDevice1 == nullptr) {
+            search->duplicatesDevice1 = new Device;
+        }
+        search->duplicatesDevice1->ID = search->duplicatesDeviceID1;
+
+        if (search->duplicatesDevice2 == nullptr) {
+            search->duplicatesDevice2 = new Device;
+        }
+        search->duplicatesDevice2->ID = search->duplicatesDeviceID2;
+    } else {
+        search->duplicatesDeviceID1 = 0;
+        search->duplicatesDeviceID2 = 0;
+    }
     search->searchOnDifferences = ui->Search_checkBox_Differences->isChecked();
     search->differencesOnName = ui->Search_checkBox_DifferencesName->checkState();
     search->differencesOnSize = ui->Search_checkBox_DifferencesSize->checkState();

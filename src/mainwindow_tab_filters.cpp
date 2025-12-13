@@ -164,7 +164,8 @@
 
         filterFromSelectedDevice();
 
-        refreshDifferencesCatalogSelection();
+        refreshDuplicatesDeviceSelection();
+        refreshDifferencesDeviceSelection();
 
         ui->Catalogs_pushButton_UpdateActiveDevice->setEnabled(false);
 
@@ -381,7 +382,8 @@
         settings.setValue("Selection/SelectedDeviceType", tr("All"));
         settings.setValue("Selection/SelectedDeviceName", tr("All"));
         settings.setValue("Selection/SelectedDeviceID", 0);
-        refreshDifferencesCatalogSelection();
+        refreshDuplicatesDeviceSelection();
+        refreshDifferencesDeviceSelection();
     }
     //----------------------------------------------------------------------
     void MainWindow::filterFromSelectedDevice()

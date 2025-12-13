@@ -135,8 +135,12 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                 qDebug() << "Window restored to:" << size() << "at position:" << pos();
             });
 
-            //Hide specific UI items
+            //Hide Development UI items
             hideDevelopmentUIItems();
+
+            QButtonGroup buttonGroupDuplicates;
+            buttonGroupDuplicates.addButton(ui->Search_radioButton_DuplicatesWithinSelectedDevice);
+            buttonGroupDuplicates.addButton(ui->Search_radioButton_DuplicatesCompareTwoDevices);
 
             QButtonGroup buttonGroupDevices;
             buttonGroupDevices.addButton(ui->Devices_radioButton_DeviceTree);
@@ -184,6 +188,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Devices_widget_ReplaceCatalogsOption->hide();
             ui->Search_widget_DifferencesDevices->hide();
             ui->Create_widget_SambaSettings->hide();
+            ui->Search_widget_Duplicates->hide();
+            //Search: hide KRename option if not linux
+            #ifndef Q_OS_LINUX
+                ui->Search_comboBox_SelectProcess->removeItem(2);
+            #endif
 
         //Hide file edtion items
             if( collection->databaseMode != "Memory"){
@@ -451,28 +460,4 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
     qDebug() << "Saved window state:" << size() << "at" << pos();
     event->accept();
-}
-
-void MainWindow::on_Search_comboBox_DuplicateChecksumSign_currentIndexChanged(int index)
-{
-    // If ≠ selected (index 1) and no other fields checked, auto-check Name
-    if (index == 1) {
-        if (!ui->Search_checkBox_DuplicatesName->isChecked() &&
-            !ui->Search_checkBox_DuplicatesSize->isChecked() &&
-            !ui->Search_checkBox_DuplicatesDateModified->isChecked()) {
-            ui->Search_checkBox_DuplicatesName->setChecked(true);
-        }
-    }
-}
-
-void MainWindow::on_Search_comboBox_DifferenceChecksumSign_currentIndexChanged(int index)
-{
-    // If ≠ selected (index 1) and no other fields checked, auto-check Name
-    if (index == 1) {
-        if (!ui->Search_checkBox_DifferencesName->isChecked() &&
-            !ui->Search_checkBox_DifferencesSize->isChecked() &&
-            !ui->Search_checkBox_DifferencesDateModified->isChecked()) {
-            ui->Search_checkBox_DifferencesName->setChecked(true);
-        }
-    }
 }

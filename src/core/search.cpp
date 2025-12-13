@@ -76,6 +76,9 @@ Search::Search(QObject *parent) : QAbstractTableModel(parent)
     differencesDeviceID2 = 0;
     searchDuplicatesOnChecksum = false;
     searchDuplicatesChecksumEqual = true;  // default to "="
+    duplicatesCompareDevices = false;      // default to Within selected device
+    duplicatesDeviceID1 = 0;
+    duplicatesDeviceID2 = 0;
     differencesOnChecksum = false;
     differencesChecksumEqual = true;       // default to "="
     searchOnFolderCriteria = false;
@@ -858,7 +861,17 @@ void Search::copyFrom(const Search* other)
     searchDuplicatesOnName = other->searchDuplicatesOnName;
     searchDuplicatesOnSize = other->searchDuplicatesOnSize;
     searchDuplicatesOnDate = other->searchDuplicatesOnDate;
-
+    duplicatesCompareDevices = other->duplicatesCompareDevices;
+    duplicatesDeviceID1 = other->duplicatesDeviceID1;
+    duplicatesDeviceID2 = other->duplicatesDeviceID2;
+    if (other->duplicatesDevice1) {
+        if (!duplicatesDevice1) duplicatesDevice1 = new Device;
+        duplicatesDevice1->ID = other->duplicatesDevice1->ID;
+    }
+    if (other->duplicatesDevice2) {
+        if (!duplicatesDevice2) duplicatesDevice2 = new Device;
+        duplicatesDevice2->ID = other->duplicatesDevice2->ID;
+    }
     searchOnDifferences = other->searchOnDifferences;
     differencesOnName = other->differencesOnName;
     differencesOnSize = other->differencesOnSize;

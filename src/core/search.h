@@ -114,6 +114,12 @@ public:
     bool searchDuplicatesOnName;
     bool searchDuplicatesOnSize;
     bool searchDuplicatesOnDate;
+    bool duplicatesCompareDevices;       // true = Compare two devices, false = Within selected device
+    int duplicatesDeviceID1;
+    int duplicatesDeviceID2;
+    Device *duplicatesDevice1 = nullptr;        // Device objects for duplicates comparison
+    Device *duplicatesDevice2 = nullptr;
+
     bool searchOnDifferences;
     bool differencesOnName;
     bool differencesOnSize;

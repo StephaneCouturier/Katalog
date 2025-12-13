@@ -309,7 +309,8 @@ class MainWindow : public KXmlGuiWindow
             int lastSearchSortSection;
             int lastSearchSortOrder;
 
-            void refreshDifferencesCatalogSelection();
+            void refreshDuplicatesDeviceSelection();
+            void refreshDifferencesDeviceSelection();
             void processSearch();
             void searchFilesStoppable();
 
@@ -622,6 +623,8 @@ class MainWindow : public KXmlGuiWindow
             void on_Search_checkBox_DuplicatesChecksum_checkStateChanged(const Qt::CheckState &arg1);
             void on_Search_checkBox_DuplicatesChecksum_toggled(bool checked);
             void on_Search_comboBox_DuplicateChecksumSign_currentIndexChanged(int index);
+            void on_Search_radioButton_DuplicatesWithinSelectedDevice_toggled(bool checked);
+            void on_Search_radioButton_DuplicatesCompareTwoDevices_toggled(bool checked);
             void on_Search_checkBox_DifferencesChecksum_checkStateChanged(const Qt::CheckState &arg1);
             void on_Search_checkBox_DifferencesChecksum_toggled(bool checked);
             void on_Search_checkBox_Differences_toggled(bool checked);

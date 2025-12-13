@@ -1968,7 +1968,8 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
         qDebug() << "=== CREATION: Complete UI refresh + Clean Create tab restoration ===";
         if (reportDevice) {
             // Complete UI refresh (like original working code)
-            refreshDifferencesCatalogSelection();
+            refreshDuplicatesDeviceSelection();
+            refreshDifferencesDeviceSelection();
             collection->updateAllDeviceActive();
             loadDevicesView("");
             ui->Filters_label_DisplayCatalog->setText(reportDevice->name);
@@ -4497,7 +4498,7 @@ QStandardItemModel* MainWindow::buildFilteredDeviceTreeModel(QObject *parent)
         int parentId = query.value(1).toInt();
         QString name = query.value(2).toString();
         QString type = query.value(3).toString();
-        int externalId = query.value(4).toInt();
+        //int externalId = query.value(4).toInt();
         bool isActive = query.value(5).toBool();
 
         // Create row items

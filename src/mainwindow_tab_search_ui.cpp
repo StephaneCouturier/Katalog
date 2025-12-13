@@ -243,12 +243,21 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Duplicates_toggled(bool checked)
         {
-            if(checked==1){
+            if (checked == 1) {
                 ui->Search_checkBox_DuplicatesName->setEnabled(true);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(true);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(true);
                 ui->Search_checkBox_DuplicatesChecksum->setEnabled(true);
                 ui->Search_comboBox_DuplicateChecksumSign->setEnabled(ui->Search_checkBox_DuplicatesChecksum->isChecked());
+                ui->Search_widget_Duplicates->setHidden(false);
+
+                // Enable radio buttons
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setEnabled(true);
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setEnabled(true);
+
+                // Show/hide device selection based on current radio state
+                ui->Search_widget_DuplicatesDevices->setHidden(!ui->Search_radioButton_DuplicatesCompareTwoDevices->isChecked());
+
                 ui->Search_checkBox_ShowFolders->setChecked(false);
                 ui->Search_checkBox_Differences->setChecked(false);
                 ui->Search_checkBox_DifferencesName->setEnabled(false);
@@ -257,19 +266,25 @@
                 ui->Search_checkBox_DifferencesChecksum->setEnabled(false);
                 ui->Search_comboBox_DifferenceChecksumSign->setEnabled(false);
             }
-            else{
+            else {
                 ui->Search_checkBox_DuplicatesName->setDisabled(true);
                 ui->Search_checkBox_DuplicatesSize->setDisabled(true);
                 ui->Search_checkBox_DuplicatesDateModified->setDisabled(true);
                 ui->Search_checkBox_DuplicatesChecksum->setDisabled(true);
                 ui->Search_comboBox_DuplicateChecksumSign->setDisabled(true);
+                ui->Search_widget_Duplicates->setHidden(true);
+
+                // Disable radio buttons and hide device selection
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setEnabled(false);
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setEnabled(false);
+                ui->Search_widget_DuplicatesDevices->setHidden(true);
             }
 
-            //Ensure at least 1 checkbox is checked, by default the first one
-            if(checked==1 and ui->Search_checkBox_DuplicatesName->isChecked() == false and
-                ui->Search_checkBox_DuplicatesSize->isChecked() == false and
-                ui->Search_checkBox_DuplicatesDateModified->isChecked() == false and
-                ui->Search_checkBox_DuplicatesChecksum->isChecked() == false){
+            // Ensure at least 1 checkbox is checked, by default the first one
+            if (checked == 1 && ui->Search_checkBox_DuplicatesName->isChecked() == false &&
+                ui->Search_checkBox_DuplicatesSize->isChecked() == false &&
+                ui->Search_checkBox_DuplicatesDateModified->isChecked() == false &&
+                ui->Search_checkBox_DuplicatesChecksum->isChecked() == false) {
                 ui->Search_checkBox_DuplicatesName->setChecked(true);
             }
         }
@@ -338,26 +353,71 @@
         {
             ui->Search_comboBox_DuplicateChecksumSign->setEnabled(checked);
         }
+
+        void MainWindow::on_Search_comboBox_DuplicateChecksumSign_currentIndexChanged(int index)
+        {
+            // If ≠ selected (index 1) and no other fields checked, auto-check Name
+            if (index == 1) {
+                if (!ui->Search_checkBox_DuplicatesName->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesSize->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesDateModified->isChecked()) {
+                    ui->Search_checkBox_DuplicatesName->setChecked(true);
+                }
+            }
+        }
+        void MainWindow::on_Search_comboBox_DifferenceChecksumSign_currentIndexChanged(int index)
+        {
+            // If ≠ selected (index 1) and no other fields checked, auto-check Name
+            if (index == 1) {
+                if (!ui->Search_checkBox_DifferencesName->isChecked() &&
+                    !ui->Search_checkBox_DifferencesSize->isChecked() &&
+                    !ui->Search_checkBox_DifferencesDateModified->isChecked()) {
+                    ui->Search_checkBox_DifferencesName->setChecked(true);
+                }
+            }
+        }
+
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_radioButton_DuplicatesWithinSelectedDevice_toggled(bool checked)
+        {
+            if (checked) {
+                ui->Search_widget_DuplicatesDevices->setHidden(true);
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_radioButton_DuplicatesCompareTwoDevices_toggled(bool checked)
+        {
+            if (checked) {
+                ui->Search_widget_DuplicatesDevices->setHidden(false);
+            }
+        }
+
+
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Differences_toggled(bool checked)
         {
             if(checked==1){
+                //Display Differences options
                 ui->Search_checkBox_DifferencesName->setEnabled(true);
                 ui->Search_checkBox_DifferencesSize->setEnabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setEnabled(true);
                 ui->Search_checkBox_DifferencesChecksum->setEnabled(true);
                 ui->Search_comboBox_DifferenceChecksumSign->setEnabled(ui->Search_checkBox_DifferencesChecksum->isChecked());
                 ui->Search_widget_DifferencesDevices->setHidden(false);
+
+                //Hide or disable other options
                 ui->Search_checkBox_ShowFolders->setChecked(false);
-                ui->Search_checkBox_Duplicates->setChecked(false);
+                ui->Search_checkBox_Duplicates->setChecked(false);                
                 ui->Search_checkBox_DuplicatesName->setEnabled(false);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(false);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(false);
                 ui->Search_checkBox_DuplicatesChecksum->setEnabled(false);
                 ui->Search_comboBox_DuplicateChecksumSign->setEnabled(false);
+                ui->Search_widget_Duplicates->setHidden(true);
                 ui->Search_treeView_CatalogsFound->setEnabled(false);
             }
             else{
+                //Hide or disable Differences options
                 ui->Search_widget_DifferencesDevices->setHidden(true);
                 ui->Search_checkBox_DifferencesName->setDisabled(true);
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
@@ -1057,7 +1117,8 @@
                  currentSearch->selectedMaximumSize = 1000;}
 
             //Populate Differences combo boxes with selected catalogs
-            refreshDifferencesCatalogSelection();
+            refreshDuplicatesDeviceSelection();
+            refreshDifferencesDeviceSelection();
         }
         //----------------------------------------------------------------------
         void MainWindow::resetToDefaultSearchCriteria()
@@ -1393,7 +1454,7 @@
                 currentSearch->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }
         //----------------------------------------------------------------------
-        void MainWindow::refreshDifferencesCatalogSelection()
+        void MainWindow::refreshDifferencesDeviceSelection()
         {
             // Build a filtered device tree model
             QStandardItemModel *treeModel = buildFilteredDeviceTreeModel(this);
@@ -1992,6 +2053,30 @@
             ui->Search_treeView_History->setModel(searchHistoryProxyModel);
             ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
+        }
+
+        //----------------------------------------------------------------------
+        void MainWindow::refreshDuplicatesDeviceSelection()
+        {
+            // Build filtered device tree models (one for each combobox)
+            QStandardItemModel *treeModel1 = buildFilteredDeviceTreeModel(this);
+            QStandardItemModel *treeModel2 = buildFilteredDeviceTreeModel(this);
+
+            // Create proxy models with icons/formatting
+            DeviceTreeView *proxyModel1 = new DeviceTreeView(this);
+            proxyModel1->setSourceModel(treeModel1);
+            proxyModel1->setKatalogTheme(themeID > 0);
+
+            DeviceTreeView *proxyModel2 = new DeviceTreeView(this);
+            proxyModel2->setSourceModel(treeModel2);
+            proxyModel2->setKatalogTheme(themeID > 0);
+
+            // Set models on the tree comboboxes
+            ui->Search_comboBox_DuplicatesDevice1->setTreeModel(proxyModel1);
+            ui->Search_comboBox_DuplicatesDevice1->expandToDepth(2);
+
+            ui->Search_comboBox_DuplicatesDevice2->setTreeModel(proxyModel2);
+            ui->Search_comboBox_DuplicatesDevice2->expandToDepth(2);
         }
         //--------------------------------------------------------------------------
         void MainWindow::clearSearchResults()
