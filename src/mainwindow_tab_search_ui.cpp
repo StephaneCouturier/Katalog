@@ -1647,15 +1647,17 @@
                     newDevice->generateDeviceID();
                     newDevice->type = "Catalog";
                     newDevice->name = fileNameWithoutExtension;
-                        //newDevice->parentID = searchResultsHolder.ID;
                     newDevice->catalog->generateID();
                     newDevice->externalID = newDevice->catalog->ID;
                     newDevice->groupID = 1;
                     newDevice->path = "EXPORT"; //there is not 1 path for a given search that can be multi-catalog
-
                     newDevice->catalog->setDateUpdated(QDateTime());  // Sets to current time and updates DB
                     newDevice->catalog->setDateLoaded(QDateTime().addMSecs(100));   // Sets to current time and updates DB
-
+                    if (currentSearch->searchOnType) {
+                        newDevice->catalog->fileType = currentSearch->selectedFileType;
+                    } else {
+                        newDevice->catalog->fileType = "All";  // Type filter wasn't used, so catalog contains all types
+                    }
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the new Catalog
@@ -1672,10 +1674,10 @@
                     catalogMetadata.prepend("<catalogIsFullDevice>");
                     catalogMetadata.prepend("<catalogIncludeSymblinks>");
                     catalogMetadata.prepend("<catalogStorage>EXPORT");
-                    catalogMetadata.prepend("<catalogFileType>EXPORT");
+                    catalogMetadata.prepend("<catalogFileType>" + newDevice->catalog->fileType);
                     catalogMetadata.prepend("<catalogIncludeHidden>false");
-                    catalogMetadata.prepend("<catalogTotalFileSize>0");
-                    catalogMetadata.prepend("<catalogFileCount>0");
+                    catalogMetadata.prepend("<catalogTotalFileSize>" + QString::number(newDevice->catalog->totalFileSize));
+                    catalogMetadata.prepend("<catalogFileCount>" + QString::number(newDevice->catalog->fileCount));
                     catalogMetadata.prepend("<catalogSourcePath>EXPORT");
 
                     selectedDevice->ID = newDevice->ID;

@@ -10276,7 +10276,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </font>
                   </property>
                   <property name="toolTip">
-                   <string>Launch the cataloging and save it to a file</string>
+                   <string>Stop the cataloging (no data will be saved)</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true"/>
