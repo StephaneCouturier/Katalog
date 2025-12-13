@@ -185,19 +185,35 @@ void Catalog::setDateUpdated(QDateTime dateTime)
 
 //catalog files data operation
 void Catalog::generateID()
-{//Generate ID
+{
     int maxID = 0;
     QSqlQuery queryCatalogID(QSqlDatabase::database(m_connectionName));
     QString queryCatalogIDSQL = QLatin1String(R"(
-                                    SELECT MAX (catalog_id)
-                                    FROM catalog
-                                )");
+                            SELECT MAX(catalog_id)
+                            FROM catalog
+                        )");
     queryCatalogID.prepare(queryCatalogIDSQL);
-    queryCatalogID.exec();
-    if(queryCatalogID.next()){
-        maxID = queryCatalogID.value(0).toInt();
-        ID = maxID + 1;
+
+    if (!queryCatalogID.exec()) {
+        qDebug() << "generateID query failed:" << queryCatalogID.lastError().text();
+        ID = 1;  // ✓ Fallback to 1 on error
+        return;
     }
+
+    if(queryCatalogID.next()){
+        QVariant value = queryCatalogID.value(0);
+        if (value.isNull()) {
+            maxID = 0;  // Empty table
+        } else {
+            maxID = value.toInt();
+        }
+        ID = maxID + 1;
+    } else {
+        // No rows returned (shouldn't happen with MAX, but handle it)
+        ID = 1;  // ✓ Default to 1
+    }
+
+    qDebug() << "Generated catalog ID:" << ID;
 }
 
 void Catalog::insertCatalog()

@@ -57,7 +57,7 @@ public:
 
     //Attributes
         //Saved
-        int ID;
+        int ID = 0;
         QString name;
         QString filePath;
         QDateTime dateUpdated;

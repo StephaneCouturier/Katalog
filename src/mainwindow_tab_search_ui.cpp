@@ -1651,6 +1651,7 @@
                     newDevice->externalID = newDevice->catalog->ID;
                     newDevice->groupID = 1;
                     newDevice->path = "EXPORT"; //there is not 1 path for a given search that can be multi-catalog
+                    newDevice->catalog->name = newDevice->name;
                     newDevice->catalog->setDateUpdated(QDateTime());  // Sets to current time and updates DB
                     newDevice->catalog->setDateLoaded(QDateTime().addMSecs(100));   // Sets to current time and updates DB
                     if (currentSearch->searchOnType) {
