@@ -264,59 +264,62 @@ QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
 
     return QString(R"(
                 CREATE TABLE IF NOT EXISTS search(
-                    date_time                 TEXT,
-                    text_checked              NUMERIC,
-                    text_phrase               TEXT,
-                    text_criteria             TEXT,
-                    text_search_in            TEXT,
-                    file_criteria_checked     NUMERIC,
-                    file_type_checked         NUMERIC,
-                    file_type                 TEXT,
-                    file_size_checked         NUMERIC,
-                    file_size_min             NUMERIC,
-                    file_size_min_unit        %1,
-                    file_size_max             NUMERIC,
-                    file_size_max_unit        %1,
-                    date_modified_checked     NUMERIC,
-                    date_modified_min         TEXT,
-                    date_modified_max         TEXT,
-                    duplicates_checked        NUMERIC,
-                    duplicates_name           NUMERIC,
-                    duplicates_size           NUMERIC,
-                    duplicates_date_modified  NUMERIC,
-                    duplicates_checksum       NUMERIC,
-                    duplicates_checksum_equal NUMERIC,
-                    differences_checked       NUMERIC,
-                    differences_name          NUMERIC,
-                    differences_size          NUMERIC,
-                    differences_date_modified NUMERIC,
-                    differences_checksum      NUMERIC,
-                    differences_checksum_equal NUMERIC,
-                    differences_catalogs      TEXT,
-                    folder_criteria_checked   NUMERIC,
-                    show_folders              NUMERIC,
-                    tag_checked               NUMERIC,
-                    tag                       TEXT,
-                    search_location           TEXT,
-                    search_storage            TEXT,
-                    search_catalog            TEXT,
-                    search_catalog_checked    NUMERIC,
-                    search_directory_checked  NUMERIC,
-                    selected_directory        TEXT,
-                    selected_device_ID_list   TEXT,
-                    text_exclude              TEXT,
-                    case_sensitive            NUMERIC,
-                    metadata_checked          NUMERIC,
-                    metadata_text_checked     NUMERIC,
-                    metadata_text_search      TEXT,
-                    metadata_size_checked     NUMERIC,
-                    metadata_size_min_height  NUMERIC,
-                    metadata_size_max_height  NUMERIC,
-                    metadata_size_min_width   NUMERIC,
-                    metadata_size_max_width   NUMERIC,
-                    metadata_duration_checked NUMERIC,
-                    metadata_duration_min     TEXT,
-                    metadata_duration_max     TEXT)
+                    date_time                   TEXT,
+                    text_checked                NUMERIC,
+                    text_phrase                 TEXT,
+                    text_criteria               TEXT,
+                    text_search_in              TEXT,
+                    file_criteria_checked       NUMERIC,
+                    file_type_checked           NUMERIC,
+                    file_type                   TEXT,
+                    file_size_checked           NUMERIC,
+                    file_size_min               NUMERIC,
+                    file_size_min_unit          %1,
+                    file_size_max               NUMERIC,
+                    file_size_max_unit          %1,
+                    date_modified_checked       NUMERIC,
+                    date_modified_min           TEXT,
+                    date_modified_max           TEXT,
+                    duplicates_checked          NUMERIC,
+                    duplicates_name             NUMERIC,
+                    duplicates_size             NUMERIC,
+                    duplicates_date_modified    NUMERIC,
+                    duplicates_checksum         NUMERIC,
+                    duplicates_checksum_equal   NUMERIC,
+                    duplicates_compare_checked  NUMERIC,
+                    duplicates_device1_ID       NUMERIC,
+                    duplicates_device2_ID       NUMERIC,
+                    differences_checked         NUMERIC,
+                    differences_name            NUMERIC,
+                    differences_size            NUMERIC,
+                    differences_date_modified   NUMERIC,
+                    differences_checksum        NUMERIC,
+                    differences_checksum_equal  NUMERIC,
+                    differences_catalogs        TEXT,
+                    folder_criteria_checked     NUMERIC,
+                    show_folders                NUMERIC,
+                    tag_checked                 NUMERIC,
+                    tag                         TEXT,
+                    search_location             TEXT,
+                    search_storage              TEXT,
+                    search_catalog              TEXT,
+                    search_catalog_checked      NUMERIC,
+                    search_directory_checked    NUMERIC,
+                    selected_directory          TEXT,
+                    selected_device_ID_list     TEXT,
+                    text_exclude                TEXT,
+                    case_sensitive              NUMERIC,
+                    metadata_checked            NUMERIC,
+                    metadata_text_checked       NUMERIC,
+                    metadata_text_search        TEXT,
+                    metadata_size_checked       NUMERIC,
+                    metadata_size_min_height    NUMERIC,
+                    metadata_size_max_height    NUMERIC,
+                    metadata_size_min_width     NUMERIC,
+                    metadata_size_max_width     NUMERIC,
+                    metadata_duration_checked   NUMERIC,
+                    metadata_duration_min       TEXT,
+                    metadata_duration_max       TEXT)
     )").arg(sizeUnitType);
 }
 
@@ -1064,8 +1067,8 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
     }
 
 
-    // Step 5: Add checksum search columns to search table
-    qDebug() << "Step 5: Adding checksum search columns to search table";
+    // Step 5: Add checksum & new duplicate search columns to search table
+    qDebug() << "Step 5: Adding checksum & new duplicate search columns to search table";
 
     QStringList existingSearchColumns = getTableColumns(connectionName, "search");
 
@@ -1073,7 +1076,10 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
         {"duplicates_checksum", "NUMERIC"},
         {"duplicates_checksum_equal", "NUMERIC"},
         {"differences_checksum", "NUMERIC"},
-        {"differences_checksum_equal", "NUMERIC"}
+        {"differences_checksum_equal", "NUMERIC"},
+        {"duplicates_compare_checked", "NUMERIC"},
+        {"duplicates_device1_ID", "NUMERIC"},
+        {"duplicates_device2_ID", "NUMERIC"}
     };
 
     for (const auto& [columnName, columnType] : newSearchColumns) {
@@ -1092,6 +1098,7 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
     }
 
     qDebug() << "Search table updated with checksum search support";
+    qDebug() << "Search table updated with duplicates compare devices support";
 
     qDebug() << "=== Database Migration 2.9 completed ===";
 

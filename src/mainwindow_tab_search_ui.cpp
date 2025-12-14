@@ -1174,14 +1174,24 @@
             ui->Search_dateTimeEdit_MetadataDurationMax->setDisabled(true);
 
             ui->Search_comboBox_FileType->setCurrentIndex(0);
-            ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicatesName->setChecked(true);
             ui->Search_checkBox_DuplicatesSize->setChecked(false);
             ui->Search_checkBox_DuplicatesDateModified->setChecked(false);
-            ui->Search_checkBox_Differences->setChecked(false);
+            ui->Search_checkBox_DuplicatesChecksum->setChecked(false);
+            ui->Search_comboBox_DuplicateChecksumSign->setCurrentIndex(0);
+            ui->Search_radioButton_DuplicatesWithinSelectedDevice->setChecked(true);
+            ui->Search_radioButton_DuplicatesCompareTwoDevices->setChecked(false);
+            ui->Search_widget_DuplicatesDevices->setHidden(true);
+            ui->Search_comboBox_DuplicatesDevice1->resetSelection();
+            ui->Search_comboBox_DuplicatesDevice2->resetSelection();
+            ui->Search_checkBox_Duplicates->setChecked(false);
+
             ui->Search_checkBox_DifferencesName->setChecked(true);
             ui->Search_checkBox_DifferencesSize->setChecked(false);
             ui->Search_checkBox_DifferencesDateModified->setChecked(false);
+            ui->Search_comboBox_DifferencesDevice1->resetSelection();
+            ui->Search_comboBox_DifferencesDevice2->resetSelection();
+            ui->Search_checkBox_Differences->setChecked(false);
 
             //Folder criteria
             ui->Search_checkBox_FolderCriteria->setChecked(false);
@@ -1292,8 +1302,21 @@
             ui->Search_checkBox_DuplicatesDateModified->setChecked(search->searchDuplicatesOnDate);
             ui->Search_checkBox_DuplicatesChecksum->setChecked(search->searchDuplicatesOnChecksum);
             ui->Search_comboBox_DuplicateChecksumSign->setCurrentIndex(search->searchDuplicatesChecksumEqual ? 0 : 1);
-            ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
+            if (search->duplicatesCompareDevices) {
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setChecked(true);
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setChecked(false);
+                ui->Search_widget_DuplicatesDevices->setHidden(false);
 
+                // Set selected devices in TreeComboBoxes
+                ui->Search_comboBox_DuplicatesDevice1->setSelectedDeviceId(search->duplicatesDeviceID1);
+                ui->Search_comboBox_DuplicatesDevice2->setSelectedDeviceId(search->duplicatesDeviceID2);
+            } else {
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setChecked(true);
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setChecked(false);
+                ui->Search_widget_DuplicatesDevices->setHidden(true);
+            }
+
+            ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
             ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName);
             ui->Search_checkBox_DifferencesSize->setChecked(search->differencesOnSize);
             ui->Search_checkBox_DifferencesDateModified->setChecked(search->differencesOnDate);

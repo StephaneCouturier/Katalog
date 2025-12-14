@@ -542,6 +542,9 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             duplicates_date_modified,
             duplicates_checksum,
             duplicates_checksum_equal,
+            duplicates_compare_checked,
+            duplicates_device1_ID,
+            duplicates_device2_ID,
             differences_checked,
             differences_name,
             differences_size,
@@ -596,6 +599,9 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             :duplicates_date_modified,
             :duplicates_checksum,
             :duplicates_checksum_equal,
+            :duplicates_compare_checked,
+            :duplicates_device1_ID,
+            :duplicates_device2_ID,
             :differences_checked,
             :differences_name,
             :differences_size,
@@ -651,6 +657,9 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":duplicates_name", searchDuplicatesOnName);
     query.bindValue(":duplicates_size", searchDuplicatesOnSize);
     query.bindValue(":duplicates_date_modified", searchDuplicatesOnDate);
+    query.bindValue(":duplicates_compare_checked", duplicatesCompareDevices);
+    query.bindValue(":duplicates_device1_ID", duplicatesDeviceID1);
+    query.bindValue(":duplicates_device2_ID", duplicatesDeviceID2);
     query.bindValue(":differences_checked", searchOnDifferences);
     query.bindValue(":differences_name", differencesOnName);
     query.bindValue(":differences_size", differencesOnSize);
@@ -717,6 +726,9 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
             duplicates_date_modified,
             duplicates_checksum,
             duplicates_checksum_equal,
+            duplicates_compare_checked,
+            duplicates_device1_ID,
+            duplicates_device2_ID,
             differences_checked,
             differences_name,
             differences_size,
@@ -777,46 +789,49 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
         searchDuplicatesOnDate = query.value(21).toBool();
         searchDuplicatesOnChecksum = query.value(22).toBool();
         searchDuplicatesChecksumEqual = query.value(23).toBool();
-        searchOnDifferences = query.value(24).toBool();
-        differencesOnName = query.value(25).toBool();
-        differencesOnSize = query.value(26).toBool();
-        differencesOnDate = query.value(27).toBool();
-        differencesOnChecksum = query.value(28).toBool();
-        differencesChecksumEqual = query.value(29).toBool();
-        differencesDevices = query.value(30).toString().split("||");
+        duplicatesCompareDevices = query.value(24).toBool();
+        duplicatesDeviceID1 = query.value(25).toInt();
+        duplicatesDeviceID2 = query.value(26).toInt();
+        searchOnDifferences = query.value(27).toBool();
+        differencesOnName = query.value(28).toBool();
+        differencesOnSize = query.value(29).toBool();
+        differencesOnDate = query.value(30).toBool();
+        differencesOnChecksum = query.value(31).toBool();
+        differencesChecksumEqual = query.value(32).toBool();
+        differencesDevices = query.value(33).toString().split("||");
         if (differencesDevices.length() > 1) {
             differencesDeviceID1 = differencesDevices[0].toInt();
             differencesDeviceID2 = differencesDevices[1].toInt();
         }
-        searchOnFolderCriteria = query.value(31).toBool();
-        showFoldersOnly = query.value(32).toBool();
-        searchOnTags = query.value(33).toBool();
-        selectedTagName = query.value(34).toString();
-        selectedStorage = query.value(36).toString();
-        selectedCatalog = query.value(37).toString();
-        searchInCatalogsChecked = query.value(38).toBool();
-        searchInConnectedChecked = query.value(39).toBool();
-        connectedDirectory = query.value(40).toString();
+        searchOnFolderCriteria = query.value(34).toBool();
+        showFoldersOnly = query.value(35).toBool();
+        searchOnTags = query.value(36).toBool();
+        selectedTagName = query.value(37).toString();
+        selectedStorage = query.value(39).toString();
+        selectedCatalog = query.value(40).toString();
+        searchInCatalogsChecked = query.value(41).toBool();
+        searchInConnectedChecked = query.value(42).toBool();
+        connectedDirectory = query.value(43).toString();
 
         selectedDeviceIDList.clear();
-        QString deviceListStr = query.value(41).toString(); // Adjust index
+        QString deviceListStr = query.value(44).toString(); // Adjust index
         if (!deviceListStr.isEmpty()) {
             const QStringList idStrings = deviceListStr.split(",", Qt::SkipEmptyParts);
             for (const QString& idStr : idStrings) {
                 selectedDeviceIDList.append(idStr.toInt());
             }
         }
-        searchOnFileMetadata = query.value(42).toBool();
-        searchOnMetadataText = query.value(43).toBool();
-        metadataTextSearch = query.value(44).toString();
-        searchOnMetadataSize = query.value(45).toBool();
-        metadataMinimumHeight = query.value(46).toInt();
-        metadataMaximumHeight = query.value(47).toInt();
-        metadataMinimumWidth = query.value(48).toInt();
-        metadataMaximumWidth = query.value(49).toInt();
-        searchOnMetadataDuration = query.value(50).toBool();
-        metadataDurationMin = QDateTime(QDate(1970, 1, 1), QTime::fromString(query.value(51).toString(), "HH:mm:ss"));
-        metadataDurationMax = QDateTime(QDate(2030, 1, 1), QTime::fromString(query.value(52).toString(), "HH:mm:ss"));
+        searchOnFileMetadata = query.value(45).toBool();
+        searchOnMetadataText = query.value(46).toBool();
+        metadataTextSearch = query.value(47).toString();
+        searchOnMetadataSize = query.value(48).toBool();
+        metadataMinimumHeight = query.value(49).toInt();
+        metadataMaximumHeight = query.value(50).toInt();
+        metadataMinimumWidth = query.value(51).toInt();
+        metadataMaximumWidth = query.value(52).toInt();
+        searchOnMetadataDuration = query.value(53).toBool();
+        metadataDurationMin = QDateTime(QDate(1970, 1, 1), QTime::fromString(query.value(54).toString(), "HH:mm:ss"));
+        metadataDurationMax = QDateTime(QDate(2030, 1, 1), QTime::fromString(query.value(55).toString(), "HH:mm:ss"));
 
         // Calculate multipliers based on loaded units
         setMultipliers();

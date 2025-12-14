@@ -521,7 +521,6 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
         }
 
         QString extension = extPair.first;
-        int fileCount = extPair.second;
 
         // Calculate type and MIME from extension
         QString fileType = getFileTypeFromExtension(extension);

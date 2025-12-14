@@ -66,6 +66,9 @@ public:
     // Get the tree view for additional customization
     QTreeView* treeView() const;
 
+    // Reset selection to first item in tree
+    void resetSelection();
+
 signals:
     // Emitted when a device is selected
     void deviceSelected(int deviceId);

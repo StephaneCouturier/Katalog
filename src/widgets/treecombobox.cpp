@@ -188,6 +188,22 @@ QTreeView* TreeComboBox::treeView() const
     return m_treeView;
 }
 
+void TreeComboBox::resetSelection()
+{
+    if (!model() || model()->rowCount() == 0) {
+        return;
+    }
+
+    // Select the first root item
+    QModelIndex firstIndex = model()->index(0, 0);
+    if (firstIndex.isValid()) {
+        m_treeView->setCurrentIndex(firstIndex);
+        setRootModelIndex(QModelIndex());  // Reset to root
+        setCurrentIndex(0);
+        updateDisplayText();
+    }
+}
+
 bool TreeComboBox::eventFilter(QObject *object, QEvent *event)
 {
     if (object == m_treeView->viewport() && event->type() == QEvent::MouseButtonPress) {
@@ -195,9 +211,6 @@ bool TreeComboBox::eventFilter(QObject *object, QEvent *event)
         QModelIndex index = m_treeView->indexAt(mouseEvent->pos());
 
         if (index.isValid()) {
-            // Check if click is on the expand/collapse indicator (branch area)
-            QRect itemRect = m_treeView->visualRect(index);
-
             // The branch indicator is typically to the left of the item
             // Get the indentation to determine where the indicator is
             int indent = m_treeView->indentation();

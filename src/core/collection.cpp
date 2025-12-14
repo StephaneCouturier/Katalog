@@ -816,7 +816,7 @@ void Collection::loadSearchHistoryFileToTable()
                         QStringList fieldList = line.split('\t');
 
                         //add empty values to support the addition of new fields to files from older versions
-                        int  targetFieldsCount = 38;
+                        int  targetFieldsCount = 43;
                         int currentFiledsCount = fieldList.count();
                         int    diffFieldsCount = targetFieldsCount - currentFiledsCount;
                         if(diffFieldsCount !=0){
@@ -865,7 +865,12 @@ void Collection::loadSearchHistoryFileToTable()
                                                     file_type_checked,
                                                     file_criteria_checked,
                                                     folder_criteria_checked,
-                                                    selected_device_ID_list
+                                                    selected_device_ID_list,
+                                                    duplicates_checksum,
+                                                    duplicates_checksum_equal,
+                                                    duplicates_compare_checked,
+                                                    duplicates_device1_ID,
+                                                    duplicates_device2_ID
                                                     )
                                                 VALUES(
                                                     :date_time,
@@ -905,7 +910,12 @@ void Collection::loadSearchHistoryFileToTable()
                                                     :file_type_checked,
                                                     :file_criteria_checked,
                                                     :folder_criteria_checked,
-                                                    :selected_device_ID_list
+                                                    :selected_device_ID_list,
+                                                    :duplicates_checksum,
+                                                    :duplicates_checksum_equal,
+                                                    :duplicates_compare_checked,
+                                                    :duplicates_device1_ID,
+                                                    :duplicates_device2_ID
                                                     )
                                                 )");
 
@@ -948,6 +958,11 @@ void Collection::loadSearchHistoryFileToTable()
                         insertQuery.bindValue(":file_criteria_checked",     fieldList[35]);
                         insertQuery.bindValue(":folder_criteria_checked",   fieldList[36]);
                         insertQuery.bindValue(":selected_device_ID_list",   fieldList[37]);
+                        insertQuery.bindValue(":duplicates_checksum",       fieldList[38]);
+                        insertQuery.bindValue(":duplicates_checksum_equal", fieldList[39]);
+                        insertQuery.bindValue(":duplicates_compare_checked",fieldList[40]);
+                        insertQuery.bindValue(":duplicates_device1_ID",     fieldList[41]);
+                        insertQuery.bindValue(":duplicates_device2_ID",     fieldList[42]);
                         insertQuery.exec();
                     }
             }
@@ -1319,7 +1334,7 @@ void Collection::saveParameterTableToFile()
 }
 //----------------------------------------------------------------------
 void Collection::saveSearchHistoryTableToFile()
-{
+{//To keep forward compatibility, new field shall be added at the end of the column list, not in the order of the table
     if(databaseMode=="Memory"){
         //Prepare export
         QFile searchFile(searchHistoryFilePath);
@@ -1366,6 +1381,11 @@ void Collection::saveSearchHistoryTableToFile()
                 << "file_criteria_checked"      << "\t"
                 << "folder_criteria_checked"    << "\t"
                 << "selected_device_ID_list"    << "\t"
+                << "duplicates_checksum"        << "\t"
+                << "duplicates_checksum_equal"  << "\t"
+                << "duplicates_compare_devices" << "\t"
+                << "duplicates_device1"         << "\t"
+                << "duplicates_device2"         << "\t"
                 << '\n';
 
             //Get data
@@ -1409,7 +1429,12 @@ void Collection::saveSearchHistoryTableToFile()
                                             file_type_checked,
                                             file_criteria_checked,
                                             folder_criteria_checked,
-                                            selected_device_ID_list
+                                            selected_device_ID_list,
+                                            duplicates_checksum,
+                                            duplicates_checksum_equal,
+                                            duplicates_compare_checked,
+                                            duplicates_device1_ID,
+                                            duplicates_device2_ID
                                         FROM search
                                         ORDER BY date_time DESC
                                        )");
@@ -1426,7 +1451,6 @@ void Collection::saveSearchHistoryTableToFile()
                 }
                 out << '\n';
             }
-            //searchFile.close();
         }
         searchFile.close();
     }
