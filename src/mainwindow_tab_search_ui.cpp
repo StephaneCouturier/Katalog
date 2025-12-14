@@ -1651,6 +1651,8 @@
                     newDevice->externalID = newDevice->catalog->ID;
                     newDevice->groupID = 1;
                     newDevice->path = "EXPORT"; //there is not 1 path for a given search that can be multi-catalog
+                    newDevice->totalFileCount = currentSearch->filesFoundNumber;
+                    newDevice->totalFileSize = currentSearch->filesFoundTotalSize;
                     newDevice->catalog->name = newDevice->name;
                     newDevice->catalog->setDateUpdated(QDateTime());  // Sets to current time and updates DB
                     newDevice->catalog->setDateLoaded(QDateTime().addMSecs(100));   // Sets to current time and updates DB
@@ -1677,8 +1679,8 @@
                     catalogMetadata.prepend("<catalogStorage>EXPORT");
                     catalogMetadata.prepend("<catalogFileType>" + newDevice->catalog->fileType);
                     catalogMetadata.prepend("<catalogIncludeHidden>false");
-                    catalogMetadata.prepend("<catalogTotalFileSize>" + QString::number(newDevice->catalog->totalFileSize));
-                    catalogMetadata.prepend("<catalogFileCount>" + QString::number(newDevice->catalog->fileCount));
+                    catalogMetadata.prepend("<catalogTotalFileSize>" + QString::number(newDevice->totalFileSize));
+                    catalogMetadata.prepend("<catalogFileCount>" + QString::number(newDevice->totalFileCount));
                     catalogMetadata.prepend("<catalogSourcePath>EXPORT");
 
                     selectedDevice->ID = newDevice->ID;
