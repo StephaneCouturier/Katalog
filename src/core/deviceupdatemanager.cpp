@@ -964,6 +964,12 @@ void DeviceUpdateManager::cleanupOperation()
         m_currentCatalogJob = nullptr;
     }
 
+    // Clear batch context from previous operation
+    if (m_catalogProgressManager) {
+        m_catalogProgressManager->clearBatchContext();
+        qDebug() << "Batch context cleared in cleanup";
+    }
+
     // Disconnect from CatalogManager - but DON'T delete it
     if (m_catalogManager) {
         disconnect(m_catalogManager, nullptr, this, nullptr);
