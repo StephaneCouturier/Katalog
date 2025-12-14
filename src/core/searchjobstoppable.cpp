@@ -767,6 +767,46 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 checksumExtractionDates.append(checksumExtractionDate);
             }
         }
+        else {
+            // Add all files when not searching on filename
+            // Files still need to pass other criteria (size, date, type, tags, metadata)
+            filesFoundList << filePath;
+            deviceFoundIDList.insert(0, QString::number(device->ID));
+
+            fileNames.append(fileName);
+            filePaths.append(filePath);
+            fileSizes.append(fileSize);
+            fileDateTimes.append(fileDateTime);
+            fileCatalogs.append(device->name);
+            fileCatalogIDs.append(device->externalID);
+            fileTypes.append(fileType);
+            mimeTypes.append(mimeType);
+            imageWidths.append(imageWidth);
+            imageHeights.append(imageHeight);
+            videoDurations.append(videoDuration);
+            videoWidths.append(videoWidth);
+            videoHeights.append(videoHeight);
+            audioDurations.append(audioDuration);
+            audioArtists.append(audioArtist);
+            audioAlbums.append(audioAlbum);
+            audioTitles.append(audioTitle);
+            fileExtensions.append(fileExtension);
+            mimeVerified.append(mimeVerifiedValue);
+            typeMismatch.append(typeMismatchValue);
+            imageOrientations.append(imageOrientation);
+            videoCodecs.append(videoCodec);
+            videoFramerates.append(videoFramerate);
+            videoBitrates.append(videoBitrate);
+            audioGenres.append(audioGenre);
+            audioYears.append(audioYear);
+            audioTrackNumbers.append(audioTrackNumber);
+            audioBitrates.append(audioBitrate);
+            audioSampleRates.append(audioSampleRate);
+            metadataExtendeds.append(metadataExtended);
+            metadataExtractionDates.append(metadataExtractionDate);
+            checksumSha256s.append(checksumSha256);
+            checksumExtractionDates.append(checksumExtractionDate);
+        }
 
         // Progress reporting
         if (batchCount >= progressRefreshRate) {
