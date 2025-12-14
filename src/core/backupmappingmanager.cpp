@@ -138,8 +138,7 @@ QList<int> BackupMappingManager::getFilteredMappingIds(const MappingFilter& filt
     bindFilterParameters(query, filter);
 
     if (!query.exec()) {
-        QString errorMsg = tr("Failed to load mapping IDs: %1")
-        .arg(query.lastError().text());
+        QString errorMsg = QString("Failed to load mapping IDs: %1").arg(query.lastError().text());
         qDebug() << "ERROR:" << errorMsg;
         emit error(errorMsg);
         return ids;
@@ -202,8 +201,7 @@ QList<MappingInfo> BackupMappingManager::getFilteredMappings(const MappingFilter
     bindFilterParameters(query, filter);
 
     if (!query.exec()) {
-        QString errorMsg = tr("Failed to load mappings: %1")
-        .arg(query.lastError().text());
+        QString errorMsg = QString("Failed to load mappings: %1").arg(query.lastError().text());
         qDebug() << "ERROR:" << errorMsg;
         emit error(errorMsg);
         return mappings;
@@ -300,7 +298,7 @@ MappingTotals BackupMappingManager::calculateTotals(const MappingFilter& filter)
 
     if (!query.exec()) {
         qDebug() << "ERROR: Failed to calculate totals:" << query.lastError().text();
-        emit error(tr("Failed to calculate mapping totals"));
+        emit error("Failed to calculate mapping totals");
         return totals;
     }
 

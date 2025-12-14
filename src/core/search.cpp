@@ -186,7 +186,7 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         case 16: return QString(QApplication::translate("MainWindow","Artist"));
         case 17: return QString(QApplication::translate("MainWindow","Album"));
         case 18: return QString(QApplication::translate("MainWindow","Title"));
-        case 19: return QString(QApplication::translate("MainWindow","Checksum (SHA256)"));
+        case 19: return QString(QApplication::translate("MainWindow","Checksum")+" (SHA256)");
         case 20: return QString(QApplication::translate("MainWindow","Checksum Date"));
         }
     }

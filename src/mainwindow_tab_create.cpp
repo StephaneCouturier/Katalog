@@ -518,7 +518,7 @@
         // Initialize Create combobox
         ui->Create_comboBox_ChecksumOption->clear();
         ui->Create_comboBox_ChecksumOption->addItem(tr("None"));
-        ui->Create_comboBox_ChecksumOption->addItem(tr("SHA-256"));
+        ui->Create_comboBox_ChecksumOption->addItem("SHA-256");
 
         ui->Create_comboBox_ChecksumOption->setItemData(0, Catalog::CHECKSUM_NONE, Qt::UserRole);
         ui->Create_comboBox_ChecksumOption->setItemData(1, Catalog::CHECKSUM_SHA256, Qt::UserRole);
@@ -526,7 +526,7 @@
         // Initialize Catalogs combobox (for editing existing catalogs)
         ui->Catalogs_comboBox_ChecksumOption->clear();
         ui->Catalogs_comboBox_ChecksumOption->addItem(tr("None"));
-        ui->Catalogs_comboBox_ChecksumOption->addItem(tr("SHA-256"));
+        ui->Catalogs_comboBox_ChecksumOption->addItem("SHA-256");
 
         ui->Catalogs_comboBox_ChecksumOption->setItemData(0, Catalog::CHECKSUM_NONE, Qt::UserRole);
         ui->Catalogs_comboBox_ChecksumOption->setItemData(1, Catalog::CHECKSUM_SHA256, Qt::UserRole);

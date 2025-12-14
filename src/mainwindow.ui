@@ -3264,7 +3264,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <locale language="English" country="UnitedStates"/>
                           </property>
                           <property name="text">
-                           <string>(</string>
+                           <string notr="true">(</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -3368,7 +3368,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <locale language="English" country="UnitedStates"/>
                           </property>
                           <property name="text">
-                           <string>)</string>
+                           <string notr="true">)</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -3380,14 +3380,20 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
+                          <property name="toolTip">
+                           <string notr="true"/>
+                          </property>
+                          <property name="currentText">
+                           <string notr="true">=</string>
+                          </property>
                           <item>
                            <property name="text">
-                            <string>=</string>
+                            <string notr="true">=</string>
                            </property>
                           </item>
                           <item>
                            <property name="text">
-                            <string>≠</string>
+                            <string notr="true">≠</string>
                            </property>
                           </item>
                          </widget>
@@ -3411,7 +3417,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            </font>
                           </property>
                           <property name="text">
-                           <string>Checksums</string>
+                           <string>Checksum</string>
                           </property>
                          </widget>
                         </item>
@@ -4139,6 +4145,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                             <kerning>true</kerning>
                            </font>
                           </property>
+                          <property name="toolTip">
+                           <string/>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">padding-left:10px;</string>
                           </property>
@@ -4146,7 +4155,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <locale language="English" country="UnitedStates"/>
                           </property>
                           <property name="text">
-                           <string>(</string>
+                           <string notr="true">(</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -4250,7 +4259,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <locale language="English" country="UnitedStates"/>
                           </property>
                           <property name="text">
-                           <string>)</string>
+                           <string notr="true">)</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -4297,14 +4306,20 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
+                          <property name="toolTip">
+                           <string notr="true"/>
+                          </property>
+                          <property name="currentText">
+                           <string notr="true">=</string>
+                          </property>
                           <item>
                            <property name="text">
-                            <string>=</string>
+                            <string notr="true">=</string>
                            </property>
                           </item>
                           <item>
                            <property name="text">
-                            <string>≠</string>
+                            <string notr="true">≠</string>
                            </property>
                           </item>
                          </widget>
@@ -4328,7 +4343,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            </font>
                           </property>
                           <property name="text">
-                           <string>Checksums</string>
+                           <string>Checksum</string>
                           </property>
                          </widget>
                         </item>

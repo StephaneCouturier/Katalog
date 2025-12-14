@@ -70,7 +70,7 @@ BackupProfileResult BackupProfileGenerator::generateProfile(const QList<int>& ma
     // Step 1: Ensure output directory exists
     if (!ensureProfilesDirectoryExists()) {
         result.success = false;
-        result.errorMessage = tr("Failed to create LuckyBackup profiles directory");
+        result.errorMessage = "Failed to create LuckyBackup profiles directory";
         emit profileGenerationFailed(result.errorMessage);
         return result;
     }
@@ -80,7 +80,7 @@ BackupProfileResult BackupProfileGenerator::generateProfile(const QList<int>& ma
 
     if (tasks.isEmpty()) {
         result.success = false;
-        result.errorMessage = tr("No backup mappings found in the database");
+        result.errorMessage = "No backup mappings found in the database";
         emit profileGenerationFailed(result.errorMessage);
         return result;
     }
@@ -101,7 +101,7 @@ BackupProfileResult BackupProfileGenerator::generateProfile(const QList<int>& ma
     if (result.success) {
         emit profileGenerationCompleted(result.profilePath, result.taskCount);
     } else {
-        result.errorMessage = tr("Failed to write profile file to: %1").arg(result.profilePath);
+        result.errorMessage =  QString("Failed to write profile file to: %1").arg(result.profilePath);
         emit profileGenerationFailed(result.errorMessage);
     }
 
