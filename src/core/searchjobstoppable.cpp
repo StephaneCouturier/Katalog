@@ -937,6 +937,44 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
             }
         }
 
+        // Apply file type filter
+        if (searchOnFileCriteria == true && searchOnType == true && selectedUserFileType != FileTypeMapping::ALL) {
+            // Get file extension and determine file type
+            QFileInfo fileInfo(lineFilePath);
+            QString extension = fileInfo.suffix().toLower();
+            QString fileType = FileMetadata::getFileTypeFromExtension(extension);
+
+            // Check if file type matches the selected filter
+            bool typeMatches = false;
+            switch (selectedUserFileType) {
+            case FileTypeMapping::AUDIO:
+                typeMatches = (fileType == "audio");
+                break;
+            case FileTypeMapping::IMAGE:
+                typeMatches = (fileType == "image");
+                break;
+            case FileTypeMapping::VIDEO:
+                typeMatches = (fileType == "video");
+                break;
+            case FileTypeMapping::TEXT:
+                typeMatches = (fileType == "text");
+                break;
+            case FileTypeMapping::OTHER:
+                typeMatches = (fileType == "other");
+                break;
+            case FileTypeMapping::NONE:
+                typeMatches = (fileType == "none" || fileType.isEmpty());
+                break;
+            default:
+                typeMatches = true; // ALL - no filtering
+                break;
+            }
+
+            if (!typeMatches) {
+                continue;
+            }
+        }
+
         // Apply tags filter
         if (searchOnTags == true) {
             bool fileIsMatchingTag = false;
