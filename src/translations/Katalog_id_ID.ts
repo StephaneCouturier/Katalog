@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+89"/>
+        <location filename="../core/catalog.cpp" line="+92"/>
         <source>Name</source>
         <translation>Nama</translation>
     </message>
@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1725"/>
+        <location filename="../core/collection.cpp" line="+1712"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Folder ini berisi file koleksi mode Memori, tetapi Anda saat ini dalam mode File.&lt;br/&gt;Beralih ke mode Memori atau pilih folder lain.</translation>
     </message>
@@ -68,23 +68,112 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+107"/>
-        <location line="+64"/>
-        <location line="+79"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
+        <location line="+167"/>
+        <source>Metadata Extracted</source>
+        <translation>Metadata diekstrak</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Checksums Calculated</source>
+        <translation>Checksum dihitung</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+189"/>
+        <location filename="../mainwindow.ui" line="+3420"/>
+        <location line="+926"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1699"/>
+        <source>Checksum</source>
+        <translation>Checksum</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checksum Date</source>
+        <translation>Tanggal checksum</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="-768"/>
+        <source>Within selected device</source>
+        <translation>Dalam perangkat yang dipilih</translation>
+    </message>
+    <message>
+        <location line="+110"/>
+        <source>Compare two devices</source>
+        <translation>Bandingkan dua perangkat</translation>
+    </message>
+    <message>
+        <location line="+212"/>
+        <location line="+661"/>
+        <source>compared to</source>
+        <translation>dibandingkan dengan</translation>
+    </message>
+    <message>
+        <location line="-264"/>
+        <source>and</source>
+        <translation>dan</translation>
+    </message>
+    <message>
+        <location line="+3439"/>
+        <location line="+1974"/>
+        <source>Include files checksum</source>
+        <translation>Sertakan checksum file</translation>
+    </message>
+    <message>
+        <location line="+584"/>
+        <source>Stop the cataloging (no data will be saved)</source>
+        <translation>Hentikan katalogisasi (tidak ada data yang akan disimpan)</translation>
+    </message>
+    <message>
+        <location line="+1114"/>
+        <source>Generate Profile</source>
+        <translation>Buat profil</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Only selected</source>
+        <translation>Hanya yang dipilih</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="+257"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+807"/>
+        <source>Copy file checksum</source>
+        <translation>Salin checksum file</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
+        <location line="+30"/>
+        <source>No backup links found.</source>
+        <translation>Tidak ada tautan cadangan ditemukan.</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Backup profile created.</source>
+        <translation>Profil cadangan dibuat.</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1549"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
+        <source>Saving</source>
+        <translation>Menyimpan</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+72"/>
+        <location line="+149"/>
         <source>Indexed</source>
         <translation>Diindeks</translation>
     </message>
     <message>
-        <location filename="../core/searchjobstoppable.cpp" line="+435"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-135"/>
-        <location line="+126"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+529"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+443"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+347"/>
         <source>File Types Updated</source>
         <translation>Jenis berkas diperbarui</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-142"/>
-        <location line="+129"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+160"/>
         <source>Counted</source>
         <translation>Dihitung</translation>
     </message>
@@ -98,10 +187,10 @@
         <location line="+28"/>
         <location line="+18"/>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1062"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+1085"/>
         <location line="+4"/>
         <location line="+30"/>
-        <location line="+57"/>
+        <location line="+54"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Evaluated</source>
@@ -109,7 +198,8 @@
     </message>
     <message>
         <location line="-13"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-82"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-105"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-54"/>
         <source>Completed</source>
         <translation>Selesai</translation>
     </message>
@@ -119,32 +209,37 @@
         <translation>Ruang terpakai</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-65"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-81"/>
         <source>Cancelled</source>
         <translation>Dibatalkan</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+39"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-20"/>
+        <location line="+22"/>
         <source>Loaded</source>
         <translation>Dimuat</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="-104"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="+124"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2160"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-75"/>
-        <location line="+58"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+448"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-71"/>
+        <location line="+54"/>
         <source>In Progress</source>
         <translation>Sedang berlangsung</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+14"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-130"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+90"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-127"/>
         <source>Stopped</source>
         <translation>Dihentikan</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+695"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+692"/>
         <source>MIME Verification Complete</source>
         <translation>Verifikasi MIME selesai</translation>
     </message>
@@ -154,7 +249,7 @@
         <translation>Buka laporan</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-469"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-450"/>
         <source>Hidden</source>
         <translation>Tersembunyi</translation>
     </message>
@@ -164,14 +259,14 @@
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3949"/>
+        <location filename="../mainwindow.ui" line="-6608"/>
         <source>File metadata</source>
         <translation>Metadata file</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+197"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+200"/>
         <source>Height</source>
         <translation>Tinggi</translation>
     </message>
@@ -196,8 +291,8 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1872"/>
-        <location line="+1921"/>
+        <location line="+1781"/>
+        <location line="+2051"/>
         <source>Include files metadata</source>
         <translation>Sertakan metadata file</translation>
     </message>
@@ -213,28 +308,30 @@
     </message>
     <message>
         <location line="+1200"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+270"/>
         <source>Other</source>
         <translation>Lainnya</translation>
     </message>
     <message>
         <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+472"/>
+        <location filename="../devicetreeview.cpp" line="+109"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+473"/>
         <location line="+12"/>
+        <location line="+35"/>
+        <location line="+8"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>None</source>
         <translation>Tidak ada</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-517"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-595"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-305"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Tampilkan metadata yang diperluas (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+514"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+592"/>
         <source>MIME Type</source>
         <translation>Tipe MIME</translation>
     </message>
@@ -339,7 +436,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-54"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>Media dasar</translation>
@@ -372,7 +469,7 @@
         <translation>Apakah Anda ingin &lt;span style=&apos;color: red&apos;;&gt;menghapus&lt;/span&gt; perangkat %1 ini?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1257"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1239"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalog diperbarui:&lt;b&gt; %1 &lt;/b&gt;(%2 dilewati)</translation>
@@ -383,12 +480,12 @@
         <translation>Perangkat virtual diperbarui: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-2511"/>
+        <location filename="../mainwindow.ui" line="-2550"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik: Hentikan segera (penghentian keras)&lt;/p&gt;&lt;p&gt;Ctrl+Klik: Hentikan setelah katalog saat ini (penghentian lembut)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-201"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
         <source>The source directory does not exist.</source>
         <translation>Direktori sumber tidak ada.</translation>
     </message>
@@ -399,20 +496,20 @@
         <translation>Folder sumber tidak mengandung file apapun.&lt;br/&gt;Ini bisa berarti sumber kosong atau perangkat tidak terpasang ke folder ini.&lt;br/&gt;Apakah Anda ingin menyimpannya tetap (katalog akan kosong)?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-463"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+93"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-460"/>
         <location line="+84"/>
         <location line="+64"/>
         <location line="+130"/>
-        <location line="+143"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+248"/>
+        <location line="+140"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+249"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>Operasi perangkat sudah berjalan.</translation>
     </message>
     <message>
         <location filename="../core/deviceupdatemanager.cpp" line="+1084"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-861"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-862"/>
         <source>Operation cancelled</source>
         <translation>Operasi dibatalkan</translation>
     </message>
@@ -422,7 +519,7 @@
         <translation>Menghentikan setelah katalog saat ini selesai...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6181"/>
+        <location filename="../mainwindow.ui" line="-7042"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -451,15 +548,15 @@
         <translation>Cari file atau folder</translation>
     </message>
     <message>
-        <location line="+3062"/>
-        <location line="+2675"/>
-        <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
+        <location line="+3923"/>
+        <location line="+2741"/>
+        <location line="+1829"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+302"/>
         <source>Text</source>
         <translation>Teks</translation>
     </message>
     <message>
-        <location line="-7279"/>
+        <location line="-8179"/>
         <source>Paste the text from the clipboard</source>
         <translation>Tempel teks dari clipboard</translation>
     </message>
@@ -481,7 +578,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+53"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+54"/>
         <source>All Words</source>
         <translation>Semua Kata</translation>
     </message>
@@ -507,7 +604,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
         <source>File names or Folder paths</source>
         <translation>Nama file atau jalur folder</translation>
     </message>
@@ -515,23 +612,23 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+812"/>
+        <location line="+983"/>
         <source>File names only</source>
         <translation>Hanya nama file</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
         <source>Folder path only</source>
         <translation>Hanya jalur folder</translation>
     </message>
     <message>
-        <location line="+3391"/>
+        <location line="+4252"/>
         <source>Choose to only show folders as results</source>
         <translation>Pilih untuk hanya menampilkan folder sebagai hasil</translation>
     </message>
     <message>
-        <location line="-4078"/>
+        <location line="-4939"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>Reset semua kriteria ke nilai default, dan hapus hasil sebelumnya.</translation>
     </message>
@@ -541,13 +638,13 @@
         <translation>Reset</translation>
     </message>
     <message>
-        <location line="+11170"/>
+        <location line="+12127"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="-2654"/>
-        <location line="+2633"/>
+        <location line="-2671"/>
+        <location line="+2650"/>
         <source>Password</source>
         <translation>Kata Sandi</translation>
     </message>
@@ -563,87 +660,87 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+283"/>
+        <location filename="../mainwindow.cpp" line="+298"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-381"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-9694"/>
-        <location line="+802"/>
-        <location line="+232"/>
-        <location line="+764"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
+        <location filename="../mainwindow.ui" line="-10652"/>
+        <location line="+848"/>
+        <location line="+891"/>
+        <location line="+921"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Size</source>
         <translation>Ukuran</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-3829"/>
-        <location line="+5765"/>
+        <location filename="../mainwindow.ui" line="-4690"/>
+        <location line="+6626"/>
         <source>Device tree</source>
         <translation>Pohon perangkat</translation>
     </message>
     <message>
-        <location line="-5285"/>
+        <location line="-6146"/>
         <source>Reload all collection&apos;s data</source>
         <translation>Muat ulang semua data koleksi</translation>
     </message>
     <message>
-        <location line="+1580"/>
+        <location line="+1579"/>
         <location line="+451"/>
-        <location line="+1388"/>
+        <location line="+2250"/>
         <location line="+218"/>
         <location line="+283"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-2276"/>
+        <location line="-3138"/>
         <source>File size unit for minimum value</source>
         <translation>Unit ukuran file untuk nilai minimum</translation>
     </message>
     <message>
         <location line="+49"/>
         <location line="+426"/>
-        <location line="+1387"/>
+        <location line="+2249"/>
         <location line="+218"/>
         <location line="+290"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-2260"/>
+        <location line="-3122"/>
         <source>File size unit for maximum value</source>
         <translation>Unit ukuran file untuk nilai maksimum</translation>
     </message>
     <message>
         <location line="+81"/>
-        <location line="+4214"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-696"/>
+        <location line="+5109"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-669"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tipe</translation>
     </message>
     <message>
-        <location line="-4176"/>
+        <location line="-5071"/>
         <source>Select the type of files</source>
         <translation>Pilih tipe file</translation>
     </message>
     <message>
-        <location line="+3972"/>
-        <location line="+1790"/>
-        <location filename="../mainwindow_setup.cpp" line="+464"/>
+        <location line="+4900"/>
+        <location line="+1763"/>
+        <location filename="../mainwindow_setup.cpp" line="+476"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+76"/>
+        <location line="+77"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -653,33 +750,33 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+753"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+923"/>
         <source>All</source>
         <translation>Semua</translation>
     </message>
     <message>
-        <location line="-1785"/>
-        <location line="+1814"/>
+        <location line="-1758"/>
+        <location line="+1787"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-1806"/>
-        <location line="+1835"/>
+        <location line="-1779"/>
+        <location line="+1808"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Image</source>
         <translation>Gambar</translation>
     </message>
     <message>
-        <location line="-1819"/>
-        <location line="+1877"/>
+        <location line="-1792"/>
+        <location line="+1850"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+2"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location line="-3385"/>
+        <location line="-3424"/>
         <source>only list folders in results</source>
         <translation>hanya tampilkan folder dalam hasil</translation>
     </message>
@@ -691,7 +788,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+417"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+426"/>
         <source>Export Results</source>
         <translation>Ekspor Hasil</translation>
     </message>
@@ -709,8 +806,8 @@
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+32"/>
-        <location line="+25"/>
+        <location line="+33"/>
+        <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Files found</source>
@@ -723,13 +820,13 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+897"/>
+        <location line="+936"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2461"/>
+        <location line="+2511"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -738,7 +835,7 @@
         <location line="+24"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+92"/>
+        <location line="+99"/>
         <location line="+38"/>
         <location line="+24"/>
         <location line="+38"/>
@@ -747,7 +844,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3657"/>
+        <location line="-3714"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -755,43 +852,45 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2678"/>
+        <location line="+2718"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Total Ukuran File</translation>
     </message>
     <message>
-        <location line="-2640"/>
+        <location line="-2680"/>
         <source>Total Number of Files</source>
         <translation>Total Jumlah File</translation>
     </message>
     <message>
-        <location line="-1149"/>
+        <location line="-1188"/>
         <source>All active</source>
         <translation>Semua aktif</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1279"/>
         <source>Import</source>
         <translation>Impor</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-403"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-211"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-400"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-271"/>
+        <location line="+22"/>
+        <location line="+35"/>
         <location line="+18"/>
         <location line="+14"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-172"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
         <source>Explore</source>
         <translation>Jelajahi</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-127"/>
-        <location line="+65"/>
-        <location line="+59"/>
-        <location filename="../mainwindow.ui" line="-1773"/>
-        <location line="+932"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+741"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
+        <location line="+81"/>
+        <location line="+70"/>
+        <location filename="../mainwindow.ui" line="-1812"/>
+        <location line="+965"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+714"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
         <location line="+88"/>
         <location line="+64"/>
@@ -802,7 +901,7 @@
         <translation>Perbarui</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4682"/>
+        <location filename="../mainwindow.ui" line="+4745"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-106"/>
         <location line="+68"/>
         <location line="+63"/>
@@ -810,43 +909,43 @@
         <translation>Edit</translation>
     </message>
     <message>
-        <location line="-5941"/>
+        <location line="-6037"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Hapus</translation>
     </message>
     <message>
-        <location line="+2103"/>
+        <location line="+2142"/>
         <source>Explore a catalog</source>
         <translation>Jelajahi katalog</translation>
     </message>
     <message>
-        <location line="-7534"/>
-        <location line="+7913"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+178"/>
+        <location line="-8434"/>
+        <location line="+8813"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+181"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1576"/>
+        <location filename="../mainwindow.ui" line="+1616"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-982"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
         <translation>Jalur</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1899"/>
+        <location filename="../mainwindow.ui" line="-1939"/>
         <source>Directories</source>
         <translation>Direktori</translation>
     </message>
     <message>
-        <location line="-7824"/>
+        <location line="-8724"/>
         <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>Tampilkan/Sembunyikan Filter</translation>
@@ -859,13 +958,13 @@
     </message>
     <message>
         <location line="+1252"/>
-        <location line="+4701"/>
-        <location line="+3141"/>
+        <location line="+5562"/>
+        <location line="+3220"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="-3604"/>
+        <location line="-3683"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Pilih...</translation>
@@ -878,8 +977,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-693"/>
-        <location line="+699"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-711"/>
+        <location line="+717"/>
         <source>Move to Trash</source>
         <translation>Pindah ke Sampah</translation>
     </message>
@@ -899,8 +998,8 @@
         <translation>Perubahan akan diterapkan hanya saat Menyimpan</translation>
     </message>
     <message>
-        <location line="+267"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+951"/>
+        <location line="+300"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+959"/>
         <source>Comment 1</source>
         <translation>Komentar 1</translation>
     </message>
@@ -929,7 +1028,7 @@
         <translation>Model</translation>
     </message>
     <message>
-        <location line="+406"/>
+        <location line="+412"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
@@ -965,8 +1064,8 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+2046"/>
-        <location line="+620"/>
+        <location line="+2086"/>
+        <location line="+630"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
@@ -974,14 +1073,14 @@
         <translation>Jumlah File</translation>
     </message>
     <message>
-        <location line="-2550"/>
+        <location line="-2600"/>
         <source>Click to open the file</source>
         <translation>Klik untuk membuka file</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-126"/>
-        <location line="+65"/>
-        <location line="+59"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-153"/>
+        <location line="+81"/>
+        <location line="+70"/>
         <location filename="../mainwindow.ui" line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
@@ -1014,7 +1113,7 @@
         <translation>Opsi lain</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+153"/>
         <source>Directories to exclude from catalogs</source>
         <translation>Direktori yang dikecualikan dari katalog</translation>
     </message>
@@ -1044,8 +1143,8 @@
         <translation>Tambah perangkat penyimpanan baru</translation>
     </message>
     <message>
-        <location line="-2581"/>
-        <location line="+2584"/>
+        <location line="-2660"/>
+        <location line="+2663"/>
         <source>Add Storage</source>
         <translation>Tambah Penyimpanan</translation>
     </message>
@@ -1071,12 +1170,11 @@
     </message>
     <message>
         <location line="+79"/>
-        <location line="+38"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Mulai katalogisasi dan simpan ke file</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="+6"/>
         <source>Create Catalog</source>
         <translation>Buat Katalog</translation>
     </message>
@@ -1091,7 +1189,7 @@
         <translation>Pilih jalur Sumber</translation>
     </message>
     <message>
-        <location line="-1833"/>
+        <location line="-1873"/>
         <source>Tree options</source>
         <translation>Opsi pohon</translation>
     </message>
@@ -1111,7 +1209,7 @@
         <translation>Masukkan Grup Virtual</translation>
     </message>
     <message>
-        <location line="-1621"/>
+        <location line="-1660"/>
         <source>View</source>
         <translation>Tampilan</translation>
     </message>
@@ -1121,12 +1219,12 @@
         <translation>Daftar penyimpanan</translation>
     </message>
     <message>
-        <location line="+697"/>
+        <location line="+576"/>
         <source>Catalog fields</source>
         <translation>Field katalog</translation>
     </message>
     <message>
-        <location line="+236"/>
+        <location line="+390"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Ruang Kosong</translation>
@@ -1137,17 +1235,17 @@
         <translation>Gambar Perangkat</translation>
     </message>
     <message>
-        <location line="-658"/>
+        <location line="-691"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Rekam nilai semua perangkat untuk statistik pada koleksi lengkap.</translation>
     </message>
     <message>
-        <location line="+780"/>
+        <location line="+813"/>
         <source>Storage fields</source>
         <translation>Field penyimpanan</translation>
     </message>
     <message>
-        <location line="+5558"/>
+        <location line="+5621"/>
         <source>Icons</source>
         <translation>Ikon</translation>
     </message>
@@ -1193,55 +1291,55 @@
         <translation>Manajemen data</translation>
     </message>
     <message>
-        <location line="-11395"/>
-        <location line="+9153"/>
+        <location line="-12352"/>
+        <location line="+10093"/>
         <source>Select the path</source>
         <translation>Pilih jalur</translation>
     </message>
     <message>
-        <location line="-9150"/>
-        <location line="+5965"/>
-        <location line="+3188"/>
+        <location line="-10090"/>
+        <location line="+6826"/>
+        <location line="+3267"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Pilih</translation>
     </message>
     <message>
-        <location line="-10016"/>
-        <location line="+7393"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
-        <location line="+2496"/>
+        <location line="-10956"/>
+        <location line="+8293"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-928"/>
+        <location line="+2478"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Penyimpanan</translation>
     </message>
     <message>
-        <location line="+4027"/>
+        <location line="+4084"/>
         <source>New</source>
         <translation>Baru</translation>
     </message>
     <message>
-        <location line="-5647"/>
+        <location line="-5743"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>Perangkat</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+653"/>
+        <location line="+686"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>Total Ruang</translation>
     </message>
     <message>
-        <location line="-565"/>
+        <location line="-598"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3465"/>
+        <location line="+3544"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Muat Ulang</translation>
@@ -1272,24 +1370,24 @@
         <translation>Edit file yang menyimpan semua rekaman</translation>
     </message>
     <message>
-        <location line="-2146"/>
+        <location line="-2186"/>
         <source>Add Virtual</source>
         <translation>Tambah Virtual</translation>
     </message>
     <message>
-        <location line="-1663"/>
+        <location line="-1702"/>
         <source>Edit List</source>
         <translation>Edit Daftar</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4188"/>
+        <location line="+4635"/>
         <source>Full Table</source>
         <translation>Tabel Lengkap</translation>
     </message>
     <message>
-        <location line="-3883"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
+        <location line="-4330"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
         <source>Device Name</source>
         <translation>Nama Perangkat</translation>
     </message>
@@ -1306,7 +1404,7 @@
         <translation>ID Perangkat</translation>
     </message>
     <message>
-        <location line="+3321"/>
+        <location line="+3400"/>
         <source>Edit Statistics</source>
         <translation>Edit Statistik</translation>
     </message>
@@ -1368,7 +1466,7 @@
         <translation>Muat ulang file yang menyimpan tag</translation>
     </message>
     <message>
-        <location line="+223"/>
+        <location line="+233"/>
         <source>Link name</source>
         <translation>Nama tautan</translation>
     </message>
@@ -1383,7 +1481,7 @@
         <translation>Tautan Katalog</translation>
     </message>
     <message>
-        <location line="+357"/>
+        <location line="+364"/>
         <source>Linked</source>
         <translation>Tertaut</translation>
     </message>
@@ -1401,7 +1499,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-390"/>
+        <location filename="../mainwindow_setup.cpp" line="-402"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
@@ -1453,12 +1551,12 @@
         <translation>Mode data &quot;File lokal SQLite&quot;</translation>
     </message>
     <message>
-        <location line="-4026"/>
+        <location line="-4083"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Terapkan opsi ke pohon perangkat Seleksi.</translation>
     </message>
     <message>
-        <location line="+1978"/>
+        <location line="+2018"/>
         <source>Type of source</source>
         <translation>Tipe sumber</translation>
     </message>
@@ -1508,12 +1606,12 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Muat ulang tautan dan segarkan statistik untuk perangkat yang dipilih.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+98"/>
         <source>Create new link</source>
         <translation>Buat tautan baru</translation>
     </message>
     <message>
-        <location line="+306"/>
+        <location line="+313"/>
         <source>Coverage</source>
         <translation>Cakupan</translation>
     </message>
@@ -1650,29 +1748,29 @@
         <translation>Buka</translation>
     </message>
     <message>
-        <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-543"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
+        <location line="-1017"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-621"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-808"/>
         <source>Open file</source>
         <translation>Buka file</translation>
     </message>
     <message>
-        <location line="+1695"/>
+        <location line="+1712"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+83"/>
+        <location line="+91"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Buka folder</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
-        <location line="+34"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+59"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-37"/>
+        <location line="+43"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
         <source>Copy folder path</source>
         <translation>Salin jalur folder</translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="-39"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Salin jalur absolut file</translation>
@@ -1692,30 +1790,31 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-8703"/>
-        <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1833"/>
-        <location line="+239"/>
-        <location line="+262"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+465"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-824"/>
+        <location filename="../mainwindow.ui" line="-9615"/>
+        <location line="+891"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1809"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+544"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-821"/>
         <source>Name</source>
         <translation>Nama</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
-        <location filename="../mainwindow.ui" line="-560"/>
-        <location line="+8438"/>
+        <location filename="../mainwindow.ui" line="-1265"/>
+        <location line="+9396"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1175"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Tanggal</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-321"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-322"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1729,40 +1828,40 @@
         <translation>Pilih direktori untuk koleksi ini</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5752"/>
-        <location line="+2427"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-494"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow.ui" line="-5848"/>
+        <location line="+2466"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3302"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total Size</source>
         <translation>Total Ukuran</translation>
     </message>
     <message>
-        <location line="-1407"/>
-        <location line="+1590"/>
+        <location line="-1446"/>
+        <location line="+1629"/>
         <source>Source Path</source>
         <translation>Jalur Sumber</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1464"/>
+        <location filename="../mainwindow.ui" line="-1528"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+648"/>
+        <location line="+630"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Tipe File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3784"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
+        <location filename="../mainwindow.ui" line="+3898"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-60"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Ukuran File</translation>
     </message>
     <message>
-        <location line="-3356"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-919"/>
+        <location line="-3412"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-893"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
@@ -1773,18 +1872,18 @@
         <translation>Sistem File</translation>
     </message>
     <message>
-        <location line="+3608"/>
+        <location line="+3671"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location line="-4403"/>
+        <location line="-4499"/>
         <source>Free</source>
         <translation>Kosong</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+762"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>Nomor Seri</translation>
@@ -1796,7 +1895,7 @@
         <translation>Tanggal Pembuatan</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1359"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1367"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalog sudah ditetapkan ke perangkat Virtual ini.</translation>
     </message>
@@ -1816,7 +1915,7 @@
         <translation>&lt;br/&gt;Snapshot dari koleksi ini telah direkam:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalog&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Jumlah file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ditambahkan: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total ukuran file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ditambahkan: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Penyimpanan&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ruang kosong penyimpanan: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ditambahkan: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total ruang penyimpanan: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ditambahkan: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+283"/>
+        <location line="+289"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Sudah ada Katalog dengan nama ini:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1837,48 +1936,49 @@
     </message>
     <message>
         <location line="+495"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>Parent ID</source>
         <translation>ID Induk</translation>
     </message>
     <message>
-        <location line="-500"/>
+        <location line="-3308"/>
         <source>External ID</source>
         <translation>ID Eksternal</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Number of files</source>
         <translation>Jumlah file</translation>
     </message>
     <message>
-        <location line="-498"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-492"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Free space</source>
         <translation>Ruang kosong</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total space</source>
         <translation>Total ruang</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Date updated</source>
         <translation>Tanggal diperbarui</translation>
     </message>
     <message>
-        <location line="-499"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-493"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Group ID</source>
         <translation>ID Grup</translation>
     </message>
@@ -1890,7 +1990,7 @@
         <translation>ID Katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+23"/>
         <source>Parent storage</source>
         <translation>Penyimpanan induk</translation>
     </message>
@@ -1915,7 +2015,7 @@
         <translation>Jalur File</translation>
     </message>
     <message>
-        <location line="+637"/>
+        <location line="+618"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Simpan perubahan pada definisi katalog?&lt;br/&gt;</translation>
     </message>
@@ -2080,9 +2180,9 @@
         <translation>Perangkat yang dipilih harus berupa Katalog. Coba dengan ID perangkat yang berbeda</translation>
     </message>
     <message>
-        <location line="-1857"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-1833"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Used space</source>
         <translation>Ruang terpakai</translation>
     </message>
@@ -2097,20 +2197,22 @@
         <translation>dari</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5346"/>
-        <location line="+1830"/>
-        <location line="+67"/>
+        <location filename="../mainwindow.ui" line="-6240"/>
+        <location line="+1989"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>Tentukan apakah teks pencarian harus digunakan untuk mencari hanya dalam nama file, atau jalur folder, atau keduanya.</translation>
     </message>
     <message>
-        <location line="-2040"/>
+        <location line="-2901"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>Tentukan bagaimana teks pencarian harus digunakan.</translation>
     </message>
     <message>
-        <location line="+7081"/>
+        <location line="+8021"/>
         <source>Include Hidden files</source>
         <translation>Sertakan file Tersembunyi</translation>
     </message>
@@ -2125,12 +2227,12 @@
         <translation>Hasilkan nama katalog berdasarkan jalur.</translation>
     </message>
     <message>
-        <location line="-8351"/>
+        <location line="-9291"/>
         <source>Reset all filters</source>
         <translation>Reset semua filter</translation>
     </message>
     <message>
-        <location line="+10426"/>
+        <location line="+11383"/>
         <source>About</source>
         <translation>Tentang</translation>
     </message>
@@ -2145,15 +2247,15 @@
         <translation>Simpan rekaman file dan ukuran untuk Statistik</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-907"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-930"/>
         <location line="+11"/>
-        <location line="+34"/>
+        <location line="+35"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-44"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+8"/>
         <source>KiB</source>
@@ -2167,18 +2269,18 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-356"/>
+        <location line="-375"/>
         <source>Explore folder</source>
         <translation>Jelajahi folder</translation>
     </message>
     <message>
-        <location line="+207"/>
-        <location line="+573"/>
+        <location line="+226"/>
+        <location line="+582"/>
         <source>MOVE</source>
         <translation>PINDAH</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-581"/>
         <source>Move this file to the trash?</source>
         <translation>Pindahkan file ini ke sampah?</translation>
     </message>
@@ -2195,12 +2297,12 @@
     </message>
     <message>
         <location line="+46"/>
-        <location line="+548"/>
+        <location line="+557"/>
         <source>DELETE</source>
         <translation>HAPUS</translation>
     </message>
     <message>
-        <location line="-547"/>
+        <location line="-556"/>
         <source>Delete this file?</source>
         <translation>Hapus file ini?</translation>
     </message>
@@ -2219,12 +2321,12 @@
     <message>
         <location line="-7"/>
         <location line="+11"/>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Bytes</source>
         <translation>Bytes</translation>
     </message>
     <message>
-        <location line="+351"/>
+        <location line="+359"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>Pilih terlebih dahulu proses yang akan diterapkan pada semua hasil di bawah ini.</translation>
     </message>
@@ -2289,7 +2391,7 @@
         <translation>Hasil Pencarian</translation>
     </message>
     <message>
-        <location line="+369"/>
+        <location line="+383"/>
         <source>Text Phrase selected</source>
         <translation>Frasa Teks dipilih</translation>
     </message>
@@ -2469,7 +2571,7 @@
         <translation>Selalu simpan satu cadangan setiap katalog</translation>
     </message>
     <message>
-        <location line="-5574"/>
+        <location line="-5670"/>
         <source>Used</source>
         <translation>Terpakai</translation>
     </message>
@@ -2500,22 +2602,22 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1033"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1027"/>
         <source>Choose a different name and try again.</source>
         <translation>Pilih nama yang berbeda dan coba lagi.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5017"/>
+        <location filename="../mainwindow.ui" line="+5113"/>
         <source>Check at start up</source>
         <translation>Periksa saat startup</translation>
     </message>
     <message>
-        <location line="-4704"/>
+        <location line="-4747"/>
         <source>Include Hidden Files</source>
         <translation>Sertakan File Tersembunyi</translation>
     </message>
     <message>
-        <location line="+552"/>
+        <location line="+532"/>
         <source>Save</source>
         <translation>Simpan</translation>
     </message>
@@ -2525,28 +2627,28 @@
         <translation>&lt;br/&gt;&lt;b&gt;Selamat datang di Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Sepertinya ini adalah kali pertama berjalan.&lt;br/&gt;&lt;br/&gt;Pengaturan berikut telah diterapkan:&lt;br/&gt; - Bahasa: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Anda dapat mengubahnya di tab %3.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1053"/>
+        <location filename="../mainwindow.ui" line="-1086"/>
         <source>Snapshot</source>
         <translation>Snapshot</translation>
     </message>
     <message>
-        <location line="+3754"/>
+        <location line="+3833"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Sumber</translation>
     </message>
     <message>
-        <location line="-3715"/>
+        <location line="-3794"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Perbarui semua katalog yang aktif, jika perangkat tersedia.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1279"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Impor daftar volume dari VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-213"/>
+        <location line="-216"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-157"/>
         <location line="+107"/>
         <location line="+9"/>
@@ -2555,63 +2657,63 @@
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+297"/>
+        <location filename="../mainwindow_setup.cpp" line="+291"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Ini adalah versi: v%1 &lt;br/&gt;&lt;br/&gt;Versi baru tersedia: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Temukan daftar fitur baru di &lt;a href=&apos;%3&apos;&gt;Catatan Rilis&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Apakah Anda ingin mengunduhnya?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-375"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+768"/>
+        <location filename="../mainwindow.ui" line="-378"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+770"/>
         <source>Storage ID</source>
         <translation>ID Penyimpanan</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+932"/>
+        <location line="-869"/>
+        <location line="+965"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Perbarui file katalog yang dipilih, jika perangkat tersedia&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-2"/>
-        <location filename="../mainwindow.ui" line="+1190"/>
-        <location line="+1449"/>
+        <location filename="../mainwindow.ui" line="+1196"/>
+        <location line="+1489"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>Direktori</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-8261"/>
+        <location filename="../mainwindow.ui" line="-9201"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Bersihkan teks pencarian dari karakter seperti _ - . ,</translation>
     </message>
     <message>
-        <location line="+1780"/>
+        <location line="+1790"/>
         <source>Duplicates on</source>
         <translation>Duplikat pada</translation>
     </message>
     <message>
-        <location line="+95"/>
-        <location line="+232"/>
+        <location line="+130"/>
+        <location line="+891"/>
         <source>Date Modified</source>
         <translation>Tanggal Dimodifikasi</translation>
     </message>
     <message>
-        <location line="+7930"/>
+        <location line="+8183"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Verifikasi apakah versi baru Katalog tersedia saat memulai aplikasi.</translation>
     </message>
     <message>
-        <location line="-5463"/>
+        <location line="-5559"/>
         <source>Show/Hide search history</source>
         <translation>Tampilkan/Sembunyikan riwayat pencarian</translation>
     </message>
     <message>
-        <location line="-4833"/>
+        <location line="-5694"/>
         <source>Search criteria</source>
         <translation>Kriteria pencarian</translation>
     </message>
     <message>
-        <location line="+4226"/>
+        <location line="+5087"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
         <source>Tag</source>
         <translation>Tag</translation>
@@ -2627,7 +2729,7 @@
         <translation>Riwayat pencarian</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-293"/>
+        <location filename="../mainwindow_setup.cpp" line="-287"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;Pada layar berikutnya, pilih folder Koleksi yang ada atau buat yang baru.</translation>
     </message>
@@ -2642,7 +2744,7 @@
         <translation>1- Pilih seluruh drive atau direktori, &lt;br/&gt;2- pilih opsi, dan &lt;br/&gt;3- klik &apos;Buat&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4909"/>
+        <location filename="../mainwindow.ui" line="-5770"/>
         <source>Show/Hide search criteria</source>
         <translation>Tampilkan/Sembunyikan kriteria pencarian</translation>
     </message>
@@ -2662,28 +2764,28 @@
         <translation>kecualikan</translation>
     </message>
     <message>
-        <location line="+4689"/>
+        <location line="+5545"/>
         <source>is full device</source>
         <translation>adalah perangkat penuh</translation>
     </message>
     <message>
-        <location line="+2346"/>
+        <location line="+2430"/>
         <source>catalog is for the full device</source>
         <translation>katalog adalah untuk perangkat penuh</translation>
     </message>
     <message>
-        <location line="-5953"/>
-        <location line="+232"/>
+        <location line="-6883"/>
+        <location line="+888"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Pilih untuk mencari duplikat berdasarkan kriteria berikutnya</translation>
     </message>
     <message>
-        <location line="+1955"/>
+        <location line="+2150"/>
         <source>Choose to use Tags to filter results</source>
         <translation>Pilih untuk menggunakan Tag untuk memfilter hasil</translation>
     </message>
     <message>
-        <location line="-3360"/>
+        <location line="-4221"/>
         <source>case sensitive</source>
         <translation>peka huruf</translation>
     </message>
@@ -2693,22 +2795,22 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hasil harus cocok persis dengan teks (peka terhadap kapitalisasi huruf)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+9983"/>
+        <location line="+10940"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Pramuat katalog terakhir yang dipilih saat startup untuk mempercepat pencarian berikutnya</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-462"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-532"/>
         <source>Move file to Trash</source>
         <translation>Pindah file ke Sampah</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+159"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-1066"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1089"/>
         <location line="+64"/>
-        <location line="+509"/>
+        <location line="+518"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Konfirmasi</translation>
@@ -2718,7 +2820,7 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-600"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-609"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Peringatan</translation>
@@ -2748,13 +2850,13 @@
         <translation>Gagal menghapus.</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
+        <location line="-200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-214"/>
         <source>Delete file</source>
         <translation>Hapus file</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+156"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2768,25 +2870,25 @@ ke sampah?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;HAPUS&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-270"/>
+        <location line="-308"/>
         <source>Tag this folder</source>
         <translation>Beri tag folder ini</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-11210"/>
+        <location filename="../mainwindow.ui" line="-12167"/>
         <source>Selection</source>
         <translation>Seleksi</translation>
     </message>
     <message>
         <location line="-356"/>
         <location line="+32"/>
-        <location line="+7091"/>
+        <location line="+7991"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Perluas 1 level, 2 level, atau tutup</translation>
     </message>
     <message>
-        <location line="+2389"/>
+        <location line="+2429"/>
         <source>all records</source>
         <translation>semua rekaman</translation>
     </message>
@@ -2803,17 +2905,21 @@ ke sampah?</translation>
         <translation>hanya snapshot</translation>
     </message>
     <message>
-        <location line="+394"/>
+        <location line="-7142"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
+        <location line="+6767"/>
         <source>Device</source>
         <translation>Perangkat</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+64"/>
         <source>Delete selected</source>
         <translation>Hapus yang dipilih</translation>
     </message>
     <message>
-        <location line="+360"/>
+        <location line="+367"/>
         <source>as Source</source>
         <translation>sebagai Sumber</translation>
     </message>
@@ -2859,7 +2965,7 @@ ke sampah?</translation>
         <translation>Buka file Pengaturan</translation>
     </message>
     <message>
-        <location line="-2993"/>
+        <location line="-3050"/>
         <source>Display folders</source>
         <translation>Tampilkan folder</translation>
     </message>
@@ -2874,7 +2980,7 @@ ke sampah?</translation>
         <translation>Urutkan folder terlebih dahulu</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+127"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+135"/>
         <source>Copy folder name</source>
         <translation>Salin nama folder</translation>
     </message>
@@ -2885,70 +2991,69 @@ ke sampah?</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+509"/>
         <source>orderValue</source>
         <translation>nilaiUrutan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1640"/>
+        <location filename="../mainwindow.ui" line="-1679"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-245"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>Device Type</source>
         <translation>Tipe Perangkat</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-260"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-300"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Katalog yang dipilih berisi lebih dari %1 file.&lt;br/&gt;Mungkin butuh beberapa menit untuk membuka.&lt;br/&gt;Lanjutkan?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5536"/>
+        <location filename="../mainwindow.ui" line="+5632"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Memori</translation>
     </message>
     <message>
-        <location line="-10875"/>
-        <location line="+1023"/>
-        <location line="+1640"/>
+        <location line="-11832"/>
+        <location line="+1022"/>
+        <location line="+2502"/>
         <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
         <translation>Gunakan kriteria Teks dalam Pencarian</translation>
     </message>
     <message>
-        <location line="-1711"/>
+        <location line="-1906"/>
         <source>Differences on</source>
         <translation>Perbedaan pada</translation>
     </message>
     <message>
-        <location line="+243"/>
         <source>Catalog 1</source>
-        <translation>Katalog 1</translation>
+        <translation type="vanished">Katalog 1</translation>
     </message>
     <message>
-        <location line="+67"/>
         <source>Catalog2</source>
-        <translation>Katalog2</translation>
+        <translation type="vanished">Katalog2</translation>
     </message>
     <message>
-        <location line="-2455"/>
+        <location line="-2811"/>
         <source>File name</source>
         <translation>Nama file</translation>
     </message>
     <message>
-        <location line="+1023"/>
+        <location line="+1022"/>
         <source>File criteria</source>
         <translation>Kriteria file</translation>
     </message>
     <message>
-        <location line="+2836"/>
+        <location line="+3698"/>
         <source>Folder criteria</source>
         <translation>Kriteria folder</translation>
     </message>
     <message>
-        <location line="+5002"/>
+        <location line="+5081"/>
         <source>Graphic Start Date</source>
         <translation>Tanggal Mulai Grafik</translation>
     </message>
@@ -2958,17 +3063,17 @@ ke sampah?</translation>
         <translation>Pilih tanggal</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+679"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2153"/>
         <source>Include Metadata</source>
         <translation>Sertakan Metadata</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+456"/>
         <source>Local disk</source>
         <translation>Disk lokal</translation>
     </message>
     <message>
-        <location line="-714"/>
+        <location line="-685"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Direktori tidak ada. Buat direktori tersebut?</translation>
     </message>
@@ -2978,7 +3083,7 @@ ke sampah?</translation>
         <translation>File database tidak ada. Buat file tersebut?</translation>
     </message>
     <message>
-        <location line="+337"/>
+        <location line="+318"/>
         <source>Collection Upgrade Required</source>
         <translation>Upgrade Koleksi Diperlukan</translation>
     </message>
@@ -3038,22 +3143,22 @@ ke sampah?</translation>
         <translation>Keluar Aplikasi</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+49"/>
         <source>Select the database to open:</source>
         <translation>Pilih database untuk dibuka:</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-292"/>
         <source>Select the database to create and open:</source>
         <translation>Pilih database untuk dibuat dan dibuka:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+130"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Beberapa perubahan dalam daftar perangkat Penyimpanan belum disimpan.&lt;br/&gt;Simpan dan keluar, buang dan keluar, atau batal keluar?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+351"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+334"/>
         <source> Physical Group</source>
         <translation> Grup Fisik</translation>
     </message>
@@ -3068,20 +3173,21 @@ ke sampah?</translation>
         <translation>Hapus tag ini</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-71"/>
+        <location filename="../mainwindow.cpp" line="-72"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+562"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1272"/>
         <source>Catalog with results</source>
         <translation>Katalog dengan hasil</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1178"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1154"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3098,9 +3204,10 @@ ke sampah?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-502"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3310"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>Active</source>
         <translation>Aktif</translation>
     </message>
@@ -3152,7 +3259,7 @@ ke sampah?</translation>
         <translation>Perbedaan Tanggal.</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Parent Device</source>
         <translation>Perangkat Induk</translation>
     </message>
@@ -3249,7 +3356,7 @@ ke sampah?</translation>
         <translation>Grup ini diperlukan untuk meng-host Penyimpanan dan Katalog.&lt;br/&gt;Tidak dapat dihapus.</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+232"/>
         <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
         <translation>Verifikasi MIME berhasil diselesaikan.&lt;br/&gt;Tidak ditemukan ketidaksesuaian antara ekstensi file dan konten sebenarnya.</translation>
     </message>
@@ -3264,8 +3371,8 @@ ke sampah?</translation>
         <translation>Verifikasi MIME gagal:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
-        <location line="+323"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-809"/>
+        <location line="+346"/>
         <source>Search Error</source>
         <translation>Kesalahan Pencarian</translation>
     </message>
@@ -3336,7 +3443,7 @@ ke sampah?</translation>
         <translation>Perbedaan ditemukan</translation>
     </message>
     <message>
-        <location line="+213"/>
+        <location line="+210"/>
         <source>No search results available.</source>
         <translation>Tidak ada hasil pencarian tersedia.</translation>
     </message>

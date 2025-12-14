@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+89"/>
+        <location filename="../core/catalog.cpp" line="+92"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1725"/>
+        <location filename="../core/collection.cpp" line="+1712"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>इस फ़ोल्डर में मेमोरी मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में फ़ाइल मोड में हैं।&lt;br/&gt;मेमोरी मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
     </message>
@@ -68,23 +68,112 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+107"/>
-        <location line="+64"/>
-        <location line="+79"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
+        <location line="+167"/>
+        <source>Metadata Extracted</source>
+        <translation>मेटाडेटा निकाला गया</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Checksums Calculated</source>
+        <translation>चेकसम की गणना की गई</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+189"/>
+        <location filename="../mainwindow.ui" line="+3420"/>
+        <location line="+926"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1699"/>
+        <source>Checksum</source>
+        <translation>चेकसम</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checksum Date</source>
+        <translation>चेकसम तिथि</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="-768"/>
+        <source>Within selected device</source>
+        <translation>चयनित डिवाइस के भीतर</translation>
+    </message>
+    <message>
+        <location line="+110"/>
+        <source>Compare two devices</source>
+        <translation>दो डिवाइस की तुलना करें</translation>
+    </message>
+    <message>
+        <location line="+212"/>
+        <location line="+661"/>
+        <source>compared to</source>
+        <translation>की तुलना में</translation>
+    </message>
+    <message>
+        <location line="-264"/>
+        <source>and</source>
+        <translation>और</translation>
+    </message>
+    <message>
+        <location line="+3439"/>
+        <location line="+1974"/>
+        <source>Include files checksum</source>
+        <translation>फ़ाइलों का चेकसम शामिल करें</translation>
+    </message>
+    <message>
+        <location line="+584"/>
+        <source>Stop the cataloging (no data will be saved)</source>
+        <translation>कैटलॉगिंग बंद करें (कोई डेटा सहेजा नहीं जाएगा)</translation>
+    </message>
+    <message>
+        <location line="+1114"/>
+        <source>Generate Profile</source>
+        <translation>प्रोफ़ाइल जनरेट करें</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Only selected</source>
+        <translation>केवल चयनित</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="+257"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+807"/>
+        <source>Copy file checksum</source>
+        <translation>फ़ाइल चेकसम कॉपी करें</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
+        <location line="+30"/>
+        <source>No backup links found.</source>
+        <translation>कोई बैकअप लिंक नहीं मिला।</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Backup profile created.</source>
+        <translation>बैकअप प्रोफ़ाइल बनाई गई।</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1549"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
+        <source>Saving</source>
+        <translation>सहेज रहा है</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+72"/>
+        <location line="+149"/>
         <source>Indexed</source>
         <translation>अनुक्रमित</translation>
     </message>
     <message>
-        <location filename="../core/searchjobstoppable.cpp" line="+435"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-135"/>
-        <location line="+126"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+529"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+443"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+347"/>
         <source>File Types Updated</source>
         <translation>फ़ाइल प्रकार अपडेट किए गए</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-142"/>
-        <location line="+129"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+160"/>
         <source>Counted</source>
         <translation>गिना गया</translation>
     </message>
@@ -98,10 +187,10 @@
         <location line="+28"/>
         <location line="+18"/>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1062"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+1085"/>
         <location line="+4"/>
         <location line="+30"/>
-        <location line="+57"/>
+        <location line="+54"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Evaluated</source>
@@ -109,7 +198,8 @@
     </message>
     <message>
         <location line="-13"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-82"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-105"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-54"/>
         <source>Completed</source>
         <translation>पूर्ण हुआ</translation>
     </message>
@@ -119,32 +209,37 @@
         <translation>उपयोग की गई जगह</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-65"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-81"/>
         <source>Cancelled</source>
         <translation>रद्द किया गया</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+39"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-20"/>
+        <location line="+22"/>
         <source>Loaded</source>
         <translation>लोड किया गया</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="-104"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="+124"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2160"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-75"/>
-        <location line="+58"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+448"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-71"/>
+        <location line="+54"/>
         <source>In Progress</source>
         <translation>प्रगति में</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+14"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-130"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+90"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-127"/>
         <source>Stopped</source>
         <translation>रोका गया</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+695"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+692"/>
         <source>MIME Verification Complete</source>
         <translation>MIME सत्यापन पूर्ण</translation>
     </message>
@@ -154,7 +249,7 @@
         <translation>रिपोर्ट खोलें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-469"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-450"/>
         <source>Hidden</source>
         <translation>छुपा हुआ</translation>
     </message>
@@ -164,14 +259,14 @@
         <translation>मेटाडेटा</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3949"/>
+        <location filename="../mainwindow.ui" line="-6608"/>
         <source>File metadata</source>
         <translation>फ़ाइल मेटाडेटा</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+197"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+200"/>
         <source>Height</source>
         <translation>ऊंचाई</translation>
     </message>
@@ -196,8 +291,8 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1872"/>
-        <location line="+1921"/>
+        <location line="+1781"/>
+        <location line="+2051"/>
         <source>Include files metadata</source>
         <translation>फ़ाइल मेटाडेटा शामिल करें</translation>
     </message>
@@ -213,28 +308,30 @@
     </message>
     <message>
         <location line="+1200"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+270"/>
         <source>Other</source>
         <translation>अन्य</translation>
     </message>
     <message>
         <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+472"/>
+        <location filename="../devicetreeview.cpp" line="+109"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+473"/>
         <location line="+12"/>
+        <location line="+35"/>
+        <location line="+8"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>None</source>
         <translation>कोई नहीं</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-517"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-595"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-305"/>
         <source>Show extended metadata (JSON)</source>
         <translation>विस्तारित मेटाडेटा दिखाएं (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+514"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+592"/>
         <source>MIME Type</source>
         <translation>MIME प्रकार</translation>
     </message>
@@ -339,7 +436,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-54"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>मीडिया बुनियादी</translation>
@@ -372,7 +469,7 @@
         <translation>क्या आप इस %1 डिवाइस को &lt;span style=&apos;color: red&apos;;&gt;डिलीट&lt;/span&gt; करना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1257"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+1239"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>कैटलॉग अपडेट किए गए:&lt;b&gt; %1 &lt;/b&gt;(%2 छोड़े गए)</translation>
@@ -383,12 +480,12 @@
         <translation>वर्चुअल डिवाइस अपडेट किया गया: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-2511"/>
+        <location filename="../mainwindow.ui" line="-2550"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;क्लिक: तुरंत रोकें (हार्ड स्टॉप)&lt;/p&gt;&lt;p&gt;Ctrl+क्लिक: वर्तमान कैटलॉग के बाद रोकें (जेंटल स्टॉप)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-201"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
         <source>The source directory does not exist.</source>
         <translation>स्रोत डायरेक्टरी मौजूद नहीं है।</translation>
     </message>
@@ -399,20 +496,20 @@
         <translation>स्रोत फ़ोल्डर में कोई फ़ाइल नहीं है।&lt;br/&gt;इसका मतलब यह हो सकता है कि स्रोत खाली है या डिवाइस इस फ़ोल्डर में माउंट नहीं है।&lt;br/&gt;क्या आप इसे वैसे भी सेव करना चाहते हैं (कैटलॉग खाली होगा)？</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-463"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+93"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-460"/>
         <location line="+84"/>
         <location line="+64"/>
         <location line="+130"/>
-        <location line="+143"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+248"/>
+        <location line="+140"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+249"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>एक डिवाइस ऑपरेशन पहले से ही चल रहा है।</translation>
     </message>
     <message>
         <location filename="../core/deviceupdatemanager.cpp" line="+1084"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-861"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-862"/>
         <source>Operation cancelled</source>
         <translation>ऑपरेशन रद्द किया गया</translation>
     </message>
@@ -422,7 +519,7 @@
         <translation>वर्तमान कैटलॉग पूरा होने के बाद रुक रहा है...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6181"/>
+        <location filename="../mainwindow.ui" line="-7042"/>
         <source>Katalog</source>
         <translation>कैटलॉग</translation>
     </message>
@@ -451,15 +548,15 @@
         <translation>फ़ाइलों या फ़ोल्डरों को खोजें</translation>
     </message>
     <message>
-        <location line="+3062"/>
-        <location line="+2675"/>
-        <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
+        <location line="+3923"/>
+        <location line="+2741"/>
+        <location line="+1829"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+302"/>
         <source>Text</source>
         <translation>टेक्स्ट</translation>
     </message>
     <message>
-        <location line="-7279"/>
+        <location line="-8179"/>
         <source>Paste the text from the clipboard</source>
         <translation>क्लिपबोर्ड से टेक्स्ट पेस्ट करें</translation>
     </message>
@@ -481,7 +578,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+53"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+54"/>
         <source>All Words</source>
         <translation>सभी शब्द</translation>
     </message>
@@ -507,7 +604,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
         <source>File names or Folder paths</source>
         <translation>फ़ाइल नाम या फ़ोल्डर पथ</translation>
     </message>
@@ -515,23 +612,23 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+812"/>
+        <location line="+983"/>
         <source>File names only</source>
         <translation>केवल फ़ाइल नाम</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
         <source>Folder path only</source>
         <translation>केवल फ़ोल्डर पथ</translation>
     </message>
     <message>
-        <location line="+3391"/>
+        <location line="+4252"/>
         <source>Choose to only show folders as results</source>
         <translation>परिणाम के रूप में केवल फ़ोल्डर दिखाना चुनें</translation>
     </message>
     <message>
-        <location line="-4078"/>
+        <location line="-4939"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>सभी मानदंडों को डिफ़ॉल्ट मानों पर रीसेट करें और पिछले परिणाम साफ़ करें।</translation>
     </message>
@@ -541,13 +638,13 @@
         <translation>रीसेट</translation>
     </message>
     <message>
-        <location line="+11170"/>
+        <location line="+12127"/>
         <source>Port</source>
         <translation>पोर्ट</translation>
     </message>
     <message>
-        <location line="-2654"/>
-        <location line="+2633"/>
+        <location line="-2671"/>
+        <location line="+2650"/>
         <source>Password</source>
         <translation>पासवर्ड</translation>
     </message>
@@ -563,87 +660,87 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+283"/>
+        <location filename="../mainwindow.cpp" line="+298"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-381"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-9694"/>
-        <location line="+802"/>
-        <location line="+232"/>
-        <location line="+764"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
+        <location filename="../mainwindow.ui" line="-10652"/>
+        <location line="+848"/>
+        <location line="+891"/>
+        <location line="+921"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
         <source>Size</source>
         <translation>आकार</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-3829"/>
-        <location line="+5765"/>
+        <location filename="../mainwindow.ui" line="-4690"/>
+        <location line="+6626"/>
         <source>Device tree</source>
         <translation>डिवाइस ट्री</translation>
     </message>
     <message>
-        <location line="-5285"/>
+        <location line="-6146"/>
         <source>Reload all collection&apos;s data</source>
         <translation>सभी संग्रह डेटा को पुनः लोड करें</translation>
     </message>
     <message>
-        <location line="+1580"/>
+        <location line="+1579"/>
         <location line="+451"/>
-        <location line="+1388"/>
+        <location line="+2250"/>
         <location line="+218"/>
         <location line="+283"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-2276"/>
+        <location line="-3138"/>
         <source>File size unit for minimum value</source>
         <translation>न्यूनतम मान के लिए फ़ाइल आकार इकाई</translation>
     </message>
     <message>
         <location line="+49"/>
         <location line="+426"/>
-        <location line="+1387"/>
+        <location line="+2249"/>
         <location line="+218"/>
         <location line="+290"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-2260"/>
+        <location line="-3122"/>
         <source>File size unit for maximum value</source>
         <translation>अधिकतम मान के लिए फ़ाइल आकार इकाई</translation>
     </message>
     <message>
         <location line="+81"/>
-        <location line="+4214"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-696"/>
+        <location line="+5109"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-669"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>प्रकार</translation>
     </message>
     <message>
-        <location line="-4176"/>
+        <location line="-5071"/>
         <source>Select the type of files</source>
         <translation>फ़ाइलों का प्रकार चुनें</translation>
     </message>
     <message>
-        <location line="+3972"/>
-        <location line="+1790"/>
-        <location filename="../mainwindow_setup.cpp" line="+464"/>
+        <location line="+4900"/>
+        <location line="+1763"/>
+        <location filename="../mainwindow_setup.cpp" line="+476"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+76"/>
+        <location line="+77"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -653,33 +750,33 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+753"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+923"/>
         <source>All</source>
         <translation>सभी</translation>
     </message>
     <message>
-        <location line="-1785"/>
-        <location line="+1814"/>
+        <location line="-1758"/>
+        <location line="+1787"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Audio</source>
         <translation>ऑडियो</translation>
     </message>
     <message>
-        <location line="-1806"/>
-        <location line="+1835"/>
+        <location line="-1779"/>
+        <location line="+1808"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
         <source>Image</source>
         <translation>छवि</translation>
     </message>
     <message>
-        <location line="-1819"/>
-        <location line="+1877"/>
+        <location line="-1792"/>
+        <location line="+1850"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+2"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location line="-3385"/>
+        <location line="-3424"/>
         <source>only list folders in results</source>
         <translation>परिणामों में केवल फ़ोल्डर सूची</translation>
     </message>
@@ -691,7 +788,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+417"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+426"/>
         <source>Export Results</source>
         <translation>परिणाम निर्यात करें</translation>
     </message>
@@ -709,8 +806,8 @@
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+32"/>
-        <location line="+25"/>
+        <location line="+33"/>
+        <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Files found</source>
@@ -723,13 +820,13 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+897"/>
+        <location line="+936"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2461"/>
+        <location line="+2511"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -738,7 +835,7 @@
         <location line="+24"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+92"/>
+        <location line="+99"/>
         <location line="+38"/>
         <location line="+24"/>
         <location line="+38"/>
@@ -747,7 +844,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3657"/>
+        <location line="-3714"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -755,43 +852,45 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2678"/>
+        <location line="+2718"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>कुल फ़ाइल आकार</translation>
     </message>
     <message>
-        <location line="-2640"/>
+        <location line="-2680"/>
         <source>Total Number of Files</source>
         <translation>फ़ाइलों की कुल संख्या</translation>
     </message>
     <message>
-        <location line="-1149"/>
+        <location line="-1188"/>
         <source>All active</source>
         <translation>सभी सक्रिय</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1279"/>
         <source>Import</source>
         <translation>आयात</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-403"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-211"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-400"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-271"/>
+        <location line="+22"/>
+        <location line="+35"/>
         <location line="+18"/>
         <location line="+14"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-172"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
         <source>Explore</source>
         <translation>अन्वेषण</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-127"/>
-        <location line="+65"/>
-        <location line="+59"/>
-        <location filename="../mainwindow.ui" line="-1773"/>
-        <location line="+932"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+741"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
+        <location line="+81"/>
+        <location line="+70"/>
+        <location filename="../mainwindow.ui" line="-1812"/>
+        <location line="+965"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+714"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
         <location line="+88"/>
         <location line="+64"/>
@@ -802,7 +901,7 @@
         <translation>अपडेट</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4682"/>
+        <location filename="../mainwindow.ui" line="+4745"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-106"/>
         <location line="+68"/>
         <location line="+63"/>
@@ -810,43 +909,43 @@
         <translation>संपादन</translation>
     </message>
     <message>
-        <location line="-5941"/>
+        <location line="-6037"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>डिलीट</translation>
     </message>
     <message>
-        <location line="+2103"/>
+        <location line="+2142"/>
         <source>Explore a catalog</source>
         <translation>एक कैटलॉग का अन्वेषण करें</translation>
     </message>
     <message>
-        <location line="-7534"/>
-        <location line="+7913"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+178"/>
+        <location line="-8434"/>
+        <location line="+8813"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+181"/>
         <source>Catalog</source>
         <translation>कैटलॉग</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1576"/>
+        <location filename="../mainwindow.ui" line="+1616"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-982"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
         <translation>पथ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1899"/>
+        <location filename="../mainwindow.ui" line="-1939"/>
         <source>Directories</source>
         <translation>डायरेक्टरियां</translation>
     </message>
     <message>
-        <location line="-7824"/>
+        <location line="-8724"/>
         <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>फ़िल्टर दिखाएं/छुपाएं</translation>
@@ -859,13 +958,13 @@
     </message>
     <message>
         <location line="+1252"/>
-        <location line="+4701"/>
-        <location line="+3141"/>
+        <location line="+5562"/>
+        <location line="+3220"/>
         <source>Stop</source>
         <translation>रोकें</translation>
     </message>
     <message>
-        <location line="-3604"/>
+        <location line="-3683"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>चुनें...</translation>
@@ -878,8 +977,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-693"/>
-        <location line="+699"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-711"/>
+        <location line="+717"/>
         <source>Move to Trash</source>
         <translation>ट्रैश में भेजें</translation>
     </message>
@@ -899,8 +998,8 @@
         <translation>परिवर्तन केवल सेव करते समय लागू होगा</translation>
     </message>
     <message>
-        <location line="+267"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+951"/>
+        <location line="+300"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+959"/>
         <source>Comment 1</source>
         <translation>टिप्पणी 1</translation>
     </message>
@@ -929,7 +1028,7 @@
         <translation>मॉडल</translation>
     </message>
     <message>
-        <location line="+406"/>
+        <location line="+412"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
@@ -965,8 +1064,8 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+2046"/>
-        <location line="+620"/>
+        <location line="+2086"/>
+        <location line="+630"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
@@ -974,14 +1073,14 @@
         <translation>फ़ाइलों की संख्या</translation>
     </message>
     <message>
-        <location line="-2550"/>
+        <location line="-2600"/>
         <source>Click to open the file</source>
         <translation>फ़ाइल खोलने के लिए क्लिक करें</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-126"/>
-        <location line="+65"/>
-        <location line="+59"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-153"/>
+        <location line="+81"/>
+        <location line="+70"/>
         <location filename="../mainwindow.ui" line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
@@ -1014,7 +1113,7 @@
         <translation>अन्य विकल्प</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+153"/>
         <source>Directories to exclude from catalogs</source>
         <translation>कैटलॉग से बाहर करने वाली डायरेक्टरियां</translation>
     </message>
@@ -1044,8 +1143,8 @@
         <translation>नया स्टोरेज डिवाइस जोड़ें</translation>
     </message>
     <message>
-        <location line="-2581"/>
-        <location line="+2584"/>
+        <location line="-2660"/>
+        <location line="+2663"/>
         <source>Add Storage</source>
         <translation>स्टोरेज जोड़ें</translation>
     </message>
@@ -1071,12 +1170,11 @@
     </message>
     <message>
         <location line="+79"/>
-        <location line="+38"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>कैटलॉगिंग शुरू करें और इसे फ़ाइल में सेव करें</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="+6"/>
         <source>Create Catalog</source>
         <translation>कैटलॉग बनाएं</translation>
     </message>
@@ -1091,7 +1189,7 @@
         <translation>सोर्स पथ चुनें</translation>
     </message>
     <message>
-        <location line="-1833"/>
+        <location line="-1873"/>
         <source>Tree options</source>
         <translation>ट्री विकल्प</translation>
     </message>
@@ -1111,7 +1209,7 @@
         <translation>वर्चुअल ग्रुप डालें</translation>
     </message>
     <message>
-        <location line="-1621"/>
+        <location line="-1660"/>
         <source>View</source>
         <translation>दृश्य</translation>
     </message>
@@ -1121,12 +1219,12 @@
         <translation>स्टोरेज सूची</translation>
     </message>
     <message>
-        <location line="+697"/>
+        <location line="+576"/>
         <source>Catalog fields</source>
         <translation>कैटलॉग फ़ील्ड</translation>
     </message>
     <message>
-        <location line="+236"/>
+        <location line="+390"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>मुक्त स्थान</translation>
@@ -1137,17 +1235,17 @@
         <translation>डिवाइस चित्र</translation>
     </message>
     <message>
-        <location line="-658"/>
+        <location line="-691"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>पूर्ण संग्रह पर आंकड़ों के लिए सभी डिवाइसों के मानों को रिकॉर्ड करें।</translation>
     </message>
     <message>
-        <location line="+780"/>
+        <location line="+813"/>
         <source>Storage fields</source>
         <translation>स्टोरेज फ़ील्ड</translation>
     </message>
     <message>
-        <location line="+5558"/>
+        <location line="+5621"/>
         <source>Icons</source>
         <translation>आइकन</translation>
     </message>
@@ -1193,55 +1291,55 @@
         <translation>डेटा प्रबंधन</translation>
     </message>
     <message>
-        <location line="-11395"/>
-        <location line="+9153"/>
+        <location line="-12352"/>
+        <location line="+10093"/>
         <source>Select the path</source>
         <translation>पथ चुनें</translation>
     </message>
     <message>
-        <location line="-9150"/>
-        <location line="+5965"/>
-        <location line="+3188"/>
+        <location line="-10090"/>
+        <location line="+6826"/>
+        <location line="+3267"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>चुनें</translation>
     </message>
     <message>
-        <location line="-10016"/>
-        <location line="+7393"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
-        <location line="+2496"/>
+        <location line="-10956"/>
+        <location line="+8293"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-928"/>
+        <location line="+2478"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>स्टोरेज</translation>
     </message>
     <message>
-        <location line="+4027"/>
+        <location line="+4084"/>
         <source>New</source>
         <translation>नया</translation>
     </message>
     <message>
-        <location line="-5647"/>
+        <location line="-5743"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>डिवाइसेस</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+653"/>
+        <location line="+686"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>कुल स्थान</translation>
     </message>
     <message>
-        <location line="-565"/>
+        <location line="-598"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3465"/>
+        <location line="+3544"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>पुनः लोड</translation>
@@ -1272,24 +1370,24 @@
         <translation>सभी रिकॉर्ड संग्रहीत करने वाली फ़ाइल को संपादित करें</translation>
     </message>
     <message>
-        <location line="-2146"/>
+        <location line="-2186"/>
         <source>Add Virtual</source>
         <translation>वर्चुअल जोड़ें</translation>
     </message>
     <message>
-        <location line="-1663"/>
+        <location line="-1702"/>
         <source>Edit List</source>
         <translation>सूची संपादित करें</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4188"/>
+        <location line="+4635"/>
         <source>Full Table</source>
         <translation>पूर्ण तालिका</translation>
     </message>
     <message>
-        <location line="-3883"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
+        <location line="-4330"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
         <source>Device Name</source>
         <translation>डिवाइस नाम</translation>
     </message>
@@ -1306,7 +1404,7 @@
         <translation>डिवाइस ID</translation>
     </message>
     <message>
-        <location line="+3321"/>
+        <location line="+3400"/>
         <source>Edit Statistics</source>
         <translation>आंकड़े संपादित करें</translation>
     </message>
@@ -1368,7 +1466,7 @@
         <translation>टैग्स संग्रहीत करने वाली फ़ाइल को पुनः लोड करें</translation>
     </message>
     <message>
-        <location line="+223"/>
+        <location line="+233"/>
         <source>Link name</source>
         <translation>लिंक नाम</translation>
     </message>
@@ -1383,7 +1481,7 @@
         <translation>कैटलॉग लिंक्स</translation>
     </message>
     <message>
-        <location line="+357"/>
+        <location line="+364"/>
         <source>Linked</source>
         <translation>लिंक्ड</translation>
     </message>
@@ -1401,7 +1499,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-390"/>
+        <location filename="../mainwindow_setup.cpp" line="-402"/>
         <source>Settings</source>
         <translation>सेटिंग्स</translation>
     </message>
@@ -1453,12 +1551,12 @@
         <translation>डेटा मोड &quot;SQLite स्थानीय फ़ाइल&quot;</translation>
     </message>
     <message>
-        <location line="-4026"/>
+        <location line="-4083"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>चयन डिवाइस ट्री पर विकल्प लागू करें।</translation>
     </message>
     <message>
-        <location line="+1978"/>
+        <location line="+2018"/>
         <source>Type of source</source>
         <translation>सोर्स का प्रकार</translation>
     </message>
@@ -1508,12 +1606,12 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;चयनित डिवाइस के लिए लिंक्स को पुनः लोड करें और आंकड़े रीफ्रेश करें।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+98"/>
         <source>Create new link</source>
         <translation>नया लिंक बनाएं</translation>
     </message>
     <message>
-        <location line="+306"/>
+        <location line="+313"/>
         <source>Coverage</source>
         <translation>कवरेज</translation>
     </message>
@@ -1650,29 +1748,29 @@
         <translation>खोलें</translation>
     </message>
     <message>
-        <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-543"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
+        <location line="-1017"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-621"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-808"/>
         <source>Open file</source>
         <translation>फ़ाइल खोलें</translation>
     </message>
     <message>
-        <location line="+1695"/>
+        <location line="+1712"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+83"/>
+        <location line="+91"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>फ़ोल्डर खोलें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
-        <location line="+34"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+59"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-37"/>
+        <location line="+43"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
         <source>Copy folder path</source>
         <translation>फ़ोल्डर पथ कॉपी करें</translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="-39"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>फ़ाइल का पूर्ण पथ कॉपी करें</translation>
@@ -1692,30 +1790,31 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-8703"/>
-        <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1833"/>
-        <location line="+239"/>
-        <location line="+262"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+465"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-824"/>
+        <location filename="../mainwindow.ui" line="-9615"/>
+        <location line="+891"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1809"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+544"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-821"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
-        <location filename="../mainwindow.ui" line="-560"/>
-        <location line="+8438"/>
+        <location filename="../mainwindow.ui" line="-1265"/>
+        <location line="+9396"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1175"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>दिनांक</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-321"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-322"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1729,40 +1828,40 @@
         <translation>इस संग्रह के लिए डायरेक्टरी चुनें</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5752"/>
-        <location line="+2427"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-494"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow.ui" line="-5848"/>
+        <location line="+2466"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3302"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total Size</source>
         <translation>कुल आकार</translation>
     </message>
     <message>
-        <location line="-1407"/>
-        <location line="+1590"/>
+        <location line="-1446"/>
+        <location line="+1629"/>
         <source>Source Path</source>
         <translation>सोर्स पथ</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1464"/>
+        <location filename="../mainwindow.ui" line="-1528"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+648"/>
+        <location line="+630"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>फ़ाइल प्रकार</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3784"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
+        <location filename="../mainwindow.ui" line="+3898"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-60"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>फ़ाइल आकार</translation>
     </message>
     <message>
-        <location line="-3356"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-919"/>
+        <location line="-3412"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-893"/>
         <source>Label</source>
         <translation>लेबल</translation>
     </message>
@@ -1773,18 +1872,18 @@
         <translation>फ़ाइल सिस्टम</translation>
     </message>
     <message>
-        <location line="+3608"/>
+        <location line="+3671"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>कुल</translation>
     </message>
     <message>
-        <location line="-4403"/>
+        <location line="-4499"/>
         <source>Free</source>
         <translation>मुक्त</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+762"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>सीरियल नंबर</translation>
@@ -1796,7 +1895,7 @@
         <translation>निर्माण दिनांक</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1359"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1367"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>कैटलॉग पहले से ही इस वर्चुअल डिवाइस को असाइन किया गया है।</translation>
     </message>
@@ -1816,7 +1915,7 @@
         <translation>&lt;br/&gt;इस संग्रह का एक स्नैपशॉट रिकॉर्ड किया गया:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;कैटलॉग&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;फ़ाइलों की संख्या: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (जोड़ा गया: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;कुल फ़ाइल आकार: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (जोड़ा गया: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;स्टोरेज&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;स्टोरेज मुक्त स्थान: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (जोड़ा गया: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;स्टोरेज कुल स्थान: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (जोड़ा गया: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+283"/>
+        <location line="+289"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>इस नाम के साथ पहले से ही एक कैटलॉग है:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1837,48 +1936,49 @@
     </message>
     <message>
         <location line="+495"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>Parent ID</source>
         <translation>पैरेंट ID</translation>
     </message>
     <message>
-        <location line="-500"/>
+        <location line="-3308"/>
         <source>External ID</source>
         <translation>बाहरी ID</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Number of files</source>
         <translation>फ़ाइलों की संख्या</translation>
     </message>
     <message>
-        <location line="-498"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-492"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Free space</source>
         <translation>मुक्त स्थान</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total space</source>
         <translation>कुल स्थान</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Date updated</source>
         <translation>अपडेट दिनांक</translation>
     </message>
     <message>
-        <location line="-499"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-493"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Group ID</source>
         <translation>ग्रुप ID</translation>
     </message>
@@ -1890,7 +1990,7 @@
         <translation>कैटलॉग ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+23"/>
         <source>Parent storage</source>
         <translation>पैरेंट स्टोरेज</translation>
     </message>
@@ -1915,7 +2015,7 @@
         <translation>फ़ाइल पथ</translation>
     </message>
     <message>
-        <location line="+637"/>
+        <location line="+618"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>कैटलॉग की परिभाषा में परिवर्तन सेव करें?&lt;br/&gt;</translation>
     </message>
@@ -2080,9 +2180,9 @@
         <translation>चयनित डिवाइस एक कैटलॉग होना चाहिए। एक अलग डिवाइस ID के साथ कोशिश करें</translation>
     </message>
     <message>
-        <location line="-1857"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-1833"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Used space</source>
         <translation>उपयोग किया गया स्थान</translation>
     </message>
@@ -2097,20 +2197,22 @@
         <translation>का</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5346"/>
-        <location line="+1830"/>
-        <location line="+67"/>
+        <location filename="../mainwindow.ui" line="-6240"/>
+        <location line="+1989"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>परिभाषित करें कि खोज टेक्स्ट का उपयोग केवल फ़ाइल नामों, या फ़ोल्डर पथों, या दोनों में देखने के लिए किया जाना चाहिए।</translation>
     </message>
     <message>
-        <location line="-2040"/>
+        <location line="-2901"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>परिभाषित करें कि खोज टेक्स्ट का उपयोग कैसे किया जाना चाहिए।</translation>
     </message>
     <message>
-        <location line="+7081"/>
+        <location line="+8021"/>
         <source>Include Hidden files</source>
         <translation>छुपी हुई फ़ाइलें शामिल करें</translation>
     </message>
@@ -2125,12 +2227,12 @@
         <translation>पथ के आधार पर कैटलॉग नाम जेनरेट करें।</translation>
     </message>
     <message>
-        <location line="-8351"/>
+        <location line="-9291"/>
         <source>Reset all filters</source>
         <translation>सभी फ़िल्टर रीसेट करें</translation>
     </message>
     <message>
-        <location line="+10426"/>
+        <location line="+11383"/>
         <source>About</source>
         <translation>के बारे में</translation>
     </message>
@@ -2145,15 +2247,15 @@
         <translation>आंकड़ों के लिए फ़ाइलों और आकार के रिकॉर्ड रखें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-907"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-930"/>
         <location line="+11"/>
-        <location line="+34"/>
+        <location line="+35"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-44"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+8"/>
         <source>KiB</source>
@@ -2167,18 +2269,18 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-356"/>
+        <location line="-375"/>
         <source>Explore folder</source>
         <translation>फ़ोल्डर अन्वेषण</translation>
     </message>
     <message>
-        <location line="+207"/>
-        <location line="+573"/>
+        <location line="+226"/>
+        <location line="+582"/>
         <source>MOVE</source>
         <translation>स्थानांतरित करें</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-581"/>
         <source>Move this file to the trash?</source>
         <translation>इस फ़ाइल को ट्रैश में भेजें?</translation>
     </message>
@@ -2195,12 +2297,12 @@
     </message>
     <message>
         <location line="+46"/>
-        <location line="+548"/>
+        <location line="+557"/>
         <source>DELETE</source>
         <translation>डिलीट करें</translation>
     </message>
     <message>
-        <location line="-547"/>
+        <location line="-556"/>
         <source>Delete this file?</source>
         <translation>इस फ़ाइल को डिलीट करें?</translation>
     </message>
@@ -2219,12 +2321,12 @@
     <message>
         <location line="-7"/>
         <location line="+11"/>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Bytes</source>
         <translation>बाइट्स</translation>
     </message>
     <message>
-        <location line="+351"/>
+        <location line="+359"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>पहले नीचे दिए गए सभी परिणामों पर लागू होने वाली प्रक्रिया चुनें।</translation>
     </message>
@@ -2289,7 +2391,7 @@
         <translation>खोज परिणाम</translation>
     </message>
     <message>
-        <location line="+369"/>
+        <location line="+383"/>
         <source>Text Phrase selected</source>
         <translation>टेक्स्ट वाक्य चयनित</translation>
     </message>
@@ -2469,7 +2571,7 @@
         <translation>हमेशा प्रत्येक कैटलॉग का एक बैकअप रखें</translation>
     </message>
     <message>
-        <location line="-5574"/>
+        <location line="-5670"/>
         <source>Used</source>
         <translation>उपयोग किया गया</translation>
     </message>
@@ -2500,22 +2602,22 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1033"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1027"/>
         <source>Choose a different name and try again.</source>
         <translation>एक अलग नाम चुनें और फिर से कोशिश करें।</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5017"/>
+        <location filename="../mainwindow.ui" line="+5113"/>
         <source>Check at start up</source>
         <translation>स्टार्ट अप पर जांचें</translation>
     </message>
     <message>
-        <location line="-4704"/>
+        <location line="-4747"/>
         <source>Include Hidden Files</source>
         <translation>छुपी हुई फ़ाइलें शामिल करें</translation>
     </message>
     <message>
-        <location line="+552"/>
+        <location line="+532"/>
         <source>Save</source>
         <translation>सेव करें</translation>
     </message>
@@ -2525,28 +2627,28 @@
         <translation>&lt;br/&gt;&lt;b&gt;कैटलॉग में आपका स्वागत है!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;यह पहली बार चलाया जा रहा है।&lt;br/&gt;&lt;br/&gt;निम्नलिखित सेटिंग्स लागू की गई हैं:&lt;br/&gt; - भाषा: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - थीम: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;आप इन्हें टैब %3 में बदल सकते हैं।</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1053"/>
+        <location filename="../mainwindow.ui" line="-1086"/>
         <source>Snapshot</source>
         <translation>स्नैपशॉट</translation>
     </message>
     <message>
-        <location line="+3754"/>
+        <location line="+3833"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location line="-3715"/>
+        <location line="-3794"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;यदि डिवाइस उपलब्ध है तो सभी सक्रिय कैटलॉग को अपडेट करें।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1279"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;VVV से वॉल्यूम की सूची आयात करें&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-213"/>
+        <location line="-216"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-157"/>
         <location line="+107"/>
         <location line="+9"/>
@@ -2555,63 +2657,63 @@
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+297"/>
+        <location filename="../mainwindow_setup.cpp" line="+291"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>यह संस्करण है: v%1 &lt;br/&gt;&lt;br/&gt;एक नया संस्करण उपलब्ध है: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; नई सुविधाओं की सूची &lt;a href=&apos;%3&apos;&gt;रिलीज़ नोट्स&lt;/a&gt; में देखें&lt;br/&gt;&lt;br/&gt;क्या आप इसे डाउनलोड करना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-375"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+768"/>
+        <location filename="../mainwindow.ui" line="-378"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+770"/>
         <source>Storage ID</source>
         <translation>स्टोरेज ID</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+932"/>
+        <location line="-869"/>
+        <location line="+965"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;यदि डिवाइस उपलब्ध है तो चयनित कैटलॉग की फ़ाइलें अपडेट करें&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-2"/>
-        <location filename="../mainwindow.ui" line="+1190"/>
-        <location line="+1449"/>
+        <location filename="../mainwindow.ui" line="+1196"/>
+        <location line="+1489"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>डायरेक्टरी</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-8261"/>
+        <location filename="../mainwindow.ui" line="-9201"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>खोज टेक्स्ट को _ - . , जैसे वर्णों से साफ़ करें</translation>
     </message>
     <message>
-        <location line="+1780"/>
+        <location line="+1790"/>
         <source>Duplicates on</source>
         <translation>डुप्लिकेट पर</translation>
     </message>
     <message>
-        <location line="+95"/>
-        <location line="+232"/>
+        <location line="+130"/>
+        <location line="+891"/>
         <source>Date Modified</source>
         <translation>संशोधित दिनांक</translation>
     </message>
     <message>
-        <location line="+7930"/>
+        <location line="+8183"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>ऐप शुरू करते समय सत्यापित करें कि कैटलॉग का नया संस्करण उपलब्ध है।</translation>
     </message>
     <message>
-        <location line="-5463"/>
+        <location line="-5559"/>
         <source>Show/Hide search history</source>
         <translation>खोज इतिहास दिखाएं/छुपाएं</translation>
     </message>
     <message>
-        <location line="-4833"/>
+        <location line="-5694"/>
         <source>Search criteria</source>
         <translation>खोज मानदंड</translation>
     </message>
     <message>
-        <location line="+4226"/>
+        <location line="+5087"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
         <source>Tag</source>
         <translation>टैग</translation>
@@ -2627,7 +2729,7 @@
         <translation>खोज इतिहास</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-293"/>
+        <location filename="../mainwindow_setup.cpp" line="-287"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;अगली स्क्रीन पर, एक मौजूदा संग्रह फ़ोल्डर चुनें या नया बनाएं।</translation>
     </message>
@@ -2642,7 +2744,7 @@
         <translation>1- एक पूरी ड्राइव या डायरेक्टरी चुनें, &lt;br/&gt;2- विकल्प चुनें, और &lt;br/&gt;3- &apos;बनाएं&apos; पर क्लिक करें&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4909"/>
+        <location filename="../mainwindow.ui" line="-5770"/>
         <source>Show/Hide search criteria</source>
         <translation>खोज मानदंड दिखाएं/छुपाएं</translation>
     </message>
@@ -2662,28 +2764,28 @@
         <translation>बाहर करें</translation>
     </message>
     <message>
-        <location line="+4689"/>
+        <location line="+5545"/>
         <source>is full device</source>
         <translation>पूर्ण डिवाइस है</translation>
     </message>
     <message>
-        <location line="+2346"/>
+        <location line="+2430"/>
         <source>catalog is for the full device</source>
         <translation>कैटलॉग पूर्ण डिवाइस के लिए है</translation>
     </message>
     <message>
-        <location line="-5953"/>
-        <location line="+232"/>
+        <location line="-6883"/>
+        <location line="+888"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>अगले मानदंडों के आधार पर डुप्लिकेट खोजने के लिए चुनें</translation>
     </message>
     <message>
-        <location line="+1955"/>
+        <location line="+2150"/>
         <source>Choose to use Tags to filter results</source>
         <translation>परिणामों को फ़िल्टर करने के लिए टैग्स का उपयोग करने के लिए चुनें</translation>
     </message>
     <message>
-        <location line="-3360"/>
+        <location line="-4221"/>
         <source>case sensitive</source>
         <translation>केस सेंसिटिव</translation>
     </message>
@@ -2693,22 +2795,22 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;परिणामों को सटीक रूप से टेक्स्ट से मेल खाना चाहिए (अक्षरों के बड़े-छोटे अक्षरों के लिए संवेदनशील)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+9983"/>
+        <location line="+10940"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>अगली खोज को तेज़ करने के लिए स्टार्ट-अप पर अंतिम चयनित कैटलॉग प्रीलोड करें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-462"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-532"/>
         <source>Move file to Trash</source>
         <translation>फ़ाइल को ट्रैश में भेजें</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+159"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-1066"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1089"/>
         <location line="+64"/>
-        <location line="+509"/>
+        <location line="+518"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>पुष्टि</translation>
@@ -2718,7 +2820,7 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-600"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-609"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>चेतावनी</translation>
@@ -2748,13 +2850,13 @@
         <translation>डिलीट करने में असफल।</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
+        <location line="-200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-214"/>
         <source>Delete file</source>
         <translation>फ़ाइल डिलीट करें</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+156"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2767,25 +2869,25 @@ to the trash?</source>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;डिलीट&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-270"/>
+        <location line="-308"/>
         <source>Tag this folder</source>
         <translation>इस फ़ोल्डर को टैग करें</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-11210"/>
+        <location filename="../mainwindow.ui" line="-12167"/>
         <source>Selection</source>
         <translation>चयन</translation>
     </message>
     <message>
         <location line="-356"/>
         <location line="+32"/>
-        <location line="+7091"/>
+        <location line="+7991"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>1 स्तर, 2 स्तर विस्तार करें, या संकुचित करें</translation>
     </message>
     <message>
-        <location line="+2389"/>
+        <location line="+2429"/>
         <source>all records</source>
         <translation>सभी रिकॉर्ड</translation>
     </message>
@@ -2802,17 +2904,21 @@ to the trash?</source>
         <translation>केवल स्नैपशॉट</translation>
     </message>
     <message>
-        <location line="+394"/>
+        <location line="-7142"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
+        <location line="+6767"/>
         <source>Device</source>
         <translation>डिवाइस</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+64"/>
         <source>Delete selected</source>
         <translation>चयनित को डिलीट करें</translation>
     </message>
     <message>
-        <location line="+360"/>
+        <location line="+367"/>
         <source>as Source</source>
         <translation>स्रोत के रूप में</translation>
     </message>
@@ -2858,7 +2964,7 @@ to the trash?</source>
         <translation>सेटिंग्स फ़ाइल खोलें</translation>
     </message>
     <message>
-        <location line="-2993"/>
+        <location line="-3050"/>
         <source>Display folders</source>
         <translation>फ़ोल्डर प्रदर्शित करें</translation>
     </message>
@@ -2873,7 +2979,7 @@ to the trash?</source>
         <translation>पहले फ़ोल्डर क्रम में</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+127"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+135"/>
         <source>Copy folder name</source>
         <translation>फ़ोल्डर नाम कॉपी करें</translation>
     </message>
@@ -2884,70 +2990,69 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+509"/>
         <source>orderValue</source>
         <translation>क्रम मान</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1640"/>
+        <location filename="../mainwindow.ui" line="-1679"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-245"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>Device Type</source>
         <translation>डिवाइस प्रकार</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-260"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-300"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>चयनित कैटलॉग में %1 से अधिक फ़ाइलें हैं।&lt;br/&gt;इसे खोलने में कई मिनट लग सकते हैं।&lt;br/&gt;जारी रखें?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5536"/>
+        <location filename="../mainwindow.ui" line="+5632"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>मेमोरी</translation>
     </message>
     <message>
-        <location line="-10875"/>
-        <location line="+1023"/>
-        <location line="+1640"/>
+        <location line="-11832"/>
+        <location line="+1022"/>
+        <location line="+2502"/>
         <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
         <translation>खोज में टेक्स्ट मानदंड का उपयोग करें</translation>
     </message>
     <message>
-        <location line="-1711"/>
+        <location line="-1906"/>
         <source>Differences on</source>
         <translation>अंतर पर</translation>
     </message>
     <message>
-        <location line="+243"/>
         <source>Catalog 1</source>
-        <translation>कैटलॉग 1</translation>
+        <translation type="vanished">कैटलॉग 1</translation>
     </message>
     <message>
-        <location line="+67"/>
         <source>Catalog2</source>
-        <translation>कैटलॉग 2</translation>
+        <translation type="vanished">कैटलॉग 2</translation>
     </message>
     <message>
-        <location line="-2455"/>
+        <location line="-2811"/>
         <source>File name</source>
         <translation>फ़ाइल नाम</translation>
     </message>
     <message>
-        <location line="+1023"/>
+        <location line="+1022"/>
         <source>File criteria</source>
         <translation>फ़ाइल मानदंड</translation>
     </message>
     <message>
-        <location line="+2836"/>
+        <location line="+3698"/>
         <source>Folder criteria</source>
         <translation>फ़ोल्डर मानदंड</translation>
     </message>
     <message>
-        <location line="+5002"/>
+        <location line="+5081"/>
         <source>Graphic Start Date</source>
         <translation>ग्राफिक प्रारंभ दिनांक</translation>
     </message>
@@ -2957,17 +3062,17 @@ to the trash?</source>
         <translation>दिनांक चुनें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+679"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2153"/>
         <source>Include Metadata</source>
         <translation>मेटाडेटा शामिल करें</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+456"/>
         <source>Local disk</source>
         <translation>स्थानीय डिस्क</translation>
     </message>
     <message>
-        <location line="-714"/>
+        <location line="-685"/>
         <source>The directory does not exist. Create it?</source>
         <translation>डायरेक्टरी मौजूद नहीं है। इसे बनाएं?</translation>
     </message>
@@ -2977,7 +3082,7 @@ to the trash?</source>
         <translation>डेटाबेस फ़ाइल मौजूद नहीं है। इसे बनाएं?</translation>
     </message>
     <message>
-        <location line="+337"/>
+        <location line="+318"/>
         <source>Collection Upgrade Required</source>
         <translation>संग्रह अपग्रेड आवश्यक</translation>
     </message>
@@ -3037,22 +3142,22 @@ to the trash?</source>
         <translation>एप्लिकेशन बंद करें</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+49"/>
         <source>Select the database to open:</source>
         <translation>खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-292"/>
         <source>Select the database to create and open:</source>
         <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+130"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>स्टोरेज डिवाइस सूची में कुछ परिवर्तन सेव नहीं किए गए हैं।&lt;br/&gt;सेव करके बाहर निकलें, छोड़कर बाहर निकलें, या बाहर निकलना रद्द करें?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+351"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+334"/>
         <source> Physical Group</source>
         <translation> फिजिकल ग्रुप</translation>
     </message>
@@ -3067,20 +3172,21 @@ to the trash?</source>
         <translation>इस टैग को हटाएं</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-71"/>
+        <location filename="../mainwindow.cpp" line="-72"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+562"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1272"/>
         <source>Catalog with results</source>
         <translation>परिणामों के साथ कैटलॉग</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1178"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1154"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3097,9 +3203,10 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-502"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3310"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+2814"/>
         <source>Active</source>
         <translation>सक्रिय</translation>
     </message>
@@ -3151,7 +3258,7 @@ to the trash?</source>
         <translation>दिनांक अंतर</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Parent Device</source>
         <translation>पैरेंट डिवाइस</translation>
     </message>
@@ -3248,7 +3355,7 @@ to the trash?</source>
         <translation>यह ग्रुप स्टोरेज और कैटलॉग होस्ट करने के लिए आवश्यक है।&lt;br/&gt;इसे डिलीट नहीं किया जा सकता।</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+232"/>
         <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
         <translation>MIME सत्यापन सफलतापूर्वक पूर्ण हुआ।&lt;br/&gt;फ़ाइल एक्सटेंशन और वास्तविक सामग्री के बीच कोई बेमेल नहीं मिला।</translation>
     </message>
@@ -3263,8 +3370,8 @@ to the trash?</source>
         <translation>MIME सत्यापन विफल:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
-        <location line="+323"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-809"/>
+        <location line="+346"/>
         <source>Search Error</source>
         <translation>खोज त्रुटि</translation>
     </message>
@@ -3335,7 +3442,7 @@ to the trash?</source>
         <translation>अंतर मिले</translation>
     </message>
     <message>
-        <location line="+213"/>
+        <location line="+210"/>
         <source>No search results available.</source>
         <translation>कोई खोज परिणाम उपलब्ध नहीं।</translation>
     </message>
