@@ -1068,22 +1068,7 @@
             ui->Search_comboBox_SearchIn->setItemData(1, Search::SEARCH_IN_FILES_AND_FOLDERS, Qt::UserRole);
             ui->Search_comboBox_SearchIn->setItemData(2, Search::SEARCH_IN_FOLDER_PATH,       Qt::UserRole);
 
-            //Add filetype English values additionally to the displayed/translated value
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder"), tr("All"), static_cast<int>(FileTypeMapping::ALL));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder-text"), tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("document-open"), tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), static_cast<int>(FileTypeMapping::NONE));
-            ui->Search_comboBox_FileType->setCurrentIndex(0);
-
-            ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
-
+            // Add Batch menu entries
             ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(2, "Rename (KRename)", Qt::UserRole);

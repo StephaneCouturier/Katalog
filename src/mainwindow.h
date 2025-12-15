@@ -397,9 +397,11 @@ class MainWindow : public KXmlGuiWindow
             void restoreCreateCatalogUIState();
             void removeFileFromResults(QString fullFilePath);
             void cleanupStoppedCatalogCreation();
+            void initiateFileTypeFields();
             void initiateMetadataFields();
             void initializeMetadataCaches();
             void initiateChecksumFields();
+            void initiateIncludeHiddenFields();
 
         //TAB: Storage
             int     selectedStorageIndexRow;

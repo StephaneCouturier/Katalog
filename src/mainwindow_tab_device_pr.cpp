@@ -562,8 +562,24 @@ void MainWindow::editDevice()
     if(activeDevice->type =="Catalog"){
         ui->Devices_widget_EditCatalogFields->show();
         ui->Devices_widget_EditStorageFields->hide();
-        ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
-        ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
+        // Find and set the file type using ItemData (multilingual-safe)
+        int fileTypeIndex = ui->Catalogs_comboBox_FileType->findData(
+            activeDevice->catalog->fileType, Qt::UserRole);
+        if (fileTypeIndex != -1) {
+            ui->Catalogs_comboBox_FileType->setCurrentIndex(fileTypeIndex);
+        } else {
+            // Default to "All" if not found
+            ui->Catalogs_comboBox_FileType->setCurrentIndex(0);
+        }
+        // Find and set the includeHidden value using ItemData (multilingual-safe)
+        int includeHiddenIndex = ui->Catalogs_comboBox_IncludeHidden->findData(
+            activeDevice->catalog->includeHidden, Qt::UserRole);
+        if (includeHiddenIndex != -1) {
+            ui->Catalogs_comboBox_IncludeHidden->setCurrentIndex(includeHiddenIndex);
+        } else {
+            // Default to "None" (index 0) if not found
+            ui->Catalogs_comboBox_IncludeHidden->setCurrentIndex(0);
+        }
         for (int i = 0; i < ui->Catalogs_comboBox_MetaDataOption->count(); ++i) {
             if (ui->Catalogs_comboBox_MetaDataOption->itemData(i, Qt::UserRole).toString() == activeDevice->catalog->includeMetadata) {
                 ui->Catalogs_comboBox_MetaDataOption->setCurrentIndex(i);
@@ -2310,10 +2326,14 @@ void MainWindow::saveCatalogChanges()
 
     //Get new values
     //Other values
-    activeDevice->catalog->fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
-    activeDevice->catalog->includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
-    activeDevice->catalog->includeMetadata  = ui->Catalogs_comboBox_MetaDataOption->itemData(ui->Catalogs_comboBox_MetaDataOption->currentIndex(), Qt::UserRole).toString();
-    activeDevice->catalog->includeChecksum  = ui->Catalogs_comboBox_ChecksumOption->itemData(ui->Catalogs_comboBox_ChecksumOption->currentIndex(), Qt::UserRole).toString();
+    activeDevice->catalog->fileType         = ui->Catalogs_comboBox_FileType->itemData(
+                ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
+    activeDevice->catalog->includeHidden    = ui->Catalogs_comboBox_IncludeHidden->itemData(
+                ui->Catalogs_comboBox_IncludeHidden->currentIndex(), Qt::UserRole).toBool();
+    activeDevice->catalog->includeMetadata  = ui->Catalogs_comboBox_MetaDataOption->itemData(
+                ui->Catalogs_comboBox_MetaDataOption->currentIndex(), Qt::UserRole).toString();
+    activeDevice->catalog->includeChecksum  = ui->Catalogs_comboBox_ChecksumOption->itemData(
+                ui->Catalogs_comboBox_ChecksumOption->currentIndex(), Qt::UserRole).toString();
     activeDevice->catalog->isFullDevice     = ui->Catalogs_checkBox_isFullDevice->checkState();
     //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
@@ -2327,7 +2347,9 @@ void MainWindow::saveCatalogChanges()
         changesToFileSelectionMade = true;
     }
     if(activeDevice->catalog->includeHidden  != previousCatalog.catalog->includeHidden){
-        message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(previousCatalog.catalog->includeHidden).toString()   + "</td><td><b>" + QVariant(activeDevice->catalog->includeHidden).toString()   + "</b></td></tr>";
+        QString previousValue = previousCatalog.catalog->includeHidden ? tr("All") : tr("None");
+        QString newValue = activeDevice->catalog->includeHidden ? tr("All") : tr("None");
+        message = message + "<tr><td>" + tr("Include Hidden") + "</td><td>" + previousValue + "</td><td><b>" + newValue + "</b></td></tr>";
         changesToFileSelectionMade = true;
     }
     if(activeDevice->catalog->includeMetadata != previousCatalog.catalog->includeMetadata){

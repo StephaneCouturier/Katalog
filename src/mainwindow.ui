@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1080</width>
-    <height>1386</height>
+    <height>720</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -7607,24 +7607,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </item>
                   <item row="1" column="0">
                    <layout class="QGridLayout" name="Devices_gridLayout_18">
-                    <item row="2" column="1">
-                     <widget class="QLabel" name="Catalogs_label_FileType_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>120</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Include files metadata</string>
-                      </property>
-                     </widget>
-                    </item>
+                    <property name="leftMargin">
+                     <number>25</number>
+                    </property>
                     <item row="2" column="2">
                      <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_MetaDataOption">
-                      <item>
-                       <widget class="QComboBox" name="Catalogs_comboBox_MetaDataOption"/>
-                      </item>
                       <item>
                        <spacer name="Catalogs_horizontalSpacer_MetaDataOption">
                         <property name="orientation">
@@ -7660,16 +7647,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="1">
-                     <widget class="QCheckBox" name="Catalogs_checkBox_IncludeHidden">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="text">
-                       <string>Include Hidden Files</string>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="0" column="2">
                      <spacer name="Devices_horizontalSpacer_14">
                       <property name="orientation">
@@ -7684,64 +7661,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </spacer>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QComboBox" name="Catalogs_comboBox_FileType">
-                      <item>
-                       <property name="text">
-                        <string>All</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>Audio</string>
-                       </property>
-                       <property name="icon">
-                        <iconset theme="audio-x-mpeg"/>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>Image</string>
-                       </property>
-                       <property name="icon">
-                        <iconset theme="image-jpeg"/>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>Text</string>
-                       </property>
-                       <property name="icon">
-                        <iconset theme="folder-text"/>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>Video</string>
-                       </property>
-                       <property name="icon">
-                        <iconset theme="video-mp4"/>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QLabel" name="Catalogs_label_FileType_3">
-                      <property name="minimumSize">
-                       <size>
-                        <width>120</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Include files checksum</string>
-                      </property>
-                     </widget>
+                     <widget class="QComboBox" name="Catalogs_comboBox_FileType"/>
                     </item>
                     <item row="3" column="2">
                      <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_MetaDataOption_2">
-                      <item>
-                       <widget class="QComboBox" name="Catalogs_comboBox_ChecksumOption"/>
-                      </item>
                       <item>
                        <spacer name="Catalogs_horizontalSpacer_MetaDataOption_2">
                         <property name="orientation">
@@ -7756,6 +7679,54 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </spacer>
                       </item>
                      </layout>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QComboBox" name="Catalogs_comboBox_IncludeHidden"/>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="Catalogs_label_FileType_4">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Include Hidden files</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="Catalogs_label_FileType_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Include files metadata</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QComboBox" name="Catalogs_comboBox_MetaDataOption"/>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="Catalogs_label_FileType_3">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Include files checksum</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QComboBox" name="Catalogs_comboBox_ChecksumOption"/>
                     </item>
                    </layout>
                   </item>
@@ -9392,248 +9363,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <layout class="QVBoxLayout" name="Create_verticalLayout_includeFileType">
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>20</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="Create_label_includeFileType">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>include File Type</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Any">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>All</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Audio">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Audio</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="audio-x-mpeg"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Image">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Image</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="image-jpeg"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Text">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Text</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="folder-text"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Video">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Video</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="video-mp4"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Other">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Other</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_None">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>None</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="application-x-zerosize"/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
                <layout class="QVBoxLayout" name="Create_verticalLayout_includeOther">
                 <property name="leftMargin">
                  <number>20</number>
@@ -9648,7 +9377,24 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <number>20</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="Create_label_OtherOptions">
+                 <widget class="QLabel" name="Create_label_includeFileType">
+                  <property name="text">
+                   <string>Include File Type</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="Create_verticalLayout_MetadataOption_2">
+                  <property name="leftMargin">
+                   <number>20</number>
+                  </property>
+                  <item>
+                   <widget class="QComboBox" name="Create_comboBox_FileType"/>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="Filters_verticalSpacer_9">
                   <property name="font">
                    <font>
                     <family>Noto Sans</family>
@@ -9656,13 +9402,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <kerning>true</kerning>
                    </font>
                   </property>
-                  <property name="text">
-                   <string>Other options</string>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
                   </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
-                 </widget>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>10</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                 <item>
                  <widget class="QLabel" name="Create_label_IncludeMetadata">
@@ -9745,18 +9497,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="Create_checkBox_IncludeHidden">
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>9</pointsize>
-                    <kerning>false</kerning>
-                   </font>
-                  </property>
+                 <widget class="QLabel" name="Create_label_IncludeHidden">
                   <property name="text">
                    <string>Include Hidden files</string>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="Create_verticalLayout_ChecksumOption_2">
+                  <property name="leftMargin">
+                   <number>20</number>
+                  </property>
+                  <item>
+                   <widget class="QComboBox" name="Create_comboBox_IncludeHidden"/>
+                  </item>
+                 </layout>
                 </item>
                 <item>
                  <widget class="QCheckBox" name="Create_checkBox_IncludeSymblinks">

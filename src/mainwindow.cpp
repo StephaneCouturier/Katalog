@@ -151,13 +151,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Source);
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Target);
 
-            QButtonGroup buttonGroupCreateFilesType;
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Any);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Audio);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Image);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Text);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Video);
-
         //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
@@ -265,9 +258,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Create_lineEdit_NewCatalogPath->setText("/");
 
             //Initiate comboboxes for metadata & checksum fields
+            initiateFileTypeFields();
             initiateMetadataFields();
             initiateChecksumFields();
-
+            initiateIncludeHiddenFields();
 
             //Always Load the file system for the treeview
             loadFileSystem("/");
