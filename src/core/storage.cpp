@@ -39,7 +39,7 @@ void Storage::generateID()
 {//Generate ID and add it to name
     QSqlQuery queryDeviceNumber(QSqlDatabase::database(m_connectionName));
     QString queryDeviceNumberSQL = QLatin1String(R"(
-                                        SELECT MAX (storage_id)
+                                        SELECT MAX(storage_id)
                                         FROM storage
                                     )");
     queryDeviceNumber.prepare(queryDeviceNumberSQL);
