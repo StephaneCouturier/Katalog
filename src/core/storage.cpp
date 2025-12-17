@@ -229,12 +229,15 @@ Storage::UpdateResult Storage::updateStorageInfo()
                                     WHERE storage_id = :storage_id
                                     )");
     queryTotalSpace.prepare(queryTotalSpaceSQL);
-    queryTotalSpace.bindValue(":storage_total_space", QString::number(totalSpace));
-    queryTotalSpace.bindValue(":storage_free_space", QString::number(freeSpace));
+    queryTotalSpace.bindValue(":storage_total_space", totalSpace);
+    queryTotalSpace.bindValue(":storage_free_space", freeSpace);
     queryTotalSpace.bindValue(":storage_label", label);
     queryTotalSpace.bindValue(":storage_file_system", fileSystem);
     queryTotalSpace.bindValue(":storage_id", ID);
-    queryTotalSpace.exec();
+    if (!queryTotalSpace.exec()) {
+        qDebug() << "ERROR updating storage table:" << queryTotalSpace.lastError().text();
+        qDebug() << "Storage ID:" << ID << "TotalSpace:" << totalSpace << "FreeSpace:" << freeSpace;
+    }
 
     // Save to Device table
     queryTotalSpaceSQL = QLatin1String(R"(

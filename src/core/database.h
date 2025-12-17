@@ -175,6 +175,7 @@ public:
                                 const QString &overrideDatabaseFilePath = QString());
     // Create all database tables
     static QSqlError createAllTables(const QString &connectionName);
+    static QString getSQLCreateIndexes(DatabaseType dbType);
 
     // Utility methods
     static bool tableExists(const QString &connectionName, const QString &tableName);

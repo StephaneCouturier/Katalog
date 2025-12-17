@@ -40,53 +40,58 @@
 //----------------------------------------------------------------------
 QString Database::getSQLCreateTableDevice(DatabaseType dbType)
 {
-    return R"(
+    // MySQL/PostgreSQL need BIGINT for large file sizes (NUMERIC defaults to ~9GB max)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
                 CREATE TABLE IF NOT EXISTS device(
-                    device_id                  NUMERIC PRIMARY KEY,
-                    device_parent_id           NUMERIC,
+                    device_id                  %1 PRIMARY KEY,
+                    device_parent_id           %1,
                     device_name                TEXT,
                     device_type                TEXT,
-                    device_external_id         NUMERIC,
+                    device_external_id         %1,
                     device_path                TEXT,
-                    device_total_file_size     NUMERIC default 0,
-                    device_total_file_count    NUMERIC default 0,
-                    device_total_space         NUMERIC default 0,
-                    device_free_space          NUMERIC default 0,
-                    device_active              NUMERIC,
-                    device_group_id            NUMERIC,
+                    device_total_file_size     %1 default 0,
+                    device_total_file_count    %1 default 0,
+                    device_total_space         %1 default 0,
+                    device_free_space          %1 default 0,
+                    device_active              %1,
+                    device_group_id            %1,
                     device_date_updated        TEXT,
-                    device_order               NUMERIC)
-            )";
+                    device_order               %1)
+            )").arg(largeNumeric);
 }
 
 QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
 {
-    // For MySQL/PostgreSQL, use VARCHAR with specific length for PRIMARY KEY
-    // SQLite allows TEXT in PRIMARY KEY
     QString catalogNameType;
+    QString largeNumeric;
 
     switch (databaseType) {
     case DatabaseType::SQLite:
         catalogNameType = "TEXT";
+        largeNumeric = "NUMERIC";
         break;
     case DatabaseType::MySQL:
         catalogNameType = "VARCHAR(500)";
+        largeNumeric = "BIGINT";
         break;
     case DatabaseType::PostgreSQL:
         catalogNameType = "VARCHAR(500)";
+        largeNumeric = "BIGINT";
         break;
     }
 
     return QString(R"(
                 CREATE TABLE IF NOT EXISTS catalog(
-                    catalog_id                    NUMERIC,
+                    catalog_id                    %2,
                     catalog_file_path             TEXT,
                     catalog_name                  %1,
                     catalog_date_updated          TEXT,
                     catalog_source_path           TEXT,
-                    catalog_file_count            NUMERIC default 0,
-                    catalog_total_file_size       NUMERIC default 0,
-                    catalog_source_path_is_active NUMERIC,
+                    catalog_file_count            %2 default 0,
+                    catalog_total_file_size       %2 default 0,
+                    catalog_source_path_is_active %2,
                     catalog_include_hidden        TEXT,
                     catalog_file_type             TEXT,
                     catalog_storage               TEXT,
@@ -97,22 +102,25 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_include_checksum      TEXT,
                     catalog_app_version           TEXT,
                     PRIMARY KEY(catalog_name))
-    )").arg(catalogNameType);
+    )").arg(catalogNameType, largeNumeric);
 }
 
 QString Database::getSQLCreateTableStorage(DatabaseType dbType)
 {
-    return R"(
+    // MySQL/PostgreSQL need BIGINT for large file sizes (NUMERIC defaults to ~9GB max)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
                 CREATE TABLE IF NOT EXISTS storage(
-                    storage_id            NUMERIC  primary key default 0,
+                    storage_id            %1  primary key default 0,
                     storage_name          TEXT,
                     storage_type          TEXT,
                     storage_location      TEXT,
                     storage_path          TEXT,
                     storage_label         TEXT,
                     storage_file_system   TEXT,
-                    storage_total_space   NUMERIC default 0,
-                    storage_free_space    NUMERIC default 0,
+                    storage_total_space   %1 default 0,
+                    storage_free_space    %1 default 0,
                     storage_brand         TEXT,
                     storage_model         TEXT,
                     storage_serial_number TEXT,
@@ -120,21 +128,24 @@ QString Database::getSQLCreateTableStorage(DatabaseType dbType)
                     storage_comment1      TEXT,
                     storage_comment2      TEXT,
                     storage_comment3      TEXT)
-            )";
+            )").arg(largeNumeric);
 }
 
 QString Database::getSQLCreateTableFile(DatabaseType dbType)
 {
-    return R"(
+    // MySQL/PostgreSQL need BIGINT for file_size (single files can exceed 9GB)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
                 CREATE TABLE IF NOT EXISTS file(
-                    file_catalog_id   NUMERIC,
-                    file_name         TEXT,     -- "home.jpg"
-                    file_folder_path  TEXT,     -- "/home/user/photos"
-                    file_size         NUMERIC,
-                    file_date_updated TEXT,
-                    file_catalog      TEXT,
-                    file_full_path    TEXT,     -- "/home/user/photos/home.jpg"
-                    file_extension    TEXT,     -- "jpg"
+                    file_catalog_id         %1,
+                    file_name               TEXT,     -- "home.jpg"
+                    file_folder_path        TEXT,     -- "/home/user/photos"
+                    file_size               %1,
+                    file_date_updated       TEXT,
+                    file_catalog            TEXT,
+                    file_full_path          TEXT,     -- "/home/user/photos/home.jpg"
+                    file_extension          TEXT,     -- "jpg"
                     file_type               TEXT,
                     mime_type               TEXT,
                     mime_verified           NUMERIC,
@@ -157,25 +168,28 @@ QString Database::getSQLCreateTableFile(DatabaseType dbType)
                     audio_track_number      NUMERIC,
                     audio_bitrate           NUMERIC,
                     audio_sample_rate       NUMERIC,
-                    metadata_extended       TEXT,    -- JSON for additional fields
+                    metadata_extended       TEXT,     -- JSON for additional fields
                     metadata_extraction_date TEXT,
                     checksum_sha256          TEXT,
                     checksum_extraction_date TEXT)
-            )";
+            )").arg(largeNumeric);
 }
 
 QString Database::getSQLCreateTableFileTemp(DatabaseType dbType)
 {
-    return R"(
-                CREATE TABLE IF NOT EXISTS  filetemp(
-                    file_catalog_id   NUMERIC,
-                    file_name         TEXT,     -- "home.jpg"
-                    file_folder_path  TEXT,     -- "/home/user/photos"
-                    file_size         NUMERIC,
-                    file_date_updated TEXT,
-                    file_catalog      TEXT,
-                    file_full_path    TEXT,     -- "/home/user/photos/home.jpg"
-                    file_extension    TEXT,      -- "jpg"
+    // MySQL/PostgreSQL need BIGINT for file_size (single files can exceed 9GB)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS filetemp(
+                    file_catalog_id         %1,
+                    file_name               TEXT,     -- "home.jpg"
+                    file_folder_path        TEXT,     -- "/home/user/photos"
+                    file_size               %1,
+                    file_date_updated       TEXT,
+                    file_catalog            TEXT,
+                    file_full_path          TEXT,     -- "/home/user/photos/home.jpg"
+                    file_extension          TEXT,     -- "jpg"
                     file_type               TEXT,
                     mime_type               TEXT,
                     mime_verified           NUMERIC,
@@ -198,11 +212,11 @@ QString Database::getSQLCreateTableFileTemp(DatabaseType dbType)
                     audio_track_number      NUMERIC,
                     audio_bitrate           NUMERIC,
                     audio_sample_rate       NUMERIC,
-                    metadata_extended       TEXT,    -- JSON for additional fields
+                    metadata_extended       TEXT,     -- JSON for additional fields
                     metadata_extraction_date TEXT,
                     checksum_sha256          TEXT,
                     checksum_extraction_date TEXT)
-            )";
+            )").arg(largeNumeric);
 }
 
 QString Database::getSQLCreateTableFolder(DatabaseType databaseType)
@@ -232,33 +246,37 @@ QString Database::getSQLCreateTableFolder(DatabaseType databaseType)
 
 QString Database::getSQLCreateTableStatisticsDevice(DatabaseType dbType)
 {
-    return R"(
-                CREATE TABLE IF NOT EXISTS  statistics_device(
+    // MySQL/PostgreSQL need BIGINT for large file sizes
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS statistics_device(
                     date_time               TEXT,
-                    device_id               TEXT,
+                    device_id               %1,
                     device_name             TEXT,
                     device_type             TEXT,
-                    device_file_count       NUMERIC,
-                    device_total_file_size  NUMERIC,
-                    device_free_space       NUMERIC,
-                    device_total_space      NUMERIC,
+                    device_file_count       %1,
+                    device_total_file_size  %1,
+                    device_free_space       %1,
+                    device_total_space      %1,
                     record_type             TEXT)
-            )";
+            )").arg(largeNumeric);
 }
 
 QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
 {
-    // For MySQL/PostgreSQL, file size unit fields must be TEXT (not NUMERIC)
-    // because they store values like "Bytes", "KB", "MB", "GB", "TB"
     QString sizeUnitType;
+    QString largeNumeric;
 
     switch (databaseType) {
     case DatabaseType::SQLite:
-        sizeUnitType = "NUMERIC";  // SQLite is flexible, accepts both
+        sizeUnitType = "NUMERIC";
+        largeNumeric = "NUMERIC";
         break;
     case DatabaseType::MySQL:
     case DatabaseType::PostgreSQL:
-        sizeUnitType = "TEXT";     // MySQL/PostgreSQL need TEXT for string values
+        sizeUnitType = "TEXT";      // For string values like "Bytes", "KB", etc.
+        largeNumeric = "BIGINT";    // For file sizes
         break;
     }
 
@@ -273,9 +291,9 @@ QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
                     file_type_checked           NUMERIC,
                     file_type                   TEXT,
                     file_size_checked           NUMERIC,
-                    file_size_min               NUMERIC,
+                    file_size_min               %2,
                     file_size_min_unit          %1,
-                    file_size_max               NUMERIC,
+                    file_size_max               %2,
                     file_size_max_unit          %1,
                     date_modified_checked       NUMERIC,
                     date_modified_min           TEXT,
@@ -320,7 +338,7 @@ QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
                     metadata_duration_checked   NUMERIC,
                     metadata_duration_min       TEXT,
                     metadata_duration_max       TEXT)
-    )").arg(sizeUnitType);
+    )").arg(sizeUnitType, largeNumeric);
 }
 
 QString Database::getSQLCreateTableTag(DatabaseType databaseType)
@@ -363,16 +381,20 @@ QString Database::getSQLCreateTableParameter(DatabaseType dbType)
 QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
 {
     QString autoIncrementSyntax;
+    QString largeNumeric;
 
     switch (databaseType) {
     case DatabaseType::SQLite:
         autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
+        largeNumeric = "NUMERIC";
         break;
     case DatabaseType::MySQL:
         autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
+        largeNumeric = "BIGINT";
         break;
     case DatabaseType::PostgreSQL:
         autoIncrementSyntax = "SERIAL PRIMARY KEY";
+        largeNumeric = "BIGINT";
         break;
     }
 
@@ -381,11 +403,11 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_id                  %1,
                     mapping_name                TEXT,
                     mapping_type                TEXT,
-                    mapping_device_source_id    NUMERIC,
-                    mapping_device_target_id    NUMERIC,
+                    mapping_device_source_id    %2,
+                    mapping_device_target_id    %2,
                     mapping_backup_last_date    TEXT,
-                    mapping_backup_last_size    TEXT)
-    )").arg(autoIncrementSyntax);
+                    mapping_backup_last_size    %2)
+            )").arg(autoIncrementSyntax, largeNumeric);
 }
 
 //----------------------------------------------------------------------
@@ -515,6 +537,27 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
         return tableError;
     }
 
+    // After creating tables, create indexes
+    DatabaseType dbType = getDatabaseType(connectionName);
+    QString indexSQL = getSQLCreateIndexes(dbType);
+
+    // For SQLite, can execute all at once
+    // For MySQL, need to execute one by one and ignore "already exists" errors
+    QStringList indexStatements = indexSQL.split(';', Qt::SkipEmptyParts);
+    for (const QString& stmt : indexStatements) {
+        QString trimmed = stmt.trimmed();
+        if (!trimmed.isEmpty()) {
+            QSqlQuery query(QSqlDatabase::database(connectionName));
+            if (!query.exec(trimmed)) {
+                // Ignore "index already exists" errors
+                QString error = query.lastError().text().toLower();
+                if (!error.contains("already exists") && !error.contains("duplicate")) {
+                    qDebug() << "Index creation warning:" << query.lastError().text();
+                }
+            }
+        }
+    }
+
     return QSqlError(); // Success
 }
 
@@ -577,6 +620,31 @@ QSqlError Database::createAllTables(const QString &connectionName)
     if (error.type() != QSqlError::NoError) return error;
 */
     return QSqlError(); // Success
+}
+
+QString Database::getSQLCreateIndexes(DatabaseType dbType)
+{
+    // MySQL requires prefix length for TEXT columns in indexes
+    // SQLite doesn't support prefix lengths but handles TEXT indexes fine
+
+    switch (dbType) {
+    case DatabaseType::SQLite:
+        return R"(
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_path ON file(file_catalog_id, file_full_path);
+            CREATE INDEX IF NOT EXISTS idx_filetemp_catalog_path ON filetemp(file_catalog_id, file_full_path);
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_folder ON file(file_catalog_id, file_folder_path);
+        )";
+
+    case DatabaseType::MySQL:
+    case DatabaseType::PostgreSQL:
+        // MySQL needs prefix length for TEXT columns (max 767 bytes for InnoDB)
+        return R"(
+            CREATE INDEX idx_file_catalog_path ON file(file_catalog_id, file_full_path(500));
+            CREATE INDEX idx_filetemp_catalog_path ON filetemp(file_catalog_id, file_full_path(500));
+            CREATE INDEX idx_file_catalog_folder ON file(file_catalog_id, file_folder_path(500));
+        )";
+    }
+    return "";
 }
 
 //----------------------------------------------------------------------

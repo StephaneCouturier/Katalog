@@ -2576,18 +2576,19 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
     QString pathList = paths.join(", ");
 
     // Bulk update using subqueries
+    // Added LIMIT 1 for MySQL compatibility (prevents "Subquery returns more than 1 row" error)
     QString updateSQL = QString(R"(
         UPDATE file
         SET file_size = (SELECT ft.file_size FROM filetemp ft
-                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             file_date_updated = (SELECT ft.file_date_updated FROM filetemp ft
-                                 WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                                 WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             file_extension = (SELECT ft.file_extension FROM filetemp ft
-                              WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                              WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             file_type = (SELECT ft.file_type FROM filetemp ft
-                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             mime_type = (SELECT ft.mime_type FROM filetemp ft
-                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             metadata_extraction_date = NULL
         WHERE file_catalog_id = %1
           AND file_full_path IN (%2)
@@ -2597,7 +2598,8 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
     if (!query.exec(updateSQL)) {
         qDebug() << "ERROR: Bulk update of modified files failed:" << query.lastError().text();
 
-        // Fallback: Update one by one
+        // Fallback: Update one by one using direct values from modifiedFiles
+        // Note: modifiedFiles contains [0]=full_path, [1]=name, [2]=folder, [3]=size, [4]=date, [5]=extension, [6]=type
         qDebug() << "Attempting individual updates...";
         QSqlQuery individualQuery(QSqlDatabase::database(m_connectionName));
         individualQuery.prepare(R"(
@@ -2606,7 +2608,6 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
                 file_date_updated = :date,
                 file_extension = :extension,
                 file_type = :file_type,
-                mime_type = :mime_type,
                 metadata_extraction_date = NULL
             WHERE file_catalog_id = :catalog_id
               AND file_full_path = :full_path
@@ -2615,13 +2616,19 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
         int successCount = 0;
         for (const auto &fileData : modifiedFiles) {
             if (!shouldContinue()) break;
-            individualQuery.bindValue(":size", fileData[3]);  // file_size
-            individualQuery.bindValue(":date", fileData[4]);  // file_date_updated
-            individualQuery.bindValue(":extension", fileData[5]);  // file_extension
-            individualQuery.bindValue(":file_type", fileData[6]);  // file_type
+
+            // Validate we have enough data
+            if (fileData.size() < 7) {
+                qDebug() << "Skipping file with insufficient data:" << fileData[0].toString();
+                continue;
+            }
+
             individualQuery.bindValue(":catalog_id", m_device->catalog->ID);
-            individualQuery.bindValue(":full_path", fileData[0]);  // file_full_path
-            individualQuery.bindValue(":mime_type", fileData[7]);  // mime_type
+            individualQuery.bindValue(":full_path", fileData[0]);   // file_full_path
+            individualQuery.bindValue(":size", fileData[3]);        // file_size
+            individualQuery.bindValue(":date", fileData[4]);        // file_date_updated
+            individualQuery.bindValue(":extension", fileData[5]);   // file_extension
+            individualQuery.bindValue(":file_type", fileData[6]);   // file_type
 
             if (individualQuery.exec()) {
                 successCount++;
