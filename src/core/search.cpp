@@ -323,23 +323,23 @@ void Search::setMultipliers()
     // Define a size multiplier depending on the size unit selected
     sizeMultiplierMin = 1;
     if (selectedMinSizeUnit == SIZE_UNIT_KIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024;
+        sizeMultiplierMin = qint64(1024);
     else if (selectedMinSizeUnit == SIZE_UNIT_MIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024;
+        sizeMultiplierMin = qint64(1024) * 1024;
     else if (selectedMinSizeUnit == SIZE_UNIT_GIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024 * 1024;
+        sizeMultiplierMin = qint64(1024) * 1024 * 1024;
     else if (selectedMinSizeUnit == SIZE_UNIT_TIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024 * 1024 * 1024;
+        sizeMultiplierMin = qint64(1024) * 1024 * 1024 * 1024;
 
     sizeMultiplierMax = 1;
     if (selectedMaxSizeUnit == SIZE_UNIT_KIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024;
+        sizeMultiplierMax = qint64(1024);
     else if (selectedMaxSizeUnit == SIZE_UNIT_MIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024;
+        sizeMultiplierMax = qint64(1024) * 1024;
     else if (selectedMaxSizeUnit == SIZE_UNIT_GIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024 * 1024;
+        sizeMultiplierMax = qint64(1024) * 1024 * 1024;
     else if (selectedMaxSizeUnit == SIZE_UNIT_TIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024 * 1024 * 1024;
+        sizeMultiplierMax = qint64(1024) * 1024 * 1024 * 1024;
 }
 
 void Search::processResults()
