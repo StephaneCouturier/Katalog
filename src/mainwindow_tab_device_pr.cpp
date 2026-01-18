@@ -34,6 +34,7 @@
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
 #include "core/device.h"
+#include "core/filechecksum.h"
 #include "mainwindow_ui_wrapper_device.h"
 #include "mainwindow_ui_wrapper_catalog.h"
 
@@ -2811,6 +2812,137 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
         }
     }
     return maxLevel + 1;
+}
+//--------------------------------------------------------------------------
+void MainWindow::verifyCatalogChecksums()
+{
+    if (!activeDevice || !activeDevice->catalog) {
+        return;
+    }
+
+    Catalog *catalog = activeDevice->catalog;
+
+    // In Memory mode, load catalog first if needed
+    if (collection->databaseMode == "Memory") {
+        if (catalog->dateLoaded < catalog->dateUpdated || catalog->dateLoaded.isNull()) {
+            qDebug() << "Memory mode: Loading catalog before verification";
+
+            QProgressDialog loadProgress(tr("Loading catalog..."), QString(), 0, catalog->fileCount, this);
+            loadProgress.setWindowModality(Qt::WindowModal);
+            loadProgress.show();
+
+            bool stopRequested = false;
+            QMutex mutex;
+
+            QMetaObject::Connection progressConnection = connect(catalog, &Catalog::loadProgress,
+                this, [&](int current, int total) {
+                loadProgress.setMaximum(total);
+                loadProgress.setValue(current);
+                QCoreApplication::processEvents();
+            });
+
+            catalog->loadCatalogFileListToTable(mutex, stopRequested);
+
+            disconnect(progressConnection);
+        }
+    }
+
+    // Count files to verify
+    int totalFiles = FileChecksum::countFilesWithChecksum(m_connectionName, catalog->ID);
+
+    if (totalFiles == 0) {
+        QMessageBox::information(this, tr("No Checksums"),
+                                tr("This catalog has no files with checksums to verify."));
+        return;
+    }
+
+    // Confirm
+    int choice = QMessageBox::question(this, tr("Verify Checksums"),
+                                      tr("Verify checksums for %1 files?\n\n"
+                                         "This will recalculate all checksums and compare them "
+                                         "to detect file corruption or modifications.")
+                                      .arg(totalFiles),
+                                      QMessageBox::Yes | QMessageBox::No);
+
+    if (choice != QMessageBox::Yes) {
+        return;
+    }
+
+    // Progress dialog
+    QProgressDialog progress(tr("Verifying checksums..."), tr("Cancel"), 0, totalFiles, this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setMinimumDuration(0);
+
+    bool userCancelled = false;
+
+    auto shouldContinue = [&]() {
+        return !userCancelled;
+    };
+
+    auto progressCallback = [&](int current, int total, const QString &fileName) {
+        progress.setMaximum(total);
+        progress.setValue(current);
+        progress.setLabelText(tr("Verifying: %1\n(%2 of %3)")
+                             .arg(fileName)
+                             .arg(current)
+                             .arg(total));
+        QCoreApplication::processEvents();
+        if (progress.wasCanceled()) {
+            userCancelled = true;
+        }
+    };
+
+    // Run verification
+    FileChecksum::CatalogVerificationResult result =
+        FileChecksum::verifyCatalogChecksums(m_connectionName,
+                                            catalog->ID,
+                                            catalog->sourcePath,
+                                            shouldContinue,
+                                            progressCallback);
+
+    // Show results
+    QString resultMessage;
+    QMessageBox::Icon icon;
+
+    if (result.mismatches == 0 && result.missing == 0) {
+        // All good
+        icon = QMessageBox::Information;
+        resultMessage = tr("✓ Verification Complete\n\n"
+                          "All checksums verified successfully!\n\n"
+                          "Files verified: %1")
+                          .arg(result.verified);
+    } else {
+        // Problems found
+        icon = QMessageBox::Warning;
+        resultMessage = tr("⚠ Verification Complete - Issues Found\n\n"
+                          "Verified: %1\n"
+                          "Mismatches: %2\n"
+                          "Missing files: %3\n\n")
+                          .arg(result.verified)
+                          .arg(result.mismatches)
+                          .arg(result.missing);
+
+        if (result.mismatches > 0) {
+            resultMessage += tr("Files with checksum mismatches:\n");
+            for (const QString &file : result.mismatchedFiles) {
+                resultMessage += "  • " + file + "\n";
+            }
+            resultMessage += "\n";
+        }
+
+        if (result.missing > 0) {
+            resultMessage += tr("Missing files:\n");
+            for (const QString &file : result.missingFiles) {
+                resultMessage += "  • " + file + "\n";
+            }
+        }
+    }
+
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle(tr("Checksum Verification Results"));
+    msgBox.setIcon(icon);
+    msgBox.setText(resultMessage);
+    msgBox.exec();
 }
 //--------------------------------------------------------------------------
 

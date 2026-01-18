@@ -39,10 +39,6 @@
 #include <QCryptographicHash>
 #include <functional>
 
-/**
- * @brief The FileChecksum class
- * Handles calculation and storage of file checksums using Qt QCryptographicHash
- */
 class FileChecksum : public QObject
 {
     Q_OBJECT
@@ -96,6 +92,27 @@ public:
     // Helper to get checksum from DB
     static QString getFileChecksum(const QString &connectionName, int catalogId,
                                    const QString &fileName, const QString &folderPath);
+
+    // Count files with checksums in a catalog
+    static int countFilesWithChecksum(const QString &connectionName, int catalogId);
+
+    // Verify all checksums in a catalog
+    struct CatalogVerificationResult {
+        int totalFiles;
+        int verified;
+        int mismatches;
+        int missing;
+        QStringList mismatchedFiles;  // List of files with checksum mismatches
+        QStringList missingFiles;     // List of files that no longer exist
+    };
+
+    static CatalogVerificationResult verifyCatalogChecksums(
+        const QString &connectionName,
+        int catalogId,
+        const QString &catalogSourcePath,
+        std::function<bool()> shouldContinue,
+        std::function<void(int, int, const QString&)> progressCallback = nullptr
+        );
 
 signals:
     void checksumCalculated(const QString &filePath);

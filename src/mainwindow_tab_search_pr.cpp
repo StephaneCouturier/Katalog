@@ -608,9 +608,7 @@ void MainWindow::updateTooltips()
     }
     ui->Search_pushButton_Stop->setToolTip(tr("Stop the current search"));
 }
-
-// Replace the displayExtendedMetadataJson method implementation with this updated version:
-
+//----------------------------------------------------------------------
 void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folderPath, const QString &fileName)
 {
     QString jsonMetadata;
@@ -719,7 +717,7 @@ void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folde
     metadataDialog->exec();
     metadataDialog->deleteLater();
 }
-
+//----------------------------------------------------------------------
 QString MainWindow::formatJsonForDisplay(const QString &jsonString)
 {
     // Parse and reformat JSON with proper indentation
@@ -733,9 +731,7 @@ QString MainWindow::formatJsonForDisplay(const QString &jsonString)
     // Return formatted JSON with indentation
     return doc.toJson(QJsonDocument::Indented);
 }
-
-// Replace the convertJsonToHtmlTable method implementation with this fixed version:
-
+//----------------------------------------------------------------------
 QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
 {
     // Parse JSON
@@ -926,7 +922,6 @@ QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
     html += "</tbody></table>";
     return html;
 }
-
 //----------------------------------------------------------------------
 //--- Display results --------------------------------------------------
 //----------------------------------------------------------------------
@@ -1213,7 +1208,6 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     statusBarTimer->start(5000);
     QCoreApplication::processEvents();
 }
-
 //----------------------------------------------------------------------
 void MainWindow::reportSearchStatistics()
 {

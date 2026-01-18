@@ -447,6 +447,8 @@ class MainWindow : public KXmlGuiWindow
             void recordDevicesSnapshot();
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
 
+            void verifyCatalogChecksums();
+
             //Migration 1.22 to 2.0
             void migrateCollectionFromV1toV2();
             void importVirtualToDevices();

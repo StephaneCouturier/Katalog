@@ -41,7 +41,6 @@
 FileChecksum::FileChecksum(QObject *parent) : QObject(parent)
 {
 }
-
 //-----------------------------------------------------------------------------------------------------
 bool FileChecksum::calculateAndStore(const QString &filePath,
                                      const QString &connectionName,
@@ -266,7 +265,7 @@ QCryptographicHash::Algorithm FileChecksum::getAlgorithmFromString(const QString
     qDebug() << "WARNING: Unknown checksum algorithm:" << algorithmName << "- defaulting to SHA256";
     return QCryptographicHash::Sha256;
 }
-
+//-----------------------------------------------------------------------------------------------------
 FileChecksum::VerificationResult FileChecksum::verifyChecksum(
     const QString &filePath,
     const QString &expectedChecksum,
@@ -301,7 +300,7 @@ FileChecksum::VerificationResult FileChecksum::verifyChecksum(
 
     return result;
 }
-
+//-----------------------------------------------------------------------------------------------------
 QString FileChecksum::getFileChecksum(const QString &connectionName, int catalogId,
                                       const QString &fileName, const QString &folderPath)
 {
@@ -320,3 +319,112 @@ QString FileChecksum::getFileChecksum(const QString &connectionName, int catalog
 
     return QString(); // Empty = no checksum
 }
+//-----------------------------------------------------------------------------------------------------
+int FileChecksum::countFilesWithChecksum(const QString &connectionName, int catalogId)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare("SELECT COUNT(*) FROM file "
+                  "WHERE file_catalog_id = :file_catalog_id "
+                  "AND checksum_sha256 IS NOT NULL "
+                  "AND checksum_sha256 != ''");
+    query.bindValue(":file_catalog_id", catalogId);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+        qDebug() << "FileChecksum::countFilesWithChecksum - Count for catalog"
+                 << catalogId << "is" << query.value(0).toInt();
+    }
+    else {
+        qDebug() << "FileChecksum::countFilesWithChecksum - Query failed:" << query.lastError().text();
+    }
+
+    return 0;
+}
+//-----------------------------------------------------------------------------------------------------
+FileChecksum::CatalogVerificationResult FileChecksum::verifyCatalogChecksums(
+    const QString &connectionName,
+    int catalogId,
+    const QString &catalogSourcePath,
+    std::function<bool()> shouldContinue,
+    std::function<void(int, int, const QString&)> progressCallback)
+{
+    CatalogVerificationResult result;
+    result.totalFiles = 0;
+    result.verified = 0;
+    result.mismatches = 0;
+    result.missing = 0;
+
+    // Query files with checksums
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare("SELECT file_name, file_folder_path, checksum_sha256 "
+                  "FROM file "
+                  "WHERE file_catalog_id = :catalog_id "
+                  "AND checksum_sha256 IS NOT NULL "
+                  "AND checksum_sha256 != ''");
+    query.bindValue(":catalog_id", catalogId);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to query files for verification:" << query.lastError().text();
+        return result;
+    }
+
+    // Count total files
+    QSqlQuery countQuery(QSqlDatabase::database(connectionName));
+    countQuery.prepare("SELECT COUNT(*) FROM file "
+                       "WHERE file_catalog_id = :catalog_id "
+                       "AND checksum_sha256 IS NOT NULL "
+                       "AND checksum_sha256 != ''");
+    countQuery.bindValue(":catalog_id", catalogId);
+    if (countQuery.exec() && countQuery.next()) {
+        result.totalFiles = countQuery.value(0).toInt();
+    }
+
+    int processed = 0;
+
+    while (query.next()) {
+        // Check for stop
+        if (shouldContinue && !shouldContinue()) {
+            qDebug() << "Checksum verification stopped by user";
+            break;
+        }
+
+        QString fileName = query.value(0).toString();
+        QString folderPath = query.value(1).toString();
+        QString expectedChecksum = query.value(2).toString();
+
+        QString filePath = folderPath + "/" + fileName;
+
+        processed++;
+
+        // Progress callback
+        if (progressCallback) {
+            progressCallback(processed, result.totalFiles, fileName);
+        }
+
+        // Check if file exists
+        if (!QFileInfo::exists(filePath)) {
+            result.missing++;
+            result.missingFiles << filePath;
+            continue;
+        }
+
+        // Calculate actual checksum (no progress callback for individual files)
+        QString actualChecksum = calculateChecksum(filePath, QCryptographicHash::Sha256, nullptr);
+
+        if (actualChecksum.isEmpty()) {
+            qDebug() << "Failed to calculate checksum for:" << filePath;
+            continue;
+        }
+
+        // Compare
+        if (actualChecksum.toLower() == expectedChecksum.toLower()) {
+            result.verified++;
+        } else {
+            result.mismatches++;
+            result.mismatchedFiles << filePath;
+        }
+    }
+
+    return result;
+}
+//-----------------------------------------------------------------------------------------------------
