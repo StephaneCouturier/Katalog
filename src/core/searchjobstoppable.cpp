@@ -1833,57 +1833,66 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
                             );
     } else {
         // Standard case (including Checksum = case)
+        // Using LEFT JOIN instead of NOT IN for better MySQL performance
+
+        // Build JOIN condition from grouping fields (e.g., "t1.file_name = t2.file_name")
+        QString joinCondition = groupingFieldsDifferences;
+        joinCondition.replace("||", " AND t1.");
+        joinCondition.prepend("t1.");
+        joinCondition.replace(" AND t1.", " = t2."); // First occurrence fix
+        // Result: "t1.file_name" -> need to add "= t2.file_name"
+
+        // Simpler approach: build it properly
+        QStringList fields = groupingFieldsDifferences.split("||");
+        QStringList joinParts;
+        for (const QString &field : fields) {
+            joinParts << QString("t1.%1 = t2.%1").arg(field);
+        }
+        joinCondition = joinParts.join(" AND ");
+
         selectSQL = QString(R"(
-            SELECT  file_name,
-                    file_size,
-                    file_date_updated,
-                    file_folder_path,
-                    file_catalog,
-                    file_catalog_id,
-                    checksum_sha256
-            FROM filetemp
-            WHERE file_catalog_id IN(
-                SELECT device_external_id
-                FROM device
-                WHERE device_id IN(%2)
-                AND device_type ='Catalog'
-            )
-            AND %1 NOT IN(
-                SELECT %1
-                FROM filetemp
-                WHERE file_catalog_id IN(
-                    SELECT device_external_id
-                    FROM device
-                    WHERE device_id IN(%3)
-                    AND device_type ='Catalog'
+            SELECT  t1.file_name,
+                    t1.file_size,
+                    t1.file_date_updated,
+                    t1.file_folder_path,
+                    t1.file_catalog,
+                    t1.file_catalog_id,
+                    t1.checksum_sha256
+            FROM filetemp t1
+            LEFT JOIN filetemp t2
+                ON %1
+                AND t2.file_catalog_id IN (
+                    SELECT device_external_id FROM device
+                    WHERE device_id IN(%3) AND device_type = 'Catalog'
                 )
+            WHERE t1.file_catalog_id IN (
+                SELECT device_external_id FROM device
+                WHERE device_id IN(%2) AND device_type = 'Catalog'
             )
+            AND t2.file_name IS NULL
+
             UNION
-            SELECT  file_name,
-                    file_size,
-                    file_date_updated,
-                    file_folder_path,
-                    file_catalog,
-                    file_catalog_id,
-                    checksum_sha256
-            FROM filetemp
-            WHERE file_catalog_id IN(
-                SELECT device_external_id
-                FROM device
-                WHERE device_id IN(%3)
-                AND device_type ='Catalog'
-            )
-            AND %1 NOT IN(
-                SELECT %1
-                FROM filetemp
-                WHERE file_catalog_id IN(
-                    SELECT device_external_id
-                    FROM device
-                    WHERE device_id IN(%2)
-                    AND device_type ='Catalog'
+
+            SELECT  t1.file_name,
+                    t1.file_size,
+                    t1.file_date_updated,
+                    t1.file_folder_path,
+                    t1.file_catalog,
+                    t1.file_catalog_id,
+                    t1.checksum_sha256
+            FROM filetemp t1
+            LEFT JOIN filetemp t2
+                ON %1
+                AND t2.file_catalog_id IN (
+                    SELECT device_external_id FROM device
+                    WHERE device_id IN(%2) AND device_type = 'Catalog'
                 )
+            WHERE t1.file_catalog_id IN (
+                SELECT device_external_id FROM device
+                WHERE device_id IN(%3) AND device_type = 'Catalog'
             )
-        )").arg(groupingFieldsDifferences, listOfCatalogDeviceIDs1, listOfCatalogDeviceIDs2);
+            AND t2.file_name IS NULL
+        )").arg(joinCondition, listOfCatalogDeviceIDs1, listOfCatalogDeviceIDs2);
     }
 
     if (!shouldContinue()) {
