@@ -186,11 +186,15 @@
 
             fileContextMenu.addSeparator();
 
-            // If the file's catalog has EXTENDED metadata enabled, display action to show them
+            // Get file information from model
             QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
             QString selectedResultFileCatalog = ui->Explore_treeView_FileList->model()->index(index.row(), 4, QModelIndex()).data().toString();
             int catalogId = exploreDevice->catalog->ID;
+            QString fileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0).data().toString();
+            QString folderPath = ui->Explore_treeView_FileList->model()->index(index.row(), 3).data().toString();
+            QString filePath = folderPath + "/" + fileName;
 
+            //Metadata
             bool showExtendedMetadataAction = false;
             QString includeMetadata;
 
@@ -257,6 +261,31 @@
                 QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy file checksum"), this);
                 connect(menuActionChecksum, &QAction::triggered, this, &MainWindow::exploreContextCopyFileChecksum);
                 fileContextMenu.addAction(menuActionChecksum);
+            }
+
+            fileContextMenu.addSeparator();
+
+            if (checksum.isEmpty()) {
+                // No checksum → Show "Calculate Checksum"
+                QAction *menuActionCalculate = new QAction(QIcon::fromTheme("document-properties"),
+                                                           tr("Calculate Checksum (SHA-256)"), this);
+                connect(menuActionCalculate, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId]() {
+                    calculateAndSaveChecksum(filePath, fileName, folderPath, catalogId);
+                });
+                fileContextMenu.addAction(menuActionCalculate);
+            } else {
+                // Has checksum → Show "Copy" and "Verify"
+                QAction *menuActionCopy = new QAction(QIcon::fromTheme("edit-copy"),
+                                                      tr("Copy Checksum"), this);
+                connect(menuActionCopy, &QAction::triggered, this, &MainWindow::exploreContextCopyFileChecksum);
+                fileContextMenu.addAction(menuActionCopy);
+
+                QAction *menuActionVerify = new QAction(QIcon::fromTheme("document-properties"),
+                                                        tr("Verify Checksum (SHA-256)"), this);
+                connect(menuActionVerify, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId, checksum]() {
+                    verifyFileChecksum(filePath, fileName, folderPath, catalogId, checksum);
+                });
+                fileContextMenu.addAction(menuActionVerify);
             }
 
             fileContextMenu.addSeparator();

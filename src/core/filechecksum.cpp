@@ -266,3 +266,57 @@ QCryptographicHash::Algorithm FileChecksum::getAlgorithmFromString(const QString
     qDebug() << "WARNING: Unknown checksum algorithm:" << algorithmName << "- defaulting to SHA256";
     return QCryptographicHash::Sha256;
 }
+
+FileChecksum::VerificationResult FileChecksum::verifyChecksum(
+    const QString &filePath,
+    const QString &expectedChecksum,
+    QCryptographicHash::Algorithm algorithm,
+    std::function<void(qint64, qint64)> progressCallback)
+{
+    VerificationResult result;
+    result.expectedChecksum = expectedChecksum;
+
+    // Check file exists
+    if (!QFileInfo::exists(filePath)) {
+        result.success = false;
+        result.match = false;
+        result.errorMessage = "File not found";
+        return result;
+    }
+
+    // Calculate actual checksum
+    QString actualChecksum = calculateChecksum(filePath, algorithm, progressCallback);
+
+    if (actualChecksum.isEmpty()) {
+        result.success = false;
+        result.match = false;
+        result.errorMessage = "Failed to calculate checksum";
+        return result;
+    }
+
+    // Compare
+    result.success = true;
+    result.actualChecksum = actualChecksum;
+    result.match = (actualChecksum.toLower() == expectedChecksum.toLower());
+
+    return result;
+}
+
+QString FileChecksum::getFileChecksum(const QString &connectionName, int catalogId,
+                                      const QString &fileName, const QString &folderPath)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare("SELECT checksum_sha256 FROM file "
+                  "WHERE file_catalog_id = :catalog_id "
+                  "AND file_name = :file_name "
+                  "AND file_folder_path = :folder_path");
+    query.bindValue(":catalog_id", catalogId);
+    query.bindValue(":file_name", fileName);
+    query.bindValue(":folder_path", folderPath);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toString();
+    }
+
+    return QString(); // Empty = no checksum
+}

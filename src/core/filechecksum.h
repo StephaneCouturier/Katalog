@@ -79,6 +79,24 @@ public:
     //Utility to get algorithm from string
     static QCryptographicHash::Algorithm getAlgorithmFromString(const QString &algorithmName);
 
+    //Verification method
+    struct VerificationResult {
+        bool success;           // Operation succeeded (file exists, readable)
+        bool match;             // Checksums match (only valid if success=true)
+        QString expectedChecksum;
+        QString actualChecksum;
+        QString errorMessage;   // Empty if success=true
+    };
+
+    static VerificationResult verifyChecksum(const QString &filePath,
+                                             const QString &expectedChecksum,
+                                             QCryptographicHash::Algorithm algorithm,
+                                             std::function<void(qint64, qint64)> progressCallback = nullptr);
+
+    // Helper to get checksum from DB
+    static QString getFileChecksum(const QString &connectionName, int catalogId,
+                                   const QString &fileName, const QString &folderPath);
+
 signals:
     void checksumCalculated(const QString &filePath);
     void calculationError(const QString &filePath, const QString &error);

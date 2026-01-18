@@ -658,6 +658,24 @@ class MainWindow : public KXmlGuiWindow
             void searchContextMoveFileToTrash();
             void searchContextDeleteFile();
 
+            void verifyFileChecksum(const QString &filePath,
+                                    const QString &fileName,
+                                    const QString &folderPath,
+                                    int catalogId,
+                                    const QString &expectedChecksum);
+            void showChecksumResult(const QString &title,
+                                    const QString &checksum,
+                                    bool wasSaved);
+            void showChecksumMismatch(const QString &expected,
+                                      const QString &actual,
+                                      int catalogId,
+                                      const QString &fileName,
+                                      const QString &folderPath);
+            void calculateAndSaveChecksum(const QString &filePath,
+                                          const QString &fileName,
+                                          const QString &folderPath,
+                                          int catalogId);
+
         //Create
             void on_Create_pushButton_PickPath_clicked();
             void on_Create_treeView_Explorer_clicked(const QModelIndex &index);

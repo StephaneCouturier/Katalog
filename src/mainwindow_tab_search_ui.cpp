@@ -34,6 +34,7 @@
 #include "ui_mainwindow.h"
 #include "core/catalog.h"
 #include "core/filemetadata.h"
+#include "core/filechecksum.h"
 
 //TAB: SEARCH FILES ------------------------------------------------------------
 
@@ -304,7 +305,6 @@
                 }
             }
         }
-
         void MainWindow::on_Search_checkBox_DuplicatesSize_checkStateChanged(const Qt::CheckState &arg1)
         {
             if(arg1==Qt::Unchecked){
@@ -321,7 +321,6 @@
                 }
             }
         }
-
         void MainWindow::on_Search_checkBox_DuplicatesDateModified_checkStateChanged(const Qt::CheckState &arg1)
         {
             if(arg1==Qt::Unchecked){
@@ -348,12 +347,10 @@
                 }
             }
         }
-
         void MainWindow::on_Search_checkBox_DuplicatesChecksum_toggled(bool checked)
         {
             ui->Search_comboBox_DuplicateChecksumSign->setEnabled(checked);
         }
-
         void MainWindow::on_Search_comboBox_DuplicateChecksumSign_currentIndexChanged(int index)
         {
             // If ≠ selected (index 1) and no other fields checked, auto-check Name
@@ -376,7 +373,6 @@
                 }
             }
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_radioButton_DuplicatesWithinSelectedDevice_toggled(bool checked)
         {
@@ -391,8 +387,6 @@
                 ui->Search_widget_DuplicatesDevices->setHidden(false);
             }
         }
-
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Differences_toggled(bool checked)
         {
@@ -451,7 +445,6 @@
                 }
             }
         }
-
         void MainWindow::on_Search_checkBox_DifferencesSize_checkStateChanged(const Qt::CheckState &arg1)
         {
             if(arg1==Qt::Unchecked){
@@ -468,7 +461,6 @@
                 }
             }
         }
-
         void MainWindow::on_Search_checkBox_DifferencesDateModified_checkStateChanged(const Qt::CheckState &arg1)
         {
             if(arg1==Qt::Unchecked){
@@ -495,12 +487,10 @@
                 }
             }
         }
-
         void MainWindow::on_Search_checkBox_DifferencesChecksum_toggled(bool checked)
         {
             ui->Search_comboBox_DifferenceChecksumSign->setEnabled(checked);
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Size_toggled(bool checked)
         {
@@ -571,7 +561,6 @@
                 ui->Search_widget_FileMetadata->setHidden(true);
             }
         }
-        //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_MetadataText_toggled(bool checked)
         {
             if(checked == true) {
@@ -581,7 +570,6 @@
                 ui->Search_lineEdit_MetadataText->setDisabled(true);
             }
         }
-
         void MainWindow::on_Search_checkBox_MetadataSize_toggled(bool checked)
         {
             if(checked==1){
@@ -597,7 +585,6 @@
                 ui->Search_spinBox_MetadataMaximumWidth->setDisabled(true);
             }
         }
-
         void MainWindow::on_Search_checkBox_MetadataDuration_toggled(bool checked)
         {
             if(checked==1){
@@ -609,7 +596,6 @@
                 ui->Search_dateTimeEdit_MetadataDurationMax->setDisabled(true);
             }
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Type_toggled(bool checked)
         {
@@ -734,12 +720,16 @@
 
             fileContextMenu.addSeparator();
 
-            //Catalog dependent actions
+            // Get File information from model
             QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
             QString selectedResultFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
             int catalogId = ui->Search_treeView_FilesFound->model()->index(index.row(), 5, QModelIndex()).data().toInt();
+            QString checksum = ui->Search_treeView_FilesFound->model()->index(index.row(), 19).data().toString();
+            QString fileName = ui->Search_treeView_FilesFound->model()->index(index.row(), 0).data().toString();
+            QString folderPath = ui->Search_treeView_FilesFound->model()->index(index.row(), 3).data().toString();
+            QString filePath = folderPath + "/" + fileName;
 
-            // If the file's catalog has EXTENDED metadata enabled, display action to show them
+            // Metadata
             bool showExtendedMetadataAction = false;
             QString includeMetadata;
 
@@ -800,14 +790,34 @@
             connect( menuAction6,&QAction::triggered, this, &MainWindow::searchContextCopyFileNameWithoutExtension);
             fileContextMenu.addAction(menuAction6);
 
-            // Check if the file has a checksum
-            QString checksum = ui->Explore_treeView_FileList->model()->index(index.row(), 19).data().toString();
-            bool showCopyChecksumAction = !checksum.isEmpty();
-            if (showCopyChecksumAction) {
-                QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy file checksum"), this);
-                connect(menuActionChecksum, &QAction::triggered, this, &MainWindow::searchContextCopyFileChecksum);
-                fileContextMenu.addAction(menuActionChecksum);
+            fileContextMenu.addSeparator();
+
+            //Checksum
+            if (checksum.isEmpty()) {
+                // NO checksum - show Calculate
+                QAction *menuActionCalculate = new QAction(QIcon::fromTheme("document-properties"),
+                                                           tr("Calculate Checksum (SHA-256)"), this);
+                connect(menuActionCalculate, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId]() {
+                    calculateAndSaveChecksum(filePath, fileName, folderPath, catalogId);
+                });
+                fileContextMenu.addAction(menuActionCalculate);
+            } else {
+                // HAS checksum - show Copy and Verify
+                QAction *menuActionCopy = new QAction(QIcon::fromTheme("edit-copy"),
+                                                      tr("Copy file checksum"), this);
+                connect(menuActionCopy, &QAction::triggered, this, &MainWindow::searchContextCopyFileChecksum);
+                fileContextMenu.addAction(menuActionCopy);
+
+                QAction *menuActionVerify = new QAction(QIcon::fromTheme("document-properties"),
+                                                        tr("Verify Checksum (SHA-256)"), this);
+                connect(menuActionVerify, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId, checksum]() {
+                    verifyFileChecksum(filePath, fileName, folderPath, catalogId, checksum);
+                });
+                fileContextMenu.addAction(menuActionVerify);
             }
+
+
+
 
             fileContextMenu.addSeparator();
 
@@ -1969,7 +1979,7 @@
 
             return fullFileName;
         }
-        //--------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         void MainWindow::loadSearchHistoryTableToModel()
         {
             QSqlQuery querySearchHistory(QSqlDatabase::database(m_connectionName));
@@ -2091,7 +2101,7 @@
             ui->Search_comboBox_DuplicatesDevice2->setTreeModel(proxyModel2);
             ui->Search_comboBox_DuplicatesDevice2->expandToDepth(2);
         }
-        //--------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         void MainWindow::clearSearchResults()
         {
             Catalog *empty = new Catalog(this);
@@ -2101,11 +2111,205 @@
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
             ui->Search_treeView_CatalogsFound->hideColumn(1);
         }
-        //--------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         void MainWindow::resetSearchButton()
         {
             qDebug() << "resetSearchButton() called";
             ui->Search_pushButton_Search->setText("Search");
             ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
             ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+        }
+        //----------------------------------------------------------------------
+
+        //--- Checksum ---------------------------------------------------------
+        void MainWindow::verifyFileChecksum(const QString &filePath,
+                                            const QString &fileName,
+                                            const QString &folderPath,
+                                            int catalogId,
+                                            const QString &expectedChecksum)
+        {
+            QProgressDialog progress(tr("Verifying SHA-256 checksum..."),
+                                     tr("Cancel"), 0, 100, this);
+            progress.setWindowModality(Qt::WindowModal);
+            progress.setMinimumDuration(1000);
+
+            auto progressCallback = [&](qint64 processed, qint64 total) {
+                int percent = (processed * 100) / total;
+                progress.setValue(percent);
+                QCoreApplication::processEvents();
+                if (progress.wasCanceled()) {
+                    throw std::runtime_error("Cancelled");
+                }
+            };
+
+            QString actualChecksum;
+            try {
+                actualChecksum = FileChecksum::calculateChecksum(filePath,
+                                                                 QCryptographicHash::Sha256,
+                                                                 progressCallback);
+            } catch (...) {
+                return; // Cancelled
+            }
+
+            if (actualChecksum == expectedChecksum) {
+                // Match!
+                showChecksumResult(tr("Checksum Verified - Match"), expectedChecksum, false);
+            } else {
+                // Mismatch!
+                showChecksumMismatch(expectedChecksum, actualChecksum,
+                                     catalogId, fileName, folderPath);
+            }
+        }
+
+        void MainWindow::showChecksumResult(const QString &title,
+                                            const QString &checksum,
+                                            bool wasSaved)
+        {
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle(title);
+            msgBox.setIcon(QMessageBox::Information);
+
+            QString message = tr("SHA-256: %1").arg(checksum);
+            if (wasSaved) {
+                message += tr("\n\nChecksum saved to database.");
+            } else {
+                message += tr("\n\nFile integrity confirmed - checksums match.");
+            }
+
+            msgBox.setText(message);
+
+            QPushButton *copyButton = msgBox.addButton(tr("Copy to Clipboard"),
+                                                       QMessageBox::ActionRole);
+            msgBox.addButton(QMessageBox::Ok);
+
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == copyButton) {
+                QClipboard *clipboard = QApplication::clipboard();
+                clipboard->setText(checksum);
+            }
+        }
+
+        void MainWindow::showChecksumMismatch(const QString &expected,
+                                              const QString &actual,
+                                              int catalogId,
+                                              const QString &fileName,
+                                              const QString &folderPath)
+        {
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle(tr("Checksum Mismatch"));
+            msgBox.setIcon(QMessageBox::Warning);
+
+            QString message = tr("WARNING: File may be corrupted or modified!\n\n"
+                                 "Expected: %1\n"
+                                 "Actual:   %2\n\n"
+                                 "The file has changed since the checksum was calculated.")
+                                  .arg(expected).arg(actual);
+
+            msgBox.setText(message);
+
+            QPushButton *recalcButton = msgBox.addButton(tr("Update Database with New Checksum"),
+                                                         QMessageBox::ActionRole);
+            msgBox.addButton(QMessageBox::Cancel);
+
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == recalcButton) {
+                // Save to database
+                FileChecksum::updateFileChecksum(m_connectionName, catalogId,
+                                                 fileName, folderPath, actual, "SHA256");
+
+                // Save to .idx file in Memory mode
+                if (collection->databaseMode == "Memory") {
+                    // Load the catalog object using catalogId
+                    Catalog tempCatalog;
+                    tempCatalog.ID = catalogId;
+                    tempCatalog.loadCatalog();
+
+                    // Save to file
+                    tempCatalog.saveCatalogToFile(collection->databaseMode, collection->folder);
+                }
+
+                QMessageBox::information(this, tr("Updated"),
+                                         tr("Database updated with new checksum."));
+            }
+        }
+
+        void MainWindow::calculateAndSaveChecksum(const QString &filePath,
+                                                  const QString &fileName,
+                                                  const QString &folderPath,
+                                                  int catalogId)
+        {
+            // Check if file exists
+            if (!QFileInfo::exists(filePath)) {
+                QMessageBox::warning(this, tr("File Not Found"),
+                                     tr("Cannot calculate checksum - file no longer exists:\n%1").arg(filePath));
+                return;
+            }
+
+            QProgressDialog progress(tr("Calculating SHA-256 checksum..."),
+                                     tr("Cancel"), 0, 100, this);
+            progress.setWindowModality(Qt::WindowModal);
+            progress.setMinimumDuration(1000);
+
+            // Progress callback
+            auto progressCallback = [&](qint64 processed, qint64 total) {
+                if (total > 0) {
+                    int percent = (processed * 100) / total;
+                    progress.setValue(percent);
+                }
+                QCoreApplication::processEvents();
+                if (progress.wasCanceled()) {
+                    throw std::runtime_error("Cancelled");
+                }
+            };
+
+            QString checksum;
+            try {
+                checksum = FileChecksum::calculateChecksum(filePath,
+                                                           QCryptographicHash::Sha256,
+                                                           progressCallback);
+            } catch (...) {
+                return; // User cancelled
+            }
+
+            if (checksum.isEmpty()) {
+                QMessageBox::warning(this, tr("Error"),
+                                     tr("Failed to calculate checksum."));
+                return;
+            }
+
+            // Save to database
+            FileChecksum::updateFileChecksum(m_connectionName, catalogId,
+                                             fileName, folderPath, checksum, "SHA256");
+
+            // Save to .idx file in Memory mode
+            if (collection->databaseMode == "Memory") {
+                // Load the catalog object using catalogId
+                Catalog tempCatalog;
+                tempCatalog.ID = catalogId;
+                tempCatalog.loadCatalog();
+
+                // Save to file
+                tempCatalog.saveCatalogToFile(collection->databaseMode, collection->folder);
+            }
+
+            // Show result with copy button
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle(tr("Checksum Calculated"));
+            msgBox.setIcon(QMessageBox::Information);
+
+            QString message = tr("SHA-256: %1\n\nChecksum saved to database.").arg(checksum);
+            msgBox.setText(message);
+
+            QPushButton *copyButton = msgBox.addButton(tr("Copy to Clipboard"),
+                                                       QMessageBox::ActionRole);
+            msgBox.addButton(QMessageBox::Ok);
+
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == copyButton) {
+                QClipboard *clipboard = QApplication::clipboard();
+                clipboard->setText(checksum);
+            }
         }
