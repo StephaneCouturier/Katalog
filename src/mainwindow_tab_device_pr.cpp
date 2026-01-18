@@ -2827,23 +2827,30 @@ void MainWindow::verifyCatalogChecksums()
         if (catalog->dateLoaded < catalog->dateUpdated || catalog->dateLoaded.isNull()) {
             qDebug() << "Memory mode: Loading catalog before verification";
 
-            QProgressDialog loadProgress(tr("Loading catalog..."), QString(), 0, catalog->fileCount, this);
-            loadProgress.setWindowModality(Qt::WindowModal);
-            loadProgress.show();
-
             bool stopRequested = false;
             QMutex mutex;
 
+            // Connect to catalog loading progress using statusbar
             QMetaObject::Connection progressConnection = connect(catalog, &Catalog::loadProgress,
-                this, [&](int current, int total) {
-                loadProgress.setMaximum(total);
-                loadProgress.setValue(current);
+                this, [this, catalog](int current, int total) {
+
+                StatusBarMessageBuilder builder;
+                builder.setOperation(tr("Verify Checksums"))
+                    .setStatus(tr("Loading"))
+                    .setDeviceContext(1, 1, catalog->name)
+                    .setProcess(tr("files"), current, total);
+
+                statusBar()->show();  // ← ADD THIS
+                statusBarLabel->setText(builder.build());
                 QCoreApplication::processEvents();
             });
 
             catalog->loadCatalogFileListToTable(mutex, stopRequested);
 
             disconnect(progressConnection);
+
+            // Clear status bar
+            statusBarLabel->clear();
         }
     }
 
@@ -2868,11 +2875,7 @@ void MainWindow::verifyCatalogChecksums()
         return;
     }
 
-    // Progress dialog
-    QProgressDialog progress(tr("Verifying checksums..."), tr("Cancel"), 0, totalFiles, this);
-    progress.setWindowModality(Qt::WindowModal);
-    progress.setMinimumDuration(0);
-
+    // Run verification with statusbar progress
     bool userCancelled = false;
 
     auto shouldContinue = [&]() {
@@ -2880,16 +2883,15 @@ void MainWindow::verifyCatalogChecksums()
     };
 
     auto progressCallback = [&](int current, int total, const QString &fileName) {
-        progress.setMaximum(total);
-        progress.setValue(current);
-        progress.setLabelText(tr("Verifying: %1\n(%2 of %3)")
-                             .arg(fileName)
-                             .arg(current)
-                             .arg(total));
+        StatusBarMessageBuilder builder;
+        builder.setOperation(tr("Verify Checksums"))
+            .setStatus(tr("Verifying"))
+            .setDeviceContext(1, 1, catalog->name)
+            .setProcess(fileName, current, total);
+
+        statusBar()->show();  // ← ADD THIS
+        statusBarLabel->setText(builder.build());
         QCoreApplication::processEvents();
-        if (progress.wasCanceled()) {
-            userCancelled = true;
-        }
     };
 
     // Run verification
@@ -2899,6 +2901,9 @@ void MainWindow::verifyCatalogChecksums()
                                             catalog->sourcePath,
                                             shouldContinue,
                                             progressCallback);
+
+    // Clear status bar
+    statusBarLabel->clear();
 
     // Show results
     QString resultMessage;
