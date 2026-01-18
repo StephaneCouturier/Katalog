@@ -2153,7 +2153,7 @@
 
             if (actualChecksum == expectedChecksum) {
                 // Match!
-                showChecksumResult(tr("Checksum Verified - Match"), expectedChecksum, false);
+                showChecksumResult("Katalog", expectedChecksum, false);
             } else {
                 // Mismatch!
                 showChecksumMismatch(expectedChecksum, actualChecksum,
@@ -2197,7 +2197,7 @@
                                               const QString &folderPath)
         {
             QMessageBox msgBox(this);
-            msgBox.setWindowTitle(tr("Checksum Mismatch"));
+            msgBox.setWindowTitle("Katalog");
             msgBox.setIcon(QMessageBox::Warning);
 
             QString message = tr("WARNING: File may be corrupted or modified!\n\n"
@@ -2296,7 +2296,7 @@
 
             // Show result with copy button
             QMessageBox msgBox(this);
-            msgBox.setWindowTitle(tr("Checksum Calculated"));
+            msgBox.setWindowTitle("Katalog");
             msgBox.setIcon(QMessageBox::Information);
 
             QString message = tr("SHA-256: %1\n\nChecksum saved to database.").arg(checksum);
