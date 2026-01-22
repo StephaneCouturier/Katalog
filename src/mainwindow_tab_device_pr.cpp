@@ -2649,11 +2649,12 @@ void MainWindow::importFromVVV()
                 catalogName += dateTimeForCatalogName;
 
                 qint64 catalogId = catalogNameToId.value(catalogName, 0);
+                QString folderPath = virtualCatalogFolder + QString(fieldList[1]).remove("\"");
 
                 //Append file data to the database
                 insertQuery.bindValue(":file_catalog_id", catalogId);
                 insertQuery.bindValue(":file_name", QString(fieldList[2]).remove("\""));
-                insertQuery.bindValue(":file_folder_path", QString(fieldList[1]).remove("\""));
+                insertQuery.bindValue(":file_folder_path", folderPath);
                 insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
                 insertQuery.bindValue(":file_date_updated", fieldList[5]);
                 insertQuery.bindValue(":file_catalog", catalogName);
@@ -2661,13 +2662,20 @@ void MainWindow::importFromVVV()
 
                 //Append folder data to the database
                 insertFolderQuery.bindValue(":folder_catalog_id", catalogId);
-                insertFolderQuery.bindValue(":folder_path", QString(fieldList[1]).remove("\""));
+                insertFolderQuery.bindValue(":folder_path", folderPath);
                 insertFolderQuery.exec();
             }
         }
     }
 
     sourceFile.close();
+
+    //Insert root folder for each catalog
+    for (auto it = catalogNameToId.begin(); it != catalogNameToId.end(); ++it) {
+        insertFolderQuery.bindValue(":folder_catalog_id", it.value());
+        insertFolderQuery.bindValue(":folder_path", virtualCatalogFolder);
+        insertFolderQuery.exec();
+    }
 
     //Complete table for missing folders
     createMissingParentDirectories();
@@ -2736,7 +2744,8 @@ void MainWindow::importFromVVV()
 
         //Write the results in the file
         while (listFilesQuery.next()) {
-            out << virtualCatalogFolder + listFilesQuery.value(0).toString() + "/" + listFilesQuery.value(1).toString();
+            // file_folder_path already includes the /import prefix
+            out << listFilesQuery.value(0).toString() + "/" + listFilesQuery.value(1).toString();
             out << '\t';
             out << listFilesQuery.value(2).toString();
             out << '\t';
@@ -2774,9 +2783,10 @@ void MainWindow::importFromVVV()
 
             //Write the results in the file
             while (listFoldersQuery.next()) {
+                // folder_path already includes the /import prefix
                 folderOut << listFoldersQuery.value(0).toString();
                 folderOut << '\t';
-                folderOut << virtualCatalogFolder + listFoldersQuery.value(1).toString();
+                folderOut << listFoldersQuery.value(1).toString();
                 folderOut << '\n';
             }
         }
