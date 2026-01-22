@@ -33,6 +33,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
+#include "core/database.h"
 #include "core/device.h"
 #include "core/filechecksum.h"
 #include "mainwindow_ui_wrapper_device.h"
@@ -2517,15 +2518,16 @@ void MainWindow::importFromVVV()
 
     //Prepare insert query for folder
     QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
-    QString insertFolderSQL = QLatin1String(R"(
-                                        INSERT OR IGNORE INTO folder(
-                                            folder_catalog_name,
+    Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+    QString insertFolderSQL = QString(R"(
+                                        %1 INTO folder(
+                                            folder_catalog_id,
                                             folder_path
                                          )
                                         VALUES(
-                                            :folder_catalog_name,
+                                            :folder_catalog_id,
                                             :folder_path)
-                                        )");
+                                        )").arg(Database::getInsertOrIgnorePrefix(dbType));
     insertFolderQuery.prepare(insertFolderSQL);
 
 
@@ -2570,8 +2572,8 @@ void MainWindow::importFromVVV()
                 insertQuery.exec();
 
                 //Append folder data to the database
-                insertFolderQuery.bindValue(":folder_catalog_name", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
-                insertFolderQuery.bindValue(":folder_path",         fieldList[1].remove("\""));
+                insertFolderQuery.bindValue(":folder_catalog_id", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
+                insertFolderQuery.bindValue(":folder_path",       fieldList[1].remove("\""));
                 insertFolderQuery.exec();
             }
         }
@@ -2724,7 +2726,7 @@ void MainWindow::importFromVVV()
             //Get the list of file to add
             QString listFoldersSQL = QLatin1String(R"(
                                             SELECT
-                                                folder_catalog_name,
+                                                folder_catalog_id,
                                                 folder_path
                                             FROM folder
                                             WHERE folder_catalog_id =:folder_catalog_id
@@ -3643,8 +3645,9 @@ void MainWindow::importVirtualAssignmentsToDevices()
     }
 
     //Insert new devices
-    querySQL = QLatin1String(R"(
-                        INSERT OR IGNORE INTO device (
+    Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+    querySQL = QString(R"(
+                        %1 INTO device (
                             device_id,
                             device_parent_id,
                             device_name,
@@ -3659,7 +3662,7 @@ void MainWindow::importVirtualAssignmentsToDevices()
                             device_group_id
                         FROM
                             temp_device
-                    )");
+                    )").arg(Database::getInsertOrIgnorePrefix(dbType));
     query.prepare(querySQL);
     query.exec();
 

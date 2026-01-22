@@ -33,6 +33,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/catalog.h"
+#include "core/database.h"
 #include "core/filemetadata.h"
 #include "core/filechecksum.h"
 
@@ -1819,15 +1820,16 @@
 
                         //Prepare insert query for folder
                         QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
-                        QString insertFolderSQL = QLatin1String(R"(
-                                                    INSERT OR IGNORE INTO folder(
+                        Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+                        QString insertFolderSQL = QString(R"(
+                                                    %1 INTO folder(
                                                         folder_catalog_id,
                                                         folder_path
                                                      )
                                                     VALUES(
                                                         :folder_catalog_id,
                                                         :folder_path)
-                                                    )");
+                                                    )").arg(Database::getInsertOrIgnorePrefix(dbType));
                         insertFolderQuery.prepare(insertFolderSQL);
 
                         //Insert root folder (so that it is displayed even when there are no sub-folders, except for search exports)
