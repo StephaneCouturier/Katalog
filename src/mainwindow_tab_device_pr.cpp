@@ -2489,7 +2489,7 @@ void MainWindow::importFromVVV()
     QFile sourceFile(sourceFilePath);
 
     //Prepare a dateTime to add to device or catalog names and avoid duplicates
-    QString dateTimeForCatalogName = "_" + QDateTime::currentDateTime().toString("yy-MM-ss hh-mm-ss");
+    QString dateTimeForCatalogName = "_" + QDateTime::currentDateTime().toString("yy-MM-dd hh-mm-ss");
 
     // Start animation while cataloging
     QApplication::setOverrideCursor(Qt::WaitCursor);
