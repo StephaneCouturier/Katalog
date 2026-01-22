@@ -39,6 +39,9 @@
 #include "mainwindow_ui_wrapper_device.h"
 #include "mainwindow_ui_wrapper_catalog.h"
 
+#include <QSet>
+#include <QMap>
+
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
 QStandardItem* addNumericItem(qint64 value) {
@@ -2485,29 +2488,124 @@ void MainWindow::importFromVVV()
     //Define file
     QFile sourceFile(sourceFilePath);
 
-    //Prepare a dateTime to add to device or catalog anmes and avoid duplicates
+    //Prepare a dateTime to add to device or catalog names and avoid duplicates
     QString dateTimeForCatalogName = "_" + QDateTime::currentDateTime().toString("yy-MM-ss hh-mm-ss");
-
-
-    //Open the source file and load all data into the database
 
     // Start animation while cataloging
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    //clear database
+    //Open file for first pass
+    if(!sourceFile.open(QIODevice::ReadOnly)) {
+        QApplication::restoreOverrideCursor();
+        QMessageBox::information(this,"Katalog",tr("No catalog found."));
+        return;
+    }
+
+    QTextStream textStream(&sourceFile);
+    QString line;
+
+    //Process and check Headers line
+    line = textStream.readLine();
+
+    //Check this is the right source format
+    if (line.left(6)!="Volume"){
+        sourceFile.close();
+        QApplication::restoreOverrideCursor();
+        QMessageBox::warning(this,"Katalog",tr("A file was found, but could not be loaded") +".\n");
+        return;
+    }
+
+    //==========================================================================
+    // FIRST PASS: Collect unique catalog names
+    //==========================================================================
+    QSet<QString> uniqueCatalogNames;
+    while (!textStream.atEnd()) {
+        line = textStream.readLine();
+        if (!line.isEmpty()) {
+            QStringList fieldList = line.split("\t");
+            if (fieldList.count() == 7) {
+                QString catalogName = fieldList[0];
+                catalogName.remove("\"");
+                catalogName.replace("/", "_");
+                catalogName += dateTimeForCatalogName;
+                uniqueCatalogNames.insert(catalogName);
+            }
+        }
+    }
+    sourceFile.close();
+
+    //==========================================================================
+    // CREATE DEVICES AND CATALOGS, BUILD NAME->ID MAP
+    //==========================================================================
+    QString virtualCatalogFolder = "/import";
+
+    //Create a virtual device to host the new catalogs
+    Device importVirtualDevice;
+    importVirtualDevice.generateDeviceID();
+    importVirtualDevice.type = "Virtual";
+    importVirtualDevice.name = "imports from VVV " + dateTimeForCatalogName;
+    importVirtualDevice.parentID = 0;
+    importVirtualDevice.groupID = 1;
+    importVirtualDevice.path = virtualCatalogFolder;
+    importVirtualDevice.dateTimeUpdated = QDateTime::currentDateTime();
+    importVirtualDevice.insertDevice();
+    collection->saveDeviceTableToFile();
+
+    // Map catalog name -> catalog ID and Device pointer
+    QMap<QString, qint64> catalogNameToId;
+    QMap<QString, Device*> catalogNameToDevice;
+
+    for (const QString& catalogName : uniqueCatalogNames) {
+        //Create Device
+        Device* importedDevice = new Device();
+        importedDevice->generateDeviceID();
+        importedDevice->name = catalogName;
+        importedDevice->type = "Catalog";
+        importedDevice->parentID = importVirtualDevice.ID;
+        importedDevice->groupID = 1;
+        importedDevice->path = virtualCatalogFolder;
+        importedDevice->catalog->generateID();
+        importedDevice->externalID = importedDevice->catalog->ID;
+        importedDevice->dateTimeUpdated = QDateTime::currentDateTime();
+        importedDevice->insertDevice();
+
+        //Get info for the new catalog
+        importedDevice->catalog->name = importedDevice->name;
+        importedDevice->catalog->filePath = collection->folder + "/" + importedDevice->name + ".idx";
+        importedDevice->catalog->sourcePath = virtualCatalogFolder;
+        importedDevice->catalog->includeHidden = 1;
+        importedDevice->catalog->includeSymblinks = 0;
+        importedDevice->catalog->isFullDevice = 0;
+        importedDevice->catalog->includeMetadata = Catalog::METADATA_NONE;
+        importedDevice->catalog->appVersion = currentVersion;
+        importedDevice->catalog->insertCatalog();
+
+        // Store mapping
+        catalogNameToId[catalogName] = importedDevice->catalog->ID;
+        catalogNameToDevice[catalogName] = importedDevice;
+    }
+
+    //==========================================================================
+    // SECOND PASS: Import files and folders with correct IDs
+    //==========================================================================
+
+    //Clear database tables
     QSqlQuery deleteQuery(QSqlDatabase::database(m_connectionName));
     deleteQuery.exec("DELETE FROM file");
+    deleteQuery.exec("DELETE FROM folder");
 
-    //prepare query to load file info
+    //Prepare query to load file info
     QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
     QString insertSQL = QLatin1String(R"(
                                     INSERT INTO file (
+                                                    file_catalog_id,
                                                     file_name,
                                                     file_folder_path,
                                                     file_size,
                                                     file_date_updated,
                                                     file_catalog )
                                     VALUES(
+                                                    :file_catalog_id,
                                                     :file_name,
                                                     :file_folder_path,
                                                     :file_size,
@@ -2530,149 +2628,87 @@ void MainWindow::importFromVVV()
                                         )").arg(Database::getInsertOrIgnorePrefix(dbType));
     insertFolderQuery.prepare(insertFolderSQL);
 
-
-    //prepare file and stream
-
+    //Re-open file for second pass
     if(!sourceFile.open(QIODevice::ReadOnly)) {
+        QApplication::restoreOverrideCursor();
         QMessageBox::information(this,"Katalog",tr("No catalog found."));
         return;
     }
 
-    QTextStream textStream(&sourceFile);
-    QString     line;
+    textStream.setDevice(&sourceFile);
+    textStream.readLine(); // Skip header
 
-    //Process and check Headers line
-    line = textStream.readLine();
-
-    //Check this is the right source format
-    if (line.left(6)!="Volume"){
-        QApplication::restoreOverrideCursor();
-        QMessageBox::warning(this,"Kotation",tr("A file was found, but could not be loaded") +".\n");
-        return;
-    }
-
-    //load all files to the database
-
-
-    while (true)
-    {
-        //Read the new line
+    while (!textStream.atEnd()) {
         line = textStream.readLine();
-
-        if (line !=""){
+        if (!line.isEmpty()) {
             QStringList fieldList = line.split("\t");
-            if ( fieldList.count()==7 ){
+            if (fieldList.count() == 7) {
+                QString catalogName = fieldList[0];
+                catalogName.remove("\"");
+                catalogName.replace("/", "_");
+                catalogName += dateTimeForCatalogName;
 
-                //Append file data to the database  ( removing " characters)
-                insertQuery.bindValue(":file_name", fieldList[2].remove("\""));
-                insertQuery.bindValue(":file_folder_path", fieldList[1].remove("\""));
+                qint64 catalogId = catalogNameToId.value(catalogName, 0);
+
+                //Append file data to the database
+                insertQuery.bindValue(":file_catalog_id", catalogId);
+                insertQuery.bindValue(":file_name", QString(fieldList[2]).remove("\""));
+                insertQuery.bindValue(":file_folder_path", QString(fieldList[1]).remove("\""));
                 insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
                 insertQuery.bindValue(":file_date_updated", fieldList[5]);
-                insertQuery.bindValue(":file_catalog", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
+                insertQuery.bindValue(":file_catalog", catalogName);
                 insertQuery.exec();
 
                 //Append folder data to the database
-                insertFolderQuery.bindValue(":folder_catalog_id", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
-                insertFolderQuery.bindValue(":folder_path",       fieldList[1].remove("\""));
+                insertFolderQuery.bindValue(":folder_catalog_id", catalogId);
+                insertFolderQuery.bindValue(":folder_path", QString(fieldList[1]).remove("\""));
                 insertFolderQuery.exec();
             }
         }
-        else
-            break;
     }
 
-    //complete table for missing folders
-    createMissingParentDirectories();
-
-    //close source file
     sourceFile.close();
 
-    //Stream the list of files and folders out to the target catalog file(s)
-    //Define a root folder, compensating for the fact that VVV export does not contain one
+    //Complete table for missing folders
+    createMissingParentDirectories();
 
-    QString virtualCatalogFolder = "/import";
-
-    //Get a list of the source catalogs
-    QString listCatalogSQL = QLatin1String(R"(
-                                    SELECT DISTINCT file_catalog
-                                    FROM file
-                                                )");
-    QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
-    listCatalogQuery.prepare(listCatalogSQL);
-    listCatalogQuery.exec();
-
-    //Create a virtual device to host the new catalogs
-    Device importVirtualDevice;
-    importVirtualDevice.generateDeviceID();
-    importVirtualDevice.type ="Virtual";
-    importVirtualDevice.name = "imports from VVV " + dateTimeForCatalogName;
-    importVirtualDevice.parentID = 0;
-    importVirtualDevice.groupID = 1;
-    importVirtualDevice.path = virtualCatalogFolder;
-    importVirtualDevice.dateTimeUpdated = QDateTime::currentDateTime();
-    importVirtualDevice.insertDevice();
-    collection->saveDeviceTableToFile();
+    //==========================================================================
+    // EXPORT CATALOG FILES AND UPDATE STATISTICS
+    //==========================================================================
 
     //Iterate each catalog to generate related files
-    while (listCatalogQuery.next()){
-
-        //Create Device
-        Device importedDevice;
-        importedDevice.generateDeviceID();
-        importedDevice.name = listCatalogQuery.value(0).toString();
-        importedDevice.type ="Catalog";
-        importedDevice.parentID = importVirtualDevice.ID;
-        importedDevice.groupID = 1;
-        importedDevice.path = virtualCatalogFolder;
-        importedDevice.catalog->generateID();
-        importedDevice.externalID = importedDevice.catalog->ID;
-        importedDevice.dateTimeUpdated = QDateTime::currentDateTime();
-        importedDevice.insertDevice();
-
-        //Get info for the new catalog
-        importedDevice.catalog->name = importedDevice.name;
-        importedDevice.catalog->filePath = collection->folder + "/" + importedDevice.name + ".idx";
-        importedDevice.catalog->sourcePath = virtualCatalogFolder;
-        importedDevice.catalog->includeHidden = 1;
-        importedDevice.catalog->includeSymblinks = 0;
-        importedDevice.catalog->isFullDevice = 0;
-        importedDevice.catalog->includeMetadata = Catalog::METADATA_NONE;
-        importedDevice.catalog->appVersion = currentVersion;
-        importedDevice.catalog->insertCatalog();
+    for (auto it = catalogNameToDevice.begin(); it != catalogNameToDevice.end(); ++it) {
+        Device* importedDevice = it.value();
 
         //Update total number and size of the files
-        QString listCatalogSQL = QLatin1String(R"(
+        QString statsSQL = QLatin1String(R"(
                                                     SELECT COUNT(*), SUM(file_size)
                                                     FROM file
                                                     WHERE file_catalog =:file_catalog
                                             )");
-        QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
-        listCatalogQuery.prepare(listCatalogSQL);
-        listCatalogQuery.bindValue(":file_catalog", importedDevice.name);
-        listCatalogQuery.exec();
-        listCatalogQuery.next();
+        QSqlQuery statsQuery(QSqlDatabase::database(m_connectionName));
+        statsQuery.prepare(statsSQL);
+        statsQuery.bindValue(":file_catalog", importedDevice->name);
+        statsQuery.exec();
+        statsQuery.next();
 
-        importedDevice.totalFileCount = listCatalogQuery.value(0).toLongLong();
-        importedDevice.totalFileSize  = listCatalogQuery.value(1).toLongLong();
-        importedDevice.saveDevice();
+        importedDevice->totalFileCount = statsQuery.value(0).toLongLong();
+        importedDevice->totalFileSize  = statsQuery.value(1).toLongLong();
+        importedDevice->saveDevice();
         collection->saveDeviceTableToFile();
-
-        //Save device
-        collection->saveDeviceTableToFile();
-
 
         //Export the catalog file
 
         //Prepare the catalog file path
-        QFile fileOut(importedDevice.catalog->filePath);
+        QFile fileOut(importedDevice->catalog->filePath);
 
         //Prepare the stream and file headers
         QTextStream out(&fileOut);
         if(fileOut.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 
             out  << "<catalogSourcePath>" + virtualCatalogFolder << "\n"
-                << "<catalogFileCount>" + QString::number(importedDevice.totalFileCount)    << "\n"
-                << "<catalogTotalFileSize>" + QString::number(importedDevice.totalFileSize) << "\n"
+                << "<catalogFileCount>" + QString::number(importedDevice->totalFileCount)    << "\n"
+                << "<catalogTotalFileSize>" + QString::number(importedDevice->totalFileSize) << "\n"
                 << "<catalogIncludeHidden>"       << "\n"
                 << "<catalogFileType>"            << "\n"
                 << "<catalogStorage>"             << "\n"
@@ -2680,7 +2716,7 @@ void MainWindow::importFromVVV()
                 << "<catalogIsFullDevice>"        << "\n"
                 << "<catalogIncludeMetadata>"     << "\n"
                 << "<catalogAppVersion>" + currentVersion << "\n"
-                << "<catalogID>" + QString::number(importedDevice.externalID) << "\n";
+                << "<catalogID>" + QString::number(importedDevice->externalID) << "\n";
         }
 
         //Get the list of file to add
@@ -2695,7 +2731,7 @@ void MainWindow::importFromVVV()
                                             )");
         QSqlQuery listFilesQuery(QSqlDatabase::database(m_connectionName));
         listFilesQuery.prepare(listFilesSQL);
-        listFilesQuery.bindValue(":file_catalog", importedDevice.name);
+        listFilesQuery.bindValue(":file_catalog", importedDevice->name);
         listFilesQuery.exec();
 
         //Write the results in the file
@@ -2716,8 +2752,8 @@ void MainWindow::importFromVVV()
 
         //Export the folder file
 
-        //Prepare the fodlers file path
-        QFile fileFolderOut(collection->folder + "/" + importedDevice.name + ".folders.idx");
+        //Prepare the folders file path
+        QFile fileFolderOut(collection->folder + "/" + importedDevice->name + ".folders.idx");
 
         //Prepare the stream and file headers
         QTextStream folderOut(&fileFolderOut);
@@ -2733,7 +2769,7 @@ void MainWindow::importFromVVV()
                                         )");
             QSqlQuery listFoldersQuery(QSqlDatabase::database(m_connectionName));
             listFoldersQuery.prepare(listFoldersSQL);
-            listFoldersQuery.bindValue(":folder_catalog_id", importedDevice.externalID);
+            listFoldersQuery.bindValue(":folder_catalog_id", importedDevice->externalID);
             listFoldersQuery.exec();
 
             //Write the results in the file
@@ -2747,6 +2783,9 @@ void MainWindow::importFromVVV()
 
         fileFolderOut.close();
     }
+
+    //Cleanup allocated Device pointers
+    qDeleteAll(catalogNameToDevice);
 
     //update virtual device
     importVirtualDevice.updateNumbersFromChildren();
