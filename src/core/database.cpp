@@ -847,11 +847,13 @@ QSqlError Database::dropTableIfExists(const QString &connectionName, const QStri
     if (tableExists(connectionName, tableName)) {
         qDebug() << "Dropping table:" << tableName;
 
-        // First, try to ensure no locks
+        // First, try to ensure no locks (SQLite-specific)
         QSqlDatabase db = QSqlDatabase::database(connectionName);
-        QSqlQuery unlockQuery(db);
-        unlockQuery.exec("PRAGMA wal_checkpoint(RESTART)");
-        unlockQuery.finish();
+        if (getDatabaseType(connectionName) == DatabaseType::SQLite) {
+            QSqlQuery unlockQuery(db);
+            unlockQuery.exec("PRAGMA wal_checkpoint(RESTART)");
+            unlockQuery.finish();
+        }
 
         // Try the drop
         QSqlError dropError = executeSql(connectionName, QString("DROP TABLE IF EXISTS %1").arg(tableName));

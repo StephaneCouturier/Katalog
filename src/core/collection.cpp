@@ -30,6 +30,7 @@
 */
 
 #include "collection.h"
+#include "database.h"
 #include "device.h"
 #include "catalog.h"
 #include <QMutex>
@@ -255,9 +256,11 @@ void Collection::clearDatabaseData()
             return;
         }
 
-        // Disable foreign key constraints temporarily to avoid constraint violations
+        // Disable foreign key constraints temporarily to avoid constraint violations (SQLite-specific)
         QSqlQuery pragmaQuery(db);
-        pragmaQuery.exec("PRAGMA foreign_keys = OFF");
+        if (Database::getDatabaseType(m_connectionName) == Database::DatabaseType::SQLite) {
+            pragmaQuery.exec("PRAGMA foreign_keys = OFF");
+        }
 
         // Execute DELETE queries in dependency order to avoid foreign key issues
         QSqlQuery queryDelete(db);
@@ -287,8 +290,10 @@ void Collection::clearDatabaseData()
         queryDelete.exec("DELETE FROM virtual_storage_catalog");
         queryDelete.exec("DELETE FROM device_catalog");
 
-        // Re-enable foreign key constraints
-        pragmaQuery.exec("PRAGMA foreign_keys = ON");
+        // Re-enable foreign key constraints (SQLite-specific)
+        if (Database::getDatabaseType(m_connectionName) == Database::DatabaseType::SQLite) {
+            pragmaQuery.exec("PRAGMA foreign_keys = ON");
+        }
 
         qDebug() << "Database cleared safely with proper constraint handling";
     }

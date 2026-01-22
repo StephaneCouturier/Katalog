@@ -548,6 +548,7 @@
         }
 
         // Dump schema and data from in-memory database
+        // Note: sqlite_master is appropriate here as this is a SQLite-to-SQLite backup operation
         QSqlQuery queryTableList(memoryDb);
         if (!queryTableList.exec("SELECT name, sql FROM sqlite_master WHERE type='table'")) {
             QMessageBox::warning(nullptr, "Database Error", "Error retrieving schema from in-memory database: " + queryTableList.lastError().text());
