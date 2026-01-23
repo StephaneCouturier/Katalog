@@ -2253,7 +2253,7 @@ void MainWindow::updateStorageSelectionStatistics()
     //Prepare the main part of the query
     QString querySQL = QLatin1String(R"(
                                         SELECT
-                                            COUNT (device_id),
+                                            COUNT(device_id),
                                             SUM(device_free_space),
                                             SUM(device_total_space)
                                         FROM device

@@ -30,6 +30,7 @@
 */
 
 #include "core/statusbarmessagebuilder.h"
+#include "core/database.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -695,7 +696,7 @@
 
         //Display number of directories and total size
             QString countSQL = QLatin1String(R"(
-                                SELECT COUNT (DISTINCT (folder_path))
+                                SELECT COUNT(DISTINCT folder_path)
                                 FROM folder
                                 WHERE folder_catalog_id =:folder_catalog_id
                                )");
@@ -713,17 +714,22 @@
         //Load all files and create model
         QString selectSQL;
 
+        // Check database type for SQL syntax differences
+        Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+        bool isSQLite = (dbType == Database::DatabaseType::SQLite);
+
         //Select folders based on selected options
         if(optionDisplayFolders==true){
 
-            selectSQL = QLatin1String(R"(
-                                SELECT (REPLACE(folder_path, :selected_directory_full_path||"/", '')) AS file_name,
+            if (isSQLite) {
+                selectSQL = QLatin1String(R"(
+                                SELECT (REPLACE(folder_path, :selected_directory_full_path||'/', '')) AS file_name,
                                             NULL                    AS file_size,
-                                            ""                      AS file_date_updated,
+                                            ''                      AS file_date_updated,
                                             folder_path             AS file_folder_path,
                                             folder_catalog_id       AS file_catalog,
-                                            "folder"                AS entry_type,
-                                            "1"||folder_path        AS order_value,
+                                            'folder'                AS entry_type,
+                                            '1'||folder_path        AS order_value,
                                             folder_path,
                                             NULL                    AS file_type,
                                             NULL                    AS mime_type,
@@ -741,16 +747,56 @@
                                 FROM  folder
                                 WHERE folder_catalog_id=:folder_catalog_id
                         )");
+            } else {
+                // MySQL/MariaDB version using CONCAT()
+                selectSQL = QLatin1String(R"(
+                                SELECT (REPLACE(folder_path, CONCAT(:selected_directory_full_path, '/'), '')) AS file_name,
+                                            NULL                    AS file_size,
+                                            ''                      AS file_date_updated,
+                                            folder_path             AS file_folder_path,
+                                            folder_catalog_id       AS file_catalog,
+                                            'folder'                AS entry_type,
+                                            CONCAT('1', folder_path) AS order_value,
+                                            folder_path,
+                                            NULL                    AS file_type,
+                                            NULL                    AS mime_type,
+                                            NULL                    AS image_width,
+                                            NULL                    AS image_height,
+                                            NULL                    AS video_duration_seconds,
+                                            NULL                    AS video_width,
+                                            NULL                    AS video_height,
+                                            NULL                    AS audio_duration_seconds,
+                                            NULL                    AS audio_artist,
+                                            NULL                    AS audio_album,
+                                            NULL                    AS audio_title,
+                                            NULL                    AS checksum_sha256,
+                                            NULL                    AS checksum_extraction_date
+                                FROM  folder
+                                WHERE folder_catalog_id=:folder_catalog_id
+                        )");
+            }
 
             if(optionDisplaySubFolders != true){
-                selectSQL = selectSQL + QLatin1String(R"(
-                                    AND     (REPLACE(folder_path, :selected_directory_full_path||'/', ''))  NOT like "%/%"
-                )");
+                if (isSQLite) {
+                    selectSQL = selectSQL + QLatin1String(R"(
+                                    AND     (REPLACE(folder_path, :selected_directory_full_path||'/', ''))  NOT like '%/%'
+                    )");
+                } else {
+                    selectSQL = selectSQL + QLatin1String(R"(
+                                    AND     (REPLACE(folder_path, CONCAT(:selected_directory_full_path, '/'), ''))  NOT like '%/%'
+                    )");
+                }
             }
             else{
-                selectSQL = selectSQL + QLatin1String(R"(
+                if (isSQLite) {
+                    selectSQL = selectSQL + QLatin1String(R"(
                                     AND     folder_path LIKE :selected_directory_full_path||'/%'
-                )");
+                    )");
+                } else {
+                    selectSQL = selectSQL + QLatin1String(R"(
+                                    AND     folder_path LIKE CONCAT(:selected_directory_full_path, '/%')
+                    )");
+                }
             }
 
             selectSQL = selectSQL + QLatin1String(R"(
@@ -761,14 +807,15 @@
         }
 
         //select files
-        selectSQL += QLatin1String(R"(
+        if (isSQLite) {
+            selectSQL += QLatin1String(R"(
                                 SELECT  file_name,
                                         file_size,
                                         file_date_updated,
                                         file_folder_path,
                                         file_catalog,
-                                        "file" AS entry_type,
-                                        "2"||file_name AS order_value,
+                                        'file' AS entry_type,
+                                        '2'||file_name AS order_value,
                                         file_full_path,
                                         file_type,
                                         mime_type,
@@ -788,6 +835,35 @@
                                 AND     file_folder_path =:file_folder_path
                                 ORDER BY order_value ASC
                             )");
+        } else {
+            selectSQL += QLatin1String(R"(
+                                SELECT  file_name,
+                                        file_size,
+                                        file_date_updated,
+                                        file_folder_path,
+                                        file_catalog,
+                                        'file' AS entry_type,
+                                        CONCAT('2', file_name) AS order_value,
+                                        file_full_path,
+                                        file_type,
+                                        mime_type,
+                                        image_width,
+                                        image_height,
+                                        video_duration_seconds,
+                                        video_width,
+                                        video_height,
+                                        audio_duration_seconds,
+                                        audio_artist,
+                                        audio_album,
+                                        audio_title,
+                                        checksum_sha256,
+                                        checksum_extraction_date
+                                FROM    file
+                                WHERE   file_catalog_id =:file_catalog_id
+                                AND     file_folder_path =:file_folder_path
+                                ORDER BY order_value ASC
+                            )");
+        }
 
         if( exploreDevice->path == "EXPORT" ){
             exploreSelectedFolderFullPath.remove("EXPORT");
@@ -896,9 +972,9 @@
 
         //Display count of files and total size
         QString countSQL = QLatin1String(R"(
-                                SELECT  count (*), sum(file_size)
-                                FROM    file
-                                WHERE   file_catalog_id =:file_catalog_id
+                                SELECT COUNT(*), SUM(file_size)
+                                FROM   file
+                                WHERE  file_catalog_id =:file_catalog_id
                            )");
 
         if (exploreSelectedDirectoryName!=""){
