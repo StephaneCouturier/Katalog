@@ -1821,15 +1821,30 @@
                         //Prepare insert query for folder
                         QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
                         Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
-                        QString insertFolderSQL = QString(R"(
-                                                    %1 INTO folder(
-                                                        folder_catalog_id,
-                                                        folder_path
-                                                     )
-                                                    VALUES(
-                                                        :folder_catalog_id,
-                                                        :folder_path)
-                                                    )").arg(Database::getInsertOrIgnorePrefix(dbType));
+                        QString insertFolderSQL;
+                        if (dbType == Database::DatabaseType::PostgreSQL) {
+                            // PostgreSQL requires ON CONFLICT clause
+                            insertFolderSQL = QString(R"(
+                                                        %1 INTO folder(
+                                                            folder_catalog_id,
+                                                            folder_path
+                                                         )
+                                                        VALUES(
+                                                            :folder_catalog_id,
+                                                            :folder_path)
+                                                        ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING
+                                                        )").arg(Database::getInsertOrIgnorePrefix(dbType));
+                        } else {
+                            insertFolderSQL = QString(R"(
+                                                        %1 INTO folder(
+                                                            folder_catalog_id,
+                                                            folder_path
+                                                         )
+                                                        VALUES(
+                                                            :folder_catalog_id,
+                                                            :folder_path)
+                                                        )").arg(Database::getInsertOrIgnorePrefix(dbType));
+                        }
                         insertFolderQuery.prepare(insertFolderSQL);
 
                         //Insert root folder (so that it is displayed even when there are no sub-folders, except for search exports)

@@ -475,6 +475,7 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
     }
     else if (collection->databaseMode == "Hosted") {
         QString driver;
+        collection->databaseType= "PostgreSQL"; //TESTING
         if (collection->databaseType == "PostgreSQL") {
             driver = "QPSQL";
         } else {
@@ -636,12 +637,19 @@ QString Database::getSQLCreateIndexes(DatabaseType dbType)
         )";
 
     case DatabaseType::MySQL:
-    case DatabaseType::PostgreSQL:
         // MySQL needs prefix length for TEXT columns (max 767 bytes for InnoDB)
         return R"(
             CREATE INDEX idx_file_catalog_path ON file(file_catalog_id, file_full_path(500));
             CREATE INDEX idx_filetemp_catalog_path ON filetemp(file_catalog_id, file_full_path(500));
             CREATE INDEX idx_file_catalog_folder ON file(file_catalog_id, file_folder_path(500));
+        )";
+
+    case DatabaseType::PostgreSQL:
+        // PostgreSQL uses functional indexes with LEFT() for prefix indexing
+        return R"(
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_path ON file(file_catalog_id, LEFT(file_full_path, 500));
+            CREATE INDEX IF NOT EXISTS idx_filetemp_catalog_path ON filetemp(file_catalog_id, LEFT(file_full_path, 500));
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_folder ON file(file_catalog_id, LEFT(file_folder_path, 500));
         )";
     }
     return "";
@@ -736,9 +744,8 @@ QString Database::getFormattedTimeDifference(DatabaseType databaseType,
     }
 
     case DatabaseType::MySQL:
-    case DatabaseType::PostgreSQL:
     {
-        // MySQL/PostgreSQL version using TIMESTAMPDIFF and MOD() function
+        // MySQL version using TIMESTAMPDIFF and MOD() function
         QString sql = QString(R"(
                 CONCAT(
                     LPAD(FLOOR(ABS(TIMESTAMPDIFF(SECOND, %1, %2)) / 31536000), 2, '0'), ':',
@@ -746,7 +753,23 @@ QString Database::getFormattedTimeDifference(DatabaseType databaseType,
                     LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 2592000) / 86400), 2, '0'), ' ',
                     LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 86400) / 3600), 2, '0'), ':',
                     LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 3600) / 60), 2, '0'), ':',
-                    LPAD(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 60), 2, '0')
+                    LPAD(CAST(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 60) AS CHAR), 2, '0')
+                )
+            )").arg(d1DateField, d2DateField);
+        return sql;
+    }
+
+    case DatabaseType::PostgreSQL:
+    {
+        // PostgreSQL version using EXTRACT(EPOCH FROM ...) instead of TIMESTAMPDIFF
+        QString sql = QString(R"(
+                CONCAT(
+                    LPAD(FLOOR(ABS(EXTRACT(EPOCH FROM (%2 - %1))) / 31536000)::TEXT, 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 31536000) / 2592000)::TEXT, 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 2592000) / 86400)::TEXT, 2, '0'), ' ',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 86400) / 3600)::TEXT, 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 3600) / 60)::TEXT, 2, '0'), ':',
+                    LPAD(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 60)::TEXT, 2, '0')
                 )
             )").arg(d1DateField, d2DateField);
         return sql;
@@ -759,7 +782,23 @@ QString Database::getFormattedTimeDifference(DatabaseType databaseType,
 bool Database::tableExists(const QString &connectionName, const QString &tableName)
 {
     QSqlQuery query(QSqlDatabase::database(connectionName));
-    query.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?");
+
+    DatabaseType databaseType = getDatabaseType(connectionName);
+    QString sql;
+
+    switch(databaseType) {
+        case DatabaseType::SQLite:
+            sql = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
+            break;
+        case DatabaseType::MySQL:
+            sql = "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=?";
+            break;
+        case DatabaseType::PostgreSQL:
+            sql = "SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename=?";
+            break;
+    }
+
+    query.prepare(sql);
     query.addBindValue(tableName);
 
     if (query.exec() && query.next()) {
