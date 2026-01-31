@@ -2189,6 +2189,7 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
     QStringList fileNames, fileFolderPaths, fileFullPaths, fileDateTimes, fileCatalogs;
     QStringList fileExtensions, fileTypes, mimeTypes;
     QList<qint64> fileSizes;
+    QStringList directoryPaths;  // Collect directories (including empty ones)
 
     int batchSize = 1000;  // Adjust based on performance testing
 
@@ -2217,8 +2218,10 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
         }
         if (isExcluded) continue;
 
-        // Only process files (skip directories for now)
-        if (entry.isFile()) {
+        // Handle directories and files (matching creation behavior for empty folders)
+        if (entry.isDir()) {
+            directoryPaths << entryPath;
+        } else if (entry.isFile()) {
             QString extension = entry.suffix().toLower();
             QString quickFileType = FileMetadata::getFileTypeFromExtension(extension);
             QString quickMimeType = FileMetadata::getMimeTypeFromExtension(extension);
@@ -2293,6 +2296,11 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
                 qDebug() << "Error inserting into filetemp:" << insertQuery.lastError().text();
             }
         }
+    }
+
+    // Insert all directory paths (including empty folders) - matching creation behavior
+    if (!directoryPaths.isEmpty()) {
+        insertFolders(directoryPaths, catalog);
     }
 }
 
