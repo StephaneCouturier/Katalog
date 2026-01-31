@@ -2344,26 +2344,40 @@ void MainWindow::saveCatalogChanges()
 
     //Confirm save changes to catalog's files selection
     bool changesToFileSelectionMade = false;
+    bool rescanNeeded = false;
     QString message = tr("Save changes to the definition of the catalog?<br/>");
     message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
 
     if(activeDevice->catalog->fileType       !=previousCatalog.catalog->fileType){
         message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + previousCatalog.catalog->fileType     + "</td><td><b>" + activeDevice->catalog->fileType      + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
     }
     if(activeDevice->catalog->includeHidden  != previousCatalog.catalog->includeHidden){
         QString previousValue = previousCatalog.catalog->includeHidden ? tr("All") : tr("None");
         QString newValue = activeDevice->catalog->includeHidden ? tr("All") : tr("None");
         message = message + "<tr><td>" + tr("Include Hidden") + "</td><td>" + previousValue + "</td><td><b>" + newValue + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
     }
     if(activeDevice->catalog->includeMetadata != previousCatalog.catalog->includeMetadata){
         message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(previousCatalog.catalog->includeMetadata).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->includeMetadata).toString() + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
+    }
+    if(activeDevice->catalog->includeChecksum != previousCatalog.catalog->includeChecksum){
+        message = message + "<tr><td>" + tr("Include Checksum") + "</td><td>" + previousCatalog.catalog->includeChecksum + "</td><td><b>" + activeDevice->catalog->includeChecksum + "</b></td></tr>";
+        changesToFileSelectionMade = true;
+        // Rescan needed except when changing from a hash to None (we keep existing hashes)
+        if(!(previousCatalog.catalog->includeChecksum != Catalog::CHECKSUM_NONE
+             && activeDevice->catalog->includeChecksum == Catalog::CHECKSUM_NONE)){
+            rescanNeeded = true;
+        }
     }
     if(activeDevice->catalog->isFullDevice  != previousCatalog.catalog->isFullDevice){
         message = message + "<tr><td>" + tr("Is Full Device") + "</td><td>" + QVariant(previousCatalog.catalog->isFullDevice).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->isFullDevice).toString() + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
     }
     message = message + "</table>";
 
@@ -2390,8 +2404,8 @@ void MainWindow::saveCatalogChanges()
             );
     }
 
-    // Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
-    if( changesToFileSelectionMade){
+    // Update the list of files if the changes impact the contents (i.e. path, file type, hidden, checksum)
+    if( rescanNeeded){
         int updatechoice = QMessageBox::warning(this, "Katalog",
                                                 tr("Update the catalog content with the new criteria?\n")
                                                 , QMessageBox::Yes
