@@ -102,7 +102,64 @@
         }
         //Save host parameters
         else if(collection->databaseMode=="Hosted"){
-            settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Hosted_HostName->text());
+            // Validate hostname before saving
+            QString hostname = ui->Settings_lineEdit_DataMode_Hosted_HostName->text().trimmed();
+
+            // Set default if empty
+            if (hostname.isEmpty()) {
+                hostname = "localhost";
+                ui->Settings_lineEdit_DataMode_Hosted_HostName->setText(hostname);
+            }
+
+            Database::HostnameValidationType validationType = Database::validateHostname(hostname);
+
+            if (validationType == Database::PublicOrInvalid) {
+                // Invalid hostname - show error and abort
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "Invalid database hostname."));
+                msgBox.setInformativeText(QCoreApplication::translate("MainWindow",
+                                                                      "For security reasons, only local or private network databases are allowed.\n\n"
+                                                                      "Valid hostnames:\n"
+                                                                      "• localhost\n"
+                                                                      "• 127.0.0.1 (or 127.x.x.x range)\n"
+                                                                      "• ::1 (IPv6 localhost)\n"
+                                                                      "• 192.168.x.x (private network)\n"
+                                                                      "• 10.x.x.x (private network)\n"
+                                                                      "• 172.16.x.x - 172.31.x.x (private network)\n\n"
+                                                                      "Do not include 'http://' or other protocol prefixes."));
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.exec();
+                return;  // Abort the save and restart
+            }
+            else if (validationType == Database::PrivateNetwork) {
+                // Private network IP - show confirmation dialog
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "Private Network Database Connection"));
+                msgBox.setInformativeText(QCoreApplication::translate("MainWindow",
+                                                                      "You are connecting to a database on your private network (%1).\n\n"
+                                                                      "Security warning:\n"
+                                                                      "• Your catalog data will be sent to this network database\n"
+                                                                      "• Ensure the database server is on a trusted network\n"
+                                                                      "• Anyone with access to this database can view your catalog information\n\n"
+                                                                      "For maximum security, use 'localhost' for same-machine databases.\n\n"
+                                                                      "Do you want to continue?").arg(hostname));
+                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                msgBox.setDefaultButton(QMessageBox::No);
+
+                int result = msgBox.exec();
+                if (result != QMessageBox::Yes) {
+                    return;  // User cancelled
+                }
+            }
+            // If Localhost, proceed without warning
+
+            settings.setValue("Settings/databaseHostName", hostname);
             settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->text());
             settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Hosted_Port->text());
             settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Hosted_UserName->text());

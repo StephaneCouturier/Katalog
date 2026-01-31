@@ -34,6 +34,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QApplication>
+#include <qhostaddress.h>
 
 //----------------------------------------------------------------------
 // Core database definition
@@ -424,6 +425,67 @@ Database::DatabaseType Database::getDatabaseType(const QString &connectionName)
 
     return DatabaseType::SQLite; // default fallback
 }
+//----------------------------------------------------------------------
+Database::HostnameValidationType Database::validateHostname(const QString &hostname)
+{
+    QString trimmedHost = hostname.trimmed().toLower();
+
+    // Empty hostname is invalid
+    if (trimmedHost.isEmpty()) {
+        return PublicOrInvalid;
+    }
+
+    // Remove any protocol prefix (http://, https://, etc.) - these shouldn't be in hostname
+    if (trimmedHost.contains("://")) {
+        return PublicOrInvalid;
+    }
+
+    // Check for localhost variations
+    if (trimmedHost == "localhost" || trimmedHost == "::1") {
+        return Localhost;
+    }
+
+    // Check for IPv4 loopback range (127.0.0.0/8)
+    QHostAddress addr(trimmedHost);
+    if (!addr.isNull() && addr.protocol() == QAbstractSocket::IPv4Protocol) {
+        quint32 ipv4 = addr.toIPv4Address();
+
+        // 127.0.0.0/8 - loopback
+        if ((ipv4 & 0xFF000000) == 0x7F000000) {
+            return Localhost;
+        }
+
+        // 10.0.0.0/8 - private
+        if ((ipv4 & 0xFF000000) == 0x0A000000) {
+            return PrivateNetwork;
+        }
+
+        // 172.16.0.0/12 - private
+        if ((ipv4 & 0xFFF00000) == 0xAC100000) {
+            return PrivateNetwork;
+        }
+
+        // 192.168.0.0/16 - private
+        if ((ipv4 & 0xFFFF0000) == 0xC0A80000) {
+            return PrivateNetwork;
+        }
+
+        // Any other IP is considered public/invalid
+        return PublicOrInvalid;
+    }
+
+    // Check for IPv6 addresses
+    if (!addr.isNull() && addr.protocol() == QAbstractSocket::IPv6Protocol) {
+        // ::1 already handled above
+        // For simplicity, treat other IPv6 as invalid for now
+        // (could be enhanced to check for link-local fe80::/10, ULA fc00::/7, etc.)
+        return PublicOrInvalid;
+    }
+
+    // If it's not a recognized IP format, it might be a domain name
+    // Domain names that could resolve to public IPs are not allowed
+    return PublicOrInvalid;
+}
 
 QSqlError Database::initialize(const QString &connectionName, Collection *collection,
                                const QString &overrideDatabaseMode,
@@ -455,6 +517,14 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
     // Set defaults if values are not provided
     if (collection->databaseMode.isEmpty())
         collection->databaseMode = "Memory";
+
+    // Set database host defaults for Hosted mode
+    if (collection->databaseHostName.isEmpty()) {
+        collection->databaseHostName = "localhost";
+    }
+    if (collection->databasePort == 0) {
+        collection->databasePort = 3306;  // Default MySQL/MariaDB port
+    }
 
     // Prepare database based on selected mode
     QSqlDatabase db;

@@ -104,6 +104,13 @@ public:
         MySQL,
         PostgreSQL
     };
+
+    enum HostnameValidationType {
+        Localhost,       // localhost, 127.x.x.x, ::1
+        PrivateNetwork,  // 192.168.x.x, 10.x.x.x, 172.16-31.x.x
+        PublicOrInvalid  // Public IPs, domains, or malformed input
+    };
+
     static DatabaseType getDatabaseType(const QString &connectionName);
 
     // CREATE statements to manage compatibility with different database systems
@@ -162,11 +169,17 @@ public:
      * @param d2DateField Target device date field name
      * @return SQL expression for formatted time difference
      */
+
+    /**
+     * @brief Validates a hostname for security - ensures database connections are local or on private networks
+     * @param hostname The hostname to validate
+     * @return HostnameValidationType indicating the security level
+     */
+    static HostnameValidationType validateHostname(const QString &hostname);
+
     static QString getFormattedTimeDifference(DatabaseType dbType,
                                               const QString &d1DateField,
                                               const QString &d2DateField);
-
-
 
     // Main initialization method - creates connection and sets up database
     // Optional overrides allow command line to bypass settings file values
