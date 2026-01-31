@@ -426,7 +426,7 @@ checksum_extraction_date  TEXT
 
 ---
 
-### Strategy E: 2 Generic Slots + Per-Catalog Algorithm Choice ⭐ RECOMMENDED
+### Strategy E: 2 Generic Slots + Per-Catalog Algorithm
 
 Two generic checksum columns, each catalog chooses which algorithm(s) to use.
 
