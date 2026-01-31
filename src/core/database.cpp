@@ -475,7 +475,6 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
     }
     else if (collection->databaseMode == "Hosted") {
         QString driver;
-        collection->databaseType= "PostgreSQL"; //TESTING
         if (collection->databaseType == "PostgreSQL") {
             driver = "QPSQL";
         } else {
