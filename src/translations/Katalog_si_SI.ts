@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1712"/>
+        <location filename="../core/collection.cpp" line="+1741"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ta mapa vsebuje datoteke zbirke v načinu pomnilnika, vendar ste trenutno v načinu datoteke.&lt;br/&gt;Preklopite v način pomnilnika ali izberite drugo mapo.</translation>
     </message>
@@ -68,6 +68,190 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2369"/>
+        <source>Include Checksum</source>
+        <translation>Vključi nadzorno vsoto</translation>
+    </message>
+    <message>
+        <location line="+541"/>
+        <location line="+46"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+301"/>
+        <source>Verify Checksums</source>
+        <translation>Preveri nadzorne vsote</translation>
+    </message>
+    <message>
+        <location line="-45"/>
+        <source>Loading</source>
+        <translation>Nalaganje</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>files</source>
+        <translation>datoteke</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>No checksums to verify.</source>
+        <translation>Ni nadzornih vsot za preverjanje.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Verify checksums for %1 files?</source>
+        <translation>Preveri nadzorne vsote za %1 datotek?</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Verifying</source>
+        <translation>Preverjanje</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+5"/>
+        <source>Verified:</source>
+        <translation>Preverjeno:</translation>
+    </message>
+    <message>
+        <location line="-4"/>
+        <source>All checksums match.</source>
+        <translation>Vse nadzorne vsote se ujemajo.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Mismatches:</source>
+        <translation>Neujemanja:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing:</source>
+        <translation>Manjka:</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mismatched files:</source>
+        <translation>Neujemajoče datoteke:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing files:</source>
+        <translation>Manjkajoče datoteke:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+9382"/>
+        <source>Include File Type</source>
+        <translation>Vključi vrsto datoteke</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="+262"/>
+        <location line="+18"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+808"/>
+        <source>Copy Checksum</source>
+        <translation>Kopiraj nadzorno vsoto</translation>
+    </message>
+    <message>
+        <location line="-8"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-8"/>
+        <source>Calculate Checksum</source>
+        <translation>Izračunaj nadzorno vsoto</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+13"/>
+        <source>Verify Checksum</source>
+        <translation>Preveri nadzorno vsoto</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1335"/>
+        <source>Verifying checksum...</source>
+        <translation>Preverjanje nadzorne vsote...</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+58"/>
+        <location line="+68"/>
+        <source>Checksum saved to database.</source>
+        <translation>Nadzorna vsota shranjena v podatkovno bazo.</translation>
+    </message>
+    <message>
+        <location line="-124"/>
+        <source>Checksums match.</source>
+        <translation>Nadzorne vsote se ujemajo.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+122"/>
+        <source>Copy to Clipboard</source>
+        <translation>Kopiraj v odložišče</translation>
+    </message>
+    <message>
+        <location line="-100"/>
+        <source>Checksums do not match.</source>
+        <translation>Nadzorne vsote se ne ujemajo.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Expected:</source>
+        <translation>Pričakovano:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Actual:</source>
+        <translation>Dejansko:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Update Checksum</source>
+        <translation>Posodobi nadzorno vsoto</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>File not found:</source>
+        <translation>Datoteka ni najdena:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Calculating checksum...</source>
+        <translation>Izračunavanje nadzorne vsote...</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Checksum calculation failed.</source>
+        <translation>Izračun nadzorne vsote ni uspel.</translation>
+    </message>
+    <message>
+        <source>Invalid database hostname.</source>
+        <translation type="vanished">Neveljavno ime gostitelja podatkovne baze.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+121"/>
+        <source>Invalid hostname.</source>
+        <translation>Neveljavno ime gostitelja.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only local or private network allowed.</source>
+        <translation>Dovoljeno je samo lokalno ali zasebno omrežje.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Valid:</source>
+        <translation>Veljavno:</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Private network connection</source>
+        <translation>Povezava z zasebnim omrežjem</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Your data will be sent to this network database.</source>
+        <translation>Vaši podatki bodo poslani v to omrežno podatkovno bazo.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Continue?</source>
+        <translation>Nadaljuj?</translation>
+    </message>
+    <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
         <location line="+167"/>
         <source>Metadata Extracted</source>
@@ -80,9 +264,9 @@
     </message>
     <message>
         <location filename="../core/search.cpp" line="+189"/>
-        <location filename="../mainwindow.ui" line="+3420"/>
+        <location filename="../mainwindow.ui" line="-5962"/>
         <location line="+926"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1699"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1281"/>
         <source>Checksum</source>
         <translation>Nadzorna vsota</translation>
     </message>
@@ -113,13 +297,13 @@
         <translation>in</translation>
     </message>
     <message>
-        <location line="+3439"/>
-        <location line="+1974"/>
+        <location line="+3427"/>
+        <location line="+1738"/>
         <source>Include files checksum</source>
         <translation>Vključi nadzorne vsote datotek</translation>
     </message>
     <message>
-        <location line="+584"/>
+        <location line="+587"/>
         <source>Stop the cataloging (no data will be saved)</source>
         <translation>Ustavi katalogizacijo (nobeni podatki ne bodo shranjeni)</translation>
     </message>
@@ -134,10 +318,8 @@
         <translation>Samo izbrano</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+257"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+807"/>
         <source>Copy file checksum</source>
-        <translation>Kopiraj nadzorno vsoto datoteke</translation>
+        <translation type="vanished">Kopiraj nadzorno vsoto datoteke</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
@@ -167,7 +349,7 @@
         <location filename="../core/searchjobstoppable.cpp" line="+443"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
         <location line="+157"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+347"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+349"/>
         <source>File Types Updated</source>
         <translation>Vrste datotek posodobljene</translation>
     </message>
@@ -187,7 +369,7 @@
         <location line="+28"/>
         <location line="+18"/>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1085"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+1080"/>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+54"/>
@@ -239,7 +421,7 @@
         <translation>Ustavljeno</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+692"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+406"/>
         <source>MIME Verification Complete</source>
         <translation>Preverjanje MIME Končano</translation>
     </message>
@@ -259,14 +441,14 @@
         <translation>Metapodatki</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6608"/>
+        <location filename="../mainwindow.ui" line="-6363"/>
         <source>File metadata</source>
         <translation>Metapodatki datoteke</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-9"/>
         <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+200"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+275"/>
         <source>Height</source>
         <translation>Višina</translation>
     </message>
@@ -291,13 +473,13 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1781"/>
-        <location line="+2051"/>
+        <location line="+1870"/>
+        <location line="+1714"/>
         <source>Include files metadata</source>
         <translation>Vključi metapodatke datotek</translation>
     </message>
     <message>
-        <location line="-1275"/>
+        <location line="-1056"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zazna dejanske tipe MIME in prepozna neskladnosti (dolg postopek)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -307,31 +489,37 @@
         <translation>Preveri tipe MIME</translation>
     </message>
     <message>
-        <location line="+1200"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+270"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+464"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Other</source>
         <translation>Drugo</translation>
     </message>
     <message>
-        <location line="+29"/>
         <location filename="../devicetreeview.cpp" line="+109"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+473"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+15"/>
         <location line="+12"/>
         <location line="+35"/>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="+15"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+638"/>
+        <location line="+1"/>
         <source>None</source>
         <translation>Brez</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-595"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-305"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-695"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1529"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Prikaži razširjene metapodatke (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+592"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+692"/>
         <source>MIME Type</source>
         <translation>Tip MIME</translation>
     </message>
@@ -372,7 +560,7 @@
         <translation>Naslov</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-365"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-362"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>Kopiraj JSON</translation>
@@ -388,7 +576,7 @@
         <translation>Zapri</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+97"/>
         <source>File Property</source>
         <translation>Lastnost Datoteke</translation>
     </message>
@@ -398,7 +586,7 @@
         <translation>Vrednost</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+119"/>
         <source>Invalid Collection Folder</source>
         <translation>Neveljavna Mapa Zbirke</translation>
     </message>
@@ -436,7 +624,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-54"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>Mediji Osnovno</translation>
@@ -469,7 +657,7 @@
         <translation>Ali želite &lt;span style=&apos;color: red&apos;;&gt;izbrisati&lt;/span&gt; to %1 napravo?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1239"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+800"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalogi posodobljeni:&lt;b&gt; %1 &lt;/b&gt;(%2 preskočenih)</translation>
@@ -480,12 +668,12 @@
         <translation>Navidezna naprava posodobljena: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-2550"/>
+        <location filename="../mainwindow.ui" line="-1292"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik: Ustavi takoj (trda ustavitev)&lt;/p&gt;&lt;p&gt;Ctrl+Klik: Ustavi po trenutnem katalogu (mehka ustavitev)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-239"/>
         <source>The source directory does not exist.</source>
         <translation>Izvorna mapa ne obstaja.</translation>
     </message>
@@ -496,9 +684,9 @@
         <translation>Izvorna mapa ne vsebuje nobene datoteke.&lt;br/&gt;To lahko pomeni, da je izvor prazen ali naprava ni priključena v to mapo.&lt;br/&gt;Ali jo želite vseeno shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+93"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-460"/>
-        <location line="+84"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+79"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-473"/>
+        <location line="+97"/>
         <location line="+64"/>
         <location line="+130"/>
         <location line="+140"/>
@@ -508,8 +696,8 @@
         <translation>Operacija naprave že poteka.</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1084"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-862"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1090"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1062"/>
         <source>Operation cancelled</source>
         <translation>Operacija preklicana</translation>
     </message>
@@ -520,6 +708,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-7042"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
+        <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -532,12 +722,12 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
         <location line="+40"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-484"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
-        <location line="+451"/>
+        <location line="+446"/>
         <location line="+4"/>
         <source>Search</source>
         <translation>Iskanje</translation>
@@ -549,14 +739,14 @@
     </message>
     <message>
         <location line="+3923"/>
-        <location line="+2741"/>
-        <location line="+1829"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+302"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+91"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Text</source>
         <translation>Besedilo</translation>
     </message>
     <message>
-        <location line="-8179"/>
+        <location line="-3609"/>
         <source>Paste the text from the clipboard</source>
         <translation>Prilepi besedilo iz odložišča</translation>
     </message>
@@ -578,7 +768,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+54"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+361"/>
         <source>All Words</source>
         <translation>Vse besede</translation>
     </message>
@@ -604,7 +794,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>File names or Folder paths</source>
         <translation>Imena datotek ali poti map</translation>
     </message>
@@ -612,13 +802,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+983"/>
+        <location line="+977"/>
         <source>File names only</source>
         <translation>Samo imena datotek</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>Folder path only</source>
         <translation>Samo pot mape</translation>
     </message>
@@ -638,7 +828,7 @@
         <translation>Ponastavi</translation>
     </message>
     <message>
-        <location line="+12127"/>
+        <location line="+11882"/>
         <source>Port</source>
         <translation>Vrata</translation>
     </message>
@@ -660,20 +850,20 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+298"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-381"/>
+        <location filename="../mainwindow.cpp" line="+292"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-378"/>
         <source>File</source>
         <translation>Datoteka</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-10652"/>
+        <location filename="../mainwindow.ui" line="-10407"/>
         <location line="+848"/>
         <location line="+891"/>
         <location line="+921"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-294"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
@@ -718,23 +908,28 @@
     </message>
     <message>
         <location line="+81"/>
-        <location line="+5109"/>
+        <location line="+5080"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-669"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1486"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location line="-5071"/>
+        <location line="-5042"/>
         <source>Select the type of files</source>
         <translation>Izberi tip datotek</translation>
     </message>
     <message>
-        <location line="+4900"/>
-        <location line="+1763"/>
         <location filename="../mainwindow_setup.cpp" line="+476"/>
         <location line="+8"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-33"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+92"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+904"/>
+        <location line="+1"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -750,33 +945,32 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+923"/>
         <source>All</source>
         <translation>Vse</translation>
     </message>
     <message>
-        <location line="-1758"/>
-        <location line="+1787"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-130"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Audio</source>
         <translation>Zvok</translation>
     </message>
     <message>
-        <location line="-1779"/>
-        <location line="+1808"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Image</source>
         <translation>Slika</translation>
     </message>
     <message>
-        <location line="-1792"/>
-        <location line="+1850"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+2"/>
+        <location line="-28"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location line="-3424"/>
+        <location filename="../mainwindow.ui" line="+3355"/>
         <source>only list folders in results</source>
         <translation>prikaži samo mape v rezultatih</translation>
     </message>
@@ -788,7 +982,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+426"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1370"/>
         <source>Export Results</source>
         <translation>Izvozi rezultate</translation>
     </message>
@@ -802,7 +996,7 @@
         <location line="+73"/>
         <location line="+34"/>
         <location filename="../mainwindow.ui" line="+129"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+636"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+631"/>
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -820,13 +1014,13 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+936"/>
+        <location line="+907"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2511"/>
+        <location line="+2295"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -844,7 +1038,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3714"/>
+        <location line="-3498"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -852,30 +1046,30 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2718"/>
+        <location line="+2502"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Skupna velikost datotek</translation>
     </message>
     <message>
-        <location line="-2680"/>
+        <location line="-2464"/>
         <source>Total Number of Files</source>
         <translation>Skupno število datotek</translation>
     </message>
     <message>
-        <location line="-1188"/>
+        <location line="-1159"/>
         <source>All active</source>
         <translation>Vse aktivne</translation>
     </message>
     <message>
-        <location line="+1279"/>
+        <location line="+1250"/>
         <source>Import</source>
         <translation>Uvozi</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-400"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-271"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-413"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-346"/>
         <location line="+22"/>
         <location line="+35"/>
         <location line="+18"/>
@@ -888,11 +1082,11 @@
         <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
         <location line="+81"/>
         <location line="+70"/>
-        <location filename="../mainwindow.ui" line="-1812"/>
-        <location line="+965"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+714"/>
+        <location filename="../mainwindow.ui" line="-1783"/>
+        <location line="+936"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-191"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+88"/>
+        <location line="+101"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
         <location line="+39"/>
@@ -901,35 +1095,35 @@
         <translation>Posodobi</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4745"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-106"/>
-        <location line="+68"/>
+        <location filename="../mainwindow.ui" line="+4529"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
+        <location line="+81"/>
         <location line="+63"/>
         <source>Edit</source>
         <translation>Uredi</translation>
     </message>
     <message>
-        <location line="-6037"/>
+        <location line="-5792"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location line="+2142"/>
+        <location line="+2113"/>
         <source>Explore a catalog</source>
         <translation>Razišči katalog</translation>
     </message>
     <message>
-        <location line="-8434"/>
-        <location line="+8813"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+181"/>
+        <location line="-8405"/>
+        <location line="+8784"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+256"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1616"/>
+        <location filename="../mainwindow.ui" line="+1400"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
@@ -940,32 +1134,32 @@
         <translation>Pot</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1939"/>
+        <location filename="../mainwindow.ui" line="-1723"/>
         <source>Directories</source>
         <translation>Imeniki</translation>
     </message>
     <message>
-        <location line="-8724"/>
+        <location line="-8695"/>
         <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>Prikaži/Skrij filtre</translation>
     </message>
     <message>
         <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1220"/>
         <source>Virtual</source>
         <translation>Navidezno</translation>
     </message>
     <message>
         <location line="+215"/>
         <location line="+32"/>
-        <location line="+7991"/>
+        <location line="+7962"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Razširi 1 raven, 2 ravni ali strni</translation>
     </message>
     <message>
-        <location line="-7918"/>
+        <location line="-7889"/>
         <source>Search in file catalogs</source>
         <translation>Iskanje v katalogih datotek</translation>
     </message>
@@ -1010,12 +1204,12 @@
     <message>
         <location line="+99"/>
         <location line="+5562"/>
-        <location line="+3220"/>
+        <location line="+2975"/>
         <source>Stop</source>
         <translation>Ustavi</translation>
     </message>
     <message>
-        <location line="-8280"/>
+        <location line="-8035"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rezultati se morajo natančno ujemati z besedilom (občutljivo na velike/male črke)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1076,7 +1270,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+475"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+493"/>
         <source>Tag</source>
         <translation>Oznaka</translation>
     </message>
@@ -1087,7 +1281,7 @@
     </message>
     <message>
         <location line="+174"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-549"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-567"/>
         <source>Select...</source>
         <translation>Izberi...</translation>
     </message>
@@ -1099,8 +1293,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-711"/>
-        <location line="+717"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-719"/>
+        <location line="+725"/>
         <source>Move to Trash</source>
         <translation>Premakni v smeti</translation>
     </message>
@@ -1137,10 +1331,10 @@
     <message>
         <location line="+159"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+698"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+714"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>Device Type</source>
         <translation>Tip naprave</translation>
     </message>
@@ -1150,23 +1344,22 @@
         <translation>Sprememba bo uveljavljena šele ob shranjevanju</translation>
     </message>
     <message>
-        <location line="+92"/>
         <source>Include Hidden Files</source>
-        <translation>Vključi skrite datoteke</translation>
+        <translation type="vanished">Vključi skrite datoteke</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2153"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2367"/>
         <source>Include Metadata</source>
         <translation>Vključi metapodatke</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-10"/>
+        <location filename="../mainwindow.ui" line="+69"/>
         <source>is full device</source>
         <translation>je celotna naprava</translation>
     </message>
     <message>
-        <location line="+180"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-911"/>
+        <location line="+164"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
         <source>Storage ID</source>
         <translation>ID shranjevanja</translation>
     </message>
@@ -1189,8 +1382,8 @@
         <translation>Komentar 3</translation>
     </message>
     <message>
-        <location line="-939"/>
-        <location line="+965"/>
+        <location line="-910"/>
+        <location line="+936"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Posodobi datoteke izbranega kataloga, če je naprava na voljo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1213,6 +1406,8 @@
     </message>
     <message>
         <location line="+16"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+599"/>
+        <location line="+117"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-114"/>
         <location line="+107"/>
         <location line="+9"/>
@@ -1221,12 +1416,12 @@
         <translation>Prekliči</translation>
     </message>
     <message>
-        <location line="-1063"/>
+        <location line="-1034"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Posodobi vse kataloge, ki so aktivni, če je naprava na voljo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1279"/>
+        <location line="+1250"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uvozi seznam nosilcev iz VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1267,7 +1462,7 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+2086"/>
+        <location line="+1870"/>
         <location line="+630"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
@@ -1276,7 +1471,7 @@
         <translation>Število datotek</translation>
     </message>
     <message>
-        <location line="-2600"/>
+        <location line="-2384"/>
         <source>Click to open the file</source>
         <translation>Kliknite za odprtje datoteke</translation>
     </message>
@@ -1288,13 +1483,13 @@
     <message>
         <location filename="../core/search.cpp" line="-4"/>
         <location filename="../mainwindow.ui" line="+34"/>
-        <location line="+1489"/>
+        <location line="+1273"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-4"/>
         <source>Directory</source>
         <translation>Imenik</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1479"/>
+        <location filename="../mainwindow.ui" line="-1263"/>
         <source>Order folders first</source>
         <translation>Najprej naročite mape</translation>
     </message>
@@ -1329,17 +1524,15 @@
         <translation>Izberi možnosti vsebine</translation>
     </message>
     <message>
-        <location line="+85"/>
         <source>include File Type</source>
-        <translation>vključi tip datoteke</translation>
+        <translation type="vanished">vključi tip datoteke</translation>
     </message>
     <message>
-        <location line="+236"/>
         <source>Other options</source>
-        <translation>Druge možnosti</translation>
+        <translation type="vanished">Druge možnosti</translation>
     </message>
     <message>
-        <location line="+153"/>
+        <location line="+258"/>
         <source>Directories to exclude from catalogs</source>
         <translation>Imeniki, ki jih izključimo iz katalogov</translation>
     </message>
@@ -1374,8 +1567,8 @@
         <translation>Jezik in tema</translation>
     </message>
     <message>
-        <location line="-6219"/>
-        <location line="+2663"/>
+        <location line="-5974"/>
+        <location line="+2418"/>
         <source>Add Storage</source>
         <translation>Dodaj shranjevanje</translation>
     </message>
@@ -1420,7 +1613,7 @@
         <translation>Izberi izvorno pot</translation>
     </message>
     <message>
-        <location line="-1873"/>
+        <location line="-1657"/>
         <source>Tree options</source>
         <translation>Možnosti drevesa</translation>
     </message>
@@ -1440,7 +1633,7 @@
         <translation>Vstavi navidezno skupino</translation>
     </message>
     <message>
-        <location line="-1660"/>
+        <location line="-1631"/>
         <source>View</source>
         <translation>Pogled</translation>
     </message>
@@ -1455,7 +1648,7 @@
         <translation>Polja kataloga</translation>
     </message>
     <message>
-        <location line="+390"/>
+        <location line="+361"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Prosti prostor</translation>
@@ -1466,17 +1659,17 @@
         <translation>Slika naprave</translation>
     </message>
     <message>
-        <location line="-691"/>
+        <location line="-662"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Zabeleži vrednosti vseh naprav za statistike celotne zbirke.</translation>
     </message>
     <message>
-        <location line="+813"/>
+        <location line="+784"/>
         <source>Storage fields</source>
         <translation>Polja shranjevanja</translation>
     </message>
     <message>
-        <location line="+5569"/>
+        <location line="+5353"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
         <translatorcomment>Z nekaj barvami po meri, za svetlo ali temno temo namizja.</translatorcomment>
@@ -1529,55 +1722,55 @@
         <translation>Upravljanje podatkov</translation>
     </message>
     <message>
-        <location line="-12352"/>
-        <location line="+10093"/>
+        <location line="-12107"/>
+        <location line="+9848"/>
         <source>Select the path</source>
         <translation>Izberi pot</translation>
     </message>
     <message>
-        <location line="-10090"/>
+        <location line="-9845"/>
         <location line="+6826"/>
-        <location line="+3267"/>
+        <location line="+3022"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Izberi</translation>
     </message>
     <message>
-        <location line="-10956"/>
-        <location line="+8293"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-928"/>
-        <location line="+2478"/>
+        <location line="-10711"/>
+        <location line="+8264"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-944"/>
+        <location line="+2694"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Shranjevanje</translation>
     </message>
     <message>
-        <location line="+4084"/>
+        <location line="+3868"/>
         <source>New</source>
         <translation>Novo</translation>
     </message>
     <message>
-        <location line="-5743"/>
+        <location line="-5498"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>Naprave</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+686"/>
+        <location line="+657"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>Skupni prostor</translation>
     </message>
     <message>
-        <location line="-598"/>
+        <location line="-569"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3544"/>
+        <location line="+3299"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Ponovno naloži</translation>
@@ -1608,23 +1801,23 @@
         <translation>Uredi datoteko, ki shranjuje vse zapise</translation>
     </message>
     <message>
-        <location line="-2186"/>
+        <location line="-1970"/>
         <source>Add Virtual</source>
         <translation>Dodaj navidezno</translation>
     </message>
     <message>
-        <location line="-1702"/>
+        <location line="-1673"/>
         <source>Edit List</source>
         <translation>Uredi seznam</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4635"/>
+        <location line="+4390"/>
         <source>Full Table</source>
         <translation>Polna tabela</translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4085"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
         <source>Device Name</source>
         <translation>Ime naprave</translation>
@@ -1642,7 +1835,7 @@
         <translation>ID naprave</translation>
     </message>
     <message>
-        <location line="+3400"/>
+        <location line="+3155"/>
         <source>Edit Statistics</source>
         <translation>Uredi statistike</translation>
     </message>
@@ -1789,12 +1982,12 @@
         <translation>Način podatkov &quot;SQLite lokalna datoteka&quot;</translation>
     </message>
     <message>
-        <location line="-4083"/>
+        <location line="-3867"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Uporabi možnosti na drevo naprav izbire.</translation>
     </message>
     <message>
-        <location line="+1608"/>
+        <location line="+1392"/>
         <source>catalog is for the full device</source>
         <translation>katalog je za celotno napravo</translation>
     </message>
@@ -1877,11 +2070,11 @@
         <translation>Varnostne kopije povezav za napravo</translation>
     </message>
     <message>
-        <location line="-7521"/>
+        <location line="-7276"/>
         <location line="+108"/>
         <location line="+553"/>
         <location line="+108"/>
-        <location line="+6767"/>
+        <location line="+6522"/>
         <source>Device</source>
         <translation>Naprava</translation>
     </message>
@@ -2101,33 +2294,33 @@
     </message>
     <message>
         <location line="-1017"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-617"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-808"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-721"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1556"/>
         <source>Open file</source>
         <translation>Odpri datoteko</translation>
     </message>
     <message>
         <location line="+1712"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+91"/>
+        <location line="+120"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Odpri mapo</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-125"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-154"/>
         <source>Tag this folder</source>
         <translation>Označi to mapo</translation>
     </message>
     <message>
-        <location line="+88"/>
-        <location line="+43"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
+        <location line="+92"/>
+        <location line="+68"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+64"/>
         <source>Copy folder path</source>
         <translation>Kopiraj pot mape</translation>
     </message>
     <message>
-        <location line="-39"/>
+        <location line="-64"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Kopiraj absolutno pot datoteke</translation>
@@ -2145,13 +2338,13 @@
         <translation>Kopiraj ime datoteke brez pripone</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+40"/>
         <source>Move file to Trash</source>
         <translation>Premakni datoteko v smeti</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+19"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+39"/>
         <source>Delete file</source>
         <translation>Izbriši datoteko</translation>
     </message>
@@ -2170,7 +2363,7 @@
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+138"/>
         <location line="+64"/>
-        <location line="+518"/>
+        <location line="+526"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Potrditev</translation>
@@ -2189,7 +2382,7 @@ v koš?</translation>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-609"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-617"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Opozorilo</translation>
@@ -2230,38 +2423,38 @@ v koš?</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+300"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+375"/>
         <source>orderValue</source>
         <translation>vrednostVrstnega reda</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-6"/>
-        <location filename="../mainwindow.ui" line="-9615"/>
+        <location filename="../mainwindow.ui" line="-9370"/>
         <location line="+891"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1809"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2009"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-6"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-821"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-816"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
         <location filename="../mainwindow.ui" line="-1265"/>
-        <location line="+9396"/>
+        <location line="+9151"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+983"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1009"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+95"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-322"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-430"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -2295,7 +2488,7 @@ v koš?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3833"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-4056"/>
         <source>Choose a different name and try again.</source>
         <translation>Izberite drugo ime in poskusite znova.</translation>
     </message>
@@ -2331,8 +2524,8 @@ v koš?</translation>
         <translation>To je različica: v%1 &lt;br/&gt;&lt;br/&gt;Na voljo je nova različica: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Seznam novih funkcij najdete v &lt;a href=&apos;%3&apos;&gt;Opombah ob izdaji&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Ali jo želite prenesti?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5848"/>
-        <location line="+2466"/>
+        <location filename="../mainwindow.ui" line="-5603"/>
+        <location line="+2437"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+531"/>
         <location line="+241"/>
         <location line="+254"/>
@@ -2340,31 +2533,31 @@ v koš?</translation>
         <translation>Skupna velikost</translation>
     </message>
     <message>
-        <location line="-1446"/>
-        <location line="+1629"/>
+        <location line="-1417"/>
+        <location line="+1600"/>
         <source>Source Path</source>
         <translation>Izvorna pot</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1528"/>
+        <location filename="../mainwindow.ui" line="-1512"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+630"/>
+        <location line="+635"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Tip datoteke</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3898"/>
+        <location filename="../mainwindow.ui" line="+3666"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+3"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Velikost datoteke</translation>
     </message>
     <message>
-        <location line="-3412"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-893"/>
+        <location line="-3196"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-898"/>
         <source>Label</source>
         <translation>Oznaka</translation>
     </message>
@@ -2375,18 +2568,18 @@ v koš?</translation>
         <translation>Datotečni sistem</translation>
     </message>
     <message>
-        <location line="+3671"/>
+        <location line="+3455"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Skupaj</translation>
     </message>
     <message>
-        <location line="-4499"/>
+        <location line="-4254"/>
         <source>Free</source>
         <translation>Prosto</translation>
     </message>
     <message>
-        <location line="+762"/>
+        <location line="+733"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>Serijska številka</translation>
@@ -2398,7 +2591,7 @@ v koš?</translation>
         <translation>Datum izdelave</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1367"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1383"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalog je že dodeljen tej navidezni napravi.</translation>
     </message>
@@ -2418,7 +2611,7 @@ v koš?</translation>
         <translation>&lt;br/&gt;Posnetek te zbirke je bil zabeležen:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Število datotek: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Skupna velikost datotek: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Shranjevanje&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Prosti prostor shranjevanja: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Skupni prostor shranjevanja: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+289"/>
+        <location line="+305"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Že obstaja katalog s tem imenom:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2441,12 +2634,12 @@ v koš?</translation>
         <location line="+495"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>Parent ID</source>
         <translation>ID nadrejene</translation>
     </message>
     <message>
-        <location line="-3308"/>
+        <location line="-3531"/>
         <source>External ID</source>
         <translation>Zunanji ID</translation>
     </message>
@@ -2518,7 +2711,7 @@ v koš?</translation>
         <translation>Pot datoteke</translation>
     </message>
     <message>
-        <location line="+618"/>
+        <location line="+623"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Shrani spremembe v definicijo kataloga?&lt;br/&gt;</translation>
     </message>
@@ -2538,17 +2731,17 @@ v koš?</translation>
         <translation>nova vrednost</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+10"/>
         <source>Include Hidden</source>
         <translation>Vključi skrite</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+19"/>
         <source>Is Full Device</source>
         <translation>Je celotna naprava</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Katalog mora biti posodobljen, da se uveljavijo te spremembe)</translation>
     </message>
@@ -2565,17 +2758,18 @@ v koš?</translation>
         <translation>Izberi csv datoteko za uvoz</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+17"/>
+        <location line="+143"/>
         <source>No catalog found.</source>
         <translation>Noben katalog ni bil najden.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-129"/>
         <source>A file was found, but could not be loaded</source>
         <translation>Datoteka je bila najdena, vendar je ni bilo mogoče naložiti</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+504"/>
         <source>Catalog updated: </source>
         <translation>Katalog posodobljen: </translation>
     </message>
@@ -2683,7 +2877,7 @@ v koš?</translation>
         <translation>Izbrana naprava mora biti katalog. Poskusite z drugim ID naprave</translation>
     </message>
     <message>
-        <location line="-1833"/>
+        <location line="-2033"/>
         <location line="+241"/>
         <location line="+254"/>
         <source>Used space</source>
@@ -2700,7 +2894,7 @@ v koš?</translation>
         <translation>od</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6240"/>
+        <location filename="../mainwindow.ui" line="-6211"/>
         <location line="+1989"/>
         <location line="+108"/>
         <location line="+553"/>
@@ -2715,12 +2909,13 @@ v koš?</translation>
         <translation>Določi, kako naj se uporabi iskalno besedilo.</translation>
     </message>
     <message>
-        <location line="+8021"/>
+        <location line="+5959"/>
+        <location line="+1807"/>
         <source>Include Hidden files</source>
         <translation>Vključi skrite datoteke</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+27"/>
         <source>Follow symbolic links</source>
         <translation>Sledi simbolnim povezavam</translation>
     </message>
@@ -2730,12 +2925,12 @@ v koš?</translation>
         <translation>Generiraj ime kataloga na podlagi poti.</translation>
     </message>
     <message>
-        <location line="-9291"/>
+        <location line="-9046"/>
         <source>Reset all filters</source>
         <translation>Ponastavi vse filtre</translation>
     </message>
     <message>
-        <location line="+11383"/>
+        <location line="+11138"/>
         <source>About</source>
         <translation>O programu</translation>
     </message>
@@ -2750,7 +2945,7 @@ v koš?</translation>
         <translation>Ohrani zapise datotek in velikosti za statistike</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-930"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-971"/>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
@@ -2772,18 +2967,18 @@ v koš?</translation>
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-375"/>
+        <location line="-384"/>
         <source>Explore folder</source>
         <translation>Razišči mapo</translation>
     </message>
     <message>
-        <location line="+226"/>
-        <location line="+582"/>
+        <location line="+250"/>
+        <location line="+590"/>
         <source>MOVE</source>
         <translation>PREMAKNI</translation>
     </message>
     <message>
-        <location line="-581"/>
+        <location line="-589"/>
         <source>Move this file to the trash?</source>
         <translation>Premakni to datoteko v smeti?</translation>
     </message>
@@ -2800,12 +2995,12 @@ v koš?</translation>
     </message>
     <message>
         <location line="+46"/>
-        <location line="+557"/>
+        <location line="+565"/>
         <source>DELETE</source>
         <translation>IZBRIŠI</translation>
     </message>
     <message>
-        <location line="-556"/>
+        <location line="-564"/>
         <source>Delete this file?</source>
         <translation>Izbriši to datoteko?</translation>
     </message>
@@ -2815,7 +3010,7 @@ v koš?</translation>
         <translation>Brisanje mape ni na voljo.</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+39"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-8"/>
         <source>TiB</source>
@@ -2829,7 +3024,7 @@ v koš?</translation>
         <translation>Bajtov</translation>
     </message>
     <message>
-        <location line="+359"/>
+        <location line="+382"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>Najprej izberi proces, ki se bo uporabil za vse spodnje rezultate.</translation>
     </message>
@@ -2894,7 +3089,7 @@ v koš?</translation>
         <translation>Rezultati iskanja</translation>
     </message>
     <message>
-        <location line="+383"/>
+        <location line="+401"/>
         <source>Text Phrase selected</source>
         <translation>Besedilna fraza izbrana</translation>
     </message>
@@ -3071,7 +3266,7 @@ v koš?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="+58"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+562"/>
+        <location line="+557"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+38"/>
         <source>Catalog with results</source>
@@ -3125,7 +3320,7 @@ v koš?</translation>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-500"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3142,10 +3337,10 @@ v koš?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3310"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3533"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>Active</source>
         <translation>Aktivno</translation>
     </message>
@@ -3238,7 +3433,7 @@ v koš?</translation>
         <translation>Izberi drug vir ali cilj (naprava se ne sme preslikati sama nase).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-482"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-495"/>
         <source>Virtual Group</source>
         <translation>Navidezna skupina</translation>
     </message>
@@ -3248,7 +3443,7 @@ v koš?</translation>
         <translation>Navidezno napravo je mogoče dodati samo k drugi navidezni napravi.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+212"/>
         <location line="+68"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
@@ -3309,7 +3504,7 @@ v koš?</translation>
         <translation>MIME preverjanje ni uspelo:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-809"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-804"/>
         <location line="+346"/>
         <source>Search Error</source>
         <translation>Napaka iskanja</translation>
@@ -3366,7 +3561,7 @@ v koš?</translation>
         <location filename="../core/searchprogressmanager.cpp" line="-107"/>
         <location line="+73"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+363"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+358"/>
         <source>Folders found</source>
         <translation>Najdene mape</translation>
     </message>
@@ -3381,7 +3576,7 @@ v koš?</translation>
         <translation>Najdene razlike</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+209"/>
         <source>No search results available.</source>
         <translation>Ni rezultatov iskanja.</translation>
     </message>

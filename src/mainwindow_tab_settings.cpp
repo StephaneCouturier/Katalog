@@ -118,18 +118,9 @@
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                           "Invalid database hostname."));
-                msgBox.setInformativeText(QCoreApplication::translate("MainWindow",
-                                                                      "For security reasons, only local or private network databases are allowed.\n\n"
-                                                                      "Valid hostnames:\n"
-                                                                      "• localhost\n"
-                                                                      "• 127.0.0.1 (or 127.x.x.x range)\n"
-                                                                      "• ::1 (IPv6 localhost)\n"
-                                                                      "• 192.168.x.x (private network)\n"
-                                                                      "• 10.x.x.x (private network)\n"
-                                                                      "• 172.16.x.x - 172.31.x.x (private network)\n\n"
-                                                                      "Do not include 'http://' or other protocol prefixes."));
+                msgBox.setText(tr("Invalid hostname."));
+                msgBox.setInformativeText(tr("Only local or private network allowed.") + "\n\n"
+                                          + tr("Valid:") + " localhost, 127.x.x.x, 192.168.x.x, 10.x.x.x, 172.16-31.x.x");
                 msgBox.setStandardButtons(QMessageBox::Ok);
                 msgBox.exec();
                 return;  // Abort the save and restart
@@ -139,16 +130,9 @@
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                           "Private Network Database Connection"));
-                msgBox.setInformativeText(QCoreApplication::translate("MainWindow",
-                                                                      "You are connecting to a database on your private network (%1).\n\n"
-                                                                      "Security warning:\n"
-                                                                      "• Your catalog data will be sent to this network database\n"
-                                                                      "• Ensure the database server is on a trusted network\n"
-                                                                      "• Anyone with access to this database can view your catalog information\n\n"
-                                                                      "For maximum security, use 'localhost' for same-machine databases.\n\n"
-                                                                      "Do you want to continue?").arg(hostname));
+                msgBox.setText(tr("Private network connection") + ": " + hostname);
+                msgBox.setInformativeText(tr("Your data will be sent to this network database.") + "\n\n"
+                                          + tr("Continue?"));
                 msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
                 msgBox.setDefaultButton(QMessageBox::No);
 

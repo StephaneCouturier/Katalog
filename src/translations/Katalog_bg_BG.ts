@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1712"/>
+        <location filename="../core/collection.cpp" line="+1741"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Тази папка съдържа файлове на колекция в режим Памет, но в момента сте в режим Файл.&lt;br/&gt;Превключете в режим Памет или изберете друга папка.</translation>
     </message>
@@ -68,6 +68,190 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2369"/>
+        <source>Include Checksum</source>
+        <translation>Включване на контролна сума</translation>
+    </message>
+    <message>
+        <location line="+541"/>
+        <location line="+46"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+301"/>
+        <source>Verify Checksums</source>
+        <translation>Проверка на контролни суми</translation>
+    </message>
+    <message>
+        <location line="-45"/>
+        <source>Loading</source>
+        <translation>Зареждане</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>files</source>
+        <translation>файлове</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>No checksums to verify.</source>
+        <translation>Няма контролни суми за проверка.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Verify checksums for %1 files?</source>
+        <translation>Проверка на контролни суми за %1 файла?</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Verifying</source>
+        <translation>Проверяване</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+5"/>
+        <source>Verified:</source>
+        <translation>Проверени:</translation>
+    </message>
+    <message>
+        <location line="-4"/>
+        <source>All checksums match.</source>
+        <translation>Всички контролни суми съвпадат.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Mismatches:</source>
+        <translation>Несъответствия:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing:</source>
+        <translation>Липсващи:</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mismatched files:</source>
+        <translation>Несъответстващи файлове:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing files:</source>
+        <translation>Липсващи файлове:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+9382"/>
+        <source>Include File Type</source>
+        <translation>Включване на тип файл</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="+262"/>
+        <location line="+18"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+808"/>
+        <source>Copy Checksum</source>
+        <translation>Копиране на контролна сума</translation>
+    </message>
+    <message>
+        <location line="-8"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-8"/>
+        <source>Calculate Checksum</source>
+        <translation>Изчисляване на контролна сума</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+13"/>
+        <source>Verify Checksum</source>
+        <translation>Проверка на контролна сума</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1335"/>
+        <source>Verifying checksum...</source>
+        <translation>Проверяване на контролна сума...</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+58"/>
+        <location line="+68"/>
+        <source>Checksum saved to database.</source>
+        <translation>Контролна сума запазена в базата данни.</translation>
+    </message>
+    <message>
+        <location line="-124"/>
+        <source>Checksums match.</source>
+        <translation>Контролните суми съвпадат.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+122"/>
+        <source>Copy to Clipboard</source>
+        <translation>Копиране в клипборда</translation>
+    </message>
+    <message>
+        <location line="-100"/>
+        <source>Checksums do not match.</source>
+        <translation>Контролните суми не съвпадат.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Expected:</source>
+        <translation>Очаквано:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Actual:</source>
+        <translation>Действително:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Update Checksum</source>
+        <translation>Актуализиране на контролна сума</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>File not found:</source>
+        <translation>Файлът не е намерен:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Calculating checksum...</source>
+        <translation>Изчисляване на контролна сума...</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Checksum calculation failed.</source>
+        <translation>Изчисляването на контролна сума се провали.</translation>
+    </message>
+    <message>
+        <source>Invalid database hostname.</source>
+        <translation type="vanished">Невалидно име на хост на база данни.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+121"/>
+        <source>Invalid hostname.</source>
+        <translation>Невалидно име на хост.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only local or private network allowed.</source>
+        <translation>Разрешена е само локална или частна мрежа.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Valid:</source>
+        <translation>Валидно:</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Private network connection</source>
+        <translation>Връзка към частна мрежа</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Your data will be sent to this network database.</source>
+        <translation>Вашите данни ще бъдат изпратени към тази мрежова база данни.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Continue?</source>
+        <translation>Продължаване?</translation>
+    </message>
+    <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
         <location line="+167"/>
         <source>Metadata Extracted</source>
@@ -80,9 +264,9 @@
     </message>
     <message>
         <location filename="../core/search.cpp" line="+189"/>
-        <location filename="../mainwindow.ui" line="+3420"/>
+        <location filename="../mainwindow.ui" line="-5962"/>
         <location line="+926"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1699"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1281"/>
         <source>Checksum</source>
         <translation>Контролна сума</translation>
     </message>
@@ -113,13 +297,13 @@
         <translation>и</translation>
     </message>
     <message>
-        <location line="+3439"/>
-        <location line="+1974"/>
+        <location line="+3427"/>
+        <location line="+1738"/>
         <source>Include files checksum</source>
         <translation>Включи контролна сума на файловете</translation>
     </message>
     <message>
-        <location line="+584"/>
+        <location line="+587"/>
         <source>Stop the cataloging (no data will be saved)</source>
         <translation>Спри каталогизирането (няма да бъдат запазени данни)</translation>
     </message>
@@ -134,10 +318,8 @@
         <translation>Само избраните</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+257"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+807"/>
         <source>Copy file checksum</source>
-        <translation>Копирай контролната сума на файла</translation>
+        <translation type="vanished">Копирай контролната сума на файла</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
@@ -167,7 +349,7 @@
         <location filename="../core/searchjobstoppable.cpp" line="+443"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
         <location line="+157"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+347"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+349"/>
         <source>File Types Updated</source>
         <translation>Файловите типове са актуализирани</translation>
     </message>
@@ -187,7 +369,7 @@
         <location line="+28"/>
         <location line="+18"/>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1085"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+1080"/>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+54"/>
@@ -239,7 +421,7 @@
         <translation>Спрян</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+692"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+406"/>
         <source>MIME Verification Complete</source>
         <translation>MIME проверката завърши</translation>
     </message>
@@ -259,14 +441,14 @@
         <translation>Метаданни</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6608"/>
+        <location filename="../mainwindow.ui" line="-6363"/>
         <source>File metadata</source>
         <translation>Метаданни на файла</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-9"/>
         <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+200"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+275"/>
         <source>Height</source>
         <translation>Височина</translation>
     </message>
@@ -291,13 +473,13 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1781"/>
-        <location line="+2051"/>
+        <location line="+1870"/>
+        <location line="+1714"/>
         <source>Include files metadata</source>
         <translation>Включи метаданните на файловете</translation>
     </message>
     <message>
-        <location line="-1275"/>
+        <location line="-1056"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Разпознай действителните MIME типове и идентифицирай несъответствия (дълъг процес)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -307,31 +489,37 @@
         <translation>Провери MIME типовете</translation>
     </message>
     <message>
-        <location line="+1200"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+270"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+464"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Other</source>
         <translation>Други</translation>
     </message>
     <message>
-        <location line="+29"/>
         <location filename="../devicetreeview.cpp" line="+109"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+473"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+15"/>
         <location line="+12"/>
         <location line="+35"/>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="+15"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+638"/>
+        <location line="+1"/>
         <source>None</source>
         <translation>Няма</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-595"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-305"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-695"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1529"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Покажи разширени метаданни (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+592"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+692"/>
         <source>MIME Type</source>
         <translation>MIME тип</translation>
     </message>
@@ -372,7 +560,7 @@
         <translation>Заглавие</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-365"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-362"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>Копирай JSON</translation>
@@ -388,7 +576,7 @@
         <translation>Затвори</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+97"/>
         <source>File Property</source>
         <translation>Свойство на файла</translation>
     </message>
@@ -398,7 +586,7 @@
         <translation>Стойност</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+119"/>
         <source>Invalid Collection Folder</source>
         <translation>Невалидна папка на колекция</translation>
     </message>
@@ -436,7 +624,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-54"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>Медия основно</translation>
@@ -469,7 +657,7 @@
         <translation>Искате ли да &lt;span style=&apos;color: red&apos;;&gt;изтриете&lt;/span&gt; това %1 устройство?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1239"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+800"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Каталози обновени:&lt;b&gt; %1 &lt;/b&gt;(%2 пропуснати)</translation>
@@ -480,12 +668,12 @@
         <translation>Виртуалното устройство е обновено: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-2550"/>
+        <location filename="../mainwindow.ui" line="-1292"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Щракване: Спри незабавно (твърд стоп)&lt;/p&gt;&lt;p&gt;Ctrl+Щракване: Спри след текущия каталог (мек стоп)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-202"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-239"/>
         <source>The source directory does not exist.</source>
         <translation>Изходната директория не съществува.</translation>
     </message>
@@ -496,9 +684,9 @@
         <translation>Изходната папка не съдържа файлове.&lt;br/&gt;Това може да означава, че източникът е празен или устройството не е монтирано в тази папка.&lt;br/&gt;Искате ли да го запишете въпреки това (каталогът ще бъде празен)?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+93"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-460"/>
-        <location line="+84"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+79"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-473"/>
+        <location line="+97"/>
         <location line="+64"/>
         <location line="+130"/>
         <location line="+140"/>
@@ -508,8 +696,8 @@
         <translation>Вече се изпълнява операция с устройство.</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1084"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-862"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1090"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1062"/>
         <source>Operation cancelled</source>
         <translation>Операцията е отменена</translation>
     </message>
@@ -520,6 +708,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="-7042"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
+        <location line="+6"/>
         <source>Katalog</source>
         <translation>Каталог</translation>
     </message>
@@ -532,12 +722,12 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
         <location line="+40"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-484"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
-        <location line="+451"/>
+        <location line="+446"/>
         <location line="+4"/>
         <source>Search</source>
         <translation>Търсене</translation>
@@ -549,14 +739,14 @@
     </message>
     <message>
         <location line="+3923"/>
-        <location line="+2741"/>
-        <location line="+1829"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+302"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+91"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location line="-8179"/>
+        <location line="-3609"/>
         <source>Paste the text from the clipboard</source>
         <translation>Поставяне на текст от клипборда</translation>
     </message>
@@ -578,7 +768,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+54"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+361"/>
         <source>All Words</source>
         <translation>Всички думи</translation>
     </message>
@@ -604,7 +794,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>File names or Folder paths</source>
         <translation>Имена на файлове или пътища на папки</translation>
     </message>
@@ -612,13 +802,13 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+983"/>
+        <location line="+977"/>
         <source>File names only</source>
         <translation>Само имена на файлове</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-981"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>Folder path only</source>
         <translation>Само път на папка</translation>
     </message>
@@ -638,7 +828,7 @@
         <translation>Възстанови</translation>
     </message>
     <message>
-        <location line="+12127"/>
+        <location line="+11882"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
@@ -660,20 +850,20 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+298"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-381"/>
+        <location filename="../mainwindow.cpp" line="+292"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-378"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-10652"/>
+        <location filename="../mainwindow.ui" line="-10407"/>
         <location line="+848"/>
         <location line="+891"/>
         <location line="+921"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-294"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
@@ -718,23 +908,28 @@
     </message>
     <message>
         <location line="+81"/>
-        <location line="+5109"/>
+        <location line="+5080"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-669"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1486"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location line="-5071"/>
+        <location line="-5042"/>
         <source>Select the type of files</source>
         <translation>Избери типа файлове</translation>
     </message>
     <message>
-        <location line="+4900"/>
-        <location line="+1763"/>
         <location filename="../mainwindow_setup.cpp" line="+476"/>
         <location line="+8"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-33"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+92"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+904"/>
+        <location line="+1"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -750,33 +945,32 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+923"/>
         <source>All</source>
         <translation>Всички</translation>
     </message>
     <message>
-        <location line="-1758"/>
-        <location line="+1787"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-130"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Audio</source>
         <translation>Аудио</translation>
     </message>
     <message>
-        <location line="-1779"/>
-        <location line="+1808"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Image</source>
         <translation>Изображение</translation>
     </message>
     <message>
-        <location line="-1792"/>
-        <location line="+1850"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+2"/>
+        <location line="-28"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Video</source>
         <translation>Видео</translation>
     </message>
     <message>
-        <location line="-3424"/>
+        <location filename="../mainwindow.ui" line="+3355"/>
         <source>only list folders in results</source>
         <translation>показвай само папки в резултатите</translation>
     </message>
@@ -788,7 +982,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+426"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1370"/>
         <source>Export Results</source>
         <translation>Експортиране на резултати</translation>
     </message>
@@ -802,7 +996,7 @@
         <location line="+73"/>
         <location line="+34"/>
         <location filename="../mainwindow.ui" line="+129"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+636"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+631"/>
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -820,13 +1014,13 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+936"/>
+        <location line="+907"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2511"/>
+        <location line="+2295"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -844,7 +1038,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3714"/>
+        <location line="-3498"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -852,30 +1046,30 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2718"/>
+        <location line="+2502"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Общ размер на файловете</translation>
     </message>
     <message>
-        <location line="-2680"/>
+        <location line="-2464"/>
         <source>Total Number of Files</source>
         <translation>Общ брой файлове</translation>
     </message>
     <message>
-        <location line="-1188"/>
+        <location line="-1159"/>
         <source>All active</source>
         <translation>Всички активни</translation>
     </message>
     <message>
-        <location line="+1279"/>
+        <location line="+1250"/>
         <source>Import</source>
         <translation>Внасяне</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-400"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-271"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-413"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-346"/>
         <location line="+22"/>
         <location line="+35"/>
         <location line="+18"/>
@@ -888,11 +1082,11 @@
         <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
         <location line="+81"/>
         <location line="+70"/>
-        <location filename="../mainwindow.ui" line="-1812"/>
-        <location line="+965"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+714"/>
+        <location filename="../mainwindow.ui" line="-1783"/>
+        <location line="+936"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-191"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+88"/>
+        <location line="+101"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
         <location line="+39"/>
@@ -901,35 +1095,35 @@
         <translation>Обновяване</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4745"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-106"/>
-        <location line="+68"/>
+        <location filename="../mainwindow.ui" line="+4529"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
+        <location line="+81"/>
         <location line="+63"/>
         <source>Edit</source>
         <translation>Редактиране</translation>
     </message>
     <message>
-        <location line="-6037"/>
+        <location line="-5792"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Изтриване</translation>
     </message>
     <message>
-        <location line="+2142"/>
+        <location line="+2113"/>
         <source>Explore a catalog</source>
         <translation>Разгледай каталог</translation>
     </message>
     <message>
-        <location line="-8434"/>
-        <location line="+8813"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+181"/>
+        <location line="-8405"/>
+        <location line="+8784"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+256"/>
         <source>Catalog</source>
         <translation>Каталог</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1616"/>
+        <location filename="../mainwindow.ui" line="+1400"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
@@ -940,19 +1134,19 @@
         <translation>Път</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1939"/>
+        <location filename="../mainwindow.ui" line="-1723"/>
         <source>Directories</source>
         <translation>Директории</translation>
     </message>
     <message>
-        <location line="-8724"/>
+        <location line="-8695"/>
         <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>Покажи/скрий филтри</translation>
     </message>
     <message>
         <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1220"/>
         <source>Virtual</source>
         <translation>Виртуален</translation>
     </message>
@@ -964,12 +1158,12 @@
     <message>
         <location line="+635"/>
         <location line="+5562"/>
-        <location line="+3220"/>
+        <location line="+2975"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location line="-8567"/>
+        <location line="-8322"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>Определете как трябва да се използва текстът за търсене.</translation>
@@ -997,8 +1191,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-711"/>
-        <location line="+717"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-719"/>
+        <location line="+725"/>
         <source>Move to Trash</source>
         <translation>Премести в кошчето</translation>
     </message>
@@ -1018,8 +1212,8 @@
         <translation>Промяната ще се приложи само при запазване</translation>
     </message>
     <message>
-        <location line="+300"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+959"/>
+        <location line="+271"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+975"/>
         <source>Comment 1</source>
         <translation>Коментар 1</translation>
     </message>
@@ -1084,7 +1278,7 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+2086"/>
+        <location line="+1870"/>
         <location line="+630"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
@@ -1093,7 +1287,7 @@
         <translation>Брой файлове</translation>
     </message>
     <message>
-        <location line="-2600"/>
+        <location line="-2384"/>
         <source>Click to open the file</source>
         <translation>Кликни за отваряне на файла</translation>
     </message>
@@ -1123,22 +1317,21 @@
         <translation>Избери опции за съдържанието</translation>
     </message>
     <message>
-        <location line="+85"/>
         <source>include File Type</source>
-        <translation>включи типа файл</translation>
+        <translation type="vanished">включи типа файл</translation>
     </message>
     <message>
-        <location line="+236"/>
         <source>Other options</source>
-        <translation>Други опции</translation>
+        <translation type="vanished">Други опции</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="-1615"/>
+        <location line="+1807"/>
         <source>Include Hidden files</source>
         <translation>Включване на скрити файлове</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+27"/>
         <source>Follow symbolic links</source>
         <translation>Следвайте символни връзки</translation>
     </message>
@@ -1173,8 +1366,8 @@
         <translation>Добави ново устройство за съхранение</translation>
     </message>
     <message>
-        <location line="-2660"/>
-        <location line="+2663"/>
+        <location line="-2415"/>
+        <location line="+2418"/>
         <source>Add Storage</source>
         <translation>Добави съхранение</translation>
     </message>
@@ -1219,7 +1412,7 @@
         <translation>Избери път към източника</translation>
     </message>
     <message>
-        <location line="-1873"/>
+        <location line="-1657"/>
         <source>Tree options</source>
         <translation>Опции за дървото</translation>
     </message>
@@ -1239,7 +1432,7 @@
         <translation>Вмъкни виртуална група</translation>
     </message>
     <message>
-        <location line="-1660"/>
+        <location line="-1631"/>
         <source>View</source>
         <translation>Изглед</translation>
     </message>
@@ -1254,7 +1447,7 @@
         <translation>Полета на каталога</translation>
     </message>
     <message>
-        <location line="+390"/>
+        <location line="+361"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Свободно пространство</translation>
@@ -1265,17 +1458,17 @@
         <translation>Изображение на устройството</translation>
     </message>
     <message>
-        <location line="-691"/>
+        <location line="-662"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Записвай стойностите на всички устройства за статистики на пълната колекция.</translation>
     </message>
     <message>
-        <location line="+813"/>
+        <location line="+784"/>
         <source>Storage fields</source>
         <translation>Полета на съхранението</translation>
     </message>
     <message>
-        <location line="+5590"/>
+        <location line="+5374"/>
         <source>Keep records of files and size for Statistics</source>
         <translation>Водете записи на файловете и размера им за статистически цели</translation>
     </message>
@@ -1326,55 +1519,55 @@
         <translation>Управление на данни</translation>
     </message>
     <message>
-        <location line="-12352"/>
-        <location line="+10093"/>
+        <location line="-12107"/>
+        <location line="+9848"/>
         <source>Select the path</source>
         <translation>Избери пътя</translation>
     </message>
     <message>
-        <location line="-10090"/>
+        <location line="-9845"/>
         <location line="+6826"/>
-        <location line="+3267"/>
+        <location line="+3022"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Избери</translation>
     </message>
     <message>
-        <location line="-10956"/>
-        <location line="+8293"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-928"/>
-        <location line="+2478"/>
+        <location line="-10711"/>
+        <location line="+8264"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-944"/>
+        <location line="+2694"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Съхранение</translation>
     </message>
     <message>
-        <location line="+4084"/>
+        <location line="+3868"/>
         <source>New</source>
         <translation>Нов</translation>
     </message>
     <message>
-        <location line="-5743"/>
+        <location line="-5498"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>Устройства</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+686"/>
+        <location line="+657"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>Общо пространство</translation>
     </message>
     <message>
-        <location line="-598"/>
+        <location line="-569"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3544"/>
+        <location line="+3299"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Презареди</translation>
@@ -1405,23 +1598,23 @@
         <translation>Редактирай файла, съхраняващ всички записи</translation>
     </message>
     <message>
-        <location line="-2186"/>
+        <location line="-1970"/>
         <source>Add Virtual</source>
         <translation>Добави виртуален</translation>
     </message>
     <message>
-        <location line="-1702"/>
+        <location line="-1673"/>
         <source>Edit List</source>
         <translation>Редактирай списъка</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4635"/>
+        <location line="+4390"/>
         <source>Full Table</source>
         <translation>Пълна таблица</translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4085"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
         <source>Device Name</source>
         <translation>Име на устройството</translation>
@@ -1439,7 +1632,7 @@
         <translation>ID на устройството</translation>
     </message>
     <message>
-        <location line="+3400"/>
+        <location line="+3155"/>
         <source>Edit Statistics</source>
         <translation>Редактирай статистики</translation>
     </message>
@@ -1586,12 +1779,12 @@
         <translation>Режим на данни &quot;Локален SQLite файл&quot;</translation>
     </message>
     <message>
-        <location line="-4083"/>
+        <location line="-3867"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Приложи опциите към дървото на избраните устройства.</translation>
     </message>
     <message>
-        <location line="+1693"/>
+        <location line="+1477"/>
         <source>Generate a catalog name based on the path.</source>
         <translation>Генерирайте име на каталог въз основа на пътя.</translation>
     </message>
@@ -1799,28 +1992,28 @@
     </message>
     <message>
         <location line="-1017"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-621"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-808"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-725"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-840"/>
         <source>Open file</source>
         <translation>Отвори файл</translation>
     </message>
     <message>
         <location line="+1712"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+91"/>
+        <location line="+120"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Отвори папка</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-37"/>
-        <location line="+43"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-62"/>
+        <location line="+68"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+64"/>
         <source>Copy folder path</source>
         <translation>Копирай път на папката</translation>
     </message>
     <message>
-        <location line="-39"/>
+        <location line="-64"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Копирай абсолютния път на файла</translation>
@@ -1840,31 +2033,31 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-9615"/>
+        <location filename="../mainwindow.ui" line="-9370"/>
         <location line="+891"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1809"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2009"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+544"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-821"/>
+        <location line="+3037"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+644"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-816"/>
         <source>Name</source>
         <translation>Име</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
         <location filename="../mainwindow.ui" line="-1265"/>
-        <location line="+9396"/>
+        <location line="+9151"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1262"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-322"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-430"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1898,7 +2091,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3833"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-4056"/>
         <source>Choose a different name and try again.</source>
         <translation>Избери различно име и опитай отново.</translation>
     </message>
@@ -1934,8 +2127,8 @@
         <translation>Това е версия: v%1 &lt;br/&gt;&lt;br/&gt;Налична е нова версия: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Намери списъка с нови функции в &lt;a href=&apos;%3&apos;&gt;бележките към изданието&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Искаш ли да я изтеглиш?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5848"/>
-        <location line="+2466"/>
+        <location filename="../mainwindow.ui" line="-5603"/>
+        <location line="+2437"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+531"/>
         <location line="+241"/>
         <location line="+254"/>
@@ -1943,31 +2136,31 @@
         <translation>Общ размер</translation>
     </message>
     <message>
-        <location line="-1446"/>
-        <location line="+1629"/>
+        <location line="-1417"/>
+        <location line="+1600"/>
         <source>Source Path</source>
         <translation>Път на източника</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1528"/>
+        <location filename="../mainwindow.ui" line="-1512"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+630"/>
+        <location line="+635"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Тип файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3898"/>
+        <location filename="../mainwindow.ui" line="+3666"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-60"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Размер на файла</translation>
     </message>
     <message>
-        <location line="-3412"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-893"/>
+        <location line="-3196"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-898"/>
         <source>Label</source>
         <translation>Етикет</translation>
     </message>
@@ -1978,18 +2171,18 @@
         <translation>Файлова система</translation>
     </message>
     <message>
-        <location line="+3671"/>
+        <location line="+3455"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Общо</translation>
     </message>
     <message>
-        <location line="-4499"/>
+        <location line="-4254"/>
         <source>Free</source>
         <translation>Свободно</translation>
     </message>
     <message>
-        <location line="+762"/>
+        <location line="+733"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>Сериен номер</translation>
@@ -2001,13 +2194,13 @@
         <translation>Дата на производство</translation>
     </message>
     <message>
-        <location line="+4999"/>
+        <location line="+4783"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Памет</translation>
     </message>
     <message>
-        <location line="-11832"/>
+        <location line="-11587"/>
         <location line="+1022"/>
         <location line="+2502"/>
         <location line="+1196"/>
@@ -2043,7 +2236,7 @@
         <translation>Критерии за папки</translation>
     </message>
     <message>
-        <location line="+5081"/>
+        <location line="+4836"/>
         <source>Graphic Start Date</source>
         <translation>Начална дата на графиката</translation>
     </message>
@@ -2053,7 +2246,7 @@
         <translation>Избери дата</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+896"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+905"/>
         <source>Include Metadata</source>
         <translation>Включи метаданни</translation>
     </message>
@@ -2063,48 +2256,49 @@
         <translation>Винаги пази едно резервно копие от всеки каталог</translation>
     </message>
     <message>
-        <location line="-5670"/>
+        <location line="-5425"/>
         <source>Used</source>
         <translation>Използвано</translation>
     </message>
     <message>
-        <location line="+5113"/>
+        <location line="+4868"/>
         <source>Check at start up</source>
         <translation>Провери при стартиране</translation>
     </message>
     <message>
-        <location line="-4747"/>
         <source>Include Hidden Files</source>
-        <translation>Включи скритите файлове</translation>
+        <translation type="vanished">Включи скритите файлове</translation>
     </message>
     <message>
-        <location line="+532"/>
+        <location line="-3999"/>
         <source>Save</source>
         <translation>Запази</translation>
     </message>
     <message>
-        <location line="-1086"/>
+        <location line="-1057"/>
         <source>Snapshot</source>
         <translation>Снимка</translation>
     </message>
     <message>
-        <location line="+3833"/>
+        <location line="+3588"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Източник</translation>
     </message>
     <message>
-        <location line="-3794"/>
+        <location line="-3549"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обнови всички активни каталози, ако устройството е налично.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1279"/>
+        <location line="+1250"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Внеси списък с томове от VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+88"/>
+        <location line="+117"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-157"/>
         <location line="+107"/>
         <location line="+9"/>
@@ -2114,26 +2308,26 @@
     </message>
     <message>
         <location line="-378"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-911"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
         <source>Storage ID</source>
         <translation>ID на съхранението</translation>
     </message>
     <message>
-        <location line="-869"/>
-        <location line="+965"/>
+        <location line="-840"/>
+        <location line="+936"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обнови файловете на избрания каталог, ако устройството е налично&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-6"/>
         <location filename="../mainwindow.ui" line="+1196"/>
-        <location line="+1489"/>
+        <location line="+1273"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>Директория</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-9201"/>
+        <location filename="../mainwindow.ui" line="-8956"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Почисти текста за търсене от символи като _ - . ,</translation>
     </message>
@@ -2149,12 +2343,12 @@
         <translation>Дата на промяна</translation>
     </message>
     <message>
-        <location line="+8183"/>
+        <location line="+7938"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Провери дали е налична нова версия на Каталог при стартиране на приложението.</translation>
     </message>
     <message>
-        <location line="-5559"/>
+        <location line="-5314"/>
         <source>Show/Hide search history</source>
         <translation>Покажи/скрий история на търсенето</translation>
     </message>
@@ -2165,7 +2359,7 @@
     </message>
     <message>
         <location line="+5087"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+21"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-184"/>
         <source>Tag</source>
         <translation>Етикет</translation>
     </message>
@@ -2200,17 +2394,17 @@
         <translation>изключи</translation>
     </message>
     <message>
-        <location line="+5545"/>
+        <location line="+5532"/>
         <source>is full device</source>
         <translation>е пълно устройство</translation>
     </message>
     <message>
-        <location line="+2430"/>
+        <location line="+2198"/>
         <source>catalog is for the full device</source>
         <translation>каталогът е за пълното устройство</translation>
     </message>
     <message>
-        <location line="-6883"/>
+        <location line="-6638"/>
         <location line="+888"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Избери да търсиш дубликати въз основа на следните критерии</translation>
@@ -2231,13 +2425,13 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Резултатите трябва да съвпадат точно с текста (чувствителен към главни/малки букви)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+10940"/>
+        <location line="+10695"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Предварително зареди последните избрани каталози при стартиране за ускоряване на следващото търсене</translation>
     </message>
     <message>
-        <location line="-3907"/>
+        <location line="-3691"/>
         <source>Display folders</source>
         <translation>Покажи папки</translation>
     </message>
@@ -2252,17 +2446,17 @@
         <translation>Подреди папките първо</translation>
     </message>
     <message>
-        <location line="-1679"/>
+        <location line="-1650"/>
         <location line="+21"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-245"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>Device Type</source>
         <translation>Тип устройство</translation>
     </message>
     <message>
-        <location line="+6011"/>
+        <location line="+5766"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
         <translation>Цветове на Каталог</translation>
@@ -2325,11 +2519,11 @@
         <translation>само снимки</translation>
     </message>
     <message>
-        <location line="-7142"/>
+        <location line="-6897"/>
         <location line="+108"/>
         <location line="+553"/>
         <location line="+108"/>
-        <location line="+6767"/>
+        <location line="+6522"/>
         <source>Device</source>
         <translation>Устройство</translation>
     </message>
@@ -2339,20 +2533,20 @@
         <translation>Изтрий избраното</translation>
     </message>
     <message>
-        <location line="-10952"/>
+        <location line="-10707"/>
         <location line="+32"/>
-        <location line="+7991"/>
+        <location line="+7962"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Разшири 1 ниво, 2 нива или свий</translation>
     </message>
     <message>
-        <location line="-7699"/>
+        <location line="-7670"/>
         <source>Selection</source>
         <translation>Избор</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-4416"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-4655"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Каталогът вече е присвоен на това виртуalno устройство.</translation>
     </message>
@@ -2372,7 +2566,7 @@
         <translation>&lt;br/&gt;Беше записана снимка на тази колекция:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Каталози&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Брой файлове: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (добавени: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Общ размер на файловете: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (добавени: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Съхранение&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Свободно пространство: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (добавени: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Общо пространство: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (добавени: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+289"/>
+        <location line="+305"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Вече съществува каталог с това име:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2395,12 +2589,12 @@
         <location line="+495"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>Parent ID</source>
         <translation>Родителски ID</translation>
     </message>
     <message>
-        <location line="-3308"/>
+        <location line="-3531"/>
         <source>External ID</source>
         <translation>Външен ID</translation>
     </message>
@@ -2472,7 +2666,7 @@
         <translation>Път на файла</translation>
     </message>
     <message>
-        <location line="+618"/>
+        <location line="+623"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Запази промените в дефиницията на каталога?&lt;br/&gt;</translation>
     </message>
@@ -2492,17 +2686,17 @@
         <translation>нова стойност</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+10"/>
         <source>Include Hidden</source>
         <translation>Включи скритите</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+19"/>
         <source>Is Full Device</source>
         <translation>Е пълно устройство</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Каталогът трябва да бъде обновен, за да отрази тези промени)</translation>
     </message>
@@ -2519,17 +2713,18 @@
         <translation>Избери csv файла за внасяне</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+17"/>
+        <location line="+143"/>
         <source>No catalog found.</source>
         <translation>Няма намерен каталог.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-129"/>
         <source>A file was found, but could not be loaded</source>
         <translation>Файлът беше намерен, но не можа да бъде зареден</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+504"/>
         <source>Catalog updated: </source>
         <translation>Каталогът е обновен: </translation>
     </message>
@@ -2637,23 +2832,23 @@
         <translation>Избраното устройство трябва да е каталог. Опитай с различно ID на устройството</translation>
     </message>
     <message>
-        <location line="-1833"/>
+        <location line="-2033"/>
         <location line="+241"/>
         <location line="+254"/>
         <source>Used space</source>
         <translation>Използвано пространство</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-532"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-607"/>
         <source>Move file to Trash</source>
         <translation>Премести файла в кошчето</translation>
     </message>
     <message>
         <location line="+159"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-1089"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1115"/>
         <location line="+64"/>
-        <location line="+518"/>
+        <location line="+526"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Потвърждение</translation>
@@ -2663,7 +2858,7 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-609"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-617"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
@@ -2713,12 +2908,12 @@ to the trash?</source>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;ИЗТРИЙ&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-308"/>
+        <location line="-337"/>
         <source>Tag this folder</source>
         <translation>Етикетирай тази папка</translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+164"/>
         <source>Copy folder name</source>
         <translation>Копирай името на папката</translation>
     </message>
@@ -2729,12 +2924,12 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+1"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+509"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+584"/>
         <source>orderValue</source>
         <translation>стойностЗаПодреждане</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-300"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Избраният каталог съдържа повече от %1 файла.&lt;br/&gt;Може да отнеме няколко минути за отваряне.&lt;br/&gt;Продължи?</translation>
     </message>
@@ -2871,9 +3066,9 @@ to the trash?</source>
     <message>
         <location line="-72"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+562"/>
+        <location line="+557"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1272"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1298"/>
         <source>Catalog with results</source>
         <translation>Каталог с резултати</translation>
     </message>
@@ -2888,7 +3083,7 @@ to the trash?</source>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-500"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -2905,10 +3100,10 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3310"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3533"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+2814"/>
+        <location line="+3037"/>
         <source>Active</source>
         <translation>Активен</translation>
     </message>
@@ -3001,7 +3196,7 @@ to the trash?</source>
         <translation>Избери различен източник или цел (устройство не може да бъде картирано към себе си).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-482"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-495"/>
         <source>Virtual Group</source>
         <translation>Виртуална група</translation>
     </message>
@@ -3011,7 +3206,7 @@ to the trash?</source>
         <translation>Виртуално устройство може да бъде добавено само към друго виртуално устройство.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+212"/>
         <location line="+68"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
@@ -3072,7 +3267,7 @@ to the trash?</source>
         <translation>MIME проверката се провали:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-809"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-804"/>
         <location line="+346"/>
         <source>Search Error</source>
         <translation>Грешка при търсене</translation>
@@ -3129,7 +3324,7 @@ to the trash?</source>
         <location filename="../core/searchprogressmanager.cpp" line="-107"/>
         <location line="+73"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+363"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+358"/>
         <source>Folders found</source>
         <translation>Намерени папки</translation>
     </message>
@@ -3144,7 +3339,7 @@ to the trash?</source>
         <translation>Намерени разлики</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+209"/>
         <source>No search results available.</source>
         <translation>Няма налични резултати от търсенето.</translation>
     </message>
@@ -3237,18 +3432,18 @@ to the trash?</source>
         <translation>Съхранение: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Папката-източник не съдържа никакви файлове:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Това може да означава, че устройството не е монтирано в тази папка,&lt;br/&gt;или папката просто е празна.&lt;br/&gt;&lt;br/&gt;Принудително опитване да се получат стойности въпреки това?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-1359"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1409"/>
         <source>Explore folder</source>
         <translation>Разгледай папка</translation>
     </message>
     <message>
-        <location line="+226"/>
-        <location line="+582"/>
+        <location line="+250"/>
+        <location line="+590"/>
         <source>MOVE</source>
         <translation>ПРЕМЕСТИ</translation>
     </message>
     <message>
-        <location line="-581"/>
+        <location line="-589"/>
         <source>Move this file to the trash?</source>
         <translation>Премести този файл в кошчето?</translation>
     </message>
@@ -3265,12 +3460,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+46"/>
-        <location line="+557"/>
+        <location line="+565"/>
         <source>DELETE</source>
         <translation>ИЗТРИЙ</translation>
     </message>
     <message>
-        <location line="-556"/>
+        <location line="-564"/>
         <source>Delete this file?</source>
         <translation>Изтрий този файл?</translation>
     </message>
@@ -3280,7 +3475,7 @@ to the trash?</source>
         <translation>Изтриването на папка не е налично.</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+39"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-32"/>
         <source>TiB</source>
@@ -3316,7 +3511,7 @@ to the trash?</source>
         <translation>Байтове</translation>
     </message>
     <message>
-        <location line="+359"/>
+        <location line="+382"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>Първо избери процес, който да се приложи към всички резултати по-долу.</translation>
     </message>
@@ -3381,7 +3576,7 @@ to the trash?</source>
         <translation>Резултати от търсенето</translation>
     </message>
     <message>
-        <location line="+383"/>
+        <location line="+401"/>
         <source>Text Phrase selected</source>
         <translation>Избрана текстова фраза</translation>
     </message>

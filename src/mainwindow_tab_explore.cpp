@@ -259,7 +259,7 @@
             QString checksum = ui->Explore_treeView_FileList->model()->index(index.row(), 19).data().toString();
             bool showCopyChecksumAction = !checksum.isEmpty();
             if (showCopyChecksumAction) {
-                QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy file checksum"), this);
+                QAction *menuActionChecksum = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy Checksum"), this);
                 connect(menuActionChecksum, &QAction::triggered, this, &MainWindow::exploreContextCopyFileChecksum);
                 fileContextMenu.addAction(menuActionChecksum);
             }
@@ -269,7 +269,7 @@
             if (checksum.isEmpty()) {
                 // No checksum → Show "Calculate Checksum"
                 QAction *menuActionCalculate = new QAction(QIcon::fromTheme("document-properties"),
-                                                           tr("Calculate Checksum (SHA-256)"), this);
+                                                           tr("Calculate Checksum") + " (SHA-256)", this);
                 connect(menuActionCalculate, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId]() {
                     calculateAndSaveChecksum(filePath, fileName, folderPath, catalogId);
                 });
@@ -282,7 +282,7 @@
                 fileContextMenu.addAction(menuActionCopy);
 
                 QAction *menuActionVerify = new QAction(QIcon::fromTheme("document-properties"),
-                                                        tr("Verify Checksum (SHA-256)"), this);
+                                                        tr("Verify Checksum") + " (SHA-256)", this);
                 connect(menuActionVerify, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId, checksum]() {
                     verifyFileChecksum(filePath, fileName, folderPath, catalogId, checksum);
                 });

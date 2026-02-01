@@ -22,7 +22,7 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   mainwindow_tab_search.cpp
+// File Name:   mainwindow_tab_search_ui.cpp
 // Purpose:     methods for the screen SEARCH beside the search process
 // Description: https://stephanecouturier.github.io/Katalog/docs/Features/Search
 // Author:      Stephane Couturier
@@ -797,7 +797,7 @@
             if (checksum.isEmpty()) {
                 // NO checksum - show Calculate
                 QAction *menuActionCalculate = new QAction(QIcon::fromTheme("document-properties"),
-                                                           tr("Calculate Checksum (SHA-256)"), this);
+                                                           tr("Calculate Checksum") + " (SHA-256)", this);
                 connect(menuActionCalculate, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId]() {
                     calculateAndSaveChecksum(filePath, fileName, folderPath, catalogId);
                 });
@@ -805,12 +805,12 @@
             } else {
                 // HAS checksum - show Copy and Verify
                 QAction *menuActionCopy = new QAction(QIcon::fromTheme("edit-copy"),
-                                                      tr("Copy file checksum"), this);
+                                                      tr("Copy Checksum"), this);
                 connect(menuActionCopy, &QAction::triggered, this, &MainWindow::searchContextCopyFileChecksum);
                 fileContextMenu.addAction(menuActionCopy);
 
                 QAction *menuActionVerify = new QAction(QIcon::fromTheme("document-properties"),
-                                                        tr("Verify Checksum (SHA-256)"), this);
+                                                        tr("Verify Checksum") + " (SHA-256)", this);
                 connect(menuActionVerify, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId, checksum]() {
                     verifyFileChecksum(filePath, fileName, folderPath, catalogId, checksum);
                 });
@@ -2145,7 +2145,7 @@
                                             int catalogId,
                                             const QString &expectedChecksum)
         {
-            QProgressDialog progress(tr("Verifying SHA-256 checksum..."),
+            QProgressDialog progress(tr("Verifying checksum..."),
                                      tr("Cancel"), 0, 100, this);
             progress.setWindowModality(Qt::WindowModal);
             progress.setMinimumDuration(1000);
@@ -2186,11 +2186,11 @@
             msgBox.setWindowTitle(title);
             msgBox.setIcon(QMessageBox::Information);
 
-            QString message = tr("SHA-256: %1").arg(checksum);
+            QString message = QString("SHA-256: %1").arg(checksum);
             if (wasSaved) {
-                message += tr("\n\nChecksum saved to database.");
+                message += "\n\n" + tr("Checksum saved to database.");
             } else {
-                message += tr("\n\nFile integrity confirmed - checksums match.");
+                message += "\n\n" + tr("Checksums match.");
             }
 
             msgBox.setText(message);
@@ -2217,15 +2217,13 @@
             msgBox.setWindowTitle("Katalog");
             msgBox.setIcon(QMessageBox::Warning);
 
-            QString message = tr("WARNING: File may be corrupted or modified!\n\n"
-                                 "Expected: %1\n"
-                                 "Actual:   %2\n\n"
-                                 "The file has changed since the checksum was calculated.")
-                                  .arg(expected).arg(actual);
+            QString message = tr("Checksums do not match.") + "\n\n"
+                                + tr("Expected:") + " " + expected + "\n"
+                                + tr("Actual:") + " " + actual;
 
             msgBox.setText(message);
 
-            QPushButton *recalcButton = msgBox.addButton(tr("Update Database with New Checksum"),
+            QPushButton *recalcButton = msgBox.addButton(tr("Update Checksum"),
                                                          QMessageBox::ActionRole);
             msgBox.addButton(QMessageBox::Cancel);
 
@@ -2247,8 +2245,8 @@
                     tempCatalog.saveCatalogToFile(collection->databaseMode, collection->folder);
                 }
 
-                QMessageBox::information(this, tr("Updated"),
-                                         tr("Database updated with new checksum."));
+                QMessageBox::information(this, "Katalog",
+                                         tr("Checksum saved to database."));
             }
         }
 
@@ -2259,12 +2257,12 @@
         {
             // Check if file exists
             if (!QFileInfo::exists(filePath)) {
-                QMessageBox::warning(this, tr("File Not Found"),
-                                     tr("Cannot calculate checksum - file no longer exists:\n%1").arg(filePath));
+                QMessageBox::warning(this, "Katalog",
+                                     tr("File not found:") + "\n" + filePath);
                 return;
             }
 
-            QProgressDialog progress(tr("Calculating SHA-256 checksum..."),
+            QProgressDialog progress(tr("Calculating checksum..."),
                                      tr("Cancel"), 0, 100, this);
             progress.setWindowModality(Qt::WindowModal);
             progress.setMinimumDuration(1000);
@@ -2291,8 +2289,8 @@
             }
 
             if (checksum.isEmpty()) {
-                QMessageBox::warning(this, tr("Error"),
-                                     tr("Failed to calculate checksum."));
+                QMessageBox::warning(this, "Katalog",
+                                     tr("Checksum calculation failed."));
                 return;
             }
 
@@ -2316,7 +2314,7 @@
             msgBox.setWindowTitle("Katalog");
             msgBox.setIcon(QMessageBox::Information);
 
-            QString message = tr("SHA-256: %1\n\nChecksum saved to database.").arg(checksum);
+            QString message = QString("SHA-256: %1\n\n").arg(checksum) + tr("Checksum saved to database.");
             msgBox.setText(message);
 
             QPushButton *copyButton = msgBox.addButton(tr("Copy to Clipboard"),
