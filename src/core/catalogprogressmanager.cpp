@@ -205,10 +205,21 @@ void CatalogProgressManager::setCurrentCatalogEngine(CatalogJobStoppable *curren
 
 void CatalogProgressManager::updateFromCatalogManager()
 {
-    if (!m_catalogManager || !m_statusBar) return;
+    qDebug() << "=== CatalogProgressManager::updateFromCatalogManager() CALLED ===";
+    qDebug() << "  m_catalogManager:" << (m_catalogManager ? "exists" : "NULL");
+    qDebug() << "  m_statusBar:" << (m_statusBar ? "exists" : "NULL");
+
+    if (!m_catalogManager || !m_statusBar) {
+        qDebug() << "  EARLY RETURN - missing catalogManager or statusBar";
+        return;
+    }
 
     // ONLY handle in-progress updates
+    qDebug() << "  catalogOperationRunning:" << m_catalogManager->catalogOperationRunning();
+
     if (m_catalogManager->catalogOperationRunning()) {
+        qDebug() << "  Building status message...";
+
         StatusBarMessageBuilder builder;
 
         // Operation type
@@ -295,6 +306,30 @@ void CatalogProgressManager::updateFromCatalogManager()
                 }
             }
 
+        } else if (currentPath.startsWith("__CHECKSUM_CALCULATION__|")) {
+            // CHECKSUM CALCULATION
+            QStringList parts = currentPath.split("|");
+            if (parts.size() >= 3) {
+                int processed = parts[1].toInt();
+                int total = parts[2].toInt();
+
+                builder.setProcess(
+                    QApplication::translate("MainWindow", "Checksums Calculated"),
+                    processed,
+                    total
+                    );
+
+                // Add time to completion if present (part 3)
+                if (parts.size() >= 4 && !parts[3].isEmpty()) {
+                    builder.setTimeToCompletion(parts[3]);
+                }
+
+                // Add current file info if present (part 4)
+                if (parts.size() >= 5 && !parts[4].isEmpty()) {
+                    builder.setCurrentItem(parts[4]);
+                }
+            }
+
         } else if (m_catalogManager->totalFiles() > 0) {
             // INDEXING
             builder.setProcess(
@@ -313,8 +348,14 @@ void CatalogProgressManager::updateFromCatalogManager()
             }
         }
 
+        // At the very end, before setting the text:
+        QString message = builder.build();
+        qDebug() << "  Final message:" << message;
+
         m_statusBar->show();
-        m_statusBarLabel->setText(builder.build());
+        m_statusBarLabel->setText(message);  // Use the message variable, not builder.build() again
+
+        qDebug() << "  Status bar text SET";
 
         if (m_statusBarTimer) {
             m_statusBarTimer->stop();

@@ -70,7 +70,7 @@ BackupProfileResult BackupProfileGenerator::generateProfile(const QList<int>& ma
     // Step 1: Ensure output directory exists
     if (!ensureProfilesDirectoryExists()) {
         result.success = false;
-        result.errorMessage = tr("Failed to create LuckyBackup profiles directory");
+        result.errorMessage = "Failed to create LuckyBackup profiles directory";
         emit profileGenerationFailed(result.errorMessage);
         return result;
     }
@@ -80,7 +80,7 @@ BackupProfileResult BackupProfileGenerator::generateProfile(const QList<int>& ma
 
     if (tasks.isEmpty()) {
         result.success = false;
-        result.errorMessage = tr("No backup mappings found in the database");
+        result.errorMessage = "No backup mappings found in the database";
         emit profileGenerationFailed(result.errorMessage);
         return result;
     }
@@ -101,7 +101,7 @@ BackupProfileResult BackupProfileGenerator::generateProfile(const QList<int>& ma
     if (result.success) {
         emit profileGenerationCompleted(result.profilePath, result.taskCount);
     } else {
-        result.errorMessage = tr("Failed to write profile file to: %1").arg(result.profilePath);
+        result.errorMessage =  QString("Failed to write profile file to: %1").arg(result.profilePath);
         emit profileGenerationFailed(result.errorMessage);
     }
 
@@ -285,7 +285,11 @@ QString BackupProfileGenerator::generateTaskSection(const BackupTask& task, int 
     QString userName = QDir::home().dirName();
     QString luckyBackupDir = getUserHomeDirectory() + "/.luckyBackup/";
 
-    // Ensure destination ends with '/' for LuckyBackup compatibility
+    // Ensure source and destination end with '/' for LuckyBackup compatibility
+    QString source = task.source;
+    if (!source.endsWith('/')) {
+        source += '/';
+    }
     QString destination = task.destination;
     if (!destination.endsWith('/')) {
         destination += '/';
@@ -294,10 +298,10 @@ QString BackupProfileGenerator::generateTaskSection(const BackupTask& task, int 
     QString section;
     section += QString("[Task] - %1\n").arg(taskIndex);
     section += QString("Name=%1\n").arg(task.name);
-    section += "TypeDirContents=0\n";
-    section += "TypeDirName=1\n";
+    section += "TypeDirContents=1\n";
+    section += "TypeDirName=0\n";
     section += "TypeSync=0\n";
-    section += QString("Source=%1\n").arg(task.source);
+    section += QString("Source=%1\n").arg(source);
     section += QString("Destination=%1\n").arg(destination);
     section += "LastExecutionTime=\n";
     section += "LastExecutionErrors=-1\n";
@@ -314,7 +318,7 @@ QString BackupProfileGenerator::generateTaskSection(const BackupTask& task, int 
     section += "Args=--update\n";
     section += "Args=--delete-after\n";
     section += "Args=--filter=protect .luckybackup-snaphots/\n";
-    section += QString("Args=%1\n").arg(task.source);
+    section += QString("Args=%1\n").arg(source);
     section += QString("Args=%1\n").arg(destination);
 
     // Task options

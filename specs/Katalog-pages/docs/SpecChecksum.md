@@ -53,10 +53,144 @@ To consider Indexing and Checksum work, within incremental update design<br/>
 * Like for Metadata, when editing this option, the user will be asked to trigger the update or not
 
     
----    
-## **Increment 1 (current work)**
+---
+## **Increment 1 - Implemented Features**
 
-### Implementation Strategy
+### FileChecksum Class (`src/core/filechecksum.h/.cpp`)
+
+Core class managing checksum calculation, storage, verification, and retrieval.
+
+#### Calculation & Storage Methods
+
+| Method | Purpose |
+|--------|---------|
+| `calculateAndStore()` | Main entry point during catalog creation/updates. Checks if enabled, verifies file exists, calculates SHA-256, stores in database. |
+| `calculateChecksum()` | Core SHA-256 calculation using Qt's `QCryptographicHash`. Uses 8 MB buffer, reports progress every 25 MB, supports cancellation. |
+| `updateFileChecksum()` | Updates single file record with checksum value and extraction timestamp. |
+| `batchUpdateFileChecksum()` | Batch updates multiple files in single transaction for performance. Uses database transaction with rollback on failure. |
+
+#### Verification Methods
+
+| Method | Purpose |
+|--------|---------|
+| `verifyChecksum()` | Verifies single file. Returns `VerificationResult` struct with success, match, expected/actual checksums, error message. |
+| `verifyCatalogChecksums()` | Verifies all checksums in a catalog. Returns `CatalogVerificationResult` with counts (totalFiles, verified, mismatches, missing) and file lists. Supports cancellation and progress reporting. |
+
+#### Utility Methods
+
+| Method | Purpose |
+|--------|---------|
+| `getFileChecksum()` | Retrieves stored checksum from database for a file. |
+| `countFilesWithChecksum()` | Returns count of files with non-null, non-empty checksums. |
+| `getAlgorithmFromString()` | Converts algorithm name string to `QCryptographicHash::Algorithm` enum. |
+
+---
+
+### Catalog Operations Integration
+
+#### During Catalog Creation/Update (`src/core/catalogjobstoppable.cpp`)
+
+| Function | Purpose |
+|----------|---------|
+| `findFilesWithoutChecksum()` | Queries files missing checksums (WHERE `checksum_extraction_date IS NULL`). |
+| `extractChecksumsForFiles()` | Processes batches of files, calculates checksums, updates database. Progress: `__CHECKSUM_CALCULATION__` markers. |
+
+**Flow:**
+- Step 9b: After metadata extraction, if `catalog->includeChecksum != "None"`:
+  1. Call `findFilesWithoutChecksum()` to get files needing checksums
+  2. Call `extractChecksumsForFiles()` for batch processing
+  3. Stoppable and resumable (only processes files with NULL extraction date)
+
+---
+
+### Search Features
+
+#### Duplicate Search (`src/core/searchjobstoppable.cpp`)
+
+| Option | SQL Logic |
+|--------|-----------|
+| Checksum Equal (`=`) | Groups files by checksum, finds identical content |
+| Checksum Not Equal (`≠`) | Finds files matching on name/size/date but with different checksums (modified copies) |
+
+#### Differences Search
+
+| Option | SQL Logic |
+|--------|-----------|
+| Checksum Equal (`=`) | Cross-device comparison for identical files |
+| Checksum Not Equal (`≠`) | Files matching on other criteria but different checksums between devices |
+
+**UI Controls** (Search tab):
+- `Search_checkBox_DuplicatesChecksum` / `Search_comboBox_DuplicateChecksumSign`
+- `Search_checkBox_DifferencesChecksum` / `Search_comboBox_DifferenceChecksumSign`
+
+---
+
+### Context Menu Actions
+
+#### File-Level Actions (Explore & Search tabs)
+
+| Action | When Shown | Handler |
+|--------|------------|---------|
+| **Copy Checksum** | File has checksum | `exploreContextCopyFileChecksum()` / `searchContextCopyFileChecksum()` |
+| **Calculate Checksum (SHA-256)** | File has no checksum | `calculateAndSaveChecksum()` |
+| **Verify Checksum (SHA-256)** | File has checksum | `verifyFileChecksum()` |
+
+#### Catalog-Level Actions (Devices tab)
+
+| Action | When Shown | Handler |
+|--------|------------|---------|
+| **Verify Checksums** | Catalog selected, has checksums | `verifyCatalogChecksums()` |
+
+---
+
+### UI Verification Functions (`src/mainwindow_tab_search_ui.cpp`)
+
+| Function | Purpose |
+|----------|---------|
+| `verifyFileChecksum()` | Shows progress dialog, calculates checksum, compares with stored value, displays result or mismatch warning. |
+| `showChecksumResult()` | Displays success message box with checksum and "Copy to Clipboard" button. |
+| `showChecksumMismatch()` | Warning dialog showing expected vs actual, offers "Update Database with New Checksum" option. |
+| `calculateAndSaveChecksum()` | On-demand calculation for files without checksum. Shows progress, saves to database, displays result. |
+
+---
+
+### Catalog Edit Behavior (`src/mainwindow_tab_device_pr.cpp`)
+
+When editing a catalog's checksum option in `saveCatalogChanges()`:
+
+| Transition | First Dialog | Second Dialog | Rescan |
+|------------|--------------|---------------|--------|
+| None → SHA256 | ✅ Shows changes | ✅ "Update catalog content?" | ✅ Yes (to compute checksums) |
+| SHA256 → None | ✅ Shows changes | ❌ Not shown | ❌ No (keeps existing checksums) |
+| SHA256 → SHA256 | ❌ No change | ❌ Not shown | ❌ No |
+
+---
+
+### Database Schema (Implemented)
+
+**File/Filetemp tables:**
+```sql
+checksum_sha256             TEXT,     -- 64 hex chars (lowercase)
+checksum_extraction_date    TEXT,     -- yyyy/MM/dd hh:mm:ss
+```
+
+**Catalog table:**
+```sql
+catalog_include_checksum    TEXT,     -- "None" or "SHA256"
+```
+
+---
+
+### Constants (`src/core/catalog.cpp`)
+
+```cpp
+const QString Catalog::CHECKSUM_NONE = "None";
+const QString Catalog::CHECKSUM_SHA256 = "SHA256";
+```
+
+---
+
+### Original Implementation Strategy (for reference)
 
 Phase 1: Infrastructure
 1. Database migration adding checksum columns
@@ -185,180 +319,230 @@ Results: Flag potential data integrity issues
 
 
 
-## **Increment 2 (future work)**
+## **Increment 2 - Algorithm Choice Strategies**
 
-### Database Schema Updates
+### Current Implementation (Increment 1)
+- **DB columns**: `checksum_sha256`, `checksum_extraction_date` (single algorithm)
+- **Catalog setting**: `catalog_include_checksum` = "None" | "SHA256"
 
-Add to `file` and `filetemp` tables:
+### Goal
+Allow users to choose checksum algorithm(s) per catalog. Support use cases:
+- Speed-focused (xxHash for large video files)
+- Security-focused (SHA256 for archives)
+- Migration (keep old algorithm, add new one)
+- Dual checksums (fast comparison + secure verification)
+
+---
+
+### Strategy A: Multiple Dedicated Columns
+
+One column per supported algorithm.
 
 ```sql
--- Checksum fields (depending on new algo retained)
-checksum_md5                TEXT,     -- 32 hex chars
-checksum_sha1               TEXT,     -- 40 hex chars  
+-- File table:
+checksum_md5              TEXT,     -- 32 hex chars
+checksum_sha1             TEXT,     -- 40 hex chars
+checksum_sha256           TEXT,     -- 64 hex chars (already exists)
+checksum_xxhash           TEXT,     -- 16 hex chars
+checksum_extraction_date  TEXT
+
+-- Catalog table:
+catalog_include_checksum  TEXT,     -- "None", "MD5", "SHA1", "SHA256", "xxHash"
 ```
 
-**Why multiple checksum columns?**
-* Like metadata levels, users may want to upgrade/downgrade
-* Storage is cheap (64 bytes max per algorithm)
-* Allows future migration between algorithms
+| Pros | Cons |
+|------|------|
+| Simple queries: `WHERE checksum_sha256 IS NOT NULL` | Wasted space for unused columns |
+| Can keep multiple checksums per file (migration) | Schema change for each new algorithm |
+| Cross-catalog comparison when same algo | More columns to manage |
+| Already partially implemented (sha256) | |
+
+**Complexity**: Low - just add columns, update FileChecksum class
 
 ---
+
+### Strategy B: Single Column + Algorithm Field
+
+One generic column, algorithm stored separately.
+
+```sql
+-- File table:
+file_checksum             TEXT,     -- Variable length hash
+file_checksum_algorithm   TEXT,     -- "MD5", "SHA256", etc.
+checksum_extraction_date  TEXT
+```
+
+| Pros | Cons |
+|------|------|
+| No wasted space | Complex queries: `WHERE algorithm='SHA256' AND checksum=...` |
+| Easy to add new algorithms | Can only store ONE checksum per file |
+| Simpler schema | No migration path (lose old checksum when changing) |
+| | Breaking change from current implementation |
+
+**Complexity**: High - requires migration, all queries need update
+
+---
+
+### Strategy C: Hybrid (Dedicated + Generic)
+
+Keep SHA256 column, add one generic slot.
+
+```sql
+-- File table:
+checksum_sha256           TEXT,     -- Current, keep for performance
+checksum_secondary        TEXT,     -- For migration/other algos
+checksum_secondary_algo   TEXT,     -- "MD5", "SHA1", "xxHash", etc.
+checksum_extraction_date  TEXT
+```
+
+| Pros | Cons |
+|------|------|
+| Keeps current implementation | Inconsistent design |
+| Allows one additional algorithm | Limited flexibility |
+| Minimal migration | Confusing model |
+
+**Complexity**: Medium
+
+---
+
+### Strategy D: JSON/Blob Storage
+
+Store all checksums in a single JSON field.
+
+```sql
+-- File table:
+checksums                 TEXT,     -- JSON: {"sha256":"...", "md5":"...", "xxhash":"..."}
+checksum_extraction_date  TEXT
+```
+
+| Pros | Cons |
+|------|------|
+| Unlimited algorithms | Cannot index/query efficiently |
+| No schema changes ever | Parsing overhead |
+| Maximum flexibility | SQLite JSON support varies |
+| | Breaking change |
+
+**Complexity**: High
+
+---
+
+### Strategy E: 2 Generic Slots + Per-Catalog Algorithm
+
+Two generic checksum columns, each catalog chooses which algorithm(s) to use.
+
+```sql
+-- Catalog table:
+catalog_checksum1_algorithm  TEXT,  -- "None", "MD5", "SHA1", "SHA256", "xxHash"
+catalog_checksum2_algorithm  TEXT,  -- "None", "MD5", "SHA1", "SHA256", "xxHash"
+
+-- File table:
+checksum1                    TEXT,  -- Value for catalog's algo1
+checksum2                    TEXT,  -- Value for catalog's algo2
+checksum1_extraction_date    TEXT,  -- When checksum1 was calculated
+checksum2_extraction_date    TEXT,  -- When checksum2 was calculated (allows separate timing)
+```
+
+#### Example Configurations
+
+| Catalog | checksum1_algo | checksum2_algo | Use Case |
+|---------|----------------|----------------|----------|
+| Photos  | SHA256         | None           | Security-focused |
+| Videos  | xxHash         | None           | Speed-focused (large files) |
+| Archive | SHA256         | MD5            | Migration: keeping old MD5, adding SHA256 |
+| Backup  | SHA256         | xxHash         | Both security + fast comparison |
+
+#### File Data Example
+
+```
+Catalog "Archive" (algo1=SHA256, algo2=MD5):
+file.txt: checksum1="a1b2c3..." (SHA256), checksum2="x9y8z7..." (MD5)
+
+Catalog "Videos" (algo1=xxHash, algo2=None):
+video.mp4: checksum1="f5e4d3..." (xxHash), checksum2=NULL
+```
+
+| Pros | Cons |
+|------|------|
+| Only 2 columns regardless of algorithm count | Cross-catalog search needs algo matching logic |
+| Flexible: any 2 algorithms per catalog | Must track which algo is in which slot |
+| Supports migration (old + new algo simultaneously) | Queries need: `JOIN ON catalog to check algo` |
+| Supports speed+security combo | Max 2 algorithms per catalog |
+| Minimal schema (2 columns forever) | |
+| Easy to add new algorithms (no schema change) | |
+| Separate extraction dates per slot | |
+
+#### Cross-Catalog Search Logic
+
+When searching duplicates across catalogs with different algorithm configurations:
+
+```sql
+-- Find matching checksums across catalogs A and B
+WHERE (catA.checksum1_algo = catB.checksum1_algo AND fileA.checksum1 = fileB.checksum1)
+   OR (catA.checksum1_algo = catB.checksum2_algo AND fileA.checksum1 = fileB.checksum2)
+   OR (catA.checksum2_algo = catB.checksum1_algo AND fileA.checksum2 = fileB.checksum1)
+   OR (catA.checksum2_algo = catB.checksum2_algo AND fileA.checksum2 = fileB.checksum2)
+```
+
+#### Migration from Current Implementation
+
+```sql
+-- Step 1: Rename existing column
+ALTER TABLE file RENAME COLUMN checksum_sha256 TO checksum1;
+ALTER TABLE file RENAME COLUMN checksum_extraction_date TO checksum1_extraction_date;
+
+-- Step 2: Add new columns
+ALTER TABLE file ADD COLUMN checksum2 TEXT;
+ALTER TABLE file ADD COLUMN checksum2_extraction_date TEXT;
+
+-- Step 3: Add catalog algorithm fields
+ALTER TABLE catalog ADD COLUMN catalog_checksum1_algorithm TEXT DEFAULT 'None';
+ALTER TABLE catalog ADD COLUMN catalog_checksum2_algorithm TEXT DEFAULT 'None';
+
+-- Step 4: Migrate existing catalogs (those with checksums become SHA256)
+UPDATE catalog
+SET catalog_checksum1_algorithm = 'SHA256'
+WHERE catalog_include_checksum = 'SHA256';
+
+-- Step 5: Drop old column (optional, after verification)
+-- ALTER TABLE catalog DROP COLUMN catalog_include_checksum;
+```
+
+**Complexity**: Medium - migration needed, but clean design going forward
+
+---
+
+### Strategy Comparison Summary
+
+| Strategy | Columns | Algos/File | Schema Changes | Query Complexity | Migration |
+|----------|---------|------------|----------------|------------------|-----------|
+| A: Multiple Dedicated | 4-5 | Unlimited | Per new algo | Low | Easy |
+| B: Single + Algo Field | 2 | 1 | None | Medium | Hard |
+| C: Hybrid | 3 | 2 | Minimal | Medium | Easy |
+| D: JSON | 1 | Unlimited | None | High | Hard |
+| **E: 2 Generic Slots** | **4** | **2** | **None** | **Medium** | **Medium** |
+
+### Recommendation: Strategy E
+
+**Reasons:**
+1. **Bounded complexity**: Max 2 checksums per file covers all realistic use cases
+2. **Future-proof**: Add xxHash, BLAKE3, SHA3 without schema changes
+3. **Supports real workflows**: Migration, speed+security dual checksums
+4. **Clean design**: Algorithm choice is per-catalog, not hardcoded in schema
+5. **Separate timing**: Can add second checksum later without recalculating first
+
+---
+
 ## **Increment 3 (future work)**
 
-#### Phase 3: Advanced Features
-8. Catalog verification (re-check existing files)
-9. Cross-catalog duplicate detection
-10. Checksum export/import for verification
-
-
-### 2. "Future migration between algorithms" - Example
-
-**Scenario**: User has 50,000 files cataloged with MD5 in 2025.
-
-In 2028, they decide to switch to SHA-256 (new company policy, or MD5 deprecated).
-
-**Without multiple columns** (single `file_checksum` TEXT):
-```
-Before: file_checksum = "a1b2c3..." (MD5)
-After:  file_checksum = "x9y8z7..." (SHA-256)
-Result: Lost all MD5 checksums forever
-```
-
-**With multiple columns**:
-```
-Before: checksum_md5 = "a1b2c3...", checksum_sha256 = NULL
-After:  checksum_md5 = "a1b2c3...", checksum_sha256 = "x9y8z7..."
-Result: Kept MD5 history, added SHA-256
-```
-
-**Benefits**:
-- Can verify old backups still match MD5
-- Can compare files across catalogs (one using MD5, one using SHA-256)
-- Gradual migration without losing history
-
-3. "Duplicate detection with different algorithms"
-
-**CANNOT compare checksums from different algorithms**
-
-**Scenario**: You have 2 catalogs:
-- Catalog A: uses MD5
-- Catalog B: uses SHA-256
-
-**Search for duplicates:**
-```
-Option 1 (current): Search within Catalog A only (MD5 vs MD5) ✓
-Option 2 (current): Search within Catalog B only (SHA256 vs SHA256) ✓
-Option 3 (impossible): Compare Catalog A vs Catalog B (MD5 vs SHA256) ✗
-```
-
-**With multiple columns**, if you later add SHA-256 to Catalog A:
-```
-Now possible: Compare Catalog A vs Catalog B (both using SHA256) ✓
-```
-
-So the benefit is: **Standardize catalogs to same algorithm** for cross-catalog comparison.
-
-Not "hash conversion" (impossible), but "recalculate with new algorithm."
+### Advanced Features
+- Cross-catalog duplicate detection with algorithm matching
+- Checksum export/import for external verification
+- Scheduled/background checksum verification
+- Checksum comparison reports
 
 ---
 
-### 4. Catalog Model - One algorithm per catalog, multiple columns in DB
-
-**Architecture**:
-```
-Database (file table):
-├─ checksum_md5         TEXT  (32 hex chars)
-├─ checksum_sha1        TEXT  (40 hex chars)
-├─ checksum_sha256      TEXT  (64 hex chars)
-└─ checksum_extraction_date TEXT
-
-Catalog settings:
-└─ catalog_include_checksum = "SHA256"  (only ONE algorithm active)
-```
-
-**Example Catalog A** (using SHA-256):
-```
-File 1: checksum_md5=NULL, checksum_sha256="x9y8z7...", checksum_extraction_date="2025-01-01"
-File 2: checksum_md5=NULL, checksum_sha256="a1b2c3...", checksum_extraction_date="2025-01-01"
-```
-
-**Example Catalog B** (using MD5):
-```
-File 1: checksum_md5="f5e4d3...", checksum_sha256=NULL, checksum_extraction_date="2025-01-02"
-File 2: checksum_md5="c2b1a0...", checksum_sha256=NULL, checksum_extraction_date="2025-01-02"
-```
-
-**Is this the right model?**
-
-**Pros**:
-- Simple: one algorithm active per catalog
-- Flexible: can change algorithm without losing old data
-- Query-friendly: `WHERE checksum_sha256 IS NOT NULL`
-
-**Cons**:
-- Wasted space: unused columns remain NULL
-- More database columns (but only ~5 algorithms total)
-
-**Alternative Model** (single column):
-```
-Database:
-├─ file_checksum              TEXT (variable length)
-├─ file_checksum_algorithm    TEXT ("MD5", "SHA256", etc.)
-└─ checksum_extraction_date   TEXT
-```
-
-**Pros**: Less wasted space
-**Cons**: 
-- Must always check algorithm column in queries
-- Harder to compare: `WHERE file_checksum_algorithm='SHA256' AND file_checksum='x9y8...'`
-- Can't easily keep multiple checksums per file
-
-**My recommendation**: Multiple columns (your original understanding is correct).
-
----
-
-### 5. "Multiple" option - Calculate MD5 + SHA256 simultaneously
-
-**Use Case**: Transition period when changing algorithms.
-
-**Scenario**:
-1. You have 50,000 files with MD5 checksums (from 2020-2024)
-2. You decide to switch to SHA-256 (company policy, Jan 2025)
-3. You want to **keep MD5 for old files** but **add SHA-256 for all files**
-
-**Without "Multiple" option**:
-```
-Step 1: Set catalog_include_checksum = "SHA256"
-Step 2: Update catalog
-Result: Only NEW files get SHA-256
-        Old files keep MD5 only
-        
-To get SHA-256 for old files:
-Step 3: Manually trigger re-calculation (expensive, 50,000 files)
-```
-
-**With "Multiple" option**:
-```
-Step 1: Set catalog_include_checksum = "Multiple_MD5_SHA256"
-Step 2: Update catalog
-Result: NEW files get BOTH MD5 + SHA-256
-        OLD files get SHA-256 added (MD5 preserved)
-        
-After transition (6 months later):
-Step 3: Set catalog_include_checksum = "SHA256"
-Step 4: Clear MD5 column if desired (optional)
-```
-
-Simpler approach:
-```
-User wants to change MD5 → SHA-256:
-1. Set catalog_include_checksum = "SHA256"
-2. Clear checksum_extraction_date for all files
-3. Next update calculates SHA-256 for all files
-4. MD5 column remains (preserved history)
-```
-
-### 5. "Verify Catalog" Feature - Full Specification
+### "Verify Catalog" Feature - Full Specification
 
 **Purpose**: Verify that files on disk still match their stored checksums (detect corruption/modification).
 

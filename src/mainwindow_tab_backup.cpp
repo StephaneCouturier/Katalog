@@ -125,7 +125,7 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
         QMessageBox::information(
             this,
             "Katalog",
-            tr("No backup mappings found.")
+            tr("No backup links found.")
             );
         return;
     }
@@ -155,7 +155,7 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
             QMessageBox::information(
                 this,
                 "Katalog",
-                tr("No backup mappings found.")
+                tr("No backup links found.")
                 );
             return;
         }
@@ -165,11 +165,6 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
         // Empty list = ALL mappings
         qDebug() << "Generating profile from ALL mappings (checkbox not checked)";
     }
-
-    // Rest of method unchanged...
-    QString scopeDescription = useSelectedLinks
-                                   ? tr("%1 selected mapping(s)").arg(mappingIds.isEmpty() ? backupMappingManager->getMappingCount() : mappingIds.size())
-                                   : tr("all mappings");
 
     // Create profile generator
     BackupProfileGenerator* generator = new BackupProfileGenerator(m_connectionName, this);
@@ -199,7 +194,7 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
                 QMessageBox msgBox(this);
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setIcon(QMessageBox::Critical);
-                msgBox.setText(tr("Failed to generate Backup profile"));
+                msgBox.setText("Failed to generate Backup profile");
                 msgBox.setInformativeText(errorMessage);
                 msgBox.setStandardButtons(QMessageBox::Ok);
                 msgBox.exec();

@@ -34,51 +34,315 @@
 #include <QFile>
 #include <QDebug>
 #include <QApplication>
+#include <qhostaddress.h>
 
 //----------------------------------------------------------------------
-// Core database functions
+// Core database definition
 //----------------------------------------------------------------------
-Database::DatabaseType Database::getDatabaseType(const QString &connectionName)
+QString Database::getSQLCreateTableDevice(DatabaseType dbType)
 {
-    QSqlDatabase db = QSqlDatabase::database(connectionName);
-    QString driver = db.driverName();
+    // MySQL/PostgreSQL need BIGINT for large file sizes (NUMERIC defaults to ~9GB max)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
 
-    if (driver == "QSQLITE") return DatabaseType::SQLite;
-    if (driver == "QMYSQL" || driver == "QMYSQL3") return DatabaseType::MySQL;
-    if (driver == "QPSQL") return DatabaseType::PostgreSQL;
-
-    return DatabaseType::SQLite; // default fallback
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS device(
+                    device_id                  %1 PRIMARY KEY,
+                    device_parent_id           %1,
+                    device_name                TEXT,
+                    device_type                TEXT,
+                    device_external_id         %1,
+                    device_path                TEXT,
+                    device_total_file_size     %1 default 0,
+                    device_total_file_count    %1 default 0,
+                    device_total_space         %1 default 0,
+                    device_free_space          %1 default 0,
+                    device_active              %1,
+                    device_group_id            %1,
+                    device_date_updated        TEXT,
+                    device_order               %1)
+            )").arg(largeNumeric);
 }
 
-QString Database::getCreateBackupMappingSQL(DatabaseType databaseType)
+QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
 {
-    QString autoIncrementSyntax;
+    QString catalogNameType;
+    QString largeNumeric;
 
     switch (databaseType) {
-        case DatabaseType::SQLite:
-            autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
-            break;
-        case DatabaseType::MySQL:
-            autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
-            break;
-        case DatabaseType::PostgreSQL:
-            autoIncrementSyntax = "SERIAL PRIMARY KEY";
-            break;
+    case DatabaseType::SQLite:
+        catalogNameType = "TEXT";
+        largeNumeric = "NUMERIC";
+        break;
+    case DatabaseType::MySQL:
+        catalogNameType = "VARCHAR(500)";
+        largeNumeric = "BIGINT";
+        break;
+    case DatabaseType::PostgreSQL:
+        catalogNameType = "VARCHAR(500)";
+        largeNumeric = "BIGINT";
+        break;
     }
 
     return QString(R"(
-                CREATE TABLE IF NOT EXISTS device_mapping(
-                    mapping_id                  %1,
-                    mapping_name                TEXT,
-                    mapping_type                TEXT,
-                    mapping_device_source_id    NUMERIC,
-                    mapping_device_target_id    NUMERIC,
-                    mapping_backup_last_date    TEXT,
-                    mapping_backup_last_size    TEXT)
-    )").arg(autoIncrementSyntax);
+                CREATE TABLE IF NOT EXISTS catalog(
+                    catalog_id                    %2,
+                    catalog_file_path             TEXT,
+                    catalog_name                  %1,
+                    catalog_date_updated          TEXT,
+                    catalog_source_path           TEXT,
+                    catalog_file_count            %2 default 0,
+                    catalog_total_file_size       %2 default 0,
+                    catalog_source_path_is_active %2,
+                    catalog_include_hidden        TEXT,
+                    catalog_file_type             TEXT,
+                    catalog_storage               TEXT,
+                    catalog_include_symblinks     TEXT,
+                    catalog_is_full_device        TEXT,
+                    catalog_date_loaded           TEXT,
+                    catalog_include_metadata      TEXT,
+                    catalog_include_checksum      TEXT,
+                    catalog_app_version           TEXT,
+                    PRIMARY KEY(catalog_name))
+    )").arg(catalogNameType, largeNumeric);
 }
 
-QString Database::getCreateTagSQL(DatabaseType databaseType)
+QString Database::getSQLCreateTableStorage(DatabaseType dbType)
+{
+    // MySQL/PostgreSQL need BIGINT for large file sizes (NUMERIC defaults to ~9GB max)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS storage(
+                    storage_id            %1  primary key default 0,
+                    storage_name          TEXT,
+                    storage_type          TEXT,
+                    storage_location      TEXT,
+                    storage_path          TEXT,
+                    storage_label         TEXT,
+                    storage_file_system   TEXT,
+                    storage_total_space   %1 default 0,
+                    storage_free_space    %1 default 0,
+                    storage_brand         TEXT,
+                    storage_model         TEXT,
+                    storage_serial_number TEXT,
+                    storage_build_date    TEXT,
+                    storage_comment1      TEXT,
+                    storage_comment2      TEXT,
+                    storage_comment3      TEXT)
+            )").arg(largeNumeric);
+}
+
+QString Database::getSQLCreateTableFile(DatabaseType dbType)
+{
+    // MySQL/PostgreSQL need BIGINT for file_size (single files can exceed 9GB)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS file(
+                    file_catalog_id         %1,
+                    file_name               TEXT,     -- "home.jpg"
+                    file_folder_path        TEXT,     -- "/home/user/photos"
+                    file_size               %1,
+                    file_date_updated       TEXT,
+                    file_catalog            TEXT,
+                    file_full_path          TEXT,     -- "/home/user/photos/home.jpg"
+                    file_extension          TEXT,     -- "jpg"
+                    file_type               TEXT,
+                    mime_type               TEXT,
+                    mime_verified           NUMERIC,
+                    type_mismatch           NUMERIC,
+                    image_width             NUMERIC,
+                    image_height            NUMERIC,
+                    image_orientation       NUMERIC,
+                    video_duration_seconds  NUMERIC,
+                    video_width             NUMERIC,
+                    video_height            NUMERIC,
+                    video_codec             TEXT,
+                    video_framerate         NUMERIC,
+                    video_bitrate           NUMERIC,
+                    audio_duration_seconds  NUMERIC,
+                    audio_artist            TEXT,
+                    audio_album             TEXT,
+                    audio_title             TEXT,
+                    audio_genre             TEXT,
+                    audio_year              NUMERIC,
+                    audio_track_number      NUMERIC,
+                    audio_bitrate           NUMERIC,
+                    audio_sample_rate       NUMERIC,
+                    metadata_extended       TEXT,     -- JSON for additional fields
+                    metadata_extraction_date TEXT,
+                    checksum_sha256          TEXT,
+                    checksum_extraction_date TEXT)
+            )").arg(largeNumeric);
+}
+
+QString Database::getSQLCreateTableFileTemp(DatabaseType dbType)
+{
+    // MySQL/PostgreSQL need BIGINT for file_size (single files can exceed 9GB)
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS filetemp(
+                    file_catalog_id         %1,
+                    file_name               TEXT,     -- "home.jpg"
+                    file_folder_path        TEXT,     -- "/home/user/photos"
+                    file_size               %1,
+                    file_date_updated       TEXT,
+                    file_catalog            TEXT,
+                    file_full_path          TEXT,     -- "/home/user/photos/home.jpg"
+                    file_extension          TEXT,     -- "jpg"
+                    file_type               TEXT,
+                    mime_type               TEXT,
+                    mime_verified           NUMERIC,
+                    type_mismatch           NUMERIC,
+                    image_width             NUMERIC,
+                    image_height            NUMERIC,
+                    image_orientation       NUMERIC,
+                    video_duration_seconds  NUMERIC,
+                    video_width             NUMERIC,
+                    video_height            NUMERIC,
+                    video_codec             TEXT,
+                    video_framerate         NUMERIC,
+                    video_bitrate           NUMERIC,
+                    audio_duration_seconds  NUMERIC,
+                    audio_artist            TEXT,
+                    audio_album             TEXT,
+                    audio_title             TEXT,
+                    audio_genre             TEXT,
+                    audio_year              NUMERIC,
+                    audio_track_number      NUMERIC,
+                    audio_bitrate           NUMERIC,
+                    audio_sample_rate       NUMERIC,
+                    metadata_extended       TEXT,     -- JSON for additional fields
+                    metadata_extraction_date TEXT,
+                    checksum_sha256          TEXT,
+                    checksum_extraction_date TEXT)
+            )").arg(largeNumeric);
+}
+
+QString Database::getSQLCreateTableFolder(DatabaseType databaseType)
+{
+    switch (databaseType) {
+    case DatabaseType::SQLite:
+        return R"(
+                CREATE TABLE IF NOT EXISTS folder(
+                    folder_catalog_id  NUMERIC,
+                    folder_path        TEXT,
+                    PRIMARY KEY(folder_catalog_id, folder_path))
+            )";
+
+    case DatabaseType::MySQL:
+    case DatabaseType::PostgreSQL:
+        // Use TEXT without PRIMARY KEY, add UNIQUE constraint instead
+        // This avoids VARCHAR length limitations while preventing duplicates
+        return R"(
+                CREATE TABLE IF NOT EXISTS folder(
+                    folder_catalog_id  NUMERIC,
+                    folder_path        TEXT,
+                    UNIQUE KEY unique_folder (folder_catalog_id, folder_path(700)))
+            )";
+    }
+    return ""; // Should never reach here
+}
+
+QString Database::getSQLCreateTableStatisticsDevice(DatabaseType dbType)
+{
+    // MySQL/PostgreSQL need BIGINT for large file sizes
+    QString largeNumeric = (dbType == DatabaseType::SQLite) ? "NUMERIC" : "BIGINT";
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS statistics_device(
+                    date_time               TEXT,
+                    device_id               %1,
+                    device_name             TEXT,
+                    device_type             TEXT,
+                    device_file_count       %1,
+                    device_total_file_size  %1,
+                    device_free_space       %1,
+                    device_total_space      %1,
+                    record_type             TEXT)
+            )").arg(largeNumeric);
+}
+
+QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
+{
+    QString sizeUnitType;
+    QString largeNumeric;
+
+    switch (databaseType) {
+    case DatabaseType::SQLite:
+        sizeUnitType = "NUMERIC";
+        largeNumeric = "NUMERIC";
+        break;
+    case DatabaseType::MySQL:
+    case DatabaseType::PostgreSQL:
+        sizeUnitType = "TEXT";      // For string values like "Bytes", "KB", etc.
+        largeNumeric = "BIGINT";    // For file sizes
+        break;
+    }
+
+    return QString(R"(
+                CREATE TABLE IF NOT EXISTS search(
+                    date_time                   TEXT,
+                    text_checked                NUMERIC,
+                    text_phrase                 TEXT,
+                    text_criteria               TEXT,
+                    text_search_in              TEXT,
+                    file_criteria_checked       NUMERIC,
+                    file_type_checked           NUMERIC,
+                    file_type                   TEXT,
+                    file_size_checked           NUMERIC,
+                    file_size_min               %2,
+                    file_size_min_unit          %1,
+                    file_size_max               %2,
+                    file_size_max_unit          %1,
+                    date_modified_checked       NUMERIC,
+                    date_modified_min           TEXT,
+                    date_modified_max           TEXT,
+                    duplicates_checked          NUMERIC,
+                    duplicates_name             NUMERIC,
+                    duplicates_size             NUMERIC,
+                    duplicates_date_modified    NUMERIC,
+                    duplicates_checksum         NUMERIC,
+                    duplicates_checksum_equal   NUMERIC,
+                    duplicates_compare_checked  NUMERIC,
+                    duplicates_device1_ID       NUMERIC,
+                    duplicates_device2_ID       NUMERIC,
+                    differences_checked         NUMERIC,
+                    differences_name            NUMERIC,
+                    differences_size            NUMERIC,
+                    differences_date_modified   NUMERIC,
+                    differences_checksum        NUMERIC,
+                    differences_checksum_equal  NUMERIC,
+                    differences_catalogs        TEXT,
+                    folder_criteria_checked     NUMERIC,
+                    show_folders                NUMERIC,
+                    tag_checked                 NUMERIC,
+                    tag                         TEXT,
+                    search_location             TEXT,
+                    search_storage              TEXT,
+                    search_catalog              TEXT,
+                    search_catalog_checked      NUMERIC,
+                    search_directory_checked    NUMERIC,
+                    selected_directory          TEXT,
+                    selected_device_ID_list     TEXT,
+                    text_exclude                TEXT,
+                    case_sensitive              NUMERIC,
+                    metadata_checked            NUMERIC,
+                    metadata_text_checked       NUMERIC,
+                    metadata_text_search        TEXT,
+                    metadata_size_checked       NUMERIC,
+                    metadata_size_min_height    NUMERIC,
+                    metadata_size_max_height    NUMERIC,
+                    metadata_size_min_width     NUMERIC,
+                    metadata_size_max_width     NUMERIC,
+                    metadata_duration_checked   NUMERIC,
+                    metadata_duration_min       TEXT,
+                    metadata_duration_max       TEXT)
+    )").arg(sizeUnitType, largeNumeric);
+}
+
+QString Database::getSQLCreateTableTag(DatabaseType databaseType)
 {
     QString autoIncrementSyntax;
 
@@ -104,71 +368,365 @@ QString Database::getCreateTagSQL(DatabaseType databaseType)
     )").arg(autoIncrementSyntax);
 }
 
-QString Database::getCreateCatalogSQL(DatabaseType databaseType)
+QString Database::getSQLCreateTableParameter(DatabaseType dbType)
 {
-    // For MySQL/PostgreSQL, use VARCHAR with specific length for PRIMARY KEY
-    // SQLite allows TEXT in PRIMARY KEY
-    QString catalogNameType;
+    return R"(
+            CREATE TABLE IF NOT EXISTS parameter(
+                    parameter_name      TEXT,
+                    parameter_type      TEXT,
+                    parameter_value1    TEXT,
+                    parameter_value2    TEXT)
+            )";
+}
+
+QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
+{
+    QString autoIncrementSyntax;
+    QString largeNumeric;
 
     switch (databaseType) {
-        case DatabaseType::SQLite:
-            catalogNameType = "TEXT";
-            break;
-        case DatabaseType::MySQL:
-            catalogNameType = "VARCHAR(500)";
-            break;
-        case DatabaseType::PostgreSQL:
-            catalogNameType = "VARCHAR(500)";
-            break;
+    case DatabaseType::SQLite:
+        autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
+        largeNumeric = "NUMERIC";
+        break;
+    case DatabaseType::MySQL:
+        autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
+        largeNumeric = "BIGINT";
+        break;
+    case DatabaseType::PostgreSQL:
+        autoIncrementSyntax = "SERIAL PRIMARY KEY";
+        largeNumeric = "BIGINT";
+        break;
     }
 
     return QString(R"(
-                CREATE TABLE IF NOT EXISTS catalog(
-                    catalog_id                    NUMERIC,
-                    catalog_file_path             TEXT,
-                    catalog_name                  %1,
-                    catalog_date_updated          TEXT,
-                    catalog_source_path           TEXT,
-                    catalog_file_count            NUMERIC default 0,
-                    catalog_total_file_size       NUMERIC default 0,
-                    catalog_source_path_is_active NUMERIC,
-                    catalog_include_hidden        TEXT,
-                    catalog_file_type             TEXT,
-                    catalog_storage               TEXT,
-                    catalog_include_symblinks     TEXT,
-                    catalog_is_full_device        TEXT,
-                    catalog_date_loaded           TEXT,
-                    catalog_include_metadata      TEXT,
-                    catalog_app_version           TEXT,
-                    PRIMARY KEY(catalog_name))
-    )").arg(catalogNameType);
+                CREATE TABLE IF NOT EXISTS device_mapping(
+                    mapping_id                  %1,
+                    mapping_name                TEXT,
+                    mapping_type                TEXT,
+                    mapping_device_source_id    %2,
+                    mapping_device_target_id    %2,
+                    mapping_backup_last_date    TEXT,
+                    mapping_backup_last_size    %2)
+            )").arg(autoIncrementSyntax, largeNumeric);
 }
 
-QString Database::getCreateFolderSQL(DatabaseType databaseType)
+//----------------------------------------------------------------------
+// Core database functions
+//----------------------------------------------------------------------
+Database::DatabaseType Database::getDatabaseType(const QString &connectionName)
 {
-    switch (databaseType) {
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    QString driver = db.driverName();
+
+    if (driver == "QSQLITE") return DatabaseType::SQLite;
+    if (driver == "QMYSQL" || driver == "QMYSQL3") return DatabaseType::MySQL;
+    if (driver == "QPSQL") return DatabaseType::PostgreSQL;
+
+    return DatabaseType::SQLite; // default fallback
+}
+//----------------------------------------------------------------------
+Database::HostnameValidationType Database::validateHostname(const QString &hostname)
+{
+    QString trimmedHost = hostname.trimmed().toLower();
+
+    // Empty hostname is invalid
+    if (trimmedHost.isEmpty()) {
+        return PublicOrInvalid;
+    }
+
+    // Remove any protocol prefix (http://, https://, etc.) - these shouldn't be in hostname
+    if (trimmedHost.contains("://")) {
+        return PublicOrInvalid;
+    }
+
+    // Check for localhost variations
+    if (trimmedHost == "localhost" || trimmedHost == "::1") {
+        return Localhost;
+    }
+
+    // Check for IPv4 loopback range (127.0.0.0/8)
+    QHostAddress addr(trimmedHost);
+    if (!addr.isNull() && addr.protocol() == QAbstractSocket::IPv4Protocol) {
+        quint32 ipv4 = addr.toIPv4Address();
+
+        // 127.0.0.0/8 - loopback
+        if ((ipv4 & 0xFF000000) == 0x7F000000) {
+            return Localhost;
+        }
+
+        // 10.0.0.0/8 - private
+        if ((ipv4 & 0xFF000000) == 0x0A000000) {
+            return PrivateNetwork;
+        }
+
+        // 172.16.0.0/12 - private
+        if ((ipv4 & 0xFFF00000) == 0xAC100000) {
+            return PrivateNetwork;
+        }
+
+        // 192.168.0.0/16 - private
+        if ((ipv4 & 0xFFFF0000) == 0xC0A80000) {
+            return PrivateNetwork;
+        }
+
+        // Any other IP is considered public/invalid
+        return PublicOrInvalid;
+    }
+
+    // Check for IPv6 addresses
+    if (!addr.isNull() && addr.protocol() == QAbstractSocket::IPv6Protocol) {
+        // ::1 already handled above
+        // For simplicity, treat other IPv6 as invalid for now
+        // (could be enhanced to check for link-local fe80::/10, ULA fc00::/7, etc.)
+        return PublicOrInvalid;
+    }
+
+    // If it's not a recognized IP format, it might be a domain name
+    // Domain names that could resolve to public IPs are not allowed
+    return PublicOrInvalid;
+}
+
+QSqlError Database::initialize(const QString &connectionName, Collection *collection,
+                               const QString &overrideDatabaseMode,
+                               const QString &overrideDatabaseFilePath)
+{
+    // Load database settings from collection settings file
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+
+    // Use override values if provided, otherwise load from settings
+    if (!overrideDatabaseMode.isEmpty()) {
+        collection->databaseMode = overrideDatabaseMode;
+    } else {
+        collection->databaseMode = settings.value("Settings/databaseMode").toString();
+    }
+
+    if (!overrideDatabaseFilePath.isEmpty()) {
+        collection->databaseFilePath = overrideDatabaseFilePath;
+    } else {
+        collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+    }
+
+    // Always load other settings from file (not overridden by command line)
+    collection->databaseHostName = settings.value("Settings/databaseHostName").toString();
+    collection->databaseName = settings.value("Settings/databaseName").toString();
+    collection->databasePort = settings.value("Settings/databasePort").toInt();
+    collection->databaseUserName = settings.value("Settings/databaseUserName").toString();
+    collection->databasePassword = settings.value("Settings/databasePassword").toString();
+
+    // Set defaults if values are not provided
+    if (collection->databaseMode.isEmpty())
+        collection->databaseMode = "Memory";
+
+    // Set database host defaults for Hosted mode
+    if (collection->databaseHostName.isEmpty()) {
+        collection->databaseHostName = "localhost";
+    }
+    if (collection->databasePort == 0) {
+        collection->databasePort = 3306;  // Default MySQL/MariaDB port
+    }
+
+    // Prepare database based on selected mode
+    QSqlDatabase db;
+
+    if (collection->databaseMode == "Memory") {
+        db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
+        db.setDatabaseName(":memory:");
+    }
+    else if (collection->databaseMode == "File") {
+        QFile databaseFile(collection->databaseFilePath);
+        if (!databaseFile.exists()) {
+            return QSqlError("Database file not found", collection->databaseFilePath, QSqlError::ConnectionError);
+        }
+        else {
+            db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
+            db.setDatabaseName(collection->databaseFilePath);
+        }
+    }
+    else if (collection->databaseMode == "Hosted") {
+        QString driver;
+        if (collection->databaseType == "PostgreSQL") {
+            driver = "QPSQL";
+        } else {
+            driver = "QMYSQL";  // Default to MySQL
+        }
+
+        db = QSqlDatabase::addDatabase(driver, connectionName);
+        db.setHostName(collection->databaseHostName);
+        db.setDatabaseName(collection->databaseName);
+        db.setPort(collection->databasePort);
+        db.setUserName(collection->databaseUserName);
+        db.setPassword(collection->databasePassword);
+    }
+
+    // Open the database connection
+    if (!db.open()) {
+        return db.lastError();
+    }
+
+    // SQLite pragmas for corruption prevention
+    if (getDatabaseType(connectionName) == DatabaseType::SQLite) {
+        QSqlQuery pragmaQuery(db);
+
+        // Use WAL mode for better corruption resistance and concurrent access
+        if (!pragmaQuery.exec("PRAGMA journal_mode = WAL")) {
+            qDebug() << "Failed to set WAL journal mode:" << pragmaQuery.lastError().text();
+        }
+
+        // Set synchronous mode for balance between safety and performance
+        if (!pragmaQuery.exec("PRAGMA synchronous = NORMAL")) {
+            qDebug() << "Failed to set synchronous pragma:" << pragmaQuery.lastError().text();
+        }
+
+        // Set page size for better performance
+        if (!pragmaQuery.exec("PRAGMA page_size = 4096")) {
+            qDebug() << "Failed to set page size:" << pragmaQuery.lastError().text();
+        }
+
+        // Set cache size
+        if (!pragmaQuery.exec("PRAGMA cache_size = 10000")) {
+            qDebug() << "Failed to set cache size:" << pragmaQuery.lastError().text();
+        }
+
+        // Enable foreign keys
+        if (!pragmaQuery.exec("PRAGMA foreign_keys = ON")) {
+            qDebug() << "Failed to enable foreign keys:" << pragmaQuery.lastError().text();
+        }
+
+        // Set temp store to memory for better performance
+        if (!pragmaQuery.exec("PRAGMA temp_store = MEMORY")) {
+            qDebug() << "Failed to set temp store:" << pragmaQuery.lastError().text();
+        }
+
+        //qDebug() << "SQLite pragmas set successfully for corruption prevention";
+    }
+
+    // Create all necessary tables
+    QSqlError tableError = createAllTables(connectionName);
+    if (tableError.type() != QSqlError::NoError) {
+        return tableError;
+    }
+
+    // After creating tables, create indexes
+    DatabaseType dbType = getDatabaseType(connectionName);
+    QString indexSQL = getSQLCreateIndexes(dbType);
+
+    // For SQLite, can execute all at once
+    // For MySQL, need to execute one by one and ignore "already exists" errors
+    QStringList indexStatements = indexSQL.split(';', Qt::SkipEmptyParts);
+    for (const QString& stmt : indexStatements) {
+        QString trimmed = stmt.trimmed();
+        if (!trimmed.isEmpty()) {
+            QSqlQuery query(QSqlDatabase::database(connectionName));
+            if (!query.exec(trimmed)) {
+                // Ignore "index already exists" errors
+                QString error = query.lastError().text().toLower();
+                if (!error.contains("already exists") && !error.contains("duplicate")) {
+                    qDebug() << "Index creation warning:" << query.lastError().text();
+                }
+            }
+        }
+    }
+
+    return QSqlError(); // Success
+}
+
+QSqlError Database::createAllTables(const QString &connectionName)
+{
+    QSqlError error;
+
+    // Detect database type
+    DatabaseType databaseType = getDatabaseType(connectionName);
+
+    // Create all tables in order
+    error = executeSql(connectionName, getSQLCreateTableDevice(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableCatalog(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableStorage(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableFile(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableFileTemp(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableFolder(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableStatisticsDevice(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableSearch(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableTag(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableParameter(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, getSQLCreateTableBackupMapping(databaseType));
+    if (error.type() != QSqlError::NoError) return error;
+
+    //Migrate
+/*
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_CATALOG);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_STORAGE);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE_CATALOG);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE_CATALOG);
+    if (error.type() != QSqlError::NoError) return error;
+*/
+    return QSqlError(); // Success
+}
+
+QString Database::getSQLCreateIndexes(DatabaseType dbType)
+{
+    // MySQL requires prefix length for TEXT columns in indexes
+    // SQLite doesn't support prefix lengths but handles TEXT indexes fine
+
+    switch (dbType) {
     case DatabaseType::SQLite:
         return R"(
-                CREATE TABLE IF NOT EXISTS folder(
-                    folder_catalog_id  NUMERIC,
-                    folder_path        TEXT,
-                    PRIMARY KEY(folder_catalog_id, folder_path))
-            )";
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_path ON file(file_catalog_id, file_full_path);
+            CREATE INDEX IF NOT EXISTS idx_filetemp_catalog_path ON filetemp(file_catalog_id, file_full_path);
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_folder ON file(file_catalog_id, file_folder_path);
+        )";
 
     case DatabaseType::MySQL:
-    case DatabaseType::PostgreSQL:
-        // Use TEXT without PRIMARY KEY, add UNIQUE constraint instead
-        // This avoids VARCHAR length limitations while preventing duplicates
+        // MySQL needs prefix length for TEXT columns (max 767 bytes for InnoDB)
         return R"(
-                CREATE TABLE IF NOT EXISTS folder(
-                    folder_catalog_id  NUMERIC,
-                    folder_path        TEXT,
-                    UNIQUE KEY unique_folder (folder_catalog_id, folder_path(700)))
-            )";
+            CREATE INDEX idx_file_catalog_path ON file(file_catalog_id, file_full_path(500));
+            CREATE INDEX idx_filetemp_catalog_path ON filetemp(file_catalog_id, file_full_path(500));
+            CREATE INDEX idx_file_catalog_folder ON file(file_catalog_id, file_folder_path(500));
+        )";
+
+    case DatabaseType::PostgreSQL:
+        // PostgreSQL uses functional indexes with LEFT() for prefix indexing
+        return R"(
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_path ON file(file_catalog_id, LEFT(file_full_path, 500));
+            CREATE INDEX IF NOT EXISTS idx_filetemp_catalog_path ON filetemp(file_catalog_id, LEFT(file_full_path, 500));
+            CREATE INDEX IF NOT EXISTS idx_file_catalog_folder ON file(file_catalog_id, LEFT(file_folder_path, 500));
+        )";
     }
-    return ""; // Should never reach here
+    return "";
 }
 
+//----------------------------------------------------------------------
+// Utility methods
+//----------------------------------------------------------------------
 QString Database::getBeginTransactionSQL(DatabaseType databaseType)
 {
     switch (databaseType) {
@@ -255,9 +813,8 @@ QString Database::getFormattedTimeDifference(DatabaseType databaseType,
     }
 
     case DatabaseType::MySQL:
-    case DatabaseType::PostgreSQL:
     {
-        // MySQL/PostgreSQL version using TIMESTAMPDIFF and MOD() function
+        // MySQL version using TIMESTAMPDIFF and MOD() function
         QString sql = QString(R"(
                 CONCAT(
                     LPAD(FLOOR(ABS(TIMESTAMPDIFF(SECOND, %1, %2)) / 31536000), 2, '0'), ':',
@@ -265,7 +822,23 @@ QString Database::getFormattedTimeDifference(DatabaseType databaseType,
                     LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 2592000) / 86400), 2, '0'), ' ',
                     LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 86400) / 3600), 2, '0'), ':',
                     LPAD(FLOOR(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 3600) / 60), 2, '0'), ':',
-                    LPAD(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 60), 2, '0')
+                    LPAD(CAST(MOD(ABS(TIMESTAMPDIFF(SECOND, %1, %2)), 60) AS CHAR), 2, '0')
+                )
+            )").arg(d1DateField, d2DateField);
+        return sql;
+    }
+
+    case DatabaseType::PostgreSQL:
+    {
+        // PostgreSQL version using EXTRACT(EPOCH FROM ...) instead of TIMESTAMPDIFF
+        QString sql = QString(R"(
+                CONCAT(
+                    LPAD(FLOOR(ABS(EXTRACT(EPOCH FROM (%2 - %1))) / 31536000)::TEXT, 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 31536000) / 2592000)::TEXT, 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 2592000) / 86400)::TEXT, 2, '0'), ' ',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 86400) / 3600)::TEXT, 2, '0'), ':',
+                    LPAD(FLOOR(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 3600) / 60)::TEXT, 2, '0'), ':',
+                    LPAD(MOD(ABS(EXTRACT(EPOCH FROM (%2 - %1)))::BIGINT, 60)::TEXT, 2, '0')
                 )
             )").arg(d1DateField, d2DateField);
         return sql;
@@ -274,260 +847,27 @@ QString Database::getFormattedTimeDifference(DatabaseType databaseType,
     return "''"; // Empty string fallback
 }
 
-QString Database::getCreateSearchSQL(DatabaseType databaseType)
-{
-    // For MySQL/PostgreSQL, file size unit fields must be TEXT (not NUMERIC)
-    // because they store values like "Bytes", "KB", "MB", "GB", "TB"
-    QString sizeUnitType;
-
-    switch (databaseType) {
-    case DatabaseType::SQLite:
-        sizeUnitType = "NUMERIC";  // SQLite is flexible, accepts both
-        break;
-    case DatabaseType::MySQL:
-    case DatabaseType::PostgreSQL:
-        sizeUnitType = "TEXT";     // MySQL/PostgreSQL need TEXT for string values
-        break;
-    }
-
-    return QString(R"(
-                CREATE TABLE IF NOT EXISTS search(
-                    date_time                 TEXT,
-                    text_checked              NUMERIC,
-                    text_phrase               TEXT,
-                    text_criteria             TEXT,
-                    text_search_in            TEXT,
-                    file_criteria_checked     NUMERIC,
-                    file_type_checked         NUMERIC,
-                    file_type                 TEXT,
-                    file_size_checked         NUMERIC,
-                    file_size_min             NUMERIC,
-                    file_size_min_unit        %1,
-                    file_size_max             NUMERIC,
-                    file_size_max_unit        %1,
-                    date_modified_checked     NUMERIC,
-                    date_modified_min         TEXT,
-                    date_modified_max         TEXT,
-                    duplicates_checked        NUMERIC,
-                    duplicates_name           NUMERIC,
-                    duplicates_size           NUMERIC,
-                    duplicates_date_modified  NUMERIC,
-                    differences_checked       NUMERIC,
-                    differences_name          NUMERIC,
-                    differences_size          NUMERIC,
-                    differences_date_modified NUMERIC,
-                    differences_catalogs      TEXT,
-                    folder_criteria_checked   NUMERIC,
-                    show_folders              NUMERIC,
-                    tag_checked               NUMERIC,
-                    tag                       TEXT,
-                    search_location           TEXT,
-                    search_storage            TEXT,
-                    search_catalog            TEXT,
-                    search_catalog_checked    NUMERIC,
-                    search_directory_checked  NUMERIC,
-                    selected_directory        TEXT,
-                    selected_device_ID_list   TEXT,
-                    text_exclude              TEXT,
-                    case_sensitive            NUMERIC,
-                    metadata_checked          NUMERIC,
-                    metadata_text_checked     NUMERIC,
-                    metadata_text_search      TEXT,
-                    metadata_size_checked     NUMERIC,
-                    metadata_size_min_height  NUMERIC,
-                    metadata_size_max_height  NUMERIC,
-                    metadata_size_min_width   NUMERIC,
-                    metadata_size_max_width   NUMERIC,
-                    metadata_duration_checked NUMERIC,
-                    metadata_duration_min     TEXT,
-                    metadata_duration_max     TEXT)
-    )").arg(sizeUnitType);
-}
-
-QSqlError Database::initialize(const QString &connectionName, Collection *collection,
-                               const QString &overrideDatabaseMode,
-                               const QString &overrideDatabaseFilePath)
-{
-    // Load database settings from collection settings file
-    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-
-    // Use override values if provided, otherwise load from settings
-    if (!overrideDatabaseMode.isEmpty()) {
-        collection->databaseMode = overrideDatabaseMode;
-    } else {
-        collection->databaseMode = settings.value("Settings/databaseMode").toString();
-    }
-
-    if (!overrideDatabaseFilePath.isEmpty()) {
-        collection->databaseFilePath = overrideDatabaseFilePath;
-    } else {
-        collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
-    }
-
-    // Always load other settings from file (not overridden by command line)
-    collection->databaseHostName = settings.value("Settings/databaseHostName").toString();
-    collection->databaseName = settings.value("Settings/databaseName").toString();
-    collection->databasePort = settings.value("Settings/databasePort").toInt();
-    collection->databaseUserName = settings.value("Settings/databaseUserName").toString();
-    collection->databasePassword = settings.value("Settings/databasePassword").toString();
-
-    // Set defaults if values are not provided
-    if (collection->databaseMode.isEmpty())
-        collection->databaseMode = "Memory";
-
-    // Prepare database based on selected mode
-    QSqlDatabase db;
-
-    if (collection->databaseMode == "Memory") {
-        db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
-        db.setDatabaseName(":memory:");
-    }
-    else if (collection->databaseMode == "File") {
-        QFile databaseFile(collection->databaseFilePath);
-        if (!databaseFile.exists()) {
-            return QSqlError("Database file not found", collection->databaseFilePath, QSqlError::ConnectionError);
-        }
-        else {
-            db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
-            db.setDatabaseName(collection->databaseFilePath);
-        }
-    }
-    else if (collection->databaseMode == "Hosted") {
-        QString driver;
-        if (collection->databaseType == "PostgreSQL") {
-            driver = "QPSQL";
-        } else {
-            driver = "QMYSQL";  // Default to MySQL
-        }
-
-        db = QSqlDatabase::addDatabase(driver, connectionName);
-        db.setHostName(collection->databaseHostName);
-        db.setDatabaseName(collection->databaseName);
-        db.setPort(collection->databasePort);
-        db.setUserName(collection->databaseUserName);
-        db.setPassword(collection->databasePassword);
-    }
-
-    // Open the database connection
-    if (!db.open()) {
-        return db.lastError();
-    }
-
-    // SQLite pragmas for corruption prevention
-    if (getDatabaseType(connectionName) == DatabaseType::SQLite) {
-        QSqlQuery pragmaQuery(db);
-
-        // Use WAL mode for better corruption resistance and concurrent access
-        if (!pragmaQuery.exec("PRAGMA journal_mode = WAL")) {
-            qDebug() << "Failed to set WAL journal mode:" << pragmaQuery.lastError().text();
-        }
-
-        // Set synchronous mode for balance between safety and performance
-        if (!pragmaQuery.exec("PRAGMA synchronous = NORMAL")) {
-            qDebug() << "Failed to set synchronous pragma:" << pragmaQuery.lastError().text();
-        }
-
-        // Set page size for better performance
-        if (!pragmaQuery.exec("PRAGMA page_size = 4096")) {
-            qDebug() << "Failed to set page size:" << pragmaQuery.lastError().text();
-        }
-
-        // Set cache size
-        if (!pragmaQuery.exec("PRAGMA cache_size = 10000")) {
-            qDebug() << "Failed to set cache size:" << pragmaQuery.lastError().text();
-        }
-
-        // Enable foreign keys
-        if (!pragmaQuery.exec("PRAGMA foreign_keys = ON")) {
-            qDebug() << "Failed to enable foreign keys:" << pragmaQuery.lastError().text();
-        }
-
-        // Set temp store to memory for better performance
-        if (!pragmaQuery.exec("PRAGMA temp_store = MEMORY")) {
-            qDebug() << "Failed to set temp store:" << pragmaQuery.lastError().text();
-        }
-
-        //qDebug() << "SQLite pragmas set successfully for corruption prevention";
-    }
-
-    // Create all necessary tables
-    QSqlError tableError = createAllTables(connectionName);
-    if (tableError.type() != QSqlError::NoError) {
-        return tableError;
-    }
-
-    return QSqlError(); // Success
-}
-
-QSqlError Database::createAllTables(const QString &connectionName)
-{
-    QSqlError error;
-
-    // Detect database type
-    DatabaseType databaseType = getDatabaseType(connectionName);
-
-    // Create all tables in order
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, getCreateCatalogSQL(databaseType));
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STORAGE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILETEMP);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, getCreateFolderSQL(databaseType));
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, getCreateSearchSQL(databaseType));
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, getCreateTagSQL(databaseType));
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_PARAMETER);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, getCreateBackupMappingSQL(databaseType));
-    if (error.type() != QSqlError::NoError) return error;
-
-    //Migrate
-/*
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_CATALOG);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_STORAGE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE_CATALOG);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE_CATALOG);
-    if (error.type() != QSqlError::NoError) return error;
-*/
-    return QSqlError(); // Success
-}
-
-//----------------------------------------------------------------------
-// Utility methods
-//----------------------------------------------------------------------
 
 bool Database::tableExists(const QString &connectionName, const QString &tableName)
 {
     QSqlQuery query(QSqlDatabase::database(connectionName));
-    query.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?");
+
+    DatabaseType databaseType = getDatabaseType(connectionName);
+    QString sql;
+
+    switch(databaseType) {
+        case DatabaseType::SQLite:
+            sql = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
+            break;
+        case DatabaseType::MySQL:
+            sql = "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=?";
+            break;
+        case DatabaseType::PostgreSQL:
+            sql = "SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename=?";
+            break;
+    }
+
+    query.prepare(sql);
     query.addBindValue(tableName);
 
     if (query.exec() && query.next()) {
@@ -615,11 +955,13 @@ QSqlError Database::dropTableIfExists(const QString &connectionName, const QStri
     if (tableExists(connectionName, tableName)) {
         qDebug() << "Dropping table:" << tableName;
 
-        // First, try to ensure no locks
+        // First, try to ensure no locks (SQLite-specific)
         QSqlDatabase db = QSqlDatabase::database(connectionName);
-        QSqlQuery unlockQuery(db);
-        unlockQuery.exec("PRAGMA wal_checkpoint(RESTART)");
-        unlockQuery.finish();
+        if (getDatabaseType(connectionName) == DatabaseType::SQLite) {
+            QSqlQuery unlockQuery(db);
+            unlockQuery.exec("PRAGMA wal_checkpoint(RESTART)");
+            unlockQuery.finish();
+        }
 
         // Try the drop
         QSqlError dropError = executeSql(connectionName, QString("DROP TABLE IF EXISTS %1").arg(tableName));
@@ -800,6 +1142,145 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
         qDebug() << "=== Database Migration 2.8 completed ===";
 
     //reset cursor
+    QApplication::restoreOverrideCursor();
+
+    return QSqlError(); // Success
+}
+
+QSqlError Database::runMigration_2_9(const QString &connectionName)
+{
+    // Change cursor to busy
+    QApplication::setOverrideCursor(Qt::BusyCursor);
+
+    qDebug() << "=== Database Migration 2.9: Adding checksum support ===";
+
+
+    // Step 1: Add checksum columns to file table
+    qDebug() << "Step 1: Adding checksum columns to file table";
+
+    const QList<QPair<QString, QString>> newFileColumns = {
+        {"checksum_sha256", "TEXT"},
+        {"checksum_extraction_date", "TEXT"}
+    };
+
+    // Get existing file columns
+    QStringList existingFileColumns = getTableColumns(connectionName, "file");
+
+    // Add missing checksum columns to file table
+    for (const auto& [columnName, columnType] : newFileColumns) {
+        if (!existingFileColumns.contains(columnName)) {
+            qDebug() << "Adding column to file:" << columnName;
+            QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2").arg(columnName, columnType);
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
+                QApplication::restoreOverrideCursor();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << columnName << "to file table";
+        }
+    }
+
+
+    // Step 2: Add checksum columns to filetemp table
+    qDebug() << "Step 2: Adding checksum columns to filetemp table";
+
+    // Get existing filetemp columns
+    QStringList existingFiletempColumns = getTableColumns(connectionName, "filetemp");
+
+    // Add missing checksum columns to filetemp (same columns as file table)
+    for (const auto& [columnName, columnType] : newFileColumns) {
+        if (!existingFiletempColumns.contains(columnName)) {
+            qDebug() << "Adding column to filetemp:" << columnName;
+            QString alterSQL = QString("ALTER TABLE filetemp ADD COLUMN %1 %2").arg(columnName, columnType);
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << columnName << "to filetemp:" << addColumnError.text();
+                QApplication::restoreOverrideCursor();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << columnName << "to filetemp table";
+        }
+    }
+
+    qDebug() << "File and filetemp tables updated with checksum support";
+
+
+    // Step 3: Add checksum column to catalog table
+    qDebug() << "Step 3: Adding catalog_include_checksum to catalog table";
+
+    QStringList existingCatalogColumns = getTableColumns(connectionName, "catalog");
+
+    if (!existingCatalogColumns.contains("catalog_include_checksum")) {
+        QString alterSQL = "ALTER TABLE catalog ADD COLUMN catalog_include_checksum TEXT";
+        if (auto addColumnError = executeSql(connectionName, alterSQL);
+            addColumnError.type() != QSqlError::NoError)
+        {
+            qDebug() << "Error adding catalog_include_checksum column:" << addColumnError.text();
+            QApplication::restoreOverrideCursor();
+            return addColumnError;
+        }
+        qDebug() << "Added catalog_include_checksum column to catalog table";
+    }
+
+
+    // Step 4: Normalize catalog_include_checksum (set default to 'None' for existing catalogs)
+    qDebug() << "Step 4: Normalizing catalog_include_checksum values";
+
+    QSqlQuery updateCatalogChecksumQuery(QSqlDatabase::database(connectionName));
+    updateCatalogChecksumQuery.exec(R"(
+        UPDATE catalog
+        SET catalog_include_checksum = 'None'
+        WHERE catalog_include_checksum IS NULL
+           OR catalog_include_checksum = ''
+    )");
+
+    int updatedCatalogs = updateCatalogChecksumQuery.numRowsAffected();
+    if (updatedCatalogs > 0) {
+        qDebug() << "Updated" << updatedCatalogs << "catalog(s) with NULL/empty checksum field to 'None'";
+    } else {
+        qDebug() << "No catalogs needed checksum field normalization";
+    }
+
+
+    // Step 5: Add checksum & new duplicate search columns to search table
+    qDebug() << "Step 5: Adding checksum & new duplicate search columns to search table";
+
+    QStringList existingSearchColumns = getTableColumns(connectionName, "search");
+
+    const QList<QPair<QString, QString>> newSearchColumns = {
+        {"duplicates_checksum", "NUMERIC"},
+        {"duplicates_checksum_equal", "NUMERIC"},
+        {"differences_checksum", "NUMERIC"},
+        {"differences_checksum_equal", "NUMERIC"},
+        {"duplicates_compare_checked", "NUMERIC"},
+        {"duplicates_device1_ID", "NUMERIC"},
+        {"duplicates_device2_ID", "NUMERIC"}
+    };
+
+    for (const auto& [columnName, columnType] : newSearchColumns) {
+        if (!existingSearchColumns.contains(columnName)) {
+            qDebug() << "Adding column to search:" << columnName;
+            QString alterSQL = QString("ALTER TABLE search ADD COLUMN %1 %2 DEFAULT NULL").arg(columnName, columnType);
+            if (auto addColumnError = executeSql(connectionName, alterSQL);
+                addColumnError.type() != QSqlError::NoError)
+            {
+                qDebug() << "Error adding column" << columnName << "to search:" << addColumnError.text();
+                QApplication::restoreOverrideCursor();
+                return addColumnError;
+            }
+            qDebug() << "Added column" << columnName << "to search table";
+        }
+    }
+
+    qDebug() << "Search table updated with checksum search support";
+    qDebug() << "Search table updated with duplicates compare devices support";
+
+    qDebug() << "=== Database Migration 2.9 completed ===";
+
+    // Restore cursor
     QApplication::restoreOverrideCursor();
 
     return QSqlError(); // Success

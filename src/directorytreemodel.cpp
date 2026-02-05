@@ -30,6 +30,7 @@
 */
 #include "directorytreemodel.h"
 #include "directorytreeitem.h"
+#include "core/database.h"
 
 DirectoryTreeModel::DirectoryTreeModel(const QStringList &headers, QObject *parent)
     : QAbstractItemModel(parent)
@@ -219,12 +220,25 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
     QSqlQuery getDirectoriesQuery(QSqlDatabase::database(m_connectionName));
 
         //shorten the paths as they all start with the catalog path
-        QString getDirectoriesSQL = QLatin1String(R"(
+        // Check database type for SQL syntax differences
+        Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+        QString getDirectoriesSQL;
+        if (dbType == Database::DatabaseType::SQLite) {
+            getDirectoriesSQL = QLatin1String(R"(
                                         SELECT DISTINCT (REPLACE(file_path, :selectedCatalogPath||'/', ''))
                                         FROM filesall
                                         WHERE   file_catalog =:file_catalog
                                         ORDER BY file_path ASC
                                     )");
+        } else {
+            // MySQL/MariaDB version using CONCAT()
+            getDirectoriesSQL = QLatin1String(R"(
+                                        SELECT DISTINCT (REPLACE(file_path, CONCAT(:selectedCatalogPath, '/'), ''))
+                                        FROM filesall
+                                        WHERE   file_catalog =:file_catalog
+                                        ORDER BY file_path ASC
+                                    )");
+        }
         getDirectoriesQuery.prepare(getDirectoriesSQL);
         getDirectoriesQuery.bindValue(":file_catalog",modelCatalogName);
         getDirectoriesQuery.bindValue(":selectedCatalogPath",modelCatalogPath);

@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+89"/>
+        <location filename="../core/catalog.cpp" line="+92"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1725"/>
+        <location filename="../core/collection.cpp" line="+1741"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Acest folder conține fișiere de colecție în modul Memorie, dar sunteți în prezent în modul Fișier.&lt;br/&gt;Comutați la modul Memorie sau selectați un alt folder.</translation>
     </message>
@@ -68,23 +68,294 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+107"/>
-        <location line="+64"/>
-        <location line="+79"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2369"/>
+        <source>Include Checksum</source>
+        <translation>Includeți suma de control</translation>
+    </message>
+    <message>
+        <location line="+541"/>
+        <location line="+46"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+301"/>
+        <source>Verify Checksums</source>
+        <translation>Verificați sumele de control</translation>
+    </message>
+    <message>
+        <location line="-45"/>
+        <source>Loading</source>
+        <translation>Se încarcă</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>files</source>
+        <translation>fișiere</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>No checksums to verify.</source>
+        <translation>Nu există sume de control de verificat.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Verify checksums for %1 files?</source>
+        <translation>Verificați sumele de control pentru %1 fișiere?</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Verifying</source>
+        <translation>Se verifică</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+5"/>
+        <source>Verified:</source>
+        <translation>Verificat:</translation>
+    </message>
+    <message>
+        <location line="-4"/>
+        <source>All checksums match.</source>
+        <translation>Toate sumele de control se potrivesc.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Mismatches:</source>
+        <translation>Nepotriviri:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing:</source>
+        <translation>Lipsă:</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mismatched files:</source>
+        <translation>Fișiere nepotrivite:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing files:</source>
+        <translation>Fișiere lipsă:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+9382"/>
+        <source>Include File Type</source>
+        <translation>Includeți tipul de fișier</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="+262"/>
+        <location line="+18"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+808"/>
+        <source>Copy Checksum</source>
+        <translation>Copiați suma de control</translation>
+    </message>
+    <message>
+        <location line="-8"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-8"/>
+        <source>Calculate Checksum</source>
+        <translation>Calculați suma de control</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+13"/>
+        <source>Verify Checksum</source>
+        <translation>Verificați suma de control</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1335"/>
+        <source>Verifying checksum...</source>
+        <translation>Se verifică suma de control...</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+58"/>
+        <location line="+68"/>
+        <source>Checksum saved to database.</source>
+        <translation>Suma de control salvată în baza de date.</translation>
+    </message>
+    <message>
+        <location line="-124"/>
+        <source>Checksums match.</source>
+        <translation>Sumele de control se potrivesc.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+122"/>
+        <source>Copy to Clipboard</source>
+        <translation>Copiați în clipboard</translation>
+    </message>
+    <message>
+        <location line="-100"/>
+        <source>Checksums do not match.</source>
+        <translation>Sumele de control nu se potrivesc.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Expected:</source>
+        <translation>Așteptat:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Actual:</source>
+        <translation>Real:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Update Checksum</source>
+        <translation>Actualizați suma de control</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>File not found:</source>
+        <translation>Fișier negăsit:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Calculating checksum...</source>
+        <translation>Se calculează suma de control...</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Checksum calculation failed.</source>
+        <translation>Calculul sumei de control a eșuat.</translation>
+    </message>
+    <message>
+        <source>Invalid database hostname.</source>
+        <translation type="vanished">Nume de gazdă al bazei de date invalid.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+121"/>
+        <source>Invalid hostname.</source>
+        <translation>Nume de gazdă invalid.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only local or private network allowed.</source>
+        <translation>Se permite doar rețea locală sau privată.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Valid:</source>
+        <translation>Valid:</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Private network connection</source>
+        <translation>Conexiune la rețea privată</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Your data will be sent to this network database.</source>
+        <translation>Datele dumneavoastră vor fi trimise către această bază de date de rețea.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Continue?</source>
+        <translation>Continuați?</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
+        <location line="+167"/>
+        <source>Metadata Extracted</source>
+        <translation>Metadate extrase</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Checksums Calculated</source>
+        <translation>Sume de control calculate</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+189"/>
+        <location filename="../mainwindow.ui" line="-5962"/>
+        <location line="+926"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1281"/>
+        <source>Checksum</source>
+        <translation>Sumă de control</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checksum Date</source>
+        <translation>Data sumei de control</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="-768"/>
+        <source>Within selected device</source>
+        <translation>În cadrul dispozitivului selectat</translation>
+    </message>
+    <message>
+        <location line="+110"/>
+        <source>Compare two devices</source>
+        <translation>Compară două dispozitive</translation>
+    </message>
+    <message>
+        <location line="+212"/>
+        <location line="+661"/>
+        <source>compared to</source>
+        <translation>comparativ cu</translation>
+    </message>
+    <message>
+        <location line="-264"/>
+        <source>and</source>
+        <translation>și</translation>
+    </message>
+    <message>
+        <location line="+3427"/>
+        <location line="+1738"/>
+        <source>Include files checksum</source>
+        <translation>Includeți suma de control a fișierelor</translation>
+    </message>
+    <message>
+        <location line="+587"/>
+        <source>Stop the cataloging (no data will be saved)</source>
+        <translation>Opriți catalogarea (nu vor fi salvate date)</translation>
+    </message>
+    <message>
+        <location line="+1114"/>
+        <source>Generate Profile</source>
+        <translation>Generați profil</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Only selected</source>
+        <translation>Doar selectate</translation>
+    </message>
+    <message>
+        <source>Copy file checksum</source>
+        <translation type="vanished">Copiați suma de control a fișierului</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
+        <location line="+30"/>
+        <source>No backup links found.</source>
+        <translation>Nu au fost găsite linkuri de backup.</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Backup profile created.</source>
+        <translation>Profil de backup creat.</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1549"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
+        <source>Saving</source>
+        <translation>Salvare</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+72"/>
+        <location line="+149"/>
         <source>Indexed</source>
         <translation>Indexat</translation>
     </message>
     <message>
-        <location filename="../core/searchjobstoppable.cpp" line="+435"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-135"/>
-        <location line="+126"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+529"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+443"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+349"/>
         <source>File Types Updated</source>
         <translation>Tipuri de fișiere actualizate</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-142"/>
-        <location line="+129"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+160"/>
         <source>Counted</source>
         <translation>Numărat</translation>
     </message>
@@ -98,10 +369,10 @@
         <location line="+28"/>
         <location line="+18"/>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1062"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+1080"/>
         <location line="+4"/>
         <location line="+30"/>
-        <location line="+57"/>
+        <location line="+54"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Evaluated</source>
@@ -109,7 +380,8 @@
     </message>
     <message>
         <location line="-13"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-82"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-105"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-54"/>
         <source>Completed</source>
         <translation>Finalizat</translation>
     </message>
@@ -119,32 +391,37 @@
         <translation>Spațiu utilizat</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-65"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-81"/>
         <source>Cancelled</source>
         <translation>Anulat</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+39"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-20"/>
+        <location line="+22"/>
         <source>Loaded</source>
         <translation>Încărcat</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="-104"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="+124"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2160"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-75"/>
-        <location line="+58"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+448"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-71"/>
+        <location line="+54"/>
         <source>In Progress</source>
         <translation>În curs</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+14"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-130"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+90"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-127"/>
         <source>Stopped</source>
         <translation>Oprit</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+695"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+406"/>
         <source>MIME Verification Complete</source>
         <translation>Verificare MIME Completă</translation>
     </message>
@@ -154,7 +431,7 @@
         <translation>Deschide Raportul</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-469"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-450"/>
         <source>Hidden</source>
         <translation>Ascuns</translation>
     </message>
@@ -164,14 +441,14 @@
         <translation>Metadate</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3949"/>
+        <location filename="../mainwindow.ui" line="-6363"/>
         <source>File metadata</source>
         <translation>Metadate fișier</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+197"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+275"/>
         <source>Height</source>
         <translation>Înălțime</translation>
     </message>
@@ -196,13 +473,13 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1872"/>
-        <location line="+1921"/>
+        <location line="+1870"/>
+        <location line="+1714"/>
         <source>Include files metadata</source>
         <translation>Include metadate fișiere</translation>
     </message>
     <message>
-        <location line="-1275"/>
+        <location line="-1056"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detectează tipurile MIME reale și identifică neconcordanțele (proces lung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -212,29 +489,37 @@
         <translation>Verifică tipurile MIME</translation>
     </message>
     <message>
-        <location line="+1200"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+464"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Other</source>
         <translation>Altele</translation>
     </message>
     <message>
-        <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+472"/>
+        <location filename="../devicetreeview.cpp" line="+109"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+15"/>
         <location line="+12"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="+35"/>
+        <location line="+8"/>
+        <location line="+15"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+638"/>
+        <location line="+1"/>
         <source>None</source>
         <translation>Niciunul</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-517"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-695"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1529"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Afișează metadate extinse (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+514"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+692"/>
         <source>MIME Type</source>
         <translation>Tip MIME</translation>
     </message>
@@ -275,7 +560,7 @@
         <translation>Titlu</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-365"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-362"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>Copiază JSON</translation>
@@ -291,7 +576,7 @@
         <translation>Închide</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+97"/>
         <source>File Property</source>
         <translation>Proprietate Fișier</translation>
     </message>
@@ -301,7 +586,7 @@
         <translation>Valoare</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+119"/>
         <source>Invalid Collection Folder</source>
         <translation>Dosar Colecție Invalid</translation>
     </message>
@@ -339,7 +624,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>Media Simplu</translation>
@@ -372,7 +657,7 @@
         <translation>Doriți să &lt;span style=&apos;color: red&apos;;&gt;ștergeți&lt;/span&gt; acest dispozitiv %1?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1257"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+800"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Cataloage actualizate:&lt;b&gt; %1 &lt;/b&gt;(%2 omise)</translation>
@@ -383,12 +668,12 @@
         <translation>Dispozitiv virtual actualizat: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-2511"/>
+        <location filename="../mainwindow.ui" line="-1292"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clic: Oprește imediat (oprire forțată)&lt;/p&gt;&lt;p&gt;Ctrl+Clic: Oprește după catalogul curent (oprire blândă)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-201"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-239"/>
         <source>The source directory does not exist.</source>
         <translation>Directorul sursă nu există.</translation>
     </message>
@@ -399,20 +684,20 @@
         <translation>Folderul sursă nu conține niciun fișier.&lt;br/&gt;Aceasta ar putea însemna că sursa este goală sau dispozitivul nu este montat în acest folder.&lt;br/&gt;Vrei să-l salvezi oricum (catalogul ar fi gol)?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-463"/>
-        <location line="+84"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+79"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-473"/>
+        <location line="+97"/>
         <location line="+64"/>
         <location line="+130"/>
-        <location line="+143"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+248"/>
+        <location line="+140"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+249"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>O operație pe dispozitiv rulează deja.</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1084"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-861"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1090"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1062"/>
         <source>Operation cancelled</source>
         <translation>Operația a fost anulată</translation>
     </message>
@@ -422,7 +707,9 @@
         <translation>Se oprește după finalizarea catalogului curent...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6181"/>
+        <location filename="../mainwindow.ui" line="-7042"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
+        <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -435,12 +722,12 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
         <location line="+40"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-484"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
-        <location line="+451"/>
+        <location line="+446"/>
         <location line="+4"/>
         <source>Search</source>
         <translation>Căutare</translation>
@@ -451,15 +738,15 @@
         <translation>Căutați fișiere sau dosare</translation>
     </message>
     <message>
-        <location line="+3062"/>
-        <location line="+2675"/>
-        <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
+        <location line="+3923"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+91"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location line="-7279"/>
+        <location line="-3609"/>
         <source>Paste the text from the clipboard</source>
         <translation>Lipiți textul din clipboard</translation>
     </message>
@@ -481,7 +768,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+53"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+361"/>
         <source>All Words</source>
         <translation>Toate cuvintele</translation>
     </message>
@@ -507,7 +794,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>File names or Folder paths</source>
         <translation>Numele fișierelor sau căile dosarelor</translation>
     </message>
@@ -515,23 +802,23 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+812"/>
+        <location line="+977"/>
         <source>File names only</source>
         <translation>Numai numele fișierelor</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>Folder path only</source>
         <translation>Numai calea dosarului</translation>
     </message>
     <message>
-        <location line="+3391"/>
+        <location line="+4252"/>
         <source>Choose to only show folders as results</source>
         <translation>Alegeți să afișați doar dosarele ca rezultate</translation>
     </message>
     <message>
-        <location line="-4078"/>
+        <location line="-4939"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>Resetați toate criteriile la valorile implicite și ștergeți rezultatele anterioare.</translation>
     </message>
@@ -541,13 +828,13 @@
         <translation>Resetare</translation>
     </message>
     <message>
-        <location line="+11170"/>
+        <location line="+11882"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="-2654"/>
-        <location line="+2633"/>
+        <location line="-2671"/>
+        <location line="+2650"/>
         <source>Password</source>
         <translation>Parolă</translation>
     </message>
@@ -563,87 +850,92 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+283"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-381"/>
+        <location filename="../mainwindow.cpp" line="+292"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-378"/>
         <source>File</source>
         <translation>Fișier</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-9694"/>
-        <location line="+802"/>
-        <location line="+232"/>
-        <location line="+764"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
+        <location filename="../mainwindow.ui" line="-10407"/>
+        <location line="+848"/>
+        <location line="+891"/>
+        <location line="+921"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-294"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-3829"/>
-        <location line="+5765"/>
+        <location filename="../mainwindow.ui" line="-4690"/>
+        <location line="+6626"/>
         <source>Device tree</source>
         <translation>Arborele dispozitivelor</translation>
     </message>
     <message>
-        <location line="-5285"/>
+        <location line="-6146"/>
         <source>Reload all collection&apos;s data</source>
         <translation>Reîncărcați toate datele colecției</translation>
     </message>
     <message>
-        <location line="+1580"/>
+        <location line="+1579"/>
         <location line="+451"/>
-        <location line="+1388"/>
+        <location line="+2250"/>
         <location line="+218"/>
         <location line="+283"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-2276"/>
+        <location line="-3138"/>
         <source>File size unit for minimum value</source>
         <translation>Unitatea de măsură pentru valoarea minimă</translation>
     </message>
     <message>
         <location line="+49"/>
         <location line="+426"/>
-        <location line="+1387"/>
+        <location line="+2249"/>
         <location line="+218"/>
         <location line="+290"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-2260"/>
+        <location line="-3122"/>
         <source>File size unit for maximum value</source>
         <translation>Unitatea de măsură pentru valoarea maximă</translation>
     </message>
     <message>
         <location line="+81"/>
-        <location line="+4214"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-696"/>
+        <location line="+5080"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1486"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location line="-4176"/>
+        <location line="-5042"/>
         <source>Select the type of files</source>
         <translation>Selectați tipul de fișiere</translation>
     </message>
     <message>
-        <location line="+3972"/>
-        <location line="+1790"/>
-        <location filename="../mainwindow_setup.cpp" line="+464"/>
+        <location filename="../mainwindow_setup.cpp" line="+476"/>
         <location line="+8"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-33"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+92"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+904"/>
+        <location line="+1"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+76"/>
+        <location line="+77"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -653,33 +945,32 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+753"/>
         <source>All</source>
         <translation>Toate</translation>
     </message>
     <message>
-        <location line="-1785"/>
-        <location line="+1814"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-130"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-1806"/>
-        <location line="+1835"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Image</source>
         <translation>Imagine</translation>
     </message>
     <message>
-        <location line="-1819"/>
-        <location line="+1877"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+2"/>
+        <location line="-28"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location line="-3385"/>
+        <location filename="../mainwindow.ui" line="+3355"/>
         <source>only list folders in results</source>
         <translation>listați doar dosarele în rezultate</translation>
     </message>
@@ -691,7 +982,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+417"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1370"/>
         <source>Export Results</source>
         <translation>Exportați rezultatele</translation>
     </message>
@@ -705,12 +996,12 @@
         <location line="+73"/>
         <location line="+34"/>
         <location filename="../mainwindow.ui" line="+129"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+636"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+631"/>
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+32"/>
-        <location line="+25"/>
+        <location line="+33"/>
+        <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Files found</source>
@@ -723,13 +1014,13 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+897"/>
+        <location line="+907"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2461"/>
+        <location line="+2295"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -738,7 +1029,7 @@
         <location line="+24"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+92"/>
+        <location line="+99"/>
         <location line="+38"/>
         <location line="+24"/>
         <location line="+38"/>
@@ -747,7 +1038,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3657"/>
+        <location line="-3498"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -755,45 +1046,47 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2678"/>
+        <location line="+2502"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Dimensiunea totală a fișierelor</translation>
     </message>
     <message>
-        <location line="-2640"/>
+        <location line="-2464"/>
         <source>Total Number of Files</source>
         <translation>Numărul total de fișiere</translation>
     </message>
     <message>
-        <location line="-1149"/>
+        <location line="-1159"/>
         <source>All active</source>
         <translation>Toate active</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1250"/>
         <source>Import</source>
         <translation>Importă</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-403"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-211"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-413"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-346"/>
+        <location line="+22"/>
+        <location line="+35"/>
         <location line="+18"/>
         <location line="+14"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-172"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
         <source>Explore</source>
         <translation>Explorează</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-127"/>
-        <location line="+65"/>
-        <location line="+59"/>
-        <location filename="../mainwindow.ui" line="-1773"/>
-        <location line="+932"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+741"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
+        <location line="+81"/>
+        <location line="+70"/>
+        <location filename="../mainwindow.ui" line="-1783"/>
+        <location line="+936"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-191"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+88"/>
+        <location line="+101"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
         <location line="+39"/>
@@ -802,70 +1095,70 @@
         <translation>Actualizare</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4682"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-106"/>
-        <location line="+68"/>
+        <location filename="../mainwindow.ui" line="+4529"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
+        <location line="+81"/>
         <location line="+63"/>
         <source>Edit</source>
         <translation>Editare</translation>
     </message>
     <message>
-        <location line="-5941"/>
+        <location line="-5792"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Șterge</translation>
     </message>
     <message>
-        <location line="+2103"/>
+        <location line="+2113"/>
         <source>Explore a catalog</source>
         <translation>Explorează un catalog</translation>
     </message>
     <message>
-        <location line="-7534"/>
-        <location line="+7913"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+178"/>
+        <location line="-8405"/>
+        <location line="+8784"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+256"/>
         <source>Catalog</source>
         <translation>Catalog</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1576"/>
+        <location filename="../mainwindow.ui" line="+1400"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-982"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
         <translation>Cale</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1899"/>
+        <location filename="../mainwindow.ui" line="-1723"/>
         <source>Directories</source>
         <translation>Directoare</translation>
     </message>
     <message>
-        <location line="-7824"/>
+        <location line="-8695"/>
         <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>Afișați/Ascundeți filtrele</translation>
     </message>
     <message>
         <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1220"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
     <message>
         <location line="+1252"/>
-        <location line="+4701"/>
-        <location line="+3141"/>
+        <location line="+5562"/>
+        <location line="+2975"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="-3604"/>
+        <location line="-3438"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Selectați...</translation>
@@ -878,8 +1171,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-693"/>
-        <location line="+699"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-719"/>
+        <location line="+725"/>
         <source>Move to Trash</source>
         <translation>Mutați la coșul de gunoi</translation>
     </message>
@@ -899,8 +1192,8 @@
         <translation>Modificarea va fi aplicată doar la salvare</translation>
     </message>
     <message>
-        <location line="+267"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+951"/>
+        <location line="+271"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+975"/>
         <source>Comment 1</source>
         <translation>Comentariu 1</translation>
     </message>
@@ -929,7 +1222,7 @@
         <translation>Model</translation>
     </message>
     <message>
-        <location line="+406"/>
+        <location line="+412"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
@@ -965,8 +1258,8 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+2046"/>
-        <location line="+620"/>
+        <location line="+1870"/>
+        <location line="+630"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
@@ -974,14 +1267,14 @@
         <translation>Numărul de fișiere</translation>
     </message>
     <message>
-        <location line="-2550"/>
+        <location line="-2384"/>
         <source>Click to open the file</source>
         <translation>Faceți clic pentru a deschide fișierul</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-126"/>
-        <location line="+65"/>
-        <location line="+59"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-153"/>
+        <location line="+81"/>
+        <location line="+70"/>
         <location filename="../mainwindow.ui" line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
@@ -1004,17 +1297,15 @@
         <translation>Selectați opțiunile de conținut</translation>
     </message>
     <message>
-        <location line="+85"/>
         <source>include File Type</source>
-        <translation>include tipul de fișier</translation>
+        <translation type="vanished">include tipul de fișier</translation>
     </message>
     <message>
-        <location line="+236"/>
         <source>Other options</source>
-        <translation>Alte opțiuni</translation>
+        <translation type="vanished">Alte opțiuni</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+258"/>
         <source>Directories to exclude from catalogs</source>
         <translation>Directoare de exclus din cataloage</translation>
     </message>
@@ -1044,8 +1335,8 @@
         <translation>Adăugați un nou dispozitiv de stocare</translation>
     </message>
     <message>
-        <location line="-2581"/>
-        <location line="+2584"/>
+        <location line="-2415"/>
+        <location line="+2418"/>
         <source>Add Storage</source>
         <translation>Adăugați stocare</translation>
     </message>
@@ -1071,12 +1362,11 @@
     </message>
     <message>
         <location line="+79"/>
-        <location line="+38"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Lansați catalogarea și salvați-o într-un fișier</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="+6"/>
         <source>Create Catalog</source>
         <translation>Creează catalog</translation>
     </message>
@@ -1091,7 +1381,7 @@
         <translation>Selectați calea sursă</translation>
     </message>
     <message>
-        <location line="-1833"/>
+        <location line="-1657"/>
         <source>Tree options</source>
         <translation>Opțiuni arbore</translation>
     </message>
@@ -1111,7 +1401,7 @@
         <translation>Inserați grup virtual</translation>
     </message>
     <message>
-        <location line="-1621"/>
+        <location line="-1631"/>
         <source>View</source>
         <translation>Vizualizare</translation>
     </message>
@@ -1121,12 +1411,12 @@
         <translation>Lista de stocare</translation>
     </message>
     <message>
-        <location line="+697"/>
+        <location line="+576"/>
         <source>Catalog fields</source>
         <translation>Câmpurile catalogului</translation>
     </message>
     <message>
-        <location line="+236"/>
+        <location line="+361"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Spațiu liber</translation>
@@ -1137,17 +1427,17 @@
         <translation>Imaginea dispozitivului</translation>
     </message>
     <message>
-        <location line="-658"/>
+        <location line="-662"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Înregistrați valorile tuturor dispozitivelor pentru statistici asupra întregii colecții.</translation>
     </message>
     <message>
-        <location line="+780"/>
+        <location line="+784"/>
         <source>Storage fields</source>
         <translation>Câmpurile de stocare</translation>
     </message>
     <message>
-        <location line="+5558"/>
+        <location line="+5405"/>
         <source>Icons</source>
         <translation>Pictograme</translation>
     </message>
@@ -1193,55 +1483,55 @@
         <translation>Gestionarea datelor</translation>
     </message>
     <message>
-        <location line="-11395"/>
-        <location line="+9153"/>
+        <location line="-12107"/>
+        <location line="+9848"/>
         <source>Select the path</source>
         <translation>Selectați calea</translation>
     </message>
     <message>
-        <location line="-9150"/>
-        <location line="+5965"/>
-        <location line="+3188"/>
+        <location line="-9845"/>
+        <location line="+6826"/>
+        <location line="+3022"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>Selectați</translation>
     </message>
     <message>
-        <location line="-10016"/>
-        <location line="+7393"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
-        <location line="+2496"/>
+        <location line="-10711"/>
+        <location line="+8264"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-944"/>
+        <location line="+2694"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Stocare</translation>
     </message>
     <message>
-        <location line="+4027"/>
+        <location line="+3868"/>
         <source>New</source>
         <translation>Nou</translation>
     </message>
     <message>
-        <location line="-5647"/>
+        <location line="-5498"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>Dispozitive</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+653"/>
+        <location line="+657"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>Spațiul total</translation>
     </message>
     <message>
-        <location line="-565"/>
+        <location line="-569"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3465"/>
+        <location line="+3299"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Reîncărcați</translation>
@@ -1272,24 +1562,24 @@
         <translation>Editați fișierul care stochează toate înregistrările</translation>
     </message>
     <message>
-        <location line="-2146"/>
+        <location line="-1970"/>
         <source>Add Virtual</source>
         <translation>Adăugați virtual</translation>
     </message>
     <message>
-        <location line="-1663"/>
+        <location line="-1673"/>
         <source>Edit List</source>
         <translation>Editați lista</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4188"/>
+        <location line="+4390"/>
         <source>Full Table</source>
         <translation>Tabelul complet</translation>
     </message>
     <message>
-        <location line="-3883"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
+        <location line="-4085"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
         <source>Device Name</source>
         <translation>Numele dispozitivului</translation>
     </message>
@@ -1306,7 +1596,7 @@
         <translation>ID-ul dispozitivului</translation>
     </message>
     <message>
-        <location line="+3321"/>
+        <location line="+3155"/>
         <source>Edit Statistics</source>
         <translation>Editați statisticile</translation>
     </message>
@@ -1368,7 +1658,7 @@
         <translation>Reîncărcați fișierul care stochează etichetele</translation>
     </message>
     <message>
-        <location line="+223"/>
+        <location line="+233"/>
         <source>Link name</source>
         <translation>Numele linkului</translation>
     </message>
@@ -1383,7 +1673,7 @@
         <translation>Linkurile catalogului</translation>
     </message>
     <message>
-        <location line="+357"/>
+        <location line="+364"/>
         <source>Linked</source>
         <translation>Legat</translation>
     </message>
@@ -1401,7 +1691,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-390"/>
+        <location filename="../mainwindow_setup.cpp" line="-402"/>
         <source>Settings</source>
         <translation>Setări</translation>
     </message>
@@ -1453,12 +1743,12 @@
         <translation>Modul de date „Fișier local SQLite&quot;</translation>
     </message>
     <message>
-        <location line="-4026"/>
+        <location line="-3867"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Aplicați opțiunile arborelui de dispozitive de selecție.</translation>
     </message>
     <message>
-        <location line="+1978"/>
+        <location line="+1802"/>
         <source>Type of source</source>
         <translation>Tipul de sursă</translation>
     </message>
@@ -1508,12 +1798,12 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reîncărcați linkurile și actualizați statisticile pentru dispozitivul selectat.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+98"/>
         <source>Create new link</source>
         <translation>Creați un link nou</translation>
     </message>
     <message>
-        <location line="+306"/>
+        <location line="+313"/>
         <source>Coverage</source>
         <translation>Acoperire</translation>
     </message>
@@ -1650,29 +1940,29 @@
         <translation>Deschide</translation>
     </message>
     <message>
-        <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-543"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
+        <location line="-1017"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-725"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-840"/>
         <source>Open file</source>
         <translation>Deschide fișierul</translation>
     </message>
     <message>
-        <location line="+1695"/>
+        <location line="+1712"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+83"/>
+        <location line="+120"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Deschide dosarul</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
-        <location line="+34"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+59"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-62"/>
+        <location line="+68"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+64"/>
         <source>Copy folder path</source>
         <translation>Copiați calea dosarului</translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="-64"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>Copiați calea absolută a fișierului</translation>
@@ -1692,30 +1982,31 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-8703"/>
-        <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1833"/>
-        <location line="+239"/>
-        <location line="+262"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+465"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-824"/>
+        <location filename="../mainwindow.ui" line="-9370"/>
+        <location line="+891"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2009"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+644"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-816"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
-        <location filename="../mainwindow.ui" line="-560"/>
-        <location line="+8438"/>
+        <location filename="../mainwindow.ui" line="-1265"/>
+        <location line="+9151"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1175"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1262"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>Dată</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-321"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-430"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1729,40 +2020,40 @@
         <translation>Selectați directorul pentru această colecție</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5752"/>
-        <location line="+2427"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-494"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow.ui" line="-5603"/>
+        <location line="+2437"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3525"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total Size</source>
         <translation>Dimensiunea totală</translation>
     </message>
     <message>
-        <location line="-1407"/>
-        <location line="+1590"/>
+        <location line="-1417"/>
+        <location line="+1600"/>
         <source>Source Path</source>
         <translation>Calea sursă</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1464"/>
+        <location filename="../mainwindow.ui" line="-1512"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+648"/>
+        <location line="+635"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Tipul fișierului</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3784"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
+        <location filename="../mainwindow.ui" line="+3666"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-60"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Dimensiunea fișierului</translation>
     </message>
     <message>
-        <location line="-3356"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-919"/>
+        <location line="-3196"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-898"/>
         <source>Label</source>
         <translation>Etichetă</translation>
     </message>
@@ -1773,18 +2064,18 @@
         <translation>Sistemul de fișiere</translation>
     </message>
     <message>
-        <location line="+3608"/>
+        <location line="+3455"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location line="-4403"/>
+        <location line="-4254"/>
         <source>Free</source>
         <translation>Liber</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+733"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>Numărul de serie</translation>
@@ -1796,7 +2087,7 @@
         <translation>Data de construire</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1359"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1383"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Catalogul este deja atribuit acestui dispozitiv virtual.</translation>
     </message>
@@ -1816,7 +2107,7 @@
         <translation>&lt;br/&gt;O captură de ecran a acestei colecții a fost înregistrată:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Cataloage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Numărul de fișiere: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensiunea totală a fișierului: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Stocare&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spațiul liber de stocare: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spațiul total de stocare: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+283"/>
+        <location line="+305"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Există deja un catalog cu acest nume:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1837,48 +2128,49 @@
     </message>
     <message>
         <location line="+495"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>Parent ID</source>
         <translation>ID-ul părintelui</translation>
     </message>
     <message>
-        <location line="-500"/>
+        <location line="-3531"/>
         <source>External ID</source>
         <translation>ID-ul extern</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Number of files</source>
         <translation>Numărul de fișiere</translation>
     </message>
     <message>
-        <location line="-498"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-492"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Free space</source>
         <translation>Spațiu liber</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total space</source>
         <translation>Spațiul total</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Date updated</source>
         <translation>Data actualizării</translation>
     </message>
     <message>
-        <location line="-499"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-493"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Group ID</source>
         <translation>ID-ul grupului</translation>
     </message>
@@ -1890,7 +2182,7 @@
         <translation>ID-ul catalogului</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+23"/>
         <source>Parent storage</source>
         <translation>Stocarea părinte</translation>
     </message>
@@ -1915,7 +2207,7 @@
         <translation>Calea fișierului</translation>
     </message>
     <message>
-        <location line="+637"/>
+        <location line="+623"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Salvați modificările la definiția catalogului?&lt;br/&gt;</translation>
     </message>
@@ -1935,17 +2227,17 @@
         <translation>valoarea nouă</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+10"/>
         <source>Include Hidden</source>
         <translation>Include ascunse</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+19"/>
         <source>Is Full Device</source>
         <translation>Este dispozitiv complet</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Catalogul trebuie actualizat pentru a reflecta aceste modificări)</translation>
     </message>
@@ -1962,17 +2254,18 @@
         <translation>Selectați fișierul csv care va fi importat</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+17"/>
+        <location line="+143"/>
         <source>No catalog found.</source>
         <translation>Nu s-a găsit niciun catalog.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-129"/>
         <source>A file was found, but could not be loaded</source>
         <translation>S-a găsit un fișier, dar nu a putut fi încărcat</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+504"/>
         <source>Catalog updated: </source>
         <translation>Catalog actualizat: </translation>
     </message>
@@ -2080,9 +2373,9 @@
         <translation>Dispozitivul selectat trebuie să fie un catalog. Încercați cu un ID de dispozitiv diferit</translation>
     </message>
     <message>
-        <location line="-1857"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-2033"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Used space</source>
         <translation>Spațiul utilizat</translation>
     </message>
@@ -2097,25 +2390,28 @@
         <translation>din</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5346"/>
-        <location line="+1830"/>
-        <location line="+67"/>
+        <location filename="../mainwindow.ui" line="-6211"/>
+        <location line="+1989"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>Definiți dacă textul de căutare trebuie folosit pentru a căuta doar în numele fișierelor, sau căile dosarelor, sau ambele.</translation>
     </message>
     <message>
-        <location line="-2040"/>
+        <location line="-2901"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>Definiți cum trebuie folosit textul de căutare.</translation>
     </message>
     <message>
-        <location line="+7081"/>
+        <location line="+5959"/>
+        <location line="+1807"/>
         <source>Include Hidden files</source>
         <translation>Include fișierele ascunse</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+27"/>
         <source>Follow symbolic links</source>
         <translation>Urmați legăturile simbolice</translation>
     </message>
@@ -2125,12 +2421,12 @@
         <translation>Generați un nume de catalog bazat pe cale.</translation>
     </message>
     <message>
-        <location line="-8351"/>
+        <location line="-9046"/>
         <source>Reset all filters</source>
         <translation>Resetați toate filtrele</translation>
     </message>
     <message>
-        <location line="+10426"/>
+        <location line="+11138"/>
         <source>About</source>
         <translation>Despre</translation>
     </message>
@@ -2145,15 +2441,15 @@
         <translation>Păstrați înregistrările fișierelor și dimensiunile pentru statistici</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-907"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-971"/>
         <location line="+11"/>
-        <location line="+34"/>
+        <location line="+35"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-44"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+8"/>
         <source>KiB</source>
@@ -2167,18 +2463,18 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-356"/>
+        <location line="-384"/>
         <source>Explore folder</source>
         <translation>Explorează dosarul</translation>
     </message>
     <message>
-        <location line="+207"/>
-        <location line="+573"/>
+        <location line="+250"/>
+        <location line="+590"/>
         <source>MOVE</source>
         <translation>MUTARE</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-589"/>
         <source>Move this file to the trash?</source>
         <translation>Mutați acest fișier la coșul de gunoi?</translation>
     </message>
@@ -2195,12 +2491,12 @@
     </message>
     <message>
         <location line="+46"/>
-        <location line="+548"/>
+        <location line="+565"/>
         <source>DELETE</source>
         <translation>ȘTERGE</translation>
     </message>
     <message>
-        <location line="-547"/>
+        <location line="-564"/>
         <source>Delete this file?</source>
         <translation>Ștergeți acest fișier?</translation>
     </message>
@@ -2210,7 +2506,7 @@
         <translation>Ștergerea unui dosar nu este disponibilă.</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+39"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-8"/>
         <source>TiB</source>
@@ -2219,12 +2515,12 @@
     <message>
         <location line="-7"/>
         <location line="+11"/>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Bytes</source>
         <translation>Octeți</translation>
     </message>
     <message>
-        <location line="+351"/>
+        <location line="+382"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>Selectați mai întâi un proces care să fie aplicat tuturor rezultatelor de mai jos.</translation>
     </message>
@@ -2289,7 +2585,7 @@
         <translation>Rezultatele căutării</translation>
     </message>
     <message>
-        <location line="+369"/>
+        <location line="+401"/>
         <source>Text Phrase selected</source>
         <translation>Fraza de text selectată</translation>
     </message>
@@ -2469,7 +2765,7 @@
         <translation>Păstrați întotdeauna o copie de rezervă a fiecărui catalog</translation>
     </message>
     <message>
-        <location line="-5574"/>
+        <location line="-5425"/>
         <source>Used</source>
         <translation>Utilizat</translation>
     </message>
@@ -2500,22 +2796,21 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1033"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1027"/>
         <source>Choose a different name and try again.</source>
         <translation>Alegeți un nume diferit și încercați din nou.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5017"/>
+        <location filename="../mainwindow.ui" line="+4868"/>
         <source>Check at start up</source>
         <translation>Verificați la pornire</translation>
     </message>
     <message>
-        <location line="-4704"/>
         <source>Include Hidden Files</source>
-        <translation>Include fișierele ascunse</translation>
+        <translation type="vanished">Include fișierele ascunse</translation>
     </message>
     <message>
-        <location line="+552"/>
+        <location line="-3999"/>
         <source>Save</source>
         <translation>Salvați</translation>
     </message>
@@ -2525,28 +2820,30 @@
         <translation>&lt;br/&gt;&lt;b&gt;Bun venit la Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Se pare că aceasta este prima rulare.&lt;br/&gt;&lt;br/&gt;Următoarele setări au fost aplicate:&lt;br/&gt; - Limba: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Puteți modifica acestea în fila %3.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1053"/>
+        <location filename="../mainwindow.ui" line="-1057"/>
         <source>Snapshot</source>
         <translation>Instantaneu</translation>
     </message>
     <message>
-        <location line="+3754"/>
+        <location line="+3588"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>Sursă</translation>
     </message>
     <message>
-        <location line="-3715"/>
+        <location line="-3549"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizați toate cataloagele care sunt active, dacă dispozitivul este disponibil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1250"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importați o listă de volume din VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-213"/>
+        <location line="-216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
+        <location line="+117"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-157"/>
         <location line="+107"/>
         <location line="+9"/>
@@ -2555,64 +2852,64 @@
         <translation>Anulare</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+297"/>
+        <location filename="../mainwindow_setup.cpp" line="+291"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Aceasta este versiunea: v%1 &lt;br/&gt;&lt;br/&gt;O nouă versiune este disponibilă: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Găsiți lista de funcții noi în &lt;a href=&apos;%3&apos;&gt;Notele de lansare&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Doriți să o descărcați?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-375"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+768"/>
+        <location filename="../mainwindow.ui" line="-378"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+770"/>
         <source>Storage ID</source>
         <translation>ID-ul stocării</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+932"/>
+        <location line="-840"/>
+        <location line="+936"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizați fișierele catalogului selectat, dacă dispozitivul este disponibil&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-2"/>
-        <location filename="../mainwindow.ui" line="+1190"/>
-        <location line="+1449"/>
+        <location filename="../mainwindow.ui" line="+1196"/>
+        <location line="+1273"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>Director</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-8261"/>
+        <location filename="../mainwindow.ui" line="-8956"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Curățați textul de căutare de caractere precum _ - . ,</translation>
     </message>
     <message>
-        <location line="+1780"/>
+        <location line="+1790"/>
         <source>Duplicates on</source>
         <translation>Duplicate pe</translation>
     </message>
     <message>
-        <location line="+95"/>
-        <location line="+232"/>
+        <location line="+130"/>
+        <location line="+891"/>
         <source>Date Modified</source>
         <translation>Data modificării</translation>
     </message>
     <message>
-        <location line="+7930"/>
+        <location line="+7938"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Verificați dacă o nouă versiune de Katalog este disponibilă la pornirea aplicației.</translation>
     </message>
     <message>
-        <location line="-5463"/>
+        <location line="-5314"/>
         <source>Show/Hide search history</source>
         <translation>Afișați/Ascundeți istoricul căutărilor</translation>
     </message>
     <message>
-        <location line="-4833"/>
+        <location line="-5694"/>
         <source>Search criteria</source>
         <translation>Criteriile de căutare</translation>
     </message>
     <message>
-        <location line="+4226"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
+        <location line="+5087"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-184"/>
         <source>Tag</source>
         <translation>Etichetă</translation>
     </message>
@@ -2627,7 +2924,7 @@
         <translation>Istoricul căutărilor</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-293"/>
+        <location filename="../mainwindow_setup.cpp" line="-287"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;Pe ecranul următor, alegeți un dosar de colecție existent sau creați unul nou.</translation>
     </message>
@@ -2642,7 +2939,7 @@
         <translation>1- Selectați o unitate sau un director întreg, &lt;br/&gt;2- selectați opțiunile, și &lt;br/&gt;3- faceți clic pe „Creează&quot;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4909"/>
+        <location filename="../mainwindow.ui" line="-5770"/>
         <source>Show/Hide search criteria</source>
         <translation>Afișați/Ascundeți criteriile de căutare</translation>
     </message>
@@ -2662,28 +2959,28 @@
         <translation>exclude</translation>
     </message>
     <message>
-        <location line="+4689"/>
+        <location line="+5532"/>
         <source>is full device</source>
         <translation>este dispozitiv complet</translation>
     </message>
     <message>
-        <location line="+2346"/>
+        <location line="+2198"/>
         <source>catalog is for the full device</source>
         <translation>catalogul este pentru dispozitivul complet</translation>
     </message>
     <message>
-        <location line="-5953"/>
-        <location line="+232"/>
+        <location line="-6638"/>
+        <location line="+888"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Alegeți să căutați duplicate bazate pe următoarele criterii</translation>
     </message>
     <message>
-        <location line="+1955"/>
+        <location line="+2150"/>
         <source>Choose to use Tags to filter results</source>
         <translation>Alegeți să folosiți etichetele pentru a filtra rezultatele</translation>
     </message>
     <message>
-        <location line="-3360"/>
+        <location line="-4221"/>
         <source>case sensitive</source>
         <translation>sensibil la majuscule</translation>
     </message>
@@ -2693,22 +2990,22 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rezultatele trebuie să se potrivească exact cu textul (sensibil la majuscule)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+9983"/>
+        <location line="+10695"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Preîncărcați ultimele cataloage selectate la pornire pentru a accelera următoarea căutare</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-462"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-607"/>
         <source>Move file to Trash</source>
         <translation>Mutați fișierul la coșul de gunoi</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+159"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-1066"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1115"/>
         <location line="+64"/>
-        <location line="+509"/>
+        <location line="+526"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Confirmare</translation>
@@ -2718,7 +3015,7 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-600"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-617"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
@@ -2748,13 +3045,13 @@
         <translation>Ștergerea a eșuat.</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
+        <location line="-200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-214"/>
         <source>Delete file</source>
         <translation>Șterge fișierul</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+156"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2768,25 +3065,25 @@ la coșul de gunoi?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;ȘTERGE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-270"/>
+        <location line="-337"/>
         <source>Tag this folder</source>
         <translation>Etichetați acest dosar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-11210"/>
+        <location filename="../mainwindow.ui" line="-11922"/>
         <source>Selection</source>
         <translation>Selecție</translation>
     </message>
     <message>
         <location line="-356"/>
         <location line="+32"/>
-        <location line="+7091"/>
+        <location line="+7962"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Extindeți 1 nivel, 2 nivele sau restrângeți</translation>
     </message>
     <message>
-        <location line="+2389"/>
+        <location line="+2213"/>
         <source>all records</source>
         <translation>toate înregistrările</translation>
     </message>
@@ -2803,17 +3100,21 @@ la coșul de gunoi?</translation>
         <translation>doar instantanee</translation>
     </message>
     <message>
-        <location line="+394"/>
+        <location line="-6897"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
+        <location line="+6522"/>
         <source>Device</source>
         <translation>Dispozitiv</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+64"/>
         <source>Delete selected</source>
         <translation>Șterge selecția</translation>
     </message>
     <message>
-        <location line="+360"/>
+        <location line="+367"/>
         <source>as Source</source>
         <translation>ca sursă</translation>
     </message>
@@ -2859,7 +3160,7 @@ la coșul de gunoi?</translation>
         <translation>Deschide fișierul de setări</translation>
     </message>
     <message>
-        <location line="-2993"/>
+        <location line="-2834"/>
         <source>Display folders</source>
         <translation>Afișați dosarele</translation>
     </message>
@@ -2874,7 +3175,7 @@ la coșul de gunoi?</translation>
         <translation>Ordonați dosarele primul</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+127"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+164"/>
         <source>Copy folder name</source>
         <translation>Copiați numele dosarului</translation>
     </message>
@@ -2885,70 +3186,69 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+584"/>
         <source>orderValue</source>
         <translation>valoareaOrdinii</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1640"/>
+        <location filename="../mainwindow.ui" line="-1650"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-245"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>Device Type</source>
         <translation>Tipul dispozitivului</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-260"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Catalogul selectat conține mai mult de %1 fișiere.&lt;br/&gt;Poate dura câteva minute să se deschidă.&lt;br/&gt;Continuați?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5536"/>
+        <location filename="../mainwindow.ui" line="+5387"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Memorie</translation>
     </message>
     <message>
-        <location line="-10875"/>
-        <location line="+1023"/>
-        <location line="+1640"/>
+        <location line="-11587"/>
+        <location line="+1022"/>
+        <location line="+2502"/>
         <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
         <translation>Folosiți criteriile de text în căutare</translation>
     </message>
     <message>
-        <location line="-1711"/>
+        <location line="-1906"/>
         <source>Differences on</source>
         <translation>Diferențe pe</translation>
     </message>
     <message>
-        <location line="+243"/>
         <source>Catalog 1</source>
-        <translation>Catalogul 1</translation>
+        <translation type="vanished">Catalogul 1</translation>
     </message>
     <message>
-        <location line="+67"/>
         <source>Catalog2</source>
-        <translation>Catalogul 2</translation>
+        <translation type="vanished">Catalogul 2</translation>
     </message>
     <message>
-        <location line="-2455"/>
+        <location line="-2811"/>
         <source>File name</source>
         <translation>Numele fișierului</translation>
     </message>
     <message>
-        <location line="+1023"/>
+        <location line="+1022"/>
         <source>File criteria</source>
         <translation>Criteriile fișierului</translation>
     </message>
     <message>
-        <location line="+2836"/>
+        <location line="+3698"/>
         <source>Folder criteria</source>
         <translation>Criteriile dosarului</translation>
     </message>
     <message>
-        <location line="+5002"/>
+        <location line="+4836"/>
         <source>Graphic Start Date</source>
         <translation>Data de început grafic</translation>
     </message>
@@ -2958,17 +3258,17 @@ la coșul de gunoi?</translation>
         <translation>Selectați data</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+679"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2367"/>
         <source>Include Metadata</source>
         <translation>Include metadatele</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+456"/>
         <source>Local disk</source>
         <translation>Disc local</translation>
     </message>
     <message>
-        <location line="-714"/>
+        <location line="-685"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Directorul nu există. Îl creați?</translation>
     </message>
@@ -2978,7 +3278,7 @@ la coșul de gunoi?</translation>
         <translation>Fișierul bazei de date nu există. Îl creați?</translation>
     </message>
     <message>
-        <location line="+337"/>
+        <location line="+318"/>
         <source>Collection Upgrade Required</source>
         <translation>Este necesară actualizarea colecției</translation>
     </message>
@@ -3038,22 +3338,22 @@ la coșul de gunoi?</translation>
         <translation>Ieșiți din aplicație</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+49"/>
         <source>Select the database to open:</source>
         <translation>Selectați baza de date de deschis:</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-292"/>
         <source>Select the database to create and open:</source>
         <translation>Selectați baza de date de creat și deschis:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+130"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Unele modificări în lista dispozitivelor de stocare nu au fost salvate.&lt;br/&gt;Salvați și ieșiți, renunțați și ieșiți, sau anulați ieșirea?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+351"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+334"/>
         <source> Physical Group</source>
         <translation> Grup fizic</translation>
     </message>
@@ -3068,20 +3368,21 @@ la coșul de gunoi?</translation>
         <translation>Eliminați această etichetă</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-71"/>
+        <location filename="../mainwindow.cpp" line="-72"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+562"/>
+        <location line="+557"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1298"/>
         <source>Catalog with results</source>
         <translation>Catalog cu rezultate</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1178"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1163"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3098,9 +3399,10 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-502"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3533"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>Active</source>
         <translation>Activ</translation>
     </message>
@@ -3152,7 +3454,7 @@ la coșul de gunoi?</translation>
         <translation>Dif. dată</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Parent Device</source>
         <translation>Dispozitivul părinte</translation>
     </message>
@@ -3193,7 +3495,7 @@ la coșul de gunoi?</translation>
         <translation>Selectați o sursă sau țintă diferită (un dispozitiv nu trebuie să fie mapat la el însuși).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-482"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-495"/>
         <source>Virtual Group</source>
         <translation>Grup virtual</translation>
     </message>
@@ -3203,7 +3505,7 @@ la coșul de gunoi?</translation>
         <translation>Un dispozitiv virtual poate fi adăugat doar la alt dispozitiv virtual.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+212"/>
         <location line="+68"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
@@ -3249,7 +3551,7 @@ la coșul de gunoi?</translation>
         <translation>Acest grup este necesar pentru a găzdui stocarea și cataloagele.&lt;br/&gt;Nu poate fi șters.</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+232"/>
         <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
         <translation>Verificarea MIME finalizată cu succes.&lt;br/&gt;Nu s-au găsit neconcordanțe între extensiile fișierelor și conținutul real.</translation>
     </message>
@@ -3264,8 +3566,8 @@ la coșul de gunoi?</translation>
         <translation>Verificarea MIME a eșuat:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
-        <location line="+323"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-804"/>
+        <location line="+346"/>
         <source>Search Error</source>
         <translation>Eroare de căutare</translation>
     </message>
@@ -3321,7 +3623,7 @@ la coșul de gunoi?</translation>
         <location filename="../core/searchprogressmanager.cpp" line="-107"/>
         <location line="+73"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+363"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+358"/>
         <source>Folders found</source>
         <translation>Dosare găsite</translation>
     </message>
@@ -3336,7 +3638,7 @@ la coșul de gunoi?</translation>
         <translation>Diferențe găsite</translation>
     </message>
     <message>
-        <location line="+213"/>
+        <location line="+209"/>
         <source>No search results available.</source>
         <translation>Nu sunt disponibile rezultate de căutare.</translation>
     </message>

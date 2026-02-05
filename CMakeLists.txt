@@ -103,6 +103,7 @@ set(CORE_HEADERS
     src/core/statusbarmessagebuilder.h
     src/core/backupprofilegenerator.h
     src/core/backupmappingmanager.h
+    src/core/filechecksum.h
 )
 
 set(CORE_SOURCES
@@ -133,6 +134,7 @@ set(CORE_SOURCES
     src/core/statusbarmessagebuilder.cpp
     src/core/backupprofilegenerator.cpp
     src/core/backupmappingmanager.cpp
+    src/core/filechecksum.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately
@@ -168,6 +170,7 @@ set(MAIN_SOURCES
     src/mainwindow_ui_wrapper_device.cpp
     src/mainwindow_ui_wrapper_storage.cpp
     src/mainwindow_ui_wrapper_catalog.cpp
+    src/widgets/treecombobox.cpp
     ${MAINWINDOW_IMPL_SOURCES}  # Always include these as separate compilation units
 )
 
@@ -184,6 +187,7 @@ set(MAIN_HEADERS
     src/mainwindow_ui_wrapper_device.h
     src/mainwindow_ui_wrapper_storage.h
     src/mainwindow_ui_wrapper_catalog.h
+    src/widgets/treecombobox.h
     src/version.h.in
 )
 

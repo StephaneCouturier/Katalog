@@ -125,6 +125,7 @@ protected:
      * @param connectionName Database connection name
      */
     void processDuplicates(const QString &connectionName) override;
+    void processDuplicatesCompareDevices(const QString &connectionName);
 
     /**
      * @brief Process differences between catalogs
@@ -143,6 +144,9 @@ private:
 
     bool m_csvLoadingStopFlag{false};
     QAtomicInt m_objectValid{1};
+
+    QString buildJoinCondition(const QString &alias1, const QString &alias2, const QString &fields);
+    QString buildExistsCondition(const QString &alias1, const QString &alias2, const QString &fields);
 };
 
 #endif // SEARCHJOBSTOPPABLE_H

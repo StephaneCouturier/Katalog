@@ -34,6 +34,7 @@
 #include "filetypemapping.h"
 #include "parallelmetadataextractor.h"
 #include "database.h"
+#include "filechecksum.h"
 
 #include <QDebug>
 #include <QDir>
@@ -159,7 +160,7 @@ void CatalogJobStoppable::createCatalogWithProgress()
     qDebug() << "Database Mode:" << m_databaseMode;
     qDebug() << "Collection Folder:" << m_collectionFolder;
 
-        if (!m_device || !m_device->catalog) {
+    if (!m_device || !m_device->catalog) {
         qDebug() << "ERROR: Invalid device or catalog";
         throw std::runtime_error("Invalid device or catalog");
     }
@@ -214,12 +215,51 @@ void CatalogJobStoppable::createCatalogWithProgress()
     processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
 
     if (!shouldContinue()) {
+        qDebug() << "Catalog creation STOPPED - cleaning up...";
+
+        // Rollback file insertions
         Database::rollbackTransaction(m_connectionName);
+
+        // ALSO delete any committed files for this catalog
+        QSqlQuery cleanupQuery(QSqlDatabase::database(m_connectionName));
+        cleanupQuery.prepare("DELETE FROM file WHERE file_catalog_id = :catalog_id");
+        cleanupQuery.bindValue(":catalog_id", catalog->ID);
+        if (cleanupQuery.exec()) {
+            qDebug() << "Deleted" << cleanupQuery.numRowsAffected() << "files for stopped catalog";
+        } else {
+            qDebug() << "Failed to cleanup files:" << cleanupQuery.lastError().text();
+        }
+
+        // Delete folders too
+        QSqlQuery cleanupFoldersQuery(QSqlDatabase::database(m_connectionName));
+        cleanupFoldersQuery.prepare("DELETE FROM folder WHERE folder_catalog_id = :catalog_id");
+        cleanupFoldersQuery.bindValue(":catalog_id", catalog->ID);
+        cleanupFoldersQuery.exec();
+
+        qDebug() << "Catalog creation cleanup complete";
+        return; // Exit without completing
     }
 
     // Commit transaction
     QSqlQuery commitQuery(QSqlDatabase::database(m_connectionName));
     Database::commitTransaction(m_connectionName);
+
+    // Step: Calculate checksums for all files (if enabled)
+    if (catalog->includeChecksum != Catalog::CHECKSUM_NONE) {
+        qDebug() << "=== Starting checksum calculation for new catalog ===";
+        qDebug() << "Checksum setting:" << catalog->includeChecksum;
+
+        QList<QVariantList> filesToChecksum = findFilesWithoutChecksum();
+
+        if (!filesToChecksum.isEmpty()) {
+            qDebug() << "Found" << filesToChecksum.size() << "files needing checksum calculation";
+            extractChecksumsForFiles(filesToChecksum);
+        } else {
+            qDebug() << "No files need checksum calculation";
+        }
+    } else {
+        qDebug() << "Checksum calculation disabled for this catalog (setting: None)";
+    }
 
     // Update catalog metadata
     catalog->updateFileCount();
@@ -1365,6 +1405,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
     if (m_databaseMode == "Memory") {
         // Determine if we need to load the catalog
         bool metadataEnabled = (catalog->includeMetadata != Catalog::METADATA_NONE);
+        bool checksumsEnabled = (catalog->includeChecksum != Catalog::CHECKSUM_NONE);
         bool userForcedLoad = false;
 
         // Check user setting for forced loading (for metadata = None case)
@@ -1376,7 +1417,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
         }
 
         // Load catalog if: (1) metadata extraction enabled, OR (2) user enabled the setting
-        shouldLoadCatalog = metadataEnabled || userForcedLoad;
+        shouldLoadCatalog = metadataEnabled || checksumsEnabled || userForcedLoad;
 
         qDebug() << "Step 1a: Checking if catalog loading needed";
         qDebug() << "  Metadata enabled:" << metadataEnabled;
@@ -1605,6 +1646,22 @@ void CatalogJobStoppable::updateCatalogIncremental()
         }
     }
 
+    // Step 9b: Calculate checksums for files (if enabled)
+    if (catalog->includeChecksum != Catalog::CHECKSUM_NONE) {
+        qDebug() << "Step 9b: Calculating checksums (setting:" << catalog->includeChecksum << ")";
+
+        QList<QVariantList> filesToChecksum = findFilesWithoutChecksum();
+
+        if (!filesToChecksum.isEmpty()) {
+            qDebug() << "Step 9b: Found" << filesToChecksum.size() << "files needing checksum";
+            extractChecksumsForFiles(filesToChecksum);
+        } else {
+            qDebug() << "Step 9b: All files have checksums, skipping";
+        }
+    } else {
+        qDebug() << "Step 9b: Checksum calculation disabled (setting: None)";
+    }
+
     // Step 10: Update catalog's file statistics
     qDebug() << "Step 10: Updating catalog's file statistics";
     catalog->updateFileCount();
@@ -1722,6 +1779,375 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutMetadata()
     return results;
 }
 
+QList<QVariantList> CatalogJobStoppable::findFilesWithoutChecksum()
+{
+    QList<QVariantList> results;
+
+    if (!m_device || !m_device->catalog) {
+        qDebug() << "findFilesWithoutChecksum: No device or catalog";
+        return results;
+    }
+
+    Catalog* catalog = m_device->catalog;
+
+    // Guard: If checksum disabled, return empty immediately
+    if (catalog->includeChecksum == Catalog::CHECKSUM_NONE) {
+        qDebug() << "findFilesWithoutChecksum: checksum disabled, returning empty";
+        return results;
+    }
+
+    qDebug() << "=== findFilesWithoutChecksum: Querying files needing checksum ===";
+    qDebug() << "Catalog ID:" << catalog->ID;
+    qDebug() << "Checksum setting:" << catalog->includeChecksum;
+
+    // Query files without checksum
+    QString querySQL = QString(
+                           "SELECT file_full_path, file_name, file_folder_path, file_size "
+                           "FROM file "
+                           "WHERE file_catalog_id = %1 "
+                           "AND (checksum_extraction_date IS NULL OR checksum_extraction_date = '') "
+                           "ORDER BY file_size ASC"
+                           ).arg(catalog->ID);
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+
+    if (!query.exec(querySQL)) {
+        qDebug() << "ERROR: Failed to query files for checksum:" << query.lastError().text();
+        return results;
+    }
+
+    qDebug() << "DEBUG: Query executed successfully";
+
+    int rowCount = 0;
+    while (query.next()) {
+        QVariantList fileData;
+
+        // Get each value and verify it's valid
+        QVariant fullPath = query.value(0);
+        QVariant fileName = query.value(1);
+        QVariant folderPath = query.value(2);
+        QVariant fileSize = query.value(3);
+
+        // Debug first row in detail
+        if (rowCount == 0) {
+            qDebug() << "DEBUG: First row data:";
+            qDebug() << "  fullPath valid:" << fullPath.isValid() << "value:" << fullPath.toString();
+            qDebug() << "  fileName valid:" << fileName.isValid() << "value:" << fileName.toString();
+            qDebug() << "  folderPath valid:" << folderPath.isValid() << "value:" << folderPath.toString();
+            qDebug() << "  fileSize valid:" << fileSize.isValid() << "value:" << fileSize.toLongLong();
+        }
+
+        fileData << fullPath << fileName << folderPath << fileSize;
+
+        // VERIFY we have exactly 4 elements
+        if (fileData.size() != 4) {
+            qDebug() << "ERROR: Row" << rowCount << "has" << fileData.size() << "elements instead of 4!";
+            qDebug() << "  Data:" << fileData;
+            continue; // Skip this row
+        }
+
+        results.append(fileData);
+        rowCount++;
+
+        // Debug first few rows
+        if (rowCount <= 3) {
+            qDebug() << "  File" << rowCount << ":" << fileData[1].toString()
+            << "(" << QLocale().formattedDataSize(fileData[3].toLongLong()) << ")"
+            << "- list size:" << fileData.size();
+        }
+    }
+
+    qDebug() << "Found" << results.size() << "files needing checksum calculation";
+
+    // Extra verification
+    if (!results.isEmpty()) {
+        qDebug() << "DEBUG: First result in list has" << results[0].size() << "elements";
+    }
+
+    return results;
+}
+
+void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &files)
+{
+    if (files.isEmpty()) {
+        return;
+    }
+
+    qDebug() << "=== CatalogJobStoppable::extractChecksumsForFiles START ===";
+    qDebug() << "Total files to process:" << files.size();
+
+    const int BATCH_SIZE = 1;
+    int totalFiles = files.size();
+    int processedFiles = 0;
+
+    // Get the algorithm from catalog setting
+    QCryptographicHash::Algorithm algorithm = FileChecksum::getAlgorithmFromString(m_device->catalog->includeChecksum);
+    qDebug() << "Using algorithm:" << m_device->catalog->includeChecksum;
+
+    // PRE-CALCULATE total bytes to process (do once at start)
+    qint64 totalBytes = 0;
+    for (const QVariantList &fileData : files) {
+        totalBytes += fileData[3].toLongLong();
+    }
+    qDebug() << "Total bytes to process:" << QLocale().formattedDataSize(totalBytes);
+
+    qint64 processedBytes = 0;  // ✅ NOT static - resets each time
+    QElapsedTimer totalTimer;
+    totalTimer.start();
+
+    // Process in batches
+    for (int batchStart = 0; batchStart < totalFiles; batchStart += BATCH_SIZE) {
+        if (!shouldContinue()) {
+            qDebug() << "Checksum calculation STOPPED by user at file" << processedFiles;
+            return;
+        }
+
+        waitIfPaused();
+
+        int batchSize = qMin(BATCH_SIZE, totalFiles - batchStart);
+        QElapsedTimer batchTimer;
+        batchTimer.start();
+
+        qDebug() << "=== Batch" << (batchStart / BATCH_SIZE + 1)
+                 << "(" << (batchStart + 1) << "-" << (batchStart + batchSize)
+                 << "of" << totalFiles << ") ===";
+
+        // Collect batch data
+        QStringList batchFileNames;
+        QStringList batchFolderPaths;
+        QStringList batchFullPaths;
+        QList<qint64> batchFileSizes;
+
+        // Collect batch data with SAFETY CHECKS
+        for (int i = batchStart; i < batchStart + batchSize; ++i) {
+            const QVariantList &fileData = files[i];
+
+            // SAFETY: Verify we have 4 elements
+            if (fileData.size() != 4) {
+                qDebug() << "ERROR: File data at index" << i << "has" << fileData.size() << "elements!";
+                qDebug() << "  Expected 4 elements. Data:" << fileData;
+                continue; // Skip this file
+            }
+
+            batchFullPaths << fileData[0].toString();      // file_full_path
+            batchFileNames << fileData[1].toString();      // file_name
+            batchFolderPaths << fileData[2].toString();    // file_folder_path
+            batchFileSizes << fileData[3].toLongLong();    // file_size
+        }
+
+        // Calculate checksums for this batch
+        QStringList updateFileNames;
+        QStringList updateFolderPaths;
+        QStringList checksums;
+
+        QString lastFileName;
+        qint64 lastFileSize = 0;
+
+        for (int i = 0; i < batchFullPaths.size(); ++i) {
+            if (!shouldContinue()) break;
+
+            QString filePath = batchFullPaths[i];
+            QString fileName = batchFileNames[i];
+            qint64 fileSize = batchFileSizes[i];
+
+            lastFileName = fileName;
+            lastFileSize = fileSize;
+
+            int currentFileNumber = processedFiles + i + 1;
+            qDebug() << "  [" << currentFileNumber << "/" << totalFiles << "]"
+                     << fileName << "(" << QLocale().formattedDataSize(fileSize) << ")";
+
+            QFileInfo fileInfo(filePath);
+            if (!fileInfo.exists()) {
+                qDebug() << "    SKIP: File no longer exists";
+                continue;
+            }
+
+            // Calculate checksum with progress callback for large files
+            qint64 bytesProcessedInFile = 0;
+
+            auto progressCallback = [&](qint64 processed, qint64 total) {
+                if (!shouldContinue()) {
+                    qDebug() << "      CALLBACK: Stop requested, throwing exception";
+                    throw std::runtime_error("Stop requested");
+                }
+
+                bytesProcessedInFile = processed;
+
+                qDebug() << "      CALLBACK triggered for" << fileName;
+                qDebug() << "        File progress:" << QLocale().formattedDataSize(processed)
+                         << "/" << QLocale().formattedDataSize(total);
+
+
+                qDebug() << "      CALLBACK triggered for" << fileName;
+                qDebug() << "        File progress:" << QLocale().formattedDataSize(processed)
+                         << "/" << QLocale().formattedDataSize(total);
+
+                // Calculate temporary total bytes (includes partial progress of current file)
+                qint64 tempTotalProcessed = processedBytes + processed;
+
+                qDebug() << "        Total processed:" << QLocale().formattedDataSize(tempTotalProcessed)
+                         << "/" << QLocale().formattedDataSize(totalBytes);
+
+                // Update time estimate with partial file progress
+                qint64 elapsedMs = totalTimer.elapsed();
+                if (elapsedMs > 0 && tempTotalProcessed > 0) {
+                    double bytesPerSecond = (static_cast<double>(tempTotalProcessed) * 1000.0) / elapsedMs;
+                    qint64 remainingBytes = totalBytes - tempTotalProcessed;
+
+                    qDebug() << "        Speed:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
+                    qDebug() << "        Remaining:" << QLocale().formattedDataSize(remainingBytes);
+
+                    QString timeString;
+                    if (bytesPerSecond > 0) {
+                        double remainingSeconds = remainingBytes / bytesPerSecond;
+                        int hours = static_cast<int>(remainingSeconds / 3600);
+                        int minutes = static_cast<int>((remainingSeconds - hours * 3600) / 60);
+                        int seconds = static_cast<int>(remainingSeconds) % 60;
+
+                        if (hours > 0) {
+                            timeString = QString("%1h %2m").arg(hours).arg(minutes);
+                        } else if (minutes > 0) {
+                            timeString = QString("%1m %2s").arg(minutes).arg(seconds);
+                        } else {
+                            timeString = QString("%1s").arg(seconds);
+                        }
+
+                        qDebug() << "        Estimated time remaining:" << timeString;
+                    }
+
+                    // Emit progress with current file info
+                    QString fileInfo = QString("%1 (%2 of %3)")
+                                           .arg(fileName)
+                                           .arg(QLocale().formattedDataSize(processed))
+                                           .arg(QLocale().formattedDataSize(total));
+
+                    QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2|%3|%4")
+                                         .arg(currentFileNumber)
+                                         .arg(totalFiles)
+                                         .arg(timeString)
+                                         .arg(fileInfo);
+
+                    qDebug() << "        Emitting marker:" << marker;
+
+                    // CHANGED: Use BYTE-based progress instead of file count
+                    emitProgressUpdate(tempTotalProcessed, totalBytes, marker);
+                    QCoreApplication::processEvents();
+                }
+            };
+
+            QString checksum = FileChecksum::calculateChecksum(filePath, algorithm, progressCallback);
+
+            // Check if checksum is empty (stopped during calculation)
+            if (checksum.isEmpty()) {
+                qDebug() << "    INTERRUPTED: Checksum calculation was stopped";
+                break; // Exit the file loop
+            }
+
+            if (!checksum.isEmpty()) {
+                qDebug() << "    SUCCESS: Checksum =" << checksum;
+                updateFileNames << batchFileNames[i];
+                updateFolderPaths << batchFolderPaths[i];
+                checksums << checksum;
+
+                // Add full file size to processed bytes (not partial)
+                processedBytes += fileSize;
+            } else {
+                qDebug() << "    ERROR: Checksum calculation failed";
+            }
+        }
+
+        // Batch update to database
+        if (!updateFileNames.isEmpty()) {
+            qDebug() << "  Batch updating" << updateFileNames.size() << "checksums to database...";
+
+            bool success = FileChecksum::batchUpdateFileChecksum(
+                m_connectionName,
+                m_device->catalog->ID,
+                updateFileNames,
+                updateFolderPaths,
+                checksums
+                );
+
+            if (success) {
+                qDebug() << "  Batch update SUCCESS";
+            } else {
+                qDebug() << "  Batch update FAILED";
+            }
+        }
+
+        int batchDurationMs = batchTimer.elapsed();
+        processedFiles += batchSize;
+
+        // Time estimation based on bytes
+        QString timeToCompletionString;
+        if (processedBytes > 0 && processedFiles < totalFiles) {
+            qint64 elapsedMs = totalTimer.elapsed();
+
+            // Calculate bytes/second rate
+            double bytesPerSecond = (static_cast<double>(processedBytes) * 1000.0) / elapsedMs;
+
+            // Calculate remaining bytes (simple subtraction now!)
+            qint64 remainingBytes = totalBytes - processedBytes;
+
+            // Estimate remaining time
+            if (bytesPerSecond > 0) {
+                double remainingSeconds = remainingBytes / bytesPerSecond;
+
+                int hours = static_cast<int>(remainingSeconds / 3600);
+                int minutes = static_cast<int>((remainingSeconds - hours * 3600) / 60);
+                int seconds = static_cast<int>(remainingSeconds) % 60;
+
+                if (hours > 0) {
+                    timeToCompletionString = QString("%1h %2m").arg(hours).arg(minutes);
+                } else if (minutes > 0) {
+                    timeToCompletionString = QString("%1m %2s").arg(minutes).arg(seconds);
+                } else {
+                    timeToCompletionString = QString("%1s").arg(seconds);
+                }
+
+                qDebug() << "Progress:" << processedFiles << "/" << totalFiles << "files";
+                qDebug() << "Processed:" << QLocale().formattedDataSize(processedBytes)
+                         << "/" << QLocale().formattedDataSize(totalBytes);
+                qDebug() << "Speed:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
+                qDebug() << "Remaining:" << QLocale().formattedDataSize(remainingBytes);
+                qDebug() << "Est. time:" << timeToCompletionString;
+            }
+        }
+
+        qDebug() << "Batch completed in" << batchDurationMs << "ms";
+        qDebug() << "Progress:" << processedFiles << "/" << totalFiles << "files";
+        qDebug() << "Processed:" << QLocale().formattedDataSize(processedBytes)
+                 << "/" << QLocale().formattedDataSize(totalBytes);
+        if (!timeToCompletionString.isEmpty()) {
+            qDebug() << "Est. time:" << timeToCompletionString;
+        }
+
+        // Emit progress with file info
+        QString fileInfo = QString("%1 (%2)")
+                               .arg(lastFileName)
+                               .arg(QLocale().formattedDataSize(lastFileSize));
+
+        QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2|%3|%4")
+                             .arg(processedFiles)
+                             .arg(totalFiles)
+                             .arg(timeToCompletionString)
+                             .arg(fileInfo);
+
+        // CHANGED: Use BYTE-based progress
+        emitProgressUpdate(processedBytes, totalBytes, marker);
+        QCoreApplication::processEvents();
+    }
+
+    // Final completion marker - CHANGED to use bytes
+    QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2").arg(totalFiles).arg(totalFiles);
+    emitProgressUpdate(totalBytes, totalBytes, marker);
+
+    qDebug() << "=== CatalogJobStoppable::extractChecksumsForFiles COMPLETE ===";
+    qDebug() << "Total files processed:" << processedFiles;
+    qDebug() << "Total bytes processed:" << QLocale().formattedDataSize(processedBytes);
+    qDebug() << "Total time:" << (totalTimer.elapsed() / 1000.0) << "seconds";
+}
 void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
                                                     Catalog *catalog,
                                                     qint64 &processedCount)
@@ -1763,6 +2189,7 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
     QStringList fileNames, fileFolderPaths, fileFullPaths, fileDateTimes, fileCatalogs;
     QStringList fileExtensions, fileTypes, mimeTypes;
     QList<qint64> fileSizes;
+    QStringList directoryPaths;  // Collect directories (including empty ones)
 
     int batchSize = 1000;  // Adjust based on performance testing
 
@@ -1791,8 +2218,10 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
         }
         if (isExcluded) continue;
 
-        // Only process files (skip directories for now)
-        if (entry.isFile()) {
+        // Handle directories and files (matching creation behavior for empty folders)
+        if (entry.isDir()) {
+            directoryPaths << entryPath;
+        } else if (entry.isFile()) {
             QString extension = entry.suffix().toLower();
             QString quickFileType = FileMetadata::getFileTypeFromExtension(extension);
             QString quickMimeType = FileMetadata::getMimeTypeFromExtension(extension);
@@ -1867,6 +2296,11 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
                 qDebug() << "Error inserting into filetemp:" << insertQuery.lastError().text();
             }
         }
+    }
+
+    // Insert all directory paths (including empty folders) - matching creation behavior
+    if (!directoryPaths.isEmpty()) {
+        insertFolders(directoryPaths, catalog);
     }
 }
 
@@ -2150,18 +2584,19 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
     QString pathList = paths.join(", ");
 
     // Bulk update using subqueries
+    // Added LIMIT 1 for MySQL compatibility (prevents "Subquery returns more than 1 row" error)
     QString updateSQL = QString(R"(
         UPDATE file
         SET file_size = (SELECT ft.file_size FROM filetemp ft
-                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             file_date_updated = (SELECT ft.file_date_updated FROM filetemp ft
-                                 WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                                 WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             file_extension = (SELECT ft.file_extension FROM filetemp ft
-                              WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                              WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             file_type = (SELECT ft.file_type FROM filetemp ft
-                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             mime_type = (SELECT ft.mime_type FROM filetemp ft
-                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1),
+                         WHERE ft.file_full_path = file.file_full_path AND ft.file_catalog_id = %1 LIMIT 1),
             metadata_extraction_date = NULL
         WHERE file_catalog_id = %1
           AND file_full_path IN (%2)
@@ -2171,7 +2606,8 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
     if (!query.exec(updateSQL)) {
         qDebug() << "ERROR: Bulk update of modified files failed:" << query.lastError().text();
 
-        // Fallback: Update one by one
+        // Fallback: Update one by one using direct values from modifiedFiles
+        // Note: modifiedFiles contains [0]=full_path, [1]=name, [2]=folder, [3]=size, [4]=date, [5]=extension, [6]=type
         qDebug() << "Attempting individual updates...";
         QSqlQuery individualQuery(QSqlDatabase::database(m_connectionName));
         individualQuery.prepare(R"(
@@ -2180,7 +2616,6 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
                 file_date_updated = :date,
                 file_extension = :extension,
                 file_type = :file_type,
-                mime_type = :mime_type,
                 metadata_extraction_date = NULL
             WHERE file_catalog_id = :catalog_id
               AND file_full_path = :full_path
@@ -2189,13 +2624,19 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
         int successCount = 0;
         for (const auto &fileData : modifiedFiles) {
             if (!shouldContinue()) break;
-            individualQuery.bindValue(":size", fileData[3]);  // file_size
-            individualQuery.bindValue(":date", fileData[4]);  // file_date_updated
-            individualQuery.bindValue(":extension", fileData[5]);  // file_extension
-            individualQuery.bindValue(":file_type", fileData[6]);  // file_type
+
+            // Validate we have enough data
+            if (fileData.size() < 7) {
+                qDebug() << "Skipping file with insufficient data:" << fileData[0].toString();
+                continue;
+            }
+
             individualQuery.bindValue(":catalog_id", m_device->catalog->ID);
-            individualQuery.bindValue(":full_path", fileData[0]);  // file_full_path
-            individualQuery.bindValue(":mime_type", fileData[7]);  // mime_type
+            individualQuery.bindValue(":full_path", fileData[0]);   // file_full_path
+            individualQuery.bindValue(":size", fileData[3]);        // file_size
+            individualQuery.bindValue(":date", fileData[4]);        // file_date_updated
+            individualQuery.bindValue(":extension", fileData[5]);   // file_extension
+            individualQuery.bindValue(":file_type", fileData[6]);   // file_type
 
             if (individualQuery.exec()) {
                 successCount++;

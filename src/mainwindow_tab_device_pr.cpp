@@ -33,9 +33,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
+#include "core/database.h"
 #include "core/device.h"
+#include "core/filechecksum.h"
 #include "mainwindow_ui_wrapper_device.h"
 #include "mainwindow_ui_wrapper_catalog.h"
+
+#include <QSet>
+#include <QMap>
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
@@ -562,11 +567,33 @@ void MainWindow::editDevice()
     if(activeDevice->type =="Catalog"){
         ui->Devices_widget_EditCatalogFields->show();
         ui->Devices_widget_EditStorageFields->hide();
-        ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
-        ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
+        // Find and set the file type using ItemData (multilingual-safe)
+        int fileTypeIndex = ui->Catalogs_comboBox_FileType->findData(
+            activeDevice->catalog->fileType, Qt::UserRole);
+        if (fileTypeIndex != -1) {
+            ui->Catalogs_comboBox_FileType->setCurrentIndex(fileTypeIndex);
+        } else {
+            // Default to "All" if not found
+            ui->Catalogs_comboBox_FileType->setCurrentIndex(0);
+        }
+        // Find and set the includeHidden value using ItemData (multilingual-safe)
+        int includeHiddenIndex = ui->Catalogs_comboBox_IncludeHidden->findData(
+            activeDevice->catalog->includeHidden, Qt::UserRole);
+        if (includeHiddenIndex != -1) {
+            ui->Catalogs_comboBox_IncludeHidden->setCurrentIndex(includeHiddenIndex);
+        } else {
+            // Default to "None" (index 0) if not found
+            ui->Catalogs_comboBox_IncludeHidden->setCurrentIndex(0);
+        }
         for (int i = 0; i < ui->Catalogs_comboBox_MetaDataOption->count(); ++i) {
             if (ui->Catalogs_comboBox_MetaDataOption->itemData(i, Qt::UserRole).toString() == activeDevice->catalog->includeMetadata) {
                 ui->Catalogs_comboBox_MetaDataOption->setCurrentIndex(i);
+                break;
+            }
+        }
+        for (int i = 0; i < ui->Catalogs_comboBox_ChecksumOption->count(); ++i) {
+            if (ui->Catalogs_comboBox_ChecksumOption->itemData(i, Qt::UserRole).toString() == activeDevice->catalog->includeChecksum) {
+                ui->Catalogs_comboBox_ChecksumOption->setCurrentIndex(i);
                 break;
             }
         }
@@ -1619,6 +1646,7 @@ void MainWindow::loadDevicesCatalogToModel(){
                             c.catalog_file_type            ,
                             c.catalog_include_hidden       ,
                             c.catalog_include_metadata     ,
+                            c.catalog_include_checksum     ,
                             (SELECT e.device_name FROM device e WHERE e.device_id = d.device_parent_id),
                             c.catalog_is_full_device       ,
                             c.catalog_date_loaded          ,
@@ -1689,11 +1717,12 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                  tr("File Type"),        //24
                                                  tr("Hidden"),           //25
                                                  tr("Metadata"),         //26
-                                                 tr("Parent storage"),   //27
-                                                 tr("Fulldevice"),       //28
-                                                 tr("Date Loaded"),      //29
-                                                 tr("App Version"),      //30
-                                                 tr("File Path"),        //31
+                                                 tr("Checksum"),         //27
+                                                 tr("Parent storage"),   //28
+                                                 tr("Fulldevice"),       //29
+                                                 tr("Date Loaded"),      //30
+                                                 tr("App Version"),      //31
+                                                 tr("File Path"),        //32
                                                  "" });
 
     //Create a map to store items by ID for easy access
@@ -1721,10 +1750,11 @@ void MainWindow::loadDevicesCatalogToModel(){
         QString catalog_file_type = loadCatalogQuery.value(14).toString();
         QString catalog_include_hidden = loadCatalogQuery.value(15).toString();
         QString catalog_include_metadata = loadCatalogQuery.value(16).toString();
-        QString parent_storage = loadCatalogQuery.value(17).toString();
-        QString catalog_is_full_device = loadCatalogQuery.value(18).toString();
-        QString catalog_date_loaded = loadCatalogQuery.value(19).toString();
-        QString catalog_app_version = loadCatalogQuery.value(20).toString();
+        QString catalog_include_checksum = loadCatalogQuery.value(17).toString();
+        QString parent_storage = loadCatalogQuery.value(18).toString();
+        QString catalog_is_full_device = loadCatalogQuery.value(19).toString();
+        QString catalog_date_loaded = loadCatalogQuery.value(20).toString();
+        QString catalog_app_version = loadCatalogQuery.value(21).toString();
 
         //Create the item for this row
         //Device fields
@@ -1753,11 +1783,12 @@ void MainWindow::loadDevicesCatalogToModel(){
         rowItems << new QStandardItem(catalog_file_type);           //24
         rowItems << new QStandardItem(catalog_include_hidden);      //25
         rowItems << new QStandardItem(catalog_include_metadata);    //26
-        rowItems << new QStandardItem(parent_storage);              //27
-        rowItems << new QStandardItem(catalog_is_full_device);      //28
-        rowItems << new QStandardItem(catalog_date_loaded);         //29
-        rowItems << new QStandardItem(catalog_app_version);         //30
-        rowItems << new QStandardItem(catalog_file_path);           //31
+        rowItems << new QStandardItem(catalog_include_checksum);    //27
+        rowItems << new QStandardItem(parent_storage);              //28
+        rowItems << new QStandardItem(catalog_is_full_device);      //29
+        rowItems << new QStandardItem(catalog_date_loaded);         //30
+        rowItems << new QStandardItem(catalog_app_version);         //31
+        rowItems << new QStandardItem(catalog_file_path);           //32
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -1814,11 +1845,12 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(24, QHeaderView::ResizeToContents); //File type
     ui->Devices_treeView_DeviceList->header()->resizeSection(25,  75); //Include Hidden
     ui->Devices_treeView_DeviceList->header()->resizeSection(26, 100); //Include metadata
-    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(27, QHeaderView::ResizeToContents); //Parent storage
-    ui->Devices_treeView_DeviceList->header()->resizeSection(28,  50); //Is full device
-    ui->Devices_treeView_DeviceList->header()->resizeSection(29, 150); //Date Loaded
-    ui->Devices_treeView_DeviceList->header()->resizeSection(30,  50); //App Version
-    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(31, QHeaderView::ResizeToContents); //File path
+    ui->Devices_treeView_DeviceList->header()->resizeSection(27, 100); //Include checksum
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(28, QHeaderView::ResizeToContents); //Parent storage
+    ui->Devices_treeView_DeviceList->header()->resizeSection(29,  50); //Is full device
+    ui->Devices_treeView_DeviceList->header()->resizeSection(30, 150); //Date Loaded
+    ui->Devices_treeView_DeviceList->header()->resizeSection(31,  50); //App Version
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(32, QHeaderView::ResizeToContents); //File path
 
     //Show and Hide
     for (int var = 14; var < 24; ++var) {
@@ -1834,27 +1866,27 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
 
     //Hide development fields
-    ui->Devices_treeView_DeviceList->header()->hideSection(28); //catalog_is_full_device
+    ui->Devices_treeView_DeviceList->header()->hideSection(29); //catalog_is_full_device
 
     // Apply DisplayFullTable choice
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->showSection(29); //Date loaded
-        ui->Devices_treeView_DeviceList->header()->showSection(30); //app version
-        ui->Devices_treeView_DeviceList->header()->showSection(31); //File path
+        ui->Devices_treeView_DeviceList->header()->showSection(30); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->showSection(31); //app version
+        ui->Devices_treeView_DeviceList->header()->showSection(32); //File path
 
     } else {
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->hideSection(29); //Date loaded
-        ui->Devices_treeView_DeviceList->header()->hideSection(30); //app version
-        ui->Devices_treeView_DeviceList->header()->hideSection(31); //File path
+        ui->Devices_treeView_DeviceList->header()->hideSection(30); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(31); //app version
+        ui->Devices_treeView_DeviceList->header()->hideSection(32); //File path
     }
 
     if (collection->databaseMode !="Memory") { //Fields that are only relevant in Memory mode
-        ui->Devices_treeView_DeviceList->header()->hideSection(29); //Date loaded
-        ui->Devices_treeView_DeviceList->header()->hideSection(31); //File path
+        ui->Devices_treeView_DeviceList->header()->hideSection(30); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(32); //File path
     }
 
     ui->Devices_treeView_DeviceList->expandAll();
@@ -1957,7 +1989,8 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
         qDebug() << "=== CREATION: Complete UI refresh + Clean Create tab restoration ===";
         if (reportDevice) {
             // Complete UI refresh (like original working code)
-            refreshDifferencesCatalogSelection();
+            refreshDuplicatesDeviceSelection();
+            refreshDifferencesDeviceSelection();
             collection->updateAllDeviceActive();
             loadDevicesView("");
             ui->Filters_label_DisplayCatalog->setText(reportDevice->name);
@@ -2220,7 +2253,7 @@ void MainWindow::updateStorageSelectionStatistics()
     //Prepare the main part of the query
     QString querySQL = QLatin1String(R"(
                                         SELECT
-                                            COUNT (device_id),
+                                            COUNT(device_id),
                                             SUM(device_free_space),
                                             SUM(device_total_space)
                                         FROM device
@@ -2298,32 +2331,53 @@ void MainWindow::saveCatalogChanges()
 
     //Get new values
     //Other values
-    activeDevice->catalog->fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
-    activeDevice->catalog->includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
-    activeDevice->catalog->includeMetadata  = ui->Catalogs_comboBox_MetaDataOption->itemData(ui->Catalogs_comboBox_MetaDataOption->currentIndex(), Qt::UserRole).toString();
+    activeDevice->catalog->fileType         = ui->Catalogs_comboBox_FileType->itemData(
+                ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
+    activeDevice->catalog->includeHidden    = ui->Catalogs_comboBox_IncludeHidden->itemData(
+                ui->Catalogs_comboBox_IncludeHidden->currentIndex(), Qt::UserRole).toBool();
+    activeDevice->catalog->includeMetadata  = ui->Catalogs_comboBox_MetaDataOption->itemData(
+                ui->Catalogs_comboBox_MetaDataOption->currentIndex(), Qt::UserRole).toString();
+    activeDevice->catalog->includeChecksum  = ui->Catalogs_comboBox_ChecksumOption->itemData(
+                ui->Catalogs_comboBox_ChecksumOption->currentIndex(), Qt::UserRole).toString();
     activeDevice->catalog->isFullDevice     = ui->Catalogs_checkBox_isFullDevice->checkState();
     //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
     //Confirm save changes to catalog's files selection
     bool changesToFileSelectionMade = false;
+    bool rescanNeeded = false;
     QString message = tr("Save changes to the definition of the catalog?<br/>");
     message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
 
     if(activeDevice->catalog->fileType       !=previousCatalog.catalog->fileType){
         message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + previousCatalog.catalog->fileType     + "</td><td><b>" + activeDevice->catalog->fileType      + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
     }
     if(activeDevice->catalog->includeHidden  != previousCatalog.catalog->includeHidden){
-        message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(previousCatalog.catalog->includeHidden).toString()   + "</td><td><b>" + QVariant(activeDevice->catalog->includeHidden).toString()   + "</b></td></tr>";
+        QString previousValue = previousCatalog.catalog->includeHidden ? tr("All") : tr("None");
+        QString newValue = activeDevice->catalog->includeHidden ? tr("All") : tr("None");
+        message = message + "<tr><td>" + tr("Include Hidden") + "</td><td>" + previousValue + "</td><td><b>" + newValue + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
     }
     if(activeDevice->catalog->includeMetadata != previousCatalog.catalog->includeMetadata){
         message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(previousCatalog.catalog->includeMetadata).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->includeMetadata).toString() + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
+    }
+    if(activeDevice->catalog->includeChecksum != previousCatalog.catalog->includeChecksum){
+        message = message + "<tr><td>" + tr("Include Checksum") + "</td><td>" + previousCatalog.catalog->includeChecksum + "</td><td><b>" + activeDevice->catalog->includeChecksum + "</b></td></tr>";
+        changesToFileSelectionMade = true;
+        // Rescan needed except when changing from a hash to None (we keep existing hashes)
+        if(!(previousCatalog.catalog->includeChecksum != Catalog::CHECKSUM_NONE
+             && activeDevice->catalog->includeChecksum == Catalog::CHECKSUM_NONE)){
+            rescanNeeded = true;
+        }
     }
     if(activeDevice->catalog->isFullDevice  != previousCatalog.catalog->isFullDevice){
         message = message + "<tr><td>" + tr("Is Full Device") + "</td><td>" + QVariant(previousCatalog.catalog->isFullDevice).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->isFullDevice).toString() + "</b></td></tr>";
         changesToFileSelectionMade = true;
+        rescanNeeded = true;
     }
     message = message + "</table>";
 
@@ -2350,8 +2404,8 @@ void MainWindow::saveCatalogChanges()
             );
     }
 
-    // Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
-    if( changesToFileSelectionMade){
+    // Update the list of files if the changes impact the contents (i.e. path, file type, hidden, checksum)
+    if( rescanNeeded){
         int updatechoice = QMessageBox::warning(this, "Katalog",
                                                 tr("Update the catalog content with the new criteria?\n")
                                                 , QMessageBox::Yes
@@ -2448,267 +2502,321 @@ void MainWindow::importFromVVV()
     //Define file
     QFile sourceFile(sourceFilePath);
 
-    //Prepare a dateTime to add to device or catalog anmes and avoid duplicates
-    QString dateTimeForCatalogName = "_" + QDateTime::currentDateTime().toString("yy-MM-ss hh-mm-ss");
-
-
-    //Open the source file and load all data into the database
+    //Prepare a dateTime to add to device or catalog names and avoid duplicates
+    QString dateTimeForCatalogName = "_" + QDateTime::currentDateTime().toString("yy-MM-dd hh-mm-ss");
 
     // Start animation while cataloging
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    //clear database
-    QSqlQuery deleteQuery(QSqlDatabase::database(m_connectionName));
-    deleteQuery.exec("DELETE FROM file");
-
-    //prepare query to load file info
-    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
-    QString insertSQL = QLatin1String(R"(
-                                    INSERT INTO file (
-                                                    file_name,
-                                                    file_folder_path,
-                                                    file_size,
-                                                    file_date_updated,
-                                                    file_catalog )
-                                    VALUES(
-                                                    :file_name,
-                                                    :file_folder_path,
-                                                    :file_size,
-                                                    :file_date_updated,
-                                                    :file_catalog )
-                                                )");
-    insertQuery.prepare(insertSQL);
-
-    //Prepare insert query for folder
-    QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
-    QString insertFolderSQL = QLatin1String(R"(
-                                        INSERT OR IGNORE INTO folder(
-                                            folder_catalog_name,
-                                            folder_path
-                                         )
-                                        VALUES(
-                                            :folder_catalog_name,
-                                            :folder_path)
-                                        )");
-    insertFolderQuery.prepare(insertFolderSQL);
-
-
-    //prepare file and stream
-
+    //Open file for first pass
     if(!sourceFile.open(QIODevice::ReadOnly)) {
+        QApplication::restoreOverrideCursor();
         QMessageBox::information(this,"Katalog",tr("No catalog found."));
         return;
     }
 
     QTextStream textStream(&sourceFile);
-    QString     line;
+    QString line;
 
     //Process and check Headers line
     line = textStream.readLine();
 
     //Check this is the right source format
     if (line.left(6)!="Volume"){
+        sourceFile.close();
         QApplication::restoreOverrideCursor();
-        QMessageBox::warning(this,"Kotation",tr("A file was found, but could not be loaded") +".\n");
+        QMessageBox::warning(this,"Katalog",tr("A file was found, but could not be loaded") +".\n");
         return;
     }
 
-    //load all files to the database
-
-
-    while (true)
-    {
-        //Read the new line
-        line = textStream.readLine();
-
-        if (line !=""){
-            QStringList fieldList = line.split("\t");
-            if ( fieldList.count()==7 ){
-
-                //Append file data to the database  ( removing " characters)
-                insertQuery.bindValue(":file_name", fieldList[2].remove("\""));
-                insertQuery.bindValue(":file_folder_path", fieldList[1].remove("\""));
-                insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
-                insertQuery.bindValue(":file_date_updated", fieldList[5]);
-                insertQuery.bindValue(":file_catalog", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
-                insertQuery.exec();
-
-                //Append folder data to the database
-                insertFolderQuery.bindValue(":folder_catalog_name", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
-                insertFolderQuery.bindValue(":folder_path",         fieldList[1].remove("\""));
-                insertFolderQuery.exec();
+    // FIRST PASS: Collect unique catalog names
+        QSet<QString> uniqueCatalogNames;
+        while (!textStream.atEnd()) {
+            line = textStream.readLine();
+            if (!line.isEmpty()) {
+                QStringList fieldList = line.split("\t");
+                if (fieldList.count() == 7) {
+                    QString catalogName = fieldList[0];
+                    catalogName.remove("\"");
+                    catalogName.replace("/", "_");
+                    catalogName += dateTimeForCatalogName;
+                    uniqueCatalogNames.insert(catalogName);
+                }
             }
         }
-        else
-            break;
-    }
+        sourceFile.close();
 
-    //complete table for missing folders
-    createMissingParentDirectories();
+        // CREATE DEVICES AND CATALOGS, BUILD NAME->ID MAP
+        QString virtualCatalogFolder = "/import";
 
-    //close source file
-    sourceFile.close();
+        //Create a virtual device to host the new catalogs
+        Device importVirtualDevice;
+        importVirtualDevice.generateDeviceID();
+        importVirtualDevice.type = "Virtual";
+        importVirtualDevice.name = "imports from VVV " + dateTimeForCatalogName;
+        importVirtualDevice.parentID = 0;
+        importVirtualDevice.groupID = 1;
+        importVirtualDevice.path = virtualCatalogFolder;
+        importVirtualDevice.dateTimeUpdated = QDateTime::currentDateTime();
+        importVirtualDevice.insertDevice();
+        collection->saveDeviceTableToFile();
 
-    //Stream the list of files and folders out to the target catalog file(s)
-    //Define a root folder, compensating for the fact that VVV export does not contain one
+        // Map catalog name -> catalog ID and Device pointer
+        QMap<QString, qint64> catalogNameToId;
+        QMap<QString, Device*> catalogNameToDevice;
 
-    QString virtualCatalogFolder = "/import";
+        for (const QString& catalogName : uniqueCatalogNames) {
+            //Create Device
+            Device* importedDevice = new Device();
+            importedDevice->generateDeviceID();
+            importedDevice->name = catalogName;
+            importedDevice->type = "Catalog";
+            importedDevice->parentID = importVirtualDevice.ID;
+            importedDevice->groupID = 1;
+            importedDevice->path = virtualCatalogFolder;
+            importedDevice->catalog->generateID();
+            importedDevice->externalID = importedDevice->catalog->ID;
+            importedDevice->dateTimeUpdated = QDateTime::currentDateTime();
+            importedDevice->insertDevice();
 
-    //Get a list of the source catalogs
-    QString listCatalogSQL = QLatin1String(R"(
-                                    SELECT DISTINCT file_catalog
-                                    FROM file
+            //Get info for the new catalog
+            importedDevice->catalog->name = importedDevice->name;
+            importedDevice->catalog->filePath = collection->folder + "/" + importedDevice->name + ".idx";
+            importedDevice->catalog->sourcePath = virtualCatalogFolder;
+            importedDevice->catalog->includeHidden = 1;
+            importedDevice->catalog->includeSymblinks = 0;
+            importedDevice->catalog->isFullDevice = 0;
+            importedDevice->catalog->includeMetadata = Catalog::METADATA_NONE;
+            importedDevice->catalog->appVersion = currentVersion;
+            importedDevice->catalog->insertCatalog();
+
+            // Store mapping
+            catalogNameToId[catalogName] = importedDevice->catalog->ID;
+            catalogNameToDevice[catalogName] = importedDevice;
+        }
+
+    // SECOND PASS: Import files and folders with correct IDs
+
+        //Clear database tables
+        QSqlQuery deleteQuery(QSqlDatabase::database(m_connectionName));
+        deleteQuery.exec("DELETE FROM file");
+        deleteQuery.exec("DELETE FROM folder");
+
+        //Prepare query to load file info
+        QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
+        QString insertSQL = QLatin1String(R"(
+                                        INSERT INTO file (
+                                                        file_catalog_id,
+                                                        file_name,
+                                                        file_folder_path,
+                                                        file_size,
+                                                        file_date_updated,
+                                                        file_catalog )
+                                        VALUES(
+                                                        :file_catalog_id,
+                                                        :file_name,
+                                                        :file_folder_path,
+                                                        :file_size,
+                                                        :file_date_updated,
+                                                        :file_catalog )
+                                                    )");
+        insertQuery.prepare(insertSQL);
+
+        //Prepare insert query for folder
+        QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
+        Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+        QString insertFolderSQL;
+        if (dbType == Database::DatabaseType::PostgreSQL) {
+            // PostgreSQL requires ON CONFLICT clause
+            insertFolderSQL = QString(R"(
+                                            %1 INTO folder(
+                                                folder_catalog_id,
+                                                folder_path
+                                             )
+                                            VALUES(
+                                                :folder_catalog_id,
+                                                :folder_path)
+                                            ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING
+                                            )").arg(Database::getInsertOrIgnorePrefix(dbType));
+        } else {
+            insertFolderSQL = QString(R"(
+                                            %1 INTO folder(
+                                                folder_catalog_id,
+                                                folder_path
+                                             )
+                                            VALUES(
+                                                :folder_catalog_id,
+                                                :folder_path)
+                                            )").arg(Database::getInsertOrIgnorePrefix(dbType));
+        }
+        insertFolderQuery.prepare(insertFolderSQL);
+
+        //Re-open file for second pass
+        if(!sourceFile.open(QIODevice::ReadOnly)) {
+            QApplication::restoreOverrideCursor();
+            QMessageBox::information(this,"Katalog",tr("No catalog found."));
+            return;
+        }
+
+        textStream.setDevice(&sourceFile);
+        textStream.readLine(); // Skip header
+
+        while (!textStream.atEnd()) {
+            line = textStream.readLine();
+            if (!line.isEmpty()) {
+                QStringList fieldList = line.split("\t");
+                if (fieldList.count() == 7) {
+                    QString catalogName = fieldList[0];
+                    catalogName.remove("\"");
+                    catalogName.replace("/", "_");
+                    catalogName += dateTimeForCatalogName;
+
+                    qint64 catalogId = catalogNameToId.value(catalogName, 0);
+                    QString folderPath = virtualCatalogFolder + QString(fieldList[1]).remove("\"");
+
+                    //Append file data to the database
+                    insertQuery.bindValue(":file_catalog_id", catalogId);
+                    insertQuery.bindValue(":file_name", QString(fieldList[2]).remove("\""));
+                    insertQuery.bindValue(":file_folder_path", folderPath);
+                    insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
+                    insertQuery.bindValue(":file_date_updated", fieldList[5]);
+                    insertQuery.bindValue(":file_catalog", catalogName);
+                    insertQuery.exec();
+
+                    //Append folder data to the database
+                    insertFolderQuery.bindValue(":folder_catalog_id", catalogId);
+                    insertFolderQuery.bindValue(":folder_path", folderPath);
+                    insertFolderQuery.exec();
+                }
+            }
+        }
+
+        sourceFile.close();
+
+        //Insert root folder for each catalog
+        for (auto it = catalogNameToId.begin(); it != catalogNameToId.end(); ++it) {
+            insertFolderQuery.bindValue(":folder_catalog_id", it.value());
+            insertFolderQuery.bindValue(":folder_path", virtualCatalogFolder);
+            insertFolderQuery.exec();
+        }
+
+        //Complete table for missing folders
+        createMissingParentDirectories();
+
+    // EXPORT CATALOG FILES AND UPDATE STATISTICS
+
+        //Iterate each catalog to generate related files
+        for (auto it = catalogNameToDevice.begin(); it != catalogNameToDevice.end(); ++it) {
+            Device* importedDevice = it.value();
+
+            //Update total number and size of the files
+            QString statsSQL = QLatin1String(R"(
+                                                        SELECT COUNT(*), SUM(file_size)
+                                                        FROM file
+                                                        WHERE file_catalog =:file_catalog
                                                 )");
-    QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
-    listCatalogQuery.prepare(listCatalogSQL);
-    listCatalogQuery.exec();
+            QSqlQuery statsQuery(QSqlDatabase::database(m_connectionName));
+            statsQuery.prepare(statsSQL);
+            statsQuery.bindValue(":file_catalog", importedDevice->name);
+            statsQuery.exec();
+            statsQuery.next();
 
-    //Create a virtual device to host the new catalogs
-    Device importVirtualDevice;
-    importVirtualDevice.generateDeviceID();
-    importVirtualDevice.type ="Virtual";
-    importVirtualDevice.name = "imports from VVV " + dateTimeForCatalogName;
-    importVirtualDevice.parentID = 0;
-    importVirtualDevice.groupID = 1;
-    importVirtualDevice.path = virtualCatalogFolder;
-    importVirtualDevice.dateTimeUpdated = QDateTime::currentDateTime();
-    importVirtualDevice.insertDevice();
-    collection->saveDeviceTableToFile();
+            importedDevice->totalFileCount = statsQuery.value(0).toLongLong();
+            importedDevice->totalFileSize  = statsQuery.value(1).toLongLong();
+            importedDevice->saveDevice();
+            collection->saveDeviceTableToFile();
 
-    //Iterate each catalog to generate related files
-    while (listCatalogQuery.next()){
+            //Export the catalog file
 
-        //Create Device
-        Device importedDevice;
-        importedDevice.generateDeviceID();
-        importedDevice.name = listCatalogQuery.value(0).toString();
-        importedDevice.type ="Catalog";
-        importedDevice.parentID = importVirtualDevice.ID;
-        importedDevice.groupID = 1;
-        importedDevice.path = virtualCatalogFolder;
-        importedDevice.catalog->generateID();
-        importedDevice.externalID = importedDevice.catalog->ID;
-        importedDevice.dateTimeUpdated = QDateTime::currentDateTime();
-        importedDevice.insertDevice();
+            //Prepare the catalog file path
+            QFile fileOut(importedDevice->catalog->filePath);
 
-        //Get info for the new catalog
-        importedDevice.catalog->name = importedDevice.name;
-        importedDevice.catalog->filePath = collection->folder + "/" + importedDevice.name + ".idx";
-        importedDevice.catalog->sourcePath = virtualCatalogFolder;
-        importedDevice.catalog->includeHidden = 1;
-        importedDevice.catalog->includeSymblinks = 0;
-        importedDevice.catalog->isFullDevice = 0;
-        importedDevice.catalog->includeMetadata = Catalog::METADATA_NONE;
-        importedDevice.catalog->appVersion = currentVersion;
-        importedDevice.catalog->insertCatalog();
+            //Prepare the stream and file headers
+            QTextStream out(&fileOut);
+            if(fileOut.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 
-        //Update total number and size of the files
-        QString listCatalogSQL = QLatin1String(R"(
-                                                    SELECT COUNT(*), SUM(file_size)
-                                                    FROM file
-                                                    WHERE file_catalog =:file_catalog
-                                            )");
-        QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
-        listCatalogQuery.prepare(listCatalogSQL);
-        listCatalogQuery.bindValue(":file_catalog", importedDevice.name);
-        listCatalogQuery.exec();
-        listCatalogQuery.next();
-
-        importedDevice.totalFileCount = listCatalogQuery.value(0).toLongLong();
-        importedDevice.totalFileSize  = listCatalogQuery.value(1).toLongLong();
-        importedDevice.saveDevice();
-        collection->saveDeviceTableToFile();
-
-        //Save device
-        collection->saveDeviceTableToFile();
-
-
-        //Export the catalog file
-
-        //Prepare the catalog file path
-        QFile fileOut(importedDevice.catalog->filePath);
-
-        //Prepare the stream and file headers
-        QTextStream out(&fileOut);
-        if(fileOut.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-
-            out  << "<catalogSourcePath>" + virtualCatalogFolder << "\n"
-                << "<catalogFileCount>" + QString::number(importedDevice.totalFileCount)    << "\n"
-                << "<catalogTotalFileSize>" + QString::number(importedDevice.totalFileSize) << "\n"
-                << "<catalogIncludeHidden>"       << "\n"
-                << "<catalogFileType>"            << "\n"
-                << "<catalogStorage>"             << "\n"
-                << "<catalogIncludeSymblinks>"    << "\n"
-                << "<catalogIsFullDevice>"        << "\n"
-                << "<catalogIncludeMetadata>"     << "\n"
-                << "<catalogAppVersion>" + currentVersion << "\n"
-                << "<catalogID>" + QString::number(importedDevice.externalID) << "\n";
-        }
-
-        //Get the list of file to add
-        QString listFilesSQL = QLatin1String(R"(
-                                                SELECT
-                                                    file_folder_path,
-                                                    file_name,
-                                                    file_size,
-                                                    file_date_updated
-                                                FROM file
-                                                WHERE file_catalog =:file_catalog
-                                            )");
-        QSqlQuery listFilesQuery(QSqlDatabase::database(m_connectionName));
-        listFilesQuery.prepare(listFilesSQL);
-        listFilesQuery.bindValue(":file_catalog", importedDevice.name);
-        listFilesQuery.exec();
-
-        //Write the results in the file
-        while (listFilesQuery.next()) {
-            out << virtualCatalogFolder + listFilesQuery.value(0).toString() + "/" + listFilesQuery.value(1).toString();
-            out << '\t';
-            out << listFilesQuery.value(2).toString();
-            out << '\t';
-            out << listFilesQuery.value(3).toString();
-            out << '\n';
-        }
-
-        fileOut.close();
-
-        //Refresh catalogs
-        collection->loadCatalogFilesToTable();
-
-
-        //Export the folder file
-
-        //Prepare the fodlers file path
-        QFile fileFolderOut(collection->folder + "/" + importedDevice.name + ".folders.idx");
-
-        //Prepare the stream and file headers
-        QTextStream folderOut(&fileFolderOut);
-        if(fileFolderOut.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+                out  << "<catalogSourcePath>" + virtualCatalogFolder << "\n"
+                    << "<catalogFileCount>" + QString::number(importedDevice->totalFileCount)    << "\n"
+                    << "<catalogTotalFileSize>" + QString::number(importedDevice->totalFileSize) << "\n"
+                    << "<catalogIncludeHidden>"       << "\n"
+                    << "<catalogFileType>"            << "\n"
+                    << "<catalogStorage>"             << "\n"
+                    << "<catalogIncludeSymblinks>"    << "\n"
+                    << "<catalogIsFullDevice>"        << "\n"
+                    << "<catalogIncludeMetadata>"     << "\n"
+                    << "<catalogAppVersion>" + currentVersion << "\n"
+                    << "<catalogID>" + QString::number(importedDevice->externalID) << "\n";
+            }
 
             //Get the list of file to add
-            QString listFoldersSQL = QLatin1String(R"(
-                                            SELECT
-                                                folder_catalog_name,
-                                                folder_path
-                                            FROM folder
-                                            WHERE folder_catalog_id =:folder_catalog_id
-                                        )");
-            QSqlQuery listFoldersQuery(QSqlDatabase::database(m_connectionName));
-            listFoldersQuery.prepare(listFoldersSQL);
-            listFoldersQuery.bindValue(":folder_catalog_id", importedDevice.externalID);
-            listFoldersQuery.exec();
+            QString listFilesSQL = QLatin1String(R"(
+                                                    SELECT
+                                                        file_folder_path,
+                                                        file_name,
+                                                        file_size,
+                                                        file_date_updated
+                                                    FROM file
+                                                    WHERE file_catalog =:file_catalog
+                                                )");
+            QSqlQuery listFilesQuery(QSqlDatabase::database(m_connectionName));
+            listFilesQuery.prepare(listFilesSQL);
+            listFilesQuery.bindValue(":file_catalog", importedDevice->name);
+            listFilesQuery.exec();
 
             //Write the results in the file
-            while (listFoldersQuery.next()) {
-                folderOut << listFoldersQuery.value(0).toString();
-                folderOut << '\t';
-                folderOut << virtualCatalogFolder + listFoldersQuery.value(1).toString();
-                folderOut << '\n';
+            while (listFilesQuery.next()) {
+                // file_folder_path already includes the /import prefix
+                out << listFilesQuery.value(0).toString() + "/" + listFilesQuery.value(1).toString();
+                out << '\t';
+                out << listFilesQuery.value(2).toString();
+                out << '\t';
+                out << listFilesQuery.value(3).toString();
+                out << '\n';
             }
+
+            fileOut.close();
+
+            //Refresh catalogs
+            collection->loadCatalogFilesToTable();
+
+
+            //Export the folder file
+
+            //Prepare the folders file path
+            QFile fileFolderOut(collection->folder + "/" + importedDevice->name + ".folders.idx");
+
+            //Prepare the stream and file headers
+            QTextStream folderOut(&fileFolderOut);
+            if(fileFolderOut.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+
+                //Get the list of file to add
+                QString listFoldersSQL = QLatin1String(R"(
+                                                SELECT
+                                                    folder_catalog_id,
+                                                    folder_path
+                                                FROM folder
+                                                WHERE folder_catalog_id =:folder_catalog_id
+                                            )");
+                QSqlQuery listFoldersQuery(QSqlDatabase::database(m_connectionName));
+                listFoldersQuery.prepare(listFoldersSQL);
+                listFoldersQuery.bindValue(":folder_catalog_id", importedDevice->externalID);
+                listFoldersQuery.exec();
+
+                //Write the results in the file
+                while (listFoldersQuery.next()) {
+                    // folder_path already includes the /import prefix
+                    folderOut << listFoldersQuery.value(0).toString();
+                    folderOut << '\t';
+                    folderOut << listFoldersQuery.value(1).toString();
+                    folderOut << '\n';
+                }
+            }
+
+            fileFolderOut.close();
         }
 
-        fileFolderOut.close();
-    }
+    //Cleanup allocated Device pointers
+    qDeleteAll(catalogNameToDevice);
 
     //update virtual device
     importVirtualDevice.updateNumbersFromChildren();
@@ -2776,6 +2884,132 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
         }
     }
     return maxLevel + 1;
+}
+//--------------------------------------------------------------------------
+void MainWindow::verifyCatalogChecksums()
+{
+    if (!activeDevice || !activeDevice->catalog) {
+        return;
+    }
+
+    Catalog *catalog = activeDevice->catalog;
+
+    // In Memory mode, load catalog first if needed
+    if (collection->databaseMode == "Memory") {
+        if (catalog->dateLoaded < catalog->dateUpdated || catalog->dateLoaded.isNull()) {
+            qDebug() << "Memory mode: Loading catalog before verification";
+
+            bool stopRequested = false;
+            QMutex mutex;
+
+            // Connect to catalog loading progress using statusbar
+            QMetaObject::Connection progressConnection = connect(catalog, &Catalog::loadProgress,
+                this, [this, catalog](int current, int total) {
+
+                StatusBarMessageBuilder builder;
+                builder.setOperation(tr("Verify Checksums"))
+                    .setStatus(tr("Loading"))
+                    .setDeviceContext(1, 1, catalog->name)
+                    .setProcess(tr("files"), current, total);
+
+                statusBar()->show();
+                statusBarLabel->setText(builder.build());
+                QCoreApplication::processEvents();
+            });
+
+            catalog->loadCatalogFileListToTable(mutex, stopRequested);
+
+            disconnect(progressConnection);
+
+            // Clear status bar
+            statusBarLabel->clear();
+        }
+    }
+
+    // Count files to verify
+    int totalFiles = FileChecksum::countFilesWithChecksum(m_connectionName, catalog->ID);
+
+    if (totalFiles == 0) {
+        QMessageBox::information(this, tr("Katalog"),
+                                tr("No checksums to verify."));
+        return;
+    }
+
+    // Confirm
+    int choice = QMessageBox::question(this, tr("Katalog"),
+                                      tr("Verify checksums for %1 files?").arg(totalFiles),
+                                      QMessageBox::Yes | QMessageBox::No);
+
+    if (choice != QMessageBox::Yes) {
+        return;
+    }
+
+    // Run verification with statusbar progress
+    bool userCancelled = false;
+
+    auto shouldContinue = [&]() {
+        return !userCancelled;
+    };
+
+    auto progressCallback = [&](int current, int total, const QString &fileName) {
+        StatusBarMessageBuilder builder;
+        builder.setOperation(tr("Verify Checksums"))
+            .setStatus(tr("Verifying"))
+            .setDeviceContext(1, 1, catalog->name)
+            .setProcess(fileName, current, total);
+
+        statusBar()->show();  // ← ADD THIS
+        statusBarLabel->setText(builder.build());
+        QCoreApplication::processEvents();
+    };
+
+    // Run verification
+    FileChecksum::CatalogVerificationResult result =
+        FileChecksum::verifyCatalogChecksums(m_connectionName,
+                                            catalog->ID,
+                                            catalog->sourcePath,
+                                            shouldContinue,
+                                            progressCallback);
+
+    // Clear status bar
+    statusBarLabel->clear();
+
+    // Show results
+    QString resultMessage;
+    QMessageBox::Icon icon;
+
+    if (result.mismatches == 0 && result.missing == 0) {
+        // All good
+        icon = QMessageBox::Information;
+        resultMessage = tr("Verified:") + " " + QString::number(result.verified) + "\n\n"
+                      + tr("All checksums match.");
+    } else {
+        // Problems found
+        icon = QMessageBox::Warning;
+        resultMessage = tr("Verified:") + " " + QString::number(result.verified) + "\n"
+                      + tr("Mismatches:") + " " + QString::number(result.mismatches) + "\n"
+                      + tr("Missing:") + " " + QString::number(result.missing) + "\n";
+
+        if (result.mismatches > 0) {
+            resultMessage += "\n" + tr("Mismatched files:") + "\n";
+            for (const QString &file : result.mismatchedFiles) {
+                resultMessage += "  " + file + "\n";
+            }
+        }
+
+        if (result.missing > 0) {
+            resultMessage += "\n" + tr("Missing files:") + "\n";
+            for (const QString &file : result.missingFiles) {
+                resultMessage += "  " + file + "\n";
+            }
+        }
+    }
+
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setIcon(icon);
+    msgBox.setText(resultMessage);
+    msgBox.exec();
 }
 //--------------------------------------------------------------------------
 
@@ -3471,23 +3705,46 @@ void MainWindow::importVirtualAssignmentsToDevices()
     }
 
     //Insert new devices
-    querySQL = QLatin1String(R"(
-                        INSERT OR IGNORE INTO device (
-                            device_id,
-                            device_parent_id,
-                            device_name,
-                            device_type,
-                            device_group_id
-                        )
-                        SELECT
-                            device_id,
-                            device_parent_id,
-                            device_name,
-                            device_type,
-                            device_group_id
-                        FROM
-                            temp_device
-                    )");
+    Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+    if (dbType == Database::DatabaseType::PostgreSQL) {
+        // PostgreSQL requires ON CONFLICT clause
+        querySQL = QString(R"(
+                            %1 INTO device (
+                                device_id,
+                                device_parent_id,
+                                device_name,
+                                device_type,
+                                device_group_id
+                            )
+                            SELECT
+                                device_id,
+                                device_parent_id,
+                                device_name,
+                                device_type,
+                                device_group_id
+                            FROM
+                                temp_device
+                            ON CONFLICT (device_id) DO NOTHING
+                        )").arg(Database::getInsertOrIgnorePrefix(dbType));
+    } else {
+        querySQL = QString(R"(
+                            %1 INTO device (
+                                device_id,
+                                device_parent_id,
+                                device_name,
+                                device_type,
+                                device_group_id
+                            )
+                            SELECT
+                                device_id,
+                                device_parent_id,
+                                device_name,
+                                device_type,
+                                device_group_id
+                            FROM
+                                temp_device
+                        )").arg(Database::getInsertOrIgnorePrefix(dbType));
+    }
     query.prepare(querySQL);
     query.exec();
 
@@ -4376,4 +4633,141 @@ void MainWindow::convertStorage()
     storageFile.close();
 
     collection->saveStorageTableToFile();
+}
+
+
+
+QStandardItemModel* MainWindow::buildFilteredDeviceTreeModel(QObject *parent)
+{
+    // Build a device tree model filtered by selectedDevice->deviceIDList
+    // This reuses the same SQL logic as loadDevicesTreeToModel() but returns the model
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL;
+
+    // Use recursive CTE to get device hierarchy
+    querySQL = QLatin1String(R"(
+        WITH RECURSIVE device_tree AS (
+            -- Base case: start with root devices (Physical Group and Virtual Groups)
+            SELECT
+                device_id,
+                device_parent_id,
+                device_name,
+                device_type,
+                device_external_id,
+                device_path,
+                device_total_file_size,
+                device_total_file_count,
+                device_total_space,
+                device_free_space,
+                device_active,
+                device_group_id,
+                device_date_updated,
+                0 AS level
+            FROM device
+            WHERE device_parent_id = 0
+
+            UNION ALL
+
+            -- Recursive case: children
+            SELECT
+                child.device_id,
+                child.device_parent_id,
+                child.device_name,
+                child.device_type,
+                child.device_external_id,
+                child.device_path,
+                child.device_total_file_size,
+                child.device_total_file_count,
+                child.device_total_space,
+                child.device_free_space,
+                child.device_active,
+                child.device_group_id,
+                child.device_date_updated,
+                parent.level + 1 AS level
+            FROM device_tree parent
+            JOIN device child ON child.device_parent_id = parent.device_id
+        )
+        SELECT
+            device_id,
+            device_parent_id,
+            device_name,
+            device_type,
+            device_external_id,
+            device_active
+        FROM device_tree
+        WHERE 1=1
+    )");
+
+    // Apply filtering based on selectedDevice->deviceIDList if not empty
+    if (!selectedDevice->deviceIDList.isEmpty() && selectedDevice->ID != 0) {
+        // Build IN clause for filtering
+        QStringList idStrings;
+        for (int id : selectedDevice->deviceIDList) {
+            idStrings << QString::number(id);
+        }
+
+        // Include the devices and their ancestors to maintain tree structure
+        querySQL += QString(" AND (device_id IN (%1) OR device_id IN ("
+                            "    WITH RECURSIVE ancestors AS ("
+                            "        SELECT device_parent_id FROM device WHERE device_id IN (%1)"
+                            "        UNION"
+                            "        SELECT d.device_parent_id FROM device d"
+                            "        JOIN ancestors a ON d.device_id = a.device_parent_id"
+                            "    )"
+                            "    SELECT device_parent_id FROM ancestors WHERE device_parent_id > 0"
+                            "))").arg(idStrings.join(","));
+    }
+
+    querySQL += " ORDER BY level ASC, device_type DESC, device_parent_id ASC, device_id ASC";
+
+    query.prepare(querySQL);
+    query.exec();
+
+    // Create the model with minimal columns: Name, Type, Active, ID, ParentID
+    QStandardItemModel *model = new QStandardItemModel(parent);
+    model->setHorizontalHeaderLabels({
+        tr("Name"),         // 0
+        tr("Device Type"),  // 1
+        tr("Active"),       // 2
+        tr("ID"),           // 3
+        tr("Parent ID")     // 4
+    });
+
+    // Map to store items by ID for building hierarchy
+    QMap<int, QStandardItem*> itemMap;
+
+    while (query.next()) {
+        int id = query.value(0).toInt();
+        int parentId = query.value(1).toInt();
+        QString name = query.value(2).toString();
+        QString type = query.value(3).toString();
+        //int externalId = query.value(4).toInt();
+        bool isActive = query.value(5).toBool();
+
+        // Create row items
+        QList<QStandardItem*> rowItems;
+        rowItems << new QStandardItem(name);                        // 0 - Name
+        rowItems << new QStandardItem(type);                        // 1 - Type
+        rowItems << new QStandardItem(QString::number(isActive));   // 2 - Active
+        rowItems << new QStandardItem(QString::number(id));         // 3 - ID
+        rowItems << new QStandardItem(QString::number(parentId));   // 4 - Parent ID
+
+        QStandardItem* item = rowItems.at(0);
+        QStandardItem* parentItem = itemMap.value(parentId);
+
+        // Add to model
+        if (parentId == 0) {
+            model->appendRow(rowItems);
+        } else if (parentItem) {
+            parentItem->appendRow(rowItems);
+        } else {
+            // Parent not found, add at root level
+            model->appendRow(rowItems);
+        }
+
+        itemMap.insert(id, item);
+    }
+
+    return model;
 }

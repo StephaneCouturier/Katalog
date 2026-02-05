@@ -135,8 +135,12 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                 qDebug() << "Window restored to:" << size() << "at position:" << pos();
             });
 
-            //Hide specific UI items
+            //Hide Development UI items
             hideDevelopmentUIItems();
+
+            QButtonGroup buttonGroupDuplicates;
+            buttonGroupDuplicates.addButton(ui->Search_radioButton_DuplicatesWithinSelectedDevice);
+            buttonGroupDuplicates.addButton(ui->Search_radioButton_DuplicatesCompareTwoDevices);
 
             QButtonGroup buttonGroupDevices;
             buttonGroupDevices.addButton(ui->Devices_radioButton_DeviceTree);
@@ -146,13 +150,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             QButtonGroup buttonGroupBackUp;
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Source);
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Target);
-
-            QButtonGroup buttonGroupCreateFilesType;
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Any);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Audio);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Image);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Text);
-            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Video);
 
         //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
@@ -184,6 +181,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Devices_widget_ReplaceCatalogsOption->hide();
             ui->Search_widget_DifferencesDevices->hide();
             ui->Create_widget_SambaSettings->hide();
+            ui->Search_widget_Duplicates->hide();
+            //Search: hide KRename option if not linux
+            #ifndef Q_OS_LINUX
+                ui->Search_comboBox_SelectProcess->removeItem(2);
+            #endif
 
         //Hide file edtion items
             if( collection->databaseMode != "Memory"){
@@ -255,8 +257,11 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             //Default path to scan
             ui->Create_lineEdit_NewCatalogPath->setText("/");
 
-            //Initiate comboboxes for metadata fields
+            //Initiate comboboxes for metadata & checksum fields
+            initiateFileTypeFields();
             initiateMetadataFields();
+            initiateChecksumFields();
+            initiateIncludeHiddenFields();
 
             //Always Load the file system for the treeview
             loadFileSystem("/");

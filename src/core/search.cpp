@@ -74,6 +74,13 @@ Search::Search(QObject *parent) : QAbstractTableModel(parent)
     differencesOnDate = false;
     differencesDeviceID1 = 0;
     differencesDeviceID2 = 0;
+    searchDuplicatesOnChecksum = false;
+    searchDuplicatesChecksumEqual = true;  // default to "="
+    duplicatesCompareDevices = false;      // default to Within selected device
+    duplicatesDeviceID1 = 0;
+    duplicatesDeviceID2 = 0;
+    differencesOnChecksum = false;
+    differencesChecksumEqual = true;       // default to "="
     searchOnFolderCriteria = false;
     showFoldersOnly = false;
     searchOnTags = false;
@@ -121,7 +128,7 @@ int Search::rowCount(const QModelIndex &parent) const
 int Search::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 19; // Aligned with Explore model
+    return 21; // Aligned with Explore model
 }
 
 QVariant Search::data(const QModelIndex &index, int role) const
@@ -149,6 +156,8 @@ QVariant Search::data(const QModelIndex &index, int role) const
     case 16: return (index.row() < audioArtists.size()) ? QString(audioArtists[index.row()]) : QString("");
     case 17: return (index.row() < audioAlbums.size()) ? QString(audioAlbums[index.row()]) : QString("");
     case 18: return (index.row() < audioTitles.size()) ? QString(audioTitles[index.row()]) : QString("");
+    case 19: return (index.row() < checksumSha256s.size()) ? QString(checksumSha256s[index.row()]) : QString("");
+    case 20: return (index.row() < checksumExtractionDates.size()) ? QString(checksumExtractionDates[index.row()]) : QString("");
     }
     return QVariant();
 }
@@ -177,6 +186,8 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         case 16: return QString(QApplication::translate("MainWindow","Artist"));
         case 17: return QString(QApplication::translate("MainWindow","Album"));
         case 18: return QString(QApplication::translate("MainWindow","Title"));
+        case 19: return QString(QApplication::translate("MainWindow","Checksum")+" (SHA256)");
+        case 20: return QString(QApplication::translate("MainWindow","Checksum Date"));
         }
     }
     return QVariant();
@@ -312,23 +323,23 @@ void Search::setMultipliers()
     // Define a size multiplier depending on the size unit selected
     sizeMultiplierMin = 1;
     if (selectedMinSizeUnit == SIZE_UNIT_KIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024;
+        sizeMultiplierMin = qint64(1024);
     else if (selectedMinSizeUnit == SIZE_UNIT_MIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024;
+        sizeMultiplierMin = qint64(1024) * 1024;
     else if (selectedMinSizeUnit == SIZE_UNIT_GIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024 * 1024;
+        sizeMultiplierMin = qint64(1024) * 1024 * 1024;
     else if (selectedMinSizeUnit == SIZE_UNIT_TIB)
-        sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024 * 1024 * 1024;
+        sizeMultiplierMin = qint64(1024) * 1024 * 1024 * 1024;
 
     sizeMultiplierMax = 1;
     if (selectedMaxSizeUnit == SIZE_UNIT_KIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024;
+        sizeMultiplierMax = qint64(1024);
     else if (selectedMaxSizeUnit == SIZE_UNIT_MIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024;
+        sizeMultiplierMax = qint64(1024) * 1024;
     else if (selectedMaxSizeUnit == SIZE_UNIT_GIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024 * 1024;
+        sizeMultiplierMax = qint64(1024) * 1024 * 1024;
     else if (selectedMaxSizeUnit == SIZE_UNIT_TIB)
-        sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024 * 1024 * 1024;
+        sizeMultiplierMax = qint64(1024) * 1024 * 1024 * 1024;
 }
 
 void Search::processResults()
@@ -529,10 +540,17 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             duplicates_name,
             duplicates_size,
             duplicates_date_modified,
+            duplicates_checksum,
+            duplicates_checksum_equal,
+            duplicates_compare_checked,
+            duplicates_device1_ID,
+            duplicates_device2_ID,
             differences_checked,
             differences_name,
             differences_size,
             differences_date_modified,
+            differences_checksum,
+            differences_checksum_equal,
             differences_catalogs,
             folder_criteria_checked,
             show_folders,
@@ -579,10 +597,17 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             :duplicates_name,
             :duplicates_size,
             :duplicates_date_modified,
+            :duplicates_checksum,
+            :duplicates_checksum_equal,
+            :duplicates_compare_checked,
+            :duplicates_device1_ID,
+            :duplicates_device2_ID,
             :differences_checked,
             :differences_name,
             :differences_size,
             :differences_date_modified,
+            :differences_checksum,
+            :differences_checksum_equal,
             :differences_catalogs,
             :folder_criteria_checked,
             :show_folders,
@@ -632,6 +657,9 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":duplicates_name", searchDuplicatesOnName);
     query.bindValue(":duplicates_size", searchDuplicatesOnSize);
     query.bindValue(":duplicates_date_modified", searchDuplicatesOnDate);
+    query.bindValue(":duplicates_compare_checked", duplicatesCompareDevices);
+    query.bindValue(":duplicates_device1_ID", duplicatesDeviceID1);
+    query.bindValue(":duplicates_device2_ID", duplicatesDeviceID2);
     query.bindValue(":differences_checked", searchOnDifferences);
     query.bindValue(":differences_name", differencesOnName);
     query.bindValue(":differences_size", differencesOnSize);
@@ -660,6 +688,10 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":metadata_duration_checked", searchOnMetadataDuration);
     query.bindValue(":metadata_duration_min", metadataDurationMin.toString("HH:mm:ss"));
     query.bindValue(":metadata_duration_max", metadataDurationMax.toString("HH:mm:ss"));
+    query.bindValue(":duplicates_checksum", searchDuplicatesOnChecksum);
+    query.bindValue(":duplicates_checksum_equal", searchDuplicatesChecksumEqual);
+    query.bindValue(":differences_checksum", differencesOnChecksum);
+    query.bindValue(":differences_checksum_equal", differencesChecksumEqual);
     query.exec();
     qDebug() << "Search::saveSearchHistoryToTable: lastError" << query.lastError();
 }
@@ -692,10 +724,17 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
             duplicates_name,
             duplicates_size,
             duplicates_date_modified,
+            duplicates_checksum,
+            duplicates_checksum_equal,
+            duplicates_compare_checked,
+            duplicates_device1_ID,
+            duplicates_device2_ID,
             differences_checked,
             differences_name,
             differences_size,
             differences_date_modified,
+            differences_checksum,
+            differences_checksum_equal,
             differences_catalogs,
             folder_criteria_checked,
             show_folders,
@@ -748,44 +787,51 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
         searchDuplicatesOnName = query.value(19).toBool();
         searchDuplicatesOnSize = query.value(20).toBool();
         searchDuplicatesOnDate = query.value(21).toBool();
-        searchOnDifferences = query.value(22).toBool();
-        differencesOnName = query.value(23).toBool();
-        differencesOnSize = query.value(24).toBool();
-        differencesOnDate = query.value(25).toBool();
-        differencesDevices = query.value(26).toString().split("||");
+        searchDuplicatesOnChecksum = query.value(22).toBool();
+        searchDuplicatesChecksumEqual = query.value(23).toBool();
+        duplicatesCompareDevices = query.value(24).toBool();
+        duplicatesDeviceID1 = query.value(25).toInt();
+        duplicatesDeviceID2 = query.value(26).toInt();
+        searchOnDifferences = query.value(27).toBool();
+        differencesOnName = query.value(28).toBool();
+        differencesOnSize = query.value(29).toBool();
+        differencesOnDate = query.value(30).toBool();
+        differencesOnChecksum = query.value(31).toBool();
+        differencesChecksumEqual = query.value(32).toBool();
+        differencesDevices = query.value(33).toString().split("||");
         if (differencesDevices.length() > 1) {
             differencesDeviceID1 = differencesDevices[0].toInt();
             differencesDeviceID2 = differencesDevices[1].toInt();
         }
-        searchOnFolderCriteria = query.value(27).toBool();
-        showFoldersOnly = query.value(28).toBool();
-        searchOnTags = query.value(29).toBool();
-        selectedTagName = query.value(30).toString();
-        selectedStorage = query.value(32).toString();
-        selectedCatalog = query.value(33).toString();
-        searchInCatalogsChecked = query.value(34).toBool();
-        searchInConnectedChecked = query.value(35).toBool();
-        connectedDirectory = query.value(36).toString();
+        searchOnFolderCriteria = query.value(34).toBool();
+        showFoldersOnly = query.value(35).toBool();
+        searchOnTags = query.value(36).toBool();
+        selectedTagName = query.value(37).toString();
+        selectedStorage = query.value(39).toString();
+        selectedCatalog = query.value(40).toString();
+        searchInCatalogsChecked = query.value(41).toBool();
+        searchInConnectedChecked = query.value(42).toBool();
+        connectedDirectory = query.value(43).toString();
 
         selectedDeviceIDList.clear();
-        QString deviceListStr = query.value(37).toString(); // Adjust index
+        QString deviceListStr = query.value(44).toString(); // Adjust index
         if (!deviceListStr.isEmpty()) {
             const QStringList idStrings = deviceListStr.split(",", Qt::SkipEmptyParts);
             for (const QString& idStr : idStrings) {
                 selectedDeviceIDList.append(idStr.toInt());
             }
         }
-        searchOnFileMetadata = query.value(38).toBool();
-        searchOnMetadataText = query.value(39).toBool();
-        metadataTextSearch = query.value(40).toString();
-        searchOnMetadataSize = query.value(41).toBool();
-        metadataMinimumHeight = query.value(42).toInt();
-        metadataMaximumHeight = query.value(43).toInt();
-        metadataMinimumWidth = query.value(44).toInt();
-        metadataMaximumWidth = query.value(45).toInt();
-        searchOnMetadataDuration = query.value(46).toBool();
-        metadataDurationMin = QDateTime(QDate(1970, 1, 1), QTime::fromString(query.value(47).toString(), "HH:mm:ss"));
-        metadataDurationMax = QDateTime(QDate(2030, 1, 1), QTime::fromString(query.value(48).toString(), "HH:mm:ss"));
+        searchOnFileMetadata = query.value(45).toBool();
+        searchOnMetadataText = query.value(46).toBool();
+        metadataTextSearch = query.value(47).toString();
+        searchOnMetadataSize = query.value(48).toBool();
+        metadataMinimumHeight = query.value(49).toInt();
+        metadataMaximumHeight = query.value(50).toInt();
+        metadataMinimumWidth = query.value(51).toInt();
+        metadataMaximumWidth = query.value(52).toInt();
+        searchOnMetadataDuration = query.value(53).toBool();
+        metadataDurationMin = QDateTime(QDate(1970, 1, 1), QTime::fromString(query.value(54).toString(), "HH:mm:ss"));
+        metadataDurationMax = QDateTime(QDate(2030, 1, 1), QTime::fromString(query.value(55).toString(), "HH:mm:ss"));
 
         // Calculate multipliers based on loaded units
         setMultipliers();
@@ -830,7 +876,17 @@ void Search::copyFrom(const Search* other)
     searchDuplicatesOnName = other->searchDuplicatesOnName;
     searchDuplicatesOnSize = other->searchDuplicatesOnSize;
     searchDuplicatesOnDate = other->searchDuplicatesOnDate;
-
+    duplicatesCompareDevices = other->duplicatesCompareDevices;
+    duplicatesDeviceID1 = other->duplicatesDeviceID1;
+    duplicatesDeviceID2 = other->duplicatesDeviceID2;
+    if (other->duplicatesDevice1) {
+        if (!duplicatesDevice1) duplicatesDevice1 = new Device;
+        duplicatesDevice1->ID = other->duplicatesDevice1->ID;
+    }
+    if (other->duplicatesDevice2) {
+        if (!duplicatesDevice2) duplicatesDevice2 = new Device;
+        duplicatesDevice2->ID = other->duplicatesDevice2->ID;
+    }
     searchOnDifferences = other->searchOnDifferences;
     differencesOnName = other->differencesOnName;
     differencesOnSize = other->differencesOnSize;
@@ -838,6 +894,10 @@ void Search::copyFrom(const Search* other)
     differencesDevices = other->differencesDevices;
     differencesDeviceID1 = other->differencesDeviceID1;
     differencesDeviceID2 = other->differencesDeviceID2;
+    searchDuplicatesOnChecksum = other->searchDuplicatesOnChecksum;
+    searchDuplicatesChecksumEqual = other->searchDuplicatesChecksumEqual;
+    differencesOnChecksum = other->differencesOnChecksum;
+    differencesChecksumEqual = other->differencesChecksumEqual;
 
     searchOnFolderCriteria = other->searchOnFolderCriteria;
     showFoldersOnly = other->showFoldersOnly;

@@ -330,32 +330,19 @@
         newCatalogDevice->catalog->name = newCatalogDevice->name;  // Make sure catalog name matches device name
         newCatalogDevice->catalog->filePath = collection->folder + "/" + newCatalogDevice->name + ".idx";
         newCatalogDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
-        newCatalogDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+        newCatalogDevice->catalog->includeHidden = ui->Create_comboBox_IncludeHidden->itemData(
+                                                                                        ui->Create_comboBox_IncludeHidden->currentIndex(), Qt::UserRole).toBool();
         newCatalogDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
         newCatalogDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
         newCatalogDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
         newCatalogDevice->catalog->includeMetadata = ui->Create_comboBox_MetadataOption->itemData(ui->Create_comboBox_MetadataOption->currentIndex(), Qt::UserRole).toString();
+        newCatalogDevice->catalog->includeChecksum = ui->Create_comboBox_ChecksumOption->itemData(ui->Create_comboBox_ChecksumOption->currentIndex(), Qt::UserRole).toString();  // ADD THIS LINE
         newCatalogDevice->catalog->appVersion = currentVersion;
 
-        // Set file type from UI radio buttons
-        QString fileType = "All";  // Default value
-        if (ui->Create_radioButton_FileType_Audio->isChecked()) {
-            fileType = "Audio";
-        } else if (ui->Create_radioButton_FileType_Image->isChecked()) {
-            fileType = "Image";
-        } else if (ui->Create_radioButton_FileType_Text->isChecked()) {
-            fileType = "Text";
-        } else if (ui->Create_radioButton_FileType_Video->isChecked()) {
-            fileType = "Video";
-        } else if (ui->Create_radioButton_FileType_Other->isChecked()) {
-            fileType = "Other";
-        } else if (ui->Create_radioButton_FileType_None->isChecked()) {
-            fileType = "None";
-        } else if (ui->Create_radioButton_FileType_Any->isChecked()) {
-            fileType = "All";
-        }
-        newCatalogDevice->catalog->fileType = fileType;
-        qDebug() << "Catalog configured - File type:" << newCatalogDevice->catalog->fileType;
+        // Set file type from UI combobox
+        newCatalogDevice->catalog->fileType = ui->Create_comboBox_FileType->itemData(
+                                                                              ui->Create_comboBox_FileType->currentIndex(), Qt::UserRole).toString();
+        qDebug() << "CREATE: Catalog configured - File type:" << newCatalogDevice->catalog->fileType;
 
         //Save new catalog
         newCatalogDevice->catalog->insertCatalog();
@@ -465,6 +452,57 @@
         qDebug() << "=== cleanupFailedCatalogCreation() COMPLETE ===";
     }
 
+    void MainWindow::initiateFileTypeFields()
+    {
+        // Initialize Create combobox
+        ui->Create_comboBox_FileType->clear();
+        ui->Create_comboBox_FileType->addItem(QIcon::fromTheme("folder"), tr("All"), "All");
+        ui->Create_comboBox_FileType->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), "Audio");
+        ui->Create_comboBox_FileType->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), "Image");
+        ui->Create_comboBox_FileType->addItem(QIcon::fromTheme("folder-text"), tr("Text"), "Text");
+        ui->Create_comboBox_FileType->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), "Video");
+        ui->Create_comboBox_FileType->addItem(QIcon::fromTheme("document-open"), tr("Other"), "Other");
+        ui->Create_comboBox_FileType->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), "None");
+
+        ui->Create_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
+        ui->Create_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
+        ui->Create_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
+        ui->Create_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
+        ui->Create_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
+        ui->Create_comboBox_FileType->setItemData(5, "Other", Qt::UserRole);
+        ui->Create_comboBox_FileType->setItemData(6, "None",  Qt::UserRole);
+        ui->Create_comboBox_FileType->setCurrentIndex(0); // Default to "All"
+
+        // Initialize Search combobox
+        ui->Search_comboBox_FileType->clear();
+        ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder"), tr("All"), static_cast<int>(FileTypeMapping::ALL));
+        ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
+        ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
+        ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder-text"), tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
+        ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
+        ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("document-open"), tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
+        ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), static_cast<int>(FileTypeMapping::NONE));
+        ui->Search_comboBox_FileType->setCurrentIndex(0);
+
+        // Initialize Catalogs combobox (for editing existing catalogs)
+        ui->Catalogs_comboBox_FileType->clear();
+        ui->Catalogs_comboBox_FileType->addItem(QIcon::fromTheme("folder"), tr("All"), "All");
+        ui->Catalogs_comboBox_FileType->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), "Audio");
+        ui->Catalogs_comboBox_FileType->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), "Image");
+        ui->Catalogs_comboBox_FileType->addItem(QIcon::fromTheme("folder-text"), tr("Text"), "Text");
+        ui->Catalogs_comboBox_FileType->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), "Video");
+        ui->Catalogs_comboBox_FileType->addItem(QIcon::fromTheme("document-open"), tr("Other"), "Other");
+        ui->Catalogs_comboBox_FileType->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), "None");
+
+        ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
+        ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
+        ui->Catalogs_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
+        ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
+        ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
+        ui->Catalogs_comboBox_FileType->setItemData(5, "Other", Qt::UserRole);
+        ui->Catalogs_comboBox_FileType->setItemData(6, "None",  Qt::UserRole);
+    }
+
     void MainWindow::initiateMetadataFields()
     {
         // Initialize Create combobox
@@ -492,7 +530,7 @@
         ui->Catalogs_comboBox_MetaDataOption->setItemData(3, Catalog::METADATA_FULL, Qt::UserRole);
 
         // Set default to None (index 0) to match your METADATA_NONE default
-        ui->Create_comboBox_MetadataOption->setCurrentIndex(0);
+        ui->Create_comboBox_ChecksumOption->setCurrentIndex(0);
         ui->Catalogs_comboBox_MetaDataOption->setCurrentIndex(0);
     }
     //--------------------------------------------------------------------------
@@ -510,5 +548,48 @@
         }
 
         qDebug() << "Metadata caches initialized";
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::initiateChecksumFields()
+    {
+        // Initialize Create combobox
+        ui->Create_comboBox_ChecksumOption->clear();
+        ui->Create_comboBox_ChecksumOption->addItem(tr("None"));
+        ui->Create_comboBox_ChecksumOption->addItem("SHA-256");
+
+        ui->Create_comboBox_ChecksumOption->setItemData(0, Catalog::CHECKSUM_NONE, Qt::UserRole);
+        ui->Create_comboBox_ChecksumOption->setItemData(1, Catalog::CHECKSUM_SHA256, Qt::UserRole);
+
+        // Initialize Catalogs combobox (for editing existing catalogs)
+        ui->Catalogs_comboBox_ChecksumOption->clear();
+        ui->Catalogs_comboBox_ChecksumOption->addItem(tr("None"));
+        ui->Catalogs_comboBox_ChecksumOption->addItem("SHA-256");
+
+        ui->Catalogs_comboBox_ChecksumOption->setItemData(0, Catalog::CHECKSUM_NONE, Qt::UserRole);
+        ui->Catalogs_comboBox_ChecksumOption->setItemData(1, Catalog::CHECKSUM_SHA256, Qt::UserRole);
+
+        // Set default to None (index 0) to match CHECKSUM_NONE default
+        ui->Create_comboBox_ChecksumOption->setCurrentIndex(0);
+        ui->Catalogs_comboBox_ChecksumOption->setCurrentIndex(0);
+    }
+
+    void MainWindow::initiateIncludeHiddenFields()
+    {
+        // Initialize Create combobox
+        ui->Create_comboBox_IncludeHidden->clear();
+        ui->Create_comboBox_IncludeHidden->addItem(tr("None"), false);
+        ui->Create_comboBox_IncludeHidden->addItem(tr("All"), true);
+
+        ui->Create_comboBox_IncludeHidden->setItemData(0, false, Qt::UserRole);
+        ui->Create_comboBox_IncludeHidden->setItemData(1, true,  Qt::UserRole);
+        ui->Create_comboBox_IncludeHidden->setCurrentIndex(0); // Default to "None" (do not include hidden)
+
+        // Initialize Catalogs combobox (for editing existing catalogs)
+        ui->Catalogs_comboBox_IncludeHidden->clear();
+        ui->Catalogs_comboBox_IncludeHidden->addItem(tr("None"), false);
+        ui->Catalogs_comboBox_IncludeHidden->addItem(tr("All"), true);
+
+        ui->Catalogs_comboBox_IncludeHidden->setItemData(0, false, Qt::UserRole);
+        ui->Catalogs_comboBox_IncludeHidden->setItemData(1, true,  Qt::UserRole);
     }
     //--------------------------------------------------------------------------

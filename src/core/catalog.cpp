@@ -41,9 +41,12 @@ const QString Catalog::METADATA_NONE = "None";
 const QString Catalog::METADATA_MEDIA_BASIC = "MediaBasic";
 const QString Catalog::METADATA_MEDIA_EXTENDED = "MediaExtended";
 const QString Catalog::METADATA_FULL = "FullExtended";
+const QString Catalog::CHECKSUM_NONE = "None";
+const QString Catalog::CHECKSUM_SHA256 = "SHA256";
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
-    includeMetadata = METADATA_NONE;  // Simple default
+    includeMetadata = METADATA_NONE;
+    includeChecksum = CHECKSUM_NONE;
 }
 
 Catalog::~Catalog() {
@@ -182,26 +185,42 @@ void Catalog::setDateUpdated(QDateTime dateTime)
 
 //catalog files data operation
 void Catalog::generateID()
-{//Generate ID
+{
     int maxID = 0;
     QSqlQuery queryCatalogID(QSqlDatabase::database(m_connectionName));
     QString queryCatalogIDSQL = QLatin1String(R"(
-                                    SELECT MAX (catalog_id)
-                                    FROM catalog
-                                )");
+                            SELECT MAX(catalog_id)
+                            FROM catalog
+                        )");
     queryCatalogID.prepare(queryCatalogIDSQL);
-    queryCatalogID.exec();
-    if(queryCatalogID.next()){
-        maxID = queryCatalogID.value(0).toInt();
-        ID = maxID + 1;
+
+    if (!queryCatalogID.exec()) {
+        qDebug() << "generateID query failed:" << queryCatalogID.lastError().text();
+        ID = 1;  // ✓ Fallback to 1 on error
+        return;
     }
+
+    if(queryCatalogID.next()){
+        QVariant value = queryCatalogID.value(0);
+        if (value.isNull()) {
+            maxID = 0;  // Empty table
+        } else {
+            maxID = value.toInt();
+        }
+        ID = maxID + 1;
+    } else {
+        // No rows returned (shouldn't happen with MAX, but handle it)
+        ID = 1;  // ✓ Default to 1
+    }
+
+    qDebug() << "Generated catalog ID:" << ID;
 }
 
 void Catalog::insertCatalog()
-{//Insert new catalog entry
+{
     QSqlQuery insertCatalogQuery(QSqlDatabase::database(m_connectionName));
     QString insertCatalogQuerySQL = QLatin1String(R"(
-                                        INSERT OR IGNORE INTO catalog (
+                                INSERT INTO catalog(
                                                         catalog_id,
                                                         catalog_file_path,
                                                         catalog_name,
@@ -216,6 +235,7 @@ void Catalog::insertCatalog()
                                                         catalog_is_full_device,
                                                         catalog_date_loaded,
                                                         catalog_include_metadata,
+                                                        catalog_include_checksum,
                                                         catalog_app_version
                                                         )
                                         VALUES(         :catalog_id,
@@ -232,6 +252,7 @@ void Catalog::insertCatalog()
                                                         :catalog_is_full_device,
                                                         :catalog_date_loaded,
                                                         :catalog_include_metadata,
+                                                        :catalog_include_checksum,
                                                         :catalog_app_version )
                                     )");
 
@@ -250,6 +271,7 @@ void Catalog::insertCatalog()
     insertCatalogQuery.bindValue(":catalog_is_full_device", isFullDevice);
     insertCatalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
     insertCatalogQuery.bindValue(":catalog_include_metadata", includeMetadata);
+    insertCatalogQuery.bindValue(":catalog_include_checksum", includeChecksum);
     insertCatalogQuery.bindValue(":catalog_app_version", appVersion);
     insertCatalogQuery.exec();
 }
@@ -280,14 +302,15 @@ void Catalog::saveCatalog()
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
         UPDATE catalog
-        SET catalog_name             =:catalog_name,
-            catalog_source_path      =:catalog_source_path,
-            catalog_storage          =:catalog_storage,
-            catalog_file_type        =:catalog_file_type,
-            catalog_include_hidden   =:catalog_include_hidden,
-            catalog_include_metadata =:catalog_include_metadata,
-            catalog_include_symblinks=:catalog_include_symblinks,
-            catalog_app_version      =:catalog_app_version
+        SET catalog_name              =:catalog_name,
+            catalog_source_path       =:catalog_source_path,
+            catalog_storage           =:catalog_storage,
+            catalog_file_type         =:catalog_file_type,
+            catalog_include_hidden    =:catalog_include_hidden,
+            catalog_include_metadata  =:catalog_include_metadata,
+            catalog_include_checksum  =:catalog_include_checksum,
+            catalog_include_symblinks =:catalog_include_symblinks,
+            catalog_app_version       =:catalog_app_version
         WHERE catalog_id=:catalog_id
     )");
     query.prepare(querySQL);
@@ -298,10 +321,12 @@ void Catalog::saveCatalog()
     query.bindValue(":catalog_file_type", fileType);
     query.bindValue(":catalog_include_hidden", includeHidden);
     query.bindValue(":catalog_include_metadata", includeMetadata);
+    query.bindValue(":catalog_include_checksum", includeChecksum);
     query.bindValue(":catalog_include_symblinks", includeSymblinks);
     query.bindValue(":catalog_app_version", appVersion);
     query.exec();
 }
+
 void Catalog::clearCatalogData()
 {
     qDebug() << "Clearing existing catalog data for update";
@@ -340,7 +365,7 @@ bool Catalog::updateCatalogFileHeaders(QString databaseMode)
 
         QFile catalogFile(filePath);
         if(!catalogFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
-            return false; // Return false to indicate failure
+            return false;
         }
 
         QString fullFileText;
@@ -356,6 +381,7 @@ bool Catalog::updateCatalogFileHeaders(QString databaseMode)
         fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
         fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
         fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
+        fullFileText.append("<catalogIncludeChecksum>" + QVariant(includeChecksum).toString() +"\n");  // ADD THIS LINE
         fullFileText.append("<catalogAppVersion>" + QVariant(appVersion).toString() +"\n");
         fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
 
@@ -399,6 +425,7 @@ void Catalog::loadCatalog()
                                 catalog_is_full_device       ,
                                 catalog_date_loaded          ,
                                 catalog_include_metadata     ,
+                                catalog_include_checksum     ,
                                 catalog_app_version
                             FROM catalog
                             WHERE catalog_id=:catalog_id
@@ -423,10 +450,9 @@ void Catalog::loadCatalog()
         isFullDevice       = query.value(11).toBool();
         dateLoaded         = query.value(12).toDateTime();
         includeMetadata    = query.value(13).toString();
-        appVersion         = query.value(14).toString();
+        includeChecksum    = query.value(14).toString();
+        appVersion         = query.value(15).toString();
     }
-
-    if (includeMetadata.isEmpty()) { includeMetadata = METADATA_NONE; }
 }
 
 void Catalog::renameCatalog(QString newCatalogName)
@@ -549,8 +575,10 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                                             audio_bitrate           ,
                                             audio_sample_rate       ,
                                             metadata_extended       ,
-                                            metadata_extraction_date
-                                            )
+                                            metadata_extraction_date,
+                                            checksum_sha256         ,
+                                            checksum_extraction_date
+                                    )
                                     VALUES(
                                             :file_catalog_id        ,
                                             :file_name              ,
@@ -560,32 +588,34 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                                             :file_catalog           ,
                                             :file_full_path         ,
                                             :file_extension         ,
-                                            :file_type               ,
-                                            :mime_type               ,
-                                            :mime_verified           ,
-                                            :type_mismatch           ,
-                                            :image_width             ,
-                                            :image_height            ,
-                                            :image_orientation       ,
-                                            :video_duration_seconds  ,
-                                            :video_width             ,
-                                            :video_height            ,
-                                            :video_codec             ,
-                                            :video_framerate         ,
-                                            :video_bitrate           ,
-                                            :audio_duration_seconds  ,
-                                            :audio_artist            ,
-                                            :audio_album             ,
-                                            :audio_title             ,
-                                            :audio_genre             ,
-                                            :audio_year              ,
-                                            :audio_track_number      ,
-                                            :audio_bitrate           ,
-                                            :audio_sample_rate       ,
-                                            :metadata_extended       ,
-                                            :metadata_extraction_date
-                                            )
-                                    )");
+                                            :file_type              ,
+                                            :mime_type              ,
+                                            :mime_verified          ,
+                                            :type_mismatch          ,
+                                            :image_width            ,
+                                            :image_height           ,
+                                            :image_orientation      ,
+                                            :video_duration_seconds ,
+                                            :video_width            ,
+                                            :video_height           ,
+                                            :video_codec            ,
+                                            :video_framerate        ,
+                                            :video_bitrate          ,
+                                            :audio_duration_seconds ,
+                                            :audio_artist           ,
+                                            :audio_album            ,
+                                            :audio_title            ,
+                                            :audio_genre            ,
+                                            :audio_year             ,
+                                            :audio_track_number     ,
+                                            :audio_bitrate          ,
+                                            :audio_sample_rate      ,
+                                            :metadata_extended      ,
+                                            :metadata_extraction_date,
+                                            :checksum_sha256        ,
+                                            :checksum_extraction_date
+                                    )
+                            )");
 
                 //Prepare insert query for folder
                 QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
@@ -695,6 +725,8 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                         insertFileQuery.bindValue(":audio_sample_rate", QVariant());
                         insertFileQuery.bindValue(":metadata_extended", QVariant());
                         insertFileQuery.bindValue(":metadata_extraction_date", QVariant());
+                        insertFileQuery.bindValue(":checksum_sha256", QVariant());
+                        insertFileQuery.bindValue(":checksum_extraction_date", QVariant());
                     } else {
                         // v2.8 format: 28 columns including extension, type, and metadata
                         QString extension = fileInfo.suffix().toLower();
@@ -729,7 +761,10 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                         insertFileQuery.bindValue(":audio_bitrate", fieldListCount > 24 ? lineFieldList[24].toInt() : QVariant());
                         insertFileQuery.bindValue(":audio_sample_rate", fieldListCount > 25 ? lineFieldList[25].toInt() : QVariant());
                         insertFileQuery.bindValue(":metadata_extended", fieldListCount > 26 ? lineFieldList[26] : QVariant());
-                        insertFileQuery.bindValue(":metadata_extraction_date", fieldListCount > 27 ? lineFieldList[27] : QVariant());      }
+                        insertFileQuery.bindValue(":metadata_extraction_date", fieldListCount > 27 ? lineFieldList[27] : QVariant());
+                        insertFileQuery.bindValue(":checksum_sha256", fieldListCount > 28 ? lineFieldList[28] : QVariant());
+                        insertFileQuery.bindValue(":checksum_extraction_date", fieldListCount > 29 ? lineFieldList[29] : QVariant());
+                    }
                     insertFileQuery.exec();
 
                     // Progress reporting using configurable rate
@@ -750,21 +785,21 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                 catalogFile.close();
 
                 if (catalogWasMigrated) {
-                    qDebug() << "Catalog migrated, saving to v2.8 format...";
-                    appVersion = "2.8";
+                    qDebug() << "Catalog migrated, saving to v2.9 format...";
+                    appVersion = "2.9";
 
                     QFileInfo catalogFileInfo(filePath);
                     QString collectionFolder = catalogFileInfo.absolutePath();
 
                     if (saveCatalogToFile("Memory", collectionFolder)) {
-                        qDebug() << "Catalog successfully saved in v2.8 format";
+                        qDebug() << "Catalog successfully saved in v2.9 format";
                     }
 
                     // After saving, check if migration is 100% complete
-                    if (!hasFilesNeedingMigration() && appVersion < "2.8") {
-                        appVersion = "2.8";
+                    if (!hasFilesNeedingMigration() && appVersion < "2.9") {
+                        appVersion = "2.9";
                         saveCatalog();  // Update database
-                        qDebug() << "✓ Catalog fully migrated to v2.8";
+                        qDebug() << "✓ Catalog fully migrated to v2.9";
                     }
                 }
             }
@@ -1066,7 +1101,9 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
                                 audio_bitrate           ,
                                 audio_sample_rate       ,
                                 metadata_extended       ,
-                                metadata_extraction_date
+                                metadata_extraction_date,
+                                checksum_sha256         ,
+                                checksum_extraction_date
                         FROM file
                         WHERE file_catalog_id = :file_catalog_id
                         ORDER BY file_full_path
@@ -1110,7 +1147,9 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
                                 queryFileList.value(24).toString() + "\t" +  // audio_bitrate
                                 queryFileList.value(25).toString() + "\t" +  // audio_sample_rate
                                 queryFileList.value(26).toString() + "\t" +  // metadata_extended
-                                queryFileList.value(27).toString() + "\t";   // metadata_extraction_date
+                                queryFileList.value(27).toString() + "\t" +  // metadata_extraction_date
+                                queryFileList.value(28).toString() + "\t" +  // checksum_sha256
+                                queryFileList.value(29).toString() + "\t";   // checksum_extraction_date
             fileList << fileEntry;
         }
 
@@ -1119,6 +1158,7 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         // Prepare the catalog file data, adding headers at the beginning (same as original)
         fileList.prepend("<catalogID>"              + QString::number(ID));
         fileList.prepend("<catalogAppVersion>"      + appVersion);
+        fileList.prepend("<catalogIncludeChecksum>" + QVariant(includeChecksum).toString());
         fileList.prepend("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString());
         fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());

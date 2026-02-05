@@ -102,7 +102,48 @@
         }
         //Save host parameters
         else if(collection->databaseMode=="Hosted"){
-            settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Hosted_HostName->text());
+            // Validate hostname before saving
+            QString hostname = ui->Settings_lineEdit_DataMode_Hosted_HostName->text().trimmed();
+
+            // Set default if empty
+            if (hostname.isEmpty()) {
+                hostname = "localhost";
+                ui->Settings_lineEdit_DataMode_Hosted_HostName->setText(hostname);
+            }
+
+            Database::HostnameValidationType validationType = Database::validateHostname(hostname);
+
+            if (validationType == Database::PublicOrInvalid) {
+                // Invalid hostname - show error and abort
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(tr("Invalid hostname."));
+                msgBox.setInformativeText(tr("Only local or private network allowed.") + "\n\n"
+                                          + tr("Valid:") + " localhost, 127.x.x.x, 192.168.x.x, 10.x.x.x, 172.16-31.x.x");
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.exec();
+                return;  // Abort the save and restart
+            }
+            else if (validationType == Database::PrivateNetwork) {
+                // Private network IP - show confirmation dialog
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(tr("Private network connection") + ": " + hostname);
+                msgBox.setInformativeText(tr("Your data will be sent to this network database.") + "\n\n"
+                                          + tr("Continue?"));
+                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                msgBox.setDefaultButton(QMessageBox::No);
+
+                int result = msgBox.exec();
+                if (result != QMessageBox::Yes) {
+                    return;  // User cancelled
+                }
+            }
+            // If Localhost, proceed without warning
+
+            settings.setValue("Settings/databaseHostName", hostname);
             settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->text());
             settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Hosted_Port->text());
             settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Hosted_UserName->text());
@@ -368,18 +409,6 @@
                         db.setDatabaseName(collection->databaseFilePath);
                         if (!db.open())
                             qDebug()<< db.lastError();
-
-                        QSqlQuery q(QSqlDatabase::database(m_connectionName));
-                        q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
-                        q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
-                        q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
-                        q.exec(DatabaseSQL::SQL_CREATE_FILE);
-                        q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
-                        q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
-                        q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
-                        q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
-                        q.exec(DatabaseSQL::SQL_CREATE_TAG);
-                        q.exec(DatabaseSQL::SQL_CREATE_PARAMETER);
                     }
                     fileOut.close();
 
@@ -476,18 +505,6 @@
                 db.setDatabaseName(collection->databaseFilePath);
                 if (!db.open())
                     qDebug()<< db.lastError();
-
-                QSqlQuery q(QSqlDatabase::database(m_connectionName));
-                q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
-                q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
-                q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
-                q.exec(DatabaseSQL::SQL_CREATE_FILE);
-                q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
-                q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
-                q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
-                q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
-                q.exec(DatabaseSQL::SQL_CREATE_TAG);
-                q.exec(DatabaseSQL::SQL_CREATE_PARAMETER);
             }
             fileOut.close();
 
@@ -629,6 +646,11 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
+        qDebug() << "=== MainWindow::loadCollection() START ===";
+        qDebug() << "Collection database mode:" << collection->databaseMode;
+        qDebug() << "Collection folder:" << collection->folder;
+        qDebug() << "Database file path:" << collection->databaseFilePath;
+
         bool defaultsCreated = collection->load();
 
         if (defaultsCreated) {
@@ -731,28 +753,18 @@
             }
 
             if ( collection->dbSchemaVersion < collection->appVersion and collection->dbSchemaVersion >= "2.0"){
-                //Apply db or file changes since 2.0
-                //No changes yet.
-
                 //Update collection version
                 collection->dbSchemaVersion = collection->appVersion;
                 collection->setDatabaseSchemaVersion();
                 collection->saveParameterTableToFile();
-
-                //Inform
-                // QMessageBox msgBox;
-                // msgBox.setWindowTitle("Katalog");
-                // msgBox.setText(QCoreApplication::translate("MainWindow",
-                //                                            "Updated collection to v2.1."
-                //                                            ).arg( collection->version, collection->appVersion));
-                // msgBox.setIcon(QMessageBox::Information);
-                // msgBox.exec();
             }
         }
 
         if(collection->databaseMode != "Memory"){
-            qDebug() << "File database mode - checking for migrations";
+            qDebug() << "=== File database mode detected ===";
+            qDebug() << "runDatabaseMigrations()...";
             runDatabaseMigrations();
+            qDebug() << "runDatabaseMigrations() completed";
         }
 
         // Refresh UI views to show updated data

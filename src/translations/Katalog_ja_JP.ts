@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+89"/>
+        <location filename="../core/catalog.cpp" line="+92"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1725"/>
+        <location filename="../core/collection.cpp" line="+1741"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>このフォルダにはメモリモードのコレクションファイルが含まれていますが、現在ファイルモードです。&lt;br/&gt;メモリモードに切り替えるか、別のフォルダを選択してください。</translation>
     </message>
@@ -68,23 +68,294 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+107"/>
-        <location line="+64"/>
-        <location line="+79"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2369"/>
+        <source>Include Checksum</source>
+        <translation>チェックサムを含める</translation>
+    </message>
+    <message>
+        <location line="+541"/>
+        <location line="+46"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+301"/>
+        <source>Verify Checksums</source>
+        <translation>チェックサムを検証</translation>
+    </message>
+    <message>
+        <location line="-45"/>
+        <source>Loading</source>
+        <translation>読み込み中</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>files</source>
+        <translation>ファイル</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>No checksums to verify.</source>
+        <translation>検証するチェックサムがありません。</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Verify checksums for %1 files?</source>
+        <translation>%1 個のファイルのチェックサムを検証しますか?</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Verifying</source>
+        <translation>検証中</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+5"/>
+        <source>Verified:</source>
+        <translation>検証済み:</translation>
+    </message>
+    <message>
+        <location line="-4"/>
+        <source>All checksums match.</source>
+        <translation>すべてのチェックサムが一致しました。</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Mismatches:</source>
+        <translation>不一致:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing:</source>
+        <translation>欠損:</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mismatched files:</source>
+        <translation>不一致ファイル:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing files:</source>
+        <translation>欠損ファイル:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="+9382"/>
+        <source>Include File Type</source>
+        <translation>ファイルタイプを含める</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="+262"/>
+        <location line="+18"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+808"/>
+        <source>Copy Checksum</source>
+        <translation>チェックサムをコピー</translation>
+    </message>
+    <message>
+        <location line="-8"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-8"/>
+        <source>Calculate Checksum</source>
+        <translation>チェックサムを計算</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+13"/>
+        <source>Verify Checksum</source>
+        <translation>チェックサムを検証</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1335"/>
+        <source>Verifying checksum...</source>
+        <translation>チェックサム検証中...</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+58"/>
+        <location line="+68"/>
+        <source>Checksum saved to database.</source>
+        <translation>チェックサムがデータベースに保存されました。</translation>
+    </message>
+    <message>
+        <location line="-124"/>
+        <source>Checksums match.</source>
+        <translation>チェックサムが一致しました。</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+122"/>
+        <source>Copy to Clipboard</source>
+        <translation>クリップボードにコピー</translation>
+    </message>
+    <message>
+        <location line="-100"/>
+        <source>Checksums do not match.</source>
+        <translation>チェックサムが一致しません。</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Expected:</source>
+        <translation>期待値:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Actual:</source>
+        <translation>実際:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Update Checksum</source>
+        <translation>チェックサムを更新</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>File not found:</source>
+        <translation>ファイルが見つかりません:</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Calculating checksum...</source>
+        <translation>チェックサム計算中...</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Checksum calculation failed.</source>
+        <translation>チェックサムの計算に失敗しました。</translation>
+    </message>
+    <message>
+        <source>Invalid database hostname.</source>
+        <translation type="vanished">データベースのホスト名が無効です。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="+121"/>
+        <source>Invalid hostname.</source>
+        <translation>ホスト名が無効です。</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only local or private network allowed.</source>
+        <translation>ローカルまたはプライベートネットワークのみ許可されています。</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Valid:</source>
+        <translation>有効:</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Private network connection</source>
+        <translation>プライベートネットワーク接続</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Your data will be sent to this network database.</source>
+        <translation>データはこのネットワークデータベースに送信されます。</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Continue?</source>
+        <translation>続行しますか?</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
+        <location line="+167"/>
+        <source>Metadata Extracted</source>
+        <translation>メタデータが抽出されました</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Checksums Calculated</source>
+        <translation>チェックサムが計算されました</translation>
+    </message>
+    <message>
+        <location filename="../core/search.cpp" line="+189"/>
+        <location filename="../mainwindow.ui" line="-5962"/>
+        <location line="+926"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1281"/>
+        <source>Checksum</source>
+        <translation>チェックサム</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checksum Date</source>
+        <translation>チェックサムの日付</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="-768"/>
+        <source>Within selected device</source>
+        <translation>選択したデバイス内</translation>
+    </message>
+    <message>
+        <location line="+110"/>
+        <source>Compare two devices</source>
+        <translation>2つのデバイスを比較</translation>
+    </message>
+    <message>
+        <location line="+212"/>
+        <location line="+661"/>
+        <source>compared to</source>
+        <translation>と比較して</translation>
+    </message>
+    <message>
+        <location line="-264"/>
+        <source>and</source>
+        <translation>および</translation>
+    </message>
+    <message>
+        <location line="+3427"/>
+        <location line="+1738"/>
+        <source>Include files checksum</source>
+        <translation>ファイルのチェックサムを含める</translation>
+    </message>
+    <message>
+        <location line="+587"/>
+        <source>Stop the cataloging (no data will be saved)</source>
+        <translation>カタログ化を停止（データは保存されません）</translation>
+    </message>
+    <message>
+        <location line="+1114"/>
+        <source>Generate Profile</source>
+        <translation>プロファイルを生成</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Only selected</source>
+        <translation>選択されたもののみ</translation>
+    </message>
+    <message>
+        <source>Copy file checksum</source>
+        <translation type="vanished">ファイルのチェックサムをコピー</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
+        <location line="+30"/>
+        <source>No backup links found.</source>
+        <translation>バックアップリンクが見つかりません。</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Backup profile created.</source>
+        <translation>バックアッププロファイルが作成されました。</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1549"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
+        <source>Saving</source>
+        <translation>保存中</translation>
+    </message>
+    <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+72"/>
+        <location line="+149"/>
         <source>Indexed</source>
         <translation>インデックス化済み</translation>
     </message>
     <message>
-        <location filename="../core/searchjobstoppable.cpp" line="+435"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-135"/>
-        <location line="+126"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+529"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+443"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+349"/>
         <source>File Types Updated</source>
         <translation>ファイルタイプが更新されました</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-142"/>
-        <location line="+129"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
+        <location line="+160"/>
         <source>Counted</source>
         <translation>カウント済み</translation>
     </message>
@@ -98,10 +369,10 @@
         <location line="+28"/>
         <location line="+18"/>
         <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1062"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+1080"/>
         <location line="+4"/>
         <location line="+30"/>
-        <location line="+57"/>
+        <location line="+54"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Evaluated</source>
@@ -109,7 +380,8 @@
     </message>
     <message>
         <location line="-13"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-82"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-105"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-54"/>
         <source>Completed</source>
         <translation>完了</translation>
     </message>
@@ -119,32 +391,37 @@
         <translation>使用済みスペース</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-65"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-81"/>
         <source>Cancelled</source>
         <translation>キャンセル済み</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+39"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+157"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-20"/>
+        <location line="+22"/>
         <source>Loaded</source>
         <translation>読み込み済み</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="-104"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="+124"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2160"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-75"/>
-        <location line="+58"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+448"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-71"/>
+        <location line="+54"/>
         <source>In Progress</source>
         <translation>進行中</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+14"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-130"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+90"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-127"/>
         <source>Stopped</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+695"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+406"/>
         <source>MIME Verification Complete</source>
         <translation>MIME検証完了</translation>
     </message>
@@ -154,7 +431,7 @@
         <translation>レポートを開く</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-469"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-450"/>
         <source>Hidden</source>
         <translation>非表示</translation>
     </message>
@@ -164,14 +441,14 @@
         <translation>メタデータ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3949"/>
+        <location filename="../mainwindow.ui" line="-6363"/>
         <source>File metadata</source>
         <translation>ファイルメタデータ</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+172"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <location filename="../mainwindow.ui" line="+356"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+197"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+275"/>
         <source>Height</source>
         <translation>高さ</translation>
     </message>
@@ -196,13 +473,13 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1872"/>
-        <location line="+1921"/>
+        <location line="+1870"/>
+        <location line="+1714"/>
         <source>Include files metadata</source>
         <translation>ファイルメタデータを含める</translation>
     </message>
     <message>
-        <location line="-1275"/>
+        <location line="-1056"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;実際のMIMEタイプを検出し、不一致を識別します（長い処理）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -212,29 +489,37 @@
         <translation>MIMEタイプを検証</translation>
     </message>
     <message>
-        <location line="+1200"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+906"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+464"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Other</source>
         <translation>その他</translation>
     </message>
     <message>
-        <location line="+29"/>
-        <location filename="../devicetreeview.cpp" line="+98"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+472"/>
+        <location filename="../devicetreeview.cpp" line="+109"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+15"/>
         <location line="+12"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="+35"/>
+        <location line="+8"/>
+        <location line="+15"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+638"/>
+        <location line="+1"/>
         <source>None</source>
         <translation>なし</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-517"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-287"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-695"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1529"/>
         <source>Show extended metadata (JSON)</source>
         <translation>拡張メタデータを表示（JSON）</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+514"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+692"/>
         <source>MIME Type</source>
         <translation>MIMEタイプ</translation>
     </message>
@@ -275,7 +560,7 @@
         <translation>タイトル</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-365"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-362"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>JSONをコピー</translation>
@@ -291,7 +576,7 @@
         <translation>閉じる</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+97"/>
         <source>File Property</source>
         <translation>ファイルプロパティ</translation>
     </message>
@@ -301,7 +586,7 @@
         <translation>値</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+213"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+119"/>
         <source>Invalid Collection Folder</source>
         <translation>無効なコレクションフォルダ</translation>
     </message>
@@ -339,7 +624,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>メディア基本</translation>
@@ -372,7 +657,7 @@
         <translation>この%1デバイスを&lt;span style=&apos;color: red&apos;;&gt;削除&lt;/span&gt;しますか？</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+1257"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+800"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>カタログが更新されました：&lt;b&gt; %1 &lt;/b&gt;（%2 スキップ）</translation>
@@ -383,12 +668,12 @@
         <translation>仮想デバイスが更新されました： </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-2511"/>
+        <location filename="../mainwindow.ui" line="-1292"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;クリック：即座に停止（強制停止）&lt;/p&gt;&lt;p&gt;Ctrl+クリック：現在のカタログ後に停止（穏やかな停止）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-201"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-239"/>
         <source>The source directory does not exist.</source>
         <translation>ソースディレクトリが存在しません。</translation>
     </message>
@@ -399,20 +684,20 @@
         <translation>ソースフォルダにファイルがありません。&lt;br/&gt;これは、ソースが空であるか、デバイスがこのフォルダにマウントされていないことを意味している可能性があります。&lt;br/&gt;それでも保存しますか（カタログは空になります）？</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+92"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-463"/>
-        <location line="+84"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+79"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-473"/>
+        <location line="+97"/>
         <location line="+64"/>
         <location line="+130"/>
-        <location line="+143"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+248"/>
+        <location line="+140"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+249"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>デバイス操作が既に実行中です。</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1084"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-861"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1090"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1062"/>
         <source>Operation cancelled</source>
         <translation>操作がキャンセルされました</translation>
     </message>
@@ -422,7 +707,9 @@
         <translation>現在のカタログ完了後に停止しています...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6181"/>
+        <location filename="../mainwindow.ui" line="-7042"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
+        <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -435,12 +722,12 @@
         <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
         <location line="+40"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-488"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-484"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
-        <location line="+451"/>
+        <location line="+446"/>
         <location line="+4"/>
         <source>Search</source>
         <translation>検索</translation>
@@ -451,15 +738,15 @@
         <translation>ファイルまたはフォルダを検索</translation>
     </message>
     <message>
-        <location line="+3062"/>
-        <location line="+2675"/>
-        <location line="+1856"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+284"/>
+        <location line="+3923"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+91"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Text</source>
         <translation>テキスト</translation>
     </message>
     <message>
-        <location line="-7279"/>
+        <location line="-3609"/>
         <source>Paste the text from the clipboard</source>
         <translation>クリップボードからテキストを貼り付け</translation>
     </message>
@@ -481,7 +768,7 @@
     </message>
     <message>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+53"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+361"/>
         <source>All Words</source>
         <translation>すべての単語</translation>
     </message>
@@ -507,7 +794,7 @@
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>File names or Folder paths</source>
         <translation>ファイル名またはフォルダパス</translation>
     </message>
@@ -515,23 +802,23 @@
         <location line="-5"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-4"/>
         <location line="+3"/>
-        <location line="+812"/>
+        <location line="+977"/>
         <source>File names only</source>
         <translation>ファイル名のみ</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-810"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-975"/>
         <source>Folder path only</source>
         <translation>フォルダパスのみ</translation>
     </message>
     <message>
-        <location line="+3391"/>
+        <location line="+4252"/>
         <source>Choose to only show folders as results</source>
         <translation>フォルダのみを結果として表示</translation>
     </message>
     <message>
-        <location line="-4078"/>
+        <location line="-4939"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>すべての条件をデフォルト値にリセットし、以前の結果をクリアします。</translation>
     </message>
@@ -541,13 +828,13 @@
         <translation>リセット</translation>
     </message>
     <message>
-        <location line="+11170"/>
+        <location line="+11882"/>
         <source>Port</source>
         <translation>ポート</translation>
     </message>
     <message>
-        <location line="-2654"/>
-        <location line="+2633"/>
+        <location line="-2671"/>
+        <location line="+2650"/>
         <source>Password</source>
         <translation>パスワード</translation>
     </message>
@@ -563,87 +850,92 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+283"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-381"/>
+        <location filename="../mainwindow.cpp" line="+292"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-378"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-9694"/>
-        <location line="+802"/>
-        <location line="+232"/>
-        <location line="+764"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+434"/>
+        <location filename="../mainwindow.ui" line="-10407"/>
+        <location line="+848"/>
+        <location line="+891"/>
+        <location line="+921"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-296"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-294"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-3829"/>
-        <location line="+5765"/>
+        <location filename="../mainwindow.ui" line="-4690"/>
+        <location line="+6626"/>
         <source>Device tree</source>
         <translation>デバイスツリー</translation>
     </message>
     <message>
-        <location line="-5285"/>
+        <location line="-6146"/>
         <source>Reload all collection&apos;s data</source>
         <translation>すべてのコレクションデータを再読み込み</translation>
     </message>
     <message>
-        <location line="+1580"/>
+        <location line="+1579"/>
         <location line="+451"/>
-        <location line="+1388"/>
+        <location line="+2250"/>
         <location line="+218"/>
         <location line="+283"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-2276"/>
+        <location line="-3138"/>
         <source>File size unit for minimum value</source>
         <translation>最小値のファイルサイズ単位</translation>
     </message>
     <message>
         <location line="+49"/>
         <location line="+426"/>
-        <location line="+1387"/>
+        <location line="+2249"/>
         <location line="+218"/>
         <location line="+290"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-2260"/>
+        <location line="-3122"/>
         <source>File size unit for maximum value</source>
         <translation>最大値のファイルサイズ単位</translation>
     </message>
     <message>
         <location line="+81"/>
-        <location line="+4214"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-68"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-696"/>
+        <location line="+5080"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1486"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>タイプ</translation>
     </message>
     <message>
-        <location line="-4176"/>
+        <location line="-5042"/>
         <source>Select the type of files</source>
         <translation>ファイルタイプを選択</translation>
     </message>
     <message>
-        <location line="+3972"/>
-        <location line="+1790"/>
-        <location filename="../mainwindow_setup.cpp" line="+464"/>
+        <location filename="../mainwindow_setup.cpp" line="+476"/>
         <location line="+8"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-33"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+92"/>
+        <location line="+9"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+904"/>
+        <location line="+1"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+76"/>
+        <location line="+77"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -653,33 +945,32 @@
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+753"/>
         <source>All</source>
         <translation>すべて</translation>
     </message>
     <message>
-        <location line="-1785"/>
-        <location line="+1814"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-130"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Audio</source>
         <translation>オーディオ</translation>
     </message>
     <message>
-        <location line="-1806"/>
-        <location line="+1835"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1"/>
+        <location line="-29"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Image</source>
         <translation>画像</translation>
     </message>
     <message>
-        <location line="-1819"/>
-        <location line="+1877"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+2"/>
+        <location line="-28"/>
+        <location line="+19"/>
+        <location line="+11"/>
         <source>Video</source>
         <translation>ビデオ</translation>
     </message>
     <message>
-        <location line="-3385"/>
+        <location filename="../mainwindow.ui" line="+3355"/>
         <source>only list folders in results</source>
         <translation>結果にフォルダのみを表示</translation>
     </message>
@@ -691,7 +982,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+417"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1370"/>
         <source>Export Results</source>
         <translation>結果をエクスポート</translation>
     </message>
@@ -705,12 +996,12 @@
         <location line="+73"/>
         <location line="+34"/>
         <location filename="../mainwindow.ui" line="+129"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+636"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+631"/>
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+32"/>
-        <location line="+25"/>
+        <location line="+33"/>
+        <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
         <source>Files found</source>
@@ -723,13 +1014,13 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+897"/>
+        <location line="+907"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2461"/>
+        <location line="+2295"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -738,7 +1029,7 @@
         <location line="+24"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+92"/>
+        <location line="+99"/>
         <location line="+38"/>
         <location line="+24"/>
         <location line="+38"/>
@@ -747,7 +1038,7 @@
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3657"/>
+        <location line="-3498"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -755,45 +1046,47 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2678"/>
+        <location line="+2502"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>総ファイルサイズ</translation>
     </message>
     <message>
-        <location line="-2640"/>
+        <location line="-2464"/>
         <source>Total Number of Files</source>
         <translation>総ファイル数</translation>
     </message>
     <message>
-        <location line="-1149"/>
+        <location line="-1159"/>
         <source>All active</source>
         <translation>すべてアクティブ</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1250"/>
         <source>Import</source>
         <translation>インポート</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-403"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-211"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-413"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-346"/>
+        <location line="+22"/>
+        <location line="+35"/>
         <location line="+18"/>
         <location line="+14"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-172"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
         <source>Explore</source>
         <translation>エクスプローラ</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-127"/>
-        <location line="+65"/>
-        <location line="+59"/>
-        <location filename="../mainwindow.ui" line="-1773"/>
-        <location line="+932"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+741"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
+        <location line="+81"/>
+        <location line="+70"/>
+        <location filename="../mainwindow.ui" line="-1783"/>
+        <location line="+936"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-191"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+88"/>
+        <location line="+101"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
         <location line="+39"/>
@@ -802,70 +1095,70 @@
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4682"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-106"/>
-        <location line="+68"/>
+        <location filename="../mainwindow.ui" line="+4529"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
+        <location line="+81"/>
         <location line="+63"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location line="-5941"/>
+        <location line="-5792"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location line="+2103"/>
+        <location line="+2113"/>
         <source>Explore a catalog</source>
         <translation>カタログを探索</translation>
     </message>
     <message>
-        <location line="-7534"/>
-        <location line="+7913"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+178"/>
+        <location line="-8405"/>
+        <location line="+8784"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+256"/>
         <source>Catalog</source>
         <translation>カタログ</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1576"/>
+        <location filename="../mainwindow.ui" line="+1400"/>
         <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-982"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
         <source>Path</source>
         <translation>パス</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1899"/>
+        <location filename="../mainwindow.ui" line="-1723"/>
         <source>Directories</source>
         <translation>ディレクトリ</translation>
     </message>
     <message>
-        <location line="-7824"/>
+        <location line="-8695"/>
         <location line="+688"/>
         <source>Show/Hide Filters</source>
         <translation>フィルタを表示/非表示</translation>
     </message>
     <message>
         <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1204"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1220"/>
         <source>Virtual</source>
         <translation>仮想</translation>
     </message>
     <message>
         <location line="+1252"/>
-        <location line="+4701"/>
-        <location line="+3141"/>
+        <location line="+5562"/>
+        <location line="+2975"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location line="-3604"/>
+        <location line="-3438"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>選択...</translation>
@@ -878,8 +1171,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-693"/>
-        <location line="+699"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-719"/>
+        <location line="+725"/>
         <source>Move to Trash</source>
         <translation>ゴミ箱に移動</translation>
     </message>
@@ -899,8 +1192,8 @@
         <translation>変更は保存時にのみ適用されます</translation>
     </message>
     <message>
-        <location line="+267"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+951"/>
+        <location line="+271"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+975"/>
         <source>Comment 1</source>
         <translation>コメント 1</translation>
     </message>
@@ -929,7 +1222,7 @@
         <translation>モデル</translation>
     </message>
     <message>
-        <location line="+406"/>
+        <location line="+412"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
@@ -965,8 +1258,8 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+2046"/>
-        <location line="+620"/>
+        <location line="+1870"/>
+        <location line="+630"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
@@ -974,14 +1267,14 @@
         <translation>ファイル数</translation>
     </message>
     <message>
-        <location line="-2550"/>
+        <location line="-2384"/>
         <source>Click to open the file</source>
         <translation>クリックしてファイルを開く</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-126"/>
-        <location line="+65"/>
-        <location line="+59"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-153"/>
+        <location line="+81"/>
+        <location line="+70"/>
         <location filename="../mainwindow.ui" line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
@@ -1004,17 +1297,15 @@
         <translation>コンテンツオプションを選択</translation>
     </message>
     <message>
-        <location line="+85"/>
         <source>include File Type</source>
-        <translation>ファイルタイプを含める</translation>
+        <translation type="vanished">ファイルタイプを含める</translation>
     </message>
     <message>
-        <location line="+236"/>
         <source>Other options</source>
-        <translation>その他のオプション</translation>
+        <translation type="vanished">その他のオプション</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+258"/>
         <source>Directories to exclude from catalogs</source>
         <translation>カタログから除外するディレクトリ</translation>
     </message>
@@ -1044,8 +1335,8 @@
         <translation>新しいストレージデバイスを追加</translation>
     </message>
     <message>
-        <location line="-2581"/>
-        <location line="+2584"/>
+        <location line="-2415"/>
+        <location line="+2418"/>
         <source>Add Storage</source>
         <translation>ストレージを追加</translation>
     </message>
@@ -1071,12 +1362,11 @@
     </message>
     <message>
         <location line="+79"/>
-        <location line="+38"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>カタログ化を開始してファイルに保存</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="+6"/>
         <source>Create Catalog</source>
         <translation>カタログを作成</translation>
     </message>
@@ -1091,7 +1381,7 @@
         <translation>ソースパスを選択</translation>
     </message>
     <message>
-        <location line="-1833"/>
+        <location line="-1657"/>
         <source>Tree options</source>
         <translation>ツリーオプション</translation>
     </message>
@@ -1111,7 +1401,7 @@
         <translation>仮想グループを挿入</translation>
     </message>
     <message>
-        <location line="-1621"/>
+        <location line="-1631"/>
         <source>View</source>
         <translation>表示</translation>
     </message>
@@ -1121,12 +1411,12 @@
         <translation>ストレージリスト</translation>
     </message>
     <message>
-        <location line="+697"/>
+        <location line="+576"/>
         <source>Catalog fields</source>
         <translation>カタログフィールド</translation>
     </message>
     <message>
-        <location line="+236"/>
+        <location line="+361"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>空き容量</translation>
@@ -1137,17 +1427,17 @@
         <translation>デバイス画像</translation>
     </message>
     <message>
-        <location line="-658"/>
+        <location line="-662"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>コレクション全体の統計のため、すべてのデバイスの値を記録します。</translation>
     </message>
     <message>
-        <location line="+780"/>
+        <location line="+784"/>
         <source>Storage fields</source>
         <translation>ストレージフィールド</translation>
     </message>
     <message>
-        <location line="+5558"/>
+        <location line="+5405"/>
         <source>Icons</source>
         <translation>アイコン</translation>
     </message>
@@ -1193,55 +1483,55 @@
         <translation>データ管理</translation>
     </message>
     <message>
-        <location line="-11395"/>
-        <location line="+9153"/>
+        <location line="-12107"/>
+        <location line="+9848"/>
         <source>Select the path</source>
         <translation>パスを選択</translation>
     </message>
     <message>
-        <location line="-9150"/>
-        <location line="+5965"/>
-        <location line="+3188"/>
+        <location line="-9845"/>
+        <location line="+6826"/>
+        <location line="+3022"/>
         <location line="+453"/>
         <source>Select</source>
         <translation>選択</translation>
     </message>
     <message>
-        <location line="-10016"/>
-        <location line="+7393"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
-        <location line="+2496"/>
+        <location line="-10711"/>
+        <location line="+8264"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-944"/>
+        <location line="+2694"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>ストレージ</translation>
     </message>
     <message>
-        <location line="+4027"/>
+        <location line="+3868"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location line="-5647"/>
+        <location line="-5498"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>デバイス</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+653"/>
+        <location line="+657"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>総容量</translation>
     </message>
     <message>
-        <location line="-565"/>
+        <location line="-569"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3465"/>
+        <location line="+3299"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>再読み込み</translation>
@@ -1272,24 +1562,24 @@
         <translation>すべてのレコードを保存するファイルを編集</translation>
     </message>
     <message>
-        <location line="-2146"/>
+        <location line="-1970"/>
         <source>Add Virtual</source>
         <translation>仮想を追加</translation>
     </message>
     <message>
-        <location line="-1663"/>
+        <location line="-1673"/>
         <source>Edit List</source>
         <translation>リストを編集</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4188"/>
+        <location line="+4390"/>
         <source>Full Table</source>
         <translation>全テーブル</translation>
     </message>
     <message>
-        <location line="-3883"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+56"/>
+        <location line="-4085"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
         <source>Device Name</source>
         <translation>デバイス名</translation>
     </message>
@@ -1306,7 +1596,7 @@
         <translation>デバイスID</translation>
     </message>
     <message>
-        <location line="+3321"/>
+        <location line="+3155"/>
         <source>Edit Statistics</source>
         <translation>統計を編集</translation>
     </message>
@@ -1368,7 +1658,7 @@
         <translation>タグを保存するファイルを再読み込み</translation>
     </message>
     <message>
-        <location line="+223"/>
+        <location line="+233"/>
         <source>Link name</source>
         <translation>リンク名</translation>
     </message>
@@ -1383,7 +1673,7 @@
         <translation>カタログリンク</translation>
     </message>
     <message>
-        <location line="+357"/>
+        <location line="+364"/>
         <source>Linked</source>
         <translation>リンク済み</translation>
     </message>
@@ -1401,7 +1691,7 @@
     <message>
         <location line="+18"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-390"/>
+        <location filename="../mainwindow_setup.cpp" line="-402"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
@@ -1453,12 +1743,12 @@
         <translation>データモード &quot;SQLiteローカルファイル&quot;</translation>
     </message>
     <message>
-        <location line="-4026"/>
+        <location line="-3867"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>選択デバイスツリーにオプションを適用します。</translation>
     </message>
     <message>
-        <location line="+1978"/>
+        <location line="+1802"/>
         <source>Type of source</source>
         <translation>ソースタイプ</translation>
     </message>
@@ -1508,12 +1798,12 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;選択したデバイスのリンクを再読み込みし、統計を更新します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+98"/>
         <source>Create new link</source>
         <translation>新しいリンクを作成</translation>
     </message>
     <message>
-        <location line="+306"/>
+        <location line="+313"/>
         <source>Coverage</source>
         <translation>カバレッジ</translation>
     </message>
@@ -1650,29 +1940,29 @@
         <translation>開く</translation>
     </message>
     <message>
-        <location line="-1000"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-543"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-780"/>
+        <location line="-1017"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-725"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-840"/>
         <source>Open file</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location line="+1695"/>
+        <location line="+1712"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+83"/>
+        <location line="+120"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>フォルダを開く</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-28"/>
-        <location line="+34"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+59"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-62"/>
+        <location line="+68"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+64"/>
         <source>Copy folder path</source>
         <translation>フォルダパスをコピー</translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="-64"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file absolute path</source>
         <translation>ファイルの絶対パスをコピー</translation>
@@ -1692,30 +1982,31 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-8703"/>
-        <location line="+232"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1833"/>
-        <location line="+239"/>
-        <location line="+262"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+465"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-824"/>
+        <location filename="../mainwindow.ui" line="-9370"/>
+        <location line="+891"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2009"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+644"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-816"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
-        <location filename="../mainwindow.ui" line="-560"/>
-        <location line="+8438"/>
+        <location filename="../mainwindow.ui" line="-1265"/>
+        <location line="+9151"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1175"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1262"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+20"/>
         <source>Date</source>
         <translation>日付</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-321"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-430"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
@@ -1729,40 +2020,40 @@
         <translation>このコレクションのディレクトリを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5752"/>
-        <location line="+2427"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-494"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow.ui" line="-5603"/>
+        <location line="+2437"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3525"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total Size</source>
         <translation>総サイズ</translation>
     </message>
     <message>
-        <location line="-1407"/>
-        <location line="+1590"/>
+        <location line="-1417"/>
+        <location line="+1600"/>
         <source>Source Path</source>
         <translation>ソースパス</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1464"/>
+        <location filename="../mainwindow.ui" line="-1512"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+648"/>
+        <location line="+635"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>ファイルタイプ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3784"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-61"/>
+        <location filename="../mainwindow.ui" line="+3666"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-60"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>ファイルサイズ</translation>
     </message>
     <message>
-        <location line="-3356"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-919"/>
+        <location line="-3196"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-898"/>
         <source>Label</source>
         <translation>ラベル</translation>
     </message>
@@ -1773,18 +2064,18 @@
         <translation>ファイルシステム</translation>
     </message>
     <message>
-        <location line="+3608"/>
+        <location line="+3455"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>合計</translation>
     </message>
     <message>
-        <location line="-4403"/>
+        <location line="-4254"/>
         <source>Free</source>
         <translation>空き</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+733"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>シリアル番号</translation>
@@ -1796,7 +2087,7 @@
         <translation>ビルド日</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1359"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1383"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>このカタログは既にこの仮想デバイスに割り当てられています。</translation>
     </message>
@@ -1816,7 +2107,7 @@
         <translation>&lt;br/&gt;このコレクションのスナップショットが記録されました：&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;カタログ&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ファイル数: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;総ファイルサイズ: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;ストレージ&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ストレージ空き容量: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ストレージ総容量: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (追加: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+283"/>
+        <location line="+305"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>この名前のカタログは既に存在します：&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1837,48 +2128,49 @@
     </message>
     <message>
         <location line="+495"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>Parent ID</source>
         <translation>親ID</translation>
     </message>
     <message>
-        <location line="-500"/>
+        <location line="-3531"/>
         <source>External ID</source>
         <translation>外部ID</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Number of files</source>
         <translation>ファイル数</translation>
     </message>
     <message>
-        <location line="-498"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-492"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Free space</source>
         <translation>空き容量</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Total space</source>
         <translation>総容量</translation>
     </message>
     <message>
-        <location line="-500"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-494"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Date updated</source>
         <translation>更新日</translation>
     </message>
     <message>
-        <location line="-499"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-493"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Group ID</source>
         <translation>グループID</translation>
     </message>
@@ -1890,7 +2182,7 @@
         <translation>カタログID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+22"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+23"/>
         <source>Parent storage</source>
         <translation>親ストレージ</translation>
     </message>
@@ -1915,7 +2207,7 @@
         <translation>ファイルパス</translation>
     </message>
     <message>
-        <location line="+637"/>
+        <location line="+623"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>カタログの定義への変更を保存しますか？&lt;br/&gt;</translation>
     </message>
@@ -1935,17 +2227,17 @@
         <translation>新しい値</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+10"/>
         <source>Include Hidden</source>
         <translation>隠しファイルを含める</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+19"/>
         <source>Is Full Device</source>
         <translation>フルデバイスです</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>（これらの変更を反映するにはカタログを更新する必要があります）</translation>
     </message>
@@ -1962,17 +2254,18 @@
         <translation>インポートするcsvファイルを選択</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+17"/>
+        <location line="+143"/>
         <source>No catalog found.</source>
         <translation>カタログが見つかりません。</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-129"/>
         <source>A file was found, but could not be loaded</source>
         <translation>ファイルが見つかりましたが、読み込めませんでした</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+504"/>
         <source>Catalog updated: </source>
         <translation>カタログが更新されました: </translation>
     </message>
@@ -2080,9 +2373,9 @@
         <translation>選択したデバイスはカタログである必要があります。別のデバイスIDで試してください</translation>
     </message>
     <message>
-        <location line="-1857"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location line="-2033"/>
+        <location line="+241"/>
+        <location line="+254"/>
         <source>Used space</source>
         <translation>使用容量</translation>
     </message>
@@ -2097,25 +2390,28 @@
         <translation>/</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5346"/>
-        <location line="+1830"/>
-        <location line="+67"/>
+        <location filename="../mainwindow.ui" line="-6211"/>
+        <location line="+1989"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>検索テキストをファイル名のみ、フォルダパスのみ、または両方で検索するかを定義します。</translation>
     </message>
     <message>
-        <location line="-2040"/>
+        <location line="-2901"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>検索テキストの使用方法を定義します。</translation>
     </message>
     <message>
-        <location line="+7081"/>
+        <location line="+5959"/>
+        <location line="+1807"/>
         <source>Include Hidden files</source>
         <translation>隠しファイルを含める</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+27"/>
         <source>Follow symbolic links</source>
         <translation>シンボリックリンクを追跡</translation>
     </message>
@@ -2125,12 +2421,12 @@
         <translation>パスに基づいてカタログ名を生成します。</translation>
     </message>
     <message>
-        <location line="-8351"/>
+        <location line="-9046"/>
         <source>Reset all filters</source>
         <translation>すべてのフィルタをリセット</translation>
     </message>
     <message>
-        <location line="+10426"/>
+        <location line="+11138"/>
         <source>About</source>
         <translation>このアプリについて</translation>
     </message>
@@ -2145,15 +2441,15 @@
         <translation>統計用にファイルとサイズの記録を保持</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-907"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-971"/>
         <location line="+11"/>
-        <location line="+34"/>
+        <location line="+35"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-115"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-44"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+8"/>
         <source>KiB</source>
@@ -2167,18 +2463,18 @@
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-356"/>
+        <location line="-384"/>
         <source>Explore folder</source>
         <translation>フォルダを探索</translation>
     </message>
     <message>
-        <location line="+207"/>
-        <location line="+573"/>
+        <location line="+250"/>
+        <location line="+590"/>
         <source>MOVE</source>
         <translation>移動</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-589"/>
         <source>Move this file to the trash?</source>
         <translation>このファイルをゴミ箱に移動しますか？</translation>
     </message>
@@ -2195,12 +2491,12 @@
     </message>
     <message>
         <location line="+46"/>
-        <location line="+548"/>
+        <location line="+565"/>
         <source>DELETE</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location line="-547"/>
+        <location line="-564"/>
         <source>Delete this file?</source>
         <translation>このファイルを削除しますか？</translation>
     </message>
@@ -2210,7 +2506,7 @@
         <translation>フォルダの削除はできません。</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+39"/>
         <location line="+11"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-8"/>
         <source>TiB</source>
@@ -2219,12 +2515,12 @@
     <message>
         <location line="-7"/>
         <location line="+11"/>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Bytes</source>
         <translation>バイト</translation>
     </message>
     <message>
-        <location line="+351"/>
+        <location line="+382"/>
         <source>Select first a process to be applied to all results below.</source>
         <translation>最初に以下のすべての結果に適用するプロセスを選択してください。</translation>
     </message>
@@ -2289,7 +2585,7 @@
         <translation>検索結果</translation>
     </message>
     <message>
-        <location line="+369"/>
+        <location line="+401"/>
         <source>Text Phrase selected</source>
         <translation>テキストフレーズが選択されました</translation>
     </message>
@@ -2469,7 +2765,7 @@
         <translation>各カタログのバックアップを常に1つ保持</translation>
     </message>
     <message>
-        <location line="-5574"/>
+        <location line="-5425"/>
         <source>Used</source>
         <translation>使用済み</translation>
     </message>
@@ -2500,22 +2796,21 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1033"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1027"/>
         <source>Choose a different name and try again.</source>
         <translation>別の名前を選択してもう一度お試しください。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5017"/>
+        <location filename="../mainwindow.ui" line="+4868"/>
         <source>Check at start up</source>
         <translation>起動時に確認</translation>
     </message>
     <message>
-        <location line="-4704"/>
         <source>Include Hidden Files</source>
-        <translation>隠しファイルを含める</translation>
+        <translation type="vanished">隠しファイルを含める</translation>
     </message>
     <message>
-        <location line="+552"/>
+        <location line="-3999"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
@@ -2525,28 +2820,30 @@
         <translation>&lt;br/&gt;&lt;b&gt;Katalogへようこそ！&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;初回実行のようです。&lt;br/&gt;&lt;br/&gt;以下の設定が適用されました：&lt;br/&gt; - 言語: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - テーマ: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;これらは%3タブで変更できます。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1053"/>
+        <location filename="../mainwindow.ui" line="-1057"/>
         <source>Snapshot</source>
         <translation>スナップショット</translation>
     </message>
     <message>
-        <location line="+3754"/>
+        <location line="+3588"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
         <source>Source</source>
         <translation>ソース</translation>
     </message>
     <message>
-        <location line="-3715"/>
+        <location line="-3549"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デバイスが利用可能な場合、アクティブなすべてのカタログを更新します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1240"/>
+        <location line="+1250"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;VVVからボリュームリストをインポートします&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-213"/>
+        <location line="-216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
+        <location line="+117"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-157"/>
         <location line="+107"/>
         <location line="+9"/>
@@ -2555,64 +2852,64 @@
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+297"/>
+        <location filename="../mainwindow_setup.cpp" line="+291"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>現在のバージョン: v%1 &lt;br/&gt;&lt;br/&gt;新しいバージョンが利用可能です: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; 新機能のリストは&lt;a href=&apos;%3&apos;&gt;リリースノート&lt;/a&gt;をご覧ください&lt;br/&gt;&lt;br/&gt;ダウンロードしますか？</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-375"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+768"/>
+        <location filename="../mainwindow.ui" line="-378"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+770"/>
         <source>Storage ID</source>
         <translation>ストレージID</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+932"/>
+        <location line="-840"/>
+        <location line="+936"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デバイスが利用可能な場合、選択したカタログのファイルを更新します&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-2"/>
-        <location filename="../mainwindow.ui" line="+1190"/>
-        <location line="+1449"/>
+        <location filename="../mainwindow.ui" line="+1196"/>
+        <location line="+1273"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>ディレクトリ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-8261"/>
+        <location filename="../mainwindow.ui" line="-8956"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>検索テキストから _ - . , などの文字を削除</translation>
     </message>
     <message>
-        <location line="+1780"/>
+        <location line="+1790"/>
         <source>Duplicates on</source>
         <translation>重複条件</translation>
     </message>
     <message>
-        <location line="+95"/>
-        <location line="+232"/>
+        <location line="+130"/>
+        <location line="+891"/>
         <source>Date Modified</source>
         <translation>更新日</translation>
     </message>
     <message>
-        <location line="+7930"/>
+        <location line="+7938"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>アプリ起動時にKatalogの新しいバージョンが利用可能かを確認します。</translation>
     </message>
     <message>
-        <location line="-5463"/>
+        <location line="-5314"/>
         <source>Show/Hide search history</source>
         <translation>検索履歴を表示/非表示</translation>
     </message>
     <message>
-        <location line="-4833"/>
+        <location line="-5694"/>
         <source>Search criteria</source>
         <translation>検索条件</translation>
     </message>
     <message>
-        <location line="+4226"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-7"/>
+        <location line="+5087"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-184"/>
         <source>Tag</source>
         <translation>タグ</translation>
     </message>
@@ -2627,7 +2924,7 @@
         <translation>検索履歴</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-293"/>
+        <location filename="../mainwindow_setup.cpp" line="-287"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;次の画面で、既存のコレクションフォルダを選択するか、新しく作成してください。</translation>
     </message>
@@ -2642,7 +2939,7 @@
         <translation>1- ドライブまたはディレクトリ全体を選択、&lt;br/&gt;2- オプションを選択、&lt;br/&gt;3- &apos;作成&apos;をクリック&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4909"/>
+        <location filename="../mainwindow.ui" line="-5770"/>
         <source>Show/Hide search criteria</source>
         <translation>検索条件を表示/非表示</translation>
     </message>
@@ -2662,28 +2959,28 @@
         <translation>除外</translation>
     </message>
     <message>
-        <location line="+4689"/>
+        <location line="+5532"/>
         <source>is full device</source>
         <translation>フルデバイス</translation>
     </message>
     <message>
-        <location line="+2346"/>
+        <location line="+2198"/>
         <source>catalog is for the full device</source>
         <translation>カタログはフルデバイス用</translation>
     </message>
     <message>
-        <location line="-5953"/>
-        <location line="+232"/>
+        <location line="-6638"/>
+        <location line="+888"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>次の条件に基づいて重複を検索することを選択</translation>
     </message>
     <message>
-        <location line="+1955"/>
+        <location line="+2150"/>
         <source>Choose to use Tags to filter results</source>
         <translation>タグを使用して結果をフィルタリングすることを選択</translation>
     </message>
     <message>
-        <location line="-3360"/>
+        <location line="-4221"/>
         <source>case sensitive</source>
         <translation>大文字小文字を区別</translation>
     </message>
@@ -2693,22 +2990,22 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;結果はテキストと完全に一致する必要があります（文字の大文字小文字を区別）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+9983"/>
+        <location line="+10695"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>次の検索を高速化するため、起動時に最後に選択したカタログをプリロード</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-462"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-607"/>
         <source>Move file to Trash</source>
         <translation>ファイルをゴミ箱に移動</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+159"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-1066"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-1115"/>
         <location line="+64"/>
-        <location line="+509"/>
+        <location line="+526"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>確認</translation>
@@ -2718,7 +3015,7 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-600"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-617"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -2748,13 +3045,13 @@
         <translation>削除に失敗しました。</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="-205"/>
+        <location line="-200"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="-214"/>
         <source>Delete file</source>
         <translation>ファイルを削除</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+156"/>
         <source>Move
 %1
 to the trash?</source>
@@ -2767,25 +3064,25 @@ to the trash?</source>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;削除&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-270"/>
+        <location line="-337"/>
         <source>Tag this folder</source>
         <translation>このフォルダにタグを付ける</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-11210"/>
+        <location filename="../mainwindow.ui" line="-11922"/>
         <source>Selection</source>
         <translation>選択</translation>
     </message>
     <message>
         <location line="-356"/>
         <location line="+32"/>
-        <location line="+7091"/>
+        <location line="+7962"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>1レベル、2レベル展開、または折りたたみ</translation>
     </message>
     <message>
-        <location line="+2389"/>
+        <location line="+2213"/>
         <source>all records</source>
         <translation>すべてのレコード</translation>
     </message>
@@ -2802,17 +3099,21 @@ to the trash?</source>
         <translation>スナップショットのみ</translation>
     </message>
     <message>
-        <location line="+394"/>
+        <location line="-6897"/>
+        <location line="+108"/>
+        <location line="+553"/>
+        <location line="+108"/>
+        <location line="+6522"/>
         <source>Device</source>
         <translation>デバイス</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+64"/>
         <source>Delete selected</source>
         <translation>選択を削除</translation>
     </message>
     <message>
-        <location line="+360"/>
+        <location line="+367"/>
         <source>as Source</source>
         <translation>ソースとして</translation>
     </message>
@@ -2858,7 +3159,7 @@ to the trash?</source>
         <translation>設定ファイルを開く</translation>
     </message>
     <message>
-        <location line="-2993"/>
+        <location line="-2834"/>
         <source>Display folders</source>
         <translation>フォルダを表示</translation>
     </message>
@@ -2873,7 +3174,7 @@ to the trash?</source>
         <translation>フォルダを最初に並べる</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+127"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+164"/>
         <source>Copy folder name</source>
         <translation>フォルダ名をコピー</translation>
     </message>
@@ -2884,70 +3185,69 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+439"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+584"/>
         <source>orderValue</source>
         <translation>並び順値</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1640"/>
+        <location filename="../mainwindow.ui" line="-1650"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-243"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-245"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>Device Type</source>
         <translation>デバイスタイプ</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-260"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>選択したカタログには %1 個以上のファイルが含まれています。&lt;br/&gt;開くのに数分かかる場合があります。&lt;br/&gt;続行しますか？</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5536"/>
+        <location filename="../mainwindow.ui" line="+5387"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>メモリ</translation>
     </message>
     <message>
-        <location line="-10875"/>
-        <location line="+1023"/>
-        <location line="+1640"/>
+        <location line="-11587"/>
+        <location line="+1022"/>
+        <location line="+2502"/>
         <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
         <translation>検索でテキスト条件を使用</translation>
     </message>
     <message>
-        <location line="-1711"/>
+        <location line="-1906"/>
         <source>Differences on</source>
         <translation>差異条件</translation>
     </message>
     <message>
-        <location line="+243"/>
         <source>Catalog 1</source>
-        <translation>カタログ 1</translation>
+        <translation type="vanished">カタログ 1</translation>
     </message>
     <message>
-        <location line="+67"/>
         <source>Catalog2</source>
-        <translation>カタログ2</translation>
+        <translation type="vanished">カタログ2</translation>
     </message>
     <message>
-        <location line="-2455"/>
+        <location line="-2811"/>
         <source>File name</source>
         <translation>ファイル名</translation>
     </message>
     <message>
-        <location line="+1023"/>
+        <location line="+1022"/>
         <source>File criteria</source>
         <translation>ファイル条件</translation>
     </message>
     <message>
-        <location line="+2836"/>
+        <location line="+3698"/>
         <source>Folder criteria</source>
         <translation>フォルダ条件</translation>
     </message>
     <message>
-        <location line="+5002"/>
+        <location line="+4836"/>
         <source>Graphic Start Date</source>
         <translation>グラフィック開始日</translation>
     </message>
@@ -2957,17 +3257,17 @@ to the trash?</source>
         <translation>日付を選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+679"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2367"/>
         <source>Include Metadata</source>
         <translation>メタデータを含める</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+485"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+456"/>
         <source>Local disk</source>
         <translation>ローカルディスク</translation>
     </message>
     <message>
-        <location line="-714"/>
+        <location line="-685"/>
         <source>The directory does not exist. Create it?</source>
         <translation>ディレクトリが存在しません。作成しますか？</translation>
     </message>
@@ -2977,7 +3277,7 @@ to the trash?</source>
         <translation>データベースファイルが存在しません。作成しますか？</translation>
     </message>
     <message>
-        <location line="+337"/>
+        <location line="+318"/>
         <source>Collection Upgrade Required</source>
         <translation>コレクションのアップグレードが必要</translation>
     </message>
@@ -3037,22 +3337,22 @@ to the trash?</source>
         <translation>アプリケーションを終了</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+49"/>
         <source>Select the database to open:</source>
         <translation>開くデータベースを選択：</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-292"/>
         <source>Select the database to create and open:</source>
         <translation>作成して開くデータベースを選択：</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+130"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>ストレージデバイスリストの一部の変更が保存されていません。&lt;br/&gt;保存して終了、破棄して終了、または終了をキャンセルしますか？</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+351"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+334"/>
         <source> Physical Group</source>
         <translation> 物理グループ</translation>
     </message>
@@ -3067,20 +3367,21 @@ to the trash?</source>
         <translation>このタグを削除</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-71"/>
+        <location filename="../mainwindow.cpp" line="-72"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+562"/>
+        <location line="+557"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_search_ui.cpp" line="+1216"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+1298"/>
         <source>Catalog with results</source>
         <translation>結果を含むカタログ</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
         <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1178"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1163"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3097,9 +3398,10 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-502"/>
-        <location line="+239"/>
-        <location line="+262"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3533"/>
+        <location line="+241"/>
+        <location line="+254"/>
+        <location line="+3037"/>
         <source>Active</source>
         <translation>アクティブ</translation>
     </message>
@@ -3151,7 +3453,7 @@ to the trash?</source>
         <translation>日付差</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Parent Device</source>
         <translation>親デバイス</translation>
     </message>
@@ -3192,7 +3494,7 @@ to the trash?</source>
         <translation>別のソースまたはターゲットを選択してください（デバイスは自分自身にマッピングできません）。</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-482"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-495"/>
         <source>Virtual Group</source>
         <translation>仮想グループ</translation>
     </message>
@@ -3202,7 +3504,7 @@ to the trash?</source>
         <translation>仮想デバイスは他の仮想デバイスにのみ追加できます。&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+212"/>
         <location line="+68"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
@@ -3248,7 +3550,7 @@ to the trash?</source>
         <translation>このグループはストレージとカタログをホストするために必要です。&lt;br/&gt;削除できません。</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+232"/>
         <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
         <translation>MIME検証が正常に完了しました。&lt;br/&gt;ファイル拡張子と実際のコンテンツの間に不一致は見つかりませんでした。</translation>
     </message>
@@ -3263,8 +3565,8 @@ to the trash?</source>
         <translation>MIME検証に失敗しました：&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-786"/>
-        <location line="+323"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-804"/>
+        <location line="+346"/>
         <source>Search Error</source>
         <translation>検索エラー</translation>
     </message>
@@ -3320,7 +3622,7 @@ to the trash?</source>
         <location filename="../core/searchprogressmanager.cpp" line="-107"/>
         <location line="+73"/>
         <location line="+33"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+363"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+358"/>
         <source>Folders found</source>
         <translation>見つかったフォルダ</translation>
     </message>
@@ -3335,7 +3637,7 @@ to the trash?</source>
         <translation>見つかった差異</translation>
     </message>
     <message>
-        <location line="+213"/>
+        <location line="+209"/>
         <source>No search results available.</source>
         <translation>検索結果がありません。</translation>
     </message>

@@ -30,6 +30,7 @@
 */
 
 #include "collection.h"
+#include "database.h"
 #include "device.h"
 #include "catalog.h"
 #include <QMutex>
@@ -255,9 +256,11 @@ void Collection::clearDatabaseData()
             return;
         }
 
-        // Disable foreign key constraints temporarily to avoid constraint violations
+        // Disable foreign key constraints temporarily to avoid constraint violations (SQLite-specific)
         QSqlQuery pragmaQuery(db);
-        pragmaQuery.exec("PRAGMA foreign_keys = OFF");
+        if (Database::getDatabaseType(m_connectionName) == Database::DatabaseType::SQLite) {
+            pragmaQuery.exec("PRAGMA foreign_keys = OFF");
+        }
 
         // Execute DELETE queries in dependency order to avoid foreign key issues
         QSqlQuery queryDelete(db);
@@ -287,8 +290,10 @@ void Collection::clearDatabaseData()
         queryDelete.exec("DELETE FROM virtual_storage_catalog");
         queryDelete.exec("DELETE FROM device_catalog");
 
-        // Re-enable foreign key constraints
-        pragmaQuery.exec("PRAGMA foreign_keys = ON");
+        // Re-enable foreign key constraints (SQLite-specific)
+        if (Database::getDatabaseType(m_connectionName) == Database::DatabaseType::SQLite) {
+            pragmaQuery.exec("PRAGMA foreign_keys = ON");
+        }
 
         qDebug() << "Database cleared safely with proper constraint handling";
     }
@@ -456,11 +461,11 @@ void Collection::loadCatalogFilesToTable()
             //Prepare a textsteam for the file
             QTextStream textStreamCatalogs(&catalogFile);
 
-            //Read the first 10 lines and put values in a stringlist
+            //Read the first 12 lines and put values in a stringlist
             QStringList catalogValues;
             QString line;
             QString value;
-            for (int i=0; i<11; i++) {
+            for (int i=0; i<12; i++) {
                 line = textStreamCatalogs.readLine();
                 if (line !="" and QVariant(line.at(0)).toString()=="<"){
                     value = line.right(line.size() - line.indexOf(">") - 1);
@@ -469,15 +474,16 @@ void Collection::loadCatalogFilesToTable()
                 }
             }
             if (catalogValues.count()== 7) catalogValues << "false"; //for older catalog without isFullDevice
-            if (catalogValues.count()== 8) catalogValues << "false"; //for older catalog without includeMetadata
-            if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion
-            if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID
+            if (catalogValues.count()== 8) catalogValues << "false"; //for older catalog without includeMetadata (v2.7)
+            if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion (v2.7)
+            if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID (v2.8)
+            if (catalogValues.count()==11) catalogValues.insert(9, "None");  //for older catalog without includeChecksum (v2.9)
 
             if(catalogValues.length()>0){
                 //Insert a line in the table with available data
 
                 Catalog newCatalog;
-                newCatalog.ID               = catalogValues[10].toInt(); //catalog_id
+                newCatalog.ID               = catalogValues[11].toInt(); //catalog_id
                 newCatalog.filePath         = path; //catalog_file_path
                 newCatalog.name             = catalogFileInfo.completeBaseName(); //catalog_name
                 newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
@@ -493,7 +499,11 @@ void Collection::loadCatalogFilesToTable()
                 if (newCatalog.includeMetadata == "false") {
                     newCatalog.includeMetadata = Catalog::METADATA_NONE;
                 }
-                newCatalog.appVersion       = catalogValues[9]; //catalog_app_version
+                newCatalog.includeChecksum  = catalogValues[9]; //catalog_include_checksum
+                if (newCatalog.includeChecksum == "false" || newCatalog.includeChecksum.isEmpty()) {
+                    newCatalog.includeChecksum = Catalog::CHECKSUM_NONE;
+                }
+                newCatalog.appVersion       = catalogValues[10]; //catalog_app_version
                 newCatalog.insertCatalog();
             }
             catalogFile.close();
@@ -811,7 +821,7 @@ void Collection::loadSearchHistoryFileToTable()
                         QStringList fieldList = line.split('\t');
 
                         //add empty values to support the addition of new fields to files from older versions
-                        int  targetFieldsCount = 38;
+                        int  targetFieldsCount = 43;
                         int currentFiledsCount = fieldList.count();
                         int    diffFieldsCount = targetFieldsCount - currentFiledsCount;
                         if(diffFieldsCount !=0){
@@ -860,7 +870,12 @@ void Collection::loadSearchHistoryFileToTable()
                                                     file_type_checked,
                                                     file_criteria_checked,
                                                     folder_criteria_checked,
-                                                    selected_device_ID_list
+                                                    selected_device_ID_list,
+                                                    duplicates_checksum,
+                                                    duplicates_checksum_equal,
+                                                    duplicates_compare_checked,
+                                                    duplicates_device1_ID,
+                                                    duplicates_device2_ID
                                                     )
                                                 VALUES(
                                                     :date_time,
@@ -900,7 +915,12 @@ void Collection::loadSearchHistoryFileToTable()
                                                     :file_type_checked,
                                                     :file_criteria_checked,
                                                     :folder_criteria_checked,
-                                                    :selected_device_ID_list
+                                                    :selected_device_ID_list,
+                                                    :duplicates_checksum,
+                                                    :duplicates_checksum_equal,
+                                                    :duplicates_compare_checked,
+                                                    :duplicates_device1_ID,
+                                                    :duplicates_device2_ID
                                                     )
                                                 )");
 
@@ -943,6 +963,11 @@ void Collection::loadSearchHistoryFileToTable()
                         insertQuery.bindValue(":file_criteria_checked",     fieldList[35]);
                         insertQuery.bindValue(":folder_criteria_checked",   fieldList[36]);
                         insertQuery.bindValue(":selected_device_ID_list",   fieldList[37]);
+                        insertQuery.bindValue(":duplicates_checksum",       fieldList[38]);
+                        insertQuery.bindValue(":duplicates_checksum_equal", fieldList[39]);
+                        insertQuery.bindValue(":duplicates_compare_checked",fieldList[40]);
+                        insertQuery.bindValue(":duplicates_device1_ID",     fieldList[41]);
+                        insertQuery.bindValue(":duplicates_device2_ID",     fieldList[42]);
                         insertQuery.exec();
                     }
             }
@@ -1314,7 +1339,7 @@ void Collection::saveParameterTableToFile()
 }
 //----------------------------------------------------------------------
 void Collection::saveSearchHistoryTableToFile()
-{
+{//To keep forward compatibility, new field shall be added at the end of the column list, not in the order of the table
     if(databaseMode=="Memory"){
         //Prepare export
         QFile searchFile(searchHistoryFilePath);
@@ -1361,6 +1386,11 @@ void Collection::saveSearchHistoryTableToFile()
                 << "file_criteria_checked"      << "\t"
                 << "folder_criteria_checked"    << "\t"
                 << "selected_device_ID_list"    << "\t"
+                << "duplicates_checksum"        << "\t"
+                << "duplicates_checksum_equal"  << "\t"
+                << "duplicates_compare_devices" << "\t"
+                << "duplicates_device1"         << "\t"
+                << "duplicates_device2"         << "\t"
                 << '\n';
 
             //Get data
@@ -1404,7 +1434,12 @@ void Collection::saveSearchHistoryTableToFile()
                                             file_type_checked,
                                             file_criteria_checked,
                                             folder_criteria_checked,
-                                            selected_device_ID_list
+                                            selected_device_ID_list,
+                                            duplicates_checksum,
+                                            duplicates_checksum_equal,
+                                            duplicates_compare_checked,
+                                            duplicates_device1_ID,
+                                            duplicates_device2_ID
                                         FROM search
                                         ORDER BY date_time DESC
                                        )");
@@ -1421,7 +1456,6 @@ void Collection::saveSearchHistoryTableToFile()
                 }
                 out << '\n';
             }
-            //searchFile.close();
         }
         searchFile.close();
     }

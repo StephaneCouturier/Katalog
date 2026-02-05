@@ -46,6 +46,7 @@
 #include "core/catalogjobstoppable.h"
 #include "core/catalogprogressmanager.h"
 #include "core/backupmappingmanager.h"
+#include "widgets/treecombobox.h"
 
 //KDE KF6
 #include <KFormat>
@@ -173,6 +174,8 @@ class MainWindow : public KXmlGuiWindow
     private:
         QString m_connectionName = "defaultConnection";
         DeviceUpdateManager* deviceUpdateManager = nullptr;
+        QStandardItemModel* buildFilteredDeviceTreeModel(QObject *parent = nullptr);
+
         bool useUnifiedManager = false;
         void setCatalogUpdateUIState(bool isRunning);
         void setCreateCatalogUIState(bool isRunning);
@@ -306,7 +309,8 @@ class MainWindow : public KXmlGuiWindow
             int lastSearchSortSection;
             int lastSearchSortOrder;
 
-            void refreshDifferencesCatalogSelection();
+            void refreshDuplicatesDeviceSelection();
+            void refreshDifferencesDeviceSelection();
             void processSearch();
             void searchFilesStoppable();
 
@@ -393,8 +397,11 @@ class MainWindow : public KXmlGuiWindow
             void restoreCreateCatalogUIState();
             void removeFileFromResults(QString fullFilePath);
             void cleanupStoppedCatalogCreation();
+            void initiateFileTypeFields();
             void initiateMetadataFields();
             void initializeMetadataCaches();
+            void initiateChecksumFields();
+            void initiateIncludeHiddenFields();
 
         //TAB: Storage
             int     selectedStorageIndexRow;
@@ -439,6 +446,8 @@ class MainWindow : public KXmlGuiWindow
             void recordAllDeviceStats(QDateTime dateTime);
             void recordDevicesSnapshot();
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
+
+            void verifyCatalogChecksums();
 
             //Migration 1.22 to 2.0
             void migrateCollectionFromV1toV2();
@@ -615,10 +624,18 @@ class MainWindow : public KXmlGuiWindow
             void on_Search_checkBox_DuplicatesName_checkStateChanged(const Qt::CheckState &arg1);
             void on_Search_checkBox_DuplicatesSize_checkStateChanged(const Qt::CheckState &arg1);
             void on_Search_checkBox_DuplicatesDateModified_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_checkBox_DuplicatesChecksum_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_checkBox_DuplicatesChecksum_toggled(bool checked);
+            void on_Search_comboBox_DuplicateChecksumSign_currentIndexChanged(int index);
+            void on_Search_radioButton_DuplicatesWithinSelectedDevice_toggled(bool checked);
+            void on_Search_radioButton_DuplicatesCompareTwoDevices_toggled(bool checked);
+            void on_Search_checkBox_DifferencesChecksum_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_checkBox_DifferencesChecksum_toggled(bool checked);
             void on_Search_checkBox_Differences_toggled(bool checked);
             void on_Search_checkBox_DifferencesName_checkStateChanged(const Qt::CheckState &arg1);
             void on_Search_checkBox_DifferencesSize_checkStateChanged(const Qt::CheckState &arg1);
             void on_Search_checkBox_DifferencesDateModified_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_comboBox_DifferenceChecksumSign_currentIndexChanged(int index);
 
             void on_Search_checkBox_ShowFolders_toggled(bool checked);
             void on_Search_checkBox_FolderCriteria_toggled(bool checked);
@@ -635,12 +652,31 @@ class MainWindow : public KXmlGuiWindow
             void searchContextOpenFile();
             void searchContextOpenFolder();
             void searchContextOpenExplore();
+            void searchContextCopyFileChecksum();
             void searchContextCopyAbsolutePath();
             void searchContextCopyFolderPath();
             void searchContextCopyFileNameWithExtension();
             void searchContextCopyFileNameWithoutExtension();
             void searchContextMoveFileToTrash();
             void searchContextDeleteFile();
+
+            void verifyFileChecksum(const QString &filePath,
+                                    const QString &fileName,
+                                    const QString &folderPath,
+                                    int catalogId,
+                                    const QString &expectedChecksum);
+            void showChecksumResult(const QString &title,
+                                    const QString &checksum,
+                                    bool wasSaved);
+            void showChecksumMismatch(const QString &expected,
+                                      const QString &actual,
+                                      int catalogId,
+                                      const QString &fileName,
+                                      const QString &folderPath);
+            void calculateAndSaveChecksum(const QString &filePath,
+                                          const QString &fileName,
+                                          const QString &folderPath,
+                                          int catalogId);
 
         //Create
             void on_Create_pushButton_PickPath_clicked();
@@ -670,6 +706,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
             void exploreContextOpenFile();
             void exploreContextOpenFolder();
+            void exploreContextCopyFileChecksum();
             void exploreContextCopyAbsolutePath();
             void exploreContextCopyFolderPath();
             void exploreContextCopyFileNameWithExtension();

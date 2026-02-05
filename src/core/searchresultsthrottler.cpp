@@ -93,6 +93,14 @@ void SearchResultsThrottler::onSearchProgress(int filesProcessed)
         return;
     }
 
+    // Skip intermediate display updates for Duplicates/Differences searches
+    // Results are only meaningful after final processing is complete
+    if (m_currentSearch &&
+        (m_currentSearch->searchOnDuplicates || m_currentSearch->searchOnDifferences)) {
+        // Don't emit updateDisplay() - let handleSearchCompleted() show final results
+        return;
+    }
+
     // Track the latest progress
     m_lastFilesProcessed = filesProcessed;
 

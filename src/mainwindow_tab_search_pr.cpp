@@ -224,12 +224,35 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->searchDuplicatesOnName = ui->Search_checkBox_DuplicatesName->isChecked();
     search->searchDuplicatesOnSize = ui->Search_checkBox_DuplicatesSize->isChecked();
     search->searchDuplicatesOnDate = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+    search->searchDuplicatesOnChecksum    = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+    search->searchDuplicatesChecksumEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+    search->duplicatesCompareDevices = ui->Search_radioButton_DuplicatesCompareTwoDevices->isChecked();
+    if (search->duplicatesCompareDevices) {
+        search->duplicatesDeviceID1 = ui->Search_comboBox_DuplicatesDevice1->selectedDeviceId();
+        search->duplicatesDeviceID2 = ui->Search_comboBox_DuplicatesDevice2->selectedDeviceId();
+
+        // Initialize device objects
+        if (search->duplicatesDevice1 == nullptr) {
+            search->duplicatesDevice1 = new Device;
+        }
+        search->duplicatesDevice1->ID = search->duplicatesDeviceID1;
+
+        if (search->duplicatesDevice2 == nullptr) {
+            search->duplicatesDevice2 = new Device;
+        }
+        search->duplicatesDevice2->ID = search->duplicatesDeviceID2;
+    } else {
+        search->duplicatesDeviceID1 = 0;
+        search->duplicatesDeviceID2 = 0;
+    }
     search->searchOnDifferences = ui->Search_checkBox_Differences->isChecked();
     search->differencesOnName = ui->Search_checkBox_DifferencesName->checkState();
     search->differencesOnSize = ui->Search_checkBox_DifferencesSize->checkState();
     search->differencesOnDate = ui->Search_checkBox_DifferencesDateModified->checkState();
-    search->differencesDeviceID1 = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
-    search->differencesDeviceID2 = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+    search->differencesOnChecksum    = ui->Search_checkBox_DifferencesChecksum->isChecked();
+    search->differencesChecksumEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+    search->differencesDeviceID1 = ui->Search_comboBox_DifferencesDevice1->selectedDeviceId();
+    search->differencesDeviceID2 = ui->Search_comboBox_DifferencesDevice2->selectedDeviceId();
     search->differencesDevices.clear();
     search->differencesDevices << QString::number(search->differencesDeviceID1) << QString::number(search->differencesDeviceID2);
 
@@ -248,12 +271,12 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     if (search->diffDevice1 == nullptr) {
         search->diffDevice1 = new Device;
     }
-    search->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
+    search->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->selectedDeviceId();
 
     if (search->diffDevice2 == nullptr) {
         search->diffDevice2 = new Device;
     }
-    search->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+    search->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->selectedDeviceId();
 
     // Populate the selectedDeviceList
     search->selectedDeviceIDList.clear();
@@ -585,9 +608,7 @@ void MainWindow::updateTooltips()
     }
     ui->Search_pushButton_Stop->setToolTip(tr("Stop the current search"));
 }
-
-// Replace the displayExtendedMetadataJson method implementation with this updated version:
-
+//----------------------------------------------------------------------
 void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folderPath, const QString &fileName)
 {
     QString jsonMetadata;
@@ -696,7 +717,7 @@ void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folde
     metadataDialog->exec();
     metadataDialog->deleteLater();
 }
-
+//----------------------------------------------------------------------
 QString MainWindow::formatJsonForDisplay(const QString &jsonString)
 {
     // Parse and reformat JSON with proper indentation
@@ -710,9 +731,7 @@ QString MainWindow::formatJsonForDisplay(const QString &jsonString)
     // Return formatted JSON with indentation
     return doc.toJson(QJsonDocument::Indented);
 }
-
-// Replace the convertJsonToHtmlTable method implementation with this fixed version:
-
+//----------------------------------------------------------------------
 QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
 {
     // Parse JSON
@@ -903,7 +922,6 @@ QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
     html += "</tbody></table>";
     return html;
 }
-
 //----------------------------------------------------------------------
 //--- Display results --------------------------------------------------
 //----------------------------------------------------------------------
@@ -1190,7 +1208,6 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     statusBarTimer->start(5000);
     QCoreApplication::processEvents();
 }
-
 //----------------------------------------------------------------------
 void MainWindow::reportSearchStatistics()
 {

@@ -22,17 +22,20 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   mainwindow_tab_search.cpp
+// File Name:   mainwindow_tab_search_ui.cpp
 // Purpose:     methods for the screen SEARCH beside the search process
 // Description: https://stephanecouturier.github.io/Katalog/docs/Features/Search
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
 
+#include "devicetreeview.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/catalog.h"
+#include "core/database.h"
 #include "core/filemetadata.h"
+#include "core/filechecksum.h"
 
 //TAB: SEARCH FILES ------------------------------------------------------------
 
@@ -242,112 +245,252 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Duplicates_toggled(bool checked)
         {
-            if(checked==1){
+            if (checked == 1) {
                 ui->Search_checkBox_DuplicatesName->setEnabled(true);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(true);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(true);
+                ui->Search_checkBox_DuplicatesChecksum->setEnabled(true);
+                ui->Search_comboBox_DuplicateChecksumSign->setEnabled(ui->Search_checkBox_DuplicatesChecksum->isChecked());
+                ui->Search_widget_Duplicates->setHidden(false);
+
+                // Enable radio buttons
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setEnabled(true);
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setEnabled(true);
+
+                // Show/hide device selection based on current radio state
+                ui->Search_widget_DuplicatesDevices->setHidden(!ui->Search_radioButton_DuplicatesCompareTwoDevices->isChecked());
+
                 ui->Search_checkBox_ShowFolders->setChecked(false);
                 ui->Search_checkBox_Differences->setChecked(false);
                 ui->Search_checkBox_DifferencesName->setEnabled(false);
                 ui->Search_checkBox_DifferencesSize->setEnabled(false);
                 ui->Search_checkBox_DifferencesDateModified->setEnabled(false);
+                ui->Search_checkBox_DifferencesChecksum->setEnabled(false);
+                ui->Search_comboBox_DifferenceChecksumSign->setEnabled(false);
             }
-            else{
+            else {
                 ui->Search_checkBox_DuplicatesName->setDisabled(true);
                 ui->Search_checkBox_DuplicatesSize->setDisabled(true);
                 ui->Search_checkBox_DuplicatesDateModified->setDisabled(true);
+                ui->Search_checkBox_DuplicatesChecksum->setDisabled(true);
+                ui->Search_comboBox_DuplicateChecksumSign->setDisabled(true);
+                ui->Search_widget_Duplicates->setHidden(true);
+
+                // Disable radio buttons and hide device selection
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setEnabled(false);
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setEnabled(false);
+                ui->Search_widget_DuplicatesDevices->setHidden(true);
             }
 
-            //Ensure at least 1 checkbox is checked, by default the first one
-            if(checked==1 and ui->Search_checkBox_DuplicatesName->isChecked() == false and
-               ui->Search_checkBox_DuplicatesSize->isChecked() == false and
-               ui->Search_checkBox_DuplicatesDateModified->isChecked() == false){
+            // Ensure at least 1 checkbox is checked, by default the first one
+            if (checked == 1 && ui->Search_checkBox_DuplicatesName->isChecked() == false &&
+                ui->Search_checkBox_DuplicatesSize->isChecked() == false &&
+                ui->Search_checkBox_DuplicatesDateModified->isChecked() == false &&
+                ui->Search_checkBox_DuplicatesChecksum->isChecked() == false) {
                 ui->Search_checkBox_DuplicatesName->setChecked(true);
             }
         }
         void MainWindow::on_Search_checkBox_DuplicatesName_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if size and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DuplicatesSize->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesDateModified->checkState()==Qt::Unchecked){
+                bool sizeChecked = ui->Search_checkBox_DuplicatesSize->isChecked();
+                bool dateChecked = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = sizeChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DuplicatesName->setCheckState(Qt::Checked);
                 }
             }
         }
         void MainWindow::on_Search_checkBox_DuplicatesSize_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DuplicatesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesDateModified->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DuplicatesName->isChecked();
+                bool dateChecked = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DuplicatesSize->setCheckState(Qt::Checked);
                 }
             }
         }
         void MainWindow::on_Search_checkBox_DuplicatesDateModified_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and size are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DuplicatesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesSize->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DuplicatesName->isChecked();
+                bool sizeChecked = ui->Search_checkBox_DuplicatesSize->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || sizeChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DuplicatesDateModified->setCheckState(Qt::Checked);
                 }
+            }
+        }
+        void MainWindow::on_Search_checkBox_DuplicatesChecksum_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            if(arg1==Qt::Unchecked){
+                if(!ui->Search_checkBox_DuplicatesName->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesSize->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesDateModified->isChecked()){
+                    ui->Search_checkBox_DuplicatesChecksum->setCheckState(Qt::Checked);
+                }
+            }
+        }
+        void MainWindow::on_Search_checkBox_DuplicatesChecksum_toggled(bool checked)
+        {
+            ui->Search_comboBox_DuplicateChecksumSign->setEnabled(checked);
+        }
+        void MainWindow::on_Search_comboBox_DuplicateChecksumSign_currentIndexChanged(int index)
+        {
+            // If ≠ selected (index 1) and no other fields checked, auto-check Name
+            if (index == 1) {
+                if (!ui->Search_checkBox_DuplicatesName->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesSize->isChecked() &&
+                    !ui->Search_checkBox_DuplicatesDateModified->isChecked()) {
+                    ui->Search_checkBox_DuplicatesName->setChecked(true);
+                }
+            }
+        }
+        void MainWindow::on_Search_comboBox_DifferenceChecksumSign_currentIndexChanged(int index)
+        {
+            // If ≠ selected (index 1) and no other fields checked, auto-check Name
+            if (index == 1) {
+                if (!ui->Search_checkBox_DifferencesName->isChecked() &&
+                    !ui->Search_checkBox_DifferencesSize->isChecked() &&
+                    !ui->Search_checkBox_DifferencesDateModified->isChecked()) {
+                    ui->Search_checkBox_DifferencesName->setChecked(true);
+                }
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_radioButton_DuplicatesWithinSelectedDevice_toggled(bool checked)
+        {
+            if (checked) {
+                ui->Search_widget_DuplicatesDevices->setHidden(true);
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_radioButton_DuplicatesCompareTwoDevices_toggled(bool checked)
+        {
+            if (checked) {
+                ui->Search_widget_DuplicatesDevices->setHidden(false);
             }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Differences_toggled(bool checked)
         {
             if(checked==1){
+                //Display Differences options
                 ui->Search_checkBox_DifferencesName->setEnabled(true);
                 ui->Search_checkBox_DifferencesSize->setEnabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setEnabled(true);
+                ui->Search_checkBox_DifferencesChecksum->setEnabled(true);
+                ui->Search_comboBox_DifferenceChecksumSign->setEnabled(ui->Search_checkBox_DifferencesChecksum->isChecked());
                 ui->Search_widget_DifferencesDevices->setHidden(false);
+
+                //Hide or disable other options
                 ui->Search_checkBox_ShowFolders->setChecked(false);
-                ui->Search_checkBox_Duplicates->setChecked(false);
+                ui->Search_checkBox_Duplicates->setChecked(false);                
                 ui->Search_checkBox_DuplicatesName->setEnabled(false);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(false);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(false);
+                ui->Search_checkBox_DuplicatesChecksum->setEnabled(false);
+                ui->Search_comboBox_DuplicateChecksumSign->setEnabled(false);
+                ui->Search_widget_Duplicates->setHidden(true);
                 ui->Search_treeView_CatalogsFound->setEnabled(false);
             }
             else{
+                //Hide or disable Differences options
                 ui->Search_widget_DifferencesDevices->setHidden(true);
                 ui->Search_checkBox_DifferencesName->setDisabled(true);
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setDisabled(true);
+                ui->Search_checkBox_DifferencesChecksum->setDisabled(true);
+                ui->Search_comboBox_DifferenceChecksumSign->setDisabled(true);
                 ui->Search_treeView_CatalogsFound->setEnabled(true);
             }
 
             //ensure at least 1 checkbox is checked, by default the first one
             if(checked==1 and ui->Search_checkBox_DifferencesName->isChecked() == false and
                 ui->Search_checkBox_DifferencesSize->isChecked() == false and
-                ui->Search_checkBox_DifferencesDateModified->isChecked() == false){
+                ui->Search_checkBox_DifferencesDateModified->isChecked() == false and
+                ui->Search_checkBox_DifferencesChecksum->isChecked() == false){
                 ui->Search_checkBox_DifferencesName->setChecked(true);
             }
         }
         void MainWindow::on_Search_checkBox_DifferencesName_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if size and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DifferencesSize->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesDateModified->checkState()==Qt::Unchecked){
+                bool sizeChecked = ui->Search_checkBox_DifferencesSize->isChecked();
+                bool dateChecked = ui->Search_checkBox_DifferencesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = sizeChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DifferencesName->setCheckState(Qt::Checked);
                 }
             }
         }
         void MainWindow::on_Search_checkBox_DifferencesSize_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and date are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DifferencesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesDateModified->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DifferencesName->isChecked();
+                bool dateChecked = ui->Search_checkBox_DifferencesDateModified->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || dateChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DifferencesSize->setCheckState(Qt::Checked);
                 }
             }
         }
         void MainWindow::on_Search_checkBox_DifferencesDateModified_checkStateChanged(const Qt::CheckState &arg1)
         {
-            //Leave it checked if name and size are unchecked
             if(arg1==Qt::Unchecked){
-                if(ui->Search_checkBox_DifferencesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesSize->checkState()==Qt::Unchecked){
+                bool nameChecked = ui->Search_checkBox_DifferencesName->isChecked();
+                bool sizeChecked = ui->Search_checkBox_DifferencesSize->isChecked();
+                bool checksumChecked = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                bool checksumIsEqual = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+
+                bool hasOtherField = nameChecked || sizeChecked;
+                bool checksumAloneValid = checksumChecked && checksumIsEqual;
+
+                if (!hasOtherField && !checksumAloneValid) {
                     ui->Search_checkBox_DifferencesDateModified->setCheckState(Qt::Checked);
                 }
             }
+        }
+        void MainWindow::on_Search_checkBox_DifferencesChecksum_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            if(arg1==Qt::Unchecked){
+                if(!ui->Search_checkBox_DifferencesName->isChecked() &&
+                    !ui->Search_checkBox_DifferencesSize->isChecked() &&
+                    !ui->Search_checkBox_DifferencesDateModified->isChecked()){
+                    ui->Search_checkBox_DifferencesChecksum->setCheckState(Qt::Checked);
+                }
+            }
+        }
+        void MainWindow::on_Search_checkBox_DifferencesChecksum_toggled(bool checked)
+        {
+            ui->Search_comboBox_DifferenceChecksumSign->setEnabled(checked);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Size_toggled(bool checked)
@@ -419,7 +562,6 @@
                 ui->Search_widget_FileMetadata->setHidden(true);
             }
         }
-        //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_MetadataText_toggled(bool checked)
         {
             if(checked == true) {
@@ -429,7 +571,6 @@
                 ui->Search_lineEdit_MetadataText->setDisabled(true);
             }
         }
-
         void MainWindow::on_Search_checkBox_MetadataSize_toggled(bool checked)
         {
             if(checked==1){
@@ -445,7 +586,6 @@
                 ui->Search_spinBox_MetadataMaximumWidth->setDisabled(true);
             }
         }
-
         void MainWindow::on_Search_checkBox_MetadataDuration_toggled(bool checked)
         {
             if(checked==1){
@@ -457,7 +597,6 @@
                 ui->Search_dateTimeEdit_MetadataDurationMax->setDisabled(true);
             }
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Type_toggled(bool checked)
         {
@@ -582,11 +721,16 @@
 
             fileContextMenu.addSeparator();
 
-            // If the file's catalog has EXTENDED metadata enabled, display action to show them
+            // Get File information from model
             QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
             QString selectedResultFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
             int catalogId = ui->Search_treeView_FilesFound->model()->index(index.row(), 5, QModelIndex()).data().toInt();
+            QString checksum = ui->Search_treeView_FilesFound->model()->index(index.row(), 19).data().toString();
+            QString fileName = ui->Search_treeView_FilesFound->model()->index(index.row(), 0).data().toString();
+            QString folderPath = ui->Search_treeView_FilesFound->model()->index(index.row(), 3).data().toString();
+            QString filePath = folderPath + "/" + fileName;
 
+            // Metadata
             bool showExtendedMetadataAction = false;
             QString includeMetadata;
 
@@ -646,6 +790,35 @@
             QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
             connect( menuAction6,&QAction::triggered, this, &MainWindow::searchContextCopyFileNameWithoutExtension);
             fileContextMenu.addAction(menuAction6);
+
+            fileContextMenu.addSeparator();
+
+            //Checksum
+            if (checksum.isEmpty()) {
+                // NO checksum - show Calculate
+                QAction *menuActionCalculate = new QAction(QIcon::fromTheme("document-properties"),
+                                                           tr("Calculate Checksum") + " (SHA-256)", this);
+                connect(menuActionCalculate, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId]() {
+                    calculateAndSaveChecksum(filePath, fileName, folderPath, catalogId);
+                });
+                fileContextMenu.addAction(menuActionCalculate);
+            } else {
+                // HAS checksum - show Copy and Verify
+                QAction *menuActionCopy = new QAction(QIcon::fromTheme("edit-copy"),
+                                                      tr("Copy Checksum"), this);
+                connect(menuActionCopy, &QAction::triggered, this, &MainWindow::searchContextCopyFileChecksum);
+                fileContextMenu.addAction(menuActionCopy);
+
+                QAction *menuActionVerify = new QAction(QIcon::fromTheme("document-properties"),
+                                                        tr("Verify Checksum") + " (SHA-256)", this);
+                connect(menuActionVerify, &QAction::triggered, this, [this, filePath, fileName, folderPath, catalogId, checksum]() {
+                    verifyFileChecksum(filePath, fileName, folderPath, catalogId, checksum);
+                });
+                fileContextMenu.addAction(menuActionVerify);
+            }
+
+
+
 
             fileContextMenu.addSeparator();
 
@@ -722,6 +895,15 @@
             //Open the catalog into the Explore tab and display selected directory contents
             openCatalogToExplore();
             ui->tabWidget->setCurrentIndex(2);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::searchContextCopyFileChecksum()
+        {
+            QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
+            // Column 19 contains the checksum
+            QString checksum = ui->Search_treeView_FilesFound->model()->index(index.row(), 19, QModelIndex()).data().toString();
+            QClipboard *clipboard = QGuiApplication::clipboard();
+            clipboard->setText(checksum);
         }
         //----------------------------------------------------------------------
         void MainWindow::searchContextCopyAbsolutePath()
@@ -897,22 +1079,7 @@
             ui->Search_comboBox_SearchIn->setItemData(1, Search::SEARCH_IN_FILES_AND_FOLDERS, Qt::UserRole);
             ui->Search_comboBox_SearchIn->setItemData(2, Search::SEARCH_IN_FOLDER_PATH,       Qt::UserRole);
 
-            //Add filetype English values additionally to the displayed/translated value
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder"), tr("All"), static_cast<int>(FileTypeMapping::ALL));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("audio-x-mpeg"), tr("Audio"), static_cast<int>(FileTypeMapping::AUDIO));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("image-jpeg"), tr("Image"), static_cast<int>(FileTypeMapping::IMAGE));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("folder-text"), tr("Text"), static_cast<int>(FileTypeMapping::TEXT));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("video-mp4"), tr("Video"), static_cast<int>(FileTypeMapping::VIDEO));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("document-open"), tr("Other"), static_cast<int>(FileTypeMapping::OTHER));
-            ui->Search_comboBox_FileType->addItem(QIcon::fromTheme("application-x-zerosize"), tr("None"), static_cast<int>(FileTypeMapping::NONE));
-            ui->Search_comboBox_FileType->setCurrentIndex(0);
-
-            ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
-            ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
-
+            // Add Batch menu entries
             ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(2, "Rename (KRename)", Qt::UserRole);
@@ -946,7 +1113,8 @@
                  currentSearch->selectedMaximumSize = 1000;}
 
             //Populate Differences combo boxes with selected catalogs
-            refreshDifferencesCatalogSelection();
+            refreshDuplicatesDeviceSelection();
+            refreshDifferencesDeviceSelection();
         }
         //----------------------------------------------------------------------
         void MainWindow::resetToDefaultSearchCriteria()
@@ -1002,14 +1170,24 @@
             ui->Search_dateTimeEdit_MetadataDurationMax->setDisabled(true);
 
             ui->Search_comboBox_FileType->setCurrentIndex(0);
-            ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicatesName->setChecked(true);
             ui->Search_checkBox_DuplicatesSize->setChecked(false);
             ui->Search_checkBox_DuplicatesDateModified->setChecked(false);
-            ui->Search_checkBox_Differences->setChecked(false);
+            ui->Search_checkBox_DuplicatesChecksum->setChecked(false);
+            ui->Search_comboBox_DuplicateChecksumSign->setCurrentIndex(0);
+            ui->Search_radioButton_DuplicatesWithinSelectedDevice->setChecked(true);
+            ui->Search_radioButton_DuplicatesCompareTwoDevices->setChecked(false);
+            ui->Search_widget_DuplicatesDevices->setHidden(true);
+            ui->Search_comboBox_DuplicatesDevice1->resetSelection();
+            ui->Search_comboBox_DuplicatesDevice2->resetSelection();
+            ui->Search_checkBox_Duplicates->setChecked(false);
+
             ui->Search_checkBox_DifferencesName->setChecked(true);
             ui->Search_checkBox_DifferencesSize->setChecked(false);
             ui->Search_checkBox_DifferencesDateModified->setChecked(false);
+            ui->Search_comboBox_DifferencesDevice1->resetSelection();
+            ui->Search_comboBox_DifferencesDevice2->resetSelection();
+            ui->Search_checkBox_Differences->setChecked(false);
 
             //Folder criteria
             ui->Search_checkBox_FolderCriteria->setChecked(false);
@@ -1118,26 +1296,33 @@
             ui->Search_checkBox_DuplicatesName->setChecked(search->searchDuplicatesOnName);
             ui->Search_checkBox_DuplicatesSize->setChecked(search->searchDuplicatesOnSize);
             ui->Search_checkBox_DuplicatesDateModified->setChecked(search->searchDuplicatesOnDate);
-            ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
+            ui->Search_checkBox_DuplicatesChecksum->setChecked(search->searchDuplicatesOnChecksum);
+            ui->Search_comboBox_DuplicateChecksumSign->setCurrentIndex(search->searchDuplicatesChecksumEqual ? 0 : 1);
+            if (search->duplicatesCompareDevices) {
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setChecked(true);
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setChecked(false);
+                ui->Search_widget_DuplicatesDevices->setHidden(false);
 
+                // Set selected devices in TreeComboBoxes
+                ui->Search_comboBox_DuplicatesDevice1->setSelectedDeviceId(search->duplicatesDeviceID1);
+                ui->Search_comboBox_DuplicatesDevice2->setSelectedDeviceId(search->duplicatesDeviceID2);
+            } else {
+                ui->Search_radioButton_DuplicatesWithinSelectedDevice->setChecked(true);
+                ui->Search_radioButton_DuplicatesCompareTwoDevices->setChecked(false);
+                ui->Search_widget_DuplicatesDevices->setHidden(true);
+            }
+
+            ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
             ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName);
             ui->Search_checkBox_DifferencesSize->setChecked(search->differencesOnSize);
             ui->Search_checkBox_DifferencesDateModified->setChecked(search->differencesOnDate);
+            ui->Search_checkBox_DifferencesChecksum->setChecked(search->differencesOnChecksum);
+            ui->Search_comboBox_DifferenceChecksumSign->setCurrentIndex(search->differencesChecksumEqual ? 0 : 1);
             ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName); //Re-apply the state
 
             //Select the element in ui->Search_comboBox_DifferencesCatalog1 matching the differencesDeviceID1
-            for (int i = 0; i < ui->Search_comboBox_DifferencesDevice1->count(); i++) {
-                if (ui->Search_comboBox_DifferencesDevice1->itemData(i).toInt() == search->differencesDeviceID1) {
-                    ui->Search_comboBox_DifferencesDevice1->setCurrentIndex(i);
-                    break;
-                }
-            }
-            for (int i = 0; i < ui->Search_comboBox_DifferencesDevice2->count(); i++) {
-                if (ui->Search_comboBox_DifferencesDevice2->itemData(i).toInt() == search->differencesDeviceID2) {
-                    ui->Search_comboBox_DifferencesDevice2->setCurrentIndex(i);
-                    break;
-                }
-            }
+            ui->Search_comboBox_DifferencesDevice1->setSelectedDeviceId(search->differencesDeviceID1);
+            ui->Search_comboBox_DifferencesDevice2->setSelectedDeviceId(search->differencesDeviceID2);
 
             //Restore the type of search (in catalogs or in connected drives
             if (lastSearch->searchInCatalogsChecked == true){
@@ -1261,12 +1446,16 @@
                 currentSearch->searchDuplicatesOnName   = ui->Search_checkBox_DuplicatesName->isChecked();
                 currentSearch->searchDuplicatesOnSize   = ui->Search_checkBox_DuplicatesSize->isChecked();
                 currentSearch->searchDuplicatesOnDate   = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+                currentSearch->searchDuplicatesOnChecksum    = ui->Search_checkBox_DuplicatesChecksum->isChecked();
+                currentSearch->searchDuplicatesChecksumEqual = (ui->Search_comboBox_DuplicateChecksumSign->currentIndex() == 0);
                 currentSearch->searchOnDifferences      = ui->Search_checkBox_Differences->isChecked();
                 currentSearch->differencesOnName        = ui->Search_checkBox_DifferencesName->checkState();
                 currentSearch->differencesOnSize        = ui->Search_checkBox_DifferencesSize->checkState();
                 currentSearch->differencesOnDate        = ui->Search_checkBox_DifferencesDateModified->checkState();
-                currentSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
-                currentSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+                currentSearch->differencesOnChecksum      = ui->Search_checkBox_DifferencesChecksum->isChecked();
+                currentSearch->differencesChecksumEqual   = (ui->Search_comboBox_DifferenceChecksumSign->currentIndex() == 0);
+                currentSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->selectedDeviceId();
+                currentSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->selectedDeviceId();
                 currentSearch->differencesDevices << QString::number(currentSearch->differencesDeviceID1) << QString::number(currentSearch->differencesDeviceID2);
 
                 currentSearch->searchOnFolderCriteria   = ui->Search_checkBox_FolderCriteria->isChecked();
@@ -1284,18 +1473,28 @@
                 currentSearch->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }
         //----------------------------------------------------------------------
-        void MainWindow::refreshDifferencesCatalogSelection(){
-            ui->Search_comboBox_DifferencesDevice1->clear();
-            ui->Search_comboBox_DifferencesDevice2->clear();
+        void MainWindow::refreshDifferencesDeviceSelection()
+        {
+            // Build a filtered device tree model
+            QStandardItemModel *treeModel = buildFilteredDeviceTreeModel(this);
 
-            Device loopDevice;
-            foreach(int ID, selectedDevice->deviceIDList)
-            {
-                loopDevice.ID = ID;
-                loopDevice.loadDevice(m_connectionName);
-                ui->Search_comboBox_DifferencesDevice1->addItem(loopDevice.name,loopDevice.ID);
-                ui->Search_comboBox_DifferencesDevice2->addItem(loopDevice.name,loopDevice.ID);
-            }
+            // Create proxy model with icons/formatting for first combobox
+            DeviceTreeView *proxyModel1 = new DeviceTreeView(this);
+            proxyModel1->setSourceModel(treeModel);
+            proxyModel1->setKatalogTheme(themeID > 0);
+
+            // Create a second copy for the second combobox (they need independent proxies)
+            QStandardItemModel *treeModel2 = buildFilteredDeviceTreeModel(this);
+            DeviceTreeView *proxyModel2 = new DeviceTreeView(this);
+            proxyModel2->setSourceModel(treeModel2);
+            proxyModel2->setKatalogTheme(themeID > 0);
+
+            // Set models on the tree comboboxes
+            ui->Search_comboBox_DifferencesDevice1->setTreeModel(proxyModel1);
+            ui->Search_comboBox_DifferencesDevice1->expandToDepth(2);
+
+            ui->Search_comboBox_DifferencesDevice2->setTreeModel(proxyModel2);
+            ui->Search_comboBox_DifferencesDevice2->expandToDepth(2);
         }
         //----------------------------------------------------------------------
         void MainWindow::batchProcessSearchResults()
@@ -1467,15 +1666,20 @@
                     newDevice->generateDeviceID();
                     newDevice->type = "Catalog";
                     newDevice->name = fileNameWithoutExtension;
-                        //newDevice->parentID = searchResultsHolder.ID;
                     newDevice->catalog->generateID();
                     newDevice->externalID = newDevice->catalog->ID;
                     newDevice->groupID = 1;
                     newDevice->path = "EXPORT"; //there is not 1 path for a given search that can be multi-catalog
-
+                    newDevice->totalFileCount = currentSearch->filesFoundNumber;
+                    newDevice->totalFileSize = currentSearch->filesFoundTotalSize;
+                    newDevice->catalog->name = newDevice->name;
                     newDevice->catalog->setDateUpdated(QDateTime());  // Sets to current time and updates DB
                     newDevice->catalog->setDateLoaded(QDateTime().addMSecs(100));   // Sets to current time and updates DB
-
+                    if (currentSearch->searchOnType) {
+                        newDevice->catalog->fileType = currentSearch->selectedFileType;
+                    } else {
+                        newDevice->catalog->fileType = "All";  // Type filter wasn't used, so catalog contains all types
+                    }
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the new Catalog
@@ -1487,15 +1691,15 @@
                     collection->saveDeviceTableToFile();
 
                     catalogMetadata.prepend("<catalogID>" + QLocale().toString(newDevice->catalog->ID));
-                    catalogMetadata.prepend("<catalogAppVersion>");
+                    catalogMetadata.prepend("<catalogAppVersion>" + currentVersion);
                     catalogMetadata.prepend("<catalogIncludeMetadata>");
                     catalogMetadata.prepend("<catalogIsFullDevice>");
                     catalogMetadata.prepend("<catalogIncludeSymblinks>");
                     catalogMetadata.prepend("<catalogStorage>EXPORT");
-                    catalogMetadata.prepend("<catalogFileType>EXPORT");
+                    catalogMetadata.prepend("<catalogFileType>" + newDevice->catalog->fileType);
                     catalogMetadata.prepend("<catalogIncludeHidden>false");
-                    catalogMetadata.prepend("<catalogTotalFileSize>0");
-                    catalogMetadata.prepend("<catalogFileCount>0");
+                    catalogMetadata.prepend("<catalogTotalFileSize>" + QString::number(newDevice->totalFileSize));
+                    catalogMetadata.prepend("<catalogFileCount>" + QString::number(newDevice->totalFileCount));
                     catalogMetadata.prepend("<catalogSourcePath>EXPORT");
 
                     selectedDevice->ID = newDevice->ID;
@@ -1572,7 +1776,9 @@
                                     audio_bitrate,
                                     audio_sample_rate,
                                     metadata_extended,
-                                    metadata_extraction_date
+                                    metadata_extraction_date,
+                                    checksum_sha256,
+                                    checksum_extraction_date
                                 )
                                 VALUES(
                                     :file_catalog_id,
@@ -1606,21 +1812,39 @@
                                     :audio_bitrate,
                                     :audio_sample_rate,
                                     :metadata_extended,
-                                    :metadata_extraction_date )
+                                    :metadata_extraction_date,
+                                    :checksum_sha256,
+                                    :checksum_extraction_date )
                               )");
                         insertFileQuery.prepare(insertFileSQL);
 
                         //Prepare insert query for folder
                         QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
-                        QString insertFolderSQL = QLatin1String(R"(
-                                                    INSERT OR IGNORE INTO folder(
-                                                        folder_catalog_id,
-                                                        folder_path
-                                                     )
-                                                    VALUES(
-                                                        :folder_catalog_id,
-                                                        :folder_path)
-                                                    )");
+                        Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+                        QString insertFolderSQL;
+                        if (dbType == Database::DatabaseType::PostgreSQL) {
+                            // PostgreSQL requires ON CONFLICT clause
+                            insertFolderSQL = QString(R"(
+                                                        %1 INTO folder(
+                                                            folder_catalog_id,
+                                                            folder_path
+                                                         )
+                                                        VALUES(
+                                                            :folder_catalog_id,
+                                                            :folder_path)
+                                                        ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING
+                                                        )").arg(Database::getInsertOrIgnorePrefix(dbType));
+                        } else {
+                            insertFolderSQL = QString(R"(
+                                                        %1 INTO folder(
+                                                            folder_catalog_id,
+                                                            folder_path
+                                                         )
+                                                        VALUES(
+                                                            :folder_catalog_id,
+                                                            :folder_path)
+                                                        )").arg(Database::getInsertOrIgnorePrefix(dbType));
+                        }
                         insertFolderQuery.prepare(insertFolderSQL);
 
                         //Insert root folder (so that it is displayed even when there are no sub-folders, except for search exports)
@@ -1639,7 +1863,6 @@
                             insertFolderQuery.exec();
 
                         //Insert files
-
                             insertFileQuery.bindValue(":file_catalog_id",   newDevice->catalog->ID);
                             insertFileQuery.bindValue(":file_name",         currentSearch->fileNames[i]);
                             insertFileQuery.bindValue(":file_size",         currentSearch->fileSizes[i]);
@@ -1649,6 +1872,10 @@
                             insertFileQuery.bindValue(":file_full_path",    currentSearch->filePaths[i]);
                             insertFileQuery.bindValue(":file_extension",
                                                       (i < currentSearch->fileExtensions.size()) ? currentSearch->fileExtensions[i] : QVariant());
+                            insertFileQuery.bindValue(":file_type",
+                                                      (i < currentSearch->fileTypes.size()) ? currentSearch->fileTypes[i] : QVariant());
+                            insertFileQuery.bindValue(":mime_type",
+                                                      (i < currentSearch->mimeTypes.size()) ? currentSearch->mimeTypes[i] : QVariant());
                             insertFileQuery.bindValue(":mime_verified",
                                                       (i < currentSearch->mimeVerified.size()) ? currentSearch->mimeVerified[i] : QVariant());
                             insertFileQuery.bindValue(":type_mismatch",
@@ -1693,6 +1920,10 @@
                                                       (i < currentSearch->metadataExtendeds.size()) ? currentSearch->metadataExtendeds[i] : QVariant());
                             insertFileQuery.bindValue(":metadata_extraction_date",
                                                       (i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : QVariant());
+                            insertFileQuery.bindValue(":checksum_sha256",
+                                                      (i < currentSearch->checksumSha256s.size()) ? currentSearch->checksumSha256s[i] : QVariant());
+                            insertFileQuery.bindValue(":checksum_extraction_date",
+                                                      (i < currentSearch->checksumExtractionDates.size()) ? currentSearch->checksumExtractionDates[i] : QVariant());
                             insertFileQuery.exec();
                     }
                 }
@@ -1715,8 +1946,6 @@
                         QString line = currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i] + "\t"
                                        + QString::number(currentSearch->fileSizes[i]) + "\t"
                                        + currentSearch->fileDateTimes[i] + "\t"
-                                       + currentSearch->fileDateTimes[i] + "\t"
-                                       + currentSearch->fileCatalogs[i] + "\t"
                                        + ((i < currentSearch->fileExtensions.size()) ? currentSearch->fileExtensions[i] : "") + "\t"  // Use the array
                                        + ((i < currentSearch->fileTypes.size()) ? currentSearch->fileTypes[i] : "") + "\t"
                                        + ((i < currentSearch->mimeTypes.size()) ? currentSearch->mimeTypes[i] : "") + "\t"
@@ -1741,7 +1970,9 @@
                                        + ((i < currentSearch->audioBitrates.size()) ? QString::number(currentSearch->audioBitrates[i]) : "") + "\t"
                                        + ((i < currentSearch->audioSampleRates.size()) ? QString::number(currentSearch->audioSampleRates[i]) : "") + "\t"
                                        + ((i < currentSearch->metadataExtendeds.size()) ? currentSearch->metadataExtendeds[i] : "") + "\t"
-                                       + ((i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : "");
+                                       + ((i < currentSearch->metadataExtractionDates.size()) ? currentSearch->metadataExtractionDates[i] : "") + "\t"
+                                       + ((i < currentSearch->checksumSha256s.size()) ? currentSearch->checksumSha256s[i] : "") + "\t"
+                                       + ((i < currentSearch->checksumExtractionDates.size()) ? currentSearch->checksumExtractionDates[i] : "");
                         stream << line << '\n';
                     }
                 }
@@ -1765,7 +1996,7 @@
 
             return fullFileName;
         }
-        //--------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         void MainWindow::loadSearchHistoryTableToModel()
         {
             QSqlQuery querySearchHistory(QSqlDatabase::database(m_connectionName));
@@ -1863,7 +2094,31 @@
             ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
         }
-        //--------------------------------------------------------------------------
+
+        //----------------------------------------------------------------------
+        void MainWindow::refreshDuplicatesDeviceSelection()
+        {
+            // Build filtered device tree models (one for each combobox)
+            QStandardItemModel *treeModel1 = buildFilteredDeviceTreeModel(this);
+            QStandardItemModel *treeModel2 = buildFilteredDeviceTreeModel(this);
+
+            // Create proxy models with icons/formatting
+            DeviceTreeView *proxyModel1 = new DeviceTreeView(this);
+            proxyModel1->setSourceModel(treeModel1);
+            proxyModel1->setKatalogTheme(themeID > 0);
+
+            DeviceTreeView *proxyModel2 = new DeviceTreeView(this);
+            proxyModel2->setSourceModel(treeModel2);
+            proxyModel2->setKatalogTheme(themeID > 0);
+
+            // Set models on the tree comboboxes
+            ui->Search_comboBox_DuplicatesDevice1->setTreeModel(proxyModel1);
+            ui->Search_comboBox_DuplicatesDevice1->expandToDepth(2);
+
+            ui->Search_comboBox_DuplicatesDevice2->setTreeModel(proxyModel2);
+            ui->Search_comboBox_DuplicatesDevice2->expandToDepth(2);
+        }
+        //----------------------------------------------------------------------
         void MainWindow::clearSearchResults()
         {
             Catalog *empty = new Catalog(this);
@@ -1873,11 +2128,203 @@
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
             ui->Search_treeView_CatalogsFound->hideColumn(1);
         }
-        //--------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         void MainWindow::resetSearchButton()
         {
             qDebug() << "resetSearchButton() called";
             ui->Search_pushButton_Search->setText("Search");
             ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
             ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+        }
+        //----------------------------------------------------------------------
+
+        //--- Checksum ---------------------------------------------------------
+        void MainWindow::verifyFileChecksum(const QString &filePath,
+                                            const QString &fileName,
+                                            const QString &folderPath,
+                                            int catalogId,
+                                            const QString &expectedChecksum)
+        {
+            QProgressDialog progress(tr("Verifying checksum..."),
+                                     tr("Cancel"), 0, 100, this);
+            progress.setWindowModality(Qt::WindowModal);
+            progress.setMinimumDuration(1000);
+
+            auto progressCallback = [&](qint64 processed, qint64 total) {
+                int percent = (processed * 100) / total;
+                progress.setValue(percent);
+                QCoreApplication::processEvents();
+                if (progress.wasCanceled()) {
+                    throw std::runtime_error("Cancelled");
+                }
+            };
+
+            QString actualChecksum;
+            try {
+                actualChecksum = FileChecksum::calculateChecksum(filePath,
+                                                                 QCryptographicHash::Sha256,
+                                                                 progressCallback);
+            } catch (...) {
+                return; // Cancelled
+            }
+
+            if (actualChecksum == expectedChecksum) {
+                // Match!
+                showChecksumResult("Katalog", expectedChecksum, false);
+            } else {
+                // Mismatch!
+                showChecksumMismatch(expectedChecksum, actualChecksum,
+                                     catalogId, fileName, folderPath);
+            }
+        }
+
+        void MainWindow::showChecksumResult(const QString &title,
+                                            const QString &checksum,
+                                            bool wasSaved)
+        {
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle(title);
+            msgBox.setIcon(QMessageBox::Information);
+
+            QString message = QString("SHA-256: %1").arg(checksum);
+            if (wasSaved) {
+                message += "\n\n" + tr("Checksum saved to database.");
+            } else {
+                message += "\n\n" + tr("Checksums match.");
+            }
+
+            msgBox.setText(message);
+
+            QPushButton *copyButton = msgBox.addButton(tr("Copy to Clipboard"),
+                                                       QMessageBox::ActionRole);
+            msgBox.addButton(QMessageBox::Ok);
+
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == copyButton) {
+                QClipboard *clipboard = QApplication::clipboard();
+                clipboard->setText(checksum);
+            }
+        }
+
+        void MainWindow::showChecksumMismatch(const QString &expected,
+                                              const QString &actual,
+                                              int catalogId,
+                                              const QString &fileName,
+                                              const QString &folderPath)
+        {
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setIcon(QMessageBox::Warning);
+
+            QString message = tr("Checksums do not match.") + "\n\n"
+                                + tr("Expected:") + " " + expected + "\n"
+                                + tr("Actual:") + " " + actual;
+
+            msgBox.setText(message);
+
+            QPushButton *recalcButton = msgBox.addButton(tr("Update Checksum"),
+                                                         QMessageBox::ActionRole);
+            msgBox.addButton(QMessageBox::Cancel);
+
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == recalcButton) {
+                // Save to database
+                FileChecksum::updateFileChecksum(m_connectionName, catalogId,
+                                                 fileName, folderPath, actual, "SHA256");
+
+                // Save to .idx file in Memory mode
+                if (collection->databaseMode == "Memory") {
+                    // Load the catalog object using catalogId
+                    Catalog tempCatalog;
+                    tempCatalog.ID = catalogId;
+                    tempCatalog.loadCatalog();
+
+                    // Save to file
+                    tempCatalog.saveCatalogToFile(collection->databaseMode, collection->folder);
+                }
+
+                QMessageBox::information(this, "Katalog",
+                                         tr("Checksum saved to database."));
+            }
+        }
+
+        void MainWindow::calculateAndSaveChecksum(const QString &filePath,
+                                                  const QString &fileName,
+                                                  const QString &folderPath,
+                                                  int catalogId)
+        {
+            // Check if file exists
+            if (!QFileInfo::exists(filePath)) {
+                QMessageBox::warning(this, "Katalog",
+                                     tr("File not found:") + "\n" + filePath);
+                return;
+            }
+
+            QProgressDialog progress(tr("Calculating checksum..."),
+                                     tr("Cancel"), 0, 100, this);
+            progress.setWindowModality(Qt::WindowModal);
+            progress.setMinimumDuration(1000);
+
+            // Progress callback
+            auto progressCallback = [&](qint64 processed, qint64 total) {
+                if (total > 0) {
+                    int percent = (processed * 100) / total;
+                    progress.setValue(percent);
+                }
+                QCoreApplication::processEvents();
+                if (progress.wasCanceled()) {
+                    throw std::runtime_error("Cancelled");
+                }
+            };
+
+            QString checksum;
+            try {
+                checksum = FileChecksum::calculateChecksum(filePath,
+                                                           QCryptographicHash::Sha256,
+                                                           progressCallback);
+            } catch (...) {
+                return; // User cancelled
+            }
+
+            if (checksum.isEmpty()) {
+                QMessageBox::warning(this, "Katalog",
+                                     tr("Checksum calculation failed."));
+                return;
+            }
+
+            // Save to database
+            FileChecksum::updateFileChecksum(m_connectionName, catalogId,
+                                             fileName, folderPath, checksum, "SHA256");
+
+            // Save to .idx file in Memory mode
+            if (collection->databaseMode == "Memory") {
+                // Load the catalog object using catalogId
+                Catalog tempCatalog;
+                tempCatalog.ID = catalogId;
+                tempCatalog.loadCatalog();
+
+                // Save to file
+                tempCatalog.saveCatalogToFile(collection->databaseMode, collection->folder);
+            }
+
+            // Show result with copy button
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setIcon(QMessageBox::Information);
+
+            QString message = QString("SHA-256: %1\n\n").arg(checksum) + tr("Checksum saved to database.");
+            msgBox.setText(message);
+
+            QPushButton *copyButton = msgBox.addButton(tr("Copy to Clipboard"),
+                                                       QMessageBox::ActionRole);
+            msgBox.addButton(QMessageBox::Ok);
+
+            msgBox.exec();
+
+            if (msgBox.clickedButton() == copyButton) {
+                QClipboard *clipboard = QApplication::clipboard();
+                clipboard->setText(checksum);
+            }
         }

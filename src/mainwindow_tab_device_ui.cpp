@@ -32,6 +32,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/device.h"
+#include "core/filechecksum.h"
+#include "core/statusbarmessagebuilder.h"
 #include "mainwindow_ui_wrapper_device.h"
 
 //TAB: DEVICES -------------------------------------------------------------
@@ -292,6 +294,19 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             editDevice();
         });
 
+        // Add separator before checksum verification
+        deviceContextMenu.addSeparator();
+
+        QAction *menuVerifyChecksums = new QAction(QIcon::fromTheme("document-properties"),
+                                                   tr("Verify Checksums"), this);
+        deviceContextMenu.addAction(menuVerifyChecksums);
+        connect(menuVerifyChecksums, &QAction::triggered, this, [this]() {
+            verifyCatalogChecksums();
+        });
+
+        deviceContextMenu.addSeparator();
+
+        // Filelight
         if(activeDevice->active==true){
             QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("view-statistics"), tr("Filelight"), this);
             deviceContextMenu.addAction(menuDeviceAction4);
