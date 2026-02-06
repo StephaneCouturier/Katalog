@@ -94,7 +94,7 @@ jobs:
         brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git --force-auto-update || echo "KDE tap failed"
         
         # Try installing essential KF6 packages
-        for kf6_pkg in kf6-kcoreaddons kf6-ki18n kf6-kxmlgui kf6-kconfig kf6-kiconthemes; do
+        for kf6_pkg in kf6-kcoreaddons kf6-ki18n kf6-kxmlgui kf6-kconfig; do
           if brew install "$kf6_pkg" 2>/dev/null; then
             echo "✅ Installed $kf6_pkg via Homebrew"
           else
@@ -144,12 +144,12 @@ jobs:
         KF6_BUILD_VERSION="${{ github.event.inputs.kf6_version || 'v6.13.0' }}"
         echo "Building all KF6 components with version: $KF6_BUILD_VERSION"
         
-        # KF6 components needed by Katalog (in dependency order)
+        # KF6 components needed by Katalog (in dependency order) #removed "karchive" "kiconthemes"
         KF6_COMPONENTS=(
           "extra-cmake-modules"
           "kcoreaddons" "ki18n" "kconfig" "kwidgetsaddons" 
-          "kcodecs" "kguiaddons" "kcolorscheme" "kcompletion" "karchive" "kitemviews" "kfilemetadata"
-          "kconfigwidgets" "kiconthemes" "kxmlgui"
+          "kcodecs" "kguiaddons" "kcolorscheme" "kcompletion"  "kitemviews" "kfilemetadata"
+          "kconfigwidgets" "kxmlgui"
         )
         
         # Set up common cmake args
@@ -359,7 +359,7 @@ jobs:
         
         echo ""
         echo "Checking specific KF6 cmake modules with exact paths:"
-        for component in CoreAddons I18n XmlGui Config IconThemes WidgetsAddons ConfigWidgets GlobalAccel; do
+        for component in CoreAddons I18n XmlGui Config WidgetsAddons ConfigWidgets GlobalAccel; do
           config_file="$(brew --prefix)/lib/cmake/KF6${component}/KF6${component}Config.cmake"
           if [ -f "$config_file" ]; then
             echo "✅ Found KF6${component}Config.cmake at: $config_file"
@@ -412,7 +412,7 @@ jobs:
         
         # Add specific KF6 component directories
         KF6_PATHS=""
-        for component in CoreAddons I18n XmlGui Config IconThemes WidgetsAddons ConfigWidgets GlobalAccel; do
+        for component in CoreAddons I18n XmlGui Config WidgetsAddons ConfigWidgets GlobalAccel; do
           kf6_dir="$(brew --prefix)/lib/cmake/KF6${component}"
           if [ -d "$kf6_dir" ]; then
             KF6_PATHS="${KF6_PATHS}:$kf6_dir"
@@ -429,7 +429,7 @@ jobs:
         echo "Final CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
         
         # Also set specific KF6 directories as fallback
-        for component in CoreAddons I18n XmlGui Config IconThemes; do
+        for component in CoreAddons I18n XmlGui Config; do
           kf6_dir="$(brew --prefix)/lib/cmake/KF6${component}"
           if [ -d "$kf6_dir" ]; then
             export KF6${component}_DIR="$kf6_dir"
@@ -441,7 +441,7 @@ jobs:
         echo "=== Final verification before cmake ==="
         # Verify KF6 packages are findable
         echo "Double-checking KF6 packages with current paths..."
-        for pkg in KF6CoreAddons KF6I18n KF6XmlGui KF6Config KF6IconThemes; do
+        for pkg in KF6CoreAddons KF6I18n KF6XmlGui KF6Config ; do
           config_file=$(find $(echo $CMAKE_PREFIX_PATH | tr ':' ' ') -name "${pkg}Config.cmake" 2>/dev/null | head -1)
           if [ -n "$config_file" ]; then
             echo "✅ Found $pkg at: $config_file"
@@ -468,8 +468,7 @@ jobs:
           -DKF6XmlGui_DIR="$KF6XmlGui_DIR" \
           -DKF6CoreAddons_DIR="$KF6CoreAddons_DIR" \
           -DKF6I18n_DIR="$KF6I18n_DIR" \
-          -DKF6Config_DIR="$KF6Config_DIR" \
-          -DKF6IconThemes_DIR="$KF6IconThemes_DIR"; then
+          -DKF6Config_DIR="$KF6Config_DIR" ; then
           echo "✅ CMake configuration successful"
         else
           echo "❌ CMake configuration failed"
