@@ -1,10 +1,6 @@
 name: Build macOS
 #v1 run2 - macOS Qt6/KF6 build from master branch (full modern build)
 on:
-  # Trigger on new releases
-  release:
-    types: [published]
-
   # Allow manual triggering from GitHub web interface
   workflow_dispatch:
     inputs:
@@ -403,15 +399,7 @@ jobs:
         # Build VERSION_TAG: platform_vX.X
         echo "VERSION_TAG=macos_v${KATALOG_VERSION}" >> $GITHUB_ENV
         echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
-
-        # Detect if this is a release build
-        if [ "${{ github.event_name }}" = "release" ]; then
-          echo "IS_RELEASE=true" >> $GITHUB_ENV
-          echo "Building RELEASE version: macos_v${KATALOG_VERSION}"
-        else
-          echo "IS_RELEASE=false" >> $GITHUB_ENV
-          echo "Building version: macos_v${KATALOG_VERSION}"
-        fi
+        echo "Building version: macos_v${KATALOG_VERSION}"
 
     - name: Build Katalog with Qt6/KF6
       run: |
@@ -873,20 +861,19 @@ jobs:
           echo "❌ No app bundle found"
         fi
 
-    - name: Upload DMG to Release
-      if: env.IS_RELEASE == 'true'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: build/Katalog-${{ env.VERSION_TAG }}-macOS.dmg
-        asset_name: Katalog-${{ env.VERSION_TAG }}-macOS.dmg
-        asset_content_type: application/x-apple-diskimage
-
     - name: Upload DMG as Artifact
-      if: env.IS_RELEASE != 'true'
       uses: actions/upload-artifact@v4
+      with:
+        name: Katalog_${{ env.VERSION_TAG }}_dmg
+        path: build/Katalog-${{ env.VERSION_TAG }}-macOS.dmg
+        retention-days: 30
+
+    - name: Upload App Bundle as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Katalog_${{ env.VERSION_TAG }}_bundle
+        path: build/Katalog.app
+        retention-days: 7
 
     - name: Summary
       run: |
