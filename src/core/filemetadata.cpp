@@ -1170,12 +1170,10 @@ QVariantMap FileMetadata::processVideoMetadata(const KFileMetaData::PropertyMult
         result["video_height"] = properties.value(KFileMetaData::Property::Height).toInt();
     }
 
-    // Video codec
-#if KFILEMETADATA_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    // Video codec (runtime check instead of preprocessor directive)
     if (properties.contains(KFileMetaData::Property::VideoCodec)) {
         result["video_codec"] = properties.value(KFileMetaData::Property::VideoCodec).toString();
     }
-#endif
 
     // Frame rate
     if (properties.contains(KFileMetaData::Property::FrameRate)) {
