@@ -142,6 +142,7 @@ jobs:
 
         # Define global KF6 version for consistent builds
         KF6_BUILD_VERSION="${{ github.event.inputs.kf6_version || 'v6.22.0' }}"
+        echo "KF6_BUILD_VERSION=$KF6_BUILD_VERSION" >> $GITHUB_ENV
         echo "Building all KF6 components with version: $KF6_BUILD_VERSION"
 
         # KF6 components needed by Katalog (in dependency order)
@@ -884,7 +885,7 @@ jobs:
         echo "- **Target**: macOS 11.0+ (Big Sur and later)" >> $GITHUB_STEP_SUMMARY
         echo "- **Architecture**: $(uname -m)" >> $GITHUB_STEP_SUMMARY
         echo "- **Qt Version**: $($(brew --prefix qt@6)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY
-        echo "- **KF6 Version**: ${{ github.event.inputs.kf6_version || 'v6.15.0' }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **KF6 Version**: ${{ env.KF6_BUILD_VERSION }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Codebase**: master (Qt6 + KF6 with all modern features)" >> $GITHUB_STEP_SUMMARY
         echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY
 
