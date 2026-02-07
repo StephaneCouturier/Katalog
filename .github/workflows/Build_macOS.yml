@@ -7,11 +7,11 @@ on:
       version_tag:
         description: 'Version tag'
         required: false
-        default: 'v2.8'
+        default: 'v2.9'
       kf6_version:
         description: 'KF6 version to build'
         required: false
-        default: 'v6.15.0'
+        default: 'v6.22.0'
 
   # Optional, trigger on push
   push:
@@ -141,7 +141,7 @@ jobs:
         echo "Available space: $(df -h . | tail -1)"
 
         # Define global KF6 version for consistent builds
-        KF6_BUILD_VERSION="${{ github.event.inputs.kf6_version || 'v6.13.0' }}"
+        KF6_BUILD_VERSION="${{ github.event.inputs.kf6_version || 'v6.22.0' }}"
         echo "Building all KF6 components with version: $KF6_BUILD_VERSION"
 
         # KF6 components needed by Katalog (in dependency order)
