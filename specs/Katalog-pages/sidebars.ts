@@ -46,7 +46,7 @@ export default {
         items: ['SpecBackUp','SpecCatalogUpdate','SpecChecksum', 'SpecProgressReport','SpecVersions'],
       },
        'Development-Build-from-source',
-
+       'Development-Release',
               ],
     },
   ],

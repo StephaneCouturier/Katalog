@@ -9,8 +9,6 @@ This help checking the coverage of backup for devices, and compare source and ba
 <b>Katalog does not have functions to automatically copy files yet.</b><br/>
 Many simple to advanced applications are available, such as [KBackUp](https://apps.kde.org/fr/kbackup) or [LuckyBackup](https://luckybackup.sourceforge.net)
 
-![](/img/screen_create_01.png)
-
 ## Catalogs mapping and comparison
 
 To help listing and comparing source directories and their backup, Katalog can help mapping catalogs.
@@ -40,6 +38,13 @@ And click the button "Delete selected".
 
 ![](/img/screen_backup_6_delete.png)
 
+**LuckyBackUp profile creation**
+Katalog can generate LuckyBackUp a ready-to-use profile based on the BackUp links
+- creates `.profile` files from backup links
+- Saves to `~/.luckyBackup/profiles/` directory
+- Option to generate from ALL backup links or only filtered ones (by source/target device)
+- Profile naming: `Katalog_<timestamp>.profile`
+- Each Katalog backup link becomes one task in the LuckyBackUp profile
 
 ## Development
 Some ideas of developments for this screen:

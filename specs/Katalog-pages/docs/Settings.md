@@ -13,15 +13,16 @@ The *Collection folder* is the folder on your computer where all data of a colle
 It is possible to have several Collections.
 
 ### Data modes
-Katalog provides 2 "*Data modes*" or different ways of storing and handling data.
+Katalog provides 3 "*Data modes*" or different ways of storing and handling data.
 
-Note 1: there is no feature yet to convert a collection in one mode into the other mode.
+Note 1: there is no feature yet to convert a collection in one mode into another mode.
 
 Note 2: changing the mode requires to click *Apply and restart*
         | Mode   | Database type      | Data storage |Files | Search Speed | Cataloging speed |
         | -------| -------------------|---|---|---|---|
         | **Memory** (default)| computer memory |  in .csv tab separated files (for devices, statistics, etc.) and in .idx files (for catalogs file lists)|Better for regular synch of the files to a cloud|Fastest search speed once catalogs are in memory (longer time for the first time a catalog is used) | Slightly Faster|
         | **File**   | SQLite file, low memory use | all in the SQLite file|all data clubbed in 1 file that can grow to several hundred Mb in size  |Faster for 1st search, slower for repetitive search in a big collection|Slightly slower|
+        | **Hosted** | MySQL/MariaDB server | all data stored in the hosted database server|Data centralized on a server, accessible from multiple machines on the network|Server-side query performance, suitable for large collections|Slightly slower (network overhead)|
 
 ![](/img/settings_database-model.png)
 
@@ -46,6 +47,29 @@ Collection folder actions:
 * *Select and open database file* provide a way to select the and load the collection
 * *Edit*: Open the SQLite database in a database editor (ex: [SQLite Browser](http://sqlitebrowser.org)).
 * *New*: Create a new collection file and load it.
+
+### Database Hosted mode
+![](/img/screen_settings_05_hosted.png)
+
+The collection data is saved to a database hosted on a local or network server (MySQL/MariaDB).
+
+Connection settings:
+* **Host Name** — The hostname or IP address of the database server (default: `localhost`).
+* **Database Name** — The name of the database on the server.
+* **Port** — The port number (default: `3306` for MySQL/MariaDB).
+* **User Name** — The database user name.
+* **Password** — The database password.
+
+Fill in all fields and click *Apply and restart* to connect.
+
+#### Security
+* Only **local** (localhost, 127.x.x.x) and **private network** (192.168.x.x, 10.x.x.x, 172.16-31.x.x) hostnames are accepted. Public IPs and domain names are rejected.
+* When connecting to a private network address, a confirmation dialog is displayed before proceeding.
+
+#### Prerequisites
+* A MySQL/MariaDB server must be running and accessible.
+* The database must already exist on the server (Katalog will create the required tables automatically).
+* The corresponding Qt SQL driver plugin must be installed (`QMYSQL` for MySQL/MariaDB).
 
 ## Language & Theme
 * Choose the Language for the application.
