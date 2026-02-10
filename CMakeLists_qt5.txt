@@ -266,7 +266,7 @@ set(QRC_FILES
     src/images.qrc
     src/Resources.qrc
     src/styles.qrc
-    # src/translations.qrc
+    src/translations.qrc
 )
 
 # Create the core library (reusable, UI-agnostic for future QtQuick support)
