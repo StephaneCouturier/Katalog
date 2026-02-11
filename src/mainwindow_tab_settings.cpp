@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/database.h"
+#include <QVersionNumber>
 
 //SETTINGS / GLOBAL -----------------------------------------------------------------
     void MainWindow::on_splitter_splitterMoved()
@@ -696,7 +697,7 @@
 
         //Verify Collection version and trigger migration or updates
         if(collection->databaseMode=="Memory"){
-            if ( collection->dbSchemaVersion < collection->appVersion and collection->dbSchemaVersion < "2.0"){
+            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString(collection->appVersion) and QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString("2.0")){
                 //Migration 1.x > 2.0
 
                 collection->dbSchemaVersion = "1.x";
@@ -752,7 +753,7 @@
                 }
             }
 
-            if ( collection->dbSchemaVersion < collection->appVersion and collection->dbSchemaVersion >= "2.0"){
+            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString(collection->appVersion) and QVersionNumber::fromString(collection->dbSchemaVersion) >= QVersionNumber::fromString("2.0")){
                 //Update collection version
                 collection->dbSchemaVersion = collection->appVersion;
                 collection->setDatabaseSchemaVersion();

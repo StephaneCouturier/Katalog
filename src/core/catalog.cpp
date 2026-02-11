@@ -35,6 +35,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QSqlError>
+#include <QVersionNumber>
 #include <qmessagebox.h>
 
 const QString Catalog::METADATA_NONE = "None";
@@ -519,7 +520,7 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
             if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
 
                 // Detect if this is an older catalog t oversion 2.8 that needs migration
-                bool needsMigration = (appVersion < "2.8");
+                bool needsMigration = (QVersionNumber::fromString(appVersion) < QVersionNumber::fromString("2.8"));
                 bool catalogWasMigrated = false;
 
                 if (needsMigration) {
@@ -796,7 +797,7 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                     }
 
                     // After saving, check if migration is 100% complete
-                    if (!hasFilesNeedingMigration() && appVersion < "2.9") {
+                    if (!hasFilesNeedingMigration() && QVersionNumber::fromString(appVersion) < QVersionNumber::fromString("2.9")) {
                         appVersion = "2.9";
                         saveCatalog();  // Update database
                         qDebug() << "✓ Catalog fully migrated to v2.9";

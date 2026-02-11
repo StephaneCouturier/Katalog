@@ -48,6 +48,7 @@
 #include <QThread>
 #include <QSettings>
 #include <QElapsedTimer>
+#include <QVersionNumber>
 
 CatalogJobStoppable::CatalogJobStoppable(QObject *parent)
     : QObject(parent)
@@ -1619,7 +1620,7 @@ void CatalogJobStoppable::updateCatalogIncremental()
     migrateMimeTypesForExistingFiles();
 
     // After migration completes, update catalog to current version
-    if (!catalog->hasFilesNeedingMigration() && catalog->appVersion < "2.8") {
+    if (!catalog->hasFilesNeedingMigration() && QVersionNumber::fromString(catalog->appVersion) < QVersionNumber::fromString("2.8")) {
         qDebug() << "✓ All files migrated - updating catalog version to 2.8";
         catalog->appVersion = "2.8";
     }

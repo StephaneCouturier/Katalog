@@ -33,6 +33,7 @@
 #include "ui_mainwindow.h"
 #include "core/database.h"
 #include <QTimer>
+#include <QVersionNumber>
 
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenus(){
@@ -364,7 +365,7 @@
                 QString releaseNotesAddress = "https://github.com/StephaneCouturier/Katalog/releases/tag/v" + lastestVersion;
 
                 //inform user if new version is available, and give the choice to download it
-                if ( lastestVersion > currentVersion ){
+                if ( QVersionNumber::fromString(lastestVersion) > QVersionNumber::fromString(currentVersion) ){
 
                     int result = QMessageBox::information(this,"Katalog",
                                     tr("This is version: v%1 <br/><br/>A new version is available: <b>v%2</b> <br/> "
@@ -391,7 +392,9 @@
         qDebug() << "App version:" << collection->appVersion;
 
         //Run in ascending version order
-            if (currentSchemaVersion < "2.6") {
+            QVersionNumber schemaVersion = QVersionNumber::fromString(currentSchemaVersion);
+
+            if (schemaVersion < QVersionNumber::fromString("2.6")) {
                 qDebug() << "Running database migration to 2.6...";
                 collection->dbSchemaVersion = "2.6";
 
@@ -406,7 +409,7 @@
                 }
             }
 
-            if (currentSchemaVersion < "2.8") {
+            if (schemaVersion < QVersionNumber::fromString("2.8")) {
                 qDebug() << "Running SAFE database migration to 2.8...";
                 collection->dbSchemaVersion = "2.8";
 
@@ -425,7 +428,7 @@
                 }
             }
 
-            if (currentSchemaVersion < "2.9") {
+            if (schemaVersion < QVersionNumber::fromString("2.9")) {
                 qDebug() << "Running database migration to 2.9...";
                 collection->dbSchemaVersion = "2.9";
 
