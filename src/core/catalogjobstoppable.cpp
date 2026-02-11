@@ -2300,6 +2300,13 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
 
     // Insert all directory paths (including empty folders) - matching creation behavior
     if (!directoryPaths.isEmpty()) {
+        // Clear existing folders first to remove any that no longer exist on disk
+        QSqlQuery clearFoldersQuery(QSqlDatabase::database(m_connectionName));
+        clearFoldersQuery.prepare("DELETE FROM folder WHERE folder_catalog_id = :catalog_id");
+        clearFoldersQuery.bindValue(":catalog_id", catalog->ID);
+        if (!clearFoldersQuery.exec()) {
+            qDebug() << "Error clearing folders:" << clearFoldersQuery.lastError().text();
+        }
         insertFolders(directoryPaths, catalog);
     }
 }
