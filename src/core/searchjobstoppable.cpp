@@ -40,7 +40,6 @@
 #include <QElapsedTimer>
 #include <QCoreApplication>
 #include <QDebug>
-#include <QApplication>
 
 SearchJobStoppable::SearchJobStoppable(QObject *parent)
     : Search(parent)
@@ -440,8 +439,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 qDebug() << "File type update needed for" << filesToMigrate << "files";
 
                 // Set operation context for file type update
-                currentOperationVerb = QApplication::translate("MainWindow","File Types Updated");
-                //currentOperationUnit = QApplication::translate("MainWindow","updated");
+                currentOperationVerb = QCoreApplication::translate("MainWindow","File Types Updated");
+                //currentOperationUnit = QCoreApplication::translate("MainWindow","updated");
                 showSearchStatistics = false;
 
                 // Reset counters for file type update progress
@@ -479,8 +478,8 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                 disconnect(progressConnection);
 
                 // Restore normal operation context
-                currentOperationVerb = QApplication::translate("MainWindow","Loaded");
-                //currentOperationUnit = QApplication::translate("MainWindow","loaded");
+                currentOperationVerb = QCoreApplication::translate("MainWindow","Loaded");
+                //currentOperationUnit = QCoreApplication::translate("MainWindow","loaded");
                 showSearchStatistics = true;
 
                 // Check if stopped

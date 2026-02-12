@@ -33,7 +33,7 @@
 #include <QSettings>
 #include <QFile>
 #include <QDebug>
-#include <QApplication>
+#include <QCoreApplication>
 #include <qhostaddress.h>
 
 //----------------------------------------------------------------------
@@ -1024,10 +1024,6 @@ QSqlError Database::runMigration_2_6(const QString &connectionName)
 
 QSqlError Database::runMigration_2_8(const QString &connectionName)
 {
-    //change cursor
-    QApplication::setOverrideCursor(Qt::BusyCursor);
-
-
     qDebug() << "=== Database Migration 2.8: PART1 - Drop metadata table, update file/filetemp tables ===";
 
         // Step 1: Drop the unused metadata table if it exists
@@ -1141,17 +1137,11 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
 
         qDebug() << "=== Database Migration 2.8 completed ===";
 
-    //reset cursor
-    QApplication::restoreOverrideCursor();
-
     return QSqlError(); // Success
 }
 
 QSqlError Database::runMigration_2_9(const QString &connectionName)
 {
-    // Change cursor to busy
-    QApplication::setOverrideCursor(Qt::BusyCursor);
-
     qDebug() << "=== Database Migration 2.9: Adding checksum support ===";
 
 
@@ -1175,7 +1165,6 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
                 addColumnError.type() != QSqlError::NoError)
             {
                 qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
-                QApplication::restoreOverrideCursor();
                 return addColumnError;
             }
             qDebug() << "Added column" << columnName << "to file table";
@@ -1198,7 +1187,6 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
                 addColumnError.type() != QSqlError::NoError)
             {
                 qDebug() << "Error adding column" << columnName << "to filetemp:" << addColumnError.text();
-                QApplication::restoreOverrideCursor();
                 return addColumnError;
             }
             qDebug() << "Added column" << columnName << "to filetemp table";
@@ -1219,7 +1207,6 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
             addColumnError.type() != QSqlError::NoError)
         {
             qDebug() << "Error adding catalog_include_checksum column:" << addColumnError.text();
-            QApplication::restoreOverrideCursor();
             return addColumnError;
         }
         qDebug() << "Added catalog_include_checksum column to catalog table";
@@ -1268,7 +1255,6 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
                 addColumnError.type() != QSqlError::NoError)
             {
                 qDebug() << "Error adding column" << columnName << "to search:" << addColumnError.text();
-                QApplication::restoreOverrideCursor();
                 return addColumnError;
             }
             qDebug() << "Added column" << columnName << "to search table";
@@ -1279,9 +1265,6 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
     qDebug() << "Search table updated with duplicates compare devices support";
 
     qDebug() << "=== Database Migration 2.9 completed ===";
-
-    // Restore cursor
-    QApplication::restoreOverrideCursor();
 
     return QSqlError(); // Success
 }

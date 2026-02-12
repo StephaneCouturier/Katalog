@@ -35,7 +35,7 @@
 #include <QStatusBar>
 #include <QLocale>
 #include <QDebug>
-#include <qapplication.h>
+#include <QCoreApplication>
 
 CatalogProgressManager::CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QLabel *statusLabel, QObject *parent)
     : QObject(parent), m_statusBar(statusBar), m_statusBarTimer(timer), m_statusBarLabel(statusLabel)
@@ -73,12 +73,12 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 // Operation type
                 if (m_catalogManager->lastOperationType() == CatalogJobStoppable::CreateCatalog) {
-                    builder.setOperation(QApplication::translate("MainWindow", "Create"));
+                    builder.setOperation(QCoreApplication::translate("MainWindow", "Create"));
                 } else {
-                    builder.setOperation(QApplication::translate("MainWindow", "Update"));
+                    builder.setOperation(QCoreApplication::translate("MainWindow", "Update"));
                 }
 
-                builder.setStatus(QApplication::translate("MainWindow", "Cancelled"));
+                builder.setStatus(QCoreApplication::translate("MainWindow", "Cancelled"));
 
                 // Catalog index (batch context)
                 if (m_batchTotalCatalogs > 1) {
@@ -96,7 +96,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                 switch (m_catalogManager->lastPhase()) {
                 case CatalogManager::PHASE_LOADING:
                     builder.setProcess(
-                        QApplication::translate("MainWindow", "Loaded"),
+                        QCoreApplication::translate("MainWindow", "Loaded"),
                         m_catalogManager->lastFilesProcessed(),
                         m_catalogManager->lastTotalFiles()
                         );
@@ -104,7 +104,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 case CatalogManager::PHASE_COUNTING:
                     builder.setProcess(
-                        QApplication::translate("MainWindow", "Counted"),
+                        QCoreApplication::translate("MainWindow", "Counted"),
                         m_catalogManager->lastFilesProcessed(),
                         0  // No total for counting
                         );
@@ -112,7 +112,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 case CatalogManager::PHASE_INDEXING:
                     builder.setProcess(
-                        QApplication::translate("MainWindow", "Indexed"),
+                        QCoreApplication::translate("MainWindow", "Indexed"),
                         m_catalogManager->lastFilesProcessed(),
                         m_catalogManager->lastTotalFiles()
                         );
@@ -120,7 +120,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 case CatalogManager::PHASE_MIGRATING:
                     builder.setProcess(
-                        QApplication::translate("MainWindow", "File Types Updated"),
+                        QCoreApplication::translate("MainWindow", "File Types Updated"),
                         m_catalogManager->lastFilesProcessed(),
                         m_catalogManager->lastTotalFiles()
                         );
@@ -128,7 +128,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 case CatalogManager::PHASE_METADATA_EXTRACTION:
                     builder.setProcess(
-                        QApplication::translate("MainWindow", "Metadata Extracted"),
+                        QCoreApplication::translate("MainWindow", "Metadata Extracted"),
                         m_catalogManager->lastFilesProcessed(),
                         m_catalogManager->lastTotalFiles()
                         );
@@ -154,12 +154,12 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 // Operation type
                 if (m_catalogManager->lastOperationType() == CatalogJobStoppable::CreateCatalog) {
-                    builder.setOperation(QApplication::translate("MainWindow", "Create"));
+                    builder.setOperation(QCoreApplication::translate("MainWindow", "Create"));
                 } else {
-                    builder.setOperation(QApplication::translate("MainWindow", "Update"));
+                    builder.setOperation(QCoreApplication::translate("MainWindow", "Update"));
                 }
 
-                builder.setStatus(QApplication::translate("MainWindow", "Completed"));
+                builder.setStatus(QCoreApplication::translate("MainWindow", "Completed"));
 
                 // Catalog index (batch context)
                 if (m_batchTotalCatalogs > 1) {
@@ -184,7 +184,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
 
                 if (finalProcessed > 0 && finalTotal > 0) {
                     builder.setProcess(
-                        QApplication::translate("MainWindow", "Indexed"),
+                        QCoreApplication::translate("MainWindow", "Indexed"),
                         finalProcessed,
                         finalTotal
                         );
@@ -224,12 +224,12 @@ void CatalogProgressManager::updateFromCatalogManager()
 
         // Operation type
         if (m_catalogManager->currentOperationType() == CatalogJobStoppable::CreateCatalog) {
-            builder.setOperation(QApplication::translate("MainWindow", "Create"));
+            builder.setOperation(QCoreApplication::translate("MainWindow", "Create"));
         } else {
-            builder.setOperation(QApplication::translate("MainWindow", "Update"));
+            builder.setOperation(QCoreApplication::translate("MainWindow", "Update"));
         }
 
-        builder.setStatus(QApplication::translate("MainWindow", "In Progress"));
+        builder.setStatus(QCoreApplication::translate("MainWindow", "In Progress"));
 
         // Catalog index (batch context)
         if (m_batchTotalCatalogs > 1) {
@@ -253,7 +253,7 @@ void CatalogProgressManager::updateFromCatalogManager()
                 int loaded = parts[1].toInt();
                 int total = parts[2].toInt();
                 builder.setProcess(
-                    QApplication::translate("MainWindow", "Loaded"),
+                    QCoreApplication::translate("MainWindow", "Loaded"),
                     loaded,
                     total
                     );
@@ -264,7 +264,7 @@ void CatalogProgressManager::updateFromCatalogManager()
             if (parts.size() >= 2) {
                 int fileCount = parts[1].toInt();
                 builder.setProcess(
-                    QApplication::translate("MainWindow", "Counted"),
+                    QCoreApplication::translate("MainWindow", "Counted"),
                     fileCount,
                     0
                     );
@@ -277,7 +277,7 @@ void CatalogProgressManager::updateFromCatalogManager()
                 int processed = parts[1].toInt();
                 int total = parts[2].toInt();
                 builder.setProcess(
-                    QApplication::translate("MainWindow", "File Types Updated"),
+                    QCoreApplication::translate("MainWindow", "File Types Updated"),
                     processed,
                     total
                     );
@@ -285,7 +285,7 @@ void CatalogProgressManager::updateFromCatalogManager()
 
         } else if (currentPath.startsWith("__SAVING__|")) {
             // Show simple "Saving" indicator without progress numbers
-            builder.setCurrentItem(QApplication::translate("MainWindow", "Saving"));
+            builder.setCurrentItem(QCoreApplication::translate("MainWindow", "Saving"));
 
         } else if (currentPath.startsWith("__METADATA_EXTRACTION__|")) {
             // METADATA EXTRACTION
@@ -295,7 +295,7 @@ void CatalogProgressManager::updateFromCatalogManager()
                 int total = parts[2].toInt();
 
                 builder.setProcess(
-                    QApplication::translate("MainWindow", "Metadata Extracted"),
+                    QCoreApplication::translate("MainWindow", "Metadata Extracted"),
                     processed,
                     total
                     );
@@ -314,7 +314,7 @@ void CatalogProgressManager::updateFromCatalogManager()
                 int total = parts[2].toInt();
 
                 builder.setProcess(
-                    QApplication::translate("MainWindow", "Checksums Calculated"),
+                    QCoreApplication::translate("MainWindow", "Checksums Calculated"),
                     processed,
                     total
                     );
@@ -333,7 +333,7 @@ void CatalogProgressManager::updateFromCatalogManager()
         } else if (m_catalogManager->totalFiles() > 0) {
             // INDEXING
             builder.setProcess(
-                QApplication::translate("MainWindow", "Indexed"),
+                QCoreApplication::translate("MainWindow", "Indexed"),
                 m_catalogManager->filesProcessed(),
                 m_catalogManager->totalFiles()
                 );

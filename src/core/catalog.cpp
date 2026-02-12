@@ -32,11 +32,10 @@
 #include "catalog.h"
 #include "filetypemapping.h"
 #include "filemetadata.h"
-#include <QApplication>
+#include <QCoreApplication>
 #include <QDir>
 #include <QSqlError>
 #include <QVersionNumber>
-#include <qmessagebox.h>
 
 const QString Catalog::METADATA_NONE = "None";
 const QString Catalog::METADATA_MEDIA_BASIC = "MediaBasic";

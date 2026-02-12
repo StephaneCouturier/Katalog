@@ -32,7 +32,7 @@
 
 #include "catalogmanager.h"
 #include <QDebug>
-#include <QApplication>
+#include <QCoreApplication>
 
 CatalogManager::CatalogManager(QObject *parent)
     : QObject(parent)

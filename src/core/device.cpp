@@ -31,7 +31,7 @@
 
 #include "device.h"
 #include <QSqlError>
-#include <QApplication>
+#include <QCoreApplication>
 #include <qelapsedtimer.h>
 
 void Device::loadDevice(QString connectionName){
@@ -648,9 +648,9 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
 
 
         result.confirmationMessage = QString(
-                                         QApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?").arg(type)
-                                         +"<table><tr><td>" +QApplication::translate("MainWindow", "ID")+":   </td><td><b>" +QString::number(ID)+" </td></tr><tr><td>"
-                                         +QApplication::translate("MainWindow", "Name") +": </td><td><b>"+ name +"</td></tr><tr><td></td></tr></table>"
+                                         QCoreApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?").arg(type)
+                                         +"<table><tr><td>" +QCoreApplication::translate("MainWindow", "ID")+":   </td><td><b>" +QString::number(ID)+" </td></tr><tr><td>"
+                                         +QCoreApplication::translate("MainWindow", "Name") +": </td><td><b>"+ name +"</td></tr><tr><td></td></tr></table>"
                                          );
 
 

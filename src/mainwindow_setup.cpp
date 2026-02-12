@@ -414,7 +414,9 @@
                 collection->dbSchemaVersion = "2.8";
 
                 // Use the safe migration method
+                QApplication::setOverrideCursor(Qt::BusyCursor);
                 QSqlError migrationError = Database::runMigration_2_8(m_connectionName);
+                QApplication::restoreOverrideCursor();
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
                     qDebug() << "SAFE database migration to 2.8 completed";
@@ -432,7 +434,9 @@
                 qDebug() << "Running database migration to 2.9...";
                 collection->dbSchemaVersion = "2.9";
 
+                QApplication::setOverrideCursor(Qt::BusyCursor);
                 QSqlError migrationError = Database::runMigration_2_9(m_connectionName);
+                QApplication::restoreOverrideCursor();
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
                     qDebug() << "Database migration to 2.9 completed";

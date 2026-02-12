@@ -3,7 +3,7 @@
 #include <QTimer>
 #include <QSqlQuery>
 #include <QSqlDatabase>
-#include <qapplication.h>
+#include <QCoreApplication>
 
 DeviceUpdateManager::DeviceUpdateManager(QObject *parent)
     : QObject(parent)
@@ -1028,7 +1028,7 @@ void DeviceUpdateManager::requestGentleStop()
     qDebug() << "DeviceUpdateManager::requestGentleStop() - STOP AFTER CURRENT CATALOG";
 
     m_gentleStopRequested.storeRelease(1);
-    setStatus(QApplication::translate("MainWindow", "Stopping after current catalog completes..."));
+    setStatus(QCoreApplication::translate("MainWindow", "Stopping after current catalog completes..."));
 
     // Don't delegate to CatalogManager for storage batch operations
     // because CatalogManager is not in batch mode and will do hard stop
@@ -1087,7 +1087,7 @@ void DeviceUpdateManager::handleOperationCancellation()
 
     // setStatus(QString(tr("Operation cancelled - %1 devices skipped, %2 catalogs skipped"))
     //               .arg(skippedDevices).arg(skippedCatalogs));
-    setStatus(QString(QApplication::translate("MainWindow", "Operation cancelled")));
+    setStatus(QString(QCoreApplication::translate("MainWindow", "Operation cancelled")));
 
     // Emit cancellation (no results - MainWindow handles this differently)
     emit operationCancelled();
