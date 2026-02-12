@@ -32,15 +32,14 @@
 
 #include "catalogprogressmanager.h"
 #include "core/statusbarmessagebuilder.h"
-#include <QStatusBar>
 #include <QLocale>
 #include <QDebug>
 #include <QCoreApplication>
 
-CatalogProgressManager::CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QLabel *statusLabel, QObject *parent)
-    : QObject(parent), m_statusBar(statusBar), m_statusBarTimer(timer), m_statusBarLabel(statusLabel)
+CatalogProgressManager::CatalogProgressManager(QObject *parent)
+    : QObject(parent)
 {
-    qDebug() << "CatalogProgressManager created with statusBar and timer";
+    qDebug() << "CatalogProgressManager created";
 }
 
 void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogManager)
@@ -138,11 +137,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                     break;
                 }
 
-                m_statusBarLabel->setText(builder.build());
-
-                if (m_statusBarTimer) {
-                    m_statusBarTimer->start(5000);
-                }
+                emit statusMessageChanged(builder.build(), 5000);
             });
 
     // Handle completion
@@ -190,11 +185,7 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                         );
                 }
 
-                m_statusBarLabel->setText(builder.build());
-
-                if (m_statusBarTimer) {
-                    m_statusBarTimer->start(5000);
-                }
+                emit statusMessageChanged(builder.build(), 5000);
             });
 }
 
@@ -207,10 +198,10 @@ void CatalogProgressManager::updateFromCatalogManager()
 {
     qDebug() << "=== CatalogProgressManager::updateFromCatalogManager() CALLED ===";
     qDebug() << "  m_catalogManager:" << (m_catalogManager ? "exists" : "NULL");
-    qDebug() << "  m_statusBar:" << (m_statusBar ? "exists" : "NULL");
+    //qDebug() << "  m_statusBar:" << (m_statusBar ? "exists" : "NULL");
 
-    if (!m_catalogManager || !m_statusBar) {
-        qDebug() << "  EARLY RETURN - missing catalogManager or statusBar";
+    if (!m_catalogManager) {
+        qDebug() << "  EARLY RETURN - missing catalogManager";
         return;
     }
 
@@ -352,23 +343,16 @@ void CatalogProgressManager::updateFromCatalogManager()
         QString message = builder.build();
         qDebug() << "  Final message:" << message;
 
-        m_statusBar->show();
-        m_statusBarLabel->setText(message);  // Use the message variable, not builder.build() again
+        qDebug() << "  Emitting status message";
 
-        qDebug() << "  Status bar text SET";
-
-        if (m_statusBarTimer) {
-            m_statusBarTimer->stop();
-        }
+        emit statusMessageChanged(message, 0);
     }
     // When NOT running, do NOTHING - completion signal handles it
 }
 
 void CatalogProgressManager::showMessage(const QString &message, int timeout)
 {
-    if (m_statusBar) {
-        m_statusBarLabel->setText(message);
-    }
+    emit statusMessageChanged(message, timeout);
 }
 
 void CatalogProgressManager::setBatchContext(int currentIndex, int totalCatalogs)

@@ -271,7 +271,17 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
             //Set up a catalog manager for creation and updates, and device manager for udpate
             // Create catalog progress manager (will be connected to DeviceUpdateManager's CatalogManager)
-            catalogProgressManager = new CatalogProgressManager(statusBar(), statusBarTimer, statusBarLabel, this);
+            catalogProgressManager = new CatalogProgressManager(this);
+            connect(catalogProgressManager, &CatalogProgressManager::statusMessageChanged,
+                    this, [this](const QString &message, int timeout) {
+                        statusBarLabel->setText(message);
+                        statusBar()->show();
+                        if (timeout > 0) {
+                            statusBarTimer->start(timeout);
+                        } else {
+                            statusBarTimer->stop();
+                        }
+                    });
             qDebug() << "CatalogProgressManager created (will connect to DeviceUpdateManager)";
             setupDeviceUpdateManager();
 

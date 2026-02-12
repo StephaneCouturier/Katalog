@@ -33,10 +33,8 @@
 #define SEARCHPROGRESSMANAGER_H
 
 #include <QObject>
-#include <QStatusBar>
 #include <QString>
 #include <QLocale>
-#include <QLabel>
 
 // Forward declarations
 class SearchManager;
@@ -47,8 +45,8 @@ class SearchProgressManager : public QObject
     Q_OBJECT
 
 public:
-    explicit SearchProgressManager(QStatusBar *statusBar, QTimer *timer, QLabel *statusLabel, QObject *parent = nullptr)
-        : QObject(parent), m_statusBar(statusBar), m_statusBarTimer(timer), m_statusBarLabel(statusLabel) {}
+    explicit SearchProgressManager(QObject *parent = nullptr)
+        : QObject(parent) {}
 
     void connectToSearchManager(SearchManager *searchManager);
     void setCurrentSearch(Search *currentSearch);
@@ -58,12 +56,9 @@ public slots:
     void showMessage(const QString &message, int timeout = 0);
 
 signals:
-    void statusBarUpdated();  // Keep this for now, can remove later if not needed
+    void statusMessageChanged(const QString &message, int timeout);
 
 private:
-    QStatusBar *m_statusBar = nullptr;
-    QTimer *m_statusBarTimer = nullptr;
-    QLabel *m_statusBarLabel = nullptr;
     SearchManager *m_searchManager = nullptr;
     Search *m_currentSearch = nullptr;
 };

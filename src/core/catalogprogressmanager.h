@@ -37,11 +37,8 @@
 #include "catalogmanager.h"
 #include "catalogjobstoppable.h"
 #include <QObject>
-#include <QStatusBar>
-#include <QTimer>
 #include <QString>
 #include <QLocale>
-#include <QLabel>
 
 /**
  * @brief The CatalogProgressManager class
@@ -53,8 +50,7 @@ class CatalogProgressManager : public QObject
     Q_OBJECT
 
 public:
-    // Declare constructor - implement in cpp file
-    explicit CatalogProgressManager(QStatusBar *statusBar, QTimer *timer, QLabel *statusLabel, QObject *parent = nullptr);
+    explicit CatalogProgressManager(QObject *parent = nullptr);
 
     /**
      * @brief Set the catalog manager to monitor
@@ -93,14 +89,11 @@ public slots:
     void showMessage(const QString &message, int timeout = 0);
 
 signals:
-    void statusBarUpdated();  // Keep for consistency with SearchProgressManager
+    void statusMessageChanged(const QString &message, int timeout);
 
 private:
     CatalogManager *m_catalogManager = nullptr;
     CatalogJobStoppable *m_currentCatalogEngine = nullptr;
-    QStatusBar *m_statusBar = nullptr;
-    QTimer *m_statusBarTimer = nullptr;
-    QLabel *m_statusBarLabel = nullptr;
 
     // Batch operation context (set by DeviceUpdateManager)
     int m_batchCurrentIndex = 0;

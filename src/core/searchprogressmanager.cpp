@@ -38,7 +38,7 @@
 
 void SearchProgressManager::connectToSearchManager(SearchManager *searchManager)
 {
-    if (!searchManager || !m_statusBar) return;
+    if (!searchManager) return;
 
     // Store reference
     m_searchManager = searchManager;
@@ -61,7 +61,7 @@ void SearchProgressManager::setCurrentSearch(Search *currentSearch)
 
 void SearchProgressManager::updateFromSearchManager()
 {
-    if (!m_searchManager || !m_statusBar) return;
+    if (!m_searchManager) return;
 
     if (m_searchManager->searchRunning()) {
         SearchJobStoppable* searchJobStoppable = nullptr;
@@ -115,11 +115,7 @@ void SearchProgressManager::updateFromSearchManager()
                 }
             }
 
-            if (m_statusBarLabel) {
-                m_statusBarLabel->setText(builder.build());
-            }
-            m_statusBar->show();
-            m_statusBarTimer->stop();
+            emit statusMessageChanged(builder.build(), 0);
             return;
         }
 
@@ -168,9 +164,7 @@ void SearchProgressManager::updateFromSearchManager()
             builder.setResult(resultTitle, m_currentSearch->fileNames.size());
         }
 
-        m_statusBar->show();
-        m_statusBarLabel->setText(builder.build());
-        m_statusBarTimer->stop();
+        emit statusMessageChanged(builder.build(), 0);
 
     } else {
         // Search completed or ready
@@ -202,22 +196,11 @@ void SearchProgressManager::updateFromSearchManager()
             builder.setResult(resultTitle, m_currentSearch->fileNames.size());
         }
 
-        m_statusBar->show();
-        m_statusBarLabel->setText(builder.build());
-        m_statusBarTimer->start(5000);
+        emit statusMessageChanged(builder.build(), 5000);
     }
 }
 
 void SearchProgressManager::showMessage(const QString &message, int timeout)
 {
-    if (m_statusBarLabel) {
-        m_statusBarLabel->setText(message);
-        m_statusBar->show();
-
-        if (timeout > 0 && m_statusBarTimer) {
-            m_statusBarTimer->start(timeout);
-        } else if (m_statusBarTimer) {
-            m_statusBarTimer->stop();
-        }
-    }
+    emit statusMessageChanged(message, timeout);
 }

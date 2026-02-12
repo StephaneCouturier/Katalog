@@ -119,7 +119,17 @@ void MainWindow::setupSearchManager()
     searchManager = new SearchManager(this);
 
     // Create progress manager with timer reference
-    searchProgressManager = new SearchProgressManager(statusBar(), statusBarTimer, statusBarLabel, this);
+    searchProgressManager = new SearchProgressManager(this);
+    connect(searchProgressManager, &SearchProgressManager::statusMessageChanged,
+            this, [this](const QString &message, int timeout) {
+                statusBarLabel->setText(message);
+                statusBar()->show();
+                if (timeout > 0) {
+                    statusBarTimer->start(timeout);
+                } else {
+                    statusBarTimer->stop();
+                }
+            });
     searchProgressManager->connectToSearchManager(searchManager);
 
     // Keep existing search lifecycle connections:
