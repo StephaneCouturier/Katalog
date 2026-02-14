@@ -339,7 +339,7 @@ class MainWindow : public KXmlGuiWindow
             void updateCatalogsScreenStatistics();
             void convertCatalog(QString catalogSourcePath);
             void backupFile(QString filePath);
-            void saveCatalogChanges();
+            void saveCatalogChanges(const QString &previousPath);
 
             void importFromVVV();
             void createMissingParentDirectories();

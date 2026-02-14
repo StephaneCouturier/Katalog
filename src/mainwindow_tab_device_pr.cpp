@@ -595,11 +595,11 @@ void MainWindow::saveDeviceForm()
     activeDevice->totalSpace = ui->Storage_lineEdit_Panel_Total->text().toLongLong();
     activeDevice->freeSpace  = ui->Storage_lineEdit_Panel_Free->text().toLongLong();
     activeDevice->saveDevice();
-    //Update Storage values if path was changed
-    if (activeDevice->path != previousPath){
+    //Update device if path was changed (for non-Catalog types; Catalogs are handled in saveCatalogChanges)
+    if (activeDevice->type != "Catalog" && activeDevice->path != previousPath){
         // Set UI state for operation
         setCatalogUpdateUIState(true);
-        //Update catalog
+        //Update device
         deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                    collection->databaseMode,
                                                    collection->folder,
@@ -610,7 +610,7 @@ void MainWindow::saveDeviceForm()
     //If device is a catalog, save catalog changes
     if(activeDevice->type == "Catalog"){
         activeDevice->catalog->storageName = newParentDevice.name;
-        saveCatalogChanges();
+        saveCatalogChanges(previousPath);
         updateCatalogsScreenStatistics();
         loadDevicesTreeToModel("Filters");
     }
@@ -2184,7 +2184,7 @@ void MainWindow::on_Catalogs_pushButton_Import_clicked()
     importFromVVV();
 }
 //--------------------------------------------------------------------------
-void MainWindow::saveCatalogChanges()
+void MainWindow::saveCatalogChanges(const QString &previousPath)
 {
     Device previousCatalog;
     previousCatalog.ID = activeDevice->ID;
@@ -2240,12 +2240,23 @@ void MainWindow::saveCatalogChanges()
         changesToFileSelectionMade = true;
         rescanNeeded = true;
     }
+    if(activeDevice->path != previousPath){
+        message = message + "<tr><td>" + tr("Source Path") + "</td><td>" + previousPath + "</td><td><b>" + activeDevice->path + "</b></td></tr>";
+        changesToFileSelectionMade = true;
+        rescanNeeded = true;
+    }
     message = message + "</table>";
 
     if(changesToFileSelectionMade){
         message = message + + "<br/><br/>" + tr("(The catalog must be updated to reflect these changes)");
         int result = QMessageBox::warning(this, "Katalog", message, QMessageBox::Yes | QMessageBox::Cancel);
         if ( result == QMessageBox::Cancel){
+            // Restore path if it was changed (already saved by saveDeviceForm before this method)
+            if (activeDevice->path != previousPath) {
+                activeDevice->path = previousPath;
+                activeDevice->catalog->sourcePath = previousPath;
+                activeDevice->saveDevice();
+            }
             return;
         }
     }
