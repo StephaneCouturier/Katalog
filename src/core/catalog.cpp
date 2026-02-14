@@ -292,9 +292,16 @@ void Catalog::deleteCatalog()
                         WHERE file_catalog_id =:file_catalog_id
                     )");
     query.prepare(querySQL);
-    query.bindValue(":file_catalog_id ", ID);
+    query.bindValue(":file_catalog_id", ID);
     query.exec();
 
+    querySQL = QLatin1String(R"(
+                        DELETE FROM folder
+                        WHERE folder_catalog_id =:folder_catalog_id
+                    )");
+    query.prepare(querySQL);
+    query.bindValue(":folder_catalog_id", ID);
+    query.exec();
 }
 
 void Catalog::saveCatalog()
