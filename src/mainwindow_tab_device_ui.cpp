@@ -294,6 +294,14 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             editDevice();
         });
 
+        if (!activeDevice->path.isEmpty() && activeDevice->path != "EXPORT") {
+            QAction *menuOpenPath = new QAction(QIcon::fromTheme("document-open-folder"), tr("Open folder"), this);
+            deviceContextMenu.addAction(menuOpenPath);
+            connect(menuOpenPath, &QAction::triggered, this, [this]() {
+                QDesktopServices::openUrl(QUrl::fromLocalFile(activeDevice->path));
+            });
+        }
+
         // Add separator before checksum verification
         deviceContextMenu.addSeparator();
 
@@ -375,6 +383,14 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             editDevice();
         });
 
+        if (!activeDevice->path.isEmpty()) {
+            QAction *menuOpenPath = new QAction(QIcon::fromTheme("document-open-folder"), tr("Open folder"), this);
+            deviceContextMenu.addAction(menuOpenPath);
+            connect(menuOpenPath, &QAction::triggered, this, [this]() {
+                QDesktopServices::openUrl(QUrl::fromLocalFile(activeDevice->path));
+            });
+        }
+
         if(activeDevice->active==true){
             QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("view-statistics"), tr("Filelight"), this);
             deviceContextMenu.addAction(menuDeviceAction5);
@@ -438,6 +454,13 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             editDevice();
         });
 
+        if (!activeDevice->path.isEmpty()) {
+            QAction *menuOpenPath = new QAction(QIcon::fromTheme("document-open-folder"), tr("Open folder"), this);
+            deviceContextMenu.addAction(menuOpenPath);
+            connect(menuOpenPath, &QAction::triggered, this, [this]() {
+                QDesktopServices::openUrl(QUrl::fromLocalFile(activeDevice->path));
+            });
+        }
 
         deviceContextMenu.addSeparator();
 
