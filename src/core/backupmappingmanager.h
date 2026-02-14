@@ -145,6 +145,9 @@ public:
     QList<MappingInfo> getFilteredMappings(const MappingFilter& filter);
     MappingInfo getMappingById(int mappingId);
 
+    // Changes
+    bool deleteMapping(int mappingId);
+
     // Statistics
     int getMappingCount();
     int getFilteredMappingCount(const MappingFilter& filter);

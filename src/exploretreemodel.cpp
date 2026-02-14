@@ -29,6 +29,8 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "exploretreemodel.h"
+#include "core/foldertreeloader.h"
+#include <functional>
 
 ExploreTreeModel::ExploreTreeModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -160,86 +162,29 @@ void ExploreTreeModel::setCatalog(int newCatalogID, QString newCatalogSourcePath
 
 void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 {
-        QList<ExploreTreeItem*> parents;
-        parents << parent;
+    // Load data from core (UI-agnostic)
+    QList<FolderNode*> rootNodes = FolderTreeLoader::loadExploreTree(
+        m_connectionName, catalogID, catalogSourcePathRoot);
 
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(folder_path, :catalogSourcePathRoot, '')) AS file_path, folder_path AS full_path
-                                FROM  folder
-                                WHERE folder_catalog_id=:folder_catalog_id
-                                ORDER BY full_path ASC
-                            )");
-        query.prepare(querySQL);
-        query.bindValue(":folder_catalog_id", catalogID);
-        query.bindValue(":catalogSourcePathRoot", catalogSourcePathRoot);
-        query.exec();
+    // Recursively convert FolderNode hierarchy to ExploreTreeItem hierarchy
+    std::function<void(const QList<FolderNode*>&, ExploreTreeItem*)> buildTree;
+    buildTree = [&buildTree](const QList<FolderNode*>& nodes, ExploreTreeItem* parentItem) {
+        for (FolderNode *node : nodes) {
+            QList<QVariant> columnData;
+            columnData << node->name;
+            columnData << node->fileCount;
+            columnData << node->fullPath;
 
-        int idPath = query.record().indexOf("file_path");
-        int idIdx  = query.record().indexOf("full_path");
+            ExploreTreeItem *treeItem = new ExploreTreeItem(columnData, parentItem);
+            parentItem->appendChild(treeItem);
 
-        QList<QVariant> columnData;
-
-        while (query.next())
-        {
-            QString name = query.value(idPath).toString();
-            int id_file = query.value(idIdx).toInt();
-            QString folderPath;
-
-            QStringList nodeString = name.split("/", Qt::SkipEmptyParts);
-            QString temppath = "";
-
-            int lastidx = 0;
-            for(int node = 0; node < nodeString.count(); ++node)
-            {
-                temppath += nodeString.at(node);
-                temppath += "/";
-
-                unsigned int hash = qHash(temppath);
-                columnData.clear();
-
-                columnData << nodeString.at(node);
-
-                int idx = findNode(hash, parents);
-
-                if(idx != -1){
-                    lastidx = idx;
-                }
-                else{
-                    QString sQuery =  "";
-                    if(node == nodeString.count() - 1){
-                        sQuery += "SELECT count(*) FROM filesall WHERE id_file=";
-                        sQuery += QString::number(id_file);
-                        sQuery += ";";
-                    }
-                    else{
-                        sQuery += "SELECT count(*) FROM filesall WHERE file_path like '";
-                        sQuery += temppath;
-                        sQuery += "%';";
-                    }
-
-                    int nChild = 0;
-                    QSqlQuery query2(sQuery, QSqlDatabase::database(m_connectionName));
-
-                    if(query2.next())
-                        nChild = query2.value(0).toInt();
-
-                    columnData << nChild;
-
-                    folderPath = catalogSourcePathRoot + "/" + temppath;
-                    folderPath.truncate(folderPath.length()-1);
-                    columnData << folderPath;
-
-                    if(lastidx != -1){
-                        parents.at(lastidx)->appendChild(new ExploreTreeItem(columnData, parents.at(lastidx), hash));
-                        parents <<  parents.at(lastidx)->child( parents.at(lastidx)->childCount()-1);
-                        lastidx = -1;
-                    }
-                    else{
-                        parents.last()->appendChild(new ExploreTreeItem(columnData, parents.last(), hash));
-                        parents <<  parents.last()->child( parents.last()->childCount()-1);
-                    }
-                }
+            if (!node->children.isEmpty()) {
+                buildTree(node->children, treeItem);
             }
         }
+    };
+
+    buildTree(rootNodes, parent);
+
+    qDeleteAll(rootNodes);
 }

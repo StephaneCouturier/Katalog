@@ -104,6 +104,7 @@ set(CORE_HEADERS
     src/core/backupprofilegenerator.h
     src/core/backupmappingmanager.h
     src/core/filechecksum.h
+    src/core/foldertreeloader.h
 )
 
 set(CORE_SOURCES
@@ -135,6 +136,7 @@ set(CORE_SOURCES
     src/core/backupprofilegenerator.cpp
     src/core/backupmappingmanager.cpp
     src/core/filechecksum.cpp
+    src/core/foldertreeloader.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

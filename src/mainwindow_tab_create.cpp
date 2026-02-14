@@ -73,35 +73,10 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_AddDirectoryToExclude_clicked()
-    {//Add fodler to the exclusion list
+    {//Add folder to the exclusion list
         QString newFolderToExclude = ui->Create_lineEdit_FolderToExclude->text();
-        int pathLength = newFolderToExclude.length();
-        if (newFolderToExclude !="" and newFolderToExclude !="/" and QVariant(newFolderToExclude.at(pathLength-1)).toString()=="/") {
-            newFolderToExclude.remove(pathLength-1,1);
-        }
 
-        if(newFolderToExclude!=""){
-            //Insert new entry
-            QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
-            QString insertSQL = QLatin1String(R"(
-                                        INSERT INTO parameter (
-                                                    parameter_name,
-                                                    parameter_type,
-                                                    parameter_value2)
-                                        VALUES(
-                                                    :parameter_name,
-                                                    :parameter_type,
-                                                    :parameter_value2)
-                                )");
-            insertQuery.prepare(insertSQL);
-            insertQuery.bindValue(":parameter_name", "");
-            insertQuery.bindValue(":parameter_type", "exclude_directory");
-            insertQuery.bindValue(":parameter_value2", newFolderToExclude);
-            insertQuery.exec();
-
-            //Save
-            collection->saveParameterTableToFile();
-
+        if (collection->addExcludeDirectory(newFolderToExclude)) {
             //Reload to list view
             QSqlQuery queryLoad(QSqlDatabase::database(m_connectionName));
             QString queryLoadSQL = QLatin1String(R"(
@@ -160,17 +135,8 @@
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove this directory"), this);
         excludeContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [ selectedDirectory, this]() {
-            //Delete
-            QSqlQuery query(QSqlDatabase::database(m_connectionName));
-            QString querySQL = QLatin1String(R"(
-                                    DELETE FROM parameter
-                                    WHERE parameter_type ='exclude_directory'
-                                    AND parameter_value2=:parameter_value2
-                                )");
-            query.prepare(querySQL);
-            query.bindValue(":parameter_value2", selectedDirectory);
-            query.exec();
-            collection->saveParameterTableToFile();
+            //Delete via core
+            collection->removeExcludeDirectory(selectedDirectory);
 
             //Reload
             QSqlQuery queryLoad(QSqlDatabase::database(m_connectionName));

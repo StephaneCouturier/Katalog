@@ -34,7 +34,9 @@
 
 #include "device.h"
 #include <QAbstractTableModel>
+#include <QDateTime>
 #include <QFile>
+#include <functional>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
@@ -113,6 +115,21 @@ public:
     };
 
     DeleteCatalogResult deleteCatalogFile(Device *device);
+
+    //Exclude directory management
+    bool addExcludeDirectory(const QString &path);
+    bool removeExcludeDirectory(const QString &path);
+    QStringList getExcludeDirectories();
+
+    //Tag CRUD
+    bool createTag(const QString &name, const QString &path, const QString &type, const QDateTime &dateTime);
+    bool deleteTag(int tagID);
+
+    //Export operations
+    bool exportAllToMemoryMode(const QString &exportFolder);
+    bool exportAllCatalogFiles(const QString &outputFolder,
+                               std::function<bool(int current, int total, const QString &catalogName)> progressCallback = nullptr);
+    bool exportSingleCatalogFoldersFile(int catalogId, const QString &filePath);
 
     //Data management
     bool insertPhysicalStorageGroup();

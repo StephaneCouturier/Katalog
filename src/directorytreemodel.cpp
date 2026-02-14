@@ -31,6 +31,7 @@
 #include "directorytreemodel.h"
 #include "directorytreeitem.h"
 #include "core/database.h"
+#include "core/foldertreeloader.h"
 
 DirectoryTreeModel::DirectoryTreeModel(const QStringList &headers, QObject *parent)
     : QAbstractItemModel(parent)
@@ -209,88 +210,42 @@ bool DirectoryTreeModel::setHeaderData(int section, Qt::Orientation orientation,
 
 void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
 {
+    // Load data from core (UI-agnostic)
+    QList<FolderNode*> nodes = FolderTreeLoader::loadDirectoryTree(
+        m_connectionName, modelCatalogName, modelCatalogPath);
+
+    // Convert FolderNode list to DirectoryTreeItem hierarchy
     QVector<DirectoryTreeItem*> parents;
-    parents << parent; //add rootItem
-    int lastAdded =0;
-//    int countLocation=1;
-//    int countStorage=1;
-//    int countCatalog=0;
+    parents << parent;
+    int lastAdded = 0;
+    QString lastAddedPath;
 
-    //prepare query to load file info
-    QSqlQuery getDirectoriesQuery(QSqlDatabase::database(m_connectionName));
+    for (FolderNode *node : nodes) {
+        QVector<QVariant> columnData;
+        QString directoryPath = node->name;
+        columnData << node->name;
+        columnData << node->fullPath;
 
-        //shorten the paths as they all start with the catalog path
-        // Check database type for SQL syntax differences
-        Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
-        QString getDirectoriesSQL;
-        if (dbType == Database::DatabaseType::SQLite) {
-            getDirectoriesSQL = QLatin1String(R"(
-                                        SELECT DISTINCT (REPLACE(file_path, :selectedCatalogPath||'/', ''))
-                                        FROM filesall
-                                        WHERE   file_catalog =:file_catalog
-                                        ORDER BY file_path ASC
-                                    )");
-        } else {
-            // MySQL/MariaDB version using CONCAT()
-            getDirectoriesSQL = QLatin1String(R"(
-                                        SELECT DISTINCT (REPLACE(file_path, CONCAT(:selectedCatalogPath, '/'), ''))
-                                        FROM filesall
-                                        WHERE   file_catalog =:file_catalog
-                                        ORDER BY file_path ASC
-                                    )");
+        if (!directoryPath.contains("/")) {
+            DirectoryTreeItem *parentItem = parents.last();
+            parentItem->insertChildren(parentItem->childCount(), 1, rootItem->columnCount());
+            for (int column = 0; column < columnData.size(); ++column)
+                parentItem->child(parentItem->childCount() - 1)->setData(column, columnData[column]);
+
+            lastAddedPath = directoryPath;
+            lastAdded = parents.count();
         }
-        getDirectoriesQuery.prepare(getDirectoriesSQL);
-        getDirectoriesQuery.bindValue(":file_catalog",modelCatalogName);
-        getDirectoriesQuery.bindValue(":selectedCatalogPath",modelCatalogPath);
-        getDirectoriesQuery.exec();
-
-
-        QString lastAddedPath;
-
-        //Add folders
-        while (getDirectoriesQuery.next())
-        {
-            //Prepare data
-            QVector<QVariant> columnData;
-            QString directoryPath = getDirectoriesQuery.value(0).toString();
-            columnData << getDirectoriesQuery.value(0).toString();
-            columnData << getDirectoriesQuery.value(1).toString();
-
-            //TEST/ add all
-                // Append a new item to the current parent's list of children.
-//                DirectoryTreeItem *parent = parents.last();
-//                parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
-//                for (int column = 0; column < columnData.size(); ++column)
-//                    parent->child(parent->childCount() - 1)->setData(column, columnData[column]);
-
-            if (directoryPath.contains("/")==false){
-                // Append a new item to the current parent's list of children.
-                DirectoryTreeItem *parent = parents.last();
-                parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
+        else {
+            if (!directoryPath.remove(lastAddedPath + "/").contains("/")) {
+                DirectoryTreeItem *parentItem = parents.last();
+                parentItem->insertChildren(lastAdded, 1, rootItem->columnCount());
                 for (int column = 0; column < columnData.size(); ++column)
-                    parent->child(parent->childCount() - 1)->setData(column, columnData[column]);
-
-                lastAddedPath = directoryPath;
-
-//                lastAdded=parents.last()->childCount();
-                lastAdded=parents.count();//.last()->childCount();
-                //lastAdded=parents.last()->childNumber();//.last()->childCount();
+                    parentItem->child(parentItem->childCount() - 1)->setData(column, columnData[column]);
             }
-            else{
-                if ( directoryPath.remove(lastAddedPath+"/").contains("/")==false )
-                {
-                    // Append a new item to the current parent's list of children.
-                    DirectoryTreeItem *parent = parents.last();
-                    parent->insertChildren(lastAdded, 1, rootItem->columnCount());
-//                    parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
-                    for (int column = 0; column < columnData.size(); ++column)
-                        parent->child(parent->childCount() - 1)->setData(column, columnData[column]);
-
-                    //lastAddedPath = directoryPath;
-                }
-            }
-
         }
+    }
+
+    qDeleteAll(nodes);
 }
 
 void DirectoryTreeModel::setModelCatlog(QString newModelCatalogName, QString newModelCatalogPath)

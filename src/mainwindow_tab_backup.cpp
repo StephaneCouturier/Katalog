@@ -71,20 +71,14 @@ void MainWindow::on_BackUp_pushButton_DeleteSelectedMapping_clicked()
 {
     //Get the selected mapping_id
     QModelIndexList selectedIndexes = ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
-    QString mappingID = selectedIndexes.at(0).data().toString();
+    int mappingID = selectedIndexes.at(0).data().toInt();
 
-    //Delete the mapping in the table device_mapping
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL = QLatin1String(R"(
-                            DELETE FROM device_mapping
-                            WHERE mapping_id = :mapping_id
-                        )");
-    query.prepare(querySQL);
-    query.bindValue(":mapping_id", mappingID);
+    //Delete the mapping via core manager
+    if (!backupMappingManager) {
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    }
 
-    if (!query.exec())
-    {
-        qDebug() << "Error deleting device_mapping: " << query.lastError();
+    if (!backupMappingManager->deleteMapping(mappingID)) {
         return;
     }
 

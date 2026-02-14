@@ -774,3 +774,177 @@ QList<qint64> Device::updateStorageOnly(const QString& statisticsRequestSource)
 
     return deviceUpdatesList;
 }
+
+//----------------------------------------------------------------------
+// Static assign/unassign operations
+//----------------------------------------------------------------------
+
+bool Device::isCatalogAssigned(int catalogExternalId, int parentDeviceId, const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    QString querySQL = QLatin1String(R"(
+        SELECT COUNT(*)
+        FROM device
+        WHERE device_parent_id =:device_parent_id
+        AND device_external_id =:device_external_id
+    )");
+    query.prepare(querySQL);
+    query.bindValue(":device_parent_id", parentDeviceId);
+    query.bindValue(":device_external_id", catalogExternalId);
+    query.exec();
+    query.next();
+    return query.value(0).toInt() > 0;
+}
+
+int Device::generateNextDeviceID(const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    QString querySQL = QLatin1String(R"(
+        SELECT MAX(device_id)
+        FROM device
+    )");
+    query.prepare(querySQL);
+    query.exec();
+    query.next();
+    return query.value(0).toInt() + 1;
+}
+
+bool Device::assignCatalogToDevice(Device *catalogDevice, Device *parentDevice, const QString &connectionName)
+{
+    if (parentDevice->ID == 0 || catalogDevice->ID == 0)
+        return false;
+
+    // Check if already assigned
+    if (isCatalogAssigned(catalogDevice->externalID, parentDevice->ID, connectionName))
+        return false;
+
+    int newID = generateNextDeviceID(connectionName);
+
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    QString querySQL = QLatin1String(R"(
+        INSERT INTO device(
+            device_id,
+            device_parent_id,
+            device_name,
+            device_type,
+            device_external_id,
+            device_path,
+            device_total_file_size,
+            device_total_file_count,
+            device_total_space,
+            device_free_space,
+            device_active,
+            device_group_id,
+            device_date_updated)
+        VALUES(
+            :device_id,
+            :device_parent_id,
+            :device_name,
+            :device_type,
+            :device_external_id,
+            :device_path,
+            :device_total_file_size,
+            :device_total_file_count,
+            :device_total_space,
+            :device_free_space,
+            :device_active,
+            :device_group_id,
+            :device_date_updated)
+    )");
+    query.prepare(querySQL);
+    query.bindValue(":device_id", newID);
+    query.bindValue(":device_parent_id", parentDevice->ID);
+    query.bindValue(":device_name", catalogDevice->name);
+    query.bindValue(":device_type", "Catalog");
+    query.bindValue(":device_external_id", catalogDevice->catalog->ID);
+    query.bindValue(":device_path", catalogDevice->catalog->sourcePath);
+    query.bindValue(":device_total_file_size", catalogDevice->catalog->totalFileSize);
+    query.bindValue(":device_total_file_count", catalogDevice->catalog->fileCount);
+    query.bindValue(":device_total_space", 0);
+    query.bindValue(":device_free_space", 0);
+    query.bindValue(":device_active", catalogDevice->active);
+    query.bindValue(":device_group_id", parentDevice->groupID);
+    query.bindValue(":device_date_updated", catalogDevice->dateTimeUpdated);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to assign catalog to device:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool Device::assignStorageToDevice(Storage *storage, int parentDeviceId, const QString &connectionName)
+{
+    if (parentDeviceId == 0 || storage->ID == 0)
+        return false;
+
+    int newID = generateNextDeviceID(connectionName);
+
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    QString querySQL = QLatin1String(R"(
+        INSERT INTO device(
+            device_id,
+            device_parent_id,
+            device_name,
+            device_type,
+            device_external_id,
+            device_path,
+            device_total_file_size,
+            device_total_file_count,
+            device_total_space,
+            device_free_space)
+        VALUES(
+            :device_id,
+            :device_parent_id,
+            :device_name,
+            :device_type,
+            :device_external_id,
+            :device_path,
+            :device_total_file_size,
+            :device_total_file_count,
+            :device_total_space,
+            :device_free_space)
+    )");
+    query.prepare(querySQL);
+    query.bindValue(":device_id", newID);
+    query.bindValue(":device_parent_id", parentDeviceId);
+    query.bindValue(":device_name", storage->name);
+    query.bindValue(":device_type", "Storage");
+    query.bindValue(":device_external_id", storage->ID);
+    query.bindValue(":device_path", storage->path);
+    query.bindValue(":device_total_file_size", 0);
+    query.bindValue(":device_total_file_count", 0);
+    query.bindValue(":device_total_space", storage->totalSpace);
+    query.bindValue(":device_free_space", storage->freeSpace);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to assign storage to device:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool Device::unassignFromDevice(int deviceID, int deviceParentID, const QString &connectionName)
+{
+    if (deviceID == 0 || deviceParentID == 0)
+        return false;
+
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    QString querySQL = QLatin1String(R"(
+        DELETE FROM device
+        WHERE device_id=:device_id
+        AND   device_parent_id=:device_parent_id
+    )");
+    query.prepare(querySQL);
+    query.bindValue(":device_id", deviceID);
+    query.bindValue(":device_parent_id", deviceParentID);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to unassign from device:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}

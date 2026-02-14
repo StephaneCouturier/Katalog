@@ -118,6 +118,13 @@ public:
         DeleteOperationResult deleteDevice(bool askConfirmation = true,
                                            const UpdateCallbacks* callbacks = nullptr);
 
+        // Static assign/unassign operations
+        static bool isCatalogAssigned(int catalogExternalId, int parentDeviceId, const QString &connectionName);
+        static int generateNextDeviceID(const QString &connectionName);
+        static bool assignCatalogToDevice(Device *catalogDevice, Device *parentDevice, const QString &connectionName);
+        static bool assignStorageToDevice(Storage *storage, int parentDeviceId, const QString &connectionName);
+        static bool unassignFromDevice(int deviceID, int deviceParentID, const QString &connectionName);
+
         /**
          * @brief Update storage information only (no catalog processing)
          * Simple storage update for initialization and basic operations

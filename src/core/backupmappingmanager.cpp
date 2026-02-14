@@ -242,6 +242,32 @@ MappingInfo BackupMappingManager::getMappingById(int mappingId)
 }
 
 //------------------------------------------------------------------------------
+// Changes
+//------------------------------------------------------------------------------
+
+bool BackupMappingManager::deleteMapping(int mappingId)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        DELETE FROM device_mapping
+        WHERE mapping_id = :mapping_id
+    )");
+    query.prepare(querySQL);
+    query.bindValue(":mapping_id", mappingId);
+
+    if (!query.exec()) {
+        QString errorMsg = QString("Failed to delete mapping %1: %2")
+                               .arg(mappingId)
+                               .arg(query.lastError().text());
+        qDebug() << "ERROR:" << errorMsg;
+        emit error(errorMsg);
+        return false;
+    }
+
+    return true;
+}
+
+//------------------------------------------------------------------------------
 // Statistics
 //------------------------------------------------------------------------------
 

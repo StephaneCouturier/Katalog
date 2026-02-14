@@ -56,38 +56,14 @@
     {
         QString selectedTagFolder = ui->Tags_lineEdit_FolderPath->text();
         QString selectedTagName   = ui->Tags_lineEdit_TagName->text();
-        QDateTime dateTime = QDateTime::currentDateTime();//fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
 
         if(selectedTagName == ""){
             QMessageBox::information(this,"Katalog","Please enter or select a tag for this folder.");
             return;
         }
 
-        //Insert tag entry
-        QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
-        QString insertQuerySQL = QLatin1String(R"(
-                                            INSERT INTO tag(
-                                                ID,
-                                                name,
-                                                path,
-                                                type,
-                                                date_time)
-                                            VALUES(
-                                                NULL,
-                                                :name,
-                                                :path,
-                                                :type,
-                                                :date_time)
-                                            )");
-        insertQuery.prepare(insertQuerySQL);
-        insertQuery.bindValue(":name",      selectedTagName);
-        insertQuery.bindValue(":path",      selectedTagFolder);
-        insertQuery.bindValue(":type",      "");
-        insertQuery.bindValue(":date_time", dateTime.toString("yyyy/MM/dd hh:mm:ss"));
-        insertQuery.exec();
-
-        //Save file
-        collection->saveTagTableToFile();
+        //Insert tag entry via core
+        collection->createTag(selectedTagName, selectedTagFolder, "", QDateTime::currentDateTime());
 
         //Reload
         reloadTagsData();
@@ -135,18 +111,8 @@
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove this tag"), this);
         tagContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [ tagID, this]() {
-            //Delete
-            QSqlQuery query(QSqlDatabase::database(m_connectionName));
-            QString querySQL = QLatin1String(R"(
-                                    DELETE FROM tag
-                                    WHERE ID=:ID
-                                )");
-            query.prepare(querySQL);
-            query.bindValue(":ID", tagID);
-            query.exec();
-
-            //Save file
-            collection->saveTagTableToFile();
+            //Delete via core
+            collection->deleteTag(tagID);
 
             //Reload
             reloadTagsData();

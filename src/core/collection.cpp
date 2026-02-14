@@ -1576,6 +1576,376 @@ Collection::DeleteCatalogResult Collection::deleteCatalogFile(Device *device) {
 }
 //----------------------------------------------------------------------
 
+//Exclude directory management ------------------------------------------
+bool Collection::addExcludeDirectory(const QString &path)
+{
+    QString cleanedPath = path;
+    int pathLength = cleanedPath.length();
+    if (!cleanedPath.isEmpty() && cleanedPath != "/" &&
+        QVariant(cleanedPath.at(pathLength - 1)).toString() == "/") {
+        cleanedPath.remove(pathLength - 1, 1);
+    }
+
+    if (cleanedPath.isEmpty())
+        return false;
+
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
+    QString insertSQL = QLatin1String(R"(
+        INSERT INTO parameter (
+            parameter_name,
+            parameter_type,
+            parameter_value2)
+        VALUES(
+            :parameter_name,
+            :parameter_type,
+            :parameter_value2)
+    )");
+    insertQuery.prepare(insertSQL);
+    insertQuery.bindValue(":parameter_name", "");
+    insertQuery.bindValue(":parameter_type", "exclude_directory");
+    insertQuery.bindValue(":parameter_value2", cleanedPath);
+
+    if (!insertQuery.exec()) {
+        qDebug() << "Failed to add exclude directory:" << insertQuery.lastError().text();
+        return false;
+    }
+
+    saveParameterTableToFile();
+    return true;
+}
+//----------------------------------------------------------------------
+bool Collection::removeExcludeDirectory(const QString &path)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        DELETE FROM parameter
+        WHERE parameter_type ='exclude_directory'
+        AND parameter_value2=:parameter_value2
+    )");
+    query.prepare(querySQL);
+    query.bindValue(":parameter_value2", path);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to remove exclude directory:" << query.lastError().text();
+        return false;
+    }
+
+    saveParameterTableToFile();
+    return true;
+}
+//----------------------------------------------------------------------
+QStringList Collection::getExcludeDirectories()
+{
+    QStringList directories;
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        SELECT DISTINCT parameter_value2
+        FROM parameter
+        WHERE parameter_type ='exclude_directory'
+        ORDER BY parameter_value2
+    )");
+
+    if (!query.exec(querySQL)) {
+        qDebug() << "Failed to get exclude directories:" << query.lastError().text();
+        return directories;
+    }
+
+    while (query.next()) {
+        directories << query.value(0).toString();
+    }
+    return directories;
+}
+//----------------------------------------------------------------------
+
+//Tag CRUD -------------------------------------------------------------
+bool Collection::createTag(const QString &name, const QString &path, const QString &type, const QDateTime &dateTime)
+{
+    QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
+    QString insertQuerySQL = QLatin1String(R"(
+        INSERT INTO tag(
+            ID,
+            name,
+            path,
+            type,
+            date_time)
+        VALUES(
+            NULL,
+            :name,
+            :path,
+            :type,
+            :date_time)
+    )");
+    insertQuery.prepare(insertQuerySQL);
+    insertQuery.bindValue(":name", name);
+    insertQuery.bindValue(":path", path);
+    insertQuery.bindValue(":type", type);
+    insertQuery.bindValue(":date_time", dateTime.toString("yyyy/MM/dd hh:mm:ss"));
+
+    if (!insertQuery.exec()) {
+        qDebug() << "Failed to create tag:" << insertQuery.lastError().text();
+        return false;
+    }
+
+    saveTagTableToFile();
+    return true;
+}
+//----------------------------------------------------------------------
+bool Collection::deleteTag(int tagID)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    QString querySQL = QLatin1String(R"(
+        DELETE FROM tag
+        WHERE ID=:ID
+    )");
+    query.prepare(querySQL);
+    query.bindValue(":ID", tagID);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to delete tag:" << query.lastError().text();
+        return false;
+    }
+
+    saveTagTableToFile();
+    return true;
+}
+//----------------------------------------------------------------------
+
+//Export operations -----------------------------------------------------
+bool Collection::exportAllToMemoryMode(const QString &exportFolder)
+{
+    // Save original settings
+    QString originalFolder = folder;
+    QString originalDatabaseMode = databaseMode;
+
+    // Set the export folder and generate paths
+    folder = exportFolder;
+    generateCollectionFilesPaths();
+
+    // Temporarily set to Memory mode so save functions will run
+    databaseMode = "Memory";
+
+    // Initialize export folder structure
+    generateCollectionFiles();
+
+    // Export all tables
+    saveParameterTableToFile();
+    saveDeviceTableToFile();
+    saveStorageTableToFile();
+    saveTagTableToFile();
+    saveMappingTableToFile();
+    saveSearchHistoryTableToFile();
+    saveStatiticsTableToFile();
+
+    // Restore original settings
+    databaseMode = originalDatabaseMode;
+    folder = originalFolder;
+    generateCollectionFilesPaths();
+
+    return true;
+}
+//----------------------------------------------------------------------
+bool Collection::exportAllCatalogFiles(const QString &outputFolder,
+                                        std::function<bool(int current, int total, const QString &catalogName)> progressCallback)
+{
+    // Get all catalog devices
+    QSqlQuery catalogDevicesQuery(QSqlDatabase::database(m_connectionName));
+    QString catalogDevicesQuerySQL = QLatin1String(R"(
+        SELECT d.device_id, d.device_name, d.device_path, d.device_total_file_count,
+               d.device_total_file_size, d.device_external_id
+        FROM device d
+        WHERE d.device_type = 'Catalog'
+        ORDER BY d.device_id
+    )");
+
+    if (!catalogDevicesQuery.exec(catalogDevicesQuerySQL)) {
+        qDebug() << "Catalog devices query failed:" << catalogDevicesQuery.lastError().text();
+        return false;
+    }
+
+    // Count total catalogs
+    QSqlQuery countQuery(QSqlDatabase::database(m_connectionName));
+    countQuery.prepare("SELECT COUNT(*) FROM device WHERE device_type = 'Catalog'");
+    if (!countQuery.exec() || !countQuery.next()) {
+        qDebug() << "Count query failed:" << countQuery.lastError().text();
+        return false;
+    }
+
+    int totalCatalogs = countQuery.value(0).toInt();
+    if (totalCatalogs == 0)
+        return true;
+
+    // Process each catalog device
+    int currentCatalog = 0;
+    while (catalogDevicesQuery.next()) {
+        currentCatalog++;
+
+        QString deviceName = catalogDevicesQuery.value(1).toString();
+        QString devicePath = catalogDevicesQuery.value(2).toString();
+        qint64 fileCount = catalogDevicesQuery.value(3).toLongLong();
+        qint64 totalFileSize = catalogDevicesQuery.value(4).toLongLong();
+        int catalogId = catalogDevicesQuery.value(5).toInt();
+
+        // Notify progress
+        if (progressCallback) {
+            if (!progressCallback(currentCatalog, totalCatalogs, deviceName))
+                return false; // Cancelled
+        }
+
+        // Get additional catalog metadata
+        QSqlQuery catalogMetaQuery(QSqlDatabase::database(m_connectionName));
+        QString catalogMetaQuerySQL = QLatin1String(R"(
+            SELECT catalog_include_hidden, catalog_file_type, catalog_storage,
+                   catalog_include_symblinks, catalog_is_full_device,
+                   catalog_include_metadata, catalog_include_checksum, catalog_app_version
+            FROM catalog
+            WHERE catalog_id = :catalog_id
+        )");
+        catalogMetaQuery.prepare(catalogMetaQuerySQL);
+        catalogMetaQuery.bindValue(":catalog_id", catalogId);
+
+        if (!catalogMetaQuery.exec() || !catalogMetaQuery.next()) {
+            qDebug() << "Catalog metadata query failed for catalog" << catalogId << ":" << catalogMetaQuery.lastError().text();
+            continue;
+        }
+
+        QString includeHidden = catalogMetaQuery.value(0).toString();
+        QString fileType = catalogMetaQuery.value(1).toString();
+        QString storageName = catalogMetaQuery.value(2).toString();
+        QString includeSymblinks = catalogMetaQuery.value(3).toString();
+        QString isFullDevice = catalogMetaQuery.value(4).toString();
+        QString includeMetadata = catalogMetaQuery.value(5).toString();
+        QString includeChecksum = catalogMetaQuery.value(6).toString();
+        QString appVersion = catalogMetaQuery.value(7).toString();
+
+        // Create the idx file
+        QString idxFilePath = outputFolder + "/" + deviceName + ".idx";
+        QFile idxFile(idxFilePath);
+
+        if (!idxFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Cannot open idx file for writing:" << idxFilePath;
+            continue;
+        }
+
+        QTextStream idxStream(&idxFile);
+
+        // Write catalog headers
+        idxStream << "<catalogSourcePath>" << devicePath << "\n";
+        idxStream << "<catalogFileCount>" << QString::number(fileCount) << "\n";
+        idxStream << "<catalogTotalFileSize>" << QString::number(totalFileSize) << "\n";
+        idxStream << "<catalogIncludeHidden>" << includeHidden << "\n";
+        idxStream << "<catalogFileType>" << fileType << "\n";
+        idxStream << "<catalogStorage>" << storageName << "\n";
+        idxStream << "<catalogIncludeSymblinks>" << includeSymblinks << "\n";
+        idxStream << "<catalogIsFullDevice>" << isFullDevice << "\n";
+        idxStream << "<catalogIncludeMetadata>" << includeMetadata << "\n";
+        idxStream << "<catalogIncludeChecksum>" << includeChecksum << "\n";
+        idxStream << "<catalogAppVersion>" << appVersion << "\n";
+        idxStream << "<catalogID>" << QString::number(catalogId) << "\n";
+
+        // Get all files for this catalog
+        QSqlQuery fileQuery(QSqlDatabase::database(m_connectionName));
+        QString fileQuerySQL = QLatin1String(R"(
+            SELECT file_full_path,
+                   file_size,
+                   file_date_updated,
+                   file_extension,
+                   file_type,
+                   mime_type,
+                   mime_verified,
+                   type_mismatch,
+                   image_width,
+                   image_height,
+                   image_orientation,
+                   video_duration_seconds,
+                   video_width,
+                   video_height,
+                   video_codec,
+                   video_framerate,
+                   video_bitrate,
+                   audio_duration_seconds,
+                   audio_artist,
+                   audio_album,
+                   audio_title,
+                   audio_genre,
+                   audio_year,
+                   audio_track_number,
+                   audio_bitrate,
+                   audio_sample_rate,
+                   metadata_extended,
+                   metadata_extraction_date
+            FROM file
+            WHERE file_catalog_id = :catalog_id
+            ORDER BY file_full_path
+        )");
+        fileQuery.prepare(fileQuerySQL);
+        fileQuery.bindValue(":catalog_id", catalogId);
+
+        if (!fileQuery.exec()) {
+            qDebug() << "File query failed for catalog" << catalogId << ":" << fileQuery.lastError().text();
+            idxFile.close();
+            continue;
+        }
+
+        // Write all file entries
+        while (fileQuery.next()) {
+            for (int i = 0; i < 28; ++i) {
+                if (i > 0)
+                    idxStream << "\t";
+                idxStream << fileQuery.value(i).toString();
+            }
+            idxStream << "\n";
+        }
+
+        idxFile.close();
+
+        // Export folders file
+        exportSingleCatalogFoldersFile(catalogId, outputFolder + "/" + deviceName + ".folders.idx");
+    }
+
+    return true;
+}
+//----------------------------------------------------------------------
+bool Collection::exportSingleCatalogFoldersFile(int catalogId, const QString &filePath)
+{
+    QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
+    checkQuery.prepare("SELECT COUNT(*) FROM folder WHERE folder_catalog_id = :catalog_id");
+    checkQuery.bindValue(":catalog_id", catalogId);
+
+    if (!checkQuery.exec() || !checkQuery.next()) {
+        qDebug() << "Folder count query failed:" << checkQuery.lastError().text();
+        return false;
+    }
+
+    int folderCount = checkQuery.value(0).toInt();
+    if (folderCount == 0)
+        return true;
+
+    QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
+    folderQuery.prepare("SELECT folder_catalog_id, folder_path FROM folder WHERE folder_catalog_id = :catalog_id ORDER BY folder_path");
+    folderQuery.bindValue(":catalog_id", catalogId);
+
+    if (!folderQuery.exec()) {
+        qDebug() << "Folder query failed:" << folderQuery.lastError().text();
+        return false;
+    }
+
+    QFile foldersFile(filePath);
+    if (!foldersFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Cannot open folders file for writing:" << filePath;
+        return false;
+    }
+
+    QTextStream foldersStream(&foldersFile);
+    while (folderQuery.next()) {
+        foldersStream << folderQuery.value(0).toString() << "\t"
+                      << folderQuery.value(1).toString() << "\n";
+    }
+
+    foldersFile.close();
+    return true;
+}
+//----------------------------------------------------------------------
+
 //Data management ------------------------------------------------------
 bool Collection::insertPhysicalStorageGroup() {
     //Add the default Physical Group and a Virtual sub-device

@@ -52,162 +52,36 @@ QStandardItem* addNumericItem(qint64 value) {
 
 void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevice)
 {
-    if( parentDevice->ID!=0 and catalogDevice->ID !=0){
+    // Check if already assigned
+    if (Device::isCatalogAssigned(catalogDevice->externalID, parentDevice->ID, m_connectionName)) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                   "The catalog is already assigned to this Virtual device."
+                                                   ));
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+        return;
+    }
 
-        //Verif if catalog is not already assigned.
-        QSqlQuery queryCurrentCatalogsExternalID(QSqlDatabase::database(m_connectionName));
-        QString queryCurrentCatalogsExternalIDSQL = QLatin1String(R"(
-                            SELECT COUNT(*)
-                            FROM device
-                            WHERE device_parent_id =:device_parent_id
-                            AND device_external_id =:device_external_id
-                        )");
-        //AND device_external_id :=device_external_id
-        queryCurrentCatalogsExternalID.prepare(queryCurrentCatalogsExternalIDSQL);
-        queryCurrentCatalogsExternalID.bindValue(":device_parent_id", parentDevice->ID);
-        queryCurrentCatalogsExternalID.bindValue(":device_external_id", catalogDevice->externalID);
-        queryCurrentCatalogsExternalID.exec();
-        queryCurrentCatalogsExternalID.next();
-        bool catalogAlreadyAssigned = queryCurrentCatalogsExternalID.value(0).toInt() > 0;
-
-        if(catalogAlreadyAssigned==true){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                       "The catalog is already assigned to this Virtual device."
-                                                       ));
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-            return;
+    // Assign via core
+    if (Device::assignCatalogToDevice(catalogDevice, parentDevice, m_connectionName)) {
+        //Save data to file
+        if (collection->databaseMode == "Memory") {
+            collection->saveDeviceTableToFile();
         }
-        else{
-            //Generate new ID
-            QSqlQuery queryID(QSqlDatabase::database(m_connectionName));
-            QString queryIDSQL = QLatin1String(R"(
-                                SELECT MAX(device_id)
-                                FROM device
-                            )");
-            queryID.prepare(queryIDSQL);
-            queryID.exec();
-            queryID.next();
-            int newID = queryID.value(0).toInt()+1;
 
-            //Insert catalog
-            QSqlQuery query(QSqlDatabase::database(m_connectionName));
-            QString querySQL = QLatin1String(R"(
-                                INSERT INTO device(
-                                            device_id,
-                                            device_parent_id,
-                                            device_name,
-                                            device_type,
-                                            device_external_id,
-                                            device_path,
-                                            device_total_file_size,
-                                            device_total_file_count,
-                                            device_total_space,
-                                            device_free_space,
-                                            device_active,
-                                            device_group_id,
-                                            device_date_updated)
-                                VALUES(
-                                            :device_id,
-                                            :device_parent_id,
-                                            :device_name,
-                                            :device_type,
-                                            :device_external_id,
-                                            :device_path,
-                                            :device_total_file_size,
-                                            :device_total_file_count,
-                                            :device_total_space,
-                                            :device_free_space,
-                                            :device_active,
-                                            :device_group_id,
-                                            :device_date_updated)
-                            )");
-            query.prepare(querySQL);
-            query.bindValue(":device_id", newID);
-            query.bindValue(":device_parent_id", parentDevice->ID);
-            query.bindValue(":device_name", catalogDevice->name);
-            query.bindValue(":device_type", "Catalog");
-            query.bindValue(":device_external_id", catalogDevice->catalog->ID);
-            query.bindValue(":device_path", catalogDevice->catalog->sourcePath);
-            query.bindValue(":device_total_file_size", catalogDevice->catalog->totalFileSize);
-            query.bindValue(":device_total_file_count", catalogDevice->catalog->fileCount);
-            query.bindValue(":device_total_space", 0);
-            query.bindValue(":device_free_space", 0);
-            query.bindValue(":device_active", catalogDevice->active);
-            query.bindValue(":device_group_id", parentDevice->groupID);
-            query.bindValue(":device_date_updated", catalogDevice->dateTimeUpdated);
-            query.exec();
-
-            //Save data to file
-            if (collection->databaseMode == "Memory"){
-                //Save file
-                collection->saveDeviceTableToFile();
-            }
-
-            //Reload
-            loadDevicesView("");
-        }
+        //Reload
+        loadDevicesView("");
     }
 }
 //--------------------------------------------------------------------------
 void MainWindow::assignStorageToDevice(int storageID,int deviceID)
 {
-    if( deviceID!=0 and storageID!=0){
-        //Generate new ID
-        QSqlQuery queryID(QSqlDatabase::database(m_connectionName));
-        QString queryIDSQL = QLatin1String(R"(
-                            SELECT MAX(device_id)
-                            FROM device
-                        )");
-        queryID.prepare(queryIDSQL);
-        queryID.exec();
-        queryID.next();
-        int newID = queryID.value(0).toInt()+1;
-
-        //Insert storage
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        QString querySQL = QLatin1String(R"(
-                            INSERT INTO device(
-                                        device_id,
-                                        device_parent_id,
-                                        device_name,
-                                        device_type,
-                                        device_external_id,
-                                        device_path,
-                                        device_total_file_size,
-                                        device_total_file_count,
-                                        device_total_space,
-                                        device_free_space)
-                            VALUES(
-                                        :device_id,
-                                        :device_parent_id,
-                                        :device_name,
-                                        :device_type,
-                                        :device_external_id,
-                                        :device_path,
-                                        :device_total_file_size,
-                                        :device_total_file_count,
-                                        :device_total_space,
-                                        :device_free_space)
-                        )");
-        query.prepare(querySQL);
-        query.bindValue(":device_id", newID);
-        query.bindValue(":device_parent_id", deviceID);
-        query.bindValue(":device_name", selectedDevice->storage->name);
-        query.bindValue(":device_type", "Storage");
-        query.bindValue(":device_external_id", selectedDevice->storage->ID);
-        query.bindValue(":device_path", selectedDevice->storage->path);
-        query.bindValue(":device_total_file_size", 0);
-        query.bindValue(":device_total_file_count", 0);
-        query.bindValue(":device_total_space", selectedDevice->storage->totalSpace);
-        query.bindValue(":device_free_space", selectedDevice->storage->freeSpace);
-        query.exec();
-
+    // Assign via core
+    if (Device::assignStorageToDevice(selectedDevice->storage, deviceID, m_connectionName)) {
         //Save data to file
-        if (collection->databaseMode == "Memory"){
-            //Save file
+        if (collection->databaseMode == "Memory") {
             collection->saveDeviceTableToFile();
         }
 
@@ -222,23 +96,10 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
                                       tr("Do you want to unassign this catalog from this virtual device?"),QMessageBox::Yes|QMessageBox::Cancel);
 
     if ( result ==QMessageBox::Yes){
-
-        if( deviceID!=0 and deviceParentID!=0){
-            //Insert catalog
-            QSqlQuery query(QSqlDatabase::database(m_connectionName));
-            QString querySQL = QLatin1String(R"(
-                                        DELETE FROM device
-                                        WHERE device_id=:device_id
-                                        AND   device_parent_id=:device_parent_id
-                                    )");
-            query.prepare(querySQL);
-            query.bindValue(":device_id",deviceID);
-            query.bindValue(":device_parent_id",deviceParentID);
-            query.exec();
-
+        // Unassign via core
+        if (Device::unassignFromDevice(deviceID, deviceParentID, m_connectionName)) {
             //Save data to file
-            if (collection->databaseMode == "Memory"){
-                //Save file
+            if (collection->databaseMode == "Memory") {
                 collection->saveDeviceTableToFile();
             }
 
