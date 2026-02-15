@@ -82,19 +82,38 @@ This setting applies only to this catalog and can be changed later by editing th
 
 **Note:** Metadata extraction requires readable files. Files that are corrupted or have access restrictions will be skipped without affecting the cataloging process.
 
+### File checksum
+Checksum SH256 can be calculated during indexing for Duplicate/Difference Search.
+⚠️ It is a much longer process than other indexing option as it reads ALL of the data to compute the checksums.
+Like file metadata, the option can be selected at catalog creation or changed later, and when interrupting the process, the calculated checksum are saved and the next update will resume for remaining files.
+The files checkum can be used as a duplicate search option or as a difference search option.
 
-### Other options:
-#### Include Hidden files
+### Include Hidden files
 Hidden files are not included by default, but this options enables to include them.<br/>
 This option will be applicable for the catalog moving forward.<br/>
 It can be changed later by editing the [Catalog](DevicesCatalogs).
 
-#### Exclude directories
-It is possible to exclude entire directories from being cataloged.<br/>
-Enter the path of the directory and by clicking on the button *Add directory to exclude from catalogs*.<br/>
-The directory is then visible in the list below.<br/>
-Any directory can be removed by a right click and  then visible in the list below.<br/>
-Note: these exclusions are **global**, which means that these folders would be excluded for all catalogs.<br/>
+### Exclude directories
+:::note
+These exclusions are **global**: they apply to **all** catalogs, both when creating new catalogs and when updating existing ones.
+:::
+
+It is possible to exclude directories from being cataloged, both during catalog creation and updates.<br/>
+Enter a path or text pattern, then click *Add*.<br/>
+The entry is then visible in the list below.<br/>
+Any entry can be removed by right-clicking on it and selecting *Remove*.<br/>
+
+**How exclusion works:**
+
+The exclusion uses **text matching**: any file or folder whose full path **contains** the exclusion text will be skipped. This means:
+
+- **Full path**: entering `/home/user/Downloads/temp` will exclude that specific directory and all its contents.
+- **Folder name**: entering `node_modules` will exclude **every** `node_modules` directory across all catalogs (e.g. `/project1/node_modules/...`, `/project2/node_modules/...`).
+- **Partial path**: entering `.cache` will exclude directories like `/home/user/.cache/` but also `/home/user/.cachedata/` since the match is based on text containment.
+
+The matching is **case-sensitive**.
+
+
 
 ![](/img/screen_create_04_exclude.png)
 
@@ -131,5 +150,4 @@ The new catalog is automatically selected in the [Selection](Selection) panel, r
 Some ideas of developments for this screen:
 * to customize file types and/or use mimetypes
 * exclude folders by catalog (not only globally)
-* exclude folders by the name (not need to put the full path)
 * For more, see the backlog of [Create development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=create).

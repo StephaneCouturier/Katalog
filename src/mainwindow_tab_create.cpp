@@ -146,7 +146,7 @@
         QPoint globalPos = ui->Create_treeView_Excluded->mapToGlobal(pos);
         QMenu excludeContextMenu;
 
-        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove this directory"), this);
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this);
         excludeContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [ selectedDirectory, this]() {
             //Delete via core
