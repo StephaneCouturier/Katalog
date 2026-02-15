@@ -742,7 +742,6 @@
             );
 
         //Lines
-        ui->Filters_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
         ui->Filters_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
         ui->Devices_line_SeparateTop->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");

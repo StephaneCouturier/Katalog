@@ -72,6 +72,20 @@
         loadFileSystem(dir);
     }
     //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_PickPathExclude_clicked()
+    {//Pick a directory to exclude from a dialog window
+        QString currentPath = ui->Create_lineEdit_FolderToExclude->text();
+        if (currentPath.isEmpty())
+            currentPath = ui->Create_lineEdit_NewCatalogPath->text();
+
+        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to exclude"),
+                                                        currentPath,
+                                                        QFileDialog::ShowDirsOnly
+                                                        | QFileDialog::DontResolveSymlinks);
+        if (!dir.isEmpty())
+            ui->Create_lineEdit_FolderToExclude->setText(dir);
+    }
+    //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_AddDirectoryToExclude_clicked()
     {//Add folder to the exclusion list
         QString newFolderToExclude = ui->Create_lineEdit_FolderToExclude->text();

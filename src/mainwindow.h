@@ -687,6 +687,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Create_pushButton_CreateCatalog_clicked();
             void on_Create_pushButton_Stop_clicked();
             void on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos);
+            void on_Create_pushButton_PickPathExclude_clicked();
 
         //Explore
             void on_Explore_splitter_splitterMoved();
