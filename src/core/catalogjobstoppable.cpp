@@ -1391,6 +1391,10 @@ void CatalogJobStoppable::updateCatalogIncremental()
     m_originalTotalFileSize = catalog->totalFileSize;
     qDebug() << "Captured original values - Files:" << m_originalFileCount << "Size:" << m_originalTotalFileSize;
 
+    // Load file extensions and excluded folders
+    catalog->getFileExtensions();
+    catalog->loadExcludedFolders();
+
     // Step 1a: Clear filetemp table
     qDebug() << "Step 1: Clearing filetemp table";
     QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
