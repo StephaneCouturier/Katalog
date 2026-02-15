@@ -193,6 +193,26 @@
             restoreCreateCatalogUIState();
         }
     }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_ShowHideGlobalParameters_clicked()
+    {
+        QString iconName = ui->Create_pushButton_ShowHideGlobalParameters->icon().name();
+
+        if ( iconName == "go-down"){ //Hide
+                ui->Create_pushButton_ShowHideGlobalParameters->setIcon(QIcon::fromTheme("go-up"));
+                ui->Create_widget_GlobalParameters->setHidden(true);
+
+                QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+                settings.setValue("Settings/ShowHideGlobalParameters", "go-up");
+        }
+        else{ //Show
+                ui->Create_pushButton_ShowHideGlobalParameters->setIcon(QIcon::fromTheme("go-down"));
+                ui->Create_widget_GlobalParameters->setHidden(false);
+
+                QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+                settings.setValue("Settings/ShowHideGlobalParameters", "go-down");
+        }
+    }
 
 //Methods-----------------------------------------------------------------------
     void MainWindow::loadFileSystem(QString newCatalogPath)

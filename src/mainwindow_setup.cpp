@@ -233,6 +233,11 @@
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
                     ui->Search_treeView_History->setHidden(true);
             }
+            //Show or Hide ShowHideGlobalParameters
+            if ( settings.value("Settings/ShowHideGlobalParameters") == "go-up"){ //Hide
+                    ui->Create_pushButton_ShowHideGlobalParameters->setIcon(QIcon::fromTheme("go-up"));
+                    ui->Create_widget_GlobalParameters->setHidden(true);
+            }
 
             //Expand/Collapse device selection tree
             filtersTreeExpandState = settings.value("Selection/filtersTreeExpandState").toInt();
