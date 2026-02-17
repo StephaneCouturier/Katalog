@@ -761,6 +761,7 @@ class MainWindow : public KXmlGuiWindow
             void on_BackUp_radioButton_Source_clicked();
             void on_BackUp_radioButton_Target_clicked();
             void on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked();
+            void on_BackUp_pushButton_ReplicateDirectories_clicked();
             void on_BackUp_checkBox_OnlySelectedLinks_checkStateChanged(const Qt::CheckState &arg1);
 
         //Statistics

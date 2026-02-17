@@ -106,6 +106,7 @@ set(CORE_HEADERS
     src/core/filechecksum.h
     src/core/foldertreeloader.h
     src/core/catalogdifferenceengine.h
+    src/core/directoryreplicator.h
 )
 
 set(CORE_SOURCES
@@ -139,6 +140,7 @@ set(CORE_SOURCES
     src/core/filechecksum.cpp
     src/core/foldertreeloader.cpp
     src/core/catalogdifferenceengine.cpp
+    src/core/directoryreplicator.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

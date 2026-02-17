@@ -30,6 +30,7 @@
 */
 
 #include "core/backupprofilegenerator.h"
+#include "core/directoryreplicator.h"
 #include "mainwindow.h"
 #include "devicemappingview.h"
 #include "ui_mainwindow.h"
@@ -85,6 +86,74 @@ void MainWindow::on_BackUp_pushButton_DeleteSelectedMapping_clicked()
     //Reload the mapping table
     loadBackUpMapping();
     collection->saveMappingTableToFile();
+}
+
+void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
+{
+    //Get the selected mapping_id
+    QModelIndexList selectedIndexes = ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
+    if (selectedIndexes.isEmpty()) {
+        QMessageBox::warning(this, "Katalog", tr("Select a mapping first."));
+        return;
+    }
+    int mappingID = selectedIndexes.at(0).data().toInt();
+
+    //Get mapping info (source and target device IDs and paths)
+    if (!backupMappingManager) {
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    }
+    MappingInfo mapping = backupMappingManager->getMappingById(mappingID);
+
+    //Load source and target devices to get catalog IDs (externalID)
+    Device sourceDevice;
+    sourceDevice.ID = mapping.sourceDeviceId;
+    sourceDevice.loadDevice(m_connectionName);
+
+    Device targetDevice;
+    targetDevice.ID = mapping.targetDeviceId;
+    targetDevice.loadDevice(m_connectionName);
+
+    //Validate both devices are catalogs with valid paths
+    if (sourceDevice.type != "Catalog" || targetDevice.type != "Catalog") {
+        QMessageBox::warning(this, "Katalog",
+                             tr("Both source and target must be Catalog devices."));
+        return;
+    }
+
+    if (!QDir(sourceDevice.path).exists()) {
+        QMessageBox::warning(this, "Katalog",
+                             tr("Source path is not accessible: %1").arg(sourceDevice.path));
+        return;
+    }
+
+    if (!QDir(targetDevice.path).exists()) {
+        QMessageBox::warning(this, "Katalog",
+                             tr("Target path is not accessible: %1").arg(targetDevice.path));
+        return;
+    }
+
+    //In Memory mode, load the source catalog's folders into the in-memory database first
+    if (collection->databaseMode == "Memory") {
+        sourceDevice.catalog->loadFoldersToTable();
+    }
+
+    //Replicate the directories from source catalog to target catalog
+    DirectoryReplicator replicator(m_connectionName);
+    ReplicationResult result = replicator.replicate(
+        {sourceDevice.externalID},
+        sourceDevice.path,
+        targetDevice.path
+    );
+
+    //Display result
+    QMessageBox::information(this, "Katalog",
+                             tr("Directory replication completed.\n\n"
+                                "Directories created: %1\n"
+                                "Directories already existing: %2\n"
+                                "Errors: %3")
+                                 .arg(result.createdCount())
+                                 .arg(result.skippedCount())
+                                 .arg(result.errorCount()));
 }
 
 void MainWindow::on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1)
