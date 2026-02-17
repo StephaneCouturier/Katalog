@@ -1027,7 +1027,7 @@ void MainWindow::displaySearchResults()
     ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(currentSearch->filesFoundTotalSize));
 
     // Enable/disable the statistics button based on results
-    ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(currentSearch->filesFoundNumber > 0);
+    ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
 
     // Save the search history and refresh UI
     collection->saveSearchHistoryTableToFile();
@@ -1287,7 +1287,7 @@ void MainWindow::reportSearchStatistics()
     headerText += filesProcessedText;
 
     // Add files statistics
-    if(!currentSearch->showFoldersOnly){
+    if(!currentSearch->showFoldersOnly and currentSearch->filesFoundNumber > 0){
         headerText +=
             tr("<tr></tr>"
                "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"
