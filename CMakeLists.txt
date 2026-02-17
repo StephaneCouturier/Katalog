@@ -105,6 +105,7 @@ set(CORE_HEADERS
     src/core/backupmappingmanager.h
     src/core/filechecksum.h
     src/core/foldertreeloader.h
+    src/core/catalogdifferenceengine.h
 )
 
 set(CORE_SOURCES
@@ -137,6 +138,7 @@ set(CORE_SOURCES
     src/core/backupmappingmanager.cpp
     src/core/filechecksum.cpp
     src/core/foldertreeloader.cpp
+    src/core/catalogdifferenceengine.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

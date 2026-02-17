@@ -1,3 +1,6 @@
+# Local Experiments
+external
+
 # C++ objects and libs
 *.slo
 *.lo

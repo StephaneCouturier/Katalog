@@ -31,6 +31,7 @@
 
 #include "core/searchjobstoppable.h"
 #include "core/catalogmanager.h"
+#include "core/catalogdifferenceengine.h"
 #include "core/filemetadata.h"
 #include "core/filetypemapping.h"
 #include "core/database.h"
@@ -1662,13 +1663,12 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
 
     if (!shouldContinue()) return;
 
-    // Clear database
+    // Step 1: Populate filetemp with current search results
     QSqlQuery deleteQuery(QSqlDatabase::database(connectionName));
     deleteQuery.exec("DELETE FROM filetemp");
 
     if (!shouldContinue()) return;
 
-    // Prepare query to load file info
     QSqlQuery insertQuery(QSqlDatabase::database(connectionName));
     QString insertSQL = QLatin1String(R"(
         INSERT INTO filetemp (
@@ -1677,22 +1677,22 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
             file_size,
             file_date_updated,
             file_catalog,
-            file_catalog_id
+            file_catalog_id,
+            checksum_sha256
         ) VALUES(
             :file_name,
             :file_folder_path,
             :file_size,
             :file_date_updated,
             :file_catalog,
-            :file_catalog_id
+            :file_catalog_id,
+            :checksum_sha256
         )
     )");
     insertQuery.prepare(insertSQL);
 
-    // Loop through the result list and populate database
     int rows = rowCount();
     for (int i = 0; i < rows && shouldContinue(); i++) {
-        // Check for pause/stop periodically and allow UI updates
         if (i % progressRefreshRate == 0) {
             waitIfPaused();
             if (!shouldContinue()) break;
@@ -1701,272 +1701,114 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
             emit searchProgress(progress);
         }
 
-        // Append data to the database
         insertQuery.bindValue(":file_name", index(i, 0).data().toString());
         insertQuery.bindValue(":file_size", index(i, 1).data().toString());
         insertQuery.bindValue(":file_folder_path", index(i, 3).data().toString());
         insertQuery.bindValue(":file_date_updated", index(i, 2).data().toString());
         insertQuery.bindValue(":file_catalog", index(i, 4).data().toString());
         insertQuery.bindValue(":file_catalog_id", index(i, 5).data().toString());
+        insertQuery.bindValue(":checksum_sha256", index(i, 19).data().toString());
         insertQuery.exec();
     }
 
-    // If search was stopped, return early
     if (!shouldContinue()) {
         qDebug() << "SearchJobStoppable::processDifferences() stopped during data loading";
         return;
     }
 
-    // Generate grouping of fields based on user selection, determining what are differences
-    QString groupingFieldsDifferences;
-    QString checksumGroupingFieldsDiff;  // Fields WITHOUT checksum for ≠ case
+    // Step 2: Build comparison fields from user selection
+    CatalogDifferenceEngine::CompareFields matchFields;
+    if (differencesOnName)
+        matchFields |= CatalogDifferenceEngine::Name;
+    if (differencesOnSize)
+        matchFields |= CatalogDifferenceEngine::Size;
+    if (differencesOnDate)
+        matchFields |= CatalogDifferenceEngine::Date;
+    if (differencesOnChecksum && differencesChecksumEqual)
+        matchFields |= CatalogDifferenceEngine::Checksum;
 
-    // Same name
-    if (differencesOnName) {
-        groupingFieldsDifferences += "||file_name";
-        checksumGroupingFieldsDiff += "||file_name";
-    }
-    // Same size
-    if (differencesOnSize) {
-        groupingFieldsDifferences += "||file_size";
-        checksumGroupingFieldsDiff += "||file_size";
-    }
-    // Same date modified
-    if (differencesOnDate) {
-        groupingFieldsDifferences += "||file_date_updated";
-        checksumGroupingFieldsDiff += "||file_date_updated";
-    }
-    // Checksum (only for = case, added to main grouping)
-    if (differencesOnChecksum && differencesChecksumEqual) {
-        groupingFieldsDifferences += "||checksum_sha256";
-    }
-
-    // Remove the || at the start
-    if (groupingFieldsDifferences.startsWith("||"))
-        groupingFieldsDifferences.remove(0, 2);
-    if (checksumGroupingFieldsDiff.startsWith("||"))
-        checksumGroupingFieldsDiff.remove(0, 2);
+    bool checksumNotEqual = differencesOnChecksum && !differencesChecksumEqual;
 
     if (!shouldContinue()) return;
 
-    // Populate listOfCatalogDeviceIDs1
-    QString listOfCatalogDeviceIDs1;
-    diffDevice1->loadDevice(connectionName);
-    if (diffDevice1->type == "Catalog") {
-        listOfCatalogDeviceIDs1 = listOfCatalogDeviceIDs1 + QString::number(diffDevice1->ID) + ",";
-    }
-    else {
-        for (const auto& row : diffDevice1->deviceListTable) {
-            if (!shouldContinue()) break;
-            if (row.type == "Catalog") {
-                listOfCatalogDeviceIDs1 = listOfCatalogDeviceIDs1 + QString::number(row.ID) + ",";
-            }
-        }
-    }
-    if (listOfCatalogDeviceIDs1.endsWith(","))
-        listOfCatalogDeviceIDs1.remove(listOfCatalogDeviceIDs1.length() - 1, 1);
+    // Step 3: Resolve device IDs to catalog device IDs
+    QList<int> sourceIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(diffDevice1, connectionName);
+    if (!shouldContinue()) return;
+    QList<int> targetIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(diffDevice2, connectionName);
+    if (!shouldContinue()) return;
+
+    // Step 4: Run comparison via engine
+    CatalogDifferenceEngine engine(connectionName);
+    DifferenceResult diffResult = engine.compare(sourceIds, targetIds, matchFields, checksumNotEqual);
 
     if (!shouldContinue()) return;
 
-    // Populate listOfCatalogDeviceIDs2
-    QString listOfCatalogDeviceIDs2;
-    diffDevice2->loadDevice(connectionName);
-    if (diffDevice2->type == "Catalog") {
-        listOfCatalogDeviceIDs2 = listOfCatalogDeviceIDs2 + QString::number(diffDevice2->ID) + ",";
-    }
-    else {
-        for (const auto& row : diffDevice2->deviceListTable) {
-            if (!shouldContinue()) break;
-            if (row.type == "Catalog") {
-                listOfCatalogDeviceIDs2 = listOfCatalogDeviceIDs2 + QString::number(row.ID) + ",";
-            }
-        }
-    }
-    if (listOfCatalogDeviceIDs2.endsWith(","))
-        listOfCatalogDeviceIDs2.remove(listOfCatalogDeviceIDs2.length() - 1, 1);
-
-    if (!shouldContinue()) return;
-
-    // Begin transaction for better performance
-    Database::beginTransaction(connectionName);
-
-    // Generate SQL based on grouping of fields
-    QString selectSQL;
-
-    if (differencesOnChecksum && !differencesChecksumEqual) {
-        // Checksum ≠ case: files matching on other fields but with different checksums between devices
-        selectSQL = QString(R"(
-            SELECT  t1.file_name,
-                    t1.file_size,
-                    t1.file_date_updated,
-                    t1.file_folder_path,
-                    t1.file_catalog,
-                    t1.file_catalog_id,
-                    t1.checksum_sha256
-            FROM filetemp t1
-            INNER JOIN filetemp t2 ON %1 = %2
-            WHERE t1.checksum_sha256 IS NOT NULL
-              AND t1.checksum_sha256 != ''
-              AND t2.checksum_sha256 IS NOT NULL
-              AND t2.checksum_sha256 != ''
-              AND t1.checksum_sha256 != t2.checksum_sha256
-              AND t1.file_catalog_id IN (
-                  SELECT device_external_id
-                  FROM device
-                  WHERE device_id IN (%3)
-                  AND device_type = 'Catalog'
-              )
-              AND t2.file_catalog_id IN (
-                  SELECT device_external_id
-                  FROM device
-                  WHERE device_id IN (%4)
-                  AND device_type = 'Catalog'
-              )
-            ORDER BY %5
-        )").arg(
-                            QString("t1.%1").arg(checksumGroupingFieldsDiff.replace("||", "||t1.")),
-                            QString("t2.%1").arg(checksumGroupingFieldsDiff.replace("||", "||t2.")),
-                            listOfCatalogDeviceIDs1,
-                            listOfCatalogDeviceIDs2,
-                            checksumGroupingFieldsDiff
-                            );
-    } else {
-        // Standard case (including Checksum = case)
-        // Using LEFT JOIN instead of NOT IN for better MySQL performance
-
-        // Build JOIN condition from grouping fields (e.g., "t1.file_name = t2.file_name")
-        QString joinCondition = groupingFieldsDifferences;
-        joinCondition.replace("||", " AND t1.");
-        joinCondition.prepend("t1.");
-        joinCondition.replace(" AND t1.", " = t2."); // First occurrence fix
-        // Result: "t1.file_name" -> need to add "= t2.file_name"
-
-        // Simpler approach: build it properly
-        QStringList fields = groupingFieldsDifferences.split("||");
-        QStringList joinParts;
-        for (const QString &field : fields) {
-            joinParts << QString("t1.%1 = t2.%1").arg(field);
-        }
-        joinCondition = joinParts.join(" AND ");
-
-        selectSQL = QString(R"(
-            SELECT  t1.file_name,
-                    t1.file_size,
-                    t1.file_date_updated,
-                    t1.file_folder_path,
-                    t1.file_catalog,
-                    t1.file_catalog_id,
-                    t1.checksum_sha256
-            FROM filetemp t1
-            LEFT JOIN filetemp t2
-                ON %1
-                AND t2.file_catalog_id IN (
-                    SELECT device_external_id FROM device
-                    WHERE device_id IN(%3) AND device_type = 'Catalog'
-                )
-            WHERE t1.file_catalog_id IN (
-                SELECT device_external_id FROM device
-                WHERE device_id IN(%2) AND device_type = 'Catalog'
-            )
-            AND t2.file_name IS NULL
-
-            UNION
-
-            SELECT  t1.file_name,
-                    t1.file_size,
-                    t1.file_date_updated,
-                    t1.file_folder_path,
-                    t1.file_catalog,
-                    t1.file_catalog_id,
-                    t1.checksum_sha256
-            FROM filetemp t1
-            LEFT JOIN filetemp t2
-                ON %1
-                AND t2.file_catalog_id IN (
-                    SELECT device_external_id FROM device
-                    WHERE device_id IN(%2) AND device_type = 'Catalog'
-                )
-            WHERE t1.file_catalog_id IN (
-                SELECT device_external_id FROM device
-                WHERE device_id IN(%3) AND device_type = 'Catalog'
-            )
-            AND t2.file_name IS NULL
-        )").arg(joinCondition, listOfCatalogDeviceIDs1, listOfCatalogDeviceIDs2);
-    }
-
-    if (!shouldContinue()) {
-        Database::commitTransaction(connectionName);
-        return;
-    }
-
-    // Run Query
-    QSqlQuery differencesQuery(QSqlDatabase::database(connectionName));
-    differencesQuery.prepare(selectSQL);
-
-    if (!differencesQuery.exec()) {
-        qWarning() << "SearchJobStoppable::processDifferences - Query error:" << differencesQuery.lastError().text();
-        Database::rollbackTransaction(connectionName);
-        return;
-    }
-
-    // Commit transaction
-    Database::commitTransaction(connectionName);
-
-    if (!shouldContinue()) return;
-
-    // Recapture file results for stats
+    // Step 5: Convert engine results to search result arrays
     fileNames.clear();
     fileSizes.clear();
     filePaths.clear();
     fileDateTimes.clear();
     fileCatalogs.clear();
     fileCatalogIDs.clear();
+    fileTypes.clear();
+    mimeTypes.clear();
+    imageWidths.clear();
+    imageHeights.clear();
+    videoDurations.clear();
+    videoWidths.clear();
+    videoHeights.clear();
+    audioDurations.clear();
+    audioArtists.clear();
+    audioAlbums.clear();
+    audioTitles.clear();
+    checksumSha256s.clear();
+    checksumExtractionDates.clear();
 
-    // ADD metadata arrays to keep them in sync
-    QString fileName = differencesQuery.value(0).toString();
-    QFileInfo fileInfo(fileName);
-    QString extension = fileInfo.suffix().toLower();
-    QString fileType = FileMetadata::getFileTypeFromExtension(extension);
-
-    fileTypes.append(fileType);
-    mimeTypes.append(""); // Empty for differences search
-    imageWidths.append(0);
-    imageHeights.append(0);
-    videoDurations.append(0);
-    videoWidths.append(0);
-    videoHeights.append(0);
-    audioDurations.append(0);
-    audioArtists.append("");
-    audioAlbums.append("");
-    audioTitles.append("");
-    checksumSha256s.append("");
-    checksumExtractionDates.append("");
+    // Combine results: for standard mode both sides, for checksum≠ mode the conflicts
+    QList<DifferenceFileEntry> allEntries;
+    if (checksumNotEqual) {
+        allEntries = diffResult.differentContent;
+    } else {
+        allEntries = diffResult.onlyInSource + diffResult.onlyInTarget;
+    }
 
     int differenceCount = 0;
-    while (differencesQuery.next() && shouldContinue()) {
-        // Check for pause/stop periodically
+    for (const auto &entry : allEntries) {
         if (differenceCount % progressRefreshRate == 0) {
             waitIfPaused();
             if (!shouldContinue()) break;
         }
 
-        fileNames.append(differencesQuery.value(0).toString());
-        fileSizes.append(differencesQuery.value(1).toLongLong());
-        fileDateTimes.append(differencesQuery.value(2).toString());
-        filePaths.append(differencesQuery.value(3).toString());
-        fileCatalogs.append(differencesQuery.value(4).toString());
-        fileCatalogIDs.append(differencesQuery.value(5).toInt());
+        fileNames.append(entry.fileName);
+        fileSizes.append(entry.fileSize);
+        fileDateTimes.append(entry.dateUpdated);
+        filePaths.append(entry.folderPath);
+        fileCatalogs.append(entry.catalog);
+        fileCatalogIDs.append(entry.catalogId);
+
+        // Metadata placeholders (not available from filetemp comparison)
+        QFileInfo fileInfo(entry.fileName);
+        QString extension = fileInfo.suffix().toLower();
+        fileTypes.append(FileMetadata::getFileTypeFromExtension(extension));
+        mimeTypes.append("");
+        imageWidths.append(0);
+        imageHeights.append(0);
+        videoDurations.append(0);
+        videoWidths.append(0);
+        videoHeights.append(0);
+        audioDurations.append(0);
+        audioArtists.append("");
+        audioAlbums.append("");
+        audioTitles.append("");
+        checksumSha256s.append(entry.checksum);
+        checksumExtractionDates.append("");
 
         differenceCount++;
     }
 
-    // Final progress report if completed successfully
     if (shouldContinue()) {
         emit searchProgress(100);
         qDebug() << "SearchJobStoppable::processDifferences() completed - Found" << differenceCount << "difference entries";
-        qDebug() << "  - Device 1 catalogs:" << listOfCatalogDeviceIDs1;
-        qDebug() << "  - Device 2 catalogs:" << listOfCatalogDeviceIDs2;
-        qDebug() << "  - Grouping fields:" << groupingFieldsDifferences;
     } else {
         qDebug() << "SearchJobStoppable::processDifferences() stopped during result processing";
     }
