@@ -107,6 +107,8 @@ set(CORE_HEADERS
     src/core/foldertreeloader.h
     src/core/catalogdifferenceengine.h
     src/core/directoryreplicator.h
+    src/core/backupjob.h
+    src/core/backupjobstoppable.h
 )
 
 set(CORE_SOURCES
@@ -141,6 +143,7 @@ set(CORE_SOURCES
     src/core/foldertreeloader.cpp
     src/core/catalogdifferenceengine.cpp
     src/core/directoryreplicator.cpp
+    src/core/backupjobstoppable.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

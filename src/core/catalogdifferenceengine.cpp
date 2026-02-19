@@ -49,7 +49,8 @@ DifferenceResult CatalogDifferenceEngine::compare(
     const QList<int> &sourceDeviceIds,
     const QList<int> &targetDeviceIds,
     CompareFields matchFields,
-    bool checksumNotEqual)
+    bool checksumNotEqual,
+    const QString &tableName)
 {
     DifferenceResult result;
 
@@ -91,8 +92,8 @@ DifferenceResult CatalogDifferenceEngine::compare(
                     t1.file_catalog,
                     t1.file_catalog_id,
                     t1.checksum_sha256
-            FROM filetemp t1
-            INNER JOIN filetemp t2 ON %1
+            FROM %4 t1
+            INNER JOIN %4 t2 ON %1
             WHERE t1.checksum_sha256 IS NOT NULL
               AND t1.checksum_sha256 != ''
               AND t2.checksum_sha256 IS NOT NULL
@@ -100,7 +101,7 @@ DifferenceResult CatalogDifferenceEngine::compare(
               AND t1.checksum_sha256 != t2.checksum_sha256
               AND t1.file_catalog_id IN (%2)
               AND t2.file_catalog_id IN (%3)
-        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds);
+        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds, tableName);
 
         query.prepare(sqlSource);
 
@@ -123,8 +124,8 @@ DifferenceResult CatalogDifferenceEngine::compare(
                     t1.file_catalog,
                     t1.file_catalog_id,
                     t1.checksum_sha256
-            FROM filetemp t1
-            INNER JOIN filetemp t2 ON %1
+            FROM %4 t1
+            INNER JOIN %4 t2 ON %1
             WHERE t1.checksum_sha256 IS NOT NULL
               AND t1.checksum_sha256 != ''
               AND t2.checksum_sha256 IS NOT NULL
@@ -132,7 +133,7 @@ DifferenceResult CatalogDifferenceEngine::compare(
               AND t1.checksum_sha256 != t2.checksum_sha256
               AND t1.file_catalog_id IN (%3)
               AND t2.file_catalog_id IN (%2)
-        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds);
+        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds, tableName);
 
         query.prepare(sqlTarget);
 
@@ -167,13 +168,13 @@ DifferenceResult CatalogDifferenceEngine::compare(
                     t1.file_catalog,
                     t1.file_catalog_id,
                     t1.checksum_sha256
-            FROM filetemp t1
-            LEFT JOIN filetemp t2
+            FROM %4 t1
+            LEFT JOIN %4 t2
                 ON %1
                 AND t2.file_catalog_id IN (%3)
             WHERE t1.file_catalog_id IN (%2)
             AND t2.file_name IS NULL
-        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds);
+        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds, tableName);
 
         query.prepare(sqlSource);
 
@@ -196,13 +197,13 @@ DifferenceResult CatalogDifferenceEngine::compare(
                     t1.file_catalog,
                     t1.file_catalog_id,
                     t1.checksum_sha256
-            FROM filetemp t1
-            LEFT JOIN filetemp t2
+            FROM %4 t1
+            LEFT JOIN %4 t2
                 ON %1
                 AND t2.file_catalog_id IN (%2)
             WHERE t1.file_catalog_id IN (%3)
             AND t2.file_name IS NULL
-        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds);
+        )").arg(joinCondition, sourceCatalogIds, targetCatalogIds, tableName);
 
         query.prepare(sqlTarget);
 

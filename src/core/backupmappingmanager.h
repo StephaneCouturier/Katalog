@@ -58,6 +58,7 @@ struct MappingInfo {
     int targetFileCount;
     bool sourceActive;
     bool targetActive;
+    bool strictCopy;  // true (default) = mirror folder structure exactly; false = dedup (skip if name+size exists anywhere in target)
 
     MappingInfo()
         : sourceSize(0)
@@ -69,6 +70,7 @@ struct MappingInfo {
         , targetFileCount(0)
         , sourceActive(false)
         , targetActive(false)
+        , strictCopy(true)
     {}
 };
 

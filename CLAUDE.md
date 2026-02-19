@@ -78,6 +78,14 @@ The main window (`mainwindow.h/cpp`) is split across multiple implementation fil
 
 SQLite with multiple connection modes (file, hosted, memory). Schema versioning handles migrations. Separate files for: devices, catalogs, storage, statistics, search history.
 
+### Memory Mode Caveat
+
+**IMPORTANT:** In Memory database mode, catalog data (files, folders) is NOT pre-loaded in the in-memory database. It must be explicitly loaded from CSV/idx files before querying. When writing code that queries the `file`, `filetemp`, or `folder` tables, always check `collection->databaseMode == "Memory"` and call the appropriate load method first:
+- `catalog->loadFoldersToTable()` — loads folder data from `.folders.idx` into the `folder` table
+- `catalog->loadCatalogFileListToTable(mutex, stopRequested)` — loads file data from `.idx` into the `file` table
+
+In File/Hosted mode, the data is already in the SQLite database and no pre-loading is needed. Forgetting this check is a recurring source of bugs — features work in File mode but return empty results in Memory mode.
+
 ## Translation
 
 24+ languages supported. Translation files in `src/translations/`. Uses Qt Linguist (lupdate/lrelease). Files compiled to `.qm` format and bundled via `translations.qrc`.

@@ -1073,7 +1073,8 @@ void Collection::loadMappingFileToTable()
                                             mapping_device_source_id,
                                             mapping_device_target_id,
                                             mapping_backup_last_date,
-                                            mapping_backup_last_size
+                                            mapping_backup_last_size,
+                                            mapping_strict_copy
                                         )
                                         VALUES(
                                             :mapping_id,
@@ -1082,7 +1083,8 @@ void Collection::loadMappingFileToTable()
                                             :mapping_device_source_id,
                                             :mapping_device_target_id,
                                             :mapping_backup_last_date,
-                                            :mapping_backup_last_size
+                                            :mapping_backup_last_size,
+                                            :mapping_strict_copy
                                         )
                                         )");
                 insertQuery.prepare(insertQuerySQL);
@@ -1093,6 +1095,8 @@ void Collection::loadMappingFileToTable()
                 insertQuery.bindValue(":mapping_device_target_id", fieldList[4]);
                 insertQuery.bindValue(":mapping_backup_last_date", fieldList[5]);
                 insertQuery.bindValue(":mapping_backup_last_size", fieldList[6]);
+                // field[7] = strict_copy (may be absent in old CSV files — default to 1)
+                insertQuery.bindValue(":mapping_strict_copy",      fieldList.size() > 7 ? fieldList[7].toInt() : 1);
                 insertQuery.exec();
             }
         }
@@ -1521,6 +1525,7 @@ void Collection::saveMappingTableToFile()
             << "device_target_id" << "\t"
             << "backup_last_date" << "\t"
             << "backup_last_size" << "\t"
+            << "strict_copy"      << "\t"
             << '\n';
 
         //Get data

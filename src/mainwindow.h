@@ -46,6 +46,9 @@
 #include "core/catalogjobstoppable.h"
 #include "core/catalogprogressmanager.h"
 #include "core/backupmappingmanager.h"
+#include "core/backupjob.h"
+#include "core/backupjobstoppable.h"
+#include <QThread>
 #include "widgets/treecombobox.h"
 
 //KDE KF6
@@ -492,7 +495,23 @@ class MainWindow : public KXmlGuiWindow
             void loadBackUpMappingTable();
             void loadBackUpDeviceLists(QString list);
             void saveNewMapping();
+            void loadBackupPreview();
+            void runBackup();
+            void showBackupReport(const BackupReport &report);
             void setupBackUpManager();
+
+            // Shared comparison helper for preview and executor
+            struct BackupCompareResult {
+                QList<DifferenceFileEntry> filesToCopy;
+                QList<DifferenceFileEntry> fileConflicts;
+                int skippedCount = 0;
+            };
+            BackupCompareResult compareForBackup(const Device &sourceDevice,
+                                                 const Device &targetDevice,
+                                                 bool strictCopy);
+
+            BackupJobStoppable *m_backupJob    = nullptr;
+            QThread            *m_backupThread = nullptr;
 
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);
@@ -762,6 +781,13 @@ class MainWindow : public KXmlGuiWindow
             void on_BackUp_radioButton_Target_clicked();
             void on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked();
             void on_BackUp_pushButton_ReplicateDirectories_clicked();
+            void on_BackUp_pushButton_BackUpPreview_clicked();
+            void on_BackUp_pushButton_RunBackup_clicked();
+            void on_BackUp_pushButton_CancelBackup_clicked();
+            void onBackupProgress(int filesDone, int totalFiles,
+                                  qint64 bytesCopied, qint64 totalBytes,
+                                  const QString &currentFile);
+            void onBackupFinished(const BackupReport &report);
             void on_BackUp_checkBox_OnlySelectedLinks_checkStateChanged(const Qt::CheckState &arg1);
 
         //Statistics
@@ -783,7 +809,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Tags_pushButton_OpenTagsFile_clicked();
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
-            void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
+            void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);         
 
         protected:
             void changeEvent(QEvent *event) override;

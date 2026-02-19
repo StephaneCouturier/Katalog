@@ -455,6 +455,20 @@
                 }
             }
 
+            if (schemaVersion < QVersionNumber::fromString("2.10")) {
+                qDebug() << "Running database migration to 2.10...";
+                collection->dbSchemaVersion = "2.10";
+
+                QSqlError migrationError = Database::runMigration_2_10(m_connectionName);
+                if (migrationError.type() == QSqlError::NoError) {
+                    collection->setDatabaseSchemaVersion();
+                    qDebug() << "Database migration to 2.10 completed";
+                } else {
+                    qDebug() << "Database migration to 2.10 failed:" << migrationError.text();
+                    return;
+                }
+            }
+
         // Refresh display
         loadSearchHistoryTableToModel();
     }
@@ -853,6 +867,9 @@
         ui->BackUp_treeView_List2->setStyleSheet(
             "QTreeView { alternate-background-color: #e9f7fc;}"
             );
+        ui->BackUp_tableView_PreviewFiles->setStyleSheet(
+            "QTreeView { alternate-background-color: #e9f7fc;}"
+            );
 
         QString additionalStyles = ui->tabWidget->styleSheet() +
                                    "QTabWidget QLabel { color: #095676; }"
@@ -1063,6 +1080,9 @@
             "QTreeView { alternate-background-color: #161b1d; }"
             );
         ui->BackUp_treeView_List2->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->BackUp_tableView_PreviewFiles->setStyleSheet(
             "QTreeView { alternate-background-color: #161b1d; }"
             );
 

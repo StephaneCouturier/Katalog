@@ -407,7 +407,8 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_device_source_id    %2,
                     mapping_device_target_id    %2,
                     mapping_backup_last_date    TEXT,
-                    mapping_backup_last_size    %2)
+                    mapping_backup_last_size    %2,
+                    mapping_strict_copy         INTEGER DEFAULT 1)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 
@@ -1267,6 +1268,29 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
     qDebug() << "=== Database Migration 2.9 completed ===";
 
     return QSqlError(); // Success
+}
+
+//----------------------------------------------------------------------
+QSqlError Database::runMigration_2_10(const QString &connectionName)
+{
+    qDebug() << "=== Database Migration 2.10: Adding mapping_strict_copy to device_mapping ===";
+
+    QStringList existingColumns = getTableColumns(connectionName, "device_mapping");
+
+    if (!existingColumns.contains("mapping_strict_copy")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE device_mapping ADD COLUMN mapping_strict_copy INTEGER DEFAULT 1");
+        if (err.type() != QSqlError::NoError) {
+            qDebug() << "Failed to add mapping_strict_copy column:" << err.text();
+            return err;
+        }
+        qDebug() << "Added mapping_strict_copy column to device_mapping";
+    } else {
+        qDebug() << "mapping_strict_copy already exists, skipping";
+    }
+
+    qDebug() << "=== Database Migration 2.10 completed ===";
+    return QSqlError();
 }
 
 //----------------------------------------------------------------------

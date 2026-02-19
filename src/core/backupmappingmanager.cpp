@@ -65,7 +65,8 @@ QString BackupMappingManager::buildBaseQuery()
             d2.device_path AS target_path,
             d2.device_total_file_size AS target_size,
             d2.device_total_file_count AS target_file_count,
-            d2.device_date_updated AS target_date_updated
+            d2.device_date_updated AS target_date_updated,
+            COALESCE(dm.mapping_strict_copy, 1) AS mapping_strict_copy
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
@@ -181,6 +182,8 @@ MappingInfo BackupMappingManager::parseMappingFromQuery(const QSqlQuery& query)
     info.targetSize = query.value("target_size").toLongLong();
     info.targetFileCount = query.value("target_file_count").toInt();
     info.targetDateUpdated = query.value("target_date_updated").toString();
+
+    info.strictCopy = query.value("mapping_strict_copy").toInt() != 0;
 
     return info;
 }

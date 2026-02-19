@@ -30,6 +30,8 @@
 */
 
 #include "core/backupprofilegenerator.h"
+#include "core/backupjobstoppable.h"
+#include "core/catalogdifferenceengine.h"
 #include "core/directoryreplicator.h"
 #include "mainwindow.h"
 #include "devicemappingview.h"
@@ -154,6 +156,424 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
                                  .arg(result.createdCount())
                                  .arg(result.skippedCount())
                                  .arg(result.errorCount()));
+}
+
+void MainWindow::on_BackUp_pushButton_BackUpPreview_clicked()
+{
+    loadBackupPreview();
+}
+
+void MainWindow::on_BackUp_pushButton_RunBackup_clicked()
+{
+    runBackup();
+}
+
+void MainWindow::on_BackUp_pushButton_CancelBackup_clicked()
+{
+    if (m_backupJob)
+        m_backupJob->stopBackup();
+}
+
+// ─── Shared comparison helper ──────────────────────────────────────────────
+
+MainWindow::BackupCompareResult MainWindow::compareForBackup(
+    const Device &sourceDevice, const Device &targetDevice, bool strictCopy)
+{
+    BackupCompareResult out;
+
+    if (strictCopy) {
+        // PATH-AWARE (strict mirror): a file is "to copy" only if no file with the
+        // same name exists at the corresponding relative path in the target catalog.
+        // A file is a "conflict" if a file with the same name exists at that path
+        // but with a different size.
+        //
+        // Relative path mapping:
+        //   source: /media/USB-A/Photos/2024/img.jpg  → source root: /media/USB-A
+        //   target: /media/USB-B/Photos/2024/img.jpg  → target root: /media/USB-B
+        //   relFolder = SUBSTR(file_folder_path, LENGTH(sourceRoot) + 1)
+
+        const QString sourceRoot = sourceDevice.path.endsWith('/')
+                                   ? sourceDevice.path.chopped(1) : sourceDevice.path;
+        const QString targetRoot = targetDevice.path.endsWith('/')
+                                   ? targetDevice.path.chopped(1) : targetDevice.path;
+        const int sourceRootLen = sourceRoot.length();
+        // Escape single quotes in path for safe SQL string literal embedding
+        const QString targetRootEsc = QString(targetRoot).replace("'", "''");
+
+        // Files to copy: no file at corresponding target path at all
+        {
+            QSqlQuery q(QSqlDatabase::database(m_connectionName));
+            q.prepare(QString(R"(
+                SELECT file_name, file_folder_path, file_size, file_date_updated
+                FROM file f1
+                WHERE f1.file_catalog_id = %1
+                AND NOT EXISTS (
+                    SELECT 1 FROM file f2
+                    WHERE f2.file_catalog_id = %2
+                    AND f2.file_name = f1.file_name
+                    AND f2.file_folder_path = '%3' || SUBSTR(f1.file_folder_path, %4 + 1)
+                )
+            )").arg(sourceDevice.externalID).arg(targetDevice.externalID)
+               .arg(targetRootEsc).arg(sourceRootLen));
+            if (q.exec()) {
+                while (q.next()) {
+                    DifferenceFileEntry e;
+                    e.fileName   = q.value(0).toString();
+                    e.folderPath = q.value(1).toString();
+                    e.fileSize   = q.value(2).toLongLong();
+                    e.dateUpdated= q.value(3).toString();
+                    out.filesToCopy.append(e);
+                }
+            }
+        }
+
+        // Conflicts: file exists at target path but different size
+        {
+            QSqlQuery q(QSqlDatabase::database(m_connectionName));
+            q.prepare(QString(R"(
+                SELECT file_name, file_folder_path, file_size, file_date_updated
+                FROM file f1
+                WHERE f1.file_catalog_id = %1
+                AND EXISTS (
+                    SELECT 1 FROM file f2
+                    WHERE f2.file_catalog_id = %2
+                    AND f2.file_name = f1.file_name
+                    AND f2.file_folder_path = '%3' || SUBSTR(f1.file_folder_path, %4 + 1)
+                    AND f2.file_size != f1.file_size
+                )
+            )").arg(sourceDevice.externalID).arg(targetDevice.externalID)
+               .arg(targetRootEsc).arg(sourceRootLen));
+            if (q.exec()) {
+                while (q.next()) {
+                    DifferenceFileEntry e;
+                    e.fileName   = q.value(0).toString();
+                    e.folderPath = q.value(1).toString();
+                    e.fileSize   = q.value(2).toLongLong();
+                    e.dateUpdated= q.value(3).toString();
+                    out.fileConflicts.append(e);
+                }
+            }
+        }
+
+        // Count in-sync (total source - to_copy - conflicts)
+        {
+            QSqlQuery q(QSqlDatabase::database(m_connectionName));
+            q.prepare(QString("SELECT COUNT(*) FROM file WHERE file_catalog_id = %1")
+                          .arg(sourceDevice.externalID));
+            if (q.exec() && q.next())
+                out.skippedCount = q.value(0).toInt()
+                                   - out.filesToCopy.size()
+                                   - out.fileConflicts.size();
+        }
+
+    } else {
+        // DEDUP mode (original): use CatalogDifferenceEngine — a file is skipped
+        // if an identical name+size exists ANYWHERE in the target, regardless of path.
+        CatalogDifferenceEngine engine(m_connectionName);
+        QList<int> sourceIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
+                                   const_cast<Device*>(&sourceDevice), m_connectionName);
+        QList<int> targetIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
+                                   const_cast<Device*>(&targetDevice), m_connectionName);
+
+        DifferenceResult result = engine.compare(
+            sourceIds, targetIds,
+            CatalogDifferenceEngine::Name | CatalogDifferenceEngine::Size,
+            false,
+            "file"
+        );
+
+        // Build a set of all target file names to classify conflicts
+        QSet<QString> targetFileNames;
+        {
+            QSqlQuery q(QSqlDatabase::database(m_connectionName));
+            q.prepare(QString("SELECT DISTINCT file_name FROM file WHERE file_catalog_id = %1")
+                          .arg(targetDevice.externalID));
+            if (q.exec()) {
+                while (q.next())
+                    targetFileNames.insert(q.value(0).toString());
+            }
+        }
+
+        for (const DifferenceFileEntry &entry : result.onlyInSource) {
+            if (targetFileNames.contains(entry.fileName))
+                out.fileConflicts.append(entry);
+            else
+                out.filesToCopy.append(entry);
+        }
+
+        // Skipped = files in source that are in both (dedup engine removed them)
+        {
+            QSqlQuery q(QSqlDatabase::database(m_connectionName));
+            q.prepare(QString("SELECT COUNT(*) FROM file WHERE file_catalog_id = %1")
+                          .arg(sourceDevice.externalID));
+            if (q.exec() && q.next())
+                out.skippedCount = q.value(0).toInt()
+                                   - out.filesToCopy.size()
+                                   - out.fileConflicts.size();
+        }
+    }
+
+    return out;
+}
+
+// ─── Backup executor ───────────────────────────────────────────────────────
+
+void MainWindow::runBackup()
+{
+    //Get the selected mapping_id
+    QModelIndexList selectedIndexes = ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
+    if (selectedIndexes.isEmpty()) {
+        QMessageBox::warning(this, "Katalog", tr("Select a mapping first."));
+        return;
+    }
+    int mappingID = selectedIndexes.at(0).data().toInt();
+
+    if (!backupMappingManager)
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    MappingInfo mapping = backupMappingManager->getMappingById(mappingID);
+
+    Device sourceDevice;
+    sourceDevice.ID = mapping.sourceDeviceId;
+    sourceDevice.loadDevice(m_connectionName);
+
+    Device targetDevice;
+    targetDevice.ID = mapping.targetDeviceId;
+    targetDevice.loadDevice(m_connectionName);
+
+    if (sourceDevice.type != "Catalog" || targetDevice.type != "Catalog") {
+        QMessageBox::warning(this, "Katalog",
+                             tr("Both source and target must be Catalog devices."));
+        return;
+    }
+
+    if (!QDir(targetDevice.path).exists()) {
+        QMessageBox::warning(this, "Katalog",
+                             tr("Target path is not accessible: %1").arg(targetDevice.path));
+        return;
+    }
+
+    //Memory mode: load file data into 'file' table first
+    if (collection->databaseMode == "Memory") {
+        QMutex mutex;
+        bool stopRequested = false;
+        sourceDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+        targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+    }
+
+    //Run comparison (respects strictCopy setting)
+    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy);
+
+    if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
+        QMessageBox::information(this, "Katalog",
+                                 tr("Source and target are already in sync. Nothing to copy."));
+        return;
+    }
+
+    //Setup and launch the backup worker thread
+    m_backupJob = new BackupJobStoppable();
+    m_backupJob->setFiles(cmp.filesToCopy);
+    m_backupJob->setSourcePath(sourceDevice.path);
+    m_backupJob->setTargetPath(targetDevice.path);
+
+    m_backupThread = new QThread(this);
+    m_backupJob->moveToThread(m_backupThread);
+
+    connect(m_backupThread, &QThread::started,
+            m_backupJob,    &BackupJobStoppable::runBackup);
+    connect(m_backupJob,    &BackupJobStoppable::backupProgress,
+            this,           &MainWindow::onBackupProgress);
+    connect(m_backupJob,    &BackupJobStoppable::backupFinished,
+            this,           &MainWindow::onBackupFinished);
+    connect(m_backupJob,    &BackupJobStoppable::backupFinished,
+            m_backupThread, &QThread::quit);
+    connect(m_backupThread, &QThread::finished,
+            m_backupJob,    &QObject::deleteLater);
+    connect(m_backupThread, &QThread::finished,
+            m_backupThread, &QObject::deleteLater);
+
+    //Show execution panel, disable Run button
+    ui->BackUp_progressBar->setMinimum(0);
+    ui->BackUp_progressBar->setMaximum(cmp.filesToCopy.size());
+    ui->BackUp_progressBar->setValue(0);
+    ui->BackUp_label_ExecutionStatus->setText(tr("Starting backup…"));
+    ui->BackUp_verticalLayout_Execution->setEnabled(true);
+    ui->BackUp_label_ExecutionStatus->setVisible(true);
+    ui->BackUp_progressBar->setVisible(true);
+    ui->BackUp_pushButton_CancelBackup->setVisible(true);
+    ui->BackUp_pushButton_RunBackup->setEnabled(false);
+    ui->BackUp_pushButton_CancelBackup->setEnabled(true);
+
+    m_backupThread->start();
+}
+
+void MainWindow::onBackupProgress(int filesDone, int totalFiles,
+                                   qint64 /*bytesCopied*/, qint64 /*totalBytes*/,
+                                   const QString &currentFile)
+{
+    ui->BackUp_progressBar->setMaximum(totalFiles);
+    ui->BackUp_progressBar->setValue(filesDone);
+    if (!currentFile.isEmpty())
+        ui->BackUp_label_ExecutionStatus->setText(
+            tr("Copying %1 / %2: %3").arg(filesDone + 1).arg(totalFiles).arg(currentFile));
+}
+
+void MainWindow::onBackupFinished(const BackupReport &report)
+{
+    m_backupJob    = nullptr;
+    m_backupThread = nullptr;
+
+    ui->BackUp_pushButton_RunBackup->setEnabled(true);
+    ui->BackUp_pushButton_CancelBackup->setEnabled(false);
+    ui->BackUp_progressBar->setValue(ui->BackUp_progressBar->maximum());
+
+    if (report.wasCancelled)
+        ui->BackUp_label_ExecutionStatus->setText(tr("Backup cancelled."));
+    else
+        ui->BackUp_label_ExecutionStatus->setText(tr("Backup complete."));
+
+    showBackupReport(report);
+}
+
+void MainWindow::showBackupReport(const BackupReport &report)
+{
+    //Replace the preview table with the backup report
+    QStandardItemModel *model = new QStandardItemModel(this);
+    model->setHorizontalHeaderItem(0, new QStandardItem(tr("Status")));
+    model->setHorizontalHeaderItem(1, new QStandardItem(tr("File Name")));
+    model->setHorizontalHeaderItem(2, new QStandardItem(tr("Path")));
+    model->setHorizontalHeaderItem(3, new QStandardItem(tr("Size")));
+
+    for (const DifferenceFileEntry &e : report.copied) {
+        QList<QStandardItem*> row;
+        row << new QStandardItem(tr("copied"))
+            << new QStandardItem(e.fileName)
+            << new QStandardItem(e.folderPath)
+            << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
+        model->appendRow(row);
+    }
+    for (const DifferenceFileEntry &e : report.conflicts) {
+        QList<QStandardItem*> row;
+        row << new QStandardItem(tr("conflict — skipped"))
+            << new QStandardItem(e.fileName)
+            << new QStandardItem(e.folderPath)
+            << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
+        model->appendRow(row);
+    }
+    for (const QString &err : report.errors) {
+        QList<QStandardItem*> row;
+        row << new QStandardItem(tr("error"))
+            << new QStandardItem(err)
+            << new QStandardItem(QString())
+            << new QStandardItem(QString());
+        model->appendRow(row);
+    }
+
+    ui->BackUp_tableView_PreviewFiles->setModel(model);
+    ui->BackUp_tableView_PreviewFiles->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->BackUp_tableView_PreviewFiles->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->BackUp_tableView_PreviewFiles->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    ui->BackUp_label_PreviewSummary->setText(
+        tr("Report — Copied: <b>%1 file(s) (%2)</b>  |  Conflicts (skipped): <b>%3 file(s)</b>  |  Errors: <b>%4</b>")
+            .arg(report.copiedCount())
+            .arg(QLocale().formattedDataSize(report.totalBytesCopied))
+            .arg(report.conflictCount())
+            .arg(report.errorCount())
+    );
+    ui->BackUp_label_PreviewSummary->setVisible(true);
+    ui->BackUp_tableView_PreviewFiles->setVisible(true);
+}
+
+void MainWindow::loadBackupPreview()
+{
+    //Get the selected mapping_id
+    QModelIndexList selectedIndexes = ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
+    if (selectedIndexes.isEmpty()) {
+        QMessageBox::warning(this, "Katalog", tr("Select a mapping first."));
+        return;
+    }
+    int mappingID = selectedIndexes.at(0).data().toInt();
+
+    //Get mapping info
+    if (!backupMappingManager)
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    MappingInfo mapping = backupMappingManager->getMappingById(mappingID);
+
+    //Load source and target devices
+    Device sourceDevice;
+    sourceDevice.ID = mapping.sourceDeviceId;
+    sourceDevice.loadDevice(m_connectionName);
+
+    Device targetDevice;
+    targetDevice.ID = mapping.targetDeviceId;
+    targetDevice.loadDevice(m_connectionName);
+
+    if (sourceDevice.type != "Catalog" || targetDevice.type != "Catalog") {
+        QMessageBox::warning(this, "Katalog",
+                             tr("Both source and target must be Catalog devices."));
+        return;
+    }
+
+    //Memory mode: load file data into 'file' table first
+    if (collection->databaseMode == "Memory") {
+        QMutex mutex;
+        bool stopRequested = false;
+        sourceDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+        targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+    }
+
+    //Run comparison (respects strictCopy setting of this mapping)
+    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy);
+
+    //Build preview model (Status: "to copy" / "conflict")
+    QStandardItemModel *model = new QStandardItemModel(this);
+    model->setHorizontalHeaderItem(0, new QStandardItem(tr("Status")));
+    model->setHorizontalHeaderItem(1, new QStandardItem(tr("File Name")));
+    model->setHorizontalHeaderItem(2, new QStandardItem(tr("Path")));
+    model->setHorizontalHeaderItem(3, new QStandardItem(tr("Size")));
+
+    qint64 copySize = 0;
+    for (const DifferenceFileEntry &entry : cmp.filesToCopy) {
+        QList<QStandardItem*> row;
+        row << new QStandardItem(tr("to copy"))
+            << new QStandardItem(entry.fileName)
+            << new QStandardItem(entry.folderPath)
+            << new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
+        model->appendRow(row);
+        copySize += entry.fileSize;
+    }
+
+    qint64 conflictSize = 0;
+    for (const DifferenceFileEntry &entry : cmp.fileConflicts) {
+        QList<QStandardItem*> row;
+        row << new QStandardItem(tr("conflict"))
+            << new QStandardItem(entry.fileName)
+            << new QStandardItem(entry.folderPath)
+            << new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
+        model->appendRow(row);
+        conflictSize += entry.fileSize;
+    }
+
+    ui->BackUp_tableView_PreviewFiles->setModel(model);
+    ui->BackUp_tableView_PreviewFiles->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->BackUp_tableView_PreviewFiles->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->BackUp_tableView_PreviewFiles->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    //Summary line — includes mode indicator
+    const QString modeLabel = mapping.strictCopy ? tr("strict copy") : tr("dedup");
+    ui->BackUp_label_PreviewSummary->setText(
+        tr("Preview [%1] — To copy: <b>%2 file(s) (%3)</b>  |  Conflicts (will be skipped): <b>%4 file(s) (%5)</b>  |  Already in target: <b>%6 file(s)</b>")
+            .arg(modeLabel)
+            .arg(cmp.filesToCopy.size())
+            .arg(QLocale().formattedDataSize(copySize))
+            .arg(cmp.fileConflicts.size())
+            .arg(QLocale().formattedDataSize(conflictSize))
+            .arg(cmp.skippedCount)
+    );
+
+    //Show preview section
+    ui->BackUp_label_PreviewSummary->setVisible(true);
+    ui->BackUp_tableView_PreviewFiles->setVisible(true);
 }
 
 void MainWindow::on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1)
@@ -527,6 +947,8 @@ void MainWindow::loadBackUpMappingTable()
     ui->BackUp_tableView_CurrentMappings->setModel(proxyModel);
     ui->BackUp_tableView_CurrentMappings->resizeColumnsToContents();
     ui->BackUp_tableView_CurrentMappings->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->BackUp_tableView_CurrentMappings->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->BackUp_tableView_CurrentMappings->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     //If the setting is checked, display all columns
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
@@ -709,13 +1131,15 @@ void MainWindow::saveNewMapping()
                             (   mapping_name,
                                 mapping_type,
                                 mapping_device_source_id,
-                                mapping_device_target_id
+                                mapping_device_target_id,
+                                mapping_strict_copy
                             )
                             VALUES
                             (   :mapping_name,
                                 :mapping_type,
                                 :mapping_device_source_id,
-                                :mapping_device_target_id
+                                :mapping_device_target_id,
+                                :mapping_strict_copy
                             )
                         )");
     query.prepare(querySQL);
@@ -723,6 +1147,7 @@ void MainWindow::saveNewMapping()
     query.bindValue(":mapping_type", "Backup");
     query.bindValue(":mapping_device_source_id", device1ID);
     query.bindValue(":mapping_device_target_id", device2ID);
+    query.bindValue(":mapping_strict_copy", ui->BackUp_checkBox_StrictCopy->isChecked() ? 1 : 0);
 
     if (!query.exec())
     {
@@ -745,4 +1170,13 @@ void MainWindow::saveNewMapping()
 void MainWindow::setupBackUpManager()
 {
     backupMappingManager = new BackupMappingManager(m_connectionName, this);
+
+    //Hide the preview section until the user clicks "Preview Backup"
+    ui->BackUp_label_PreviewSummary->setVisible(false);
+    ui->BackUp_tableView_PreviewFiles->setVisible(false);
+
+    //Hide the execution panel until a backup is running
+    ui->BackUp_label_ExecutionStatus->setVisible(false);
+    ui->BackUp_progressBar->setVisible(false);
+    ui->BackUp_pushButton_CancelBackup->setVisible(false);
 }

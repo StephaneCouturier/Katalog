@@ -90,7 +90,8 @@ public:
         const QList<int> &sourceDeviceIds,
         const QList<int> &targetDeviceIds,
         CompareFields matchFields,
-        bool checksumNotEqual = false
+        bool checksumNotEqual = false,
+        const QString &tableName = QLatin1String("filetemp")
     );
 
     /**
