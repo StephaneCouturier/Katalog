@@ -11606,6 +11606,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
+               <widget class="QCheckBox" name="BackUp_checkBox_UpdateBeforeBackup">
+                <property name="toolTip">
+                 <string>Update source and target catalogs before backup, and update the target catalog again after backup</string>
+                </property>
+                <property name="text">
+                 <string>Update catalogs</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="BackUp_horizontalSpacer_Actions">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>

@@ -511,6 +511,16 @@ class MainWindow : public KXmlGuiWindow
                                                  const Device &targetDevice,
                                                  bool strictCopy);
 
+            // Pre-backup catalog update state machine
+            void setupDeviceUpdateManagerForBackup();
+            void continueBackupAfterCatalogUpdate();
+            void executeBackup(Device sourceDevice, Device targetDevice, MappingInfo mapping);
+            enum class BackupUpdatePhase { None, UpdatingSource, UpdatingTarget };
+            BackupUpdatePhase m_backupUpdatePhase = BackupUpdatePhase::None;
+            Device  m_pendingBackupSourceDevice;
+            Device  m_pendingBackupTargetDevice;
+            int     m_pendingBackupMappingId = -1;
+
             BackupJobStoppable *m_backupJob    = nullptr;
             QThread            *m_backupThread = nullptr;
             QElapsedTimer       m_backupTimer;

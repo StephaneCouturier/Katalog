@@ -31,6 +31,7 @@
 
 #include "core/backupprofilegenerator.h"
 #include "core/backupjobstoppable.h"
+#include <QTimer>
 #include "core/catalogdifferenceengine.h"
 #include "core/directoryreplicator.h"
 #include "core/statusbarmessagebuilder.h"
@@ -353,6 +354,103 @@ void MainWindow::runBackup()
         return;
     }
 
+    // Optionally update both catalogs from filesystem before comparing
+    if (ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()) {
+        if (deviceUpdateManager->operationRunning()) {
+            QMessageBox::warning(this, "Katalog",
+                tr("A catalog update is already in progress. Please wait and try again."));
+            return;
+        }
+        m_pendingBackupMappingId    = mappingID;
+        m_pendingBackupSourceDevice = sourceDevice;
+        m_pendingBackupTargetDevice = targetDevice;
+        m_backupUpdatePhase         = BackupUpdatePhase::UpdatingSource;
+
+        ui->BackUp_pushButton_RunBackup->setEnabled(false);
+        ui->BackUp_label_ExecutionStatus->setVisible(true);
+        ui->BackUp_label_ExecutionStatus->setText(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Backup"))
+                .setStatus(tr("Updating source catalog…"))
+                .build());
+
+        setupDeviceUpdateManagerForBackup();
+        deviceUpdateManager->updateDeviceHierarchy(
+            &m_pendingBackupSourceDevice, collection->databaseMode, collection->folder, "update");
+        return;
+    }
+
+    executeBackup(sourceDevice, targetDevice, mapping);
+}
+
+void MainWindow::setupDeviceUpdateManagerForBackup()
+{
+    // Temporarily replace normal device-tab connections with backup-specific ones
+    disconnect(deviceUpdateManager, nullptr, this, nullptr);
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+            this, &MainWindow::continueBackupAfterCatalogUpdate);
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationError,
+            this, [this](const QString &error) {
+                m_backupUpdatePhase      = BackupUpdatePhase::None;
+                m_pendingBackupMappingId = -1;
+                setupDeviceUpdateManager();  // restore normal device-tab connections
+                ui->BackUp_pushButton_RunBackup->setEnabled(true);
+                ui->BackUp_label_ExecutionStatus->setVisible(false);
+                QMessageBox::warning(this, "Katalog",
+                    tr("Catalog update failed: %1").arg(error));
+            });
+    connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
+            this, [this]() {
+                m_backupUpdatePhase      = BackupUpdatePhase::None;
+                m_pendingBackupMappingId = -1;
+                setupDeviceUpdateManager();
+                ui->BackUp_pushButton_RunBackup->setEnabled(true);
+                ui->BackUp_label_ExecutionStatus->setVisible(false);
+            });
+}
+
+void MainWindow::continueBackupAfterCatalogUpdate()
+{
+    if (m_backupUpdatePhase == BackupUpdatePhase::UpdatingSource) {
+        // Source done — now update target.
+        // NOTE: DeviceUpdateManager defers cleanupOperation() 10 ms after emitting
+        // operationCompleted. Starting the target update synchronously here would
+        // have that cleanup fire mid-operation and corrupt DeviceUpdateManager state.
+        // Delay past the cleanup window (>10 ms) so the manager is fully reset first.
+        m_backupUpdatePhase = BackupUpdatePhase::UpdatingTarget;
+        ui->BackUp_label_ExecutionStatus->setText(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Backup"))
+                .setStatus(tr("Updating target catalog…"))
+                .build());
+        QTimer::singleShot(50, this, [this]() {
+            deviceUpdateManager->updateDeviceHierarchy(
+                &m_pendingBackupTargetDevice, collection->databaseMode, collection->folder, "update");
+        });
+        return;
+    }
+
+    // Both catalogs updated — restore normal device connections then execute
+    m_backupUpdatePhase = BackupUpdatePhase::None;
+    setupDeviceUpdateManager();  // restore normal device-tab connections
+
+    if (!backupMappingManager)
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    MappingInfo mapping = backupMappingManager->getMappingById(m_pendingBackupMappingId);
+    m_pendingBackupMappingId = -1;
+
+    // Reload device data so the updated catalog IDs/stats are current
+    m_pendingBackupSourceDevice.loadDevice(m_connectionName);
+    m_pendingBackupTargetDevice.loadDevice(m_connectionName);
+
+    executeBackup(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice, mapping);
+}
+
+void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, MappingInfo mapping)
+{
+    // Save target device so onBackupFinished() can update the target catalog afterward
+    m_pendingBackupTargetDevice = targetDevice;
+
     //Memory mode: load file data into 'file' table first
     if (collection->databaseMode == "Memory") {
         QMutex mutex;
@@ -365,6 +463,8 @@ void MainWindow::runBackup()
     BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy);
 
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
+        ui->BackUp_pushButton_RunBackup->setEnabled(true);
+        ui->BackUp_label_ExecutionStatus->setVisible(false);
         QMessageBox::information(this, "Katalog",
                                  tr("Source and target are already in sync. Nothing to copy."));
         return;
@@ -475,6 +575,32 @@ void MainWindow::onBackupFinished(const BackupReport &report)
     ui->BackUp_label_ExecutionStatus->setText(msg);
 
     showBackupReport(report);
+
+    // Update the target catalog to reflect the newly copied files
+    if (!report.wasCancelled
+            && ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()
+            && !deviceUpdateManager->operationRunning()) {
+
+        ui->BackUp_label_ExecutionStatus->setText(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Backup"))
+                .setStatus(tr("Updating target catalog…"))
+                .build());
+
+        disconnect(deviceUpdateManager, nullptr, this, nullptr);
+        connect(deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+                this, [this, msg]() {
+                    setupDeviceUpdateManager();
+                    ui->BackUp_label_ExecutionStatus->setText(msg);
+                });
+        connect(deviceUpdateManager, &DeviceUpdateManager::operationError,
+                this, [this](const QString&) { setupDeviceUpdateManager(); });
+        connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
+                this, [this]() { setupDeviceUpdateManager(); });
+
+        deviceUpdateManager->updateDeviceHierarchy(
+            &m_pendingBackupTargetDevice, collection->databaseMode, collection->folder, "update");
+    }
 }
 
 void MainWindow::showBackupReport(const BackupReport &report)
