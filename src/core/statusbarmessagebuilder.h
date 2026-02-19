@@ -150,6 +150,25 @@ public:
     StatusBarMessageBuilder& setResult(const QString& title, int count);
 
     /**
+     * @brief Set data size progress (bytes transferred vs total)
+     * @param current Bytes transferred so far
+     * @param total Total bytes to transfer
+     * @return Reference to this builder for chaining
+     *
+     * Generates: "1.2 GB / 4.5 GB"
+     */
+    StatusBarMessageBuilder& setSizeProgress(qint64 current, qint64 total);
+
+    /**
+     * @brief Set transfer speed
+     * @param bytesPerSecond Current speed in bytes/second (< 0 = not yet known)
+     * @return Reference to this builder for chaining
+     *
+     * Generates: "45 MB/s"
+     */
+    StatusBarMessageBuilder& setSpeed(double bytesPerSecond);
+
+    /**
      * @brief Set time to completion
      * @param timeString Time string (e.g., "5m 23s", "1h 25m 10s")
      * @return Reference to this builder for chaining
@@ -200,6 +219,9 @@ private:
     int m_processTotalCount = -1;
     QString m_resultTitle;
     int m_resultCount = -1;
+    qint64  m_sizeProgressCurrent = -1;
+    qint64  m_sizeProgressTotal   = -1;
+    double  m_speedBps            = -1.0;
     QString m_timeToCompletion;
     QString m_currentItem;
 
@@ -212,6 +234,8 @@ private:
     QString formatDeviceContext() const;
     QString formatProcess() const;
     QString formatResult() const;
+    QString formatSizeProgress() const;
+    QString formatSpeed() const;
     QString formatTimeToCompletion() const;
     QString formatCurrentItem() const;
     double calculatePercent() const;

@@ -33,6 +33,7 @@
 #include "core/backupjobstoppable.h"
 #include "core/catalogdifferenceengine.h"
 #include "core/directoryreplicator.h"
+#include "core/statusbarmessagebuilder.h"
 #include "mainwindow.h"
 #include "devicemappingview.h"
 #include "ui_mainwindow.h"
@@ -392,11 +393,12 @@ void MainWindow::runBackup()
             m_backupThread, &QObject::deleteLater);
 
     //Show execution panel, disable Run button
+    // Use a 0–1000 scale so the bar works with large byte counts (qint64 → int safe)
     ui->BackUp_progressBar->setMinimum(0);
-    ui->BackUp_progressBar->setMaximum(cmp.filesToCopy.size());
+    ui->BackUp_progressBar->setMaximum(1000);
     ui->BackUp_progressBar->setValue(0);
     ui->BackUp_label_ExecutionStatus->setText(tr("Starting backup…"));
-    ui->BackUp_verticalLayout_Execution->setEnabled(true);
+    m_backupTimer.start();
     ui->BackUp_label_ExecutionStatus->setVisible(true);
     ui->BackUp_progressBar->setVisible(true);
     ui->BackUp_pushButton_CancelBackup->setVisible(true);
@@ -407,14 +409,42 @@ void MainWindow::runBackup()
 }
 
 void MainWindow::onBackupProgress(int filesDone, int totalFiles,
-                                   qint64 /*bytesCopied*/, qint64 /*totalBytes*/,
+                                   qint64 bytesCopied, qint64 totalBytes,
                                    const QString &currentFile)
 {
-    ui->BackUp_progressBar->setMaximum(totalFiles);
-    ui->BackUp_progressBar->setValue(filesDone);
-    if (!currentFile.isEmpty())
-        ui->BackUp_label_ExecutionStatus->setText(
-            tr("Copying %1 / %2: %3").arg(filesDone + 1).arg(totalFiles).arg(currentFile));
+    // Progress bar: 0–1000 byte-based scale (more accurate than file count for mixed sizes)
+    if (totalBytes > 0)
+        ui->BackUp_progressBar->setValue(static_cast<int>(bytesCopied * 1000 / totalBytes));
+
+    // Speed and ETA — only after ≥ 500 ms to avoid wild numbers at the very start
+    const qint64 elapsedMs = m_backupTimer.elapsed();
+    double speedBps = -1.0;
+    QString etaStr;
+
+    if (elapsedMs >= 500 && bytesCopied > 0) {
+        speedBps = static_cast<double>(bytesCopied) / (elapsedMs / 1000.0);
+
+        if (speedBps > 0 && totalBytes > bytesCopied) {
+            const qint64 etaSec = static_cast<qint64>((totalBytes - bytesCopied) / speedBps);
+            if (etaSec < 60)
+                etaStr = tr("%1s").arg(etaSec);
+            else if (etaSec < 3600)
+                etaStr = tr("%1m %2s").arg(etaSec / 60).arg(etaSec % 60);
+            else
+                etaStr = tr("%1h %2m").arg(etaSec / 3600).arg((etaSec % 3600) / 60);
+        }
+    }
+
+    const QString msg = StatusBarMessageBuilder()
+        .setOperation(tr("backup"))
+        .setProcess(tr("Copying"), filesDone + 1, totalFiles)
+        .setSizeProgress(bytesCopied, totalBytes)
+        .setSpeed(speedBps)
+        .setTimeToCompletion(etaStr)
+        .setCurrentItem(currentFile)
+        .build();
+
+    ui->BackUp_label_ExecutionStatus->setText(msg);
 }
 
 void MainWindow::onBackupFinished(const BackupReport &report)
@@ -426,10 +456,23 @@ void MainWindow::onBackupFinished(const BackupReport &report)
     ui->BackUp_pushButton_CancelBackup->setEnabled(false);
     ui->BackUp_progressBar->setValue(ui->BackUp_progressBar->maximum());
 
-    if (report.wasCancelled)
-        ui->BackUp_label_ExecutionStatus->setText(tr("Backup cancelled."));
+    // Format total elapsed time
+    const qint64 elapsedSec = m_backupTimer.elapsed() / 1000;
+    QString elapsedStr;
+    if (elapsedSec < 60)
+        elapsedStr = tr("%1s").arg(elapsedSec);
+    else if (elapsedSec < 3600)
+        elapsedStr = tr("%1m %2s").arg(elapsedSec / 60).arg(elapsedSec % 60);
     else
-        ui->BackUp_label_ExecutionStatus->setText(tr("Backup complete."));
+        elapsedStr = tr("%1h %2m").arg(elapsedSec / 3600).arg((elapsedSec % 3600) / 60);
+
+    const QString msg = StatusBarMessageBuilder()
+        .setOperation(tr("backup"))
+        .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Complete"))
+        .setSizeProgress(report.totalBytesCopied, report.totalBytesCopied)
+        .setTimeToCompletion(elapsedStr)
+        .build();
+    ui->BackUp_label_ExecutionStatus->setText(msg);
 
     showBackupReport(report);
 }

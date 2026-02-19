@@ -49,6 +49,7 @@
 #include "core/backupjob.h"
 #include "core/backupjobstoppable.h"
 #include <QThread>
+#include <QElapsedTimer>
 #include "widgets/treecombobox.h"
 
 //KDE KF6
@@ -512,6 +513,7 @@ class MainWindow : public KXmlGuiWindow
 
             BackupJobStoppable *m_backupJob    = nullptr;
             QThread            *m_backupThread = nullptr;
+            QElapsedTimer       m_backupTimer;
 
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);

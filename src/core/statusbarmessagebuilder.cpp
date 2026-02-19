@@ -91,6 +91,19 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::setResult(const QString& title
     return *this;
 }
 
+StatusBarMessageBuilder& StatusBarMessageBuilder::setSizeProgress(qint64 current, qint64 total)
+{
+    m_sizeProgressCurrent = current;
+    m_sizeProgressTotal   = total;
+    return *this;
+}
+
+StatusBarMessageBuilder& StatusBarMessageBuilder::setSpeed(double bytesPerSecond)
+{
+    m_speedBps = bytesPerSecond;
+    return *this;
+}
+
 StatusBarMessageBuilder &StatusBarMessageBuilder::setTimeToCompletion(const QString &timeString)
 {
     m_timeToCompletion = timeString;
@@ -115,6 +128,9 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::reset()
     m_processTotalCount = -1;
     m_resultTitle.clear();
     m_resultCount = -1;
+    m_sizeProgressCurrent = -1;
+    m_sizeProgressTotal   = -1;
+    m_speedBps            = -1.0;
     m_timeToCompletion.clear();
     m_currentItem.clear();
     return *this;
@@ -151,6 +167,18 @@ QString StatusBarMessageBuilder::build() const
     QString result = formatResult();
     if (!result.isEmpty()) {
         parts << result;
+    }
+
+    // Part 6: Size progress (bytes transferred / total)
+    QString sizeProgress = formatSizeProgress();
+    if (!sizeProgress.isEmpty()) {
+        parts << sizeProgress;
+    }
+
+    // Part 7: Transfer speed
+    QString speed = formatSpeed();
+    if (!speed.isEmpty()) {
+        parts << speed;
     }
 
     // Part 10: Time to completion
@@ -289,6 +317,24 @@ QString StatusBarMessageBuilder::formatResult() const
 
     return QString("%1: %2")
         .arg(m_resultTitle.toHtmlEscaped(), resultValue);
+}
+
+QString StatusBarMessageBuilder::formatSizeProgress() const
+{
+    if (m_sizeProgressCurrent < 0 || m_sizeProgressTotal <= 0)
+        return QString();
+
+    return QString("%1 / %2")
+        .arg(QLocale().formattedDataSize(m_sizeProgressCurrent),
+             QLocale().formattedDataSize(m_sizeProgressTotal));
+}
+
+QString StatusBarMessageBuilder::formatSpeed() const
+{
+    if (m_speedBps < 0.0)
+        return QString();
+
+    return QLocale().formattedDataSize(static_cast<qint64>(m_speedBps)) + "/s";
 }
 
 QString StatusBarMessageBuilder::formatTimeToCompletion() const
