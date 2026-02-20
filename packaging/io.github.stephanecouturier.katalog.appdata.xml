@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.stephanecouturier.katalog</id>
+  <id>io.github.stephanecouturier.Katalog</id>
   <name>Katalog</name>
   <summary>File Catalog Manager</summary>
   <description>
@@ -46,7 +46,7 @@
   <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
   <url type="donation">https://github.com/sponsors/StephaneCouturier</url>
   <url type="vcs-browser">https://github.com/StephaneCouturier/Katalog</url>
-  <launchable type="desktop-id">io.github.stephanecouturier.katalog.desktop</launchable>
+  <launchable type="desktop-id">io.github.stephanecouturier.Katalog.desktop</launchable>
   <provides>
     <binary>Katalog</binary>
   </provides>
