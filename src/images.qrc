@@ -48,5 +48,6 @@
         <file>images/flags/ua.png</file>
         <file>images/flags/hr.png</file>
         <file>images/flags/id.png</file>
+        <file>images/Katalog_logo_256.png</file>
     </qresource>
 </RCC>
