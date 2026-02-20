@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>io.github.stephanecouturier.Katalog</id>
+  <metadata_license>CC0-1.0</metadata_license>
   <name>Katalog</name>
   <summary>File Catalog Manager</summary>
   <description>
