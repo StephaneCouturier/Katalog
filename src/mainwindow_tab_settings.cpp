@@ -771,6 +771,7 @@
         // Refresh UI views to show updated data
         loadDevicesView("");                // Refresh main device tree with updated dates
         loadDevicesTreeToModel("Filters");  // Refresh filters tree view
+        loadBackUpMapping();               // Refresh backup mappings for the new collection
 
     }
     //----------------------------------------------------------------------
