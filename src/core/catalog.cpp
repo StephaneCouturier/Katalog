@@ -44,6 +44,18 @@ const QString Catalog::METADATA_FULL = "FullExtended";
 const QString Catalog::CHECKSUM_NONE = "None";
 const QString Catalog::CHECKSUM_SHA256 = "SHA256";
 
+QString Catalog::metadataLevelDisplayName(const QString &internalValue)
+{// Maps internal DB metadata level values to their English display names
+    if (internalValue == METADATA_NONE)           return "None";
+    if (internalValue == "MimeOnly")              return "MIME Type Only";
+    if (internalValue == METADATA_MEDIA_BASIC)    return "Media Basic";
+    if (internalValue == METADATA_MEDIA_EXTENDED) return "Extended Custom";
+    if (internalValue == "ExtendedCustom")        return "Extended Custom";
+    if (internalValue == METADATA_FULL)           return "Extended Full";
+    if (internalValue == "ExtendedFull")          return "Extended Full";
+    return internalValue; // unknown value, display as-is
+}
+
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
     includeMetadata = METADATA_NONE;
     includeChecksum = CHECKSUM_NONE;

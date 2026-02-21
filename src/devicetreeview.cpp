@@ -29,6 +29,8 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "devicetreeview.h"
+#include "core/device.h"
+#include "core/catalog.h"
 
 #include <QFont>
 #include <QBrush>
@@ -48,18 +50,19 @@ void DeviceTreeView::initializeLists()
     //Assign fields to data types.
     //   1 list per data type except for text used as default (no customization)
     // + 1 list for bold text
+    using namespace DeviceTreeColumns;
 
     //Device fields
-    filecountColumnList << 3 << 4 << 5 << 6;
-    filesizeColumnList  << 7 << 8 << 9 << 10;
-    booleanColumnList   << 2;
-    boldColumnList      << 0 << 6 << 7 << 8 << 9 << 10;
+    filecountColumnList << DEVICE_ID << PARENT_ID << EXTERNAL_ID << FILE_COUNT;
+    filesizeColumnList  << FILE_SIZE << USED_SPACE << FREE_SPACE << TOTAL_SPACE;
+    booleanColumnList   << IS_ACTIVE;
+    boldColumnList      << NAME << FILE_COUNT << FILE_SIZE << USED_SPACE << FREE_SPACE << TOTAL_SPACE;
 
     //Storage fields
     //All text
 
     //Catalog fields
-    booleanColumnList   << 25 << 28;
+    booleanColumnList   << CATALOG_HIDDEN << CATALOG_PARENT_STORAGE;
 }
 
 void DeviceTreeView::setColorizeFullRow(bool fullRow)
@@ -101,23 +104,10 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     return QVariant("");
                 }
                 // Metadata column
-                else if (index.column() == 26) {
+                else if (index.column() == DeviceTreeColumns::CATALOG_METADATA) {
                     QString internalValue = QSortFilterProxyModel::data(index, role).toString();
-
-                    // Translate internal values to user-friendly text
-                    if (internalValue == "None") {
-                        return QVariant(QApplication::translate("MainWindow","None"));
-                    } else if (internalValue == "MimeOnly") {
-                        return QVariant(QApplication::translate("MainWindow","MIME Type Only"));
-                    } else if (internalValue == "MediaBasic") {
-                        return QVariant(QApplication::translate("MainWindow","Media Basic"));
-                    } else if (internalValue == "ExtendedCustom") {
-                        return QVariant(QApplication::translate("MainWindow","Extended Custom"));
-                    } else if (internalValue == "ExtendedFull") {
-                        return QVariant(QApplication::translate("MainWindow","Extended Full"));
-                    } else {
-                        return QVariant(internalValue);
-                    }
+                    QString displayName = Catalog::metadataLevelDisplayName(internalValue);
+                    return QVariant(QApplication::translate("MainWindow", displayName.toUtf8().constData()));
                 }
 
                 else QSortFilterProxyModel::data(index, role) ;

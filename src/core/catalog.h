@@ -137,6 +137,7 @@ public:
     static const QString METADATA_MEDIA_BASIC;
     static const QString METADATA_MEDIA_EXTENDED;
     static const QString METADATA_FULL;
+    static QString metadataLevelDisplayName(const QString &internalValue);
 
     //Checksum
     static const QString CHECKSUM_NONE;

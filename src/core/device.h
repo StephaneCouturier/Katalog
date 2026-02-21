@@ -37,6 +37,37 @@
 #include "storage.h"
 #include "catalog.h"
 
+// Column index constants for the device tree QStandardItemModel.
+// Must stay in sync with the rowItems construction in mainwindow_tab_device_pr.cpp.
+namespace DeviceTreeColumns {
+    // Common fields
+    constexpr int NAME          = 0;
+    constexpr int TYPE          = 1;
+    constexpr int IS_ACTIVE     = 2;
+    constexpr int DEVICE_ID     = 3;
+    constexpr int PARENT_ID     = 4;
+    constexpr int EXTERNAL_ID   = 5;
+    constexpr int FILE_COUNT    = 6;
+    constexpr int FILE_SIZE     = 7;
+    constexpr int USED_SPACE    = 8;
+    constexpr int FREE_SPACE    = 9;
+    constexpr int TOTAL_SPACE   = 10;
+    constexpr int DATE_UPDATED  = 11;
+    constexpr int PATH          = 12;
+    constexpr int GROUP_ID      = 13;
+    // Columns 14-23 are empty Storage-padding rows
+    // Catalog-specific fields
+    constexpr int CATALOG_FILE_TYPE      = 24;
+    constexpr int CATALOG_HIDDEN         = 25;
+    constexpr int CATALOG_METADATA       = 26;
+    constexpr int CATALOG_CHECKSUM       = 27;
+    constexpr int CATALOG_PARENT_STORAGE = 28;
+    constexpr int CATALOG_IS_FULL        = 29;
+    constexpr int CATALOG_DATE_LOADED    = 30;
+    constexpr int CATALOG_APP_VERSION    = 31;
+    constexpr int CATALOG_FILE_PATH      = 32;
+}
+
 class Device
 {
 
