@@ -299,26 +299,53 @@ void Collection::clearDatabaseData()
     }
 }
 //----------------------------------------------------------------------
-void Collection::loadAllCatalogFiles()
+bool Collection::loadAllCatalogFiles(std::function<bool(int, int, const QString &)> progressCallback)
 {//Load all catalog files to memory
-    if(databaseMode=="Memory"){
-        QSqlQuery queryLoadAllCatalogFiles(QSqlDatabase::database(m_connectionName));
-        QString queryLoadAllCatalogFilesSQL = QLatin1String(R"(
-                                        SELECT device_id
-                                        FROM device
-                                        WHERE device_type ='Catalog'
-                                    )");
-        queryLoadAllCatalogFiles.prepare(queryLoadAllCatalogFilesSQL);
-        queryLoadAllCatalogFiles.exec();
-        while(queryLoadAllCatalogFiles.next()){
-            Device tempDevice;
-            tempDevice.ID = queryLoadAllCatalogFiles.value(0).toInt();
-            tempDevice.loadDevice(m_connectionName);
-            QMutex tempMutex;
-            bool tempStopRequested = false;
-            tempDevice.catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
-        }
+    if (databaseMode != "Memory")
+        return true;
+
+    // Get total file count for progress reporting when a callback is provided
+    int totalFileCount = 0;
+    if (progressCallback) {
+        QSqlQuery countQuery(QSqlDatabase::database(m_connectionName));
+        countQuery.prepare(QLatin1String(R"(
+            SELECT SUM(device_total_file_count)
+            FROM device
+            WHERE device_type = 'Catalog'
+            AND device_group_id = 0
+        )"));
+        countQuery.exec();
+        if (countQuery.next())
+            totalFileCount = countQuery.value(0).toInt();
     }
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        SELECT device_id, device_name, device_total_file_count
+        FROM device
+        WHERE device_type = 'Catalog'
+    )"));
+    query.exec();
+
+    int filesLoaded = 0;
+    while (query.next()) {
+        Device tempDevice;
+        tempDevice.ID = query.value(0).toInt();
+        QString deviceName = query.value(1).toString();
+        int deviceFileCount = query.value(2).toInt();
+
+        tempDevice.loadDevice(m_connectionName);
+        QMutex tempMutex;
+        bool tempStopRequested = false;
+        tempDevice.catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
+
+        filesLoaded += deviceFileCount;
+
+        if (progressCallback && !progressCallback(filesLoaded, totalFileCount, deviceName))
+            return false; // cancelled
+    }
+
+    return true;
 }
 //----------------------------------------------------------------------
 void Collection::loadDeviceFileToTable()

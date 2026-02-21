@@ -88,7 +88,7 @@ public:
     //File loading
     bool load();
     void clearDatabaseData();
-    void loadAllCatalogFiles();
+    bool loadAllCatalogFiles(std::function<bool(int filesLoaded, int totalFiles, const QString &deviceName)> progressCallback = nullptr);
     void loadDeviceFileToTable();
     void loadCatalogFilesToTable();
     void loadStorageFileToTable();

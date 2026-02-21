@@ -57,58 +57,23 @@ void MainWindow::exportToSQLiteFile()
             backupFilePath = selectedBackupFilePath;
         }
 
-        //Load all Catalogs indexes into memory
-
-        //Prepare temporary variables
-        Device tempCatalogDevice;
-        QMutex tempMutex;
-        bool tempStopRequested = false;
-
-        // Get the total number of files for all devices
-        QSqlQuery fileCountQuery(QSqlDatabase::database(m_connectionName));
-        QString fileCountQuerySQL = QLatin1String(R"(
-                    SELECT SUM(device_total_file_count)
-                    FROM device
-                    WHERE device_type ="Catalog"
-                    AND device_group_id = 0
-                )");
-        fileCountQuery.prepare(fileCountQuerySQL);
-        fileCountQuery.exec();
-        fileCountQuery.next();
-        qint64 totalFileCount = fileCountQuery.value(0).toInt();
-
-        // Create the progress dialog
-        QProgressDialog progress("Loading devices...", "Cancel", 0, totalFileCount, this);
+        // Load all catalog indexes into memory, with progress
+        QProgressDialog progress("Loading devices...", "Cancel", 0, 100, this);
         progress.setWindowModality(Qt::WindowModal);
-        qint64 filesLoaded = 0;
 
-        // List all Catalogs indexes to be loaded into memory
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        QString querySQL = QLatin1String(R"(
-                    SELECT device_id, device_name, device_total_file_count
-                    FROM device
-                    WHERE device_type ="Catalog"
-                )");
-        query.prepare(querySQL);
-        query.exec();
+        bool cancelled = !collection->loadAllCatalogFiles(
+            [&progress](int filesLoaded, int totalFiles, const QString &deviceName) -> bool {
+                int percent = totalFiles > 0 ? (filesLoaded * 100) / totalFiles : 0;
+                progress.setValue(percent);
+                progress.setLabelText(
+                    QCoreApplication::translate("MainWindow",
+                        "Loading all catalogs prior to export<br/> %1 <br/><br/> %2 files loaded out of %3")
+                        .arg(deviceName, QLocale().toString(filesLoaded), QLocale().toString(totalFiles)));
+                return !progress.wasCanceled();
+            });
 
-        while(query.next()){
-            int deviceId = query.value(0).toInt();
-            QString deviceName = query.value(1).toString();
-            qint64 deviceFileCount = query.value(2).toInt();
-
-            progress.setLabelText(QString("Loading all catalogs prior to export<br/> %1 <br/><br/> %2 files loaded out of %3" ).arg(deviceName, QLocale().toString(filesLoaded), QLocale().toString(totalFileCount)) );
-
-            tempCatalogDevice.ID = deviceId;
-            tempCatalogDevice.loadDevice(m_connectionName);
-            tempCatalogDevice.catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
-
-            filesLoaded += deviceFileCount;
-            progress.setValue(filesLoaded);
-
-            if (progress.wasCanceled())
-                return;
-        }
+        if (cancelled)
+            return;
 
         //Dump all the database in Memory to the sql File
         if (!backupMemoryDatabaseToFile(m_connectionName, backupFilePath)) {
