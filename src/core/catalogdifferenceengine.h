@@ -56,6 +56,13 @@ struct DifferenceResult {
     QList<DifferenceFileEntry> differentContent;  // Same match fields, different checksum
 };
 
+// Result of a path-aware strict comparison (used by the strictCopy backup mode)
+struct StrictDifferenceResult {
+    QList<DifferenceFileEntry> filesToCopy;  // Source files absent from the corresponding target path
+    QList<DifferenceFileEntry> conflicts;    // Source files at matching target path but different size
+    int skippedCount = 0;                    // Files already in sync
+};
+
 class CatalogDifferenceEngine
 {
 public:
@@ -92,6 +99,26 @@ public:
         CompareFields matchFields,
         bool checksumNotEqual = false,
         const QString &tableName = QLatin1String("filetemp")
+    );
+
+    /**
+     * @brief Path-aware comparison for strictCopy backup mode.
+     *
+     * A file is "to copy" if no file with the same name exists at the corresponding
+     * relative path in the target catalog. A file is a "conflict" if a file with the
+     * same name exists at that path but with a different size.
+     *
+     * @param sourceCatalogId  externalID of the source catalog
+     * @param targetCatalogId  externalID of the target catalog
+     * @param sourceRoot       Root path of the source device (used to compute relative paths)
+     * @param targetRoot       Root path of the target device
+     * @return StrictDifferenceResult with filesToCopy, conflicts and skippedCount
+     */
+    StrictDifferenceResult compareStrict(
+        int sourceCatalogId,
+        int targetCatalogId,
+        const QString &sourceRoot,
+        const QString &targetRoot
     );
 
     /**

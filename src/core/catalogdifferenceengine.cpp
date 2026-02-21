@@ -293,3 +293,92 @@ DifferenceFileEntry CatalogDifferenceEngine::entryFromQuery(const QSqlQuery &que
     return entry;
 }
 //----------------------------------------------------------------------
+StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
+    int sourceCatalogId,
+    int targetCatalogId,
+    const QString &sourceRoot,
+    const QString &targetRoot)
+{
+    StrictDifferenceResult result;
+
+    // Normalize roots: remove trailing slash
+    const QString sourceRootNorm = sourceRoot.endsWith('/') ? sourceRoot.chopped(1) : sourceRoot;
+    const QString targetRootNorm = targetRoot.endsWith('/') ? targetRoot.chopped(1) : targetRoot;
+    const int sourceRootLen = sourceRootNorm.length();
+
+    QSqlQuery q(QSqlDatabase::database(m_connectionName));
+
+    // Files to copy: no file at the corresponding relative path in target
+    q.prepare(R"(
+        SELECT file_name, file_folder_path, file_size, file_date_updated
+        FROM file f1
+        WHERE f1.file_catalog_id = :sourceId
+        AND NOT EXISTS (
+            SELECT 1 FROM file f2
+            WHERE f2.file_catalog_id = :targetId
+            AND f2.file_name = f1.file_name
+            AND f2.file_folder_path = :targetRoot || SUBSTR(f1.file_folder_path, :rootLen + 1)
+        )
+    )");
+    q.bindValue(":sourceId",   sourceCatalogId);
+    q.bindValue(":targetId",   targetCatalogId);
+    q.bindValue(":targetRoot", targetRootNorm);
+    q.bindValue(":rootLen",    sourceRootLen);
+
+    if (q.exec()) {
+        while (q.next()) {
+            DifferenceFileEntry e;
+            e.fileName    = q.value(0).toString();
+            e.folderPath  = q.value(1).toString();
+            e.fileSize    = q.value(2).toLongLong();
+            e.dateUpdated = q.value(3).toString();
+            result.filesToCopy.append(e);
+        }
+    } else {
+        qWarning() << "CatalogDifferenceEngine::compareStrict - filesToCopy error:"
+                   << q.lastError().text();
+    }
+
+    // Conflicts: file exists at the corresponding path but with a different size
+    q.prepare(R"(
+        SELECT file_name, file_folder_path, file_size, file_date_updated
+        FROM file f1
+        WHERE f1.file_catalog_id = :sourceId
+        AND EXISTS (
+            SELECT 1 FROM file f2
+            WHERE f2.file_catalog_id = :targetId
+            AND f2.file_name = f1.file_name
+            AND f2.file_folder_path = :targetRoot || SUBSTR(f1.file_folder_path, :rootLen + 1)
+            AND f2.file_size != f1.file_size
+        )
+    )");
+    q.bindValue(":sourceId",   sourceCatalogId);
+    q.bindValue(":targetId",   targetCatalogId);
+    q.bindValue(":targetRoot", targetRootNorm);
+    q.bindValue(":rootLen",    sourceRootLen);
+
+    if (q.exec()) {
+        while (q.next()) {
+            DifferenceFileEntry e;
+            e.fileName    = q.value(0).toString();
+            e.folderPath  = q.value(1).toString();
+            e.fileSize    = q.value(2).toLongLong();
+            e.dateUpdated = q.value(3).toString();
+            result.conflicts.append(e);
+        }
+    } else {
+        qWarning() << "CatalogDifferenceEngine::compareStrict - conflicts error:"
+                   << q.lastError().text();
+    }
+
+    // Skipped = total source files minus to-copy and conflicts
+    q.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :sourceId");
+    q.bindValue(":sourceId", sourceCatalogId);
+    if (q.exec() && q.next())
+        result.skippedCount = q.value(0).toInt()
+                              - result.filesToCopy.size()
+                              - result.conflicts.size();
+
+    return result;
+}
+//----------------------------------------------------------------------

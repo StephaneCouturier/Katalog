@@ -184,89 +184,17 @@ MainWindow::BackupCompareResult MainWindow::compareForBackup(
     BackupCompareResult out;
 
     if (strictCopy) {
-        // PATH-AWARE (strict mirror): a file is "to copy" only if no file with the
-        // same name exists at the corresponding relative path in the target catalog.
-        // A file is a "conflict" if a file with the same name exists at that path
-        // but with a different size.
-        //
-        // Relative path mapping:
-        //   source: /media/USB-A/Photos/2024/img.jpg  → source root: /media/USB-A
-        //   target: /media/USB-B/Photos/2024/img.jpg  → target root: /media/USB-B
-        //   relFolder = SUBSTR(file_folder_path, LENGTH(sourceRoot) + 1)
-
-        const QString sourceRoot = sourceDevice.path.endsWith('/')
-                                   ? sourceDevice.path.chopped(1) : sourceDevice.path;
-        const QString targetRoot = targetDevice.path.endsWith('/')
-                                   ? targetDevice.path.chopped(1) : targetDevice.path;
-        const int sourceRootLen = sourceRoot.length();
-        // Escape single quotes in path for safe SQL string literal embedding
-        const QString targetRootEsc = QString(targetRoot).replace("'", "''");
-
-        // Files to copy: no file at corresponding target path at all
-        {
-            QSqlQuery q(QSqlDatabase::database(m_connectionName));
-            q.prepare(QString(R"(
-                SELECT file_name, file_folder_path, file_size, file_date_updated
-                FROM file f1
-                WHERE f1.file_catalog_id = %1
-                AND NOT EXISTS (
-                    SELECT 1 FROM file f2
-                    WHERE f2.file_catalog_id = %2
-                    AND f2.file_name = f1.file_name
-                    AND f2.file_folder_path = '%3' || SUBSTR(f1.file_folder_path, %4 + 1)
-                )
-            )").arg(sourceDevice.externalID).arg(targetDevice.externalID)
-               .arg(targetRootEsc).arg(sourceRootLen));
-            if (q.exec()) {
-                while (q.next()) {
-                    DifferenceFileEntry e;
-                    e.fileName   = q.value(0).toString();
-                    e.folderPath = q.value(1).toString();
-                    e.fileSize   = q.value(2).toLongLong();
-                    e.dateUpdated= q.value(3).toString();
-                    out.filesToCopy.append(e);
-                }
-            }
-        }
-
-        // Conflicts: file exists at target path but different size
-        {
-            QSqlQuery q(QSqlDatabase::database(m_connectionName));
-            q.prepare(QString(R"(
-                SELECT file_name, file_folder_path, file_size, file_date_updated
-                FROM file f1
-                WHERE f1.file_catalog_id = %1
-                AND EXISTS (
-                    SELECT 1 FROM file f2
-                    WHERE f2.file_catalog_id = %2
-                    AND f2.file_name = f1.file_name
-                    AND f2.file_folder_path = '%3' || SUBSTR(f1.file_folder_path, %4 + 1)
-                    AND f2.file_size != f1.file_size
-                )
-            )").arg(sourceDevice.externalID).arg(targetDevice.externalID)
-               .arg(targetRootEsc).arg(sourceRootLen));
-            if (q.exec()) {
-                while (q.next()) {
-                    DifferenceFileEntry e;
-                    e.fileName   = q.value(0).toString();
-                    e.folderPath = q.value(1).toString();
-                    e.fileSize   = q.value(2).toLongLong();
-                    e.dateUpdated= q.value(3).toString();
-                    out.fileConflicts.append(e);
-                }
-            }
-        }
-
-        // Count in-sync (total source - to_copy - conflicts)
-        {
-            QSqlQuery q(QSqlDatabase::database(m_connectionName));
-            q.prepare(QString("SELECT COUNT(*) FROM file WHERE file_catalog_id = %1")
-                          .arg(sourceDevice.externalID));
-            if (q.exec() && q.next())
-                out.skippedCount = q.value(0).toInt()
-                                   - out.filesToCopy.size()
-                                   - out.fileConflicts.size();
-        }
+        // PATH-AWARE (strict mirror): delegate to CatalogDifferenceEngine::compareStrict()
+        CatalogDifferenceEngine engine(m_connectionName);
+        StrictDifferenceResult r = engine.compareStrict(
+            sourceDevice.externalID,
+            targetDevice.externalID,
+            sourceDevice.path,
+            targetDevice.path
+        );
+        out.filesToCopy   = r.filesToCopy;
+        out.fileConflicts = r.conflicts;
+        out.skippedCount  = r.skippedCount;
 
     } else {
         // DEDUP mode (original): use CatalogDifferenceEngine — a file is skipped

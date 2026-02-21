@@ -200,21 +200,10 @@
             QString includeMetadata;
 
             if (!selectedResultFileCatalog.isEmpty() && selectedResultFileCatalog != "Connected") {
-                // For catalog files, check the catalog's metadata level using catalog_id
-                QSqlQuery query(QSqlDatabase::database(m_connectionName));
-                QString querySQL = QLatin1String(R"(
-                                        SELECT catalog_include_metadata
-                                        FROM catalog
-                                        WHERE catalog_id = :catalog_id
-                                    )");
-                query.prepare(querySQL);
-                query.bindValue(":catalog_id", catalogId);
-                query.exec();
-                if (query.next()) {
-                    includeMetadata = query.value(0).toString();
-                    if (includeMetadata.contains("Extended")) {
-                        showExtendedMetadataAction = true;
-                    }
+                // Use the already-loaded catalog attribute — no DB query needed
+                includeMetadata = exploreDevice->catalog->includeMetadata;
+                if (includeMetadata.contains("Extended")) {
+                    showExtendedMetadataAction = true;
                 }
             } else {
                 // For connected drives, show action if file type supports metadata
