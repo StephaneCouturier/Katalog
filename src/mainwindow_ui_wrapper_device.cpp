@@ -29,7 +29,6 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "mainwindow_ui_wrapper_device.h"
-#include "mainwindow_ui_wrapper_catalog.h"
 #include <QMessageBox>
 #include <QApplication>
 #include <QCoreApplication>

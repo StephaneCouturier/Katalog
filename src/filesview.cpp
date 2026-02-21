@@ -30,6 +30,7 @@
 */
 #include "filesview.h"
 #include "core/filetypemapping.h"
+#include "core/filemetadata.h"
 
 #include <QFont>
 #include <QBrush>
@@ -70,27 +71,10 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                         QVariant videoDuration = QSortFilterProxyModel::data(index.sibling(index.row(), 12), role);
                         QVariant audioDuration = QSortFilterProxyModel::data(index.sibling(index.row(), 15), role);
 
-                        int duration = 0;
-
                         // Priority: video duration first, then audio duration
-                        if (videoDuration.isValid() && videoDuration.toInt() > 0) {
-                            duration = videoDuration.toInt();
-                            //isVideo = true;
-                        } else if (audioDuration.isValid() && audioDuration.toInt() > 0) {
-                            duration = audioDuration.toInt();
-                            //isVideo = false;
-                        }
-
-                        if (duration > 0) {
-                                int hours = duration / 3600;
-                                int minutes = (duration % 3600) / 60;
-                                int seconds = duration % 60;
-                                return QString("%1:%2:%3")
-                                    .arg(hours, 2, 10, QChar('0'))
-                                    .arg(minutes, 2, 10, QChar('0'))
-                                    .arg(seconds, 2, 10, QChar('0'));
-                        }
-                        return "";
+                        int duration = FileMetadata::mergeMetadataValue(videoDuration, audioDuration);
+                        QString formatted = FileMetadata::formatDuration(duration);
+                        return formatted.isEmpty() ? QVariant(QString("")) : QVariant(formatted);
                     }
                 }
                 //Width columns (merged: image + video width)
@@ -100,12 +84,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     QVariant videoWidth = QSortFilterProxyModel::data(index.sibling(index.row(), 13), role);
 
                     // Priority: image width first, then video width
-                    if (imageWidth.isValid() && imageWidth.toInt() > 0) {
-                        return QVariant(QLocale().toString(imageWidth.toInt()));
-                    } else if (videoWidth.isValid() && videoWidth.toInt() > 0) {
-                        return QVariant(QLocale().toString(videoWidth.toInt()));
-                    }
-                    return "";
+                    int width = FileMetadata::mergeMetadataValue(imageWidth, videoWidth);
+                    return width > 0 ? QVariant(QLocale().toString(width)) : QVariant(QString(""));
                 }
                 //Height columns (merged: image + video height)
                 else if (index.column() == 11) {
@@ -114,12 +94,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     QVariant videoHeight = QSortFilterProxyModel::data(index.sibling(index.row(), 14), role);
 
                     // Priority: image height first, then video height
-                    if (imageHeight.isValid() && imageHeight.toInt() > 0) {
-                        return QVariant(QLocale().toString(imageHeight.toInt()));
-                    } else if (videoHeight.isValid() && videoHeight.toInt() > 0) {
-                        return QVariant(QLocale().toString(videoHeight.toInt()));
-                    }
-                    return "";
+                    int height = FileMetadata::mergeMetadataValue(imageHeight, videoHeight);
+                    return height > 0 ? QVariant(QLocale().toString(height)) : QVariant(QString(""));
                 }
 
                 //Numbers columns (without units)
@@ -264,21 +240,8 @@ bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) cons
         QVariant rightVideoWidth = sourceModel()->data(sourceModel()->index(right.row(), 13));
 
         // Determine actual width values (image takes priority)
-        int leftWidth = 0;
-        int rightWidth = 0;
-
-        if (leftImageWidth.isValid() && leftImageWidth.toInt() > 0) {
-            leftWidth = leftImageWidth.toInt();
-        } else if (leftVideoWidth.isValid() && leftVideoWidth.toInt() > 0) {
-            leftWidth = leftVideoWidth.toInt();
-        }
-
-        if (rightImageWidth.isValid() && rightImageWidth.toInt() > 0) {
-            rightWidth = rightImageWidth.toInt();
-        } else if (rightVideoWidth.isValid() && rightVideoWidth.toInt() > 0) {
-            rightWidth = rightVideoWidth.toInt();
-        }
-
+        int leftWidth  = FileMetadata::mergeMetadataValue(leftImageWidth,  leftVideoWidth);
+        int rightWidth = FileMetadata::mergeMetadataValue(rightImageWidth, rightVideoWidth);
         return leftWidth < rightWidth;
     }
     else if (column == 11) { // Height column (merged: image_height + video_height)
@@ -289,21 +252,8 @@ bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) cons
         QVariant rightVideoHeight = sourceModel()->data(sourceModel()->index(right.row(), 14));
 
         // Determine actual height values (image takes priority)
-        int leftHeight = 0;
-        int rightHeight = 0;
-
-        if (leftImageHeight.isValid() && leftImageHeight.toInt() > 0) {
-            leftHeight = leftImageHeight.toInt();
-        } else if (leftVideoHeight.isValid() && leftVideoHeight.toInt() > 0) {
-            leftHeight = leftVideoHeight.toInt();
-        }
-
-        if (rightImageHeight.isValid() && rightImageHeight.toInt() > 0) {
-            rightHeight = rightImageHeight.toInt();
-        } else if (rightVideoHeight.isValid() && rightVideoHeight.toInt() > 0) {
-            rightHeight = rightVideoHeight.toInt();
-        }
-
+        int leftHeight  = FileMetadata::mergeMetadataValue(leftImageHeight,  leftVideoHeight);
+        int rightHeight = FileMetadata::mergeMetadataValue(rightImageHeight, rightVideoHeight);
         return leftHeight < rightHeight;
     }
     else if (column == 12) { // Duration column (merged: video_duration + audio_duration)
@@ -314,21 +264,8 @@ bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) cons
         QVariant rightAudioDuration = sourceModel()->data(sourceModel()->index(right.row(), 15));
 
         // Determine actual duration values (video takes priority)
-        int leftDuration = 0;
-        int rightDuration = 0;
-
-        if (leftVideoDuration.isValid() && leftVideoDuration.toInt() > 0) {
-            leftDuration = leftVideoDuration.toInt();
-        } else if (leftAudioDuration.isValid() && leftAudioDuration.toInt() > 0) {
-            leftDuration = leftAudioDuration.toInt();
-        }
-
-        if (rightVideoDuration.isValid() && rightVideoDuration.toInt() > 0) {
-            rightDuration = rightVideoDuration.toInt();
-        } else if (rightAudioDuration.isValid() && rightAudioDuration.toInt() > 0) {
-            rightDuration = rightAudioDuration.toInt();
-        }
-
+        int leftDuration  = FileMetadata::mergeMetadataValue(leftVideoDuration,  leftAudioDuration);
+        int rightDuration = FileMetadata::mergeMetadataValue(rightVideoDuration, rightAudioDuration);
         return leftDuration < rightDuration;
     }
 

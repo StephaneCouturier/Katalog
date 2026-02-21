@@ -96,6 +96,10 @@ public:
     // Make extensions cache accessible
     static const QHash<QString, QString>& getExtensionToTypeCache();
 
+    // Media metadata display utilities
+    static int     mergeMetadataValue(const QVariant &primary, const QVariant &secondary);
+    static QString formatDuration(int seconds);
+
     // Batch update metadata for multiple files
     static bool batchUpdateFileMetadata(const QString &connectionName,
                                         int catalogId,

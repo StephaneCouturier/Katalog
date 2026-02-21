@@ -1254,3 +1254,25 @@ QString FileMetadata::getExtendedMetadataJson(const QString &filePath)
     return QString("{}");  // Return empty JSON object instead of message
 }
 //-----------------------------------------------------------------------------------------------------
+int FileMetadata::mergeMetadataValue(const QVariant &primary, const QVariant &secondary)
+{// Return primary value if valid and non-zero, else secondary, else 0
+    if (primary.isValid() && primary.toInt() > 0)
+        return primary.toInt();
+    if (secondary.isValid() && secondary.toInt() > 0)
+        return secondary.toInt();
+    return 0;
+}
+//-----------------------------------------------------------------------------------------------------
+QString FileMetadata::formatDuration(int seconds)
+{// Format seconds as HH:MM:SS; returns empty string for zero/negative values
+    if (seconds <= 0)
+        return QString();
+    int hours   = seconds / 3600;
+    int minutes = (seconds % 3600) / 60;
+    int secs    = seconds % 60;
+    return QString("%1:%2:%3")
+        .arg(hours,   2, 10, QChar('0'))
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(secs,    2, 10, QChar('0'));
+}
+//-----------------------------------------------------------------------------------------------------
