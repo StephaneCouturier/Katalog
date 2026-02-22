@@ -414,25 +414,7 @@
         // Get max levels once and cache it (shared for both trees)
         static int maxTreeLevels = -1;
         if (maxTreeLevels == -1 || forceRefreshMaxLevels) {
-            QSqlQuery query(QSqlDatabase::database(m_connectionName));
-            QString querySQL = QLatin1String(R"(
-                WITH RECURSIVE device_tree AS (
-                  SELECT device_id, device_parent_id, 0 AS level
-                  FROM device
-                  WHERE device_parent_id = 0
-                  UNION ALL
-                  SELECT child.device_id, child.device_parent_id, parent.level + 1 AS level
-                  FROM device_tree parent
-                  JOIN device child ON child.device_parent_id = parent.device_id
-                )
-                SELECT MAX(level) AS total_levels FROM device_tree;
-        )");
-            query.prepare(querySQL);
-            query.exec();
-            if (query.next()) {
-                maxTreeLevels = query.value(0).toInt();
-            }
-            if (maxTreeLevels == 0) maxTreeLevels = 4; // fallback
+            maxTreeLevels = Device::getMaxHierarchyDepth(m_connectionName);
         }
 
         // Bounds checking

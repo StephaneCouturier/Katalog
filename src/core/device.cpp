@@ -948,3 +948,26 @@ bool Device::unassignFromDevice(int deviceID, int deviceParentID, const QString 
 
     return true;
 }
+//----------------------------------------------------------------------
+int Device::getMaxHierarchyDepth(const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare(QLatin1String(R"(
+        WITH RECURSIVE device_tree AS (
+          SELECT device_id, device_parent_id, 0 AS level
+          FROM device
+          WHERE device_parent_id = 0
+          UNION ALL
+          SELECT child.device_id, child.device_parent_id, parent.level + 1 AS level
+          FROM device_tree parent
+          JOIN device child ON child.device_parent_id = parent.device_id
+        )
+        SELECT MAX(level) AS total_levels FROM device_tree
+    )"));
+
+    if (query.exec() && query.next()) {
+        int depth = query.value(0).toInt();
+        return (depth == 0) ? 4 : depth; // fallback if tree is flat
+    }
+    return 4; // safe default
+}

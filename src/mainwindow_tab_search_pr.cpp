@@ -626,25 +626,7 @@ void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folde
 
     // Try to get stored JSON from database if we have a catalog
     if (catalogId > 0) {
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        QString querySQL = QLatin1String(R"(
-            SELECT metadata_extended
-            FROM file
-            WHERE file_name = :file_name
-            AND file_folder_path = :folder_path
-            AND file_catalog_id = :catalog_id
-            AND metadata_extended IS NOT NULL
-            AND metadata_extended != ''
-        )");
-
-        query.prepare(querySQL);
-        query.bindValue(":file_name", fileName);
-        query.bindValue(":folder_path", folderPath);
-        query.bindValue(":catalog_id", catalogId);
-
-        if (query.exec() && query.next()) {
-            jsonMetadata = query.value(0).toString();
-        }
+        jsonMetadata = Catalog::getFileMetadataJson(catalogId, fileName, folderPath, m_connectionName);
     }
 
     // If no stored JSON found, try to extract it fresh from the file

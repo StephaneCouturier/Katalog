@@ -1680,3 +1680,24 @@ bool Catalog::hasFilesNeedingMigration() const
     int filesNeedingMigration = checkQuery.value(0).toInt();
     return (filesNeedingMigration > 0);
 }
+//----------------------------------------------------------------------
+QString Catalog::getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath, const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare(QLatin1String(R"(
+        SELECT metadata_extended
+        FROM file
+        WHERE file_name = :file_name
+          AND file_folder_path = :folder_path
+          AND file_catalog_id = :catalog_id
+          AND metadata_extended IS NOT NULL
+          AND metadata_extended != ''
+    )"));
+    query.bindValue(":file_name",   fileName);
+    query.bindValue(":folder_path", folderPath);
+    query.bindValue(":catalog_id",  catalogId);
+
+    if (query.exec() && query.next())
+        return query.value(0).toString();
+    return QString();
+}

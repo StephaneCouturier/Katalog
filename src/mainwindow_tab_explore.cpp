@@ -561,25 +561,10 @@
                 qDebug() << "File mode: Checking if migration needed for" << exploreDevice->name;
 
                 // Check if migration is actually needed
-                QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
-                checkQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = ? "
-                                   "AND (file_type IS NULL OR file_type = '' "
-                                   "OR file_extension IS NULL OR file_extension = '' "
-                                   "OR mime_type IS NULL OR mime_type = '')");
-                checkQuery.bindValue(0, exploreDevice->catalog->ID);
+                bool needsMigration = exploreDevice->catalog->hasFilesNeedingMigration();
 
-                bool needsMigration = false;
-                int filesToMigrate = 0;
-
-                if (checkQuery.exec() && checkQuery.next()) {
-                    filesToMigrate = checkQuery.value(0).toInt();
-                    qDebug()<< "==Files needing migration:" << filesToMigrate;
-                    needsMigration = (filesToMigrate > 0);
-                    qDebug()<< "==Files needing migration:" << needsMigration;
-                }
-
-                if (needsMigration && filesToMigrate > 0) {
-                    qDebug() << "File type update needed for" << filesToMigrate << "files";
+                if (needsMigration) {
+                    qDebug() << "File type update needed for" << exploreDevice->name;
 
                     StatusBarMessageBuilder builder;
                     builder.setOperation(tr("Explore"));
