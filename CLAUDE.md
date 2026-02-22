@@ -66,6 +66,36 @@ The main window (`mainwindow.h/cpp`) is split across multiple implementation fil
 - **Qt Model-View**: Standard item models with proxy models for filtering/sorting
 - **UI Wrappers**: `mainwindow_ui_wrapper_*.cpp` files abstract UI component access
 
+### UI / Core Boundary — STRICT RULE
+
+The two-layer separation is enforced for future **QtQuick compatibility**. The goal is that core can be reused without modification if the UI is ever ported from Qt Widgets to QtQuick/QML.
+
+**What belongs in `src/core/`:**
+- All SQL queries (`QSqlQuery`) — wrap in methods on the relevant domain class (`Catalog`, `Device`, `Collection`, `Tag`, `FileMetadata`, etc.)
+- File I/O for data files
+- Business logic, data transformations, algorithms
+- Domain-specific sorting/formatting logic (e.g. metadata field priority order)
+- Progress callbacks via `std::function<bool(int, int, QString)>`
+
+**What belongs in `src/` (UI layer only):**
+- Widget construction, layout, signal/slot wiring
+- `tr()` translations and all user-visible strings
+- HTML/CSS generation for display
+- Qt Charts series building
+- Error dialogs and user confirmations
+
+**Enforcement rules:**
+- `src/core/` files must **never** include Qt Widgets headers (`QWidget`, `QDialog`, `QMessageBox`, etc.)
+- `mainwindow_tab_*.cpp` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
+- Core methods return plain Qt value types (`QString`, `QList`, `QStringList`, `QPair`, etc.), never widget types
+
+**Reference implementations (established patterns):**
+- Single-row DB lookup: `Catalog::getFileChecksum(fileName, folderPath)` → `QString`
+- Aggregate query: `Device::getMaxHierarchyDepth(connectionName)` → `int`
+- Model self-loading: `Tag::loadFromDatabase(connectionName, filterName)`
+- Structured data for display: `FileMetadata::parseExtendedMetadataFields(jsonObj)` → `QList<QPair<QString,QString>>`
+- Collection-level query: `Collection::getExcludeDirectories()` → `QStringList`
+
 ## Dependencies
 
 **Qt6 Components:**
@@ -73,6 +103,12 @@ The main window (`mainwindow.h/cpp`) is split across multiple implementation fil
 
 **KDE Frameworks 6:**
 - CoreAddons, XmlGui, Config, FileMetaData, Completion
+
+### KDE / KF6 Usage Rules
+
+- **Maximize use of existing KF6 libraries** — especially those already integrated, to avoid cross-platform build risk
+- **Approval required before adding any new library** — adding a new Qt6 module or KF6 component to `CMakeLists.txt` requires explicit user approval before writing code
+- **Cross-platform simplicity** — prefer Qt6 built-ins over platform-specific APIs; keep CMake configuration minimal; the Windows build must remain viable
 
 ## Database
 
@@ -88,4 +124,16 @@ In File/Hosted mode, the data is already in the SQLite database and no pre-loadi
 
 ## Translation
 
-24+ languages supported. Translation files in `src/translations/`. Uses Qt Linguist (lupdate/lrelease). Files compiled to `.qm` format and bundled via `translations.qrc`.
+**30 languages** supported. Translation files in `src/translations/`. Uses Qt Linguist (lupdate/lrelease). Files compiled to `.qm` format and bundled via `translations.qrc`.
+
+**Rules:**
+- **Do not change existing `tr()` strings** — any change breaks all 30 translations at once
+- **Reuse existing messages** wherever semantically appropriate before creating new ones
+- All new user-visible strings must be wrapped in `tr()`; run `ninja translations_lupdate` after adding them
+
+## Documentation Requirements
+
+Any change that affects users or future developers must be documented:
+
+- **User-facing feature or change** → document in **Katalog-doc** for user support
+- **Technical practice, architecture decision, limitation, or risk** → document in **Katalog-doc/specs/** as a Markdown file with the `Spec` prefix (e.g. `SpecBackupStrategy.md`)
