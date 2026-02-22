@@ -56,6 +56,31 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QHash<int, QByteArray> roleNames() const override;
+
+    enum Roles {
+        FileNameRole      = Qt::UserRole + 1,
+        FileSizeRole      = Qt::UserRole + 2,
+        FileDateRole      = Qt::UserRole + 3,
+        FolderPathRole    = Qt::UserRole + 4,
+        CatalogNameRole   = Qt::UserRole + 5,
+        CatalogIdRole     = Qt::UserRole + 6,
+        OrderValueRole    = Qt::UserRole + 7,
+        FullPathRole      = Qt::UserRole + 8,
+        FileTypeRole      = Qt::UserRole + 9,
+        MimeTypeRole      = Qt::UserRole + 10,
+        ImageWidthRole    = Qt::UserRole + 11,
+        ImageHeightRole   = Qt::UserRole + 12,
+        VideoDurationRole = Qt::UserRole + 13,
+        VideoWidthRole    = Qt::UserRole + 14,
+        VideoHeightRole   = Qt::UserRole + 15,
+        AudioDurationRole = Qt::UserRole + 16,
+        ArtistRole        = Qt::UserRole + 17,
+        AlbumRole         = Qt::UserRole + 18,
+        TitleRole         = Qt::UserRole + 19,
+        ChecksumRole      = Qt::UserRole + 20,
+        ChecksumDateRole  = Qt::UserRole + 21
+    };
 
     // Internal constants
     static const QString SEARCH_IN_FILE_NAMES;

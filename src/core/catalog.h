@@ -86,6 +86,15 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QHash<int, QByteArray> roleNames() const override;
+
+    enum Roles {
+        FileNameRole   = Qt::UserRole + 1,
+        FileSizeRole   = Qt::UserRole + 2,
+        FileDateRole   = Qt::UserRole + 3,
+        FolderPathRole = Qt::UserRole + 4,
+        CatalogRole    = Qt::UserRole + 5
+    };
 
     void setSourcePath(QString selectedSourcePath);
     void updateFileCount();

@@ -50,15 +50,34 @@ int Tag::columnCount(const QModelIndex &parent) const
 
 QVariant Tag::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || role != Qt::DisplayRole) {
+    if (!index.isValid()) return QVariant();
+
+    if (role == Qt::DisplayRole) {
+        switch (index.column()){
+        case 0: return int(ID[index.row()]);
+        case 1: return QString(folderPath[index.row()]);
+        case 2: return QString(tagName[index.row()]);
+        }
         return QVariant();
     }
-    switch (index.column()){
-    case 0: return int(ID[index.row()]);
-    case 1: return QString(folderPath[index.row()]);
-    case 2: return QString(tagName[index.row()]);
+
+    // Named roles for QML
+    const int row = index.row();
+    switch (role) {
+    case IdRole:     return int(ID[row]);
+    case FolderRole: return QString(folderPath[row]);
+    case NameRole:   return QString(tagName[row]);
     }
     return QVariant();
+}
+
+QHash<int, QByteArray> Tag::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[IdRole]     = "tagId";
+    roles[FolderRole] = "folder";
+    roles[NameRole]   = "name";
+    return roles;
 }
 
 QVariant Tag::headerData(int section, Qt::Orientation orientation, int role) const

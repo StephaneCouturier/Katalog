@@ -47,6 +47,13 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QHash<int, QByteArray> roleNames() const override;
+
+    enum Roles {
+        IdRole     = Qt::UserRole + 1,
+        FolderRole = Qt::UserRole + 2,
+        NameRole   = Qt::UserRole + 3
+    };
 
     void populateTagData(const QList<int> &tTagID, const QList<QString> &folderPath,
                          const QList<QString> &tagName

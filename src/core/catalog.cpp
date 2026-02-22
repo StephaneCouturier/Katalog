@@ -84,17 +84,40 @@ int Catalog::columnCount(const QModelIndex &parent) const
 
 QVariant Catalog::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || role != Qt::DisplayRole) {
+    if (!index.isValid()) return QVariant();
+
+    if (role == Qt::DisplayRole) {
+        switch (index.column()){
+        case 0: return QString(fileNames[index.row()]);
+        case 1: return qint64 (fileSizes[index.row()]);
+        case 2: return QString(fileDateTimes[index.row()]);
+        case 3: return QString(filePaths[index.row()]);
+        case 4: return QString(fileCatalogs[index.row()]);
+        }
         return QVariant();
     }
-    switch (index.column()){
-    case 0: return QString(fileNames[index.row()]);
-    case 1: return qint64 (fileSizes[index.row()]);
-    case 3: return QString(filePaths[index.row()]);
-    case 2: return QString(fileDateTimes[index.row()]);
-    case 4: return QString(fileCatalogs[index.row()]);
+
+    // Named roles for QML
+    const int row = index.row();
+    switch (role) {
+    case FileNameRole:   return QString(fileNames[row]);
+    case FileSizeRole:   return qint64(fileSizes[row]);
+    case FileDateRole:   return QString(fileDateTimes[row]);
+    case FolderPathRole: return QString(filePaths[row]);
+    case CatalogRole:    return QString(fileCatalogs[row]);
     }
     return QVariant();
+}
+
+QHash<int, QByteArray> Catalog::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[FileNameRole]   = "fileName";
+    roles[FileSizeRole]   = "fileSize";
+    roles[FileDateRole]   = "fileDate";
+    roles[FolderPathRole] = "folderPath";
+    roles[CatalogRole]    = "catalogName";
+    return roles;
 }
 
 QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role) const

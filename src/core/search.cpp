@@ -133,33 +133,89 @@ int Search::columnCount(const QModelIndex &parent) const
 
 QVariant Search::data(const QModelIndex &index, int role) const
 {
-    if (role != Qt::DisplayRole) return QVariant();
+    if (!index.isValid()) return QVariant();
 
-    switch (index.column()) {
-    case 0: return QString(fileNames[index.row()]);
-    case 1: return QVariant(fileSizes[index.row()]);
-    case 2: return QString(fileDateTimes[index.row()]);
-    case 3: return QString(filePaths[index.row()]);        // Directory
-    case 4: return QString(fileCatalogs[index.row()]);     // Catalog
-    case 5: return int(fileCatalogIDs[index.row()]);       // Type (ID for now)
-    case 6: return QVariant(index.row());                  // orderValue (row index)
-    case 7: return QString(filePaths[index.row()] + "/" + fileNames[index.row()]); // Path (full path)
-    // Metadata - WITH BOUNDS CHECKING to prevent crashes
-    case 8: return (index.row() < fileTypes.size()) ? QString(fileTypes[index.row()]) : QString("");
-    case 9: return (index.row() < mimeTypes.size()) ? QString(mimeTypes[index.row()]) : QString("");
-    case 10: return (index.row() < imageWidths.size() && imageWidths[index.row()] > 0) ? imageWidths[index.row()] : QVariant();
-    case 11: return (index.row() < imageHeights.size() && imageHeights[index.row()] > 0) ? imageHeights[index.row()] : QVariant();
-    case 12: return (index.row() < videoDurations.size() && videoDurations[index.row()] > 0) ? videoDurations[index.row()] : QVariant();
-    case 13: return (index.row() < videoWidths.size() && videoWidths[index.row()] > 0) ? videoWidths[index.row()] : QVariant();
-    case 14: return (index.row() < videoHeights.size() && videoHeights[index.row()] > 0) ? videoHeights[index.row()] : QVariant();
-    case 15: return (index.row() < audioDurations.size() && audioDurations[index.row()] > 0) ? audioDurations[index.row()] : QVariant();
-    case 16: return (index.row() < audioArtists.size()) ? QString(audioArtists[index.row()]) : QString("");
-    case 17: return (index.row() < audioAlbums.size()) ? QString(audioAlbums[index.row()]) : QString("");
-    case 18: return (index.row() < audioTitles.size()) ? QString(audioTitles[index.row()]) : QString("");
-    case 19: return (index.row() < checksumSha256s.size()) ? QString(checksumSha256s[index.row()]) : QString("");
-    case 20: return (index.row() < checksumExtractionDates.size()) ? QString(checksumExtractionDates[index.row()]) : QString("");
+    if (role == Qt::DisplayRole) {
+        switch (index.column()) {
+        case 0: return QString(fileNames[index.row()]);
+        case 1: return QVariant(fileSizes[index.row()]);
+        case 2: return QString(fileDateTimes[index.row()]);
+        case 3: return QString(filePaths[index.row()]);
+        case 4: return QString(fileCatalogs[index.row()]);
+        case 5: return int(fileCatalogIDs[index.row()]);
+        case 6: return QVariant(index.row());
+        case 7: return QString(filePaths[index.row()] + "/" + fileNames[index.row()]);
+        // Metadata - WITH BOUNDS CHECKING to prevent crashes
+        case 8:  return (index.row() < fileTypes.size())      ? QString(fileTypes[index.row()])      : QString("");
+        case 9:  return (index.row() < mimeTypes.size())      ? QString(mimeTypes[index.row()])      : QString("");
+        case 10: return (index.row() < imageWidths.size()     && imageWidths[index.row()]     > 0)   ? imageWidths[index.row()]     : QVariant();
+        case 11: return (index.row() < imageHeights.size()    && imageHeights[index.row()]    > 0)   ? imageHeights[index.row()]    : QVariant();
+        case 12: return (index.row() < videoDurations.size()  && videoDurations[index.row()]  > 0)   ? videoDurations[index.row()]  : QVariant();
+        case 13: return (index.row() < videoWidths.size()     && videoWidths[index.row()]     > 0)   ? videoWidths[index.row()]     : QVariant();
+        case 14: return (index.row() < videoHeights.size()    && videoHeights[index.row()]    > 0)   ? videoHeights[index.row()]    : QVariant();
+        case 15: return (index.row() < audioDurations.size()  && audioDurations[index.row()]  > 0)   ? audioDurations[index.row()]  : QVariant();
+        case 16: return (index.row() < audioArtists.size())   ? QString(audioArtists[index.row()])   : QString("");
+        case 17: return (index.row() < audioAlbums.size())    ? QString(audioAlbums[index.row()])    : QString("");
+        case 18: return (index.row() < audioTitles.size())    ? QString(audioTitles[index.row()])    : QString("");
+        case 19: return (index.row() < checksumSha256s.size())         ? QString(checksumSha256s[index.row()])         : QString("");
+        case 20: return (index.row() < checksumExtractionDates.size()) ? QString(checksumExtractionDates[index.row()]) : QString("");
+        }
+        return QVariant();
+    }
+
+    // Named roles for QML
+    const int row = index.row();
+    switch (role) {
+    case FileNameRole:    return QString(fileNames[row]);
+    case FileSizeRole:    return QVariant(fileSizes[row]);
+    case FileDateRole:    return QString(fileDateTimes[row]);
+    case FolderPathRole:  return QString(filePaths[row]);
+    case CatalogNameRole: return QString(fileCatalogs[row]);
+    case CatalogIdRole:   return int(fileCatalogIDs[row]);
+    case OrderValueRole:  return QVariant(row);
+    case FullPathRole:    return QString(filePaths[row] + "/" + fileNames[row]);
+    case FileTypeRole:    return (row < fileTypes.size())     ? QString(fileTypes[row])     : QString("");
+    case MimeTypeRole:    return (row < mimeTypes.size())     ? QString(mimeTypes[row])     : QString("");
+    case ImageWidthRole:  return (row < imageWidths.size()    && imageWidths[row]    > 0)   ? imageWidths[row]    : QVariant();
+    case ImageHeightRole: return (row < imageHeights.size()   && imageHeights[row]   > 0)   ? imageHeights[row]   : QVariant();
+    case VideoDurationRole:return (row < videoDurations.size() && videoDurations[row] > 0)  ? videoDurations[row] : QVariant();
+    case VideoWidthRole:  return (row < videoWidths.size()    && videoWidths[row]    > 0)   ? videoWidths[row]    : QVariant();
+    case VideoHeightRole: return (row < videoHeights.size()   && videoHeights[row]   > 0)   ? videoHeights[row]  : QVariant();
+    case AudioDurationRole:return (row < audioDurations.size() && audioDurations[row] > 0)  ? audioDurations[row] : QVariant();
+    case ArtistRole:      return (row < audioArtists.size())  ? QString(audioArtists[row])  : QString("");
+    case AlbumRole:       return (row < audioAlbums.size())   ? QString(audioAlbums[row])   : QString("");
+    case TitleRole:       return (row < audioTitles.size())   ? QString(audioTitles[row])   : QString("");
+    case ChecksumRole:    return (row < checksumSha256s.size())         ? QString(checksumSha256s[row])         : QString("");
+    case ChecksumDateRole:return (row < checksumExtractionDates.size()) ? QString(checksumExtractionDates[row]) : QString("");
     }
     return QVariant();
+}
+
+QHash<int, QByteArray> Search::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[FileNameRole]     = "fileName";
+    roles[FileSizeRole]     = "fileSize";
+    roles[FileDateRole]     = "fileDate";
+    roles[FolderPathRole]   = "folderPath";
+    roles[CatalogNameRole]  = "catalogName";
+    roles[CatalogIdRole]    = "catalogId";
+    roles[OrderValueRole]   = "orderValue";
+    roles[FullPathRole]     = "fullPath";
+    roles[FileTypeRole]     = "fileType";
+    roles[MimeTypeRole]     = "mimeType";
+    roles[ImageWidthRole]   = "imageWidth";
+    roles[ImageHeightRole]  = "imageHeight";
+    roles[VideoDurationRole]= "videoDuration";
+    roles[VideoWidthRole]   = "videoWidth";
+    roles[VideoHeightRole]  = "videoHeight";
+    roles[AudioDurationRole]= "audioDuration";
+    roles[ArtistRole]       = "artist";
+    roles[AlbumRole]        = "album";
+    roles[TitleRole]        = "title";
+    roles[ChecksumRole]     = "checksum";
+    roles[ChecksumDateRole] = "checksumDate";
+    return roles;
 }
 
 QVariant Search::headerData(int section, Qt::Orientation orientation, int role) const
