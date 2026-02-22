@@ -303,7 +303,7 @@
 
             deviceContextMenu.addSeparator();
 
-            QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
+            QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("view-list-tree"), tr("Explore"), this);
             deviceContextMenu.addAction(menuDeviceAction2);
             connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
                 exploreDevice->ID = selectedDevice->ID;
@@ -317,6 +317,14 @@
                 //Go to explore tab
                 ui->tabWidget->setCurrentIndex(2);
             });
+
+            if (!selectedDevice->path.isEmpty()) {
+                QAction *menuOpenPath = new QAction(QIcon::fromTheme("document-open-folder"), tr("Open folder"), this);
+                deviceContextMenu.addAction(menuOpenPath);
+                connect(menuOpenPath, &QAction::triggered, this, [this]() {
+                    QDesktopServices::openUrl(QUrl::fromLocalFile(selectedDevice->path));
+                });
+            }
 
             deviceContextMenu.exec(globalPos);
         }

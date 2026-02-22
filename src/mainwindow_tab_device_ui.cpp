@@ -273,7 +273,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             });
         }
 
-        QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
+        QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("view-list-tree"), tr("Explore"), this);
         deviceContextMenu.addAction(menuDeviceAction5);
         connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
             exploreDevice->ID = activeDevice->ID;
