@@ -38,6 +38,10 @@
 #include <QDateTime>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QPair>
+#include <algorithm>
 #include <qelapsedtimer.h>
 #include <qjsonarray.h>
 
@@ -1274,5 +1278,88 @@ QString FileMetadata::formatDuration(int seconds)
         .arg(hours,   2, 10, QChar('0'))
         .arg(minutes, 2, 10, QChar('0'))
         .arg(secs,    2, 10, QChar('0'));
+}
+//-----------------------------------------------------------------------------------------------------
+QList<QPair<QString,QString>> FileMetadata::parseExtendedMetadataFields(const QJsonObject &jsonObj)
+{
+    QList<QPair<QString,QString>> result;
+    if (jsonObj.isEmpty())
+        return result;
+
+    // Domain-ordered priority list for display
+    static const QStringList priority = {
+        "Title", "Artist", "Album", "Genre", "Year", "Track",
+        "Duration", "Bitrate", "Sample Rate",
+        "Width", "Height", "Orientation",
+        "Codec", "Framerate"
+    };
+
+    QStringList keys = jsonObj.keys();
+    std::sort(keys.begin(), keys.end(), [](const QString &a, const QString &b) {
+        auto priorityIndex = [](const QString &key) {
+            QString clean = key.split('_').last();
+            for (int i = 0; i < priority.size(); ++i)
+                if (clean.compare(priority[i], Qt::CaseInsensitive) == 0)
+                    return i;
+            return -1;
+        };
+        int indexA = priorityIndex(a), indexB = priorityIndex(b);
+        if (indexA >= 0 && indexB >= 0) return indexA < indexB;
+        if (indexA >= 0) return true;
+        if (indexB >= 0) return false;
+        return a < b;
+    });
+
+    for (const QString &key : keys) {
+        const QJsonValue value = jsonObj[key];
+
+        // Format key: underscores → spaces, title case
+        QString displayKey = key;
+        displayKey.replace('_', ' ');
+        QStringList words = displayKey.split(' ');
+        for (QString &word : words)
+            if (!word.isEmpty()) word[0] = word[0].toUpper();
+        displayKey = words.join(' ');
+
+        // Format value by type
+        QString displayValue;
+        if (value.isArray()) {
+            QStringList items;
+            for (const QJsonValue &item : value.toArray())
+                items << item.toString();
+            displayValue = '[' + items.join(", ") + ']';
+        } else if (value.isObject()) {
+            displayValue = "[Complex Object]";
+        } else if (value.isString()) {
+            displayValue = value.toString();
+        } else if (value.isBool()) {
+            displayValue = value.toBool() ? "Yes" : "No";
+        } else {
+            // Numeric — check for duration fields
+            if (key.contains("duration", Qt::CaseInsensitive)) {
+                int duration = value.toVariant().toInt();
+                if (duration > 0) {
+                    if (key.contains("video", Qt::CaseInsensitive)) {
+                        displayValue = formatDuration(duration); // HH:MM:SS
+                    } else {
+                        // Audio: MM:SS
+                        int minutes = duration / 60;
+                        int seconds = duration % 60;
+                        displayValue = QString("%1:%2")
+                                           .arg(minutes, 2, 10, QChar('0'))
+                                           .arg(seconds, 2, 10, QChar('0'));
+                    }
+                } else {
+                    displayValue = QString::number(duration);
+                }
+            } else {
+                displayValue = QString::number(value.toVariant().toDouble());
+            }
+        }
+
+        result.append({displayKey, displayValue});
+    }
+
+    return result;
 }
 //-----------------------------------------------------------------------------------------------------

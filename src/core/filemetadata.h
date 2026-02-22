@@ -35,6 +35,9 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
+#include <QJsonObject>
+#include <QPair>
+#include <QList>
 #include <QSqlError>
 #include <QMimeDatabase>
 #include <KFileMetaData/ExtractorCollection>
@@ -99,6 +102,7 @@ public:
     // Media metadata display utilities
     static int     mergeMetadataValue(const QVariant &primary, const QVariant &secondary);
     static QString formatDuration(int seconds);
+    static QList<QPair<QString,QString>> parseExtendedMetadataFields(const QJsonObject &jsonObj);
 
     // Batch update metadata for multiple files
     static bool batchUpdateFileMetadata(const QString &connectionName,

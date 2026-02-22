@@ -726,7 +726,7 @@ QString MainWindow::formatJsonForDisplay(const QString &jsonString)
 //----------------------------------------------------------------------
 QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
 {
-    // Parse JSON
+    // Parse JSON — handle errors at the UI boundary
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8(), &error);
 
@@ -739,7 +739,7 @@ QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
         return "<p>No metadata available.</p>";
     }
 
-    // Start building HTML table with Gwenview-like styling
+    // Build HTML table
     QString html = QString(R"(
         <style>
         table {
@@ -792,123 +792,15 @@ QString MainWindow::convertJsonToHtmlTable(const QString &jsonString)
         <tbody>
     )").arg(tr("File Property"), tr("Value"));
 
-    // Sort keys for consistent display
-    QStringList keys = jsonObj.keys();
-    //keys.sort();
-    // Custom sorting function to group related fields
-    std::sort(keys.begin(), keys.end(), [](const QString &a, const QString &b) {
-        // Define priority groups
-        QStringList priority = {
-            "Title", "Artist", "Album", "Genre", "Year", "Track",  // Audio metadata first
-            "Duration", "Bitrate", "Sample Rate",                  // Audio technical
-            "Width", "Height", "Orientation",                      // Image/Video dimensions together
-            "Codec", "Framerate"                                   // Video technical
-        };
-
-        // Check if both keys are in priority list
-        int indexA = -1, indexB = -1;
-
-        for (int i = 0; i < priority.size(); ++i) {
-            QString cleanKeyA = a.split('_').last();  // Get last part (e.g., "width" from "image_width")
-            QString cleanKeyB = b.split('_').last();
-
-            if (cleanKeyA.compare(priority[i], Qt::CaseInsensitive) == 0) {
-                indexA = i;
-            }
-            if (cleanKeyB.compare(priority[i], Qt::CaseInsensitive) == 0) {
-                indexB = i;
-            }
-        }
-
-        // If both have priority, use priority order
-        if (indexA >= 0 && indexB >= 0) {
-            return indexA < indexB;
-        }
-
-        // If only one has priority, it comes first
-        if (indexA >= 0) return true;
-        if (indexB >= 0) return false;
-
-        // Otherwise, use alphabetical
-        return a < b;
-    });
-
-    // Add each key-value pair as table row
-    for (const QString &key : keys) {
-        QJsonValue value = jsonObj[key];
-        QString displayKey = key;
-        QString displayValue;
-
-        // Format the key name (make it more readable)
-        displayKey = displayKey.replace('_', ' ');
-
-        // Simple title case conversion
-        QStringList words = displayKey.split(' ');
-        for (QString &word : words) {
-            if (!word.isEmpty()) {
-                word[0] = word[0].toUpper();
-            }
-        }
-        displayKey = words.join(' ');
-
-        // Handle different value types
-        if (value.isArray()) {
-            QJsonArray array = value.toArray();
-            QStringList arrayItems;
-            for (const QJsonValue &item : array) {
-                arrayItems << item.toString();
-            }
-            displayValue = QString("<span class='array-value'>[%1]</span>").arg(arrayItems.join(", "));
-        } else if (value.isObject()) {
-            displayValue = "<span class='array-value'>[Complex Object]</span>";
-        } else if (value.isString()) {
-            displayValue = value.toString();
-        } else if (value.isDouble() || value.toVariant().canConvert<int>()) {
-            // Check if this is a duration field
-            if (key.contains("duration", Qt::CaseInsensitive) ) {
-                int duration = value.toVariant().toInt();
-                if (duration > 0) {
-                    // Determine if it's video or audio duration for formatting
-                    if (key.contains("video", Qt::CaseInsensitive)) {
-                        // Video Duration - show as H:MM:SS
-                        int hours = duration / 3600;
-                        int minutes = (duration % 3600) / 60;
-                        int seconds = duration % 60;
-                        displayValue = QString("%1:%2:%3")
-                                           .arg(hours, 2, 10, QChar('0'))
-                                           .arg(minutes, 2, 10, QChar('0'))
-                                           .arg(seconds, 2, 10, QChar('0'));
-                    } else {
-                        // Audio Duration - show as MM:SS
-                        int minutes = duration / 60;
-                        int seconds = duration % 60;
-                        displayValue = QString("%1:%2")
-                                           .arg(minutes, 2, 10, QChar('0'))
-                                           .arg(seconds, 2, 10, QChar('0'));
-                    }
-                } else {
-                    displayValue = QString::number(duration);
-                }
-            } else {
-                // Regular numeric value
-                displayValue = QString::number(value.toVariant().toDouble());
-            }
-        } else if (value.isBool()) {
-            displayValue = value.toBool() ? "Yes" : "No";
-        } else {
-            displayValue = value.toVariant().toString();
-        }
-
-        // Escape HTML characters in values
-        displayValue = displayValue.toHtmlEscaped();
-
-        // Add table row
+    // Delegate field ordering and value formatting to core
+    const auto fields = FileMetadata::parseExtendedMetadataFields(jsonObj);
+    for (const auto &field : fields) {
         html += QString(R"(
             <tr>
                 <td class="field-name">%1</td>
                 <td class="field-value">%2</td>
             </tr>
-        )").arg(displayKey, displayValue);
+        )").arg(field.first, field.second.toHtmlEscaped());
     }
 
     html += "</tbody></table>";
