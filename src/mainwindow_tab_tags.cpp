@@ -165,38 +165,14 @@
     //----------------------------------------------------------------------
     void MainWindow::loadTagsTableToExistingTagsModel()
     {
-        //Set up temporary lists
-        QList<int>     tTagIDs;
-        QList<QString> tFolderPaths;
-        QList<QString> tTagNames;
-
-		//Get full list of tags
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-		QString querySQL = QLatin1String(R"(
-                                    SELECT ID, path, name
-                                    FROM tag
-                                    )");
-        query.prepare(querySQL);
-		query.exec();
-
-		//Populate lists
-		while(query.next()){
-            tTagIDs      << query.value(0).toInt();
-            tFolderPaths << query.value(1).toString();
-            tTagNames    << query.value(2).toString();
-		}
-
-        // Create model
+        // Create model and load data from database
         Tag *tagModel = new Tag(this);
-
-        // Populate model with data
-        tagModel->populateTagData(tTagIDs, tFolderPaths, tTagNames);
+        tagModel->loadFromDatabase(m_connectionName);
 
         QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
         proxyStorageModel->setSourceModel(tagModel);
 
-        QList<QString> tTagUniqueNames;
-        tTagUniqueNames = tTagNames;
+        QList<QString> tTagUniqueNames = tagModel->tagNames();
         tTagUniqueNames.removeDuplicates();
 
         //Load list of catalogs in which files where found
@@ -210,38 +186,9 @@
 
     void MainWindow::loadTagsTableToTagsAndFolderListModel()
     {
-        //Set up temporary lists
-        QList<int> tIDs;
-        QList<QString> tFolderPaths;
-        QList<QString> tTagNames;
-
-        //Get full list of tags
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        QString querySQL = QLatin1String(R"(
-                                    SELECT ID, path, name
-                                    FROM tag
-                                    )");
-        if(selectedTagListName!=""){
-            querySQL = querySQL + " WHERE name=:name";
-        }
-        query.prepare(querySQL);
-
-        query.bindValue(":name",selectedTagListName);
-
-        query.exec();
-
-        //Populate lists
-        while(query.next()){
-            tIDs << query.value(0).toInt();
-            tFolderPaths << query.value(1).toString();
-            tTagNames    << query.value(2).toString();
-        }
-
-        // Create model
+        // Create model and load data from database (optionally filtered by tag name)
         Tag *tagModel = new Tag(this);
-
-        // Populate model with data
-        tagModel->populateTagData(tIDs, tFolderPaths, tTagNames);
+        tagModel->loadFromDatabase(m_connectionName, selectedTagListName);
 
         QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
         proxyStorageModel->setSourceModel(tagModel);

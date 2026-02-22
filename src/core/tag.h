@@ -33,6 +33,8 @@
 #define TAG_H
 
 #include <QAbstractTableModel>
+#include <QSqlQuery>
+#include <QSqlDatabase>
 
 class Tag : public QAbstractTableModel
 {
@@ -49,6 +51,9 @@ public:
     void populateTagData(const QList<int> &tTagID, const QList<QString> &folderPath,
                          const QList<QString> &tagName
                          );
+
+    void loadFromDatabase(const QString &connectionName, const QString &filterName = QString());
+    QList<QString> tagNames() const;
 
 private:
     QList<int> ID;

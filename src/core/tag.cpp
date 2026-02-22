@@ -88,3 +88,34 @@ void Tag::populateTagData(
 
     return;
 }
+//----------------------------------------------------------------------
+void Tag::loadFromDatabase(const QString &connectionName, const QString &filterName)
+{
+    QList<int>     tTagIDs;
+    QList<QString> tFolderPaths;
+    QList<QString> tTagNames;
+
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    QString querySQL = QLatin1String("SELECT ID, path, name FROM tag");
+    if (!filterName.isEmpty())
+        querySQL += QLatin1String(" WHERE name = :name");
+
+    query.prepare(querySQL);
+    if (!filterName.isEmpty())
+        query.bindValue(":name", filterName);
+
+    if (query.exec()) {
+        while (query.next()) {
+            tTagIDs      << query.value(0).toInt();
+            tFolderPaths << query.value(1).toString();
+            tTagNames    << query.value(2).toString();
+        }
+    }
+
+    populateTagData(tTagIDs, tFolderPaths, tTagNames);
+}
+//----------------------------------------------------------------------
+QList<QString> Tag::tagNames() const
+{
+    return tagName;
+}
