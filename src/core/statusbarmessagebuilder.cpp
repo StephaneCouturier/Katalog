@@ -86,8 +86,14 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::setProcess(const QString& titl
 
 StatusBarMessageBuilder& StatusBarMessageBuilder::setResult(const QString& title, int count)
 {
-    m_resultTitle = title;
-    m_resultCount = count;
+    m_results.clear();
+    m_results.append({title, count, -1});
+    return *this;
+}
+
+StatusBarMessageBuilder& StatusBarMessageBuilder::addResult(const QString& title, int count, qint64 size)
+{
+    m_results.append({title, count, size});
     return *this;
 }
 
@@ -126,8 +132,7 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::reset()
     m_processTitle.clear();
     m_processCurrentCount = -1;
     m_processTotalCount = -1;
-    m_resultTitle.clear();
-    m_resultCount = -1;
+    m_results.clear();
     m_sizeProgressCurrent = -1;
     m_sizeProgressTotal   = -1;
     m_speedBps            = -1.0;
@@ -304,19 +309,28 @@ QString StatusBarMessageBuilder::formatProcess() const
 
 QString StatusBarMessageBuilder::formatResult() const
 {
-    if (m_resultTitle.isEmpty() || m_resultCount < 0) {
+    if (m_results.isEmpty()) {
         return QString();
     }
 
-    QString resultValue = QLocale().toString(m_resultCount);
+    QStringList parts;
+    for (const ResultItem &item : m_results) {
+        QString countValue = QLocale().toString(item.count);
+        if (m_formatOptions.resultsBold) {
+            countValue = QString("<b>%1</b>").arg(countValue);
+        }
 
-    // Apply optional bold
-    if (m_formatOptions.resultsBold) {
-        resultValue = QString("<b>%1</b>").arg(resultValue);
+        QString part = QString("%1: %2")
+                           .arg(item.title.toHtmlEscaped(), countValue);
+
+        if (item.size >= 0) {
+            part += QString(" (%1)").arg(QLocale().formattedDataSize(item.size));
+        }
+
+        parts << part;
     }
 
-    return QString("%1: %2")
-        .arg(m_resultTitle.toHtmlEscaped(), resultValue);
+    return parts.join(" | ");
 }
 
 QString StatusBarMessageBuilder::formatSizeProgress() const

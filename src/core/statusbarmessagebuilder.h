@@ -34,6 +34,7 @@
 #define STATUSBARMESSAGEBUILDER_H
 
 #include <QString>
+#include <QList>
 #include <QLocale>
 
 /**
@@ -140,7 +141,7 @@ public:
     StatusBarMessageBuilder& setProcess(const QString& title, int currentCount, int totalCount = 0);
 
     /**
-     * @brief Set result information
+     * @brief Set result information (single result — replaces any previously added results)
      * @param title Result title (e.g., "Found", "Files", "Folders")
      * @param count Result count
      * @return Reference to this builder for chaining
@@ -148,6 +149,18 @@ public:
      * Generates: "Title: N"
      */
     StatusBarMessageBuilder& setResult(const QString& title, int count);
+
+    /**
+     * @brief Append a result segment (supports multiple results in sequence)
+     * @param title Result title (e.g., "To copy", "Conflicts", "Errors")
+     * @param count Result count
+     * @param size Optional byte size to display in parentheses after the count (-1 = none)
+     * @return Reference to this builder for chaining
+     *
+     * Generates: "Title: N" or "Title: N (1.2 GB)" when size >= 0.
+     * Multiple addResult() calls produce segments separated by " | ".
+     */
+    StatusBarMessageBuilder& addResult(const QString& title, int count, qint64 size = -1);
 
     /**
      * @brief Set data size progress (bytes transferred vs total)
@@ -208,6 +221,13 @@ public:
     static FormatOptions defaultFormatOptions();
 
 private:
+    // Result item (used by addResult / setResult)
+    struct ResultItem {
+        QString title;
+        int     count = 0;
+        qint64  size  = -1; // -1 = no size displayed
+    };
+
     // Message components
     QString m_operation;
     QString m_status;
@@ -217,8 +237,7 @@ private:
     QString m_processTitle;
     int m_processCurrentCount = -1;
     int m_processTotalCount = -1;
-    QString m_resultTitle;
-    int m_resultCount = -1;
+    QList<ResultItem> m_results;
     qint64  m_sizeProgressCurrent = -1;
     qint64  m_sizeProgressTotal   = -1;
     double  m_speedBps            = -1.0;

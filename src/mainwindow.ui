@@ -11381,7 +11381,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <layout class="QHBoxLayout" name="BackUp_horizontalLayout_Preview">
                 <item>
-                 <widget class="QLabel" name="BackUp_label_PreviewSummary">
+                 <widget class="QLabel" name="BackUp_label_ProgressSummary">
                   <property name="text">
                    <string/>
                   </property>
@@ -11637,13 +11637,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <layout class="QVBoxLayout" name="BackUp_verticalLayout_Execution">
               <item>
                <layout class="QHBoxLayout" name="BackUp_horizontalLayout_Execution">
-                <item>
-                 <widget class="QLabel" name="BackUp_label_ExecutionStatus">
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
                 <item>
                  <spacer name="BackUp_horizontalSpacer_Execution">
                   <property name="orientation">

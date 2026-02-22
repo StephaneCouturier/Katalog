@@ -295,8 +295,8 @@ void MainWindow::runBackup()
         m_backupUpdatePhase         = BackupUpdatePhase::UpdatingSource;
 
         ui->BackUp_pushButton_RunBackup->setEnabled(false);
-        ui->BackUp_label_ExecutionStatus->setVisible(true);
-        ui->BackUp_label_ExecutionStatus->setText(
+        ui->BackUp_label_ProgressSummary->setVisible(true);
+        ui->BackUp_label_ProgressSummary->setText(
             StatusBarMessageBuilder()
                 .setOperation(tr("Backup"))
                 .setStatus(tr("Updating source catalog…"))
@@ -323,7 +323,7 @@ void MainWindow::setupDeviceUpdateManagerForBackup()
                 m_pendingBackupMappingId = -1;
                 setupDeviceUpdateManager();  // restore normal device-tab connections
                 ui->BackUp_pushButton_RunBackup->setEnabled(true);
-                ui->BackUp_label_ExecutionStatus->setVisible(false);
+                ui->BackUp_label_ProgressSummary->setVisible(false);
                 QMessageBox::warning(this, "Katalog",
                     tr("Catalog update failed: %1").arg(error));
             });
@@ -333,7 +333,7 @@ void MainWindow::setupDeviceUpdateManagerForBackup()
                 m_pendingBackupMappingId = -1;
                 setupDeviceUpdateManager();
                 ui->BackUp_pushButton_RunBackup->setEnabled(true);
-                ui->BackUp_label_ExecutionStatus->setVisible(false);
+                ui->BackUp_label_ProgressSummary->setVisible(false);
             });
 }
 
@@ -346,7 +346,7 @@ void MainWindow::continueBackupAfterCatalogUpdate()
         // have that cleanup fire mid-operation and corrupt DeviceUpdateManager state.
         // Delay past the cleanup window (>10 ms) so the manager is fully reset first.
         m_backupUpdatePhase = BackupUpdatePhase::UpdatingTarget;
-        ui->BackUp_label_ExecutionStatus->setText(
+        ui->BackUp_label_ProgressSummary->setText(
             StatusBarMessageBuilder()
                 .setOperation(tr("Backup"))
                 .setStatus(tr("Updating target catalog…"))
@@ -392,7 +392,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
 
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
         ui->BackUp_pushButton_RunBackup->setEnabled(true);
-        ui->BackUp_label_ExecutionStatus->setVisible(false);
+        ui->BackUp_label_ProgressSummary->setVisible(false);
         QMessageBox::information(this, "Katalog",
                                  tr("Source and target are already in sync. Nothing to copy."));
         return;
@@ -425,9 +425,13 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     ui->BackUp_progressBar->setMinimum(0);
     ui->BackUp_progressBar->setMaximum(1000);
     ui->BackUp_progressBar->setValue(0);
-    ui->BackUp_label_ExecutionStatus->setText(tr("Starting backup…"));
+    ui->BackUp_label_ProgressSummary->setText(
+        StatusBarMessageBuilder()
+            .setOperation(tr("Backup"))
+            .setStatus(tr("Starting…"))
+            .build());
     m_backupTimer.start();
-    ui->BackUp_label_ExecutionStatus->setVisible(true);
+    ui->BackUp_label_ProgressSummary->setVisible(true);
     ui->BackUp_progressBar->setVisible(true);
     ui->BackUp_pushButton_CancelBackup->setVisible(true);
     ui->BackUp_pushButton_RunBackup->setEnabled(false);
@@ -472,7 +476,7 @@ void MainWindow::onBackupProgress(int filesDone, int totalFiles,
         .setCurrentItem(currentFile)
         .build();
 
-    ui->BackUp_label_ExecutionStatus->setText(msg);
+    ui->BackUp_label_ProgressSummary->setText(msg);
 }
 
 void MainWindow::onBackupFinished(const BackupReport &report)
@@ -500,7 +504,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
         .setSizeProgress(report.totalBytesCopied, report.totalBytesCopied)
         .setTimeToCompletion(elapsedStr)
         .build();
-    ui->BackUp_label_ExecutionStatus->setText(msg);
+    ui->BackUp_label_ProgressSummary->setText(msg);
 
     showBackupReport(report);
 
@@ -509,7 +513,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
             && ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()
             && !deviceUpdateManager->operationRunning()) {
 
-        ui->BackUp_label_ExecutionStatus->setText(
+        ui->BackUp_label_ProgressSummary->setText(
             StatusBarMessageBuilder()
                 .setOperation(tr("Backup"))
                 .setStatus(tr("Updating target catalog…"))
@@ -519,7 +523,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
         connect(deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
                 this, [this, msg]() {
                     setupDeviceUpdateManager();
-                    ui->BackUp_label_ExecutionStatus->setText(msg);
+                    ui->BackUp_label_ProgressSummary->setText(msg);
                 });
         connect(deviceUpdateManager, &DeviceUpdateManager::operationError,
                 this, [this](const QString&) { setupDeviceUpdateManager(); });
@@ -570,14 +574,16 @@ void MainWindow::showBackupReport(const BackupReport &report)
     ui->BackUp_tableView_PreviewFiles->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->BackUp_tableView_PreviewFiles->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    ui->BackUp_label_PreviewSummary->setText(
-        tr("Report — Copied: <b>%1 file(s) (%2)</b>  |  Conflicts (skipped): <b>%3 file(s)</b>  |  Errors: <b>%4</b>")
-            .arg(report.copiedCount())
-            .arg(QLocale().formattedDataSize(report.totalBytesCopied))
-            .arg(report.conflictCount())
-            .arg(report.errorCount())
+    ui->BackUp_label_ProgressSummary->setText(
+        StatusBarMessageBuilder()
+            .setOperation(tr("Report"))
+            .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Complete"))
+            .addResult(tr("Copied"),              report.copiedCount(),   report.totalBytesCopied)
+            .addResult(tr("Conflicts (skipped)"), report.conflictCount())
+            .addResult(tr("Errors"),              report.errorCount())
+            .build()
     );
-    ui->BackUp_label_PreviewSummary->setVisible(true);
+    ui->BackUp_label_ProgressSummary->setVisible(true);
     ui->BackUp_tableView_PreviewFiles->setVisible(true);
 }
 
@@ -658,18 +664,18 @@ void MainWindow::loadBackupPreview()
 
     //Summary line — includes mode indicator
     const QString modeLabel = mapping.strictCopy ? tr("strict copy") : tr("dedup");
-    ui->BackUp_label_PreviewSummary->setText(
-        tr("Preview [%1] — To copy: <b>%2 file(s) (%3)</b>  |  Conflicts (will be skipped): <b>%4 file(s) (%5)</b>  |  Already in target: <b>%6 file(s)</b>")
-            .arg(modeLabel)
-            .arg(cmp.filesToCopy.size())
-            .arg(QLocale().formattedDataSize(copySize))
-            .arg(cmp.fileConflicts.size())
-            .arg(QLocale().formattedDataSize(conflictSize))
-            .arg(cmp.skippedCount)
+    ui->BackUp_label_ProgressSummary->setText(
+        StatusBarMessageBuilder()
+            .setOperation(tr("Preview"))
+            .setStatus(modeLabel)
+            .addResult(tr("To copy"),             cmp.filesToCopy.size(),   copySize)
+            .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
+            .addResult(tr("Already in target"),   cmp.skippedCount)
+            .build()
     );
 
     //Show preview section
-    ui->BackUp_label_PreviewSummary->setVisible(true);
+    ui->BackUp_label_ProgressSummary->setVisible(true);
     ui->BackUp_tableView_PreviewFiles->setVisible(true);
 }
 
@@ -1268,12 +1274,9 @@ void MainWindow::setupBackUpManager()
 {
     backupMappingManager = new BackupMappingManager(m_connectionName, this);
 
-    //Hide the preview section until the user clicks "Preview Backup"
-    ui->BackUp_label_PreviewSummary->setVisible(false);
+    //Hide progress/preview area until the user triggers an action
+    ui->BackUp_label_ProgressSummary->setVisible(false);
     ui->BackUp_tableView_PreviewFiles->setVisible(false);
-
-    //Hide the execution panel until a backup is running
-    ui->BackUp_label_ExecutionStatus->setVisible(false);
     ui->BackUp_progressBar->setVisible(false);
     ui->BackUp_pushButton_CancelBackup->setVisible(false);
 }
