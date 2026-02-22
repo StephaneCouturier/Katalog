@@ -342,26 +342,8 @@
         // Get checksum from database since Explore model may not have it loaded
         QString fileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
         QString folderPath = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-        int catalogId = exploreDevice->catalog->ID;
 
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        QString querySQL = QLatin1String(R"(
-            SELECT checksum_sha256
-            FROM file
-            WHERE file_catalog_id = :catalog_id
-              AND file_name = :file_name
-              AND file_folder_path = :folder_path
-        )");
-        query.prepare(querySQL);
-        query.bindValue(":catalog_id", catalogId);
-        query.bindValue(":file_name", fileName);
-        query.bindValue(":folder_path", folderPath);
-
-        QString checksum;
-        if (query.exec() && query.next()) {
-            checksum = query.value(0).toString();
-        }
-
+        QString checksum = exploreDevice->catalog->getFileChecksum(fileName, folderPath);
         QClipboard *clipboard = QGuiApplication::clipboard();
         clipboard->setText(checksum);
     }

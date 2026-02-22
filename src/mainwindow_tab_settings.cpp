@@ -678,19 +678,7 @@
         reloadTagsData();
 
         //Load directories to exclude
-        QSqlQuery queryLoad(QSqlDatabase::database(m_connectionName));
-        QString queryLoadSQL = QLatin1String(R"(
-                                        SELECT DISTINCT parameter_value2
-                                        FROM parameter
-                                        WHERE parameter_type ='exclude_directory'
-                                        ORDER BY parameter_value2
-                                )");
-        if (!queryLoad.exec(queryLoadSQL)) {
-            qDebug() << "Failed to execute queryLoad exclude_directory.";
-            return;
-        }
-        QSqlQueryModel *model = new QSqlQueryModel(this);
-        model->setQuery(std::move(queryLoad));
+        QStringListModel *model = new QStringListModel(collection->getExcludeDirectories(), this);
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
         proxyModel->setSourceModel(model);
         ui->Create_treeView_Excluded->setModel(proxyModel);

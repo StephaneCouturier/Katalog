@@ -1437,6 +1437,25 @@ int Catalog::getTempID() const
     return m_tempID;
 }
 
+QString Catalog::getFileChecksum(const QString &fileName, const QString &folderPath) const
+{// Retrieve the stored SHA-256 checksum for a specific file in this catalog
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        SELECT checksum_sha256
+        FROM file
+        WHERE file_catalog_id = :catalog_id
+          AND file_name        = :file_name
+          AND file_folder_path = :folder_path
+    )"));
+    query.bindValue(":catalog_id",   ID);
+    query.bindValue(":file_name",    fileName);
+    query.bindValue(":folder_path",  folderPath);
+
+    if (query.exec() && query.next())
+        return query.value(0).toString();
+    return QString();
+}
+//----------------------------------------------------------------------
 // Metadata fields management for tranistions in this catalog
 bool Catalog::clearMetadataBasicFields()
 {

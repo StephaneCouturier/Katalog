@@ -142,6 +142,7 @@ public:
     //Checksum
     static const QString CHECKSUM_NONE;
     static const QString CHECKSUM_SHA256;
+    QString getFileChecksum(const QString &fileName, const QString &folderPath) const;
 
     // Metadata management
     bool clearMetadataBasicFields();
