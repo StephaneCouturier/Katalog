@@ -184,13 +184,14 @@ void MainWindow::on_BackUp_pushButton_ExportPreview_clicked()
 
     const QString filePath = BackupMappingManager::exportPreviewToCsv(rows, collection->folder);
 
-    if (filePath.isEmpty()) {
-        QMessageBox::warning(this, "Katalog", tr("Failed to export preview."));
-        return;
-    }
-
-    QMessageBox::information(this, "Katalog",
-                             tr("Preview exported to:\n%1").arg(filePath));
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setTextFormat(Qt::RichText);
+    QString exportFileName = "file://" + filePath;
+    msgBox.setText(tr("Results exported to the collection folder:")
+                       +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
 }
 
 void MainWindow::on_BackUp_pushButton_RunBackup_clicked()
