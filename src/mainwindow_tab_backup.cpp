@@ -165,6 +165,34 @@ void MainWindow::on_BackUp_pushButton_BackUpPreview_clicked()
     loadBackupPreview();
 }
 
+void MainWindow::on_BackUp_pushButton_ExportPreview_clicked()
+{
+    QAbstractItemModel *model = ui->BackUp_tableView_PreviewFiles->model();
+    if (!model || model->rowCount() == 0)
+        return;
+
+    QList<BackupPreviewRow> rows;
+    rows.reserve(model->rowCount());
+    for (int r = 0; r < model->rowCount(); ++r) {
+        BackupPreviewRow row;
+        row.status     = model->index(r, 0).data().toString();
+        row.fileName   = model->index(r, 1).data().toString();
+        row.folderPath = model->index(r, 2).data().toString();
+        row.fileSize   = model->index(r, 3).data(Qt::UserRole).toLongLong();
+        rows.append(row);
+    }
+
+    const QString filePath = BackupMappingManager::exportPreviewToCsv(rows, collection->folder);
+
+    if (filePath.isEmpty()) {
+        QMessageBox::warning(this, "Katalog", tr("Failed to export preview."));
+        return;
+    }
+
+    QMessageBox::information(this, "Katalog",
+                             tr("Preview exported to:\n%1").arg(filePath));
+}
+
 void MainWindow::on_BackUp_pushButton_RunBackup_clicked()
 {
     runBackup();
@@ -401,6 +429,9 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     //Setup and launch the backup worker thread
     m_backupJob = new BackupJobStoppable();
     m_backupJob->setFiles(cmp.filesToCopy);
+    m_backupJob->setConflictMode(mapping.conflictMode);
+    if (mapping.conflictMode == ConflictMode::KeepBoth)
+        m_backupJob->setConflictFiles(cmp.fileConflicts);
     m_backupJob->setSourcePath(sourceDevice.path);
     m_backupJob->setTargetPath(targetDevice.path);
 
@@ -552,6 +583,14 @@ void MainWindow::showBackupReport(const BackupReport &report)
             << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
         model->appendRow(row);
     }
+    for (const DifferenceFileEntry &e : report.renamed) {
+        QList<QStandardItem*> row;
+        row << new QStandardItem(tr("archived + replaced"))
+            << new QStandardItem(e.fileName)
+            << new QStandardItem(e.folderPath)
+            << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
+        model->appendRow(row);
+    }
     for (const DifferenceFileEntry &e : report.conflicts) {
         QList<QStandardItem*> row;
         row << new QStandardItem(tr("conflict — skipped"))
@@ -579,6 +618,7 @@ void MainWindow::showBackupReport(const BackupReport &report)
             .setOperation(tr("Report"))
             .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Complete"))
             .addResult(tr("Copied"),              report.copiedCount(),   report.totalBytesCopied)
+            .addResult(tr("Archived+replaced"),   report.renamedCount())
             .addResult(tr("Conflicts (skipped)"), report.conflictCount())
             .addResult(tr("Errors"),              report.errorCount())
             .build()
@@ -637,22 +677,26 @@ void MainWindow::loadBackupPreview()
 
     qint64 copySize = 0;
     for (const DifferenceFileEntry &entry : cmp.filesToCopy) {
+        auto *sizeItem = new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
+        sizeItem->setData(entry.fileSize, Qt::UserRole);
         QList<QStandardItem*> row;
         row << new QStandardItem(tr("to copy"))
             << new QStandardItem(entry.fileName)
             << new QStandardItem(entry.folderPath)
-            << new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
+            << sizeItem;
         model->appendRow(row);
         copySize += entry.fileSize;
     }
 
     qint64 conflictSize = 0;
     for (const DifferenceFileEntry &entry : cmp.fileConflicts) {
+        auto *sizeItem = new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
+        sizeItem->setData(entry.fileSize, Qt::UserRole);
         QList<QStandardItem*> row;
         row << new QStandardItem(tr("conflict"))
             << new QStandardItem(entry.fileName)
             << new QStandardItem(entry.folderPath)
-            << new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
+            << sizeItem;
         model->appendRow(row);
         conflictSize += entry.fileSize;
     }
@@ -674,9 +718,10 @@ void MainWindow::loadBackupPreview()
             .build()
     );
 
-    //Show preview section
+    //Show preview section and enable export
     ui->BackUp_label_ProgressSummary->setVisible(true);
     ui->BackUp_tableView_PreviewFiles->setVisible(true);
+    ui->BackUp_pushButton_ExportPreview->setEnabled(true);
 }
 
 void MainWindow::on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1)
@@ -1235,14 +1280,16 @@ void MainWindow::saveNewMapping()
                                 mapping_type,
                                 mapping_device_source_id,
                                 mapping_device_target_id,
-                                mapping_strict_copy
+                                mapping_strict_copy,
+                                mapping_conflict_mode
                             )
                             VALUES
                             (   :mapping_name,
                                 :mapping_type,
                                 :mapping_device_source_id,
                                 :mapping_device_target_id,
-                                :mapping_strict_copy
+                                :mapping_strict_copy,
+                                :mapping_conflict_mode
                             )
                         )");
     query.prepare(querySQL);
@@ -1251,6 +1298,7 @@ void MainWindow::saveNewMapping()
     query.bindValue(":mapping_device_source_id", device1ID);
     query.bindValue(":mapping_device_target_id", device2ID);
     query.bindValue(":mapping_strict_copy", ui->BackUp_checkBox_StrictCopy->isChecked() ? 1 : 0);
+    query.bindValue(":mapping_conflict_mode", ui->BackUp_comboBox_ConflictMode->currentIndex());
 
     if (!query.exec())
     {
@@ -1279,4 +1327,5 @@ void MainWindow::setupBackUpManager()
     ui->BackUp_tableView_PreviewFiles->setVisible(false);
     ui->BackUp_progressBar->setVisible(false);
     ui->BackUp_pushButton_CancelBackup->setVisible(false);
+    ui->BackUp_pushButton_ExportPreview->setEnabled(false);
 }

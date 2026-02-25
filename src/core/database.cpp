@@ -408,7 +408,8 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_device_target_id    %2,
                     mapping_backup_last_date    TEXT,
                     mapping_backup_last_size    %2,
-                    mapping_strict_copy         INTEGER DEFAULT 1)
+                    mapping_strict_copy         INTEGER DEFAULT 1,
+                    mapping_conflict_mode       INTEGER DEFAULT 0)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 
@@ -1290,6 +1291,29 @@ QSqlError Database::runMigration_2_10(const QString &connectionName)
     }
 
     qDebug() << "=== Database Migration 2.10 completed ===";
+    return QSqlError();
+}
+
+//----------------------------------------------------------------------
+QSqlError Database::runMigration_2_11(const QString &connectionName)
+{
+    qDebug() << "=== Database Migration 2.11: Adding mapping_conflict_mode to device_mapping ===";
+
+    QStringList existingColumns = getTableColumns(connectionName, "device_mapping");
+
+    if (!existingColumns.contains("mapping_conflict_mode")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE device_mapping ADD COLUMN mapping_conflict_mode INTEGER DEFAULT 0");
+        if (err.type() != QSqlError::NoError) {
+            qDebug() << "Failed to add mapping_conflict_mode column:" << err.text();
+            return err;
+        }
+        qDebug() << "Added mapping_conflict_mode column to device_mapping";
+    } else {
+        qDebug() << "mapping_conflict_mode already exists, skipping";
+    }
+
+    qDebug() << "=== Database Migration 2.11 completed ===";
     return QSqlError();
 }
 

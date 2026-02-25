@@ -1101,7 +1101,8 @@ void Collection::loadMappingFileToTable()
                                             mapping_device_target_id,
                                             mapping_backup_last_date,
                                             mapping_backup_last_size,
-                                            mapping_strict_copy
+                                            mapping_strict_copy,
+                                            mapping_conflict_mode
                                         )
                                         VALUES(
                                             :mapping_id,
@@ -1111,7 +1112,8 @@ void Collection::loadMappingFileToTable()
                                             :mapping_device_target_id,
                                             :mapping_backup_last_date,
                                             :mapping_backup_last_size,
-                                            :mapping_strict_copy
+                                            :mapping_strict_copy,
+                                            :mapping_conflict_mode
                                         )
                                         )");
                 insertQuery.prepare(insertQuerySQL);
@@ -1124,6 +1126,8 @@ void Collection::loadMappingFileToTable()
                 insertQuery.bindValue(":mapping_backup_last_size", fieldList[6]);
                 // field[7] = strict_copy (may be absent in old CSV files — default to 1)
                 insertQuery.bindValue(":mapping_strict_copy",      fieldList.size() > 7 ? fieldList[7].toInt() : 1);
+                // field[8] = conflict_mode (may be absent in old CSV files — default to 0)
+                insertQuery.bindValue(":mapping_conflict_mode",    fieldList.size() > 8 ? fieldList[8].toInt() : 0);
                 insertQuery.exec();
             }
         }
@@ -1553,6 +1557,7 @@ void Collection::saveMappingTableToFile()
             << "backup_last_date" << "\t"
             << "backup_last_size" << "\t"
             << "strict_copy"      << "\t"
+            << "conflict_mode"    << "\t"
             << '\n';
 
         //Get data

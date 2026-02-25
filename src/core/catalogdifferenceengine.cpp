@@ -339,18 +339,22 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
                    << q.lastError().text();
     }
 
-    // Conflicts: file exists at the corresponding path but with a different size
+    // Conflicts: file exists at the corresponding path but with a different size.
+    // JOIN (instead of EXISTS) so we can return the target file's date alongside
+    // the source fields — needed for direction check in KeepBoth conflict mode.
     q.prepare(R"(
-        SELECT file_name, file_folder_path, file_size, file_date_updated
+        SELECT f1.file_name,
+               f1.file_folder_path,
+               f1.file_size,
+               f1.file_date_updated,
+               f2.file_date_updated AS target_date_updated
         FROM file f1
-        WHERE f1.file_catalog_id = :sourceId
-        AND EXISTS (
-            SELECT 1 FROM file f2
-            WHERE f2.file_catalog_id = :targetId
-            AND f2.file_name = f1.file_name
+        JOIN file f2
+            ON  f2.file_catalog_id = :targetId
+            AND f2.file_name       = f1.file_name
             AND f2.file_folder_path = :targetRoot || SUBSTR(f1.file_folder_path, :rootLen + 1)
-            AND f2.file_size != f1.file_size
-        )
+            AND f2.file_size       != f1.file_size
+        WHERE f1.file_catalog_id = :sourceId
     )");
     q.bindValue(":sourceId",   sourceCatalogId);
     q.bindValue(":targetId",   targetCatalogId);
@@ -360,10 +364,11 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
     if (q.exec()) {
         while (q.next()) {
             DifferenceFileEntry e;
-            e.fileName    = q.value(0).toString();
-            e.folderPath  = q.value(1).toString();
-            e.fileSize    = q.value(2).toLongLong();
-            e.dateUpdated = q.value(3).toString();
+            e.fileName          = q.value(0).toString();
+            e.folderPath        = q.value(1).toString();
+            e.fileSize          = q.value(2).toLongLong();
+            e.dateUpdated       = q.value(3).toString();
+            e.targetDateUpdated = q.value(4).toString();
             result.conflicts.append(e);
         }
     } else {

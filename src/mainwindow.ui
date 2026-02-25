@@ -11114,6 +11114,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
+               <widget class="QLabel" name="BackUp_label_ConflictMode">
+                <property name="text">
+                 <string>On conflict:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="BackUp_comboBox_ConflictMode">
+                <property name="toolTip">
+                 <string>How to handle files that already exist in the target but differ from the source (conflicts).
+Skip: report the conflict, do nothing (safe default).
+Archive &amp; Replace: rename the old target file with a date-time stamp, then copy the newer source file.</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Skip</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Archive &amp; Replace</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
                 <property name="text">
                  <string>Create link</string>
@@ -11202,6 +11228,25 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QPushButton" name="BackUp_pushButton_ExportPreview">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>200</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Export</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="document-export"/>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </item>
               <item>
@@ -11215,22 +11260,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item row="7" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QPushButton" name="BackUp_pushButton_DeleteSelectedMapping">
-                <property name="maximumSize">
-                 <size>
-                  <width>200</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Delete selected</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="QIcon::ThemeIcon::EditDelete"/>
-                </property>
-               </widget>
-              </item>
               <item>
                <widget class="QPushButton" name="BackUp_pushButton_ReplicateDirectories">
                 <property name="maximumSize">
@@ -11259,7 +11288,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Preview Backup</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+                 <iconset theme="QIcon::ThemeIcon::GoNext"/>
                 </property>
                </widget>
               </item>
@@ -11304,6 +11333,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="BackUp_pushButton_DeleteSelectedMapping">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Delete selected</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="QIcon::ThemeIcon::EditDelete"/>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>

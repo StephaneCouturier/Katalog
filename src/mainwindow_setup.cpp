@@ -469,6 +469,20 @@
                 }
             }
 
+            if (schemaVersion < QVersionNumber::fromString("2.11")) {
+                qDebug() << "Running database migration to 2.11...";
+                collection->dbSchemaVersion = "2.11";
+
+                QSqlError migrationError = Database::runMigration_2_11(m_connectionName);
+                if (migrationError.type() == QSqlError::NoError) {
+                    collection->setDatabaseSchemaVersion();
+                    qDebug() << "Database migration to 2.11 completed";
+                } else {
+                    qDebug() << "Database migration to 2.11 failed:" << migrationError.text();
+                    return;
+                }
+            }
+
         // Refresh display
         loadSearchHistoryTableToModel();
     }

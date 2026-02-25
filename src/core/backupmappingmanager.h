@@ -31,6 +31,8 @@
 #ifndef BACKUPMAPPINGMANAGER_H
 #define BACKUPMAPPINGMANAGER_H
 
+#include "backupjob.h"
+
 #include <QObject>
 #include <QString>
 #include <QList>
@@ -58,7 +60,8 @@ struct MappingInfo {
     int targetFileCount;
     bool sourceActive;
     bool targetActive;
-    bool strictCopy;  // true (default) = mirror folder structure exactly; false = dedup (skip if name+size exists anywhere in target)
+    bool strictCopy;       // true (default) = mirror folder structure exactly; false = dedup (skip if name+size exists anywhere in target)
+    ConflictMode conflictMode;  // how to handle files that exist in target but differ
 
     MappingInfo()
         : sourceSize(0)
@@ -71,6 +74,7 @@ struct MappingInfo {
         , sourceActive(false)
         , targetActive(false)
         , strictCopy(true)
+        , conflictMode(ConflictMode::Skip)
     {}
 };
 
@@ -130,6 +134,16 @@ struct MappingFilter {
 };
 
 /**
+ * @brief A single row of backup preview data for CSV export
+ */
+struct BackupPreviewRow {
+    QString status;
+    QString fileName;
+    QString folderPath;
+    qint64  fileSize = 0;
+};
+
+/**
  * @brief Backend manager for backup mappings
  */
 class BackupMappingManager : public QObject
@@ -154,6 +168,10 @@ public:
     int getMappingCount();
     int getFilteredMappingCount(const MappingFilter& filter);
     MappingTotals calculateTotals(const MappingFilter& filter);
+
+    // Export
+    static QString exportPreviewToCsv(const QList<BackupPreviewRow> &rows,
+                                      const QString &collectionFolder);
 
     // Query building (for UI compatibility)
     QString buildMappingQuery(const MappingFilter& filter);

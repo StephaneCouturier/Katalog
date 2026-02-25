@@ -794,6 +794,7 @@ class MainWindow : public KXmlGuiWindow
             void on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked();
             void on_BackUp_pushButton_ReplicateDirectories_clicked();
             void on_BackUp_pushButton_BackUpPreview_clicked();
+            void on_BackUp_pushButton_ExportPreview_clicked();
             void on_BackUp_pushButton_RunBackup_clicked();
             void on_BackUp_pushButton_CancelBackup_clicked();
             void onBackupProgress(int filesDone, int totalFiles,

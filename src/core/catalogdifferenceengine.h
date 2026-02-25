@@ -44,7 +44,8 @@ struct DifferenceFileEntry {
     QString fileName;
     QString folderPath;
     qint64 fileSize = 0;
-    QString dateUpdated;
+    QString dateUpdated;          // source file date
+    QString targetDateUpdated;    // target file date (conflicts only; empty otherwise)
     QString catalog;
     int catalogId = 0;
     QString checksum;

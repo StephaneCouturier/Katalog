@@ -33,6 +33,9 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QDateTime>
 
 BackupMappingManager::BackupMappingManager(const QString& connectionName,
                                            QObject *parent)
@@ -66,7 +69,8 @@ QString BackupMappingManager::buildBaseQuery()
             d2.device_total_file_size AS target_size,
             d2.device_total_file_count AS target_file_count,
             d2.device_date_updated AS target_date_updated,
-            COALESCE(dm.mapping_strict_copy, 1) AS mapping_strict_copy
+            COALESCE(dm.mapping_strict_copy,    1) AS mapping_strict_copy,
+            COALESCE(dm.mapping_conflict_mode, 0) AS mapping_conflict_mode
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
@@ -183,7 +187,8 @@ MappingInfo BackupMappingManager::parseMappingFromQuery(const QSqlQuery& query)
     info.targetFileCount = query.value("target_file_count").toInt();
     info.targetDateUpdated = query.value("target_date_updated").toString();
 
-    info.strictCopy = query.value("mapping_strict_copy").toInt() != 0;
+    info.strictCopy    = query.value("mapping_strict_copy").toInt() != 0;
+    info.conflictMode  = static_cast<ConflictMode>(query.value("mapping_conflict_mode").toInt());
 
     return info;
 }
@@ -347,5 +352,35 @@ MappingTotals BackupMappingManager::calculateTotals(const MappingFilter& filter)
 
     qDebug() << "Calculated totals for" << totals.totalMappings << "mappings";
     return totals;
+}
+
+// ─── Export ────────────────────────────────────────────────────────────────
+
+QString BackupMappingManager::exportPreviewToCsv(const QList<BackupPreviewRow> &rows,
+                                                  const QString &collectionFolder)
+{
+    const QString timestamp = QDateTime::currentDateTime().toString("yyyy-MM-dd_HH-mm-ss");
+    const QString filePath = collectionFolder + "/backup_preview_" + timestamp + ".csv";
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "ERROR: Cannot write backup preview CSV:" << filePath;
+        return QString();
+    }
+
+    QTextStream out(&file);
+    out << "Status"      << '\t'
+        << "File Name"   << '\t'
+        << "Folder Path" << '\t'
+        << "Size (bytes)" << '\n';
+
+    for (const BackupPreviewRow &row : rows) {
+        out << row.status     << '\t'
+            << row.fileName   << '\t'
+            << row.folderPath << '\t'
+            << row.fileSize   << '\n';
+    }
+
+    return filePath;
 }
 

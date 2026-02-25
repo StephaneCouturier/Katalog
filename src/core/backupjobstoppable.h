@@ -45,6 +45,9 @@
  * Usage:
  *   auto *job = new BackupJobStoppable();
  *   job->setFiles(filesToCopy);
+ *   job->setConflictMode(mapping.conflictMode);
+ *   if (mapping.conflictMode == ConflictMode::KeepBoth)
+ *       job->setConflictFiles(fileConflicts);
  *   job->setSourcePath(sourceDevice.path);
  *   job->setTargetPath(targetDevice.path);
  *
@@ -65,8 +68,19 @@ class BackupJobStoppable : public QObject
 public:
     explicit BackupJobStoppable(QObject *parent = nullptr);
 
-    /** Files to copy — typically DifferenceResult::onlyInSource minus conflicts. */
+    /** New files to copy (no counterpart in target). */
     void setFiles(const QList<DifferenceFileEntry> &files);
+
+    /**
+     * @brief Conflict files (exist in target but differ).
+     * Only processed when conflictMode is KeepBoth.
+     * In KeepBoth mode: if source is newer, the target is archived and the
+     * source is copied; otherwise the file is reported as a skipped conflict.
+     */
+    void setConflictFiles(const QList<DifferenceFileEntry> &conflicts);
+
+    /** How to handle files that already exist in the target but differ. */
+    void setConflictMode(ConflictMode mode);
 
     /** Absolute path of the source catalog root (e.g. "/media/USB_Drive"). */
     void setSourcePath(const QString &path);
@@ -101,11 +115,16 @@ signals:
 
 private:
     QList<DifferenceFileEntry> m_files;
-    QString      m_sourcePath;
-    QString      m_targetPath;
-    QAtomicInt   m_stopRequested{0};
+    QList<DifferenceFileEntry> m_conflictFiles;
+    QString        m_sourcePath;
+    QString        m_targetPath;
+    ConflictMode   m_conflictMode = ConflictMode::Skip;
+    QAtomicInt     m_stopRequested{0};
 
     bool shouldContinue() const { return m_stopRequested.loadAcquire() == 0; }
+
+    /** Build the archived filename: stem_YYYYMMDD-HHmmss.ext */
+    static QString buildArchivedFileName(const QString &filePath);
 };
 
 #endif // BACKUPJOBSTOPPABLE_H
