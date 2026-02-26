@@ -7483,22 +7483,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <property name="leftMargin">
                      <number>25</number>
                     </property>
-                    <item row="2" column="2">
-                     <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_MetaDataOption">
-                      <item>
-                       <spacer name="Catalogs_horizontalSpacer_MetaDataOption">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="Catalogs_label_FileType_3">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Include files checksum</string>
+                      </property>
+                     </widget>
                     </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="Catalogs_label_FileType">
@@ -7510,62 +7506,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="text">
                        <string>File Type</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="2">
-                     <widget class="QCheckBox" name="Catalogs_checkBox_isFullDevice">
-                      <property name="text">
-                       <string>is full device</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="2">
-                     <spacer name="Devices_horizontalSpacer_14">
-                      <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QComboBox" name="Catalogs_comboBox_FileType"/>
-                    </item>
-                    <item row="3" column="2">
-                     <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_MetaDataOption_2">
-                      <item>
-                       <spacer name="Catalogs_horizontalSpacer_MetaDataOption_2">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QComboBox" name="Catalogs_comboBox_IncludeHidden"/>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="Catalogs_label_FileType_4">
-                      <property name="minimumSize">
-                       <size>
-                        <width>120</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Include Hidden files</string>
                       </property>
                      </widget>
                     </item>
@@ -7585,8 +7525,61 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item row="2" column="1">
                      <widget class="QComboBox" name="Catalogs_comboBox_MetaDataOption"/>
                     </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="Catalogs_label_FileType_3">
+                    <item row="0" column="2">
+                     <spacer name="Devices_horizontalSpacer_14">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="2" column="2">
+                     <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_MetaDataOption">
+                      <item>
+                       <spacer name="Catalogs_horizontalSpacer_MetaDataOption">
+                        <property name="orientation">
+                         <enum>Qt::Orientation::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QComboBox" name="Catalogs_comboBox_FileType"/>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QComboBox" name="Catalogs_comboBox_ChecksumOption"/>
+                    </item>
+                    <item row="3" column="2">
+                     <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_MetaDataOption_2">
+                      <item>
+                       <spacer name="Catalogs_horizontalSpacer_MetaDataOption_2">
+                        <property name="orientation">
+                         <enum>Qt::Orientation::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="Catalogs_label_FileType_4">
                       <property name="minimumSize">
                        <size>
                         <width>120</width>
@@ -7594,12 +7587,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </size>
                       </property>
                       <property name="text">
-                       <string>Include files checksum</string>
+                       <string>Include Hidden files</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="1">
-                     <widget class="QComboBox" name="Catalogs_comboBox_ChecksumOption"/>
+                    <item row="4" column="1">
+                     <widget class="QComboBox" name="Catalogs_comboBox_IncludeHidden"/>
+                    </item>
+                    <item row="4" column="2">
+                     <widget class="QCheckBox" name="Catalogs_checkBox_isFullDevice">
+                      <property name="text">
+                       <string>is full device</string>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </item>
@@ -11261,6 +11261,19 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
             <item row="7" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
+               <widget class="QCheckBox" name="BackUp_checkBox_UpdateBeforeBackup">
+                <property name="toolTip">
+                 <string>Update source and target catalogs before backup, and update the target catalog again after backup</string>
+                </property>
+                <property name="text">
+                 <string>Update catalogs</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="BackUp_pushButton_ReplicateDirectories">
                 <property name="maximumSize">
                  <size>
@@ -11305,19 +11318,6 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                 </property>
                 <property name="icon">
                  <iconset theme="QIcon::ThemeIcon::GoNext"/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="BackUp_checkBox_UpdateBeforeBackup">
-                <property name="toolTip">
-                 <string>Update source and target catalogs before backup, and update the target catalog again after backup</string>
-                </property>
-                <property name="text">
-                 <string>Update catalogs</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
                 </property>
                </widget>
               </item>

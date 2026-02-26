@@ -515,8 +515,11 @@ class MainWindow : public KXmlGuiWindow
             void setupDeviceUpdateManagerForBackup();
             void continueBackupAfterCatalogUpdate();
             void executeBackup(Device sourceDevice, Device targetDevice, MappingInfo mapping);
+            void executeReplicate(const Device &sourceDevice, const Device &targetDevice);
             enum class BackupUpdatePhase { None, UpdatingSource, UpdatingTarget };
             BackupUpdatePhase m_backupUpdatePhase = BackupUpdatePhase::None;
+            enum class PendingBackupOperation { None, RunBackup, Preview, ReplicateDirectories };
+            PendingBackupOperation m_pendingBackupOperation = PendingBackupOperation::None;
             Device  m_pendingBackupSourceDevice;
             Device  m_pendingBackupTargetDevice;
             int     m_pendingBackupMappingId = -1;

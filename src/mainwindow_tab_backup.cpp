@@ -103,9 +103,8 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
     int mappingID = selectedIndexes.at(0).data().toInt();
 
     //Get mapping info (source and target device IDs and paths)
-    if (!backupMappingManager) {
+    if (!backupMappingManager)
         backupMappingManager = new BackupMappingManager(m_connectionName, this);
-    }
     MappingInfo mapping = backupMappingManager->getMappingById(mappingID);
 
     //Load source and target devices to get catalog IDs (externalID)
@@ -136,6 +135,33 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
         return;
     }
 
+    if (ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()) {
+        if (deviceUpdateManager->operationRunning()) {
+            QMessageBox::warning(this, "Katalog",
+                tr("A catalog update is already in progress. Please wait and try again."));
+            return;
+        }
+
+        m_pendingBackupMappingId    = mappingID;
+        m_pendingBackupSourceDevice = sourceDevice;
+        m_pendingBackupTargetDevice = targetDevice;
+        m_backupUpdatePhase         = BackupUpdatePhase::UpdatingSource;
+        m_pendingBackupOperation    = PendingBackupOperation::ReplicateDirectories;
+
+        ui->BackUp_pushButton_ReplicateDirectories->setEnabled(false);
+        ui->BackUp_label_ProgressSummary->setVisible(false);
+
+        setupDeviceUpdateManagerForBackup();
+        deviceUpdateManager->updateDeviceHierarchy(
+            &m_pendingBackupSourceDevice, collection->databaseMode, collection->folder, "update");
+        return;
+    }
+
+    executeReplicate(sourceDevice, targetDevice);
+}
+
+void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targetDevice)
+{
     //In Memory mode, load the source catalog's folders into the in-memory database first
     if (collection->databaseMode == "Memory") {
         sourceDevice.catalog->loadFoldersToTable();
@@ -149,7 +175,19 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
         targetDevice.path
     );
 
-    //Display result
+    //Update status bar with completion statistics
+    ui->BackUp_label_ProgressSummary->setVisible(true);
+    ui->BackUp_label_ProgressSummary->setText(
+        StatusBarMessageBuilder()
+            .setOperation(tr("Replicate"))
+            .setStatus(tr("Completed"))
+            .addResult(tr("Created"),          result.createdCount())
+            .addResult(tr("Already existing"), result.skippedCount())
+            .addResult(tr("Errors"),           result.errorCount())
+            .build()
+    );
+
+    //Display result dialog
     QMessageBox::information(this, "Katalog",
                              tr("Directory replication completed.\n\n"
                                 "Directories created: %1\n"
@@ -162,6 +200,53 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
 
 void MainWindow::on_BackUp_pushButton_BackUpPreview_clicked()
 {
+    if (ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()) {
+        QModelIndexList selectedIndexes = ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
+        if (selectedIndexes.isEmpty()) {
+            QMessageBox::warning(this, "Katalog", tr("Select a mapping first."));
+            return;
+        }
+        int mappingID = selectedIndexes.at(0).data().toInt();
+
+        if (!backupMappingManager)
+            backupMappingManager = new BackupMappingManager(m_connectionName, this);
+        MappingInfo mapping = backupMappingManager->getMappingById(mappingID);
+
+        Device sourceDevice;
+        sourceDevice.ID = mapping.sourceDeviceId;
+        sourceDevice.loadDevice(m_connectionName);
+
+        Device targetDevice;
+        targetDevice.ID = mapping.targetDeviceId;
+        targetDevice.loadDevice(m_connectionName);
+
+        if (sourceDevice.type != "Catalog" || targetDevice.type != "Catalog") {
+            QMessageBox::warning(this, "Katalog",
+                                 tr("Both source and target must be Catalog devices."));
+            return;
+        }
+
+        if (deviceUpdateManager->operationRunning()) {
+            QMessageBox::warning(this, "Katalog",
+                tr("A catalog update is already in progress. Please wait and try again."));
+            return;
+        }
+
+        m_pendingBackupMappingId    = mappingID;
+        m_pendingBackupSourceDevice = sourceDevice;
+        m_pendingBackupTargetDevice = targetDevice;
+        m_backupUpdatePhase         = BackupUpdatePhase::UpdatingSource;
+        m_pendingBackupOperation    = PendingBackupOperation::Preview;
+
+        ui->BackUp_pushButton_BackUpPreview->setEnabled(false);
+        ui->BackUp_label_ProgressSummary->setVisible(false);
+
+        setupDeviceUpdateManagerForBackup();
+        deviceUpdateManager->updateDeviceHierarchy(
+            &m_pendingBackupSourceDevice, collection->databaseMode, collection->folder, "update");
+        return;
+    }
+
     loadBackupPreview();
 }
 
@@ -322,14 +407,10 @@ void MainWindow::runBackup()
         m_pendingBackupSourceDevice = sourceDevice;
         m_pendingBackupTargetDevice = targetDevice;
         m_backupUpdatePhase         = BackupUpdatePhase::UpdatingSource;
+        m_pendingBackupOperation    = PendingBackupOperation::RunBackup;
 
         ui->BackUp_pushButton_RunBackup->setEnabled(false);
-        ui->BackUp_label_ProgressSummary->setVisible(true);
-        ui->BackUp_label_ProgressSummary->setText(
-            StatusBarMessageBuilder()
-                .setOperation(tr("Backup"))
-                .setStatus(tr("Updating source catalog…"))
-                .build());
+        ui->BackUp_label_ProgressSummary->setVisible(false);
 
         setupDeviceUpdateManagerForBackup();
         deviceUpdateManager->updateDeviceHierarchy(
@@ -338,6 +419,8 @@ void MainWindow::runBackup()
     }
 
     executeBackup(sourceDevice, targetDevice, mapping);
+
+    ui->BackUp_pushButton_ExportPreview->setEnabled(true);
 }
 
 void MainWindow::setupDeviceUpdateManagerForBackup()
@@ -349,9 +432,12 @@ void MainWindow::setupDeviceUpdateManagerForBackup()
     connect(deviceUpdateManager, &DeviceUpdateManager::operationError,
             this, [this](const QString &error) {
                 m_backupUpdatePhase      = BackupUpdatePhase::None;
+                m_pendingBackupOperation = PendingBackupOperation::None;
                 m_pendingBackupMappingId = -1;
                 setupDeviceUpdateManager();  // restore normal device-tab connections
                 ui->BackUp_pushButton_RunBackup->setEnabled(true);
+                ui->BackUp_pushButton_BackUpPreview->setEnabled(true);
+                ui->BackUp_pushButton_ReplicateDirectories->setEnabled(true);
                 ui->BackUp_label_ProgressSummary->setVisible(false);
                 QMessageBox::warning(this, "Katalog",
                     tr("Catalog update failed: %1").arg(error));
@@ -359,9 +445,12 @@ void MainWindow::setupDeviceUpdateManagerForBackup()
     connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
             this, [this]() {
                 m_backupUpdatePhase      = BackupUpdatePhase::None;
+                m_pendingBackupOperation = PendingBackupOperation::None;
                 m_pendingBackupMappingId = -1;
                 setupDeviceUpdateManager();
                 ui->BackUp_pushButton_RunBackup->setEnabled(true);
+                ui->BackUp_pushButton_BackUpPreview->setEnabled(true);
+                ui->BackUp_pushButton_ReplicateDirectories->setEnabled(true);
                 ui->BackUp_label_ProgressSummary->setVisible(false);
             });
 }
@@ -375,11 +464,6 @@ void MainWindow::continueBackupAfterCatalogUpdate()
         // have that cleanup fire mid-operation and corrupt DeviceUpdateManager state.
         // Delay past the cleanup window (>10 ms) so the manager is fully reset first.
         m_backupUpdatePhase = BackupUpdatePhase::UpdatingTarget;
-        ui->BackUp_label_ProgressSummary->setText(
-            StatusBarMessageBuilder()
-                .setOperation(tr("Backup"))
-                .setStatus(tr("Updating target catalog…"))
-                .build());
         QTimer::singleShot(50, this, [this]() {
             deviceUpdateManager->updateDeviceHierarchy(
                 &m_pendingBackupTargetDevice, collection->databaseMode, collection->folder, "update");
@@ -400,7 +484,25 @@ void MainWindow::continueBackupAfterCatalogUpdate()
     m_pendingBackupSourceDevice.loadDevice(m_connectionName);
     m_pendingBackupTargetDevice.loadDevice(m_connectionName);
 
-    executeBackup(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice, mapping);
+    const PendingBackupOperation op = m_pendingBackupOperation;
+    m_pendingBackupOperation = PendingBackupOperation::None;
+
+    switch (op) {
+        case PendingBackupOperation::RunBackup:
+            // RunBackup button remains disabled during the backup job; onBackupFinished() re-enables it
+            executeBackup(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice, mapping);
+            break;
+        case PendingBackupOperation::Preview:
+            ui->BackUp_pushButton_BackUpPreview->setEnabled(true);
+            loadBackupPreview();
+            break;
+        case PendingBackupOperation::ReplicateDirectories:
+            ui->BackUp_pushButton_ReplicateDirectories->setEnabled(true);
+            executeReplicate(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice);
+            break;
+        default:
+            break;
+    }
 }
 
 void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, MappingInfo mapping)
@@ -544,12 +646,6 @@ void MainWindow::onBackupFinished(const BackupReport &report)
     if (!report.wasCancelled
             && ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()
             && !deviceUpdateManager->operationRunning()) {
-
-        ui->BackUp_label_ProgressSummary->setText(
-            StatusBarMessageBuilder()
-                .setOperation(tr("Backup"))
-                .setStatus(tr("Updating target catalog…"))
-                .build());
 
         disconnect(deviceUpdateManager, nullptr, this, nullptr);
         connect(deviceUpdateManager, &DeviceUpdateManager::operationCompleted,

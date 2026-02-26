@@ -1096,7 +1096,10 @@ void Catalog::loadExcludedFolders()
     query.exec();
 
     while(query.next()){
-        excludedFolders<<query.value(0).toString();
+        QString folder = query.value(0).toString();
+        while (folder.endsWith('/') || folder.endsWith('\\'))
+            folder.chop(1);
+        excludedFolders << folder;
     }
 }
 
