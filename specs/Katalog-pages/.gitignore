@@ -10,6 +10,7 @@
 
 # Misc
 package-lock.json
+.nextcloudignore
 
 .DS_Store
 .env.local
