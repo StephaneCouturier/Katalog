@@ -1,14 +1,11 @@
 ---
 title: A test of QML and Kirigami for Katalog
 authors:
-  name: StephaneCouturier
-  title: Developer of Katalog
-  url: https://github.com/StephaneCouturier
-  image_url: https://avatars.githubusercontent.com/u/8320281?v=4
+  - StephaneCouturier
 tags: [pre-development]
 ---
 
-Looking at the future of Katalog, a few direction are still there since the start of the project:
+Looking at the future of Katalog, a few direction have been here since the start of the project:
 - Multi-platform: why not even consider Mobile ? (ok, iOS should really be covered first)
 - Using KDE KF6 librairies: this could be the best way to grow capabilities such a archives indexing or media files meta data
 - User Experience: nicer interface, more responsive.
