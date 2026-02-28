@@ -42,6 +42,29 @@
 
 //UI----------------------------------------------------------------------------
 
+void MainWindow::on_BackUp_pushButton_GenerateMappingName_clicked()
+{
+    QAbstractItemModel* model1 = ui->BackUp_treeView_ListSources->model();
+    QAbstractItemModel* model2 = ui->BackUp_treeView_ListTargets->model();
+    if (!model1 || !model2)
+        return;
+
+    QItemSelectionModel* sel1 = ui->BackUp_treeView_ListSources->selectionModel();
+    QItemSelectionModel* sel2 = ui->BackUp_treeView_ListTargets->selectionModel();
+    if (!sel1 || !sel2)
+        return;
+
+    QModelIndexList rows1 = sel1->selectedRows();
+    QModelIndexList rows2 = sel2->selectedRows();
+    if (rows1.isEmpty() || rows2.isEmpty())
+        return;
+
+    // Column 2 holds the device name
+    QString sourceName = rows1.first().siblingAtColumn(2).data().toString();
+    QString targetName = rows2.first().siblingAtColumn(2).data().toString();
+    ui->BackUp_lineEdit_Name->setText(sourceName + " -> " + targetName);
+}
+
 void MainWindow::on_BackUp_pushButton_SaveMapping_clicked()
 {
     saveNewMapping();
@@ -1285,16 +1308,16 @@ void MainWindow::loadBackUpDeviceLists(QString list)
 
     //Load model to the Target view
     if (list.contains("Target")){
-        ui->BackUp_treeView_List2->setModel(model);
-        ui->BackUp_treeView_List2->resizeColumnToContents(1);
-        ui->BackUp_treeView_List2->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        ui->BackUp_treeView_List2->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->BackUp_treeView_ListTargets->setModel(model);
+        ui->BackUp_treeView_ListTargets->resizeColumnToContents(1);
+        ui->BackUp_treeView_ListTargets->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->BackUp_treeView_ListTargets->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     }
     else{
-        ui->BackUp_treeView_List1->setModel(model);
-        ui->BackUp_treeView_List1->resizeColumnToContents(1);
-        ui->BackUp_treeView_List1->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        ui->BackUp_treeView_List1->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->BackUp_treeView_ListSources->setModel(model);
+        ui->BackUp_treeView_ListSources->resizeColumnToContents(1);
+        ui->BackUp_treeView_ListSources->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->BackUp_treeView_ListSources->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     }
 }
 
@@ -1302,8 +1325,8 @@ void MainWindow::saveNewMapping()
 {
     //Get data and validate it
         //Check if models are valid and have data
-        QAbstractItemModel* model1 = ui->BackUp_treeView_List1->model();
-        QAbstractItemModel* model2 = ui->BackUp_treeView_List2->model();
+        QAbstractItemModel* model1 = ui->BackUp_treeView_ListSources->model();
+        QAbstractItemModel* model2 = ui->BackUp_treeView_ListTargets->model();
 
         if (!model1 || !model2) {
             QMessageBox::warning(this, "Katalog", tr("Populate the lists first (One or both device lists are empty)."));
@@ -1316,8 +1339,8 @@ void MainWindow::saveNewMapping()
         }
 
         //Get selection models
-        QItemSelectionModel* selectionModel1 = ui->BackUp_treeView_List1->selectionModel();
-        QItemSelectionModel* selectionModel2 = ui->BackUp_treeView_List2->selectionModel();
+        QItemSelectionModel* selectionModel1 = ui->BackUp_treeView_ListSources->selectionModel();
+        QItemSelectionModel* selectionModel2 = ui->BackUp_treeView_ListTargets->selectionModel();
 
         //Check if selection models exist
         if (!selectionModel1 || !selectionModel2) {
@@ -1410,8 +1433,8 @@ void MainWindow::saveNewMapping()
     ui->BackUp_lineEdit_Name->clear();
 
     //Clear the selection
-    ui->BackUp_treeView_List1->clearSelection();
-    ui->BackUp_treeView_List2->clearSelection();
+    ui->BackUp_treeView_ListSources->clearSelection();
+    ui->BackUp_treeView_ListTargets->clearSelection();
 
 }
 

@@ -760,6 +760,8 @@
         loadDevicesView("");                // Refresh main device tree with updated dates
         loadDevicesTreeToModel("Filters");  // Refresh filters tree view
         loadBackUpMapping();               // Refresh backup mappings for the new collection
+        loadBackUpDeviceLists("Source");   // Refresh source selection list for the new collection
+        loadBackUpDeviceLists("Target");   // Refresh target selection list for the new collection
 
     }
     //----------------------------------------------------------------------

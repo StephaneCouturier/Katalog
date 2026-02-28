@@ -875,10 +875,10 @@
         ui->BackUp_tableView_CurrentMappings->setStyleSheet(
             "QTreeView { alternate-background-color: #e9f7fc;}"
             );
-        ui->BackUp_treeView_List1->setStyleSheet(
+        ui->BackUp_treeView_ListSources->setStyleSheet(
             "QTreeView { alternate-background-color: #e9f7fc;}"
             );
-        ui->BackUp_treeView_List2->setStyleSheet(
+        ui->BackUp_treeView_ListTargets->setStyleSheet(
             "QTreeView { alternate-background-color: #e9f7fc;}"
             );
         ui->BackUp_tableView_PreviewFiles->setStyleSheet(
@@ -1090,10 +1090,10 @@
         ui->BackUp_tableView_CurrentMappings->setStyleSheet(
             "QTreeView { alternate-background-color: #161b1d; }"
             );
-        ui->BackUp_treeView_List1->setStyleSheet(
+        ui->BackUp_treeView_ListSources->setStyleSheet(
             "QTreeView { alternate-background-color: #161b1d; }"
             );
-        ui->BackUp_treeView_List2->setStyleSheet(
+        ui->BackUp_treeView_ListTargets->setStyleSheet(
             "QTreeView { alternate-background-color: #161b1d; }"
             );
         ui->BackUp_tableView_PreviewFiles->setStyleSheet(

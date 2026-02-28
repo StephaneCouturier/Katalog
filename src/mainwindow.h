@@ -785,6 +785,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Storage_pushButton_UpdateStorage_clicked();
 
             //BackUp
+            void on_BackUp_pushButton_GenerateMappingName_clicked();
             void on_BackUp_pushButton_SaveMapping_clicked();
             void on_BackUp_pushButton_ReloadDeviceMappings_clicked();
             void on_BackUp_pushButton_ReloadSourceList_clicked();

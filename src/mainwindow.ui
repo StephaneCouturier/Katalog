@@ -11098,6 +11098,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="BackUp_pushButton_GenerateMappingName">
+                <property name="text">
+                 <string>Generate</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="tools-wizard"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLineEdit" name="BackUp_lineEdit_Name"/>
               </item>
               <item>
@@ -11578,14 +11594,14 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
             <item row="15" column="0" colspan="2">
              <layout class="QGridLayout" name="BackUp_gridLayout_CreateMapping">
               <item row="5" column="0">
-               <widget class="QTreeView" name="BackUp_treeView_List1">
+               <widget class="QTreeView" name="BackUp_treeView_ListSources">
                 <property name="alternatingRowColors">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item row="5" column="1">
-               <widget class="QTreeView" name="BackUp_treeView_List2">
+               <widget class="QTreeView" name="BackUp_treeView_ListTargets">
                 <property name="alternatingRowColors">
                  <bool>true</bool>
                 </property>
