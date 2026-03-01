@@ -21,7 +21,7 @@ Přenosná verze pro Windows je také k dispozici v [souborech katalogu](https:/
 ## První použití / tipy
 
 ### Nejprve začněte výběrem složky sbírky
-- Při prvním spuštění se aplikace zeptá na výběr **[složka sbírky](/Katalog/cs/docs/Settings#Collection)**, kde jsou uložena všechna data sbírky.
+- Při prvním spuštění se aplikace zeptá na výběr **[složka sbírky](/Katalog/cs/docs/Settings#collection)**, kde jsou uložena všechna data sbírky.
 - Proto je obvykle nejlepším místem složka ve vašem uživatelském adresáři.
 - Poznámka: po prvním spuštění je možné přepnout do jiného režimu správy dat.
 

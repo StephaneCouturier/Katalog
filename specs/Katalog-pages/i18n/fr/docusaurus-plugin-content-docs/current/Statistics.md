@@ -19,7 +19,7 @@ Cet écran permet de visualiser le contenu et l'évolution d'une collection :
 * *Afficher chaque valeur* : choisissez d'afficher un petit losange pour chaque point de données
 
 ### Modifier le fichier
-* disponible en [Mode mémoire](Settings#mode-m%C3%A9moire-de-base-de-donn%C3%A9es) uniquement.
+* disponible en [Mode mémoire](Settings#database-memory-mode) uniquement.
 * Bouton *Modifier les statistiques* : Il peut être utile d'éditer le fichier Statistiques pour corriger certains chiffres, le bouton ouvrira le fichier dans l'application associée aux fichiers csv. Veillez à le conserver dans un **fichier séparé par des tabulations**
 * Bouton *Recharger* : les données sont rechargées et le graphique rafraîchi.
 

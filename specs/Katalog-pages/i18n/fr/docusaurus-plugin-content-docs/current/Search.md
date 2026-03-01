@@ -6,8 +6,8 @@ Les principales caractéristiques de cet écran sont :
 * Rechercher des fichiers dans les catalogues ou à partir de lecteurs connectés
 * Utilisez plusieurs **critères** pour affiner et réduire le nombre de résultats :
  * La recherche filtrera les résultats en fonction du texte que vous avez saisi dans la ligne _Texte_ par défaut.
- * et peut être affiné avec plus d'[options de recherche de texte](Search#crit%C3%A8res-de-texte-de-recherche),
- * fournir des [attributs de fichier](Search#crit%C3%A8res-du-fichier) tels que la taille ou le type,
+ * et peut être affiné avec plus d'[options de recherche de texte](Search#search-text-criteria),
+ * fournir des [attributs de fichier](Search#file-criteria) tels que la taille ou le type,
  * mise en évidence des [fichiers dupliqués](Search#duplicates-on),
  * ou mettre en évidence les [différences](Search#differences-on) entre 2 catalogues.
 * Utilisez les **Résultats** avec un [menu contextuel](Search#file-context-menu) (clic droit) ou [Exporter les résultats](Search#batch-process) eux,

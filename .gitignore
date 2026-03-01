@@ -55,3 +55,6 @@ compile_commands.json
 *creator.user*
 
 *_qmlcache.qrc
+
+# Nextcloud ignored files
+.sync-exclude.lst

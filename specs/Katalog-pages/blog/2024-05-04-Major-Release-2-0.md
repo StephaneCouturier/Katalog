@@ -10,6 +10,8 @@ After releasing 1 version of Katalog every month and as no major bug had been re
 
 Here is finally the release 2.0: [Release Notes](https://github.com/StephaneCouturier/Katalog/releases/tag/v2.0)
 
+<!-- truncate -->
+
 This development focused on main 2 enablers:
 - **Devices**: Virtual devices, Storage, and Catalog lists are now all accessible from 1 single tab providing the equivalent on the 3 previous tabs. It provides flexibility to create and a global **hierarchy of Devices** for improvements in Search or Statistics capabilities
 

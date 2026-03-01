@@ -1,4 +1,4 @@
-# Updates with metadata
+# File Metadata
 
 ## **Introduction**
 This document specifices the use and Implementation of catalog and related files updates in the context of the use of File Metadata.

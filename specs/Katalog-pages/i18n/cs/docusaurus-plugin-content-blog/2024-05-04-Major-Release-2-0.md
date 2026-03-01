@@ -13,6 +13,8 @@ Po vydání 1 verze Katalogu každý měsíc a protože nebyla hlášena žádn�
 
 Zde je konečně vydání 2.0: [Poznámky k vydání](https://github.com/StephaneCouturier/Katalog/releases/tag/v2.0)
 
+<!-- truncate -->
+
 Tento vývoj se zaměřil na 2 hlavní faktory:
 - **Zařízení**: Seznamy virtuálních zařízení, úložiště a katalogu jsou nyní přístupné z jediné karty, která poskytuje ekvivalent na 3 předchozích kartách. Poskytuje flexibilitu při vytváření a globální **hierarchii zařízení** pro vylepšení možností vyhledávání nebo statistiky
 

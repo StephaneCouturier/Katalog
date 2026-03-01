@@ -14,7 +14,7 @@ Si le chemin source d'un catalogue pointe vers un chemin actif/connecté/monté,
 ## Boutons d'actions
 * **Mise à jour** : (activé lorsqu'un catalogue est sélectionné) Mettez à jour le catalogue sélectionné en répertoriant à nouveau tous les fichiers à partir de son chemin source, selon ses critères.
 * **Tous actifs** : Mettez à jour tous les catalogues affichés qui sont actifs (le chemin est accessible).
-* **[Import](#importer)** : Importe un catalogue depuis un autre outil. Actuellement, l'import depuis un export VVV (csv, séparés par des tabulations) est pris en charge.
+* **[Import](#import)** : Importe un catalogue depuis un autre outil. Actuellement, l'import depuis un export VVV (csv, séparés par des tabulations) est pris en charge.
 
 ## Menu contextuel (clic droit)
 
@@ -39,7 +39,7 @@ Sinon, le panneau donne accès à la modification des champs suivants :
 * **Type de fichier**
 * **Inclure les fichiers cachés**
 ![](/img/devices_catalogs_03_edit.png)
-## Importer
+## Importer {#import}
 Il est désormais possible d'importer tous les volumes physiques VVV à partir d'un seul fichier d'export réalisé en utilisant la tabulation comme séparateur.<br/>
 Chaque volume physique VVV deviendra 1 catalogue distinct. <br/>
 Limite : le chemin source et d'autres informations sur le volume ne sont pas disponibles dans l'export depuis VVV.

@@ -3,7 +3,7 @@
 ## Souhrn
 Tato stránka popisuje všechny funkce zobrazení **Seznam katalogů** na obrazovce [Zařízení](Devices) a jak je používat.
 * *Katalog* je index souborů z daného adresáře označovaný jako katalogová **cesta**.
-* **Seznam katalogů** zobrazuje všechny katalogy [Kolekce](Settings#kolekce), filtrované podle [Výběr](Selection).
+* **Seznam katalogů** zobrazuje všechny katalogy [Kolekce](Settings#collection), filtrované podle [Výběr](Selection).
 
 ![](/img/devices_catalogs_01.png)
 

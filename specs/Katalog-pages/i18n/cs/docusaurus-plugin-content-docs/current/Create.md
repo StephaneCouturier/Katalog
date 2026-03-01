@@ -16,8 +16,8 @@ Existují 3 způsoby, jak vybrat zdrojovou cestu k adresáři se soubory, které
 
 Vybraná cesta se vždy objeví v zóně pro úpravy textu a aplikace tuto cestu použije k procházení a katalogizaci jejího obsahu.
 
-## Vyberte možnosti pro zahrnutí/vyloučení souborů
-### zahrnout Typ souboru
+## Vyberte možnosti pro zahrnutí/vyloučení souborů {#select-options-to-includeexclude-files}
+### zahrnout Typ souboru {#enhanced-file-type-filtering}
 Obsah může být omezen na určitý typ souborů, 4 jsou k dispozici a budou zahrnovat soubory s příponami, jak je uvedeno zde:
  | Typ | Rozšíření |
  | ------| -------------------------------------------------- |
@@ -29,7 +29,7 @@ Obsah může být omezen na určitý typ souborů, 4 jsou k dispozici a budou za
 Tato možnost bude použitelná pro katalog, který bude pokračovat.<br/>
 Lze jej později změnit úpravou [Katalogu](DevicesCatalogs).
 
-### Jiné možnosti:
+### Jiné možnosti {#other-options}
 #### Zahrnout skryté soubory
 Skryté soubory nejsou ve výchozím nastavení zahrnuty, ale tato volba je umožňuje zahrnout.<br/>
 Tato možnost bude použitelná pro katalog, který bude pokračovat.<br/>
@@ -43,6 +43,10 @@ Libovolný adresář lze odstranit kliknutím pravým tlačítkem a poté jej zo
 Poznámka: Tato vyloučení jsou **globální**, což znamená, že tyto složky budou vyloučeny pro všechny katalogy.<br/>
 
 ![](/img/screen_create_04_exclude.png)
+
+### Extrakce metadat {#metadata-extraction}
+Zvolte, kolik metadat se má z vašich souborů extrahovat při vytváření katalogu.<br/>
+Toto nastavení je možné později změnit úpravou [Katalogu](DevicesCatalogs).
 
 ## Definujte a vytvořte katalog
 #### Vyberte úložné zařízení

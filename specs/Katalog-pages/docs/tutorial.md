@@ -19,7 +19,7 @@ A portable version for Windows is also available in the [Katalog files](https://
 
 ## First use / tips
 ### First start, pick a collection folder
-- For the first start, the application will ask to select the **[Collection folder](/Katalog/docs/Settings#Collection)** , which is where all data of a collection are stored.
+- For the first start, the application will ask to select the **[Collection folder](/Katalog/docs/Settings#collection)** , which is where all data of a collection are stored.
 - Therefore a folder in your user directory is usually the best place.
 - Note: after the first start, it is possible switch to a different data management mode.
 ### Create a catalog

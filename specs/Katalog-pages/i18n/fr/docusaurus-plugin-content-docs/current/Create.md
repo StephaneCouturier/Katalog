@@ -17,8 +17,8 @@ Il existe 3 manières de sélectionner le chemin source du répertoire contenant
 
 Le chemin sélectionné apparaîtra toujours dans la zone d'édition de texte et l'application utilisera ce chemin pour parcourir et cataloguer son contenu.
 
-## Sélectionnez les options pour inclure/exclure des fichiers
-### inclure le type de fichier
+## Sélectionnez les options pour inclure/exclure des fichiers {#select-options-to-includeexclude-files}
+### inclure le type de fichier {#enhanced-file-type-filtering}
 Le contenu peut être limité à un type particulier de fichiers, 4 sont disponibles et incluront des fichiers avec les extensions répertoriées ici :
         | Type  | Extensions                                        |
         | ------| --------------------------------------------------|
@@ -30,7 +30,7 @@ Le contenu peut être limité à un type particulier de fichiers, 4 sont disponi
 Cette option sera applicable pour le catalogue à venir.<br/>
 Il peut être modifié ultérieurement en éditant le [Catalogue](DevicesCatalogs).
 
-### Autres options:
+### Autres options {#other-options}
 #### Inclure les fichiers cachés
 Les fichiers cachés ne sont pas inclus par défaut, mais cette option permet de les inclure.<br/>
 Cette option sera applicable pour le catalogue à venir.<br/>
@@ -44,6 +44,10 @@ N'importe quel répertoire peut être supprimé par un clic droit puis visible d
 Remarque : ces exclusions sont **globales**, ce qui signifie que ces dossiers seraient exclus de tous les catalogues.<br/>
 
 ![](/img/screen_create_04_exclude.png)
+
+### Extraction de métadonnées {#metadata-extraction}
+Choisissez la quantité de métadonnées à extraire de vos fichiers lors de la création du catalogue.<br/>
+Ce paramètre peut être modifié ultérieurement en éditant le [Catalogue](DevicesCatalogs).
 
 ## Définir et créer le catalogue
 #### Sélectionnez le périphérique de stockage

@@ -20,7 +20,7 @@ Une version portable pour Windows est également disponible dans les [Fichiers K
 ## Première utilisation / astuces
 
 ### Premier démarrage, choisir un dossier de collection
-- Au premier démarrage, l'application vous demandera de sélectionner le **[dossier de collection](/Katalog/fr/docs/Settings#Collection)**, où sont stockées toutes les données d'une collection.
+- Au premier démarrage, l'application vous demandera de sélectionner le **[dossier de collection](/Katalog/fr/docs/Settings#collection)**, où sont stockées toutes les données d'une collection.
 - Par conséquent, un dossier dans votre répertoire utilisateur est généralement le meilleur emplacement.
 - Remarque : après le premier démarrage, il est possible de passer à un autre mode de gestion des données.
 

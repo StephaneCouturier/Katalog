@@ -10,6 +10,8 @@ Looking at the future of Katalog, a few direction have been here since the start
 - Using KDE KF6 librairies: this could be the best way to grow capabilities such a archives indexing or media files meta data
 - User Experience: nicer interface, more responsive.
 
+<!-- truncate -->
+
 It happens that there is now a way to address all that at once: QML with Kirigami
 - QML is the modern interface design code from Qt (which makes 100% of Katalog today)
 - Kirigami is the QML based framework by KDE to provide additional interface and consistency in the KDE world.

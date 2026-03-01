@@ -1,4 +1,5 @@
 # Devices
+
 ## Summary
 This page describes the concept of **Device** in Katalog and the top part of the **Devices** screen.
 

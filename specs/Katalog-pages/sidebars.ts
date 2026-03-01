@@ -33,8 +33,39 @@ export default {
     'tutorial',
     {
       type: 'category',
-      label: 'Features',
-      items: ['BackUp','Create', 'Devices', 'DevicesCatalogs', 'DevicesStorage', 'DevicesTree', 'Explore', 'Search', 'Selection', 'Settings', 'Statistics', 'Tags', 'CommandLines'],
+      label: 'Features', //'Main Features (tabs)',
+      items: [
+
+                'Create',
+
+                // {
+                //   type: 'category',
+                //   label: 'Devices',
+                //   items: [
+                    'Devices',
+                    'DevicesCatalogs',
+                    'DevicesStorage',
+                    'DevicesTree',
+                //   ],
+                // },
+                'Explore',
+
+                // {
+                //   type: 'category',
+                //   label: 'BackUp & Archiving',
+                //   items: [
+                          'BackUp',
+                //           'BackUp_luckybackup_profile',
+                //   ],
+                // },
+
+                'Search',
+                'Selection',
+                'Settings',
+                'Statistics',
+                'Tags',
+                'CommandLines'
+              ],
     },
     {
       type: 'category',
@@ -43,7 +74,17 @@ export default {
       {
         type: 'category',
         label: 'Specifications',
-        items: ['SpecBackUp','SpecCatalogUpdate','SpecChecksum', 'SpecProgressReport','SpecVersions'],
+        items: [{
+                  type: 'category',
+                  label: 'Spec BackUp & Archiving',
+                  items: ['SpecBackUp',
+                          'BackUp_luckybackup_profile',
+                          'SpecBackUp_Archiving'],
+                },
+                'SpecMetadata',
+                'SpecChecksum',
+                'SpecProgressReport',
+                'SpecVersions'],
       },
        'Development-Build-from-source',
        'Development-Release',

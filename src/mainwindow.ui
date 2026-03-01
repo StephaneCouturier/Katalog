@@ -11082,7 +11082,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_BackUp">
            <attribute name="icon">
-            <iconset theme="QIcon::ThemeIcon::MediaPlaylistRepeat"/>
+            <iconset theme="QIcon::ThemeIcon::EditCopy"/>
            </attribute>
            <attribute name="title">
             <string>BackUp</string>

@@ -1,5 +1,6 @@
-# File checksums
+# File Checksum
 ![Draft](https://img.shields.io/badge/Status-Draft-orange) ![2.9](https://img.shields.io/badge/Version-2.9-orange) ![664](https://img.shields.io/badge/github-664-blue?logo=github)
+
 ## **Introduction**
 This document specifies the implementation of features using **File checksums**.
 

@@ -88,7 +88,7 @@ Checksum SH256 can be calculated during indexing for Duplicate/Difference Search
 Like file metadata, the option can be selected at catalog creation or changed later, and when interrupting the process, the calculated checksum are saved and the next update will resume for remaining files.
 The files checkum can be used as a duplicate search option or as a difference search option.
 
-### Include Hidden files
+### Include Hidden files {#other-options}
 Hidden files are not included by default, but this options enables to include them.<br/>
 This option will be applicable for the catalog moving forward.<br/>
 It can be changed later by editing the [Catalog](DevicesCatalogs).

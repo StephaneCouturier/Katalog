@@ -6,7 +6,7 @@ Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je použí
 * O
 ![](/img/screen_settings_01.png)
 ## Správa dat
-### Kolekce
+### Kolekce {#collection}
 
 Sbírka je jediná skupina zařízení a všech souvisejících informací, jako jsou statistiky.<br/>
 Složka *Collection* je složka ve vašem počítači, kde jsou uložena všechna data kolekce.<br/>
