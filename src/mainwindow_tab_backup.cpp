@@ -547,8 +547,6 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
         ui->BackUp_pushButton_RunBackup->setEnabled(true);
         ui->BackUp_label_ProgressSummary->setVisible(false);
-        QMessageBox::information(this, "Katalog",
-                                 tr("Source and target are already in sync. Nothing to copy."));
         return;
     }
 

@@ -1153,7 +1153,7 @@
                       </font>
                      </property>
                      <property name="toolTip">
-                      <string>Use the Text criteria in the Search</string>
+                      <string>Use the criteria in the Search</string>
                      </property>
                      <property name="text">
                       <string>File name</string>
@@ -2175,7 +2175,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </font>
                      </property>
                      <property name="toolTip">
-                      <string>Use the Text criteria in the Search</string>
+                      <string>Use the criteria in the Search</string>
                      </property>
                      <property name="text">
                       <string>File criteria</string>
@@ -4677,7 +4677,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </font>
                      </property>
                      <property name="toolTip">
-                      <string>Use the Text criteria in the Search</string>
+                      <string>Use the criteria in the Search</string>
                      </property>
                      <property name="text">
                       <string>File metadata</string>
@@ -5873,7 +5873,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </font>
                      </property>
                      <property name="toolTip">
-                      <string>Use the Text criteria in the Search</string>
+                      <string>Use the criteria in the Search</string>
                      </property>
                      <property name="text">
                       <string>Folder criteria</string>
@@ -7397,7 +7397,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item row="3" column="1">
-                  <widget class="QComboBox" name="Devices_comboBox_Parent"/>
+                  <widget class="TreeComboBox" name="Devices_comboBox_Parent">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>

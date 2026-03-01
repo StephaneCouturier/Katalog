@@ -300,41 +300,58 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadParentsList()
-{//Load valid list of parents to the panel comboBox. It enables a selection to change the parent of a device.
+{//Load valid list of parents to the TreeComboBox. It enables a selection to change the parent of a device.
 
-    //Get data
     //A device can only be moved within its group (0= Physical, 1= Virtual)
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
-                                SELECT device_name, device_id
-                                FROM device
-                                WHERE device_id !=0
-                                AND device_id !=:selected_device_id
-                                AND device_group_id =:device_group_id
-                            )");
+        SELECT device_id, device_parent_id, device_name, device_type, device_active
+        FROM device
+        WHERE device_id != 0
+        AND device_id != :selected_device_id
+        AND device_group_id = :device_group_id
+    )");
 
-    if(activeDevice->type == "Catalog"){
-        querySQL += QLatin1String(R"(AND device_type NOT IN ("Catalog"))");
-    }
-    else //if(activeDevice->type == "Virtual")
-    {
-        querySQL += QLatin1String(R"(AND device_type NOT IN ("Catalog","Storage"))");
+    if (activeDevice->type == "Catalog") {
+        querySQL += QLatin1String(R"( AND device_type NOT IN ("Catalog"))");
+    } else {
+        querySQL += QLatin1String(R"( AND device_type NOT IN ("Catalog","Storage"))");
     }
 
     query.prepare(querySQL);
     query.bindValue(":selected_device_id", activeDevice->ID);
     query.bindValue(":device_group_id", activeDevice->groupID);
     query.exec();
-    query.next();
 
-    //Load to comboboxes
-    ui->Devices_comboBox_Parent->clear();
-    ui->Devices_comboBox_Parent->addItem("Top level", query.value(1).toInt());
+    // Build hierarchical tree model — same column layout as buildFilteredDeviceTreeModel():
+    // col 0=Name, col 1=Type, col 2=Active, col 3=ID (read by selectedDeviceId()), col 4=ParentID
+    QStandardItemModel *treeModel = new QStandardItemModel(this);
+    QMap<int, QStandardItem*> itemMap;
 
-    while(query.next())
-    {
-        ui->Devices_comboBox_Parent->addItem(query.value(0).toString()+" ("+query.value(1).toString()+")",query.value(1).toInt());
+    while (query.next()) {
+        int id       = query.value(0).toInt();
+        int parentId = query.value(1).toInt();
+        QList<QStandardItem*> row = {
+            new QStandardItem(query.value(2).toString()),
+            new QStandardItem(query.value(3).toString()),
+            new QStandardItem(query.value(4).toString()),
+            new QStandardItem(QString::number(id)),
+            new QStandardItem(QString::number(parentId))
+        };
+        QStandardItem *parentItem = itemMap.value(parentId, nullptr);
+        if (!parentItem)
+            treeModel->appendRow(row);
+        else
+            parentItem->appendRow(row);
+        itemMap.insert(id, row[0]);
     }
+
+    DeviceTreeView *proxy = new DeviceTreeView(this);
+    proxy->setSourceModel(treeModel);
+    proxy->setKatalogTheme(themeID > 0);
+
+    ui->Devices_comboBox_Parent->setTreeModel(proxy);
+    ui->Devices_comboBox_Parent->expandToDepth(2);
 }
 //--------------------------------------------------------------------------
 void MainWindow::addDeviceVirtual()
@@ -498,11 +515,8 @@ void MainWindow::editDevice()
         ui->Devices_widget_EditCommon->hide();
     }
 
-    //Get parent and selected it the combobox
-    Device *newDeviceItem = new Device();
-    newDeviceItem->ID = activeDevice->parentID;
-    newDeviceItem->loadDevice(m_connectionName);
-    ui->Devices_comboBox_Parent->setCurrentText(newDeviceItem->name+" ("+QString::number(newDeviceItem->ID)+")");
+    //Pre-select the current parent in the tree
+    ui->Devices_comboBox_Parent->setSelectedDeviceId(activeDevice->parentID);
 }
 //--------------------------------------------------------------------------
 void MainWindow::saveDeviceForm()
@@ -518,7 +532,8 @@ void MainWindow::saveDeviceForm()
     previousParentDevice.loadDevice(m_connectionName);
 
     //Get new values: name, parentID, externalID
-    activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
+    int selectedParentId = ui->Devices_comboBox_Parent->selectedDeviceId();
+    activeDevice->parentID = (selectedParentId > 0) ? selectedParentId : 0;
     activeDevice->name = ui->Devices_lineEdit_Name->text();
 
     if (activeDevice->type == "Storage")
