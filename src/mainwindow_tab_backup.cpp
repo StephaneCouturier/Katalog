@@ -197,24 +197,29 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
     targetDevice.ID = mapping.targetDeviceId;
     targetDevice.loadDevice(m_connectionName);
 
-    //Validate both devices are catalogs with valid paths
+    //Validate both devices are catalogs
     if (sourceDevice.type != "Catalog" || targetDevice.type != "Catalog") {
         QMessageBox::warning(this, "Katalog",
                              tr("Both source and target must be Catalog devices."));
         return;
     }
 
-    if (!QDir(sourceDevice.path).exists()) {
-        QMessageBox::warning(this, "Katalog",
-                             tr("Source path is not accessible: %1").arg(sourceDevice.path));
-        return;
-    }
+    //Refresh active state from filesystem, then check availability
+    sourceDevice.updateActiveState(m_connectionName);
+    targetDevice.updateActiveState(m_connectionName);
 
-    if (!QDir(targetDevice.path).exists()) {
-        QMessageBox::warning(this, "Katalog",
-                             tr("Target path is not accessible: %1").arg(targetDevice.path));
-        return;
-    }
+    auto showUnavailable = [this](const QString &role, const QString &name) {
+        ui->BackUp_label_ProgressSummary->setVisible(true);
+        ui->BackUp_label_ProgressSummary->setText(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Replicate"))
+                .setStatus(tr("%1 not available").arg(role))
+                .setCatalogName(name)
+                .build());
+    };
+
+    if (!sourceDevice.active) { showUnavailable(tr("Source"), sourceDevice.name); return; }
+    if (!targetDevice.active) { showUnavailable(tr("Target"), targetDevice.name); return; }
 
     if (ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()) {
         if (deviceUpdateManager->operationRunning()) {
@@ -268,15 +273,6 @@ void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targ
             .build()
     );
 
-    //Display result dialog
-    QMessageBox::information(this, "Katalog",
-                             tr("Directory replication completed.\n\n"
-                                "Directories created: %1\n"
-                                "Directories already existing: %2\n"
-                                "Errors: %3")
-                                 .arg(result.createdCount())
-                                 .arg(result.skippedCount())
-                                 .arg(result.errorCount()));
 }
 
 void MainWindow::on_BackUp_pushButton_BackUpPreview_clicked()
@@ -516,11 +512,22 @@ void MainWindow::runBackup()
         return;
     }
 
-    if (!QDir(targetDevice.path).exists()) {
-        QMessageBox::warning(this, "Katalog",
-                             tr("Target path is not accessible: %1").arg(targetDevice.path));
-        return;
-    }
+    //Refresh active state from filesystem, then check availability
+    sourceDevice.updateActiveState(m_connectionName);
+    targetDevice.updateActiveState(m_connectionName);
+
+    auto showUnavailable = [this](const QString &role, const QString &name) {
+        ui->BackUp_label_ProgressSummary->setVisible(true);
+        ui->BackUp_label_ProgressSummary->setText(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Backup"))
+                .setStatus(tr("%1 not available").arg(role))
+                .setCatalogName(name)
+                .build());
+    };
+
+    if (!sourceDevice.active) { showUnavailable(tr("Source"), sourceDevice.name); return; }
+    if (!targetDevice.active) { showUnavailable(tr("Target"), targetDevice.name); return; }
 
     // Optionally update both catalogs from filesystem before comparing
     if (ui->BackUp_checkBox_UpdateBeforeBackup->isChecked()) {
@@ -875,6 +882,10 @@ void MainWindow::loadBackupPreview()
         return;
     }
 
+    //Refresh active state from filesystem (preview uses catalog data from DB, so offline is allowed)
+    sourceDevice.updateActiveState(m_connectionName);
+    targetDevice.updateActiveState(m_connectionName);
+
     //Memory mode: load file data into 'file' table first
     if (collection->databaseMode == "Memory") {
         QMutex mutex;
@@ -924,12 +935,20 @@ void MainWindow::loadBackupPreview()
     ui->BackUp_tableView_PreviewFiles->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->BackUp_tableView_PreviewFiles->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    //Summary line — includes mode indicator
+    //Summary line — includes mode indicator and offline notice if either device is unavailable
     const QString modeLabel = mapping.strictCopy ? tr("strict copy") : tr("dedup");
+    QString offlineNote;
+    if (!sourceDevice.active && !targetDevice.active)
+        offlineNote = tr(" — source & target offline");
+    else if (!sourceDevice.active)
+        offlineNote = tr(" — source offline");
+    else if (!targetDevice.active)
+        offlineNote = tr(" — target offline");
+
     ui->BackUp_label_ProgressSummary->setText(
         StatusBarMessageBuilder()
             .setOperation(tr("Preview"))
-            .setStatus(modeLabel)
+            .setStatus(modeLabel + offlineNote)
             .addResult(tr("To copy"),             cmp.filesToCopy.size(),   copySize)
             .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
             .addResult(tr("Already in target"),   cmp.skippedCount)
