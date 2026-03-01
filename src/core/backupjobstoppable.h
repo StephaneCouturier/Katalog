@@ -47,7 +47,7 @@
  *   auto *job = new BackupJobStoppable();
  *   job->setFiles(filesToCopy);
  *   job->setConflictMode(mapping.conflictMode);
- *   if (mapping.conflictMode == ConflictMode::KeepBoth)
+ *   if (mapping.conflictMode == ConflictMode::RenameOldest)
  *       job->setConflictFiles(fileConflicts);
  *   job->setSourcePath(sourceDevice.path);
  *   job->setTargetPath(targetDevice.path);
@@ -74,9 +74,9 @@ public:
 
     /**
      * @brief Conflict files (exist in target but differ).
-     * Only processed when conflictMode is KeepBoth.
-     * In KeepBoth mode: if source is newer, the target is archived and the
-     * source is copied; otherwise the file is reported as a skipped conflict.
+     * Only processed when conflictMode is RenameOldest.
+     * In RenameOldest mode: if source is newer, the target is renamed with a
+     * datetime stamp and the source is copied; otherwise reported as a conflict.
      */
     void setConflictFiles(const QList<DifferenceFileEntry> &conflicts);
 
@@ -126,7 +126,7 @@ private:
     QList<DifferenceFileEntry> m_conflictFiles;
     QString        m_sourcePath;
     QString        m_targetPath;
-    ConflictMode   m_conflictMode = ConflictMode::Skip;
+    ConflictMode   m_conflictMode = ConflictMode::RenameOldest;
     QAtomicInt     m_stopRequested{0};
     QAtomicInt     m_paused{0};
     mutable QMutex m_pauseMutex;

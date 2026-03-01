@@ -40,11 +40,17 @@
  *        but differ from the source (conflicts).
  *
  * Stored as INTEGER in device_mapping.mapping_conflict_mode (migration 2.11).
+ *
+ * Only modes 0 and 1 are implemented (v1).
+ * Modes 2 and 3 are defined for the backlog and must not be used yet.
  */
 enum class ConflictMode {
-    Skip     = 0,   ///< Report the conflict, do nothing (v1 default).
-    KeepBoth = 1    ///< Archive the old target file (rename with datetime stamp),
-                    ///< then copy the source file — only when source is newer.
+    Skip          = 0,  ///< Report the conflict, leave target untouched (safe default).
+    RenameOldest  = 1,  ///< If source is newer: rename the target file with a datetime
+                        ///< stamp (stem_YYYYMMDD-HHmmss.ext), then copy the source.
+                        ///< If target is newer or same date: skip (protect newer target).
+    // Overwrite   = 2,  ///< (backlog) Source always wins — overwrite target silently, no rename.
+    // RenameAlways= 3,  ///< (backlog) Always rename target + copy source, regardless of date.
 };
 
 /**
@@ -52,7 +58,7 @@ enum class ConflictMode {
  *
  * Categories mirror the Backup Preview:
  *   copied    — files successfully copied from source to target (new files)
- *   renamed   — target archived as stem_YYYYMMDD-HHmmss.ext, source copied (KeepBoth mode)
+ *   renamed   — target renamed as stem_YYYYMMDD-HHmmss.ext, source copied (RenameOldest mode)
  *   conflicts — files that exist in target but differ and were NOT handled; skipped
  *   errors    — files that could not be copied (I/O error, permission, rename failure, …)
  *

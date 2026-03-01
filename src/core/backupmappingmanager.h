@@ -74,7 +74,7 @@ struct MappingInfo {
         , sourceActive(false)
         , targetActive(false)
         , strictCopy(true)
-        , conflictMode(ConflictMode::Skip)
+        , conflictMode(ConflictMode::RenameOldest)
     {}
 };
 

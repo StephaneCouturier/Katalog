@@ -10404,6 +10404,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <height>22</height>
                      </size>
                     </property>
+                    <property name="font">
+                     <font>
+                      <family>Noto Sans</family>
+                      <pointsize>9</pointsize>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">padding: 2px 10px;</string>
+                    </property>
                     <property name="text">
                      <string/>
                     </property>
@@ -11095,97 +11105,222 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <string>BackUp</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="16" column="0" colspan="2">
-             <layout class="QHBoxLayout" name="BackUp_horizontalLayout_Save">
-              <item>
-               <widget class="QLabel" name="BackUp_label_Name">
-                <property name="text">
-                 <string>Link name</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="BackUp_pushButton_GenerateMappingName">
-                <property name="text">
-                 <string>Generate</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="tools-wizard"/>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>22</width>
-                  <height>22</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="BackUp_lineEdit_Name"/>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="BackUp_checkBox_StrictCopy">
-                <property name="toolTip">
-                 <string>Strict copy: each source folder is mirrored to the matching target folder (recommended). Uncheck to skip files that already exist anywhere in the target (deduplication mode).</string>
-                </property>
-                <property name="text">
-                 <string>Strict copy</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_ConflictMode">
-                <property name="text">
-                 <string>On conflict:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="BackUp_comboBox_ConflictMode">
-                <property name="toolTip">
-                 <string>How to handle files that already exist in the target but differ from the source (conflicts).
-Skip: report the conflict, do nothing (safe default).
-Archive &amp; Replace: rename the old target file with a date-time stamp, then copy the newer source file.</string>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>Skip</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Archive &amp; Replace</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
-                <property name="text">
-                 <string>Create link</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="BackUp_horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
+            <item row="17" column="0">
+             <widget class="QWidget" name="BackUp_widget_CreateLink" native="true">
+              <layout class="QVBoxLayout" name="BackUp_verticalLayout_23">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <layout class="QGridLayout" name="BackUp_gridLayout_CreateMapping">
+                 <item row="5" column="0">
+                  <widget class="QTreeView" name="BackUp_treeView_ListSources">
+                   <property name="alternatingRowColors">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <layout class="QHBoxLayout" name="BackUp_horizontalLayout_9">
+                   <item>
+                    <widget class="QLabel" name="BackUp_label_TargetDevice">
+                     <property name="text">
+                      <string>Select Target catalog</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="BackUp_pushButton_ReloadTargetList">
+                     <property name="maximumSize">
+                      <size>
+                       <width>250</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Load Catalogs</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="view-refresh"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="BackUp_pushButton_ReloadTargetListWithoutMapping">
+                     <property name="maximumSize">
+                      <size>
+                       <width>250</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>without links</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="view-refresh"/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="BackUp_horizontalLayout_3">
+                   <item>
+                    <widget class="QLabel" name="BackUp_label_SourceDevice">
+                     <property name="text">
+                      <string>Select Source catalog</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="BackUp_pushButton_ReloadSourceList">
+                     <property name="maximumSize">
+                      <size>
+                       <width>250</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Load Catalogs</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="view-refresh"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="BackUp_pushButton_ReloadSourceListWithoutMapping">
+                     <property name="maximumSize">
+                      <size>
+                       <width>250</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>without links</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="view-refresh"/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QTreeView" name="BackUp_treeView_ListTargets">
+                   <property name="alternatingRowColors">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="0">
+                  <layout class="QHBoxLayout" name="BackUp_horizontalLayout_Save">
+                   <item>
+                    <widget class="QLabel" name="BackUp_label_Name">
+                     <property name="text">
+                      <string>Link name</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="BackUp_pushButton_GenerateMappingName">
+                     <property name="text">
+                      <string>Generate</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="tools-wizard"/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>22</width>
+                       <height>22</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="BackUp_lineEdit_Name"/>
+                   </item>
+                   <item>
+                    <widget class="QCheckBox" name="BackUp_checkBox_StrictCopy">
+                     <property name="toolTip">
+                      <string>Strict copy: each source folder is mirrored to the matching target folder (recommended). Uncheck to skip files that already exist anywhere in the target (deduplication mode).</string>
+                     </property>
+                     <property name="text">
+                      <string>Strict copy</string>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="BackUp_label_ConflictMode">
+                     <property name="text">
+                      <string>On conflict:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="BackUp_comboBox_ConflictMode">
+                     <property name="toolTip">
+                      <string>How to handle files that already exist in the target but differ from the source (conflicts).
+Skip: report the conflict, leave the target untouched (safe default).
+Rename oldest: if source is newer, rename the target file with a date-time stamp then copy the source; if target is newer, skip.</string>
+                     </property>
+                     <property name="currentIndex">
+                      <number>1</number>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Skip</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Rename oldest</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
+                     <property name="text">
+                      <string>Create link</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="BackUp_horizontalSpacer">
+                     <property name="orientation">
+                      <enum>Qt::Orientation::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item row="9" column="0" colspan="2">
              <layout class="QVBoxLayout" name="BackUp_verticalLayout_Preview">
@@ -11264,6 +11399,19 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="12" column="0" colspan="2">
+             <widget class="Line" name="BackUp_line_Separate1">
+              <property name="frameShadow">
+               <enum>QFrame::Shadow::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+             </widget>
             </item>
             <item row="7" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -11359,333 +11507,6 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                  </size>
                 </property>
                </spacer>
-              </item>
-             </layout>
-            </item>
-            <item row="3" column="0" colspan="2">
-             <layout class="QHBoxLayout" name="BackUp_horizontalLayout">
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabel">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Coverage</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="BackUp_radioButton_Source">
-                <property name="text">
-                 <string>as Source</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="BackUp_radioButton_Target">
-                <property name="text">
-                 <string>as Target</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="BackUp_line_5">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Vertical</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_SizeLabelTotalDevice">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Total</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizeValue">
-                <property name="minimumSize">
-                 <size>
-                  <width>25</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <bold>true</bold>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_SizeLabelMapped">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Linked</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizeMappedValue">
-                <property name="minimumSize">
-                 <size>
-                  <width>25</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <bold>true</bold>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue">
-                <property name="minimumSize">
-                 <size>
-                  <width>25</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <bold>true</bold>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_SizeLabelUnMapped">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Unlinked</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizeDiffValue">
-                <property name="minimumSize">
-                 <size>
-                  <width>25</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <bold>true</bold>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentUnlinkedValue">
-                <property name="minimumSize">
-                 <size>
-                  <width>25</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>9</pointsize>
-                  <bold>true</bold>
-                  <kerning>false</kerning>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item row="12" column="0" colspan="2">
-             <widget class="Line" name="BackUp_line_Separate1">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="15" column="0" colspan="2">
-             <layout class="QGridLayout" name="BackUp_gridLayout_CreateMapping">
-              <item row="5" column="0">
-               <widget class="QTreeView" name="BackUp_treeView_ListSources">
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
-               <widget class="QTreeView" name="BackUp_treeView_ListTargets">
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <layout class="QHBoxLayout" name="BackUp_horizontalLayout_3">
-                <item>
-                 <widget class="QLabel" name="BackUp_label_SourceDevice">
-                  <property name="text">
-                   <string>Select Source catalog</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BackUp_pushButton_ReloadSourceList">
-                  <property name="maximumSize">
-                   <size>
-                    <width>250</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Load Catalogs</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="view-refresh"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BackUp_pushButton_ReloadSourceListWithoutMapping">
-                  <property name="maximumSize">
-                   <size>
-                    <width>250</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>without links</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="view-refresh"/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="1">
-               <layout class="QHBoxLayout" name="BackUp_horizontalLayout_9">
-                <item>
-                 <widget class="QLabel" name="BackUp_label_TargetDevice">
-                  <property name="text">
-                   <string>Select Target catalog</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BackUp_pushButton_ReloadTargetList">
-                  <property name="maximumSize">
-                   <size>
-                    <width>250</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Load Catalogs</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="view-refresh"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BackUp_pushButton_ReloadTargetListWithoutMapping">
-                  <property name="maximumSize">
-                   <size>
-                    <width>250</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>without links</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="view-refresh"/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
               </item>
              </layout>
             </item>
@@ -11977,20 +11798,6 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
               </item>
              </layout>
             </item>
-            <item row="14" column="0" colspan="2">
-             <widget class="QLabel" name="BackUp_label_CreateMapping">
-              <property name="text">
-               <string>Create new link</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0" colspan="2">
-             <widget class="Line" name="BackUp_line_Separate1_2">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
             <item row="6" column="0" colspan="2">
              <widget class="QTableView" name="BackUp_tableView_CurrentMappings">
               <property name="lineWidth">
@@ -12071,6 +11878,266 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                <widget class="QCheckBox" name="BackUp_checkBox_OnlySelectedLinks">
                 <property name="text">
                  <string>Only selected</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="3" column="0" colspan="2">
+             <layout class="QHBoxLayout" name="BackUp_horizontalLayout">
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Coverage</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="BackUp_radioButton_Source">
+                <property name="text">
+                 <string>as Source</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="BackUp_radioButton_Target">
+                <property name="text">
+                 <string>as Target</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="BackUp_line_5">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_SizeLabelTotalDevice">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Total</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizeValue">
+                <property name="minimumSize">
+                 <size>
+                  <width>25</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <bold>true</bold>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_SizeLabelMapped">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Linked</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizeMappedValue">
+                <property name="minimumSize">
+                 <size>
+                  <width>25</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <bold>true</bold>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue">
+                <property name="minimumSize">
+                 <size>
+                  <width>25</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <bold>true</bold>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_SizeLabelUnMapped">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Unlinked</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizeDiffValue">
+                <property name="minimumSize">
+                 <size>
+                  <width>25</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <bold>true</bold>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentUnlinkedValue">
+                <property name="minimumSize">
+                 <size>
+                  <width>25</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <bold>true</bold>
+                  <kerning>false</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="4" column="0" colspan="2">
+             <widget class="Line" name="BackUp_line_Separate1_2">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QPushButton" name="BackUp_pushButton_CreateLinkShowHide">
+                <property name="maximumSize">
+                 <size>
+                  <width>35</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>9</pointsize>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">padding: 2px 10px;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset theme="QIcon::ThemeIcon::GoDown"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_CreateMapping">
+                <property name="text">
+                 <string>Create new link</string>
                 </property>
                </widget>
               </item>

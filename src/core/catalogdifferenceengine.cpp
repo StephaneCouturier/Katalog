@@ -341,7 +341,7 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
 
     // Conflicts: file exists at the corresponding path but with a different size.
     // JOIN (instead of EXISTS) so we can return the target file's date alongside
-    // the source fields — needed for direction check in KeepBoth conflict mode.
+    // the source fields — needed for direction check in RenameOldest conflict mode.
     q.prepare(R"(
         SELECT f1.file_name,
                f1.file_folder_path,

@@ -1126,8 +1126,8 @@ void Collection::loadMappingFileToTable()
                 insertQuery.bindValue(":mapping_backup_last_size", fieldList[6]);
                 // field[7] = strict_copy (may be absent in old CSV files — default to 1)
                 insertQuery.bindValue(":mapping_strict_copy",      fieldList.size() > 7 ? fieldList[7].toInt() : 1);
-                // field[8] = conflict_mode (may be absent in old CSV files — default to 0)
-                insertQuery.bindValue(":mapping_conflict_mode",    fieldList.size() > 8 ? fieldList[8].toInt() : 0);
+                // field[8] = conflict_mode (may be absent in old CSV files — default to 1 = RenameOldest)
+                insertQuery.bindValue(":mapping_conflict_mode",    fieldList.size() > 8 ? fieldList[8].toInt() : 1);
                 insertQuery.exec();
             }
         }

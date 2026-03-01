@@ -409,7 +409,7 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_backup_last_date    TEXT,
                     mapping_backup_last_size    %2,
                     mapping_strict_copy         INTEGER DEFAULT 1,
-                    mapping_conflict_mode       INTEGER DEFAULT 0)
+                    mapping_conflict_mode       INTEGER DEFAULT 1)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 

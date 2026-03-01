@@ -120,17 +120,17 @@ void BackupJobStoppable::runBackup()
 {
     BackupReport report;
 
-    // In KeepBoth mode the conflict files are also processed, so include them
+    // In RenameOldest mode the conflict files are also processed, so include them
     // in the total count and byte estimate for accurate progress reporting.
     const int conflictsToProcess =
-        (m_conflictMode == ConflictMode::KeepBoth) ? m_conflictFiles.size() : 0;
+        (m_conflictMode == ConflictMode::RenameOldest) ? m_conflictFiles.size() : 0;
     const int totalFiles = m_files.size() + conflictsToProcess;
 
     // Pre-compute total bytes for the progress signal
     qint64 totalBytes = 0;
     for (const DifferenceFileEntry &e : m_files)
         totalBytes += e.fileSize;
-    if (m_conflictMode == ConflictMode::KeepBoth) {
+    if (m_conflictMode == ConflictMode::RenameOldest) {
         for (const DifferenceFileEntry &e : m_conflictFiles)
             totalBytes += e.fileSize;
     }
@@ -195,8 +195,8 @@ void BackupJobStoppable::runBackup()
         ++filesDone;
     }
 
-    // ── Phase 2: handle conflict files (KeepBoth mode only) ──────────────────
-    if (!report.wasCancelled && m_conflictMode == ConflictMode::KeepBoth) {
+    // ── Phase 2: handle conflict files (RenameOldest mode only) ─────────────
+    if (!report.wasCancelled && m_conflictMode == ConflictMode::RenameOldest) {
         for (const DifferenceFileEntry &entry : m_conflictFiles) {
             if (!shouldContinue()) {
                 report.wasCancelled = true;

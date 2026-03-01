@@ -640,7 +640,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     m_backupJob = new BackupJobStoppable();
     m_backupJob->setFiles(cmp.filesToCopy);
     m_backupJob->setConflictMode(mapping.conflictMode);
-    if (mapping.conflictMode == ConflictMode::KeepBoth)
+    if (mapping.conflictMode == ConflictMode::RenameOldest)
         m_backupJob->setConflictFiles(cmp.fileConflicts);
     m_backupJob->setSourcePath(sourceDevice.path);
     m_backupJob->setTargetPath(targetDevice.path);
@@ -1157,7 +1157,7 @@ void MainWindow::loadBackUpMappingTable()
                                 dm.mapping_type,
                                 CASE WHEN dm.mapping_strict_copy = 1 THEN 'Strict' ELSE 'Dedup' END,
                                 CASE WHEN dm.mapping_conflict_mode = 0 THEN 'Skip'
-                                     WHEN dm.mapping_conflict_mode = 1 THEN 'Archive'
+                                     WHEN dm.mapping_conflict_mode = 1 THEN 'Rename oldest'
                                      ELSE '' END,
                                 dm.mapping_device_source_id,
                                 d1.device_name,
