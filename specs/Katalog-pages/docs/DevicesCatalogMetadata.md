@@ -1,4 +1,4 @@
-# File Metadata
+# Catalog: File Metadata
 
 ## **Introduction**
 This document specifices the use and Implementation of catalog and related files updates in the context of the use of File Metadata.
@@ -30,41 +30,19 @@ This document specifices the use and Implementation of catalog and related files
 - The User shall be able to see when Katalog is running specific conversion processes and their progress
 - The User shall be able to change a catalog includeMetadata option at any time and to decide when to run the updates
 
-
-
-
-
-
-
-
-
-
 ---
-
-
-
-
 
 #### 2. Incremental Indexing
 - New mechanism limiting metadata extraction processing:
 - **includeMetadata = "None"**: Only updates  exact file changes (unchanged/deleted/added/modified)
 - **includeMetadata != "None"**: also extracts metadata for changed files or files missing `metadata_extraction_date`
-
-
-
 
 ## **Database Schema: Metadata Fields**
 
-
-
-
-
 #### 2. Incremental Indexing
 - New mechanism limiting metadata extraction processing:
 - **includeMetadata = "None"**: Only updates  exact file changes (unchanged/deleted/added/modified)
 - **includeMetadata != "None"**: also extracts metadata for changed files or files missing `metadata_extraction_date`
-
-
 
 ---
 

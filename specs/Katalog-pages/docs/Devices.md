@@ -11,7 +11,6 @@ This gives a way to search in these only, and it provides totals of number and s
 
 ## Model
 
-
 ### Definitions
 
 * A **[Catalog](DevicesCatalogs)** device is a list of files in a particular directory.
@@ -33,7 +32,7 @@ This gives a way to search in these only, and it provides totals of number and s
 
 ## Features
 
-These are always available at the top of the screen.
+Always available at the top of the screen:
 
 ### Chosing between 3 views
 

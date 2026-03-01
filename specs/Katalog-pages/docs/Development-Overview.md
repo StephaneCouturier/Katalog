@@ -14,7 +14,7 @@ Katalo's Backlog is available in GitHub with 3 views:
 
 ### Specifications
 Documentation of the implementation of specific features & code:
-* [Updates with metadata](SpecCatalogUpdate) (v2.8)
+* [Updates with metadata](DevicesCatalogMetadata) (v2.8)
 * [Progress Reporting](SpecProgressReport) (v2.8)
 * [Version Numbers](SpecVersions) (v2.8)
 
@@ -83,7 +83,7 @@ KDE-aligned versioning policy that works with current major.minor approach.
 - Display: "Katalog 2.8"
 
 #### Database Schema Versioning
-see [SpecVersions](http://localhost:3000/Katalog/docs/SpecVersions)
+see [SpecVersions](SpecVersions)
 - **Schema version = App version** when DB changes occur
 - **Schema version unchanged** when no DB changes (like 2.7 staying at 2.6)
 

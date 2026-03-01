@@ -1,5 +1,4 @@
-# File Checksum
-![Draft](https://img.shields.io/badge/Status-Draft-orange) ![2.9](https://img.shields.io/badge/Version-2.9-orange) ![664](https://img.shields.io/badge/github-664-blue?logo=github)
+# Catalog: File Checksum
 
 ## **Introduction**
 This document specifies the implementation of features using **File checksums**.
@@ -11,21 +10,17 @@ This document specifies the implementation of features using **File checksums**.
 - Security: Checksums can provide a basic level of security by detecting unauthorized changes to files.
 
 
-### Available Algorithms
+### Available Algorithms & features
 
-The Qt6 librairy **QCryptographicHash** provides: MD4, MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA3 variants, Keccak variants, and BLAKE2b/BLAKE2s algorithms.<br/>
-1. **MD5** - Legacy compatibility (fast but cryptographically broken, 128-bit/16 bytes)
-2. **SHA-1** - Middle ground (faster than SHA-256, more secure than MD5, 160-bit/20 bytes)
-3. **SHA-256** - Best balance (secure, fast, widely supported, 256-bit/32 bytes)
+![Available](https://img.shields.io/badge/Status-Available-green) ![2.9](https://img.shields.io/badge/Version-2.9-green) ![664](https://img.shields.io/badge/github-664-blue?logo=github)
 
-**Out of Qt:** (external library)
-1. **CRC32** - A cyclic redundancy check that is faster but less secure than cryptographic hash functions like SHA-256.
-2. **xxHash** - Extremely fast Hash algorithm, processing at RAM speed limits. <br/>Code is highly portable, and produces hashes identical across all platforms (little / big endian). |  https://xxhash.com/ <br/> https://github.com/Cyan4973/xxHash
+Katalog has currently 1 single algorithms **SHA-256** selected for balance (secure, fast, widely supported, 256-bit/32 bytes).
 
 
 ## **Architecture & Feature steps**
 
 **Increment 1: add catalog option, single algo, option in Search Duplicates/Differences**
+
 * 1 algorithm set for the app (not changeable)
 * 1 algo to start with, Qt supported, to be selected among: Retained **SHA-256**
 * 1 new "file" column: checksum_sha256
@@ -321,6 +316,20 @@ Results: Flag potential data integrity issues
 
 
 ## **Increment 2 - Algorithm Choice Strategies**
+
+
+### Other Algorithm options
+
+The Qt6 librairy **QCryptographicHash** provides: MD4, MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA3 variants, Keccak variants, and BLAKE2b/BLAKE2s algorithms.<br/>
+1. **MD5** - Legacy compatibility (fast but cryptographically broken, 128-bit/16 bytes)
+2. **SHA-1** - Middle ground (faster than SHA-256, more secure than MD5, 160-bit/20 bytes)
+3. **SHA-256** - Best balance (secure, fast, widely supported, 256-bit/32 bytes)
+
+**Out of Qt:** (external library)
+1. **CRC32** - A cyclic redundancy check that is faster but less secure than cryptographic hash functions like SHA-256.
+2. **xxHash** - Extremely fast Hash algorithm, processing at RAM speed limits. <br/>Code is highly portable, and produces hashes identical across all platforms (little / big endian). |  https://xxhash.com/ <br/> https://github.com/Cyan4973/xxHash
+
+
 
 ### Current Implementation (Increment 1)
 - **DB columns**: `checksum_sha256`, `checksum_extraction_date` (single algorithm)

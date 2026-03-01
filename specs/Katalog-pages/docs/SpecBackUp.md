@@ -1,15 +1,13 @@
 # BackUp management
 
-## **Introduction**
+## Introduction
 This document specifices the implementation of next features for the **[BackUp](BackUp) capability**.
 
+## Scope
+Katalog's backup feature syncs files from a **source catalog** to a **target catalog** using Katalog's own indexed data. No external tool dependency (rsync optional export only).
 
-
-
-
-
-
-
+## Prerequisites
+- Both catalogs must belong to devices with valid, accessible paths.
 
 ## **Existing Features & Architecture**
 
@@ -19,15 +17,17 @@ see: [BackUp](BackUp)
 
 Table _device_mapping_
 ```
-CREATE TABLE device_mapping(
-    mapping_id                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    mapping_name                TEXT,
-    mapping_type                TEXT,
-    mapping_device_source_id    NUMERIC,
-    mapping_device_target_id    NUMERIC,
-    mapping_backup_last_date    TEXT,
-    mapping_backup_last_size    TEXT
-)
+device_mapping
+      mapping_id                  %1,
+      mapping_name                TEXT,
+      mapping_type                TEXT,
+      mapping_device_source_id    %2,
+      mapping_device_target_id    %2,
+      mapping_backup_last_date    TEXT,
+      mapping_backup_last_size    %2,
+      mapping_strict_copy         INTEGER DEFAULT 1,
+      mapping_conflict_mode       INTEGER DEFAULT 0)
+
 ```
 
 **Device Properties (from code):**
@@ -43,23 +43,8 @@ CREATE TABLE device_mapping(
 - TableView for mapping display with comparison metrics
 - Buttons: SaveMapping, DeleteMapping, Reload lists
 
-**To be considered for new developments:**
-- Backend/UI separation
-- KJob pattern to make long operations stoppable (DeviceUpdateManager)
-- KF6 libraries available
-- Cross-platform considerations (Linux/Windows/macOS)
-- Qt6 with QProcess for external commands
-
 ---
 
-# Backup Requirements
-
-## Scope
-Katalog's backup feature syncs files from a **source catalog** to a **target catalog** using Katalog's own indexed data. No external tool dependency (rsync optional export only).
-
-## Prerequisites
-- Both source and target must be **fully cataloged** before backup.
-- Both catalogs must belong to devices with valid, accessible paths.
 
 ## Core Behavior (v1 — Incremental Copy)
 

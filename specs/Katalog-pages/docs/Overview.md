@@ -12,12 +12,12 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 ![](/img/screen_search_01.png)
 <b>8 main tabs for 8 main features</b>
 ![](/img/global_tabwidget.png)
-1. [Create](Create) catalogs of **files**
 1. [Search](Search) files across multiple storage devices **without needing them connected**
+1. Organize storage [Devices](Devices) and their catalogs in a unified hierarchy with **Virtual** devices
 1. [Explore](Explore) the catalogs' hierarchy and files
-1. Organize storage [Devices](Devices) and their catalogs in a unified hierarchy with virtual devices
+1. [Create](Create) catalogs of **files**
 1. Get [Statistics](Statistics) about your file collections & storage usage
-1. Personalize [Tags](Tags) and assigned them to directories for extra searching or statistics
+1. Personalize [Tags](Tags) and assigned them to directories for extra searching capabilities
 1. Compare [BackUp](BackUp) catalogs to confirm the coverage of backed up files and folders between source and target devices
 1. Personalize your experience with your [Settings](Settings) such as language and theme
 <br/>
@@ -27,7 +27,7 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
   <br/><br/>and a <b>[Selection](Selection) panel</b> to
   <br/>
   * Choose searching in <b>Catalogs</b> or directly in <b>Connected drives</b><br/>
-  * Set the device in the <b>hierarchy to be used</b> Search or Create or get Statistics or manage BackUp coverage<br/>
+  * Set the device in the <b>hierarchy to be used</b> for Search, Create (parent device), Statistics, or BackUp management<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
     ![](/img/global_selection_panel.png)
