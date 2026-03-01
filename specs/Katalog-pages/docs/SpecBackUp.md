@@ -48,22 +48,18 @@ device_mapping
 
 ## Core Behavior (v1 — Incremental Copy)
 
-### What it does
-- Compares source and target catalogs to find files **missing from the target**.
-- Copies missing files to the target, recreating folder structure via `QDir::mkpath()`.
-- Does **not** overwrite existing files in the target (even if different).
-- Does **not** delete files from the target that are absent from the source.
-
-### Comparison criteria (v1)
+Comparison criteria (v1)
 - Match by **file name + relative folder path** (same file in same relative location).
 - A file is "missing" if no match exists in the target catalog.
 
-### What it reports
+What it reports
 After execution, a **backup report** lists:
 - Files copied (count, total size)
 - Files skipped — already exist in target (count)
 - Files with conflicts — exist in target but differ (newer date, different size, different checksum). Listed for user review, **not overwritten**.
 - Errors — files that failed to copy (permission denied, disk full, etc.)
+
+
 
 ## Decisions Log
 
@@ -99,16 +95,12 @@ After execution, a **backup report** lists:
 
 
 **Features Roadmap:**
-- [ ] Basic file copy (rsync)
-- [ ] Incremental backups
 - [ ] Snapshot management
 - [ ] Exclude/include patterns
-- [ ] Progress tracking
 - [ ] Scheduling (cron/systemd/Task Scheduler)
 - [ ] Restore functionality
 - [ ] Compression options
 - [ ] Remote backups (ssh)
-- [ ] Verification
 
 ---
 
@@ -181,8 +173,20 @@ After execution, a **backup report** lists:
 - Status label on finish: `Backup complete — X GB copied in Ym Zs` (or cancelled variant)
 - Note: per-file chunk progress is a future enhancement (requires replacing `QFile::copy()`)
 
+**Pause / Resume**:
+- The "Run Backup" button becomes a 3-state toggle (following the Search tab pattern):
+  - **Idle** → label "Run Backup", icon `media-playback-start`
+  - **Running** → label "Pause", icon `media-playback-pause`
+  - **Paused** → label "Resume", icon `media-playback-start`
+- The "Cancel" button remains active in both Running and Paused states.
+- Pause suspends execution after the current file finishes (never mid-file); the job sleeps in `waitIfPaused()` (100 ms poll, same pattern as `CatalogJobStoppable` and `SearchJobStoppable`).
+- While paused, the status label shows `backup | Paused`. Progress bar and counters freeze until resumed.
+- Cancelling from the Paused state: `stopBackup()` causes `waitIfPaused()` to exit, then `shouldContinue()` returns false, and the job finishes with `wasCancelled = true`.
+- Implementation: `QAtomicInt m_paused{0}` + `QMutex m_pauseMutex` in `BackupJobStoppable`. `waitIfPaused()` called after each `shouldContinue()` check in both Phase 1 and Phase 2 loops.
+
 **UI changes**:
 - Execution panel (hidden until backup starts): status label, progress bar, cancel button
+- Run Backup button transitions between Run / Pause / Resume labels during execution
 - Report display after completion (reuses preview table)
 
 ### Strict Copy vs Dedup — `mapping_strict_copy` option
