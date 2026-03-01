@@ -1155,6 +1155,10 @@ void MainWindow::loadBackUpMappingTable()
                                 dm.mapping_id,
                                 dm.mapping_name,
                                 dm.mapping_type,
+                                CASE WHEN dm.mapping_strict_copy = 1 THEN 'Strict' ELSE 'Dedup' END,
+                                CASE WHEN dm.mapping_conflict_mode = 0 THEN 'Skip'
+                                     WHEN dm.mapping_conflict_mode = 1 THEN 'Archive'
+                                     ELSE '' END,
                                 dm.mapping_device_source_id,
                                 d1.device_name,
                                 d1.device_active,
@@ -1266,28 +1270,30 @@ void MainWindow::loadBackUpMappingTable()
     QSqlQueryModel *queryModel = new QSqlQueryModel(this);
     queryModel->setQuery(std::move(query));
 
-    queryModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
-    queryModel->setHeaderData(1, Qt::Horizontal, tr("Mapping Name"));
-    queryModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
-    queryModel->setHeaderData(3, Qt::Horizontal, tr("Source ID"));
-    queryModel->setHeaderData(4, Qt::Horizontal, tr("Source"));
-    queryModel->setHeaderData(5, Qt::Horizontal, tr("Active"));
-    queryModel->setHeaderData(6, Qt::Horizontal, tr("Path"));
-    queryModel->setHeaderData(7, Qt::Horizontal, tr("File Size"));
-    queryModel->setHeaderData(8, Qt::Horizontal, tr("Files"));
-    queryModel->setHeaderData(9, Qt::Horizontal, tr("Date Updated"));
-    queryModel->setHeaderData(10, Qt::Horizontal, tr("Target ID"));
-    queryModel->setHeaderData(11, Qt::Horizontal, tr("Target"));
-    queryModel->setHeaderData(12, Qt::Horizontal, tr("Active"));
-    queryModel->setHeaderData(13, Qt::Horizontal, tr("Path"));
-    queryModel->setHeaderData(14, Qt::Horizontal, tr("File Size"));
-    queryModel->setHeaderData(15, Qt::Horizontal, tr("Files"));
-    queryModel->setHeaderData(16, Qt::Horizontal, tr("Date Updated"));
-    queryModel->setHeaderData(17, Qt::Horizontal, tr("Size Diff."));
-    queryModel->setHeaderData(18, Qt::Horizontal, tr("Size Diff.(%)"));
-    queryModel->setHeaderData(19, Qt::Horizontal, tr("Files Diff."));
-    queryModel->setHeaderData(20, Qt::Horizontal, tr("Files Diff.(%)"));
-    queryModel->setHeaderData(21, Qt::Horizontal, tr("Date Diff."));
+    queryModel->setHeaderData( 0, Qt::Horizontal, tr("ID"));
+    queryModel->setHeaderData( 1, Qt::Horizontal, tr("Mapping Name"));
+    queryModel->setHeaderData( 2, Qt::Horizontal, tr("Type"));
+    queryModel->setHeaderData( 3, Qt::Horizontal, tr("Copy mode"));
+    queryModel->setHeaderData( 4, Qt::Horizontal, tr("On conflict"));
+    queryModel->setHeaderData( 5, Qt::Horizontal, tr("Source ID"));
+    queryModel->setHeaderData( 6, Qt::Horizontal, tr("Source"));
+    queryModel->setHeaderData( 7, Qt::Horizontal, tr("Active"));
+    queryModel->setHeaderData( 8, Qt::Horizontal, tr("Path"));
+    queryModel->setHeaderData( 9, Qt::Horizontal, tr("File Size"));
+    queryModel->setHeaderData(10, Qt::Horizontal, tr("Files"));
+    queryModel->setHeaderData(11, Qt::Horizontal, tr("Date Updated"));
+    queryModel->setHeaderData(12, Qt::Horizontal, tr("Target ID"));
+    queryModel->setHeaderData(13, Qt::Horizontal, tr("Target"));
+    queryModel->setHeaderData(14, Qt::Horizontal, tr("Active"));
+    queryModel->setHeaderData(15, Qt::Horizontal, tr("Path"));
+    queryModel->setHeaderData(16, Qt::Horizontal, tr("File Size"));
+    queryModel->setHeaderData(17, Qt::Horizontal, tr("Files"));
+    queryModel->setHeaderData(18, Qt::Horizontal, tr("Date Updated"));
+    queryModel->setHeaderData(19, Qt::Horizontal, tr("Size Diff."));
+    queryModel->setHeaderData(20, Qt::Horizontal, tr("Size Diff.(%)"));
+    queryModel->setHeaderData(21, Qt::Horizontal, tr("Files Diff."));
+    queryModel->setHeaderData(22, Qt::Horizontal, tr("Files Diff.(%)"));
+    queryModel->setHeaderData(23, Qt::Horizontal, tr("Date Diff."));
 
     DeviceMappingView *proxyModel = new DeviceMappingView(this);
     proxyModel->setSourceModel(queryModel);
@@ -1301,30 +1307,32 @@ void MainWindow::loadBackUpMappingTable()
 
     //If the setting is checked, display all columns
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-    if (optionDisplayFullMappingTable == false)
-    {
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(6, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(10, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(13, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, true);
-    }
-    else
-    {
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(6, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(10, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(13, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, false);
-    }
+    // Columns toggled by the "full table" option
+    //   col  2: mapping_type
+    //   col  3: copy mode (strict/dedup)
+    //   col  4: conflict mode (skip/archive)
+    //   col  5: source ID
+    //   col  7: source active
+    //   col  8: source path
+    //   col 11: source date updated
+    //   col 12: target ID
+    //   col 14: target active
+    //   col 15: target path
+    //   col 16: target file size
+    const bool full = optionDisplayFullMappingTable;
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 2, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 3, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 4, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 5, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 7, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 8, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(15, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(16, !full);
+    // Always hidden
     ui->BackUp_tableView_CurrentMappings->setColumnHidden(0, true);
-    ui->BackUp_tableView_CurrentMappings->setColumnHidden(2, true);
 
     ui->BackUp_tableView_CurrentMappings->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }

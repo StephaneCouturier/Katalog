@@ -48,11 +48,11 @@ void DeviceMappingView::initializeLists()
     //   1 list per data type except for text used as default (no customization)
     // + 1 list for bold text
 
-    //Device fields
-    filecountColumnList <<  8 << 15 << 19;
-    filesizeColumnList  <<  7 << 14 << 17;
-    percentColumnList   << 18 << 20;
-    booleanColumnList   <<  5 << 12;
+    //Device fields  (cols 3+4 added for strict_copy/conflict_mode → all indices +2 vs original)
+    filecountColumnList << 10 << 17 << 21;
+    filesizeColumnList  <<  9 << 16 << 19;
+    percentColumnList   << 20 << 22;
+    booleanColumnList   <<  7 << 14;
     //boldColumnList      << 0;
 }
 
@@ -127,8 +127,8 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
     {
         //Icon for source catalog
-        if( index.column()==4 ){
-            QModelIndex idx = index.sibling(index.row(), 5);
+        if( index.column()==6 ){
+            QModelIndex idx = index.sibling(index.row(), 7);
             if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
                 return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
             }
@@ -136,8 +136,8 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
                 return QIcon(QIcon::fromTheme("media-optical"));
         }
         //Icon for target catalog
-        if( index.column()==11 ){
-            QModelIndex idx = index.sibling(index.row(), 12);
+        if( index.column()==13 ){
+            QModelIndex idx = index.sibling(index.row(), 14);
             if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
                 return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
             }
@@ -160,7 +160,7 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
 QVariant DeviceMappingView::headerData(int section, Qt::Orientation orientation, int role) const
 {
     QList<int> grayColumnList;
-    grayColumnList    <<7 <<8 <<9 <<10 <<11;
+    grayColumnList    <<9 <<10 <<11 <<12 <<13;
 
 
     switch ( role )
