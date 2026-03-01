@@ -797,7 +797,8 @@ class MainWindow : public KXmlGuiWindow
             void on_BackUp_pushButton_ReloadSourceList_clicked();
             void on_BackUp_pushButton_ReloadSourceListWithoutMapping_clicked();
             void on_BackUp_pushButton_ReloadTargetList_clicked();
-            void on_BackUp_pushButton_ReloadTargetListWithoutMapping_clicked();            void on_BackUp_pushButton_DeleteSelectedMapping_clicked();
+            void on_BackUp_pushButton_ReloadTargetListWithoutMapping_clicked();
+            void on_BackUp_tableView_CurrentMappings_customContextMenuRequested(const QPoint &pos);
             void on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1);
             void on_BackUp_radioButton_Source_clicked();
             void on_BackUp_radioButton_Target_clicked();

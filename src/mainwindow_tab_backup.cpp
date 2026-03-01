@@ -95,24 +95,65 @@ void MainWindow::on_BackUp_pushButton_ReloadDeviceMappings_clicked()
     loadBackUpMapping();
 }
 
-void MainWindow::on_BackUp_pushButton_DeleteSelectedMapping_clicked()
+void MainWindow::on_BackUp_tableView_CurrentMappings_customContextMenuRequested(const QPoint &pos)
 {
-    //Get the selected mapping_id
-    QModelIndexList selectedIndexes = ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
-    int mappingID = selectedIndexes.at(0).data().toInt();
-
-    //Delete the mapping via core manager
-    if (!backupMappingManager) {
-        backupMappingManager = new BackupMappingManager(m_connectionName, this);
-    }
-
-    if (!backupMappingManager->deleteMapping(mappingID)) {
+    // Select the right-clicked row so subsequent action handlers find the correct mapping
+    QModelIndex clickedIndex = ui->BackUp_tableView_CurrentMappings->indexAt(pos);
+    if (!clickedIndex.isValid())
         return;
-    }
+    ui->BackUp_tableView_CurrentMappings->setCurrentIndex(clickedIndex);
 
-    //Reload the mapping table
-    loadBackUpMapping();
-    collection->saveMappingTableToFile();
+    QModelIndexList selectedIndexes = ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
+    if (selectedIndexes.isEmpty())
+        return;
+
+    QPoint globalPos = ui->BackUp_tableView_CurrentMappings->mapToGlobal(pos);
+    QMenu mappingContextMenu;
+
+    // ── Primary actions ───────────────────────────────────────────────────────
+    QAction *runAction = new QAction(QIcon::fromTheme("media-playback-start"), tr("Run Backup"), this);
+    mappingContextMenu.addAction(runAction);
+    connect(runAction, &QAction::triggered, this, [this]() { runBackup(); });
+
+    QAction *previewAction = new QAction(QIcon::fromTheme("go-next"), tr("Preview Backup"), this);
+    mappingContextMenu.addAction(previewAction);
+    connect(previewAction, &QAction::triggered, this, [this]() {
+        on_BackUp_pushButton_BackUpPreview_clicked();
+    });
+
+    QAction *replicateAction = new QAction(QIcon::fromTheme("edit-copy"), tr("Replicate Directories"), this);
+    mappingContextMenu.addAction(replicateAction);
+    connect(replicateAction, &QAction::triggered, this, [this]() {
+        on_BackUp_pushButton_ReplicateDirectories_clicked();
+    });
+
+    // ── Mapping management (not yet implemented) ──────────────────────────────
+    mappingContextMenu.addSeparator();
+
+    QAction *renameAction = new QAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this);
+    renameAction->setEnabled(false);
+    mappingContextMenu.addAction(renameAction);
+
+    QAction *rsyncAction = new QAction(QIcon::fromTheme("document-export"), tr("Export to rsync"), this);
+    rsyncAction->setEnabled(false);
+    mappingContextMenu.addAction(rsyncAction);
+
+    // ── Destructive ───────────────────────────────────────────────────────────
+    mappingContextMenu.addSeparator();
+
+    QAction *deleteAction = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this);
+    mappingContextMenu.addAction(deleteAction);
+    connect(deleteAction, &QAction::triggered, this, [this, selectedIndexes]() {
+        int mappingID = selectedIndexes.at(0).data().toInt();
+        if (!backupMappingManager)
+            backupMappingManager = new BackupMappingManager(m_connectionName, this);
+        if (!backupMappingManager->deleteMapping(mappingID))
+            return;
+        loadBackUpMapping();
+        collection->saveMappingTableToFile();
+    });
+
+    mappingContextMenu.exec(globalPos);
 }
 
 void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()

@@ -44,6 +44,7 @@
         ui->Filters_treeView_Devices->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Create_treeView_Excluded->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Tags_treeView_FolderTags->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->BackUp_tableView_CurrentMappings->setContextMenuPolicy(Qt::CustomContextMenu);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()

@@ -11236,41 +11236,6 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="BackUp_pushButton_RunBackup">
-                  <property name="maximumSize">
-                   <size>
-                    <width>200</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Run Backup</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="media-playback-start"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BackUp_pushButton_CancelBackup">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Cancel</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="QIcon::ThemeIcon::ProcessStop"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QPushButton" name="BackUp_pushButton_ExportPreview">
                   <property name="enabled">
                    <bool>false</bool>
@@ -11348,7 +11313,42 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                </widget>
               </item>
               <item>
-               <spacer name="BackUp_horizontalSpacer_Actions">
+               <widget class="QPushButton" name="BackUp_pushButton_RunBackup">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Run Backup</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="media-playback-start"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="BackUp_pushButton_CancelBackup">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Cancel</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="QIcon::ThemeIcon::ProcessStop"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="BackUp_horizontalSpacer_Execution_2">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>
                 </property>
@@ -11359,22 +11359,6 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="BackUp_pushButton_DeleteSelectedMapping">
-                <property name="maximumSize">
-                 <size>
-                  <width>200</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Delete selected</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="QIcon::ThemeIcon::EditDelete"/>
-                </property>
-               </widget>
               </item>
              </layout>
             </item>
