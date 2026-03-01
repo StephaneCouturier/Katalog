@@ -36,6 +36,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QThread>
 #include <QDebug>
 
 //----------------------------------------------------------------------
@@ -94,6 +95,27 @@ void BackupJobStoppable::stopBackup()
 }
 
 //----------------------------------------------------------------------
+void BackupJobStoppable::pauseBackup()
+{
+    m_paused.storeRelease(1);
+}
+
+//----------------------------------------------------------------------
+void BackupJobStoppable::resumeBackup()
+{
+    m_paused.storeRelease(0);
+}
+
+//----------------------------------------------------------------------
+void BackupJobStoppable::waitIfPaused()
+{
+    while (m_paused.loadAcquire() && shouldContinue()) {
+        QMutexLocker locker(&m_pauseMutex);
+        QThread::msleep(100);
+    }
+}
+
+//----------------------------------------------------------------------
 void BackupJobStoppable::runBackup()
 {
     BackupReport report;
@@ -118,6 +140,11 @@ void BackupJobStoppable::runBackup()
 
     // ── Phase 1: copy new files (no counterpart in target) ───────────────────
     for (const DifferenceFileEntry &entry : m_files) {
+        if (!shouldContinue()) {
+            report.wasCancelled = true;
+            break;
+        }
+        waitIfPaused();
         if (!shouldContinue()) {
             report.wasCancelled = true;
             break;
@@ -171,6 +198,11 @@ void BackupJobStoppable::runBackup()
     // ── Phase 2: handle conflict files (KeepBoth mode only) ──────────────────
     if (!report.wasCancelled && m_conflictMode == ConflictMode::KeepBoth) {
         for (const DifferenceFileEntry &entry : m_conflictFiles) {
+            if (!shouldContinue()) {
+                report.wasCancelled = true;
+                break;
+            }
+            waitIfPaused();
             if (!shouldContinue()) {
                 report.wasCancelled = true;
                 break;

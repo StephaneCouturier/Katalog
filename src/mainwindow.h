@@ -528,6 +528,12 @@ class MainWindow : public KXmlGuiWindow
             QThread            *m_backupThread = nullptr;
             QElapsedTimer       m_backupTimer;
 
+            enum class BackupButtonState { Idle, Running, Paused };
+            BackupButtonState backupButtonState = BackupButtonState::Idle;
+            void setBackupButtonState(BackupButtonState state);
+            void pauseCurrentBackup();
+            void resumeCurrentBackup();
+
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);
             enum InvalidFolderAction {

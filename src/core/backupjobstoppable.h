@@ -37,6 +37,7 @@
 
 #include <QObject>
 #include <QAtomicInt>
+#include <QMutex>
 #include <QString>
 
 /**
@@ -91,7 +92,14 @@ public:
     /** Request graceful cancellation — checked between files. */
     void stopBackup();
 
+    /** Suspend execution after the current file finishes. */
+    void pauseBackup();
+
+    /** Resume a paused backup. */
+    void resumeBackup();
+
     bool wasStopRequested() const { return m_stopRequested.loadAcquire() != 0; }
+    bool isPaused()         const { return m_paused.loadAcquire() != 0; }
 
 public slots:
     /** Main blocking method — call from a worker thread. */
@@ -120,8 +128,13 @@ private:
     QString        m_targetPath;
     ConflictMode   m_conflictMode = ConflictMode::Skip;
     QAtomicInt     m_stopRequested{0};
+    QAtomicInt     m_paused{0};
+    mutable QMutex m_pauseMutex;
 
     bool shouldContinue() const { return m_stopRequested.loadAcquire() == 0; }
+
+    /** Blocks the calling thread while paused (and not stopped). */
+    void waitIfPaused();
 
     /** Build the archived filename: stem_YYYYMMDD-HHmmss.ext */
     static QString buildArchivedFileName(const QString &filePath);

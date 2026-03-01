@@ -11236,7 +11236,26 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                  </spacer>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="BackUp_pushButton_RunBackup">
+                  <property name="maximumSize">
+                   <size>
+                    <width>200</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Run Backup</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="media-playback-start"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="BackUp_pushButton_CancelBackup">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>150</width>
@@ -11322,22 +11341,6 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                 </property>
                 <property name="text">
                  <string>Preview Backup</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="QIcon::ThemeIcon::GoNext"/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="BackUp_pushButton_RunBackup">
-                <property name="maximumSize">
-                 <size>
-                  <width>200</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Run Backup</string>
                 </property>
                 <property name="icon">
                  <iconset theme="QIcon::ThemeIcon::GoNext"/>
@@ -11632,7 +11635,7 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                    </size>
                   </property>
                   <property name="text">
-                   <string>Load Source Catalogs</string>
+                   <string>Load Catalogs</string>
                   </property>
                   <property name="icon">
                    <iconset theme="view-refresh"/>
@@ -11675,7 +11678,7 @@ Archive &amp; Replace: rename the old target file with a date-time stamp, then c
                    </size>
                   </property>
                   <property name="text">
-                   <string>Load Target Catalogs</string>
+                   <string>Load Catalogs</string>
                   </property>
                   <property name="icon">
                    <iconset theme="view-refresh"/>

@@ -304,7 +304,52 @@ void MainWindow::on_BackUp_pushButton_ExportPreview_clicked()
 
 void MainWindow::on_BackUp_pushButton_RunBackup_clicked()
 {
-    runBackup();
+    switch (backupButtonState) {
+        case BackupButtonState::Idle:    runBackup();            break;
+        case BackupButtonState::Running: pauseCurrentBackup();   break;
+        case BackupButtonState::Paused:  resumeCurrentBackup();  break;
+    }
+}
+
+void MainWindow::pauseCurrentBackup()
+{
+    if (!m_backupJob) return;
+    m_backupJob->pauseBackup();
+    setBackupButtonState(BackupButtonState::Paused);
+    ui->BackUp_label_ProgressSummary->setText(
+        StatusBarMessageBuilder().setOperation(tr("backup")).setStatus(tr("Paused")).build());
+}
+
+void MainWindow::resumeCurrentBackup()
+{
+    if (!m_backupJob) return;
+    m_backupJob->resumeBackup();
+    setBackupButtonState(BackupButtonState::Running);
+}
+
+void MainWindow::setBackupButtonState(BackupButtonState state)
+{
+    backupButtonState = state;
+    switch (state) {
+        case BackupButtonState::Idle:
+            ui->BackUp_pushButton_RunBackup->setText(tr("Run Backup"));
+            ui->BackUp_pushButton_RunBackup->setIcon(QIcon::fromTheme("media-playback-start"));
+            ui->BackUp_pushButton_RunBackup->setEnabled(true);
+            ui->BackUp_pushButton_CancelBackup->setVisible(false);
+            break;
+        case BackupButtonState::Running:
+            ui->BackUp_pushButton_RunBackup->setText(tr("Pause"));
+            ui->BackUp_pushButton_RunBackup->setIcon(QIcon::fromTheme("media-playback-pause"));
+            ui->BackUp_pushButton_RunBackup->setEnabled(true);
+            ui->BackUp_pushButton_CancelBackup->setVisible(true);
+            break;
+        case BackupButtonState::Paused:
+            ui->BackUp_pushButton_RunBackup->setText(tr("Resume"));
+            ui->BackUp_pushButton_RunBackup->setIcon(QIcon::fromTheme("media-playback-start"));
+            ui->BackUp_pushButton_RunBackup->setEnabled(true);
+            ui->BackUp_pushButton_CancelBackup->setVisible(true);
+            break;
+    }
 }
 
 void MainWindow::on_BackUp_pushButton_CancelBackup_clicked()
@@ -512,7 +557,7 @@ void MainWindow::continueBackupAfterCatalogUpdate()
 
     switch (op) {
         case PendingBackupOperation::RunBackup:
-            // RunBackup button remains disabled during the backup job; onBackupFinished() re-enables it
+            // executeBackup() transitions the button to Running (Pause) via setBackupButtonState
             executeBackup(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice, mapping);
             break;
         case PendingBackupOperation::Preview:
@@ -588,9 +633,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     m_backupTimer.start();
     ui->BackUp_label_ProgressSummary->setVisible(true);
     ui->BackUp_progressBar->setVisible(true);
-    ui->BackUp_pushButton_CancelBackup->setVisible(true);
-    ui->BackUp_pushButton_RunBackup->setEnabled(false);
-    ui->BackUp_pushButton_CancelBackup->setEnabled(true);
+    setBackupButtonState(BackupButtonState::Running);
 
     m_backupThread->start();
 }
@@ -639,8 +682,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
     m_backupJob    = nullptr;
     m_backupThread = nullptr;
 
-    ui->BackUp_pushButton_RunBackup->setEnabled(true);
-    ui->BackUp_pushButton_CancelBackup->setEnabled(false);
+    setBackupButtonState(BackupButtonState::Idle);
     ui->BackUp_progressBar->setValue(ui->BackUp_progressBar->maximum());
 
     // Format total elapsed time
