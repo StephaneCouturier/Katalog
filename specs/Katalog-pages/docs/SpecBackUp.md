@@ -26,7 +26,7 @@ device_mapping
       mapping_backup_last_date    TEXT,
       mapping_backup_last_size    %2,
       mapping_strict_copy         INTEGER DEFAULT 1,
-      mapping_conflict_mode       INTEGER DEFAULT 0)
+      mapping_conflict_mode       TEXT DEFAULT 'RenameOldest')
 
 ```
 
@@ -208,12 +208,29 @@ Corner case: source has FolderA and FolderB with identical contents; target alre
 
 ### Conflict Resolution Modes — `mapping_conflict_mode` option
 
-When a conflict is detected (file exists at the target path but with a different size), the executor can handle it in two ways:
+A **conflict** occurs when a file exists at both the source and the target path, but the date, size, or checksum differ. The mode controls what the executor does in that case.
 
-| Mode | Value | Behaviour | Typical use case |
-|------|-------|-----------|-----------------|
-| **Skip** (default, `mapping_conflict_mode = 0`) | `ConflictMode::Skip` | Report the conflict, do nothing. Target file is preserved. | Safe default; user reviews conflicts manually. |
-| **Keep Both** (`mapping_conflict_mode = 1`) | `ConflictMode::KeepBoth` | If source is newer than target (by filesystem date): rename the target file inserting a datetime stamp before its extension, then copy the source file to the original target path. If target is newer or same date: fall back to Skip. | Working documents that evolved on the source — old version is archived, new version is synced. |
+#### Available modes
+
+| Mode | DB value | Behaviour |
+|------|----------|-----------|
+| **Skip** (default) | `"Skip"` | No file operation — source is not copied, target is not modified. Conflict is reported for user review. |
+| **Rename oldest** | `"RenameOldest"` | If the source is newer: rename the older target file (adding a timestamp suffix), then copy the source. If the target is newer or same date: skip (protect the newer target). |
+| **Overwrite** *(backlog)* | `"Overwrite"` | Source always wins — overwrite the target silently, no rename backup. For users who want the source to be authoritative regardless of date. |
+| **Rename always** *(backlog)* | `"RenameAlways"` | Always rename the target and copy the source, even when the target is newer — aggressive, explicit archiving. |
+
+#### Full scenario space
+
+| # | Situation | Skip | Rename oldest | Overwrite *(backlog)* | Rename always *(backlog)* |
+|---|-----------|------|---------------|-----------------------|---------------------------|
+| A | Source newer than target | conflict reported | rename target → copy source ✓ | overwrite target | rename target → copy source |
+| B | Target newer than source | conflict reported | skip (protect newer target) | overwrite target | rename target → copy source |
+| C | Same date, different size | conflict reported | skip (no clear winner) | overwrite target | rename target → copy source |
+| D | Source file missing on disk | error | error | error | error |
+
+Cases B and C are currently left as reported conflicts. `Overwrite` and `RenameAlways` are the natural future modes to cover them when the user wants the source to be unconditionally authoritative.
+
+#### Implementation details
 
 **Archived filename format**: `stem_YYYYMMDD-HHmmss.ext`
 - Example: `report.docx` → `report_20260225-102559.docx`
@@ -233,9 +250,9 @@ When a conflict is detected (file exists at the target path but with a different
 
 **`BackupReport` extension**: `renamed` list added (`QList<DifferenceFileEntry>`) for files that were archived+replaced. `renamedCount()` helper and `totalBytesCopied` includes bytes from renamed+replaced files.
 
-**Schema change**: `device_mapping.mapping_conflict_mode INTEGER DEFAULT 0` (migration 2.11).
+**Schema change**: `device_mapping.mapping_conflict_mode TEXT DEFAULT 'RenameOldest'` (migration 2.11, unreleased — part of v2.10 development).
 
-**UI**: Combobox `BackUp_comboBox_ConflictMode` ("On conflict: Skip / Archive & Replace") in the mapping creation row. Index maps directly to the `ConflictMode` enum (0 = Skip, 1 = KeepBoth). Placed between `BackUp_checkBox_StrictCopy` and `BackUp_pushButton_SaveMapping` in `BackUp_horizontalLayout_Save`.
+**UI**: Combobox `BackUp_comboBox_ConflictMode` ("On conflict: Skip / Rename oldest") in the mapping creation row. Index maps directly to the `ConflictMode` enum (0 = Skip, 1 = RenameOldest). Placed between `BackUp_checkBox_StrictCopy` and `BackUp_pushButton_SaveMapping` in `BackUp_horizontalLayout_Save`.
 
 ## Phase 5: Post-Backup Target Catalog Update
 

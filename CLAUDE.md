@@ -2,6 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **CRITICAL — Version context:**
+> - Last **released** version: **2.9**
+> - Current **development** version: **2.10** (branch `katalog_development`)
+> - Database migrations 2.10 were introduced **during** the 2.10 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
+> - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
+>
+> **New fields added in 2.10 (unreleased — edit in place, no extra migration needed):**
+> - `device_mapping.mapping_strict_copy` — added by migration 2.10
+> - `device_mapping.mapping_conflict_mode` — added by migration 2.10 (folded in, no separate 2.11)
+
 ## Project Overview
 
 Katalog is a Qt6/KDE desktop application for managing file catalogs across storage devices. Users can create catalogs from folders/drives, search files when devices are disconnected, explore catalog contents offline, and find duplicates/differences between files.

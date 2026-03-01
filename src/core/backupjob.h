@@ -39,10 +39,11 @@
  * @brief How the backup executor handles files that already exist in the target
  *        but differ from the source (conflicts).
  *
- * Stored as INTEGER in device_mapping.mapping_conflict_mode (migration 2.11).
+ * Stored as TEXT in device_mapping.mapping_conflict_mode (migration 2.12).
+ * String values: "Skip", "RenameOldest" — same pattern as device_type.
  *
- * Only modes 0 and 1 are implemented (v1).
- * Modes 2 and 3 are defined for the backlog and must not be used yet.
+ * Only Skip and RenameOldest are implemented (v1).
+ * Overwrite and RenameAlways are defined for the backlog and must not be used yet.
  */
 enum class ConflictMode {
     Skip          = 0,  ///< Report the conflict, leave target untouched (safe default).
@@ -52,6 +53,21 @@ enum class ConflictMode {
     // Overwrite   = 2,  ///< (backlog) Source always wins — overwrite target silently, no rename.
     // RenameAlways= 3,  ///< (backlog) Always rename target + copy source, regardless of date.
 };
+
+inline QString conflictModeToString(ConflictMode mode)
+{
+    switch (mode) {
+    case ConflictMode::RenameOldest: return QStringLiteral("RenameOldest");
+    case ConflictMode::Skip:
+    default:                         return QStringLiteral("Skip");
+    }
+}
+
+inline ConflictMode conflictModeFromString(const QString &s)
+{
+    if (s == QLatin1String("RenameOldest")) return ConflictMode::RenameOldest;
+    return ConflictMode::Skip;
+}
 
 /**
  * @brief Report produced after a backup run.

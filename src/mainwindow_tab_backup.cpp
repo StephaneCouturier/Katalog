@@ -1173,9 +1173,10 @@ void MainWindow::loadBackUpMappingTable()
                                 dm.mapping_name,
                                 dm.mapping_type,
                                 CASE WHEN dm.mapping_strict_copy = 1 THEN 'Strict' ELSE 'Dedup' END,
-                                CASE WHEN dm.mapping_conflict_mode = 0 THEN 'Skip'
-                                     WHEN dm.mapping_conflict_mode = 1 THEN 'Rename oldest'
-                                     ELSE '' END,
+                                CASE dm.mapping_conflict_mode
+                                     WHEN 'Skip'         THEN 'Skip'
+                                     WHEN 'RenameOldest' THEN 'Rename oldest'
+                                     ELSE dm.mapping_conflict_mode END,
                                 dm.mapping_device_source_id,
                                 d1.device_name,
                                 d1.device_active,
@@ -1524,7 +1525,9 @@ void MainWindow::saveNewMapping()
     query.bindValue(":mapping_device_source_id", device1ID);
     query.bindValue(":mapping_device_target_id", device2ID);
     query.bindValue(":mapping_strict_copy", ui->BackUp_checkBox_StrictCopy->isChecked() ? 1 : 0);
-    query.bindValue(":mapping_conflict_mode", ui->BackUp_comboBox_ConflictMode->currentIndex());
+    query.bindValue(":mapping_conflict_mode",
+                    conflictModeToString(static_cast<ConflictMode>(
+                        ui->BackUp_comboBox_ConflictMode->currentIndex())));
 
     if (!query.exec())
     {

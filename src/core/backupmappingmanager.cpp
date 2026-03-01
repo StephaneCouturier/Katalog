@@ -70,7 +70,7 @@ QString BackupMappingManager::buildBaseQuery()
             d2.device_total_file_count AS target_file_count,
             d2.device_date_updated AS target_date_updated,
             COALESCE(dm.mapping_strict_copy,    1) AS mapping_strict_copy,
-            COALESCE(dm.mapping_conflict_mode, 0) AS mapping_conflict_mode
+            COALESCE(dm.mapping_conflict_mode, 'RenameOldest') AS mapping_conflict_mode
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
@@ -188,7 +188,7 @@ MappingInfo BackupMappingManager::parseMappingFromQuery(const QSqlQuery& query)
     info.targetDateUpdated = query.value("target_date_updated").toString();
 
     info.strictCopy    = query.value("mapping_strict_copy").toInt() != 0;
-    info.conflictMode  = static_cast<ConflictMode>(query.value("mapping_conflict_mode").toInt());
+    info.conflictMode  = conflictModeFromString(query.value("mapping_conflict_mode").toString());
 
     return info;
 }

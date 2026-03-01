@@ -20,12 +20,49 @@ Necessary during the backup process, it is possible to trigger the copy of the f
 **Incremental backup**
 
 Katalog's backup will copy files from a **source catalog** to a **target catalog** using Katalog's own indexed data.
+<br/>For that to happen fully, updates of the Catalogs will be run before the backup and after (optional but highly recommanded).
 <br/>There is no external tool dependency.
-
-- Compares source and target catalogs to find files **missing from the target**.
+<br/><br/>Sequence of actions:
+- Compare source and target catalogs to find **files missing from the target**.
 - Copies missing files to the target, recreating folder structure.
 - Does **not** overwrite existing files in the target (even if different).
 - Does **not** delete files from the target that are absent from the source.
+
+Options "Strict copy"
+- <i>Strict copy</i> (default): Katalog will copy files even if they are present once already in the target. If unticked, there will likely be no duplicates on Name, Size, Date in the target.
+
+Options of Conflict Resolution Modes
+- <i>On Conflict</i> (default is <i>Rename oldest</i>)
+
+Katalog can address different conflicts in different manners, when the file exists on the target but the date, size, and checksum are different.
+
+
+A **conflict** occurs when a file exists at both the source and the target path, but the date, size, or checksum differ. The mode controls what the executor does in that case.
+
+#### Available modes
+
+| Mode | DB value | Behaviour |
+|------|----------|-----------|
+| **Skip** (default) | `"Skip"` | No file operation — source is not copied, target is not modified. Conflict is reported for user review. |
+| **Rename oldest** | `"RenameOldest"` | If the source is newer: rename the older target file (adding a timestamp suffix), then copy the source. If the target is newer or same date: skip (protect the newer target). |
+| **Overwrite** *(backlog)* | `"Overwrite"` | Source always wins — overwrite the target silently, no rename backup. For users who want the source to be authoritative regardless of date. |
+| **Rename always** *(backlog)* | `"RenameAlways"` | Always rename the target and copy the source, even when the target is newer — aggressive, explicit archiving. |
+
+#### Full scenario space
+
+| # | Situation | Skip | Rename oldest | Overwrite *(backlog)* | Rename always *(backlog)* |
+|---|-----------|------|---------------|-----------------------|---------------------------|
+| A | Source newer than target | conflict reported | rename target → copy source ✓ | overwrite target | rename target → copy source |
+| B | Target newer than source | conflict reported | skip (protect newer target) | overwrite target | rename target → copy source |
+| C | Same date, different size | conflict reported | skip (no clear winner) | overwrite target | rename target → copy source |
+| D | Source file missing on disk | error | error | error | error |
+
+Cases B and C are currently left as reported conflicts. `Overwrite` and `RenameAlways` are the natural future modes to cover them when the user wants the source to be unconditionally authoritative.
+
+
+
+
+
 
 **LuckyBackup profile**
 
@@ -66,7 +103,7 @@ Goal: create a mapping between the source on local disk and the target on extern
 ![](/img/screen_backup_5_comparison.png)
 
 ### Delete a Mapping
-Select the entire line by clicking somewhere the row, and click the button "Delete".
+Right click on the link line to display the context menu, and select "Delete".
 
 ![](/img/screen_backup_6_delete.png)
 
