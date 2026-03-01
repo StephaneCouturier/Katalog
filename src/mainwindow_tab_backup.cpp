@@ -42,6 +42,23 @@
 
 //UI----------------------------------------------------------------------------
 
+void MainWindow::on_BackUp_pushButton_CreateLinkShowHide_clicked()
+{
+    QString iconName = ui->BackUp_pushButton_CreateLinkShowHide->icon().name();
+
+    if (iconName == "go-down") { //Hide
+        ui->BackUp_pushButton_CreateLinkShowHide->setIcon(QIcon::fromTheme("go-up"));
+        ui->BackUp_widget_CreateLink->setHidden(true);
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        settings.setValue("BackUp/ShowHideCreateLink", "go-up");
+    } else { //Show
+        ui->BackUp_pushButton_CreateLinkShowHide->setIcon(QIcon::fromTheme("go-down"));
+        ui->BackUp_widget_CreateLink->setHidden(false);
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        settings.setValue("BackUp/ShowHideCreateLink", "go-down");
+    }
+}
+
 void MainWindow::on_BackUp_pushButton_GenerateMappingName_clicked()
 {
     QAbstractItemModel* model1 = ui->BackUp_treeView_ListSources->model();

@@ -240,6 +240,12 @@
                     ui->Create_widget_GlobalParameters->setHidden(true);
             }
 
+            //Show or Hide BackUp Create Link section
+            if ( settings.value("BackUp/ShowHideCreateLink") == "go-up"){ //Hide
+                    ui->BackUp_pushButton_CreateLinkShowHide->setIcon(QIcon::fromTheme("go-up"));
+                    ui->BackUp_widget_CreateLink->setHidden(true);
+            }
+
             //Expand/Collapse device selection tree
             filtersTreeExpandState = settings.value("Selection/filtersTreeExpandState").toInt();
             deviceTreeExpandState = settings.value("Devices/deviceTreeExpandState").toInt();
@@ -787,7 +793,7 @@
         ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
         ui->Settings_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5; } ");
         ui->Settings_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
-        ui->Create_hline_01->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->BackUp_line_Separate1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
 
         //Doted lines on Search screen
         ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
