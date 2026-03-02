@@ -94,6 +94,9 @@ public:
     // Updated method signature - returns structured result instead of mixed list
     UpdateResult updateStorageInfo();
 
+    /** Returns bytes available at the filesystem containing @p path, or -1 if unavailable. */
+    static qint64 availableSpace(const QString &path);
+
 private:
     QString m_connectionName = "defaultConnection";
     // Helper methods

@@ -511,6 +511,12 @@ class MainWindow : public KXmlGuiWindow
                                                  const Device &targetDevice,
                                                  bool strictCopy);
 
+            // Builds the full summary label (operation | status | To copy | Conflicts | Already in target | space warning)
+            // Used by both loadBackupPreview() and executeBackup() (cancelled case) for consistency.
+            QString buildBackupSummaryHtml(const QString &operation, const QString &status,
+                                           const BackupCompareResult &cmp, bool isArchive,
+                                           const BackupSpaceCheck &spaceCheck) const;
+
             // Pre-backup catalog update state machine
             void setupDeviceUpdateManagerForBackup();
             void continueBackupAfterCatalogUpdate();

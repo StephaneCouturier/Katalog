@@ -33,6 +33,7 @@
 #define BACKUPJOB_H
 
 #include "catalogdifferenceengine.h"
+#include <QList>
 #include <QStringList>
 
 /**
@@ -96,5 +97,44 @@ struct BackupReport {
     int conflictCount()  const { return conflicts.size(); }
     int errorCount()     const { return errors.size();    }
 };
+
+/**
+ * @brief Result of a pre-execution disk space evaluation for a backup/archive operation.
+ *
+ * Produced by evaluateBackupSpace(). The UI layer uses this to decide whether to
+ * block execution (Insufficient), ask for confirmation (Low), or proceed silently (OK).
+ */
+enum class BackupSpaceStatus {
+    OK,           ///< Enough space with comfortable headroom.
+    Low,          ///< Enough space but headroom is below the safety threshold.
+    Insufficient, ///< Not enough space — operation would likely fail mid-way.
+    Unknown,      ///< Could not determine available space (remote FS, invalid path, …).
+};
+
+struct BackupSpaceCheck {
+    BackupSpaceStatus status    = BackupSpaceStatus::Unknown;
+    qint64            available = -1;  ///< Bytes available on the target filesystem.
+    qint64            required  =  0;  ///< Bytes the operation needs on the target.
+};
+
+/**
+ * @brief Evaluate whether the target has sufficient space for a backup/archive run.
+ *
+ * Takes the available bytes already obtained from Storage::availableSpace() and the
+ * planned file lists, computes the required bytes (including RenameOldest overhead),
+ * then classifies the result.
+ *
+ * @param availableBytes  Bytes available on target — pass Storage::availableSpace(targetPath).
+ * @param filesToCopy     Files that will be written to the target (new files).
+ * @param fileConflicts   Conflict files (only relevant when conflictMode == RenameOldest).
+ * @param conflictMode    Determines whether conflict files also consume space.
+ * @param lowThreshold    Headroom below which status is Low (default 512 MB).
+ */
+BackupSpaceCheck evaluateBackupSpace(
+    qint64 availableBytes,
+    const QList<DifferenceFileEntry> &filesToCopy,
+    const QList<DifferenceFileEntry> &fileConflicts,
+    ConflictMode conflictMode,
+    qint64 lowThreshold = 512LL * 1024 * 1024);
 
 #endif // BACKUPJOB_H

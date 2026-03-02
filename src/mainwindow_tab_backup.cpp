@@ -31,6 +31,7 @@
 
 #include "core/backupprofilegenerator.h"
 #include "core/backupjobstoppable.h"
+#include "core/storage.h"
 #include <QTimer>
 #include "core/catalogdifferenceengine.h"
 #include "core/directoryreplicator.h"
@@ -689,6 +690,24 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
         return;
     }
 
+    const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
+
+    // Space check — block or warn if target does not have enough free space
+    {
+        const BackupSpaceCheck spaceCheck = evaluateBackupSpace(
+            Storage::availableSpace(targetDevice.path),
+            cmp.filesToCopy, cmp.fileConflicts, mapping.conflictMode);
+        if (spaceCheck.status == BackupSpaceStatus::Insufficient) {
+            ui->BackUp_pushButton_RunBackup->setEnabled(true);
+            ui->BackUp_label_ProgressSummary->setVisible(true);
+            ui->BackUp_label_ProgressSummary->setText(
+                buildBackupSummaryHtml(isArchive ? tr("Archive") : tr("Backup"),
+                                       tr("Cancelled"), cmp, isArchive, spaceCheck));
+            return;
+        }
+        // Low: preview already showed the warning — proceed silently
+    }
+
     //Setup and launch the backup worker thread
     m_backupJob = new BackupJobStoppable();
     m_backupJob->setFiles(cmp.filesToCopy);
@@ -697,7 +716,6 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
         m_backupJob->setConflictFiles(cmp.fileConflicts);
     m_backupJob->setSourcePath(sourceDevice.path);
     m_backupJob->setTargetPath(targetDevice.path);
-    const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
     m_currentBackupIsArchive = isArchive;
     m_backupJob->setArchiveMode(isArchive);
 
@@ -892,6 +910,42 @@ void MainWindow::showBackupReport(const BackupReport &report)
     ui->BackUp_tableView_PreviewFiles->setVisible(true);
 }
 
+QString MainWindow::buildBackupSummaryHtml(const QString &operation, const QString &status,
+                                           const BackupCompareResult &cmp, bool isArchive,
+                                           const BackupSpaceCheck &spaceCheck) const
+{
+    qint64 copySize = 0;
+    for (const DifferenceFileEntry &e : cmp.filesToCopy)
+        copySize += e.fileSize;
+    qint64 conflictSize = 0;
+    for (const DifferenceFileEntry &e : cmp.fileConflicts)
+        conflictSize += e.fileSize;
+
+    QString html = StatusBarMessageBuilder()
+        .setOperation(operation)
+        .setStatus(status)
+        .addResult(isArchive ? tr("To move") : tr("To copy"), cmp.filesToCopy.size(), copySize)
+        .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
+        .addResult(tr("Already in target"), cmp.skippedCount)
+        .build();
+
+    if (spaceCheck.status == BackupSpaceStatus::Insufficient) {
+        html += QStringLiteral(" | <span style='color:#cc4444;font-weight:bold;'>\u26a0 ")
+            + tr("Insufficient disk space \u2014 Required: %1, Available: %2, Missing: %3")
+                  .arg(QLocale().formattedDataSize(spaceCheck.required))
+                  .arg(QLocale().formattedDataSize(spaceCheck.available))
+                  .arg(QLocale().formattedDataSize(spaceCheck.required - spaceCheck.available))
+            + QStringLiteral("</span>");
+    } else if (spaceCheck.status == BackupSpaceStatus::Low) {
+        html += QStringLiteral(" | <span style='color:#cc7a00;'>\u26a0 ")
+            + tr("Low target space: %1 remaining after operation")
+                  .arg(QLocale().formattedDataSize(spaceCheck.available - spaceCheck.required))
+            + QStringLiteral("</span>");
+    }
+
+    return html;
+}
+
 void MainWindow::loadBackupPreview()
 {
     //Get the selected mapping_id
@@ -985,15 +1039,14 @@ void MainWindow::loadBackupPreview()
     else if (!targetDevice.active)
         offlineNote = tr(" — target offline");
 
-    ui->BackUp_label_ProgressSummary->setText(
-        StatusBarMessageBuilder()
-            .setOperation(tr("Preview"))
-            .setStatus(tr("Completed") + offlineNote)
-            .addResult(isArchive ? tr("To move") : tr("To copy"), cmp.filesToCopy.size(), copySize)
-            .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
-            .addResult(tr("Already in target"),   cmp.skippedCount)
-            .build()
-    );
+    const BackupSpaceCheck spaceCheck = evaluateBackupSpace(
+        Storage::availableSpace(targetDevice.path),
+        cmp.filesToCopy, cmp.fileConflicts, mapping.conflictMode);
+
+    QString previewSummary = buildBackupSummaryHtml(
+        tr("Preview"), tr("Completed") + offlineNote, cmp, isArchive, spaceCheck);
+
+    ui->BackUp_label_ProgressSummary->setText(previewSummary);
 
     //Show preview section and enable export
     ui->BackUp_label_ProgressSummary->setVisible(true);

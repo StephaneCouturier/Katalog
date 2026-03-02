@@ -143,6 +143,7 @@ set(CORE_SOURCES
     src/core/foldertreeloader.cpp
     src/core/catalogdifferenceengine.cpp
     src/core/directoryreplicator.cpp
+    src/core/backupjob.cpp
     src/core/backupjobstoppable.cpp
 )
 

@@ -180,6 +180,15 @@ bool Storage::getStorageInfo()
     return storageInfo.bytesTotal() != -1;
 }
 
+//------------------------------------------------------------------------------
+qint64 Storage::availableSpace(const QString &path)
+{
+    const QStorageInfo info(path);
+    if (!info.isValid())
+        return -1;
+    return info.bytesAvailable();
+}
+
 Storage::UpdateResult Storage::updateStorageInfo()
 {
     UpdateResult result;
