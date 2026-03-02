@@ -89,6 +89,9 @@ public:
     /** Absolute path of the target catalog root (e.g. "/media/Backup"). */
     void setTargetPath(const QString &path);
 
+    /** Enable Archive mode: delete source file after each successful copy. */
+    void setArchiveMode(bool archive);
+
     /** Request graceful cancellation — checked between files. */
     void stopBackup();
 
@@ -127,6 +130,7 @@ private:
     QString        m_sourcePath;
     QString        m_targetPath;
     ConflictMode   m_conflictMode = ConflictMode::RenameOldest;
+    bool           m_archiveMode  = false;
     QAtomicInt     m_stopRequested{0};
     QAtomicInt     m_paused{0};
     mutable QMutex m_pauseMutex;

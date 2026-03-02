@@ -82,7 +82,8 @@ inline ConflictMode conflictModeFromString(const QString &s)
  * derived as (total source files) - copied - renamed - conflicts - errors.
  */
 struct BackupReport {
-    QList<DifferenceFileEntry> copied;
+    QList<DifferenceFileEntry> copied;      // Backup mode: copy succeeded
+    QList<DifferenceFileEntry> moved;       // Archive mode: copy + source delete succeeded
     QList<DifferenceFileEntry> renamed;     // archived old target + replaced with source
     QList<DifferenceFileEntry> conflicts;   // exist in target but differ — skipped
     QStringList                errors;      // "<path>: <reason>"
@@ -90,6 +91,7 @@ struct BackupReport {
     bool                       wasCancelled     = false;
 
     int copiedCount()    const { return copied.size();    }
+    int movedCount()     const { return moved.size();     }
     int renamedCount()   const { return renamed.size();   }
     int conflictCount()  const { return conflicts.size(); }
     int errorCount()     const { return errors.size();    }

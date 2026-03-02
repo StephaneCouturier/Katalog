@@ -524,6 +524,7 @@ class MainWindow : public KXmlGuiWindow
             Device  m_pendingBackupTargetDevice;
             int     m_pendingBackupMappingId = -1;
 
+            bool    m_currentBackupIsArchive    = false;
             BackupJobStoppable *m_backupJob    = nullptr;
             QThread            *m_backupThread = nullptr;
             QElapsedTimer       m_backupTimer;

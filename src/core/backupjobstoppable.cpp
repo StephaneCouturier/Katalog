@@ -77,6 +77,12 @@ void BackupJobStoppable::setTargetPath(const QString &path)
 }
 
 //----------------------------------------------------------------------
+void BackupJobStoppable::setArchiveMode(bool archive)
+{
+    m_archiveMode = archive;
+}
+
+//----------------------------------------------------------------------
 QString BackupJobStoppable::buildArchivedFileName(const QString &filePath)
 {
     const QFileInfo fi(filePath);
@@ -182,10 +188,17 @@ void BackupJobStoppable::runBackup()
 
         // Copy the file
         if (QFile::copy(sourceFile, targetFile)) {
-            report.copied.append(entry);
             report.totalBytesCopied += entry.fileSize;
             bytesCopied += entry.fileSize;
-            qDebug() << "BackupJobStoppable: copied" << sourceFile << "->" << targetFile;
+            if (m_archiveMode) {
+                if (!QFile::remove(sourceFile))
+                    report.errors.append(sourceFile + ": copied to target but source delete failed");
+                report.moved.append(entry);
+                qDebug() << "BackupJobStoppable: moved" << sourceFile << "->" << targetFile;
+            } else {
+                report.copied.append(entry);
+                qDebug() << "BackupJobStoppable: copied" << sourceFile << "->" << targetFile;
+            }
         } else {
             const QString msg = sourceFile + ": copy failed";
             report.errors.append(msg);
@@ -249,6 +262,8 @@ void BackupJobStoppable::runBackup()
                 bytesCopied += entry.fileSize;
                 qDebug() << "BackupJobStoppable: archived" << archivedFile
                          << "and replaced with" << sourceFile;
+                if (m_archiveMode && !QFile::remove(sourceFile))
+                    report.errors.append(sourceFile + ": moved (archived+replaced) but source delete failed");
             } else {
                 // Copy failed — restore the archived file to avoid data loss.
                 QFile::rename(archivedFile, targetFile);

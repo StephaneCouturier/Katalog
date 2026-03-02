@@ -680,6 +680,9 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
         m_backupJob->setConflictFiles(cmp.fileConflicts);
     m_backupJob->setSourcePath(sourceDevice.path);
     m_backupJob->setTargetPath(targetDevice.path);
+    const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
+    m_currentBackupIsArchive = isArchive;
+    m_backupJob->setArchiveMode(isArchive);
 
     m_backupThread = new QThread(this);
     m_backupJob->moveToThread(m_backupThread);
@@ -704,7 +707,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     ui->BackUp_progressBar->setValue(0);
     ui->BackUp_label_ProgressSummary->setText(
         StatusBarMessageBuilder()
-            .setOperation(tr("Backup"))
+            .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("Backup"))
             .setStatus(tr("Starting…"))
             .build());
     m_backupTimer.start();
@@ -744,7 +747,7 @@ void MainWindow::onBackupProgress(int filesDone, int totalFiles,
 
     const QString msg = StatusBarMessageBuilder()
         .setOperation(tr("backup"))
-        .setProcess(tr("Copying"), filesDone + 1, totalFiles)
+        .setProcess(m_currentBackupIsArchive ? tr("Moving") : tr("Copying"), filesDone + 1, totalFiles)
         .setSizeProgress(bytesCopied, totalBytes)
         .setSpeed(speedBps)
         .setTimeToCompletion(etaStr)
@@ -773,7 +776,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
         elapsedStr = tr("%1h %2m").arg(elapsedSec / 3600).arg((elapsedSec % 3600) / 60);
 
     const QString msg = StatusBarMessageBuilder()
-        .setOperation(tr("backup"))
+        .setOperation(m_currentBackupIsArchive ? tr("archive") : tr("backup"))
         .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Complete"))
         .setSizeProgress(report.totalBytesCopied, report.totalBytesCopied)
         .setTimeToCompletion(elapsedStr)
@@ -815,6 +818,14 @@ void MainWindow::showBackupReport(const BackupReport &report)
     for (const DifferenceFileEntry &e : report.copied) {
         QList<QStandardItem*> row;
         row << new QStandardItem(tr("copied"))
+            << new QStandardItem(e.fileName)
+            << new QStandardItem(e.folderPath)
+            << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
+        model->appendRow(row);
+    }
+    for (const DifferenceFileEntry &e : report.moved) {
+        QList<QStandardItem*> row;
+        row << new QStandardItem(tr("moved"))
             << new QStandardItem(e.fileName)
             << new QStandardItem(e.folderPath)
             << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
@@ -908,8 +919,9 @@ void MainWindow::loadBackupPreview()
 
     //Run comparison (respects strictCopy setting of this mapping)
     BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy);
+    const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
 
-    //Build preview model (Status: "to copy" / "conflict")
+    //Build preview model (Status: "to copy" / "to move" / "conflict")
     QStandardItemModel *model = new QStandardItemModel(this);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Status")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("File Name")));
@@ -921,7 +933,7 @@ void MainWindow::loadBackupPreview()
         auto *sizeItem = new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
         sizeItem->setData(entry.fileSize, Qt::UserRole);
         QList<QStandardItem*> row;
-        row << new QStandardItem(tr("to copy"))
+        row << new QStandardItem(isArchive ? tr("to move") : tr("to copy"))
             << new QStandardItem(entry.fileName)
             << new QStandardItem(entry.folderPath)
             << sizeItem;
@@ -961,7 +973,7 @@ void MainWindow::loadBackupPreview()
         StatusBarMessageBuilder()
             .setOperation(tr("Preview"))
             .setStatus(modeLabel + offlineNote)
-            .addResult(tr("To copy"),             cmp.filesToCopy.size(),   copySize)
+            .addResult(isArchive ? tr("To move") : tr("To copy"), cmp.filesToCopy.size(), copySize)
             .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
             .addResult(tr("Already in target"),   cmp.skippedCount)
             .build()
