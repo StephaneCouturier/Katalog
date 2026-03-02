@@ -384,6 +384,8 @@
         setCreateCatalogUIState(true);  // Only affects Create tab
 
         // Start the DeviceUpdateManager operation
+        m_catalogCreateStartTime = QDateTime::currentDateTime();
+        m_catalogCreateTimer.start();
         deviceUpdateManager->updateDeviceHierarchy(newCatalogDevice,
                                                    collection->databaseMode,
                                                    collection->folder,

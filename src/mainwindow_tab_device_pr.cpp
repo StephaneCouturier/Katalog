@@ -1881,6 +1881,23 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 
         loadStorageList();
 
+        // Report indexing duration
+        {
+            const QDateTime endTime = QDateTime::currentDateTime();
+            const qint64 elapsedMs = m_catalogCreateTimer.elapsed();
+            const int totalSec = static_cast<int>(elapsedMs / 1000);
+            const QString duration = QString("%1:%2:%3")
+                .arg(totalSec / 3600,         2, 10, QLatin1Char('0'))
+                .arg((totalSec % 3600) / 60,  2, 10, QLatin1Char('0'))
+                .arg(totalSec % 60,           2, 10, QLatin1Char('0'));
+            const QString timingMsg = tr("Indexing — Start: %1 | End: %2 | Duration: %3")
+                .arg(m_catalogCreateStartTime.toString("hh:mm:ss"))
+                .arg(endTime.toString("hh:mm:ss"))
+                .arg(duration);
+            statusBarLabel->setText(timingMsg);
+            qDebug() << timingMsg;
+        }
+
         // SURGICAL FIX: Clean Create tab restoration (no mixed contexts)
         qDebug() << "Restoring ONLY Create tab UI state (clean separation)";
         setCreateCatalogUIState(false);  // Use dedicated Create method

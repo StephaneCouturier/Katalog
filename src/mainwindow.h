@@ -401,6 +401,8 @@ class MainWindow : public KXmlGuiWindow
             void restoreCreateCatalogUIState();
             void removeFileFromResults(QString fullFilePath);
             void cleanupStoppedCatalogCreation();
+            QElapsedTimer m_catalogCreateTimer;
+            QDateTime     m_catalogCreateStartTime;
             void initiateFileTypeFields();
             void initiateMetadataFields();
             void initializeMetadataCaches();
