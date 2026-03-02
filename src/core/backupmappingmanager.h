@@ -174,6 +174,10 @@ public:
     static QString exportPreviewToCsv(const QList<BackupPreviewRow> &rows,
                                       const QString &collectionFolder);
 
+    // Table display — builds and executes the full display query (all columns + diffs + time diff)
+    // Returns an executed QSqlQuery ready for QSqlQueryModel::setQuery()
+    QSqlQuery executeTableDisplayQuery(const MappingFilter& filter);
+
     // Query building (for UI compatibility)
     QString buildMappingQuery(const MappingFilter& filter);
 

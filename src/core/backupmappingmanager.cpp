@@ -30,6 +30,7 @@
 */
 
 #include "backupmappingmanager.h"
+#include "database.h"
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
@@ -375,6 +376,77 @@ MappingTotals BackupMappingManager::calculateTotals(const MappingFilter& filter)
 
     qDebug() << "Calculated totals for" << totals.totalMappings << "mappings";
     return totals;
+}
+
+// ─── Table Display Query ───────────────────────────────────────────────────
+
+QSqlQuery BackupMappingManager::executeTableDisplayQuery(const MappingFilter& filter)
+{
+    Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+    QString timeDiffSQL = Database::getFormattedTimeDifference(
+        dbType, "d1.device_date_updated", "d2.device_date_updated");
+
+    QString querySQL = QLatin1String(R"(
+        SELECT
+            dm.mapping_id,
+            dm.mapping_name,
+            dm.mapping_type,
+            CASE WHEN dm.mapping_strict_copy = 1 THEN 'Strict' ELSE 'Dedup' END,
+            CASE dm.mapping_conflict_mode
+                 WHEN 'Skip'         THEN 'Skip'
+                 WHEN 'RenameOldest' THEN 'Rename oldest'
+                 ELSE dm.mapping_conflict_mode END,
+            dm.mapping_device_source_id,
+            d1.device_name,
+            d1.device_active,
+            d1.device_path,
+            d1.device_total_file_size,
+            d1.device_total_file_count,
+            d1.device_date_updated,
+            dm.mapping_device_target_id,
+            d2.device_name,
+            d2.device_active,
+            d2.device_path,
+            d2.device_total_file_size,
+            d2.device_total_file_count,
+            d2.device_date_updated,
+            d2.device_total_file_size - d1.device_total_file_size AS size_difference,
+            CASE
+                WHEN d1.device_total_file_size > 0
+                THEN ROUND(((d2.device_total_file_size - d1.device_total_file_size) * 100.0 / d1.device_total_file_size), 2)
+                ELSE NULL
+            END AS size_difference_percentage,
+            d2.device_total_file_count - d1.device_total_file_count AS file_count_difference,
+            CASE
+                WHEN d1.device_total_file_count > 0
+                THEN ROUND(((d2.device_total_file_count - d1.device_total_file_count) * 100.0 / d1.device_total_file_count), 2)
+                ELSE NULL
+            END AS file_count_difference_percentage,
+    )");
+
+    querySQL += "        (" + timeDiffSQL + ") AS formatted_time_difference\n";
+
+    querySQL += QLatin1String(R"(
+        FROM device_mapping dm
+        JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
+        JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
+        WHERE dm.mapping_type = 'Backup'
+    )");
+
+    querySQL += buildFilterClause(filter);
+    querySQL += " ORDER BY dm.mapping_name ASC";
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(querySQL);
+    bindFilterParameters(query, filter);
+
+    if (!query.exec()) {
+        QString errorMsg = QString("Failed to load mapping table: %1").arg(query.lastError().text());
+        qDebug() << "ERROR:" << errorMsg;
+        emit error(errorMsg);
+    }
+
+    return query;
 }
 
 // ─── Export ────────────────────────────────────────────────────────────────

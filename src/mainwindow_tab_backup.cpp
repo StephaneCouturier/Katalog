@@ -40,7 +40,6 @@
 #include "devicetreeview.h"
 #include "ui_mainwindow.h"
 #include <QMap>
-#include "core/database.h"
 
 //UI----------------------------------------------------------------------------
 
@@ -1184,139 +1183,22 @@ void MainWindow::loadBackUpMappingTotals()
 
 void MainWindow::loadBackUpMappingTable()
 {
-    // Get database type for time difference formatting
-    Database::DatabaseType databaseType = Database::getDatabaseType(m_connectionName);
-    QString timeDiffSQL = Database::getFormattedTimeDifference(databaseType,
-                                                               "d1.device_date_updated",
-                                                               "d2.device_date_updated");
+    if (!backupMappingManager)
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
 
-    // DEBUG: Print the generated time diff SQL
-    // qDebug() << "=== DEBUG loadBackUpMappingTable ===";
-    // qDebug() << "Database type:" << (int)databaseType;
-    // qDebug() << "Time diff SQL:" << timeDiffSQL;
-
-    //Load data from table device_mapping
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-
-    // Build the complete SELECT statement
-    QString querySQL = QLatin1String(R"(
-                            SELECT
-                                dm.mapping_id,
-                                dm.mapping_name,
-                                dm.mapping_type,
-                                CASE WHEN dm.mapping_strict_copy = 1 THEN 'Strict' ELSE 'Dedup' END,
-                                CASE dm.mapping_conflict_mode
-                                     WHEN 'Skip'         THEN 'Skip'
-                                     WHEN 'RenameOldest' THEN 'Rename oldest'
-                                     ELSE dm.mapping_conflict_mode END,
-                                dm.mapping_device_source_id,
-                                d1.device_name,
-                                d1.device_active,
-                                d1.device_path,
-                                d1.device_total_file_size,
-                                d1.device_total_file_count,
-                                d1.device_date_updated,
-                                dm.mapping_device_target_id,
-                                d2.device_name,
-                                d2.device_active,
-                                d2.device_path,
-                                d2.device_total_file_size,
-                                d2.device_total_file_count,
-                                d2.device_date_updated,
-
-                                d2.device_total_file_size - d1.device_total_file_size AS size_difference,
-                                CASE
-                                    WHEN d1.device_total_file_size > 0
-                                    THEN ROUND(((d2.device_total_file_size - d1.device_total_file_size) * 100.0 / d1.device_total_file_size), 2)
-                                    ELSE NULL
-                                END AS size_difference_percentage,
-
-                                d2.device_total_file_count - d1.device_total_file_count AS file_count_difference,
-                                CASE
-                                    WHEN d1.device_total_file_count > 0
-                                    THEN ROUND(((d2.device_total_file_count - d1.device_total_file_count) * 100.0 / d1.device_total_file_count), 2)
-                                    ELSE NULL
-                                END AS file_count_difference_percentage,
-
-)");
-
-    // Append the database-specific time difference calculation
-    querySQL += "                                (" + timeDiffSQL + ") AS formatted_time_difference\n";
-
-    // Add FROM and WHERE clauses
-    querySQL += QLatin1String(R"(
-                            FROM device_mapping dm,
-                                device d1,
-                                device d2
-                            WHERE dm.mapping_device_source_id = d1.device_id
-                            AND   dm.mapping_device_target_id = d2.device_id
-                        )");
-
-    // Add device filtering based on radio button selection
-    if(ui->BackUp_radioButton_Target->isChecked()==true){
-        if (      selectedDevice->type == "Storage" ){
-            querySQL += " AND d2.device_parent_id =:device_parent_id ";
-        }
-        else if ( selectedDevice->type == "Catalog" ){
-            querySQL += " AND d2.device_id =:device_id ";
-        }
-        else if ( selectedDevice->type == "Virtual" ){
-            QString prepareSQL = QLatin1String(R"(
-                                            AND d2.device_id IN (
-                                            WITH RECURSIVE hierarchy AS (
-                                                 SELECT device_id, device_parent_id, device_name
-                                                 FROM device
-                                                 WHERE device_id = :device_id
-                                                 UNION ALL
-                                                 SELECT t.device_id, t.device_parent_id, t.device_name
-                                                 FROM device t
-                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                            )
-                                            SELECT device_id
-                                            FROM hierarchy)
-                                        )");
-            querySQL += prepareSQL;
-        }
-    }
-    else{
-        if (      selectedDevice->type == "Storage" ){
-            querySQL += " AND d1.device_parent_id =:device_parent_id ";
-        }
-        else if ( selectedDevice->type == "Catalog" ){
-            querySQL += " AND d1.device_id =:device_id ";
-        }
-        else if ( selectedDevice->type == "Virtual" ){
-            QString prepareSQL = QLatin1String(R"(
-                                            AND d1.device_id IN (
-                                            WITH RECURSIVE hierarchy AS (
-                                                 SELECT device_id, device_parent_id, device_name
-                                                 FROM device
-                                                 WHERE device_id = :device_id
-                                                 UNION ALL
-                                                 SELECT t.device_id, t.device_parent_id, t.device_name
-                                                 FROM device t
-                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                            )
-                                            SELECT device_id
-                                            FROM hierarchy)
-                                        )");
-            querySQL += prepareSQL;
+    // Build filter — same logic as loadBackUpMappingTotals()
+    MappingFilter filter;
+    if (!optionDisplayFullMappingTable) {
+        if (ui->BackUp_radioButton_Source->isChecked()) {
+            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID);
+        } else if (ui->BackUp_radioButton_Target->isChecked()) {
+            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID);
         }
     }
 
-    querySQL +=" ORDER BY dm.mapping_name ASC ";
+    // All SQL stays in core — get the executed query from the manager
+    QSqlQuery query = backupMappingManager->executeTableDisplayQuery(filter);
 
-    query.prepare(querySQL);
-    query.bindValue(":device_id",        selectedDevice->ID);
-    query.bindValue(":device_parent_id", selectedDevice->ID);
-
-    if (!query.exec())
-    {
-        qDebug() << "Error loading device_mapping: " << query.lastError();
-        return;
-    }
-
-    //Create an sql model for the table
     QSqlQueryModel *queryModel = new QSqlQueryModel(this);
     queryModel->setQuery(std::move(query));
 
@@ -1348,27 +1230,17 @@ void MainWindow::loadBackUpMappingTable()
     DeviceMappingView *proxyModel = new DeviceMappingView(this);
     proxyModel->setSourceModel(queryModel);
 
-    //Load model to the view
     ui->BackUp_tableView_CurrentMappings->setModel(proxyModel);
     ui->BackUp_tableView_CurrentMappings->resizeColumnsToContents();
     ui->BackUp_tableView_CurrentMappings->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->BackUp_tableView_CurrentMappings->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->BackUp_tableView_CurrentMappings->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-    //If the setting is checked, display all columns
-    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     // Columns toggled by the "full table" option
-    //   col  2: mapping_type
-    //   col  3: copy mode (strict/dedup)
-    //   col  4: conflict mode (skip/archive)
-    //   col  5: source ID
-    //   col  7: source active
-    //   col  8: source path
-    //   col 11: source date updated
-    //   col 12: target ID
-    //   col 14: target active
-    //   col 15: target path
-    //   col 16: target file size
+    //   col  2: mapping_type       col  3: copy mode      col  4: conflict mode
+    //   col  5: source ID          col  7: source active   col  8: source path
+    //   col 11: source date        col 12: target ID       col 14: target active
+    //   col 15: target path        col 16: target file size
     const bool full = optionDisplayFullMappingTable;
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 2, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 3, !full);
@@ -1381,8 +1253,7 @@ void MainWindow::loadBackUpMappingTable()
     ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden(15, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden(16, !full);
-    // Always hidden
-    ui->BackUp_tableView_CurrentMappings->setColumnHidden(0, true);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 0, true); // always hidden: ID
 
     ui->BackUp_tableView_CurrentMappings->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
