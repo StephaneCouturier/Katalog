@@ -253,6 +253,29 @@ MappingInfo BackupMappingManager::getMappingById(int mappingId)
 // Changes
 //------------------------------------------------------------------------------
 
+bool BackupMappingManager::invertMapping(int mappingId)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        UPDATE device_mapping
+        SET mapping_device_source_id = mapping_device_target_id,
+            mapping_device_target_id = mapping_device_source_id
+        WHERE mapping_id = :mapping_id
+    )"));
+    query.bindValue(":mapping_id", mappingId);
+
+    if (!query.exec()) {
+        QString errorMsg = QString("Failed to invert mapping %1: %2")
+                               .arg(mappingId)
+                               .arg(query.lastError().text());
+        qDebug() << "ERROR:" << errorMsg;
+        emit error(errorMsg);
+        return false;
+    }
+
+    return true;
+}
+
 bool BackupMappingManager::deleteMapping(int mappingId)
 {
     QSqlQuery query(QSqlDatabase::database(m_connectionName));

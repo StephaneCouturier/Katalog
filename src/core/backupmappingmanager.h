@@ -163,6 +163,7 @@ public:
 
     // Changes
     bool deleteMapping(int mappingId);
+    bool invertMapping(int mappingId);
 
     // Statistics
     int getMappingCount();

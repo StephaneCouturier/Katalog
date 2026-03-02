@@ -37,7 +37,9 @@
 #include "core/statusbarmessagebuilder.h"
 #include "mainwindow.h"
 #include "devicemappingview.h"
+#include "devicetreeview.h"
 #include "ui_mainwindow.h"
+#include <QMap>
 #include "core/database.h"
 
 //UI----------------------------------------------------------------------------
@@ -61,25 +63,24 @@ void MainWindow::on_BackUp_pushButton_CreateLinkShowHide_clicked()
 
 void MainWindow::on_BackUp_pushButton_GenerateMappingName_clicked()
 {
-    QAbstractItemModel* model1 = ui->BackUp_treeView_ListSources->model();
-    QAbstractItemModel* model2 = ui->BackUp_treeView_ListTargets->model();
-    if (!model1 || !model2)
+    const int sourceId = ui->BackUp_comboBox_Source->selectedDeviceId();
+    const int targetId = ui->BackUp_comboBox_Target->selectedDeviceId();
+    if (sourceId <= 0 || targetId <= 0)
         return;
 
-    QItemSelectionModel* sel1 = ui->BackUp_treeView_ListSources->selectionModel();
-    QItemSelectionModel* sel2 = ui->BackUp_treeView_ListTargets->selectionModel();
-    if (!sel1 || !sel2)
-        return;
+    // Look up device names from the flat models (col 1 = device ID, col 2 = device name)
+    auto nameForId = [](QAbstractItemModel *m, int id) -> QString {
+        if (!m) return {};
+        for (int r = 0; r < m->rowCount(); ++r)
+            if (m->index(r, 1).data().toInt() == id)
+                return m->index(r, 2).data().toString();
+        return {};
+    };
 
-    QModelIndexList rows1 = sel1->selectedRows();
-    QModelIndexList rows2 = sel2->selectedRows();
-    if (rows1.isEmpty() || rows2.isEmpty())
-        return;
-
-    // Column 2 holds the device name
-    QString sourceName = rows1.first().siblingAtColumn(2).data().toString();
-    QString targetName = rows2.first().siblingAtColumn(2).data().toString();
-    ui->BackUp_lineEdit_Name->setText(sourceName + " -> " + targetName);
+    const QString sourceName = nameForId(ui->BackUp_treeView_ListSources->model(), sourceId);
+    const QString targetName = nameForId(ui->BackUp_treeView_ListTargets->model(), targetId);
+    if (!sourceName.isEmpty() && !targetName.isEmpty())
+        ui->BackUp_lineEdit_Name->setText(sourceName + " -> " + targetName);
 }
 
 void MainWindow::on_BackUp_pushButton_SaveMapping_clicked()
@@ -144,8 +145,20 @@ void MainWindow::on_BackUp_tableView_CurrentMappings_customContextMenuRequested(
         on_BackUp_pushButton_ReplicateDirectories_clicked();
     });
 
-    // ── Mapping management (not yet implemented) ──────────────────────────────
+    // ── Mapping management ────────────────────────────────────────────────────
     mappingContextMenu.addSeparator();
+
+    QAction *invertAction = new QAction(QIcon::fromTheme("object-flip-horizontal"), tr("Invert (swap source and target)"), this);
+    mappingContextMenu.addAction(invertAction);
+    connect(invertAction, &QAction::triggered, this, [this, selectedIndexes]() {
+        int mappingID = selectedIndexes.at(0).data().toInt();
+        if (!backupMappingManager)
+            backupMappingManager = new BackupMappingManager(m_connectionName, this);
+        if (!backupMappingManager->invertMapping(mappingID))
+            return;
+        loadBackUpMapping();
+        collection->saveMappingTableToFile();
+    });
 
     QAction *renameAction = new QAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this);
     renameAction->setEnabled(false);
@@ -1384,6 +1397,10 @@ void MainWindow::loadBackUpDeviceLists(QString list)
     model->setHorizontalHeaderItem(2, new QStandardItem(tr("Device Name")));
     model->setHorizontalHeaderItem(3, new QStandardItem(tr("Size")));
 
+    // Extra data for the TreeComboBox hierarchical model (DeviceTreeView needs type + active)
+    QMap<QString, QString> parentTypeMap;   // parentName → device type ("Virtual", "Storage", …)
+    QMap<int, bool>        deviceActiveMap; // deviceId  → active state
+
     //Populate the model from each deviceListTable if type = "Catalog"
     for (int i = 0; i < selectedDevice->deviceListTable.size(); i++)
     {
@@ -1396,6 +1413,9 @@ void MainWindow::loadBackUpDeviceLists(QString list)
             Device tempParentDevice;
             tempParentDevice.ID = tempDevice.parentID;
             tempParentDevice.loadDevice(m_connectionName);
+
+            parentTypeMap.insert(tempParentDevice.name, tempParentDevice.type);
+            deviceActiveMap.insert(tempDevice.ID, tempDevice.active);
 
             //Add row if valid for the type of list
             if (list == "Source_without_mapping") {
@@ -1433,90 +1453,102 @@ void MainWindow::loadBackUpDeviceLists(QString list)
     }
 
     //Load model to the Target view
+    TreeComboBox *combo;
+    QTreeView    *tree;
     if (list.contains("Target")){
         ui->BackUp_treeView_ListTargets->setModel(model);
         ui->BackUp_treeView_ListTargets->resizeColumnToContents(1);
         ui->BackUp_treeView_ListTargets->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->BackUp_treeView_ListTargets->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        combo = ui->BackUp_comboBox_Target;
+        tree  = ui->BackUp_treeView_ListTargets;
     }
     else{
         ui->BackUp_treeView_ListSources->setModel(model);
         ui->BackUp_treeView_ListSources->resizeColumnToContents(1);
         ui->BackUp_treeView_ListSources->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->BackUp_treeView_ListSources->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        combo = ui->BackUp_comboBox_Source;
+        tree  = ui->BackUp_treeView_ListSources;
     }
+
+    // Build hierarchical model for the TreeComboBox.
+    // Column layout matches DeviceTreeView expectations:
+    //   col 0 = name, col 1 = type, col 2 = active, col 3 = device ID (idColumn default)
+    // Parent nodes (Virtual/Storage) are visible but not selectable.
+    // Catalog leaf nodes are selectable.
+    QStandardItemModel *comboModel = new QStandardItemModel(this);
+    QMap<QString, QStandardItem*> parentItems;
+
+    for (int row = 0; row < model->rowCount(); ++row) {
+        const QString parentName = model->item(row, 0)->text(); // col 0 = parent device name
+        const int     deviceId   = model->item(row, 1)->text().toInt(); // col 1 = device ID
+        const QString deviceName = model->item(row, 2)->text(); // col 2 = catalog name
+
+        if (!parentItems.contains(parentName)) {
+            auto *groupItem = new QStandardItem(parentName);
+            groupItem->setFlags(Qt::ItemIsEnabled); // not selectable
+            const QString parentType = parentTypeMap.value(parentName, "Virtual");
+            QList<QStandardItem*> groupRow = {
+                groupItem,
+                new QStandardItem(parentType), // col 1: type → drives icon selection
+                new QStandardItem(),            // col 2: active (n/a for groups)
+                new QStandardItem()             // col 3: id (n/a for groups)
+            };
+            comboModel->appendRow(groupRow);
+            parentItems.insert(parentName, groupItem);
+        }
+
+        const bool isActive = deviceActiveMap.value(deviceId, false);
+        QList<QStandardItem*> childRow = {
+            new QStandardItem(deviceName),
+            new QStandardItem("Catalog"),                         // col 1: type
+            new QStandardItem(isActive ? "1" : "0"),              // col 2: active → icon variant
+            new QStandardItem(QString::number(deviceId))          // col 3: id
+        };
+        parentItems[parentName]->appendRow(childRow);
+    }
+
+    DeviceTreeView *comboProxy = new DeviceTreeView(this);
+    comboProxy->setSourceModel(comboModel);
+    comboProxy->setKatalogTheme(themeID > 0);
+    combo->setTreeModel(comboProxy);
+    combo->expandToDepth(1);
+
+    // Sync: tree view selection → TreeComboBox (one-way; new selectionModel after setModel)
+    connect(tree->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, [combo](const QItemSelection &selected, const QItemSelection &) {
+        if (selected.isEmpty()) return;
+        const int id = selected.indexes().first().siblingAtColumn(1).data().toInt();
+        if (id > 0) combo->setSelectedDeviceId(id);
+    });
 }
 
 void MainWindow::saveNewMapping()
 {
-    //Get data and validate it
-        //Check if models are valid and have data
-        QAbstractItemModel* model1 = ui->BackUp_treeView_ListSources->model();
-        QAbstractItemModel* model2 = ui->BackUp_treeView_ListTargets->model();
+    //Read selections from the combo boxes (primary selection source)
+    const int sourceId = ui->BackUp_comboBox_Source->selectedDeviceId();
+    const int targetId = ui->BackUp_comboBox_Target->selectedDeviceId();
 
-        if (!model1 || !model2) {
-            QMessageBox::warning(this, "Katalog", tr("Populate the lists first (One or both device lists are empty)."));
-            return;
-        }
+    if (sourceId <= 0) {
+        QMessageBox::warning(this, "Katalog", tr("Select a source catalog first."));
+        return;
+    }
+    if (targetId <= 0) {
+        QMessageBox::warning(this, "Katalog", tr("Select a target catalog first."));
+        return;
+    }
 
-        if (model1->rowCount() == 0 || model2->rowCount() == 0) {
-            QMessageBox::warning(this, "Katalog", tr("Populate the lists first (One or both device lists are empty)."));
-            return;
-        }
+    const QString mappingName = ui->BackUp_lineEdit_Name->text().trimmed();
+    if (mappingName.isEmpty()) {
+        QMessageBox::warning(this, "Katalog", tr("Provide a mapping name."));
+        return;
+    }
 
-        //Get selection models
-        QItemSelectionModel* selectionModel1 = ui->BackUp_treeView_ListSources->selectionModel();
-        QItemSelectionModel* selectionModel2 = ui->BackUp_treeView_ListTargets->selectionModel();
-
-        //Check if selection models exist
-        if (!selectionModel1 || !selectionModel2) {
-            QMessageBox::warning(this, "Katalog", tr("Invalid selection model"));
-            return;
-        }
-
-        //Get selected rows
-        QModelIndexList selectedRows1 = selectionModel1->selectedRows();
-        QModelIndexList selectedRows2 = selectionModel2->selectedRows();
-
-        //Validate selections
-        if (selectedRows1.isEmpty() || selectedRows2.isEmpty()) {
-            QMessageBox::warning(this, "Katalog",
-                                 tr("Select a device from both lists."));
-            return;
-        }
-
-        //Safely get device IDs using first selected row
-        QModelIndex deviceIndex1 = selectedRows1.first().siblingAtColumn(1);
-        QModelIndex deviceIndex2 = selectedRows2.first().siblingAtColumn(1);
-
-        //Additional null check
-        if (!deviceIndex1.isValid() || !deviceIndex2.isValid()) {
-            QMessageBox::warning(this, "Katalog", tr("Invalid device selection."));
-            return;
-        }
-
-        QString device1ID = deviceIndex1.data().toString();
-        QString device2ID = deviceIndex2.data().toString();
-
-
-        //Validate device IDs
-        if (device1ID.isEmpty() || device2ID.isEmpty()) {
-            QMessageBox::warning(this, "Katalog", tr("Empty device ID."));
-            return;
-        }
-
-        //Validate mapping name
-        QString mappingName = ui->BackUp_lineEdit_Name->text().trimmed();
-        if (mappingName.isEmpty()) {
-            QMessageBox::warning(this, "Katalog", tr("Provide a mapping name."));
-            return;
-        }
-
-        //Prevent mapping a device to itself
-        if (device1ID == device2ID) {
-            QMessageBox::warning(this, "Katalog", tr("Select a different source or target (a device shall not be mapped to itself)."));
-            return;
-        }
+    if (sourceId == targetId) {
+        QMessageBox::warning(this, "Katalog", tr("Select a different source or target (a device shall not be mapped to itself)."));
+        return;
+    }
 
     //Insert mapping in the table device_mapping
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
@@ -1541,8 +1573,8 @@ void MainWindow::saveNewMapping()
     query.prepare(querySQL);
     query.bindValue(":mapping_name", mappingName);
     query.bindValue(":mapping_type", "Backup");
-    query.bindValue(":mapping_device_source_id", device1ID);
-    query.bindValue(":mapping_device_target_id", device2ID);
+    query.bindValue(":mapping_device_source_id", sourceId);
+    query.bindValue(":mapping_device_target_id", targetId);
     query.bindValue(":mapping_strict_copy", ui->BackUp_checkBox_StrictCopy->isChecked() ? 1 : 0);
     query.bindValue(":mapping_conflict_mode",
                     conflictModeToString(static_cast<ConflictMode>(
