@@ -814,6 +814,7 @@ class MainWindow : public KXmlGuiWindow
                                   qint64 bytesCopied, qint64 totalBytes,
                                   const QString &currentFile);
             void onBackupFinished(const BackupReport &report);
+            void onBackupMappingSelectionChanged();
             void on_BackUp_checkBox_OnlySelectedLinks_checkStateChanged(const Qt::CheckState &arg1);
 
         //Statistics

@@ -53,7 +53,7 @@ void DeviceMappingView::initializeLists()
     filesizeColumnList  <<  9 << 16 << 19;
     percentColumnList   << 20 << 22;
     booleanColumnList   <<  7 << 14;
-    //boldColumnList      << 0;
+    boldColumnList      <<  1; // Mapping Name
 }
 
 QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
@@ -93,19 +93,9 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
     case Qt::FontRole:
     {
         if( boldColumnList.contains(index.column()) ){
-            QModelIndex idx = index.sibling(index.row(), 1);
-            QString type = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
-            if( type =="Virtual" ){
-                QFont boldItalicFont;
-                boldItalicFont.setBold(true);
-                boldItalicFont.setItalic(true);
-                return boldItalicFont;
-            }
-            else if( type =="Storage" ){
-                QFont boldFont;
-                boldFont.setBold(true);
-                return boldFont;
-            }
+            QFont boldFont;
+            boldFont.setBold(true);
+            return boldFont;
         }
         break;
     }

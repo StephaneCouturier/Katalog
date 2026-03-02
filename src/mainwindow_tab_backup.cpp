@@ -79,7 +79,7 @@ void MainWindow::on_BackUp_pushButton_GenerateMappingName_clicked()
     const QString sourceName = nameForId(ui->BackUp_treeView_ListSources->model(), sourceId);
     const QString targetName = nameForId(ui->BackUp_treeView_ListTargets->model(), targetId);
     if (!sourceName.isEmpty() && !targetName.isEmpty())
-        ui->BackUp_lineEdit_Name->setText(sourceName + " -> " + targetName);
+        ui->BackUp_lineEdit_Name->setText(sourceName + " \u2192 " + targetName);
 }
 
 void MainWindow::on_BackUp_pushButton_SaveMapping_clicked()
@@ -127,12 +127,21 @@ void MainWindow::on_BackUp_tableView_CurrentMappings_customContextMenuRequested(
     QPoint globalPos = ui->BackUp_tableView_CurrentMappings->mapToGlobal(pos);
     QMenu mappingContextMenu;
 
+    // Determine mapping type for label adaption
+    const int ctxMappingID = selectedIndexes.at(0).data().toInt();
+    if (!backupMappingManager)
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    const bool ctxIsArchive =
+        (backupMappingManager->getMappingById(ctxMappingID).mappingType == QLatin1String("Archive"));
+
     // ── Primary actions ───────────────────────────────────────────────────────
-    QAction *runAction = new QAction(QIcon::fromTheme("media-playback-start"), tr("Run Backup"), this);
+    QAction *runAction = new QAction(QIcon::fromTheme("media-playback-start"),
+                                     ctxIsArchive ? tr("Run Archive") : tr("Run Backup"), this);
     mappingContextMenu.addAction(runAction);
     connect(runAction, &QAction::triggered, this, [this]() { runBackup(); });
 
-    QAction *previewAction = new QAction(QIcon::fromTheme("go-next"), tr("Preview Backup"), this);
+    QAction *previewAction = new QAction(QIcon::fromTheme("go-next"),
+                                         ctxIsArchive ? tr("Preview Archive") : tr("Preview Backup"), this);
     mappingContextMenu.addAction(previewAction);
     connect(previewAction, &QAction::triggered, this, [this]() {
         on_BackUp_pushButton_BackUpPreview_clicked();
@@ -959,8 +968,7 @@ void MainWindow::loadBackupPreview()
     ui->BackUp_tableView_PreviewFiles->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->BackUp_tableView_PreviewFiles->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    //Summary line — includes mode indicator and offline notice if either device is unavailable
-    const QString modeLabel = mapping.strictCopy ? tr("strict copy") : tr("dedup");
+    //Summary line — includes offline notice if either device is unavailable
     QString offlineNote;
     if (!sourceDevice.active && !targetDevice.active)
         offlineNote = tr(" — source & target offline");
@@ -972,7 +980,7 @@ void MainWindow::loadBackupPreview()
     ui->BackUp_label_ProgressSummary->setText(
         StatusBarMessageBuilder()
             .setOperation(tr("Preview"))
-            .setStatus(modeLabel + offlineNote)
+            .setStatus(tr("Complete") + offlineNote)
             .addResult(isArchive ? tr("To move") : tr("To copy"), cmp.filesToCopy.size(), copySize)
             .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
             .addResult(tr("Already in target"),   cmp.skippedCount)
@@ -1259,6 +1267,11 @@ void MainWindow::loadBackUpMappingTable()
     ui->BackUp_tableView_CurrentMappings->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->BackUp_tableView_CurrentMappings->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
+    // Update button labels whenever the selection changes (setModel resets the selection model)
+    connect(ui->BackUp_tableView_CurrentMappings->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this, &MainWindow::onBackupMappingSelectionChanged);
+
     // Columns toggled by the "full table" option
     //   col  2: mapping_type       col  3: copy mode      col  4: conflict mode
     //   col  5: source ID          col  7: source active   col  8: source path
@@ -1279,6 +1292,32 @@ void MainWindow::loadBackUpMappingTable()
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 0, true); // always hidden: ID
 
     ui->BackUp_tableView_CurrentMappings->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+}
+
+void MainWindow::onBackupMappingSelectionChanged()
+{
+    const QModelIndexList sel =
+        ui->BackUp_tableView_CurrentMappings->selectionModel()->selectedIndexes();
+
+    if (sel.isEmpty()) {
+        ui->BackUp_pushButton_RunBackup->setText(tr("Run Backup"));
+        ui->BackUp_pushButton_BackUpPreview->setText(tr("Preview Backup"));
+        return;
+    }
+
+    const int mappingID = sel.at(0).data().toInt();
+    if (!backupMappingManager)
+        backupMappingManager = new BackupMappingManager(m_connectionName, this);
+    const bool isArchive =
+        (backupMappingManager->getMappingById(mappingID).mappingType == QLatin1String("Archive"));
+
+    // Only update when the backup is not running (button shows "Pause"/"Resume" while running)
+    const QString currentText = ui->BackUp_pushButton_RunBackup->text();
+    if (currentText != tr("Pause") && currentText != tr("Resume")) {
+        ui->BackUp_pushButton_RunBackup->setText(isArchive ? tr("Run Archive") : tr("Run Backup"));
+    }
+    ui->BackUp_pushButton_BackUpPreview->setText(
+        isArchive ? tr("Preview Archive") : tr("Preview Backup"));
 }
 
 void MainWindow::loadBackUpDeviceLists(QString list)

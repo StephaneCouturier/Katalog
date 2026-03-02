@@ -272,22 +272,56 @@ MappingInfo BackupMappingManager::getMappingById(int mappingId)
 
 bool BackupMappingManager::invertMapping(int mappingId)
 {
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    query.prepare(QLatin1String(R"(
-        UPDATE device_mapping
-        SET mapping_device_source_id = mapping_device_target_id,
-            mapping_device_target_id = mapping_device_source_id
-        WHERE mapping_id = :mapping_id
-    )"));
-    query.bindValue(":mapping_id", mappingId);
+    QSqlDatabase db = QSqlDatabase::database(m_connectionName);
 
-    if (!query.exec()) {
-        QString errorMsg = QString("Failed to invert mapping %1: %2")
-                               .arg(mappingId)
-                               .arg(query.lastError().text());
-        qDebug() << "ERROR:" << errorMsg;
-        emit error(errorMsg);
-        return false;
+    // Step 1: swap source/target device IDs
+    {
+        QSqlQuery query(db);
+        query.prepare(QLatin1String(R"(
+            UPDATE device_mapping
+            SET mapping_device_source_id = mapping_device_target_id,
+                mapping_device_target_id = mapping_device_source_id
+            WHERE mapping_id = :mapping_id
+        )"));
+        query.bindValue(":mapping_id", mappingId);
+
+        if (!query.exec()) {
+            QString errorMsg = QString("Failed to invert mapping %1: %2")
+                                   .arg(mappingId)
+                                   .arg(query.lastError().text());
+            qDebug() << "ERROR:" << errorMsg;
+            emit error(errorMsg);
+            return false;
+        }
+    }
+
+    // Step 2: if the name contains an arrow ("→" or "->"), reverse the two halves
+    {
+        QSqlQuery nameQuery(db);
+        nameQuery.prepare("SELECT mapping_name FROM device_mapping WHERE mapping_id = :id");
+        nameQuery.bindValue(":id", mappingId);
+        if (nameQuery.exec() && nameQuery.next()) {
+            QString name = nameQuery.value(0).toString();
+            // Support both the Unicode arrow and the legacy ASCII arrow
+            QString arrow;
+            if (name.contains(QStringLiteral(" \u2192 ")))
+                arrow = QStringLiteral(" \u2192 ");
+            else if (name.contains(QStringLiteral(" -> ")))
+                arrow = QStringLiteral(" -> ");
+
+            if (!arrow.isEmpty()) {
+                const QStringList parts = name.split(arrow);
+                if (parts.size() == 2) {
+                    const QString newName = parts.at(1) + arrow + parts.at(0);
+                    QSqlQuery updateQuery(db);
+                    updateQuery.prepare(
+                        "UPDATE device_mapping SET mapping_name = :name WHERE mapping_id = :id");
+                    updateQuery.bindValue(":name", newName);
+                    updateQuery.bindValue(":id", mappingId);
+                    updateQuery.exec();
+                }
+            }
+        }
     }
 
     return true;
