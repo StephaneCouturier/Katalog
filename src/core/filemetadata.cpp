@@ -1087,21 +1087,10 @@ bool FileMetadata::updateFileMetadata(const QString &connectionName,
 //-----------------------------------------------------------------------------------------------------
 bool FileMetadata::isMetadataSupported(const QString &filePath)
 {
-    // First check extension - avoid MIME detection if possible
     QFileInfo fileInfo(filePath);
     QString extension = fileInfo.suffix().toLower();
-
-    // Quick check based on extension
-    static QSet<QString> supportedExtensions = {
-        // Images
-        "jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "webp", "svg", "heic", "heif", "raw", "xcf",
-        // Video
-        "mp4", "avi", "mkv", "mov", "wmv", "flv", "webm", "m4v", "mpg", "mpeg", "3gp", "ogv", "vob", "m2ts", "mts",
-        // Audio
-        "mp3", "wav", "flac", "ogg", "oga", "m4a", "aac", "wma", "opus", "aiff", "aif", "mid", "midi", "amr"
-    };
-
-    return supportedExtensions.contains(extension);
+    QString fileType = getFileTypeFromExtension(extension);
+    return (fileType == "image" || fileType == "audio" || fileType == "video");
 }
 //-----------------------------------------------------------------------------------------------------
 void FileMetadata::initializeExtensionsCache() {
