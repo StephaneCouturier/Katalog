@@ -676,8 +676,16 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy);
 
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
+        const bool isArchiveEarly = (mapping.mappingType == QLatin1String("Archive"));
         ui->BackUp_pushButton_RunBackup->setEnabled(true);
-        ui->BackUp_label_ProgressSummary->setVisible(false);
+        ui->BackUp_label_ProgressSummary->setVisible(true);
+        ui->BackUp_label_ProgressSummary->setText(
+            StatusBarMessageBuilder()
+                .setOperation(isArchiveEarly ? tr("Archive") : tr("Backup"))
+                .setStatus(tr("Completed"))
+                .addResult(isArchiveEarly ? tr("To move") : tr("To copy"), 0)
+                .addResult(tr("Already in target"), cmp.skippedCount)
+                .build());
         return;
     }
 
@@ -786,7 +794,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
 
     const QString msg = StatusBarMessageBuilder()
         .setOperation(m_currentBackupIsArchive ? tr("archive") : tr("backup"))
-        .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Complete"))
+        .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Completed"))
         .setSizeProgress(report.totalBytesCopied, report.totalBytesCopied)
         .setTimeToCompletion(elapsedStr)
         .build();
@@ -873,7 +881,7 @@ void MainWindow::showBackupReport(const BackupReport &report)
     ui->BackUp_label_ProgressSummary->setText(
         StatusBarMessageBuilder()
             .setOperation(tr("Report"))
-            .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Complete"))
+            .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Completed"))
             .addResult(tr("Copied"),              report.copiedCount(),   report.totalBytesCopied)
             .addResult(tr("Archived+replaced"),   report.renamedCount())
             .addResult(tr("Conflicts (skipped)"), report.conflictCount())
@@ -980,7 +988,7 @@ void MainWindow::loadBackupPreview()
     ui->BackUp_label_ProgressSummary->setText(
         StatusBarMessageBuilder()
             .setOperation(tr("Preview"))
-            .setStatus(tr("Complete") + offlineNote)
+            .setStatus(tr("Completed") + offlineNote)
             .addResult(isArchive ? tr("To move") : tr("To copy"), cmp.filesToCopy.size(), copySize)
             .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
             .addResult(tr("Already in target"),   cmp.skippedCount)
@@ -1016,6 +1024,13 @@ void MainWindow::on_BackUp_radioButton_Target_clicked()
 void MainWindow::on_BackUp_comboBox_MappingType_currentIndexChanged(int /*index*/)
 {
     loadBackUpMapping();
+}
+
+void MainWindow::on_BackUp_comboBox_CreateMappingType_currentIndexChanged(int /*index*/)
+{
+    const bool isArchive =
+        (ui->BackUp_comboBox_CreateMappingType->currentText() == QLatin1String("Archive"));
+    ui->BackUp_checkBox_StrictCopy->setEnabled(!isArchive);
 }
 
 void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
@@ -1508,7 +1523,10 @@ void MainWindow::saveNewMapping()
     query.bindValue(":mapping_type", ui->BackUp_comboBox_CreateMappingType->currentText());
     query.bindValue(":mapping_device_source_id", sourceId);
     query.bindValue(":mapping_device_target_id", targetId);
-    query.bindValue(":mapping_strict_copy", ui->BackUp_checkBox_StrictCopy->isChecked() ? 1 : 0);
+    const bool isArchiveSave =
+        (ui->BackUp_comboBox_CreateMappingType->currentText() == QLatin1String("Archive"));
+    query.bindValue(":mapping_strict_copy",
+                    (!isArchiveSave && ui->BackUp_checkBox_StrictCopy->isChecked()) ? 1 : 0);
     query.bindValue(":mapping_conflict_mode",
                     conflictModeToString(static_cast<ConflictMode>(
                         ui->BackUp_comboBox_ConflictMode->currentIndex())));

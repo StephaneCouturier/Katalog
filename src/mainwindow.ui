@@ -12122,7 +12122,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="QCheckBox" name="BackUp_checkBox_StrictCopy">
                    <property name="toolTip">
-                    <string>Strict copy: each source folder is mirrored to the matching target folder (recommended). Uncheck to skip files that already exist anywhere in the target (deduplication mode).</string>
+                    <string>Strict copy: each source folder is mirrored to the matching target folder (recommended). Uncheck to skip files that already exist anywhere in the target (deduplication mode). Not applicable to Archive mappings — Archive always uses deduplication (if a file is already in the target it is simply removed from the source).</string>
                    </property>
                    <property name="text">
                     <string>Strict copy</string>

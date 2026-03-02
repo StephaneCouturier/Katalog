@@ -815,6 +815,7 @@ class MainWindow : public KXmlGuiWindow
                                   const QString &currentFile);
             void onBackupFinished(const BackupReport &report);
             void onBackupMappingSelectionChanged();
+            void on_BackUp_comboBox_CreateMappingType_currentIndexChanged(int index);
             void on_BackUp_checkBox_OnlySelectedLinks_checkStateChanged(const Qt::CheckState &arg1);
 
         //Statistics

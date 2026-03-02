@@ -441,7 +441,9 @@ QSqlQuery BackupMappingManager::executeTableDisplayQuery(const MappingFilter& fi
             dm.mapping_id,
             dm.mapping_name,
             dm.mapping_type,
-            CASE WHEN dm.mapping_strict_copy = 1 THEN 'Strict' ELSE 'Dedup' END,
+            CASE WHEN dm.mapping_type = 'Archive' THEN ''
+                 WHEN dm.mapping_strict_copy = 1  THEN 'Strict'
+                 ELSE 'Dedup' END,
             CASE dm.mapping_conflict_mode
                  WHEN 'Skip'         THEN 'Skip'
                  WHEN 'RenameOldest' THEN 'Rename oldest'
