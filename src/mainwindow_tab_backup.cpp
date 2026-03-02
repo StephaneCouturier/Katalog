@@ -993,6 +993,11 @@ void MainWindow::on_BackUp_radioButton_Target_clicked()
     settings.setValue("BackUp/FilterMappingTable", "Target");
 }
 
+void MainWindow::on_BackUp_comboBox_MappingType_currentIndexChanged(int /*index*/)
+{
+    loadBackUpMapping();
+}
+
 void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
 {
     // Initialization
@@ -1015,17 +1020,19 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
     bool useSelectedLinks = ui->BackUp_checkBox_OnlySelectedLinks->isChecked();
 
     if (useSelectedLinks) {
-        // Use only filtered mappings based on current radio button selection
+        // Use only filtered mappings based on current radio button + type selection
+        const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
         MappingFilter filter;
+        filter.mappingType = mappingType;
 
         if (ui->BackUp_radioButton_Source->isChecked()) {
-            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID);
+            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
             qDebug() << "Filtering by Source device:" << selectedDevice->ID;
         } else if (ui->BackUp_radioButton_Target->isChecked()) {
-            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID);
+            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
             qDebug() << "Filtering by Target device:" << selectedDevice->ID;
         } else {
-            // No radio button selected - use all
+            // No radio button selected - use all of selected type
             qDebug() << "No filter radio button checked, using all mappings";
         }
 
@@ -1116,12 +1123,14 @@ void MainWindow::loadBackUpMappingTotals()
     ui->BackUp_label_CurrentMappings_DeviceValue->setText(selectedDevice->name);
 
     // Determine current filter
+    const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
     MappingFilter filter;
+    filter.mappingType = mappingType;
     if (!optionDisplayFullMappingTable) {
         if (ui->BackUp_radioButton_Source->isChecked()) {
-            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID);
+            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
         } else if (ui->BackUp_radioButton_Target->isChecked()) {
-            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID);
+            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
         }
     }
 
@@ -1187,12 +1196,14 @@ void MainWindow::loadBackUpMappingTable()
         backupMappingManager = new BackupMappingManager(m_connectionName, this);
 
     // Build filter — same logic as loadBackUpMappingTotals()
+    const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
     MappingFilter filter;
+    filter.mappingType = mappingType;
     if (!optionDisplayFullMappingTable) {
         if (ui->BackUp_radioButton_Source->isChecked()) {
-            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID);
+            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
         } else if (ui->BackUp_radioButton_Target->isChecked()) {
-            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID);
+            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
         }
     }
 
@@ -1443,7 +1454,7 @@ void MainWindow::saveNewMapping()
                         )");
     query.prepare(querySQL);
     query.bindValue(":mapping_name", mappingName);
-    query.bindValue(":mapping_type", "Backup");
+    query.bindValue(":mapping_type", ui->BackUp_comboBox_CreateMappingType->currentText());
     query.bindValue(":mapping_device_source_id", sourceId);
     query.bindValue(":mapping_device_target_id", targetId);
     query.bindValue(":mapping_strict_copy", ui->BackUp_checkBox_StrictCopy->isChecked() ? 1 : 0);

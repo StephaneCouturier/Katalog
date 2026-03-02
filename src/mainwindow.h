@@ -834,7 +834,9 @@ class MainWindow : public KXmlGuiWindow
             void on_Tags_pushButton_OpenTagsFile_clicked();
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
-            void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);         
+            void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
+
+            void on_BackUp_comboBox_MappingType_currentIndexChanged(int index);
 
         protected:
             void changeEvent(QEvent *event) override;

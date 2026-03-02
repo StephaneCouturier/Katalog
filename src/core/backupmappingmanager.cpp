@@ -49,7 +49,7 @@ BackupMappingManager::BackupMappingManager(const QString& connectionName,
 // Query Building
 //------------------------------------------------------------------------------
 
-QString BackupMappingManager::buildBaseQuery()
+QString BackupMappingManager::buildSelectFromJoin()
 {
     return QLatin1String(R"(
         SELECT
@@ -75,21 +75,30 @@ QString BackupMappingManager::buildBaseQuery()
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
-        WHERE dm.mapping_type = 'Backup'
     )");
+}
+
+QString BackupMappingManager::buildBaseQuery()
+{
+    return buildSelectFromJoin() + " WHERE 1=1";
 }
 
 QString BackupMappingManager::buildFilterClause(const MappingFilter& filter)
 {
-    if (filter.type == MappingFilter::None) {
-        return "";
+    QString clause;
+
+    // Type filter — omit when "All" so every mapping_type is included
+    if (filter.mappingType != QLatin1String("All") && !filter.mappingType.isEmpty()) {
+        clause += " AND dm.mapping_type = :mapping_type";
     }
 
-    QString deviceField = (filter.type == MappingFilter::SourceDevice)
-                              ? "dm.mapping_device_source_id"
-                              : "dm.mapping_device_target_id";
+    // Device filter
+    if (filter.type != MappingFilter::None && filter.deviceId > 0) {
+        QString deviceField = (filter.type == MappingFilter::SourceDevice)
+                                  ? "dm.mapping_device_source_id"
+                                  : "dm.mapping_device_target_id";
 
-    return QString(R"(
+        clause += QString(R"(
         AND (%1 = :device_id
             OR %1 IN (
                 WITH RECURSIVE hierarchy(device_id, device_parent_id, device_name) AS (
@@ -105,6 +114,9 @@ QString BackupMappingManager::buildFilterClause(const MappingFilter& filter)
             )
         )
     )").arg(deviceField);
+    }
+
+    return clause;
 }
 
 QString BackupMappingManager::buildMappingQuery(const MappingFilter& filter)
@@ -118,6 +130,9 @@ QString BackupMappingManager::buildMappingQuery(const MappingFilter& filter)
 void BackupMappingManager::bindFilterParameters(QSqlQuery& query,
                                                 const MappingFilter& filter)
 {
+    if (filter.mappingType != QLatin1String("All") && !filter.mappingType.isEmpty()) {
+        query.bindValue(":mapping_type", filter.mappingType);
+    }
     if (filter.type != MappingFilter::None && filter.deviceId > 0) {
         query.bindValue(":device_id", filter.deviceId);
         query.bindValue(":device_parent_id", filter.deviceId);
@@ -231,8 +246,9 @@ MappingInfo BackupMappingManager::getMappingById(int mappingId)
 {
     MappingInfo info;
 
+    // Lookup by primary key — no mapping_type filter needed
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL = buildBaseQuery() + " AND dm.mapping_id = :mapping_id";
+    QString querySQL = buildSelectFromJoin() + " WHERE dm.mapping_id = :mapping_id";
 
     query.prepare(querySQL);
     query.bindValue(":mapping_id", mappingId);
@@ -310,7 +326,7 @@ int BackupMappingManager::getMappingCount()
 
 int BackupMappingManager::getFilteredMappingCount(const MappingFilter& filter)
 {
-    QString querySQL = "SELECT COUNT(*) FROM device_mapping dm WHERE dm.mapping_type = 'Backup'";
+    QString querySQL = "SELECT COUNT(*) FROM device_mapping dm WHERE 1=1";
     querySQL += buildFilterClause(filter);
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
@@ -345,7 +361,7 @@ MappingTotals BackupMappingManager::calculateTotals(const MappingFilter& filter)
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
-        WHERE dm.mapping_type = 'Backup'
+        WHERE 1=1
     )");
 
     querySQL += buildFilterClause(filter);
@@ -430,7 +446,7 @@ QSqlQuery BackupMappingManager::executeTableDisplayQuery(const MappingFilter& fi
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
-        WHERE dm.mapping_type = 'Backup'
+        WHERE 1=1
     )");
 
     querySQL += buildFilterClause(filter);

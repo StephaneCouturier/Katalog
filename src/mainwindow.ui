@@ -11149,6 +11149,25 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
+               <widget class="QComboBox" name="BackUp_comboBox_MappingType">
+                <item>
+                 <property name="text">
+                  <string notr="true">All</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">Backup</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">Archive</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
                <spacer name="horizontalSpacer">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>
@@ -12078,6 +12097,27 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="BackUp_lineEdit_Name"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="BackUp_label_CreateMappingType">
+                   <property name="text">
+                    <string>Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="BackUp_comboBox_CreateMappingType">
+                   <item>
+                    <property name="text">
+                     <string notr="true">Backup</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string notr="true">Archive</string>
+                    </property>
+                   </item>
+                  </widget>
                  </item>
                  <item>
                   <widget class="QCheckBox" name="BackUp_checkBox_StrictCopy">

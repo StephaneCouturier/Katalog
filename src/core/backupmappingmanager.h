@@ -121,15 +121,18 @@ struct MappingFilter {
 
     FilterType type;
     int deviceId;
+    QString mappingType;  // "Backup" or "Archive"
 
     MappingFilter()
         : type(None)
         , deviceId(-1)
+        , mappingType("Backup")
     {}
 
-    MappingFilter(FilterType t, int devId)
+    MappingFilter(FilterType t, int devId, const QString& mType = "Backup")
         : type(t)
         , deviceId(devId)
+        , mappingType(mType)
     {}
 };
 
@@ -186,7 +189,8 @@ signals:
     void error(const QString& message);
 
 private:
-    QString buildBaseQuery();
+    QString buildSelectFromJoin();   // SELECT … FROM device_mapping dm JOIN device … (no WHERE)
+    QString buildBaseQuery();        // buildSelectFromJoin() + WHERE dm.mapping_type = :mapping_type
     QString buildFilterClause(const MappingFilter& filter);
     void bindFilterParameters(QSqlQuery& query, const MappingFilter& filter);
     MappingInfo parseMappingFromQuery(const QSqlQuery& query);
