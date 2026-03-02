@@ -186,23 +186,38 @@ void BackupJobStoppable::runBackup()
             continue;
         }
 
-        // Copy the file
-        if (QFile::copy(sourceFile, targetFile)) {
-            report.totalBytesCopied += entry.fileSize;
-            bytesCopied += entry.fileSize;
-            if (m_archiveMode) {
+        // Move or copy the file
+        if (m_archiveMode) {
+            // Try atomic rename first (same filesystem: instant, no data copied)
+            if (QFile::rename(sourceFile, targetFile)) {
+                report.totalBytesCopied += entry.fileSize;
+                bytesCopied += entry.fileSize;
+                report.moved.append(entry);
+                qDebug() << "BackupJobStoppable: renamed (moved)" << sourceFile << "->" << targetFile;
+            } else if (QFile::copy(sourceFile, targetFile)) {
+                // Cross-filesystem fallback: copy then delete source
+                report.totalBytesCopied += entry.fileSize;
+                bytesCopied += entry.fileSize;
                 if (!QFile::remove(sourceFile))
                     report.errors.append(sourceFile + ": copied to target but source delete failed");
                 report.moved.append(entry);
-                qDebug() << "BackupJobStoppable: moved" << sourceFile << "->" << targetFile;
+                qDebug() << "BackupJobStoppable: moved (copy+delete)" << sourceFile << "->" << targetFile;
             } else {
-                report.copied.append(entry);
-                qDebug() << "BackupJobStoppable: copied" << sourceFile << "->" << targetFile;
+                const QString msg = sourceFile + ": move failed";
+                report.errors.append(msg);
+                qWarning() << "BackupJobStoppable:" << msg;
             }
         } else {
-            const QString msg = sourceFile + ": copy failed";
-            report.errors.append(msg);
-            qWarning() << "BackupJobStoppable:" << msg;
+            if (QFile::copy(sourceFile, targetFile)) {
+                report.totalBytesCopied += entry.fileSize;
+                bytesCopied += entry.fileSize;
+                report.copied.append(entry);
+                qDebug() << "BackupJobStoppable: copied" << sourceFile << "->" << targetFile;
+            } else {
+                const QString msg = sourceFile + ": copy failed";
+                report.errors.append(msg);
+                qWarning() << "BackupJobStoppable:" << msg;
+            }
         }
 
         ++filesDone;
@@ -256,18 +271,37 @@ void BackupJobStoppable::runBackup()
                 continue;
             }
 
-            if (QFile::copy(sourceFile, targetFile)) {
+            bool transferOk = false;
+            if (m_archiveMode) {
+                // Try atomic rename first (same filesystem: instant, no data copied)
+                if (QFile::rename(sourceFile, targetFile)) {
+                    transferOk = true;
+                    qDebug() << "BackupJobStoppable: archived" << archivedFile
+                             << "and renamed (moved)" << sourceFile << "->" << targetFile;
+                } else if (QFile::copy(sourceFile, targetFile)) {
+                    // Cross-filesystem fallback: copy then delete source
+                    transferOk = true;
+                    if (!QFile::remove(sourceFile))
+                        report.errors.append(sourceFile + ": moved (archived+replaced) but source delete failed");
+                    qDebug() << "BackupJobStoppable: archived" << archivedFile
+                             << "and moved (copy+delete)" << sourceFile << "->" << targetFile;
+                }
+            } else {
+                if (QFile::copy(sourceFile, targetFile)) {
+                    transferOk = true;
+                    qDebug() << "BackupJobStoppable: archived" << archivedFile
+                             << "and replaced with" << sourceFile;
+                }
+            }
+
+            if (transferOk) {
                 report.renamed.append(entry);
                 report.totalBytesCopied += entry.fileSize;
                 bytesCopied += entry.fileSize;
-                qDebug() << "BackupJobStoppable: archived" << archivedFile
-                         << "and replaced with" << sourceFile;
-                if (m_archiveMode && !QFile::remove(sourceFile))
-                    report.errors.append(sourceFile + ": moved (archived+replaced) but source delete failed");
             } else {
-                // Copy failed — restore the archived file to avoid data loss.
+                // Transfer failed — restore the archived file to avoid data loss.
                 QFile::rename(archivedFile, targetFile);
-                const QString msg = sourceFile + ": copy failed after archiving (restored original)";
+                const QString msg = sourceFile + ": move/copy failed after archiving (restored original)";
                 report.errors.append(msg);
                 qWarning() << "BackupJobStoppable:" << msg;
             }
