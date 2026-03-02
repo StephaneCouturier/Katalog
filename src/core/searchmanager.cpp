@@ -41,6 +41,7 @@ SearchManager::~SearchManager()
 {
     if (m_currentJob) {
         m_currentJob->kill();
+        m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
     }
 }
@@ -155,6 +156,7 @@ void SearchManager::stopSearch()
 
     // Clean up immediately
     if (m_currentJob) {
+        m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
         qDebug() << "Forced cleanup complete";
@@ -285,6 +287,7 @@ void SearchManager::cleanupJob()
 {
     if (m_currentJob) {
         //qDebug() << "Cleaning up search job...";
+        m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
         //qDebug() << "Search job cleanup complete";

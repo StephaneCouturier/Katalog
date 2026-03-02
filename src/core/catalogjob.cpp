@@ -191,6 +191,7 @@ bool CatalogJob::doKill()
     if (m_executeTimer) {
         qDebug() << "Stopping execute timer";
         m_executeTimer->stop();
+        m_executeTimer->setParent(nullptr);
         m_executeTimer->deleteLater();
         m_executeTimer = nullptr;
     }

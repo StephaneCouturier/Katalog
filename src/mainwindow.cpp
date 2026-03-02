@@ -44,6 +44,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     currentVersion  = KatalogVersion::string();
     releaseDate     = KatalogVersion::buildDate();
 
+    // MainWindow is stack-allocated in main.cpp; prevent KMainWindow from
+    // calling deleteLater() on close (which would try to delete a stack object).
+    setAttribute(Qt::WA_DeleteOnClose, false);
+
     // Initialize objects first
     collection = new Collection();
     collection->appVersion = currentVersion;
@@ -449,6 +453,14 @@ void MainWindow::closeEvent (QCloseEvent *event)
             event->accept();
             return;
         }
+    }
+
+    // Stop backup thread if running so it doesn't outlive the window
+    if (m_backupThread && m_backupThread->isRunning()) {
+        if (m_backupJob)
+            m_backupJob->stopBackup();
+        m_backupThread->quit();
+        m_backupThread->wait(5000);
     }
 
     //Save window size and position

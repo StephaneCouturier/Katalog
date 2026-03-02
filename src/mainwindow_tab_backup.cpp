@@ -719,7 +719,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     m_currentBackupIsArchive = isArchive;
     m_backupJob->setArchiveMode(isArchive);
 
-    m_backupThread = new QThread(this);
+    m_backupThread = new QThread();
     m_backupJob->moveToThread(m_backupThread);
 
     connect(m_backupThread, &QThread::started,
@@ -1185,6 +1185,7 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
 
     BackupProfileResult result = generator->generateProfile(mappingIds);
 
+    generator->setParent(nullptr);
     generator->deleteLater();
 }
 

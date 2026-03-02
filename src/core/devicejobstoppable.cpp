@@ -453,6 +453,7 @@ void DeviceJobStoppable::onCatalogOperationCompleted()
     }
 
     // Clean up catalog job
+    m_currentCatalogJob->setParent(nullptr);
     m_currentCatalogJob->deleteLater();
     m_currentCatalogJob = nullptr;
     m_waitingForCatalogCompletion = false;
@@ -485,6 +486,7 @@ void DeviceJobStoppable::onCatalogOperationError(const QString& error)
 
     // Clean up catalog job
     if (m_currentCatalogJob) {
+        m_currentCatalogJob->setParent(nullptr);
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }
@@ -500,6 +502,7 @@ void DeviceJobStoppable::onCatalogOperationCancelled()
 
     // Clean up catalog job
     if (m_currentCatalogJob) {
+        m_currentCatalogJob->setParent(nullptr);
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }
@@ -750,6 +753,7 @@ void DeviceJobStoppable::cleanupOperation()
 
     // Clean up catalog job if still active
     if (m_currentCatalogJob) {
+        m_currentCatalogJob->setParent(nullptr);
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }

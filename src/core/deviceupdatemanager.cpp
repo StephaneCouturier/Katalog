@@ -38,6 +38,7 @@ void DeviceUpdateManager::cleanupCatalogJob()
 {
     if (m_currentCatalogJob) {
         qDebug() << "Cleaning up catalog job";
+        m_currentCatalogJob->setParent(nullptr);
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }
@@ -728,6 +729,7 @@ void DeviceUpdateManager::onCatalogOperationError(const QString& error)
     qDebug() << "Catalog operation error:" << error;
 
     if (m_currentCatalogJob) {
+        m_currentCatalogJob->setParent(nullptr);
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }
@@ -741,6 +743,7 @@ void DeviceUpdateManager::onCatalogOperationCancelled()
     qDebug() << "Catalog operation cancelled";
 
     if (m_currentCatalogJob) {
+        m_currentCatalogJob->setParent(nullptr);
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }
@@ -960,6 +963,7 @@ void DeviceUpdateManager::cleanupOperation()
 
     // Clean up catalog job
     if (m_currentCatalogJob) {
+        m_currentCatalogJob->setParent(nullptr);
         m_currentCatalogJob->deleteLater();
         m_currentCatalogJob = nullptr;
     }

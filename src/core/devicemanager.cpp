@@ -520,6 +520,7 @@ void DeviceManager::cleanupDeviceJob()
         disconnect(m_currentDeviceJob, nullptr, this, nullptr);
 
         // Delete the job
+        m_currentDeviceJob->setParent(nullptr);
         m_currentDeviceJob->deleteLater();
         m_currentDeviceJob = nullptr;
     }

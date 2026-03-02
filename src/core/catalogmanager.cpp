@@ -44,6 +44,7 @@ CatalogManager::~CatalogManager()
 {
     if (m_currentJob) {
         m_currentJob->kill();
+        m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
     }
     qDebug() << "CatalogManager destroyed";
@@ -206,6 +207,7 @@ void CatalogManager::stopCatalogOperation()
     m_isPaused = false;
 
     if (m_currentJob) {
+        m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
         qDebug() << "Forced cleanup complete";
@@ -448,6 +450,7 @@ void CatalogManager::cleanupJob()
 {
     if (m_currentJob) {
         qDebug() << "Cleaning up catalog job...";
+        m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
         qDebug() << "Catalog job cleanup complete";
