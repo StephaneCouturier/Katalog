@@ -315,6 +315,11 @@
             if(filterMappingTable=="Target"){
                 ui->BackUp_radioButton_Target->setChecked(true);
             }
+            // Restore mapping type filter (default "Backup" matches old hardcoded base-query behaviour)
+            const QString mappingTypeFilter = settings.value("BackUp/MappingTypeFilter", "Backup").toString();
+            const int mappingTypeIndex = ui->BackUp_comboBox_MappingType->findText(mappingTypeFilter);
+            if (mappingTypeIndex >= 0)
+                ui->BackUp_comboBox_MappingType->setCurrentIndex(mappingTypeIndex);
             ui->BackUp_checkBox_OnlySelectedLinks->setChecked(
                 settings.value("BackUp/OnlySelectedLinks", false).toBool()
                 );

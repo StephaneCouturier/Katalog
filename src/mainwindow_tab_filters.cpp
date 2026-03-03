@@ -407,6 +407,9 @@
 
         //Statistics
         loadStatisticsChart();
+
+        //Backup: re-apply device filter to the mapping table
+        loadBackUpMapping();
     }
     //----------------------------------------------------------------------
     void MainWindow::changeTreeExpandLevel(int levelChange,

@@ -1066,16 +1066,20 @@ void MainWindow::on_BackUp_radioButton_Source_clicked()
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("BackUp/FilterMappingTable", "Source");
+    loadBackUpMapping();
 }
 
 void MainWindow::on_BackUp_radioButton_Target_clicked()
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("BackUp/FilterMappingTable", "Target");
+    loadBackUpMapping();
 }
 
 void MainWindow::on_BackUp_comboBox_MappingType_currentIndexChanged(int /*index*/)
 {
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("BackUp/MappingTypeFilter", ui->BackUp_comboBox_MappingType->currentText());
     loadBackUpMapping();
 }
 
@@ -1215,12 +1219,10 @@ void MainWindow::loadBackUpMappingTotals()
     const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
     MappingFilter filter;
     filter.mappingType = mappingType;
-    if (!optionDisplayFullMappingTable) {
-        if (ui->BackUp_radioButton_Source->isChecked()) {
-            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
-        } else if (ui->BackUp_radioButton_Target->isChecked()) {
-            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
-        }
+    if (ui->BackUp_radioButton_Source->isChecked()) {
+        filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
+    } else if (ui->BackUp_radioButton_Target->isChecked()) {
+        filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
     }
 
     // Calculate totals through manager
@@ -1288,12 +1290,10 @@ void MainWindow::loadBackUpMappingTable()
     const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
     MappingFilter filter;
     filter.mappingType = mappingType;
-    if (!optionDisplayFullMappingTable) {
-        if (ui->BackUp_radioButton_Source->isChecked()) {
-            filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
-        } else if (ui->BackUp_radioButton_Target->isChecked()) {
-            filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
-        }
+    if (ui->BackUp_radioButton_Source->isChecked()) {
+        filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
+    } else if (ui->BackUp_radioButton_Target->isChecked()) {
+        filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
     }
 
     // All SQL stays in core — get the executed query from the manager
