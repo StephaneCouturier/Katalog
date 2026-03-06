@@ -1406,6 +1406,35 @@ void MainWindow::loadBackUpDeviceLists(QString list)
     QMap<QString, QString> parentTypeMap;   // parentName → device type ("Virtual", "Storage", …)
     QMap<int, bool>        deviceActiveMap; // deviceId  → active state
 
+    // When a single Catalog device is selected directly, deviceListTable contains its children
+    // (none for a leaf catalog), so we must handle it as its own entry.
+    if (selectedDevice->type == "Catalog") {
+        Device tempDevice = *selectedDevice; // already loaded
+        Device tempParentDevice;
+        tempParentDevice.ID = tempDevice.parentID;
+        tempParentDevice.loadDevice(m_connectionName);
+
+        parentTypeMap.insert(tempParentDevice.name, tempParentDevice.type);
+        deviceActiveMap.insert(tempDevice.ID, tempDevice.active);
+
+        auto addRow = [&]() {
+            QList<QStandardItem*> row;
+            row.append(new QStandardItem(tempParentDevice.name));
+            row.append(new QStandardItem(QString::number(tempDevice.ID)));
+            row.append(new QStandardItem(tempDevice.name));
+            row.append(new QStandardItem(QLocale().formattedDataSize(tempDevice.totalFileSize) + "  "));
+            model->appendRow(row);
+        };
+
+        if (list == "Source_without_mapping") {
+            if (!tempDevice.verifyDeviceHasSourceMapping()) addRow();
+        } else if (list == "Target_without_mapping") {
+            if (!tempDevice.verifyDeviceHasTargetMapping()) addRow();
+        } else {
+            addRow();
+        }
+    }
+
     //Populate the model from each deviceListTable if type = "Catalog"
     for (int i = 0; i < selectedDevice->deviceListTable.size(); i++)
     {
