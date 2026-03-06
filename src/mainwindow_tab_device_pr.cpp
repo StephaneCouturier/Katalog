@@ -476,6 +476,13 @@ void MainWindow::editDevice()
             }
         }
         //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
+
+        // Per-catalog exclude folders
+        {
+            const QStringList folders = activeDevice->catalog->getExcludeFolders();
+            QStringListModel *model = new QStringListModel(folders, this);
+            ui->Devices_listView_ExcludeFolders->setModel(model);
+        }
     }
     else if(activeDevice->type =="Storage"){
         ui->Devices_widget_EditStorageFields->show();

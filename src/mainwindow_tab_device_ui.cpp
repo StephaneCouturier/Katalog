@@ -132,6 +132,59 @@ void MainWindow::on_Devices_pushButton_Save_clicked()
     saveDeviceForm();
 }
 //--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_PickExcludeFolder_clicked()
+{
+    if (!activeDevice || activeDevice->type != "Catalog")
+        return;
+    QString currentPath = ui->Devices_lineEdit_NewExcludeFolder->text();
+    if (currentPath.isEmpty())
+        currentPath = activeDevice->catalog->sourcePath;
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to exclude"),
+                                                    currentPath,
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    if (!dir.isEmpty())
+        ui->Devices_lineEdit_NewExcludeFolder->setText(dir);
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_AddExcludeFolder_clicked()
+{
+    const QString path = ui->Devices_lineEdit_NewExcludeFolder->text().trimmed();
+    if (path.isEmpty() || !activeDevice || activeDevice->type != "Catalog")
+        return;
+
+    if (activeDevice->catalog->addExcludeFolder(path)) {
+        ui->Devices_lineEdit_NewExcludeFolder->clear();
+        const QStringList folders = activeDevice->catalog->getExcludeFolders();
+        QStringListModel *model = new QStringListModel(folders, this);
+        ui->Devices_listView_ExcludeFolders->setModel(model);
+    }
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_listView_ExcludeFolders_customContextMenuRequested(const QPoint &pos)
+{
+    if (!activeDevice || activeDevice->type != "Catalog")
+        return;
+
+    QModelIndex index = ui->Devices_listView_ExcludeFolders->indexAt(pos);
+    if (!index.isValid())
+        return;
+
+    const QString selectedFolder = index.data().toString();
+    QPoint globalPos = ui->Devices_listView_ExcludeFolders->mapToGlobal(pos);
+    QMenu contextMenu;
+    QAction *removeAction = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this);
+    contextMenu.addAction(removeAction);
+    connect(removeAction, &QAction::triggered, this, [this, selectedFolder]() {
+        if (activeDevice->catalog->removeExcludeFolder(selectedFolder)) {
+            const QStringList folders = activeDevice->catalog->getExcludeFolders();
+            QStringListModel *model = new QStringListModel(folders, this);
+            ui->Devices_listView_ExcludeFolders->setModel(model);
+        }
+    });
+    contextMenu.exec(globalPos);
+}
+//--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_Cancel_clicked()
 {
     ui->Devices_widget_Edit->hide();

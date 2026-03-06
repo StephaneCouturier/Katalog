@@ -408,8 +408,9 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_device_target_id    %2,
                     mapping_backup_last_date    TEXT,
                     mapping_backup_last_size    %2,
-                    mapping_strict_copy         INTEGER DEFAULT 1,
-                    mapping_conflict_mode       TEXT DEFAULT 'RenameOldest')
+                    mapping_strict_copy                   INTEGER DEFAULT 1,
+                    mapping_conflict_mode                 TEXT DEFAULT 'RenameOldest',
+                    mapping_ignore_catalog_exclusions     INTEGER DEFAULT 0)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 
@@ -1301,6 +1302,33 @@ QSqlError Database::runMigration_2_10(const QString &connectionName)
     } else {
         qDebug() << "mapping_conflict_mode already exists, skipping";
     }
+
+    if (!existingColumns.contains("mapping_ignore_catalog_exclusions")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE device_mapping ADD COLUMN mapping_ignore_catalog_exclusions INTEGER DEFAULT 0");
+        if (err.type() != QSqlError::NoError) {
+            qDebug() << "Failed to add mapping_ignore_catalog_exclusions column:" << err.text();
+            return err;
+        }
+        qDebug() << "Added mapping_ignore_catalog_exclusions column to device_mapping";
+    } else {
+        qDebug() << "mapping_ignore_catalog_exclusions already exists, skipping";
+    }
+
+    QSqlError filterErr = executeSql(connectionName, QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS catalog_filter (
+            filter_id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            filter_catalog_id INTEGER NOT NULL,
+            filter_type       TEXT    NOT NULL DEFAULT 'exclude_folder',
+            filter_value      TEXT    NOT NULL,
+            UNIQUE(filter_catalog_id, filter_type, filter_value)
+        )
+    )"));
+    if (filterErr.type() != QSqlError::NoError) {
+        qDebug() << "Failed to create catalog_filter table:" << filterErr.text();
+        return filterErr;
+    }
+    qDebug() << "catalog_filter table ready";
 
     qDebug() << "=== Database Migration 2.10 completed ===";
     return QSqlError();

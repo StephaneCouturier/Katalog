@@ -77,6 +77,7 @@ export default {
         label: 'Specifications',
         items: [
                 'BackUp_luckybackup_profile',
+                'SpecCatalogIncludeExclude',
                 'SpecProgressReport',
                 'SpecVersions'],
       },

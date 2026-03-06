@@ -112,6 +112,11 @@ public:
 
     void loadExcludedFolders();
 
+    // Per-catalog exclude folders (catalog_filter table)
+    QStringList getExcludeFolders() const;
+    bool addExcludeFolder(const QString &path);
+    bool removeExcludeFolder(const QString &path);
+
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
     bool updateCatalogFileHeaders(QString databaseMode);

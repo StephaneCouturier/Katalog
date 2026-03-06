@@ -48,11 +48,11 @@ void DeviceMappingView::initializeLists()
     //   1 list per data type except for text used as default (no customization)
     // + 1 list for bold text
 
-    //Device fields  (cols 3+4 added for strict_copy/conflict_mode → all indices +2 vs original)
-    filecountColumnList << 10 << 17 << 21;
-    filesizeColumnList  <<  9 << 16 << 19;
-    percentColumnList   << 20 << 22;
-    booleanColumnList   <<  7 << 14;
+    //Device fields  (cols 3,4,5 added for strict_copy/ignore_exclusions/conflict_mode → all indices +3 vs original)
+    filecountColumnList << 11 << 18 << 22;
+    filesizeColumnList  << 10 << 17 << 20;
+    percentColumnList   << 21 << 23;
+    booleanColumnList   <<  8 << 15;
     boldColumnList      <<  1; // Mapping Name
 }
 
@@ -117,8 +117,8 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
     {
         //Icon for source catalog
-        if( index.column()==6 ){
-            QModelIndex idx = index.sibling(index.row(), 7);
+        if( index.column()==7 ){
+            QModelIndex idx = index.sibling(index.row(), 8);
             if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
                 return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
             }
@@ -126,8 +126,8 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
                 return QIcon(QIcon::fromTheme("media-optical"));
         }
         //Icon for target catalog
-        if( index.column()==13 ){
-            QModelIndex idx = index.sibling(index.row(), 14);
+        if( index.column()==14 ){
+            QModelIndex idx = index.sibling(index.row(), 15);
             if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
                 return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
             }
@@ -150,7 +150,7 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
 QVariant DeviceMappingView::headerData(int section, Qt::Orientation orientation, int role) const
 {
     QList<int> grayColumnList;
-    grayColumnList    <<9 <<10 <<11 <<12 <<13;
+    grayColumnList    <<10 <<11 <<12 <<13 <<14;
 
 
     switch ( role )

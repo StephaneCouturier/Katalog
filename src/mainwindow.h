@@ -177,6 +177,7 @@ class MainWindow : public KXmlGuiWindow
 
     private:
         QString m_connectionName = "defaultConnection";
+        QStringList m_pendingExcludeFolders;
         DeviceUpdateManager* deviceUpdateManager = nullptr;
         QStandardItemModel* buildFilteredDeviceTreeModel(QObject *parent = nullptr);
 
@@ -396,6 +397,7 @@ class MainWindow : public KXmlGuiWindow
 
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
+            void refreshCreateExcludeList();
             void loadStorageList();
             void onCatalogOperationCompleted();
             void restoreCreateCatalogUIState();
@@ -511,7 +513,8 @@ class MainWindow : public KXmlGuiWindow
             };
             BackupCompareResult compareForBackup(const Device &sourceDevice,
                                                  const Device &targetDevice,
-                                                 bool strictCopy);
+                                                 bool strictCopy,
+                                                 bool ignoreCatalogExclusions = false);
 
             // Builds the full summary label (operation | status | To copy | Conflicts | Already in target | space warning)
             // Used by both loadBackupPreview() and executeBackup() (cancelled case) for consistency.
@@ -738,6 +741,9 @@ class MainWindow : public KXmlGuiWindow
             void on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos);
             void on_Create_pushButton_PickPathExclude_clicked();
             void on_Create_pushButton_ShowHideGlobalParameters_clicked();
+            void on_Create_pushButton_PickExcludeFolder_clicked();
+            void on_Create_pushButton_AddExcludeFolder_clicked();
+            void on_Create_listView_ExcludeFolders_customContextMenuRequested(const QPoint &pos);
 
         //Explore
             void on_Explore_splitter_splitterMoved();
@@ -771,6 +777,9 @@ class MainWindow : public KXmlGuiWindow
             void on_Devices_radioButton_CatalogList_clicked();
             void on_Devices_pushButton_InsertRootLevel_clicked();
             void on_Devices_pushButton_AddVirtual_clicked();
+            void on_Devices_pushButton_PickExcludeFolder_clicked();
+            void on_Devices_pushButton_AddExcludeFolder_clicked();
+            void on_Devices_listView_ExcludeFolders_customContextMenuRequested(const QPoint &pos);
             void on_Devices_pushButton_AddStorage_clicked();
             void on_Devices_pushButton_Save_clicked();
             void on_Devices_pushButton_Cancel_clicked();

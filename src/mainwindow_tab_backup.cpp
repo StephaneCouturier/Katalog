@@ -169,13 +169,13 @@ void MainWindow::on_BackUp_tableView_CurrentMappings_customContextMenuRequested(
         collection->saveMappingTableToFile();
     });
 
-    QAction *renameAction = new QAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this);
-    renameAction->setEnabled(false);
-    mappingContextMenu.addAction(renameAction);
+    // QAction *renameAction = new QAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this);
+    // renameAction->setEnabled(false);
+    // mappingContextMenu.addAction(renameAction);
 
-    QAction *rsyncAction = new QAction(QIcon::fromTheme("document-export"), tr("Export to rsync"), this);
-    rsyncAction->setEnabled(false);
-    mappingContextMenu.addAction(rsyncAction);
+    // QAction *rsyncAction = new QAction(QIcon::fromTheme("document-export"), tr("Export to rsync"), this);
+    // rsyncAction->setEnabled(false);
+    // mappingContextMenu.addAction(rsyncAction);
 
     // ── Destructive ───────────────────────────────────────────────────────────
     mappingContextMenu.addSeparator();
@@ -440,8 +440,14 @@ void MainWindow::on_BackUp_pushButton_CancelBackup_clicked()
 // ─── Shared comparison helper ──────────────────────────────────────────────
 
 MainWindow::BackupCompareResult MainWindow::compareForBackup(
-    const Device &sourceDevice, const Device &targetDevice, bool strictCopy)
+    const Device &sourceDevice, const Device &targetDevice,
+    bool strictCopy, bool ignoreCatalogExclusions)
 {
+    // NOTE: when ignoreCatalogExclusions = true, the comparison should include
+    // files from excluded folders (filesystem walk, not catalog-based).
+    // This is currently not enforced — the catalog only contains indexed files.
+    // Full enforcement requires a future filesystem-walk comparison path.
+    Q_UNUSED(ignoreCatalogExclusions)
     BackupCompareResult out;
 
     if (strictCopy) {
@@ -677,7 +683,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     }
 
     //Run comparison (respects strictCopy setting)
-    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy);
+    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.ignoreCatalogExclusions);
 
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
         const bool isArchiveEarly = (mapping.mappingType == QLatin1String("Archive"));
@@ -992,7 +998,7 @@ void MainWindow::loadBackupPreview()
     }
 
     //Run comparison (respects strictCopy setting of this mapping)
-    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy);
+    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.ignoreCatalogExclusions);
     const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
 
     //Build preview model (Status: "to copy" / "to move" / "conflict")
@@ -1309,26 +1315,27 @@ void MainWindow::loadBackUpMappingTable()
     queryModel->setHeaderData( 1, Qt::Horizontal, tr("Mapping Name"));
     queryModel->setHeaderData( 2, Qt::Horizontal, tr("Type"));
     queryModel->setHeaderData( 3, Qt::Horizontal, tr("Copy mode"));
-    queryModel->setHeaderData( 4, Qt::Horizontal, tr("On conflict"));
-    queryModel->setHeaderData( 5, Qt::Horizontal, tr("Source ID"));
-    queryModel->setHeaderData( 6, Qt::Horizontal, tr("Source"));
-    queryModel->setHeaderData( 7, Qt::Horizontal, tr("Active"));
-    queryModel->setHeaderData( 8, Qt::Horizontal, tr("Path"));
-    queryModel->setHeaderData( 9, Qt::Horizontal, tr("File Size"));
-    queryModel->setHeaderData(10, Qt::Horizontal, tr("Files"));
-    queryModel->setHeaderData(11, Qt::Horizontal, tr("Date Updated"));
-    queryModel->setHeaderData(12, Qt::Horizontal, tr("Target ID"));
-    queryModel->setHeaderData(13, Qt::Horizontal, tr("Target"));
-    queryModel->setHeaderData(14, Qt::Horizontal, tr("Active"));
-    queryModel->setHeaderData(15, Qt::Horizontal, tr("Path"));
-    queryModel->setHeaderData(16, Qt::Horizontal, tr("File Size"));
-    queryModel->setHeaderData(17, Qt::Horizontal, tr("Files"));
-    queryModel->setHeaderData(18, Qt::Horizontal, tr("Date Updated"));
-    queryModel->setHeaderData(19, Qt::Horizontal, tr("Size Diff."));
-    queryModel->setHeaderData(20, Qt::Horizontal, tr("Size Diff.(%)"));
-    queryModel->setHeaderData(21, Qt::Horizontal, tr("Files Diff."));
-    queryModel->setHeaderData(22, Qt::Horizontal, tr("Files Diff.(%)"));
-    queryModel->setHeaderData(23, Qt::Horizontal, tr("Date Diff."));
+    queryModel->setHeaderData( 4, Qt::Horizontal, tr("Ignore excl."));
+    queryModel->setHeaderData( 5, Qt::Horizontal, tr("On conflict"));
+    queryModel->setHeaderData( 6, Qt::Horizontal, tr("Source ID"));
+    queryModel->setHeaderData( 7, Qt::Horizontal, tr("Source"));
+    queryModel->setHeaderData( 8, Qt::Horizontal, tr("Active"));
+    queryModel->setHeaderData( 9, Qt::Horizontal, tr("Path"));
+    queryModel->setHeaderData(10, Qt::Horizontal, tr("File Size"));
+    queryModel->setHeaderData(11, Qt::Horizontal, tr("Files"));
+    queryModel->setHeaderData(12, Qt::Horizontal, tr("Date Updated"));
+    queryModel->setHeaderData(13, Qt::Horizontal, tr("Target ID"));
+    queryModel->setHeaderData(14, Qt::Horizontal, tr("Target"));
+    queryModel->setHeaderData(15, Qt::Horizontal, tr("Active"));
+    queryModel->setHeaderData(16, Qt::Horizontal, tr("Path"));
+    queryModel->setHeaderData(17, Qt::Horizontal, tr("File Size"));
+    queryModel->setHeaderData(18, Qt::Horizontal, tr("Files"));
+    queryModel->setHeaderData(19, Qt::Horizontal, tr("Date Updated"));
+    queryModel->setHeaderData(20, Qt::Horizontal, tr("Size Diff."));
+    queryModel->setHeaderData(21, Qt::Horizontal, tr("Size Diff.(%)"));
+    queryModel->setHeaderData(22, Qt::Horizontal, tr("Files Diff."));
+    queryModel->setHeaderData(23, Qt::Horizontal, tr("Files Diff.(%)"));
+    queryModel->setHeaderData(24, Qt::Horizontal, tr("Date Diff."));
 
     DeviceMappingView *proxyModel = new DeviceMappingView(this);
     proxyModel->setSourceModel(queryModel);
@@ -1345,22 +1352,23 @@ void MainWindow::loadBackUpMappingTable()
             this, &MainWindow::onBackupMappingSelectionChanged);
 
     // Columns toggled by the "full table" option
-    //   col  2: mapping_type       col  3: copy mode      col  4: conflict mode
-    //   col  5: source ID          col  7: source active   col  8: source path
-    //   col 11: source date        col 12: target ID       col 14: target active
-    //   col 15: target path        col 16: target file size
+    //   col  2: mapping_type       col  3: copy mode      col  4: ignore exclusions
+    //   col  5: conflict mode      col  6: source ID      col  8: source active
+    //   col  9: source path        col 12: source date    col 13: target ID
+    //   col 15: target active      col 16: target path    col 17: target file size
     const bool full = optionDisplayFullMappingTable;
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 2, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 3, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 4, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 5, !full);
-    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 7, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 6, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 8, !full);
-    ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 9, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, !full);
-    ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(13, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden(15, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden(16, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(17, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 0, true); // always hidden: ID
 
     ui->BackUp_tableView_CurrentMappings->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -1593,7 +1601,8 @@ void MainWindow::saveNewMapping()
                                 mapping_device_source_id,
                                 mapping_device_target_id,
                                 mapping_strict_copy,
-                                mapping_conflict_mode
+                                mapping_conflict_mode,
+                                mapping_ignore_catalog_exclusions
                             )
                             VALUES
                             (   :mapping_name,
@@ -1601,7 +1610,8 @@ void MainWindow::saveNewMapping()
                                 :mapping_device_source_id,
                                 :mapping_device_target_id,
                                 :mapping_strict_copy,
-                                :mapping_conflict_mode
+                                :mapping_conflict_mode,
+                                :mapping_ignore_catalog_exclusions
                             )
                         )");
     query.prepare(querySQL);
@@ -1616,6 +1626,8 @@ void MainWindow::saveNewMapping()
     query.bindValue(":mapping_conflict_mode",
                     conflictModeToString(static_cast<ConflictMode>(
                         ui->BackUp_comboBox_ConflictMode->currentIndex())));
+    query.bindValue(":mapping_ignore_catalog_exclusions",
+                    ui->BackUp_checkBox_IgnoreCatalogExclusions->isChecked() ? 1 : 0);
 
     if (!query.exec())
     {

@@ -7610,6 +7610,56 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </item>
                    </layout>
                   </item>
+                  <item row="0" column="1" rowspan="2">
+                   <widget class="QGroupBox" name="Devices_groupBox_IncludeExclude">
+                    <property name="title">
+                     <string>Excluded folders</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="Devices_verticalLayout_IncludeExclude">
+                     <item>
+                      <widget class="QListView" name="Devices_listView_ExcludeFolders">
+                       <property name="contextMenuPolicy">
+                        <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="Devices_horizontalLayout_ExcludeAdd">
+                       <item>
+                        <widget class="QLineEdit" name="Devices_lineEdit_NewExcludeFolder">
+                         <property name="placeholderText">
+                          <string>Folder path or pattern to exclude…</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="Devices_pushButton_PickExcludeFolder">
+                         <property name="toolTip">
+                          <string>Select the path</string>
+                         </property>
+                         <property name="text">
+                          <string>Select</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="edit-select"/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="Devices_pushButton_AddExcludeFolder">
+                         <property name="text">
+                          <string>Add</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="document-new"/>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
                  </layout>
                 </widget>
                </item>
@@ -9898,24 +9948,54 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </item>
                   <item>
-                   <spacer name="Create_verticalSpacer_01">
-                    <property name="font">
-                     <font>
-                      <family>Noto Sans</family>
-                      <pointsize>9</pointsize>
-                      <kerning>false</kerning>
-                     </font>
+                   <widget class="QGroupBox" name="Create_groupBox_ExcludeFolders">
+                    <property name="title">
+                     <string>Excluded folders</string>
                     </property>
-                    <property name="orientation">
-                     <enum>Qt::Orientation::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
+                    <layout class="QVBoxLayout" name="Create_verticalLayout_ExcludeFolders">
+                     <item>
+                      <widget class="QListView" name="Create_listView_ExcludeFolders">
+                       <property name="contextMenuPolicy">
+                        <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="Create_horizontalLayout_ExcludeAdd">
+                       <item>
+                        <widget class="QLineEdit" name="Create_lineEdit_NewExcludeFolder">
+                         <property name="placeholderText">
+                          <string>Folder path or pattern to exclude…</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="Create_pushButton_PickExcludeFolder">
+                         <property name="toolTip">
+                          <string>Select the path</string>
+                         </property>
+                         <property name="text">
+                          <string>Select</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="edit-select"/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="Create_pushButton_AddExcludeFolder">
+                         <property name="text">
+                          <string>Add</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="document-new"/>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -12129,6 +12209,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="checked">
                     <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="BackUp_checkBox_IgnoreCatalogExclusions">
+                   <property name="toolTip">
+                    <string>When checked, all files below the catalog source path will be backed up or archived, regardless of any catalog exclusion rules.</string>
+                   </property>
+                   <property name="text">
+                    <string>Ignore catalog exclusions</string>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>

@@ -214,6 +214,53 @@
         }
     }
 
+//--------------------------------------------------------------------------
+    void MainWindow::refreshCreateExcludeList()
+    {
+        QStringListModel *model = new QStringListModel(m_pendingExcludeFolders, this);
+        ui->Create_listView_ExcludeFolders->setModel(model);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_PickExcludeFolder_clicked()
+    {
+        QString currentPath = ui->Create_lineEdit_NewExcludeFolder->text();
+        if (currentPath.isEmpty())
+            currentPath = ui->Create_lineEdit_NewCatalogPath->text();
+        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to exclude"),
+                                                        currentPath,
+                                                        QFileDialog::ShowDirsOnly
+                                                        | QFileDialog::DontResolveSymlinks);
+        if (!dir.isEmpty())
+            ui->Create_lineEdit_NewExcludeFolder->setText(dir);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_AddExcludeFolder_clicked()
+    {
+        const QString path = ui->Create_lineEdit_NewExcludeFolder->text().trimmed();
+        if (path.isEmpty() || m_pendingExcludeFolders.contains(path))
+            return;
+        m_pendingExcludeFolders << path;
+        ui->Create_lineEdit_NewExcludeFolder->clear();
+        refreshCreateExcludeList();
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_listView_ExcludeFolders_customContextMenuRequested(const QPoint &pos)
+    {
+        QModelIndex index = ui->Create_listView_ExcludeFolders->indexAt(pos);
+        if (!index.isValid())
+            return;
+        const QString selectedFolder = index.data().toString();
+        QPoint globalPos = ui->Create_listView_ExcludeFolders->mapToGlobal(pos);
+        QMenu contextMenu;
+        QAction *removeAction = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this);
+        contextMenu.addAction(removeAction);
+        connect(removeAction, &QAction::triggered, this, [this, selectedFolder]() {
+            m_pendingExcludeFolders.removeAll(selectedFolder);
+            refreshCreateExcludeList();
+        });
+        contextMenu.exec(globalPos);
+    }
+
 //Methods-----------------------------------------------------------------------
     void MainWindow::loadFileSystem(QString newCatalogPath)
     {//Load file system to the Create and the Filter for connected devices treeviews
@@ -346,6 +393,12 @@
 
         //Save new catalog
         newCatalogDevice->catalog->insertCatalog();
+
+        // Save per-catalog exclude folders collected during creation
+        for (const QString &folder : std::as_const(m_pendingExcludeFolders))
+            newCatalogDevice->catalog->addExcludeFolder(folder);
+        m_pendingExcludeFolders.clear();
+        refreshCreateExcludeList();
 
         //Add path to parent Storage device if empty
         Device parentStorageDevice;

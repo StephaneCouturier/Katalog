@@ -11,6 +11,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **New fields added in 2.10 (unreleased — edit in place, no extra migration needed):**
 > - `device_mapping.mapping_strict_copy` — added by migration 2.10
 > - `device_mapping.mapping_conflict_mode` — added by migration 2.10 (folded in, no separate 2.11)
+> - `device_mapping.mapping_ignore_catalog_exclusions` — added by migration 2.10
+> - `catalog_filter` table — added by migration 2.10 (per-catalog include/exclude rules)
 
 ## Project Overview
 

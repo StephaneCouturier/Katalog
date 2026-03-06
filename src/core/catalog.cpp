@@ -1085,22 +1085,94 @@ void Catalog::populateFileTypes(QMutex &mutex, bool &stopRequested)
 
 void Catalog::loadExcludedFolders()
 {
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL = QLatin1String(R"(
-                                    SELECT DISTINCT parameter_value2
-                                    FROM parameter
-                                    WHERE parameter_type ='exclude_directory'
-                                    ORDER BY parameter_value2
-                                )");
-    query.prepare(querySQL);
-    query.exec();
+    excludedFolders.clear();
 
-    while(query.next()){
+    // Global exclusions (apply to all catalogs)
+    QSqlQuery globalQuery(QSqlDatabase::database(m_connectionName));
+    globalQuery.prepare(QLatin1String(R"(
+        SELECT DISTINCT parameter_value2
+        FROM parameter
+        WHERE parameter_type = 'exclude_directory'
+        ORDER BY parameter_value2
+    )"));
+    globalQuery.exec();
+    while (globalQuery.next()) {
+        QString folder = globalQuery.value(0).toString();
+        while (folder.endsWith('/') || folder.endsWith('\\'))
+            folder.chop(1);
+        if (!folder.isEmpty())
+            excludedFolders << folder;
+    }
+
+    // Per-catalog exclusions
+    if (ID > 0) {
+        const QStringList perCatalog = getExcludeFolders();
+        for (const QString &folder : perCatalog) {
+            if (!excludedFolders.contains(folder))
+                excludedFolders << folder;
+        }
+    }
+}
+
+QStringList Catalog::getExcludeFolders() const
+{
+    QStringList result;
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        SELECT filter_value
+        FROM catalog_filter
+        WHERE filter_catalog_id = :id
+          AND filter_type = 'exclude_folder'
+        ORDER BY filter_value
+    )"));
+    query.bindValue(":id", ID);
+    query.exec();
+    while (query.next()) {
         QString folder = query.value(0).toString();
         while (folder.endsWith('/') || folder.endsWith('\\'))
             folder.chop(1);
-        excludedFolders << folder;
+        if (!folder.isEmpty())
+            result << folder;
     }
+    return result;
+}
+
+bool Catalog::addExcludeFolder(const QString &path)
+{
+    QString folder = path;
+    while (folder.endsWith('/') || folder.endsWith('\\'))
+        folder.chop(1);
+    if (folder.isEmpty() || ID <= 0)
+        return false;
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        INSERT OR IGNORE INTO catalog_filter (filter_catalog_id, filter_type, filter_value)
+        VALUES (:id, 'exclude_folder', :value)
+    )"));
+    query.bindValue(":id", ID);
+    query.bindValue(":value", folder);
+    return query.exec();
+}
+
+bool Catalog::removeExcludeFolder(const QString &path)
+{
+    QString folder = path;
+    while (folder.endsWith('/') || folder.endsWith('\\'))
+        folder.chop(1);
+    if (folder.isEmpty() || ID <= 0)
+        return false;
+
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        DELETE FROM catalog_filter
+        WHERE filter_catalog_id = :id
+          AND filter_type = 'exclude_folder'
+          AND filter_value = :value
+    )"));
+    query.bindValue(":id", ID);
+    query.bindValue(":value", folder);
+    return query.exec();
 }
 
 bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
