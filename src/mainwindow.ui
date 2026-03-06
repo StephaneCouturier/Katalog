@@ -11110,7 +11110,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QLabel" name="BackUp_label_CurrentMappings">
                 <property name="text">
-                 <string>BackUp links for device</string>
+                 <string>BackUp &amp; Archive Links for device</string>
                 </property>
                </widget>
               </item>

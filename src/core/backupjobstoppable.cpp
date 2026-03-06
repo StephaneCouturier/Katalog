@@ -95,6 +95,68 @@ QString BackupJobStoppable::buildArchivedFileName(const QString &filePath)
 }
 
 //----------------------------------------------------------------------
+bool BackupJobStoppable::copyFileChunked(const QString &source, const QString &target,
+                                         qint64 fileSize,
+                                         int filesDone, int totalFiles,
+                                         qint64 &bytesCopied, qint64 totalBytes,
+                                         const QString &fileName)
+{
+    static constexpr qint64 kChunkSize = 1 * 1024 * 1024; // 1 MB
+
+    QFile src(source);
+    if (!src.open(QIODevice::ReadOnly)) {
+        qWarning() << "BackupJobStoppable::copyFileChunked - cannot open source:" << source;
+        return false;
+    }
+
+    QFile dst(target);
+    if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        qWarning() << "BackupJobStoppable::copyFileChunked - cannot open target:" << target;
+        return false;
+    }
+
+    QByteArray buffer(kChunkSize, Qt::Uninitialized);
+    qint64 bytesWrittenForFile = 0;
+
+    while (!src.atEnd()) {
+        waitIfPaused();
+        if (!shouldContinue()) {
+            dst.close();
+            QFile::remove(target);
+            return false;
+        }
+
+        const qint64 bytesRead = src.read(buffer.data(), kChunkSize);
+        if (bytesRead < 0) {
+            qWarning() << "BackupJobStoppable::copyFileChunked - read error:" << source;
+            dst.close();
+            QFile::remove(target);
+            return false;
+        }
+
+        const qint64 bytesWritten = dst.write(buffer.constData(), bytesRead);
+        if (bytesWritten != bytesRead) {
+            qWarning() << "BackupJobStoppable::copyFileChunked - write error:" << target;
+            dst.close();
+            QFile::remove(target);
+            return false;
+        }
+
+        bytesWrittenForFile += bytesWritten;
+        bytesCopied         += bytesWritten;
+        emit backupProgress(filesDone, totalFiles, bytesCopied, totalBytes, fileName);
+    }
+
+    // Guard: if catalog size is stale this may differ, but the copy itself succeeded
+    if (fileSize > 0 && bytesWrittenForFile != fileSize) {
+        qWarning() << "BackupJobStoppable::copyFileChunked - size mismatch for" << source
+                   << "expected" << fileSize << "got" << bytesWrittenForFile;
+    }
+
+    return true;
+}
+
+//----------------------------------------------------------------------
 void BackupJobStoppable::stopBackup()
 {
     m_stopRequested.storeRelease(1);
@@ -194,10 +256,12 @@ void BackupJobStoppable::runBackup()
                 bytesCopied += entry.fileSize;
                 report.moved.append(entry);
                 qDebug() << "BackupJobStoppable: renamed (moved)" << sourceFile << "->" << targetFile;
-            } else if (QFile::copy(sourceFile, targetFile)) {
+            } else if (copyFileChunked(sourceFile, targetFile, entry.fileSize,
+                                       filesDone, totalFiles, bytesCopied, totalBytes,
+                                       entry.fileName)) {
                 // Cross-filesystem fallback: copy then delete source
                 report.totalBytesCopied += entry.fileSize;
-                bytesCopied += entry.fileSize;
+                // bytesCopied already updated chunk-by-chunk inside copyFileChunked
                 if (!QFile::remove(sourceFile))
                     report.errors.append(sourceFile + ": copied to target but source delete failed");
                 report.moved.append(entry);
@@ -208,9 +272,11 @@ void BackupJobStoppable::runBackup()
                 qWarning() << "BackupJobStoppable:" << msg;
             }
         } else {
-            if (QFile::copy(sourceFile, targetFile)) {
+            if (copyFileChunked(sourceFile, targetFile, entry.fileSize,
+                                filesDone, totalFiles, bytesCopied, totalBytes,
+                                entry.fileName)) {
                 report.totalBytesCopied += entry.fileSize;
-                bytesCopied += entry.fileSize;
+                // bytesCopied already updated chunk-by-chunk inside copyFileChunked
                 report.copied.append(entry);
                 qDebug() << "BackupJobStoppable: copied" << sourceFile << "->" << targetFile;
             } else {
@@ -276,10 +342,14 @@ void BackupJobStoppable::runBackup()
                 // Try atomic rename first (same filesystem: instant, no data copied)
                 if (QFile::rename(sourceFile, targetFile)) {
                     transferOk = true;
+                    bytesCopied += entry.fileSize; // rename is instant; account bytes here
                     qDebug() << "BackupJobStoppable: archived" << archivedFile
                              << "and renamed (moved)" << sourceFile << "->" << targetFile;
-                } else if (QFile::copy(sourceFile, targetFile)) {
+                } else if (copyFileChunked(sourceFile, targetFile, entry.fileSize,
+                                           filesDone, totalFiles, bytesCopied, totalBytes,
+                                           entry.fileName)) {
                     // Cross-filesystem fallback: copy then delete source
+                    // bytesCopied already updated chunk-by-chunk inside copyFileChunked
                     transferOk = true;
                     if (!QFile::remove(sourceFile))
                         report.errors.append(sourceFile + ": moved (archived+replaced) but source delete failed");
@@ -287,7 +357,10 @@ void BackupJobStoppable::runBackup()
                              << "and moved (copy+delete)" << sourceFile << "->" << targetFile;
                 }
             } else {
-                if (QFile::copy(sourceFile, targetFile)) {
+                if (copyFileChunked(sourceFile, targetFile, entry.fileSize,
+                                    filesDone, totalFiles, bytesCopied, totalBytes,
+                                    entry.fileName)) {
+                    // bytesCopied already updated chunk-by-chunk inside copyFileChunked
                     transferOk = true;
                     qDebug() << "BackupJobStoppable: archived" << archivedFile
                              << "and replaced with" << sourceFile;
@@ -297,7 +370,7 @@ void BackupJobStoppable::runBackup()
             if (transferOk) {
                 report.renamed.append(entry);
                 report.totalBytesCopied += entry.fileSize;
-                bytesCopied += entry.fileSize;
+                // bytesCopied already updated above (by rename or copyFileChunked)
             } else {
                 // Transfer failed — restore the archived file to avoid data loss.
                 QFile::rename(archivedFile, targetFile);

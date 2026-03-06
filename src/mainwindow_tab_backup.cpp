@@ -412,18 +412,21 @@ void MainWindow::setBackupButtonState(BackupButtonState state)
             ui->BackUp_pushButton_RunBackup->setIcon(QIcon::fromTheme("media-playback-start"));
             ui->BackUp_pushButton_RunBackup->setEnabled(true);
             ui->BackUp_pushButton_CancelBackup->setVisible(false);
+            ui->BackUp_pushButton_CancelBackup->setEnabled(false);
             break;
         case BackupButtonState::Running:
             ui->BackUp_pushButton_RunBackup->setText(tr("Pause"));
             ui->BackUp_pushButton_RunBackup->setIcon(QIcon::fromTheme("media-playback-pause"));
             ui->BackUp_pushButton_RunBackup->setEnabled(true);
             ui->BackUp_pushButton_CancelBackup->setVisible(true);
+            ui->BackUp_pushButton_CancelBackup->setEnabled(true);
             break;
         case BackupButtonState::Paused:
             ui->BackUp_pushButton_RunBackup->setText(tr("Resume"));
             ui->BackUp_pushButton_RunBackup->setIcon(QIcon::fromTheme("media-playback-start"));
             ui->BackUp_pushButton_RunBackup->setEnabled(true);
             ui->BackUp_pushButton_CancelBackup->setVisible(true);
+            ui->BackUp_pushButton_CancelBackup->setEnabled(true);
             break;
     }
 }

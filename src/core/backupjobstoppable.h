@@ -142,6 +142,18 @@ private:
 
     /** Build the archived filename: stem_YYYYMMDD-HHmmss.ext */
     static QString buildArchivedFileName(const QString &filePath);
+
+    /**
+     * @brief Copy a file in 1 MB chunks, emitting backupProgress after each chunk.
+     * Deletes the partial target file on cancellation or write error.
+     * @param bytesCopied  Accumulated bytes (updated in-place as chunks are written).
+     * @return true on success, false on error or cancellation.
+     */
+    bool copyFileChunked(const QString &source, const QString &target,
+                         qint64 fileSize,
+                         int filesDone, int totalFiles,
+                         qint64 &bytesCopied, qint64 totalBytes,
+                         const QString &fileName);
 };
 
 #endif // BACKUPJOBSTOPPABLE_H
