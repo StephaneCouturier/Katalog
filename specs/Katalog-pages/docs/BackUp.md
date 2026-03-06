@@ -3,21 +3,32 @@
 This page describes all the features of the **BackUp** screen and how to use them.<br/>
 From this screen, the user can **manage catalog backups**.<br/>
 
+![](/img/screen_backup_01.png)
+
 ## Main concepts & current features
 
-**BackUp Links**
+### Catalog Links
 
-The screen helps to <b>associate a Catalog</b>, considered as the <b><i>source</i></b>, to and another Catalog, considered as the backup <b><i>target</i></b>.<br/>This is the core enabler of all features of this screen.
+The screen helps to <b>associate a Catalog</b>, considered as the <b><i>source</i></b>, to another Catalog, considered as the backup <b><i>target</i></b>.<br/>This is the core enabler of all features of this screen.
 
-**Catalogs' Comparison**
+### Catalogs' Comparison
 
-The BackUp Links section provides the list of links and <b>coverage of catalog backups</b> for the entire selection and per link, comparing source and backup target size, number of files and date updated.
+The screen provides the list of links and <b>coverage of catalog backups</b> for the entire selection and per link, comparing source and backup target size, number of files and date updated.
 
-**Replicate directory**
+### Replicate directory
 
 Necessary during the backup process, it is possible to trigger the copy of the folder hierarchy separately, without the files.
 
-**Incremental backup**
+## BackUp or Archive
+
+| operation | file process  |  Purpose                                                         |
+|-----------|---------------|------------------------------------------------------------------|
+| **Backup**    | A **copy** operation from a source catalog to a target catalog. | The source is never modified. The goal is redundancy and recovery. <br/> Multiple strategies will exist over time (full, incremental, sync). |
+| **Archive**   | A **move** operation from a source catalog to a target catalog. | Files are transferred and then removed from the source once the copy is verified. The goal is long-term offload and storage organisation. Empty directories left behind in the source are optionally cleaned up. |
+
+
+
+### Incremental backup (file copy)
 
 Katalog's backup will copy files from a **source catalog** to a **target catalog** using Katalog's own indexed data.
 <br/>For that to happen fully, updates of the Catalogs will be run before the backup and after (optional but highly recommanded).
@@ -59,12 +70,19 @@ A **conflict** occurs when a file exists at both the source and the target path,
 
 Cases B and C are currently left as reported conflicts. `Overwrite` and `RenameAlways` are the natural future modes to cover them when the user wants the source to be unconditionally authoritative.
 
+> **Rename oldest — archived filename format**: the old target file is renamed to `originalname_YYYYMMDD-HHmmss.ext` (e.g. `report_20260225-102559.docx`). The timestamp is inserted before the extension so the file remains openable. These files accumulate on the target and must be cleaned up manually to reclaim space.
+
+> **Rename oldest — safety guarantee**: if the copy of the source file fails after the target has already been renamed, the renamed file is automatically restored to its original name. No data is lost.
 
 
+### Archive (file move)
 
+The Archive operation **moves** files from source to target instead of copying them. Source files are deleted after a confirmed successful transfer — if the transfer fails, the source file is left untouched.
 
+- On the **same filesystem**: the move is instant — no data is physically copied; only the file location changes.
+- **Across filesystems**: the file is first copied to the target, then deleted from the source once the copy is confirmed complete.
 
-**LuckyBackup profile**
+### LuckyBackup profile
 
 It is possbile to export the BackUp Links into a [LuckyBackup](https://luckybackup.sourceforge.net) profile.
 See dedicate page: [LuckyBackup profile](BackUp_luckybackup_profile) 
@@ -77,6 +95,19 @@ To help listing and comparing source directories and their backup, Katalog can h
 This assume that the user creates manually 
 
 ### Create a BackUp Link
+
+#### Link fields
+
+| Field | Description | 
+|-------|-------------|
+| name | Name of the link, can be generated from the 2 catalog names |
+| type | `BackUp` or `Archive` |
+| device_source | `"RenameAlways"` |
+| device_target_id | mapping_device_source_id |
+| backup_last_date | mapping_device_source_id |
+| backup_last_size | mapping_device_source_id |
+| strict_copy | mapping_device_source_id |
+| conflict_mode | RenameOldest |
 
 #### Example & Catalogs
 Goal: create a mapping between the source on local disk and the target on external drive.
@@ -115,8 +146,118 @@ Katalog can generate LuckyBackUp a ready-to-use profile based on the BackUp link
 - Profile naming: `Katalog_<timestamp>.profile`
 - Each Katalog backup link becomes one task in the LuckyBackUp profile
 
+## BackUp or Archive execution
+
+### Prerequisites
+- A BackUp/Archive Link is selected
+- Both catalogs must belong to devices with valid, accessible paths.
+- There is enough space to copy/move the files to the target
+- while optional, it is recommanded to keep "Update catalogs" selected for update prior and after the process completion.
+
+### Preview
+- A Preview (simulation) can be run to test the effect of the BackUp or Archive process and generate a report.
+
+### Pause, Resume, and Cancel
+
+During execution the **Run Backup** button changes label and function:
+- While **running** → click to **Pause** (suspends after the current file finishes)
+- While **paused** → click to **Resume**
+
+A **Cancel** button is always available while the backup is running or paused. Cancelling stops the operation cleanly — any file currently being copied is removed from the target (no partial files left).
+
+### Catalog update after execution
+
+After a successful backup, the target catalog will be updated automatically to reflect the newly copied files, without requiring a full re-index. *(Planned — not yet available.)*
+
+## Core Behavior Incremental Copy or Archive
+
+Comparison criteria
+- Match by **file name + relative folder path** (same file in same relative location).
+- A file is "missing" if no match exists in the target catalog.
+
+**On conflict management**
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| Delete files in target? | No (v1). Future backlog item. | Start safe — incremental only. |
+| Overwrite conflicts? | No (v1). Report them. | Avoid data loss. Future: user choice per-file. |
+| Create missing directories? | Yes, always. | Required for any file copy to work. |
+
+### Disk Space Management
+
+Disk space is a critical constraint for both Backup and Archive operations. Running out of space
+mid-operation leaves the target in a partial state and produces a series of I/O errors. Space
+must be estimated and checked before execution begins.
+
+Space Requirements by Operation
+
+| Operation | What consumes target space | Net effect on source |
+|-----------|---------------------------|----------------------|
+| **Backup** | All files-to-copy | None |
+| **Archive (same FS)** | Zero — `rename()` moves metadata only | Space freed on source |
+| **Archive (cross-FS)** | Files copied before source deletion | Space freed on source after delete |
+| **RenameOldest conflict** | Old target file renamed and retained (+1 copy) | None until user manually purges archived files |
+
+
+### Space Check Logic (implemented)
+
+Computed before execution and shown in Preview using `QStorageInfo(targetDevice.path).bytesAvailable()`.
+
+**Required bytes** = sum of all `filesToCopy` sizes + (if RenameOldest) sum of `fileConflicts` sizes.
+
+| Condition | Threshold | Action |
+|-----------|-----------|--------|
+| **Insufficient** | `available < required` | Block: `QMessageBox::warning`, operation not started |
+| **Low** | `available − required < 512 MB` | Ask: `QMessageBox::question` (Yes/No to proceed) |
+| **OK** | `available − required ≥ 512 MB` | Proceed silently |
+
+In Preview, the space status is appended to the summary label:
+- **Insufficient** → red warning: `⚠ Target space: X available, Y needed`
+- **Low** → orange warning: `⚠ Low target space: Z remaining after operation`
+- **OK** → no annotation (clean display)
+
+When `QStorageInfo` cannot determine available space (remote mount, virtual FS), the check
+is silently skipped.
+
+
+
+> **Note**: The RenameOldest mode permanently adds renamed copies to the target. Users can
+> manually clean archived files (`stem_YYYYMMDD-HHmmss.ext`) to reclaim space if required.
+
+## Report
+After execution, a **backup report** lists:
+- Files copied (count, total size)
+- Files skipped — already exist in target (count)
+- Files with conflicts — exist in target but differ (newer date, different size, different checksum). Listed for user review, **not overwritten**.
+- Errors — files that failed to copy (permission denied, disk full, etc.)
+
+
+
 ## Development
+
+
+### Future Features
+- [ ] Snapshot management
+- [ ] Exclude/include patterns
+- [ ] Scheduling (cron/systemd/Task Scheduler)
+- [ ] Restore functionality
+- [ ] Compression options
+- [ ] Remote backups (ssh)
+
+### Future Backlog — Various
 Some ideas of developments for this screen:
-* Catalog operations from this screen (update, search differences, etc.)
-* Basic file copying
+- **Delete mode**: opt-in option to remove target files absent from source.
+- **Overwrite mode**: options per conflict (skip, overwrite, keep both, ask).
+- **Checksum comparison**: detect content changes even when name/size/date match.
+- **Scheduled/automated backup**: run on timer or on catalog update.
+- **Backup history**: log of past backup runs with dates and statistics.
+
+### Future Backlog — Disk Space
+
+- **Per-mapping minimum free space setting**: user-configurable floor (e.g., always keep 5 GB free).
+- **Source space check for Archive**: warn when source free space after archive will be very low.
+- **In-flight space exhaustion early abort**: detect ENOSPC errors during copy and stop immediately rather than continuing to fail file after file.
+- **Post-archive source verification**: confirm actual source space was freed after Archive completes.
+- **Space trend display**: show target space over time in the Statistics tab.
+- **Archived file cleanup tool**: list and bulk-delete `stem_YYYYMMDD-HHmmss.ext` files produced by RenameOldest mode.
+
 * For more, see the backlog of [BackUp development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=BackUp).

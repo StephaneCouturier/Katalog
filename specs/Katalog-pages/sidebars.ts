@@ -35,6 +35,14 @@ export default {
       type: 'category',
       label: 'Features', //'Main Features (tabs)',
       items: [
+                // {
+                //   type: 'category',
+                //   label: 'BackUp & Archiving',
+                //   items: [
+                'BackUp',
+                //           'BackUp_luckybackup_profile',
+                //   ],
+                // },
 
                 'Create',
 
@@ -51,16 +59,6 @@ export default {
                 //   ],
                 // },
                 'Explore',
-
-                // {
-                //   type: 'category',
-                //   label: 'BackUp & Archiving',
-                //   items: [
-                          'BackUp',
-                //           'BackUp_luckybackup_profile',
-                //   ],
-                // },
-
                 'Search',
                 'Selection',
                 'Settings',
@@ -73,16 +71,12 @@ export default {
       type: 'category',
       label: 'Development',
       items: ['Development-Overview', 'Development-Roadmap',
+
       {
         type: 'category',
         label: 'Specifications',
-        items: [{
-                  type: 'category',
-                  label: 'Spec BackUp & Archiving',
-                  items: ['SpecBackUp',
-                          'BackUp_luckybackup_profile',
-                          'BackUpArchiving'],
-                },
+        items: [
+                'BackUp_luckybackup_profile',
                 'SpecProgressReport',
                 'SpecVersions'],
       },
