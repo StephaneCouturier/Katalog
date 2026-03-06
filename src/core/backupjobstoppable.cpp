@@ -267,6 +267,10 @@ void BackupJobStoppable::runBackup()
                 report.moved.append(entry);
                 qDebug() << "BackupJobStoppable: moved (copy+delete)" << sourceFile << "->" << targetFile;
             } else {
+                if (!shouldContinue()) {
+                    report.wasCancelled = true;
+                    break;
+                }
                 const QString msg = sourceFile + ": move failed";
                 report.errors.append(msg);
                 qWarning() << "BackupJobStoppable:" << msg;
@@ -280,6 +284,10 @@ void BackupJobStoppable::runBackup()
                 report.copied.append(entry);
                 qDebug() << "BackupJobStoppable: copied" << sourceFile << "->" << targetFile;
             } else {
+                if (!shouldContinue()) {
+                    report.wasCancelled = true;
+                    break;
+                }
                 const QString msg = sourceFile + ": copy failed";
                 report.errors.append(msg);
                 qWarning() << "BackupJobStoppable:" << msg;
@@ -372,8 +380,12 @@ void BackupJobStoppable::runBackup()
                 report.totalBytesCopied += entry.fileSize;
                 // bytesCopied already updated above (by rename or copyFileChunked)
             } else {
-                // Transfer failed — restore the archived file to avoid data loss.
+                // Restore the archived file to avoid data loss.
                 QFile::rename(archivedFile, targetFile);
+                if (!shouldContinue()) {
+                    report.wasCancelled = true;
+                    break;
+                }
                 const QString msg = sourceFile + ": move/copy failed after archiving (restored original)";
                 report.errors.append(msg);
                 qWarning() << "BackupJobStoppable:" << msg;

@@ -788,7 +788,7 @@ void MainWindow::onBackupProgress(int filesDone, int totalFiles,
         .setProcess(m_currentBackupIsArchive ? tr("Moving") : tr("Copying"), filesDone + 1, totalFiles)
         .setSizeProgress(bytesCopied, totalBytes)
         .setSpeed(speedBps)
-        .setTimeToCompletion(etaStr)
+        .setTimeToCompletion(etaStr.isEmpty() ? QString() : tr("%1").arg(etaStr))
         .setCurrentItem(currentFile)
         .build();
 
