@@ -471,6 +471,10 @@ void MainWindow::onSearchCompleted()
         qDebug() << "No search results to display";
     }
 
+    // Always refresh history view — the entry was saved at search start regardless of result count
+    collection->saveSearchHistoryTableToFile();
+    loadSearchHistoryTableToModel();
+
     qDebug() << "After reset - Search button state:" << static_cast<int>(searchButtonState);
     qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
     qDebug() << "=== onSearchCompleted() completed ===";
@@ -902,10 +906,6 @@ void MainWindow::displaySearchResults()
 
     // Enable/disable the statistics button based on results
     ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
-
-    // Save the search history and refresh UI
-    collection->saveSearchHistoryTableToFile();
-    loadSearchHistoryTableToModel();
 
     // Enable Export
     ui->Search_pushButton_ProcessResults->setEnabled(true);
