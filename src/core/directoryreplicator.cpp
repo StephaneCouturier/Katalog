@@ -168,6 +168,67 @@ ReplicationResult DirectoryReplicator::replicateAndPrune(
 }
 
 //----------------------------------------------------------------------
+ReplicationResult DirectoryReplicator::replicateFromDrive(
+    const QString &sourcePath,
+    const QString &targetPath,
+    bool dryRun)
+{
+    ReplicationResult result;
+
+    if (sourcePath.isEmpty() || targetPath.isEmpty()) {
+        qWarning() << "DirectoryReplicator::replicateFromDrive - empty source or target path";
+        return result;
+    }
+
+    const QString sourceNorm = sourcePath.endsWith('/') ? sourcePath.chopped(1) : sourcePath;
+    const int sourceLen = sourceNorm.length();
+
+    // Walk the source filesystem — directories only, all names (AllDirs = no name filter applied)
+    QDirIterator it(sourceNorm,
+                    QDir::Dirs | QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Readable,
+                    QDirIterator::Subdirectories);
+
+    QStringList relativePaths;
+    while (it.hasNext()) {
+        const QString absPath = it.next();
+        const QString relative = absPath.mid(sourceLen + 1); // strip "sourceNorm/"
+        if (!relative.isEmpty())
+            relativePaths.append(relative);
+    }
+
+    std::sort(relativePaths.begin(), relativePaths.end());
+
+    qDebug() << "DirectoryReplicator::replicateFromDrive -"
+             << relativePaths.size() << "directories found under" << sourcePath
+             << (dryRun ? "(dry run)" : "");
+
+    for (const QString &relativePath : relativePaths) {
+        const QString fullTargetPath = targetPath + "/" + relativePath;
+        QDir targetDir(fullTargetPath);
+
+        if (targetDir.exists()) {
+            result.alreadyExist.append(relativePath);
+        } else if (dryRun) {
+            result.created.append(relativePath);
+        } else {
+            if (QDir().mkpath(fullTargetPath)) {
+                result.created.append(relativePath);
+            } else {
+                result.errors.append(relativePath + " (failed to create)");
+                qWarning() << "DirectoryReplicator::replicateFromDrive - failed to create:" << fullTargetPath;
+            }
+        }
+    }
+
+    qDebug() << "DirectoryReplicator::replicateFromDrive - Done:"
+             << result.createdCount() << "created,"
+             << result.skippedCount() << "already existed,"
+             << result.errorCount() << "errors";
+
+    return result;
+}
+
+//----------------------------------------------------------------------
 QStringList DirectoryReplicator::loadSourceFolders(const QList<int> &catalogIds)
 {
     QStringList folders;

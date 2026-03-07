@@ -514,7 +514,7 @@ class MainWindow : public KXmlGuiWindow
             BackupCompareResult compareForBackup(const Device &sourceDevice,
                                                  const Device &targetDevice,
                                                  bool strictCopy,
-                                                 bool ignoreCatalogExclusions = false);
+                                                 bool sourceDrive = false);
 
             // Builds the full summary label (operation | status | To copy | Conflicts | Already in target | space warning)
             // Used by both loadBackupPreview() and executeBackup() (cancelled case) for consistency.
@@ -526,7 +526,7 @@ class MainWindow : public KXmlGuiWindow
             void setupDeviceUpdateManagerForBackup();
             void continueBackupAfterCatalogUpdate();
             void executeBackup(Device sourceDevice, Device targetDevice, MappingInfo mapping);
-            void executeReplicate(const Device &sourceDevice, const Device &targetDevice);
+            void executeReplicate(const Device &sourceDevice, const Device &targetDevice, bool sourceDrive = false);
             enum class BackupUpdatePhase { None, UpdatingSource, UpdatingTarget };
             BackupUpdatePhase m_backupUpdatePhase = BackupUpdatePhase::None;
             enum class PendingBackupOperation { None, RunBackup, Preview, ReplicateDirectories };
@@ -534,6 +534,7 @@ class MainWindow : public KXmlGuiWindow
             Device  m_pendingBackupSourceDevice;
             Device  m_pendingBackupTargetDevice;
             int     m_pendingBackupMappingId = -1;
+            bool    m_pendingBackupSourceDrive = false;
 
             bool    m_currentBackupIsArchive    = false;
             BackupJobStoppable *m_backupJob    = nullptr;

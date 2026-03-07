@@ -72,7 +72,7 @@ QString BackupMappingManager::buildSelectFromJoin()
             d2.device_date_updated AS target_date_updated,
             COALESCE(dm.mapping_strict_copy,    1) AS mapping_strict_copy,
             COALESCE(dm.mapping_conflict_mode, 'RenameOldest') AS mapping_conflict_mode,
-            COALESCE(dm.mapping_ignore_catalog_exclusions, 0) AS mapping_ignore_catalog_exclusions
+            COALESCE(dm.mapping_source_mode, 'Catalog') AS mapping_source_mode
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
@@ -206,7 +206,7 @@ MappingInfo BackupMappingManager::parseMappingFromQuery(const QSqlQuery& query)
 
     info.strictCopy                = query.value("mapping_strict_copy").toInt() != 0;
     info.conflictMode              = conflictModeFromString(query.value("mapping_conflict_mode").toString());
-    info.ignoreCatalogExclusions   = query.value("mapping_ignore_catalog_exclusions").toInt() != 0;
+    info.sourceDrive               = query.value("mapping_source_mode").toString() == QLatin1String("Drive");
 
     return info;
 }
@@ -446,7 +446,7 @@ QSqlQuery BackupMappingManager::executeTableDisplayQuery(const MappingFilter& fi
             CASE WHEN dm.mapping_type = 'Archive' THEN ''
                  WHEN dm.mapping_strict_copy = 1  THEN 'Strict'
                  ELSE 'Dedup' END,
-            CASE WHEN COALESCE(dm.mapping_ignore_catalog_exclusions, 0) = 1 THEN 'Yes' ELSE 'No' END,
+            COALESCE(dm.mapping_source_mode, 'Catalog'),
             CASE dm.mapping_conflict_mode
                  WHEN 'Skip'         THEN 'Skip'
                  WHEN 'RenameOldest' THEN 'Rename oldest'

@@ -253,6 +253,7 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
         m_pendingBackupMappingId    = mappingID;
         m_pendingBackupSourceDevice = sourceDevice;
         m_pendingBackupTargetDevice = targetDevice;
+        m_pendingBackupSourceDrive  = mapping.sourceDrive;
         m_backupUpdatePhase         = BackupUpdatePhase::UpdatingSource;
         m_pendingBackupOperation    = PendingBackupOperation::ReplicateDirectories;
 
@@ -265,23 +266,31 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
         return;
     }
 
-    executeReplicate(sourceDevice, targetDevice);
+    executeReplicate(sourceDevice, targetDevice, mapping.sourceDrive);
 }
 
-void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targetDevice)
+void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targetDevice, bool sourceDrive)
 {
-    //In Memory mode, load the source catalog's folders into the in-memory database first
-    if (collection->databaseMode == "Memory") {
-        sourceDevice.catalog->loadFoldersToTable();
-    }
-
-    //Replicate the directories from source catalog to target catalog
     DirectoryReplicator replicator(m_connectionName);
-    ReplicationResult result = replicator.replicate(
-        {sourceDevice.externalID},
-        sourceDevice.path,
-        targetDevice.path
-    );
+    ReplicationResult result;
+
+    if (sourceDrive) {
+        //Drive mode: walk the source filesystem directly (includes excluded folders)
+        result = replicator.replicateFromDrive(
+            sourceDevice.path,
+            targetDevice.path
+        );
+    } else {
+        //Catalog mode: replicate from the folder table in the catalog index
+        if (collection->databaseMode == "Memory") {
+            sourceDevice.catalog->loadFoldersToTable();
+        }
+        result = replicator.replicate(
+            {sourceDevice.externalID},
+            sourceDevice.path,
+            targetDevice.path
+        );
+    }
 
     //Update status bar with completion statistics
     ui->BackUp_label_ProgressSummary->setVisible(true);
@@ -441,24 +450,30 @@ void MainWindow::on_BackUp_pushButton_CancelBackup_clicked()
 
 MainWindow::BackupCompareResult MainWindow::compareForBackup(
     const Device &sourceDevice, const Device &targetDevice,
-    bool strictCopy, bool ignoreCatalogExclusions)
+    bool strictCopy, bool sourceDrive)
 {
-    // NOTE: when ignoreCatalogExclusions = true, the comparison should include
-    // files from excluded folders (filesystem walk, not catalog-based).
-    // This is currently not enforced — the catalog only contains indexed files.
-    // Full enforcement requires a future filesystem-walk comparison path.
-    Q_UNUSED(ignoreCatalogExclusions)
     BackupCompareResult out;
 
     if (strictCopy) {
-        // PATH-AWARE (strict mirror): delegate to CatalogDifferenceEngine::compareStrict()
         CatalogDifferenceEngine engine(m_connectionName);
-        StrictDifferenceResult r = engine.compareStrict(
-            sourceDevice.externalID,
-            targetDevice.externalID,
-            sourceDevice.path,
-            targetDevice.path
-        );
+        StrictDifferenceResult r;
+
+        if (sourceDrive) {
+            // DRIVE mode: walk source filesystem directly — bypasses catalog index and exclusions
+            r = engine.compareStrictFromDrive(
+                sourceDevice.path,
+                targetDevice.externalID,
+                targetDevice.path
+            );
+        } else {
+            // CATALOG mode (default): use catalog index
+            r = engine.compareStrict(
+                sourceDevice.externalID,
+                targetDevice.externalID,
+                sourceDevice.path,
+                targetDevice.path
+            );
+        }
         out.filesToCopy   = r.filesToCopy;
         out.fileConflicts = r.conflicts;
         out.skippedCount  = r.skippedCount;
@@ -662,7 +677,7 @@ void MainWindow::continueBackupAfterCatalogUpdate()
             break;
         case PendingBackupOperation::ReplicateDirectories:
             ui->BackUp_pushButton_ReplicateDirectories->setEnabled(true);
-            executeReplicate(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice);
+            executeReplicate(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice, m_pendingBackupSourceDrive);
             break;
         default:
             break;
@@ -683,7 +698,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     }
 
     //Run comparison (respects strictCopy setting)
-    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.ignoreCatalogExclusions);
+    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
 
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
         const bool isArchiveEarly = (mapping.mappingType == QLatin1String("Archive"));
@@ -998,7 +1013,7 @@ void MainWindow::loadBackupPreview()
     }
 
     //Run comparison (respects strictCopy setting of this mapping)
-    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.ignoreCatalogExclusions);
+    BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
     const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
 
     //Build preview model (Status: "to copy" / "to move" / "conflict")
@@ -1315,7 +1330,7 @@ void MainWindow::loadBackUpMappingTable()
     queryModel->setHeaderData( 1, Qt::Horizontal, tr("Mapping Name"));
     queryModel->setHeaderData( 2, Qt::Horizontal, tr("Type"));
     queryModel->setHeaderData( 3, Qt::Horizontal, tr("Copy mode"));
-    queryModel->setHeaderData( 4, Qt::Horizontal, tr("Ignore excl."));
+    queryModel->setHeaderData( 4, Qt::Horizontal, tr("Source mode"));
     queryModel->setHeaderData( 5, Qt::Horizontal, tr("On conflict"));
     queryModel->setHeaderData( 6, Qt::Horizontal, tr("Source ID"));
     queryModel->setHeaderData( 7, Qt::Horizontal, tr("Source"));
@@ -1602,7 +1617,7 @@ void MainWindow::saveNewMapping()
                                 mapping_device_target_id,
                                 mapping_strict_copy,
                                 mapping_conflict_mode,
-                                mapping_ignore_catalog_exclusions
+                                mapping_source_mode
                             )
                             VALUES
                             (   :mapping_name,
@@ -1611,7 +1626,7 @@ void MainWindow::saveNewMapping()
                                 :mapping_device_target_id,
                                 :mapping_strict_copy,
                                 :mapping_conflict_mode,
-                                :mapping_ignore_catalog_exclusions
+                                :mapping_source_mode
                             )
                         )");
     query.prepare(querySQL);
@@ -1626,8 +1641,8 @@ void MainWindow::saveNewMapping()
     query.bindValue(":mapping_conflict_mode",
                     conflictModeToString(static_cast<ConflictMode>(
                         ui->BackUp_comboBox_ConflictMode->currentIndex())));
-    query.bindValue(":mapping_ignore_catalog_exclusions",
-                    ui->BackUp_checkBox_IgnoreCatalogExclusions->isChecked() ? 1 : 0);
+    query.bindValue(":mapping_source_mode",
+                    ui->BackUp_checkBox_SourceMode->isChecked() ? QStringLiteral("Drive") : QStringLiteral("Catalog"));
 
     if (!query.exec())
     {

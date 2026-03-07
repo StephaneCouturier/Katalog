@@ -334,7 +334,9 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
     // Use QDirIterator for efficient directory traversal - RESTORE ORIGINAL APPROACH
     // Changed from QDir::Files to QDir::AllEntries to include directories (like v2.6)
-    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Readable;
+    // QDir::AllDirs ensures directory entries are always yielded regardless of the name filter
+    // (without it, directories whose names don't match the extension filter are silently dropped)
+    QDir::Filters filters = QDir::AllEntries | QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Readable;
     if (catalog->includeHidden) {
         filters |= QDir::Hidden;
     }
@@ -2178,7 +2180,9 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
     }
 
     // Setup directory iterator
-    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Readable;
+    // QDir::AllDirs ensures directory entries are always yielded regardless of the name filter
+    // (without it, directories whose names don't match the extension filter are silently dropped)
+    QDir::Filters filters = QDir::AllEntries | QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Readable;
     if (catalog->includeHidden) {
         filters |= QDir::Hidden;
     }

@@ -12213,12 +12213,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="BackUp_checkBox_IgnoreCatalogExclusions">
+                  <widget class="QCheckBox" name="BackUp_checkBox_SourceMode">
                    <property name="toolTip">
-                    <string>When checked, all files below the catalog source path will be backed up or archived, regardless of any catalog exclusion rules.</string>
+                    <string>When checked, the source drive is scanned directly (Drive mode) — all files under the source path are backed up, bypassing the catalog index and exclusion rules. The source device must be connected. When unchecked (Catalog mode, default), the catalog index is used and exclude folder rules apply.</string>
                    </property>
                    <property name="text">
-                    <string>Ignore catalog exclusions</string>
+                    <string>Scan source drive directly</string>
                    </property>
                    <property name="checked">
                     <bool>false</bool>

@@ -37,6 +37,8 @@
 #include <QSqlError>
 #include <QSqlDatabase>
 #include <QDebug>
+#include <QDirIterator>
+#include <QFileInfo>
 
 //----------------------------------------------------------------------
 CatalogDifferenceEngine::CatalogDifferenceEngine(const QString &connectionName)
@@ -383,6 +385,82 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
         result.skippedCount = q.value(0).toInt()
                               - result.filesToCopy.size()
                               - result.conflicts.size();
+
+    return result;
+}
+//----------------------------------------------------------------------
+StrictDifferenceResult CatalogDifferenceEngine::compareStrictFromDrive(
+    const QString &sourceRoot,
+    int targetCatalogId,
+    const QString &targetRoot)
+{
+    StrictDifferenceResult result;
+
+    const QString sourceRootNorm = sourceRoot.endsWith('/') ? sourceRoot.chopped(1) : sourceRoot;
+    const QString targetRootNorm = targetRoot.endsWith('/') ? targetRoot.chopped(1) : targetRoot;
+
+    // Build a lookup map from the target catalog:
+    // key = relative folder path (starts and ends with '/') + file_name
+    // e.g. "/docs/" + "report.pdf" → "/docs/report.pdf"
+    struct TargetEntry { qint64 size; QString dateUpdated; };
+    QHash<QString, TargetEntry> targetMap;
+    {
+        QSqlQuery q(QSqlDatabase::database(m_connectionName));
+        q.prepare("SELECT file_name, file_folder_path, file_size, file_date_updated "
+                  "FROM file WHERE file_catalog_id = :targetId");
+        q.bindValue(":targetId", targetCatalogId);
+        if (q.exec()) {
+            const int targetRootLen = targetRootNorm.length();
+            while (q.next()) {
+                const QString name     = q.value(0).toString();
+                const QString fullPath = q.value(1).toString();
+                // Relative folder = everything after targetRoot, including trailing slash
+                const QString relFolder = fullPath.mid(targetRootLen);
+                targetMap.insert(relFolder + name, {q.value(2).toLongLong(), q.value(3).toString()});
+            }
+        } else {
+            qWarning() << "compareStrictFromDrive: failed to load target catalog:"
+                       << q.lastError().text();
+            return result;
+        }
+    }
+
+    // Walk the source filesystem
+    int totalSourceFiles = 0;
+    QDirIterator it(sourceRootNorm,
+                    QDir::Files | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot,
+                    QDirIterator::Subdirectories);
+    const int sourceRootLen = sourceRootNorm.length();
+
+    while (it.hasNext()) {
+        const QFileInfo fi(it.nextFileInfo());
+        totalSourceFiles++;
+
+        // Relative folder: strip sourceRoot prefix, keep trailing slash
+        // e.g. "/source/docs" → "/docs/"
+        const QString absDir    = fi.absolutePath();
+        const QString relFolder = absDir.mid(sourceRootLen) + "/";
+        const QString key       = relFolder + fi.fileName();
+
+        DifferenceFileEntry e;
+        e.fileName   = fi.fileName();
+        e.folderPath = absDir + "/";
+        e.fileSize   = fi.size();
+        e.dateUpdated = fi.lastModified().toString(Qt::ISODate);
+
+        auto targetIt = targetMap.constFind(key);
+        if (targetIt == targetMap.constEnd()) {
+            result.filesToCopy.append(e);
+        } else if (targetIt->size != fi.size()) {
+            e.targetDateUpdated = targetIt->dateUpdated;
+            result.conflicts.append(e);
+        }
+        // else: same name, same relative path, same size → already in sync (skipped)
+    }
+
+    result.skippedCount = totalSourceFiles
+                          - result.filesToCopy.size()
+                          - result.conflicts.size();
 
     return result;
 }

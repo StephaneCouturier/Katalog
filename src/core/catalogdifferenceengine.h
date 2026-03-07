@@ -123,6 +123,24 @@ public:
     );
 
     /**
+     * @brief Path-aware strict comparison using a live filesystem walk as source.
+     *
+     * Used in Drive source mode: every file physically present under sourceRoot
+     * is compared against the target catalog. Excluded folders are not skipped —
+     * the full tree is walked. The source device must be connected and mounted.
+     *
+     * @param sourceRoot       Filesystem path to walk recursively
+     * @param targetCatalogId  externalID of the target catalog
+     * @param targetRoot       Root path of the target device (to compute relative paths)
+     * @return StrictDifferenceResult with filesToCopy, conflicts and skippedCount
+     */
+    StrictDifferenceResult compareStrictFromDrive(
+        const QString &sourceRoot,
+        int targetCatalogId,
+        const QString &targetRoot
+    );
+
+    /**
      * @brief Resolve a device to its catalog device IDs.
      *
      * If the device is a Catalog, returns its own ID.

@@ -94,6 +94,25 @@ public:
         bool dryRun = false
     );
 
+    /**
+     * @brief Replicate directory structure by walking the source filesystem directly.
+     *
+     * Used in Drive source mode: scans the source path on disk instead of reading
+     * from the folder table. All directories found under sourcePath are created
+     * under targetPath at the same relative location. The source device must be
+     * connected and mounted.
+     *
+     * @param sourcePath        Source root path to walk
+     * @param targetPath        Target root path where directories will be created
+     * @param dryRun            If true, compute without creating anything
+     * @return ReplicationResult with created, skipped, and error lists
+     */
+    ReplicationResult replicateFromDrive(
+        const QString &sourcePath,
+        const QString &targetPath,
+        bool dryRun = false
+    );
+
 private:
     QString m_connectionName;
 

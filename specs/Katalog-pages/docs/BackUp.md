@@ -75,6 +75,23 @@ Cases B and C are currently left as reported conflicts. `Overwrite` and `RenameA
 > **Rename oldest — safety guarantee**: if the copy of the source file fails after the target has already been renamed, the renamed file is automatically restored to its original name. No data is lost.
 
 
+### Source Mode
+
+Each backup link has a **Source Mode** that controls what is used as the source during comparison and file copy.
+
+| Mode | DB value | Description |
+|------|----------|-------------|
+| **Catalog** (default) | `'Catalog'` | Uses the catalog index (`.idx` file). Works offline — the source device does not need to be connected. Catalog exclude-folder rules are applied: excluded folders are not backed up. |
+| **Drive** | `'Drive'` | Walks the source filesystem directly. The source device **must be connected and mounted**. All files under the source path are included — catalog index and exclude-folder rules are entirely bypassed. |
+
+The mode is stored in `device_mapping.mapping_source_mode` (TEXT, default `'Catalog'`).
+
+**Architecture decision (Option B):** Drive mode replaces the catalog as the file enumeration source entirely — it does not "supplement" the catalog with excluded folders. The same filesystem-walk logic used by `CatalogJobStoppable` is reused. Catalog mode remains the default because it is offline-capable; Drive mode is for users who want a guaranteed full backup regardless of catalog state.
+
+**UI:** the "Scan source drive directly" checkbox on the Create Link panel controls this field. Unchecked = Catalog (default), checked = Drive.
+
+> **Implementation status:** Drive mode is implemented for the Strict Copy path (`compareStrictFromDrive()` in `CatalogDifferenceEngine`). The Dedup path (`strictCopy=false`) currently falls back to the catalog index when Drive mode is selected — full Drive+Dedup support is a future backlog item.
+
 ### Archive (file move)
 
 The Archive operation **moves** files from source to target instead of copying them. Source files are deleted after a confirmed successful transfer — if the transfer fails, the source file is left untouched.

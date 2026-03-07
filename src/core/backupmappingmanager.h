@@ -62,7 +62,7 @@ struct MappingInfo {
     bool targetActive;
     bool strictCopy;                  // true (default) = mirror folder structure exactly; false = dedup (skip if name+size exists anywhere in target)
     ConflictMode conflictMode;        // how to handle files that exist in target but differ
-    bool ignoreCatalogExclusions;     // false (default) = catalog exclude rules apply; true = back up all files under the source path
+    bool sourceDrive;                 // false (default) = 'Catalog' mode (use index); true = 'Drive' mode (full filesystem walk, requires connected source)
 
     MappingInfo()
         : sourceSize(0)
@@ -76,7 +76,7 @@ struct MappingInfo {
         , targetActive(false)
         , strictCopy(true)
         , conflictMode(ConflictMode::RenameOldest)
-        , ignoreCatalogExclusions(false)
+        , sourceDrive(false)
     {}
 };
 

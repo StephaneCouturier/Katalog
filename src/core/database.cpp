@@ -410,7 +410,7 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_backup_last_size    %2,
                     mapping_strict_copy                   INTEGER DEFAULT 1,
                     mapping_conflict_mode                 TEXT DEFAULT 'RenameOldest',
-                    mapping_ignore_catalog_exclusions     INTEGER DEFAULT 0)
+                    mapping_source_mode                   TEXT DEFAULT 'Catalog')
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 
@@ -1302,16 +1302,16 @@ QSqlError Database::runMigration_2_10(const QString &connectionName)
         qDebug() << "mapping_conflict_mode already exists, skipping";
     }
 
-    if (!existingColumns.contains("mapping_ignore_catalog_exclusions")) {
+    if (!existingColumns.contains("mapping_source_mode")) {
         QSqlError err = executeSql(connectionName,
-            "ALTER TABLE device_mapping ADD COLUMN mapping_ignore_catalog_exclusions INTEGER DEFAULT 0");
+            "ALTER TABLE device_mapping ADD COLUMN mapping_source_mode TEXT DEFAULT 'Catalog'");
         if (err.type() != QSqlError::NoError) {
-            qDebug() << "Failed to add mapping_ignore_catalog_exclusions column:" << err.text();
+            qDebug() << "Failed to add mapping_source_mode column:" << err.text();
             return err;
         }
-        qDebug() << "Added mapping_ignore_catalog_exclusions column to device_mapping";
+        qDebug() << "Added mapping_source_mode column to device_mapping";
     } else {
-        qDebug() << "mapping_ignore_catalog_exclusions already exists, skipping";
+        qDebug() << "mapping_source_mode already exists, skipping";
     }
 
     QSqlError filterErr = executeSql(connectionName, QLatin1String(R"(

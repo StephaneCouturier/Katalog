@@ -1106,7 +1106,7 @@ void Collection::loadMappingFileToTable()
                                             mapping_backup_last_size,
                                             mapping_strict_copy,
                                             mapping_conflict_mode,
-                                            mapping_ignore_catalog_exclusions
+                                            mapping_source_mode
                                         )
                                         VALUES(
                                             :mapping_id,
@@ -1118,7 +1118,7 @@ void Collection::loadMappingFileToTable()
                                             :mapping_backup_last_size,
                                             :mapping_strict_copy,
                                             :mapping_conflict_mode,
-                                            :mapping_ignore_catalog_exclusions
+                                            :mapping_source_mode
                                         )
                                         )");
                 insertQuery.prepare(insertQuerySQL);
@@ -1134,9 +1134,9 @@ void Collection::loadMappingFileToTable()
                 // field[8] = conflict_mode as TEXT (e.g. "Skip", "RenameOldest") — defaults to RenameOldest if absent
                 insertQuery.bindValue(":mapping_conflict_mode",
                     fieldList.size() > 8 ? fieldList[8] : QStringLiteral("RenameOldest"));
-                // field[9] = ignore_catalog_exclusions — defaults to 0 if absent
-                insertQuery.bindValue(":mapping_ignore_catalog_exclusions",
-                    fieldList.size() > 9 ? fieldList[9].toInt() : 0);
+                // field[9] = source_mode ('Catalog'/'Drive') — defaults to 'Catalog' if absent
+                insertQuery.bindValue(":mapping_source_mode",
+                    fieldList.size() > 9 ? fieldList[9] : QStringLiteral("Catalog"));
                 insertQuery.exec();
             }
         }
@@ -1605,7 +1605,7 @@ void Collection::saveMappingTableToFile()
             << "backup_last_size"          << "\t"
             << "strict_copy"               << "\t"
             << "conflict_mode"             << "\t"
-            << "ignore_catalog_exclusions" << "\t"
+            << "source_mode"               << "\t"
             << '\n';
 
         //Get data
