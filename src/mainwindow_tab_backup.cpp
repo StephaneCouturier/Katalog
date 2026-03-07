@@ -41,6 +41,7 @@
 #include "devicetreeview.h"
 #include "ui_mainwindow.h"
 #include <QMap>
+#include <QUrl>
 
 //UI----------------------------------------------------------------------------
 
@@ -380,7 +381,7 @@ void MainWindow::on_BackUp_pushButton_ExportPreview_clicked()
     QMessageBox msgBox;
     msgBox.setWindowTitle("Katalog");
     msgBox.setTextFormat(Qt::RichText);
-    QString exportFileName = "file://" + filePath;
+    QString exportFileName = QUrl::fromLocalFile(filePath).toString();
     msgBox.setText(tr("Results exported to the collection folder:")
                        +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
     msgBox.setIcon(QMessageBox::Information);
@@ -1370,7 +1371,7 @@ void MainWindow::loadBackUpMappingTable()
     //   col  9: source path        col 12: source date    col 13: target ID
     //   col 15: target active      col 16: target path    col 17: target file size
     const bool full = optionDisplayFullMappingTable;
-    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 2, !full);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden( 2, false); // Type: always visible
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 3, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 4, !full);
     ui->BackUp_tableView_CurrentMappings->setColumnHidden( 5, !full);

@@ -1527,7 +1527,7 @@
                     msgBox.setWindowTitle("Katalog");
                     msgBox.setTextFormat(Qt::RichText);
                     if(collection->databaseMode=="Memory" or fileSuffix=="csv"){
-                        exportFileName = "file://" + exportFileName;
+                        exportFileName = QUrl::fromLocalFile(exportFileName).toString();
                         msgBox.setText(tr("Results exported to the collection folder:")
                                        +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
                     }
