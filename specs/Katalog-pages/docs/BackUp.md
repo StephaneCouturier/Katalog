@@ -24,7 +24,7 @@ Necessary during the backup process, it is possible to trigger the copy of the f
 | operation | file process  |  Purpose                                                         |
 |-----------|---------------|------------------------------------------------------------------|
 | **Backup**    | A **copy** operation from a source catalog to a target catalog. | The source is never modified. The goal is redundancy and recovery. <br/> Multiple strategies will exist over time (full, incremental, sync). |
-| **Archive**   | A **move** operation from a source catalog to a target catalog. | Files are transferred and then removed from the source once the copy is verified. The goal is long-term offload and storage organisation. Empty directories left behind in the source are optionally cleaned up. |
+| **Archive**   | A **move** operation from a source catalog to a target catalog. | Files are transferred and then removed from the source once the copy is verified. The goal is long-term offload and storage organisation. Empty directories left behind in the source are **not** deleted. |
 
 
 
@@ -75,6 +75,13 @@ Cases B and C are currently left as reported conflicts. `Overwrite` and `RenameA
 > **Rename oldest — safety guarantee**: if the copy of the source file fails after the target has already been renamed, the renamed file is automatically restored to its original name. No data is lost.
 
 
+### Archive (file move)
+
+The Archive operation **moves** files from source to target instead of copying them. Source files are deleted after a confirmed successful transfer — if the transfer fails, the source file is left untouched.
+
+- On the **same filesystem**: the move is instant — no data is physically copied; only the file location changes.
+- **Across filesystems**: the file is first copied to the target, then deleted from the source once the copy is confirmed complete.
+
 ### Source Mode
 
 Each backup link has a **Source Mode** that controls what is used as the source during comparison and file copy.
@@ -91,13 +98,6 @@ The mode is stored in `device_mapping.mapping_source_mode` (TEXT, default `'Cata
 **UI:** the "Scan source drive directly" checkbox on the Create Link panel controls this field. Unchecked = Catalog (default), checked = Drive.
 
 > **Implementation status:** Drive mode is implemented for the Strict Copy path (`compareStrictFromDrive()` in `CatalogDifferenceEngine`). The Dedup path (`strictCopy=false`) currently falls back to the catalog index when Drive mode is selected — full Drive+Dedup support is a future backlog item.
-
-### Archive (file move)
-
-The Archive operation **moves** files from source to target instead of copying them. Source files are deleted after a confirmed successful transfer — if the transfer fails, the source file is left untouched.
-
-- On the **same filesystem**: the move is instant — no data is physically copied; only the file location changes.
-- **Across filesystems**: the file is first copied to the target, then deleted from the source once the copy is confirmed complete.
 
 ### LuckyBackup profile
 
@@ -262,6 +262,7 @@ After execution, a **backup report** lists:
 
 ### Future Backlog — Various
 Some ideas of developments for this screen:
+- **Archive source cleanup**: opt-in option to delete empty directories left behind in the source after an Archive (move) operation.
 - **Delete mode**: opt-in option to remove target files absent from source.
 - **Overwrite mode**: options per conflict (skip, overwrite, keep both, ask).
 - **Checksum comparison**: detect content changes even when name/size/date match.

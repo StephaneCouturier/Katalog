@@ -697,6 +697,12 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
         targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
     }
 
+    //Drive mode: replicate full directory tree first (preserves empty directories)
+    if (mapping.sourceDrive) {
+        DirectoryReplicator replicator(m_connectionName);
+        replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+    }
+
     //Run comparison (respects strictCopy setting)
     BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
 
