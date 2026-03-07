@@ -158,6 +158,7 @@ void MainWindow::on_Devices_pushButton_AddExcludeFolder_clicked()
         const QStringList folders = activeDevice->catalog->getExcludeFolders();
         QStringListModel *model = new QStringListModel(folders, this);
         ui->Devices_listView_ExcludeFolders->setModel(model);
+        collection->saveCatalogFilterTableToFile();
     }
 }
 //--------------------------------------------------------------------------
@@ -180,6 +181,7 @@ void MainWindow::on_Devices_listView_ExcludeFolders_customContextMenuRequested(c
             const QStringList folders = activeDevice->catalog->getExcludeFolders();
             QStringListModel *model = new QStringListModel(folders, this);
             ui->Devices_listView_ExcludeFolders->setModel(model);
+            collection->saveCatalogFilterTableToFile();
         }
     });
     contextMenu.exec(globalPos);

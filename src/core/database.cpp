@@ -414,6 +414,19 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 
+QString Database::getSQLCreateTableCatalogFilter()
+{
+    return QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS catalog_filter (
+            filter_id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            filter_catalog_id INTEGER NOT NULL,
+            filter_type       TEXT    NOT NULL DEFAULT 'exclude_folder',
+            filter_value      TEXT    NOT NULL,
+            UNIQUE(filter_catalog_id, filter_type, filter_value)
+        )
+    )");
+}
+
 //----------------------------------------------------------------------
 // Core database functions
 //----------------------------------------------------------------------
@@ -675,23 +688,9 @@ QSqlError Database::createAllTables(const QString &connectionName)
     error = executeSql(connectionName, getSQLCreateTableBackupMapping(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    //Migrate
-/*
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_CATALOG);
+    error = executeSql(connectionName, getSQLCreateTableCatalogFilter());
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_STORAGE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE_CATALOG);
-    if (error.type() != QSqlError::NoError) return error;
-
-    error = executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE_CATALOG);
-    if (error.type() != QSqlError::NoError) return error;
-*/
     return QSqlError(); // Success
 }
 

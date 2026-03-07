@@ -399,6 +399,7 @@
             newCatalogDevice->catalog->addExcludeFolder(folder);
         m_pendingExcludeFolders.clear();
         refreshCreateExcludeList();
+        collection->saveCatalogFilterTableToFile();
 
         //Add path to parent Storage device if empty
         Device parentStorageDevice;

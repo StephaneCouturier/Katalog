@@ -82,6 +82,7 @@ public:
     QString parameterFilePath;
     QString tagFilePath;
     QString mappingFilePath;
+    QString catalogFilterFilePath;
     void generateCollectionFilesPaths();
     void generateCollectionFiles();
 
@@ -97,6 +98,7 @@ public:
     void loadSearchHistoryFileToTable();
     void loadTagFileToTable();
     void loadMappingFileToTable();
+    void loadCatalogFilterFileToTable();
 
     //File saving
     void saveDeviceTableToFile();
@@ -106,6 +108,7 @@ public:
     void saveSearchHistoryTableToFile();
     void saveTagTableToFile();
     void saveMappingTableToFile();
+    void saveCatalogFilterTableToFile();
 
     //File deleting
     enum DeleteCatalogResult {

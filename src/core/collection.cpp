@@ -115,6 +115,7 @@ void Collection::generateCollectionFilesPaths()
     parameterFilePath           = folder + "/" + "parameters.csv";
     tagFilePath                 = folder + "/" + "tags.csv";
     mappingFilePath             = folder + "/" + "device_mapping.csv";
+    catalogFilterFilePath       = folder + "/" + "catalog_filter.csv";
 
     //v1.22 files
     deviceCatalogFilePath       = folder + "/" + "device_catalog.csv";
@@ -237,6 +238,7 @@ bool Collection::load()
     loadCatalogFilesToTable();
     loadSearchHistoryFileToTable();
     loadMappingFileToTable();
+    loadCatalogFilterFileToTable();
 
     //Add a default storage device, to force any new catalog to have one
     bool defaultsCreated = insertPhysicalStorageGroup();
@@ -273,6 +275,7 @@ void Collection::clearDatabaseData()
         queryDelete.exec("DELETE FROM statistics_storage");
         queryDelete.exec("DELETE FROM statistics_device");
         queryDelete.exec("DELETE FROM device_mapping");
+        queryDelete.exec("DELETE FROM catalog_filter");
         queryDelete.exec("DELETE FROM tag");
         queryDelete.exec("DELETE FROM search");
         queryDelete.exec("DELETE FROM folder");
@@ -1102,7 +1105,8 @@ void Collection::loadMappingFileToTable()
                                             mapping_backup_last_date,
                                             mapping_backup_last_size,
                                             mapping_strict_copy,
-                                            mapping_conflict_mode
+                                            mapping_conflict_mode,
+                                            mapping_ignore_catalog_exclusions
                                         )
                                         VALUES(
                                             :mapping_id,
@@ -1113,7 +1117,8 @@ void Collection::loadMappingFileToTable()
                                             :mapping_backup_last_date,
                                             :mapping_backup_last_size,
                                             :mapping_strict_copy,
-                                            :mapping_conflict_mode
+                                            :mapping_conflict_mode,
+                                            :mapping_ignore_catalog_exclusions
                                         )
                                         )");
                 insertQuery.prepare(insertQuerySQL);
@@ -1129,10 +1134,51 @@ void Collection::loadMappingFileToTable()
                 // field[8] = conflict_mode as TEXT (e.g. "Skip", "RenameOldest") — defaults to RenameOldest if absent
                 insertQuery.bindValue(":mapping_conflict_mode",
                     fieldList.size() > 8 ? fieldList[8] : QStringLiteral("RenameOldest"));
+                // field[9] = ignore_catalog_exclusions — defaults to 0 if absent
+                insertQuery.bindValue(":mapping_ignore_catalog_exclusions",
+                    fieldList.size() > 9 ? fieldList[9].toInt() : 0);
                 insertQuery.exec();
             }
         }
         mappingFile.close();
+    }
+}
+//----------------------------------------------------------------------
+void Collection::loadCatalogFilterFileToTable()
+{
+    if (databaseMode == "Memory") {
+        QFile filterFile(catalogFilterFilePath);
+        QTextStream textStream(&filterFile);
+
+        QSqlQuery queryDelete(QSqlDatabase::database(m_connectionName));
+        queryDelete.prepare("DELETE FROM catalog_filter");
+
+        if (!filterFile.open(QIODevice::ReadOnly)) {
+            return; // File does not exist yet — nothing to load
+        }
+        queryDelete.exec();
+
+        // Skip header line
+        textStream.readLine();
+
+        while (true) {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            QStringList fields = line.split('\t');
+            if (fields.size() < 3)
+                continue;
+            QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
+            insertQuery.prepare(QLatin1String(R"(
+                INSERT OR IGNORE INTO catalog_filter (filter_catalog_id, filter_type, filter_value)
+                VALUES (:catalog_id, :type, :value)
+            )"));
+            insertQuery.bindValue(":catalog_id", fields[0].toInt());
+            insertQuery.bindValue(":type",       fields[1]);
+            insertQuery.bindValue(":value",      fields[2]);
+            insertQuery.exec();
+        }
+        filterFile.close();
     }
 }
 //----------------------------------------------------------------------
@@ -1550,15 +1596,16 @@ void Collection::saveMappingTableToFile()
         QTextStream out(&mappingFile);
 
         //Prepare header line
-        out << "id"               << "\t"
-            << "name"             << "\t"
-            << "type"             << "\t"
-            << "device_source_id" << "\t"
-            << "device_target_id" << "\t"
-            << "backup_last_date" << "\t"
-            << "backup_last_size" << "\t"
-            << "strict_copy"      << "\t"
-            << "conflict_mode"    << "\t"
+        out << "id"                        << "\t"
+            << "name"                      << "\t"
+            << "type"                      << "\t"
+            << "device_source_id"          << "\t"
+            << "device_target_id"          << "\t"
+            << "backup_last_date"          << "\t"
+            << "backup_last_size"          << "\t"
+            << "strict_copy"               << "\t"
+            << "conflict_mode"             << "\t"
+            << "ignore_catalog_exclusions" << "\t"
             << '\n';
 
         //Get data
@@ -1584,6 +1631,28 @@ void Collection::saveMappingTableToFile()
             }
         }
         mappingFile.close();
+    }
+}
+//----------------------------------------------------------------------
+void Collection::saveCatalogFilterTableToFile()
+{
+    if (databaseMode == "Memory") {
+        QFile filterFile(catalogFilterFilePath);
+        QTextStream out(&filterFile);
+
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
+        query.prepare(QLatin1String("SELECT filter_catalog_id, filter_type, filter_value FROM catalog_filter ORDER BY filter_catalog_id, filter_type, filter_value"));
+        query.exec();
+
+        if (filterFile.open(QFile::WriteOnly | QFile::Text)) {
+            out << "catalog_id" << "\t" << "type" << "\t" << "value" << "\n";
+            while (query.next()) {
+                out << query.value(0).toString() << "\t"
+                    << query.value(1).toString() << "\t"
+                    << query.value(2).toString() << "\n";
+            }
+        }
+        filterFile.close();
     }
 }
 //----------------------------------------------------------------------
