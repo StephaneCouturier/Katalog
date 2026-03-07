@@ -311,13 +311,31 @@
             ui->Settings_checkBox_SettingsFileCaseSensitiveSort->setChecked(fileSortCaseSensitive);
 
             //BackUp Tab
+            // Repopulate type comboboxes with translated display text; DB values stored as userData
+            ui->BackUp_comboBox_MappingType->clear();
+            ui->BackUp_comboBox_MappingType->addItem(tr("All"),     QStringLiteral("All"));
+            ui->BackUp_comboBox_MappingType->addItem(tr("BackUp"),  QStringLiteral("Backup"));
+            ui->BackUp_comboBox_MappingType->addItem(tr("Archive"), QStringLiteral("Archive"));
+
+            ui->BackUp_comboBox_CreateMappingType->clear();
+            ui->BackUp_comboBox_CreateMappingType->addItem(tr("BackUp"),  QStringLiteral("Backup"));
+            ui->BackUp_comboBox_CreateMappingType->addItem(tr("Archive"), QStringLiteral("Archive"));
+
+            // Translation registrations for mapping table display values shown by DeviceMappingView.
+            // These strings have no dedicated widget; tr() here registers them in the MainWindow context.
+            (void)tr("Strict");         // Copy mode: copy by path even if already present elsewhere in target
+            (void)tr("Unique");         // Copy mode: skip files already present anywhere in target
+            (void)tr("Drive");          // Source mode: scan source filesystem directly
+            (void)tr("Skip");           // Conflict mode: do not copy, report conflict for review
+            (void)tr("Rename oldest");  // Conflict mode: rename the older file then copy
+
             QString filterMappingTable = settings.value("BackUp/FilterMappingTable", "Source").toString();
             if(filterMappingTable=="Target"){
                 ui->BackUp_radioButton_Target->setChecked(true);
             }
-            // Restore mapping type filter (default "Backup" matches old hardcoded base-query behaviour)
+            // Restore mapping type filter by DB value (userData), not display text
             const QString mappingTypeFilter = settings.value("BackUp/MappingTypeFilter", "Backup").toString();
-            const int mappingTypeIndex = ui->BackUp_comboBox_MappingType->findText(mappingTypeFilter);
+            const int mappingTypeIndex = ui->BackUp_comboBox_MappingType->findData(mappingTypeFilter);
             if (mappingTypeIndex >= 0)
                 ui->BackUp_comboBox_MappingType->setCurrentIndex(mappingTypeIndex);
             ui->BackUp_checkBox_OnlySelectedLinks->setChecked(

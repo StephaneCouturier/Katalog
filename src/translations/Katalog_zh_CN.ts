@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+92"/>
+        <location filename="../core/catalog.cpp" line="+127"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1741"/>
+        <location filename="../core/collection.cpp" line="+2218"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>此文件夹包含内存模式的收藏文件，但您当前处于文件模式。&lt;br/&gt;切换到内存模式或选择其他文件夹。</translation>
     </message>
@@ -50,7 +50,7 @@
 <context>
     <name>ExploreTreeModel</name>
     <message>
-        <location filename="../exploretreemodel.cpp" line="+37"/>
+        <location filename="../exploretreemodel.cpp" line="+39"/>
         <source>Folder</source>
         <translation>文件夹</translation>
     </message>
@@ -68,14 +68,14 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2369"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2269"/>
         <source>Include Checksum</source>
         <translation>包含校验和</translation>
     </message>
     <message>
-        <location line="+541"/>
+        <location line="+552"/>
         <location line="+46"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+301"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+364"/>
         <source>Verify Checksums</source>
         <translation>验证校验和</translation>
     </message>
@@ -136,12 +136,12 @@
         <translation>缺失的文件：</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+9382"/>
+        <location filename="../mainwindow.ui" line="+9774"/>
         <source>Include File Type</source>
         <translation>包含文件类型</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+262"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+808"/>
         <source>Copy Checksum</source>
@@ -222,7 +222,7 @@
         <translation type="vanished">无效的数据库主机名。</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+121"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+122"/>
         <source>Invalid hostname.</source>
         <translation>无效的主机名。</translation>
     </message>
@@ -252,8 +252,8 @@
         <translation>继续？</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
-        <location line="+167"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+130"/>
+        <location line="+159"/>
         <source>Metadata Extracted</source>
         <translation>元数据已提取</translation>
     </message>
@@ -263,10 +263,10 @@
         <translation>校验和已计算</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+189"/>
-        <location filename="../mainwindow.ui" line="-5962"/>
+        <location filename="../core/search.cpp" line="+245"/>
+        <location filename="../mainwindow.ui" line="-6481"/>
         <location line="+926"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1281"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1309"/>
         <source>Checksum</source>
         <translation>校验和</translation>
     </message>
@@ -297,18 +297,37 @@
         <translation>和</translation>
     </message>
     <message>
-        <location line="+3427"/>
-        <location line="+1738"/>
+        <location line="+3332"/>
+        <location line="+2352"/>
         <source>Include files checksum</source>
         <translation>包含文件校验和</translation>
     </message>
     <message>
-        <location line="+587"/>
+        <location line="-258"/>
         <source>Stop the cataloging (no data will be saved)</source>
         <translation>停止编目（不会保存任何数据）</translation>
     </message>
     <message>
-        <location line="+1114"/>
+        <location line="+1621"/>
+        <location line="+949"/>
+        <source>Backup</source>
+        <translation>备份</translation>
+    </message>
+    <message>
+        <location line="-944"/>
+        <location line="+949"/>
+        <location filename="../devicemappingview.cpp" line="+97"/>
+        <location filename="../mainwindow_setup.cpp" line="+318"/>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+714"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+68"/>
+        <source>Archive</source>
+        <translation>存档</translation>
+    </message>
+    <message>
+        <location line="-928"/>
         <source>Generate Profile</source>
         <translation>生成配置文件</translation>
     </message>
@@ -322,8 +341,8 @@
         <translation type="vanished">复制文件校验和</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
-        <location line="+30"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+285"/>
+        <location line="+32"/>
         <source>No backup links found.</source>
         <translation>未找到备份链接。</translation>
     </message>
@@ -333,43 +352,44 @@
         <translation>备份配置文件已创建。</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1549"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1556"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>正在保存</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
-        <location line="+72"/>
-        <location line="+149"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-165"/>
+        <location line="+68"/>
+        <location line="+145"/>
         <source>Indexed</source>
         <translation>已索引</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+443"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
-        <location line="+157"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+349"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-205"/>
+        <location line="+149"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+316"/>
         <source>File Types Updated</source>
         <translation>文件类型已更新</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
-        <location line="+160"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-165"/>
+        <location line="+152"/>
         <source>Counted</source>
         <translation>已计数</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-776"/>
         <source>Paused</source>
         <translation>已暂停</translation>
     </message>
     <message>
         <location line="+27"/>
-        <location line="+28"/>
+        <location line="+24"/>
         <location line="+18"/>
-        <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1080"/>
+        <location line="+34"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+964"/>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+54"/>
@@ -380,8 +400,13 @@
     </message>
     <message>
         <location line="-13"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-105"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-54"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-101"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-105"/>
+        <location line="+415"/>
+        <location line="+128"/>
+        <location line="+87"/>
+        <location line="+139"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-39"/>
         <source>Completed</source>
         <translation>已完成</translation>
     </message>
@@ -391,23 +416,26 @@
         <translation>已用空间</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-81"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-77"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-335"/>
+        <location line="+109"/>
+        <location line="+87"/>
         <source>Cancelled</source>
         <translation>已取消</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+39"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
-        <location line="+157"/>
+        <location line="+149"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-20"/>
         <location line="+22"/>
         <source>Loaded</source>
         <translation>已加载</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-104"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+448"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+465"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-71"/>
         <location line="+54"/>
@@ -415,13 +443,13 @@
         <translation>进行中</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+90"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+75"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-127"/>
         <source>Stopped</source>
         <translation>已停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+406"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+421"/>
         <source>MIME Verification Complete</source>
         <translation>MIME验证完成</translation>
     </message>
@@ -431,7 +459,7 @@
         <translation>打开报告</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-450"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-467"/>
         <source>Hidden</source>
         <translation>隐藏</translation>
     </message>
@@ -441,7 +469,7 @@
         <translation>元数据</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6363"/>
+        <location filename="../mainwindow.ui" line="-6570"/>
         <source>File metadata</source>
         <translation>文件元数据</translation>
     </message>
@@ -473,13 +501,13 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1870"/>
-        <location line="+1714"/>
+        <location line="+1817"/>
+        <location line="+2286"/>
         <source>Include files metadata</source>
         <translation>包含文件元数据</translation>
     </message>
     <message>
-        <location line="-1056"/>
+        <location line="-1518"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;检测实际MIME类型并识别不匹配项（耗时较长）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -489,15 +517,14 @@
         <translation>验证MIME类型</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+464"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+520"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Other</source>
         <translation>其他</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+109"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-29"/>
+        <location line="-29"/>
         <location line="+19"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -506,20 +533,20 @@
         <location line="+8"/>
         <location line="+15"/>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+638"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+655"/>
         <location line="+1"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-695"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-662"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-1529"/>
         <source>Show extended metadata (JSON)</source>
         <translation>显示扩展元数据（JSON）</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+692"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+659"/>
         <source>MIME Type</source>
         <translation>MIME类型</translation>
     </message>
@@ -560,18 +587,22 @@
         <translation>标题</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-362"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-254"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>复制JSON</translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-47"/>
+        <location line="+16"/>
+        <location line="+32"/>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-3"/>
         <source>Copied</source>
         <translation>已复制</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+8"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -618,29 +649,25 @@
         <translation>使用应用程序文件夹</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
         <source>MIME Type Only</source>
-        <translation>仅MIME类型</translation>
+        <translation type="vanished">仅MIME类型</translation>
     </message>
     <message>
-        <location line="+2"/>
         <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>媒体基本</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Extended Custom</source>
-        <translation>扩展自定义</translation>
+        <translation type="vanished">扩展自定义</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Extended Full</source>
-        <translation>扩展完整</translation>
+        <translation type="vanished">扩展完整</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="-11"/>
         <location line="+12"/>
         <source>Media Extended</source>
         <translation>媒体扩展</translation>
@@ -657,7 +684,7 @@
         <translation>您要&lt;span style=&apos;color: red&apos;;&gt;删除&lt;/span&gt;这个 %1 设备吗？</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+800"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>目录已更新：&lt;b&gt; %1 &lt;/b&gt;（%2 个跳过）</translation>
@@ -668,12 +695,12 @@
         <translation>虚拟设备已更新： </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1292"/>
+        <location filename="../mainwindow.ui" line="-1349"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;点击：立即停止（强制停止）&lt;/p&gt;&lt;p&gt;Ctrl+点击：当前目录完成后停止（温和停止）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-239"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-248"/>
         <source>The source directory does not exist.</source>
         <translation>源目录不存在。</translation>
     </message>
@@ -684,11 +711,11 @@
         <translation>源文件夹不包含任何文件。&lt;br/&gt;这可能意味着源为空或设备未挂载到此文件夹。&lt;br/&gt;您是否仍要保存（目录将为空）？</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+79"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-473"/>
-        <location line="+97"/>
-        <location line="+64"/>
-        <location line="+130"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+86"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-496"/>
+        <location line="+105"/>
+        <location line="+72"/>
+        <location line="+137"/>
         <location line="+140"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+249"/>
         <location line="+40"/>
@@ -696,8 +723,8 @@
         <translation>设备操作已在运行。</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1090"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1062"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1094"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1073"/>
         <source>Operation cancelled</source>
         <translation>操作已取消</translation>
     </message>
@@ -707,27 +734,27 @@
         <translation>当前目录完成后停止...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-7042"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
+        <location filename="../mainwindow.ui" line="-6915"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+822"/>
         <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="-1"/>
-        <location line="+57"/>
-        <location line="+47"/>
-        <location filename="../mainwindow.ui" line="+1009"/>
+        <location line="+53"/>
+        <location line="+45"/>
+        <location filename="../mainwindow.ui" line="+882"/>
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
         <location line="+40"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-484"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-466"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
-        <location line="+446"/>
+        <location line="+320"/>
         <location line="+4"/>
         <source>Search</source>
         <translation>搜索</translation>
@@ -739,7 +766,7 @@
     </message>
     <message>
         <location line="+3923"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+91"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+93"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
@@ -828,13 +855,13 @@
         <translation>重置</translation>
     </message>
     <message>
-        <location line="+11882"/>
+        <location line="+12393"/>
         <source>Port</source>
         <translation>端口</translation>
     </message>
     <message>
-        <location line="-2671"/>
-        <location line="+2650"/>
+        <location line="-3124"/>
+        <location line="+3103"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
@@ -850,26 +877,28 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+292"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-378"/>
+        <location filename="../mainwindow.cpp" line="+306"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-270"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-10407"/>
+        <location filename="../mainwindow.ui" line="-10918"/>
         <location line="+848"/>
         <location line="+891"/>
         <location line="+921"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-53"/>
+        <location line="+143"/>
+        <location line="+402"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-294"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-276"/>
         <source>Size</source>
         <translation>大小</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4690"/>
-        <location line="+6626"/>
+        <location filename="../mainwindow.ui" line="-4663"/>
+        <location line="+6599"/>
         <source>Device tree</source>
         <translation>设备树</translation>
     </message>
@@ -908,34 +937,57 @@
     </message>
     <message>
         <location line="+81"/>
-        <location line="+5080"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1486"/>
+        <location line="+5137"/>
+        <location line="+4396"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-95"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1514"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location line="-5042"/>
+        <location line="-9495"/>
         <source>Select the type of files</source>
         <translation>选择文件类型</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+476"/>
+        <location line="+6547"/>
+        <source>Catalog Parameters</source>
+        <translation>目录参数</translation>
+    </message>
+    <message>
+        <location line="+1283"/>
+        <source>Global Parameters</source>
+        <translation>全局参数</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Excluded from all catalogs</source>
+        <translation>从所有目录中排除</translation>
+    </message>
+    <message>
+        <location line="+547"/>
+        <source>BackUp &amp; Archive Links for device</source>
+        <translation>设备的备份 &amp; 存档链接</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <location filename="../mainwindow_setup.cpp" line="-6"/>
+        <location line="+216"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_create.cpp" line="-33"/>
         <location line="+19"/>
         <location line="+11"/>
         <location line="+92"/>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+904"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+921"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+77"/>
+        <location line="+62"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -970,7 +1022,7 @@
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3355"/>
+        <location filename="../mainwindow.ui" line="-5194"/>
         <source>only list folders in results</source>
         <translation>仅在结果中列出文件夹</translation>
     </message>
@@ -992,11 +1044,11 @@
         <translation>显示/隐藏有结果的目录</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-86"/>
-        <location line="+73"/>
-        <location line="+34"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <location filename="../mainwindow.ui" line="+129"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+631"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+505"/>
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1014,13 +1066,18 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+907"/>
+        <location line="+964"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2295"/>
+        <location line="+2413"/>
+        <location line="+38"/>
+        <location line="+24"/>
+        <location line="+38"/>
+        <location line="+24"/>
+        <location line="+179"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1029,16 +1086,11 @@
         <location line="+24"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+99"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+38"/>
-        <location line="+24"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3498"/>
+        <location line="-3696"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -1046,48 +1098,48 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2502"/>
+        <location line="+2640"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>总文件大小</translation>
     </message>
     <message>
-        <location line="-2464"/>
+        <location line="-2602"/>
         <source>Total Number of Files</source>
         <translation>文件总数</translation>
     </message>
     <message>
-        <location line="-1159"/>
+        <location line="-1216"/>
         <source>All active</source>
         <translation>全部激活</translation>
     </message>
     <message>
-        <location line="+1250"/>
+        <location line="+1307"/>
         <source>Import</source>
         <translation>导入</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-413"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-346"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-436"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-331"/>
         <location line="+22"/>
-        <location line="+35"/>
+        <location line="+20"/>
         <location line="+18"/>
         <location line="+14"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-166"/>
         <source>Explore</source>
         <translation>浏览</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
-        <location line="+81"/>
-        <location line="+70"/>
-        <location filename="../mainwindow.ui" line="-1783"/>
-        <location line="+936"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-146"/>
+        <location line="+77"/>
+        <location line="+66"/>
+        <location filename="../mainwindow.ui" line="-1840"/>
+        <location line="+993"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-191"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+101"/>
-        <location line="+64"/>
+        <location line="+109"/>
+        <location line="+72"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
         <location line="+39"/>
         <location line="+40"/>
@@ -1095,38 +1147,42 @@
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4529"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
-        <location line="+81"/>
-        <location line="+63"/>
+        <location filename="../mainwindow.ui" line="+4983"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-135"/>
+        <location line="+89"/>
+        <location line="+71"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location line="-5792"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
+        <location line="-6303"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1146"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location line="+2113"/>
+        <location line="+2170"/>
         <source>Explore a catalog</source>
         <translation>浏览目录</translation>
     </message>
     <message>
-        <location line="-8405"/>
-        <location line="+8784"/>
+        <location line="-8435"/>
+        <location line="+8814"/>
+        <location filename="../devicemappingview.cpp" line="+6"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+256"/>
         <source>Catalog</source>
         <translation>目录</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1400"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
+        <location filename="../mainwindow.ui" line="+1032"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+695"/>
+        <location line="+143"/>
+        <location line="+315"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-974"/>
         <location line="+241"/>
         <location line="+254"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
@@ -1134,31 +1190,39 @@
         <translation>路径</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1723"/>
+        <location filename="../mainwindow.ui" line="-1355"/>
         <source>Directories</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location line="-8695"/>
-        <location line="+688"/>
+        <location line="-8064"/>
+        <location line="+13153"/>
         <source>Show/Hide Filters</source>
         <translation>显示/隐藏筛选器</translation>
     </message>
     <message>
-        <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1220"/>
+        <location line="-13668"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1225"/>
         <source>Virtual</source>
         <translation>虚拟</translation>
     </message>
     <message>
-        <location line="+1252"/>
+        <location line="+990"/>
+        <location line="+1022"/>
+        <location line="+2502"/>
+        <location line="+1196"/>
+        <source>Use the criteria in the Search</source>
+        <translation>使用搜索条件</translation>
+    </message>
+    <message>
+        <location line="-4485"/>
         <location line="+5562"/>
-        <location line="+2975"/>
+        <location line="+2649"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location line="-3438"/>
+        <location line="-3112"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>选择...</translation>
@@ -1187,13 +1251,33 @@
         <translation>目录列表</translation>
     </message>
     <message>
-        <location line="+523"/>
+        <location line="+530"/>
         <source>The change will be applied only when Saving</source>
         <translation>更改仅在保存时应用</translation>
     </message>
     <message>
-        <location line="+271"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+975"/>
+        <location line="+159"/>
+        <location line="+2314"/>
+        <source>Excluded folders from this catalog</source>
+        <translation>从此目录中排除的文件夹</translation>
+    </message>
+    <message>
+        <location line="-2299"/>
+        <location line="+2314"/>
+        <location line="+574"/>
+        <source>Folder path or pattern to exclude</source>
+        <translation>要排除的文件夹路径或模式</translation>
+    </message>
+    <message>
+        <location line="-2868"/>
+        <location line="+2314"/>
+        <location line="+607"/>
+        <source>Add</source>
+        <translation>添加</translation>
+    </message>
+    <message>
+        <location line="-2794"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+980"/>
         <source>Comment 1</source>
         <translation>注释 1</translation>
     </message>
@@ -1258,8 +1342,8 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+1870"/>
-        <location line="+630"/>
+        <location line="+2008"/>
+        <location line="+913"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
@@ -1267,14 +1351,14 @@
         <translation>文件数量</translation>
     </message>
     <message>
-        <location line="-2384"/>
+        <location line="-2805"/>
         <source>Click to open the file</source>
         <translation>点击打开文件</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-153"/>
-        <location line="+81"/>
-        <location line="+70"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-145"/>
+        <location line="+77"/>
+        <location line="+66"/>
         <location filename="../mainwindow.ui" line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
@@ -1287,7 +1371,7 @@
         <translation>创建目录</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+503"/>
         <source>2- </source>
         <translation>2- </translation>
     </message>
@@ -1305,17 +1389,15 @@
         <translation type="vanished">其他选项</translation>
     </message>
     <message>
-        <location line="+258"/>
         <source>Directories to exclude from catalogs</source>
-        <translation>从目录中排除的目录</translation>
+        <translation type="vanished">从目录中排除的目录</translation>
     </message>
     <message>
-        <location line="+32"/>
         <source>Add directory to exclude</source>
-        <translation>添加要排除的目录</translation>
+        <translation type="vanished">添加要排除的目录</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="-454"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
@@ -1335,8 +1417,8 @@
         <translation>添加新的存储设备</translation>
     </message>
     <message>
-        <location line="-2415"/>
-        <location line="+2418"/>
+        <location line="-2112"/>
+        <location line="+2115"/>
         <source>Add Storage</source>
         <translation>添加存储</translation>
     </message>
@@ -1357,11 +1439,12 @@
     </message>
     <message>
         <location line="+29"/>
+        <location line="+2637"/>
         <source>Generate</source>
         <translation>生成</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="-2581"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>启动目录编制并保存到文件</translation>
     </message>
@@ -1371,7 +1454,7 @@
         <translation>创建目录</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+441"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
@@ -1381,7 +1464,7 @@
         <translation>选择源路径</translation>
     </message>
     <message>
-        <location line="-1657"/>
+        <location line="-1566"/>
         <source>Tree options</source>
         <translation>树选项</translation>
     </message>
@@ -1401,7 +1484,7 @@
         <translation>插入虚拟组</translation>
     </message>
     <message>
-        <location line="-1631"/>
+        <location line="-1688"/>
         <source>View</source>
         <translation>视图</translation>
     </message>
@@ -1411,12 +1494,12 @@
         <translation>存储列表</translation>
     </message>
     <message>
-        <location line="+576"/>
+        <location line="+583"/>
         <source>Catalog fields</source>
         <translation>目录字段</translation>
     </message>
     <message>
-        <location line="+361"/>
+        <location line="+411"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>可用空间</translation>
@@ -1427,17 +1510,17 @@
         <translation>设备图片</translation>
     </message>
     <message>
-        <location line="-662"/>
+        <location line="-719"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>记录所有设备的值，用于整个集合的统计。</translation>
     </message>
     <message>
-        <location line="+784"/>
+        <location line="+841"/>
         <source>Storage fields</source>
         <translation>存储字段</translation>
     </message>
     <message>
-        <location line="+5405"/>
+        <location line="+5859"/>
         <source>Icons</source>
         <translation>图标</translation>
     </message>
@@ -1483,55 +1566,61 @@
         <translation>数据管理</translation>
     </message>
     <message>
-        <location line="-12107"/>
-        <location line="+9848"/>
+        <location line="-12618"/>
+        <location line="+7033"/>
+        <location line="+2314"/>
+        <location line="+190"/>
+        <location line="+459"/>
         <source>Select the path</source>
         <translation>选择路径</translation>
     </message>
     <message>
-        <location line="-9845"/>
-        <location line="+6826"/>
-        <location line="+3022"/>
-        <location line="+453"/>
+        <location line="-9993"/>
+        <location line="+6833"/>
+        <location line="+200"/>
+        <location line="+2314"/>
+        <location line="+190"/>
+        <location line="+459"/>
+        <location line="+500"/>
         <source>Select</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location line="-10711"/>
-        <location line="+8264"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-944"/>
-        <location line="+2694"/>
+        <location line="-10879"/>
+        <location line="+8294"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-949"/>
+        <location line="+2727"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>存储</translation>
     </message>
     <message>
-        <location line="+3868"/>
+        <location line="+4322"/>
         <source>New</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location line="-5498"/>
+        <location line="-6009"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>设备</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+657"/>
+        <location line="+714"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>总空间</translation>
     </message>
     <message>
-        <location line="-569"/>
+        <location line="-626"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3299"/>
+        <location line="+3494"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>重新加载</translation>
@@ -1562,24 +1651,24 @@
         <translation>编辑存储所有记录的文件</translation>
     </message>
     <message>
-        <location line="-1970"/>
+        <location line="-2108"/>
         <source>Add Virtual</source>
         <translation>添加虚拟</translation>
     </message>
     <message>
-        <location line="-1673"/>
+        <location line="-1730"/>
         <source>Edit List</source>
         <translation>编辑列表</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4390"/>
+        <location line="+4868"/>
         <source>Full Table</source>
         <translation>完整表格</translation>
     </message>
     <message>
-        <location line="-4085"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
+        <location line="-4563"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+80"/>
         <source>Device Name</source>
         <translation>设备名称</translation>
     </message>
@@ -1596,7 +1685,7 @@
         <translation>设备ID</translation>
     </message>
     <message>
-        <location line="+3155"/>
+        <location line="+3350"/>
         <source>Edit Statistics</source>
         <translation>编辑统计</translation>
     </message>
@@ -1658,22 +1747,22 @@
         <translation>重新加载存储标签的文件</translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+1097"/>
         <source>Link name</source>
         <translation>链接名称</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+91"/>
         <source>Create link</source>
         <translation>创建链接</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="-612"/>
         <source>Catalog Links</source>
         <translation>目录链接</translation>
     </message>
     <message>
-        <location line="+364"/>
+        <location line="-265"/>
         <source>Linked</source>
         <translation>已链接</translation>
     </message>
@@ -1683,15 +1772,84 @@
         <translation>未链接</translation>
     </message>
     <message>
-        <location line="+124"/>
-        <location line="+43"/>
+        <location line="+174"/>
+        <source>Export</source>
+        <translation>导出</translation>
+    </message>
+    <message>
+        <location line="+331"/>
+        <source>Update catalogs</source>
+        <translation>更新目录</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1271"/>
+        <source>Replicate directories</source>
+        <translation>复制目录</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-6"/>
+        <location line="+1252"/>
+        <location line="+16"/>
+        <source>Preview Backup</source>
+        <translation>备份预览</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1273"/>
+        <location line="+280"/>
+        <location line="+976"/>
+        <location line="+14"/>
+        <source>Run Backup</source>
+        <translation>执行备份</translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <location line="+53"/>
+        <source>Load Catalogs</source>
+        <translation>加载目录</translation>
+    </message>
+    <message>
+        <location line="-37"/>
+        <location line="+53"/>
         <source>without links</source>
         <translation>无链接</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+73"/>
+        <source>Strict copy</source>
+        <translation>严格复制</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Scan source drive directly</source>
+        <translation>直接扫描源驱动器</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-78"/>
+        <source>On conflict</source>
+        <translation>发生冲突时</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location filename="../devicemappingview.cpp" line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="-211"/>
+        <source>Skip</source>
+        <translation>跳过</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../devicemappingview.cpp" line="+2"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Rename oldest</source>
+        <translation>重命名最旧的</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-402"/>
+        <location filename="../mainwindow_setup.cpp" line="-246"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
@@ -1743,12 +1901,12 @@
         <translation>数据模式&quot;SQLite本地文件&quot;</translation>
     </message>
     <message>
-        <location line="-3867"/>
+        <location line="-4321"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>将选项应用于选择设备树。</translation>
     </message>
     <message>
-        <location line="+1802"/>
+        <location line="+1794"/>
         <source>Type of source</source>
         <translation>源类型</translation>
     </message>
@@ -1763,7 +1921,7 @@
         <translation>Samba共享</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+59"/>
         <source>IP address</source>
         <translation>IP地址</translation>
     </message>
@@ -1773,52 +1931,59 @@
         <translation>用户名</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+84"/>
         <source>Connection settings</source>
         <translation>连接设置</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="-178"/>
         <source>Verify connection</source>
         <translation>验证连接</translation>
     </message>
     <message>
-        <location line="+622"/>
+        <location line="+936"/>
+        <location filename="../devicemappingview.cpp" line="-14"/>
+        <location filename="../mainwindow_setup.cpp" line="+233"/>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-927"/>
+        <location line="+164"/>
+        <location line="+145"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+38"/>
+        <location line="+30"/>
         <source>BackUp</source>
         <translation>备份</translation>
     </message>
     <message>
-        <location line="+15"/>
         <source>BackUp links for device</source>
-        <translation>设备备份链接</translation>
+        <translation type="vanished">设备备份链接</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+36"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;重新加载链接并刷新选定设备的统计信息。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+308"/>
         <source>Create new link</source>
         <translation>创建新链接</translation>
     </message>
     <message>
-        <location line="+313"/>
+        <location line="-236"/>
         <source>Coverage</source>
         <translation>覆盖率</translation>
     </message>
     <message>
-        <location line="+246"/>
         <source>Load Source Catalogs</source>
-        <translation>加载源目录</translation>
+        <translation type="vanished">加载源目录</translation>
     </message>
     <message>
-        <location line="+43"/>
         <source>Load Target Catalogs</source>
-        <translation>加载目标目录</translation>
+        <translation type="vanished">加载目标目录</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+1100"/>
         <source>File list display</source>
         <translation>文件列表显示</translation>
     </message>
@@ -1940,16 +2105,20 @@
         <translation>打开</translation>
     </message>
     <message>
-        <location line="-1017"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-725"/>
+        <location line="-1333"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-681"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-840"/>
         <source>Open file</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location line="+1712"/>
+        <location line="+2028"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-197"/>
+        <location line="+89"/>
+        <location line="+71"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+120"/>
+        <location line="+109"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>打开文件夹</translation>
@@ -1982,21 +2151,21 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-9370"/>
+        <location filename="../mainwindow.ui" line="-9881"/>
         <location line="+891"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2009"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2037"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+644"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-816"/>
+        <location line="+3065"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+611"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-690"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
         <location filename="../mainwindow.ui" line="-1265"/>
-        <location line="+9151"/>
+        <location line="+9662"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -2006,54 +2175,55 @@
         <translation>日期</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-430"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-486"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+77"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>选择要在此新目录中编制目录的目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+12"/>
+        <location filename="../mainwindow_setup.cpp" line="-225"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>选择此集合的目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5603"/>
-        <location line="+2437"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3525"/>
+        <location filename="../mainwindow.ui" line="-6114"/>
+        <location line="+2494"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3553"/>
         <location line="+241"/>
         <location line="+254"/>
         <source>Total Size</source>
         <translation>总大小</translation>
     </message>
     <message>
-        <location line="-1417"/>
-        <location line="+1600"/>
+        <location line="-1467"/>
+        <location line="+1650"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+700"/>
         <source>Source Path</source>
         <translation>源路径</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1512"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+635"/>
+        <location filename="../mainwindow.ui" line="-1566"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-683"/>
+        <location line="+652"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>文件类型</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3666"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-60"/>
+        <location filename="../mainwindow.ui" line="+4141"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+495"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>文件大小</translation>
     </message>
     <message>
-        <location line="-3196"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-898"/>
+        <location line="-3617"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-915"/>
         <source>Label</source>
         <translation>标签</translation>
     </message>
@@ -2064,18 +2234,18 @@
         <translation>文件系统</translation>
     </message>
     <message>
-        <location line="+3455"/>
+        <location line="+3247"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>总计</translation>
     </message>
     <message>
-        <location line="-4254"/>
+        <location line="-4103"/>
         <source>Free</source>
         <translation>可用</translation>
     </message>
     <message>
-        <location line="+733"/>
+        <location line="+790"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>序列号</translation>
@@ -2087,17 +2257,17 @@
         <translation>构建日期</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1383"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1283"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>该目录已分配给此虚拟设备。</translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+37"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
         <translation>您要从此虚拟设备中取消分配此目录吗？</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+39"/>
         <source>Deletion failed</source>
         <translation>删除失败</translation>
     </message>
@@ -2107,7 +2277,7 @@
         <translation>&lt;br/&gt;已记录此集合的快照：&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;目录&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;文件数量：&lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (已添加：&lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;总文件大小：&lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (已添加：&lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;存储&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;存储可用空间：&lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (已添加：&lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;存储总空间：&lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (已添加：&lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+305"/>
+        <location line="+327"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>已经存在具有此名称的目录：&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2130,12 +2300,12 @@
         <location line="+495"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Parent ID</source>
         <translation>父ID</translation>
     </message>
     <message>
-        <location line="-3531"/>
+        <location line="-3559"/>
         <source>External ID</source>
         <translation>外部ID</translation>
     </message>
@@ -2207,7 +2377,12 @@
         <translation>文件路径</translation>
     </message>
     <message>
-        <location line="+623"/>
+        <location line="+292"/>
+        <source>Indexing - Start: %1 | End: %2 | Duration: %3</source>
+        <translation>索引 - 开始: %1 | 结束: %2 | 持续时间: %3</translation>
+    </message>
+    <message>
+        <location line="+348"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>保存对目录定义的更改？&lt;br/&gt;</translation>
     </message>
@@ -2237,12 +2412,12 @@
         <translation>是完整设备</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+12"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>（必须更新目录以反映这些更改）</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+31"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation>使用新标准更新目录内容？
@@ -2373,7 +2548,7 @@
         <translation>选定的设备必须是目录。请尝试使用不同的设备ID</translation>
     </message>
     <message>
-        <location line="-2033"/>
+        <location line="-2061"/>
         <location line="+241"/>
         <location line="+254"/>
         <source>Used space</source>
@@ -2390,7 +2565,7 @@
         <translation>的</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6211"/>
+        <location filename="../mainwindow.ui" line="-6268"/>
         <location line="+1989"/>
         <location line="+108"/>
         <location line="+553"/>
@@ -2405,8 +2580,8 @@
         <translation>定义如何使用搜索文本。</translation>
     </message>
     <message>
-        <location line="+5959"/>
-        <location line="+1807"/>
+        <location line="+5988"/>
+        <location line="+2297"/>
         <source>Include Hidden files</source>
         <translation>包括隐藏文件</translation>
     </message>
@@ -2416,17 +2591,17 @@
         <translation>跟随符号链接</translation>
     </message>
     <message>
-        <location line="+400"/>
+        <location line="-422"/>
         <source>Generate a catalog name based on the path.</source>
         <translation>基于路径生成目录名称。</translation>
     </message>
     <message>
-        <location line="-9046"/>
+        <location line="-8743"/>
         <source>Reset all filters</source>
         <translation>重置所有筛选器</translation>
     </message>
     <message>
-        <location line="+11138"/>
+        <location line="+11649"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -2525,12 +2700,13 @@
         <translation>首先选择要应用于下面所有结果的过程。</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-960"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+15"/>
         <source>Results exported to the collection folder:</source>
         <translation>结果已导出到集合文件夹：</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Results exported a new Catalog:</source>
         <translation>结果已导出新目录：</translation>
     </message>
@@ -2765,17 +2941,30 @@
         <translation>始终保留每个目录的一个备份</translation>
     </message>
     <message>
-        <location line="-5425"/>
+        <location line="-5936"/>
         <source>Used</source>
         <translation>已用</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+97"/>
         <source>Remove this directory</source>
-        <translation>删除此目录</translation>
+        <translation type="vanished">删除此目录</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+18"/>
+        <location line="+148"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-508"/>
+        <source>Select the directory to exclude</source>
+        <translation>选择要排除的目录</translation>
+    </message>
+    <message>
+        <location line="-80"/>
+        <location line="+106"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+35"/>
+        <source>Remove</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <location line="+49"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>为此新目录提供名称。&lt;br/&gt;</translation>
     </message>
@@ -2801,7 +2990,7 @@
         <translation>选择不同的名称并重试。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4868"/>
+        <location filename="../mainwindow.ui" line="+5379"/>
         <source>Check at start up</source>
         <translation>启动时检查</translation>
     </message>
@@ -2810,7 +2999,7 @@
         <translation type="vanished">包括隐藏文件</translation>
     </message>
     <message>
-        <location line="-3999"/>
+        <location line="-4453"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
@@ -2820,28 +3009,31 @@
         <translation>&lt;br/&gt;&lt;b&gt;欢迎使用Katalog！&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;看起来这是第一次运行。&lt;br/&gt;&lt;br/&gt;已应用以下设置：&lt;br/&gt; - 语言：&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - 主题：&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;您可以在选项卡%3中更改这些设置。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1057"/>
+        <location filename="../mainwindow.ui" line="-1114"/>
         <source>Snapshot</source>
         <translation>快照</translation>
     </message>
     <message>
-        <location line="+3588"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
+        <location line="+3783"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-141"/>
+        <location line="+332"/>
+        <location line="+759"/>
         <source>Source</source>
         <translation>源</translation>
     </message>
     <message>
-        <location line="-3549"/>
+        <location line="-3744"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;如果设备可用，更新所有活动的目录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1250"/>
+        <location line="+1307"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;从VVV导入卷列表&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-216"/>
+        <location line="+3862"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
         <location line="+117"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-157"/>
@@ -2852,32 +3044,32 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+291"/>
+        <location filename="../mainwindow_setup.cpp" line="+325"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>当前版本：v%1 &lt;br/&gt;&lt;br/&gt;有新版本可用：&lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; 在&lt;a href=&apos;%3&apos;&gt;发布说明&lt;/a&gt;中查找新功能列表&lt;br/&gt;&lt;br/&gt;您想要下载吗？</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-378"/>
+        <location filename="../mainwindow.ui" line="-4240"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+770"/>
         <source>Storage ID</source>
         <translation>存储ID</translation>
     </message>
     <message>
-        <location line="-840"/>
-        <location line="+936"/>
+        <location line="-897"/>
+        <location line="+993"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;如果设备可用，更新选定目录的文件&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-2"/>
         <location filename="../mainwindow.ui" line="+1196"/>
-        <location line="+1273"/>
+        <location line="+1274"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-8956"/>
+        <location filename="../mainwindow.ui" line="-9014"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>清除搜索文本中的字符，如 _ - . ,</translation>
     </message>
@@ -2893,12 +3085,12 @@
         <translation>修改日期</translation>
     </message>
     <message>
-        <location line="+7938"/>
+        <location line="+8449"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>启动应用程序时验证是否有新版本的Katalog可用。</translation>
     </message>
     <message>
-        <location line="-5314"/>
+        <location line="-5825"/>
         <source>Show/Hide search history</source>
         <translation>显示/隐藏搜索历史</translation>
     </message>
@@ -2924,7 +3116,7 @@
         <translation>搜索历史</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-287"/>
+        <location filename="../mainwindow_setup.cpp" line="-321"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;在下一个屏幕上，选择现有的集合文件夹或创建一个新的。</translation>
     </message>
@@ -2959,17 +3151,17 @@
         <translation>排除</translation>
     </message>
     <message>
-        <location line="+5532"/>
+        <location line="+5620"/>
         <source>is full device</source>
         <translation>是完整设备</translation>
     </message>
     <message>
-        <location line="+2198"/>
+        <location line="+1807"/>
         <source>catalog is for the full device</source>
         <translation>目录是完整设备的</translation>
     </message>
     <message>
-        <location line="-6638"/>
+        <location line="-6335"/>
         <location line="+888"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>选择基于下一个条件搜索重复项</translation>
@@ -2990,18 +3182,18 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;结果应完全匹配文本（对字母大小写敏感）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+10695"/>
+        <location line="+11206"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>启动时预加载最后选择的目录以加快下一次搜索</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-607"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-574"/>
         <source>Move file to Trash</source>
         <translation>移动文件到回收站</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+141"/>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-1115"/>
         <location line="+64"/>
@@ -3045,13 +3237,13 @@
         <translation>删除失败。</translation>
     </message>
     <message>
-        <location line="-200"/>
+        <location line="-182"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-214"/>
         <source>Delete file</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+138"/>
         <source>Move
 %1
 to the trash?</source>
@@ -3065,25 +3257,25 @@ to the trash?</source>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;删除&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;？</translation>
     </message>
     <message>
-        <location line="-337"/>
+        <location line="-308"/>
         <source>Tag this folder</source>
         <translation>标记此文件夹</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-11922"/>
+        <location filename="../mainwindow.ui" line="-12433"/>
         <source>Selection</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location line="-356"/>
+        <location line="-329"/>
         <location line="+32"/>
-        <location line="+7962"/>
+        <location line="+7992"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>展开1级、2级或折叠</translation>
     </message>
     <message>
-        <location line="+2213"/>
+        <location line="+2351"/>
         <source>all records</source>
         <translation>所有记录</translation>
     </message>
@@ -3100,21 +3292,20 @@ to the trash?</source>
         <translation>仅快照</translation>
     </message>
     <message>
-        <location line="-6897"/>
+        <location line="-7092"/>
         <location line="+108"/>
         <location line="+553"/>
         <location line="+108"/>
-        <location line="+6522"/>
+        <location line="+6710"/>
         <source>Device</source>
         <translation>设备</translation>
     </message>
     <message>
-        <location line="+64"/>
         <source>Delete selected</source>
-        <translation>删除选定的</translation>
+        <translation type="vanished">删除选定的</translation>
     </message>
     <message>
-        <location line="+367"/>
+        <location line="+92"/>
         <source>as Source</source>
         <translation>作为源</translation>
     </message>
@@ -3124,17 +3315,17 @@ to the trash?</source>
         <translation>作为目标</translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+737"/>
         <source>Select Source catalog</source>
         <translation>选择源目录</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+53"/>
         <source>Select Target catalog</source>
         <translation>选择目标目录</translation>
     </message>
     <message>
-        <location line="+717"/>
+        <location line="+848"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation>集合数据保存到计算机本地的.idx或.csv文件。</translation>
     </message>
@@ -3160,7 +3351,7 @@ to the trash?</source>
         <translation>打开设置文件</translation>
     </message>
     <message>
-        <location line="-2834"/>
+        <location line="-3288"/>
         <source>Display folders</source>
         <translation>显示文件夹</translation>
     </message>
@@ -3175,7 +3366,7 @@ to the trash?</source>
         <translation>首先排序文件夹</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+164"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+153"/>
         <source>Copy folder name</source>
         <translation>复制文件夹名称</translation>
     </message>
@@ -3186,41 +3377,37 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+584"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+551"/>
         <source>orderValue</source>
         <translation>排序值</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1650"/>
+        <location filename="../mainwindow.ui" line="-1707"/>
         <location line="+21"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-245"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Device Type</source>
         <translation>设备类型</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-360"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>选定的目录包含超过%1个文件。&lt;br/&gt;打开可能需要几分钟。&lt;br/&gt;继续？</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5387"/>
+        <location filename="../mainwindow.ui" line="+5898"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>内存</translation>
     </message>
     <message>
-        <location line="-11587"/>
-        <location line="+1022"/>
-        <location line="+2502"/>
-        <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
-        <translation>在搜索中使用文本条件</translation>
+        <translation type="vanished">在搜索中使用文本条件</translation>
     </message>
     <message>
-        <location line="-1906"/>
+        <location line="-9284"/>
         <source>Differences on</source>
         <translation>差异基于</translation>
     </message>
@@ -3234,6 +3421,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="-2811"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-457"/>
         <source>File name</source>
         <translation>文件名</translation>
     </message>
@@ -3248,7 +3436,7 @@ to the trash?</source>
         <translation>文件夹条件</translation>
     </message>
     <message>
-        <location line="+4836"/>
+        <location line="+5031"/>
         <source>Graphic Start Date</source>
         <translation>图形开始日期</translation>
     </message>
@@ -3258,17 +3446,17 @@ to the trash?</source>
         <translation>选择日期</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2367"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2378"/>
         <source>Include Metadata</source>
         <translation>包括元数据</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+456"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+447"/>
         <source>Local disk</source>
         <translation>本地磁盘</translation>
     </message>
     <message>
-        <location line="-685"/>
+        <location line="-676"/>
         <source>The directory does not exist. Create it?</source>
         <translation>目录不存在。创建它？</translation>
     </message>
@@ -3278,7 +3466,7 @@ to the trash?</source>
         <translation>数据库文件不存在。创建它？</translation>
     </message>
     <message>
-        <location line="+318"/>
+        <location line="+306"/>
         <source>Collection Upgrade Required</source>
         <translation>需要升级集合</translation>
     </message>
@@ -3338,12 +3526,12 @@ to the trash?</source>
         <translation>退出应用程序</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+52"/>
         <source>Select the database to open:</source>
         <translation>选择要打开的数据库：</translation>
     </message>
     <message>
-        <location line="-292"/>
+        <location line="-283"/>
         <source>Select the database to create and open:</source>
         <translation>选择要创建和打开的数据库：</translation>
     </message>
@@ -3353,7 +3541,7 @@ to the trash?</source>
         <translation>存储设备列表中的某些更改尚未保存。&lt;br/&gt;保存并退出、丢弃并退出，还是取消退出？</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+334"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+325"/>
         <source> Physical Group</source>
         <translation>物理组</translation>
     </message>
@@ -3363,14 +3551,14 @@ to the trash?</source>
         <translation>虚拟设备</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_tags.cpp" line="+91"/>
+        <location filename="../mainwindow_tab_tags.cpp" line="+67"/>
         <source>Remove this tag</source>
         <translation>删除此标签</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="-72"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+557"/>
+        <location line="+431"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1298"/>
         <source>Catalog with results</source>
@@ -3378,11 +3566,11 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1163"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+450"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1180"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3392,17 +3580,17 @@ to the trash?</source>
         <translation>映射名称</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Source ID</source>
         <translation>源ID</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3533"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3561"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Active</source>
         <translation>活动</translation>
     </message>
@@ -3424,12 +3612,218 @@ to the trash?</source>
         <translation>目标ID</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-1096"/>
+        <location line="+332"/>
+        <location line="+765"/>
         <source>Target</source>
         <translation>目标</translation>
     </message>
     <message>
+        <location line="-1201"/>
+        <location line="+1270"/>
+        <source>Run Archive</source>
+        <translation>执行存档</translation>
+    </message>
+    <message>
+        <location line="-1265"/>
+        <location line="+1268"/>
+        <source>Preview Archive</source>
+        <translation>存档预览</translation>
+    </message>
+    <message>
+        <location line="-1253"/>
+        <source>Invert (swap source and target)</source>
+        <translation>反转（交换源和目标）</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+111"/>
+        <location line="+224"/>
+        <location line="+444"/>
+        <source>Select a mapping first.</source>
+        <translation>请先选择一个链接。</translation>
+    </message>
+    <message>
+        <location line="-757"/>
+        <location line="+108"/>
+        <location line="+224"/>
+        <source>Both source and target must be Catalog devices.</source>
+        <translation>源和目标都必须是目录设备。</translation>
+    </message>
+    <message>
+        <location line="-320"/>
+        <location line="+62"/>
+        <source>Replicate</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location line="-61"/>
+        <location line="+332"/>
+        <source>%1 not available</source>
+        <translation>%1 不可用</translation>
+    </message>
+    <message>
+        <location line="-321"/>
+        <location line="+90"/>
+        <location line="+243"/>
+        <source>A catalog update is already in progress. Please wait and try again.</source>
+        <translation>目录更新已在进行中。请等待并重试。</translation>
+    </message>
+    <message>
+        <location line="-281"/>
+        <source>Created</source>
+        <translation>已创建</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Already existing</source>
+        <translation>已存在</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+631"/>
+        <source>Errors</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location line="-218"/>
+        <location line="+239"/>
+        <location line="+74"/>
+        <source>Move</source>
+        <translation>移动</translation>
+    </message>
+    <message>
+        <location line="-313"/>
+        <location line="+239"/>
+        <location line="+74"/>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location line="-312"/>
+        <location line="+240"/>
+        <source>Already in target</source>
+        <translation>已在目标中</translation>
+    </message>
+    <message>
+        <location line="-154"/>
+        <location line="+32"/>
+        <source>%1s</source>
+        <translation>%1秒</translation>
+    </message>
+    <message>
+        <location line="-30"/>
+        <location line="+32"/>
+        <source>%1m %2s</source>
+        <translation>%1分%2秒</translation>
+    </message>
+    <message>
+        <location line="-30"/>
+        <location line="+32"/>
+        <source>%1h %2m</source>
+        <translation>%1小时%2分</translation>
+    </message>
+    <message>
+        <location line="-26"/>
+        <source>Moving</source>
+        <translation>移动中</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Copying</source>
+        <translation>复制中</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <location line="+143"/>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <location line="-128"/>
+        <source>Moved</source>
+        <translation>已移动</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+33"/>
+        <source>Archived</source>
+        <translation>已存档</translation>
+    </message>
+    <message>
+        <location line="-25"/>
+        <location line="+135"/>
+        <source>Conflict</source>
+        <translation>冲突</translation>
+    </message>
+    <message>
+        <location line="-127"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Report</source>
+        <translation>报告</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+23"/>
+        <source>Conflicts</source>
+        <translation>冲突</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Insufficient disk space - Required: %1, Available: %2, Missing: %3</source>
+        <translation>磁盘空间不足 - 需要: %1，可用: %2，缺少: %3</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Low target space: %1 remaining after operation</source>
+        <translation>目标空间不足：操作后剩余 %1</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>File Name</source>
+        <translation>文件名</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source> — source &amp; target offline</source>
+        <translation> — 源 &amp; 目标离线</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source> — source offline</source>
+        <translation> — 源离线</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source> — target offline</source>
+        <translation> — 目标离线</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Preview</source>
+        <translation>预览</translation>
+    </message>
+    <message>
+        <location line="+261"/>
+        <source>Copy mode</source>
+        <translation>复制模式</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Source mode</source>
+        <translation>源模式</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Size Diff.</source>
         <translation>大小差异</translation>
     </message>
@@ -3454,48 +3848,52 @@ to the trash?</source>
         <translation>日期差异</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+70"/>
         <source>Parent Device</source>
         <translation>父设备</translation>
     </message>
     <message>
-        <location line="+76"/>
-        <location line="+5"/>
+        <location line="+168"/>
+        <source>Select a source catalog first.</source>
+        <translation>请先选择源目录。</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select a target catalog first.</source>
+        <translation>请先选择目标目录。</translation>
+    </message>
+    <message>
         <source>Populate the lists first (One or both device lists are empty).</source>
-        <translation>首先填充列表（一个或两个设备列表为空）。</translation>
+        <translation type="vanished">首先填充列表（一个或两个设备列表为空）。</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Invalid selection model</source>
-        <translation>无效的选择模型</translation>
+        <translation type="vanished">无效的选择模型</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Select a device from both lists.</source>
-        <translation>从两个列表中选择设备。</translation>
+        <translation type="vanished">从两个列表中选择设备。</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Invalid device selection.</source>
-        <translation>无效的设备选择。</translation>
+        <translation type="vanished">无效的设备选择。</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Empty device ID.</source>
-        <translation>空设备ID。</translation>
+        <translation type="vanished">空设备ID。</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Provide a mapping name.</source>
         <translation>提供映射名称。</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>选择不同的源或目标（设备不能映射到自己）。</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-495"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-100"/>
         <source>Virtual Group</source>
         <translation>虚拟组</translation>
     </message>
@@ -3505,13 +3903,13 @@ to the trash?</source>
         <translation>虚拟设备只能添加到另一个虚拟设备。&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+212"/>
-        <location line="+68"/>
+        <location line="+275"/>
+        <location line="+76"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-64"/>
         <source>Unassign this catalog</source>
         <translation>取消分配此目录</translation>
     </message>
@@ -3521,7 +3919,7 @@ to the trash?</source>
         <translation>删除此目录</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+66"/>
         <source>Unassign this storage</source>
         <translation>取消分配此存储</translation>
     </message>
@@ -3531,7 +3929,7 @@ to the trash?</source>
         <translation>删除此存储</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+55"/>
         <source>Add Virtual device</source>
         <translation>添加虚拟设备</translation>
     </message>
@@ -3566,7 +3964,7 @@ to the trash?</source>
         <translation>MIME验证失败：&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-804"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-678"/>
         <location line="+346"/>
         <source>Search Error</source>
         <translation>搜索错误</translation>
@@ -3583,19 +3981,23 @@ to the trash?</source>
         <translation>目录名称</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1177"/>
+        <location line="+982"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+178"/>
         <location line="+46"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="-975"/>
+        <location line="+975"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-31"/>
         <location line="+33"/>
         <source>Resume</source>
         <translation>恢复</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-21"/>
         <source>Searching...</source>
         <translation>搜索中...</translation>
     </message>
@@ -3620,10 +4022,10 @@ to the trash?</source>
         <translation>停止当前搜索</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-107"/>
-        <location line="+73"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+358"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+232"/>
         <source>Folders found</source>
         <translation>找到的文件夹</translation>
     </message>
@@ -3699,7 +4101,12 @@ to the trash?</source>
         <translation>为此导出选择目录和文件名。</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+21"/>
+        <source>Loading all catalogs prior to export&lt;br/&gt; %1 &lt;br/&gt;&lt;br/&gt; %2 files loaded out of %3</source>
+        <translation>导出前加载所有目录&lt;br/&gt; %1 &lt;br/&gt;&lt;br/&gt; 已从 %3 中加载 %2 个文件</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
         <translation>导出内存数据库到文件失败。&lt;br/&gt;&lt;br/&gt; 导出文件路径：&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
@@ -3709,17 +4116,17 @@ to the trash?</source>
         <translation>成功导出集合到SQLite数据库文件。&lt;br/&gt;&lt;br/&gt; 导出文件路径：&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Select the directory for the CSV export</source>
         <translation>选择CSV导出的目录</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+37"/>
         <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
         <translation>成功导出数据库到CSV文件。&lt;br/&gt;&lt;br/&gt;导出目录：&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;您现在可以切换到内存模式并加载此集合。</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+8"/>
         <source>Export failed: %1</source>
         <translation>导出失败：%1</translation>
     </message>
@@ -3760,11 +4167,29 @@ to the trash?</source>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
         <translation>存储：&lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;源文件夹不包含任何文件：&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;这可能意味着设备未安装到此文件夹，&lt;br/&gt;或文件夹只是空的。&lt;br/&gt;&lt;br/&gt;强制尝试获取值吗？</translation>
     </message>
+    <message>
+        <location filename="../devicemappingview.cpp" line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="+164"/>
+        <source>Strict</source>
+        <translation>严格</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Unique</source>
+        <translation>唯一</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Drive</source>
+        <translation>驱动器</translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>
     <message>
-        <location filename="../core/tag.cpp" line="+68"/>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>

@@ -34,6 +34,7 @@
 #include <QBrush>
 #include <QDebug>
 #include <QFileIconProvider>
+#include <QCoreApplication>
 
 DeviceMappingView::DeviceMappingView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -85,7 +86,31 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
             return QVariant("");
         }
 
-        else QSortFilterProxyModel::data(index, role) ;
+        //Translated enum columns: Type (2), Copy mode (3), Source mode (4), On conflict (5)
+        // All lookups use the MainWindow context to keep translations centralised.
+        // Corresponding tr() registrations live in mainwindow_setup.cpp (loadSettings).
+        else if( index.column() >= 2 && index.column() <= 5 ){
+            const QString val = QSortFilterProxyModel::data(index, role).toString();
+            if (val == QLatin1String("Backup") || val == QLatin1String("BackUp"))
+                return QCoreApplication::translate("MainWindow", "BackUp");
+            if (val == QLatin1String("Archive"))
+                return QCoreApplication::translate("MainWindow", "Archive");
+            if (val == QLatin1String("Strict"))
+                return QCoreApplication::translate("MainWindow", "Strict");
+            if (val == QLatin1String("Unique"))
+                return QCoreApplication::translate("MainWindow", "Unique");
+            if (val == QLatin1String("Catalog"))
+                return QCoreApplication::translate("MainWindow", "Catalog");
+            if (val == QLatin1String("Drive"))
+                return QCoreApplication::translate("MainWindow", "Drive");
+            if (val == QLatin1String("Skip"))
+                return QCoreApplication::translate("MainWindow", "Skip");
+            if (val == QLatin1String("Rename oldest"))
+                return QCoreApplication::translate("MainWindow", "Rename oldest");
+            return val; // fallback: return raw value untranslated
+        }
+
+        else QSortFilterProxyModel::data(index, role);
 
         break;
     }

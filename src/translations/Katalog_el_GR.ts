@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+92"/>
+        <location filename="../core/catalog.cpp" line="+127"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1741"/>
+        <location filename="../core/collection.cpp" line="+2218"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Αυτός ο φάκελος περιέχει αρχεία συλλογής λειτουργίας μνήμης, αλλά βρίσκεστε αυτήν τη στιγμή σε λειτουργία αρχείου.&lt;br/&gt;Μεταβείτε στη λειτουργία μνήμης ή επιλέξτε διαφορετικό φάκελο.</translation>
     </message>
@@ -50,7 +50,7 @@
 <context>
     <name>ExploreTreeModel</name>
     <message>
-        <location filename="../exploretreemodel.cpp" line="+37"/>
+        <location filename="../exploretreemodel.cpp" line="+39"/>
         <source>Folder</source>
         <translation>Φάκελος</translation>
     </message>
@@ -68,14 +68,14 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2369"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2269"/>
         <source>Include Checksum</source>
         <translation>Συμπερίληψη αθροίσματος ελέγχου</translation>
     </message>
     <message>
-        <location line="+541"/>
+        <location line="+552"/>
         <location line="+46"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+301"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+364"/>
         <source>Verify Checksums</source>
         <translation>Επαλήθευση αθροισμάτων ελέγχου</translation>
     </message>
@@ -136,12 +136,12 @@
         <translation>Αρχεία που λείπουν:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+9382"/>
+        <location filename="../mainwindow.ui" line="+9774"/>
         <source>Include File Type</source>
         <translation>Συμπερίληψη τύπου αρχείου</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+262"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+808"/>
         <source>Copy Checksum</source>
@@ -222,7 +222,7 @@
         <translation type="vanished">Μη έγκυρο όνομα κεντρικού υπολογιστή βάσης δεδομένων.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+121"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+122"/>
         <source>Invalid hostname.</source>
         <translation>Μη έγκυρο όνομα κεντρικού υπολογιστή.</translation>
     </message>
@@ -252,8 +252,8 @@
         <translation>Συνέχεια;</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
-        <location line="+167"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+130"/>
+        <location line="+159"/>
         <source>Metadata Extracted</source>
         <translation>Μεταδεδομένα εξήχθησαν</translation>
     </message>
@@ -263,10 +263,10 @@
         <translation>Αθροίσματα ελέγχου υπολογίστηκαν</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+189"/>
-        <location filename="../mainwindow.ui" line="-5962"/>
+        <location filename="../core/search.cpp" line="+245"/>
+        <location filename="../mainwindow.ui" line="-6481"/>
         <location line="+926"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1281"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1309"/>
         <source>Checksum</source>
         <translation>Άθροισμα ελέγχου</translation>
     </message>
@@ -297,18 +297,37 @@
         <translation>και</translation>
     </message>
     <message>
-        <location line="+3427"/>
-        <location line="+1738"/>
+        <location line="+3332"/>
+        <location line="+2352"/>
         <source>Include files checksum</source>
         <translation>Συμπερίληψη αθροίσματος ελέγχου αρχείων</translation>
     </message>
     <message>
-        <location line="+587"/>
+        <location line="-258"/>
         <source>Stop the cataloging (no data will be saved)</source>
         <translation>Διακοπή της καταλογογράφησης (δεν θα αποθηκευτούν δεδομένα)</translation>
     </message>
     <message>
-        <location line="+1114"/>
+        <location line="+1621"/>
+        <location line="+949"/>
+        <source>Backup</source>
+        <translation>Αντίγραφο ασφαλείας</translation>
+    </message>
+    <message>
+        <location line="-944"/>
+        <location line="+949"/>
+        <location filename="../devicemappingview.cpp" line="+97"/>
+        <location filename="../mainwindow_setup.cpp" line="+318"/>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+714"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+68"/>
+        <source>Archive</source>
+        <translation>Αρχείο</translation>
+    </message>
+    <message>
+        <location line="-928"/>
         <source>Generate Profile</source>
         <translation>Δημιουργία προφίλ</translation>
     </message>
@@ -322,8 +341,8 @@
         <translation type="vanished">Αντιγραφή αθροίσματος ελέγχου αρχείου</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
-        <location line="+30"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+285"/>
+        <location line="+32"/>
         <source>No backup links found.</source>
         <translation>Δεν βρέθηκαν σύνδεσμοι αντιγράφων ασφαλείας.</translation>
     </message>
@@ -333,43 +352,44 @@
         <translation>Το προφίλ αντιγράφου ασφαλείας δημιουργήθηκε.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1549"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1556"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
-        <location line="+72"/>
-        <location line="+149"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-165"/>
+        <location line="+68"/>
+        <location line="+145"/>
         <source>Indexed</source>
         <translation>Ευρετηριασμένο</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+443"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
-        <location line="+157"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+349"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-205"/>
+        <location line="+149"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+316"/>
         <source>File Types Updated</source>
         <translation>Τύποι αρχείων ενημερώθηκαν</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
-        <location line="+160"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-165"/>
+        <location line="+152"/>
         <source>Counted</source>
         <translation>Μετρημένο</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-776"/>
         <source>Paused</source>
         <translation>Σε παύση</translation>
     </message>
     <message>
         <location line="+27"/>
-        <location line="+28"/>
+        <location line="+24"/>
         <location line="+18"/>
-        <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1080"/>
+        <location line="+34"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+964"/>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+54"/>
@@ -380,8 +400,13 @@
     </message>
     <message>
         <location line="-13"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-105"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-54"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-101"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-105"/>
+        <location line="+415"/>
+        <location line="+128"/>
+        <location line="+87"/>
+        <location line="+139"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-39"/>
         <source>Completed</source>
         <translation>Ολοκληρωμένο</translation>
     </message>
@@ -391,23 +416,26 @@
         <translation>Χρησιμοποιούμενος χώρος</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-81"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-77"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-335"/>
+        <location line="+109"/>
+        <location line="+87"/>
         <source>Cancelled</source>
         <translation>Ακυρώθηκε</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+39"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
-        <location line="+157"/>
+        <location line="+149"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-20"/>
         <location line="+22"/>
         <source>Loaded</source>
         <translation>Φορτωμένο</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-104"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+448"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+465"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-71"/>
         <location line="+54"/>
@@ -415,13 +443,13 @@
         <translation>Σε εξέλιξη</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+90"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+75"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-127"/>
         <source>Stopped</source>
         <translation>Σταμάτησε</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+406"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+421"/>
         <source>MIME Verification Complete</source>
         <translation>Επαλήθευση MIME ολοκληρώθηκε</translation>
     </message>
@@ -431,7 +459,7 @@
         <translation>Άνοιγμα αναφοράς</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-450"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-467"/>
         <source>Hidden</source>
         <translation>Κρυφό</translation>
     </message>
@@ -441,7 +469,7 @@
         <translation>Μεταδεδομένα</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6363"/>
+        <location filename="../mainwindow.ui" line="-6570"/>
         <source>File metadata</source>
         <translation>Μεταδεδομένα αρχείου</translation>
     </message>
@@ -473,13 +501,13 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1870"/>
-        <location line="+1714"/>
+        <location line="+1817"/>
+        <location line="+2286"/>
         <source>Include files metadata</source>
         <translation>Συμπερίληψη μεταδεδομένων αρχείων</translation>
     </message>
     <message>
-        <location line="-1056"/>
+        <location line="-1518"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Εντοπισμός πραγματικών τύπων MIME και αναγνώριση αναντιστοιχιών (μακρά διαδικασία)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -489,15 +517,14 @@
         <translation>Επαλήθευση τύπων MIME</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+464"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+520"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Other</source>
         <translation>Άλλο</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+109"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-29"/>
+        <location line="-29"/>
         <location line="+19"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -506,20 +533,20 @@
         <location line="+8"/>
         <location line="+15"/>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+638"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+655"/>
         <location line="+1"/>
         <source>None</source>
         <translation>Κανένα</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-695"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-662"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-1529"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Εμφάνιση εκτεταμένων μεταδεδομένων (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+692"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+659"/>
         <source>MIME Type</source>
         <translation>Τύπος MIME</translation>
     </message>
@@ -560,18 +587,22 @@
         <translation>Τίτλος</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-362"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-254"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>Αντιγραφή JSON</translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-47"/>
+        <location line="+16"/>
+        <location line="+32"/>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-3"/>
         <source>Copied</source>
         <translation>Αντιγράφηκε</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+8"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
@@ -618,29 +649,25 @@
         <translation>Χρήση φακέλου εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
         <source>MIME Type Only</source>
-        <translation>Μόνο τύπος MIME</translation>
+        <translation type="vanished">Μόνο τύπος MIME</translation>
     </message>
     <message>
-        <location line="+2"/>
         <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>Μέσα βασικό</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Extended Custom</source>
-        <translation>Εκτεταμένο προσαρμοσμένο</translation>
+        <translation type="vanished">Εκτεταμένο προσαρμοσμένο</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Extended Full</source>
-        <translation>Εκτεταμένο πλήρες</translation>
+        <translation type="vanished">Εκτεταμένο πλήρες</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="-11"/>
         <location line="+12"/>
         <source>Media Extended</source>
         <translation>Μέσα εκτεταμένο</translation>
@@ -657,7 +684,7 @@
         <translation>Θέλετε να &lt;span style=&apos;color: red&apos;;&gt;διαγράψετε&lt;/span&gt; αυτή τη %1 συσκευή;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+800"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Κατάλογοι ενημερώθηκαν:&lt;b&gt; %1 &lt;/b&gt;(%2 παραλείφθηκαν)</translation>
@@ -668,21 +695,21 @@
         <translation>Εικονική συσκευή ενημερώθηκε: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1292"/>
+        <location filename="../mainwindow.ui" line="-1349"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Κλικ: Διακοπή άμεσα (σκληρή διακοπή)&lt;/p&gt;&lt;p&gt;Ctrl+Κλικ: Διακοπή μετά τον τρέχοντα κατάλογο (ήπια διακοπή)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-239"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-248"/>
         <source>The source directory does not exist.</source>
         <translation>Ο κατάλογος προέλευσης δεν υπάρχει.</translation>
     </message>
     <message>
-        <location line="+85"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-473"/>
-        <location line="+97"/>
-        <location line="+64"/>
-        <location line="+130"/>
+        <location line="+92"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-496"/>
+        <location line="+105"/>
+        <location line="+72"/>
+        <location line="+137"/>
         <location line="+140"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+249"/>
         <location line="+40"/>
@@ -690,8 +717,8 @@
         <translation>Μια λειτουργία συσκευής εκτελείται ήδη.</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1090"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1062"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1094"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1073"/>
         <source>Operation cancelled</source>
         <translation>Η λειτουργία ακυρώθηκε</translation>
     </message>
@@ -702,32 +729,32 @@
     </message>
     <message>
         <location filename="../mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-79"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-86"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Le dossier source ne contient aucun fichier.&lt;br/&gt;Cela pourrait signifier que la source est vide ou que le périphérique n&apos;est pas monté dans ce dossier.&lt;br/&gt;Voulez-vous l&apos;enregistrer quand même (le catalogue serait vide) ?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-7042"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
+        <location filename="../mainwindow.ui" line="-6915"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+822"/>
         <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="-1"/>
-        <location line="+57"/>
-        <location line="+47"/>
-        <location filename="../mainwindow.ui" line="+1009"/>
+        <location line="+53"/>
+        <location line="+45"/>
+        <location filename="../mainwindow.ui" line="+882"/>
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
         <location line="+40"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-484"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-466"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
-        <location line="+446"/>
+        <location line="+320"/>
         <location line="+4"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
@@ -739,7 +766,7 @@
     </message>
     <message>
         <location line="+3923"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+170"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+179"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
@@ -828,13 +855,13 @@
         <translation>Επαναφορά</translation>
     </message>
     <message>
-        <location line="+11882"/>
+        <location line="+12393"/>
         <source>Port</source>
         <translation>Θύρα</translation>
     </message>
     <message>
-        <location line="-2671"/>
-        <location line="+2650"/>
+        <location line="-3124"/>
+        <location line="+3103"/>
         <source>Password</source>
         <translation>Κωδικός πρόσβασης</translation>
     </message>
@@ -850,26 +877,28 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+292"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-378"/>
+        <location filename="../mainwindow.cpp" line="+306"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-270"/>
         <source>File</source>
         <translation>Αρχείο</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-10407"/>
+        <location filename="../mainwindow.ui" line="-10918"/>
         <location line="+848"/>
         <location line="+891"/>
         <location line="+921"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-53"/>
+        <location line="+143"/>
+        <location line="+402"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-294"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-276"/>
         <source>Size</source>
         <translation>Μέγεθος</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4690"/>
-        <location line="+6626"/>
+        <location filename="../mainwindow.ui" line="-4663"/>
+        <location line="+6599"/>
         <source>Device tree</source>
         <translation>Δέντρο συσκευών</translation>
     </message>
@@ -908,34 +937,52 @@
     </message>
     <message>
         <location line="+81"/>
-        <location line="+5080"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1486"/>
+        <location line="+5137"/>
+        <location line="+4396"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-95"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1514"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Τύπος</translation>
     </message>
     <message>
-        <location line="-5042"/>
+        <location line="-9495"/>
         <source>Select the type of files</source>
         <translation>Επιλογή τύπου αρχείων</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+476"/>
+        <location line="+7830"/>
+        <source>Global Parameters</source>
+        <translation>Γενικές παράμετροι</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Excluded from all catalogs</source>
+        <translation>Εξαιρεμένο από όλους τους καταλόγους</translation>
+    </message>
+    <message>
+        <location line="+547"/>
+        <source>BackUp &amp; Archive Links for device</source>
+        <translation>Σύνδεσμοι αντιγράφου ασφαλείας &amp; αρχείου για συσκευή</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <location filename="../mainwindow_setup.cpp" line="-6"/>
+        <location line="+216"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_create.cpp" line="-33"/>
         <location line="+19"/>
         <location line="+11"/>
         <location line="+92"/>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+904"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+921"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+77"/>
+        <location line="+62"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -970,7 +1017,7 @@
         <translation>Βίντεο</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3355"/>
+        <location filename="../mainwindow.ui" line="-5194"/>
         <source>only list folders in results</source>
         <translation>εμφάνιση μόνο φακέλων στα αποτελέσματα</translation>
     </message>
@@ -992,11 +1039,11 @@
         <translation>Εμφάνιση/Απόκρυψη καταλόγων με αποτελέσματα</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-86"/>
-        <location line="+73"/>
-        <location line="+34"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <location filename="../mainwindow.ui" line="+129"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+631"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+505"/>
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1014,13 +1061,18 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+907"/>
+        <location line="+964"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2295"/>
+        <location line="+2413"/>
+        <location line="+38"/>
+        <location line="+24"/>
+        <location line="+38"/>
+        <location line="+24"/>
+        <location line="+179"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1029,16 +1081,11 @@
         <location line="+24"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+99"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+38"/>
-        <location line="+24"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3498"/>
+        <location line="-3696"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -1046,48 +1093,48 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2502"/>
+        <location line="+2640"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Συνολικό μέγεθος αρχείων</translation>
     </message>
     <message>
-        <location line="-2464"/>
+        <location line="-2602"/>
         <source>Total Number of Files</source>
         <translation>Συνολικός αριθμός αρχείων</translation>
     </message>
     <message>
-        <location line="-1159"/>
+        <location line="-1216"/>
         <source>All active</source>
         <translation>Όλα ενεργά</translation>
     </message>
     <message>
-        <location line="+1250"/>
+        <location line="+1307"/>
         <source>Import</source>
         <translation>Εισαγωγή</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-413"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-346"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-436"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-331"/>
         <location line="+22"/>
-        <location line="+35"/>
+        <location line="+20"/>
         <location line="+18"/>
         <location line="+14"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-166"/>
         <source>Explore</source>
         <translation>Εξερεύνηση</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
-        <location line="+81"/>
-        <location line="+70"/>
-        <location filename="../mainwindow.ui" line="-1783"/>
-        <location line="+936"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-146"/>
+        <location line="+77"/>
+        <location line="+66"/>
+        <location filename="../mainwindow.ui" line="-1840"/>
+        <location line="+993"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-191"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+101"/>
-        <location line="+64"/>
+        <location line="+109"/>
+        <location line="+72"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
         <location line="+39"/>
         <location line="+40"/>
@@ -1095,38 +1142,42 @@
         <translation>Ενημέρωση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4529"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
-        <location line="+81"/>
-        <location line="+63"/>
+        <location filename="../mainwindow.ui" line="+4983"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-135"/>
+        <location line="+89"/>
+        <location line="+71"/>
         <source>Edit</source>
         <translation>Επεξεργασία</translation>
     </message>
     <message>
-        <location line="-5792"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
+        <location line="-6303"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1146"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location line="+2113"/>
+        <location line="+2170"/>
         <source>Explore a catalog</source>
         <translation>Εξερεύνηση καταλόγου</translation>
     </message>
     <message>
-        <location line="-8405"/>
-        <location line="+8784"/>
+        <location line="-8435"/>
+        <location line="+8814"/>
+        <location filename="../devicemappingview.cpp" line="+6"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+256"/>
         <source>Catalog</source>
         <translation>Κατάλογος</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1400"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
+        <location filename="../mainwindow.ui" line="+1032"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+695"/>
+        <location line="+143"/>
+        <location line="+315"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-974"/>
         <location line="+241"/>
         <location line="+254"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
@@ -1134,32 +1185,32 @@
         <translation>Διαδρομή</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1723"/>
+        <location filename="../mainwindow.ui" line="-1355"/>
         <source>Directories</source>
         <translation>Κατάλογοι</translation>
     </message>
     <message>
-        <location line="-8695"/>
-        <location line="+688"/>
+        <location line="-8064"/>
+        <location line="+13153"/>
         <source>Show/Hide Filters</source>
         <translation>Εμφάνιση/Απόκρυψη φίλτρων</translation>
     </message>
     <message>
-        <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1220"/>
+        <location line="-13668"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1225"/>
         <source>Virtual</source>
         <translation>Εικονική</translation>
     </message>
     <message>
         <location line="+215"/>
         <location line="+32"/>
-        <location line="+7962"/>
+        <location line="+7992"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Επέκταση 1 επίπεδο, 2 επίπεδα ή σύμπτυξη</translation>
     </message>
     <message>
-        <location line="-7889"/>
+        <location line="-7946"/>
         <source>Search in file catalogs</source>
         <translation>Αναζήτηση σε καταλόγους αρχείων</translation>
     </message>
@@ -1189,15 +1240,12 @@
         <translation>Κριτήρια αναζήτησης</translation>
     </message>
     <message>
-        <location line="+123"/>
-        <location line="+1022"/>
-        <location line="+2502"/>
-        <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
-        <translation>Χρησιμοποιήστε τα κριτήρια κειμένου στην Αναζήτηση</translation>
+        <translation type="vanished">Χρησιμοποιήστε τα κριτήρια κειμένου στην Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-4717"/>
+        <location line="+126"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-466"/>
         <source>File name</source>
         <translation>Όνομα αρχείου</translation>
     </message>
@@ -1209,12 +1257,12 @@
     <message>
         <location line="+99"/>
         <location line="+5562"/>
-        <location line="+2975"/>
+        <location line="+2649"/>
         <source>Stop</source>
         <translation>Διακοπή</translation>
     </message>
     <message>
-        <location line="-8322"/>
+        <location line="-7996"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>Ορισμός τρόπου χρήσης του κειμένου αναζήτησης.</translation>
@@ -1351,15 +1399,15 @@
     <message>
         <location line="+159"/>
         <location line="+21"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+714"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+719"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Device Type</source>
         <translation>Τύπος συσκευής</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+101"/>
         <source>The change will be applied only when Saving</source>
         <translation>Η αλλαγή θα εφαρμοστεί μόνο κατά την αποθήκευση</translation>
     </message>
@@ -1368,18 +1416,18 @@
         <translation type="vanished">Συμπερίληψη κρυφών αρχείων</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2367"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2378"/>
         <source>Include Metadata</source>
         <translation>Συμπερίληψη μεταδεδομένων</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+69"/>
+        <location filename="../mainwindow.ui" line="+150"/>
         <source>is full device</source>
         <translation>είναι πλήρης συσκευή</translation>
     </message>
     <message>
-        <location line="+164"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-920"/>
+        <location line="+133"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-937"/>
         <source>Storage ID</source>
         <translation>ID αποθήκευσης</translation>
     </message>
@@ -1402,8 +1450,8 @@
         <translation>Σχόλιο 3</translation>
     </message>
     <message>
-        <location line="-910"/>
-        <location line="+936"/>
+        <location line="-967"/>
+        <location line="+993"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ενημέρωση αρχείων του επιλεγμένου καταλόγου, αν η συσκευή είναι διαθέσιμη&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1426,6 +1474,7 @@
     </message>
     <message>
         <location line="+16"/>
+        <location line="+3862"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+599"/>
         <location line="+117"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-114"/>
@@ -1436,12 +1485,40 @@
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location line="-1034"/>
+        <location line="-4953"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ενημέρωση όλων των καταλόγων που είναι ενεργοί, αν η συσκευή είναι διαθέσιμη.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1250"/>
+        <location line="-5871"/>
+        <location line="+1022"/>
+        <location line="+2502"/>
+        <location line="+1196"/>
+        <source>Use the criteria in the Search</source>
+        <translation>Χρήση κριτηρίων αναζήτησης</translation>
+    </message>
+    <message>
+        <location line="+1740"/>
+        <location line="+2314"/>
+        <source>Excluded folders from this catalog</source>
+        <translation>Εξαιρεμένοι φάκελοι από αυτόν τον κατάλογο</translation>
+    </message>
+    <message>
+        <location line="-2299"/>
+        <location line="+2314"/>
+        <location line="+574"/>
+        <source>Folder path or pattern to exclude</source>
+        <translation>Διαδρομή φακέλου ή μοτίβο προς εξαίρεση</translation>
+    </message>
+    <message>
+        <location line="-2868"/>
+        <location line="+2314"/>
+        <location line="+607"/>
+        <source>Add</source>
+        <translation>Προσθήκη</translation>
+    </message>
+    <message>
+        <location line="-2238"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Εισαγωγή λίστας τόμων από VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1482,8 +1559,8 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+1870"/>
-        <location line="+630"/>
+        <location line="+2008"/>
+        <location line="+913"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
@@ -1491,7 +1568,7 @@
         <translation>Αριθμός αρχείων</translation>
     </message>
     <message>
-        <location line="-2384"/>
+        <location line="-2805"/>
         <source>Click to open the file</source>
         <translation>Κλικ για άνοιγμα του αρχείου</translation>
     </message>
@@ -1503,13 +1580,13 @@
     <message>
         <location filename="../core/search.cpp" line="-4"/>
         <location filename="../mainwindow.ui" line="+34"/>
-        <location line="+1273"/>
+        <location line="+1274"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-4"/>
         <source>Directory</source>
         <translation>Κατάλογος</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1263"/>
+        <location filename="../mainwindow.ui" line="-1264"/>
         <source>Order folders first</source>
         <translation>Ταξινόμηση φακέλων πρώτα</translation>
     </message>
@@ -1519,9 +1596,9 @@
         <translation>και όλοι οι υποφάκελοι</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-153"/>
-        <location line="+81"/>
-        <location line="+70"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-145"/>
+        <location line="+77"/>
+        <location line="+66"/>
         <location filename="../mainwindow.ui" line="+124"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-226"/>
         <location line="+224"/>
@@ -1534,7 +1611,7 @@
         <translation>Δημιουργία καταλόγου</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+503"/>
         <source>2- </source>
         <translation>2- </translation>
     </message>
@@ -1552,8 +1629,8 @@
         <translation type="vanished">Άλλες επιλογές</translation>
     </message>
     <message>
-        <location line="-1615"/>
-        <location line="+1807"/>
+        <location line="-2105"/>
+        <location line="+2297"/>
         <source>Include Hidden files</source>
         <translation>Συμπερίληψη κρυφών αρχείων</translation>
     </message>
@@ -1563,17 +1640,15 @@
         <translation>Ακολουθία συμβολικών συνδέσμων</translation>
     </message>
     <message>
-        <location line="+39"/>
         <source>Directories to exclude from catalogs</source>
-        <translation>Κατάλογοι προς εξαίρεση από τους καταλόγους</translation>
+        <translation type="vanished">Κατάλογοι προς εξαίρεση από τους καταλόγους</translation>
     </message>
     <message>
-        <location line="+32"/>
         <source>Add directory to exclude</source>
-        <translation>Προσθήκη καταλόγου προς εξαίρεση</translation>
+        <translation type="vanished">Προσθήκη καταλόγου προς εξαίρεση</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="-673"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
@@ -1593,7 +1668,7 @@
         <translation>Προσθήκη νέας συσκευής αποθήκευσης</translation>
     </message>
     <message>
-        <location line="+1026"/>
+        <location line="+1524"/>
         <source>Graphic Start Date</source>
         <translation>Ημερομηνία έναρξης γραφικών</translation>
     </message>
@@ -1603,13 +1678,13 @@
         <translation>Επιλογή ημερομηνίας</translation>
     </message>
     <message>
-        <location line="+2503"/>
+        <location line="+2819"/>
         <source>Language &amp; Theme</source>
         <translation>Γλώσσα &amp; Θέμα</translation>
     </message>
     <message>
-        <location line="-5974"/>
-        <location line="+2418"/>
+        <location line="-6485"/>
+        <location line="+2115"/>
         <source>Add Storage</source>
         <translation>Προσθήκη αποθήκευσης</translation>
     </message>
@@ -1630,11 +1705,12 @@
     </message>
     <message>
         <location line="+29"/>
+        <location line="+2637"/>
         <source>Generate</source>
         <translation>Δημιουργία</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="-2581"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Εκκίνηση καταλογογράφησης και αποθήκευση σε αρχείο</translation>
     </message>
@@ -1644,7 +1720,7 @@
         <translation>Δημιουργία καταλόγου</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+441"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
@@ -1654,7 +1730,7 @@
         <translation>Επιλογή διαδρομής πηγής</translation>
     </message>
     <message>
-        <location line="-1657"/>
+        <location line="-1566"/>
         <source>Tree options</source>
         <translation>Επιλογές δέντρου</translation>
     </message>
@@ -1674,7 +1750,7 @@
         <translation>Εισαγωγή εικονικής ομάδας</translation>
     </message>
     <message>
-        <location line="-1631"/>
+        <location line="-1688"/>
         <source>View</source>
         <translation>Προβολή</translation>
     </message>
@@ -1684,12 +1760,12 @@
         <translation>Λίστα αποθήκευσης</translation>
     </message>
     <message>
-        <location line="+576"/>
+        <location line="+583"/>
         <source>Catalog fields</source>
         <translation>Πεδία καταλόγου</translation>
     </message>
     <message>
-        <location line="+361"/>
+        <location line="+411"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Ελεύθερος χώρος</translation>
@@ -1700,17 +1776,17 @@
         <translation>Εικόνα συσκευής</translation>
     </message>
     <message>
-        <location line="-662"/>
+        <location line="-719"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Καταγραφή τιμών όλων των συσκευών για στατιστικά στη πλήρη συλλογή.</translation>
     </message>
     <message>
-        <location line="+784"/>
+        <location line="+841"/>
         <source>Storage fields</source>
         <translation>Πεδία αποθήκευσης</translation>
     </message>
     <message>
-        <location line="+5353"/>
+        <location line="+5807"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
         <translatorcomment>Με ορισμένα προσαρμοσμένα χρώματα, για ανοιχτό ή σκούρο θέμα επιφάνειας εργασίας.</translatorcomment>
@@ -1768,55 +1844,61 @@
         <translation>Διαχείριση δεδομένων</translation>
     </message>
     <message>
-        <location line="-12107"/>
-        <location line="+9848"/>
+        <location line="-12618"/>
+        <location line="+7033"/>
+        <location line="+2314"/>
+        <location line="+190"/>
+        <location line="+459"/>
         <source>Select the path</source>
         <translation>Επιλογή διαδρομής</translation>
     </message>
     <message>
-        <location line="-9845"/>
-        <location line="+6826"/>
-        <location line="+3022"/>
-        <location line="+453"/>
+        <location line="-9993"/>
+        <location line="+6833"/>
+        <location line="+200"/>
+        <location line="+2314"/>
+        <location line="+190"/>
+        <location line="+459"/>
+        <location line="+500"/>
         <source>Select</source>
         <translation>Επιλογή</translation>
     </message>
     <message>
-        <location line="-10711"/>
-        <location line="+8264"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-944"/>
-        <location line="+2694"/>
+        <location line="-10879"/>
+        <location line="+8294"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-949"/>
+        <location line="+2727"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location line="+3868"/>
+        <location line="+4322"/>
         <source>New</source>
         <translation>Νέο</translation>
     </message>
     <message>
-        <location line="-5498"/>
+        <location line="-6009"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>Συσκευές</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+657"/>
+        <location line="+714"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>Συνολικός χώρος</translation>
     </message>
     <message>
-        <location line="-569"/>
+        <location line="-626"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3299"/>
+        <location line="+3494"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Επαναφόρτωση</translation>
@@ -1847,24 +1929,24 @@
         <translation>Επεξεργασία αρχείου που αποθηκεύει όλες τις εγγραφές</translation>
     </message>
     <message>
-        <location line="-1970"/>
+        <location line="-2108"/>
         <source>Add Virtual</source>
         <translation>Προσθήκη εικονικής</translation>
     </message>
     <message>
-        <location line="-1673"/>
+        <location line="-1730"/>
         <source>Edit List</source>
         <translation>Επεξεργασία λίστας</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4390"/>
+        <location line="+4868"/>
         <source>Full Table</source>
         <translation>Πλήρης πίνακας</translation>
     </message>
     <message>
-        <location line="-4085"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
+        <location line="-4563"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+546"/>
         <source>Device Name</source>
         <translation>Όνομα συσκευής</translation>
     </message>
@@ -1881,7 +1963,7 @@
         <translation>ID συσκευής</translation>
     </message>
     <message>
-        <location line="+3155"/>
+        <location line="+3350"/>
         <source>Edit Statistics</source>
         <translation>Επεξεργασία στατιστικών</translation>
     </message>
@@ -1943,22 +2025,22 @@
         <translation>Επαναφόρτωση αρχείου που αποθηκεύει τις ετικέτες</translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+1097"/>
         <source>Link name</source>
         <translation>Όνομα συνδέσμου</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+91"/>
         <source>Create link</source>
         <translation>Δημιουργία συνδέσμου</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="-612"/>
         <source>Catalog Links</source>
         <translation>Σύνδεσμοι καταλόγου</translation>
     </message>
     <message>
-        <location line="+364"/>
+        <location line="-265"/>
         <source>Linked</source>
         <translation>Συνδεδεμένο</translation>
     </message>
@@ -1968,15 +2050,84 @@
         <translation>Μη συνδεδεμένο</translation>
     </message>
     <message>
-        <location line="+124"/>
-        <location line="+43"/>
+        <location line="+174"/>
+        <source>Export</source>
+        <translation>Εξαγωγή</translation>
+    </message>
+    <message>
+        <location line="+331"/>
+        <source>Update catalogs</source>
+        <translation>Ενημέρωση καταλόγων</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1271"/>
+        <source>Replicate directories</source>
+        <translation>Αντιγραφή καταλόγων</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-6"/>
+        <location line="+1252"/>
+        <location line="+16"/>
+        <source>Preview Backup</source>
+        <translation>Προεπισκόπηση αντιγράφου ασφαλείας</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1273"/>
+        <location line="+280"/>
+        <location line="+976"/>
+        <location line="+14"/>
+        <source>Run Backup</source>
+        <translation>Εκτέλεση αντιγράφου ασφαλείας</translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <location line="+53"/>
+        <source>Load Catalogs</source>
+        <translation>Φόρτωση καταλόγων</translation>
+    </message>
+    <message>
+        <location line="-37"/>
+        <location line="+53"/>
         <source>without links</source>
         <translation>χωρίς συνδέσμους</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+73"/>
+        <source>Strict copy</source>
+        <translation>Αυστηρή αντιγραφή</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Scan source drive directly</source>
+        <translation>Σάρωση μονάδας δίσκου προέλευσης απευθείας</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-78"/>
+        <source>On conflict</source>
+        <translation>Σε σύγκρουση</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location filename="../devicemappingview.cpp" line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="-211"/>
+        <source>Skip</source>
+        <translation>Παράλειψη</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../devicemappingview.cpp" line="+2"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Rename oldest</source>
+        <translation>Μετονομασία παλαιότερου</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-402"/>
+        <location filename="../mainwindow_setup.cpp" line="-246"/>
         <source>Settings</source>
         <translation>Ρυθμίσεις</translation>
     </message>
@@ -2028,12 +2179,17 @@
         <translation>Λειτουργία δεδομένων &quot;SQLite τοπικό αρχείο&quot;</translation>
     </message>
     <message>
-        <location line="-3867"/>
+        <location line="-4321"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Εφαρμογή επιλογών στο δέντρο συσκευών επιλογής.</translation>
     </message>
     <message>
-        <location line="+1392"/>
+        <location line="+828"/>
+        <source>Catalog Parameters</source>
+        <translation>Παράμετροι καταλόγου</translation>
+    </message>
+    <message>
+        <location line="+204"/>
         <source>catalog is for the full device</source>
         <translation>Ο κατάλογος αφορά την πλήρη συσκευή</translation>
     </message>
@@ -2043,7 +2199,7 @@
         <translation>Δημιουργήστε ένα όνομα καταλόγου με βάση τη διαδρομή.</translation>
     </message>
     <message>
-        <location line="+325"/>
+        <location line="+677"/>
         <source>Type of source</source>
         <translation>Τύπος πηγής</translation>
     </message>
@@ -2058,7 +2214,7 @@
         <translation>Κοινόχρηστος φάκελος Samba</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+59"/>
         <source>IP address</source>
         <translation>Διεύθυνση IP</translation>
     </message>
@@ -2068,18 +2224,20 @@
         <translation>Όνομα χρήστη</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+84"/>
         <source>Connection settings</source>
         <translation>Ρυθμίσεις σύνδεσης</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="-178"/>
         <source>Verify connection</source>
         <translation>Επαλήθευση σύνδεσης</translation>
     </message>
     <message>
-        <location line="+231"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-63"/>
+        <location line="+545"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1089"/>
+        <location line="+332"/>
+        <location line="+759"/>
         <source>Source</source>
         <translation>Πηγή</translation>
     </message>
@@ -2102,20 +2260,29 @@
     </message>
     <message>
         <location line="+364"/>
+        <location filename="../devicemappingview.cpp" line="-14"/>
+        <location filename="../mainwindow_setup.cpp" line="+233"/>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-929"/>
+        <location line="+164"/>
+        <location line="+145"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+38"/>
+        <location line="+30"/>
         <source>BackUp</source>
         <translation>Αντίγραφο ασφαλείας</translation>
     </message>
     <message>
-        <location line="+15"/>
         <source>BackUp links for device</source>
-        <translation>Σύνδεσμοι αντιγράφων ασφαλείας για συσκευή</translation>
+        <translation type="vanished">Σύνδεσμοι αντιγράφων ασφαλείας για συσκευή</translation>
     </message>
     <message>
-        <location line="-7276"/>
+        <location line="-7456"/>
         <location line="+108"/>
         <location line="+553"/>
         <location line="+108"/>
-        <location line="+6522"/>
+        <location line="+6710"/>
         <source>Device</source>
         <translation>Συσκευή</translation>
     </message>
@@ -2125,17 +2292,16 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Επαναφόρτωση συνδέσμων και ανανέωση στατιστικών για την επιλεγμένη συσκευή.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+51"/>
         <source>Delete selected</source>
-        <translation>Διαγραφή επιλεγμένων</translation>
+        <translation type="vanished">Διαγραφή επιλεγμένων</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+308"/>
         <source>Create new link</source>
         <translation>Δημιουργία νέου συνδέσμου</translation>
     </message>
     <message>
-        <location line="+313"/>
+        <location line="-236"/>
         <source>Coverage</source>
         <translation>Κάλυψη</translation>
     </message>
@@ -2150,27 +2316,25 @@
         <translation>ως προορισμός</translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+737"/>
         <source>Select Source catalog</source>
         <translation>Επιλογή καταλόγου πηγής</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Load Source Catalogs</source>
-        <translation>Φόρτωση καταλόγων πηγής</translation>
+        <translation type="vanished">Φόρτωση καταλόγων πηγής</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+53"/>
         <source>Select Target catalog</source>
         <translation>Επιλογή καταλόγου προορισμού</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Load Target Catalogs</source>
-        <translation>Φόρτωση καταλόγων προορισμού</translation>
+        <translation type="vanished">Φόρτωση καταλόγων προορισμού</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+209"/>
         <source>Open Settings file</source>
         <translation>Άνοιγμα αρχείου ρυθμίσεων</translation>
     </message>
@@ -2344,27 +2508,31 @@
         <translation>Άνοιγμα</translation>
     </message>
     <message>
-        <location line="-1017"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-721"/>
+        <location line="-1333"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-677"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-1556"/>
         <source>Open file</source>
         <translation>Άνοιγμα αρχείου</translation>
     </message>
     <message>
-        <location line="+1712"/>
+        <location line="+2028"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-197"/>
+        <location line="+89"/>
+        <location line="+71"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+120"/>
+        <location line="+109"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Άνοιγμα φακέλου</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-154"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-143"/>
         <source>Tag this folder</source>
         <translation>Προσθήκη ετικέτας σε αυτόν τον φάκελο</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+81"/>
         <location line="+68"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+64"/>
         <source>Copy folder path</source>
@@ -2410,7 +2578,7 @@
         <translation>Μετακίνηση φακέλου στα απορρίμματα</translation>
     </message>
     <message>
-        <location line="+133"/>
+        <location line="+115"/>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+138"/>
         <location line="+64"/>
@@ -2474,28 +2642,28 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+375"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+360"/>
         <source>orderValue</source>
         <translation>τιμή ταξινόμησης</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-6"/>
-        <location filename="../mainwindow.ui" line="-9370"/>
+        <location filename="../mainwindow.ui" line="-9881"/>
         <location line="+891"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2009"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2037"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-6"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-816"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-690"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
         <location filename="../mainwindow.ui" line="-1265"/>
-        <location line="+9151"/>
+        <location line="+9662"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -2505,20 +2673,33 @@ to the trash?</source>
         <translation>Ημερομηνία</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-430"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-486"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+77"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Επιλογή καταλόγου που θα καταλογογραφηθεί σε αυτόν τον νέο κατάλογο</translation>
     </message>
     <message>
-        <location line="+97"/>
         <source>Remove this directory</source>
-        <translation>Κατάργηση αυτού του καταλόγου</translation>
+        <translation type="vanished">Κατάργηση αυτού του καταλόγου</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+18"/>
+        <location line="+148"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-448"/>
+        <source>Select the directory to exclude</source>
+        <translation>Επιλογή καταλόγου προς εξαίρεση</translation>
+    </message>
+    <message>
+        <location line="-80"/>
+        <location line="+106"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+35"/>
+        <source>Remove</source>
+        <translation>Αφαίρεση</translation>
+    </message>
+    <message>
+        <location line="+49"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Δώστε ένα όνομα για αυτόν τον νέο κατάλογο.&lt;br/&gt;</translation>
     </message>
@@ -2539,12 +2720,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-4056"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-4084"/>
         <source>Choose a different name and try again.</source>
         <translation>Επιλέξτε ένα διαφορετικό όνομα και δοκιμάστε ξανά.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-3"/>
+        <location filename="../mainwindow_setup.cpp" line="-240"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Καλώς ορίσατε στον Κατάλογο!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Φαίνεται ότι αυτή είναι η πρώτη εκτέλεση.&lt;br/&gt;&lt;br/&gt;Έχουν εφαρμοστεί οι ακόλουθες ρυθμίσεις:&lt;br/&gt; - Γλώσσα: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Θέμα: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Μπορείτε να τις αλλάξετε στην καρτέλα %3.</translation>
     </message>
@@ -2570,13 +2751,13 @@ to the trash?</source>
         <translation>1- Επιλέξτε μια ολόκληρη μονάδα δίσκου ή κατάλογο, &lt;br/&gt;2- επιλέξτε επιλογές και &lt;br/&gt;3- κάντε κλικ στην επιλογή &apos;Δημιουργία&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+244"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>1- Επιλέξτε μια ολόκληρη μονάδα δίσκου ή κατάλογο, &lt;br/&gt;2- επιλέξτε επιλογές και &lt;br/&gt;3- κάντε κλικ στην επιλογή &apos;Δημιουργία&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5603"/>
-        <location line="+2437"/>
+        <location filename="../mainwindow.ui" line="-6114"/>
+        <location line="+2494"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+531"/>
         <location line="+241"/>
         <location line="+254"/>
@@ -2584,31 +2765,32 @@ to the trash?</source>
         <translation>Συνολικό μέγεθος</translation>
     </message>
     <message>
-        <location line="-1417"/>
-        <location line="+1600"/>
+        <location line="-1467"/>
+        <location line="+1650"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+700"/>
         <source>Source Path</source>
         <translation>Διαδρομή πηγής</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1512"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+635"/>
+        <location filename="../mainwindow.ui" line="-1566"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-683"/>
+        <location line="+652"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Τύπος αρχείου</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3666"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+3"/>
+        <location filename="../mainwindow.ui" line="+4141"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+495"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Μέγεθος αρχείου</translation>
     </message>
     <message>
-        <location line="-3196"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-898"/>
+        <location line="-3617"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-915"/>
         <source>Label</source>
         <translation>Ετικέτα</translation>
     </message>
@@ -2619,18 +2801,18 @@ to the trash?</source>
         <translation>Σύστημα αρχείων</translation>
     </message>
     <message>
-        <location line="+3455"/>
+        <location line="+3247"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Σύνολο</translation>
     </message>
     <message>
-        <location line="-4254"/>
+        <location line="-4103"/>
         <source>Free</source>
         <translation>Ελεύθερος</translation>
     </message>
     <message>
-        <location line="+733"/>
+        <location line="+790"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>Σειριακός αριθμός</translation>
@@ -2642,17 +2824,17 @@ to the trash?</source>
         <translation>Ημερομηνία κατασκευής</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1383"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1283"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Ο κατάλογος είναι ήδη ανατεθειμένος σε αυτή την εικονική συσκευή.</translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+37"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
         <translation>Θέλετε να αφαιρέσετε την ανάθεση αυτού του καταλόγου από αυτή την εικονική συσκευή;</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+39"/>
         <source>Deletion failed</source>
         <translation>Αποτυχία διαγραφής</translation>
     </message>
@@ -2662,7 +2844,7 @@ to the trash?</source>
         <translation>&lt;br/&gt;Ένα στιγμιότυπο αυτής της συλλογής καταγράφηκε:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Κατάλογοι&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Αριθμός αρχείων: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (προστέθηκαν: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Συνολικό μέγεθος αρχείων: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (προστέθηκε: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Αποθήκευση&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ελεύθερος χώρος αποθήκευσης: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (προστέθηκε: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Συνολικός χώρος αποθήκευσης: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (προστέθηκε: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+305"/>
+        <location line="+327"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Υπάρχει ήδη κατάλογος με αυτό το όνομα:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2685,12 +2867,12 @@ to the trash?</source>
         <location line="+495"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Parent ID</source>
         <translation>ID γονέα</translation>
     </message>
     <message>
-        <location line="-3531"/>
+        <location line="-3559"/>
         <source>External ID</source>
         <translation>Εξωτερικό ID</translation>
     </message>
@@ -2769,7 +2951,12 @@ to the trash?</source>
         <translation>Διαδρομή αρχείου</translation>
     </message>
     <message>
-        <location line="+623"/>
+        <location line="+292"/>
+        <source>Indexing - Start: %1 | End: %2 | Duration: %3</source>
+        <translation>Ευρετηρίαση - Έναρξη: %1 | Λήξη: %2 | Διάρκεια: %3</translation>
+    </message>
+    <message>
+        <location line="+348"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Αποθήκευση αλλαγών στον ορισμό του καταλόγου;&lt;br/&gt;</translation>
     </message>
@@ -2799,12 +2986,12 @@ to the trash?</source>
         <translation>Είναι πλήρης συσκευή</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+12"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Ο κατάλογος πρέπει να ενημερωθεί για να αντικατοπτρίσει αυτές τις αλλαγές)</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+31"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation>Ενημέρωση του περιεχομένου του καταλόγου με τα νέα κριτήρια;
@@ -2920,7 +3107,7 @@ to the trash?</source>
         <translation>&lt;table&gt;&lt;br/&gt;Οι επιλεγμένοι ενεργοί κατάλογοι από το &lt;b&gt;%1&lt;/b&gt; ενημερώθηκαν.&amp;nbsp;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+60"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+473"/>
         <source>Do you want a the summary of updates for each catalog?</source>
         <translation>Θέλετε περίληψη των ενημερώσεων για κάθε κατάλογο;</translation>
     </message>
@@ -2937,7 +3124,7 @@ to the trash?</source>
     <message>
         <location filename="../mainwindow.cpp" line="+58"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+557"/>
+        <location line="+431"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+66"/>
         <source>Catalog with results</source>
@@ -2987,11 +3174,11 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-14"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2038"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-17"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2066"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3001,17 +3188,17 @@ to the trash?</source>
         <translation>Όνομα αντιστοίχισης</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Source ID</source>
         <translation>ID πηγής</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3533"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3561"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Active</source>
         <translation>Ενεργό</translation>
     </message>
@@ -3033,12 +3220,218 @@ to the trash?</source>
         <translation>ID προορισμού</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-1096"/>
+        <location line="+332"/>
+        <location line="+765"/>
         <source>Target</source>
         <translation>Προορισμός</translation>
     </message>
     <message>
+        <location line="-1201"/>
+        <location line="+1270"/>
+        <source>Run Archive</source>
+        <translation>Εκτέλεση αρχειοθέτησης</translation>
+    </message>
+    <message>
+        <location line="-1265"/>
+        <location line="+1268"/>
+        <source>Preview Archive</source>
+        <translation>Προεπισκόπηση αρχείου</translation>
+    </message>
+    <message>
+        <location line="-1253"/>
+        <source>Invert (swap source and target)</source>
+        <translation>Αντιστροφή (εναλλαγή πηγής και προορισμού)</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+111"/>
+        <location line="+224"/>
+        <location line="+444"/>
+        <source>Select a mapping first.</source>
+        <translation>Επιλέξτε πρώτα έναν σύνδεσμο.</translation>
+    </message>
+    <message>
+        <location line="-757"/>
+        <location line="+108"/>
+        <location line="+224"/>
+        <source>Both source and target must be Catalog devices.</source>
+        <translation>Η πηγή και ο προορισμός πρέπει να είναι συσκευές καταλόγου.</translation>
+    </message>
+    <message>
+        <location line="-320"/>
+        <location line="+62"/>
+        <source>Replicate</source>
+        <translation>Αντιγραφή</translation>
+    </message>
+    <message>
+        <location line="-61"/>
+        <location line="+332"/>
+        <source>%1 not available</source>
+        <translation>%1 δεν είναι διαθέσιμο</translation>
+    </message>
+    <message>
+        <location line="-321"/>
+        <location line="+90"/>
+        <location line="+243"/>
+        <source>A catalog update is already in progress. Please wait and try again.</source>
+        <translation>Μια ενημέρωση καταλόγου βρίσκεται ήδη σε εξέλιξη. Περιμένετε και δοκιμάστε ξανά.</translation>
+    </message>
+    <message>
+        <location line="-281"/>
+        <source>Created</source>
+        <translation>Δημιουργήθηκε</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Already existing</source>
+        <translation>Ήδη υπάρχον</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+631"/>
+        <source>Errors</source>
+        <translation>Σφάλματα</translation>
+    </message>
+    <message>
+        <location line="-218"/>
+        <location line="+239"/>
+        <location line="+74"/>
+        <source>Move</source>
+        <translation>Μετακίνηση</translation>
+    </message>
+    <message>
+        <location line="-313"/>
+        <location line="+239"/>
+        <location line="+74"/>
+        <source>Copy</source>
+        <translation>Αντιγραφή</translation>
+    </message>
+    <message>
+        <location line="-312"/>
+        <location line="+240"/>
+        <source>Already in target</source>
+        <translation>Ήδη στον προορισμό</translation>
+    </message>
+    <message>
+        <location line="-154"/>
+        <location line="+32"/>
+        <source>%1s</source>
+        <translation>%1s</translation>
+    </message>
+    <message>
+        <location line="-30"/>
+        <location line="+32"/>
+        <source>%1m %2s</source>
+        <translation>%1m %2s</translation>
+    </message>
+    <message>
+        <location line="-30"/>
+        <location line="+32"/>
+        <source>%1h %2m</source>
+        <translation>%1h %2m</translation>
+    </message>
+    <message>
+        <location line="-26"/>
+        <source>Moving</source>
+        <translation>Μετακίνηση</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Copying</source>
+        <translation>Αντιγραφή</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <location line="+143"/>
+        <source>Status</source>
+        <translation>Κατάσταση</translation>
+    </message>
+    <message>
+        <location line="-128"/>
+        <source>Moved</source>
+        <translation>Μετακινήθηκε</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+33"/>
+        <source>Archived</source>
+        <translation>Αρχειοθετήθηκε</translation>
+    </message>
+    <message>
+        <location line="-25"/>
+        <location line="+135"/>
+        <source>Conflict</source>
+        <translation>Σύγκρουση</translation>
+    </message>
+    <message>
+        <location line="-127"/>
+        <source>Error</source>
+        <translation>Σφάλμα</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Report</source>
+        <translation>Αναφορά</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+23"/>
+        <source>Conflicts</source>
+        <translation>Συγκρούσεις</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Insufficient disk space - Required: %1, Available: %2, Missing: %3</source>
+        <translation>Ανεπαρκής χώρος δίσκου - Απαιτείται: %1, Διαθέσιμο: %2, Λείπει: %3</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Low target space: %1 remaining after operation</source>
+        <translation>Λίγος χώρος στον προορισμό: %1 απομένει μετά την ενέργεια</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>File Name</source>
+        <translation>Όνομα αρχείου</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source> — source &amp; target offline</source>
+        <translation> — πηγή &amp; προορισμός εκτός σύνδεσης</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source> — source offline</source>
+        <translation> — πηγή εκτός σύνδεσης</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source> — target offline</source>
+        <translation> — προορισμός εκτός σύνδεσης</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Preview</source>
+        <translation>Προεπισκόπηση</translation>
+    </message>
+    <message>
+        <location line="+261"/>
+        <source>Copy mode</source>
+        <translation>Λειτουργία αντιγραφής</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Source mode</source>
+        <translation>Λειτουργία πηγής</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Size Diff.</source>
         <translation>Διαφ. μεγέθους</translation>
     </message>
@@ -3063,48 +3456,52 @@ to the trash?</source>
         <translation>Διαφ. ημερομηνίας</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+70"/>
         <source>Parent Device</source>
         <translation>Γονική συσκευή</translation>
     </message>
     <message>
-        <location line="+76"/>
-        <location line="+5"/>
+        <location line="+168"/>
+        <source>Select a source catalog first.</source>
+        <translation>Επιλέξτε πρώτα έναν κατάλογο πηγής.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select a target catalog first.</source>
+        <translation>Επιλέξτε πρώτα έναν κατάλογο προορισμού.</translation>
+    </message>
+    <message>
         <source>Populate the lists first (One or both device lists are empty).</source>
-        <translation>Συμπληρώστε πρώτα τις λίστες (Μία ή και οι δύο λίστες συσκευών είναι κενές).</translation>
+        <translation type="vanished">Συμπληρώστε πρώτα τις λίστες (Μία ή και οι δύο λίστες συσκευών είναι κενές).</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Invalid selection model</source>
-        <translation>Μη έγκυρο μοντέλο επιλογής</translation>
+        <translation type="vanished">Μη έγκυρο μοντέλο επιλογής</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Select a device from both lists.</source>
-        <translation>Επιλέξτε συσκευή από τις δύο λίστες.</translation>
+        <translation type="vanished">Επιλέξτε συσκευή από τις δύο λίστες.</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Invalid device selection.</source>
-        <translation>Μη έγκυρη επιλογή συσκευής.</translation>
+        <translation type="vanished">Μη έγκυρη επιλογή συσκευής.</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Empty device ID.</source>
-        <translation>Κενό ID συσκευής.</translation>
+        <translation type="vanished">Κενό ID συσκευής.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Provide a mapping name.</source>
         <translation>Παρέχετε όνομα αντιστοίχισης.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>Επιλέξτε διαφορετική πηγή ή προορισμό (μια συσκευή δεν πρέπει να αντιστοιχίζεται στον εαυτό της).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-495"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-573"/>
         <source>Virtual Group</source>
         <translation>Εικονική ομάδα</translation>
     </message>
@@ -3114,13 +3511,13 @@ to the trash?</source>
         <translation>Μια εικονική συσκευή μπορεί να προστεθεί μόνο σε άλλη εικονική συσκευή.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+212"/>
-        <location line="+68"/>
+        <location line="+275"/>
+        <location line="+76"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-64"/>
         <source>Unassign this catalog</source>
         <translation>Αφαίρεση ανάθεσης αυτού του καταλόγου</translation>
     </message>
@@ -3130,7 +3527,7 @@ to the trash?</source>
         <translation>Διαγραφή αυτού του καταλόγου</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+66"/>
         <source>Unassign this storage</source>
         <translation>Αφαίρεση ανάθεσης αυτής της αποθήκευσης</translation>
     </message>
@@ -3140,7 +3537,7 @@ to the trash?</source>
         <translation>Διαγραφή αυτής της αποθήκευσης</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+55"/>
         <source>Add Virtual device</source>
         <translation>Προσθήκη εικονικής συσκευής</translation>
     </message>
@@ -3175,7 +3572,7 @@ to the trash?</source>
         <translation>Η επαλήθευση MIME απέτυχε:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-804"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-678"/>
         <location line="+346"/>
         <source>Search Error</source>
         <translation>Σφάλμα αναζήτησης</translation>
@@ -3192,19 +3589,23 @@ to the trash?</source>
         <translation>Όνομα καταλόγου</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1177"/>
+        <location line="+982"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+178"/>
         <location line="+46"/>
         <source>Pause</source>
         <translation>Παύση</translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="-975"/>
+        <location line="+975"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-31"/>
         <location line="+33"/>
         <source>Resume</source>
         <translation>Συνέχεια</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-21"/>
         <source>Searching...</source>
         <translation>Αναζήτηση...</translation>
     </message>
@@ -3229,10 +3630,10 @@ to the trash?</source>
         <translation>Διακοπή τρέχουσας αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-107"/>
-        <location line="+73"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+358"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+232"/>
         <source>Folders found</source>
         <translation>Φάκελοι που βρέθηκαν</translation>
     </message>
@@ -3387,12 +3788,13 @@ to the trash?</source>
         <translation>Επιλέξτε πρώτα μια διεργασία που θα εφαρμοστεί σε όλα τα παρακάτω αποτελέσματα.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1025"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+15"/>
         <source>Results exported to the collection folder:</source>
         <translation>Αποτελέσματα εξήχθησαν στον φάκελο συλλογής:</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Results exported a new Catalog:</source>
         <translation>Αποτελέσματα εξήχθησαν σε νέο κατάλογο:</translation>
     </message>
@@ -3637,7 +4039,7 @@ to the trash?</source>
         <translation>Επιλογή βάσης δεδομένων για δημιουργία και άνοιγμα:</translation>
     </message>
     <message>
-        <location line="+217"/>
+        <location line="+205"/>
         <source>Collection Upgrade Required</source>
         <translation>Απαιτείται αναβάθμιση συλλογής</translation>
     </message>
@@ -3697,7 +4099,7 @@ to the trash?</source>
         <translation>Έξοδος από την εφαρμογή</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+52"/>
         <source>Select the database to open:</source>
         <translation>Επιλογή βάσης δεδομένων για άνοιγμα:</translation>
     </message>
@@ -3722,7 +4124,12 @@ to the trash?</source>
         <translation>Επιλέξτε τον κατάλογο και το όνομα αρχείου για την εξαγωγή του.</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+21"/>
+        <source>Loading all catalogs prior to export&lt;br/&gt; %1 &lt;br/&gt;&lt;br/&gt; %2 files loaded out of %3</source>
+        <translation>Φόρτωση όλων των καταλόγων πριν την εξαγωγή&lt;br/&gt; %1 &lt;br/&gt;&lt;br/&gt; %2 αρχεία φορτώθηκαν από %3</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
         <translation>Αποτυχία εξαγωγής βάσης δεδομένων μνήμης σε αρχείο.&lt;br/&gt;&lt;br/&gt; Διαδρομή αρχείου εξαγωγής: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
@@ -3732,17 +4139,17 @@ to the trash?</source>
         <translation>Επιτυχής εξαγωγή συλλογής σε αρχείο βάσης δεδομένων SQLite.&lt;br/&gt;&lt;br/&gt; Διαδρομή αρχείου εξαγωγής: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Select the directory for the CSV export</source>
         <translation>Επιλογή καταλόγου για την εξαγωγή CSV</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+37"/>
         <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
         <translation>Επιτυχής εξαγωγή βάσης δεδομένων σε αρχεία CSV.&lt;br/&gt;&lt;br/&gt;Κατάλογος εξαγωγής: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Μπορείτε τώρα να μεταβείτε στη λειτουργία μνήμης και να φορτώσετε αυτή τη συλλογή.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+8"/>
         <source>Export failed: %1</source>
         <translation>Αποτυχία εξαγωγής: %1</translation>
     </message>
@@ -3757,15 +4164,33 @@ to the trash?</source>
         <translation>από</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_tags.cpp" line="+91"/>
+        <location filename="../mainwindow_tab_tags.cpp" line="+67"/>
         <source>Remove this tag</source>
         <translation>Αφαίρεση αυτής της ετικέτας</translation>
+    </message>
+    <message>
+        <location filename="../devicemappingview.cpp" line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="-80"/>
+        <source>Strict</source>
+        <translation>Αυστηρό</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Unique</source>
+        <translation>Μοναδικό</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Drive</source>
+        <translation>Μονάδα δίσκου</translation>
     </message>
 </context>
 <context>
     <name>Tag</name>
     <message>
-        <location filename="../core/tag.cpp" line="+68"/>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>

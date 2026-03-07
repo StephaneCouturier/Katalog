@@ -1897,7 +1897,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
                 .arg(totalSec / 3600,         2, 10, QLatin1Char('0'))
                 .arg((totalSec % 3600) / 60,  2, 10, QLatin1Char('0'))
                 .arg(totalSec % 60,           2, 10, QLatin1Char('0'));
-            const QString timingMsg = tr("Indexing — Start: %1 | End: %2 | Duration: %3")
+            const QString timingMsg = tr("Indexing - Start: %1 | End: %2 | Duration: %3")
                 .arg(m_catalogCreateStartTime.toString("hh:mm:ss"))
                 .arg(endTime.toString("hh:mm:ss"))
                 .arg(duration);

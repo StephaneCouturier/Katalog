@@ -7613,7 +7613,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item row="0" column="1" rowspan="2">
                    <widget class="QGroupBox" name="Devices_groupBox_IncludeExclude">
                     <property name="title">
-                     <string>Excluded folders</string>
+                     <string>Excluded folders from this catalog</string>
                     </property>
                     <layout class="QVBoxLayout" name="Devices_verticalLayout_IncludeExclude">
                      <item>
@@ -7628,7 +7628,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item>
                         <widget class="QLineEdit" name="Devices_lineEdit_NewExcludeFolder">
                          <property name="placeholderText">
-                          <string>Folder path or pattern to exclude…</string>
+                          <string>Folder path or pattern to exclude</string>
                          </property>
                         </widget>
                        </item>
@@ -9456,29 +9456,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </widget>
                   </item>
                   <item>
-                   <spacer name="Create_verticalSpacer_04">
-                    <property name="font">
-                     <font>
-                      <family>Noto Sans</family>
-                      <pointsize>9</pointsize>
-                      <kerning>false</kerning>
-                     </font>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Orientation::Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                     <enum>QSizePolicy::Policy::Fixed</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>100</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
                    <layout class="QHBoxLayout" name="Create_horizontalLayout_Generate">
                     <item>
                      <widget class="QLineEdit" name="Create_lineEdit_NewCatalogName">
@@ -9950,7 +9927,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <widget class="QGroupBox" name="Create_groupBox_ExcludeFolders">
                     <property name="title">
-                     <string>Excluded folders</string>
+                     <string>Excluded folders from this catalog</string>
                     </property>
                     <layout class="QVBoxLayout" name="Create_verticalLayout_ExcludeFolders">
                      <item>
@@ -9965,7 +9942,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item>
                         <widget class="QLineEdit" name="Create_lineEdit_NewExcludeFolder">
                          <property name="placeholderText">
-                          <string>Folder path or pattern to exclude…</string>
+                          <string>Folder path or pattern to exclude</string>
                          </property>
                         </widget>
                        </item>
@@ -10539,7 +10516,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </font>
                      </property>
                      <property name="text">
-                      <string>Directory Text to exclude from all Catalogs</string>
+                      <string>Folder path or pattern to exclude</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -10643,7 +10620,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </font>
                      </property>
                      <property name="text">
-                      <string>Directory Text excluded from all Catalogs</string>
+                      <string>Excluded from all catalogs</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -11232,17 +11209,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QComboBox" name="BackUp_comboBox_MappingType">
                 <item>
                  <property name="text">
-                  <string notr="true">All</string>
+                  <string>All</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string notr="true">Backup</string>
+                  <string>Backup</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string notr="true">Archive</string>
+                  <string>Archive</string>
                  </property>
                 </item>
                </widget>
@@ -11932,9 +11909,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
                <widget class="QCheckBox" name="BackUp_checkBox_UpdateBeforeBackup">
-                <property name="toolTip">
-                 <string>Update source and target catalogs before backup, and update the target catalog again after backup</string>
-                </property>
                 <property name="text">
                  <string>Update catalogs</string>
                 </property>
@@ -12189,21 +12163,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <widget class="QComboBox" name="BackUp_comboBox_CreateMappingType">
                    <item>
                     <property name="text">
-                     <string notr="true">Backup</string>
+                     <string>Backup</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string notr="true">Archive</string>
+                     <string>Archive</string>
                     </property>
                    </item>
                   </widget>
                  </item>
                  <item>
                   <widget class="QCheckBox" name="BackUp_checkBox_StrictCopy">
-                   <property name="toolTip">
-                    <string>Strict copy: each source folder is mirrored to the matching target folder (recommended). Uncheck to skip files that already exist anywhere in the target (deduplication mode). Not applicable to Archive mappings — Archive always uses deduplication (if a file is already in the target it is simply removed from the source).</string>
-                   </property>
                    <property name="text">
                     <string>Strict copy</string>
                    </property>
@@ -12214,9 +12185,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </item>
                  <item>
                   <widget class="QCheckBox" name="BackUp_checkBox_SourceMode">
-                   <property name="toolTip">
-                    <string>When checked, the source drive is scanned directly (Drive mode) — all files under the source path are backed up, bypassing the catalog index and exclusion rules. The source device must be connected. When unchecked (Catalog mode, default), the catalog index is used and exclude folder rules apply.</string>
-                   </property>
                    <property name="text">
                     <string>Scan source drive directly</string>
                    </property>
@@ -12228,17 +12196,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="QLabel" name="BackUp_label_ConflictMode">
                    <property name="text">
-                    <string>On conflict:</string>
+                    <string>On conflict</string>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="QComboBox" name="BackUp_comboBox_ConflictMode">
-                   <property name="toolTip">
-                    <string>How to handle files that already exist in the target but differ from the source (conflicts).
-Skip: report the conflict, leave the target untouched (safe default).
-Rename oldest: if source is newer, rename the target file with a date-time stamp then copy the source; if target is newer, skip.</string>
-                   </property>
                    <property name="currentIndex">
                     <number>1</number>
                    </property>
@@ -13914,7 +13877,7 @@ Rename oldest: if source is newer, rename the target file with a date-time stamp
   <customwidget>
    <class>QChartView</class>
    <extends>QGraphicsView</extends>
-   <header location="global">QChartView</header>
+   <header location="global">QChartView&gt;</header>
   </customwidget>
   <customwidget>
    <class>TreeComboBox</class>

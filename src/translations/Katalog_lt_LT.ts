@@ -4,7 +4,7 @@
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+92"/>
+        <location filename="../core/catalog.cpp" line="+127"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
@@ -32,7 +32,7 @@
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+1741"/>
+        <location filename="../core/collection.cpp" line="+2218"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Šiame aplanke yra atminties režimo kolekcijos failai, bet šiuo metu esate failų režime.&lt;br/&gt;Perjunkite į atminties režimą arba pasirinkite kitą aplanką.</translation>
     </message>
@@ -50,7 +50,7 @@
 <context>
     <name>ExploreTreeModel</name>
     <message>
-        <location filename="../exploretreemodel.cpp" line="+37"/>
+        <location filename="../exploretreemodel.cpp" line="+39"/>
         <source>Folder</source>
         <translation>Aplankas</translation>
     </message>
@@ -68,14 +68,14 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+2369"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+2269"/>
         <source>Include Checksum</source>
         <translation>Įtraukti kontrolinę sumą</translation>
     </message>
     <message>
-        <location line="+541"/>
+        <location line="+552"/>
         <location line="+46"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+301"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+364"/>
         <source>Verify Checksums</source>
         <translation>Patikrinti kontrolines sumas</translation>
     </message>
@@ -136,12 +136,12 @@
         <translation>Trūkstami failai:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+9382"/>
+        <location filename="../mainwindow.ui" line="+9774"/>
         <source>Include File Type</source>
         <translation>Įtraukti failo tipą</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+262"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+808"/>
         <source>Copy Checksum</source>
@@ -222,7 +222,7 @@
         <translation type="vanished">Netinkamas duomenų bazės pagrindinio kompiuterio vardas.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+121"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+122"/>
         <source>Invalid hostname.</source>
         <translation>Netinkamas pagrindinio kompiuterio vardas.</translation>
     </message>
@@ -252,8 +252,8 @@
         <translation>Tęsti?</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="+131"/>
-        <location line="+167"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+130"/>
+        <location line="+159"/>
         <source>Metadata Extracted</source>
         <translation>Metaduomenys išgauti</translation>
     </message>
@@ -263,10 +263,10 @@
         <translation>Kontrolinės sumos apskaičiuotos</translation>
     </message>
     <message>
-        <location filename="../core/search.cpp" line="+189"/>
-        <location filename="../mainwindow.ui" line="-5962"/>
+        <location filename="../core/search.cpp" line="+245"/>
+        <location filename="../mainwindow.ui" line="-6481"/>
         <location line="+926"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1281"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1309"/>
         <source>Checksum</source>
         <translation>Kontrolinė suma</translation>
     </message>
@@ -297,18 +297,37 @@
         <translation>ir</translation>
     </message>
     <message>
-        <location line="+3427"/>
-        <location line="+1738"/>
+        <location line="+3332"/>
+        <location line="+2352"/>
         <source>Include files checksum</source>
         <translation>Įtraukti failų kontrolines sumas</translation>
     </message>
     <message>
-        <location line="+587"/>
+        <location line="-258"/>
         <source>Stop the cataloging (no data will be saved)</source>
         <translation>Sustabdyti katalogavimą (duomenys nebus išsaugoti)</translation>
     </message>
     <message>
-        <location line="+1114"/>
+        <location line="+1621"/>
+        <location line="+949"/>
+        <source>Backup</source>
+        <translation>Atsarginė kopija</translation>
+    </message>
+    <message>
+        <location line="-944"/>
+        <location line="+949"/>
+        <location filename="../devicemappingview.cpp" line="+97"/>
+        <location filename="../mainwindow_setup.cpp" line="+318"/>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+714"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+68"/>
+        <source>Archive</source>
+        <translation>Archyvas</translation>
+    </message>
+    <message>
+        <location line="-928"/>
         <source>Generate Profile</source>
         <translation>Generuoti profilį</translation>
     </message>
@@ -322,8 +341,8 @@
         <translation type="vanished">Kopijuoti failo kontrolinę sumą</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="+128"/>
-        <location line="+30"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+285"/>
+        <location line="+32"/>
         <source>No backup links found.</source>
         <translation>Nerasta atsarginių kopijų nuorodų.</translation>
     </message>
@@ -333,43 +352,44 @@
         <translation>Atsarginės kopijos profilis sukurtas.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1549"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1556"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Išsaugoma</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
-        <location line="+72"/>
-        <location line="+149"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-165"/>
+        <location line="+68"/>
+        <location line="+145"/>
         <source>Indexed</source>
         <translation>Indeksuota</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+443"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-213"/>
-        <location line="+157"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+349"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-205"/>
+        <location line="+149"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+316"/>
         <source>File Types Updated</source>
         <translation>Failų tipai atnaujinti</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-173"/>
-        <location line="+160"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-165"/>
+        <location line="+152"/>
         <source>Counted</source>
         <translation>Suskaičiuota</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-776"/>
         <source>Paused</source>
         <translation>Pristabdyta</translation>
     </message>
     <message>
         <location line="+27"/>
-        <location line="+28"/>
+        <location line="+24"/>
         <location line="+18"/>
-        <location line="+36"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+1080"/>
+        <location line="+34"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+964"/>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+54"/>
@@ -380,8 +400,13 @@
     </message>
     <message>
         <location line="-13"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-105"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-54"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-101"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-105"/>
+        <location line="+415"/>
+        <location line="+128"/>
+        <location line="+87"/>
+        <location line="+139"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-39"/>
         <source>Completed</source>
         <translation>Užbaigta</translation>
     </message>
@@ -391,23 +416,26 @@
         <translation>Naudojama vieta</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-81"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-77"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-335"/>
+        <location line="+109"/>
+        <location line="+87"/>
         <source>Cancelled</source>
         <translation>Atšaukta</translation>
     </message>
     <message>
         <location filename="../core/searchjobstoppable.cpp" line="+39"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
-        <location line="+157"/>
+        <location line="+149"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-20"/>
         <location line="+22"/>
         <source>Loaded</source>
         <translation>Įkelta</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-104"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+448"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+465"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-24"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-71"/>
         <location line="+54"/>
@@ -415,13 +443,13 @@
         <translation>Vykdoma</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+90"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+75"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="-127"/>
         <source>Stopped</source>
         <translation>Sustabdyta</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+406"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+421"/>
         <source>MIME Verification Complete</source>
         <translation>MIME patikrinimas baigtas</translation>
     </message>
@@ -431,7 +459,7 @@
         <translation>Atidaryti ataskaitą</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-450"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-467"/>
         <source>Hidden</source>
         <translation>Paslėptas</translation>
     </message>
@@ -441,7 +469,7 @@
         <translation>Metaduomenys</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6363"/>
+        <location filename="../mainwindow.ui" line="-6570"/>
         <source>File metadata</source>
         <translation>Failo metaduomenys</translation>
     </message>
@@ -473,13 +501,13 @@
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1870"/>
-        <location line="+1714"/>
+        <location line="+1817"/>
+        <location line="+2286"/>
         <source>Include files metadata</source>
         <translation>Įtraukti failų metaduomenis</translation>
     </message>
     <message>
-        <location line="-1056"/>
+        <location line="-1518"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aptikti tikrus MIME tipus ir nustatyti neatitikimus (ilgas procesas)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -489,15 +517,14 @@
         <translation>Patikrinti MIME tipus</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+464"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+520"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Other</source>
         <translation>Kita</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+109"/>
-        <location filename="../mainwindow_tab_create.cpp" line="-29"/>
+        <location line="-29"/>
         <location line="+19"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -506,20 +533,20 @@
         <location line="+8"/>
         <location line="+15"/>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+638"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+655"/>
         <location line="+1"/>
         <source>None</source>
         <translation>Nėra</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-695"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-662"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-1529"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Rodyti išplėstinius metaduomenis (JSON)</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+692"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+659"/>
         <source>MIME Type</source>
         <translation>MIME tipas</translation>
     </message>
@@ -560,18 +587,22 @@
         <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-362"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-254"/>
         <location line="+8"/>
         <source>Copy JSON</source>
         <translation>Kopijuoti JSON</translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-47"/>
+        <location line="+16"/>
+        <location line="+32"/>
+        <location line="+1"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-3"/>
         <source>Copied</source>
         <translation>Nukopijuota</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+8"/>
         <source>Close</source>
         <translation>Uždaryti</translation>
     </message>
@@ -618,29 +649,25 @@
         <translation>Naudoti programos aplanką</translation>
     </message>
     <message>
-        <location filename="../devicetreeview.cpp" line="+2"/>
         <source>MIME Type Only</source>
-        <translation>Tik MIME tipas</translation>
+        <translation type="vanished">Tik MIME tipas</translation>
     </message>
     <message>
-        <location line="+2"/>
         <location filename="../mainwindow_tab_create.cpp" line="-78"/>
         <location line="+12"/>
         <source>Media Basic</source>
         <translation>Medija pagrindinė</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Extended Custom</source>
-        <translation>Išplėstinė pasirinktinė</translation>
+        <translation type="vanished">Išplėstinė pasirinktinė</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Extended Full</source>
-        <translation>Išplėstinė pilna</translation>
+        <translation type="vanished">Išplėstinė pilna</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-11"/>
+        <location line="-11"/>
         <location line="+12"/>
         <source>Media Extended</source>
         <translation>Medija išplėstinė</translation>
@@ -657,7 +684,7 @@
         <translation>Ar norite &lt;span style=&apos;color: red&apos;;&gt;ištrinti&lt;/span&gt; šį %1 įrenginį?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+800"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
         <location line="+40"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalogai atnaujinti:&lt;b&gt; %1 &lt;/b&gt;(%2 praleista)</translation>
@@ -668,12 +695,12 @@
         <translation>Virtualus įrenginys atnaujintas: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1292"/>
+        <location filename="../mainwindow.ui" line="-1349"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Spustelėjimas: Stabdyti nedelsiant (griežtas stabdymas)&lt;/p&gt;&lt;p&gt;Ctrl+Spustelėjimas: Stabdyti po dabartinio katalogo (švelnus stabdymas)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-239"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-248"/>
         <source>The source directory does not exist.</source>
         <translation>Šaltinio katalogas neegzistuoja.</translation>
     </message>
@@ -684,11 +711,11 @@
         <translation>Šaltinio aplankas neturi jokių failų.&lt;br/&gt;Tai gali reikšti, kad šaltinis tuščias arba įrenginys neprijungtas prie šio aplanko.&lt;br/&gt;Ar norite jį išsaugoti vis tiek (katalogas būtų tuščias)?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+79"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-473"/>
-        <location line="+97"/>
-        <location line="+64"/>
-        <location line="+130"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+86"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-496"/>
+        <location line="+105"/>
+        <location line="+72"/>
+        <location line="+137"/>
         <location line="+140"/>
         <location filename="../mainwindow_tab_filters.cpp" line="+249"/>
         <location line="+40"/>
@@ -696,8 +723,8 @@
         <translation>Įrenginio operacija jau vykdoma.</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1090"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1062"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1094"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1073"/>
         <source>Operation cancelled</source>
         <translation>Operacija atšaukta</translation>
     </message>
@@ -707,27 +734,27 @@
         <translation>Stabdoma po dabartinio katalogo užbaigimo...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-7042"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+811"/>
+        <location filename="../mainwindow.ui" line="-6915"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+822"/>
         <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalogas</translation>
     </message>
     <message>
         <location filename="../core/searchprogressmanager.cpp" line="-1"/>
-        <location line="+57"/>
-        <location line="+47"/>
-        <location filename="../mainwindow.ui" line="+1009"/>
+        <location line="+53"/>
+        <location line="+45"/>
+        <location filename="../mainwindow.ui" line="+882"/>
         <location line="+436"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-97"/>
         <location line="+40"/>
         <location line="+39"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-484"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-466"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+177"/>
         <location line="+58"/>
-        <location line="+446"/>
+        <location line="+320"/>
         <location line="+4"/>
         <source>Search</source>
         <translation>Paieška</translation>
@@ -739,7 +766,7 @@
     </message>
     <message>
         <location line="+3923"/>
-        <location filename="../mainwindow_tab_create.cpp" line="+91"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+93"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
@@ -828,13 +855,13 @@
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location line="+11882"/>
+        <location line="+12393"/>
         <source>Port</source>
         <translation>Prievadas</translation>
     </message>
     <message>
-        <location line="-2671"/>
-        <location line="+2650"/>
+        <location line="-3124"/>
+        <location line="+3103"/>
         <source>Password</source>
         <translation>Slaptažodis</translation>
     </message>
@@ -850,26 +877,28 @@
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../mainwindow.cpp" line="+292"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-378"/>
+        <location filename="../mainwindow.cpp" line="+306"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-270"/>
         <source>File</source>
         <translation>Failas</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-18"/>
-        <location filename="../mainwindow.ui" line="-10407"/>
+        <location filename="../mainwindow.ui" line="-10918"/>
         <location line="+848"/>
         <location line="+891"/>
         <location line="+921"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+326"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-53"/>
+        <location line="+143"/>
+        <location line="+402"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-31"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-294"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-276"/>
         <source>Size</source>
         <translation>Dydis</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-4690"/>
-        <location line="+6626"/>
+        <location filename="../mainwindow.ui" line="-4663"/>
+        <location line="+6599"/>
         <source>Device tree</source>
         <translation>Įrenginių medis</translation>
     </message>
@@ -908,34 +937,57 @@
     </message>
     <message>
         <location line="+81"/>
-        <location line="+5080"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-67"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1486"/>
+        <location line="+5137"/>
+        <location line="+4396"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-95"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1514"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tipas</translation>
     </message>
     <message>
-        <location line="-5042"/>
+        <location line="-9495"/>
         <source>Select the type of files</source>
         <translation>Pasirinkti failų tipą</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+476"/>
+        <location line="+6547"/>
+        <source>Catalog Parameters</source>
+        <translation>Katalogo parametrai</translation>
+    </message>
+    <message>
+        <location line="+1283"/>
+        <source>Global Parameters</source>
+        <translation>Globalūs parametrai</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Excluded from all catalogs</source>
+        <translation>Pašalinta iš visų katalogų</translation>
+    </message>
+    <message>
+        <location line="+547"/>
+        <source>BackUp &amp; Archive Links for device</source>
+        <translation>Atsarginės kopijos &amp; archyvo nuorodos įrenginiui</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <location filename="../mainwindow_setup.cpp" line="-6"/>
+        <location line="+216"/>
         <location line="+8"/>
         <location filename="../mainwindow_tab_create.cpp" line="-33"/>
         <location line="+19"/>
         <location line="+11"/>
         <location line="+92"/>
         <location line="+9"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+904"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+921"/>
         <location line="+1"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+100"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
         <location line="+1"/>
-        <location line="+77"/>
+        <location line="+62"/>
         <location line="+2"/>
         <location line="+1"/>
         <location line="+1"/>
@@ -970,7 +1022,7 @@
         <translation>Vaizdo įrašas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3355"/>
+        <location filename="../mainwindow.ui" line="-5194"/>
         <source>only list folders in results</source>
         <translation>tik išvardinti aplankus rezultatuose</translation>
     </message>
@@ -992,11 +1044,11 @@
         <translation>Rodyti/Slėpti katalogus su rezultatais</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-86"/>
-        <location line="+73"/>
-        <location line="+34"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <location filename="../mainwindow.ui" line="+129"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+631"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+505"/>
         <location line="+54"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1014,13 +1066,18 @@
         <location line="+41"/>
         <location line="+29"/>
         <location line="+29"/>
-        <location line="+907"/>
+        <location line="+964"/>
         <location line="+45"/>
         <location line="+38"/>
         <location line="+496"/>
         <location line="+100"/>
         <location line="+53"/>
-        <location line="+2295"/>
+        <location line="+2413"/>
+        <location line="+38"/>
+        <location line="+24"/>
+        <location line="+38"/>
+        <location line="+24"/>
+        <location line="+179"/>
         <location line="+45"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1029,16 +1086,11 @@
         <location line="+24"/>
         <location line="+24"/>
         <location line="+24"/>
-        <location line="+99"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+38"/>
-        <location line="+24"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3498"/>
+        <location line="-3696"/>
         <location line="+377"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-16"/>
         <source>Catalogs</source>
@@ -1046,48 +1098,48 @@
     </message>
     <message>
         <location line="-332"/>
-        <location line="+2502"/>
+        <location line="+2640"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-30"/>
         <source>Total File Size</source>
         <translation>Bendras failų dydis</translation>
     </message>
     <message>
-        <location line="-2464"/>
+        <location line="-2602"/>
         <source>Total Number of Files</source>
         <translation>Bendras failų skaičius</translation>
     </message>
     <message>
-        <location line="-1159"/>
+        <location line="-1216"/>
         <source>All active</source>
         <translation>Visi aktyvūs</translation>
     </message>
     <message>
-        <location line="+1250"/>
+        <location line="+1307"/>
         <source>Import</source>
         <translation>Importuoti</translation>
     </message>
     <message>
         <location line="+349"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-413"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-346"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-436"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-331"/>
         <location line="+22"/>
-        <location line="+35"/>
+        <location line="+20"/>
         <location line="+18"/>
         <location line="+14"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="-173"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="-166"/>
         <source>Explore</source>
         <translation>Naršyti</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-154"/>
-        <location line="+81"/>
-        <location line="+70"/>
-        <location filename="../mainwindow.ui" line="-1783"/>
-        <location line="+936"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-146"/>
+        <location line="+77"/>
+        <location line="+66"/>
+        <location filename="../mainwindow.ui" line="-1840"/>
+        <location line="+993"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-191"/>
         <location filename="../mainwindow_tab_device_ui.cpp" line="-31"/>
-        <location line="+101"/>
-        <location line="+64"/>
+        <location line="+109"/>
+        <location line="+72"/>
         <location filename="../mainwindow_tab_filters.cpp" line="-105"/>
         <location line="+39"/>
         <location line="+40"/>
@@ -1095,38 +1147,42 @@
         <translation>Atnaujinti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4529"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-119"/>
-        <location line="+81"/>
-        <location line="+63"/>
+        <location filename="../mainwindow.ui" line="+4983"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-135"/>
+        <location line="+89"/>
+        <location line="+71"/>
         <source>Edit</source>
         <translation>Redaguoti</translation>
     </message>
     <message>
-        <location line="-5792"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+37"/>
+        <location line="-6303"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1146"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
         <translation>Ištrinti</translation>
     </message>
     <message>
-        <location line="+2113"/>
+        <location line="+2170"/>
         <source>Explore a catalog</source>
         <translation>Naršyti katalogą</translation>
     </message>
     <message>
-        <location line="-8405"/>
-        <location line="+8784"/>
+        <location line="-8435"/>
+        <location line="+8814"/>
+        <location filename="../devicemappingview.cpp" line="+6"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+256"/>
         <source>Catalog</source>
         <translation>Katalogas</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+6"/>
-        <location filename="../mainwindow.ui" line="+1400"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+4"/>
+        <location filename="../mainwindow.ui" line="+1032"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+695"/>
+        <location line="+143"/>
+        <location line="+315"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-957"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-974"/>
         <location line="+241"/>
         <location line="+254"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+3"/>
@@ -1134,31 +1190,39 @@
         <translation>Kelias</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1723"/>
+        <location filename="../mainwindow.ui" line="-1355"/>
         <source>Directories</source>
         <translation>Katalogai</translation>
     </message>
     <message>
-        <location line="-8695"/>
-        <location line="+688"/>
+        <location line="-8064"/>
+        <location line="+13153"/>
         <source>Show/Hide Filters</source>
         <translation>Rodyti/Slėpti filtrus</translation>
     </message>
     <message>
-        <location line="-542"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1220"/>
+        <location line="-13668"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1225"/>
         <source>Virtual</source>
         <translation>Virtualus</translation>
     </message>
     <message>
-        <location line="+1252"/>
+        <location line="+990"/>
+        <location line="+1022"/>
+        <location line="+2502"/>
+        <location line="+1196"/>
+        <source>Use the criteria in the Search</source>
+        <translation>Naudoti paieškos kriterijus</translation>
+    </message>
+    <message>
+        <location line="-4485"/>
         <location line="+5562"/>
-        <location line="+2975"/>
+        <location line="+2649"/>
         <source>Stop</source>
         <translation>Sustabdyti</translation>
     </message>
     <message>
-        <location line="-3438"/>
+        <location line="-3112"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-74"/>
         <source>Select...</source>
         <translation>Pasirinkti...</translation>
@@ -1187,13 +1251,33 @@
         <translation>Katalogų sąrašas</translation>
     </message>
     <message>
-        <location line="+523"/>
+        <location line="+530"/>
         <source>The change will be applied only when Saving</source>
         <translation>Pakeitimas bus pritaikytas tik išsaugojus</translation>
     </message>
     <message>
-        <location line="+271"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+975"/>
+        <location line="+159"/>
+        <location line="+2314"/>
+        <source>Excluded folders from this catalog</source>
+        <translation>Iš šio katalogo pašalinti aplankai</translation>
+    </message>
+    <message>
+        <location line="-2299"/>
+        <location line="+2314"/>
+        <location line="+574"/>
+        <source>Folder path or pattern to exclude</source>
+        <translation>Aplanko kelias arba šablonas, kurį reikia pašalinti</translation>
+    </message>
+    <message>
+        <location line="-2868"/>
+        <location line="+2314"/>
+        <location line="+607"/>
+        <source>Add</source>
+        <translation>Pridėti</translation>
+    </message>
+    <message>
+        <location line="-2794"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+980"/>
         <source>Comment 1</source>
         <translation>Komentaras 1</translation>
     </message>
@@ -1258,8 +1342,8 @@
     </message>
     <message>
         <location line="+227"/>
-        <location line="+1870"/>
-        <location line="+630"/>
+        <location line="+2008"/>
+        <location line="+913"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
@@ -1267,14 +1351,14 @@
         <translation>Failų skaičius</translation>
     </message>
     <message>
-        <location line="-2384"/>
+        <location line="-2805"/>
         <source>Click to open the file</source>
         <translation>Spustelėkite norėdami atidaryti failą</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-153"/>
-        <location line="+81"/>
-        <location line="+70"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-145"/>
+        <location line="+77"/>
+        <location line="+66"/>
         <location filename="../mainwindow.ui" line="+218"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+224"/>
@@ -1287,7 +1371,7 @@
         <translation>Sukurti katalogą</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+503"/>
         <source>2- </source>
         <translation>2- </translation>
     </message>
@@ -1305,17 +1389,15 @@
         <translation type="vanished">Kitos parinktys</translation>
     </message>
     <message>
-        <location line="+258"/>
         <source>Directories to exclude from catalogs</source>
-        <translation>Katalogai, kuriuos reikia išskirti iš catalogų</translation>
+        <translation type="vanished">Katalogai, kuriuos reikia išskirti iš catalogų</translation>
     </message>
     <message>
-        <location line="+32"/>
         <source>Add directory to exclude</source>
-        <translation>Pridėti aplanką išskyrimo</translation>
+        <translation type="vanished">Pridėti aplanką išskyrimo</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="-454"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
@@ -1335,8 +1417,8 @@
         <translation>Pridėti naują saugyklos įrenginį</translation>
     </message>
     <message>
-        <location line="-2415"/>
-        <location line="+2418"/>
+        <location line="-2112"/>
+        <location line="+2115"/>
         <source>Add Storage</source>
         <translation>Pridėti saugyklą</translation>
     </message>
@@ -1357,11 +1439,12 @@
     </message>
     <message>
         <location line="+29"/>
+        <location line="+2637"/>
         <source>Generate</source>
         <translation>Generuoti</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="-2581"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Paleisti katalogavimą ir išsaugoti į failą</translation>
     </message>
@@ -1371,7 +1454,7 @@
         <translation>Sukurti katalogą</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+441"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
@@ -1381,7 +1464,7 @@
         <translation>Pasirinkti šaltinio kelią</translation>
     </message>
     <message>
-        <location line="-1657"/>
+        <location line="-1566"/>
         <source>Tree options</source>
         <translation>Medžio parinktys</translation>
     </message>
@@ -1401,7 +1484,7 @@
         <translation>Įterpti virtualią grupę</translation>
     </message>
     <message>
-        <location line="-1631"/>
+        <location line="-1688"/>
         <source>View</source>
         <translation>Peržiūra</translation>
     </message>
@@ -1411,12 +1494,12 @@
         <translation>Saugyklos sąrašas</translation>
     </message>
     <message>
-        <location line="+576"/>
+        <location line="+583"/>
         <source>Catalog fields</source>
         <translation>Katalogo laukai</translation>
     </message>
     <message>
-        <location line="+361"/>
+        <location line="+411"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Laisva vieta</translation>
@@ -1427,17 +1510,17 @@
         <translation>Įrenginio paveikslas</translation>
     </message>
     <message>
-        <location line="-662"/>
+        <location line="-719"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Įrašyti visų įrenginių reikšmes statistikai apie pilną rinkinį.</translation>
     </message>
     <message>
-        <location line="+784"/>
+        <location line="+841"/>
         <source>Storage fields</source>
         <translation>Saugyklos laukai</translation>
     </message>
     <message>
-        <location line="+5405"/>
+        <location line="+5859"/>
         <source>Icons</source>
         <translation>Piktogramos</translation>
     </message>
@@ -1483,55 +1566,61 @@
         <translation>Duomenų valdymas</translation>
     </message>
     <message>
-        <location line="-12107"/>
-        <location line="+9848"/>
+        <location line="-12618"/>
+        <location line="+7033"/>
+        <location line="+2314"/>
+        <location line="+190"/>
+        <location line="+459"/>
         <source>Select the path</source>
         <translation>Pasirinkti kelią</translation>
     </message>
     <message>
-        <location line="-9845"/>
-        <location line="+6826"/>
-        <location line="+3022"/>
-        <location line="+453"/>
+        <location line="-9993"/>
+        <location line="+6833"/>
+        <location line="+200"/>
+        <location line="+2314"/>
+        <location line="+190"/>
+        <location line="+459"/>
+        <location line="+500"/>
         <source>Select</source>
         <translation>Pasirinkti</translation>
     </message>
     <message>
-        <location line="-10711"/>
-        <location line="+8264"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-944"/>
-        <location line="+2694"/>
+        <location line="-10879"/>
+        <location line="+8294"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-949"/>
+        <location line="+2727"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Saugykla</translation>
     </message>
     <message>
-        <location line="+3868"/>
+        <location line="+4322"/>
         <source>New</source>
         <translation>Naujas</translation>
     </message>
     <message>
-        <location line="-5498"/>
+        <location line="-6009"/>
         <location line="+268"/>
         <source>Devices</source>
         <translation>Įrenginiai</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+657"/>
+        <location line="+714"/>
         <location line="+28"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Total Space</source>
         <translation>Visa vieta</translation>
     </message>
     <message>
-        <location line="-569"/>
+        <location line="-626"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3299"/>
+        <location line="+3494"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Perkrauti</translation>
@@ -1562,24 +1651,24 @@
         <translation>Redaguoti failą, kuriame saugomi visi įrašai</translation>
     </message>
     <message>
-        <location line="-1970"/>
+        <location line="-2108"/>
         <source>Add Virtual</source>
         <translation>Pridėti virtualų</translation>
     </message>
     <message>
-        <location line="-1673"/>
+        <location line="-1730"/>
         <source>Edit List</source>
         <translation>Redaguoti sąrašą</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4390"/>
+        <location line="+4868"/>
         <source>Full Table</source>
         <translation>Pilna lentelė</translation>
     </message>
     <message>
-        <location line="-4085"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="+55"/>
+        <location line="-4563"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+80"/>
         <source>Device Name</source>
         <translation>Įrenginio pavadinimas</translation>
     </message>
@@ -1596,7 +1685,7 @@
         <translation>Įrenginio ID</translation>
     </message>
     <message>
-        <location line="+3155"/>
+        <location line="+3350"/>
         <source>Edit Statistics</source>
         <translation>Redaguoti statistiką</translation>
     </message>
@@ -1658,22 +1747,22 @@
         <translation>Perkrauti failą, kuriame saugomos žymos</translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+1097"/>
         <source>Link name</source>
         <translation>Nuorodos pavadinimas</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+91"/>
         <source>Create link</source>
         <translation>Sukurti nuorodą</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="-612"/>
         <source>Catalog Links</source>
         <translation>Katalogo nuorodos</translation>
     </message>
     <message>
-        <location line="+364"/>
+        <location line="-265"/>
         <source>Linked</source>
         <translation>Susietas</translation>
     </message>
@@ -1683,15 +1772,84 @@
         <translation>Nesusietas</translation>
     </message>
     <message>
-        <location line="+124"/>
-        <location line="+43"/>
+        <location line="+174"/>
+        <source>Export</source>
+        <translation>Eksportuoti</translation>
+    </message>
+    <message>
+        <location line="+331"/>
+        <source>Update catalogs</source>
+        <translation>Atnaujinti katalogus</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1271"/>
+        <source>Replicate directories</source>
+        <translation>Replikuoti katalogus</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-6"/>
+        <location line="+1252"/>
+        <location line="+16"/>
+        <source>Preview Backup</source>
+        <translation>Atsarginės kopijos peržiūra</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1273"/>
+        <location line="+280"/>
+        <location line="+976"/>
+        <location line="+14"/>
+        <source>Run Backup</source>
+        <translation>Paleisti atsarginį kopijavimą</translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <location line="+53"/>
+        <source>Load Catalogs</source>
+        <translation>Įkelti katalogus</translation>
+    </message>
+    <message>
+        <location line="-37"/>
+        <location line="+53"/>
         <source>without links</source>
         <translation>be nuorodų</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+73"/>
+        <source>Strict copy</source>
+        <translation>Griežtas kopijavimas</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Scan source drive directly</source>
+        <translation>Tiesiogiai nuskaityti šaltinio diską</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-78"/>
+        <source>On conflict</source>
+        <translation>Konfliktui</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location filename="../devicemappingview.cpp" line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="-211"/>
+        <source>Skip</source>
+        <translation>Praleisti</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../devicemappingview.cpp" line="+2"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Rename oldest</source>
+        <translation>Pervadinti seniausią</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <location line="+878"/>
-        <location filename="../mainwindow_setup.cpp" line="-402"/>
+        <location filename="../mainwindow_setup.cpp" line="-246"/>
         <source>Settings</source>
         <translation>Nustatymai</translation>
     </message>
@@ -1743,12 +1901,12 @@
         <translation>Duomenų režimas &quot;SQLite vietinis failas&quot;</translation>
     </message>
     <message>
-        <location line="-3867"/>
+        <location line="-4321"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Pritaikyti parinktis pasirinkimo įrenginių medžiui.</translation>
     </message>
     <message>
-        <location line="+1802"/>
+        <location line="+1794"/>
         <source>Type of source</source>
         <translation>Šaltinio tipas</translation>
     </message>
@@ -1763,7 +1921,7 @@
         <translation>Samba bendrinimas</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+59"/>
         <source>IP address</source>
         <translation>IP adresas</translation>
     </message>
@@ -1773,52 +1931,59 @@
         <translation>Vartotojo vardas</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+84"/>
         <source>Connection settings</source>
         <translation>Ryšio nustatymai</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="-178"/>
         <source>Verify connection</source>
         <translation>Tikrinti ryšį</translation>
     </message>
     <message>
-        <location line="+622"/>
+        <location line="+936"/>
+        <location filename="../devicemappingview.cpp" line="-14"/>
+        <location filename="../mainwindow_setup.cpp" line="+233"/>
+        <location line="+4"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-927"/>
+        <location line="+164"/>
+        <location line="+145"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+38"/>
+        <location line="+30"/>
         <source>BackUp</source>
         <translation>Atsarginis kopijavimas</translation>
     </message>
     <message>
-        <location line="+15"/>
         <source>BackUp links for device</source>
-        <translation>Atsarginis kopijavimas įrenginio nuorodų</translation>
+        <translation type="vanished">Atsarginis kopijavimas įrenginio nuorodų</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+36"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Perkrauti nuorodasir atnaujinti pasirinkto įrenginio statistiką.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+308"/>
         <source>Create new link</source>
         <translation>Sukurti naują nuorodą</translation>
     </message>
     <message>
-        <location line="+313"/>
+        <location line="-236"/>
         <source>Coverage</source>
         <translation>Padengimas</translation>
     </message>
     <message>
-        <location line="+246"/>
         <source>Load Source Catalogs</source>
-        <translation>Įkelti šaltinio katalogus</translation>
+        <translation type="vanished">Įkelti šaltinio katalogus</translation>
     </message>
     <message>
-        <location line="+43"/>
         <source>Load Target Catalogs</source>
-        <translation>Įkelti paskirties katalogus</translation>
+        <translation type="vanished">Įkelti paskirties katalogus</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+1100"/>
         <source>File list display</source>
         <translation>Failų sąrašo rodymas</translation>
     </message>
@@ -1940,16 +2105,20 @@
         <translation>Atidaryti</translation>
     </message>
     <message>
-        <location line="-1017"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="-725"/>
+        <location line="-1333"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-681"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-840"/>
         <source>Open file</source>
         <translation>Atidaryti failą</translation>
     </message>
     <message>
-        <location line="+1712"/>
+        <location line="+2028"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-197"/>
+        <location line="+89"/>
+        <location line="+71"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+4"/>
-        <location line="+120"/>
+        <location line="+109"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Open folder</source>
         <translation>Atidaryti aplanką</translation>
@@ -1982,21 +2151,21 @@
     <message>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
-        <location filename="../mainwindow.ui" line="-9370"/>
+        <location filename="../mainwindow.ui" line="-9881"/>
         <location line="+891"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2009"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2037"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+644"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-816"/>
+        <location line="+3065"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+611"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-690"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+2"/>
         <location filename="../mainwindow.ui" line="-1265"/>
-        <location line="+9151"/>
+        <location line="+9662"/>
         <location line="+64"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -2006,54 +2175,55 @@
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="-430"/>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="+40"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="+68"/>
+        <location filename="../mainwindow_tab_create.cpp" line="-486"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+77"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../mainwindow_tab_tags.cpp" line="+44"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Pasirinkti aplanką, kuris bus katalogizuojamas šiame naujame kataloge</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+12"/>
+        <location filename="../mainwindow_setup.cpp" line="-225"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-65"/>
         <source>Select the directory for this collection</source>
         <translation>Pasirinkti aplanką šiam rinkiniui</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-5603"/>
-        <location line="+2437"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3525"/>
+        <location filename="../mainwindow.ui" line="-6114"/>
+        <location line="+2494"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3553"/>
         <location line="+241"/>
         <location line="+254"/>
         <source>Total Size</source>
         <translation>Bendras dydis</translation>
     </message>
     <message>
-        <location line="-1417"/>
-        <location line="+1600"/>
+        <location line="-1467"/>
+        <location line="+1650"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="+700"/>
         <source>Source Path</source>
         <translation>Šaltinio kelias</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+7"/>
-        <location filename="../mainwindow.ui" line="-1512"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="+17"/>
-        <location line="+635"/>
+        <location filename="../mainwindow.ui" line="-1566"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-683"/>
+        <location line="+652"/>
         <location filename="../mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Failo tipas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+3666"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-60"/>
+        <location filename="../mainwindow.ui" line="+4141"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+495"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Failo dydis</translation>
     </message>
     <message>
-        <location line="-3196"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-898"/>
+        <location line="-3617"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-915"/>
         <source>Label</source>
         <translation>Etiketė</translation>
     </message>
@@ -2064,18 +2234,18 @@
         <translation>Failų sistema</translation>
     </message>
     <message>
-        <location line="+3455"/>
+        <location line="+3247"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="+4"/>
         <source>Total</source>
         <translation>Iš viso</translation>
     </message>
     <message>
-        <location line="-4254"/>
+        <location line="-4103"/>
         <source>Free</source>
         <translation>Laisva</translation>
     </message>
     <message>
-        <location line="+733"/>
+        <location line="+790"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+3"/>
         <source>Serial Number</source>
         <translation>Serijos numeris</translation>
@@ -2087,17 +2257,17 @@
         <translation>Gamybos data</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1383"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1283"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalogas jau priskirtas šiam virtualiam įrenginiui.</translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+37"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
         <translation>Ar norite atšaukti šio katalogo priskyrimo šiam virtualiam įrenginiui?</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+39"/>
         <source>Deletion failed</source>
         <translation>Trynimas nepavyko</translation>
     </message>
@@ -2107,7 +2277,7 @@
         <translation>&lt;br/&gt;Šio rinkinio momentinė nuotrauka buvo įrašyta:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogai&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Failų skaičius: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Bendras failų dydis: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Saugykla&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Saugyklos laisva vieta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Saugyklos visa vieta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+305"/>
+        <location line="+327"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Jau yra katalogas su šiuo pavadinimu:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -2130,12 +2300,12 @@
         <location line="+495"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Parent ID</source>
         <translation>Tėvinis ID</translation>
     </message>
     <message>
-        <location line="-3531"/>
+        <location line="-3559"/>
         <source>External ID</source>
         <translation>Išorės ID</translation>
     </message>
@@ -2207,7 +2377,12 @@
         <translation>Failo kelias</translation>
     </message>
     <message>
-        <location line="+623"/>
+        <location line="+292"/>
+        <source>Indexing - Start: %1 | End: %2 | Duration: %3</source>
+        <translation>Indeksavimas - Pradžia: %1 | Pabaiga: %2 | Trukmė: %3</translation>
+    </message>
+    <message>
+        <location line="+348"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Išsaugoti katalogo apibrėžimo pakeitimus?&lt;br/&gt;</translation>
     </message>
@@ -2237,12 +2412,12 @@
         <translation>Ar pilnas įrenginys</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+12"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Katalogas turi būti atnaujintas, kad atspindėtų šiuos pakeitimus)</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+31"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation>Atnaujinti katalogo turinį su naujais kriterijais?\n</translation>
@@ -2372,7 +2547,7 @@
         <translation>Pasirinktas įrenginys turi būti katalogas. Bandykite su kitu įrenginio ID</translation>
     </message>
     <message>
-        <location line="-2033"/>
+        <location line="-2061"/>
         <location line="+241"/>
         <location line="+254"/>
         <source>Used space</source>
@@ -2389,7 +2564,7 @@
         <translation>iš</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-6211"/>
+        <location filename="../mainwindow.ui" line="-6268"/>
         <location line="+1989"/>
         <location line="+108"/>
         <location line="+553"/>
@@ -2404,8 +2579,8 @@
         <translation>Apibrėžti, kaip turėtų būti naudojamas paieškos tekstas.</translation>
     </message>
     <message>
-        <location line="+5959"/>
-        <location line="+1807"/>
+        <location line="+5988"/>
+        <location line="+2297"/>
         <source>Include Hidden files</source>
         <translation>Įtraukti paslėptus failus</translation>
     </message>
@@ -2415,17 +2590,17 @@
         <translation>Sekti simbolines nuorodas</translation>
     </message>
     <message>
-        <location line="+400"/>
+        <location line="-422"/>
         <source>Generate a catalog name based on the path.</source>
         <translation>Generuoti katalogo pavadinimą pagal kelią.</translation>
     </message>
     <message>
-        <location line="-9046"/>
+        <location line="-8743"/>
         <source>Reset all filters</source>
         <translation>Atstatyti visus filtrus</translation>
     </message>
     <message>
-        <location line="+11138"/>
+        <location line="+11649"/>
         <source>About</source>
         <translation>Apie</translation>
     </message>
@@ -2524,12 +2699,13 @@
         <translation>Pirmiausia pasirinkite procesą, kuris būtų pritaikytas visiems žemiau esantiems rezultatams.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-960"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+15"/>
         <source>Results exported to the collection folder:</source>
         <translation>Rezultatai eksportuoti į rinkinio aplanką:</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location filename="../mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Results exported a new Catalog:</source>
         <translation>Rezultatai eksportuoti į naują katalogą:</translation>
     </message>
@@ -2764,17 +2940,30 @@
         <translation>Visada išsaugoti po vieną kiekvieno katalogo atsarginę kopiją</translation>
     </message>
     <message>
-        <location line="-5425"/>
+        <location line="-5936"/>
         <source>Used</source>
         <translation>Naudojama</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="+97"/>
         <source>Remove this directory</source>
-        <translation>Pašalinti šį aplanką</translation>
+        <translation type="vanished">Pašalinti šį aplanką</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location filename="../mainwindow_tab_create.cpp" line="+18"/>
+        <location line="+148"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-508"/>
+        <source>Select the directory to exclude</source>
+        <translation>Pasirinkite katalogą, kurį norite pašalinti</translation>
+    </message>
+    <message>
+        <location line="-80"/>
+        <location line="+106"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="+35"/>
+        <source>Remove</source>
+        <translation>Šalinti</translation>
+    </message>
+    <message>
+        <location line="+49"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Pateikite šio naujo katalogo pavadinimą.&lt;br/&gt;</translation>
     </message>
@@ -2800,7 +2989,7 @@
         <translation>Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+4868"/>
+        <location filename="../mainwindow.ui" line="+5379"/>
         <source>Check at start up</source>
         <translation>Tikrinti paleidžiant</translation>
     </message>
@@ -2809,7 +2998,7 @@
         <translation type="vanished">Įtraukti paslėptus failus</translation>
     </message>
     <message>
-        <location line="-3999"/>
+        <location line="-4453"/>
         <source>Save</source>
         <translation>Išsaugoti</translation>
     </message>
@@ -2819,28 +3008,31 @@
         <translation>&lt;br/&gt;&lt;b&gt;Sveiki atvykę į Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Atrodo, kad tai pirmasis paleidimas.&lt;br/&gt;&lt;br/&gt;Buvo pritaikyti šie nustatymai:&lt;br/&gt; - Kalba: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Galite juos pakeisti skirtuke %3.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1057"/>
+        <location filename="../mainwindow.ui" line="-1114"/>
         <source>Snapshot</source>
         <translation>Momentinė nuotrauka</translation>
     </message>
     <message>
-        <location line="+3588"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-10"/>
+        <location line="+3783"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-141"/>
+        <location line="+332"/>
+        <location line="+759"/>
         <source>Source</source>
         <translation>Šaltinis</translation>
     </message>
     <message>
-        <location line="-3549"/>
+        <location line="-3744"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Atnaujinti visus aktyvius katalogus, jei įrenginys prieinamas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1250"/>
+        <location line="+1307"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importuoti tomų sąrašą iš VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-216"/>
+        <location line="+3862"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+60"/>
         <location line="+117"/>
         <location filename="../mainwindow_tab_settings.cpp" line="-157"/>
@@ -2851,32 +3043,32 @@
         <translation>Atšaukti</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="+291"/>
+        <location filename="../mainwindow_setup.cpp" line="+325"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Tai versija: v%1 &lt;br/&gt;&lt;br/&gt;Prieinama nauja versija: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Rasite naujų funkcijų sąrašą &lt;a href=&apos;%3&apos;&gt;Versijos pastabose&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Ar norite ją atsisiųsti?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-378"/>
+        <location filename="../mainwindow.ui" line="-4240"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="+770"/>
         <source>Storage ID</source>
         <translation>Saugyklos ID</translation>
     </message>
     <message>
-        <location line="-840"/>
-        <location line="+936"/>
+        <location line="-897"/>
+        <location line="+993"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Atnaujinti pasirinkto katalogo failus, jei įrenginys prieinamas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="-2"/>
         <location filename="../mainwindow.ui" line="+1196"/>
-        <location line="+1273"/>
+        <location line="+1274"/>
         <location filename="../mainwindow_tab_explore.cpp" line="-19"/>
         <source>Directory</source>
         <translation>Aplankas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-8956"/>
+        <location filename="../mainwindow.ui" line="-9014"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Išvalyti paieškos tekstą nuo simbolių tokių kaip _ - . ,</translation>
     </message>
@@ -2892,12 +3084,12 @@
         <translation>Keitimo data</translation>
     </message>
     <message>
-        <location line="+7938"/>
+        <location line="+8449"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Tikrinti, ar prieinama nauja Katalog versija, paleidžiant programą.</translation>
     </message>
     <message>
-        <location line="-5314"/>
+        <location line="-5825"/>
         <source>Show/Hide search history</source>
         <translation>Rodyti/slėpti paieškos istoriją</translation>
     </message>
@@ -2923,7 +3115,7 @@
         <translation>Paieškos istorija</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="-287"/>
+        <location filename="../mainwindow_setup.cpp" line="-321"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;Kitame ekrane pasirinkite esamą rinkinio aplanką arba sukurkite naują.</translation>
     </message>
@@ -2958,17 +3150,17 @@
         <translation>išskirti</translation>
     </message>
     <message>
-        <location line="+5532"/>
+        <location line="+5620"/>
         <source>is full device</source>
         <translation>yra pilnas įrenginys</translation>
     </message>
     <message>
-        <location line="+2198"/>
+        <location line="+1807"/>
         <source>catalog is for the full device</source>
         <translation>katalogas yra visam įrenginiui</translation>
     </message>
     <message>
-        <location line="-6638"/>
+        <location line="-6335"/>
         <location line="+888"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Pasirinkite ieškoti dublikatų pagal šiuos kriterijus</translation>
@@ -2989,18 +3181,18 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rezultatai turėtų tiksliai atitikti tekstą (jautrūs didžiųjų ir mažųjų raidžių skirtumui)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+10695"/>
+        <location line="+11206"/>
         <location line="+44"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Iš anksto įkelti paskutinius pasirinktus katalogus paleidžiant, kad pagreitintų kitą paiešką</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-607"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-574"/>
         <source>Move file to Trash</source>
         <translation>Perkelti failą į šiukšlinę</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+141"/>
         <location line="+33"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-1115"/>
         <location line="+64"/>
@@ -3044,13 +3236,13 @@
         <translation>Trynimas nepavyko.</translation>
     </message>
     <message>
-        <location line="-200"/>
+        <location line="-182"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="-214"/>
         <source>Delete file</source>
         <translation>Ištrinti failą</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+138"/>
         <source>Move
 %1
 to the trash?</source>
@@ -3064,25 +3256,25 @@ to the trash?</source>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;TRINTI&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-337"/>
+        <location line="-308"/>
         <source>Tag this folder</source>
         <translation>Žymėti šį aplanką</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-11922"/>
+        <location filename="../mainwindow.ui" line="-12433"/>
         <source>Selection</source>
         <translation>Pасirinkimas</translation>
     </message>
     <message>
-        <location line="-356"/>
+        <location line="-329"/>
         <location line="+32"/>
-        <location line="+7962"/>
+        <location line="+7992"/>
         <location line="+32"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Išskleisti 1 lygį, 2 lygius arba suskleisti</translation>
     </message>
     <message>
-        <location line="+2213"/>
+        <location line="+2351"/>
         <source>all records</source>
         <translation>visi įrašai</translation>
     </message>
@@ -3099,21 +3291,20 @@ to the trash?</source>
         <translation>tik momentinės nuotraukos</translation>
     </message>
     <message>
-        <location line="-6897"/>
+        <location line="-7092"/>
         <location line="+108"/>
         <location line="+553"/>
         <location line="+108"/>
-        <location line="+6522"/>
+        <location line="+6710"/>
         <source>Device</source>
         <translation>Įrenginys</translation>
     </message>
     <message>
-        <location line="+64"/>
         <source>Delete selected</source>
-        <translation>Ištrinti pasirinktus</translation>
+        <translation type="vanished">Ištrinti pasirinktus</translation>
     </message>
     <message>
-        <location line="+367"/>
+        <location line="+92"/>
         <source>as Source</source>
         <translation>kaip šaltinis</translation>
     </message>
@@ -3123,17 +3314,17 @@ to the trash?</source>
         <translation>kaip paskirtis</translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+737"/>
         <source>Select Source catalog</source>
         <translation>Pasirinkti šaltinio katalogą</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+53"/>
         <source>Select Target catalog</source>
         <translation>Pasirinkti paskirties katalogą</translation>
     </message>
     <message>
-        <location line="+717"/>
+        <location line="+848"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation>Rinkinio duomenys išsaugomi .idx arba .csv failuose vietiniame kompiuteryje.</translation>
     </message>
@@ -3159,7 +3350,7 @@ to the trash?</source>
         <translation>Atidaryti nustatymų failą</translation>
     </message>
     <message>
-        <location line="-2834"/>
+        <location line="-3288"/>
         <source>Display folders</source>
         <translation>Rodyti aplankus</translation>
     </message>
@@ -3174,7 +3365,7 @@ to the trash?</source>
         <translation>Pirmiausia rūšiuoti aplankus</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="+164"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+153"/>
         <source>Copy folder name</source>
         <translation>Kopijuoti aplanko pavadinimą</translation>
     </message>
@@ -3185,41 +3376,37 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+3"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="+584"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="+551"/>
         <source>orderValue</source>
         <translation>rūšiavimoReikšmė</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-1650"/>
+        <location filename="../mainwindow.ui" line="-1707"/>
         <location line="+21"/>
         <location filename="../mainwindow_tab_device_pr.cpp" line="-245"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Device Type</source>
         <translation>Įrenginio tipas</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="-375"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="-360"/>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Pasirinktas katalogas turi daugiau nei %1 failų.&lt;br/&gt;Atidarymas gali užtrukti kelias minutes.&lt;br/&gt;Tęsti?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+5387"/>
+        <location filename="../mainwindow.ui" line="+5898"/>
         <location filename="../mainwindow.cpp" line="-2"/>
         <source>Memory</source>
         <translation>Atmintis</translation>
     </message>
     <message>
-        <location line="-11587"/>
-        <location line="+1022"/>
-        <location line="+2502"/>
-        <location line="+1196"/>
         <source>Use the Text criteria in the Search</source>
-        <translation>Naudoti teksto kriterijus paieškoje</translation>
+        <translation type="vanished">Naudoti teksto kriterijus paieškoje</translation>
     </message>
     <message>
-        <location line="-1906"/>
+        <location line="-9284"/>
         <source>Differences on</source>
         <translation>Skirtumai įjungti</translation>
     </message>
@@ -3233,6 +3420,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="-2811"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="-457"/>
         <source>File name</source>
         <translation>Failo pavadinimas</translation>
     </message>
@@ -3247,7 +3435,7 @@ to the trash?</source>
         <translation>Aplanko kriterijai</translation>
     </message>
     <message>
-        <location line="+4836"/>
+        <location line="+5031"/>
         <source>Graphic Start Date</source>
         <translation>Grafiko pradžios data</translation>
     </message>
@@ -3257,17 +3445,17 @@ to the trash?</source>
         <translation>Pasirinkti datą</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-2367"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-2378"/>
         <source>Include Metadata</source>
         <translation>Įtraukti metaduomenis</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+456"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+447"/>
         <source>Local disk</source>
         <translation>Vietinis diskas</translation>
     </message>
     <message>
-        <location line="-685"/>
+        <location line="-676"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Aplankas neegzistuoja. Sukurti jį?</translation>
     </message>
@@ -3277,7 +3465,7 @@ to the trash?</source>
         <translation>Duomenų bazės failas neegzistuoja. Sukurti jį?</translation>
     </message>
     <message>
-        <location line="+318"/>
+        <location line="+306"/>
         <source>Collection Upgrade Required</source>
         <translation>Reikalingas rinkinio atnaujinimas</translation>
     </message>
@@ -3337,12 +3525,12 @@ to the trash?</source>
         <translation>Išeiti iš programos</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+52"/>
         <source>Select the database to open:</source>
         <translation>Pasirinkite duomenų bazę atidarymui:</translation>
     </message>
     <message>
-        <location line="-292"/>
+        <location line="-283"/>
         <source>Select the database to create and open:</source>
         <translation>Pasirinkite duomenų bazę sukūrimui ir atidarymui:</translation>
     </message>
@@ -3352,7 +3540,7 @@ to the trash?</source>
         <translation>Kai kurie saugyklų įrenginių sąrašo pakeitimai nebuvo išsaugoti.&lt;br/&gt;Išsaugoti ir išeiti, atmesti ir išeiti, ar atšaukti išėjimą?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="+334"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="+325"/>
         <source> Physical Group</source>
         <translation> Fizinė grupė</translation>
     </message>
@@ -3362,14 +3550,14 @@ to the trash?</source>
         <translation>Virtualus įrenginys</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_tags.cpp" line="+91"/>
+        <location filename="../mainwindow_tab_tags.cpp" line="+67"/>
         <source>Remove this tag</source>
         <translation>Pašalinti šią žymą</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="-72"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+557"/>
+        <location line="+431"/>
         <location line="+7"/>
         <location filename="../mainwindow_tab_search_ui.cpp" line="+1298"/>
         <source>Catalog with results</source>
@@ -3377,11 +3565,11 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../core/device.cpp" line="-1"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="-4"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-1163"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="+450"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-1180"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3391,17 +3579,17 @@ to the trash?</source>
         <translation>Susiejimo pavadinimas</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Source ID</source>
         <translation>Šaltinio ID</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../mainwindow_tab_device_pr.cpp" line="-3533"/>
+        <location filename="../mainwindow_tab_device_pr.cpp" line="-3561"/>
         <location line="+241"/>
         <location line="+254"/>
-        <location line="+3037"/>
+        <location line="+3065"/>
         <source>Active</source>
         <translation>Aktyvus</translation>
     </message>
@@ -3423,12 +3611,218 @@ to the trash?</source>
         <translation>Paskirties ID</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-1096"/>
+        <location line="+332"/>
+        <location line="+765"/>
         <source>Target</source>
         <translation>Paskirtis</translation>
     </message>
     <message>
+        <location line="-1201"/>
+        <location line="+1270"/>
+        <source>Run Archive</source>
+        <translation>Paleisti archyvavimą</translation>
+    </message>
+    <message>
+        <location line="-1265"/>
+        <location line="+1268"/>
+        <source>Preview Archive</source>
+        <translation>Archyvo peržiūra</translation>
+    </message>
+    <message>
+        <location line="-1253"/>
+        <source>Invert (swap source and target)</source>
+        <translation>Apversti (sukeisti šaltinį ir tikslą)</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <location line="+111"/>
+        <location line="+224"/>
+        <location line="+444"/>
+        <source>Select a mapping first.</source>
+        <translation>Pirmiausia pasirinkite nuorodą.</translation>
+    </message>
+    <message>
+        <location line="-757"/>
+        <location line="+108"/>
+        <location line="+224"/>
+        <source>Both source and target must be Catalog devices.</source>
+        <translation>Šaltinis ir tikslas turi būti katalogų įrenginiai.</translation>
+    </message>
+    <message>
+        <location line="-320"/>
+        <location line="+62"/>
+        <source>Replicate</source>
+        <translation>Replikuoti</translation>
+    </message>
+    <message>
+        <location line="-61"/>
+        <location line="+332"/>
+        <source>%1 not available</source>
+        <translation>%1 nepasiekiamas</translation>
+    </message>
+    <message>
+        <location line="-321"/>
+        <location line="+90"/>
+        <location line="+243"/>
+        <source>A catalog update is already in progress. Please wait and try again.</source>
+        <translation>Katalogo atnaujinimas jau vyksta. Palaukite ir bandykite dar kartą.</translation>
+    </message>
+    <message>
+        <location line="-281"/>
+        <source>Created</source>
+        <translation>Sukurta</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Already existing</source>
+        <translation>Jau egzistuojantis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+631"/>
+        <source>Errors</source>
+        <translation>Klaidos</translation>
+    </message>
+    <message>
+        <location line="-218"/>
+        <location line="+239"/>
+        <location line="+74"/>
+        <source>Move</source>
+        <translation>Perkelti</translation>
+    </message>
+    <message>
+        <location line="-313"/>
+        <location line="+239"/>
+        <location line="+74"/>
+        <source>Copy</source>
+        <translation>Kopijuoti</translation>
+    </message>
+    <message>
+        <location line="-312"/>
+        <location line="+240"/>
+        <source>Already in target</source>
+        <translation>Jau tiksle</translation>
+    </message>
+    <message>
+        <location line="-154"/>
+        <location line="+32"/>
+        <source>%1s</source>
+        <translation>%1s</translation>
+    </message>
+    <message>
+        <location line="-30"/>
+        <location line="+32"/>
+        <source>%1m %2s</source>
+        <translation>%1m %2s</translation>
+    </message>
+    <message>
+        <location line="-30"/>
+        <location line="+32"/>
+        <source>%1h %2m</source>
+        <translation>%1h %2m</translation>
+    </message>
+    <message>
+        <location line="-26"/>
+        <source>Moving</source>
+        <translation>Perkėlimas</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Copying</source>
+        <translation>Kopijavimas</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <location line="+143"/>
+        <source>Status</source>
+        <translation>Būsena</translation>
+    </message>
+    <message>
+        <location line="-128"/>
+        <source>Moved</source>
+        <translation>Perkelta</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+33"/>
+        <source>Archived</source>
+        <translation>Suarchyvuota</translation>
+    </message>
+    <message>
+        <location line="-25"/>
+        <location line="+135"/>
+        <source>Conflict</source>
+        <translation>Konfliktas</translation>
+    </message>
+    <message>
+        <location line="-127"/>
+        <source>Error</source>
+        <translation>Klaida</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Report</source>
+        <translation>Ataskaita</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+23"/>
+        <source>Conflicts</source>
+        <translation>Konfliktai</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Insufficient disk space - Required: %1, Available: %2, Missing: %3</source>
+        <translation>Nepakanka vietos diske - Reikalinga: %1, Prieinama: %2, Trūksta: %3</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Low target space: %1 remaining after operation</source>
+        <translation>Mažai vietos tiksle: %1 liks po operacijos</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>File Name</source>
+        <translation>Failo pavadinimas</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source> — source &amp; target offline</source>
+        <translation> — šaltinis &amp; tikslas neprisijungęs</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source> — source offline</source>
+        <translation> — šaltinis neprisijungęs</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source> — target offline</source>
+        <translation> — tikslas neprisijungęs</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Preview</source>
+        <translation>Peržiūra</translation>
+    </message>
+    <message>
+        <location line="+261"/>
+        <source>Copy mode</source>
+        <translation>Kopijavimo režimas</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Source mode</source>
+        <translation>Šaltinio režimas</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Size Diff.</source>
         <translation>Dydžio skirt.</translation>
     </message>
@@ -3453,48 +3847,52 @@ to the trash?</source>
         <translation>Datos skirt.</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+70"/>
         <source>Parent Device</source>
         <translation>Tėvinis įrenginys</translation>
     </message>
     <message>
-        <location line="+76"/>
-        <location line="+5"/>
+        <location line="+168"/>
+        <source>Select a source catalog first.</source>
+        <translation>Pirmiausia pasirinkite šaltinio katalogą.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select a target catalog first.</source>
+        <translation>Pirmiausia pasirinkite tikslinio katalogo katalogą.</translation>
+    </message>
+    <message>
         <source>Populate the lists first (One or both device lists are empty).</source>
-        <translation>Pirmiausia užpildykite sąrašus (vienas arba abu įrenginių sąrašai yra tušti).</translation>
+        <translation type="vanished">Pirmiausia užpildykite sąrašus (vienas arba abu įrenginių sąrašai yra tušti).</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Invalid selection model</source>
-        <translation>Netinkamas pasirinkimo modelis</translation>
+        <translation type="vanished">Netinkamas pasirinkimo modelis</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Select a device from both lists.</source>
-        <translation>Pasirinkite įrenginį iš abiejų sąrašų.</translation>
+        <translation type="vanished">Pasirinkite įrenginį iš abiejų sąrašų.</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Invalid device selection.</source>
-        <translation>Netinkamas įrenginio pasirinkimas.</translation>
+        <translation type="vanished">Netinkamas įrenginio pasirinkimas.</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Empty device ID.</source>
-        <translation>Tuščias įrenginio ID.</translation>
+        <translation type="vanished">Tuščias įrenginio ID.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Provide a mapping name.</source>
         <translation>Pateikite susiejimo pavadinimą.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>Pasirinkite kitą šaltinį arba paskirtį (įrenginys negali būti susiejamas su savimi).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device_ui.cpp" line="-495"/>
+        <location filename="../mainwindow_tab_device_ui.cpp" line="-100"/>
         <source>Virtual Group</source>
         <translation>Virtuali grupė</translation>
     </message>
@@ -3504,13 +3902,13 @@ to the trash?</source>
         <translation>Virtualus įrenginys gali būti pridėtas tik prie kito virtualaus įrenginio.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+212"/>
-        <location line="+68"/>
+        <location line="+275"/>
+        <location line="+76"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-64"/>
         <source>Unassign this catalog</source>
         <translation>Atšaukti šio katalogo priskyrimą</translation>
     </message>
@@ -3520,7 +3918,7 @@ to the trash?</source>
         <translation>Ištrinti šį katalogą</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+66"/>
         <source>Unassign this storage</source>
         <translation>Atšaukti šios saugyklos priskyrimą</translation>
     </message>
@@ -3530,7 +3928,7 @@ to the trash?</source>
         <translation>Ištrinti šią saugyklą</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+55"/>
         <source>Add Virtual device</source>
         <translation>Pridėti virtualų įrenginį</translation>
     </message>
@@ -3565,7 +3963,7 @@ to the trash?</source>
         <translation>MIME patikrinimas nepavyko:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="-804"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-678"/>
         <location line="+346"/>
         <source>Search Error</source>
         <translation>Paieškos klaida</translation>
@@ -3582,19 +3980,23 @@ to the trash?</source>
         <translation>Katalogo pavadinimas</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="-1177"/>
+        <location line="+982"/>
         <location filename="../mainwindow_tab_search_pr.cpp" line="+178"/>
         <location line="+46"/>
         <source>Pause</source>
         <translation>Pristabdyti</translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="-975"/>
+        <location line="+975"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-31"/>
         <location line="+33"/>
         <source>Resume</source>
         <translation>Tęsti</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="-21"/>
         <source>Searching...</source>
         <translation>Ieškoma...</translation>
     </message>
@@ -3619,10 +4021,10 @@ to the trash?</source>
         <translation>Sustabdyti dabartinę paiešką</translation>
     </message>
     <message>
-        <location filename="../core/searchprogressmanager.cpp" line="-107"/>
-        <location line="+73"/>
-        <location line="+33"/>
-        <location filename="../mainwindow_tab_search_pr.cpp" line="+358"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
+        <location filename="../mainwindow_tab_search_pr.cpp" line="+232"/>
         <source>Folders found</source>
         <translation>Rasti aplankai</translation>
     </message>
@@ -3698,7 +4100,12 @@ to the trash?</source>
         <translation>Pasirinkite aplanką ir failo pavadinimą šiam eksportui.</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+21"/>
+        <source>Loading all catalogs prior to export&lt;br/&gt; %1 &lt;br/&gt;&lt;br/&gt; %2 files loaded out of %3</source>
+        <translation>Visi katalogai įkeliami prieš eksportą&lt;br/&gt; %1 &lt;br/&gt;&lt;br/&gt; %2 failai įkelti iš %3</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
         <translation>Nepavyko eksportuoti atmintyje esančios duomenų bazės į failą.&lt;br/&gt;&lt;br/&gt; Eksporto failo kelias: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
@@ -3708,17 +4115,17 @@ to the trash?</source>
         <translation>Sėkmingas rinkinio eksportas į SQLite duomenų bazės failą.&lt;br/&gt;&lt;br/&gt; Eksporto failo kelias: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Select the directory for the CSV export</source>
         <translation>Pasirinkite aplanką CSV eksportui</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+37"/>
         <source>Successfully exported database to CSV files.&lt;br/&gt;&lt;br/&gt;Export directory: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can now switch to Memory mode and load this collection.</source>
         <translation>Sėkmingai eksportuota duomenų bazė į CSV failus.&lt;br/&gt;&lt;br/&gt;Eksporto aplankas: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dabar galite pereiti į atminties režimą ir įkelti šį rinkinį.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+8"/>
         <source>Export failed: %1</source>
         <translation>Eksportavimas nepavyko: %1</translation>
     </message>
@@ -3759,11 +4166,29 @@ to the trash?</source>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
         <translation>Saugykla: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Šaltinio aplanke nėra jokių failų:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Tai gali reikšti, kad įrenginys neprijungtas prie šio aplanko,&lt;br/&gt;arba aplankas paprasčiausiai tuščias.&lt;br/&gt;&lt;br/&gt;Vis tiek priversti bandyti gauti reikšmes?</translation>
     </message>
+    <message>
+        <location filename="../devicemappingview.cpp" line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="+164"/>
+        <source>Strict</source>
+        <translation>Griežtas</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Unique</source>
+        <translation>Unikalus</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../mainwindow_setup.cpp" line="+1"/>
+        <source>Drive</source>
+        <translation>Diskas</translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>
     <message>
-        <location filename="../core/tag.cpp" line="+68"/>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>

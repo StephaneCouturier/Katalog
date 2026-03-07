@@ -445,7 +445,7 @@ QSqlQuery BackupMappingManager::executeTableDisplayQuery(const MappingFilter& fi
             dm.mapping_type,
             CASE WHEN dm.mapping_type = 'Archive' THEN ''
                  WHEN dm.mapping_strict_copy = 1  THEN 'Strict'
-                 ELSE 'Dedup' END,
+                 ELSE 'Unique' END,
             COALESCE(dm.mapping_source_mode, 'Catalog'),
             CASE dm.mapping_conflict_mode
                  WHEN 'Skip'         THEN 'Skip'

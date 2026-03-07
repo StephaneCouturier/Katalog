@@ -91,8 +91,6 @@ Each backup link has a **Source Mode** that controls what is used as the source 
 | **Catalog** (default) | `'Catalog'` | Uses the catalog index (`.idx` file). Works offline — the source device does not need to be connected. Catalog exclude-folder rules are applied: excluded folders are not backed up. |
 | **Drive** | `'Drive'` | Walks the source filesystem directly. The source device **must be connected and mounted**. All files under the source path are included — catalog index and exclude-folder rules are entirely bypassed. |
 
-The mode is stored in `device_mapping.mapping_source_mode` (TEXT, default `'Catalog'`).
-
 **Architecture decision (Option B):** Drive mode replaces the catalog as the file enumeration source entirely — it does not "supplement" the catalog with excluded folders. The same filesystem-walk logic used by `CatalogJobStoppable` is reused. Catalog mode remains the default because it is offline-capable; Drive mode is for users who want a guaranteed full backup regardless of catalog state.
 
 **UI:** the "Scan source drive directly" checkbox on the Create Link panel controls this field. Unchecked = Catalog (default), checked = Drive.
@@ -107,7 +105,7 @@ See dedicate page: [LuckyBackup profile](BackUp_luckybackup_profile)
 
 ## BackUp Links management
 
-To help listing and comparing source directories and their backup, Katalog can help mapping catalogs.
+To help listing and comparing source directories and their backup, Katalog can help linking catalogs.
 
 This assume that the user creates manually 
 
@@ -115,19 +113,20 @@ This assume that the user creates manually
 
 #### Link fields
 
-| Field | Description | 
+| Field | Description |
 |-------|-------------|
-| name | Name of the link, can be generated from the 2 catalog names |
-| type | `BackUp` or `Archive` |
-| device_source | `"RenameAlways"` |
-| device_target_id | mapping_device_source_id |
-| backup_last_date | mapping_device_source_id |
-| backup_last_size | mapping_device_source_id |
-| strict_copy | mapping_device_source_id |
-| conflict_mode | RenameOldest |
+| Name |  Label for the link. Can be auto-generated as `"<source name> -> <target name>"`. |
+| Type |  `BackUp` (copy) or `Archive` (move). Controls whether source files are deleted after transfer. |
+| Source device  | The source catalog device. Files are read from its indexed path. |
+| Target device  | The backup destination catalog device. Files are written to its path. |
+| Last backup date  | Date of the last completed backup run. Updated automatically. |
+| Last backup size  | Total bytes transferred in the last backup run. Updated automatically. |
+| Strict copy | If enabled (default), copies files by path — even if the file already exists elsewhere on the target. If disabled, skips files already present anywhere on the target (de-duplication mode). |
+| On conflict | What to do when a file exists at the same path on both source and target but differs. Default: `RenameOldest`. See [Conflict Resolution Modes](#available-modes). |
+| Source mode | `Catalog` (default) or `Drive`. Controls whether the source is read from the catalog index or by walking the filesystem directly. See [Source Mode](#source-mode). |
 
 #### Example & Catalogs
-Goal: create a mapping between the source on local disk and the target on external drive.
+Goal: create a link between the source on local disk and the target on external drive.
 ![](/img/screen_backup_1_devices.png)
 
 #### Select source & target
@@ -150,7 +149,7 @@ Goal: create a mapping between the source on local disk and the target on extern
 - The Link appears in the list and coverage is calculated
 ![](/img/screen_backup_5_comparison.png)
 
-### Delete a Mapping
+### Delete a Link
 Right click on the link line to display the context menu, and select "Delete".
 
 ![](/img/screen_backup_6_delete.png)
@@ -271,7 +270,7 @@ Some ideas of developments for this screen:
 
 ### Future Backlog — Disk Space
 
-- **Per-mapping minimum free space setting**: user-configurable floor (e.g., always keep 5 GB free).
+- **Per-link minimum free space setting**: user-configurable floor (e.g., always keep 5 GB free).
 - **Source space check for Archive**: warn when source free space after archive will be very low.
 - **In-flight space exhaustion early abort**: detect ENOSPC errors during copy and stop immediately rather than continuing to fail file after file.
 - **Post-archive source verification**: confirm actual source space was freed after Archive completes.

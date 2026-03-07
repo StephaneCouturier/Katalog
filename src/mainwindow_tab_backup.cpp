@@ -148,7 +148,7 @@ void MainWindow::on_BackUp_tableView_CurrentMappings_customContextMenuRequested(
         on_BackUp_pushButton_BackUpPreview_clicked();
     });
 
-    QAction *replicateAction = new QAction(QIcon::fromTheme("edit-copy"), tr("Replicate Directories"), this);
+    QAction *replicateAction = new QAction(QIcon::fromTheme("edit-copy"), tr("Replicate directories"), this);
     mappingContextMenu.addAction(replicateAction);
     connect(replicateAction, &QAction::triggered, this, [this]() {
         on_BackUp_pushButton_ReplicateDirectories_clicked();
@@ -402,7 +402,7 @@ void MainWindow::pauseCurrentBackup()
     m_backupJob->pauseBackup();
     setBackupButtonState(BackupButtonState::Paused);
     ui->BackUp_label_ProgressSummary->setText(
-        StatusBarMessageBuilder().setOperation(tr("backup")).setStatus(tr("Paused")).build());
+        StatusBarMessageBuilder().setOperation(tr("BackUp")).setStatus(tr("Paused")).build());
 }
 
 void MainWindow::resumeCurrentBackup()
@@ -566,7 +566,7 @@ void MainWindow::runBackup()
         ui->BackUp_label_ProgressSummary->setVisible(true);
         ui->BackUp_label_ProgressSummary->setText(
             StatusBarMessageBuilder()
-                .setOperation(tr("Backup"))
+                .setOperation(tr("BackUp"))
                 .setStatus(tr("%1 not available").arg(role))
                 .setCatalogName(name)
                 .build());
@@ -618,8 +618,7 @@ void MainWindow::setupDeviceUpdateManagerForBackup()
                 ui->BackUp_pushButton_BackUpPreview->setEnabled(true);
                 ui->BackUp_pushButton_ReplicateDirectories->setEnabled(true);
                 ui->BackUp_label_ProgressSummary->setVisible(false);
-                QMessageBox::warning(this, "Katalog",
-                    tr("Catalog update failed: %1").arg(error));
+                qDebug()<<"Catalog update failed: " << error;
             });
     connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
             this, [this]() {
@@ -712,9 +711,9 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
         ui->BackUp_label_ProgressSummary->setVisible(true);
         ui->BackUp_label_ProgressSummary->setText(
             StatusBarMessageBuilder()
-                .setOperation(isArchiveEarly ? tr("Archive") : tr("Backup"))
+                .setOperation(isArchiveEarly ? tr("Archive") : tr("BackUp"))
                 .setStatus(tr("Completed"))
-                .addResult(isArchiveEarly ? tr("To move") : tr("To copy"), 0)
+                .addResult(isArchiveEarly ? tr("Move") : tr("Copy"), 0)
                 .addResult(tr("Already in target"), cmp.skippedCount)
                 .build());
         return;
@@ -731,7 +730,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
             ui->BackUp_pushButton_RunBackup->setEnabled(true);
             ui->BackUp_label_ProgressSummary->setVisible(true);
             ui->BackUp_label_ProgressSummary->setText(
-                buildBackupSummaryHtml(isArchive ? tr("Archive") : tr("Backup"),
+                buildBackupSummaryHtml(isArchive ? tr("Archive") : tr("BackUp"),
                                        tr("Cancelled"), cmp, isArchive, spaceCheck));
             return;
         }
@@ -772,8 +771,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     ui->BackUp_progressBar->setValue(0);
     ui->BackUp_label_ProgressSummary->setText(
         StatusBarMessageBuilder()
-            .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("Backup"))
-            .setStatus(tr("Starting…"))
+            .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("BackUp"))
             .build());
     m_backupTimer.start();
     ui->BackUp_label_ProgressSummary->setVisible(true);
@@ -811,7 +809,7 @@ void MainWindow::onBackupProgress(int filesDone, int totalFiles,
     }
 
     const QString msg = StatusBarMessageBuilder()
-        .setOperation(tr("backup"))
+        .setOperation(tr("BackUp"))
         .setProcess(m_currentBackupIsArchive ? tr("Moving") : tr("Copying"), filesDone + 1, totalFiles)
         .setSizeProgress(bytesCopied, totalBytes)
         .setSpeed(speedBps)
@@ -841,7 +839,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
         elapsedStr = tr("%1h %2m").arg(elapsedSec / 3600).arg((elapsedSec % 3600) / 60);
 
     const QString msg = StatusBarMessageBuilder()
-        .setOperation(m_currentBackupIsArchive ? tr("archive") : tr("backup"))
+        .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("BackUp"))
         .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Completed"))
         .setSizeProgress(report.totalBytesCopied, report.totalBytesCopied)
         .setTimeToCompletion(elapsedStr)
@@ -876,13 +874,13 @@ void MainWindow::showBackupReport(const BackupReport &report)
     //Replace the preview table with the backup report
     QStandardItemModel *model = new QStandardItemModel(this);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Status")));
-    model->setHorizontalHeaderItem(1, new QStandardItem(tr("File Name")));
+    model->setHorizontalHeaderItem(1, new QStandardItem(tr("File name")));
     model->setHorizontalHeaderItem(2, new QStandardItem(tr("Path")));
     model->setHorizontalHeaderItem(3, new QStandardItem(tr("Size")));
 
     for (const DifferenceFileEntry &e : report.copied) {
         QList<QStandardItem*> row;
-        row << new QStandardItem(tr("copied"))
+        row << new QStandardItem(tr("Copied"))
             << new QStandardItem(e.fileName)
             << new QStandardItem(e.folderPath)
             << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
@@ -890,7 +888,7 @@ void MainWindow::showBackupReport(const BackupReport &report)
     }
     for (const DifferenceFileEntry &e : report.moved) {
         QList<QStandardItem*> row;
-        row << new QStandardItem(tr("moved"))
+        row << new QStandardItem(tr("Moved"))
             << new QStandardItem(e.fileName)
             << new QStandardItem(e.folderPath)
             << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
@@ -898,7 +896,7 @@ void MainWindow::showBackupReport(const BackupReport &report)
     }
     for (const DifferenceFileEntry &e : report.renamed) {
         QList<QStandardItem*> row;
-        row << new QStandardItem(tr("archived + replaced"))
+        row << new QStandardItem(tr("Archived") + " & " + tr("Copied"))
             << new QStandardItem(e.fileName)
             << new QStandardItem(e.folderPath)
             << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
@@ -906,7 +904,7 @@ void MainWindow::showBackupReport(const BackupReport &report)
     }
     for (const DifferenceFileEntry &e : report.conflicts) {
         QList<QStandardItem*> row;
-        row << new QStandardItem(tr("conflict — skipped"))
+        row << new QStandardItem(tr("Conflict"))
             << new QStandardItem(e.fileName)
             << new QStandardItem(e.folderPath)
             << new QStandardItem(QLocale().formattedDataSize(e.fileSize));
@@ -914,7 +912,7 @@ void MainWindow::showBackupReport(const BackupReport &report)
     }
     for (const QString &err : report.errors) {
         QList<QStandardItem*> row;
-        row << new QStandardItem(tr("error"))
+        row << new QStandardItem(tr("Error"))
             << new QStandardItem(err)
             << new QStandardItem(QString())
             << new QStandardItem(QString());
@@ -931,8 +929,8 @@ void MainWindow::showBackupReport(const BackupReport &report)
             .setOperation(tr("Report"))
             .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Completed"))
             .addResult(tr("Copied"),              report.copiedCount(),   report.totalBytesCopied)
-            .addResult(tr("Archived+replaced"),   report.renamedCount())
-            .addResult(tr("Conflicts (skipped)"), report.conflictCount())
+            .addResult(tr("Archived") + " & " + tr("Copied"),   report.renamedCount())
+            .addResult(tr("Conflicts"), report.conflictCount())
             .addResult(tr("Errors"),              report.errorCount())
             .build()
     );
@@ -954,14 +952,14 @@ QString MainWindow::buildBackupSummaryHtml(const QString &operation, const QStri
     QString html = StatusBarMessageBuilder()
         .setOperation(operation)
         .setStatus(status)
-        .addResult(isArchive ? tr("To move") : tr("To copy"), cmp.filesToCopy.size(), copySize)
-        .addResult(tr("Conflicts (skipped)"), cmp.fileConflicts.size(), conflictSize)
+        .addResult(isArchive ? tr("Move") : tr("Copy"), cmp.filesToCopy.size(), copySize)
+        .addResult(tr("Conflicts"), cmp.fileConflicts.size(), conflictSize)
         .addResult(tr("Already in target"), cmp.skippedCount)
         .build();
 
     if (spaceCheck.status == BackupSpaceStatus::Insufficient) {
         html += QStringLiteral(" | <span style='color:#cc4444;font-weight:bold;'>\u26a0 ")
-            + tr("Insufficient disk space \u2014 Required: %1, Available: %2, Missing: %3")
+            + tr("Insufficient disk space - Required: %1, Available: %2, Missing: %3")
                   .arg(QLocale().formattedDataSize(spaceCheck.required))
                   .arg(QLocale().formattedDataSize(spaceCheck.available))
                   .arg(QLocale().formattedDataSize(spaceCheck.required - spaceCheck.available))
@@ -1000,12 +998,6 @@ void MainWindow::loadBackupPreview()
     targetDevice.ID = mapping.targetDeviceId;
     targetDevice.loadDevice(m_connectionName);
 
-    if (sourceDevice.type != "Catalog" || targetDevice.type != "Catalog") {
-        QMessageBox::warning(this, "Katalog",
-                             tr("Both source and target must be Catalog devices."));
-        return;
-    }
-
     //Refresh active state from filesystem (preview uses catalog data from DB, so offline is allowed)
     sourceDevice.updateActiveState(m_connectionName);
     targetDevice.updateActiveState(m_connectionName);
@@ -1022,7 +1014,7 @@ void MainWindow::loadBackupPreview()
     BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
     const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
 
-    //Build preview model (Status: "to copy" / "to move" / "conflict")
+    //Build preview model (Status: "Copy" / "Move" / "Conflict")
     QStandardItemModel *model = new QStandardItemModel(this);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Status")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("File Name")));
@@ -1034,7 +1026,7 @@ void MainWindow::loadBackupPreview()
         auto *sizeItem = new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
         sizeItem->setData(entry.fileSize, Qt::UserRole);
         QList<QStandardItem*> row;
-        row << new QStandardItem(isArchive ? tr("to move") : tr("to copy"))
+        row << new QStandardItem(isArchive ? tr("Move") : tr("Copy"))
             << new QStandardItem(entry.fileName)
             << new QStandardItem(entry.folderPath)
             << sizeItem;
@@ -1047,7 +1039,7 @@ void MainWindow::loadBackupPreview()
         auto *sizeItem = new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
         sizeItem->setData(entry.fileSize, Qt::UserRole);
         QList<QStandardItem*> row;
-        row << new QStandardItem(tr("conflict"))
+        row << new QStandardItem(tr("Conflict"))
             << new QStandardItem(entry.fileName)
             << new QStandardItem(entry.folderPath)
             << sizeItem;
@@ -1109,14 +1101,14 @@ void MainWindow::on_BackUp_radioButton_Target_clicked()
 void MainWindow::on_BackUp_comboBox_MappingType_currentIndexChanged(int /*index*/)
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    settings.setValue("BackUp/MappingTypeFilter", ui->BackUp_comboBox_MappingType->currentText());
+    settings.setValue("BackUp/MappingTypeFilter", ui->BackUp_comboBox_MappingType->currentData().toString());
     loadBackUpMapping();
 }
 
 void MainWindow::on_BackUp_comboBox_CreateMappingType_currentIndexChanged(int /*index*/)
 {
     const bool isArchive =
-        (ui->BackUp_comboBox_CreateMappingType->currentText() == QLatin1String("Archive"));
+        (ui->BackUp_comboBox_CreateMappingType->currentData().toString() == QLatin1String("Archive"));
     ui->BackUp_checkBox_StrictCopy->setEnabled(!isArchive);
 }
 
@@ -1143,7 +1135,7 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
 
     if (useSelectedLinks) {
         // Use only filtered mappings based on current radio button + type selection
-        const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
+        const QString mappingType = ui->BackUp_comboBox_MappingType->currentData().toString();
         MappingFilter filter;
         filter.mappingType = mappingType;
 
@@ -1246,7 +1238,7 @@ void MainWindow::loadBackUpMappingTotals()
     ui->BackUp_label_CurrentMappings_DeviceValue->setText(selectedDevice->name);
 
     // Determine current filter
-    const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
+    const QString mappingType = ui->BackUp_comboBox_MappingType->currentData().toString();
     MappingFilter filter;
     filter.mappingType = mappingType;
     if (ui->BackUp_radioButton_Source->isChecked()) {
@@ -1317,7 +1309,7 @@ void MainWindow::loadBackUpMappingTable()
         backupMappingManager = new BackupMappingManager(m_connectionName, this);
 
     // Build filter — same logic as loadBackUpMappingTotals()
-    const QString mappingType = ui->BackUp_comboBox_MappingType->currentText();
+    const QString mappingType = ui->BackUp_comboBox_MappingType->currentData().toString();
     MappingFilter filter;
     filter.mappingType = mappingType;
     if (ui->BackUp_radioButton_Source->isChecked()) {
@@ -1637,11 +1629,11 @@ void MainWindow::saveNewMapping()
                         )");
     query.prepare(querySQL);
     query.bindValue(":mapping_name", mappingName);
-    query.bindValue(":mapping_type", ui->BackUp_comboBox_CreateMappingType->currentText());
+    query.bindValue(":mapping_type", ui->BackUp_comboBox_CreateMappingType->currentData().toString());
     query.bindValue(":mapping_device_source_id", sourceId);
     query.bindValue(":mapping_device_target_id", targetId);
     const bool isArchiveSave =
-        (ui->BackUp_comboBox_CreateMappingType->currentText() == QLatin1String("Archive"));
+        (ui->BackUp_comboBox_CreateMappingType->currentData().toString() == QLatin1String("Archive"));
     query.bindValue(":mapping_strict_copy",
                     (!isArchiveSave && ui->BackUp_checkBox_StrictCopy->isChecked()) ? 1 : 0);
     query.bindValue(":mapping_conflict_mode",

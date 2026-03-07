@@ -11,7 +11,7 @@ Main steps to build Katalog:
 * Available on any platform (Linux, Windows, Apple)
 * Install Qt6 dev librairies (via your software manager, or https://www.qt.io/download, or Craft (Windows)
 * Install KF6 librairies via your software manager (via Craft on Windows)
-* Download the source code (latest released, or under development from the master branch)
+* Download the source code (under development from the katalog_development branch, or latest released from the katalog_master branch)
 * Follow the command lines provided hereafter
 
 ## **Preparation**
