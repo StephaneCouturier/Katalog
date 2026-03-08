@@ -104,6 +104,11 @@ set(CORE_HEADERS
     src/core/backupprofilegenerator.h
     src/core/backupmappingmanager.h
     src/core/filechecksum.h
+    src/core/foldertreeloader.h
+    src/core/catalogdifferenceengine.h
+    src/core/directoryreplicator.h
+    src/core/backupjob.h
+    src/core/backupjobstoppable.h
 )
 
 set(CORE_SOURCES
@@ -135,6 +140,11 @@ set(CORE_SOURCES
     src/core/backupprofilegenerator.cpp
     src/core/backupmappingmanager.cpp
     src/core/filechecksum.cpp
+    src/core/foldertreeloader.cpp
+    src/core/catalogdifferenceengine.cpp
+    src/core/directoryreplicator.cpp
+    src/core/backupjob.cpp
+    src/core/backupjobstoppable.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately
