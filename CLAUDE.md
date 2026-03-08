@@ -42,7 +42,7 @@ ninja translations_lrelease
 
 ## Architecture
 
-### Two-Layer Design
+### Two-Layer Design toward future porting to QtQuick
 
 1. **Core Library (`src/core/`)** - UI-agnostic business logic compiled as `katalog-core` static library
 2. **UI Layer (`src/`)** - Qt/KDE UI components, linked against `katalog-core`
