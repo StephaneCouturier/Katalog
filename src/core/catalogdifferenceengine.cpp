@@ -433,7 +433,8 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrictFromDrive(
     const int sourceRootLen = sourceRootNorm.length();
 
     while (it.hasNext()) {
-        const QFileInfo fi(it.nextFileInfo());
+        it.next();
+        const QFileInfo fi(it.fileInfo());
         totalSourceFiles++;
 
         // Relative folder: strip sourceRoot prefix, keep trailing slash
