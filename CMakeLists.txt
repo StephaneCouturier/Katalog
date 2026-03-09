@@ -331,6 +331,8 @@ qt6_add_executable(Katalog
     ${QRC_FILES}
 )
 
+add_dependencies(Katalog Katalog_lrelease)
+
 # Link libraries to the main executable (using keyword signature to match Qt6)
 target_link_libraries(Katalog PRIVATE
     katalog-core
@@ -430,6 +432,26 @@ install(TARGETS Katalog
     BUNDLE DESTINATION .
     RUNTIME DESTINATION bin
 )
+
+# Install license (required by Flathub)
+install(FILES src/LICENSE.md
+    DESTINATION share/licenses/io.github.stephanecouturier.Katalog
+    RENAME LICENSE)
+
+# Install desktop file
+install(FILES packaging/Katalog.desktop
+    DESTINATION share/applications
+    RENAME io.github.stephanecouturier.Katalog.desktop)
+
+# Install metainfo
+install(FILES packaging/io.github.stephanecouturier.katalog.appdata.xml
+    DESTINATION share/metainfo
+    RENAME io.github.stephanecouturier.Katalog.metainfo.xml)
+
+# Install icon
+install(FILES src/images/Katalog_logo_256.png
+    DESTINATION share/icons/hicolor/256x256/apps
+    RENAME io.github.stephanecouturier.Katalog.png)
 
 # Debug information
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
