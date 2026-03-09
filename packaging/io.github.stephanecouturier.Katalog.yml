@@ -5,12 +5,9 @@ sdk: org.kde.Sdk
 command: Katalog
 
 finish-args:
-  # Display
   - --share=ipc
   - --socket=wayland
   - --socket=fallback-x11
-  # GPU acceleration
-  #- --device=dri
   - --device=all
   # File system: Katalog's core purpose is cataloging arbitrary storage locations
   # (external drives, NAS, removable media) so host access is required
@@ -36,6 +33,8 @@ modules:
       - ninja -C _build
       # Step 4: Install binary and any CMake install() targets
       - ninja -C _build install
+      # Step 5: set LICENSE
+      - install -Dm644 src/LICENSE.md /app/share/licenses/io.github.stephanecouturier.Katalog/LICENSE
 
     # Install packaging assets not handled by CMakeLists.txt
     post-install:
@@ -52,4 +51,5 @@ modules:
     sources:
       - type: git
         url: https://github.com/StephaneCouturier/Katalog.git
-        branch: katalog_development
+        tag: v2.10.1
+        commit: dcf36259e4f8d4da6041d1c85bfe7b2f9f55d5f5
