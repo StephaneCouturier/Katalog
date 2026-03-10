@@ -9,15 +9,13 @@
       Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
       Create catalogs of your DVDs, external drives, and folders to quickly find files without having to connect the device.
     </p>
-    <p>Key Features:</p>
     <ul>
       <li>Create comprehensive catalogs of files and folders from any storage device</li>
       <li>Search across multiple catalogs simultaneously with advanced filters</li>
       <li>Track files on external devices (DVDs, USB drives, network storage)</li>
-      <li>Import catalogs from other popular catalog software formats</li>
       <li>Generate detailed statistics and file analysis reports</li>
-      <li>Multiple language support with professional translations</li>
-      <li>Cross-platform compatibility (Linux, Windows)</li>
+      <li>Multiple language support</li>
+      <li>Cross-platform compatibility (Linux, Windows, macOS)</li>
       <li>Backup and synchronization features</li>
       <li>Custom device and storage management</li>
       <li>Metadata extraction for media files</li>
@@ -81,6 +79,6 @@
     <display_length compare="ge">768</display_length>
   </requires>
   <recommends>
-    <memory compare="ge">512</memory>
+    <memory compare="ge" unit="MiB">512</memory>
   </recommends>
 </component>
