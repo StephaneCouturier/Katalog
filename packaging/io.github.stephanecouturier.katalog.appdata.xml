@@ -53,25 +53,27 @@
   </provides>
   <screenshots>
     <screenshot type="default">
-      <caption>Main interface showing catalog creation</caption>
-      <image>https://stephanecouturier.github.io/Katalog/img/screenshots/Filters_catalogs_storage.png</image>
+      <caption>Main interface showing a Search operation</caption>
+      <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/specs/Katalog-pages/static/img/screen_search_01.png</image>
     </screenshot>
     <screenshot>
-      <caption>Search interface with advanced filters</caption>
-      <image>https://stephanecouturier.github.io/Katalog/img/screenshots/Filters_catalogs_virtual.png</image>
+      <caption>catalog creation screen</caption>
+      <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/specs/Katalog-pages/static/img/screen_create_04_exclude.png</image>
     </screenshot>
     <screenshot>
-      <caption>Device management interface</caption>
-      <image>https://stephanecouturier.github.io/Katalog/img/screenshots/Filters_connecteddrives.png</image>
+      <caption>BackUp and Archive management screen</caption>
+      <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/specs/Katalog-pages/static/img/screen_backup_01.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1"/>
   <project_license>GPL-3.0-or-later</project_license>
-  <developer_name>Stéphane Couturier</developer_name>
+  <developer id="io.github.stephanecouturier">
+    <name>Stéphane Couturier</name>
+  </developer>
   <releases>
-    <release version="2.6" date="2024-12-01">
+    <release version="2.10" date="2026-03-09">
       <description>
-        <p>Major update with enhanced KF6 integration and improved cross-platform support.</p>
+        <p>Incremental BackUp and Archive, Exclude folders.</p>
       </description>
     </release>
   </releases>
