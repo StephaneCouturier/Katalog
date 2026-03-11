@@ -1,70 +1,48 @@
 # Release Process
 This page describes the steps to Release Katalog.
 This includes:
-- Building and loading the final packages
-- Releases Notes & communication
+- Preparation
+- Building the packages
+- Communication
 
 ## Local preparation
-### Test AppImage creation
 
 ### Release folder
-add version folder in:
-/home/stephane/Documents/Informatique/Katalog/Release/
+/Katalog/Release/2.xx
+
 
 
 ## GitHub
+### Release issue (Check list) template
 
-###  github task: Release x.x
+Name:
+Release x.x
 
-    Non functional updates:
-      - Version number, date
-      - Language updates
-      - Comments, code style, and structure.
-      - Documentation
-      - Clear Application Output errors and warnings
+Functional updates
+- [ ] Version number, date
+- [ ] Clean Application Output: no debug messages, errors, and warnings
+- [ ] CMakeList_qt5.txt update if changes to CMakeList.txt
+- [ ] macOS yml if using new KF6 libraries
 
-### PR from katalog_development to katalog_master
-  - after last PUSH to katalog_development,
-  - open pull request, title:  Katalog development to Katalog Master for release 2.9
-  - confirm Merge > Pull request successfully merged and closed
-  - Action test the creation of linux appimages, add: _v2.9_rc1
-  
-  - QtCreator: 
-      - checkout katalog_master branch
-      - fetch/pull master branch
-      
-  - update CMakeLists_qt5.txt (if needed, typically when the code has new classes)
+Language & documentation
+- [ ] Language updates
+- [ ] Comments, code style, and structure.
+- [ ] Documentation
 
-## Linux
-### pre-build & AppImages
-  Test Qt5 and Qt6 Builds prior to release (which will trigger a build)
+Packaging
+- [ ] Linux pre-build & AppImages locally
+- [ ] Linux Qt5 and Qt6 Builds with gitHub Actions
+- [ ] Linux Portable versions with gitHub Actions
+- [ ] Linux Flatpak appdata or yml as needed
+- [ ] macOS  macOS versions
+- [ ] Windows Portable
+- [ ] Windows AdvancedInstaller
 
-## Portable versions  
+Publishing
+- [ ] Load packages to SoureForge
+- [ ] Define Default package for Linux, Windows, macOS
+- [ ] Release publish (sourceforge)
+- [ ] Release publish (github)
+- [ ] Release publish (Facebook)
+- [ ] Close GitHub issues and milestone
 
-
-  
-## Windows
-### AdvancedInstaller
-Create installer, move it to the Release fodler and rename
-
-## macOS
-  Test Qt5 and Qt6 Builds prior to release (which will trigger a build)
-
-
-
-
-  
-## Release communication
-### Release notes draft (github)
-### Load files (sourceforge)
-  load linux files
-  load windows files
-  load macOS file
-  set default windows file
-  set default linux file
-  set default macos file
-### Release publish (sourceforge)
-### Release publish (github)
-### Release publish (Facebook)
-
-### Load files (sourceforge)

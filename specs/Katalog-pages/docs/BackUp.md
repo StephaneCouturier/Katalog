@@ -1,7 +1,7 @@
 # BackUp
 ## Summary
 This page describes all the features of the **BackUp** screen and how to use them.<br/>
-From this screen, the user can **manage catalog backups**.<br/>
+From this screen, the user can **manage catalog backups (copy) or Archive (move) **.<br/>
 
 ![](/img/screen_backup_01.png)
 
