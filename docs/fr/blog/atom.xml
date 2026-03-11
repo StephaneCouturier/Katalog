@@ -15,13 +15,13 @@
         <summary type="html"><![CDATA[✨ Main improvements:]]></summary>
         <content type="html"><![CDATA[<p>✨ Main improvements:</p>
 <ul>
-<li class="">
-<p><strong>#664 CREATE/SEARCH: File Checksum SH256 for Duplicate/Difference Search</strong>
+<li class=""><strong>#664 CREATE/SEARCH: File Checksum SH256 for Duplicate/Difference Search</strong>
 It is now possible to compute and store files checksum in the catalogs.
 It is a <strong>much longer process</strong> than other indexing option as <strong>it reads ALL of the data</strong> to compute the checksums.
 Like file metadata, the option can be selected at catalog creation or changed later, and when interrupting the process, the calculated checksum are saved and the next update will resume for remaining files.
-The files checkum can be used as a duplicate search option or as a difference search option</p>
-</li>
+The files checkum can be used as a duplicate search option or as a difference search option</li>
+</ul>
+<ul>
 <li class="">
 <p><strong>#402 DATA: Store data in a local MySQL/mariadb database.</strong>
 Beside Memory or SQLite File modes, it is now possible to store data in a local hosted db.
@@ -69,11 +69,11 @@ These are basic profiles (task name, source, destination), no exclude or advance
         <summary type="html"><![CDATA[✨ Main improvements:]]></summary>
         <content type="html"><![CDATA[<p>✨ Main improvements:</p>
 <ul>
-<li class="">
-<p>#379 CREATE/ SEARCH: <strong>File Types</strong> management
+<li class="">#379 CREATE/ SEARCH: <strong>File Types</strong> management
 Instead of hard-coded and limited list, Katalog now uses a <strong>standard database, with more than 1200 known types</strong>, to determine the type from the extension and it can also verify the real mime type and report gaps.
-The definition of main types "Images, Audio, Video" is strictly related, only the type "Text" was customized to include types such as PDF. see <a href="https://stephanecouturier.github.io/Katalog/docs/Create#file-type-categories" target="_blank" rel="noopener noreferrer" class="">Create#file-type-categories</a></p>
-</li>
+The definition of main types "Images, Audio, Video" is strictly related, only the type "Text" was customized to include types such as PDF. see <a href="https://stephanecouturier.github.io/Katalog/docs/Create#file-type-categories" target="_blank" rel="noopener noreferrer" class="">Create#file-type-categories</a></li>
+</ul>
+<ul>
 <li class="">
 <p>#379 CREATE/ SEARCH: <strong>File Metadata</strong> management
 Basic Media (Image size, Video duration, Music artist, etc.) or Extended (all available) metadata can be scanned, stored, and used in searching. see <a href="https://stephanecouturier.github.io/Katalog/docs/Create#metadata-extraction" target="_blank" rel="noopener noreferrer" class="">Create#metadata-extraction</a> for the different options.
@@ -173,7 +173,7 @@ Par conséquent, la version prend en charge une procédure de migration 1.x &gt;
 <p>Pour en savoir plus sur ces principaux changements, explorez les pages <em>Périphériques</em> et <em>Paramètres</em> de la Documentation.</p>
 <p>Tous les commentaires via Facebook, Github, e-mail sont toujours appréciés 😉</p>]]></content>
         <author>
-            <name>StephaneCouturier</name>
+            <name>Stephane Couturier</name>
             <uri>https://github.com/StephaneCouturier</uri>
         </author>
         <category label="release" term="release"/>
