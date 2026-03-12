@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Create
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Summary
 This page describes all the features of the **Create** screen and how to use them.<br/>
 From this screen, the user can **create a catalog of files**.<br/>
@@ -7,7 +12,7 @@ It is done in 3 main steps:
 1. Select options to include or exclude some particular files.
 1. Select the [Storage](DevicesStorage) and define the catalog name, and create the catalog.
 
-![](/img/screen_create_01.png)
+![Create screen overview](/img/screen_create_01.png)
 
 ## Select the Source path
 There are 3 ways to  select the source path of the directory with the files to be included in the new [Catalog](DevicesCatalogs):
@@ -93,7 +98,12 @@ Hidden files are not included by default, but this options enables to include th
 This option will be applicable for the catalog moving forward.<br/>
 It can be changed later by editing the [Catalog](DevicesCatalogs).
 
-### Exclude directories
+### Global Parameters panel
+
+The *Global Parameters* panel groups settings that apply across all catalogs. It can be collapsed or expanded using the toggle button at the top of the panel.
+
+### Exclude directories (global) {#exclude-directories}
+
 :::note
 These exclusions are **global**: they apply to **all** catalogs, both when creating new catalogs and when updating existing ones.
 :::
@@ -113,9 +123,19 @@ The exclusion uses **text matching**: any file or folder whose full path **conta
 
 The matching is **case-sensitive**.
 
+![Global exclude directories list showing example entries](/img/screen_create_04_exclude.png)
 
+### Exclude folders (per catalog)
 
-![](/img/screen_create_04_exclude.png)
+In addition to global exclusions, it is possible to define excluded folders that apply only to the catalog being created.
+
+- Enter a folder path manually, or browse to it using the *Pick* button.
+- Click *Add* to add it to the pending list.
+- Remove any entry by right-clicking on it and selecting *Remove*.
+
+The per-catalog exclusions are saved with the catalog once creation completes. They are applied in addition to global exclusions — a folder skipped by either rule will not be indexed.
+
+This option can be changed later by editing the [Catalog](DevicesCatalogs).
 
 ## Define & Create the catalog
 #### Select the Storage device
@@ -140,14 +160,49 @@ Once the process is completed,
 - A message confirms the creation and provides the number of files and total file size of the selected folder for this catalog.
 - your local drive, (a Storage device which was added automatically) was also updated, and the message provides a view of free, used, and total space:
 
-![](/img/screen_create_02.png)
+![Catalog creation confirmation with file count and storage space summary](/img/screen_create_02.png)
 
 the [Devices](DevicesTree) screen will be display to show the Catalog in the device tree.
 
 The new catalog is automatically selected in the [Selection](Selection) panel, ready to be used to [Search](Search) for the contents.
 
+## Performance Guide
+
+### What Affects Scanning Speed?
+
+#### 1. Metadata Extraction (Biggest Impact: ~10× slowdown)
+- Image metadata: ~2-3ms/file (reads header)
+- Video metadata: ~5-15ms/file (seeks, parses container)
+- Solution: Use "Media Basic" only, not "Full Extended"
+
+#### 2. Database Mode
+- Memory mode: Faster, uses RAM
+- SQLite File mode: Slower, I/O bound
+- Recommendation: Use Memory for development
+
+#### 3. Storage Type
+- SSD: ~100K files/min
+- HDD: ~20-30K files/min (fragmentation matters)
+- Network storage: Highly variable
+
+#### 4. Excluded Folders
+- More exclusions = faster scanning
+- Example: Exclude .cache, node_modules, etc.
+
+#### 5. System Load
+- Parallel extraction uses 4-8 cores
+- Other heavy processes will interfere
+
+### Performance Benchmarks
+
+| Files | Storage | Metadata | Time |
+|-------|---------|----------|------|
+| 5K | SSD | None | 10s |
+| 5K | SSD | Basic | 50s |
+| 95K | HDD | Basic | 47s (1st) / 10s (cached) |
+
 ## Development
 Some ideas of developments for this screen:
-* to customize file types and/or use mimetypes
-* exclude folders by catalog (not only globally)
+* catalog a cloud instance (ex: Nextcloud)
+* Customize file types
 * For more, see the backlog of [Create development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=create).

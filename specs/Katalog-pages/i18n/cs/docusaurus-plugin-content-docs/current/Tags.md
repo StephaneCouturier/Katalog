@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Štítky
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Souhrn
 Tato stránka popisuje všechny funkce obrazovky **Štítky** a jak je používat.<br/>
 Na této obrazovce může uživatel **přiřadit několik značek libovolné složce**.<br/>
@@ -9,7 +14,7 @@ Označení složky se provádí ve 3 hlavních krocích:
 1. Vyberte nebo vytvořte nový štítek,
 1. Klepnutím označte složku.
 
-![](/img/screen_tags_01.png)
+![Obrazovka Štítky zobrazující rozhraní pro přiřazování štítků](/img/screen_tags_01.png)
 
 ## Přiřaďte štítky adresářům
 Poznámka: Štítky jsou přiřazeny k absolutní cestě ke složce, proto jsou nezávislé na hierarchii zařízení a katalozích.

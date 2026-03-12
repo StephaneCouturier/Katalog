@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Přehled
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Indexování souborů a správce úložných zařízení
 Katalog je výkonný <b>správce katalogů souborů</b>, který vám pomáhá organizovat a vyhledávat soubory.<br/>
 Poskytuje úplný přehled souborů napříč <b>více úložnými zařízeními bez nutnosti jejich připojení</b>.<br/>
@@ -9,16 +14,16 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 - **Organizujte svou kolekci**: Spravujte více úložných zařízení a jejich katalogy v jednotné hierarchii
 
 
-![](/img/screen_search_01.png)
+![Výsledky vyhledávání napříč více katalogy](/img/screen_search_01.png)
 <b>8 hlavních záložek pro 8 hlavních funkcí</b>
-![](/img/global_tabwidget.png)
-1. [Vytvořit](Create) katalogy **souborů**
+![8 hlavních záložek Katalog](/img/global_tabwidget.png)
 1. [Hledat](Search) soubory napříč více úložnými zařízeními **bez nutnosti jejich připojení**
+1. Organizovat úložná [Zařízení](Devices) a jejich katalogy v jednotné hierarchii s **Virtuálními** zařízeními
 1. [Procházet](Explore) hierarchii katalogů a soubory
-1. Organizovat úložná [Zařízení](Devices) a jejich katalogy v jednotné hierarchii s virtuálními zařízeními
+1. [Vytvořit](Create) katalogy **souborů**
 1. Získat [Statistiky](Statistics) o vašich kolekcích souborů a využití úložiště
-1. Přizpůsobit [Štítky](Tags) a přiřadit je adresářům pro další vyhledávání nebo statistiky
-1. Porovnat [Záložní](BackUp) katalogy pro potvrzení pokrytí zálohovaných souborů a složek mezi zdrojovými a cílovými zařízeními
+1. Přizpůsobit [Štítky](Tags) a přiřadit je adresářům pro další možnosti vyhledávání
+1. Porovnat katalogy [Záloha](BackUp) pro potvrzení pokrytí zálohovaných souborů a složek mezi zdrojovými a cílovými zařízeními
 1. Přizpůsobit si zážitek pomocí [Nastavení](Settings), jako je jazyk a téma
 <br/>
 
@@ -27,10 +32,10 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
   <br/><br/>a panel pro [Výběr](Selection)
   <br/>
   * Vyberte vyhledávání v <b>Katalozích</b> nebo přímo v <b>Připojených discích</b><br/>
-  * Nastavte zařízení v <b>hierarchii, která se má použít</b> pro Vyhledávání nebo Vytváření nebo získání Statistik nebo správu pokrytí Zálohování<br/>
+  * Nastavte zařízení v <b>hierarchii, která se má použít</b> pro *Hledat*, *Vytvořit* (nadřazené zařízení), *Statistiky* nebo správu *Zálohy*<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![](/img/global_selection_panel.png)
+    ![Panel výběru](/img/global_selection_panel.png)
   </div>
 </div>
 
@@ -41,6 +46,7 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 - **[Inteligence typu souboru](Create#enhanced-file-type-filtering)**: Standardní detekce z přípon a ověření typu MIME
 - **[Možnosti katalogu](Create#select-options-to-includeexclude-files)**: Zahrňte pouze [typ souborů](Create#enhanced-file-type-filtering) a [zahrňte/vyloučte adresáře nebo skryté soubory](Create#other-options)
 - **[Extrakce metadat](Create#metadata-extraction)**: Automaticky extrahujte metadata z obrázků (rozměry, informace o fotoaparátu), videí (trvání, rozlišení) a zvukových souborů (interpret, album, trvání) nebo jakéhokoli jiného typu souboru.
+- **[Kontrolní součet](Create#file-checksum)**: Výpočet SHA256 pro detekci duplicit a rozdílů
 - **[Systém štítků složek](Tags)**: Organizujte a kategorizujte složky pomocí vlastních štítků
 
 ### Výkonné vyhledávání a objevování
@@ -59,7 +65,7 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 ### Analýza a správa
 - **[Průzkumník souborů](Explore)**: Procházejte obsah katalogu, jako by bylo zařízení připojeno
 - **[Statistiky](Statistics)**: Sledujte své kolekce souborů a využití úložiště
-- **[Správa záloh](BackUp)**: Mapujte a porovnávejte zdrojové adresáře s jejich zálohami
+- **[Správa záloh a archivů](BackUp)**: Kopírujte nebo přesouvejte soubory mezi katalogy, porovnávejte pokrytí záloh a spravujte zálohovací vazby
 - **[Dávkové operace](Search#batch-process)**: Exportujte výsledky a provádějte hromadné akce na souborech
 
 ### Pokročilé funkce

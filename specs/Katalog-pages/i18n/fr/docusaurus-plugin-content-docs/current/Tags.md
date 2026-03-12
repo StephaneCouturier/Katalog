@@ -1,4 +1,9 @@
-# Etiquettes
+---
+version: "2.10"
+---
+# Étiquettes
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Etiquettes** et comment les utiliser.<br/>
 À partir de cet écran, l'utilisateur peut **attribuer plusieurs étiquettes à n'importe quel dossier**.<br/>
@@ -9,7 +14,7 @@ Le balisage d'un dossier se fait en 3 étapes principales :
 1. Sélectionnez ou créez un nouveau Tag,
 1. Cliquez pour étiquetter le dossier.
 
-![](/img/screen_tags_01.png)
+![Écran Étiquettes montrant l'interface d'attribution des étiquettes](/img/screen_tags_01.png)
 
 ## Attribuer des étiquettes aux répertoires
 Remarque : Les étiquettes sont attribuées à un chemin de dossier absolu, elles sont donc indépendantes de la hiérarchie des périphériques et des catalogues.

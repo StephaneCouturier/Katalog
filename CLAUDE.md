@@ -2,17 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **CRITICAL — File safety:**
+> - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
+
 > **CRITICAL — Version context:**
-> - Last **released** version: **2.9**
-> - Current **development** version: **2.10** (branch `katalog_development`)
-> - Database migrations 2.10 were introduced **during** the 2.10 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
+> - Last **released** version: **2.10**
+> - Current **development** version: **2.11** (branch `katalog_development`)
+> - Database migrations 2.11 were introduced **during** the 2.11 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
 >
-> **New fields added in 2.10 (unreleased — edit in place, no extra migration needed):**
-> - `device_mapping.mapping_strict_copy` — added by migration 2.10
-> - `device_mapping.mapping_conflict_mode` — added by migration 2.10 (folded in, no separate 2.11)
-> - `device_mapping.mapping_source_mode` — added by migration 2.10 (TEXT DEFAULT 'Catalog'; 'Drive' = full filesystem walk bypassing catalog)
-> - `catalog_filter` table — added by migration 2.10 (per-catalog include/exclude rules)
+> **New fields added in 2.11 (unreleased — edit in place, no extra migration needed):**
+> - (no new field yet) — added by migration 2.11
 
 ## Project Overview
 
@@ -147,5 +147,16 @@ In File/Hosted mode, the data is already in the SQLite database and no pre-loadi
 
 Any change that affects users or future developers must be documented:
 
-- **User-facing feature or change** → document in **Katalog-doc** for user support
-- **Technical practice, architecture decision, limitation, or risk** → document in **Katalog-doc/specs/** as a Markdown file with the `Spec` prefix (e.g. `SpecBackupStrategy.md`)
+- **User-facing feature or change** → document in `specs/Katalog-pages/docs/` (the feature page for the relevant screen)
+- **Technical practice, architecture decision, limitation, or risk** → document in `specs/Katalog-pages/docs/` as a Markdown file with the `Spec` prefix (e.g. `SpecBackupStrategy.md`)
+
+### Documentation page rules
+
+All documentation pages must follow the design guidelines in `specs/Katalog-pages/docs/Development-Documentation.md`. Key rules:
+
+- Every page starts with a YAML frontmatter block (`id`, `title`, `description`), then `# Title`, then Status + Version shields (shields.io)
+- **Feature pages are for end-users**: no code, no method names, no variable names, no source filenames
+- **When updating or creating a feature page, provide translations for all languages: French (`i18n/fr/`) and Czech (`i18n/cs/`)**
+- Update the `Version` badge to the current release version whenever a translated page is updated
+- Development and Specification pages are **English only** — do not create FR/CS translations for them
+- Published site: https://stephanecouturier.github.io/Katalog/

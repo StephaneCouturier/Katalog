@@ -1,7 +1,12 @@
+---
+version: "2.10"
+---
 # BackUp
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Summary
 This page describes all the features of the **BackUp** screen and how to use them.<br/>
-From this screen, the user can **manage catalog backups (copy) or Archive (move) **.<br/>
+From this screen, the user can **manage catalog BackUp (copy) or Archive (move)**.<br/>
 
 ![](/img/screen_backup_01.png)
 
@@ -50,25 +55,21 @@ Katalog can address different conflicts in different manners, when the file exis
 
 A **conflict** occurs when a file exists at both the source and the target path, but the date, size, or checksum differ. The mode controls what the executor does in that case.
 
-#### Available modes
+#### Available modes {#available-modes}
 
-| Mode | DB value | Behaviour |
-|------|----------|-----------|
-| **Skip** (default) | `"Skip"` | No file operation — source is not copied, target is not modified. Conflict is reported for user review. |
-| **Rename oldest** | `"RenameOldest"` | If the source is newer: rename the older target file (adding a timestamp suffix), then copy the source. If the target is newer or same date: skip (protect the newer target). |
-| **Overwrite** *(backlog)* | `"Overwrite"` | Source always wins — overwrite the target silently, no rename backup. For users who want the source to be authoritative regardless of date. |
-| **Rename always** *(backlog)* | `"RenameAlways"` | Always rename the target and copy the source, even when the target is newer — aggressive, explicit archiving. |
+| Mode | Behaviour |
+|------|-----------|
+| **Skip** (default) | No file operation — source is not copied, target is not modified. Conflict is reported for user review. |
+| **Rename oldest** | If the source is newer: rename the older target file (adding a timestamp suffix), then copy the source. If the target is newer or same date: skip (protect the newer target). |
 
 #### Full scenario space
 
-| # | Situation | Skip | Rename oldest | Overwrite *(backlog)* | Rename always *(backlog)* |
-|---|-----------|------|---------------|-----------------------|---------------------------|
-| A | Source newer than target | conflict reported | rename target → copy source ✓ | overwrite target | rename target → copy source |
-| B | Target newer than source | conflict reported | skip (protect newer target) | overwrite target | rename target → copy source |
-| C | Same date, different size | conflict reported | skip (no clear winner) | overwrite target | rename target → copy source |
-| D | Source file missing on disk | error | error | error | error |
-
-Cases B and C are currently left as reported conflicts. `Overwrite` and `RenameAlways` are the natural future modes to cover them when the user wants the source to be unconditionally authoritative.
+| # | Situation | Skip | Rename oldest |
+|---|-----------|------|---------------|
+| A | Source newer than target | conflict reported | rename target → copy source ✓ |
+| B | Target newer than source | conflict reported | skip (protect newer target) |
+| C | Same date, different size | conflict reported | skip (no clear winner) |
+| D | Source file missing on disk | error | error |
 
 > **Rename oldest — archived filename format**: the old target file is renamed to `originalname_YYYYMMDD-HHmmss.ext` (e.g. `report_20260225-102559.docx`). The timestamp is inserted before the extension so the file remains openable. These files accumulate on the target and must be cleaned up manually to reclaim space.
 
@@ -82,7 +83,7 @@ The Archive operation **moves** files from source to target instead of copying t
 - On the **same filesystem**: the move is instant — no data is physically copied; only the file location changes.
 - **Across filesystems**: the file is first copied to the target, then deleted from the source once the copy is confirmed complete.
 
-### Source Mode
+### Source Mode {#source-mode}
 
 Each backup link has a **Source Mode** that controls what is used as the source during comparison and file copy.
 
@@ -111,6 +112,8 @@ This assume that the user creates manually
 
 ### Create a BackUp Link
 
+The *Create Link* panel can be collapsed or expanded using the toggle button at the top of the panel.
+
 #### Link fields
 
 | Field | Description |
@@ -121,7 +124,7 @@ This assume that the user creates manually
 | Target device  | The backup destination catalog device. Files are written to its path. |
 | Last backup date  | Date of the last completed backup run. Updated automatically. |
 | Last backup size  | Total bytes transferred in the last backup run. Updated automatically. |
-| Strict copy | If enabled (default), copies files by path — even if the file already exists elsewhere on the target. If disabled, skips files already present anywhere on the target (de-duplication mode). |
+| Strict copy | If enabled (default), copies files by path — even if the file already exists elsewhere on the target. If disabled, skips files already present anywhere on the target (de-duplication mode). Not applicable for *Archive* links (automatically disabled). |
 | On conflict | What to do when a file exists at the same path on both source and target but differs. Default: `RenameOldest`. See [Conflict Resolution Modes](#available-modes). |
 | Source mode | `Catalog` (default) or `Drive`. Controls whether the source is read from the catalog index or by walking the filesystem directly. See [Source Mode](#source-mode). |
 
@@ -149,18 +152,31 @@ Goal: create a link between the source on local disk and the target on external 
 - The Link appears in the list and coverage is calculated
 ![](/img/screen_backup_5_comparison.png)
 
-### Delete a Link
-Right click on the link line to display the context menu, and select "Delete".
+### Links list filters
 
-![](/img/screen_backup_6_delete.png)
+The links list can be filtered to show only relevant links:
+- **Source / Target** radio buttons — show only links where the currently selected device acts as the source or as the target.
+- **Type** dropdown — filter by *BackUp* or *Archive*.
+- **Display full table** checkbox — toggles additional detail columns in the list.
+
+### Context menu on a link
+
+Right-clicking a link in the list opens a context menu with the following actions:
+
+| Action | Description |
+|--------|-------------|
+| *Run Backup* / *Run Archive* | Start the backup or archive operation for this link. |
+| *Preview Backup* / *Preview Archive* | Run a preview (simulation) without copying any files. |
+| *Replicate directories* | Copy the folder structure only, without the files. |
+| *Invert (swap source and target)* | Swap the source and target of the link in one click — useful to reverse a backup direction. |
+| *Delete* | Remove the link (does not affect the files on disk). |
 
 **LuckyBackUp profile creation**
-Katalog can generate LuckyBackUp a ready-to-use profile based on the BackUp links
-- creates `.profile` files from backup links
+Katalog can generate a ready-to-use LuckyBackUp profile based on the BackUp links:
 - Saves to `~/.luckyBackup/profiles/` directory
-- Option to generate from ALL backup links or only filtered ones (by source/target device)
-- Profile naming: `Katalog_<timestamp>.profile`
-- Each Katalog backup link becomes one task in the LuckyBackUp profile
+- Each backup link becomes one task in the profile
+- By default, **all** links are included
+- Check *Only selected links* to include only the links currently visible in the filtered list (filtered by Source/Target device and/or Type)
 
 ## BackUp or Archive execution
 
@@ -172,6 +188,7 @@ Katalog can generate LuckyBackUp a ready-to-use profile based on the BackUp link
 
 ### Preview
 - A Preview (simulation) can be run to test the effect of the BackUp or Archive process and generate a report.
+- The preview result can be **exported** using the *Export* button, saving the list of planned operations to a file for review.
 
 ### Pause, Resume, and Cancel
 
@@ -240,16 +257,24 @@ is silently skipped.
 > manually clean archived files (`stem_YYYYMMDD-HHmmss.ext`) to reclaim space if required.
 
 ## Report
-After execution, a **backup report** lists:
-- Files copied (count, total size)
-- Files skipped — already exist in target (count)
-- Files with conflicts — exist in target but differ (newer date, different size, different checksum). Listed for user review, **not overwritten**.
-- Errors — files that failed to copy (permission denied, disk full, etc.)
+After execution, the preview table is replaced by a **backup report** — a table with four columns: **Status**, **File name**, **Path**, and **Size**.
 
+Each row corresponds to one file, with the following status values:
 
+| Status | Meaning |
+|--------|---------|
+| *Copied* | File was successfully copied to the target. |
+| *Moved* | File was successfully moved to the target (Archive operation). |
+| *Archived & Copied* | A conflicting target file was renamed (RenameOldest mode), then the source was copied. |
+| *Conflict* | File exists at the same path on both source and target but differs — not overwritten, listed for review. |
+| *Error* | File could not be copied or moved (permission denied, disk full, etc.). |
+
+A summary line above the table shows totals: files copied, archived & copied, conflicts, and errors.
+
+---
 
 ## Development
-
+Some ideas of developments for this screen:
 
 ### Future Features
 - [ ] Snapshot management
@@ -259,19 +284,23 @@ After execution, a **backup report** lists:
 - [ ] Compression options
 - [ ] Remote backups (ssh)
 
-### Future Backlog — Various
-Some ideas of developments for this screen:
+### Future conflict modes
+
+| Mode | Behaviour |
+|------|-----------|
+| **Overwrite** | Source always wins — overwrites the target silently. For users who want the source to be authoritative regardless of date. |
+| **Rename always** | Always renames the target and copies the source, even when the target is newer — aggressive, explicit archiving. |
+
+### Future Options
+
 - **Archive source cleanup**: opt-in option to delete empty directories left behind in the source after an Archive (move) operation.
 - **Delete mode**: opt-in option to remove target files absent from source.
-- **Overwrite mode**: options per conflict (skip, overwrite, keep both, ask).
 - **Checksum comparison**: detect content changes even when name/size/date match.
 - **Scheduled/automated backup**: run on timer or on catalog update.
 - **Backup history**: log of past backup runs with dates and statistics.
 
-### Future Backlog — Disk Space
-
+### Future Features for Disk Space
 - **Per-link minimum free space setting**: user-configurable floor (e.g., always keep 5 GB free).
-- **Source space check for Archive**: warn when source free space after archive will be very low.
 - **In-flight space exhaustion early abort**: detect ENOSPC errors during copy and stop immediately rather than continuing to fail file after file.
 - **Post-archive source verification**: confirm actual source space was freed after Archive completes.
 - **Space trend display**: show target space over time in the Statistics tab.

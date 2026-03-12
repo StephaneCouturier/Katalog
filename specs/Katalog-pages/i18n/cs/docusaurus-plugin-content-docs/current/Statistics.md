@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Statistika
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Souhrn
 Tato stránka popisuje všechny funkce obrazovky **Statistiky** a jak je používat.
 
@@ -9,7 +14,7 @@ Tato obrazovka poskytuje pohledy na obsah a vývoj kolekce:
 1. Pro úložná zařízení: použitý a celkový prostor a celková velikost souboru souvisejících katalogů nebo počet souborů.
 1. Pro virtuální zařízení: související zařízení počet souborů nebo celkový prostor a celková velikost souborů souvisejících katalogů.
 
-![](/img/screen_statistics_01.png)
+![Obrazovka Statistiky zobrazující graf vývoje kolekce](/img/screen_statistics_01.png)
 
 ## Funkce
 ### Možnost dat

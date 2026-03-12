@@ -52,8 +52,6 @@ export default {
                 //   items: [
                     'Devices',
                     'DevicesCatalogs',
-                    'DevicesCatalogChecksum',
-                    'DevicesCatalogMetadata',
                     'DevicesStorage',
                     'DevicesTree',
                 //   ],
@@ -77,12 +75,15 @@ export default {
         label: 'Specifications',
         items: [
                 'BackUp_luckybackup_profile',
+                'DevicesCatalogChecksum',
+                'DevicesCatalogMetadata',
                 'SpecCatalogIncludeExclude',
                 'SpecProgressReport',
                 'SpecVersions'],
       },
        'Development-Build-from-source',
        'Development-Release',
+       'Development-Documentation'
               ],
     },
   ],

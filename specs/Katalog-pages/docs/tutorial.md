@@ -1,8 +1,10 @@
 ---
 sidebar_position: 1
+version: "2.10"
 ---
 
 # Tutorial
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
 
 Let's discover **Katalog in less than 5 minutes**.
 
@@ -26,18 +28,18 @@ A portable version for Windows is also available in the [Katalog files](https://
 - The application then start on the **[Create](/Katalog/docs/Create)** screen.
 - Just select a folder to be scanned to catalog the files (here, the directory */home* is selected),
 - and click the button **Create Catalog**.
-![](/img/screen_create_01.png)
+![Create screen with folder selected](/img/screen_create_01.png)
 - A message confirms the creation and provides the number of files and total file size of the selected folder for this catalog.
 - your local drive, (a Storage device which was added automatically) was also updated, and the message provides a view of free, used, and total space:
-![](/img/screen_create_02.png)
+![Catalog creation confirmation message](/img/screen_create_02.png)
 - The application will now go to the **[Devices](/Katalog/docs/Devices)** tab to show you the catalog created for your local drive:
-![](/img/screen_create_03.png)
+![Devices screen showing the newly created catalog](/img/screen_create_03.png)
 
 ### Search files in this catalog
 - Go the **[Search](/Katalog/docs/Search)** screen by clicking on the first tab *Search* at the top of the application.
 - The catlog you created is already selected, so you can search for files right away.
 - Try and enter a text for the file name, and click on the button **Search**
-![](/img/screen_search_01.png)
+![Search screen with results](/img/screen_search_01.png)
 
 You can continue to experiment the Search screen to use more criteria and limit the number of results.
 

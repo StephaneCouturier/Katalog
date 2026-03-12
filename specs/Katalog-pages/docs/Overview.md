@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Overview
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Files indexing & Storage devices manager
 Katalog is a powerful <b>file catalog manager</b> that helps you organize and find files.<br/>
 It gives a full view of the files across <b>multiple storage devices without needing them connected</b>.<br/>
@@ -9,9 +14,9 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 - **Organize the collection**: Manage multiple storage devices and their catalogs in a unified hierarchy
 
 
-![](/img/screen_search_01.png)
+![Search results across multiple catalogs](/img/screen_search_01.png)
 <b>8 main tabs for 8 main features</b>
-![](/img/global_tabwidget.png)
+![Katalog's 8 main tabs](/img/global_tabwidget.png)
 1. [Search](Search) files across multiple storage devices **without needing them connected**
 1. Organize storage [Devices](Devices) and their catalogs in a unified hierarchy with **Virtual** devices
 1. [Explore](Explore) the catalogs' hierarchy and files
@@ -30,7 +35,7 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
   * Set the device in the <b>hierarchy to be used</b> for Search, Create (parent device), Statistics, or BackUp management<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![](/img/global_selection_panel.png)
+    ![Selection panel](/img/global_selection_panel.png)
   </div>
 </div>
 
@@ -41,6 +46,7 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 - **[File Type intelligence](Create#enhanced-file-type-filtering)**: Standard detection from extensions, and MIME type verification
 - **[Catalog options](Create#select-options-to-includeexclude-files)**: Only include a [type of files](Create#enhanced-file-type-filtering) , and [include/exclude directories or hidden files](Create#other-options)
 - **[Metadata extraction](Create#metadata-extraction)**: Automatically extract metadata from images (dimensions, camera info), videos (duration, resolution), and audio files (artist, album, duration) or any other file type.
+- **[File checksum](Create#file-checksum)**: SHA256 checksum calculation for duplicate and difference detection
 - **[Folder Tag system](Tags)**: Organize and categorize folders with custom tags
 
 ### Powerful Search & Discovery
@@ -59,7 +65,7 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 ### Analysis & Management
 - **[File Explorer](Explore)**: Browse catalog contents as if the device were connected
 - **[Statistics](Statistics)**: Track your file collections & storage usage
-- **[Backup Management](BackUp)**: Map and compare source directories with their backups
+- **[Backup & Archive Management](BackUp)**: Copy or move files between catalogs, compare backup coverage, and manage backup links
 - **[Batch Operations](Search#batch-process)**: Export results and perform batch actions on files
 
 ### Advanced Capabilities

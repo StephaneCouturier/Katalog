@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Statistiques
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Statistiques** et comment les utiliser.
 
@@ -9,7 +14,7 @@ Cet écran permet de visualiser le contenu et l'évolution d'une collection :
 1. Pour les périphériques de stockage : espace utilisé et total, ainsi que la taille totale des fichiers des catalogues associés, ou le nombre de fichiers.
 1. Pour les périphériques virtuels : nombre de fichiers des périphériques associés, ou espace total et taille totale des fichiers des catalogues associés.
 
-![](/img/screen_statistics_01.png)
+![Écran Statistiques montrant le graphique d'évolution de la collection](/img/screen_statistics_01.png)
 
 ## Caractéristiques
 ### Option de Données

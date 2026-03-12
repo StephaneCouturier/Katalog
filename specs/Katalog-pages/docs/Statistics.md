@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Statistics
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Summary
 This page describes all the features of the **Statistics** screen and how to use them.
 
@@ -9,7 +14,7 @@ This screen provides views of the contents and the evolution of a collection:
 1. For Storage devices: used and total space, and the related catalogs' total file size, or the number of files.
 1. For Virtual devices: related devices number of files, or total space and the related catalogs' total file size.
 
-![](/img/screen_statistics_01.png)
+![Statistics screen showing chart of collection evolution](/img/screen_statistics_01.png)
 
 ## Features
 ### Data option

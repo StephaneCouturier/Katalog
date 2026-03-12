@@ -1,4 +1,9 @@
+---
+version: "2.10"
+---
 # Aperçu général
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Indexation de fichiers & Gestionnaire de périphériques de stockage
 Katalog est un puissant <b>gestionnaire de catalogue de fichiers</b> qui vous aide à organiser et à retrouver vos fichiers.<br/>
 Il donne une vue complète des fichiers présents sur <b>plusieurs périphériques de stockage sans avoir besoin de les connecter</b>.<br/>
@@ -9,15 +14,15 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 - **Organisez votre collection** : Gérez plusieurs périphériques de stockage et leurs catalogues dans une hiérarchie unifiée
 
 
-![](/img/screen_search_01.png)
+![Résultats de recherche dans plusieurs catalogues](/img/screen_search_01.png)
 <b>8 onglets principaux pour 8 fonctionnalités principales</b>
-![](/img/global_tabwidget.png)
-1. [Créer](Create) des catalogues de **fichiers**
+![Les 8 onglets principaux de Katalog](/img/global_tabwidget.png)
 1. [Rechercher](Search) des fichiers sur plusieurs périphériques de stockage **sans avoir besoin de les connecter**
+1. Organiser les [Périphériques](Devices) de stockage et leurs catalogues dans une hiérarchie unifiée avec des périphériques **Virtuels**
 1. [Explorer](Explore) la hiérarchie des catalogues et les fichiers
-1. Organiser les [Périphériques](Devices) de stockage et leurs catalogues dans une hiérarchie unifiée avec des périphériques virtuels
+1. [Créer](Create) des catalogues de **fichiers**
 1. Obtenir des [Statistiques](Statistics) sur vos collections de fichiers et l'utilisation du stockage
-1. Personnaliser les [Étiquettes](Tags) et les attribuer aux répertoires pour des recherches ou statistiques supplémentaires
+1. Personnaliser les [Étiquettes](Tags) et les attribuer aux répertoires pour des capacités de recherche supplémentaires
 1. Comparer les catalogues de [Sauvegarde](BackUp) pour confirmer la couverture des fichiers et dossiers sauvegardés entre les périphériques source et cible
 1. Personnaliser votre expérience avec vos [Paramètres](Settings) tels que la langue et le thème
 <br/>
@@ -27,10 +32,10 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
   <br/><br/>et un <b>panneau de [Sélection](Selection)</b> pour
   <br/>
   * Choisir de rechercher dans les <b>Catalogues</b> ou directement dans les <b>Lecteurs connectés</b><br/>
-  * Définir le périphérique dans la <b>hiérarchie à utiliser</b> pour Rechercher ou Créer ou obtenir des Statistiques ou gérer la couverture de Sauvegarde<br/>
+  * Définir le périphérique dans la <b>hiérarchie à utiliser</b> pour *Rechercher*, *Créer* (périphérique parent), *Statistiques* ou la gestion de *Sauvegarde*<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![](/img/global_selection_panel.png)
+    ![Panneau de sélection](/img/global_selection_panel.png)
   </div>
 </div>
 
@@ -41,6 +46,7 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 - **[Intelligence du type de fichier](Create#enhanced-file-type-filtering)** : Détection standard par extension et vérification du type MIME
 - **[Options de catalogue](Create#select-options-to-includeexclude-files)** : Inclure uniquement un [type de fichiers](Create#enhanced-file-type-filtering), et [inclure/exclure les répertoires ou fichiers cachés](Create#other-options)
 - **[Extraction de métadonnées](Create#metadata-extraction)** : Extraction automatique des métadonnées des images (dimensions, informations de l'appareil photo), vidéos (durée, résolution) et fichiers audio (artiste, album, durée) ou tout autre type de fichier.
+- **[Somme de contrôle](Create#file-checksum)** : Calcul SHA256 pour la détection de doublons et de différences
 - **[Système d'étiquettes de dossier](Tags)** : Organisez et catégorisez les dossiers avec des étiquettes personnalisées
 
 ### Recherche et découverte puissantes
@@ -59,7 +65,7 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 ### Analyse et gestion
 - **[Explorateur de fichiers](Explore)** : Parcourez le contenu des catalogues comme si le périphérique était connecté
 - **[Statistiques](Statistics)** : Suivez vos collections de fichiers et l'utilisation du stockage
-- **[Gestion des sauvegardes](BackUp)** : Cartographiez et comparez les répertoires sources avec leurs sauvegardes
+- **[Gestion des sauvegardes et archives](BackUp)** : Copiez ou déplacez des fichiers entre catalogues, comparez la couverture des sauvegardes et gérez les liens de sauvegarde
 - **[Opérations par lots](Search#batch-process)** : Exportez les résultats et effectuez des actions par lots sur les fichiers
 
 ### Capacités avancées
