@@ -434,7 +434,7 @@ install(TARGETS Katalog
 )
 
 # Install license (required by Flathub)
-install(FILES src/LICENSE.md
+install(FILES LICENSE.md
     DESTINATION share/licenses/io.github.stephanecouturier.Katalog
     RENAME LICENSE)
 
