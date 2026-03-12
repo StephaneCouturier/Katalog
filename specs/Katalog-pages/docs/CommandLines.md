@@ -1,8 +1,16 @@
+---
+version: "2.10"
+---
 # Command Lines
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
+
 ## Summary
-This page describes available command lines features and options that can be run from console.
-Without the need of the graphical interface, some tasks can therefore be automated.<br/>
-These commands currently run only under <b>Linux</b>.<br/>
+This page describes available command line features and options that can be run from the console.
+Without the need of the graphical interface, some tasks can therefore be automated.
+
+These commands currently run only under **Linux**.
+
+![Command line help output showing available actions and options](/img/commandlines_01_help.png)
 
 ## Synopsis
 
@@ -26,7 +34,7 @@ Lists all catalogs with their ID, active state, and name.
 ./Katalog.sh list_catalogs --verbose
 ```
 
-![](/img/commandlines_02_list.png)
+![Command line output listing all catalogs with ID, state, and name](/img/commandlines_02_list.png)
 
 ### `update_catalog`
 Updates a specific catalog by device ID.
@@ -41,9 +49,9 @@ Updates a specific catalog by device ID.
 
 **Example:**
 ```bash
-./Katalog.sh update_catalog 5 --report
+./Katalog.sh update_catalog 5
 ```
-![](/img/commandlines_03_catalog.png)
+![Command line output after updating a specific catalog](/img/commandlines_03_catalog.png)
 
 ### `update_all_active`
 Updates all active catalogs in the collection.
@@ -55,9 +63,9 @@ Updates all active catalogs in the collection.
 
 **Example:**
 ```bash
-./Katalog.sh update_all_active --report --verbose
+./Katalog.sh update_all_active --verbose
 ```
-![](/img/commandlines_04_all.png)
+![Command line output after updating all active catalogs](/img/commandlines_04_all.png)
 
 ### `search`
 Executes a search using the last search criteria from history, with optional overrides.
@@ -70,14 +78,6 @@ Executes a search using the last search criteria from history, with optional ove
 **Example:**
 ```bash
 ./Katalog.sh search --text "vacation" --type image --limit 100
-```
-
-### `restart`
-Restarts the application (used internally for application lifecycle management).
-
-**Usage:**
-```bash
-./Katalog.sh restart
 ```
 
 ## General Options
@@ -95,20 +95,6 @@ Specifies the path to the collection folder.
 ```bash
 ./Katalog.sh search --collection "/path/to/my/collection"
 ```
-
-### `-r, --report`
-Shows detailed report for update operations in a graphical window (usual message box in the interface).
-
-**Example:**
-```bash
-./Katalog.sh update_catalog 3 --report
-```
-
-> ./Katalog update_catalog 4 --report
-
-This will display:
-![](/img/commandlines_05_report.png)
-
 
 ### `--verbose`
 Enables verbose output for debugging and detailed information.
@@ -131,7 +117,7 @@ Limits the number of files to display in search results.
 ```
 
 ### `--selectedDeviceID <deviceID>`
-Specifies which device ID to search in. 
+Specifies which device ID to search in.
 - Default: uses settings file value
 - When used with `--collection`: defaults to 0 (All devices)
 
@@ -154,7 +140,7 @@ Filters results by file type.
 **Valid values:**
 - `all` (default)
 - `audio`
-- `image` 
+- `image`
 - `text`
 - `video`
 
@@ -254,16 +240,6 @@ Starts with default search criteria instead of loading from search history.
 ./Katalog.sh search --no-history --text "newfile"
 ```
 
-## CSV Export Options
-
-### `--csv`
-Exports search results to a CSV file. The file is saved in the collection folder with a timestamp.
-
-**Example:**
-```bash
-./Katalog.sh search --text "documents" --csv
-```
-
 ## Exit Codes
 
 - **0**: Success
@@ -279,14 +255,14 @@ List all catalogs:
 ./Katalog.sh list_catalogs
 ```
 
-Update a specific catalog with detailed report:
+Update a specific catalog with verbose output:
 ```bash
-./Katalog.sh update_catalog 3 --report --verbose
+./Katalog.sh update_catalog 3 --verbose
 ```
 
 Update all active catalogs:
 ```bash
-./Katalog.sh update_all_active --report
+./Katalog.sh update_all_active
 ```
 
 ### Search Examples
@@ -311,9 +287,9 @@ Complex search with multiple criteria:
 ./Katalog.sh search --text "project" --type text --search-in files-and-folders --case-sensitive --limit 200
 ```
 
-Search in specific device and export to CSV:
+Search in a specific device:
 ```bash
-./Katalog.sh search --selectedDeviceID 2 --text "documents" --csv --verbose
+./Katalog.sh search --selectedDeviceID 2 --text "documents" --verbose
 ```
 
 ### Using Custom Collection Path
@@ -325,7 +301,7 @@ Search in a different collection:
 
 Update catalogs in a specific collection:
 ```bash
-./Katalog.sh --collection "/path/to/collection" update_all_active --report
+./Katalog.sh --collection "/path/to/collection" update_all_active
 ```
 
 ## Notes
@@ -333,16 +309,14 @@ Update catalogs in a specific collection:
 - When no action is specified, Katalog launches in GUI mode
 - Search criteria are loaded from search history by default, unless `--no-history` is used
 - Command line options override values from search history
-- The `restart` action is primarily used internally for application lifecycle management
 - All search operations respect the active state of catalogs
 - File size units supported: KB, MB, GB, TB (case-insensitive)
 - Date formats must be in YYYY-MM-DD format
-- CSV exports are automatically timestamped and saved in the collection folder
 
 ## Troubleshooting
 
 **Invalid device ID:**
-Ensure the device ID exists by running `katalog list_catalogs` first.
+Ensure the device ID exists by running `./Katalog.sh list_catalogs` first.
 
 **Database connection issues:**
 Verify the collection path is correct and accessible.
@@ -353,3 +327,8 @@ Try using `--no-history` to start with default criteria, or check if the selecte
 **Permission errors:**
 Ensure Katalog has read/write access to the collection folder and database files.
 
+## Development
+Some ideas of developments for this screen:
+* Add a `--report` option to display a detailed update report after catalog operations
+* Add a `--csv` option to export search results to a timestamped CSV file in the collection folder
+* For more, see the backlog of [CommandLines development](https://github.com/StephaneCouturier/Katalog/issues?q=commandlines).

@@ -1,9 +1,16 @@
+---
+version: "2.10"
+---
 # Lignes de Commande
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
 
 ## Résumé
 Cette page décrit les fonctionnalités et options disponibles en ligne de commande qui peuvent être exécutées depuis la console.
-Sans avoir besoin de l'interface graphique, certaines tâches peuvent donc être automatisées.<br/>
-Ces commandes fonctionnent actuellement uniquement sous <b>Linux</b>.<br/>
+Sans avoir besoin de l'interface graphique, certaines tâches peuvent donc être automatisées.
+
+Ces commandes fonctionnent actuellement uniquement sous **Linux**.
+
+![Sortie de l'aide en ligne de commande affichant les actions et options disponibles](/img/commandlines_01_help.png)
 
 ## Synopsis
 
@@ -28,7 +35,7 @@ Liste tous les catalogues avec leur ID, état actif et nom.
 ./Katalog.sh list_catalogs --verbose
 ```
 
-![](/img/commandlines_02_list.png)
+![Sortie en ligne de commande listant tous les catalogues avec leur ID, état et nom](/img/commandlines_02_list.png)
 
 ### `update_catalog`
 Met à jour un catalogue spécifique par ID de périphérique.
@@ -43,9 +50,9 @@ Met à jour un catalogue spécifique par ID de périphérique.
 
 **Exemple :**
 ```bash
-./Katalog.sh update_catalog 5 --report
+./Katalog.sh update_catalog 5
 ```
-![](/img/commandlines_03_catalog.png)
+![Sortie en ligne de commande après la mise à jour d'un catalogue spécifique](/img/commandlines_03_catalog.png)
 
 ### `update_all_active`
 Met à jour tous les catalogues actifs dans la collection.
@@ -57,9 +64,9 @@ Met à jour tous les catalogues actifs dans la collection.
 
 **Exemple :**
 ```bash
-./Katalog.sh update_all_active --report --verbose
+./Katalog.sh update_all_active --verbose
 ```
-![](/img/commandlines_04_all.png)
+![Sortie en ligne de commande après la mise à jour de tous les catalogues actifs](/img/commandlines_04_all.png)
 
 ### `search`
 Exécute une recherche en utilisant les derniers critères de recherche de l'historique, avec des remplacements optionnels.
@@ -72,14 +79,6 @@ Exécute une recherche en utilisant les derniers critères de recherche de l'his
 **Exemple :**
 ```bash
 ./Katalog.sh search --text "vacances" --type image --limit 100
-```
-
-### `restart`
-Redémarre l'application (utilisé en interne pour la gestion du cycle de vie de l'application).
-
-**Utilisation :**
-```bash
-./Katalog.sh restart
 ```
 
 ## Options Générales
@@ -97,19 +96,6 @@ Spécifie le chemin vers le dossier de collection.
 ```bash
 ./Katalog.sh search --collection "/chemin/vers/ma/collection"
 ```
-
-### `-r, --report`
-Affiche un rapport détaillé pour les opérations de mise à jour dans une fenêtre graphique (boîte de message habituelle dans l'interface).
-
-**Exemple :**
-```bash
-./Katalog.sh update_catalog 3 --report
-```
-
-> ./Katalog update_catalog 4 --report
-
-Ceci affichera :
-![](/img/commandlines_05_report.png)
 
 ### `--verbose`
 Active la sortie verbeuse pour le débogage et les informations détaillées.
@@ -155,7 +141,7 @@ Filtre les résultats par type de fichier.
 **Valeurs valides :**
 - `all` (par défaut)
 - `audio`
-- `image` 
+- `image`
 - `text`
 - `video`
 
@@ -255,16 +241,6 @@ Commence avec les critères de recherche par défaut au lieu de charger depuis l
 ./Katalog.sh search --no-history --text "nouveaufichier"
 ```
 
-## Options d'Export CSV
-
-### `--csv`
-Exporte les résultats de recherche vers un fichier CSV. Le fichier est sauvegardé dans le dossier de collection avec un horodatage.
-
-**Exemple :**
-```bash
-./Katalog.sh search --text "documents" --csv
-```
-
 ## Codes de Sortie
 
 - **0** : Succès
@@ -280,14 +256,14 @@ Lister tous les catalogues :
 ./Katalog.sh list_catalogs
 ```
 
-Mettre à jour un catalogue spécifique avec rapport détaillé :
+Mettre à jour un catalogue spécifique avec sortie détaillée :
 ```bash
-./Katalog.sh update_catalog 3 --report --verbose
+./Katalog.sh update_catalog 3 --verbose
 ```
 
 Mettre à jour tous les catalogues actifs :
 ```bash
-./Katalog.sh update_all_active --report
+./Katalog.sh update_all_active
 ```
 
 ### Exemples de Recherche
@@ -312,9 +288,9 @@ Recherche complexe avec critères multiples :
 ./Katalog.sh search --text "projet" --type text --search-in files-and-folders --case-sensitive --limit 200
 ```
 
-Rechercher dans un périphérique spécifique et exporter en CSV :
+Rechercher dans un périphérique spécifique :
 ```bash
-./Katalog.sh search --selectedDeviceID 2 --text "documents" --csv --verbose
+./Katalog.sh search --selectedDeviceID 2 --text "documents" --verbose
 ```
 
 ### Utilisation d'un Chemin de Collection Personnalisé
@@ -326,7 +302,7 @@ Rechercher dans une collection différente :
 
 Mettre à jour les catalogues dans une collection spécifique :
 ```bash
-./Katalog.sh --collection "/chemin/vers/collection" update_all_active --report
+./Katalog.sh --collection "/chemin/vers/collection" update_all_active
 ```
 
 ## Notes
@@ -334,11 +310,9 @@ Mettre à jour les catalogues dans une collection spécifique :
 - Quand aucune action n'est spécifiée, Katalog se lance en mode GUI
 - Les critères de recherche sont chargés depuis l'historique de recherche par défaut, sauf si `--no-history` est utilisé
 - Les options de ligne de commande remplacent les valeurs de l'historique de recherche
-- L'action `restart` est principalement utilisée en interne pour la gestion du cycle de vie de l'application
 - Toutes les opérations de recherche respectent l'état actif des catalogues
 - Unités de taille de fichier supportées : KB, MB, GB, TB (insensible à la casse)
 - Les formats de date doivent être au format YYYY-MM-DD
-- Les exports CSV sont automatiquement horodatés et sauvegardés dans le dossier de collection
 
 ## Dépannage
 

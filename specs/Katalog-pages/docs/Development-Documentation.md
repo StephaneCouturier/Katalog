@@ -41,13 +41,13 @@ Sections:
 | DevicesCatalogs |  |  |  | |
 | DevicesStorage |  |  |  | |
 | DevicesTree |  |  |  | |
-| Explore |  |  |  | |
+| Explore | 2.10 | 2.10 | 2.10 | |
 | Search |  |  |  | |
-| Selection |  |  |  | |
-| Settings |  |  |  | |
+| Selection | 2.10 | 2.10 | 2.10 | |
+| Settings | 2.10 | 2.10 | 2.10 | |
 | Statistics | 2.10 | 2.10 | 2.10 | |
 | Tags | 2.10 | 2.10 | 2.10 | |
-| CommandLines |  |  |  | |
+| CommandLines | 2.10 | 2.10 | 2.10 | |
 
 ### Development section (English only)
 

@@ -1,9 +1,16 @@
+---
+version: "2.10"
+---
 # Příkazová Řádka
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
 
 ## Shrnutí
 Tato stránka popisuje dostupné funkce a možnosti příkazové řádky, které lze spouštět z konzole.
-Bez potřeby grafického rozhraní lze tedy automatizovat některé úkoly.<br/>
-Tyto příkazy aktuálně fungují pouze pod <b>Linuxem</b>.<br/>
+Bez potřeby grafického rozhraní lze tedy automatizovat některé úkoly.
+
+Tyto příkazy aktuálně fungují pouze pod **Linuxem**.
+
+![Výstup nápovědy příkazové řádky zobrazující dostupné akce a možnosti](/img/commandlines_01_help.png)
 
 ## Syntaxe
 
@@ -28,7 +35,7 @@ Vypíše všechny katalogy s jejich ID, aktivním stavem a názvem.
 ./Katalog.sh list_catalogs --verbose
 ```
 
-![](/img/commandlines_02_list.png)
+![Výstup příkazové řádky se seznamem všech katalogů s ID, stavem a názvem](/img/commandlines_02_list.png)
 
 ### `update_catalog`
 Aktualizuje konkrétní katalog podle ID zařízení.
@@ -43,9 +50,9 @@ Aktualizuje konkrétní katalog podle ID zařízení.
 
 **Příklad:**
 ```bash
-./Katalog.sh update_catalog 5 --report
+./Katalog.sh update_catalog 5
 ```
-![](/img/commandlines_03_catalog.png)
+![Výstup příkazové řádky po aktualizaci konkrétního katalogu](/img/commandlines_03_catalog.png)
 
 ### `update_all_active`
 Aktualizuje všechny aktivní katalogy v kolekci.
@@ -57,9 +64,9 @@ Aktualizuje všechny aktivní katalogy v kolekci.
 
 **Příklad:**
 ```bash
-./Katalog.sh update_all_active --report --verbose
+./Katalog.sh update_all_active --verbose
 ```
-![](/img/commandlines_04_all.png)
+![Výstup příkazové řádky po aktualizaci všech aktivních katalogů](/img/commandlines_04_all.png)
 
 ### `search`
 Provede vyhledávání pomocí posledních kritérií vyhledávání z historie, s volitelnými přepsáními.
@@ -72,14 +79,6 @@ Provede vyhledávání pomocí posledních kritérií vyhledávání z historie,
 **Příklad:**
 ```bash
 ./Katalog.sh search --text "dovolená" --type image --limit 100
-```
-
-### `restart`
-Restartuje aplikaci (používá se interně pro správu životního cyklu aplikace).
-
-**Použití:**
-```bash
-./Katalog.sh restart
 ```
 
 ## Obecné Možnosti
@@ -97,19 +96,6 @@ Určuje cestu ke složce kolekce.
 ```bash
 ./Katalog.sh search --collection "/cesta/k/mé/kolekci"
 ```
-
-### `-r, --report`
-Zobrazí podrobný report pro operace aktualizace v grafickém okně (obvyklé dialogové okno v rozhraní).
-
-**Příklad:**
-```bash
-./Katalog.sh update_catalog 3 --report
-```
-
-> ./Katalog update_catalog 4 --report
-
-Toto zobrazí:
-![](/img/commandlines_05_report.png)
 
 ### `--verbose`
 Povolí podrobný výstup pro ladění a detailní informace.
@@ -155,7 +141,7 @@ Filtruje výsledky podle typu souboru.
 **Platné hodnoty:**
 - `all` (výchozí)
 - `audio`
-- `image` 
+- `image`
 - `text`
 - `video`
 
@@ -255,16 +241,6 @@ Začne s výchozími kritérii vyhledávání místo načítání z historie vyh
 ./Katalog.sh search --no-history --text "novýsoubor"
 ```
 
-## Možnosti Exportu CSV
-
-### `--csv`
-Exportuje výsledky vyhledávání do CSV souboru. Soubor je uložen ve složce kolekce s časovým razítkem.
-
-**Příklad:**
-```bash
-./Katalog.sh search --text "dokumenty" --csv
-```
-
 ## Návratové Kódy
 
 - **0**: Úspěch
@@ -280,14 +256,14 @@ Vypsat všechny katalogy:
 ./Katalog.sh list_catalogs
 ```
 
-Aktualizovat konkrétní katalog s podrobným reportem:
+Aktualizovat konkrétní katalog s podrobným výstupem:
 ```bash
-./Katalog.sh update_catalog 3 --report --verbose
+./Katalog.sh update_catalog 3 --verbose
 ```
 
 Aktualizovat všechny aktivní katalogy:
 ```bash
-./Katalog.sh update_all_active --report
+./Katalog.sh update_all_active
 ```
 
 ### Příklady Vyhledávání
@@ -312,9 +288,9 @@ Složité vyhledávání s více kritérii:
 ./Katalog.sh search --text "projekt" --type text --search-in files-and-folders --case-sensitive --limit 200
 ```
 
-Vyhledat v konkrétním zařízení a exportovat do CSV:
+Vyhledat v konkrétním zařízení:
 ```bash
-./Katalog.sh search --selectedDeviceID 2 --text "dokumenty" --csv --verbose
+./Katalog.sh search --selectedDeviceID 2 --text "dokumenty" --verbose
 ```
 
 ### Použití Vlastní Cesty Kolekce
@@ -326,7 +302,7 @@ Vyhledat v jiné kolekci:
 
 Aktualizovat katalogy v konkrétní kolekci:
 ```bash
-./Katalog.sh --collection "/cesta/ke/kolekci" update_all_active --report
+./Katalog.sh --collection "/cesta/ke/kolekci" update_all_active
 ```
 
 ## Poznámky
@@ -334,11 +310,9 @@ Aktualizovat katalogy v konkrétní kolekci:
 - Když není zadána žádná akce, Katalog se spustí v GUI režimu
 - Kritéria vyhledávání jsou ve výchozím nastavení načtena z historie vyhledávání, pokud není použito `--no-history`
 - Možnosti příkazové řádky přepisují hodnoty z historie vyhledávání
-- Akce `restart` se používá především interně pro správu životního cyklu aplikace
 - Všechny operace vyhledávání respektují aktivní stav katalogů
 - Podporované jednotky velikosti souborů: KB, MB, GB, TB (necitlivé na velikost písmen)
 - Formáty data musí být ve formátu YYYY-MM-DD
-- CSV exporty jsou automaticky opatřeny časovým razítkem a uloženy ve složce kolekce
 
 ## Řešení Problémů
 
