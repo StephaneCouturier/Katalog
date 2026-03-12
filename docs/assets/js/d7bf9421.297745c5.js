@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[8192],{3050:e=>{e.exports=JSON.parse('{"tags":[{"label":"release","permalink":"/Katalog/blog/tags/release","count":2},{"label":"pre-development","permalink":"/Katalog/blog/tags/pre-development","count":1}]}')}}]);

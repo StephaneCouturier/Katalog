@@ -22,10 +22,10 @@ Existují 3 způsoby, jak vybrat zdrojovou cestu k adresáři se soubory, které
 
 Vybraná cesta se vždy zobrazí v textovém poli a aplikace ji použije k procházení a katalogizaci obsahu.
 
-## Vybrat možnosti pro zahrnutí/vyloučení souborů
+## Vybrat možnosti pro zahrnutí/vyloučení souborů {#select-options-to-includeexclude-files}
 Zvolte, které typy souborů mají být zahrnuty do katalogu.
 
-### Filtrování typů souborů
+### Filtrování typů souborů {#enhanced-file-type-filtering}
 Katalog používá inteligentní detekci typů souborů podle přípony, která automaticky podporuje stovky formátů.
 
 **Jak detekce typů souborů funguje:**
@@ -52,7 +52,7 @@ Tato možnost se bude vztahovat na katalog dopředu. Lze ji později změnit úp
 | Ostatní | Všechny ostatní typy nepokryté výše uvedenými kategoriemi | (specifická definice Katalog) | ZIP, RAR, EXE, DLL, ISO, aplikační soubory neklasifikované jako Text |
 | Žádný | Soubory, jejichž typ nelze určit podle přípony | Soubory bez přípony nebo s neznámými příponami | |
 
-### Extrakce metadat
+### Extrakce metadat {#metadata-extraction}
 Zvolte, kolik metadat se má z vašich souborů extrahovat při vytváření katalogu.
 <br/>To ovlivňuje rychlost katalogizace nebo velikost kolekce, ale poskytuje bohatší informace o souborech pro vyhledávání a statistiky.
 
@@ -84,7 +84,7 @@ Toto nastavení se vztahuje pouze na tento katalog a lze je později změnit úp
 
 **Poznámka:** Extrakce metadat vyžaduje čitelné soubory. Poškozené soubory nebo soubory s omezeným přístupem budou přeskočeny bez vlivu na proces katalogizace.
 
-### Kontrolní součet souboru
+### Kontrolní součet souboru {#file-checksum}
 Kontrolní součet SHA256 lze vypočítat během indexování pro vyhledávání duplicit nebo rozdílů.
 ⚠️ Je to výrazně delší proces než ostatní možnosti indexování, protože čte VŠECHNA data pro výpočet kontrolních součtů.
 Stejně jako metadata lze tuto možnost vybrat při vytváření katalogu nebo změnit později; při přerušení procesu jsou již vypočítané kontrolní součty uloženy a příští aktualizace bude pokračovat pro zbývající soubory.

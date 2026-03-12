@@ -22,10 +22,10 @@ Il existe 3 façons de sélectionner le chemin source du répertoire contenant l
 
 Le chemin sélectionné apparaîtra toujours dans la zone de texte et l'application utilisera ce chemin pour parcourir et cataloguer son contenu.
 
-## Sélectionner les options pour inclure/exclure des fichiers
+## Sélectionner les options pour inclure/exclure des fichiers {#select-options-to-includeexclude-files}
 Choisissez les types de fichiers à inclure dans votre catalogue.
 
-### Filtrage des types de fichiers
+### Filtrage des types de fichiers {#enhanced-file-type-filtering}
 Katalog utilise une détection intelligente des types de fichiers basée sur l'extension, qui prend en charge des centaines de formats automatiquement.
 
 **Fonctionnement de la détection des types de fichiers :**
@@ -52,7 +52,7 @@ Cette option sera applicable pour le catalogue à venir. Elle peut être modifi�
 | Autre | Tous les autres types non couverts par les catégories ci-dessus | (définition spécifique Katalog) | ZIP, RAR, EXE, DLL, ISO, fichiers applicatifs non classifiés en Texte |
 | Aucun | Fichiers dont le type n'a pas pu être déterminé à partir de l'extension | Fichiers sans extension ou avec des extensions inconnues | |
 
-### Extraction de métadonnées
+### Extraction de métadonnées {#metadata-extraction}
 Choisissez la quantité de métadonnées à extraire de vos fichiers lors de la création du catalogue.
 <br/>Cela affecte la vitesse de catalogage ou la taille de la collection, mais fournit des informations plus riches pour les recherches et les statistiques.
 
@@ -84,7 +84,7 @@ Ce paramètre s'applique uniquement à ce catalogue et peut être modifié ulté
 
 **Remarque :** l'extraction de métadonnées nécessite des fichiers lisibles. Les fichiers corrompus ou avec des restrictions d'accès seront ignorés sans affecter le processus de catalogage.
 
-### Somme de contrôle des fichiers
+### Somme de contrôle des fichiers {#file-checksum}
 La somme de contrôle SHA256 peut être calculée lors de l'indexation pour la recherche de doublons ou de différences.
 ⚠️ C'est un processus bien plus long que les autres options d'indexation car il lit TOUTES les données pour calculer les sommes de contrôle.
 Comme pour les métadonnées, l'option peut être sélectionnée à la création du catalogue ou modifiée ultérieurement ; en cas d'interruption du processus, les sommes de contrôle déjà calculées sont sauvegardées et la prochaine mise à jour reprendra pour les fichiers restants.

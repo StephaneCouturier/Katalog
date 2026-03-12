@@ -14,7 +14,7 @@ Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je použí
 
 ## Správa dat
 
-### Kolekce
+### Kolekce {#collection}
 
 Kolekce je jediná skupina zařízení a všech souvisejících informací, jako jsou statistiky.<br/>
 Složka *Kolekce* je složka ve vašem počítači, kde jsou uložena všechna data kolekce.<br/>
