@@ -37,12 +37,12 @@ Sections:
 | tutorial | 2.10 | 2.10 | 2.10 | |
 | BackUp | 2.10 | 2.10 | 2.10 | |
 | Create | 2.10 | 2.10 | 2.10 | |
-| Devices |  |  |  | |
-| DevicesCatalogs |  |  |  | |
-| DevicesStorage |  |  |  | |
-| DevicesTree |  |  |  | |
+| Devices | 2.10 | 2.10 | 2.10 | |
+| DevicesCatalogs | 2.10 | 2.10 | 2.10 | |
+| DevicesStorage | 2.10 | 2.10 | 2.10 | |
+| DevicesTree | 2.10 | 2.10 | 2.10 | |
 | Explore | 2.10 | 2.10 | 2.10 | |
-| Search |  |  |  | |
+| Search | 2.10 | 2.10 | 2.10 | |
 | Selection | 2.10 | 2.10 | 2.10 | |
 | Settings | 2.10 | 2.10 | 2.10 | |
 | Statistics | 2.10 | 2.10 | 2.10 | |

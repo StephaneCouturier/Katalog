@@ -1,43 +1,83 @@
-# Périphériques : Stockage
+---
+version: "2.10"
+---
+# Périphériques : Stockage
+![2.10](https://img.shields.io/badge/Version-2.10-blue)
 
 ## Résumé
-Cette page décrit toutes les fonctionnalités de la vue **Liste de stockage** de l'écran [Périphériques](Devices) et comment les utiliser.
-* Un périphérique de **stockage** est un véritable lecteur physique, un disque ou un autre type de mémoire stockant des données sous forme de fichiers et à partir duquel vous pouvez créer un ou plusieurs catalogues.
-* Les données associées à ce type d'appareil sont une combinaison de 3 types d'informations :
- * *stockage physique* : **espace libre**, **espace utilisé**, **espace total**. **étiquette**, **système de fichiers**.
- * *calculé* : le **nombre total de fichiers** et la **taille totale des fichiers** seront automatiquement renseignés si le stockage dispose de catalogues.
- * *Personnalisé par l'utilisateur* : **chemin**, **type**, **marque**, **modèle**, **numéro de série**, **date de construction**, **commentaire 1** , **commentaire 2**, **commentaire 3**.
-* Leur utilisation peut vous aider à effectuer une recherche sur plusieurs catalogues associés à cet appareil particulier.
-* Ils vous aideront également à voir plus de [statistiques](Statistics) sur tous vos appareils et ce qu'ils stockent.
-* Le stockage ne peut faire partie que du *Groupe physique* et peut être placé sous n'importe quel *périphérique virtuel* de ce groupe, ce qui peut être utile pour les fonctionnalités de recherche ou de statistiques.
-![](/img/devices_storage_01.png)
+Cette page décrit toutes les fonctionnalités de la vue **Liste de stockage** de l'écran [Périphériques](Devices).
+
+Un périphérique de **Stockage** représente un lecteur physique, un disque ou tout autre support de stockage à partir duquel un ou plusieurs catalogues peuvent être créés.
+
+Les données associées à un périphérique de stockage combinent trois types d'informations :
+- *Physiques* : **espace libre**, **espace utilisé**, **espace total**, **étiquette**, **système de fichiers** — lus depuis le lecteur lorsqu'il est connecté.
+- *Calculées* : **nombre total de fichiers** et **taille totale des fichiers** — dérivés automatiquement des catalogues associés à ce stockage.
+- *Définies par l'utilisateur* : **chemin**, **type**, **marque**, **modèle**, **numéro de série**, **date de construction**, **commentaires**.
+
+Les périphériques de stockage ne peuvent être placés qu'à l'intérieur du *Groupe Physique* et de ses sous-éléments.
+
+![Liste de stockage affichant les périphériques avec l'utilisation d'espace et le nombre de catalogues associés](/img/devices_storage_01.png)
+
 ## Liste et sélection
-La liste des catalogues peut être limitée en utilisant le panneau de gauche [Sélection](Selection).
+La liste des périphériques de stockage peut être restreinte à l'aide du panneau **[Sélection](Selection)** à gauche.
 
-## Boutons d'actions
-* **Mise à jour** : (activé lorsqu'un catalogue est sélectionné) Mettez à jour le catalogue sélectionné en répertoriant à nouveau tous les fichiers à partir de son chemin source, selon ses critères.
-* **Tous actifs** : Mettez à jour tous les catalogues affichés qui sont actifs (le chemin est accessible).
+Lorsque le chemin d'un périphérique de stockage pointe vers un emplacement connecté et monté, l'icône est affichée en couleur, indiquant que le stockage est **actif**.
 
-## Menu contextuel (clic droit)
-Un clic droit sur l'un des catalogues répertoriés ouvre un menu contextuel permettant d'agir sur ce catalogue actif.
-![](/img/devices_storage_02_context.png)
- | Entrée de menu | Action connexe |
- | ------------| -------------------------------------------------- |
- | **Mise à jour** | Mettre à jour le stockage sélectionné : cela mettra à jour le stockage lui-même et la mise à jour de tous les catalogues ci-dessous. |
- | **[Editer](#édition)** | Ouvrez un panneau pour modifier le nom, le chemin, etc. |
- | **Filelight** | Ouvrez [Filelight](https://apps.kde.org/filelight/) dans le chemin du périphérique de stockage. |
- | **Supprimer** | Supprimez le périphérique de stockage. Cela n'est possible que si aucun catalogue ne lui est associé. Cela ne supprime pas les valeurs associées dans les statistiques. |
+## Boutons d'action
 
-## Édition
-Le panneau permet de modifier tous les champs du périphérique de stockage, à l'exception de l'ID du périphérique lui-même.
-![](/img/devices_storage_03_edit.png)
+| Bouton | Activé lorsque | Description |
+|--------|---------------|-------------|
+| *Mettre à jour* | Un périphérique de stockage est sélectionné | Met à jour le périphérique de stockage sélectionné et tous ses catalogues associés |
 
-## Image de l'appareil
-Cette fonctionnalité n'est actuellement disponible que pour le [Mode date mémoire](Settings#database-memory-mode) car les images sont stockées avec le dossier de collection.
+:::note
+Le bouton *Tous les actifs* n'est pas disponible dans la vue Liste de stockage — il n'est actif que dans la vue Liste des catalogues.
+:::
 
-Il est possible d'associer une image à un périphérique de stockage.<br/>
-Un dossier *images* doit être créé dans le dossier de collection et l'image nommée avec l'ID de stockage (pas l'ID de l'appareil, mais l'ID de stockage).<br/>
-Exemple : /home/user/Documents/KatalogCollectionFolder/images/3.jpg
+## Menu contextuel {#storage-context-menu}
 
+Un clic droit sur un périphérique de stockage ouvre un menu contextuel :
 
-![](/img/devices_storage_04_picture.png)
+![Menu contextuel d'un périphérique de stockage affichant les actions disponibles](/img/devices_storage_02_context.png)
+
+| Action | Condition | Description |
+|--------|-----------|-------------|
+| *Mettre à jour* | Toujours | Met à jour le périphérique de stockage sélectionné et tous les catalogues en dessous |
+| *Modifier* | Toujours | Ouvre le [panneau de modification](#edit) pour changer les champs du périphérique de stockage |
+| *Ouvrir le dossier* | Chemin défini | Ouvre le chemin du stockage dans le gestionnaire de fichiers |
+| *Filelight* | Stockage actif uniquement | Ouvre [Filelight](https://apps.kde.org/filelight/) dans le chemin du stockage |
+| *Désaffecter ce stockage* | Stockage dans un sous-groupe | Retire le stockage de son périphérique virtuel parent (le stockage lui-même n'est pas supprimé) |
+| *Supprimer ce stockage* | Toujours | Supprime définitivement le périphérique de stockage (uniquement possible si aucun catalogue ne lui est associé) |
+
+## Modifier {#edit}
+
+Le panneau de modification permet de changer tous les champs du périphérique de stockage :
+
+![Panneau de modification d'un périphérique de stockage affichant tous les champs configurables](/img/devices_storage_03_edit.png)
+
+| Champ | Description |
+|-------|-------------|
+| *Nom du périphérique* | Le nom affiché du périphérique de stockage |
+| *Type* | Le type de périphérique (ex. disque interne, disque externe, USB, NAS…) |
+| *Étiquette* | L'étiquette du système de fichiers du lecteur |
+| *Système de fichiers* | Le type de système de fichiers (ex. ext4, NTFS, exFAT…) |
+| *Marque* | Le fabricant du lecteur |
+| *Modèle* | Le nom du modèle du lecteur |
+| *Numéro de série* | Le numéro de série du lecteur |
+| *Date de construction* | La date de fabrication du lecteur |
+| *Commentaire 1 / 2 / 3* | Champs de texte libre pour des notes |
+| *Image* | Une image associée à ce stockage (mode Mémoire uniquement — voir ci-dessous) |
+| *Périphérique parent* | Le périphérique virtuel ou groupe auquel ce stockage appartient |
+
+## Image du périphérique
+
+Il est possible d'associer une image à un périphérique de stockage. Cette fonctionnalité n'est actuellement disponible qu'en [mode base de données Mémoire](Settings#database-memory-mode), car les images sont stockées dans le dossier de collection.
+
+Pour l'utiliser :
+1. Créer un dossier nommé `images` dans le dossier de collection.
+2. Placer un fichier image nommé avec l'identifiant de stockage (pas l'identifiant du périphérique) — par exemple : `/home/user/Documents/KatalogCollection/images/3.jpg`
+
+![Périphérique de stockage avec une image associée affichée dans le panneau de modification](/img/devices_storage_04_picture.png)
+
+## Développement
+Quelques idées d'évolutions pour cet écran :
+* Voir la liste de [développement Périphériques](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=devices).
