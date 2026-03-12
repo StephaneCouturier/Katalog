@@ -457,24 +457,6 @@ class MainWindow : public KXmlGuiWindow
 
             void verifyCatalogChecksums();
 
-            //Migration 1.22 to 2.0
-            void migrateCollectionFromV1toV2();
-            void importVirtualToDevices();
-            void importStorageToDevices();
-            void importCatalogsToDevices();
-            void generateAndAssociateCatalogMissingIDs();
-            void importStatistics();
-            void loadStatisticsCatalogFileToTable();
-            void loadStatisticsStorageFileToTable();
-            void loadVirtualStorageFileToTable();
-            void loadVirtualStorageCatalogFileToTable();
-            void importVirtualAssignmentsToDevices();
-            void convertFoldersIdxFiles();
-            void importExcludeIntoParameter();
-            void convertTags();
-            void convertSearchHistory();
-            void convertStorage();
-
         //TAB: Statistics
             QStringList typeOfData;
             QString selectedTypeOfData;

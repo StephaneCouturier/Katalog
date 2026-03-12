@@ -683,64 +683,17 @@
         proxyModel->setSourceModel(model);
         ui->Create_treeView_Excluded->setModel(proxyModel);
 
-        //Verify Collection version and trigger migration or updates
+        //Verify Collection version and trigger updates
         if(collection->databaseMode=="Memory"){
-            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString(collection->appVersion) and QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString("2.0")){
-                //Migration 1.x > 2.0
-
-                collection->dbSchemaVersion = "1.x";
-
-                QString releaseNotesAddress = "https://github.com/StephaneCouturier/Katalog/releases/tag/v" + currentVersion;
-                QString wikiAddress = "https://github.com/StephaneCouturier/Katalog/wiki/Major-release-2.0";
-
-                QMessageBox msgBox;
-                QString message;
-                message += "<b>" + tr("Collection Upgrade Required") + "</b>";
-                message += "<br/><br/><table><tr><td width=550>";
-                message += tr("This application of 'Katalog' is in version: ") + "<b>" + currentVersion + "</b>";
-                message += "<br/></td></tr><tr><td>";
-                message += tr("Current collection version: ") + QString::fromUtf8("<b>%1</b>").arg(collection->dbSchemaVersion);
-                message += "<br/></td></tr><tr><td>";
-                message += tr("Collection folder: ") + QString::fromUtf8("<br/><i>%1</i>").arg(collection->folder);
-                message += "<br/></td></tr><tr><td>";
-                message += tr("This upgrade process can be performed automatically.");
-                message += "<br/></td></tr><tr><td>";
-                message += tr("Find out about the main changes and the migration in this <a href='%1'>Major release 2.0</a>.").arg(wikiAddress);
-                message += "</td></tr><tr><td>";
-                message += tr("Find the usual list of new features in the <a href='%1'>Release Notes</a>.").arg(releaseNotesAddress);
-                message += "</td></tr><tr><td><br/>";
-                message += tr("<span><b style='color:red;'>Back up the collection folder/files before upgrading!</b>");
-                message += "</td></tr><tr><td>";
-                message += tr("What should be done now?");
-                message += "</td></tr></table><br/>";
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(message);
-                msgBox.setIcon(QMessageBox::Warning);
-
-                QPushButton *upgradeButton = msgBox.addButton(tr("Upgrade Now"), QMessageBox::YesRole);
-                upgradeButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogYesButton));
-                QPushButton *folderButton = msgBox.addButton(tr("Choose a Different Folder"), QMessageBox::NoRole);
-                folderButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
-                QPushButton *exitButton = msgBox.addButton(tr("Exit Application"), QMessageBox::NoRole);
-                exitButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
-                msgBox.exec();
-
-                if (msgBox.clickedButton() == upgradeButton) {
-                    // Trigger migration
-                    migrateCollectionFromV1toV2();
-
-                } else if (msgBox.clickedButton() == folderButton) {
-                    // Select other folder
-                    on_Settings_pushButton_SelectFolder_clicked();
-                    return;
-
-                } else if (msgBox.clickedButton() == exitButton) {
-                    // Quit app
-                    qApp->deleteLater();
-                    return;
-                }
+            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString("2.0")){
+                QMessageBox::warning(this, "Katalog",
+                    tr("This collection was created with Katalog version %1, which is no longer supported."
+                       "<br/><br/>To convert it, open it with Katalog 2.10 first."
+                       "<br/><br/>Please select a different collection folder.")
+                        .arg(collection->dbSchemaVersion));
+                on_Settings_pushButton_SelectFolder_clicked();
+                return;
             }
-
             if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString(collection->appVersion) and QVersionNumber::fromString(collection->dbSchemaVersion) >= QVersionNumber::fromString("2.0")){
                 //Update collection version
                 collection->dbSchemaVersion = collection->appVersion;
