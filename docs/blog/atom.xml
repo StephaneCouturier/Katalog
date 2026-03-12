@@ -2,11 +2,58 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://StephaneCouturier.github.io/Katalog/blog</id>
     <title>Katalog Blog</title>
-    <updated>2026-02-07T00:00:00.000Z</updated>
+    <updated>2026-03-07T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://StephaneCouturier.github.io/Katalog/blog"/>
     <subtitle>Katalog Blog</subtitle>
     <icon>https://StephaneCouturier.github.io/Katalog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 2.10]]></title>
+        <id>https://StephaneCouturier.github.io/Katalog/blog/release-2-10</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/blog/release-2-10"/>
+        <updated>2026-03-07T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[✨ Main improvements:]]></summary>
+        <content type="html"><![CDATA[<p>✨ Main improvements:</p>
+<ul>
+<li class="">
+<p><strong>#723 BACKUP: Incremental BackUp from source Catalog to target Catalog</strong></p>
+</li>
+<li class="">
+<p><strong>#738 BACKUP: Archive (move) files from source Catalog to target Catalog</strong>
+It is now possible to Backup (incremental copy) or Archive (move) files using the catalog links defined in the <a href="https://stephanecouturier.github.io/Katalog/docs/BackUp" target="_blank" rel="noopener noreferrer" class="">BackUp</a> screen.</p>
+</li>
+<li class="">
+<p><strong>#713 CREATE: Exclude folders / folder paths per catalog or globally</strong>
+On Create or Devices edit screen, it is now possible to add folders to be excluded with the Catalog itself. The feature to exclude globally from collection remain on screen Create.</p>
+</li>
+<li class="">
+<p><strong>#728 Linux packaging: Flathub/Flatpak version</strong>
+Enabled a Flatpak version hosted on Flathub (application on Flathub in progress)</p>
+</li>
+</ul>
+<p>⚠️ Technical changes:</p>
+<ul>
+<li class="">As for any new version, it is highly recommended to <strong>backup the collections</strong> 💾, and test the new version on other copies.</li>
+<li class=""><strong>Database updates</strong>: added fields to support backup improvements</li>
+</ul>
+<p>📦 Distribution Formats:</p>
+<ul>
+<li class="">As usual, <strong>Window 64</strong>, <strong>Linux</strong>, <strong>macOS</strong></li>
+<li class=""><strong>Flathub/Flatpak</strong> has been prepared and will be added soon to Flathub for easier Linux deployment</li>
+</ul>
+<p>📋 Release details:</p>
+<ul>
+<li class="">Full list of updates: <a href="https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.10+sort%3Acreated-asc" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.10+sort%3Acreated-asc</a></li>
+<li class="">Full code changelog: <a href="https://github.com/StephaneCouturier/Katalog/compare/v2.9...v2.10" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/compare/v2.9...v2.10</a></li>
+<li class="">📥 <strong>Download Katalog</strong>: <a href="https://sourceforge.net/projects/katalogg" target="_blank" rel="noopener noreferrer" class="">https://sourceforge.net/projects/katalogg</a></li>
+<li class="">📚 <strong>Documentation</strong>: <a href="https://stephanecouturier.github.io/Katalog" target="_blank" rel="noopener noreferrer" class="">https://stephanecouturier.github.io/Katalog</a></li>
+</ul>]]></content>
+        <author>
+            <name>Stephane Couturier</name>
+            <uri>https://github.com/StephaneCouturier</uri>
+        </author>
+        <category label="release" term="release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Release 2.9]]></title>
         <id>https://StephaneCouturier.github.io/Katalog/blog/release-2-9</id>
