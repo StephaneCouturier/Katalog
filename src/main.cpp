@@ -122,7 +122,6 @@ int main(int argc, char *argv[])
         for (int i = 1; i < args.size(); ++i) {
             QString arg = args[i];
             if (arg == "restart") {
-                qDebug() << "Restarting the application...";
 
                 // Prepare arguments for restarting the application
                 QStringList newArgs;

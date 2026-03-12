@@ -136,7 +136,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             QTimer::singleShot(100, this, [this, savedWidth, savedHeight, savedX, savedY]() {
                 resize(savedWidth, savedHeight);
                 move(savedX, savedY);
-                qDebug() << "Window restored to:" << size() << "at position:" << pos();
             });
 
             //Hide Development UI items
@@ -286,7 +285,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                             statusBarTimer->stop();
                         }
                     });
-            qDebug() << "CatalogProgressManager created (will connect to DeviceUpdateManager)";
             setupDeviceUpdateManager();
 
         //Setup tab: Tags
@@ -422,7 +420,6 @@ MainWindow::~MainWindow()
         catalogJobStoppable->deleteLater();
     }
 
-    qDebug() << "=== Testing selectedDevice only ===";
     // delete collection;  // Comment out
     delete selectedDevice;  // Test this alone
 }
@@ -474,6 +471,5 @@ void MainWindow::closeEvent (QCloseEvent *event)
     group.writeEntry("y", pos().y());
     group.sync();
 
-    qDebug() << "Saved window state:" << size() << "at" << pos();
     event->accept();
 }

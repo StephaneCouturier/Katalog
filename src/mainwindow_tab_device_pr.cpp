@@ -281,7 +281,7 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
     query.prepare(sql);
     query.bindValue(":shiftAmount", shiftAmount);
     if (!query.exec()) {
-        qDebug() << "shiftIDsInDeviceTable - Error updating device table:" << query.lastError().text();
+        qWarning() << "WARNING: shiftIDsInDeviceTable - Error updating device table:" << query.lastError().text();
         return;
     }
 
@@ -292,11 +292,10 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
     query.prepare(sql);
     query.bindValue(":shiftAmount", shiftAmount);
     if (!query.exec()) {
-        qDebug() << "Error updating device table:" << query.lastError().text();
+        qWarning() << "WARNING: Error updating device table:" << query.lastError().text();
         return;
     }
 
-    qDebug() << "shiftIDsInDeviceTable - IDs shifted successfully by" << shiftAmount;
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadParentsList()
@@ -1148,7 +1147,6 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
             }
             else if(id!=0){
                 // Skip this row and proceed to the next one
-                qDebug() << "loadDevicesTreeToModel - Parent item not found for ID:" << id;
                 continue;
             }
         }
@@ -1421,7 +1419,6 @@ void MainWindow::loadDevicesStorageToModel(){
             }
             else if(id!=0){
                 // Skip this row and proceed to the next one
-                qDebug() << "loadDevicesTreeToModel - Parent item not found for ID:" << id;
                 continue;
             }
         }
@@ -1688,7 +1685,6 @@ void MainWindow::loadDevicesCatalogToModel(){
             }
             else if(id!=0){
                 // Skip this row and proceed to the next one
-                qDebug() << "loadDevicesTreeToModel - Parent item not found for ID:" << id;
                 continue;
             }
         }
@@ -1780,7 +1776,6 @@ void MainWindow::loadDevicesCatalogToModel(){
 //--- Device ---------------------------------------------------------------
 void MainWindow::setupDeviceUpdateManager()
 {
-    qDebug() << "=== setupDeviceUpdateManager called ===";
 
     if (!deviceUpdateManager) {
         deviceUpdateManager = new DeviceUpdateManager(this);
@@ -1807,14 +1802,11 @@ void MainWindow::setupDeviceUpdateManager()
     // Connect individual catalog batch reports
     connect(deviceUpdateManager, &DeviceUpdateManager::catalogCompletedInBatch,
             this, [this](Device* catalogDevice, const QList<qint64>& results) {
-        qDebug() << "catalogCompletedInBatch signal received for:" << catalogDevice->name;
 
         // Check if user wants individual reports (from UpdateAllActive dialog)
         if (showEachCatalogUpdateSummary) {
-            qDebug() << "Showing individual report";
             reportAllUpdates(catalogDevice, results, "update");
         } else {
-            qDebug() << "Skipping individual report (user chose No)";
         }
     });
 
@@ -1823,31 +1815,10 @@ void MainWindow::setupDeviceUpdateManager()
         deviceUpdateManager->setCatalogProgressManager(catalogProgressManager);
     }
 
-    qDebug() << "DeviceUpdateManager connections established";
 }
 //--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 {
-    qDebug() << "=== MainWindow::onDeviceUpdateCompleted ===";
-
-    // Detect Storage batch operations by examining the results
-    bool hasMultipleCatalogs = false;
-
-    if (results.size() >= 7) {
-        // Check if this looks like a Storage batch operation
-        int updatedCatalogs = results.size() > 5 ? results[5] : 0;
-        int skippedCatalogs = results.size() > 6 ? results[6] : 0;
-        int storageUpdated = results.size() > 7 ? results[7] : 0;
-
-        qDebug() << "Results analysis - Updated catalogs:" << updatedCatalogs
-                 << "Skipped catalogs:" << skippedCatalogs
-                 << "Storage updated:" << storageUpdated;
-
-        if ((updatedCatalogs > 0 || skippedCatalogs > 0) && storageUpdated == 1) {
-            hasMultipleCatalogs = (updatedCatalogs + skippedCatalogs) > 1;
-            qDebug() << "Detected Storage batch operation - Multiple catalogs:" << hasMultipleCatalogs;
-        }
-    }
 
     // Determine report device and correct updateType for reportAllUpdates
     Device* reportDevice = deviceUpdateManager->m_rootDevice;
@@ -1859,17 +1830,12 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
 
     // STEP 1: Call reportAllUpdates with correct parameters
     if (reportDevice) {
-        qDebug() << "*** CALLING reportAllUpdates with device:" << reportDevice->name
-                 << "updateType:" << deviceUpdateManager->m_updateType;
         reportAllUpdates(reportDevice, results, deviceUpdateManager->m_updateType);
-        qDebug() << "*** reportAllUpdates completed successfully ***";
     } else {
-        qDebug() << "*** ERROR: No valid device for reportAllUpdates - skipping report ***";
     }
 
     // STEP 2: UI restoration (existing logic continues...)
     if (isCatalogCreation) {
-        qDebug() << "=== CREATION: Complete UI refresh + Clean Create tab restoration ===";
         if (reportDevice) {
             // Complete UI refresh (like original working code)
             refreshDuplicatesDeviceSelection();
@@ -1902,14 +1868,11 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
                 .arg(endTime.toString("hh:mm:ss"))
                 .arg(duration);
             statusBarLabel->setText(timingMsg);
-            qDebug() << timingMsg;
         }
 
         // SURGICAL FIX: Clean Create tab restoration (no mixed contexts)
-        qDebug() << "Restoring ONLY Create tab UI state (clean separation)";
         setCreateCatalogUIState(false);  // Use dedicated Create method
     } else {
-        qDebug() << "=== UPDATE: Standard update tab restoration ===";
         setCatalogUpdateUIState(false);
 
         // Full UI refresh for updates to show updated dates and values
@@ -1926,14 +1889,11 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     // Clear references Last
     if (isCatalogCreation) {
         currentUpdateDevice = nullptr;
-        qDebug() << "Cleared currentUpdateDevice after UI refresh";
     } else {
         // Clear for regular updates
         currentUpdateDevice = nullptr;
-        qDebug() << "Cleared currentUpdateDevice after update completion";
     }
 
-    qDebug() << "=== MainWindow::onDeviceUpdateCompleted COMPLETE ===";
 }
 //--------------------------------------------------------------------------
 QList<Device*> MainWindow::collectActiveCatalogs()
@@ -1960,7 +1920,6 @@ QList<Device*> MainWindow::collectActiveCatalogs()
 //--------------------------------------------------------------------------
 void MainWindow::setCatalogUpdateUIState(bool isRunning)
 {
-    qDebug() << "setCatalogUpdateUIState:" << isRunning;
 
     if (isRunning) {
         // Disable update buttons during operation
@@ -1995,25 +1954,19 @@ void MainWindow::setCatalogUpdateUIState(bool isRunning)
 //--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateStarted()
 {
-    qDebug() << "=== MainWindow::onDeviceUpdateStarted ===";
 
     // UI is already set by button handler, just log
-    qDebug() << "Device update operation started";
 }
 //--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateError(const QString& error)
 {
-    qDebug() << "=== MainWindow::onDeviceUpdateError ===";
-    qDebug() << "Error:" << error;
 
     if (deviceUpdateManager->m_updateType == "create") {
-        qDebug() << "CREATION ERROR: Performing database cleanup";
 
         // SURGICAL FIX: Call the existing cleanup method for creation errors too
         cleanupStoppedCatalogCreation();
 
     } else {
-        qDebug() << "UPDATE ERROR: Standard UI restoration";
         setCatalogUpdateUIState(false);  // Use Catalog context restoration
     }
 
@@ -2024,30 +1977,25 @@ void MainWindow::onDeviceUpdateError(const QString& error)
 //--------------------------------------------------------------------------
 void MainWindow::onDeviceUpdateCancelled()
 {
-    qDebug() << "=== MainWindow::onDeviceUpdateCancelled ===";
 
     // PREVENT DOUBLE CALL
     static bool alreadyHandling = false;
     if (alreadyHandling) {
-        qDebug() << "Already handling cancellation, ignoring duplicate call";
         return;
     }
     alreadyHandling = true;
 
     if (deviceUpdateManager->m_updateType == "create") {
-        qDebug() << "CREATION CANCELLED: Performing database cleanup";
 
         // Call the existing cleanup method for creation cancellation
         cleanupStoppedCatalogCreation();
 
         //statusBarLabel->setText(tr("Operation cancelled"));
     } else {
-        qDebug() << "UPDATE CANCELLED: Standard UI restoration";
         setCatalogUpdateUIState(false);  // Use Catalog context restoration
         //statusBarLabel->setText(tr("Operation cancelled"));
     }
 
-    qDebug() << "Operation cancelled by user";
 
     // Reset flag at end
     alreadyHandling = false;
@@ -2058,7 +2006,6 @@ void MainWindow::onDeviceUpdateProgress()
     if (!deviceUpdateManager) return;
 
     // Update progress display
-    int progress = deviceUpdateManager->progress();
     QString status = deviceUpdateManager->status();
     QString currentDevice = deviceUpdateManager->currentDeviceName();
 
@@ -2073,7 +2020,6 @@ void MainWindow::onDeviceUpdateProgress()
     statusBarLabel->setText(builder.build());
 
     // Log progress for debugging
-    qDebug() << "Progress:" << progress << "%" << "Status:" << status;
 }
 //--------------------------------------------------------------------------
 
@@ -2765,7 +2711,7 @@ void MainWindow::createMissingParentDirectories() {
             checkQuery.bindValue(":path", currentPath);
 
             if (!checkQuery.exec()) {
-                qDebug() << "Error checking path:" << checkQuery.lastError().text();
+                qWarning() << "WARNING: Error checking path:" << checkQuery.lastError().text();
             }
 
             // If the current path doesn't exist, insert it
@@ -2776,7 +2722,7 @@ void MainWindow::createMissingParentDirectories() {
                 insertQuery.bindValue(":path", currentPath);
 
                 if (!insertQuery.exec()) {
-                    qDebug() << "Error inserting path:" << insertQuery.lastError().text();
+                    qWarning() << "WARNING: Error inserting path:" << insertQuery.lastError().text();
                 }
             }
         }
@@ -2808,7 +2754,6 @@ void MainWindow::verifyCatalogChecksums()
     // In Memory mode, load catalog first if needed
     if (collection->databaseMode == "Memory") {
         if (catalog->dateLoaded < catalog->dateUpdated || catalog->dateLoaded.isNull()) {
-            qDebug() << "Memory mode: Loading catalog before verification";
 
             bool stopRequested = false;
             QMutex mutex;
@@ -3084,9 +3029,7 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
     if (device->type=="Virtual" and updateType=="update"){
         message = "";
 
-        qDebug() << "Virtual device report - results list size:" << list.size();
         for (int i = 0; i < list.size(); ++i) {
-            qDebug() << "  list[" << i << "] = " << list[i];
         }
 
         // Report virtual device updated
@@ -3140,29 +3083,15 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
 //--------------------------------------------------------------------------
 void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
 {
-    qDebug() << "Updating device:   " << deviceId;
 
     //Set selected device to the one specified by catalogId
     selectedDevice->ID = deviceId;
     selectedDevice->loadDevice(m_connectionName);
 
     if(selectedDevice->type != "Catalog"){
-        qDebug() << tr("The device selected must be a Catalog. Try with a different device ID");
-        qDebug() << "Device ID: " << selectedDevice->ID;;
-        qDebug() << "Device Name: " << selectedDevice->name;
-        qDebug() << "Device Type: " << selectedDevice->type;
         return;
     }
 
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "Catalog values prior to update:";
-    qDebug() << "Catalog ID: " << selectedDevice->ID;;
-    qDebug() << "Catalog Name: " << selectedDevice->name;
-    qDebug() << "Catalog Path: " << selectedDevice->path;
-    qDebug() << "Catalog Type: " << selectedDevice->type;
-    qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
-    qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
-    qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
 
     // Perform the update operation
     //Update and report if active
@@ -3177,20 +3106,8 @@ void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
         collection->saveStatiticsTableToFile();
 
         //Report device info after update
-        qDebug() << "---";
-        qDebug() << "Catalog updated successfully.";
-        qDebug() << "Catalog ID: "   << selectedDevice->ID;;
-        qDebug() << "Catalog Name: " << selectedDevice->name;
-        qDebug() << "Catalog Path: " << selectedDevice->path;
-        qDebug() << "Catalog Type: " << selectedDevice->type;
-        qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
-        qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
-        qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
     }
     else{
-        qDebug() << "";
-        qDebug() << "The Catalog was not updated as it is not active.";
-        qDebug() << "";
     }
 }
 //--------------------------------------------------------------------------
@@ -3209,19 +3126,9 @@ void MainWindow::cmd_listGroup0Catalogs()
     //Prepare and execute the query
     query.prepare(querySQL);
     query.exec();
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "Catalogs";
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "Device ID" << "    Active" << "      Device Name:";
 
-    //Iterate through the results and print the device ID and name
     while (query.next()) {
-        int deviceID = query.value(0).toInt();
-        QString deviceName = query.value(1).toString();
-        bool deviceActive = query.value(2).toBool();
-        qDebug() << "  " << deviceID << "         " << deviceActive << "      " << deviceName;
     }
-    qDebug() << "-----------------------------------------------------------------------";
 }
 //--------------------------------------------------------------------------
 void MainWindow::cmd_updateAllActive(bool displayReport)
@@ -3241,13 +3148,9 @@ void MainWindow::cmd_updateAllActive(bool displayReport)
     //Update each catalog
     while (query.next()) {
         int deviceID = query.value(0).toInt();
-        qDebug() << "processing:   "<< deviceID ;
         cmd_updateCatalog(deviceID, displayReport);
     }
 
-    qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "All active catalogs updated";
-    qDebug() << "-----------------------------------------------------------------------";
 }
 //--------------------------------------------------------------------------
 

@@ -535,7 +535,6 @@
                                                  statusBarTimer->stop();
                                                  QCoreApplication::processEvents();
 
-                                                 qDebug() << "EXPLORE loading progress:" << filesLoaded << "/" << totalFiles;  // DEBUG
                                              }, Qt::DirectConnection);
 
                 exploreDevice->catalog->loadCatalogFileListToTable(catalogMutex, localStopRequested);
@@ -558,13 +557,11 @@
 
             // Ensure file types are populated for File mode catalogs
             if (collection->databaseMode == "File" && exploreDevice->catalog) {
-                qDebug() << "File mode: Checking if migration needed for" << exploreDevice->name;
 
                 // Check if migration is actually needed
                 bool needsMigration = exploreDevice->catalog->hasFilesNeedingMigration();
 
                 if (needsMigration) {
-                    qDebug() << "File type update needed for" << exploreDevice->name;
 
                     StatusBarMessageBuilder builder;
                     builder.setOperation(tr("Explore"));
@@ -607,7 +604,6 @@
                         return;
                     }
                 } else {
-                    qDebug() << "No file type update needed - catalog already up to date";
                 }
             }
 

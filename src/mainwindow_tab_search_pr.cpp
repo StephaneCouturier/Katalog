@@ -62,10 +62,9 @@ void MainWindow::launchSearch()
     // Set animation cursor before starting
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    qDebug() << "=== launchSearch() called ===";
 
     if (!searchManager) {
-        qDebug() << "ERROR: SearchManager not initialized";
+        qWarning() << "WARNING: SearchManager not initialized";
         return;
     }
 
@@ -81,7 +80,6 @@ void MainWindow::launchSearch()
 
     // Enable memory mode when in development mode and memory mode**
     if (collection->databaseMode == "Memory") {
-        qDebug() << "Memory mode: Enabling memory mode for SearchJobStoppable";
         searchJobStoppable->setMemoryModeEnabled(true);
     }
 
@@ -103,14 +101,12 @@ void MainWindow::launchSearch()
     setSearchStateRunning();
 
     // Start the search
-    qDebug() << "Starting Search via SearchManager";
     searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
 
     searchResultsThrottler->setCurrentSearch(searchJobStoppable);
     connect(searchJobStoppable, &Search::searchProgress,
             searchResultsThrottler, &SearchResultsThrottler::onSearchProgress);
 
-    qDebug() << "=== launchSearch() complete ===";
 }
 //----------------------------------------------------------------------
 void MainWindow::setupSearchManager()
@@ -400,50 +396,39 @@ void MainWindow::resetSearchState()
 //----------------------------------------------------------------------
 void MainWindow::pauseCurrentSearch()
 {
-    qDebug() << "=== pauseCurrentSearch() called ===";
 
     if (!currentSearch) {
-        qDebug() << "No current search to pause";
         return;
     }
 
     SearchJobStoppable* searchJobStoppable = qobject_cast<SearchJobStoppable*>(currentSearch);
     if (!searchJobStoppable) {
-        qDebug() << "Current search doesn't support pause/resume";
         return;
     }
 
     if (!searchManager || !searchManager->searchRunning()) {
-        qDebug() << "Search is not running - resetting to idle";
         setSearchStateIdle();
         return;
     }
 
-    qDebug() << "Calling pauseSearch() on SearchJobStoppable";
     searchJobStoppable->pauseSearch();
 
-    qDebug() << "Calling setSearchStatePaused()";
     setSearchStatePaused();
 
-    qDebug() << "State after pause should be:" << static_cast<int>(SearchButtonState::Paused);
-    qDebug() << "Actual state is:" << static_cast<int>(searchButtonState);
 }
 //----------------------------------------------------------------------
 void MainWindow::resumeCurrentSearch()
 {
     if (!currentSearch) {
-        qDebug() << "No current search to resume";
         return;
     }
 
     SearchJobStoppable* searchJobStoppable = qobject_cast<SearchJobStoppable*>(currentSearch);
     if (!searchJobStoppable) {
-        qDebug() << "Current search doesn't support pause/resume";
         return;
     }
 
     if (!searchManager || !searchManager->searchRunning()) {
-        qDebug() << "Search is not running - resetting to idle";
         setSearchStateIdle();
         return;
     }
@@ -454,9 +439,6 @@ void MainWindow::resumeCurrentSearch()
 //----------------------------------------------------------------------
 void MainWindow::onSearchCompleted()
 {
-    qDebug() << "=== onSearchCompleted() called ===";
-    qDebug() << "Before reset - Search button state:" << static_cast<int>(searchButtonState);
-    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
     // Reset search button state when search completes
     setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
@@ -464,40 +446,28 @@ void MainWindow::onSearchCompleted()
     QApplication::restoreOverrideCursor();
 
     if (currentSearch && currentSearch->fileNames.size() > 0) {
-        qDebug() << "Displaying search results...";
         displaySearchResults();
-        qDebug() << "Search results displayed";
     } else {
-        qDebug() << "No search results to display";
     }
 
     // Always refresh history view — the entry was saved at search start regardless of result count
     collection->saveSearchHistoryTableToFile();
     loadSearchHistoryTableToModel();
 
-    qDebug() << "After reset - Search button state:" << static_cast<int>(searchButtonState);
-    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
-    qDebug() << "=== onSearchCompleted() completed ===";
 }
 //----------------------------------------------------------------------
 void MainWindow::onSearchCancelled()
 {
-    qDebug() << "=== onSearchCancelled() called ===";
-    qDebug() << "Before reset - Search button state:" << static_cast<int>(searchButtonState);
-    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
     // Reset search button state when search is cancelled
     setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
 
     QApplication::restoreOverrideCursor();
 
-    qDebug() << "After reset - Search button state:" << static_cast<int>(searchButtonState);
-    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 }
 //----------------------------------------------------------------------
 void MainWindow::onSearchError(const QString &error)
 {
-    qDebug() << "Search error:" << error;
 
     // Reset to idle state
     setSearchStateIdle();
@@ -510,43 +480,38 @@ void MainWindow::onSearchError(const QString &error)
 //----------------------------------------------------------------------
 void MainWindow::setSearchStateIdle()
 {
-    qDebug() << "Setting search state: IDLE";
     setSearchButtonState(SearchButtonState::Idle);
     updateTooltips();
 }
 //----------------------------------------------------------------------
 void MainWindow::setSearchStateRunning()
 {
-    qDebug() << "Setting search state: RUNNING";
     setSearchButtonState(SearchButtonState::Running);
     updateTooltips();
 }
 //----------------------------------------------------------------------
 void MainWindow::setSearchStatePaused()
 {
-    qDebug() << "Setting search state: PAUSED";
     setSearchButtonState(SearchButtonState::Paused);
     updateTooltips();
 }
 //----------------------------------------------------------------------
 void MainWindow::setSearchButtonState(SearchButtonState state)
 {
-    qDebug() << "Setting search button state from" << static_cast<int>(searchButtonState)
-    << "to" << static_cast<int>(state);
 
     // Safety checks
     if (!ui) {
-        qDebug() << "ERROR: ui is null in setSearchButtonState";
+        qWarning() << "WARNING: ui is null in setSearchButtonState";
         return;
     }
 
     if (!ui->Search_pushButton_Search) {
-        qDebug() << "ERROR: Search_pushButton_Search is null in setSearchButtonState";
+        qWarning() << "WARNING: Search_pushButton_Search is null in setSearchButtonState";
         return;
     }
 
     if (!ui->Search_pushButton_Stop) {
-        qDebug() << "ERROR: Search_pushButton_Stop is null in setSearchButtonState";
+        qWarning() << "WARNING: Search_pushButton_Stop is null in setSearchButtonState";
         return;
     }
 
@@ -564,7 +529,6 @@ void MainWindow::setSearchButtonState(SearchButtonState state)
         ui->Search_pushButton_Stop->setEnabled(false);
 
         isSearchRunning = false;
-        qDebug() << "Button set to IDLE state - Stop button disabled";
         break;
 
     case SearchButtonState::Running:
@@ -579,7 +543,6 @@ void MainWindow::setSearchButtonState(SearchButtonState state)
         ui->Search_pushButton_Stop->setEnabled(true);
 
         isSearchRunning = true;
-        qDebug() << "Button set to RUNNING state - Stop button enabled";
         break;
 
     case SearchButtonState::Paused:
@@ -592,7 +555,6 @@ void MainWindow::setSearchButtonState(SearchButtonState state)
         // Stop button - KEEP ENABLED when paused (so user can still stop)
         ui->Search_pushButton_Stop->setEnabled(true);
 
-        qDebug() << "Button set to PAUSED state - Stop button enabled";
         break;
 
     case SearchButtonState::Searching:  // New state for memory mode
@@ -606,8 +568,6 @@ void MainWindow::setSearchButtonState(SearchButtonState state)
 
     }
 
-    qDebug() << "Search button text:" << ui->Search_pushButton_Search->text();
-    qDebug() << "Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 }
 //----------------------------------------------------------------------
 void MainWindow::updateTooltips()
@@ -1230,7 +1190,6 @@ void MainWindow::removeFileFromResults(QString fullFilePath)
 {
     // Remove the file from the list of results and refresh the UI
     // Find the index of the file in the results
-    qDebug() << "Removing file from results:" << fullFilePath << QFileInfo(fullFilePath).absoluteFilePath();
 
     int index = currentSearch->filePaths.indexOf(QFileInfo(fullFilePath).absoluteFilePath());
 

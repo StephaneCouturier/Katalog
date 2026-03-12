@@ -409,7 +409,7 @@
                         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
                         db.setDatabaseName(collection->databaseFilePath);
                         if (!db.open())
-                            qDebug()<< db.lastError();
+                            qWarning()<< db.lastError();
                     }
                     fileOut.close();
 
@@ -505,7 +505,7 @@
                 QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
                 db.setDatabaseName(collection->databaseFilePath);
                 if (!db.open())
-                    qDebug()<< db.lastError();
+                    qWarning()<< db.lastError();
             }
             fileOut.close();
 
@@ -647,10 +647,6 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
-        qDebug() << "=== MainWindow::loadCollection() START ===";
-        qDebug() << "Collection database mode:" << collection->databaseMode;
-        qDebug() << "Collection folder:" << collection->folder;
-        qDebug() << "Database file path:" << collection->databaseFilePath;
 
         bool defaultsCreated = collection->load();
 
@@ -703,10 +699,7 @@
         }
 
         if(collection->databaseMode != "Memory"){
-            qDebug() << "=== File database mode detected ===";
-            qDebug() << "runDatabaseMigrations()...";
             runDatabaseMigrations();
-            qDebug() << "runDatabaseMigrations() completed";
         }
 
         // Refresh UI views to show updated data

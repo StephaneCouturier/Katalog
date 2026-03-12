@@ -100,7 +100,7 @@
                                         ORDER BY parameter_value2
                                 )");
             if (!queryLoad.exec(queryLoadSQL)) {
-                qDebug() << "Failed to execute query";
+                qWarning() << "WARNING: Failed to execute query";
                 return;
             }
 
@@ -161,7 +161,7 @@
                                         ORDER BY parameter_value2
                                 )");
             if (!queryLoad.exec(queryLoadSQL)) {
-                qDebug() << "Failed to execute query";
+                qWarning() << "WARNING: Failed to execute query";
                 return;
             }
 
@@ -179,17 +179,14 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_Stop_clicked()
     {
-        qDebug() << "=== Create Stop button clicked ===";
 
         // Stop DeviceUpdateManager (not catalogManager)
         if (deviceUpdateManager && deviceUpdateManager->operationRunning()) {
-            qDebug() << "Stopping catalog creation via DeviceUpdateManager";
             deviceUpdateManager->requestHardStop();
 
             // Immediate UI feedback
             ui->Create_pushButton_Stop->setEnabled(false);
         } else {
-            qDebug() << "No active operation - just reset UI";
             restoreCreateCatalogUIState();
         }
     }
@@ -295,7 +292,6 @@
     //--------------------------------------------------------------------------
     void MainWindow::createCatalog()
     {
-        qDebug() << "=== MainWindow::createCatalog() ENTRY ===";
 
         // Validation 1: Catalog name
         if (ui->Create_lineEdit_NewCatalogName->text() == "") {
@@ -349,7 +345,6 @@
         newCatalogDevice->type = "Catalog";
         newCatalogDevice->name = ui->Create_lineEdit_NewCatalogName->text();
 
-        qDebug() << "Creating new Device - ID:" << newCatalogDevice->ID << "Name:" << newCatalogDevice->name;
 
         //Check if the catalog name (so the csv file name) already exists
         if (newCatalogDevice->verifyDeviceNameExists()) {
@@ -371,7 +366,6 @@
         newCatalogDevice->groupID = 0;
         newCatalogDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
         newCatalogDevice->insertDevice();
-        qDebug() << "Device inserted - Parent ID:" << newCatalogDevice->parentID << "Path:" << newCatalogDevice->path;
 
         //Get inputs and set values of the newCatalog
         newCatalogDevice->catalog->name = newCatalogDevice->name;  // Make sure catalog name matches device name
@@ -389,7 +383,6 @@
         // Set file type from UI combobox
         newCatalogDevice->catalog->fileType = ui->Create_comboBox_FileType->itemData(
                                                                               ui->Create_comboBox_FileType->currentIndex(), Qt::UserRole).toString();
-        qDebug() << "CREATE: Catalog configured - File type:" << newCatalogDevice->catalog->fileType;
 
         //Save new catalog
         newCatalogDevice->catalog->insertCatalog();
@@ -416,7 +409,6 @@
         loadStorageList();
 
         if (!deviceUpdateManager) {
-            qDebug() << "DeviceUpdateManager not available - setting up now";
             setupDeviceUpdateManager();
         }
 
@@ -428,11 +420,9 @@
         }
 
         // ALL VALIDATIONS PASSED - Now set UI to running state and start operation
-        qDebug() << "All validations passed - starting catalog creation";
 
         // Store device reference
         currentUpdateDevice = newCatalogDevice;
-        qDebug() << "*** STORED currentUpdateDevice for creation:" << currentUpdateDevice->name;
 
         // SURGICAL FIX: Set Create UI to running state AFTER validations pass
         setCreateCatalogUIState(true);  // Only affects Create tab
@@ -445,7 +435,6 @@
                                                    collection->folder,
                                                    "create");
 
-        qDebug() << "=== MainWindow::createCatalog() EXIT ===";
     }
     //--------------------------------------------------------------------------
     void MainWindow::restoreCreateCatalogUIState()
@@ -454,12 +443,10 @@
         QApplication::restoreOverrideCursor();
         ui->Create_pushButton_CreateCatalog->setEnabled(true);
         ui->Create_pushButton_Stop->setEnabled(false);
-        qDebug() << "Create catalog UI state restored to idle";
     }
     //--------------------------------------------------------------------------
     void MainWindow::setCreateCatalogUIState(bool isRunning)
     {
-        qDebug() << "setCreateCatalogUIState:" << isRunning;
 
         if (isRunning) {
             // CREATION RUNNING: Disable Create tab buttons, set cursor
@@ -476,24 +463,21 @@
     //--------------------------------------------------------------------------
     void MainWindow::cleanupStoppedCatalogCreation()
     {
-        qDebug() << "=== cleanupFailedCatalogCreation() START ===";
 
         // Use the device reference we stored when starting the operation
         if (currentUpdateDevice) {
-            qDebug() << "Cleaning up failed catalog creation for device:" << currentUpdateDevice->name;
+            qWarning() << "WARNING: Cleaning up failed catalog creation for device:" << currentUpdateDevice->name;
 
             // Use the existing backend method to delete the device (no UI confirmation)
             bool success = DeviceUIWrapper::deleteDeviceWithUI(currentUpdateDevice, false);
 
             if (success) {
-                qDebug() << "Device deleted successfully";
             } else {
-                qDebug() << "Failed to delete device";
+                qWarning() << "WARNING: Failed to delete device";
             }
 
 
         } else {
-            qDebug() << "No device to cleanup";
         }
 
         // Refresh UI
@@ -505,7 +489,6 @@
         ui->Create_pushButton_CreateCatalog->setEnabled(true);
         ui->Create_pushButton_Stop->setEnabled(false);
 
-        qDebug() << "=== cleanupFailedCatalogCreation() COMPLETE ===";
     }
 
     void MainWindow::initiateFileTypeFields()
@@ -603,7 +586,6 @@
             FileMetadata::initializeExtensionsCache();
         }
 
-        qDebug() << "Metadata caches initialized";
     }
     //--------------------------------------------------------------------------
     void MainWindow::initiateChecksumFields()

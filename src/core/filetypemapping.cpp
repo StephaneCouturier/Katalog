@@ -191,7 +191,6 @@ QStringList FileTypeMapping::getExtensionsForFileType(const QString &fileType)
         }
     }
 
-    qDebug() << "FileTypeMapping::getExtensionsForFileType(" << fileType << ") found:" << extensions;
     return extensions;
 }
 
@@ -210,7 +209,6 @@ QStringList FileTypeMapping::getExtensionsForCataloging(const QString &fileType)
         wildcardExtensions << QString("*.%1").arg(ext);
     }
 
-    qDebug() << "FileTypeMapping::getExtensionsForCataloging(" << fileType << ") returning:" << wildcardExtensions;
     return wildcardExtensions;
 }
 

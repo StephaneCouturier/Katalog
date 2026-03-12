@@ -161,7 +161,7 @@ QList<int> BackupMappingManager::getFilteredMappingIds(const MappingFilter& filt
 
     if (!query.exec()) {
         QString errorMsg = QString("Failed to load mapping IDs: %1").arg(query.lastError().text());
-        qDebug() << "ERROR:" << errorMsg;
+        qWarning() << "WARNING: " << errorMsg;
         emit error(errorMsg);
         return ids;
     }
@@ -170,8 +170,6 @@ QList<int> BackupMappingManager::getFilteredMappingIds(const MappingFilter& filt
         ids.append(query.value("mapping_id").toInt());
     }
 
-    qDebug() << "Loaded" << ids.size() << "mapping IDs (filter type:"
-             << filter.type << ")";
 
     return ids;
 }
@@ -228,7 +226,7 @@ QList<MappingInfo> BackupMappingManager::getFilteredMappings(const MappingFilter
 
     if (!query.exec()) {
         QString errorMsg = QString("Failed to load mappings: %1").arg(query.lastError().text());
-        qDebug() << "ERROR:" << errorMsg;
+        qWarning() << "WARNING: " << errorMsg;
         emit error(errorMsg);
         return mappings;
     }
@@ -237,8 +235,6 @@ QList<MappingInfo> BackupMappingManager::getFilteredMappings(const MappingFilter
         mappings.append(parseMappingFromQuery(query));
     }
 
-    qDebug() << "Loaded" << mappings.size() << "mappings (filter type:"
-             << filter.type << ")";
     emit mappingsLoaded(mappings.size());
 
     return mappings;
@@ -256,7 +252,7 @@ MappingInfo BackupMappingManager::getMappingById(int mappingId)
     query.bindValue(":mapping_id", mappingId);
 
     if (!query.exec()) {
-        qDebug() << "ERROR: Failed to load mapping" << mappingId
+        qWarning() << "WARNING: Failed to load mapping" << mappingId
                  << ":" << query.lastError().text();
         return info;
     }
@@ -291,7 +287,7 @@ bool BackupMappingManager::invertMapping(int mappingId)
             QString errorMsg = QString("Failed to invert mapping %1: %2")
                                    .arg(mappingId)
                                    .arg(query.lastError().text());
-            qDebug() << "ERROR:" << errorMsg;
+            qWarning() << "WARNING: " << errorMsg;
             emit error(errorMsg);
             return false;
         }
@@ -343,7 +339,7 @@ bool BackupMappingManager::deleteMapping(int mappingId)
         QString errorMsg = QString("Failed to delete mapping %1: %2")
                                .arg(mappingId)
                                .arg(query.lastError().text());
-        qDebug() << "ERROR:" << errorMsg;
+        qWarning() << "WARNING: " << errorMsg;
         emit error(errorMsg);
         return false;
     }
@@ -370,7 +366,7 @@ int BackupMappingManager::getFilteredMappingCount(const MappingFilter& filter)
     bindFilterParameters(query, filter);
 
     if (!query.exec() || !query.next()) {
-        qDebug() << "ERROR: Failed to count mappings:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to count mappings:" << query.lastError().text();
         return 0;
     }
 
@@ -407,7 +403,7 @@ MappingTotals BackupMappingManager::calculateTotals(const MappingFilter& filter)
     bindFilterParameters(query, filter);
 
     if (!query.exec()) {
-        qDebug() << "ERROR: Failed to calculate totals:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to calculate totals:" << query.lastError().text();
         emit error("Failed to calculate mapping totals");
         return totals;
     }
@@ -426,7 +422,6 @@ MappingTotals BackupMappingManager::calculateTotals(const MappingFilter& filter)
         totals.averageFileCountDifferencePercentage = query.value("average_file_count_difference_percentage").toDouble();
     }
 
-    qDebug() << "Calculated totals for" << totals.totalMappings << "mappings";
     return totals;
 }
 
@@ -497,7 +492,7 @@ QSqlQuery BackupMappingManager::executeTableDisplayQuery(const MappingFilter& fi
 
     if (!query.exec()) {
         QString errorMsg = QString("Failed to load mapping table: %1").arg(query.lastError().text());
-        qDebug() << "ERROR:" << errorMsg;
+        qWarning() << "WARNING: " << errorMsg;
         emit error(errorMsg);
     }
 
@@ -514,7 +509,7 @@ QString BackupMappingManager::exportPreviewToCsv(const QList<BackupPreviewRow> &
 
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "ERROR: Cannot write backup preview CSV:" << filePath;
+        qWarning() << "WARNING: Cannot write backup preview CSV:" << filePath;
         return QString();
     }
 

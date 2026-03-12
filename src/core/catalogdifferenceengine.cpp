@@ -149,8 +149,6 @@ DifferenceResult CatalogDifferenceEngine::compare(
             result.differentContent.append(entryFromQuery(query));
         }
 
-        qDebug() << "CatalogDifferenceEngine::compare (checksum≠) - Found"
-                 << result.differentContent.size() << "conflicts";
     }
     else {
         // Standard mode: find files unique to each side
@@ -219,13 +217,8 @@ DifferenceResult CatalogDifferenceEngine::compare(
             result.onlyInTarget.append(entryFromQuery(query));
         }
 
-        qDebug() << "CatalogDifferenceEngine::compare - Found"
-                 << result.onlyInSource.size() << "only-in-source,"
-                 << result.onlyInTarget.size() << "only-in-target";
     }
 
-    qDebug() << "  Source device IDs:" << sourceIds;
-    qDebug() << "  Target device IDs:" << targetIds;
 
     return result;
 }

@@ -625,7 +625,7 @@ void MainWindow::setupDeviceUpdateManagerForBackup()
                 ui->BackUp_pushButton_BackUpPreview->setEnabled(true);
                 ui->BackUp_pushButton_ReplicateDirectories->setEnabled(true);
                 ui->BackUp_label_ProgressSummary->setVisible(false);
-                qDebug()<<"Catalog update failed: " << error;
+                qWarning()<<"Catalog update failed: " << error;
             });
     connect(deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
             this, [this]() {
@@ -1148,13 +1148,10 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
 
         if (ui->BackUp_radioButton_Source->isChecked()) {
             filter = MappingFilter(MappingFilter::SourceDevice, selectedDevice->ID, mappingType);
-            qDebug() << "Filtering by Source device:" << selectedDevice->ID;
         } else if (ui->BackUp_radioButton_Target->isChecked()) {
             filter = MappingFilter(MappingFilter::TargetDevice, selectedDevice->ID, mappingType);
-            qDebug() << "Filtering by Target device:" << selectedDevice->ID;
         } else {
             // No radio button selected - use all of selected type
-            qDebug() << "No filter radio button checked, using all mappings";
         }
 
         mappingIds = backupMappingManager->getFilteredMappingIds(filter);
@@ -1168,10 +1165,8 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
             return;
         }
 
-        qDebug() << "Generating profile from" << mappingIds.size() << "filtered mapping(s)";
     } else {
         // Empty list = ALL mappings
-        qDebug() << "Generating profile from ALL mappings (checkbox not checked)";
     }
 
     // Create profile generator
@@ -1189,9 +1184,6 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
                 msgBox.setStandardButtons(QMessageBox::Ok);
                 msgBox.exec();
 
-                qDebug() << "LuckyBackup profile generated successfully:";
-                qDebug() << "  Path:" << profilePath;
-                qDebug() << "  Tasks:" << taskCount;
             });
 
     connect(generator, &BackupProfileGenerator::profileGenerationFailed,
@@ -1207,13 +1199,7 @@ void MainWindow::on_BackUp_pushButton_GenerateLuckyBackupProfile_clicked()
                 msgBox.setStandardButtons(QMessageBox::Ok);
                 msgBox.exec();
 
-                qDebug() << "ERROR: Failed to generate LuckyBackup profile:";
-                qDebug() << "Common causes:\n"
-                            "• Directory ~/.luckyBackup/profiles/ is not writable\n"
-                            "• No backup mappings exist in the database\n"
-                            "• Source or destination paths are empty\n\n"
-                            "Please check the error message above and try again.";
-                qDebug() << "  Error:" << errorMessage;
+                qWarning() << "WARNING: Failed to generate LuckyBackup profile:";
             });
 
     BackupProfileResult result = generator->generateProfile(mappingIds);
@@ -1651,7 +1637,7 @@ void MainWindow::saveNewMapping()
 
     if (!query.exec())
     {
-        qDebug() << "Error inserting device_mapping: " << query.lastError();
+        qWarning() << "WARNING: Error inserting device_mapping: " << query.lastError();
         return;
     }
 

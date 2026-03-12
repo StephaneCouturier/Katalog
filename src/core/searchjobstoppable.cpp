@@ -91,9 +91,7 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
     checkQuery.exec("SELECT COUNT(*) FROM filetemp");
     if (checkQuery.next()) {
         int tempCount = checkQuery.value(0).toInt();
-        qDebug() << "  - filetemp table has" << tempCount << "records at start";
         if (tempCount > 0) {
-            qDebug() << "  - WARNING: filetemp table not empty! Clearing it...";
             QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
             clearQuery.exec("DELETE FROM filetemp");
         }
@@ -109,7 +107,6 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
         int tempCount = checkQuery2.value(0).toInt();
         //qDebug() << "  - filetemp table has" << tempCount << "records at start";
         if (tempCount > 0) {
-            qDebug() << "  - WARNING: filetemp table not empty! Clearing it...";
             QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
             clearQuery.exec("DELETE FROM filetemp");
         }
@@ -249,14 +246,12 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
             }
         }
     } else if (searchInConnectedChecked && shouldContinue()) {
-        qDebug() << "SearchJobStoppable::searchFiles() searching in connected directory:" << connectedDirectory;
         // Search in directory
         totalCatalogs = 1;
         currentCatalogIndex = 1;
         currentCatalogName = connectedDirectory;
         QMutex dummyMutex;
         bool dummyStop = false;
-        qDebug() << "  - Searching in directory:" << connectedDirectory;
         searchFilesInDirectory(connectedDirectory, dummyMutex, dummyStop);
     }
 
@@ -307,7 +302,6 @@ void SearchJobStoppable::stopSearch()
 
     // Wake up any paused operations
     if (m_paused.loadAcquire()) {
-        qDebug() << "Waking up paused operation";
         m_paused.storeRelease(0);
     }
 
@@ -327,13 +321,9 @@ void SearchJobStoppable::resumeSearch()
 //----------------------------------------------------------------------
 void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested)
 {
-    qDebug() << "SearchJobStoppable::searchFilesInCatalog() starting for device:" << device->name;
-    qDebug() << "  - Device external ID:" << device->externalID;
-    qDebug() << "  - Database connection:" << m_connectionName;
 
     // Add memory mode CSV loading with proper progress reporting with stop/pause control
     if (memoryModeEnabled) {
-        qDebug() << "Memory mode: Loading catalog CSV file for" << device->name;
 
         // Set opeartion context for csv loading
         currentOperationVerb = "Loaded";
@@ -357,7 +347,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                                      [this, &localStopRequested, &progressConnection](int filesLoaded, int totalFiles) {
                                          // STOP CHECK: If stop requested, disconnect immediately and exit
                                          if (!shouldContinue()) {
-                                             qDebug() << "Stop detected in CSV loading callback - disconnecting";
                                              QObject::disconnect(progressConnection);
                                              localStopRequested = true;
                                              return;
@@ -371,7 +360,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
                                          // Check again after pause
                                          if (!shouldContinue()) {
-                                             qDebug() << "Stop detected after pause - disconnecting";
                                              QObject::disconnect(progressConnection);
                                              localStopRequested = true;
                                              return;
@@ -391,14 +379,12 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
         // Check if stopped during loading
         if (!shouldContinue() || localStopRequested) {
-            qDebug() << "Stop requested during CSV loading";
             return;
         }
 
         // Signal that catalog loading is complete (same as SearchMemory)
         emit searchProgress(-3); // Special signal to indicate catalog loading finished
 
-        qDebug() << "Memory mode: CSV loading complete for" << device->name;
     }
 
     //Rest of method is common for all types of database modes
@@ -406,7 +392,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     Q_UNUSED(stopRequested);
 
     if (!shouldContinue()) {
-        qDebug() << "SearchJobStoppable::searchFilesInCatalog - stop requested at start";
         return;
     }
 
@@ -421,7 +406,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
     // Ensure file types are populated for File mode catalogs
     if (!memoryModeEnabled && device->catalog) {
-        qDebug() << "File mode: Checking if migration needed for" << device->name;
 
         // Check if migration is actually needed
         QSqlQuery checkQuery(QSqlDatabase::database(m_connectionName));
@@ -437,7 +421,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             needsMigration = (filesToMigrate > 0);
 
             if (needsMigration) {
-                qDebug() << "File type update needed for" << filesToMigrate << "files";
 
                 // Set operation context for file type update
                 currentOperationVerb = QCoreApplication::translate("MainWindow","File Types Updated");
@@ -460,7 +443,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                     device->catalog, &Catalog::loadProgress,
                     this, [this, &localStopRequested, &progressConnection](int filesLoaded, int totalFiles) {
                         if (!shouldContinue()) {
-                            qDebug() << "Stop detected in file type update callback";
                             QObject::disconnect(progressConnection);
                             localStopRequested = true;
                             return;
@@ -485,14 +467,11 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
                 // Check if stopped
                 if (!shouldContinue() || localStopRequested) {
-                    qDebug() << "Stop requested during file type update";
                     return;
                 }
 
                 emit searchProgress(-3);
-                qDebug() << "File type update complete for" << device->name;
             } else {
-                qDebug() << "No migration needed - all files already have metadata";
             }
         }
     }
@@ -614,10 +593,9 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     }
 
     if (!getFilesQuery.exec()) {
-        qDebug() << "Query error:" << getFilesQuery.lastError().text();
+        qWarning() << "WARNING: Query error:" << getFilesQuery.lastError().text();
         return;
     }
-    qDebug() << "  - SQL query executed successfully" << getFilesQuerySQL;
 
     emit searchProgress(-3); // Processing files
 
@@ -627,7 +605,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     while (getFilesQuery.next() && shouldContinue()) {
         // STOP check (existing)
         if (stopRequested || !shouldContinue()) {
-            qDebug() << "SearchJobStoppable::searchFilesInCatalog - stop requested in main loop at file" << filesProcessed;
             break;
         }
 
@@ -637,7 +614,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 
             // After resuming, check if stop was requested while paused
             if (!shouldContinue()) {
-                qDebug() << "SearchJobStoppable::searchFilesInCatalog - stop requested after pause";
                 break;
             }
         }
@@ -681,7 +657,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         filesProcessed++;
         batchCount++;
         if (filesProcessed % 100 == 0) {
-            qDebug() << "  - Processed" << filesProcessed << "files so far";
         }
         // Tag filtering
         if (searchOnFolderCriteria && searchOnTags && !selectedTagName.isEmpty()) {
@@ -713,7 +688,6 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             if (selectedSearchIn == SEARCH_IN_FILE_NAMES) {
 
                 match = regex.match(fileName);
-                qDebug() << "selectedSearchIn == SEARCH_IN_FILE_NAMES: match" << match;
             } else if (selectedSearchIn == SEARCH_IN_FOLDER_PATH) {
                 regex.setPattern(regexSearchtext);
                 auto foldermatch = regex.match(filePath);
@@ -828,14 +802,12 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
 //----------------------------------------------------------------------
 void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested)
 {
-    qDebug() << "SearchJobStoppable::searchFilesInDirectory starting for:" << sourceDirectory;
 
     // Use the same pattern as searchFilesInCatalog - get local reference to stopRequested
     bool &localStopRequested = stopRequested;
 
     // But ALSO check shouldContinue() since we use atomic variables
     if (!shouldContinue()) {
-        qDebug() << "SearchJobStoppable::searchFilesInDirectory - stop requested at start";
         return;
     }
 
@@ -860,13 +832,11 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
     int filesFoundCount = 0;      // Files that match criteria
     int batchProcessedCount = 0;  // Batch counter for progress reporting
 
-    qDebug() << "SearchJobStoppable::searchFilesInDirectory - starting main loop";
 
     // Main loop - similar pattern to searchFilesInCatalog but track processing vs finding separately
     while (iterator.hasNext()) {
         // STOP check (existing)
         if (localStopRequested || !shouldContinue()) {
-            qDebug() << "SearchJobStoppable::searchFilesInDirectory - stop requested in main loop at file" << filesProcessedCount;
             break;
         }
 
@@ -876,7 +846,6 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
 
             // After resuming, check if stop was requested while paused
             if (!shouldContinue()) {
-                qDebug() << "SearchJobStoppable::searchFilesInDirectory - stop requested after pause";
                 break;
             }
         }
@@ -1133,7 +1102,6 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
             // CRITICAL: Process events to keep UI responsive (same as searchFilesInCatalog)
             QCoreApplication::processEvents();
 
-            qDebug() << "SearchJobStoppable::searchFilesInDirectory - processed" << totalFilesProcessed << "files, found" << filesFoundCount << "matches";
         }
     }
 
@@ -1143,15 +1111,10 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
         emit searchProgress(totalFilesProcessed);
     }
 
-    qDebug() << "SearchJobStoppable::searchFilesInDirectory completed for:" << sourceDirectory
-             << "- Total files processed:" << totalFilesProcessed
-             << "- Files found:" << filesFoundCount
-             << "- Files in results:" << fileNames.size();
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::processDuplicates(const QString &connectionName)
 {
-    qDebug() << "SearchJobStoppable::processDuplicates() starting";
 
     if (!shouldContinue()) return;
 
@@ -1209,7 +1172,6 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
 
     // If search was stopped, return early
     if (!shouldContinue()) {
-        qDebug() << "SearchJobStoppable::processDuplicates() stopped during data loading";
         return;
     }
 
@@ -1369,18 +1331,13 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
     // Final progress report if completed successfully
     if (shouldContinue()) {
         emit searchProgress(100);
-        qDebug() << "SearchJobStoppable::processDuplicates() completed - Found" << duplicateCount << "duplicate entries";
     } else {
-        qDebug() << "SearchJobStoppable::processDuplicates() stopped during result processing";
     }
 }
 
 //----------------------------------------------------------------------
 void SearchJobStoppable::processDuplicatesCompareDevices(const QString &connectionName)
 {
-    qDebug() << "SearchJobStoppable::processDuplicatesCompareDevices() starting";
-    qDebug() << "dupDevice1->ID:" << duplicatesDevice1->ID;
-    qDebug() << "dupDevice2->ID:" << duplicatesDevice2->ID;
 
     if (!shouldContinue()) return;
 
@@ -1452,8 +1409,6 @@ void SearchJobStoppable::processDuplicatesCompareDevices(const QString &connecti
         listOfCatalogDeviceIDs2 = ids.join(",");
     }
 
-    qDebug() << "listOfCatalogDeviceIDs1:" << listOfCatalogDeviceIDs1;
-    qDebug() << "listOfCatalogDeviceIDs2:" << listOfCatalogDeviceIDs2;
 
     if (!shouldContinue()) return;
 
@@ -1578,7 +1533,6 @@ void SearchJobStoppable::processDuplicatesCompareDevices(const QString &connecti
                             );
     }
 
-    qDebug() << "selectSQL:" << selectSQL;
 
     if (!shouldContinue()) {
         Database::commitTransaction(connectionName);
@@ -1653,13 +1607,11 @@ void SearchJobStoppable::processDuplicatesCompareDevices(const QString &connecti
 
     if (shouldContinue()) {
         emit searchProgress(100);
-        qDebug() << "processDuplicatesCompareDevices completed - Found" << resultCount << "common files";
     }
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::processDifferences(const QString &connectionName)
 {
-    qDebug() << "SearchJobStoppable::processDifferences() starting";
 
     if (!shouldContinue()) return;
 
@@ -1712,7 +1664,6 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     }
 
     if (!shouldContinue()) {
-        qDebug() << "SearchJobStoppable::processDifferences() stopped during data loading";
         return;
     }
 
@@ -1808,9 +1759,7 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
 
     if (shouldContinue()) {
         emit searchProgress(100);
-        qDebug() << "SearchJobStoppable::processDifferences() completed - Found" << differenceCount << "difference entries";
     } else {
-        qDebug() << "SearchJobStoppable::processDifferences() stopped during result processing";
     }
 }
 //----------------------------------------------------------------------

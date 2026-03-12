@@ -230,7 +230,7 @@ void Catalog::generateID()
     queryCatalogID.prepare(queryCatalogIDSQL);
 
     if (!queryCatalogID.exec()) {
-        qDebug() << "generateID query failed:" << queryCatalogID.lastError().text();
+        qWarning() << "WARNING: generateID query failed:" << queryCatalogID.lastError().text();
         ID = 1;  // ✓ Fallback to 1 on error
         return;
     }
@@ -248,7 +248,6 @@ void Catalog::generateID()
         ID = 1;  // ✓ Default to 1
     }
 
-    qDebug() << "Generated catalog ID:" << ID;
 }
 
 void Catalog::insertCatalog()
@@ -371,7 +370,6 @@ void Catalog::saveCatalog()
 
 void Catalog::clearCatalogData()
 {
-    qDebug() << "Clearing existing catalog data for update";
 
     // Clear files from database (use catalog ID, not name)
     QString deleteFilesSQL = "DELETE FROM file WHERE file_catalog_id = :file_catalog_id";
@@ -380,9 +378,8 @@ void Catalog::clearCatalogData()
     query.bindValue(":file_catalog_id", ID);  // Use ID, not name
 
     if (!query.exec()) {
-        qDebug() << "Error clearing catalog files:" << query.lastError().text();
+        qWarning() << "WARNING: Error clearing catalog files:" << query.lastError().text();
     } else {
-        qDebug() << "Cleared" << query.numRowsAffected() << "files from catalog";
     }
 
     // Clear folders from database (use catalog ID, not name)
@@ -391,9 +388,8 @@ void Catalog::clearCatalogData()
     query.bindValue(":folder_catalog_id", ID);  // Use ID, not name
 
     if (!query.exec()) {
-        qDebug() << "Error clearing catalog folders:" << query.lastError().text();
+        qWarning() << "WARNING: Error clearing catalog folders:" << query.lastError().text();
     } else {
-        qDebug() << "Cleared" << query.numRowsAffected() << "folders from catalog";
     }
 
     // Reset counters
@@ -565,7 +561,6 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                 bool catalogWasMigrated = false;
 
                 if (needsMigration) {
-                    qDebug() << "Loading v2.6 catalog:" << name << "- will migrate to v2.8 format";
                 }
 
                 //Set up a text stream from the file's data
@@ -827,21 +822,18 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
                 catalogFile.close();
 
                 if (catalogWasMigrated) {
-                    qDebug() << "Catalog migrated, saving to v2.9 format...";
                     appVersion = "2.9";
 
                     QFileInfo catalogFileInfo(filePath);
                     QString collectionFolder = catalogFileInfo.absolutePath();
 
                     if (saveCatalogToFile("Memory", collectionFolder)) {
-                        qDebug() << "Catalog successfully saved in v2.9 format";
                     }
 
                     // After saving, check if migration is 100% complete
                     if (!hasFilesNeedingMigration() && QVersionNumber::fromString(appVersion) < QVersionNumber::fromString("2.9")) {
                         appVersion = "2.9";
                         saveCatalog();  // Update database
-                        qDebug() << "✓ Catalog fully migrated to v2.9";
                     }
                 }
             }
@@ -1063,7 +1055,6 @@ void Catalog::populateFileTypes(QMutex &mutex, bool &stopRequested)
 {
     Q_UNUSED(mutex);  // Using callbacks instead
 
-    qDebug() << "=== Catalog::populateFileTypes() - FILE TYPE CONVERSION ONLY ===";
 
     // Use the unified method with progress callback
     FileMetadata::migrateFileTypesForCatalog(
@@ -1080,7 +1071,6 @@ void Catalog::populateFileTypes(QMutex &mutex, bool &stopRequested)
         }
         );
 
-    qDebug() << "=== Catalog::populateFileTypes() COMPLETED - NO metadata extracted ===";
 }
 
 void Catalog::loadExcludedFolders()
@@ -1181,8 +1171,6 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         return true; // Nothing to do for non-Memory mode
     }
 
-    qDebug() << "=== Catalog::saveCatalogToFile() START ===";
-    qDebug() << "Building file list directly from database (independent of fileListModel)";
 
     try {
         // Build file list directly from database (don't depend on fileListModel)
@@ -1229,11 +1217,10 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         queryFileList.bindValue(":file_catalog_id", ID);
 
         if (!queryFileList.exec()) {
-            qDebug() << "ERROR: Failed to query file list:" << queryFileList.lastError().text();
+            qWarning() << "WARNING: Failed to query file list:" << queryFileList.lastError().text();
             return false;
         }
 
-        qDebug() << "Queried files from database successfully";
 
         // Build the file list (same format as original)
         while(queryFileList.next()){
@@ -1270,7 +1257,6 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
             fileList << fileEntry;
         }
 
-        qDebug() << "Built file list with" << fileList.size() << "entries";
 
         // Prepare the catalog file data, adding headers at the beginning (same as original)
         fileList.prepend("<catalogID>"              + QString::number(ID));
@@ -1286,15 +1272,13 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         fileList.prepend("<catalogFileCount>"       + QString::number(fileCount));
         fileList.prepend("<catalogSourcePath>"      + sourcePath);
 
-        qDebug() << "Added catalog headers, total lines:" << fileList.size();
 
         // Write to file
         filePath = collectionFolder + "/" + name + ".idx";
-        qDebug() << "Writing to file:" << filePath;
 
         QFile fileOut(filePath);
         if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
-            qDebug() << "ERROR: Failed to open file for writing:" << filePath;
+            qWarning() << "WARNING: Failed to open file for writing:" << filePath;
             return false;
         }
 
@@ -1305,15 +1289,13 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
 
         fileOut.close();
 
-        qDebug() << "File written successfully:" << filePath;
-        qDebug() << "=== Catalog::saveCatalogToFile() SUCCESS ===";
         return true;
 
     } catch (const std::exception& e) {
-        qDebug() << "=== EXCEPTION in saveCatalogToFile():" << e.what() << "===";
+        qWarning() << "WARNING: === EXCEPTION in saveCatalogToFile():" << e.what() << "===";
         return false;
     } catch (...) {
-        qDebug() << "=== UNKNOWN EXCEPTION in saveCatalogToFile() ===";
+        qWarning() << "WARNING: === UNKNOWN EXCEPTION in saveCatalogToFile() ===";
         return false;
     }
 }
@@ -1324,7 +1306,6 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
         return true; // Nothing to do for non-Memory mode
     }
 
-    qDebug() << "=== Catalog::saveFoldersToFile() START ===";
 
     try {
         // Get the folder list from database
@@ -1339,7 +1320,7 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
         query.bindValue(":folder_catalog_id", ID);
 
         if (!query.exec()) {
-            qDebug() << "ERROR: Failed to query folders:" << query.lastError().text();
+            qWarning() << "WARNING: Failed to query folders:" << query.lastError().text();
             return false;
         }
 
@@ -1349,13 +1330,12 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
             folderList << query.value(0).toString();
         }
 
-        qDebug() << "Found" << folderList.size() << "folders to save";
 
         // Write to file
         QString foldersFilePath = collectionFolder + "/" + name + ".folders.idx";
         QFile fileOut(foldersFilePath);
         if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
-            qDebug() << "ERROR: Failed to open folders file:" << foldersFilePath;
+            qWarning() << "WARNING: Failed to open folders file:" << foldersFilePath;
             return false;
         }
 
@@ -1366,15 +1346,13 @@ bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
 
         fileOut.close();
 
-        qDebug() << "Folders file written successfully:" << foldersFilePath;
-        qDebug() << "=== Catalog::saveFoldersToFile() SUCCESS ===";
         return true;
 
     } catch (const std::exception& e) {
-        qDebug() << "=== EXCEPTION in saveFoldersToFile():" << e.what() << "===";
+        qWarning() << "WARNING: === EXCEPTION in saveFoldersToFile():" << e.what() << "===";
         return false;
     } catch (...) {
-        qDebug() << "=== UNKNOWN EXCEPTION in saveFoldersToFile() ===";
+        qWarning() << "WARNING: === UNKNOWN EXCEPTION in saveFoldersToFile() ===";
         return false;
     }
 }
@@ -1398,17 +1376,15 @@ int Catalog::countFileLines(const QString &filePath)
 void Catalog::generateTempID()
 {
     m_tempID = ID + 999999;
-    qDebug() << "Generated temp catalog ID:" << m_tempID << "for catalog:" << ID;
 }
 
 void Catalog::moveFilesToTempID()
 {
     if (m_tempID == 0) {
-        qDebug() << "ERROR: Temp ID not generated before moving files";
+        qWarning() << "WARNING: Temp ID not generated before moving files";
         return;
     }
 
-    qDebug() << "Moving existing files from catalog ID" << ID << "to temp ID" << m_tempID;
 
     // Move files to temp ID
     QSqlQuery moveFilesQuery(QSqlDatabase::database(m_connectionName));
@@ -1418,11 +1394,10 @@ void Catalog::moveFilesToTempID()
     moveFilesQuery.bindValue(":catalog_id", ID);
 
     if (!moveFilesQuery.exec()) {
-        qDebug() << "Error moving files to temp ID:" << moveFilesQuery.lastError().text();
+        qWarning() << "WARNING: Error moving files to temp ID:" << moveFilesQuery.lastError().text();
         return;
     }
 
-    qDebug() << "Moved" << moveFilesQuery.numRowsAffected() << "files to temp ID";
 
     // Move folders to temp ID
     QSqlQuery moveFoldersQuery(QSqlDatabase::database(m_connectionName));
@@ -1432,21 +1407,18 @@ void Catalog::moveFilesToTempID()
     moveFoldersQuery.bindValue(":catalog_id", ID);
 
     if (!moveFoldersQuery.exec()) {
-        qDebug() << "Error moving folders to temp ID:" << moveFoldersQuery.lastError().text();
+        qWarning() << "WARNING: Error moving folders to temp ID:" << moveFoldersQuery.lastError().text();
         return;
     }
 
-    qDebug() << "Moved" << moveFoldersQuery.numRowsAffected() << "folders to temp ID";
 }
 
 void Catalog::restoreFromTempID()
 {
     if (m_tempID == 0) {
-        qDebug() << "No temp ID to restore from";
         return;
     }
 
-    qDebug() << "Restoring files from temp ID" << m_tempID << "to catalog ID" << ID;
 
     // Delete any current files first (partial new scan)
     QSqlQuery deleteCurrentQuery(QSqlDatabase::database(m_connectionName));
@@ -1469,11 +1441,10 @@ void Catalog::restoreFromTempID()
     restoreFilesQuery.bindValue(":temp_id", m_tempID);
 
     if (!restoreFilesQuery.exec()) {
-        qDebug() << "Error restoring files from temp ID:" << restoreFilesQuery.lastError().text();
+        qWarning() << "WARNING: Error restoring files from temp ID:" << restoreFilesQuery.lastError().text();
         return;
     }
 
-    qDebug() << "Restored" << restoreFilesQuery.numRowsAffected() << "files from temp ID";
 
     // Restore folders from temp ID
     QSqlQuery restoreFoldersQuery(QSqlDatabase::database(m_connectionName));
@@ -1483,11 +1454,10 @@ void Catalog::restoreFromTempID()
     restoreFoldersQuery.bindValue(":temp_id", m_tempID);
 
     if (!restoreFoldersQuery.exec()) {
-        qDebug() << "Error restoring folders from temp ID:" << restoreFoldersQuery.lastError().text();
+        qWarning() << "WARNING: Error restoring folders from temp ID:" << restoreFoldersQuery.lastError().text();
         return;
     }
 
-    qDebug() << "Restored" << restoreFoldersQuery.numRowsAffected() << "folders from temp ID";
 
     m_tempID = 0; // Reset temp ID
 }
@@ -1495,11 +1465,9 @@ void Catalog::restoreFromTempID()
 void Catalog::cleanupTempID()
 {
     if (m_tempID == 0) {
-        qDebug() << "No temp ID to cleanup";
         return;
     }
 
-    qDebug() << "Cleaning up temp ID" << m_tempID;
 
     // Delete temp files
     QSqlQuery deleteTempQuery(QSqlDatabase::database(m_connectionName));
@@ -1508,11 +1476,10 @@ void Catalog::cleanupTempID()
     deleteTempQuery.bindValue(":temp_id", m_tempID);
 
     if (!deleteTempQuery.exec()) {
-        qDebug() << "Error deleting temp files:" << deleteTempQuery.lastError().text();
+        qWarning() << "WARNING: Error deleting temp files:" << deleteTempQuery.lastError().text();
         return;
     }
 
-    qDebug() << "Deleted" << deleteTempQuery.numRowsAffected() << "temp files";
 
     // Delete temp folders
     QSqlQuery deleteTempFoldersQuery(QSqlDatabase::database(m_connectionName));
@@ -1521,11 +1488,10 @@ void Catalog::cleanupTempID()
     deleteTempFoldersQuery.bindValue(":temp_id", m_tempID);
 
     if (!deleteTempFoldersQuery.exec()) {
-        qDebug() << "Error deleting temp folders:" << deleteTempFoldersQuery.lastError().text();
+        qWarning() << "WARNING: Error deleting temp folders:" << deleteTempFoldersQuery.lastError().text();
         return;
     }
 
-    qDebug() << "Deleted" << deleteTempFoldersQuery.numRowsAffected() << "temp folders";
 
     m_tempID = 0; // Reset temp ID
 }
@@ -1557,7 +1523,6 @@ QString Catalog::getFileChecksum(const QString &fileName, const QString &folderP
 // Metadata fields management for tranistions in this catalog
 bool Catalog::clearMetadataBasicFields()
 {
-    qDebug() << "Clearing all metadata fields for catalog:" << name << "(ID:" << ID << ")";
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
@@ -1587,19 +1552,15 @@ bool Catalog::clearMetadataBasicFields()
     query.bindValue(":catalog_id", ID);
 
     if (!query.exec()) {
-        qDebug() << "ERROR: Failed to clear metadata fields:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to clear metadata fields:" << query.lastError().text();
         return false;
     }
-
-    int rowsAffected = query.numRowsAffected();
-    qDebug() << "Cleared metadata for" << rowsAffected << "files";
 
     return true;
 }
 
 bool Catalog::clearMetadataExtendedField()
 {
-    qDebug() << "Clearing all metadata fields for catalog:" << name << "(ID:" << ID << ")";
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
@@ -1612,19 +1573,15 @@ bool Catalog::clearMetadataExtendedField()
     query.bindValue(":catalog_id", ID);
 
     if (!query.exec()) {
-        qDebug() << "ERROR: Failed to clear metadata fields:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to clear metadata fields:" << query.lastError().text();
         return false;
     }
-
-    int rowsAffected = query.numRowsAffected();
-    qDebug() << "Cleared metadata for" << rowsAffected << "files";
 
     return true;
 }
 
 bool Catalog::clearMetadataExtractionDate()
 {
-    qDebug() << "Clearing metadata_extraction_date for catalog:" << name << "(ID:" << ID << ")";
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
@@ -1637,19 +1594,15 @@ bool Catalog::clearMetadataExtractionDate()
     query.bindValue(":catalog_id", ID);
 
     if (!query.exec()) {
-        qDebug() << "ERROR: Failed to clear metadata_extraction_date:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to clear metadata_extraction_date:" << query.lastError().text();
         return false;
     }
-
-    int rowsAffected = query.numRowsAffected();
-    qDebug() << "Cleared metadata_extraction_date for" << rowsAffected << "files";
 
     return true;
 }
 
 bool Catalog::clearMetadataExtractionDateForNonMedia()
 {
-    qDebug() << "Clearing metadata_extraction_date for NON-MEDIA files in catalog:" << name << "(ID:" << ID << ")";
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
@@ -1663,12 +1616,9 @@ bool Catalog::clearMetadataExtractionDateForNonMedia()
     query.bindValue(":catalog_id", ID);
 
     if (!query.exec()) {
-        qDebug() << "ERROR: Failed to clear metadata_extraction_date for non-media:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to clear metadata_extraction_date for non-media:" << query.lastError().text();
         return false;
     }
-
-    int rowsAffected = query.numRowsAffected();
-    qDebug() << "Cleared metadata_extraction_date for" << rowsAffected << "non-media files";
 
     return true;
 }
@@ -1681,13 +1631,10 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
         return;
     }
 
-    qDebug() << "Handling metadata transition from" << previousIncludeMetadata
-             << "to" << newIncludeMetadata << "for catalog:" << name;
 
     // Scenario 2.1: None → any other value
     // Files already have NULL metadata_extraction_date
     if (previousIncludeMetadata == METADATA_NONE) {
-        qDebug() << "Scenario 2.1: Transition from None - no clearing needed";
         return;
     }
 
@@ -1695,7 +1642,6 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     // Re-extract all media with extended metadata
     if (previousIncludeMetadata == METADATA_MEDIA_BASIC &&
         newIncludeMetadata == METADATA_MEDIA_EXTENDED) {
-        qDebug() << "Scenario 2.2: Media_Basic → Media_Extended - clearing extraction date";
         clearMetadataExtractionDate();
         return;
     }
@@ -1704,7 +1650,6 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     // Keep basic metadata, discard extended
     if (previousIncludeMetadata == METADATA_MEDIA_EXTENDED &&
         newIncludeMetadata == METADATA_MEDIA_BASIC) {
-        qDebug() << "Scenario 2.3: Media_Extended → Media_Basic - clearing extended field only";
         clearMetadataExtendedField();
         return;
     }
@@ -1713,7 +1658,6 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     // Re-extract media with extended + extract non-media
     if (previousIncludeMetadata == METADATA_MEDIA_BASIC &&
         newIncludeMetadata == METADATA_FULL) {
-        qDebug() << "Scenario 2.5: Media_Basic → Full_Extended - clearing extraction date";
         clearMetadataExtractionDate();
         return;
     }
@@ -1722,7 +1666,6 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     // Media already have extended, non-media will be found automatically
     if (previousIncludeMetadata == METADATA_MEDIA_EXTENDED &&
         newIncludeMetadata == METADATA_FULL) {
-        qDebug() << "Scenario 2.4: Media_Extended → Full_Extended - no clearing needed";
         return;
     }
 
@@ -1730,7 +1673,6 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     // Clear extended field + clear extraction date for non-media only
     if (previousIncludeMetadata == METADATA_FULL &&
         newIncludeMetadata == METADATA_MEDIA_BASIC) {
-        qDebug() << "Scenario 2.6: Full_Extended → Media_Basic - clearing extended field and non-media extraction dates";
         clearMetadataExtendedField();
         clearMetadataExtractionDateForNonMedia();
         return;
@@ -1740,7 +1682,6 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     // Clear extraction date for non-media only
     if (previousIncludeMetadata == METADATA_FULL &&
         newIncludeMetadata == METADATA_MEDIA_EXTENDED) {
-        qDebug() << "Scenario 2.7: Full_Extended → Media_Extended - clearing non-media extraction dates";
         clearMetadataExtractionDateForNonMedia();
         return;
     }
@@ -1748,7 +1689,6 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     // Scenario 2.8: Any → None
     // Clear all metadata fields to reduce DB size
     if (newIncludeMetadata == METADATA_NONE) {
-        qDebug() << "Scenario 2.8: Transition to None - clearing all metadata";
         clearMetadataBasicFields();
         clearMetadataExtendedField();
         clearMetadataExtractionDate();
@@ -1756,7 +1696,7 @@ void Catalog::handleMetadataTransition(const QString& previousIncludeMetadata,
     }
 
     // Log unhandled transition (for future-proofing)
-    qDebug() << "Warning: Unhandled metadata transition - no action taken";
+    qWarning() << "WARNING: Unhandled metadata transition - no action taken";
 }
 
 bool Catalog::hasFilesNeedingMigration() const
@@ -1771,7 +1711,7 @@ bool Catalog::hasFilesNeedingMigration() const
     checkQuery.bindValue(":catalog_id", ID);
 
     if (!checkQuery.exec() || !checkQuery.next()) {
-        qDebug() << "ERROR: Failed to check migration status:" << checkQuery.lastError().text();
+        qWarning() << "WARNING: Failed to check migration status:" << checkQuery.lastError().text();
         return true;  // Assume needs migration if query fails (safe default)
     }
 

@@ -75,7 +75,6 @@ void SearchJob::startJob()
 //----------------------------------------------------------------------
 void SearchJob::start()
 {
-    qDebug() << "Starting search job...";
 
     emit searchStarted();
 
@@ -103,11 +102,9 @@ void SearchJob::start()
 //----------------------------------------------------------------------
 void SearchJob::executeSearch()
 {
-    qDebug() << "=== SearchJob::executeSearch() START ===";
 
     // Check if search was killed before doing anything else
     if (m_isKilled.loadAcquire()) {
-        qDebug() << "Job was killed before executeSearch started - exiting without emitResult()";
         return;
     }
 
@@ -130,7 +127,6 @@ void SearchJob::executeSearch()
         // If search was killed, doKill() will have already set the error and KJob will handle cleanup
         // DO NOT call emitResult() - let KJob's own machinery handle it
         if (m_isKilled.loadAcquire()) {
-            qDebug() << "Job was killed during search - exiting without emitResult()";
             return;
         }
 
@@ -146,7 +142,6 @@ void SearchJob::executeSearch()
         }
 
         // If we get here, search completed successfully
-        qDebug() << "Search job completed successfully!";
 
         // Only emit signals if not killed
         if (!m_isKilled.loadAcquire()) {
@@ -155,7 +150,7 @@ void SearchJob::executeSearch()
         }
 
     } catch (const std::exception &e) {
-        qDebug() << "Exception in executeSearch:" << e.what();
+        qWarning() << "WARNING: Exception in executeSearch:" << e.what();
         setError(UserDefinedError);
         setErrorText(QString("Search failed: %1").arg(e.what()));
         // Only emit if not killed
@@ -163,7 +158,7 @@ void SearchJob::executeSearch()
             emitResult();
         }
     } catch (...) {
-        qDebug() << "Unknown exception in executeSearch";
+        qWarning() << "WARNING: Unknown exception in executeSearch";
         setError(UserDefinedError);
         setErrorText("Search failed with unknown error");
         // Only emit if not killed
@@ -172,19 +167,15 @@ void SearchJob::executeSearch()
         }
     }
 
-    qDebug() << "=== SearchJob::executeSearch() END ===";
 }
 //----------------------------------------------------------------------
 bool SearchJob::doKill()
 {
-    qDebug() << "=== SearchJob::doKill() called ===";
 
     // Set the killed flag FIRST before doing anything else
     m_isKilled.storeRelease(1);
-    qDebug() << "Killed flag set to 1";
 
     if (m_executeTimer) {
-        qDebug() << "Stopping execute timer";
         m_executeTimer->stop();
         m_executeTimer->setParent(nullptr);
         m_executeTimer->deleteLater();
@@ -193,18 +184,15 @@ bool SearchJob::doKill()
 
     // Stop the search engine
     if (m_searchEngine) {
-        qDebug() << "Stopping SearchJobStoppable engine";
         SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
         if (searchJobStoppable) {
             searchJobStoppable->stopSearch();
-            qDebug() << "SearchJobStoppable::stopSearch() called";
         }
     }
 
     setError(KilledJobError);
     setErrorText("Search was cancelled by user");
 
-    qDebug() << "=== SearchJob::doKill() complete ===";
 
     // Return true to indicate kill was successful
     // KJob will handle calling finishJob() and emitting signals
@@ -213,7 +201,6 @@ bool SearchJob::doKill()
 //----------------------------------------------------------------------
 bool SearchJob::doSuspend()
 {
-    qDebug() << "Suspending search job...";
 
     QMutexLocker locker(&m_mutex);
     m_suspended = true;
@@ -226,7 +213,6 @@ bool SearchJob::doSuspend()
 //----------------------------------------------------------------------
 bool SearchJob::doResume()
 {
-    qDebug() << "Resuming search job...";
 
     QMutexLocker locker(&m_mutex);
     m_suspended = false;
@@ -238,11 +224,9 @@ void SearchJob::onSearchProgress(int filesProcessed)
 {
     // If search kill was requested, do not emit anything
     if (m_isKilled.loadAcquire()) {
-        qDebug() << "SearchJob::onSearchProgress - job killed, ignoring progress update";
         return;
     }
 
-    qDebug() << "SearchJob::onSearchProgress received:" << filesProcessed;
 
     // Emit our own signal for SearchManager to handle
     emit searchProgress(filesProcessed);
@@ -279,14 +263,12 @@ void SearchJob::onSearchProgress(int filesProcessed)
 
     // Regular progress update
     if (filesProcessed >= 0) {
-        qDebug() << "SearchJob updating progress to:" << filesProcessed;
         m_lastFilesProcessed = filesProcessed;
         setProcessedAmount(KJob::Files, filesProcessed);
 
         if (m_searchEngine->estimatedTotalFiles > 0) {
             qint64 calculation = (static_cast<qint64>(filesProcessed) * 100) / m_searchEngine->estimatedTotalFiles;
             qint64 percent = qMin(static_cast<qint64>(100), calculation);
-            qDebug() << "SearchJob emitting percent:" << percent;
             emitPercent(static_cast<unsigned long>(percent), 100);
         }
     }

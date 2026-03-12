@@ -54,7 +54,6 @@ QString Collection::loadDatabaseSchemaVersion()
     queryVersion.exec();
 
     if (queryVersion.next()) {
-        qDebug() << "DEBUG: Collection::loadDatabaseSchemaVersion() / Version found:" << queryVersion.value(0).toString();
         return queryVersion.value(0).toString();
     }
     return "0"; // Your logic for missing versions
@@ -136,7 +135,7 @@ void Collection::generateCollectionFiles()
                 //File opened successfully, no need to write anything
                 deviceFile.close(); // Close the file after creating it
             } else {
-                qDebug() << "DEBUG: Failed to create Device file:" << deviceFile.errorString();
+                qWarning() << "WARNING: DEBUG: Failed to create Device file:" << deviceFile.errorString();
             }
         }
 
@@ -148,7 +147,7 @@ void Collection::generateCollectionFiles()
                 //File opened successfully, no need to write anything
                 parametersFile.close(); // Close the file after creating it
             } else {
-                qDebug() << "DEBUG: Failed to create Parameters file:" << parametersFile.errorString();
+                qWarning() << "WARNING: DEBUG: Failed to create Parameters file:" << parametersFile.errorString();
             }
 
             //Save
@@ -254,7 +253,7 @@ void Collection::clearDatabaseData()
         // MEMORY SAFETY: Ensure database connection is valid before executing queries
         QSqlDatabase db = QSqlDatabase::database(m_connectionName);
         if (!db.isValid() || !db.isOpen()) {
-            qDebug() << "Database connection invalid - skipping clearDatabaseData";
+            qWarning() << "WARNING: Database connection invalid - skipping clearDatabaseData";
             return;
         }
 
@@ -298,7 +297,6 @@ void Collection::clearDatabaseData()
             pragmaQuery.exec("PRAGMA foreign_keys = ON");
         }
 
-        qDebug() << "Database cleared safely with proper constraint handling";
     }
 }
 //----------------------------------------------------------------------
@@ -375,7 +373,7 @@ void Collection::loadDeviceFileToTable()
                        << "free_space\tactive\tgroupID\tdate updated\torder\n";
                 newDeviceFile.close();
             } else {
-                qDebug() << "DEBUG: Failed to create device file:" << newDeviceFile.errorString();
+                qWarning() << "WARNING: DEBUG: Failed to create device file:" << newDeviceFile.errorString();
                 // Optionally: return early or handle the error appropriately
             }
         }
@@ -393,7 +391,7 @@ void Collection::loadDeviceFileToTable()
                     QStringList fieldList = line.split('\t');
                     // Check if the line has enough fields
                     if (fieldList.size() < 14) {
-                        qDebug() << "DEBUG: Collection::loadDeviceFileToTable() / Invalid line format:" << line;
+                        qWarning() << "WARNING: DEBUG: Collection::loadDeviceFileToTable() / Invalid line format:" << line;
                         continue; // Skip this line if it doesn't have enough fields
                     }
                     QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
@@ -484,7 +482,7 @@ void Collection::loadCatalogFilesToTable()
 
             // Verify that the file can be opened
             if(!catalogFile.open(QIODevice::ReadOnly)) {
-                qDebug() << "DEBUG: loadCatalogFilesToTable() / Could not open catalog file:" << catalogFile.errorString();
+                qWarning() << "WARNING: DEBUG: loadCatalogFilesToTable() / Could not open catalog file:" << catalogFile.errorString();
                 return;
             }
 
@@ -561,7 +559,7 @@ void Collection::loadStorageFileToTable()
         //Test file validity (application breaks between v0.13 and v0.14)
         QString line = textStream.readLine();
         if (line.left(2)!="ID"){
-            qDebug() << "DEBUG: loadStorageFileToTable() / Storage file is not valid, cannot load it to table: " << storageFilePath;
+            qWarning() << "WARNING: DEBUG: loadStorageFileToTable() / Storage file is not valid, cannot load it to table: " << storageFilePath;
             return;
         }
 
@@ -797,7 +795,7 @@ void Collection::loadParameterFileToTable()
             }
         }
         else{
-            qDebug() << "DEBUG: Could not open parameters.csv:" << parametersFile.errorString();
+            qWarning() << "WARNING: DEBUG: Could not open parameters.csv:" << parametersFile.errorString();
         }
     }
 
@@ -1077,7 +1075,6 @@ void Collection::loadMappingFileToTable()
 
         //Open file or return information
         if(!mappingFile.open(QIODevice::ReadOnly)) {
-            qDebug() << "loadMappingFileToTable: File not found";
             return;
         }
         //Clear all entries of the current table
@@ -1247,7 +1244,6 @@ void Collection::saveDeviceTableToFile()
             deviceFile.close();
         }
         else{
-            qDebug() << "DEBUG: saveDeviceTableToFile() / Error opening output file:" << deviceFilePath;
         }
     }
 }
@@ -1713,7 +1709,7 @@ bool Collection::addExcludeDirectory(const QString &path)
     insertQuery.bindValue(":parameter_value2", cleanedPath);
 
     if (!insertQuery.exec()) {
-        qDebug() << "Failed to add exclude directory:" << insertQuery.lastError().text();
+        qWarning() << "WARNING: Failed to add exclude directory:" << insertQuery.lastError().text();
         return false;
     }
 
@@ -1733,7 +1729,7 @@ bool Collection::removeExcludeDirectory(const QString &path)
     query.bindValue(":parameter_value2", path);
 
     if (!query.exec()) {
-        qDebug() << "Failed to remove exclude directory:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to remove exclude directory:" << query.lastError().text();
         return false;
     }
 
@@ -1753,7 +1749,7 @@ QStringList Collection::getExcludeDirectories()
     )");
 
     if (!query.exec(querySQL)) {
-        qDebug() << "Failed to get exclude directories:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to get exclude directories:" << query.lastError().text();
         return directories;
     }
 
@@ -1789,7 +1785,7 @@ bool Collection::createTag(const QString &name, const QString &path, const QStri
     insertQuery.bindValue(":date_time", dateTime.toString("yyyy/MM/dd hh:mm:ss"));
 
     if (!insertQuery.exec()) {
-        qDebug() << "Failed to create tag:" << insertQuery.lastError().text();
+        qWarning() << "WARNING: Failed to create tag:" << insertQuery.lastError().text();
         return false;
     }
 
@@ -1808,7 +1804,7 @@ bool Collection::deleteTag(int tagID)
     query.bindValue(":ID", tagID);
 
     if (!query.exec()) {
-        qDebug() << "Failed to delete tag:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to delete tag:" << query.lastError().text();
         return false;
     }
 
@@ -1865,7 +1861,7 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
     )");
 
     if (!catalogDevicesQuery.exec(catalogDevicesQuerySQL)) {
-        qDebug() << "Catalog devices query failed:" << catalogDevicesQuery.lastError().text();
+        qWarning() << "WARNING: Catalog devices query failed:" << catalogDevicesQuery.lastError().text();
         return false;
     }
 
@@ -1873,7 +1869,7 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
     QSqlQuery countQuery(QSqlDatabase::database(m_connectionName));
     countQuery.prepare("SELECT COUNT(*) FROM device WHERE device_type = 'Catalog'");
     if (!countQuery.exec() || !countQuery.next()) {
-        qDebug() << "Count query failed:" << countQuery.lastError().text();
+        qWarning() << "WARNING: Count query failed:" << countQuery.lastError().text();
         return false;
     }
 
@@ -1911,7 +1907,7 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
         catalogMetaQuery.bindValue(":catalog_id", catalogId);
 
         if (!catalogMetaQuery.exec() || !catalogMetaQuery.next()) {
-            qDebug() << "Catalog metadata query failed for catalog" << catalogId << ":" << catalogMetaQuery.lastError().text();
+            qWarning() << "WARNING: Catalog metadata query failed for catalog" << catalogId << ":" << catalogMetaQuery.lastError().text();
             continue;
         }
 
@@ -1929,7 +1925,7 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
         QFile idxFile(idxFilePath);
 
         if (!idxFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            qDebug() << "Cannot open idx file for writing:" << idxFilePath;
+            qWarning() << "WARNING: Cannot open idx file for writing:" << idxFilePath;
             continue;
         }
 
@@ -1988,7 +1984,7 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
         fileQuery.bindValue(":catalog_id", catalogId);
 
         if (!fileQuery.exec()) {
-            qDebug() << "File query failed for catalog" << catalogId << ":" << fileQuery.lastError().text();
+            qWarning() << "WARNING: File query failed for catalog" << catalogId << ":" << fileQuery.lastError().text();
             idxFile.close();
             continue;
         }
@@ -2019,7 +2015,7 @@ bool Collection::exportSingleCatalogFoldersFile(int catalogId, const QString &fi
     checkQuery.bindValue(":catalog_id", catalogId);
 
     if (!checkQuery.exec() || !checkQuery.next()) {
-        qDebug() << "Folder count query failed:" << checkQuery.lastError().text();
+        qWarning() << "WARNING: Folder count query failed:" << checkQuery.lastError().text();
         return false;
     }
 
@@ -2032,13 +2028,13 @@ bool Collection::exportSingleCatalogFoldersFile(int catalogId, const QString &fi
     folderQuery.bindValue(":catalog_id", catalogId);
 
     if (!folderQuery.exec()) {
-        qDebug() << "Folder query failed:" << folderQuery.lastError().text();
+        qWarning() << "WARNING: Folder query failed:" << folderQuery.lastError().text();
         return false;
     }
 
     QFile foldersFile(filePath);
     if (!foldersFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Cannot open folders file for writing:" << filePath;
+        qWarning() << "WARNING: Cannot open folders file for writing:" << filePath;
         return false;
     }
 

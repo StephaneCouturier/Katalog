@@ -42,12 +42,10 @@
 DeviceJobStoppable::DeviceJobStoppable(QObject *parent)
     : QObject(parent)
 {
-    qDebug() << "DeviceJobStoppable created";
 }
 
 DeviceJobStoppable::~DeviceJobStoppable()
 {
-    qDebug() << "DeviceJobStoppable destructor";
     m_objectValid.storeRelease(0);
     cleanupOperation();
 }
@@ -58,10 +56,6 @@ void DeviceJobStoppable::startDeviceOperation(Device* rootDevice,
                                               const QString& collectionFolder,
                                               CatalogManager* catalogManager)
 {
-    qDebug() << "=== DeviceJobStoppable::startDeviceOperation() ===";
-    qDebug() << "Root device:" << (rootDevice ? rootDevice->name : "NULL");
-    qDebug() << "Operation type:" << operationType;
-    qDebug() << "Database mode:" << databaseMode;
 
     if (!rootDevice) {
         handleOperationError("Invalid root device provided");
@@ -107,14 +101,10 @@ void DeviceJobStoppable::startDeviceOperation(Device* rootDevice,
     m_globalCatalogResults.clear();
     m_globalStorageResults.clear();
 
-    qDebug() << "Starting device operation analysis...";
 
     // Analyze hierarchy and build processing plan
     analyzeDeviceHierarchy(m_rootDevice);
 
-    qDebug() << "Hierarchy analysis complete:";
-    qDebug() << "Total devices to process:" << m_allDevicesInHierarchy.size();
-    qDebug() << "Total catalogs to process:" << m_allCatalogsInHierarchy.size();
 
     emit deviceOperationStarted();
 
@@ -122,14 +112,12 @@ void DeviceJobStoppable::startDeviceOperation(Device* rootDevice,
     if (!m_processingQueue.isEmpty()) {
         processNextInQueue();
     } else {
-        qDebug() << "No devices to process";
         completeOperation();
     }
 }
 
 void DeviceJobStoppable::stopDeviceOperation()
 {
-    qDebug() << "DeviceJobStoppable::stopDeviceOperation() - Stop requested";
     m_stopRequested.storeRelease(1);
 
     // Stop current catalog operation if running
@@ -140,7 +128,6 @@ void DeviceJobStoppable::stopDeviceOperation()
 
 void DeviceJobStoppable::pauseDeviceOperation()
 {
-    qDebug() << "DeviceJobStoppable::pauseDeviceOperation() - Pause requested";
     m_paused.storeRelease(1);
 
     // Pause current catalog operation if running
@@ -151,7 +138,6 @@ void DeviceJobStoppable::pauseDeviceOperation()
 
 void DeviceJobStoppable::resumeDeviceOperation()
 {
-    qDebug() << "DeviceJobStoppable::resumeDeviceOperation() - Resume requested";
     m_paused.storeRelease(0);
 
     // Resume current catalog operation if running
@@ -167,13 +153,10 @@ QString DeviceJobStoppable::currentDeviceName() const
 
 void DeviceJobStoppable::analyzeDeviceHierarchy(Device* rootDevice)
 {
-    qDebug() << "Analyzing device hierarchy starting from:" << rootDevice->name;
 
     // Recursively build the processing queue and analyze hierarchy
     buildProcessingQueue(rootDevice);
 
-    qDebug() << "Processing queue built with" << m_processingQueue.size() << "devices";
-    qDebug() << "Found" << m_allCatalogsInHierarchy.size() << "catalogs in hierarchy";
 }
 
 void DeviceJobStoppable::buildProcessingQueue(Device* device)
@@ -189,7 +172,6 @@ void DeviceJobStoppable::buildProcessingQueue(Device* device)
         m_allCatalogsInHierarchy.append(device);
     }
 
-    qDebug() << "Added device to queue:" << device->name << "Type:" << device->type;
 
     // Load children using public method
     loadDeviceChildren(device);
@@ -220,28 +202,22 @@ void DeviceJobStoppable::loadDeviceChildren(Device* device)
             device->subDevices.append(childDevice);
         }
 
-        qDebug() << "Loaded" << device->subDevices.size() << "children for device:" << device->name;
-        for (const Device& child : device->subDevices) {
-            qDebug() << "  Child:" << child.name << "Type:" << child.type;
-        }
     } catch (const std::exception& e) {
-        qDebug() << "Error loading children for device" << device->name << ":" << e.what();
+        qWarning() << "WARNING: Error loading children for device" << device->name << ":" << e.what();
     }
 }
 
 void DeviceJobStoppable::processNextInQueue()
 {
-    qDebug() << "=== processNextInQueue() ===";
 
     if (!shouldContinue()) {
-        qDebug() << "Stop requested, aborting queue processing";
+        qWarning() << "WARNING: Stop requested, aborting queue processing";
         handleOperationCancellation();
         return;
     }
 
     // Check for gentle stop before starting new device (but not for single catalog creation)
     if (m_gentleStopRequested.loadAcquire() && m_operationType == UpdateDevice) {
-        qDebug() << "Gentle stop requested - completing operation after current device";
         completeOperation();
         return;
     }
@@ -249,7 +225,6 @@ void DeviceJobStoppable::processNextInQueue()
     waitIfPaused();
 
     if (m_processingQueue.isEmpty()) {
-        qDebug() << "Processing queue empty, operation complete";
         completeOperation();
         return;
     }
@@ -257,7 +232,6 @@ void DeviceJobStoppable::processNextInQueue()
     Device* nextDevice = m_processingQueue.dequeue();
     m_currentDevice = nextDevice;
 
-    qDebug() << "Processing device:" << nextDevice->name << "Type:" << nextDevice->type;
 
     emit deviceProcessingStarted(nextDevice->name, nextDevice->type);
     updateProgress();
@@ -270,7 +244,6 @@ void DeviceJobStoppable::processDevice(Device* device)
 {
     if (!device || !shouldContinue()) return;
 
-    qDebug() << "Processing device:" << device->name << "Type:" << device->type;
 
     // Update device active state (same as original logic)
     device->updateActiveState(m_connectionName);
@@ -285,7 +258,6 @@ void DeviceJobStoppable::processDevice(Device* device)
         processCatalogDevice(device);
         return; // Async operation - continues in onCatalogOperationCompleted()
     } else {
-        qDebug() << "Unknown device type:" << device->type << "- treating as virtual";
         processVirtualDevice(device);
     }
 
@@ -295,7 +267,6 @@ void DeviceJobStoppable::processDevice(Device* device)
 
 void DeviceJobStoppable::processVirtualDevice(Device* device)
 {
-    qDebug() << "Processing Virtual Device:" << device->name;
 
     emitStatusUpdate("Updating virtual device", device->name);
 
@@ -306,18 +277,15 @@ void DeviceJobStoppable::processVirtualDevice(Device* device)
     // Save device state
     device->saveDevice();
 
-    qDebug() << "Virtual device processing complete:" << device->name;
 }
 
 void DeviceJobStoppable::processStorageDevice(Device* device)
 {
-    qDebug() << "Processing Storage Device:" << device->name;
 
     emitStatusUpdate("Updating storage device", device->name);
 
     // Fast operation: Update storage space information
     if (device->storage) {
-        qDebug() << "Updating storage info for:" << device->name;
 
         // Update storage path from device path (same as Device::updateDevice logic)
         device->storage->path = device->path;
@@ -326,13 +294,6 @@ void DeviceJobStoppable::processStorageDevice(Device* device)
         Storage::UpdateResult result = device->storage->updateStorageInfo();
 
         if (result.wasUpdated) {
-            qDebug() << "Storage updated successfully and saved to database";
-            qDebug() << "New total space:" << result.newTotalSpace;
-            qDebug() << "Delta total space:" << result.deltaTotalSpace;
-            qDebug() << "New free space:" << result.newFreeSpace;
-            qDebug() << "Delta free space:" << result.deltaFreeSpace;
-            qDebug() << "New used space:" << result.newUsedSpace;
-            qDebug() << "Delta used space:" << result.deltaUsedSpace;
 
             // Update device values with new storage information (for consistency)
             device->totalSpace = result.newTotalSpace;
@@ -342,7 +303,6 @@ void DeviceJobStoppable::processStorageDevice(Device* device)
             m_storageUpdateResult = result;
 
         } else {
-            qDebug() << "Storage not updated - Error:" << result.errorMessage;
             // Store empty result for reporting
             m_storageUpdateResult = Storage::UpdateResult();
         }
@@ -354,12 +314,10 @@ void DeviceJobStoppable::processStorageDevice(Device* device)
     // Save statistics (same as Device::updateDevice logic)
     saveDeviceStatistics(device);
 
-    qDebug() << "Storage device processing complete:" << device->name;
 }
 
 void DeviceJobStoppable::processCatalogDevice(Device* device)
 {
-    qDebug() << "Processing Catalog Device:" << device->name;
 
     if (!device->catalog) {
         handleOperationError(QString("Invalid catalog for device: %1").arg(device->name));
@@ -368,7 +326,6 @@ void DeviceJobStoppable::processCatalogDevice(Device* device)
 
     // Check if catalog is active. If not skip it and continue
     if (!device->active) {
-        qDebug() << "Catalog is inactive, skipping:" << device->name;
 
         // Create a "skipped" result for reporting
         QList<qint64> skippedResults;
@@ -404,7 +361,6 @@ void DeviceJobStoppable::processCatalogDevice(Device* device)
     connect(m_currentCatalogJob, &CatalogJobStoppable::catalogProgress,
             this, &DeviceJobStoppable::onCatalogProgressUpdate);
 
-    qDebug() << "Starting catalog operation for:" << device->name;
 
     // Start catalog operation through existing CatalogManager
     m_catalogManager->startCatalogJobStoppable(
@@ -415,15 +371,13 @@ void DeviceJobStoppable::processCatalogDevice(Device* device)
         m_collectionFolder
         );
 
-    qDebug() << "Catalog operation started, waiting for completion...";
 }
 
 void DeviceJobStoppable::onCatalogOperationCompleted()
 {
-    qDebug() << "=== onCatalogOperationCompleted() ===";
 
     if (!m_currentCatalogJob || !m_currentDevice) {
-        qDebug() << "ERROR: Catalog operation completed but no current job/device";
+        qWarning() << "WARNING: Catalog operation completed but no current job/device";
         return;
     }
 
@@ -435,9 +389,6 @@ void DeviceJobStoppable::onCatalogOperationCompleted()
     catalogResults << 0;  // Delta files (placeholder)
     catalogResults << 0;  // Delta size (placeholder)
 
-    qDebug() << "Catalog operation completed successfully";
-    qDebug() << "Files processed:" << m_currentCatalogJob->filesProcessed;
-    qDebug() << "Total files:" << m_currentCatalogJob->countedTotalFiles;
 
     // Update device with catalog results (same as Device::updateDevice logic)
     if (catalogResults.count() > 0 && catalogResults[0] == 1) {
@@ -468,13 +419,11 @@ void DeviceJobStoppable::onCatalogOperationCompleted()
 
         // Verify CatalogManager is ready for next operation
         if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
-            qDebug() << "CatalogManager still running, waiting longer...";
             // Try again after a longer delay
             QTimer::singleShot(500, this, [this, catalogResults]() {
                 processDeviceCompleted(m_currentDevice, catalogResults);
             });
         } else {
-            qDebug() << "CatalogManager ready, continuing to next device";
             processDeviceCompleted(m_currentDevice, catalogResults);
         }
     });
@@ -482,7 +431,6 @@ void DeviceJobStoppable::onCatalogOperationCompleted()
 
 void DeviceJobStoppable::onCatalogOperationError(const QString& error)
 {
-    qDebug() << "=== onCatalogOperationError() ===" << error;
 
     // Clean up catalog job
     if (m_currentCatalogJob) {
@@ -498,7 +446,6 @@ void DeviceJobStoppable::onCatalogOperationError(const QString& error)
 
 void DeviceJobStoppable::onCatalogOperationCancelled()
 {
-    qDebug() << "=== onCatalogOperationCancelled() ===";
 
     // Clean up catalog job
     if (m_currentCatalogJob) {
@@ -527,7 +474,6 @@ void DeviceJobStoppable::onCatalogProgressUpdate(qint64 filesProcessed, qint64 t
 
 void DeviceJobStoppable::processDeviceCompleted(Device* device, const QList<qint64>& deviceResults)
 {
-    qDebug() << "Device processing completed:" << device->name;
 
     // Accumulate results
     accumulateResults(deviceResults);
@@ -552,15 +498,13 @@ void DeviceJobStoppable::updateParentNumbers(Device* device)
     // This preserves the critical business logic from Device::updateDevice()
     // that was missing in the new async system
 
-    qDebug() << "Updating parent numbers for device:" << device->name;
 
     try {
         // Update parent device numbers (same as Device::updateDevice logic)
         device->updateParentsNumbers();
 
-        qDebug() << "Parent numbers updated successfully for:" << device->name;
     } catch (const std::exception& e) {
-        qDebug() << "Error updating parent numbers for" << device->name << ":" << e.what();
+        qWarning() << "WARNING: Error updating parent numbers for" << device->name << ":" << e.what();
     }
 }
 
@@ -568,7 +512,6 @@ void DeviceJobStoppable::updateRelatedDevices(Device* device)
 {
     if (!device || device->type != "Catalog") return;
 
-    qDebug() << "Updating related devices for catalog:" << device->name;
 
     // Update related devices (same logic as Device::updateDevice)
     // This handles catalogs that share the same external ID
@@ -596,10 +539,9 @@ void DeviceJobStoppable::updateRelatedDevices(Device* device)
             relatedDevice.saveDevice();
             relatedDevice.updateParentsNumbers();
 
-            qDebug() << "Updated related device:" << relatedDevice.name;
         }
     } catch (const std::exception& e) {
-        qDebug() << "Error updating related devices:" << e.what();
+        qWarning() << "WARNING: Error updating related devices:" << e.what();
     }
 }
 
@@ -610,9 +552,8 @@ void DeviceJobStoppable::saveDeviceStatistics(Device* device)
     try {
         // Save statistics (same as Device::updateDevice logic)
         device->saveStatistics(device->dateTimeUpdated, "update");
-        qDebug() << "Statistics saved for device:" << device->name;
     } catch (const std::exception& e) {
-        qDebug() << "Error saving statistics for" << device->name << ":" << e.what();
+        qWarning() << "WARNING: Error saving statistics for" << device->name << ":" << e.what();
     }
 }
 
@@ -682,36 +623,26 @@ void DeviceJobStoppable::accumulateResults(const QList<qint64>& deviceResults)
 
 void DeviceJobStoppable::completeOperation()
 {
-    qDebug() << "=== DeviceJobStoppable::completeOperation() ===";
-    qDebug() << "Total devices processed:" << m_processedDevices;
-    qDebug() << "Total catalogs processed:" << m_processedCatalogs;
 
     // Update parent numbers after all devices in hierarchy are processed
-    qDebug() << "Updating parent numbers for entire hierarchy";
     if (m_rootDevice) {
         try {
             // First, reload the root device to get latest data from database
-            qDebug() << "Reloading root device to get latest data";
             m_rootDevice->loadDevice(m_connectionName);
 
             // Update numbers from children (aggregates from child devices)
-            qDebug() << "Calling updateNumbersFromChildren on root device";
             m_rootDevice->updateNumbersFromChildren();
 
             // Save the updated device
-            qDebug() << "Saving updated root device";
             m_rootDevice->saveDevice();
 
             // Update parent numbers starting from the root device
             // This will recursively update all parents in the hierarchy
-            qDebug() << "Calling updateParentsNumbers on root device";
             m_rootDevice->updateParentsNumbers();
 
-            qDebug() << "Parent numbers updated successfully for entire hierarchy";
-            qDebug() << "Root device now has - Files:" << m_rootDevice->totalFileCount << "Size:" << m_rootDevice->totalFileSize;
 
         } catch (const std::exception& e) {
-            qDebug() << "Error updating parent numbers for hierarchy:" << e.what();
+            qWarning() << "WARNING: Error updating parent numbers for hierarchy:" << e.what();
         }
     }
 
@@ -725,7 +656,6 @@ void DeviceJobStoppable::completeOperation()
 
 void DeviceJobStoppable::handleOperationError(const QString& error)
 {
-    qDebug() << "=== DeviceJobStoppable::handleOperationError() ===" << error;
 
     m_lastError = error;
     m_hasErrors = true;
@@ -738,7 +668,6 @@ void DeviceJobStoppable::handleOperationError(const QString& error)
 
 void DeviceJobStoppable::handleOperationCancellation()
 {
-    qDebug() << "=== DeviceJobStoppable::handleOperationCancellation() ===";
 
     m_operationRunning = false;
 
@@ -749,7 +678,6 @@ void DeviceJobStoppable::handleOperationCancellation()
 
 void DeviceJobStoppable::cleanupOperation()
 {
-    qDebug() << "DeviceJobStoppable::cleanupOperation()";
 
     // Clean up catalog job if still active
     if (m_currentCatalogJob) {
@@ -772,7 +700,6 @@ void DeviceJobStoppable::cleanupOperation()
 
 void DeviceJobStoppable::requestGentleStop()
 {
-    qDebug() << "DeviceJobStoppable::requestGentleStop() - Gentle stop requested";
     m_gentleStopRequested.storeRelease(1);
 }
 

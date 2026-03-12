@@ -370,7 +370,6 @@ QStringList Search::getExtensionsForFileType(const QString &fileType)
         }
     }
 
-    qDebug() << "getExtensionsForFileType(" << fileType << ") found extensions:" << extensions;
     return extensions;
 }
 
@@ -749,7 +748,7 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":differences_checksum", differencesOnChecksum);
     query.bindValue(":differences_checksum_equal", differencesChecksumEqual);
     query.exec();
-    qDebug() << "Search::saveSearchHistoryToTable: lastError" << query.lastError();
+    qWarning() << "WARNING: Search::saveSearchHistoryToTable: lastError" << query.lastError();
 }
 
 void Search::loadSearchHistoryCriteria(const QString &connectionName)
@@ -1070,7 +1069,7 @@ QString Search::mapSearchInToInternal(const QString& dbValue)
     }
 
     // Default fallback
-    qDebug() << "Warning: Unknown SearchIn value, using default:" << dbValue;
+    qWarning() << "WARNING: Unknown SearchIn value, using default:" << dbValue;
     return SEARCH_IN_FILES_AND_FOLDERS;
 }
 
@@ -1131,7 +1130,7 @@ QString Search::mapTextCriteriaToInternal(const QString& dbValue)
     }
 
     // Default fallback
-    qDebug() << "Warning: Unknown text criteria value, using default:" << dbValue;
+    qWarning() << "WARNING: Unknown text criteria value, using default:" << dbValue;
     return TEXT_CRITERIA_ALL_WORDS;
 }
 
@@ -1204,7 +1203,7 @@ QString Search::mapSizeUnitToInternal(const QString& dbValue)
     }
 
     // Default fallback
-    qDebug() << "Warning: Unknown size unit value, using default:" << dbValue;
+    qWarning() << "WARNING: Unknown size unit value, using default:" << dbValue;
     return SIZE_UNIT_BYTES;
 }
 

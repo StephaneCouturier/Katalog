@@ -158,19 +158,17 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                             // MIME MODE: Use QMimeDatabase for MIME-based icons
                             QIcon mimeIcon = getMimeBasedIcon(mimeType);
                             if (!mimeIcon.isNull()) {
-                                qDebug() << "Using MIME icon for" << fileName << "mimeType:" << mimeType;
                                 return mimeIcon;
                             }
-                            qDebug() << "MIME icon failed for" << mimeType << ", falling back to extension mode";
+                            qWarning() << "WARNING: MIME icon failed for" << mimeType << ", falling back to extension mode";
                         }
 
                         // EXTENSION MODE: Extension-based system icons
                         QIcon advancedIcon = getAdvancedIcon(fileName, fileType);
                         if (!advancedIcon.isNull()) {
-                            qDebug() << "Using extension-based icon for" << fileName;
                             return advancedIcon;
                         }
-                        qDebug() << "Extension-based icon failed for" << fileName << ", falling back to simple mode";
+                        qWarning() << "WARNING: Extension-based icon failed for" << fileName << ", falling back to simple mode";
                         // Fall through to simple mode if advanced icon not found
                     }
 
@@ -304,7 +302,6 @@ QIcon FilesView::getAdvancedIcon(const QString &fileName, const QString &fileTyp
     }
 
     // Debug: Print what we're looking for
-    qDebug() << "getAdvancedIcon: fileName=" << fileName << "extension=" << extension << "fileType=" << fileType;
 
     // Start with very common icons that should exist on most systems
     QString iconName;
@@ -352,13 +349,11 @@ QIcon FilesView::getAdvancedIcon(const QString &fileName, const QString &fileTyp
 
     if (!iconName.isEmpty()) {
         QIcon icon = QIcon::fromTheme(iconName);
-        qDebug() << "Trying icon:" << iconName << "isNull:" << icon.isNull();
 
         if (!icon.isNull()) {
-            qDebug() << "SUCCESS: Using icon" << iconName;
             return icon;
         } else {
-            qDebug() << "FAILED: Icon" << iconName << "not found, trying fallback";
+            qWarning() << "WARNING: FAILED: Icon" << iconName << "not found, trying fallback";
 
             // Try some very basic fallbacks
             QString fallback;
@@ -368,12 +363,10 @@ QIcon FilesView::getAdvancedIcon(const QString &fileName, const QString &fileTyp
             else fallback = "text-x-generic";
 
             QIcon fallbackIcon = QIcon::fromTheme(fallback);
-            qDebug() << "Fallback icon:" << fallback << "isNull:" << fallbackIcon.isNull();
             return fallbackIcon;
         }
     }
 
-    qDebug() << "No icon mapping found for extension:" << extension;
     return QIcon(); // Return null icon to use simple mode fallback
 }
 
@@ -384,44 +377,36 @@ QIcon FilesView::getMimeBasedIcon(const QString &mimeType) const
         return QIcon();
     }
 
-    qDebug() << "getMimeBasedIcon: mimeType=" << mimeType;
 
     // Use QMimeDatabase to get the icon name for this MIME type
     QMimeDatabase mimeDb;
     QMimeType mime = mimeDb.mimeTypeForName(mimeType);
 
     if (!mime.isValid()) {
-        qDebug() << "Invalid MIME type:" << mimeType;
+        qWarning() << "WARNING: Invalid MIME type:" << mimeType;
         return QIcon();
     }
 
     QString iconName = mime.iconName();
-    qDebug() << "MIME icon name:" << iconName;
 
     if (!iconName.isEmpty()) {
         QIcon icon = QIcon::fromTheme(iconName);
-        qDebug() << "MIME icon" << iconName << "isNull:" << icon.isNull();
 
         if (!icon.isNull()) {
-            qDebug() << "SUCCESS: Using MIME icon" << iconName;
             return icon;
         }
     }
 
     // Try generic icon for MIME type family
     QString genericIconName = mime.genericIconName();
-    qDebug() << "MIME generic icon name:" << genericIconName;
 
     if (!genericIconName.isEmpty()) {
         QIcon genericIcon = QIcon::fromTheme(genericIconName);
-        qDebug() << "MIME generic icon" << genericIconName << "isNull:" << genericIcon.isNull();
 
         if (!genericIcon.isNull()) {
-            qDebug() << "SUCCESS: Using MIME generic icon" << genericIconName;
             return genericIcon;
         }
     }
 
-    qDebug() << "No MIME icon found for:" << mimeType;
     return QIcon();
 }

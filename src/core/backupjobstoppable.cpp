@@ -234,7 +234,6 @@ void BackupJobStoppable::runBackup()
         // Unexpected conflict: target file already exists despite catalog check
         if (QFileInfo::exists(targetFile)) {
             report.conflicts.append(entry);
-            qDebug() << "BackupJobStoppable: unexpected conflict (target exists):" << targetFile;
             ++filesDone;
             continue;
         }
@@ -255,7 +254,6 @@ void BackupJobStoppable::runBackup()
                 report.totalBytesCopied += entry.fileSize;
                 bytesCopied += entry.fileSize;
                 report.moved.append(entry);
-                qDebug() << "BackupJobStoppable: renamed (moved)" << sourceFile << "->" << targetFile;
             } else if (copyFileChunked(sourceFile, targetFile, entry.fileSize,
                                        filesDone, totalFiles, bytesCopied, totalBytes,
                                        entry.fileName)) {
@@ -265,7 +263,6 @@ void BackupJobStoppable::runBackup()
                 if (!QFile::remove(sourceFile))
                     report.errors.append(sourceFile + ": copied to target but source delete failed");
                 report.moved.append(entry);
-                qDebug() << "BackupJobStoppable: moved (copy+delete)" << sourceFile << "->" << targetFile;
             } else {
                 if (!shouldContinue()) {
                     report.wasCancelled = true;
@@ -282,7 +279,6 @@ void BackupJobStoppable::runBackup()
                 report.totalBytesCopied += entry.fileSize;
                 // bytesCopied already updated chunk-by-chunk inside copyFileChunked
                 report.copied.append(entry);
-                qDebug() << "BackupJobStoppable: copied" << sourceFile << "->" << targetFile;
             } else {
                 if (!shouldContinue()) {
                     report.wasCancelled = true;
@@ -330,7 +326,6 @@ void BackupJobStoppable::runBackup()
             if (!tgtInfo.exists() || srcInfo.lastModified() <= tgtInfo.lastModified()) {
                 // Target is newer or same age — do not overwrite; report as conflict.
                 report.conflicts.append(entry);
-                qDebug() << "BackupJobStoppable: conflict kept (target not older):" << targetFile;
                 ++filesDone;
                 continue;
             }
@@ -351,8 +346,6 @@ void BackupJobStoppable::runBackup()
                 if (QFile::rename(sourceFile, targetFile)) {
                     transferOk = true;
                     bytesCopied += entry.fileSize; // rename is instant; account bytes here
-                    qDebug() << "BackupJobStoppable: archived" << archivedFile
-                             << "and renamed (moved)" << sourceFile << "->" << targetFile;
                 } else if (copyFileChunked(sourceFile, targetFile, entry.fileSize,
                                            filesDone, totalFiles, bytesCopied, totalBytes,
                                            entry.fileName)) {
@@ -361,8 +354,6 @@ void BackupJobStoppable::runBackup()
                     transferOk = true;
                     if (!QFile::remove(sourceFile))
                         report.errors.append(sourceFile + ": moved (archived+replaced) but source delete failed");
-                    qDebug() << "BackupJobStoppable: archived" << archivedFile
-                             << "and moved (copy+delete)" << sourceFile << "->" << targetFile;
                 }
             } else {
                 if (copyFileChunked(sourceFile, targetFile, entry.fileSize,
@@ -370,8 +361,6 @@ void BackupJobStoppable::runBackup()
                                     entry.fileName)) {
                     // bytesCopied already updated chunk-by-chunk inside copyFileChunked
                     transferOk = true;
-                    qDebug() << "BackupJobStoppable: archived" << archivedFile
-                             << "and replaced with" << sourceFile;
                 }
             }
 

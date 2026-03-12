@@ -37,7 +37,6 @@
 CatalogManager::CatalogManager(QObject *parent)
     : QObject(parent)
 {
-    qDebug() << "CatalogManager created";
 }
 
 CatalogManager::~CatalogManager()
@@ -47,7 +46,6 @@ CatalogManager::~CatalogManager()
         m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
     }
-    qDebug() << "CatalogManager destroyed";
 }
 
 void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine,
@@ -63,11 +61,9 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
     if (operationType == CatalogJobStoppable::UpdateCatalog) {
         m_catalogUpdateInProgress = true;
         m_updatingCatalogID = targetDevice->catalog->ID;
-        qDebug() << "Starting catalog update - marking catalog" << m_updatingCatalogID << "as being updated";
     }
 
     if (m_currentJob) {
-        qDebug() << "Catalog operation already running!";
         return;
     }
 
@@ -83,13 +79,8 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
         // ADD THESE LINES:
         m_gentleStopRequested.storeRelease(0);  // Reset stop flags for new operation
         m_hardStopRequested.storeRelease(0);
-        qDebug() << "Reset stop flags for new catalog operation";
     }
 
-    qDebug() << "Starting catalog operation:"
-             << "Type:" << (operationType == CatalogJobStoppable::CreateCatalog ? "Create" : "Update")
-             << "Catalog:" << targetDevice->catalog->name
-             << "DatabaseMode:" << databaseMode;
 
     m_currentJob = new CatalogJob(this);
     m_currentJob->setCatalogJobStoppable(catalogEngine);
@@ -175,14 +166,11 @@ void CatalogManager::startCatalogJobStoppable(CatalogJobStoppable *catalogEngine
 
 void CatalogManager::stopCatalogOperation()
 {
-    qDebug() << "=== CatalogManager::stopCatalogOperation() called ===";
 
     if (!m_currentJob || !m_catalogOperationRunning) {
-        qDebug() << "No operation to stop";
         return;
     }
 
-    qDebug() << "Stopping catalog operation...";
 
     // SAVE STATE for cancelled message (before reset)
     CatalogJobStoppable::OperationType savedOperationType = m_currentOperationType;
@@ -193,11 +181,9 @@ void CatalogManager::stopCatalogOperation()
     setStatus("Catalog operation stopped");
     disconnect(m_currentJob, nullptr, this, nullptr);
 
-    qDebug() << "Calling m_currentJob->kill()";
     m_currentJob->kill();
 
     // Force immediate cleanup
-    qDebug() << "Force cleanup after kill...";
     setCatalogOperationRunning(false);
     setProgress(0);
     setCurrentCatalogName("");
@@ -210,7 +196,6 @@ void CatalogManager::stopCatalogOperation()
         m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
-        qDebug() << "Forced cleanup complete";
     }
 
     // RESTORE state temporarily so signal handlers can read it
@@ -232,7 +217,6 @@ void CatalogManager::stopCatalogOperation()
     m_gentleStopRequested.storeRelease(0);
     m_hardStopRequested.storeRelease(0);
 
-    qDebug() << "=== CatalogManager::stopCatalogOperation() complete ===";
 }
 
 void CatalogManager::pauseCatalogOperation()
@@ -243,7 +227,6 @@ void CatalogManager::pauseCatalogOperation()
 
     if (m_currentJob->suspend()) {
         m_isPaused = true;
-        qDebug() << "Catalog operation paused";
     }
 }
 
@@ -255,7 +238,6 @@ void CatalogManager::resumeCatalogOperation()
 
     if (m_currentJob->resume()) {
         m_isPaused = false;
-        qDebug() << "Catalog operation resumed";
     }
 }
 
@@ -278,22 +260,17 @@ CatalogJobStoppable::OperationType CatalogManager::currentOperationType() const
 
 void CatalogManager::requestGentleStop()
 {
-    qDebug() << "CatalogManager::requestGentleStop() - Gentle stop requested";
     m_gentleStopRequested.storeRelease(1);
     stopCatalogOperation(); // Single operations = immediate stop
 }
 
 void CatalogManager::onJobResult(KJob *job)
 {
-    qDebug() << "=== DIAGNOSTIC: CatalogManager::onJobResult() ENTRY ===";
-    qDebug() << "=== DIAGNOSTIC: Job error code:" << job->error();
-    qDebug() << "=== DIAGNOSTIC: KilledJobError constant:" << KJob::KilledJobError;
 
     try {
         if (job->error() == KJob::KilledJobError) {
             // Phase is already set correctly from where cancel was triggered
             // Don't change it - just emit signal so handlers can read lastPhase
-            qDebug() << "Job cancelled - lastPhase:" << m_lastPhase << "currentPhase:" << m_currentPhase;
             emit catalogOperationCancelled();
 
         } else if (job->error()) {
@@ -323,7 +300,6 @@ void CatalogManager::onJobResult(KJob *job)
             m_lastCurrentPath = m_currentPath;
             setOperationPhase(PHASE_COMPLETING);
 
-            qDebug() << "Saved final state:" << m_lastFilesProcessed << "/" << m_lastTotalFiles;
 
             // Handle batch mode
             if (m_inBatchMode) {
@@ -351,7 +327,7 @@ void CatalogManager::onJobResult(KJob *job)
         cleanupJob();
 
     } catch (const std::exception& e) {
-        qDebug() << "EXCEPTION in onJobResult():" << e.what();
+        qWarning() << "WARNING: EXCEPTION in onJobResult():" << e.what();
         setStatus("Catalog operation failed with exception");
         emit catalogOperationError("Catalog operation failed with exception");
         cleanupJob();
@@ -359,7 +335,6 @@ void CatalogManager::onJobResult(KJob *job)
 
     // Clean up update state
     if (m_catalogUpdateInProgress) {
-        qDebug() << "Catalog update completed - clearing update state for catalog" << m_updatingCatalogID;
         m_catalogUpdateInProgress = false;
         m_updatingCatalogID = 0;
     }
@@ -368,14 +343,12 @@ void CatalogManager::onJobResult(KJob *job)
     m_hardStopRequested.storeRelease(0);
     setOperationPhase(PHASE_IDLE);  // Reset phase after all handlers have run
 
-    qDebug() << "=== CatalogManager::onJobResult() EXIT ===";
 }
 
 void CatalogManager::onJobPercent()
 {
     if (m_currentJob) {
         unsigned long percent = m_currentJob->percent();
-        qDebug() << "CatalogManager::onJobPercent received percent:" << percent;
         setProgress(static_cast<int>(percent));
     }
 }
@@ -397,7 +370,6 @@ void CatalogManager::setCatalogOperationRunning(bool running)
 void CatalogManager::setProgress(int progress)
 {
     if (m_progress != progress) {
-        qDebug() << "CatalogManager::setProgress updating from" << m_progress << "to" << progress;
         m_progress = progress;
         emit progressChanged();
     }
@@ -449,29 +421,24 @@ void CatalogManager::setCurrentPath(const QString &path)
 void CatalogManager::cleanupJob()
 {
     if (m_currentJob) {
-        qDebug() << "Cleaning up catalog job...";
         m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
-        qDebug() << "Catalog job cleanup complete";
     }
 }
 
 void CatalogManager::handleBatchCatalogCompletion()
 {
-    qDebug() << "=== CatalogManager::handleBatchCatalogCompletion() ===";
 
     if (!m_inBatchMode) return;
 
     // Check hard stop before the gentle stop
     if (m_hardStopRequested.loadAcquire()) {
-        qDebug() << "Hard stop requested - finishing batch operation early (same as gentle stop)";
 
         // For batch operations, hard stop = gentle stop (finish current, then stop)
         // Calculate remaining active catalogs that were never processed
         int remainingActiveCatalogs = m_batchCatalogs.size() - m_batchCurrentIndex - 1;
         if (remainingActiveCatalogs > 0) {
-            qDebug() << "Adding" << remainingActiveCatalogs << "stopped active catalogs to skipped count";
             m_skippedCatalogs += remainingActiveCatalogs;
         }
 
@@ -486,12 +453,10 @@ void CatalogManager::handleBatchCatalogCompletion()
     }
 
     if (m_gentleStopRequested.loadAcquire()) {
-        qDebug() << "Gentle stop requested - finishing batch operation early";
 
         // Calculate remaining active catalogs that were never processed
         int remainingActiveCatalogs = m_batchCatalogs.size() - m_batchCurrentIndex - 1;
         if (remainingActiveCatalogs > 0) {
-            qDebug() << "Adding" << remainingActiveCatalogs << "stopped active catalogs to skipped count";
             m_skippedCatalogs += remainingActiveCatalogs;
         }
 
@@ -512,7 +477,6 @@ void CatalogManager::handleBatchCatalogCompletion()
 
 void CatalogManager::requestHardStop()
 {
-    qDebug() << "CatalogManager::requestHardStop() - Hard stop requested";
     m_hardStopRequested.storeRelease(1);
     setStatus("Hard stopping catalog operation...");
     if (m_currentJob) {
@@ -540,7 +504,6 @@ void CatalogManager::setOperationPhase(OperationPhase phase)
                                        ? phaseNames[currentPhaseIndex]
                                        : QString("UNKNOWN(%1)").arg(currentPhaseIndex);
 
-        qDebug() << "Operation phase changed:" << lastPhaseName << "->" << currentPhaseName;
     }
 }
 

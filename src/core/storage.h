@@ -53,15 +53,15 @@ public:
 
     // Result structure for updateStorageInfo
     struct UpdateResult {
-        bool wasUpdated;
-        ErrorCode errorCode;
-        qint64 newUsedSpace;
-        qint64 deltaUsedSpace;
-        qint64 newFreeSpace;
-        qint64 deltaFreeSpace;
-        qint64 newTotalSpace;
-        qint64 deltaTotalSpace;
-        QString errorMessage; // For detailed error information
+        bool wasUpdated    = false;
+        ErrorCode errorCode = ErrorCode::Success;
+        qint64 newUsedSpace   = 0;
+        qint64 deltaUsedSpace = 0;
+        qint64 newFreeSpace   = 0;
+        qint64 deltaFreeSpace = 0;
+        qint64 newTotalSpace  = 0;
+        qint64 deltaTotalSpace = 0;
+        QString errorMessage;
     };
 
     // Data members

@@ -300,11 +300,9 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
             deviceContextMenu.addAction(menuDeviceAction1);
             connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-                qDebug() << "=== Filters Context Menu Update (DeviceUpdateManager) ===";
 
                 // Ensure DeviceUpdateManager is set up (like in other tabs)
                 if (!deviceUpdateManager) {
-                    qDebug() << "DeviceUpdateManager not available - setting up now";
                     setupDeviceUpdateManager();
                 }
 
@@ -314,7 +312,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                     return;
                 }
 
-                qDebug() << "Filters context menu catalog update for:" << activeDevice->name;
 
                 // Set UI state for catalog operation
                 setCatalogUpdateUIState(true);
@@ -324,7 +321,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                                                            collection->databaseMode,
                                                            collection->folder);
 
-                qDebug() << "Filters context menu - DeviceUpdateManager operation started";
             });
         }
 
@@ -615,11 +611,10 @@ void MainWindow::on_Devices_pushButton_ApplyToSelection_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateActiveDevice_clicked()
 {
-    qDebug() << "=== Update Active Device (DeviceUpdateManager) ===";
 
     if (!deviceUpdateManager) {
         //QMessageBox::critical(this, "Katalog", tr("Device update manager not available."));
-        qDebug() << "ERROR: DeviceUpdateManager not available";
+        qWarning() << "WARNING: DeviceUpdateManager not available";
         return;
     }
 
@@ -637,12 +632,10 @@ void MainWindow::on_Catalogs_pushButton_UpdateActiveDevice_clicked()
                                                collection->folder,
                                                "update");
 
-    qDebug() << "Device operation started for:" << activeDevice->name << "Type:" << activeDevice->type;
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 {
-    qDebug() << "=== UPDATE ALL ACTIVE CLICKED ===";
 
     // Ask user for report choice
     QMessageBox msgBox;
@@ -662,7 +655,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         return;
     }
 
-    qDebug() << "User chose to show individual reports:" << showEachCatalogUpdateSummary;
 
     ui->Catalogs_pushButton_Stop->setEnabled(true);
 
@@ -672,7 +664,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     int inactiveCatalogs = 0;
     int skippedDevices = 0;
 
-    qDebug() << "Collecting catalogs from tree view...";
 
     for (int row = 0; row < ui->Devices_treeView_DeviceList->model()->rowCount(); ++row) {
         // Get device info
@@ -683,7 +674,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         loopDevice->ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 3)).toInt();
         loopDevice->loadDevice(m_connectionName);
 
-        qDebug() << "Found device:" << loopDevice->name << "Type:" << loopDevice->type;
 
         if (loopDevice->type == "Catalog") {
             totalCatalogs++;  // Count all catalogs
@@ -692,26 +682,19 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
             if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
                 // Active catalog - add to processing list
                 collectedCatalogs.append(loopDevice);
-                qDebug() << "Added active catalog to batch:" << loopDevice->name;
             } else {
                 // Inactive catalog - count but don't process
                 inactiveCatalogs++;
-                qDebug() << "Counted inactive catalog:" << loopDevice->name;
                 delete loopDevice;
             }
         } else {
-            qDebug() << "Skipping non-catalog device:" << loopDevice->name;
             delete loopDevice;
             skippedDevices++;
         }
     }
 
-    qDebug() << "Total catalogs found:" << totalCatalogs;
-    qDebug() << "Active catalogs to process:" << collectedCatalogs.size();
-    qDebug() << "Inactive catalogs (baseline skipped):" << inactiveCatalogs;
 
     if (collectedCatalogs.isEmpty()) {
-        qDebug() << "Catalogs_pushButton_UpdateAllActive: No active catalogs found";
         return;
     }
 
@@ -731,15 +714,12 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_Stop_clicked()
 {
-    qDebug() << "=== Stop Catalog Operation ===";
 
     if (!deviceUpdateManager) {
-        qDebug() << "DeviceUpdateManager not available";
         return;
     }
 
     if (!deviceUpdateManager->operationRunning()) {
-        qDebug() << "No device operation running";
         ui->Catalogs_pushButton_Stop->setEnabled(false);
         return;
     }
@@ -748,10 +728,8 @@ void MainWindow::on_Catalogs_pushButton_Stop_clicked()
     bool useGentleStop = QApplication::keyboardModifiers() & Qt::ControlModifier;
 
     if (useGentleStop) {
-        qDebug() << "Requesting gentle stop (Ctrl+Click detected)";
         deviceUpdateManager->requestGentleStop();
     } else {
-        qDebug() << "Requesting hard stop (immediate)";
         deviceUpdateManager->requestHardStop();
     }
 }

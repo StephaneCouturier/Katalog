@@ -98,6 +98,5 @@ QList<MetadataExtractionResult> ParallelMetadataExtractor::extractBatch(
         }
     }
 
-    qDebug() << "Parallel extraction completed for" << results.size() << "files";
     return results;
 }

@@ -38,7 +38,6 @@ CatalogJob::CatalogJob(QObject *parent)
 {
     setCapabilities(Killable | Suspendable);
     setTotalAmount(KJob::Files, 0); // Will be set when we know the estimate
-    qDebug() << "CatalogJob created";
 }
 
 void CatalogJob::setCatalogJobStoppable(CatalogJobStoppable *catalogEngine)
@@ -99,7 +98,6 @@ void CatalogJob::startJob()
 
 void CatalogJob::requestHardStop()
 {
-    qDebug() << "CatalogJob::requestHardStop() - Hard stop requested";
 
     // Forward the hard stop request to the catalog engine
     if (m_catalogEngine) {
@@ -109,7 +107,6 @@ void CatalogJob::requestHardStop()
 
 void CatalogJob::start()
 {
-    qDebug() << "Starting catalog job...";
 
     emit catalogStarted();
 
@@ -142,16 +139,12 @@ void CatalogJob::executeCatalogOperation()
     }
 
     try {
-        qDebug() << "=== CatalogJob::executeCatalogOperation() START ===";
 
         // Execute the catalog operation
-        qDebug() << "About to call m_catalogEngine->processCatalog()";
         m_catalogEngine->processCatalog();
-        qDebug() << "m_catalogEngine->processCatalog() returned successfully";
 
         // Check if operation was stopped
         if (m_catalogEngine->wasStopRequested()) {
-            qDebug() << "Stop was requested during catalog operation";
             setError(KilledJobError);
             setErrorText("Catalog operation was cancelled");
             emitResult();
@@ -159,37 +152,29 @@ void CatalogJob::executeCatalogOperation()
         }
 
         // If we get here, catalog operation completed successfully
-        qDebug() << "=== Catalog job completed successfully! ===";
 
-        qDebug() << "About to emit catalogFinished()";
         emit catalogFinished();
-        qDebug() << "catalogFinished() emitted successfully";
 
-        qDebug() << "About to call emitResult()";
         emitResult();
-        qDebug() << "emitResult() called successfully";
 
     } catch (const std::exception &e) {
-        qDebug() << "=== EXCEPTION in executeCatalogOperation():" << e.what() << "===";
+        qWarning() << "WARNING: === EXCEPTION in executeCatalogOperation():" << e.what() << "===";
         setError(UserDefinedError);
         setErrorText(QString("Catalog operation failed: %1").arg(e.what()));
         emitResult();
     } catch (...) {
-        qDebug() << "=== UNKNOWN EXCEPTION in executeCatalogOperation() ===";
+        qWarning() << "WARNING: === UNKNOWN EXCEPTION in executeCatalogOperation() ===";
         setError(UserDefinedError);
         setErrorText("Catalog operation failed with unknown error");
         emitResult();
     }
 
-    qDebug() << "=== CatalogJob::executeCatalogOperation() END ===";
 }
 
 bool CatalogJob::doKill()
 {
-    qDebug() << "=== CatalogJob::doKill() called ===";
 
     if (m_executeTimer) {
-        qDebug() << "Stopping execute timer";
         m_executeTimer->stop();
         m_executeTimer->setParent(nullptr);
         m_executeTimer->deleteLater();
@@ -198,21 +183,17 @@ bool CatalogJob::doKill()
 
     // Stop the catalog engine
     if (m_catalogEngine) {
-        qDebug() << "Stopping CatalogJobStoppable engine";
         m_catalogEngine->stopCatalogOperation();
-        qDebug() << "CatalogJobStoppable::stopCatalogOperation() called";
     }
 
     setError(KilledJobError);
     setErrorText("Catalog operation was cancelled by user");
 
-    qDebug() << "=== CatalogJob::doKill() complete ===";
     return true;
 }
 
 bool CatalogJob::doSuspend()
 {
-    qDebug() << "Suspending catalog job...";
 
     QMutexLocker locker(&m_mutex);
     m_suspended = true;
@@ -227,7 +208,6 @@ bool CatalogJob::doSuspend()
 
 bool CatalogJob::doResume()
 {
-    qDebug() << "Resuming catalog job...";
 
     QMutexLocker locker(&m_mutex);
     m_suspended = false;
@@ -259,7 +239,6 @@ void CatalogJob::onCatalogProgress(qint64 filesProcessed, qint64 totalFiles, con
         if (totalFiles > 0) {
             qint64 calculation = (static_cast<qint64>(filesProcessed) * 100) / totalFiles;
             qint64 percent = qMin(static_cast<qint64>(100), calculation);
-            qDebug() << "CatalogJob emitting percent:" << percent;
             emitPercent(static_cast<unsigned long>(percent), 100);
         }
     }

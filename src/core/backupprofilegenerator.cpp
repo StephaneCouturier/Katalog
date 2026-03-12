@@ -185,7 +185,7 @@ QList<BackupTask> BackupProfileGenerator::loadBackupTasks(const QList<int>& mapp
     querySQL += " ORDER BY dm.mapping_name ASC";
 
     if (!query.exec(querySQL)) {
-        qDebug() << "ERROR: Failed to load backup tasks:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to load backup tasks:" << query.lastError().text();
         return tasks;
     }
 
@@ -202,18 +202,12 @@ QList<BackupTask> BackupProfileGenerator::loadBackupTasks(const QList<int>& mapp
         if (task.isValid()) {
             tasks.append(task);
 
-            qDebug() << "Loaded backup task:"
-                     << "ID=" << task.mappingId
-                     << "Name=" << task.name
-                     << "Source=" << task.source
-                     << "Destination=" << task.destination;
         } else {
-            qDebug() << "WARNING: Skipping invalid mapping ID" << task.mappingId
+            qWarning() << "WARNING: Skipping invalid mapping ID" << task.mappingId
                      << "- missing source or destination path";
         }
     }
 
-    qDebug() << "Total backup tasks loaded:" << tasks.size();
     return tasks;
 }
 
@@ -412,8 +406,8 @@ bool BackupProfileGenerator::writeProfileToFile(const QString& content,
     QFile file(filepath);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "ERROR: Cannot open file for writing:" << filepath;
-        qDebug() << "Error:" << file.errorString();
+        qWarning() << "WARNING: Cannot open file for writing:" << filepath;
+        qWarning() << "WARNING: Error:" << file.errorString();
         return false;
     }
 
@@ -421,7 +415,6 @@ bool BackupProfileGenerator::writeProfileToFile(const QString& content,
     out << content;
     file.close();
 
-    qDebug() << "Profile written successfully to:" << filepath;
     return true;
 }
 

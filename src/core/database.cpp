@@ -586,32 +586,32 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
 
         // Use WAL mode for better corruption resistance and concurrent access
         if (!pragmaQuery.exec("PRAGMA journal_mode = WAL")) {
-            qDebug() << "Failed to set WAL journal mode:" << pragmaQuery.lastError().text();
+            qWarning() << "WARNING: Failed to set WAL journal mode:" << pragmaQuery.lastError().text();
         }
 
         // Set synchronous mode for balance between safety and performance
         if (!pragmaQuery.exec("PRAGMA synchronous = NORMAL")) {
-            qDebug() << "Failed to set synchronous pragma:" << pragmaQuery.lastError().text();
+            qWarning() << "WARNING: Failed to set synchronous pragma:" << pragmaQuery.lastError().text();
         }
 
         // Set page size for better performance
         if (!pragmaQuery.exec("PRAGMA page_size = 4096")) {
-            qDebug() << "Failed to set page size:" << pragmaQuery.lastError().text();
+            qWarning() << "WARNING: Failed to set page size:" << pragmaQuery.lastError().text();
         }
 
         // Set cache size
         if (!pragmaQuery.exec("PRAGMA cache_size = 10000")) {
-            qDebug() << "Failed to set cache size:" << pragmaQuery.lastError().text();
+            qWarning() << "WARNING: Failed to set cache size:" << pragmaQuery.lastError().text();
         }
 
         // Enable foreign keys
         if (!pragmaQuery.exec("PRAGMA foreign_keys = ON")) {
-            qDebug() << "Failed to enable foreign keys:" << pragmaQuery.lastError().text();
+            qWarning() << "WARNING: Failed to enable foreign keys:" << pragmaQuery.lastError().text();
         }
 
         // Set temp store to memory for better performance
         if (!pragmaQuery.exec("PRAGMA temp_store = MEMORY")) {
-            qDebug() << "Failed to set temp store:" << pragmaQuery.lastError().text();
+            qWarning() << "WARNING: Failed to set temp store:" << pragmaQuery.lastError().text();
         }
 
         //qDebug() << "SQLite pragmas set successfully for corruption prevention";
@@ -638,7 +638,7 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
                 // Ignore "index already exists" errors
                 QString error = query.lastError().text().toLower();
                 if (!error.contains("already exists") && !error.contains("duplicate")) {
-                    qDebug() << "Index creation warning:" << query.lastError().text();
+                    qWarning() << "WARNING: Index creation warning:" << query.lastError().text();
                 }
             }
         }
@@ -760,7 +760,7 @@ bool Database::beginTransaction(const QString &connectionName)
     QSqlQuery query(QSqlDatabase::database(connectionName));
 
     if (!query.exec(getBeginTransactionSQL(databaseType))) {
-        qDebug() << "Failed to BEGIN transaction:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to BEGIN transaction:" << query.lastError().text();
         return false;
     }
     return true;
@@ -771,7 +771,7 @@ bool Database::commitTransaction(const QString &connectionName)
     QSqlQuery query(QSqlDatabase::database(connectionName));
 
     if (!query.exec("COMMIT")) {
-        qDebug() << "Failed to COMMIT transaction:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to COMMIT transaction:" << query.lastError().text();
         return false;
     }
     return true;
@@ -782,7 +782,7 @@ bool Database::rollbackTransaction(const QString &connectionName)
     QSqlQuery query(QSqlDatabase::database(connectionName));
 
     if (!query.exec("ROLLBACK")) {
-        qDebug() << "Failed to ROLLBACK transaction:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to ROLLBACK transaction:" << query.lastError().text();
         return false;
     }
     return true;
@@ -944,8 +944,7 @@ QSqlError Database::executeSql(const QString &connectionName, const QString &sql
     QSqlQuery query(QSqlDatabase::database(connectionName));
 
     if (!query.exec(sql)) {
-        qDebug() << "Database::executeSql failed:" << query.lastError().text();
-        qDebug() << "SQL was:" << sql;
+        qWarning() << "WARNING: Database::executeSql failed:" << query.lastError().text();
         return query.lastError();
     }
 
@@ -955,7 +954,6 @@ QSqlError Database::executeSql(const QString &connectionName, const QString &sql
 QSqlError Database::dropTableIfExists(const QString &connectionName, const QString &tableName)
 {
     if (tableExists(connectionName, tableName)) {
-        qDebug() << "Dropping table:" << tableName;
 
         // First, try to ensure no locks (SQLite-specific)
         QSqlDatabase db = QSqlDatabase::database(connectionName);
@@ -969,14 +967,12 @@ QSqlError Database::dropTableIfExists(const QString &connectionName, const QStri
         QSqlError dropError = executeSql(connectionName, QString("DROP TABLE IF EXISTS %1").arg(tableName));
 
         if (dropError.type() != QSqlError::NoError) {
-            qDebug() << "DROP TABLE failed (table may be locked):" << dropError.text();
-            qDebug() << "Migration will continue without dropping" << tableName;
+            qWarning() << "WARNING: DROP TABLE failed (table may be locked):" << dropError.text();
             return QSqlError(); // Return success anyway - not critical
         }
 
         return dropError;
     } else {
-        qDebug() << "Table" << tableName << "doesn't exist, skipping drop";
         return QSqlError(); // Success - nothing to do
     }
 }
@@ -987,7 +983,6 @@ QSqlError Database::dropTableIfExists(const QString &connectionName, const QStri
 
 QSqlError Database::runMigration_2_6(const QString &connectionName)
 {
-    qDebug() << "=== Database Migration 2.6: Adding selected_device_ID_list to search table ===";
 
     // Check if column already exists
     QStringList existingColumns = getTableColumns(connectionName, "search");
@@ -998,11 +993,10 @@ QSqlError Database::runMigration_2_6(const QString &connectionName)
                                               "ALTER TABLE search ADD COLUMN selected_device_ID_list TEXT");
 
         if (addColumnError.type() != QSqlError::NoError) {
-            qDebug() << "Failed to add selected_device_ID_list column:" << addColumnError.text();
+            qWarning() << "WARNING: Failed to add selected_device_ID_list column:" << addColumnError.text();
             return addColumnError;
         }
 
-        qDebug() << "Added selected_device_ID_list column to search table";
 
         // Migrate existing data (simplified version - set default value)
         QSqlQuery updateQuery(QSqlDatabase::database(connectionName));
@@ -1015,24 +1009,19 @@ QSqlError Database::runMigration_2_6(const QString &connectionName)
             WHERE selected_device_ID_list IS NULL OR selected_device_ID_list = ''
         )");
 
-        qDebug() << "Migrated existing search history device data";
     } else {
-        qDebug() << "selected_device_ID_list column already exists, skipping migration";
     }
 
-    qDebug() << "=== Database Migration 2.6 completed ===";
     return QSqlError(); // Success
 }
 
 QSqlError Database::runMigration_2_8(const QString &connectionName)
 {
-    qDebug() << "=== Database Migration 2.8: PART1 - Drop metadata table, update file/filetemp tables ===";
 
         // Step 1: Drop the unused metadata table if it exists
         if (auto dropError = dropTableIfExists(connectionName, "metadata");
             dropError.type() != QSqlError::NoError)
         {
-            qDebug() << "Warning dropping metadata table:" << dropError.text();
             // Continue - not critical
         }
 
@@ -1055,20 +1044,16 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
         // Add missing metadata columns
         for (const auto& [columnName, columnType] : newFileColumns) {
             if (!existingFileColumns.contains(columnName)) {
-                qDebug() << "Adding column:" << columnName;
                 QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2").arg(columnName, columnType);
                 if (auto addColumnError = executeSql(connectionName, alterSQL);
                     addColumnError.type() != QSqlError::NoError)
                 {
-                    qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
                     return addColumnError;
                 }
-                qDebug() << "Added column" << columnName << "to -file- table";
             }
         }
 
         // Step 3: Update "filetemp" table structure to match file table
-        qDebug() << "Updating filetemp table with complete metadata structure...";
 
         // Get existing filetemp columns
         QStringList existingFiletempColumns = getTableColumns(connectionName, "filetemp");
@@ -1076,26 +1061,20 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
         // Add missing metadata columns to filetemp (same columns as file table)
         for (const auto& [columnName, columnType] : newFileColumns) {
             if (!existingFiletempColumns.contains(columnName)) {
-                qDebug() << "Adding column to filetemp:" << columnName;
                 QString alterSQL = QString("ALTER TABLE filetemp ADD COLUMN %1 %2").arg(columnName, columnType);
                 if (auto addColumnError = executeSql(connectionName, alterSQL);
                     addColumnError.type() != QSqlError::NoError)
                 {
-                    qDebug() << "Error adding column" << columnName << "to filetemp:" << addColumnError.text();
                     return addColumnError;
                 }
-                qDebug() << "Added column" << columnName << "to filetemp table";
             }
         }
-        qDebug() << "File and filetemp tables updated with metadata support";
 
 
-    qDebug() << "=== Database Migration 2.8: PART2 - File type population. DEFERRED ===";
         // qDebug() << "File types will be populated on-demand when each catalog is first used";
         // qDebug() << "This ensures fast startup and processes only catalogs you actually use";
 
 
-    qDebug() << "=== Database Migration 2.8: PART3 - Update search table ===";
         QStringList existingSearchColumns = getTableColumns(connectionName, "search");
         const QList<QPair<QString, QString>> newSearchColumns = {
             {"metadata_checked", "NUMERIC"}, {"metadata_text_checked", "NUMERIC"}, {"metadata_text_search", "TEXT"},
@@ -1107,19 +1086,15 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
         // Add missing metadata columns
         for (const auto& [columnName, columnType] : newSearchColumns) {
             if (!existingSearchColumns.contains(columnName)) {
-                qDebug() << "Adding column:" << columnName;
                 QString alterSQL = QString("ALTER TABLE search ADD COLUMN %1 %2 DEFAULT NULL").arg(columnName, columnType);
                 if (auto addColumnError = executeSql(connectionName, alterSQL);
                     addColumnError.type() != QSqlError::NoError)
                 {
-                    qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
                     return addColumnError;
                 }
-                qDebug() << "Added column" << columnName << "to -search- table";
             }
         }
 
-    qDebug() << "=== Database Migration 2.8: PART4 - Normalize catalog_include_metadata ===";
         QSqlQuery updateCatalogMetadataQuery(QSqlDatabase::database(connectionName));
         updateCatalogMetadataQuery.exec(R"(
             UPDATE catalog
@@ -1132,23 +1107,18 @@ QSqlError Database::runMigration_2_8(const QString &connectionName)
 
         int updatedCatalogs = updateCatalogMetadataQuery.numRowsAffected();
         if (updatedCatalogs > 0) {
-            qDebug() << "Updated" << updatedCatalogs << "catalog(s) with NULL/empty metadata field to 'None'";
         } else {
-            qDebug() << "No catalogs needed metadata field normalization";
         }
 
-        qDebug() << "=== Database Migration 2.8 completed ===";
 
     return QSqlError(); // Success
 }
 
 QSqlError Database::runMigration_2_9(const QString &connectionName)
 {
-    qDebug() << "=== Database Migration 2.9: Adding checksum support ===";
 
 
     // Step 1: Add checksum columns to file table
-    qDebug() << "Step 1: Adding checksum columns to file table";
 
     const QList<QPair<QString, QString>> newFileColumns = {
         {"checksum_sha256", "TEXT"},
@@ -1161,21 +1131,17 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
     // Add missing checksum columns to file table
     for (const auto& [columnName, columnType] : newFileColumns) {
         if (!existingFileColumns.contains(columnName)) {
-            qDebug() << "Adding column to file:" << columnName;
             QString alterSQL = QString("ALTER TABLE file ADD COLUMN %1 %2").arg(columnName, columnType);
             if (auto addColumnError = executeSql(connectionName, alterSQL);
                 addColumnError.type() != QSqlError::NoError)
             {
-                qDebug() << "Error adding column" << columnName << ":" << addColumnError.text();
                 return addColumnError;
             }
-            qDebug() << "Added column" << columnName << "to file table";
         }
     }
 
 
     // Step 2: Add checksum columns to filetemp table
-    qDebug() << "Step 2: Adding checksum columns to filetemp table";
 
     // Get existing filetemp columns
     QStringList existingFiletempColumns = getTableColumns(connectionName, "filetemp");
@@ -1183,23 +1149,18 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
     // Add missing checksum columns to filetemp (same columns as file table)
     for (const auto& [columnName, columnType] : newFileColumns) {
         if (!existingFiletempColumns.contains(columnName)) {
-            qDebug() << "Adding column to filetemp:" << columnName;
             QString alterSQL = QString("ALTER TABLE filetemp ADD COLUMN %1 %2").arg(columnName, columnType);
             if (auto addColumnError = executeSql(connectionName, alterSQL);
                 addColumnError.type() != QSqlError::NoError)
             {
-                qDebug() << "Error adding column" << columnName << "to filetemp:" << addColumnError.text();
                 return addColumnError;
             }
-            qDebug() << "Added column" << columnName << "to filetemp table";
         }
     }
 
-    qDebug() << "File and filetemp tables updated with checksum support";
 
 
     // Step 3: Add checksum column to catalog table
-    qDebug() << "Step 3: Adding catalog_include_checksum to catalog table";
 
     QStringList existingCatalogColumns = getTableColumns(connectionName, "catalog");
 
@@ -1208,15 +1169,12 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
         if (auto addColumnError = executeSql(connectionName, alterSQL);
             addColumnError.type() != QSqlError::NoError)
         {
-            qDebug() << "Error adding catalog_include_checksum column:" << addColumnError.text();
             return addColumnError;
         }
-        qDebug() << "Added catalog_include_checksum column to catalog table";
     }
 
 
     // Step 4: Normalize catalog_include_checksum (set default to 'None' for existing catalogs)
-    qDebug() << "Step 4: Normalizing catalog_include_checksum values";
 
     QSqlQuery updateCatalogChecksumQuery(QSqlDatabase::database(connectionName));
     updateCatalogChecksumQuery.exec(R"(
@@ -1228,14 +1186,11 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
 
     int updatedCatalogs = updateCatalogChecksumQuery.numRowsAffected();
     if (updatedCatalogs > 0) {
-        qDebug() << "Updated" << updatedCatalogs << "catalog(s) with NULL/empty checksum field to 'None'";
     } else {
-        qDebug() << "No catalogs needed checksum field normalization";
     }
 
 
     // Step 5: Add checksum & new duplicate search columns to search table
-    qDebug() << "Step 5: Adding checksum & new duplicate search columns to search table";
 
     QStringList existingSearchColumns = getTableColumns(connectionName, "search");
 
@@ -1251,22 +1206,16 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
 
     for (const auto& [columnName, columnType] : newSearchColumns) {
         if (!existingSearchColumns.contains(columnName)) {
-            qDebug() << "Adding column to search:" << columnName;
             QString alterSQL = QString("ALTER TABLE search ADD COLUMN %1 %2 DEFAULT NULL").arg(columnName, columnType);
             if (auto addColumnError = executeSql(connectionName, alterSQL);
                 addColumnError.type() != QSqlError::NoError)
             {
-                qDebug() << "Error adding column" << columnName << "to search:" << addColumnError.text();
                 return addColumnError;
             }
-            qDebug() << "Added column" << columnName << "to search table";
         }
     }
 
-    qDebug() << "Search table updated with checksum search support";
-    qDebug() << "Search table updated with duplicates compare devices support";
 
-    qDebug() << "=== Database Migration 2.9 completed ===";
 
     return QSqlError(); // Success
 }
@@ -1274,7 +1223,6 @@ QSqlError Database::runMigration_2_9(const QString &connectionName)
 //----------------------------------------------------------------------
 QSqlError Database::runMigration_2_10(const QString &connectionName)
 {
-    qDebug() << "=== Database Migration 2.10: Adding backup mapping columns to device_mapping ===";
 
     QStringList existingColumns = getTableColumns(connectionName, "device_mapping");
 
@@ -1282,36 +1230,30 @@ QSqlError Database::runMigration_2_10(const QString &connectionName)
         QSqlError err = executeSql(connectionName,
             "ALTER TABLE device_mapping ADD COLUMN mapping_strict_copy INTEGER DEFAULT 1");
         if (err.type() != QSqlError::NoError) {
-            qDebug() << "Failed to add mapping_strict_copy column:" << err.text();
+            qWarning() << "WARNING: Failed to add mapping_strict_copy column:" << err.text();
             return err;
         }
-        qDebug() << "Added mapping_strict_copy column to device_mapping";
     } else {
-        qDebug() << "mapping_strict_copy already exists, skipping";
     }
 
     if (!existingColumns.contains("mapping_conflict_mode")) {
         QSqlError err = executeSql(connectionName,
             "ALTER TABLE device_mapping ADD COLUMN mapping_conflict_mode TEXT DEFAULT 'RenameOldest'");
         if (err.type() != QSqlError::NoError) {
-            qDebug() << "Failed to add mapping_conflict_mode column:" << err.text();
+            qWarning() << "WARNING: Failed to add mapping_conflict_mode column:" << err.text();
             return err;
         }
-        qDebug() << "Added mapping_conflict_mode column to device_mapping";
     } else {
-        qDebug() << "mapping_conflict_mode already exists, skipping";
     }
 
     if (!existingColumns.contains("mapping_source_mode")) {
         QSqlError err = executeSql(connectionName,
             "ALTER TABLE device_mapping ADD COLUMN mapping_source_mode TEXT DEFAULT 'Catalog'");
         if (err.type() != QSqlError::NoError) {
-            qDebug() << "Failed to add mapping_source_mode column:" << err.text();
+            qWarning() << "WARNING: Failed to add mapping_source_mode column:" << err.text();
             return err;
         }
-        qDebug() << "Added mapping_source_mode column to device_mapping";
     } else {
-        qDebug() << "mapping_source_mode already exists, skipping";
     }
 
     QSqlError filterErr = executeSql(connectionName, QLatin1String(R"(
@@ -1324,12 +1266,10 @@ QSqlError Database::runMigration_2_10(const QString &connectionName)
         )
     )"));
     if (filterErr.type() != QSqlError::NoError) {
-        qDebug() << "Failed to create catalog_filter table:" << filterErr.text();
+        qWarning() << "WARNING: Failed to create catalog_filter table:" << filterErr.text();
         return filterErr;
     }
-    qDebug() << "catalog_filter table ready";
 
-    qDebug() << "=== Database Migration 2.10 completed ===";
     return QSqlError();
 }
 

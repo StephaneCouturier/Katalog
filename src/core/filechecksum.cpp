@@ -55,7 +55,7 @@ bool FileChecksum::calculateAndStore(const QString &filePath,
     // Check if file exists
     QFileInfo fileInfo(filePath);
     if (!fileInfo.exists() || !fileInfo.isFile()) {
-        qDebug() << "FileChecksum::calculateAndStore - File does not exist:" << filePath;
+        qWarning() << "WARNING: FileChecksum::calculateAndStore - File does not exist:" << filePath;
         return false;
     }
 
@@ -63,7 +63,7 @@ bool FileChecksum::calculateAndStore(const QString &filePath,
     QString checksumValue = calculateChecksum(filePath, QCryptographicHash::Sha256);
 
     if (checksumValue.isEmpty()) {
-        qDebug() << "FileChecksum::calculateAndStore - Failed to calculate checksum:" << filePath;
+        qWarning() << "WARNING: FileChecksum::calculateAndStore - Failed to calculate checksum:" << filePath;
         return false;
     }
 
@@ -83,14 +83,12 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
     QFile file(filePath);
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "FileChecksum::calculateChecksum - Cannot open file:" << filePath;
-        qDebug() << "  Error:" << file.errorString();
+        qWarning() << "WARNING: FileChecksum::calculateChecksum - Cannot open file:" << filePath;
+        qWarning() << "WARNING:   Error:" << file.errorString();
         return QString();
     }
 
     qint64 fileSize = file.size();
-    qDebug() << "FileChecksum::calculateChecksum - Processing:" << filePath;
-    qDebug() << "  File size:" << QLocale().formattedDataSize(fileSize);
 
     QCryptographicHash hash(algorithm);
 
@@ -109,16 +107,13 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
 
         // Call progress callback if provided
         if (progressCallback && (totalRead - lastProgressReport) >= progressInterval) {
-            qDebug() << "    Progress callback: Read"
-                     << QLocale().formattedDataSize(totalRead)
-                     << "of" << QLocale().formattedDataSize(fileSize);
 
             // Call the callback - it will throw or return false if we should stop
             try {
                 progressCallback(totalRead, fileSize);
             } catch (...) {
                 // Callback indicated we should stop
-                qDebug() << "    Progress callback indicated stop - aborting checksum";
+                qWarning() << "WARNING:     Progress callback indicated stop - aborting checksum";
                 file.close();
                 return QString(); // Return empty to indicate interrupted
             }
@@ -134,7 +129,6 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
 
     // Final progress callback AFTER hash is complete
     if (progressCallback && totalRead > 0) {
-        qDebug() << "    Final progress callback: Checksum complete";
         try {
             progressCallback(totalRead, fileSize);
         } catch (...) {
@@ -142,8 +136,6 @@ QString FileChecksum::calculateChecksum(const QString &filePath,
         }
     }
 
-    qDebug() << "  Checksum:" << checksum;
-    qDebug() << "  Bytes processed:" << QLocale().formattedDataSize(totalRead);
 
     return checksum;
 }
@@ -158,7 +150,6 @@ bool FileChecksum::updateFileChecksum(const QString &connectionName,
 {
     QSqlDatabase database = QSqlDatabase::database(connectionName);
     if (!database.isOpen()) {
-        qDebug() << "FileChecksum::updateFileChecksum - Database not open";
         return false;
     }
 
@@ -184,8 +175,7 @@ bool FileChecksum::updateFileChecksum(const QString &connectionName,
     query.addBindValue(folderPath);
 
     if (!query.exec()) {
-        qDebug() << "FileChecksum::updateFileChecksum - Query failed:" << query.lastError().text();
-        qDebug() << "Query was:" << queryString;
+        qWarning() << "WARNING: FileChecksum::updateFileChecksum - Query failed:" << query.lastError().text();
         return false;
     }
 
@@ -200,7 +190,7 @@ bool FileChecksum::batchUpdateFileChecksum(const QString &connectionName,
                                            const QStringList &checksumValues)
 {
     if (fileNames.size() != folderPaths.size() || fileNames.size() != checksumValues.size()) {
-        qDebug() << "FileChecksum::batchUpdateFileChecksum - Size mismatch in input arrays";
+        qWarning() << "WARNING: FileChecksum::batchUpdateFileChecksum - Size mismatch in input arrays";
         return false;
     }
 
@@ -210,7 +200,6 @@ bool FileChecksum::batchUpdateFileChecksum(const QString &connectionName,
 
     QSqlDatabase database = QSqlDatabase::database(connectionName);
     if (!database.isOpen()) {
-        qDebug() << "FileChecksum::batchUpdateFileChecksum - Database not open";
         return false;
     }
 
@@ -239,7 +228,7 @@ bool FileChecksum::batchUpdateFileChecksum(const QString &connectionName,
         query.addBindValue(folderPaths[i]);
 
         if (!query.exec()) {
-            qDebug() << "FileChecksum::batchUpdateFileChecksum - Failed for file:"
+            qWarning() << "WARNING: FileChecksum::batchUpdateFileChecksum - Failed for file:"
                      << fileNames[i] << query.lastError().text();
             database.rollback();
             return false;
@@ -247,7 +236,6 @@ bool FileChecksum::batchUpdateFileChecksum(const QString &connectionName,
     }
 
     database.commit();
-    qDebug() << "FileChecksum::batchUpdateFileChecksum - Updated" << fileNames.size() << "files";
 
     return true;
 }
@@ -262,7 +250,7 @@ QCryptographicHash::Algorithm FileChecksum::getAlgorithmFromString(const QString
     // }
 
     // Default fallback
-    qDebug() << "WARNING: Unknown checksum algorithm:" << algorithmName << "- defaulting to SHA256";
+    qWarning() << "WARNING: Unknown checksum algorithm:" << algorithmName << "- defaulting to SHA256";
     return QCryptographicHash::Sha256;
 }
 //-----------------------------------------------------------------------------------------------------
@@ -331,11 +319,9 @@ int FileChecksum::countFilesWithChecksum(const QString &connectionName, int cata
 
     if (query.exec() && query.next()) {
         return query.value(0).toInt();
-        qDebug() << "FileChecksum::countFilesWithChecksum - Count for catalog"
-                 << catalogId << "is" << query.value(0).toInt();
     }
     else {
-        qDebug() << "FileChecksum::countFilesWithChecksum - Query failed:" << query.lastError().text();
+        qWarning() << "WARNING: FileChecksum::countFilesWithChecksum - Query failed:" << query.lastError().text();
     }
 
     return 0;
@@ -364,7 +350,7 @@ FileChecksum::CatalogVerificationResult FileChecksum::verifyCatalogChecksums(
     query.bindValue(":catalog_id", catalogId);
 
     if (!query.exec()) {
-        qDebug() << "Failed to query files for verification:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to query files for verification:" << query.lastError().text();
         return result;
     }
 
@@ -384,7 +370,6 @@ FileChecksum::CatalogVerificationResult FileChecksum::verifyCatalogChecksums(
     while (query.next()) {
         // Check for stop
         if (shouldContinue && !shouldContinue()) {
-            qDebug() << "Checksum verification stopped by user";
             break;
         }
 
@@ -412,7 +397,7 @@ FileChecksum::CatalogVerificationResult FileChecksum::verifyCatalogChecksums(
         QString actualChecksum = calculateChecksum(filePath, QCryptographicHash::Sha256, nullptr);
 
         if (actualChecksum.isEmpty()) {
-            qDebug() << "Failed to calculate checksum for:" << filePath;
+            qWarning() << "WARNING: Failed to calculate checksum for:" << filePath;
             continue;
         }
 

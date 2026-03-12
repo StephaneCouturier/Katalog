@@ -70,10 +70,6 @@ ReplicationResult DirectoryReplicator::replicate(
     QStringList absoluteFolders = loadSourceFolders(catalogIds);
     QStringList relativePaths = toRelativePaths(absoluteFolders, sourcePath);
 
-    qDebug() << "DirectoryReplicator::replicate -"
-             << relativePaths.size() << "folders to replicate from"
-             << sourcePath << "to" << targetPath
-             << (dryRun ? "(dry run)" : "");
 
     // Sort so parent directories are created before children
     std::sort(relativePaths.begin(), relativePaths.end());
@@ -102,10 +98,6 @@ ReplicationResult DirectoryReplicator::replicate(
         }
     }
 
-    qDebug() << "DirectoryReplicator::replicate - Done:"
-             << result.createdCount() << "created,"
-             << result.skippedCount() << "already existed,"
-             << result.errorCount() << "errors";
 
     return result;
 }
@@ -160,9 +152,6 @@ ReplicationResult DirectoryReplicator::replicateAndPrune(
         }
     }
 
-    qDebug() << "DirectoryReplicator::replicateAndPrune -"
-             << result.removedCount() << "orphan directories"
-             << (dryRun ? "would be removed" : "removed");
 
     return result;
 }
@@ -198,9 +187,6 @@ ReplicationResult DirectoryReplicator::replicateFromDrive(
 
     std::sort(relativePaths.begin(), relativePaths.end());
 
-    qDebug() << "DirectoryReplicator::replicateFromDrive -"
-             << relativePaths.size() << "directories found under" << sourcePath
-             << (dryRun ? "(dry run)" : "");
 
     for (const QString &relativePath : relativePaths) {
         const QString fullTargetPath = targetPath + "/" + relativePath;
@@ -220,10 +206,6 @@ ReplicationResult DirectoryReplicator::replicateFromDrive(
         }
     }
 
-    qDebug() << "DirectoryReplicator::replicateFromDrive - Done:"
-             << result.createdCount() << "created,"
-             << result.skippedCount() << "already existed,"
-             << result.errorCount() << "errors";
 
     return result;
 }
@@ -259,8 +241,6 @@ QStringList DirectoryReplicator::loadSourceFolders(const QList<int> &catalogIds)
         folders.append(query.value(0).toString());
     }
 
-    qDebug() << "DirectoryReplicator::loadSourceFolders - loaded"
-             << folders.size() << "folders for catalog IDs:" << catalogIds;
 
     return folders;
 }

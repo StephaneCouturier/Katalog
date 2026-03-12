@@ -66,7 +66,6 @@ KFileMetaData::ExtractorCollection* FileMetadata::getCachedExtractorCollection()
 
     if (!s_extractorCollection) {
         s_extractorCollection = new KFileMetaData::ExtractorCollection();
-        qDebug() << "ExtractorCollection created and cached for performance";
     }
 
     return s_extractorCollection;
@@ -75,14 +74,12 @@ KFileMetaData::ExtractorCollection* FileMetadata::getCachedExtractorCollection()
 void FileMetadata::initializeExtensionTypeCache()
 {
     if (s_typeCacheInitialized) {
-        qDebug() << "Extension->Type cache already initialized with" << s_extensionToTypeCache.size() << "mappings";
         return;
     }
 
     QMimeDatabase mimeDb;
     KFileMetaData::ExtractorCollection extractors;
 
-    qDebug() << "Building extension->type cache from MIME database...";
 
     // Build mapping from MIME types to file types
     const auto allMimeTypes = mimeDb.allMimeTypes();
@@ -104,13 +101,11 @@ void FileMetadata::initializeExtensionTypeCache()
     }
 
     s_typeCacheInitialized = true;
-    qDebug() << "Extension->Type cache initialized with" << s_extensionToTypeCache.size() << "mappings";
 
     // Debug output of some common extensions
     QStringList sampleExts = {"jpg", "mp3", "mp4", "txt", "pdf", "doc", "flac", "m4a"};
     for (const QString& ext : sampleExts) {
         if (s_extensionToTypeCache.contains(ext)) {
-            qDebug() << "  " << ext << "->" << s_extensionToTypeCache[ext];
         }
     }
 }
@@ -315,7 +310,7 @@ QVariantMap FileMetadata::verifyMimeType(const QString &filePath, const QString 
         result["verification_date"] = QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm:ss");
 
         if (result["has_mismatch"].toBool()) {
-            qDebug() << "Type mismatch for" << filePath
+            qWarning() << "WARNING: Type mismatch for" << filePath
                      << "- Extension suggested:" << currentFileType
                      << "- MIME detected:" << mimeBasedType;
         }
@@ -349,7 +344,6 @@ bool FileMetadata::batchUpdateFileMetadata(const QString &connectionName,
 
     QSqlDatabase database = QSqlDatabase::database(connectionName);
     if (!database.isOpen()) {
-        qDebug() << "FileMetadata::batchUpdateFileMetadata - Database not open";
         return false;
     }
 
@@ -368,7 +362,7 @@ bool FileMetadata::batchUpdateFileMetadata(const QString &connectionName,
     // Start transaction for batch update
     QSqlQuery txQuery(database);
     if (!txQuery.exec("BEGIN TRANSACTION")) {
-        qDebug() << "Could not start transaction:" << txQuery.lastError().text();
+        qWarning() << "WARNING: Could not start transaction:" << txQuery.lastError().text();
     }
 
     // Update each metadata field with CASE statement covering all files
@@ -406,7 +400,7 @@ bool FileMetadata::batchUpdateFileMetadata(const QString &connectionName,
         }
 
         if (!query.exec()) {
-            qDebug() << "Batch update failed for key" << key << ":" << query.lastError().text();
+            qWarning() << "WARNING: Batch update failed for key" << key << ":" << query.lastError().text();
             txQuery.exec("ROLLBACK");
             return false;
         }
@@ -414,11 +408,10 @@ bool FileMetadata::batchUpdateFileMetadata(const QString &connectionName,
 
     // Commit transaction
     if (!txQuery.exec("COMMIT")) {
-        qDebug() << "Could not commit transaction:" << txQuery.lastError().text();
+        qWarning() << "WARNING: Could not commit transaction:" << txQuery.lastError().text();
         return false;
     }
 
-    qDebug() << "Batch metadata update: completed for" << fileNames.size() << "files";
     return true;
 }
 //-----------------------------------------------------------------------------------------------------
@@ -429,11 +422,9 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
 {
     QSqlDatabase database = QSqlDatabase::database(connectionName);
     if (!database.isOpen()) {
-        qDebug() << "FileMetadata::migrateFileTypesForCatalog - Database not open";
         return;
     }
 
-    qDebug() << "=== FILE TYPE MIGRATION (extension-based) - NO metadata extraction ===";
 
     // Step 1: Check if migration is needed
     QSqlQuery checkQuery(database);
@@ -446,17 +437,15 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
     checkQuery.bindValue(":catalog_id", catalogId);
 
     if (!checkQuery.exec() || !checkQuery.next()) {
-        qDebug() << "Failed to check migration status";
+        qWarning() << "WARNING: Failed to check migration status";
         return;
     }
 
     int totalFiles = checkQuery.value(0).toInt();
     if (totalFiles == 0) {
-        qDebug() << "No files need migration";
         return;
     }
 
-    qDebug() << "Starting migration for" << totalFiles << "files (file types only, NO metadata)";
     if (progressCallback) {
         progressCallback(0, totalFiles, "Starting file type conversion...");
     }
@@ -472,7 +461,7 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
     filesQuery.bindValue(":catalog_id", catalogId);
 
     if (!filesQuery.exec()) {
-        qDebug() << "Failed to query files:" << filesQuery.lastError().text();
+        qWarning() << "WARNING: Failed to query files:" << filesQuery.lastError().text();
         return;
     }
 
@@ -504,12 +493,10 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
                   return a.second > b.second; // Sort by count descending
               });
 
-    qDebug() << "Found" << extensions.size() << "distinct extensions and"
-             << extensionlessCount << "extensionless files";
 
     // Step 3: Begin transaction
     if (!database.transaction()) {
-        qDebug() << "Failed to begin transaction";
+        qWarning() << "WARNING: Failed to begin transaction";
         return;
     }
 
@@ -520,7 +507,6 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
         // Check if we should continue
         if (shouldContinueCallback && !shouldContinueCallback()) {
             database.rollback();
-            qDebug() << "Migration stopped by user";
             return;
         }
 
@@ -552,7 +538,7 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
         updateQuery.bindValue(":like_pattern", likePattern);
 
         if (!updateQuery.exec()) {
-            qDebug() << "Failed to update extension" << extension << ":"
+            qWarning() << "WARNING: Failed to update extension" << extension << ":"
                      << updateQuery.lastError().text();
             database.rollback();
             return;
@@ -574,7 +560,6 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
     if (extensionlessCount > 0) {
         if (shouldContinueCallback && !shouldContinueCallback()) {
             database.rollback();
-            qDebug() << "Migration stopped by user";
             return;
         }
 
@@ -591,7 +576,7 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
         updateExtensionlessQuery.bindValue(":catalog_id", catalogId);
 
         if (!updateExtensionlessQuery.exec()) {
-            qDebug() << "Failed to update extensionless files:"
+            qWarning() << "WARNING: Failed to update extensionless files:"
                      << updateExtensionlessQuery.lastError().text();
             database.rollback();
             return;
@@ -607,13 +592,11 @@ void FileMetadata::migrateFileTypesForCatalog(const QString &connectionName,
 
     // Step 6: Commit
     if (!database.commit()) {
-        qDebug() << "Failed to commit migration";
+        qWarning() << "WARNING: Failed to commit migration";
         database.rollback();
         return;
     }
 
-    qDebug() << "=== FILE TYPE MIGRATION COMPLETED: " << processedFiles
-             << "files (NO metadata was extracted) ===";
     if (progressCallback) {
         progressCallback(processedFiles, totalFiles, "File type conversion completed");
     }
@@ -634,36 +617,26 @@ bool FileMetadata::extractAndStore(const QString &filePath,
 
     QFileInfo fileInfo(filePath);
     if (!fileInfo.exists() || !fileInfo.isReadable()) {
-        qDebug() << "  ERROR: File not accessible";
         return false;
     }
 
     // Extract metadata
-    QElapsedTimer extractTimer;
-    extractTimer.start();
     QVariantMap metadata = extractMetadata(filePath, includeMetadata);
-    int extractMs = extractTimer.elapsed();
 
     if (metadata.isEmpty()) {
         return true;
     }
 
     // Store in database
-    QElapsedTimer updateTimer;
-    updateTimer.start();
     bool result = updateFileMetadata(connectionName, catalogId,
                                      fileInfo.fileName(),
                                      fileInfo.absolutePath(),
                                      metadata);
-    int updateMs = updateTimer.elapsed();
 
     if (callCount % 100 == 0) {
-        qDebug() << "Progress:" << callCount << "Extract:" << extractMs << "ms Database:" << updateMs << "ms";
     }
 
     if (callCount == 5745) {
-        qDebug() << "TOTAL TIME:" << timer.elapsed() << "ms for 5745 files";
-        qDebug() << "Average per file:" << (timer.elapsed() / 5745) << "ms";
     }
 
     return result;
@@ -682,14 +655,12 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
 
     // No metadata extraction
     if (includeMetadata == Catalog::METADATA_NONE) {
-        qDebug() << "  Skipping: METADATA_NONE";
         return result;
     }
 
     try {
         QFileInfo fileInfo(filePath);
         if (!fileInfo.exists() || !fileInfo.isReadable()) {
-            qDebug() << "  ERROR: File not accessible";
             return result;
         }
 
@@ -726,7 +697,6 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         const auto extractorsList = extractors->fetchExtractors(guessMimeType);
 
         if (extractorsList.isEmpty()) {
-            qDebug() << "  No extractors available";
             result["metadata_extended"] = "NOT SUPPORTED";
             return result;
         }
@@ -742,26 +712,25 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
                 try {
                     extractor->extract(&extractionResult);
                 } catch (const std::exception& e) {
-                    qDebug() << "  WARNING: Extractor threw exception:" << e.what();
+                    qWarning() << "WARNING:   WARNING: Extractor threw exception:" << e.what();
                 } catch (...) {
-                    qDebug() << "  WARNING: Extractor threw unknown exception";
+                    qWarning() << "WARNING:   WARNING: Extractor threw unknown exception";
                 }
             }
 
             properties = extractionResult.properties();
 
         } catch (const std::exception& e) {
-            qDebug() << "  ERROR: Extraction failed:" << e.what();
+            qWarning() << "WARNING:   ERROR: Extraction failed:" << e.what();
             result["metadata_extended"] = "FAILED";
             return result;
         } catch (...) {
-            qDebug() << "  ERROR: Extraction failed with unknown exception";
+            qWarning() << "WARNING:   ERROR: Extraction failed with unknown exception";
             result["metadata_extended"] = "FAILED";
             return result;
         }
 
         if (properties.isEmpty()) {
-            qDebug() << "  No properties extracted";
             result["metadata_extended"] = "EMPTY";
             return result;
         }
@@ -843,7 +812,6 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
             if (!extendedObj.isEmpty()) {
                 QJsonDocument doc(extendedObj);
                 result["metadata_extended"] = doc.toJson(QJsonDocument::Compact);
-                qDebug() << "  Added extended JSON with" << extendedObj.size() << "properties";
             }
         }
 
@@ -852,16 +820,14 @@ QVariantMap FileMetadata::extractMetadata(const QString &filePath, QString inclu
         totalExtractMs += (extractEndMs - extractStartMs);
 
         if (callCount % 500 == 0 || callCount == 5745) {
-            qDebug() << "=== TIMING ===" << callCount << "files extracted,"
-                     << "avg extract time:" << (totalExtractMs / callCount) << "ms per file";
         }
 
         return result;
     } catch (const std::exception& e) {
-        qDebug() << "ERROR: Exception in extractMetadata:" << e.what();
+        qWarning() << "WARNING: Exception in extractMetadata:" << e.what();
         result["metadata_extended"] = "FAILED";
     } catch (...) {
-        qDebug() << "ERROR: Unknown exception in extractMetadata";
+        qWarning() << "WARNING: Unknown exception in extractMetadata";
         result["metadata_extended"] = "FAILED";
     }
 
@@ -949,7 +915,6 @@ bool FileMetadata::updateFileMetadata(const QString &connectionName,
 {
     QSqlDatabase database = QSqlDatabase::database(connectionName);
     if (!database.isOpen()) {
-        qDebug() << "FileMetadata::updateFileMetadata - Database not open";
         return false;
     }
 
@@ -1077,8 +1042,7 @@ bool FileMetadata::updateFileMetadata(const QString &connectionName,
     }
 
     if (!query.exec()) {
-        qDebug() << "FileMetadata::updateFileMetadata - Query failed:" << query.lastError().text();
-        qDebug() << "Query was:" << queryString;
+        qWarning() << "WARNING: FileMetadata::updateFileMetadata - Query failed:" << query.lastError().text();
         return false;
     }
 
@@ -1114,8 +1078,6 @@ void FileMetadata::initializeExtensionsCache() {
     }
 
     s_cacheInitialized = true;
-    qDebug() << "Metadata extensions cache initialized with"
-             << s_supportedExtensionsCache.size() << "extensions";
 }
 //-----------------------------------------------------------------------------------------------------
 bool FileMetadata::isExtensionSupported(const QString &extension)

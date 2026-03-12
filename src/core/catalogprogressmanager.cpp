@@ -39,7 +39,6 @@
 CatalogProgressManager::CatalogProgressManager(QObject *parent)
     : QObject(parent)
 {
-    qDebug() << "CatalogProgressManager created";
 }
 
 void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogManager)
@@ -65,8 +64,6 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
     // Handle cancellation
     connect(m_catalogManager, &CatalogManager::catalogOperationCancelled,
             this, [this]() {
-                qDebug() << "=== CANCELLED SIGNAL ===";
-                qDebug() << "Phase:" << m_catalogManager->lastPhase();
 
                 StatusBarMessageBuilder builder;
 
@@ -143,7 +140,6 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
     // Handle completion
     connect(m_catalogManager, &CatalogManager::catalogOperationCompleted,
             this, [this]() {
-                qDebug() << "=== COMPLETED SIGNAL ===";
 
                 StatusBarMessageBuilder builder;
 
@@ -196,20 +192,15 @@ void CatalogProgressManager::setCurrentCatalogEngine(CatalogJobStoppable *curren
 
 void CatalogProgressManager::updateFromCatalogManager()
 {
-    qDebug() << "=== CatalogProgressManager::updateFromCatalogManager() CALLED ===";
-    qDebug() << "  m_catalogManager:" << (m_catalogManager ? "exists" : "NULL");
     //qDebug() << "  m_statusBar:" << (m_statusBar ? "exists" : "NULL");
 
     if (!m_catalogManager) {
-        qDebug() << "  EARLY RETURN - missing catalogManager";
         return;
     }
 
     // ONLY handle in-progress updates
-    qDebug() << "  catalogOperationRunning:" << m_catalogManager->catalogOperationRunning();
 
     if (m_catalogManager->catalogOperationRunning()) {
-        qDebug() << "  Building status message...";
 
         StatusBarMessageBuilder builder;
 
@@ -341,9 +332,7 @@ void CatalogProgressManager::updateFromCatalogManager()
 
         // At the very end, before setting the text:
         QString message = builder.build();
-        qDebug() << "  Final message:" << message;
 
-        qDebug() << "  Emitting status message";
 
         emit statusMessageChanged(message, 0);
     }
@@ -359,12 +348,10 @@ void CatalogProgressManager::setBatchContext(int currentIndex, int totalCatalogs
 {
     m_batchCurrentIndex = currentIndex;
     m_batchTotalCatalogs = totalCatalogs;
-    qDebug() << "CatalogProgressManager: Batch context set to" << currentIndex << "of" << totalCatalogs;
 }
 
 void CatalogProgressManager::clearBatchContext()
 {
     m_batchCurrentIndex = 0;
     m_batchTotalCatalogs = 0;
-    qDebug() << "CatalogProgressManager: Batch context cleared";
 }

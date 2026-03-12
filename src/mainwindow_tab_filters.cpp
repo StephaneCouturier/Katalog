@@ -202,10 +202,8 @@
             deviceContextMenu.addAction(menuDeviceAction3);
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
                 for (int i = 0; i < selectedDevice->subDevices.size(); ++i) {
-                    qDebug() << "  Existing child" << i << ":" << selectedDevice->subDevices[i].name << "ID:" << selectedDevice->subDevices[i].ID;
                 }
                 for (int i = 0; i < selectedDevice->deviceIDList.size(); ++i) {
-                    qDebug() << "  Child ID" << i << ":" << selectedDevice->deviceIDList[i];
                 }
 
                 setCatalogUpdateUIState(true);
@@ -217,7 +215,6 @@
                     collection->folder,
                     "update"
                     );
-                qDebug() << "Device operation started using DeviceUpdateManager";
             });
 
             deviceContextMenu.exec(globalPos);

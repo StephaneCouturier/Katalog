@@ -49,49 +49,36 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            qDebug() << "=== Search/Pause/Resume button clicked ===";
-            qDebug() << "Current state:" << static_cast<int>(searchButtonState);
 
             switch (searchButtonState) {
                 case SearchButtonState::Idle:
-                    qDebug() << "Starting search from idle state";
                     launchSearch();  // Let launchSearch() handle state updates
                     break;
 
                 case SearchButtonState::Running:
-                    qDebug() << "Pausing search";
                     pauseCurrentSearch();  // This should call setSearchStatePaused()
                     break;
 
                 case SearchButtonState::Paused:
-                    qDebug() << "Resuming search";
                     resumeCurrentSearch();  // This should call setSearchStateRunning()
                     break;
 
                 case SearchButtonState::Searching:
                     // Memory mode - button disabled, nothing to do
-                    qDebug() << "Button clicked during memory search (should be disabled)";
                     break;
             }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Stop_clicked()
         {
-            qDebug() << "=== Stop button clicked ===";
-            qDebug() << "Before stop - Search button state:" << static_cast<int>(searchButtonState);
-            qDebug() << "Before stop - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
             // Stop any running search
             if (searchManager && searchManager->searchRunning()) {
-                qDebug() << "Stopping active search via SearchManager";
                 searchManager->stopSearch();
             } else {
-                qDebug() << "No active search, but user clicked Stop - just reset buttons";
                 setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
             }
 
-            qDebug() << "After stop - Search button state:" << static_cast<int>(searchButtonState);
-            qDebug() << "After stop - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
@@ -653,7 +640,7 @@
                     selectedDevice->loadDevice(m_connectionName);
                 }
                 else {
-                    qDebug() << "Warning: Device ID" << deviceID << "no longer exists, using 'All'";
+                    qWarning() << "WARNING: Device ID" << deviceID << "no longer exists, using 'All'";
                     selectedDevice->ID = 0;
                     selectedDevice->type = "All";
                     selectedDevice->loadDevice(m_connectionName);
@@ -2131,7 +2118,6 @@
         //----------------------------------------------------------------------
         void MainWindow::resetSearchButton()
         {
-            qDebug() << "resetSearchButton() called";
             ui->Search_pushButton_Search->setText("Search");
             ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
             ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");

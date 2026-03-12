@@ -423,29 +423,24 @@
     void MainWindow::runDatabaseMigrations()
     {
         QString currentSchemaVersion = collection->loadDatabaseSchemaVersion();
-        qDebug() << "Current database schema version:" << currentSchemaVersion;
-        qDebug() << "App version:" << collection->appVersion;
 
         //Run in ascending version order
             QVersionNumber schemaVersion = QVersionNumber::fromString(currentSchemaVersion);
 
             if (schemaVersion < QVersionNumber::fromString("2.6")) {
-                qDebug() << "Running database migration to 2.6...";
                 collection->dbSchemaVersion = "2.6";
 
                 QSqlError migrationError = Database::runMigration_2_6(m_connectionName);
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
-                    qDebug() << "Database migration to 2.6 completed";
                     migrateExistingSearchDeviceData_2_6();
                 } else {
-                    qDebug() << "Database migration to 2.6 failed:" << migrationError.text();
+                    qWarning() << "WARNING: Database migration to 2.6 failed:" << migrationError.text();
                     return;
                 }
             }
 
             if (schemaVersion < QVersionNumber::fromString("2.8")) {
-                qDebug() << "Running SAFE database migration to 2.8...";
                 collection->dbSchemaVersion = "2.8";
 
                 // Use the safe migration method
@@ -454,9 +449,8 @@
                 QApplication::restoreOverrideCursor();
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
-                    qDebug() << "SAFE database migration to 2.8 completed";
                 } else {
-                    qDebug() << "Database migration to 2.8 failed:" << migrationError.text();
+                    qWarning() << "WARNING: Database migration to 2.8 failed:" << migrationError.text();
                     QMessageBox::critical(this, "Migration Failed",
                                           QString("Database migration failed: %1\n\n"
                                                   "Your original database backup is safe.\n"
@@ -466,7 +460,6 @@
             }
 
             if (schemaVersion < QVersionNumber::fromString("2.9")) {
-                qDebug() << "Running database migration to 2.9...";
                 collection->dbSchemaVersion = "2.9";
 
                 QApplication::setOverrideCursor(Qt::BusyCursor);
@@ -474,9 +467,8 @@
                 QApplication::restoreOverrideCursor();
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
-                    qDebug() << "Database migration to 2.9 completed";
                 } else {
-                    qDebug() << "Database migration to 2.9 failed:" << migrationError.text();
+                    qWarning() << "WARNING: Database migration to 2.9 failed:" << migrationError.text();
                     QMessageBox::critical(this, "Migration Failed",
                                           QString("Database migration to 2.9 failed: %1\n\n"
                                                   "Please check the logs and contact support if needed.")
@@ -486,15 +478,13 @@
             }
 
             if (schemaVersion < QVersionNumber::fromString("2.10")) {
-                qDebug() << "Running database migration to 2.10...";
                 collection->dbSchemaVersion = "2.10";
 
                 QSqlError migrationError = Database::runMigration_2_10(m_connectionName);
                 if (migrationError.type() == QSqlError::NoError) {
                     collection->setDatabaseSchemaVersion();
-                    qDebug() << "Database migration to 2.10 completed";
                 } else {
-                    qDebug() << "Database migration to 2.10 failed:" << migrationError.text();
+                    qWarning() << "WARNING: Database migration to 2.10 failed:" << migrationError.text();
                     return;
                 }
             }
@@ -505,7 +495,6 @@
    //----------------------------------------------------------------------
     void MainWindow::migrateExistingSearchDeviceData_2_6()
     {
-        qDebug() << "Migrating existing search history device data...";
 
         QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
         QSqlQuery selectQuery(QSqlDatabase::database(m_connectionName));
@@ -557,7 +546,7 @@
                     else {
                         // Device not found, use 0 as fallback for "All"
                         deviceIdList = "0";
-                        qDebug() << "Warning: Could not find device for catalog:" << catalogName << "storage:" << storageName;
+                        qWarning() << "WARNING: Could not find device for catalog:" << catalogName << "storage:" << storageName;
                     }
                 }
             }
@@ -576,11 +565,10 @@
             updateQuery.bindValue(":date_time", dateTime);
 
             if (!updateQuery.exec()) {
-                qDebug() << "Failed to update search record:" << updateQuery.lastError().text();
+                qWarning() << "WARNING: Failed to update search record:" << updateQuery.lastError().text();
             }
         }
 
-        qDebug() << "Search history device data migration completed";
     }
     //----------------------------------------------------------------------
     bool MainWindow::backupMemoryDatabaseToFile(
@@ -644,7 +632,6 @@
             //Process table copy, except for the system table sqlite_sequence
             if (tableName != "sqlite_sequence")
             {
-                qDebug()<<tablesDumped;
                 // Create table in file-based database
                 if (!fileDbQuery.exec(createTableSQL)) {
                     QMessageBox::warning(nullptr, "Database Error", "Error creating table in file-based database: " + fileDbQuery.lastError().text());
@@ -1133,8 +1120,6 @@
         QString xdgCurrentDesktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
         QString sessionDesktop = qEnvironmentVariable("DESKTOP_SESSION");
 
-        qDebug() << "Theme detection - XDG_CURRENT_DESKTOP:" << xdgCurrentDesktop
-                 << "DESKTOP_SESSION:" << sessionDesktop;
 
         // KDE Detection: Use Qt palette method as it works well on KDE
         if (xdgCurrentDesktop.contains("KDE", Qt::CaseInsensitive) ||
@@ -1143,19 +1128,15 @@
 
             QPalette palette = QApplication::palette();
             bool kdeDark = palette.color(QPalette::Window).lightness() < 128;
-            qDebug() << "KDE detected - using Qt palette detection. Window lightness:"
-                     << palette.color(QPalette::Window).lightness() << "- Dark theme:" << kdeDark;
             return kdeDark;
         }
 
         // For non-KDE environments, use enhanced detection
-        qDebug() << "Non-KDE environment detected - using enhanced detection";
 
         // Method 1: Check GTK_THEME environment variable (most reliable when set)
         QString gtkTheme = qEnvironmentVariable("GTK_THEME");
         if (!gtkTheme.isEmpty()) {
             bool gtkDark = gtkTheme.contains("dark", Qt::CaseInsensitive);
-            qDebug() << "GTK_THEME found:" << gtkTheme << "- Dark theme:" << gtkDark;
             return gtkDark;
         }
 
@@ -1167,18 +1148,15 @@
             xdgCurrentDesktop.contains("ubuntu", Qt::CaseInsensitive)) {
             desktopSpecificResult = checkGnomeTheme();
             desktopSpecificFound = true;
-            qDebug() << "GNOME/Ubuntu theme detection result:" << desktopSpecificResult;
         }
         else if (xdgCurrentDesktop.contains("XFCE", Qt::CaseInsensitive)) {
             desktopSpecificResult = checkXfceTheme();
             desktopSpecificFound = true;
-            qDebug() << "XFCE theme detection result:" << desktopSpecificResult;
         }
         else if (xdgCurrentDesktop.contains("X-Cinnamon", Qt::CaseInsensitive) ||
                  xdgCurrentDesktop.contains("Cinnamon", Qt::CaseInsensitive)) {
             desktopSpecificResult = checkCinnamonTheme();
             desktopSpecificFound = true;
-            qDebug() << "Cinnamon theme detection result:" << desktopSpecificResult;
         }
 
         // If desktop-specific detection worked, use it
@@ -1194,19 +1172,13 @@
         QColor textColor = palette.color(QPalette::WindowText);
         bool textColorIndicatesDark = textColor.lightness() > 128; // Light text suggests dark theme
 
-        qDebug() << "Fallback detection - Window lightness:" << palette.color(QPalette::Window).lightness()
-                 << "Text lightness:" << textColor.lightness()
-                 << "Qt palette says dark:" << qtPaletteDark
-                 << "Text color suggests dark:" << textColorIndicatesDark;
 
         // If both indicators agree, use that result
         if (qtPaletteDark == textColorIndicatesDark) {
-            qDebug() << "Both indicators agree - using result:" << qtPaletteDark;
             return qtPaletteDark;
         }
 
         // If they disagree, prefer text color indication (often more reliable on non-KDE)
-        qDebug() << "Indicators disagree - preferring text color indication:" << textColorIndicatesDark;
         return textColorIndicatesDark;
     }
     bool MainWindow::checkGnomeTheme() const
@@ -1219,7 +1191,6 @@
         if (process.exitCode() == 0) {
             QString colorScheme = process.readAllStandardOutput().trimmed();
             colorScheme.remove(QChar('\''));  // Remove quotes
-            qDebug() << "GNOME color-scheme:" << colorScheme;
             if (colorScheme.contains("dark", Qt::CaseInsensitive) || colorScheme.contains("prefer-dark")) {
                 return true;
             }
@@ -1235,7 +1206,6 @@
         if (process.exitCode() == 0) {
             QString gtkTheme = process.readAllStandardOutput().trimmed();
             gtkTheme.remove(QChar('\''));  // Remove quotes
-            qDebug() << "GNOME gtk-theme:" << gtkTheme;
             return gtkTheme.contains("dark", Qt::CaseInsensitive);
         }
 
@@ -1251,7 +1221,6 @@
 
         if (process.exitCode() == 0) {
             QString themeName = process.readAllStandardOutput().trimmed();
-            qDebug() << "XFCE theme name:" << themeName;
             return themeName.contains("dark", Qt::CaseInsensitive);
         }
 
@@ -1268,7 +1237,6 @@
         if (process.exitCode() == 0) {
             QString gtkTheme = process.readAllStandardOutput().trimmed();
             gtkTheme.remove(QChar('\''));  // Remove quotes
-            qDebug() << "Cinnamon gtk-theme:" << gtkTheme;
             return gtkTheme.contains("dark", Qt::CaseInsensitive);
         }
 
@@ -1292,7 +1260,6 @@
 #ifdef Q_OS_LINUX
     void MainWindow::setupLinuxIconTheme()
     {
-        qDebug() << "Setting up Linux icon theme...";
 
         // Disable KDE icon integration to restore Qt-only behavior
         // This forces Qt to use fallback paths like the old portable versions
@@ -1309,19 +1276,15 @@
 
         if (darkTheme) {
             fallbackPaths << ":/fallback-icons-dark";  // White icons for dark backgrounds
-            qDebug() << "Linux dark theme: Using white icons from :/fallback-icons-dark";
         } else {
             fallbackPaths << ":/fallback-icons"; // Dark icons for light backgrounds
-            qDebug() << "Linux light theme: Using dark icons from :/fallback-icons-light";
         }
 
         QIcon::setFallbackSearchPaths(fallbackPaths);
 
-        qDebug() << "Linux icon setup completed. Fallback paths:" << QIcon::fallbackSearchPaths();
 
         // Test icon loading
         QIcon testIcon = QIcon::fromTheme("folder");
-        qDebug() << "Test folder icon loaded successfully:" << !testIcon.isNull();
     }
 #endif
     //----------------------------------------------------------------------
@@ -1329,7 +1292,6 @@
     void MainWindow::setupWindowsIconTheme()
     {
         // Windows: Keep the exact same logic that was working before
-        qDebug() << "Setting up Windows icon theme...";
 
         // Use the original approach from main.cpp
         bool darkTheme = isDarkTheme();
@@ -1342,54 +1304,29 @@
 
         if (darkTheme) {
             fallbackPaths << ":/fallback-icons-dark";
-            qDebug() << "Windows dark theme: Using fallback-icons-dark";
         } else {
             fallbackPaths << ":/fallback-icons";
-            qDebug() << "Windows light theme: Using fallback-icons-light";
         }
 
         QIcon::setFallbackSearchPaths(fallbackPaths);
 
-        qDebug() << "Windows icon setup completed. Theme:" << QIcon::themeName();
-        qDebug() << "Fallback paths:" << QIcon::fallbackSearchPaths();
     }
 #endif
     //----------------------------------------------------------------------
     void MainWindow::debugIconSetup()
     {
-        qDebug() << "=== ICON SETUP DEBUG ===";
-        qDebug() << "Platform:"
-#ifdef Q_OS_LINUX
-                 << "Linux"
-#elif defined(Q_OS_WIN)
-                 << "Windows"
-#elif defined(Q_OS_MAC)
-                 << "macOS"
-#else
-                 << "Other"
-#endif
-            ;
 
-        qDebug() << "Icon theme name:" << QIcon::themeName();
-        qDebug() << "Fallback search paths:" << QIcon::fallbackSearchPaths();
-        qDebug() << "Theme search paths:" << QIcon::themeSearchPaths();
-        qDebug() << "Desktop settings aware:" << QApplication::desktopSettingsAware();
-        qDebug() << "Dark theme detected:" << isDarkTheme();
 
         // Test key icons
         QStringList testIcons = {"folder", "edit-find", "image-jpeg"};
         for (const QString &iconName : testIcons) {
             QIcon icon = QIcon::fromTheme(iconName);
-            qDebug() << "Icon" << iconName << "- null:" << icon.isNull()
-                     << "sizes:" << icon.availableSizes().size();
         }
 
-        qDebug() << "=== END ICON DEBUG ===";
     }
     //----------------------------------------------------------------------
     void MainWindow::refreshAllIcons()
     {
-        qDebug() << "Refreshing all UI icons after theme change...";
 
         // Force refresh of tree view icons by triggering model updates
         if (ui->Search_treeView_FilesFound && ui->Search_treeView_FilesFound->model()) {
@@ -1420,7 +1357,6 @@
         // Force repaint of the entire UI
         update();
 
-        qDebug() << "Icon refresh completed";
     }
     //----------------------------------------------------------------------
     void MainWindow::changeEvent(QEvent *event)
@@ -1429,7 +1365,6 @@
             event->type() == QEvent::StyleChange ||
             event->type() == QEvent::ThemeChange) {
 
-            qDebug() << "Desktop theme change detected, refreshing icons...";
 
             // Small delay to ensure the palette change is fully applied
             QTimer::singleShot(100, this, [this]() {
@@ -1448,7 +1383,6 @@
                     }
                 }
 
-                qDebug() << "Theme change handling completed";
             });
         }
 
@@ -1478,46 +1412,21 @@
     //----------------------------------------------------------------------
     void MainWindow::debugIconLoadingDetailed()
     {
-        qDebug() << "=== DETAILED ICON LOADING ANALYSIS ===";
-        qDebug() << "Platform:"
-#ifdef Q_OS_LINUX
-                 << "Linux"
-#elif defined(Q_OS_WIN)
-                 << "Windows"
-#elif defined(Q_OS_MAC)
-                 << "macOS"
-#else
-                 << "Other"
-#endif
-            ;
 
         // Basic icon theme info
-        qDebug() << "Icon theme name:" << QIcon::themeName();
-        qDebug() << "Fallback search paths:" << QIcon::fallbackSearchPaths();
-        qDebug() << "Theme search paths:" << QIcon::themeSearchPaths();
-        qDebug() << "Desktop settings aware:" << QApplication::desktopSettingsAware();
-        qDebug() << "Dark theme detected:" << isDarkTheme();
 
         // Check if KF6BreezeIcons is available
-        qDebug() << "";
-        qDebug() << "=== KF6 Integration Check ===";
 
         // Try to load a test icon with different approaches
         QStringList testIcons = {"folder", "edit-find", "media-optical", "dialog-ok-apply"};
 
         for (const QString &iconName : testIcons) {
-            qDebug() << "";
-            qDebug() << "Testing icon:" << iconName;
 
             // Method 1: Standard QIcon::fromTheme (current approach)
             QIcon standardIcon = QIcon::fromTheme(iconName);
-            qDebug() << "  Standard fromTheme - null:" << standardIcon.isNull()
-                     << "sizes:" << standardIcon.availableSizes().size();
             if (!standardIcon.isNull()) {
-                qDebug() << "  Available sizes:" << standardIcon.availableSizes();
                 // Try to get the actual file path being used
                 QPixmap pixmap = standardIcon.pixmap(22, 22);
-                qDebug() << "  22x22 pixmap null:" << pixmap.isNull();
             }
 
             // Method 2: Test if KF6 theme loading works by temporarily clearing fallbacks
@@ -1527,14 +1436,10 @@
             // Try with breeze theme name
             QIcon::setThemeName("breeze");
             QIcon kf6Icon = QIcon::fromTheme(iconName);
-            qDebug() << "  KF6/Breeze without fallbacks - null:" << kf6Icon.isNull()
-                     << "sizes:" << kf6Icon.availableSizes().size();
 
             // Try with system theme
             QIcon::setThemeName(""); // Let system decide
             QIcon systemIcon = QIcon::fromTheme(iconName);
-            qDebug() << "  System theme without fallbacks - null:" << systemIcon.isNull()
-                     << "sizes:" << systemIcon.availableSizes().size();
 
             // Restore original settings
             QIcon::setFallbackSearchPaths(originalFallbacks);
@@ -1543,19 +1448,13 @@
             // Method 3: Direct resource check
             QString lightResource = QString(":/fallback-icons/%1.png").arg(iconName);
             QString darkResource = QString(":/fallback-icons-dark/%1.png").arg(iconName);
-            qDebug() << "  Light resource exists:" << QFile::exists(lightResource);
-            qDebug() << "  Dark resource exists:" << QFile::exists(darkResource);
         }
 
-        qDebug() << "";
-        qDebug() << "=== Icon Search Path Analysis ===";
         QStringList themePaths = QIcon::themeSearchPaths();
         for (const QString &path : themePaths) {
-            qDebug() << "Theme path:" << path;
             QDir dir(path);
             if (dir.exists()) {
                 QStringList themes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-                qDebug() << "  Available themes:" << themes;
 
                 // Check if breeze theme exists
                 if (themes.contains("breeze")) {
@@ -1563,28 +1462,19 @@
                     QDir breezeDir(breezePath);
                     if (breezeDir.exists()) {
                         QStringList categories = breezeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-                        qDebug() << "  Breeze categories:" << categories;
                     }
                 }
             } else {
-                qDebug() << "  Path does not exist";
+                qWarning() << "WARNING:   Path does not exist";
             }
         }
 
-        qDebug() << "";
-        qDebug() << "=== Environment Variables ===";
-        qDebug() << "XDG_DATA_DIRS:" << qgetenv("XDG_DATA_DIRS");
-        qDebug() << "XDG_CONFIG_HOME:" << qgetenv("XDG_CONFIG_HOME");
-        qDebug() << "XDG_DATA_HOME:" << qgetenv("XDG_DATA_HOME");
 
-        qDebug() << "=== END DETAILED ANALYSIS ===";
-        qDebug() << "";
     }
 
     // Also add this method to track which actual files are being loaded
     void MainWindow::testIconSourceTracking()
     {
-        qDebug() << "=== ICON SOURCE TRACKING TEST ===";
 
         // Create a custom icon engine to track loading
         QStringList testIcons = {"folder", "edit-find", "document-save"};
@@ -1597,11 +1487,6 @@
                 QPixmap pm22 = icon.pixmap(22, 22);
                 QPixmap pm32 = icon.pixmap(32, 32);
 
-                qDebug() << "Icon" << iconName << ":";
-                qDebug() << "  16x16 available:" << !pm16.isNull();
-                qDebug() << "  22x22 available:" << !pm22.isNull();
-                qDebug() << "  32x32 available:" << !pm32.isNull();
-                qDebug() << "  Cachekey:" << QString::number(icon.cacheKey());
 
                 // Try to determine if it's coming from resources
                 // This is a bit hacky but can help identify the source
@@ -1611,25 +1496,19 @@
                 bool matchesLight = (icon.cacheKey() == resourceIcon.cacheKey());
                 bool matchesDark = (icon.cacheKey() == resourceIconDark.cacheKey());
 
-                qDebug() << "  Matches light resource:" << matchesLight;
-                qDebug() << "  Matches dark resource:" << matchesDark;
 
                 if (!matchesLight && !matchesDark) {
-                    qDebug() << "  *** LIKELY FROM SYSTEM/KF6 ***";
                 } else {
-                    qDebug() << "  *** FROM EMBEDDED RESOURCES ***";
                 }
             }
         }
 
-        qDebug() << "=== END SOURCE TRACKING ===";
     }
 
     // Modified setupIconTheme methods to test KF6 icon loading
     // Add these as test methods to MainWindow class
     void MainWindow::setupIconThemeWithKF6Test()
     {
-        qDebug() << "=== TESTING KF6 ICON LOADING ===";
 
 #ifdef Q_OS_LINUX
         setupLinuxIconThemeKF6Test();
@@ -1647,7 +1526,6 @@
 #ifdef Q_OS_LINUX
     void MainWindow::setupLinuxIconThemeKF6Test()
     {
-        qDebug() << "Setting up Linux icon theme with KF6 integration test...";
 
         // ENABLE KDE icon integration (opposite of current approach)
         QApplication::setDesktopSettingsAware(true);
@@ -1656,34 +1534,23 @@
         // Try different approaches:
 
         // Approach 1: Let system decide theme
-        qDebug() << "Test 1: System-decided theme";
         QIcon::setThemeName(""); // Let system decide
 
         // Clear fallback paths to force KF6/system usage
         QIcon::setFallbackSearchPaths(QStringList());
 
-        qDebug() << "After clearing fallbacks:";
-        qDebug() << "  Theme name:" << QIcon::themeName();
-        qDebug() << "  Theme paths:" << QIcon::themeSearchPaths();
 
         // Test if icons load
         QIcon testIcon1 = QIcon::fromTheme("folder");
-        qDebug() << "  System folder icon loaded:" << !testIcon1.isNull();
 
         // Approach 2: Explicitly set breeze theme
-        qDebug() << "";
-        qDebug() << "Test 2: Explicit breeze theme";
         QIcon::setThemeName("breeze");
 
         QIcon testIcon2 = QIcon::fromTheme("folder");
-        qDebug() << "  Breeze folder icon loaded:" << !testIcon2.isNull();
 
         // Approach 3: Add minimal fallback only if KF6 fails
-        qDebug() << "";
-        qDebug() << "Test 3: KF6 with minimal fallback";
 
         if (testIcon2.isNull()) {
-            qDebug() << "  KF6 icons not available, adding fallback";
             QStringList fallbackPaths;
             bool darkTheme = isDarkTheme();
 
@@ -1694,19 +1561,15 @@
             }
 
             QIcon::setFallbackSearchPaths(fallbackPaths);
-            qDebug() << "  Added fallback paths:" << fallbackPaths;
         } else {
-            qDebug() << "  KF6 icons working, no fallback needed";
         }
 
-        qDebug() << "Linux KF6 test setup completed";
     }
 #endif
 
 #ifdef Q_OS_WIN
     void MainWindow::setupWindowsIconThemeKF6Test()
     {
-        qDebug() << "Setting up Windows icon theme with KF6 integration test...";
 
         // Test if KF6BreezeIcons works on Windows
         QApplication::setDesktopSettingsAware(true);
@@ -1715,9 +1578,6 @@
         QIcon::setThemeName("breeze");
         QIcon::setFallbackSearchPaths(QStringList()); // Clear fallbacks
 
-        qDebug() << "Testing KF6 on Windows:";
-        qDebug() << "  Theme name:" << QIcon::themeName();
-        qDebug() << "  Theme paths:" << QIcon::themeSearchPaths();
 
         // Test critical icons
         QStringList testIcons = {"folder", "edit-find", "document-save"};
@@ -1727,14 +1587,11 @@
             QIcon icon = QIcon::fromTheme(iconName);
             bool loaded = !icon.isNull();
             if (loaded) successCount++;
-            qDebug() << "  " << iconName << "loaded:" << loaded;
         }
 
-        qDebug() << "KF6 success rate:" << successCount << "/" << testIcons.size();
 
         // If KF6 doesn't work well, add fallbacks
         if (successCount < testIcons.size()) {
-            qDebug() << "Adding fallback paths for Windows";
 
             QStringList fallbackPaths = QIcon::fallbackSearchPaths();
             bool darkTheme = isDarkTheme();
@@ -1746,9 +1603,7 @@
             }
 
             QIcon::setFallbackSearchPaths(fallbackPaths);
-            qDebug() << "Windows KF6 test with fallback completed";
         } else {
-            qDebug() << "Windows KF6 test - no fallback needed!";
         }
     }
 #endif
@@ -1756,7 +1611,6 @@
     // Safe method to test removing fallback resources
     void MainWindow::testWithoutFallbackResources()
     {
-        qDebug() << "=== TESTING WITHOUT FALLBACK RESOURCES ===";
 
         // Store original setup
         QString originalTheme = QIcon::themeName();
@@ -1768,7 +1622,6 @@
         QIcon::setThemeName("breeze");
         QIcon::setFallbackSearchPaths(QStringList()); // Remove all fallbacks
 
-        qDebug() << "Testing icon loading without any fallback resources:";
 
         // Test all your commonly used icons
         QStringList criticalIcons = {
@@ -1786,29 +1639,20 @@
 
             if (loaded) {
                 successCount++;
-                qDebug() << "  ✅" << iconName << "- sizes:" << icon.availableSizes();
             } else {
                 failedIcons << iconName;
-                qDebug() << "  ❌" << iconName << "- FAILED";
+                qWarning() << "WARNING:   ❌" << iconName << "- FAILED";
             }
         }
 
-        qDebug() << "";
-        qDebug() << "RESULTS:";
-        qDebug() << "  Success rate:" << successCount << "/" << criticalIcons.size()
-                 << "(" << (100 * successCount / criticalIcons.size()) << "%)";
 
         if (!failedIcons.isEmpty()) {
-            qDebug() << "  Failed icons:" << failedIcons;
-            qDebug() << "  These would need fallback resources";
+            qWarning() << "WARNING:   Failed icons:" << failedIcons;
         }
 
         if (successCount == criticalIcons.size()) {
-            qDebug() << "  🎉 ALL ICONS LOADED FROM KF6! Safe to remove fallback resources.";
         } else if (successCount >= criticalIcons.size() * 0.8) {
-            qDebug() << "  ⚠️ Most icons work, consider keeping minimal fallback for:" << failedIcons;
         } else {
-            qDebug() << "  ❌ KF6 icon loading insufficient, keep fallback resources";
         }
 
         // Restore original setup
@@ -1816,5 +1660,4 @@
         QIcon::setThemeName(originalTheme);
         QIcon::setFallbackSearchPaths(originalFallbacks);
 
-        qDebug() << "=== FALLBACK TEST COMPLETED, ORIGINAL SETUP RESTORED ===";
     }

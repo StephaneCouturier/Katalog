@@ -153,10 +153,9 @@ void Storage::loadStorage(QString connectionName)
             comment2     = query.value(12).toString();
             comment3     = query.value(13).toString();
         } else {
-            qDebug() << "No record found for storage_id" << ID;
         }
     } else {
-        qDebug() << "Query execution failed:" << query.lastError().text();
+        qWarning() << "WARNING: Query execution failed:" << query.lastError().text();
     }
 }
 
@@ -244,8 +243,7 @@ Storage::UpdateResult Storage::updateStorageInfo()
     queryTotalSpace.bindValue(":storage_file_system", fileSystem);
     queryTotalSpace.bindValue(":storage_id", ID);
     if (!queryTotalSpace.exec()) {
-        qDebug() << "ERROR updating storage table:" << queryTotalSpace.lastError().text();
-        qDebug() << "Storage ID:" << ID << "TotalSpace:" << totalSpace << "FreeSpace:" << freeSpace;
+        qWarning() << "WARNING: ERROR updating storage table:" << queryTotalSpace.lastError().text();
     }
 
     // Save to Device table

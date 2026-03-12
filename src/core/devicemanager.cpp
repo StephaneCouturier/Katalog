@@ -38,17 +38,14 @@
 DeviceManager::DeviceManager(QObject *parent)
     : QObject(parent)
 {
-    qDebug() << "DeviceManager created";
 
     // Setup catalog manager integration
     setupCatalogManagerIntegration();
 
-    qDebug() << "DeviceManager initialization complete";
 }
 
 DeviceManager::~DeviceManager()
 {
-    qDebug() << "DeviceManager destructor";
     cleanupDeviceJob();
 }
 
@@ -59,10 +56,6 @@ void DeviceManager::startDeviceOperation(DeviceJobStoppable* deviceEngine,
                                          const QString& collectionFolder,
                                          CatalogManager* catalogManager)
 {
-    qDebug() << "=== DeviceManager::startDeviceOperation() ===";
-    qDebug() << "Root device:" << (rootDevice ? rootDevice->name : "NULL");
-    qDebug() << "Operation type:" << operationType;
-    qDebug() << "Database mode:" << databaseMode;
 
     if (!deviceEngine) {
         emit deviceOperationError("Invalid device engine provided");
@@ -109,7 +102,6 @@ void DeviceManager::startDeviceOperation(DeviceJobStoppable* deviceEngine,
     setStatus("Starting device operation...");
     m_isPaused = false;
 
-    qDebug() << "Starting device operation...";
 
     // Start the device operation
     deviceEngine->startDeviceOperation(
@@ -120,12 +112,10 @@ void DeviceManager::startDeviceOperation(DeviceJobStoppable* deviceEngine,
         m_catalogManager
         );
 
-    qDebug() << "Device operation started";
 }
 
 void DeviceManager::setCatalogManager(CatalogManager* catalogManager)
 {
-    qDebug() << "DeviceManager::setCatalogManager() - using existing MainWindow CatalogManager";
 
     m_catalogManager = catalogManager;  // Use MainWindow's CatalogManager instead of creating our own
 
@@ -135,7 +125,6 @@ void DeviceManager::setCatalogManager(CatalogManager* catalogManager)
 
 void DeviceManager::stopDeviceOperation()
 {
-    qDebug() << "DeviceManager::stopDeviceOperation()";
 
     if (m_currentDeviceJob) {
         m_currentDeviceJob->stopDeviceOperation();
@@ -149,7 +138,6 @@ void DeviceManager::stopDeviceOperation()
 
 void DeviceManager::pauseDeviceOperation()
 {
-    qDebug() << "DeviceManager::pauseDeviceOperation()";
 
     if (m_currentDeviceJob) {
         m_currentDeviceJob->pauseDeviceOperation();
@@ -164,7 +152,6 @@ void DeviceManager::pauseDeviceOperation()
 
 void DeviceManager::resumeDeviceOperation()
 {
-    qDebug() << "DeviceManager::resumeDeviceOperation()";
 
     if (m_currentDeviceJob) {
         m_currentDeviceJob->resumeDeviceOperation();
@@ -179,20 +166,17 @@ void DeviceManager::resumeDeviceOperation()
 
 void DeviceManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
 {
-    qDebug() << "DeviceManager::setCatalogProgressManager()";
 
     m_catalogProgressManager = catalogProgressManager;
 
     if (m_catalogProgressManager && m_catalogManager) {
         // Connect the existing CatalogProgressManager to our CatalogManager
         m_catalogProgressManager->connectToCatalogManager(m_catalogManager);
-        qDebug() << "CatalogProgressManager connected to DeviceManager's CatalogManager";
     }
 }
 
 void DeviceManager::requestGentleStop()
 {
-    qDebug() << "DeviceManager::requestGentleStop()";
 
     if (m_currentDeviceJob) {
         m_currentDeviceJob->requestGentleStop();
@@ -206,7 +190,6 @@ void DeviceManager::connectDeviceJob(DeviceJobStoppable* deviceJob)
 {
     if (!deviceJob) return;
 
-    qDebug() << "Connecting device job signals";
 
     // Main operation lifecycle signals
     connect(deviceJob, &DeviceJobStoppable::deviceOperationStarted,
@@ -239,17 +222,14 @@ void DeviceManager::connectDeviceJob(DeviceJobStoppable* deviceJob)
     connect(deviceJob, &DeviceJobStoppable::deviceProcessingCompleted,
             this, [this](const QString& deviceName, const QList<qint64>& deviceResults) {
                 Q_UNUSED(deviceResults);
-                qDebug() << "Device completed:" << deviceName;
             });
 
-    qDebug() << "Device job signals connected";
 }
 
 void DeviceManager::setupCatalogManagerIntegration()
 {
     if (!m_catalogManager || m_catalogManagerIntegrated) return;
 
-    qDebug() << "Setting up catalog manager integration";
 
     // Connect catalog manager progress signals
     connect(m_catalogManager, &CatalogManager::progressChanged,
@@ -264,12 +244,10 @@ void DeviceManager::setupCatalogManagerIntegration()
             });
 
     m_catalogManagerIntegrated = true;
-    qDebug() << "Catalog manager integration complete";
 }
 
 void DeviceManager::onDeviceOperationStarted()
 {
-    qDebug() << "=== DeviceManager::onDeviceOperationStarted() ===";
 
     // Update totals from device job
     if (m_currentDeviceJob) {
@@ -283,8 +261,6 @@ void DeviceManager::onDeviceOperationStarted()
 
 void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
 {
-    qDebug() << "=== DeviceManager::onDeviceOperationCompleted() ===";
-    qDebug() << "Results count:" << results.size();
 
     setDeviceOperationRunning(false);
     setProgress(100);
@@ -297,7 +273,6 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
         Device* rootDevice = m_currentDeviceJob->rootDevice();
 
         if (rootDevice) {
-            qDebug() << "Root device found:" << rootDevice->name << "Type:" << rootDevice->type;
 
             if (rootDevice->type == "Storage") {
                 // Create results list in the format that reportAllUpdates expects for Storage
@@ -313,7 +288,6 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
                 Storage::UpdateResult updateResult = m_currentDeviceJob->getStorageUpdateResult();
 
                 if (updateResult.wasUpdated) {
-                    qDebug() << "Using actual storage update results with deltas";
 
                     // Set storage space values with real deltas (indices 8-13)
                     storageResults[8] = updateResult.newUsedSpace;     // Used space
@@ -323,12 +297,8 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
                     storageResults[12] = updateResult.newTotalSpace;   // Total space
                     storageResults[13] = updateResult.deltaTotalSpace; // Delta total space
 
-                    qDebug() << "Storage results - Used:" << storageResults[8] << "(+" << storageResults[9] << ")";
-                    qDebug() << "Storage results - Free:" << storageResults[10] << "(+" << storageResults[11] << ")";
-                    qDebug() << "Storage results - Total:" << storageResults[12] << "(+" << storageResults[13] << ")";
 
                 } else {
-                    qDebug() << "Storage was not updated, using current values with zero deltas";
 
                     // Fallback to current values with zero deltas
                     if (rootDevice->storage) {
@@ -341,15 +311,12 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
                     }
                 }
 
-                qDebug() << "Emitting requestReportAllUpdates for Storage device:" << rootDevice->name;
                 emit requestReportAllUpdates(rootDevice, storageResults, "update");
 
             } else if (rootDevice->type == "Catalog") {
-                qDebug() << "Root device is Catalog - catalog reports handled by CatalogManager";
                 // Catalog reports are handled separately by the existing catalog system
 
             } else if (rootDevice->type == "Virtual") {
-                qDebug() << "Root device is Virtual - creating virtual device report";
                 // For virtual devices, create a simple success report
                 QList<qint64> virtualResults;
                 for (int i = 0; i < 14; ++i) {
@@ -360,19 +327,15 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
                 emit requestReportAllUpdates(rootDevice, virtualResults, "update");
 
             } else {
-                qDebug() << "Root device type" << rootDevice->type << "- no specific report implemented";
             }
         } else {
-            qDebug() << "No root device found for final report";
         }
     } else {
-        qDebug() << "No current device job found";
     }
 
     emit deviceOperationCompleted(results);
 
     // Request UI refresh to show updated values
-    qDebug() << "Emitting requestUIRefresh signal";
     emit requestUIRefresh();
 
     // Clean up
@@ -381,7 +344,6 @@ void DeviceManager::onDeviceOperationCompleted(const QList<qint64>& results)
 
 void DeviceManager::onDeviceOperationError(const QString& error)
 {
-    qDebug() << "=== DeviceManager::onDeviceOperationError() ===" << error;
 
     setDeviceOperationRunning(false);
     setStatus(QString("Device operation failed: %1").arg(error));
@@ -394,7 +356,6 @@ void DeviceManager::onDeviceOperationError(const QString& error)
 
 void DeviceManager::onDeviceOperationCancelled()
 {
-    qDebug() << "=== DeviceManager::onDeviceOperationCancelled() ===";
 
     setDeviceOperationRunning(false);
     setStatus("Device operation cancelled");
@@ -407,7 +368,6 @@ void DeviceManager::onDeviceOperationCancelled()
 
 void DeviceManager::onDeviceHierarchyProgress(int processed, int total)
 {
-    qDebug() << "Device hierarchy progress:" << processed << "/" << total;
 
     setProcessedDevices(processed);
     setTotalDevices(total);
@@ -425,7 +385,6 @@ void DeviceManager::onDeviceHierarchyProgress(int processed, int total)
 
 void DeviceManager::onDeviceCatalogProgress(int processed, int total)
 {
-    qDebug() << "Device catalog progress:" << processed << "/" << total;
 
     setProcessedCatalogs(processed);
     setTotalCatalogs(total);
@@ -443,7 +402,6 @@ void DeviceManager::onDeviceCatalogProgress(int processed, int total)
 
 void DeviceManager::onDeviceCurrentChanged(const QString& deviceName, const QString& operation)
 {
-    qDebug() << "Current device changed:" << deviceName << "Operation:" << operation;
 
     setCurrentDeviceName(deviceName);
     setStatus(operation);
@@ -513,7 +471,6 @@ void DeviceManager::updateOverallProgress()
 
 void DeviceManager::cleanupDeviceJob()
 {
-    qDebug() << "DeviceManager::cleanupDeviceJob()";
 
     if (m_currentDeviceJob) {
         // Disconnect signals to avoid issues during cleanup
@@ -532,7 +489,6 @@ void DeviceManager::setDeviceOperationRunning(bool running)
 {
     if (m_deviceOperationRunning != running) {
         m_deviceOperationRunning = running;
-        qDebug() << "Device operation running changed to:" << running;
         emit deviceOperationRunningChanged();
     }
 }
@@ -542,7 +498,6 @@ void DeviceManager::setProgress(int progress)
     progress = qBound(0, progress, 100);
     if (m_progress != progress) {
         m_progress = progress;
-        qDebug() << "Overall progress changed to:" << progress << "%";
         emit progressChanged();
     }
 }
@@ -551,7 +506,6 @@ void DeviceManager::setStatus(const QString& status)
 {
     if (m_status != status) {
         m_status = status;
-        qDebug() << "Status changed to:" << status;
         emit statusChanged();
     }
 }
@@ -560,7 +514,6 @@ void DeviceManager::setCurrentDeviceName(const QString& name)
 {
     if (m_currentDeviceName != name) {
         m_currentDeviceName = name;
-        qDebug() << "Current device name changed to:" << name;
         emit currentDeviceNameChanged();
     }
 }
@@ -570,7 +523,6 @@ void DeviceManager::setHierarchyProgress(int progress)
     progress = qBound(0, progress, 100);
     if (m_hierarchyProgress != progress) {
         m_hierarchyProgress = progress;
-        qDebug() << "Hierarchy progress changed to:" << progress << "%";
         emit hierarchyProgressChanged();
     }
 }
@@ -580,7 +532,6 @@ void DeviceManager::setCatalogProgress(int progress)
     progress = qBound(0, progress, 100);
     if (m_catalogProgress != progress) {
         m_catalogProgress = progress;
-        qDebug() << "Catalog progress changed to:" << progress << "%";
         emit catalogProgressChanged();
     }
 }
@@ -589,7 +540,6 @@ void DeviceManager::setProcessedDevices(qint64 processed)
 {
     if (m_processedDevices != processed) {
         m_processedDevices = processed;
-        qDebug() << "Processed devices changed to:" << processed;
         emit processedDevicesChanged();
     }
 }
@@ -598,7 +548,6 @@ void DeviceManager::setTotalDevices(qint64 total)
 {
     if (m_totalDevices != total) {
         m_totalDevices = total;
-        qDebug() << "Total devices changed to:" << total;
         emit totalDevicesChanged();
     }
 }
@@ -607,7 +556,6 @@ void DeviceManager::setProcessedCatalogs(qint64 processed)
 {
     if (m_processedCatalogs != processed) {
         m_processedCatalogs = processed;
-        qDebug() << "Processed catalogs changed to:" << processed;
         emit processedCatalogsChanged();
     }
 }
@@ -616,7 +564,6 @@ void DeviceManager::setTotalCatalogs(qint64 total)
 {
     if (m_totalCatalogs != total) {
         m_totalCatalogs = total;
-        qDebug() << "Total catalogs changed to:" << total;
         emit totalCatalogsChanged();
     }
 }

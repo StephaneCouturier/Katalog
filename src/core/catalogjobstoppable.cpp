@@ -54,14 +54,12 @@ CatalogJobStoppable::CatalogJobStoppable(QObject *parent)
     : QObject(parent)
     , m_storageWasUpdated(false)
 {
-    qDebug() << "CatalogJobStoppable created";
 }
 
 CatalogJobStoppable::~CatalogJobStoppable()
 {
     // Mark object as invalid to prevent use after destruction
     m_objectValid.storeRelease(0);
-    qDebug() << "CatalogJobStoppable destroyed";
 }
 
 void CatalogJobStoppable::configureOperation(Device *device,
@@ -90,31 +88,23 @@ void CatalogJobStoppable::configureOperation(Device *device,
         setProgressRefreshRate(100); // Default rate for faster operations without metadata
     }
 
-    qDebug() << "CatalogJobStoppable configured:"
-             << "Operation:" << (operationType == CreateCatalog ? "Create" : "Update")
-             << "Catalog:" << currentCatalogName
-             << "DatabaseMode:" << databaseMode
-             << "IncludeMetadata:" << (device && device->catalog ? device->catalog->includeMetadata : "N/A")
-             << "ProgressRefreshRate:" << progressRefreshRate;
 }
 
 void CatalogJobStoppable::processCatalog()
 {
-    qDebug() << "=== CatalogJobStoppable::processCatalog() START ===";
 
     if (!m_objectValid.loadAcquire()) {
-        qDebug() << "Object is invalid, aborting";
+        qWarning() << "WARNING: Object is invalid, aborting";
         return;
     }
 
     if (!m_device || !m_device->catalog) {
-        qDebug() << "No device or catalog configured";
+        qWarning() << "WARNING: No device or catalog configured";
         emit catalogOperationError("No device or catalog configured");
         return;
     }
 
     if (!shouldContinue()) {
-        qDebug() << "Stop was requested before processing";
         return;
     }
 
@@ -123,8 +113,6 @@ void CatalogJobStoppable::processCatalog()
         filesProcessed = 0;
         currentCatalogName = m_device->catalog->name;
 
-        qDebug() << "Starting operation type:" << m_operationType
-                 << "for catalog:" << currentCatalogName;
 
         // Route to correct operation
         if (m_operationType == CreateCatalog) {
@@ -149,65 +137,49 @@ void CatalogJobStoppable::processCatalog()
         emit catalogOperationError(QString("Catalog operation failed: %1").arg(e.what()));
     }
 
-    qDebug() << "=== CatalogJobStoppable::processCatalog() END ===";
 }
 
 void CatalogJobStoppable::createCatalogWithProgress()
 {
-    qDebug() << "=== CATALOG CREATION STARTED ===";
-    qDebug() << "Device ID:" << m_device->ID;
-    qDebug() << "Catalog Name:" << m_device->catalog->name;
-    qDebug() << "Source Path:" << m_device->catalog->sourcePath;
-    qDebug() << "Database Mode:" << m_databaseMode;
-    qDebug() << "Collection Folder:" << m_collectionFolder;
 
     if (!m_device || !m_device->catalog) {
-        qDebug() << "ERROR: Invalid device or catalog";
+        qWarning() << "WARNING: Invalid device or catalog";
         throw std::runtime_error("Invalid device or catalog");
     }
 
     Catalog* catalog = m_device->catalog;
 
     // Validate source path
-    qDebug() << "Step 1: Validating source directory";
     QDir sourceDir(catalog->sourcePath);
     if (!sourceDir.exists()) {
-        qDebug() << "ERROR: Source directory does not exist:" << catalog->sourcePath;
+        qWarning() << "WARNING: Source directory does not exist:" << catalog->sourcePath;
         throw std::runtime_error("Source directory does not exist: " + catalog->sourcePath.toStdString());
     }
 
     // Check if directory is empty
     int entryCount = sourceDir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count();
-    qDebug() << "Source directory entry count:" << entryCount;
     if (entryCount == 0) {
-        qDebug() << "WARNING: Source directory is empty:" << catalog->sourcePath;
+        qWarning() << "WARNING: Source directory is empty:" << catalog->sourcePath;
         throw std::runtime_error("Source directory is empty: " + catalog->sourcePath.toStdString());
     }
 
     // Get file extensions to scan for and load excluded folders
-    qDebug() << "Step 2: Loading file extensions and excluded folders";
     catalog->getFileExtensions();
     catalog->loadExcludedFolders();
-    qDebug() << "File extensions loaded, excluded folders loaded";
 
     // Count total files for progress calculation
-    qDebug() << "Step 3: Counting total files...";
     auto startTime = QDateTime::currentDateTime();
     countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
     auto endTime = QDateTime::currentDateTime();
 
-    qDebug() << "Counting completed in" << startTime.msecsTo(endTime) << "ms";
-    qDebug() << "Counting total files:" << countedTotalFiles;
 
     if (!shouldContinue()) {
-        qDebug() << "Stop requested during estimation";
         return;
     }
 
     // Initialize database transaction for efficiency
     Database::beginTransaction(m_connectionName);
 
-    qDebug() << "Step 4: Starting database transaction";
     // Save catalog to database first
     catalog->insertCatalog();
 
@@ -216,7 +188,6 @@ void CatalogJobStoppable::createCatalogWithProgress()
     processDirectoryWithProgress(catalog->sourcePath, catalog, processedCount);
 
     if (!shouldContinue()) {
-        qDebug() << "Catalog creation STOPPED - cleaning up...";
 
         // Rollback file insertions
         Database::rollbackTransaction(m_connectionName);
@@ -226,9 +197,8 @@ void CatalogJobStoppable::createCatalogWithProgress()
         cleanupQuery.prepare("DELETE FROM file WHERE file_catalog_id = :catalog_id");
         cleanupQuery.bindValue(":catalog_id", catalog->ID);
         if (cleanupQuery.exec()) {
-            qDebug() << "Deleted" << cleanupQuery.numRowsAffected() << "files for stopped catalog";
         } else {
-            qDebug() << "Failed to cleanup files:" << cleanupQuery.lastError().text();
+            qWarning() << "WARNING: Failed to cleanup files:" << cleanupQuery.lastError().text();
         }
 
         // Delete folders too
@@ -237,7 +207,6 @@ void CatalogJobStoppable::createCatalogWithProgress()
         cleanupFoldersQuery.bindValue(":catalog_id", catalog->ID);
         cleanupFoldersQuery.exec();
 
-        qDebug() << "Catalog creation cleanup complete";
         return; // Exit without completing
     }
 
@@ -247,19 +216,14 @@ void CatalogJobStoppable::createCatalogWithProgress()
 
     // Step: Calculate checksums for all files (if enabled)
     if (catalog->includeChecksum != Catalog::CHECKSUM_NONE) {
-        qDebug() << "=== Starting checksum calculation for new catalog ===";
-        qDebug() << "Checksum setting:" << catalog->includeChecksum;
 
         QList<QVariantList> filesToChecksum = findFilesWithoutChecksum();
 
         if (!filesToChecksum.isEmpty()) {
-            qDebug() << "Found" << filesToChecksum.size() << "files needing checksum calculation";
             extractChecksumsForFiles(filesToChecksum);
         } else {
-            qDebug() << "No files need checksum calculation";
         }
     } else {
-        qDebug() << "Checksum calculation disabled for this catalog (setting: None)";
     }
 
     // Update catalog metadata
@@ -268,25 +232,19 @@ void CatalogJobStoppable::createCatalogWithProgress()
     catalog->saveCatalog();
 
     // Final progress update
-    qDebug() << "About to emit final progress update";
     //emitProgressUpdate(processedCount, countedTotalFiles, "temp_text_for_test2");
-    qDebug() << "Final progress update emitted";
 
-    qDebug() << "=== CatalogJobStoppable::createCatalogWithProgress() completed successfully ===";
 }
 
 void CatalogJobStoppable::updateCatalogWithProgress()
 {
-    qDebug() << "=== CATALOG UPDATE STARTED ===";
-    qDebug() << "Device ID:" << m_device->ID;
-    qDebug() << "Catalog Name:" << m_device->catalog->name;
     bool shouldUseFullRescan = false;  //Full Rescan is not used, keeping for later user/test option
     // Decide between full rescan and incremental update
     if (shouldUseFullRescan) {
         // Clear existing files since we're doing a full rescan
         QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
         if (!clearQuery.exec(QString("DELETE FROM file WHERE file_catalog_id = %1").arg(m_device->catalog->ID))) {
-            qDebug() << "Warning: Could not clear existing files:" << clearQuery.lastError().text();
+            qWarning() << "WARNING: Could not clear existing files:" << clearQuery.lastError().text();
         }
 
         // Do full rescan (same as creation)
@@ -296,11 +254,9 @@ void CatalogJobStoppable::updateCatalogWithProgress()
             completeCatalogCreation();
         }
     } else {
-        qDebug() << "Using INCREMENTAL UPDATE";
         updateCatalogIncremental();  // Fast incremental update
     }
 
-    qDebug() << "=== CATALOG UPDATE COMPLETED ===";
 }
 
 void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
@@ -309,7 +265,6 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 {
     if (!shouldContinue()) return;
 
-    qDebug() << "Processing directory:" << directory;
 
     // Get file extensions for filtering (for files only)
     QStringList extensions;
@@ -324,7 +279,7 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     } else if (catalog->fileType == "Other") {
         extensions = FileTypeMapping::getExtensionsForCataloging("other");
         if (extensions.isEmpty()) {
-            qDebug() << "WARNING: Other type returned empty extensions list!";
+            qWarning() << "WARNING: Other type returned empty extensions list!";
         }
     } else if (catalog->fileType == "None") {
         extensions << "*";
@@ -511,19 +466,16 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
 
 void CatalogJobStoppable::stopCatalogOperation()
 {
-    qDebug() << "CatalogJobStoppable::stopCatalogOperation() - Stop requested";
     m_stopRequested.storeRelease(1);
 }
 
 void CatalogJobStoppable::pauseCatalogOperation()
 {
-    qDebug() << "CatalogJobStoppable::pauseCatalogOperation() - Pause requested";
     m_paused.storeRelease(1);
 }
 
 void CatalogJobStoppable::resumeCatalogOperation()
 {
-    qDebug() << "CatalogJobStoppable::resumeCatalogOperation() - Resume requested";
     m_paused.storeRelease(0);
 }
 
@@ -565,7 +517,6 @@ void CatalogJobStoppable::updateRelatedCatalogDevices()
 {
     if (!m_device) return;
 
-    qDebug() << "Updating related catalog devices...";
 
     try {
         // Update related devices (other catalog devices using the same catalog ID)
@@ -594,70 +545,57 @@ void CatalogJobStoppable::updateRelatedCatalogDevices()
             relatedDevice.dateTimeUpdated = m_device->dateTimeUpdated;
             relatedDevice.saveDevice();
 
-            qDebug() << "Updated related catalog device:" << relatedDevice.name;
         }
 
     } catch (const std::exception& e) {
-        qDebug() << "Error updating related catalog devices:" << e.what();
+        qWarning() << "WARNING: Error updating related catalog devices:" << e.what();
     }
 }
 
 void CatalogJobStoppable::completeCatalogCreation()
 {
-    qDebug() << "=== CatalogJobStoppable::completeCatalogCreation() START ===";
 
     if (!m_device || !m_device->catalog) {
-        qDebug() << "ERROR: Invalid device or catalog in completion";
+        qWarning() << "WARNING: Invalid device or catalog in completion";
         return;
     }
 
     try {
         // Step 1: Update device statistics from catalog
-        qDebug() << "Step 1: Updating device statistics";
         m_device->totalFileCount = m_device->catalog->fileCount;
         m_device->totalFileSize = m_device->catalog->totalFileSize;
         m_device->dateTimeUpdated = QDateTime::currentDateTime();
-        qDebug() << "Device stats - Files:" << m_device->totalFileCount << "Size:" << m_device->totalFileSize;
 
         // Step 2: Save device to database
-        qDebug() << "Step 2: Saving device to database";
         m_device->saveDevice();
 
         // Step 3: Save catalog files (Memory mode)
         if (m_databaseMode == "Memory") {
-            qDebug() << "Step 3: Saving catalog files for Memory mode";
 
-            qDebug() << "Step 3a: About to call saveCatalogToFile()";
             if (!m_device->catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
-                qDebug() << "Warning: Failed to save catalog to file";
+                qWarning() << "WARNING: Failed to save catalog to file";
             } else {
-                qDebug() << "Catalog saved to file successfully";
             }
 
-            qDebug() << "Step 3b: About to call saveFoldersToFile()";
             if (!m_device->catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
-                qDebug() << "Warning: Failed to save folders to file";
+                qWarning() << "WARNING: Failed to save folders to file";
             } else {
-                qDebug() << "Folders saved to file successfully";
             }
         }
 
         // Step 4: Update catalog loaded version
-        qDebug() << "Step 4: Setting catalog loaded date";
         QDateTime currentDateTime = QDateTime::currentDateTime();
         m_device->catalog->setDateLoaded(QDateTime());
 
-        qDebug() << "=== Backend post-processing completed successfully ===";
 
     } catch (const std::exception& e) {
-        qDebug() << "EXCEPTION in completeCatalogCreation():" << e.what();
+        qWarning() << "WARNING: EXCEPTION in completeCatalogCreation():" << e.what();
         throw; // Re-throw to let caller handle
     } catch (...) {
-        qDebug() << "UNKNOWN EXCEPTION in completeCatalogCreation()";
+        qWarning() << "WARNING: UNKNOWN EXCEPTION in completeCatalogCreation()";
         throw;
     }
 
-    qDebug() << "=== CatalogJobStoppable::completeCatalogCreation() END ===";
 }
 
 QList<qint64> CatalogJobStoppable::getResults() const
@@ -707,7 +645,6 @@ QList<qint64> CatalogJobStoppable::getResults() const
 
 void CatalogJobStoppable::requestHardStop()
 {
-    qDebug() << "CatalogJobStoppable::requestHardStop() - Hard stop requested";
     m_hardStopRequested.storeRelease(1);
 
     // Also set the regular stop flag to exit processing loops
@@ -716,10 +653,9 @@ void CatalogJobStoppable::requestHardStop()
 
 void CatalogJobStoppable::verifyMimeTypes()
 {
-    qDebug() << "=== Starting MIME type verification for catalog:" << m_device->catalog->name;
 
     if (!m_device || !m_device->catalog) {
-        qDebug() << "No device or catalog configured";
+        qWarning() << "WARNING: No device or catalog configured";
         emit catalogOperationError("No device or catalog configured");
         return;
     }
@@ -740,7 +676,7 @@ void CatalogJobStoppable::verifyMimeTypes()
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
     if (!query.exec()) {
-        qDebug() << "Failed to query files for MIME verification:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to query files for MIME verification:" << query.lastError().text();
         emit catalogOperationError("Failed to query files for MIME verification");
         return;
     }
@@ -757,7 +693,6 @@ void CatalogJobStoppable::verifyMimeTypes()
         totalFiles++;
     }
 
-    qDebug() << "Found" << totalFiles << "files to verify MIME types";
 
     if (totalFiles == 0) {
         emitProgressUpdate(0, 0, "No files need MIME verification");
@@ -778,7 +713,6 @@ void CatalogJobStoppable::verifyMimeTypes()
 
     for (const QVariantList &fileData : filesToProcess) {
         if (!shouldContinue()) {
-            qDebug() << "MIME verification stopped by user";
             db.rollback();
             return;
         }
@@ -793,7 +727,6 @@ void CatalogJobStoppable::verifyMimeTypes()
         // Check if file still exists
         QFileInfo fileInfo(filePath);
         if (!fileInfo.exists()) {
-            qDebug() << "File no longer exists:" << filePath;
 
             // Mark as verified even if file doesn't exist
             QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
@@ -814,7 +747,6 @@ void CatalogJobStoppable::verifyMimeTypes()
         QVariantMap verifyResult = FileMetadata::verifyMimeType(filePath, extensionType);
 
         if (verifyResult.contains("error")) {
-            qDebug() << "Error verifying" << filePath << ":" << verifyResult["error"].toString();
 
             // Mark as verified with no mismatch on error
             QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
@@ -848,7 +780,7 @@ void CatalogJobStoppable::verifyMimeTypes()
 
             // Log first few mismatches
             if (m_mismatchCount <= 10) {
-                qDebug() << "Mismatch found:" << mismatchInfo;
+                qWarning() << "WARNING: Mismatch found:" << mismatchInfo;
             }
         }
 
@@ -868,7 +800,7 @@ void CatalogJobStoppable::verifyMimeTypes()
         updateQuery.bindValue(":file_full_path", filePath);
 
         if (!updateQuery.exec()) {
-            qDebug() << "Failed to update file" << filePath << ":" << updateQuery.lastError().text();
+            qWarning() << "WARNING: Failed to update file" << filePath << ":" << updateQuery.lastError().text();
         }
 
         processedFiles++;
@@ -898,7 +830,7 @@ void CatalogJobStoppable::verifyMimeTypes()
 
     // Save mismatch report ONLY if there are actual mismatches
     if (m_mismatchCount > 0 && !mismatches.isEmpty()) {
-        qDebug() << "Total mismatches found:" << m_mismatchCount;
+        qWarning() << "WARNING: Total mismatches found:" << m_mismatchCount;
         m_reportFilePath = saveMismatchReportAndReturnPath(mismatches);
     } else {
         m_reportFilePath.clear(); // Ensure empty path when no mismatches
@@ -935,9 +867,9 @@ void CatalogJobStoppable::saveMismatchReport(const QStringList &mismatches)
         }
 
         reportFile.close();
-        qDebug() << "Mismatch report saved to:" << reportPath;
+        qInfo() << "Mismatch report saved to:" << reportPath;
     } else {
-        qDebug() << "Failed to save mismatch report to:" << reportPath;
+        qWarning() << "WARNING: Failed to save mismatch report to:" << reportPath;
     }
 }
 
@@ -1009,10 +941,9 @@ bool CatalogJobStoppable::shouldExtractMetadata(const QString &filePath, Catalog
 
 void CatalogJobStoppable::extractMissingMetadata()
 {
-    qDebug() << "=== Starting metadata extraction for files missing metadata ===";
 
     if (!m_device || !m_device->catalog) {
-        qDebug() << "No device or catalog configured";
+        qWarning() << "WARNING: No device or catalog configured";
         emit catalogOperationError("No device or catalog configured");
         return;
     }
@@ -1030,7 +961,7 @@ void CatalogJobStoppable::extractMissingMetadata()
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
     if (!query.exec()) {
-        qDebug() << "Failed to query files for metadata extraction:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to query files for metadata extraction:" << query.lastError().text();
         emit catalogOperationError("Failed to query files for metadata extraction");
         return;
     }
@@ -1049,7 +980,6 @@ void CatalogJobStoppable::extractMissingMetadata()
         totalFiles++;
     }
 
-    qDebug() << "Found" << totalFiles << "files missing metadata";
 
     if (totalFiles == 0) {
         emitProgressUpdate(0, 0, "No files need metadata extraction");
@@ -1061,7 +991,6 @@ void CatalogJobStoppable::extractMissingMetadata()
 
     for (const QVariantList &fileData : filesToProcess) {
         if (!shouldContinue()) {
-            qDebug() << "Metadata extraction stopped by user";
             return;
         }
 
@@ -1075,7 +1004,6 @@ void CatalogJobStoppable::extractMissingMetadata()
         // Check if file still exists
         QFileInfo fileInfo(filePath);
         if (!fileInfo.exists()) {
-            qDebug() << "File no longer exists:" << filePath;
             processedFiles++;
             continue;
         }
@@ -1101,7 +1029,6 @@ void CatalogJobStoppable::extractMissingMetadata()
     QString marker = QString("__METADATA_EXTRACTION__|%1|%2").arg(processedFiles).arg(totalFiles);
     emitProgressUpdate(processedFiles, totalFiles, marker);
 
-    qDebug() << "=== Metadata extraction completed: %1 files processed ===" << processedFiles;
 
     //qDebug() << "=== Metadata extraction completed ===" << finalMsg;
 }
@@ -1127,10 +1054,10 @@ QString CatalogJobStoppable::saveMismatchReportAndReturnPath(const QStringList &
         }
 
         reportFile.close();
-        qDebug() << "Mismatch report saved to:" << reportPath;
+        qInfo() << "Mismatch report saved to:" << reportPath;
         return reportPath;
     } else {
-        qDebug() << "Failed to save mismatch report to:" << reportPath;
+        qWarning() << "WARNING: Failed to save mismatch report to:" << reportPath;
         return QString();
     }
 }
@@ -1167,7 +1094,7 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
             query.bindValue(":mime_type", mimeTypes[i]);
 
             if (!query.exec()) {
-                qDebug() << "Database insert error:" << query.lastError().text();
+                qWarning() << "WARNING: Database insert error:" << query.lastError().text();
             }
         }
 
@@ -1217,12 +1144,6 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
             int totalBatchMs = batchTimer.elapsed();
 
             // DETAILED TIMING OUTPUT
-            qDebug() << "=== BATCH TIMING ==="
-                     << "Files:" << batchFileNames.size()
-                     << "| Extract:" << extractDurationMs << "ms"
-                     << "(" << (extractDurationMs / qMax(1, (int)batchFileNames.size())) << "ms/file)"
-                     << "| Update:" << updateDurationMs << "ms"
-                     << "| Total batch:" << totalBatchMs << "ms";
         }
 */
 
@@ -1265,9 +1186,6 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
                     }
                 }
 
-                qDebug() << "Parallel extraction:" << optimalThreads << "threads"
-                         << "(" << availableCores << "cores available)"
-                         << "Database mode:" << m_databaseMode;
 
                 ParallelMetadataExtractor extractor;
                 QList<MetadataExtractionResult> results = extractor.extractBatch(
@@ -1277,8 +1195,6 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
                     catalog->includeMetadata,
                     optimalThreads  // Use calculated nb of threads
                     );
-
-                int extractDurationMs = extractTimer.elapsed();
 
                 QStringList batchFileNames;
                 QStringList batchFolderPaths;
@@ -1292,24 +1208,12 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
                     }
                 }
 
-                QElapsedTimer updateTimer;
-                updateTimer.start();
-
                 if (!batchFileNames.isEmpty()) {
                     FileMetadata::batchUpdateFileMetadata(m_connectionName, catalog->ID,
                                                           batchFileNames, batchFolderPaths,
                                                           batchMetadata);
                 }
 
-                int updateDurationMs = updateTimer.elapsed();
-                int totalBatchMs = batchTimer.elapsed();
-
-                qDebug() << "=== PARALLEL BATCH ==="
-                         << "Files:" << extractFileNames.size()
-                         << "| Extract:" << extractDurationMs << "ms"
-                         << "(" << (extractDurationMs / qMax(1, (int)extractFileNames.size())) << "ms/file)"
-                         << "| Update:" << updateDurationMs << "ms"
-                         << "| Total batch:" << totalBatchMs << "ms";
             }
         }
 
@@ -1367,21 +1271,16 @@ void CatalogJobStoppable::insertFolders(const QStringList& folderPaths, Catalog*
         folderQuery.bindValue(":catalog_id", catalog->ID);
         folderQuery.bindValue(":path", folderPath);
         if (!folderQuery.exec()) {
-            qDebug() << "Folder insert error:" << folderQuery.lastError().text();
+            qWarning() << "WARNING: Folder insert error:" << folderQuery.lastError().text();
         }
     }
 }
 
 void CatalogJobStoppable::updateCatalogIncremental()
 {
-    qDebug() << "=== INCREMENTAL CATALOG UPDATE STARTED ===";
-    qDebug() << "Device ID:" << m_device->ID;
-    qDebug() << "Catalog Name:" << m_device->catalog->name;
-    qDebug() << "Source Path:" << m_device->catalog->sourcePath;
-    qDebug() << "Database Mode:" << m_databaseMode;
 
     if (!m_device || !m_device->catalog) {
-        qDebug() << "ERROR: No device or catalog configured";
+        qWarning() << "WARNING: No device or catalog configured";
         emit catalogOperationError("No device or catalog configured");
         return;
     }
@@ -1391,17 +1290,15 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     m_originalFileCount = catalog->fileCount;
     m_originalTotalFileSize = catalog->totalFileSize;
-    qDebug() << "Captured original values - Files:" << m_originalFileCount << "Size:" << m_originalTotalFileSize;
 
     // Load file extensions and excluded folders
     catalog->getFileExtensions();
     catalog->loadExcludedFolders();
 
     // Step 1a: Clear filetemp table
-    qDebug() << "Step 1: Clearing filetemp table";
     QSqlQuery clearQuery(QSqlDatabase::database(m_connectionName));
     if (!clearQuery.exec("DELETE FROM filetemp")) {
-        qDebug() << "ERROR: Could not clear filetemp:" << clearQuery.lastError().text();
+        qWarning() << "WARNING: Could not clear filetemp:" << clearQuery.lastError().text();
         emit catalogOperationError("Failed to prepare temporary table");
         return;
     }
@@ -1426,26 +1323,17 @@ void CatalogJobStoppable::updateCatalogIncremental()
         // Load catalog if: (1) metadata extraction enabled, OR (2) user enabled the setting
         shouldLoadCatalog = metadataEnabled || checksumsEnabled || userForcedLoad;
 
-        qDebug() << "Step 1a: Checking if catalog loading needed";
-        qDebug() << "  Metadata enabled:" << metadataEnabled;
-        qDebug() << "  User forced load:" << userForcedLoad;
-        qDebug() << "  Will load catalog:" << shouldLoadCatalog;
 
         if (shouldLoadCatalog) {
-            qDebug() << "Loading existing catalog data for incremental comparison";
-            qDebug() << "Catalog dateLoaded:" << catalog->dateLoaded.toString("yyyy-MM-dd hh:mm:ss");
-            qDebug() << "Catalog dateUpdated:" << catalog->dateUpdated.toString("yyyy-MM-dd hh:mm:ss");
 
             // Check if catalog needs loading
             if (catalog->dateLoaded < catalog->dateUpdated || catalog->dateLoaded.isNull()) {
-                qDebug() << "Catalog data needs loading from .idx file";
 
                 // Count existing files before loading
                 QSqlQuery countBeforeQuery(QSqlDatabase::database(m_connectionName));
                 countBeforeQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :catalog_id");
                 countBeforeQuery.bindValue(":catalog_id", catalog->ID);
                 if (countBeforeQuery.exec() && countBeforeQuery.next()) {
-                    qDebug() << "Files in file table before loading:" << countBeforeQuery.value(0).toInt();
                 }
 
                 // Emit loading start progress
@@ -1465,7 +1353,6 @@ void CatalogJobStoppable::updateCatalogIncremental()
                 progressConnection = connect(catalog, &Catalog::loadProgress, this,
                                              [this, &localStopRequested, &progressConnection](int filesLoaded, int totalFiles) {
                                                  if (!shouldContinue()) {
-                                                     qDebug() << "Stop detected during catalog loading - disconnecting";
                                                      QObject::disconnect(progressConnection);
                                                      localStopRequested = true;
                                                      return;
@@ -1486,7 +1373,6 @@ void CatalogJobStoppable::updateCatalogIncremental()
                 }
 
                 if (localStopRequested || !shouldContinue()) {
-                    qDebug() << "Stop requested during catalog loading";
                     return;
                 }
 
@@ -1495,12 +1381,9 @@ void CatalogJobStoppable::updateCatalogIncremental()
                 countAfterQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :catalog_id");
                 countAfterQuery.bindValue(":catalog_id", catalog->ID);
                 if (countAfterQuery.exec() && countAfterQuery.next()) {
-                    qDebug() << "Files in file table after loading:" << countAfterQuery.value(0).toInt();
                 }
 
-                qDebug() << "Existing catalog data loaded successfully";
             } else {
-                qDebug() << "Catalog data already loaded (dateLoaded >= dateUpdated)";
 
                 // Still verify we have data
                 QSqlQuery verifyQuery(QSqlDatabase::database(m_connectionName));
@@ -1508,10 +1391,9 @@ void CatalogJobStoppable::updateCatalogIncremental()
                 verifyQuery.bindValue(":catalog_id", catalog->ID);
                 if (verifyQuery.exec() && verifyQuery.next()) {
                     int fileCount = verifyQuery.value(0).toInt();
-                    qDebug() << "Files already in memory:" << fileCount;
 
                     if (fileCount == 0 && catalog->fileCount > 0) {
-                        qDebug() << "WARNING: Expected" << catalog->fileCount << "files but found 0 - forcing load";
+                        qWarning() << "WARNING: Expected" << catalog->fileCount << "files but found 0 - forcing load";
                         QMutex tempMutex;
                         bool tempStopRequested = false;
                         catalog->loadCatalogFileListToTable(tempMutex, tempStopRequested);
@@ -1519,28 +1401,20 @@ void CatalogJobStoppable::updateCatalogIncremental()
                 }
             }
         } else {
-            qDebug() << "Step 1a: Skipped catalog loading (metadata=None and user setting disabled)";
-            qDebug() << "  Note: If all files show as 'new', enable 'Load Catalog Before Update' in Settings";
         }
     } else {
-        qDebug() << "Step 1a: Skipped (File database mode - data already in database)";
     }
 
     // Step 2: Estimate total files for progress
-    qDebug() << "Step 2: Estimating file count";
     QDateTime startTime = QDateTime::currentDateTime();
     qint64 countedTotalFiles = countTotalFiles(catalog->sourcePath, catalog);
     QDateTime endTime = QDateTime::currentDateTime();
-    qDebug() << "Counting completed in" << startTime.msecsTo(endTime) << "ms";
-    qDebug() << "Estimated total files:" << countedTotalFiles;
 
     if (!shouldContinue()) {
-        qDebug() << "Stop requested during estimation";
         return;
     }
 
     // Step 3: Scan filesystem and populate filetemp
-    qDebug() << "Step 3: Scanning filesystem into temporary table";
     Database::beginTransaction(m_connectionName);
 
     qint64 indexedCount = 0;
@@ -1551,14 +1425,12 @@ void CatalogJobStoppable::updateCatalogIncremental()
         return;
     }
 
-    qDebug() << "Step 3b: Scan completed - showing Indexed 100% | Saving";
     emitProgressUpdate(countedTotalFiles, countedTotalFiles,
                        QCoreApplication::translate("MainWindow", "Saving"));
     QCoreApplication::processEvents();
 
     Database::commitTransaction(m_connectionName);
 
-    qDebug() << "Indexed" << indexedCount << "files into filetemp";
 
     // Step 4: Analyze differences using SQL
     //qDebug() << "Step 4: Analyzing differences with SQL";
@@ -1574,15 +1446,8 @@ void CatalogJobStoppable::updateCatalogIncremental()
     m_updateStats.deletedFiles = deletedFiles.size();
     m_updateStats.unchangedFiles = unchangedCount;
 
-    qDebug() << "=== UPDATE ANALYSIS RESULTS ===";
-    qDebug() << "  New files:       " << m_updateStats.newFiles;
-    qDebug() << "  Modified files:  " << m_updateStats.modifiedFiles;
-    qDebug() << "  Deleted files:   " << m_updateStats.deletedFiles;
-    qDebug() << "  Unchanged files: " << m_updateStats.unchangedFiles;
-    qDebug() << "  Total changes:   " << m_updateStats.totalChanges();
 
     if (!shouldContinue()) {
-        qDebug() << "Stop requested during analysis";
         return;
     }
 
@@ -1591,7 +1456,6 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 6: Process NEW files
     if (!newFiles.isEmpty()) {
-        qDebug() << "Step 6a: Inserting" << newFiles.size() << "new files";
         emitProgressUpdate(0, m_updateStats.totalChanges(),
                            QString("Inserting %1 new files...").arg(newFiles.size()));
         insertNewFilesFromFiletemp(newFiles);
@@ -1599,7 +1463,6 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 7: Process MODIFIED files
     if (!modifiedFiles.isEmpty()) {
-        qDebug() << "Step 7: Updating" << modifiedFiles.size() << "modified files";
         emitProgressUpdate(newFiles.size(), m_updateStats.totalChanges(),
                            QString("Updating %1 modified files...").arg(modifiedFiles.size()));
         updateModifiedFilesFromFiletemp(modifiedFiles);
@@ -1607,7 +1470,6 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 8: Process DELETED files
     if (!deletedFiles.isEmpty()) {
-        qDebug() << "Step 8: Deleting" << deletedFiles.size() << "removed files";
         emitProgressUpdate(newFiles.size() + modifiedFiles.size(), m_updateStats.totalChanges(),
                            QString("Deleting %1 removed files...").arg(deletedFiles.size()));
         deleteRemovedFiles(deletedFiles);
@@ -1622,12 +1484,10 @@ void CatalogJobStoppable::updateCatalogIncremental()
     Database::commitTransaction(m_connectionName);
 
     // One-time migration for existing files without mime_type
-    qDebug() << "Step 8a: Checking for mime_type migration";
     migrateMimeTypesForExistingFiles();
 
     // After migration completes, update catalog to current version
     if (!catalog->hasFilesNeedingMigration() && QVersionNumber::fromString(catalog->appVersion) < QVersionNumber::fromString("2.8")) {
-        qDebug() << "✓ All files migrated - updating catalog version to 2.8";
         catalog->appVersion = "2.8";
     }
 
@@ -1642,12 +1502,10 @@ void CatalogJobStoppable::updateCatalogIncremental()
         // This handles transition case: None → Media_Basic
         QList<QVariantList> filesNeedingMetadata = findFilesWithoutMetadata();
         if (!filesNeedingMetadata.isEmpty()) {
-            qDebug() << "Step 9a: Found" << filesNeedingMetadata.size() << "existing files without metadata";
             filesToExtract.append(filesNeedingMetadata);
         }
 
         if (!filesToExtract.isEmpty()) {
-            qDebug() << "Step 9: Extracting metadata for" << filesToExtract.size() << "files";
             m_updateStats.metadataExtracted = filesToExtract.size();
             extractMetadataForChangedFiles(filesToExtract);
         }
@@ -1655,22 +1513,17 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 9b: Calculate checksums for files (if enabled)
     if (catalog->includeChecksum != Catalog::CHECKSUM_NONE) {
-        qDebug() << "Step 9b: Calculating checksums (setting:" << catalog->includeChecksum << ")";
 
         QList<QVariantList> filesToChecksum = findFilesWithoutChecksum();
 
         if (!filesToChecksum.isEmpty()) {
-            qDebug() << "Step 9b: Found" << filesToChecksum.size() << "files needing checksum";
             extractChecksumsForFiles(filesToChecksum);
         } else {
-            qDebug() << "Step 9b: All files have checksums, skipping";
         }
     } else {
-        qDebug() << "Step 9b: Checksum calculation disabled (setting: None)";
     }
 
     // Step 10: Update catalog's file statistics
-    qDebug() << "Step 10: Updating catalog's file statistics";
     catalog->updateFileCount();
     catalog->updateTotalFileSize();
     catalog->saveCatalog();
@@ -1683,11 +1536,10 @@ void CatalogJobStoppable::updateCatalogIncremental()
     m_device->saveDevice();
 
     // Step 12: Update parent hierarchy
-    qDebug() << "Step 12: Updating parent device hierarchy";
     try {
         m_device->updateParentsNumbers();
     } catch (const std::exception& e) {
-        qDebug() << "Error updating parent numbers:" << e.what();
+        qWarning() << "WARNING: Error updating parent numbers:" << e.what();
     }
 
     // Step 13: Update related catalog devices
@@ -1695,29 +1547,23 @@ void CatalogJobStoppable::updateCatalogIncremental()
 
     // Step 14: Save catalog files to disk (Memory mode)
     if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
-        qDebug() << "Warning: Failed to save updated catalog to file";
+        qWarning() << "WARNING: Failed to save updated catalog to file";
     }
 
     // Step 15: Complete catalog update (same as creation)
-    qDebug() << "Step 15: Completing catalog update";
     // Save catalog files to disk (Memory mode)
     if (m_databaseMode == "Memory") {
         if (!catalog->saveCatalogToFile(m_databaseMode, m_collectionFolder)) {
-            qDebug() << "Warning: Failed to save updated catalog to file";
+            qWarning() << "WARNING: Failed to save updated catalog to file";
         }
         if (!catalog->saveFoldersToFile(m_databaseMode, m_collectionFolder)) {
-            qDebug() << "Warning: Failed to save updated folders to file";
+            qWarning() << "WARNING: Failed to save updated folders to file";
         }
     }
 
     // Set catalog loaded date
     catalog->setDateLoaded(QDateTime());
 
-    qDebug() << "=== INCREMENTAL CATALOG UPDATE COMPLETED SUCCESSFULLY ===";
-    qDebug() << "Summary:" << m_updateStats.newFiles << "new,"
-             << m_updateStats.modifiedFiles << "modified,"
-             << m_updateStats.deletedFiles << "deleted,"
-             << m_updateStats.unchangedFiles << "unchanged";
 }
 
 QList<QVariantList> CatalogJobStoppable::findFilesWithoutMetadata()
@@ -1732,7 +1578,6 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutMetadata()
 
     // Guard: If metadata disabled, return empty immediately
     if (catalog->includeMetadata == Catalog::METADATA_NONE) {
-        qDebug() << "findFilesWithoutMetadata: metadata disabled, returning empty";
         return results;
     }
 
@@ -1763,14 +1608,13 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutMetadata()
     query.bindValue(":catalog_id", catalog->ID);
 
     if (!query.exec()) {
-        qDebug() << "findFilesWithoutMetadata: Query failed:" << query.lastError().text();
+        qWarning() << "WARNING: findFilesWithoutMetadata: Query failed:" << query.lastError().text();
         return results;
     }
 
     // Collect results
     while (query.next()) {
         if (!shouldContinue()) {
-            qDebug() << "findFilesWithoutMetadata: Stop requested";
             break;
         }
 
@@ -1781,7 +1625,6 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutMetadata()
         results.append(fileData);
     }
 
-    qDebug() << "findFilesWithoutMetadata: Found" << results.size() << "files needing metadata";
 
     return results;
 }
@@ -1791,7 +1634,6 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutChecksum()
     QList<QVariantList> results;
 
     if (!m_device || !m_device->catalog) {
-        qDebug() << "findFilesWithoutChecksum: No device or catalog";
         return results;
     }
 
@@ -1799,13 +1641,9 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutChecksum()
 
     // Guard: If checksum disabled, return empty immediately
     if (catalog->includeChecksum == Catalog::CHECKSUM_NONE) {
-        qDebug() << "findFilesWithoutChecksum: checksum disabled, returning empty";
         return results;
     }
 
-    qDebug() << "=== findFilesWithoutChecksum: Querying files needing checksum ===";
-    qDebug() << "Catalog ID:" << catalog->ID;
-    qDebug() << "Checksum setting:" << catalog->includeChecksum;
 
     // Query files without checksum
     QString querySQL = QString(
@@ -1819,11 +1657,10 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutChecksum()
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
 
     if (!query.exec(querySQL)) {
-        qDebug() << "ERROR: Failed to query files for checksum:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to query files for checksum:" << query.lastError().text();
         return results;
     }
 
-    qDebug() << "DEBUG: Query executed successfully";
 
     int rowCount = 0;
     while (query.next()) {
@@ -1837,19 +1674,13 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutChecksum()
 
         // Debug first row in detail
         if (rowCount == 0) {
-            qDebug() << "DEBUG: First row data:";
-            qDebug() << "  fullPath valid:" << fullPath.isValid() << "value:" << fullPath.toString();
-            qDebug() << "  fileName valid:" << fileName.isValid() << "value:" << fileName.toString();
-            qDebug() << "  folderPath valid:" << folderPath.isValid() << "value:" << folderPath.toString();
-            qDebug() << "  fileSize valid:" << fileSize.isValid() << "value:" << fileSize.toLongLong();
         }
 
         fileData << fullPath << fileName << folderPath << fileSize;
 
         // VERIFY we have exactly 4 elements
         if (fileData.size() != 4) {
-            qDebug() << "ERROR: Row" << rowCount << "has" << fileData.size() << "elements instead of 4!";
-            qDebug() << "  Data:" << fileData;
+            qWarning() << "WARNING: Row" << rowCount << "has" << fileData.size() << "elements instead of 4!";
             continue; // Skip this row
         }
 
@@ -1858,17 +1689,12 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutChecksum()
 
         // Debug first few rows
         if (rowCount <= 3) {
-            qDebug() << "  File" << rowCount << ":" << fileData[1].toString()
-            << "(" << QLocale().formattedDataSize(fileData[3].toLongLong()) << ")"
-            << "- list size:" << fileData.size();
         }
     }
 
-    qDebug() << "Found" << results.size() << "files needing checksum calculation";
 
     // Extra verification
     if (!results.isEmpty()) {
-        qDebug() << "DEBUG: First result in list has" << results[0].size() << "elements";
     }
 
     return results;
@@ -1880,8 +1706,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
         return;
     }
 
-    qDebug() << "=== CatalogJobStoppable::extractChecksumsForFiles START ===";
-    qDebug() << "Total files to process:" << files.size();
 
     const int BATCH_SIZE = 1;
     int totalFiles = files.size();
@@ -1889,14 +1713,12 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
 
     // Get the algorithm from catalog setting
     QCryptographicHash::Algorithm algorithm = FileChecksum::getAlgorithmFromString(m_device->catalog->includeChecksum);
-    qDebug() << "Using algorithm:" << m_device->catalog->includeChecksum;
 
     // PRE-CALCULATE total bytes to process (do once at start)
     qint64 totalBytes = 0;
     for (const QVariantList &fileData : files) {
         totalBytes += fileData[3].toLongLong();
     }
-    qDebug() << "Total bytes to process:" << QLocale().formattedDataSize(totalBytes);
 
     qint64 processedBytes = 0;  // ✅ NOT static - resets each time
     QElapsedTimer totalTimer;
@@ -1905,7 +1727,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
     // Process in batches
     for (int batchStart = 0; batchStart < totalFiles; batchStart += BATCH_SIZE) {
         if (!shouldContinue()) {
-            qDebug() << "Checksum calculation STOPPED by user at file" << processedFiles;
             return;
         }
 
@@ -1915,9 +1736,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
         QElapsedTimer batchTimer;
         batchTimer.start();
 
-        qDebug() << "=== Batch" << (batchStart / BATCH_SIZE + 1)
-                 << "(" << (batchStart + 1) << "-" << (batchStart + batchSize)
-                 << "of" << totalFiles << ") ===";
 
         // Collect batch data
         QStringList batchFileNames;
@@ -1931,8 +1749,7 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
 
             // SAFETY: Verify we have 4 elements
             if (fileData.size() != 4) {
-                qDebug() << "ERROR: File data at index" << i << "has" << fileData.size() << "elements!";
-                qDebug() << "  Expected 4 elements. Data:" << fileData;
+                qWarning() << "WARNING: File data at index" << i << "has" << fileData.size() << "elements!";
                 continue; // Skip this file
             }
 
@@ -1961,12 +1778,9 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
             lastFileSize = fileSize;
 
             int currentFileNumber = processedFiles + i + 1;
-            qDebug() << "  [" << currentFileNumber << "/" << totalFiles << "]"
-                     << fileName << "(" << QLocale().formattedDataSize(fileSize) << ")";
 
             QFileInfo fileInfo(filePath);
             if (!fileInfo.exists()) {
-                qDebug() << "    SKIP: File no longer exists";
                 continue;
             }
 
@@ -1975,26 +1789,17 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
 
             auto progressCallback = [&](qint64 processed, qint64 total) {
                 if (!shouldContinue()) {
-                    qDebug() << "      CALLBACK: Stop requested, throwing exception";
                     throw std::runtime_error("Stop requested");
                 }
 
                 bytesProcessedInFile = processed;
 
-                qDebug() << "      CALLBACK triggered for" << fileName;
-                qDebug() << "        File progress:" << QLocale().formattedDataSize(processed)
-                         << "/" << QLocale().formattedDataSize(total);
 
 
-                qDebug() << "      CALLBACK triggered for" << fileName;
-                qDebug() << "        File progress:" << QLocale().formattedDataSize(processed)
-                         << "/" << QLocale().formattedDataSize(total);
 
                 // Calculate temporary total bytes (includes partial progress of current file)
                 qint64 tempTotalProcessed = processedBytes + processed;
 
-                qDebug() << "        Total processed:" << QLocale().formattedDataSize(tempTotalProcessed)
-                         << "/" << QLocale().formattedDataSize(totalBytes);
 
                 // Update time estimate with partial file progress
                 qint64 elapsedMs = totalTimer.elapsed();
@@ -2002,8 +1807,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                     double bytesPerSecond = (static_cast<double>(tempTotalProcessed) * 1000.0) / elapsedMs;
                     qint64 remainingBytes = totalBytes - tempTotalProcessed;
 
-                    qDebug() << "        Speed:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
-                    qDebug() << "        Remaining:" << QLocale().formattedDataSize(remainingBytes);
 
                     QString timeString;
                     if (bytesPerSecond > 0) {
@@ -2020,7 +1823,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                             timeString = QString("%1s").arg(seconds);
                         }
 
-                        qDebug() << "        Estimated time remaining:" << timeString;
                     }
 
                     // Emit progress with current file info
@@ -2035,7 +1837,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                                          .arg(timeString)
                                          .arg(fileInfo);
 
-                    qDebug() << "        Emitting marker:" << marker;
 
                     // CHANGED: Use BYTE-based progress instead of file count
                     emitProgressUpdate(tempTotalProcessed, totalBytes, marker);
@@ -2047,12 +1848,10 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
 
             // Check if checksum is empty (stopped during calculation)
             if (checksum.isEmpty()) {
-                qDebug() << "    INTERRUPTED: Checksum calculation was stopped";
                 break; // Exit the file loop
             }
 
             if (!checksum.isEmpty()) {
-                qDebug() << "    SUCCESS: Checksum =" << checksum;
                 updateFileNames << batchFileNames[i];
                 updateFolderPaths << batchFolderPaths[i];
                 checksums << checksum;
@@ -2060,13 +1859,12 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                 // Add full file size to processed bytes (not partial)
                 processedBytes += fileSize;
             } else {
-                qDebug() << "    ERROR: Checksum calculation failed";
+                qWarning() << "WARNING:     ERROR: Checksum calculation failed";
             }
         }
 
         // Batch update to database
         if (!updateFileNames.isEmpty()) {
-            qDebug() << "  Batch updating" << updateFileNames.size() << "checksums to database...";
 
             bool success = FileChecksum::batchUpdateFileChecksum(
                 m_connectionName,
@@ -2077,13 +1875,11 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                 );
 
             if (success) {
-                qDebug() << "  Batch update SUCCESS";
             } else {
-                qDebug() << "  Batch update FAILED";
+                qWarning() << "WARNING:   Batch update FAILED";
             }
         }
 
-        int batchDurationMs = batchTimer.elapsed();
         processedFiles += batchSize;
 
         // Time estimation based on bytes
@@ -2113,21 +1909,10 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
                     timeToCompletionString = QString("%1s").arg(seconds);
                 }
 
-                qDebug() << "Progress:" << processedFiles << "/" << totalFiles << "files";
-                qDebug() << "Processed:" << QLocale().formattedDataSize(processedBytes)
-                         << "/" << QLocale().formattedDataSize(totalBytes);
-                qDebug() << "Speed:" << QLocale().formattedDataSize(bytesPerSecond) << "/s";
-                qDebug() << "Remaining:" << QLocale().formattedDataSize(remainingBytes);
-                qDebug() << "Est. time:" << timeToCompletionString;
             }
         }
 
-        qDebug() << "Batch completed in" << batchDurationMs << "ms";
-        qDebug() << "Progress:" << processedFiles << "/" << totalFiles << "files";
-        qDebug() << "Processed:" << QLocale().formattedDataSize(processedBytes)
-                 << "/" << QLocale().formattedDataSize(totalBytes);
         if (!timeToCompletionString.isEmpty()) {
-            qDebug() << "Est. time:" << timeToCompletionString;
         }
 
         // Emit progress with file info
@@ -2150,10 +1935,6 @@ void CatalogJobStoppable::extractChecksumsForFiles(const QList<QVariantList> &fi
     QString marker = QString("__CHECKSUM_CALCULATION__|%1|%2").arg(totalFiles).arg(totalFiles);
     emitProgressUpdate(totalBytes, totalBytes, marker);
 
-    qDebug() << "=== CatalogJobStoppable::extractChecksumsForFiles COMPLETE ===";
-    qDebug() << "Total files processed:" << processedFiles;
-    qDebug() << "Total bytes processed:" << QLocale().formattedDataSize(processedBytes);
-    qDebug() << "Total time:" << (totalTimer.elapsed() / 1000.0) << "seconds";
 }
 void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
                                                     Catalog *catalog,
@@ -2269,7 +2050,7 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
                     insertQuery.bindValue(":mime_type", mimeTypes[i]);
 
                     if (!insertQuery.exec()) {
-                        qDebug() << "Error inserting into filetemp:" << insertQuery.lastError().text();
+                        qWarning() << "WARNING: Error inserting into filetemp:" << insertQuery.lastError().text();
                     }
                 }
 
@@ -2302,7 +2083,7 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
             insertQuery.bindValue(":mime_type", mimeTypes[i]);
 
             if (!insertQuery.exec()) {
-                qDebug() << "Error inserting into filetemp:" << insertQuery.lastError().text();
+                qWarning() << "WARNING: Error inserting into filetemp:" << insertQuery.lastError().text();
             }
         }
     }
@@ -2314,7 +2095,7 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
         clearFoldersQuery.prepare("DELETE FROM folder WHERE folder_catalog_id = :catalog_id");
         clearFoldersQuery.bindValue(":catalog_id", catalog->ID);
         if (!clearFoldersQuery.exec()) {
-            qDebug() << "Error clearing folders:" << clearFoldersQuery.lastError().text();
+            qWarning() << "WARNING: Error clearing folders:" << clearFoldersQuery.lastError().text();
         }
         insertFolders(directoryPaths, catalog);
     }
@@ -2325,38 +2106,30 @@ QList<QVariantList> CatalogJobStoppable::findNewFiles()
     QList<QVariantList> newFiles;
 
     // ADD DIAGNOSTIC: Check what's in filetemp
-    qDebug() << "=== DIAGNOSTIC: findNewFiles() ===";
-    qDebug() << "Catalog ID:" << m_device->catalog->ID;
 
     QSqlQuery diagQuery(QSqlDatabase::database(m_connectionName));
     diagQuery.prepare("SELECT COUNT(*) FROM filetemp WHERE file_catalog_id = :catalog_id");
     diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
     if (diagQuery.exec() && diagQuery.next()) {
-        qDebug() << "Files in filetemp for this catalog:" << diagQuery.value(0).toInt();
     }
 
     diagQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :catalog_id");
     diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
     if (diagQuery.exec() && diagQuery.next()) {
-        qDebug() << "Files in file table for this catalog:" << diagQuery.value(0).toInt();
     }
 
     // Show first few file paths from each table
     diagQuery.prepare("SELECT file_full_path FROM filetemp WHERE file_catalog_id = :catalog_id LIMIT 3");
     diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
     if (diagQuery.exec()) {
-        qDebug() << "Sample paths in filetemp:";
         while (diagQuery.next()) {
-            qDebug() << "  " << diagQuery.value(0).toString();
         }
     }
 
     diagQuery.prepare("SELECT file_full_path FROM file WHERE file_catalog_id = :catalog_id LIMIT 3");
     diagQuery.bindValue(":catalog_id", m_device->catalog->ID);
     if (diagQuery.exec()) {
-        qDebug() << "Sample paths in file table:";
         while (diagQuery.next()) {
-            qDebug() << "  " << diagQuery.value(0).toString();
         }
     }
 
@@ -2374,12 +2147,11 @@ QList<QVariantList> CatalogJobStoppable::findNewFiles()
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
     if (!query.exec()) {
-        qDebug() << "ERROR finding new files:" << query.lastError().text();
+        qWarning() << "WARNING: ERROR finding new files:" << query.lastError().text();
         return newFiles;
     }
 
     // ADD DIAGNOSTIC: Show what the query returns
-    qDebug() << "New files query returned" << query.size() << "rows";
 
     while (query.next()) {
         QVariantList fileData;
@@ -2397,7 +2169,6 @@ QList<QVariantList> CatalogJobStoppable::findNewFiles()
         newFiles.append(fileData);
     }
 
-    qDebug() << "=== END DIAGNOSTIC: findNewFiles() found" << newFiles.size() << "new files ===";
     return newFiles;
 }
 
@@ -2419,7 +2190,7 @@ QList<QVariantList> CatalogJobStoppable::findModifiedFiles()
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
     if (!query.exec()) {
-        qDebug() << "ERROR finding modified files:" << query.lastError().text();
+        qWarning() << "WARNING: ERROR finding modified files:" << query.lastError().text();
         return modifiedFiles;
     }
 
@@ -2454,7 +2225,7 @@ QStringList CatalogJobStoppable::findDeletedFiles()
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
     if (!query.exec()) {
-        qDebug() << "ERROR finding deleted files:" << query.lastError().text();
+        qWarning() << "WARNING: ERROR finding deleted files:" << query.lastError().text();
         return deletedFiles;
     }
 
@@ -2480,7 +2251,7 @@ int CatalogJobStoppable::countUnchangedFiles()
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
     if (!query.exec() || !query.next()) {
-        qDebug() << "ERROR counting unchanged files:" << query.lastError().text();
+        qWarning() << "WARNING: ERROR counting unchanged files:" << query.lastError().text();
         return 0;
     }
 
@@ -2491,7 +2262,6 @@ void CatalogJobStoppable::insertNewFilesFromFiletemp(const QList<QVariantList> &
 {
     if (newFiles.isEmpty()) return;
 
-    qDebug() << "Inserting" << newFiles.size() << "new files from filetemp";
 
     // Use a single INSERT SELECT statement for efficiency
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
@@ -2520,10 +2290,9 @@ void CatalogJobStoppable::insertNewFilesFromFiletemp(const QList<QVariantList> &
     )").arg(m_device->catalog->ID).arg(pathList);
 
     if (!query.exec(insertSQL)) {
-        qDebug() << "ERROR: Bulk insert of new files failed:" << query.lastError().text();
+        qWarning() << "WARNING: Bulk insert of new files failed:" << query.lastError().text();
 
         // Fallback: Insert one by one
-        qDebug() << "Attempting individual inserts...";
         QSqlQuery individualQuery(QSqlDatabase::database(m_connectionName));
         individualQuery.prepare(R"(
             INSERT INTO file (file_catalog_id, file_name, file_folder_path, file_full_path,
@@ -2560,13 +2329,11 @@ void CatalogJobStoppable::insertNewFilesFromFiletemp(const QList<QVariantList> &
             if (individualQuery.exec()) {
                 successCount++;
             } else {
-                qDebug() << "Failed to insert file:" << fileData[0].toString()
+                qWarning() << "WARNING: Failed to insert file:" << fileData[0].toString()
                 << "Error:" << individualQuery.lastError().text();
             }
         }
-        qDebug() << "Individual insert completed:" << successCount << "of" << newFiles.size() << "files";
     } else {
-        qDebug() << "Bulk insert successful:" << query.numRowsAffected() << "rows";
     }
 
     // Insert folder entries for new files
@@ -2587,7 +2354,6 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
 {
     if (modifiedFiles.isEmpty()) return;
 
-    qDebug() << "Updating" << modifiedFiles.size() << "modified files from filetemp";
 
     // Build list of file paths for WHERE IN clause
     QStringList paths;
@@ -2620,11 +2386,10 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     if (!query.exec(updateSQL)) {
-        qDebug() << "ERROR: Bulk update of modified files failed:" << query.lastError().text();
+        qWarning() << "WARNING: Bulk update of modified files failed:" << query.lastError().text();
 
         // Fallback: Update one by one using direct values from modifiedFiles
         // Note: modifiedFiles contains [0]=full_path, [1]=name, [2]=folder, [3]=size, [4]=date, [5]=extension, [6]=type
-        qDebug() << "Attempting individual updates...";
         QSqlQuery individualQuery(QSqlDatabase::database(m_connectionName));
         individualQuery.prepare(R"(
             UPDATE file
@@ -2643,7 +2408,6 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
 
             // Validate we have enough data
             if (fileData.size() < 7) {
-                qDebug() << "Skipping file with insufficient data:" << fileData[0].toString();
                 continue;
             }
 
@@ -2657,13 +2421,11 @@ void CatalogJobStoppable::updateModifiedFilesFromFiletemp(const QList<QVariantLi
             if (individualQuery.exec()) {
                 successCount++;
             } else {
-                qDebug() << "Failed to update file:" << fileData[0].toString()
+                qWarning() << "WARNING: Failed to update file:" << fileData[0].toString()
                 << "Error:" << individualQuery.lastError().text();
             }
         }
-        qDebug() << "Individual update completed:" << successCount << "of" << modifiedFiles.size() << "files";
     } else {
-        qDebug() << "Bulk update successful:" << query.numRowsAffected() << "rows";
     }
 }
 
@@ -2671,7 +2433,6 @@ void CatalogJobStoppable::deleteRemovedFiles(const QStringList &deletedFiles)
 {
     if (deletedFiles.isEmpty()) return;
 
-    qDebug() << "Deleting" << deletedFiles.size() << "removed files";
 
     // Build list of file paths for WHERE IN clause
     QStringList paths;
@@ -2691,9 +2452,8 @@ void CatalogJobStoppable::deleteRemovedFiles(const QStringList &deletedFiles)
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     if (!query.exec(deleteSQL)) {
-        qDebug() << "ERROR: Bulk delete of removed files failed:" << query.lastError().text();
+        qWarning() << "WARNING: Bulk delete of removed files failed:" << query.lastError().text();
     } else {
-        qDebug() << "Bulk delete successful:" << query.numRowsAffected() << "rows";
     }
 }
 
@@ -2701,7 +2461,6 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
 {
     if (changedFiles.isEmpty()) return;
 
-    qDebug() << "=== Starting metadata extraction for" << changedFiles.size() << "files ===";
 
     // Collect files that need metadata extraction
     QStringList extractFileNames, extractFolderPaths, extractFullPaths;
@@ -2718,14 +2477,12 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
     }
 
     if (extractFullPaths.isEmpty()) {
-        qDebug() << "No files require metadata extraction";
         return;
     }
 
     int totalFiles = extractFullPaths.size();
     int processedFiles = 0;
 
-    qDebug() << "Total files needing metadata extraction:" << totalFiles;
 
     // ETA tracking
     QElapsedTimer totalTimer;
@@ -2741,13 +2498,11 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
         }
     }
 
-    qDebug() << "Using" << optimalThreads << "threads for parallel extraction";
 
     // Process in batches of files (progressRefreshRate)
     for (int batchStart = 0; batchStart < totalFiles; batchStart += progressRefreshRate) {
         // Check if stop requested between batches
         if (!shouldContinue()) {
-            qDebug() << "Metadata extraction stopped by user after" << processedFiles << "files";
             QString stopMsg = QString("Metadata extraction stopped: %1/%2 files processed")
                                   .arg(processedFiles)
                                   .arg(totalFiles);
@@ -2760,7 +2515,6 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
         int batchEnd = qMin(batchStart + progressRefreshRate, totalFiles);
         int batchSize = batchEnd - batchStart;
 
-        qDebug() << "Processing batch:" << batchStart << "to" << batchEnd << "(" << batchSize << "files)";
 
         // Extract batch slice
         QStringList batchFullPaths = extractFullPaths.mid(batchStart, batchSize);
@@ -2795,7 +2549,6 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
                                                   updateMetadata);
         }
 
-        int batchDurationMs = batchTimer.elapsed();
         processedFiles += batchSize;
 
         // Calculate time to completion
@@ -2828,11 +2581,6 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
         emitProgressUpdate(processedFiles, totalFiles, marker);
 
         // Log batch performance
-        qDebug() << "Batch completed:" << batchSize << "files in" << batchDurationMs << "ms"
-                 << "(" << (batchDurationMs / qMax(1, batchSize)) << "ms/file)"
-                 << "| Total progress:" << processedFiles << "/" << totalFiles
-                 << "(" << (processedFiles * 100) / totalFiles << "%)"
-                 << "| Time to completion:" << timeToCompletionString;
 
         // Allow UI to process events between batches
         QCoreApplication::processEvents();
@@ -2842,14 +2590,12 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
     QString marker = QString("__METADATA_EXTRACTION__|%1|%2").arg(processedFiles).arg(totalFiles);
     emitProgressUpdate(processedFiles, totalFiles, marker);
 
-    qDebug() << "=== Metadata extraction completed: %1 files processed ===" << processedFiles;
 
     //qDebug() << "=== Metadata extraction completed ===" << finalMsg;
 }
 
 void CatalogJobStoppable::migrateMimeTypesForExistingFiles()
 {
-    qDebug() << "=== Starting MIME type migration (by extension) ===";
 
     // Use the unified method with progress callback
     FileMetadata::migrateFileTypesForCatalog(
@@ -2868,5 +2614,4 @@ void CatalogJobStoppable::migrateMimeTypesForExistingFiles()
         }
         );
 
-    qDebug() << "=== MIME type migration completed ===";
 }

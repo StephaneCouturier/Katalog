@@ -43,7 +43,6 @@ void Device::loadDevice(QString connectionName){
 
     QSqlDatabase db = QSqlDatabase::database(connectionName);
     if (!db.isOpen()) {
-        qDebug() << "DEBUG: Database is not open.";
         return;
     }
     QSqlQuery query(db);
@@ -68,7 +67,6 @@ void Device::loadDevice(QString connectionName){
     query.bindValue(":device_id", ID);
 
     if(useTimerForDebug){
-        qDebug() << "      TIMER3: prepare load device query:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
     }
 
     if (query.exec()) {
@@ -85,14 +83,13 @@ void Device::loadDevice(QString connectionName){
             groupID     = query.value(10).toInt();
             order       = query.value(11).toInt();
         } else if (ID !=0){
-            qDebug() << "DEBUG: loadDevice query failed, no record found for device_id" << ID;
+            qWarning() << "WARNING: DEBUG: loadDevice query failed, no record found for device_id" << ID;
         }
     } else {
-        qDebug() << "DEBUG: loadDevice query execution failed:" << query.lastError().text();
+        qWarning() << "WARNING: DEBUG: loadDevice query execution failed:" << query.lastError().text();
         return;
     }
 
-    if(useTimerForDebug) {qDebug() << "      TIMER3: load device query.exec:" << stepTimer.elapsed() << "ms"; stepTimer.restart();}
 
     // Get active state
     updateActiveState(connectionName);
@@ -106,7 +103,6 @@ void Device::loadDevice(QString connectionName){
         storage->freeSpace  = freeSpace;
     }
     if(useTimerForDebug){
-        qDebug() << "      TIMER3: Load storage values:" << stepTimer.elapsed() << "ms";
         stepTimer.restart();
     }
 
@@ -123,7 +119,6 @@ void Device::loadDevice(QString connectionName){
         catalog->totalFileSize = totalFileSize;
     }
     if(useTimerForDebug){
-        qDebug() << "      TIMER3: Load catalog values:" << stepTimer.elapsed() << "ms";
         stepTimer.restart();
     }
 
@@ -131,14 +126,12 @@ void Device::loadDevice(QString connectionName){
     loadSubDeviceList(connectionName);
 
     if(useTimerForDebug){
-        qDebug() << "      TIMER3: Load sub-device list:" << stepTimer.elapsed() << "ms";
         stepTimer.restart();
     }
 
     //Update states
     verifyHasSubDevice(connectionName);
     if(useTimerForDebug){
-        qDebug() << "      TIMER3: verifyHasSubDevice:" << stepTimer.elapsed() << "ms";
         stepTimer.restart();
     }
 }
@@ -218,10 +211,10 @@ void Device::getCatalogStorageID(){
         if (queryGetCatalogStorageID.next()) {
             ID = queryGetCatalogStorageID.value(0).toInt();
         } else {
-            qDebug() << "getCatalogStorageID failed, no record found for device_name" << name;
+            qWarning() << "WARNING: getCatalogStorageID failed, no record found for device_name" << name;
         }
     } else {
-        qDebug() << "DEBUG: getCatalogStorageID query execution failed:" << queryGetCatalogStorageID.lastError().text();
+        qWarning() << "WARNING: DEBUG: getCatalogStorageID query execution failed:" << queryGetCatalogStorageID.lastError().text();
     }
 }
 
@@ -303,7 +296,7 @@ bool Device::verifyDeviceNameExists()
     query.bindValue(":device_name", name);
 
     if (!query.exec() and ID !=0) {
-        qDebug() << "DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();
+        qWarning() << "WARNING: DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();
         return false;
     }
 
@@ -325,7 +318,7 @@ bool Device::verifyParentDeviceExistsInPhysicalGroup()
     query.bindValue(":device_id", parentID);
 
     if (!query.exec()) {
-        qDebug() << "DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();
+        qWarning() << "WARNING: DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();
         return false;
     }
 
@@ -658,7 +651,6 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
 
         if (callbacks && callbacks->onConfirmation) {
             if (!callbacks->onConfirmation(result.confirmationMessage)) {
-                qDebug() << "Device::deleteDevice - User cancelled";
                 result.result = DeleteCancelled;
                 return result;
             }
@@ -679,7 +671,7 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
     query.bindValue(":device_id", ID);
 
     if (!query.exec()) {
-        qDebug() << "Device::deleteDevice - Database error:" << query.lastError().text();
+        qWarning() << "WARNING: Device::deleteDevice - Database error:" << query.lastError().text();
         result.result = DeleteError;
         result.errorMessage = "Database error: " + query.lastError().text();
         return result;
@@ -710,13 +702,12 @@ QList<qint64> Device::updateStorageOnly(const QString& statisticsRequestSource)
     // Simple storage-only update
     // Used for early initialization in Collection::insertPhysicalStorageGroup()
 
-    qDebug() << "updateStorageOnly for device:" << name;
 
     QList<qint64> deviceUpdatesList;
 
     // Only valid for Storage devices
     if (type != "Storage") {
-        qDebug() << "ERROR: updateStorageOnly called on non-Storage device:" << type;
+        qWarning() << "WARNING: updateStorageOnly called on non-Storage device:" << type;
         // Return empty results to indicate error
         return QList<qint64>();
     }
@@ -770,7 +761,6 @@ QList<qint64> Device::updateStorageOnly(const QString& statisticsRequestSource)
     deviceUpdatesList += storageUpdates[5];  // Total space
     deviceUpdatesList += storageUpdates[6];  // Delta total space
 
-    qDebug() << "updateStorageOnly completed. Storage updated:" << storageResult.wasUpdated;
 
     return deviceUpdatesList;
 }
@@ -867,7 +857,7 @@ bool Device::assignCatalogToDevice(Device *catalogDevice, Device *parentDevice, 
     query.bindValue(":device_date_updated", catalogDevice->dateTimeUpdated);
 
     if (!query.exec()) {
-        qDebug() << "Failed to assign catalog to device:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to assign catalog to device:" << query.lastError().text();
         return false;
     }
 
@@ -919,7 +909,7 @@ bool Device::assignStorageToDevice(Storage *storage, int parentDeviceId, const Q
     query.bindValue(":device_free_space", storage->freeSpace);
 
     if (!query.exec()) {
-        qDebug() << "Failed to assign storage to device:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to assign storage to device:" << query.lastError().text();
         return false;
     }
 
@@ -942,7 +932,7 @@ bool Device::unassignFromDevice(int deviceID, int deviceParentID, const QString 
     query.bindValue(":device_parent_id", deviceParentID);
 
     if (!query.exec()) {
-        qDebug() << "Failed to unassign from device:" << query.lastError().text();
+        qWarning() << "WARNING: Failed to unassign from device:" << query.lastError().text();
         return false;
     }
 

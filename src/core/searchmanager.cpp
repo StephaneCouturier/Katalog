@@ -49,7 +49,6 @@ SearchManager::~SearchManager()
 void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, Device *targetDevice)
 {
     if (m_currentJob) {
-        qDebug() << "Search already running!";
         return;
     }
 
@@ -128,27 +127,20 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
 //----------------------------------------------------------------------
 void SearchManager::stopSearch()
 {
-    qDebug() << "=== SearchManager::stopSearch() called ===";
-    qDebug() << "Current job exists:" << (m_currentJob != nullptr);
-    qDebug() << "Search running:" << m_searchRunning;
 
     if (!m_currentJob) {
-        qDebug() << "No search to stop!";
         return;
     }
 
-    qDebug() << "Stopping search...";
     setStatus("Stopping search...");
 
     // Disconnect signals first to prevent double handling
     disconnect(m_currentJob, nullptr, this, nullptr);
 
     // Kill the job
-    qDebug() << "Calling m_currentJob->kill()";
     m_currentJob->kill();
 
     // Force immediate cleanup since result signal might not be emitted
-    qDebug() << "Force cleanup after kill...";
     setSearchRunning(false);
     setProgress(0);
     setCurrentCatalogName("");
@@ -159,11 +151,9 @@ void SearchManager::stopSearch()
         m_currentJob->setParent(nullptr);
         m_currentJob->deleteLater();
         m_currentJob = nullptr;
-        qDebug() << "Forced cleanup complete";
     }
 
     emit searchCancelled();
-    qDebug() << "=== SearchManager::stopSearch() complete ===";
 }
 //----------------------------------------------------------------------
 void SearchManager::pauseSearch()
@@ -174,7 +164,6 @@ void SearchManager::pauseSearch()
 
     if (m_currentJob->suspend()) {
         m_isPaused = true;
-        qDebug() << "Search paused";
     }
 }
 //----------------------------------------------------------------------
@@ -186,7 +175,6 @@ void SearchManager::resumeSearch()
 
     if (m_currentJob->resume()) {
         m_isPaused = false;
-        qDebug() << "Search resumed";
     }
 }
 //----------------------------------------------------------------------
@@ -200,7 +188,6 @@ Search* SearchManager::getCurrentSearch() const
 //----------------------------------------------------------------------
 void SearchManager::onJobResult(KJob *job)
 {
-    qDebug() << "Search job result received, error:" << job->error();
 
     if (job->error() == KJob::KilledJobError) {
         setStatus("Search cancelled");
@@ -228,7 +215,6 @@ void SearchManager::onJobPercent()
 {
     if (m_currentJob) {
         unsigned long percent = m_currentJob->percent();
-        qDebug() << "SearchManager::onJobPercent received percent:" << percent;
         setProgress(static_cast<int>(percent));
     }
 }
@@ -261,7 +247,6 @@ void SearchManager::setSearchRunning(bool running)
 void SearchManager::setProgress(int progress)
 {
     if (m_progress != progress) {
-        qDebug() << "SearchManager::setProgress updating from" << m_progress << "to" << progress;
         m_progress = progress;
         emit progressChanged();
     }
