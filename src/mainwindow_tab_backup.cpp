@@ -495,20 +495,26 @@ MainWindow::BackupCompareResult MainWindow::compareForBackup(
             "file"
         );
 
-        // Build a set of all target file names to classify conflicts
-        QSet<QString> targetFileNames;
+        // Build a set of "folder_path/file_name" from the target to detect conflicts
+        // only when the same file would land at the same destination path —
+        // same filename in a different folder is NOT a conflict.
+        QSet<QString> targetFilePaths;
         {
             QSqlQuery q(QSqlDatabase::database(m_connectionName));
-            q.prepare(QString("SELECT DISTINCT file_name FROM file WHERE file_catalog_id = %1")
+            q.prepare(QString("SELECT file_folder_path || '/' || file_name FROM file WHERE file_catalog_id = %1")
                           .arg(targetDevice.externalID));
             if (q.exec()) {
                 while (q.next())
-                    targetFileNames.insert(q.value(0).toString());
+                    targetFilePaths.insert(q.value(0).toString());
             }
         }
 
+        const int sourceRootLen = sourceDevice.path.length();
         for (const DifferenceFileEntry &entry : result.onlyInSource) {
-            if (targetFileNames.contains(entry.fileName))
+            // Map source folder to expected target folder by replacing the source root
+            const QString relFolder   = entry.folderPath.mid(sourceRootLen);
+            const QString expectedPath = targetDevice.path + relFolder + QLatin1Char('/') + entry.fileName;
+            if (targetFilePaths.contains(expectedPath))
                 out.fileConflicts.append(entry);
             else
                 out.filesToCopy.append(entry);
