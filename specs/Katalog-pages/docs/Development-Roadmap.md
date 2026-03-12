@@ -1,25 +1,30 @@
 # Roadmap
-This page documents the ideas and sub projects for the future of Katalog.<br/>
+![Draft](https://img.shields.io/badge/Status-Draft-orange) ![All](https://img.shields.io/badge/Version-All-green)
 
 ## Vision
 
-Katalog aims at providing the most features for device & file management across as many platforms as possbile.
+Katalog aims to provide the richest set of features for device and file management across as many platforms as possible — starting from KDE Plasma on Linux, extending toward Windows, mobile, and web.
 
+## Ideas and directions
 
-## Some ideas and directions
-
+```mermaid
+mindmap
+  root((Katalog))
+    File Management & Search
+      More metadata
+      Archive support
+      Richer statistics
+      Fuzzy matching
+      File backup
+    UI & Multi-platform
+      QtQuick / Kirigami
+      Mobile support
+      Web features
+    Quality & Scale
+      RESTful API
+      Nextcloud as source
 ```
- File management & Search       UI & Multi-platform           Quality & Scale
-    │                               │                             │
-    ├─ more metadata                ├─ QtQuick/Kirigami           ├─ localhost db
-    ├─ archives                     ├─ Mobile Support             ├─ RESTful API for Web
-    ├─ statistics                   └─ Web features               └─ NextCloud as source
-    ├─ fuzzy matching
-    └─ files backup
-```
 
-## Backlog of main features
+## Backlog
 
-Active and future work items are visible in the [Backlog on GitHub, Major Features](https://github.com/users/StephaneCouturier/projects/7/views/1?sliceBy[value]=1_Major_feature)
-
-
+Active and planned work items are tracked in the [GitHub Backlog — Major Features](https://github.com/users/StephaneCouturier/projects/7/views/1?sliceBy[value]=1_Major_feature).

@@ -1,9 +1,23 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type * as Mermaid from '@docusaurus/theme-mermaid';
 
 //Backlog: https://github.com/users/StephaneCouturier/projects/7/views/1
 //Repository: https://github.com/StephaneCouturier/Katalog
+
+function suppressVscodeLspWarning() {
+  return {
+    name: 'suppress-vscode-languageserver-types-warning',
+    configureWebpack() {
+      return {
+        ignoreWarnings: [
+          { module: /vscode-languageserver-types/ },
+        ],
+      };
+    },
+  };
+}
 
 const config: Config = {
   title: 'Katalog',
@@ -23,10 +37,13 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
   markdown: {
+    mermaid: true,
     hooks: {
       onBrokenMarkdownLinks: 'warn',
     },
   },
+  themes: ['@docusaurus/theme-mermaid'],
+  plugins: [suppressVscodeLspWarning],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -145,7 +162,23 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-  } satisfies Preset.ThemeConfig,
+    mermaid: {
+      // Use Katalog color palette: deep blue, sky blue, lime green, orange
+      theme: { light: 'base', dark: 'base' },
+      options: {
+        themeVariables: {
+          // Root node
+          cScale0: '#095676',
+          // Branch 1 — File Management & Search
+          cScale1: '#39b2e5',
+          // Branch 2 — UI & Multi-platform
+          cScale2: '#81d41a',
+          // Branch 3 — Quality & Scale
+          cScale3: '#ff8000',
+        },
+      },
+    },
+  } satisfies Preset.ThemeConfig & Mermaid.ThemeConfig,
 };
 
 export default config;
