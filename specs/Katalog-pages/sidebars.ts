@@ -68,8 +68,9 @@ export default {
     {
       type: 'category',
       label: 'Development',
-      items: ['Development-Overview', 'Development-Roadmap',
-
+      items: [  'Development-Overview',
+                'Development-Roadmap',
+                'Development-CodePractice',
       {
         type: 'category',
         label: 'Specifications',
@@ -83,7 +84,8 @@ export default {
       },
        'Development-Build-from-source',
        'Development-Release',
-       'Development-Documentation'
+       'Development-Documentation',
+       'Development-RepositoryRestructuring'
               ],
     },
   ],

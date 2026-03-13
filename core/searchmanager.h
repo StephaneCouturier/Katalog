@@ -35,8 +35,8 @@
 
 #include <QObject>
 #include <QTimer>
-#include "src/core/searchjob.h"
-#include "src/core/searchjobstoppable.h"
+#include "searchjob.h"
+#include "searchjobstoppable.h"
 
 /**
  * @brief The SearchManager class

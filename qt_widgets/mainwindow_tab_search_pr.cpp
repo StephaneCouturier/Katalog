@@ -30,8 +30,8 @@
 */
 
 #include "mainwindow.h"
-#include "src/filesview.h"
-#include "src/ui_mainwindow.h"
+#include "filesview.h"
+#include "ui_mainwindow.h"
 #include "core/filemetadata.h"
 #include "core/statusbarmessagebuilder.h"
 

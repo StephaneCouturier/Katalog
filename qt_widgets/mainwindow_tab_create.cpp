@@ -31,10 +31,10 @@
 
 #include "mainwindow.h"
 #include "mainwindow_ui_wrapper_device.h"
-#include "src/ui_mainwindow.h"
-#include "src/core/catalogprogressmanager.h"
-#include "src/core/filemetadata.h"
-#include "src/core/catalog.h"
+#include "ui_mainwindow.h"
+#include "core/catalogprogressmanager.h"
+#include "core/filemetadata.h"
+#include "core/catalog.h"
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>

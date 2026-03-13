@@ -60,6 +60,7 @@ Sections:
 | Development-Build-from-source | |
 | Development-Release | |
 | Development-Documentation | This page |
+| Development-CodePractice | Coding conventions (diagnostic output, etc.) |
 
 #### Specification pages
 
