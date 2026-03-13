@@ -71,46 +71,44 @@ set(UI_FILES
     mainwindow.ui
 )
 
-# Translation files (sources stay in src/translations/ until Step 3)
 set(TS_FILES
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_bg_BG.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_cz_CZ.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_da_DK.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_de_DE.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_en_US.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_el_GR.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_es_ES.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_et_EE.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_fr_FR.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_fi_FI.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_hi_IN.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_hu_HU.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_it_IT.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_ja_JP.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_lt_LT.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_lv_LV.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_nl_NL.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_nb_NO.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_pl_PL.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_pt_PT.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_ro_RO.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_sv_SE.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_zh_CN.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_sk_SK.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_si_SI.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_sr_RS.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_uk_UA.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_hr_HR.ts
-    ${CMAKE_SOURCE_DIR}/src/translations/Katalog_id_ID.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_bg_BG.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_cz_CZ.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_da_DK.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_de_DE.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_en_US.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_el_GR.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_es_ES.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_et_EE.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_fr_FR.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_fi_FI.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_hi_IN.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_hu_HU.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_it_IT.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_ja_JP.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_lt_LT.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_lv_LV.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_nl_NL.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_nb_NO.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_pl_PL.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_pt_PT.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_ro_RO.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_sv_SE.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_zh_CN.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_sk_SK.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_si_SI.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_sr_RS.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_uk_UA.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_hr_HR.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_id_ID.ts
 )
 
-# Resource files (translations.qrc stays in src/ until Step 3 — paths are relative to it)
 set(QRC_FILES
     icons.qrc
     images.qrc
     Resources.qrc
     styles.qrc
-    ${CMAKE_SOURCE_DIR}/src/translations.qrc
+    translations.qrc
 )
 
 # Set up translations
@@ -148,7 +146,7 @@ add_custom_target(translations_copy
 foreach(ts_file ${TS_FILES})
     get_filename_component(qm_filename ${ts_file} NAME_WE)
     set(qm_file_build "${CMAKE_CURRENT_BINARY_DIR}/${qm_filename}.qm")
-    set(qm_file_source "${CMAKE_SOURCE_DIR}/src/translations/${qm_filename}.qm")
+    set(qm_file_source "${CMAKE_SOURCE_DIR}/translations/${qm_filename}.qm")
 
     add_custom_command(TARGET translations_copy POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
