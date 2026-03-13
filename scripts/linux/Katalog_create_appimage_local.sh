@@ -360,7 +360,7 @@ build_translations() {
     else
         print_warning "Translation build failed, creating empty .qm files"
         # Create empty .qm files for missing translations
-        for ts_file in "$PROJECT_ROOT"/src/translations/*.ts; do
+        for ts_file in "$PROJECT_ROOT"/translations/*.ts; do
             if [ -f "$ts_file" ]; then
                 qm_file="${ts_file%.ts}.qm"
                 if [ ! -f "$qm_file" ]; then
@@ -484,9 +484,9 @@ EOF
 EOF
 
     # Create/copy icon
-    if [ -f "$PROJECT_ROOT/src/images/Katalog_logo_64.ico" ]; then
+    if [ -f "$PROJECT_ROOT/qt_widgets/images/Katalog_logo_64.ico" ]; then
         # Convert ICO to PNG with exact 64x64 size
-        convert "$PROJECT_ROOT/src/images/Katalog_logo_64.ico[0]" -resize 64x64! "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png" 2>/dev/null || {
+        convert "$PROJECT_ROOT/qt_widgets/images/Katalog_logo_64.ico[0]" -resize 64x64! "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png" 2>/dev/null || {
             print_warning "ICO conversion failed, creating fallback icon"
             create_fallback_icon
         }

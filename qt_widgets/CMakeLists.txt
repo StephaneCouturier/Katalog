@@ -251,11 +251,11 @@ install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.md
     DESTINATION share/licenses/io.github.stephanecouturier.Katalog
     RENAME LICENSE)
 
-install(FILES ${CMAKE_SOURCE_DIR}/packaging/Katalog.desktop
+install(FILES ${CMAKE_SOURCE_DIR}/packaging/qt_widgets/Katalog.desktop
     DESTINATION share/applications
     RENAME io.github.stephanecouturier.Katalog.desktop)
 
-install(FILES ${CMAKE_SOURCE_DIR}/packaging/io.github.stephanecouturier.katalog.appdata.xml
+install(FILES ${CMAKE_SOURCE_DIR}/packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml
     DESTINATION share/metainfo
     RENAME io.github.stephanecouturier.Katalog.metainfo.xml)
 

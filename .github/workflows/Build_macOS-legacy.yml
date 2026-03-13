@@ -280,7 +280,7 @@ jobs:
 
         # Create icon if needed
         if [ ! -f "Katalog.app/Contents/Resources/Katalog.icns" ]; then
-          if [ -f "../src/images/Katalog_logo_64.ico" ]; then
+          if [ -f "../qt_widgets/images/Katalog_logo_64.ico" ]; then
             echo "Converting icon..."
             # Create iconset directory
             mkdir -p Katalog.iconset
@@ -288,20 +288,20 @@ jobs:
             # Use 'magick' instead of deprecated 'convert'
             if command -v magick >/dev/null; then
               echo "Using ImageMagick 7 (magick command)"
-              magick "../src/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png" || echo "512x512 conversion failed"
-              magick "../src/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png" || echo "256x256 conversion failed"
-              magick "../src/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png" || echo "128x128 conversion failed"
-              magick "../src/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png" || echo "64x64 conversion failed"
-              magick "../src/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png" || echo "32x32 conversion failed"
-              magick "../src/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png" || echo "16x16 conversion failed"
+              magick "../qt_widgets/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png" || echo "512x512 conversion failed"
+              magick "../qt_widgets/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png" || echo "256x256 conversion failed"
+              magick "../qt_widgets/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png" || echo "128x128 conversion failed"
+              magick "../qt_widgets/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png" || echo "64x64 conversion failed"
+              magick "../qt_widgets/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png" || echo "32x32 conversion failed"
+              magick "../qt_widgets/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png" || echo "16x16 conversion failed"
             elif command -v convert >/dev/null; then
               echo "Using ImageMagick 6 (convert command)"
-              convert "../src/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png" || echo "512x512 conversion failed"
-              convert "../src/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png" || echo "256x256 conversion failed"
-              convert "../src/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png" || echo "128x128 conversion failed"
-              convert "../src/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png" || echo "64x64 conversion failed"
-              convert "../src/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png" || echo "32x32 conversion failed"
-              convert "../src/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png" || echo "16x16 conversion failed"
+              convert "../qt_widgets/images/Katalog_logo_64.ico" -resize 512x512 "Katalog.iconset/icon_512x512.png" || echo "512x512 conversion failed"
+              convert "../qt_widgets/images/Katalog_logo_64.ico" -resize 256x256 "Katalog.iconset/icon_256x256.png" || echo "256x256 conversion failed"
+              convert "../qt_widgets/images/Katalog_logo_64.ico" -resize 128x128 "Katalog.iconset/icon_128x128.png" || echo "128x128 conversion failed"
+              convert "../qt_widgets/images/Katalog_logo_64.ico" -resize 64x64 "Katalog.iconset/icon_64x64.png" || echo "64x64 conversion failed"
+              convert "../qt_widgets/images/Katalog_logo_64.ico" -resize 32x32 "Katalog.iconset/icon_32x32.png" || echo "32x32 conversion failed"
+              convert "../qt_widgets/images/Katalog_logo_64.ico" -resize 16x16 "Katalog.iconset/icon_16x16.png" || echo "16x16 conversion failed"
             else
               echo "No ImageMagick found, skipping icon conversion"
             fi

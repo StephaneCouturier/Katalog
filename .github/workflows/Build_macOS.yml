@@ -707,10 +707,10 @@ jobs:
 
         # Check what translation files exist
         echo "Available .ts files:"
-        find ../src/translations -name "*.ts" | sort
+        find ../translations -name "*.ts" | sort
 
         # Create any missing .qm files as empty to avoid build failures
-        for ts_file in ../src/translations/*.ts; do
+        for ts_file in ../translations/*.ts; do
           if [ -f "$ts_file" ]; then
             qm_file="${ts_file%.ts}.qm"
             if [ ! -f "$qm_file" ]; then

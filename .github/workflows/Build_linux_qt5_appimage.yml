@@ -205,8 +205,8 @@ jobs:
 
     - name: Set version information
       run: |
-        # Extract version from CMakeLists.txt
-        KATALOG_VERSION=$(grep -E "^project\(Katalog VERSION" CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
+        # Extract version from qt_widgets/CMakeLists.txt (version is owned by the variant)
+        KATALOG_VERSION=$(grep -E "^project\(Katalog VERSION" qt_widgets/CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
 
         if [ -z "$KATALOG_VERSION" ]; then
           echo "Warning: Could not extract version from CMakeLists.txt, using default"
@@ -221,13 +221,13 @@ jobs:
     - name: Prepare Qt5/KF5 build configuration
       run: |
         # Use the Qt5/KF5 specific CMakeLists.txt file
-        if [ -f "CMakeLists_qt5.txt" ]; then
+        if [ -f "qt_widgets/CMakeLists_qt5.txt" ]; then
           echo "Using Qt5/KF5 specific CMakeLists.txt"
-          cp CMakeLists_qt5.txt CMakeLists.txt
+          cp qt_widgets/CMakeLists_qt5.txt CMakeLists.txt
         else
-          echo "Warning: CMakeLists_qt5.txt not found. The build may not work properly with Qt5/KF5"
+          echo "Warning: qt_widgets/CMakeLists_qt5.txt not found. The build may not work properly with Qt5/KF5"
           echo "Available CMakeLists files:"
-          ls -la CMakeLists*.txt || echo "No CMakeLists files found"
+          ls -la CMakeLists*.txt qt_widgets/CMakeLists*.txt || echo "No CMakeLists files found"
         fi
 
     - name: Build Katalog with Qt5/KF5
@@ -255,7 +255,7 @@ jobs:
         find .. -name "*.qm" -type f || echo "No .qm files found"
 
         # Create missing .qm files as empty files if needed
-        for ts_file in ../src/translations/*.ts; do
+        for ts_file in ../translations/*.ts; do
           if [ -f "$ts_file" ]; then
             qm_file="${ts_file%.ts}.qm"
             if [ ! -f "$qm_file" ]; then
@@ -290,16 +290,16 @@ jobs:
         mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
 
         # Copy desktop file
-        cp ../packaging/Katalog.desktop AppDir/usr/share/applications/
+        cp ../packaging/qt_widgets/Katalog.desktop AppDir/usr/share/applications/
 
         # Copy AppData
-        cp ../packaging/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
+        cp ../packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
 
         # Create proper 64x64 icon
-        if [ -f "../src/images/Katalog_logo_64.ico" ]; then
+        if [ -f "../qt_widgets/images/Katalog_logo_64.ico" ]; then
           # Convert ico to png with exact 64x64 size
           sudo apt-get install -y imagemagick
-          convert "../src/images/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
+          convert "../qt_widgets/images/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
           {
             echo "ICO conversion failed, creating fallback icon"
             convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
