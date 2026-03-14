@@ -13,7 +13,7 @@ Kirigami.AbstractCard {
                         0
     anchors.right: parent.right
 
-    property bool isSelected: appManager1.getSelectedDeviceId() === model.deviceId
+    property bool isSelected: appManager1.selectedDeviceId === model.deviceId
 
     TapHandler {
         onTapped: appManager1.selectDeviceById(model.deviceId)

@@ -63,6 +63,7 @@ class AppManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
+    Q_PROPERTY(int selectedDeviceId READ getSelectedDeviceId NOTIFY selectedDeviceChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
