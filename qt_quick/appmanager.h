@@ -116,6 +116,9 @@ public slots:
     QString getSelectedDeviceName() const;
     int getSelectedDeviceId() const;
 
+    Q_INVOKABLE bool  shouldShowAlphaWarning() const;
+    Q_INVOKABLE void  setAlphaWarningShown();
+
 signals:
     void deviceListModelChanged();
     void databasePathChanged(const QString &newPath);

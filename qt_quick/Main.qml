@@ -207,6 +207,47 @@ Kirigami.ApplicationWindow {
     //Pages ---------------------------------------------------------------------
     pageStack.initialPage: [ pageSelection, pageSearch ]
 
+    Component.onCompleted: {
+        if (appManager1.shouldShowAlphaWarning())
+            alphaWarningDialog.open()
+    }
+
+    Controls.Dialog {
+        id: alphaWarningDialog
+        title: "Katalog 3 - Alpha1 Version"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
+
+        Controls.Label {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: "This is an early alpha version of Katalog intended to support development and gather feedback.\n\n" +
+                  "Features available (read-only):\n" +
+                  "  • Open a collection\n" +
+                  "  • Device selection\n" +
+                  "  • Search\n\n" +
+                  "All other features are not yet available in this version."
+        }
+
+        footer: Controls.DialogButtonBox {
+            Controls.CheckBox {
+                id: doNotShowAgain
+                text: "Do not show again"
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.ResetRole
+            }
+            Controls.Button {
+                text: "OK"
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: {
+                if (doNotShowAgain.checked)
+                    appManager1.setAlphaWarningShown()
+                alphaWarningDialog.close()
+            }
+        }
+    }
+
     Component {
         id: aboutPage
         Kirigami.AboutPage {

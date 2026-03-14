@@ -32,8 +32,8 @@ void AppManager::initiateApp()
     QString defaultDbPath = "/home/stephane/Developments/Katalog/Data/newKatalogFile.db";
     collection->databaseFilePath = settings.value("Database/FilePath", defaultDbPath).toString();
 
-    //TEMP
-    selectedDevice->ID = 1; //Physical Group
+    selectedDevice->ID = settings.value("Selection/SelectedDeviceID", 1).toInt();
+    if (selectedDevice->ID == 0) selectedDevice->type = "All";
     selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
 
     // Verify the database file exists, fallback to default if not
@@ -396,6 +396,19 @@ int AppManager::getSelectedDeviceId() const
     return -1;
 }
 
+bool AppManager::shouldShowAlphaWarning() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/ShowAlphaWarning", true).toBool();
+}
+
+void AppManager::setAlphaWarningShown()
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/ShowAlphaWarning", false);
+    settings.sync();
+}
+
 void AppManager::selectDeviceById(int deviceId)
 {
     if (!selectedDevice) {
@@ -405,9 +418,12 @@ void AppManager::selectDeviceById(int deviceId)
     // Only emit signal if the device actually changes
     if (selectedDevice->ID != deviceId) {
         selectedDevice->ID = deviceId;
+        if (selectedDevice->ID == 0) selectedDevice->type = "All";
         selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
 
-        // Emit the signal to notify QML components
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        settings.setValue("Selection/SelectedDeviceID", deviceId);
+
         emit selectedDeviceChanged(deviceId);
 
         qDebug() << "Selected device changed to ID:" << deviceId << "Name:" << selectedDevice->name;

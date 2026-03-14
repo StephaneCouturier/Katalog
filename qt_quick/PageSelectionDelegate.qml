@@ -15,6 +15,10 @@ Kirigami.AbstractCard {
 
     property bool isSelected: appManager1.getSelectedDeviceId() === model.deviceId
 
+    TapHandler {
+        onTapped: appManager1.selectDeviceById(model.deviceId)
+    }
+
     contentItem: Item {
         implicitWidth: deviceDelegateLayout.implicitWidth
         implicitHeight: deviceDelegateLayout.implicitHeight
