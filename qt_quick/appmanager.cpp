@@ -229,7 +229,7 @@ QString AppManager::testQuery()
 
     //Test using KZip, list contents
     KZip zip("/home/stephane/Developments/archive.zip");
-    zip.open(QIODevice::ReadOnly);
+    if (!zip.open(QIODevice::ReadOnly)) return {};
     qDebug()<<"AppManager::testQuery / test zip: " <<zip.directory()->entries();
     zip.close();
 
@@ -314,7 +314,6 @@ void AppManager::refreshAllUI()
 
     // Reload selected device to ensure it's still valid
     if (selectedDevice && selectedDevice->ID > 0) {
-        int currentID = selectedDevice->ID;
         selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
 
         // If device no longer exists, reset to default
