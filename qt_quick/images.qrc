@@ -1,28 +1,28 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/flags/cz.png</file>
-        <file>images/flags/de.png</file>
-        <file>images/flags/fr.png</file>
-        <file>images/flags/us.png</file>
-        <file>images/link_blue/link-h.png</file>
-        <file>images/link_blue/link-tree-end.png</file>
-        <file>images/link_blue/link-tree-mid.png</file>
-        <file>images/link_blue/link-v.png</file>
-        <file>images/screenshots/Filters_catalogs_storage.png</file>
-        <file>images/screenshots/Filters_catalogs_virtual.png</file>
-        <file>images/screenshots/Filters_connecteddrives.png</file>
-        <file>images/screenshots/Virtual_screen.png</file>
-        <file>images/Appname_Logo.png</file>
-        <file>images/Banner.png</file>
-        <file>images/drive_blue.png</file>
-        <file>images/drive_gray.png</file>
-        <file>images/drive_green.png</file>
-        <file>images/drive_orange.png</file>
-        <file>images/Katalog_logo_64.ico</file>
-        <file>images/link-h.png</file>
-        <file>images/link-tree-end.png</file>
-        <file>images/link-tree-mid.png</file>
-        <file>images/link-v.png</file>
-        <file>images/logo-64.png</file>
+        <file alias="images/flags/cz.png">../assets/flags/cz.png</file>
+        <file alias="images/flags/de.png">../assets/flags/de.png</file>
+        <file alias="images/flags/fr.png">../assets/flags/fr.png</file>
+        <file alias="images/flags/us.png">../assets/flags/us.png</file>
+        <file alias="images/link_blue/link-h.png">../assets/link_blue/link-h.png</file>
+        <file alias="images/link_blue/link-tree-end.png">../assets/link_blue/link-tree-end.png</file>
+        <file alias="images/link_blue/link-tree-mid.png">../assets/link_blue/link-tree-mid.png</file>
+        <file alias="images/link_blue/link-v.png">../assets/link_blue/link-v.png</file>
+        <file alias="images/screenshots/Filters_catalogs_storage.png">../assets/screenshots/Filters_catalogs_storage.png</file>
+        <file alias="images/screenshots/Filters_catalogs_virtual.png">../assets/screenshots/Filters_catalogs_virtual.png</file>
+        <file alias="images/screenshots/Filters_connecteddrives.png">../assets/screenshots/Filters_connecteddrives.png</file>
+        <file alias="images/screenshots/Virtual_screen.png">../assets/screenshots/Virtual_screen.png</file>
+        <file alias="images/Appname_Logo.png">../assets/Appname_Logo.png</file>
+        <file alias="images/Banner.png">../assets/Banner.png</file>
+        <file alias="images/drive_blue.png">../assets/drive_blue.png</file>
+        <file alias="images/drive_gray.png">../assets/drive_gray.png</file>
+        <file alias="images/drive_green.png">../assets/drive_green.png</file>
+        <file alias="images/drive_orange.png">../assets/drive_orange.png</file>
+        <file alias="images/Katalog_logo_64.ico">../assets/Katalog_logo_64.ico</file>
+        <file alias="images/link-h.png">../assets/link-h.png</file>
+        <file alias="images/link-tree-end.png">../assets/link-tree-end.png</file>
+        <file alias="images/link-tree-mid.png">../assets/link-tree-mid.png</file>
+        <file alias="images/link-v.png">../assets/link-v.png</file>
+        <file alias="images/logo-64.png">../assets/logo-64.png</file>
     </qresource>
 </RCC>

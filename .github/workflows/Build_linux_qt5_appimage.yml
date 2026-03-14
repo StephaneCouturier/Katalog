@@ -298,10 +298,10 @@ jobs:
         cp ../packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
 
         # Create proper 64x64 icon
-        if [ -f "../qt_widgets/images/Katalog_logo_64.ico" ]; then
+        if [ -f "../assets/Katalog_logo_64.ico" ]; then
           # Convert ico to png with exact 64x64 size
           sudo apt-get install -y imagemagick
-          convert "../qt_widgets/images/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
+          convert "../assets/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
           {
             echo "ICO conversion failed, creating fallback icon"
             convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png

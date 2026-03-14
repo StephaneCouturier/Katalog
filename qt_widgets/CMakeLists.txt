@@ -259,7 +259,7 @@ install(FILES ${CMAKE_SOURCE_DIR}/packaging/qt_widgets/io.github.stephanecouturi
     DESTINATION share/metainfo
     RENAME io.github.stephanecouturier.Katalog.metainfo.xml)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/Katalog_logo_256.png
+install(FILES ${CMAKE_SOURCE_DIR}/assets/Katalog_logo_256.png
     DESTINATION share/icons/hicolor/256x256/apps
     RENAME io.github.stephanecouturier.Katalog.png)
 

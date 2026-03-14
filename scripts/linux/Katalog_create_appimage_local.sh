@@ -484,9 +484,9 @@ EOF
 EOF
 
     # Create/copy icon
-    if [ -f "$PROJECT_ROOT/qt_widgets/images/Katalog_logo_64.ico" ]; then
+    if [ -f "$PROJECT_ROOT/assets/Katalog_logo_64.ico" ]; then
         # Convert ICO to PNG with exact 64x64 size
-        convert "$PROJECT_ROOT/qt_widgets/images/Katalog_logo_64.ico[0]" -resize 64x64! "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png" 2>/dev/null || {
+        convert "$PROJECT_ROOT/assets/Katalog_logo_64.ico[0]" -resize 64x64! "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png" 2>/dev/null || {
             print_warning "ICO conversion failed, creating fallback icon"
             create_fallback_icon
         }
