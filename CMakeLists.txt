@@ -56,7 +56,7 @@ add_subdirectory(translations)
 # Variants — build one at a time
 option(BUILD_QT_WIDGETS "Build Katalog2 - QtWidgets/KF6 desktop" ON)
 option(BUILD_QT_QUICK   "Build Katalog3 - QtQuick/KF6 desktop"   OFF)
-option(BUILD_WEB_SERVER  "Build KatalogWeb - REST API server"     OFF)
+option(BUILD_WEB_SERVER  "Build KatalogWeb - REST API server"    OFF)
 
 if(BUILD_QT_WIDGETS)
     add_subdirectory(qt_widgets)

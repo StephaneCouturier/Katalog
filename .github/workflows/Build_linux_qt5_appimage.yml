@@ -244,6 +244,8 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr \
           -DCMAKE_PREFIX_PATH=/usr \
+          -DBUILD_QT_WIDGETS=ON \
+          -DBUILD_QT_QUICK=OFF \
           -DBUILD_TESTS=OFF
 
         # Build translations first (may fail, but continue)
