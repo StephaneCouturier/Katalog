@@ -32,13 +32,9 @@
 #ifndef SEARCH_SYNC_H
 #define SEARCH_SYNC_H
 
-#include "../../core/search.h"
-#include <QCoreApplication>
-#include <QSqlQuery>
-#include <QStringListModel>
-#include <QSqlQueryModel>
+#include "../../core/searchjobstoppable.h"
 
-class SearchSync : public Search
+class SearchSync : public SearchJobStoppable
 {
     Q_OBJECT
 
@@ -192,31 +188,13 @@ public:
         emit propertiesChanged();
     }
 
-    //FileTypes (SearchSync-specific)
-    QStringList fileType_Image;
-    QStringList fileType_Audio;
-    QStringList fileType_Video;
-    QStringList fileType_Text;
-    QStringList fileType_ImageS;
-    QStringList fileType_AudioS;
-    QStringList fileType_VideoS;
-    QStringList fileType_TextS;
-    QStringList fileType_current;
-    void setFileTypes();
-
-    QStringList searchTextList;
-
 signals:
     void propertiesChanged();
     void filesFoundNumberChanged();
 
 public slots:
-    QString testFunction();
-
     void resetSearchResults();
     void searchFiles(Device *selectedDevice);
-    void searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested) override;
-    void searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested) override;
 };
 
 #endif // SEARCH_SYNC_H

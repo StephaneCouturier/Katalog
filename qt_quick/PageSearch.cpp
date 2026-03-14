@@ -2,7 +2,7 @@
 #include<QClipboard>
 #include<QGuiApplication>
 
-#include "core/search.h"
+#include "adapters/search.h"
 #include "PageSearch.h"
 #include "filesview.h"
 #include "core/collection.h"

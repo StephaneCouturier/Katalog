@@ -18,13 +18,13 @@ target_compile_definitions(appKatalog PRIVATE
 
 # Define core sources
 set(CORE_SOURCES
-    core/search.h            core/search.cpp
-    core/devicelistmodel.h   core/devicelistmodel.cpp
-    #core/commandline.h core/commandline.cpp
-    #core/database.cpp core/database.h
-    #core/searchjob.cpp core/searchjob.h
-    #core/searchjobstoppable.cpp core/searchjobstoppable.h
-    #core/searchmanager.cpp core/searchmanager.h
+    adapters/search.h            adapters/search.cpp
+    adapters/devicelistmodel.h   adapters/devicelistmodel.cpp
+    #adapters/commandline.h adapters/commandline.cpp
+    #adapters/database.cpp adapters/database.h
+    #adapters/searchjob.cpp adapters/searchjob.h
+    #adapters/searchjobstoppable.cpp adapters/searchjobstoppable.h
+    #adapters/searchmanager.cpp adapters/searchmanager.h
 )
 
 # Define UI sources

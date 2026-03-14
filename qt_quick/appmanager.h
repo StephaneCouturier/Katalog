@@ -56,8 +56,8 @@
 //Katalog object classes
 #include "core/collection.h"
 #include "core/device.h"
-#include "core/search.h"
-#include "core/devicelistmodel.h"
+#include "adapters/search.h"
+#include "adapters/devicelistmodel.h"
 
 class AppManager : public QObject
 {

@@ -4,9 +4,9 @@
 
 #include "appmanager.h"
 #include "core/collection.h"
-#include "core/search.h"
+#include "adapters/search.h"
 #include "PageSearch.h"
-#include "core/devicelistmodel.h"
+#include "adapters/devicelistmodel.h"
 
 #include <KAboutData>
 #include <KLocalizedContext>

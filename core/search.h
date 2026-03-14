@@ -243,7 +243,9 @@ public:
 
     // Abstract methods to be implemented by derived classes
     virtual void searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested) = 0;
-    virtual void searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested) = 0;
+    virtual void searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested) {
+        Q_UNUSED(sourceDirectory); Q_UNUSED(mutex); Q_UNUSED(stopRequested);
+    }
 
     // Import/Export of search parameters
     virtual void copyFrom(const Search* other);
@@ -270,9 +272,11 @@ public:
     FileTypeMapping::UserFileType getFileType2Category() const {
         return selectedUserFileType;
     }
+protected:
+    static QStringList getExtensionsForFileType(const QString &fileType);
+
 private:
     QString m_connectionName = "defaultConnection";
-    static QStringList getExtensionsForFileType(const QString &fileType);
 
 signals:
     void searchProgress(int filesProcessed);
