@@ -6,7 +6,7 @@ This page describes the management of Katalog's Documentation.
 
 Katalog's user documentation is published as a static website built with [**Docusaurus**](https://docusaurus.io/) (React/TypeScript).
 
-- **Source repository:** `specs/Katalog-pages/` inside the main Katalog source tree
+- **Source repository:** `docs_src/` inside the main Katalog source tree
 - **Default language:** English — source files live in `docs/`
 - **Translations:** French (`i18n/fr/`) and Czech (`i18n/cs/`)
 - **Sidebar:** manually defined in `sidebars.ts`
