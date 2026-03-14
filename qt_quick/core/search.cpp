@@ -29,11 +29,10 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
-#include "search.h"
-#include<QGuiApplication>
-SearchSync::SearchSync(QObject *parent) : QAbstractTableModel(parent)
-{
+#include "search.h"  // qt_quick/core/search.h → inherits ../../core/search.h
 
+SearchSync::SearchSync(QObject *parent) : Search(parent)
+{
 }
 
 //file list model
@@ -78,66 +77,31 @@ QVariant SearchSync::headerData(int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
+QHash<int, QByteArray> SearchSync::roleNames() const
+{
+    // Start with the base QAbstractItemModel defaults (includes "display" for Qt::DisplayRole)
+    QHash<int, QByteArray> roles = QAbstractTableModel::roleNames();
+    // Merge in the named roles from Search for QML access by role name
+    const QHash<int, QByteArray> searchRoles = Search::roleNames();
+    for (auto it = searchRoles.cbegin(); it != searchRoles.cend(); ++it) {
+        roles[it.key()] = it.value();
+    }
+    return roles;
+}
+
 QString SearchSync::testFunction()
 {
     return "testObject: " + searchInCatalogsChecked;
 }
 
 //----------------------------------------------------------------------
-//methods
-void SearchSync::setMultipliers()
-{//Define a size multiplier depending on the size unit selected
-    sizeMultiplierMin=1;
-    if      (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "KiB"))
-            sizeMultiplierMin = sizeMultiplierMin *1024;
-    else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "MiB"))
-            sizeMultiplierMin = sizeMultiplierMin *1024*1024;
-    else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "GiB"))
-            sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024;
-    else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
-            sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024*1024;
-    sizeMultiplierMax=1;
-    qDebug()<<"KiB: "<<QCoreApplication::translate("MainWindow", "KiB");
-    qDebug()<<"selectedMaxSizeUnit: "<<selectedMaxSizeUnit;
-
-    if      (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "KiB"))
-            sizeMultiplierMax = sizeMultiplierMax *1024;
-    else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "MiB"))
-            sizeMultiplierMax = sizeMultiplierMax *1024*1024;
-    else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "GiB"))
-            sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024;
-    else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
-            sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
-
-    qDebug()<<"sizeMultiplierMax: "<<sizeMultiplierMax;
-
-}
-//----------------------------------------------------------------------
 void SearchSync::resetSearchResults()
 {
-    fileNames.clear();
-    fileSizes.clear();
-    filePaths.clear();
-    fileDateTimes.clear();
-    fileCatalogs.clear();
-
-    filesFoundNumber = 0;
-    filesFoundTotalSize = 0;
-    filesFoundAverageSize = 0;
-    filesFoundMinSize = 0;
-    filesFoundMaxSize = 0;
-    filesFoundMinDate = 0;
-    filesFoundMaxDate = 0;
-
-    filesFoundList.clear();
-    deviceFoundIDList.clear();
-    deviceFoundModel = new QStandardItemModel;
+    clearResults();
     searchTextList.clear();
 
     emit propertiesChanged();
-
 }
-//----------------------------------------------------------------------
 //----------------------------------------------------------------------
 //Search process
 void SearchSync::searchFiles(Device *selectedDevice)
@@ -149,10 +113,13 @@ void SearchSync::searchFiles(Device *selectedDevice)
         setFileTypes();
         setMultipliers();
 
+    QMutex mutex;
+    bool stopRequested = false;
+
     if (searchInCatalogsChecked == true){
 
             if (selectedDevice->type == "Catalog") {
-                searchFilesInCatalog(selectedDevice);
+                searchFilesInCatalog(selectedDevice, mutex, stopRequested);
             }
             else {
                 foreach(const Device::deviceListRow & row, selectedDevice->deviceListTable) {
@@ -160,7 +127,7 @@ void SearchSync::searchFiles(Device *selectedDevice)
                         Device *device = new Device;
                         device->ID = row.ID;
                         device->loadDevice(QSqlDatabase::defaultConnection);
-                        searchFilesInCatalog(device);
+                        searchFilesInCatalog(device, mutex, stopRequested);
                         delete device;
                     }
                 }
@@ -194,24 +161,7 @@ void SearchSync::searchFiles(Device *selectedDevice)
         deviceFoundModel->appendRow(items);
     }
 
-
-    //Process search results: list of files
-
-    //Prepare query model
-    //QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-    // Prepare model to display
-    //FilesView *fileViewModel = new FilesView(this);
-
     //Files found Statistics
-    //Reset from previous search
-    filesFoundNumber = 0;
-    filesFoundTotalSize = 0;
-    filesFoundAverageSize = 0;
-    filesFoundMinSize = 0;
-    filesFoundMaxSize = 0;
-    filesFoundMinDate = "";
-    filesFoundMaxDate = "";
-
     //Number of files found
     filesFoundNumber = fileNames.count();
 
@@ -242,25 +192,23 @@ void SearchSync::searchFiles(Device *selectedDevice)
 
 }
 //----------------------------------------------------------------------
-void SearchSync::searchFilesInCatalog(Device *device)
+void SearchSync::searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested)
 {//Run a search of files for the selected Catalog
-    //Prepare Inputs including Regular Expression
-    QFile catalogFile(device->catalog->sourcePath);
+    Q_UNUSED(mutex);
+    Q_UNUSED(stopRequested);
 
+    //Prepare Inputs including Regular Expression
     QRegularExpressionMatch match;
     QRegularExpressionMatch foldermatch;
 
     //Define how to use the search text
-
-    //TEMP
-
-    if(selectedSearchWith == tr("Exact Phrase"))
-        regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
-    else if(selectedSearchWith == tr("Begins With"))
+    if(selectedTextCriteria == TEXT_CRITERIA_EXACT_PHRASE)
+        regexSearchtext=searchText;
+    else if(selectedTextCriteria == TEXT_CRITERIA_BEGINS_WITH)
         regexSearchtext="(^"+searchText+")";
-    else if(selectedSearchWith == tr("Any Word"))
-        regexSearchtext=searchText.replace(" ","|");
-    else if(selectedSearchWith == tr("All Words")){
+    else if(selectedTextCriteria == TEXT_CRITERIA_ANY_WORD)
+        regexSearchtext=QString(searchText).replace(" ","|");
+    else if(selectedTextCriteria == TEXT_CRITERIA_ALL_WORDS){
 
         QString searchTextToSplit = searchText;
         QString groupRegEx = "";
@@ -339,9 +287,6 @@ void SearchSync::searchFilesInCatalog(Device *device)
         regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
     }
 
-    //Load the catalog file contents if not already loaded in memory
-    //device->catalog->loadCatalogFileListToTable();
-
     //Search loop for all lines in the catalog file
     //Load the files of the Catalog
     QSqlQuery getFilesQuery;
@@ -416,12 +361,12 @@ void SearchSync::searchFilesInCatalog(Device *device)
         //Finally, verify the text search criteria
         if (searchOnFileName==true){
             //Depends on the "Search in" criteria,
-            //Reduces the abosulte path to the required text string and matches the search text
-            if(selectedSearchIn == tr("File names only"))
+            //Reduces the absolute path to the required text string and matches the search text
+            if(selectedSearchIn == SEARCH_IN_FILE_NAMES)
             {
                 match = regex.match(lineFileName);
             }
-            else if(selectedSearchIn == tr("Folder path only"))
+            else if(selectedSearchIn == SEARCH_IN_FOLDER_PATH)
             {
 
                 //Check that the folder name matches the search text
@@ -433,7 +378,7 @@ void SearchSync::searchFilesInCatalog(Device *device)
                     match = regex.match(lineFileName);
                 }
                 else
-                    match = foldermatch; //selectedSearchIn == tr("Files and Folder paths")
+                    match = foldermatch;
             }
             else {
                 match = regex.match(lineFileFullPath);
@@ -477,54 +422,15 @@ void SearchSync::searchFilesInCatalog(Device *device)
     }
 }
 //----------------------------------------------------------------------
-void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
+void SearchSync::searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested)
 {//Run a search of files for the selected Directory
+    Q_UNUSED(mutex);
+    Q_UNUSED(stopRequested);
 
-    //Search *newSearch = new Search; //TEMP
-
-    //Define how to use the search text //COMMON to searchFilesInCatalog
-    /* //TEMP
-    if(selectedSearchWith == tr("Exact Phrase"))
-        regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
-    else if(selectedSearchWith == tr("Begins With"))
-        regexSearchtext="(^"+searchText+")";
-    else if(selectedSearchWith == tr("Any Word"))
-        regexSearchtext=searchText.replace(" ","|");
-    else if(selectedSearchWith == tr("All Words")){
-        QString searchTextToSplit = searchText;
-        QString groupRegEx = "";
-        QRegularExpression lineSplitExp(" ");
-        QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-        int numberOfSearchWords = lineFieldList.count();
-        //Build regex group for one word
-        for (int i=0; i<(numberOfSearchWords); i++){
-            groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
-        }
-        regexSearchtext = groupRegEx;
-    }
-    else {
-        regexSearchtext="";
-    }
-*/
     regexPattern = regexSearchtext;
 
-    //Prepare the regexFileType for file types //COMMON to searchFilesInCatalog
-    if ( searchOnFileCriteria==true and selectedFileType !=tr("All")){
-        //Get the list of file extension and join it into one string
-        /*
-        if(selectedFileType ==tr("Audio")){
-            regexFileType = fileType_AudioS.join("|");
-        }
-        if(selectedFileType ==tr("Image")){
-            regexFileType = fileType_ImageS.join("|");
-        }
-        if(selectedFileType ==tr("Text")){
-            regexFileType = fileType_TextS.join("|");
-        }
-        if(selectedFileType ==tr("Video")){
-            regexFileType = fileType_VideoS.join("|");
-        }
-*/
+    //Prepare the regexFileType for file types
+    if ( searchOnFileCriteria==true and selectedFileType !="All"){
         //Replace the *. by .* needed for regex
         regexFileType = regexFileType.replace("*.",".*");
 
@@ -532,8 +438,7 @@ void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
         regexPattern = regexSearchtext  + "(" + regexFileType + ")";
     }
 
-    //Add the words to exclude to the regex //COMMON to searchFilesInCatalog
-
+    //Add the words to exclude to the regex
     if ( selectedSearchExclude !=""){
 
         //Prepare
@@ -560,13 +465,11 @@ void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
     QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
 
     //Filetypes
-    //Get the file type for the catalog
     QStringList fileTypes;
 
     //Scan directory and create a list of files
     QString line;
     QString reducedLine;
-
 
     QDirIterator iterator(sourceDirectory, fileTypes, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
     while (iterator.hasNext()){
@@ -578,10 +481,8 @@ void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
 
         line = fileInfo.absoluteFilePath() + "\t" + QString::number(fileInfo.size()) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
 
-        //COMMON to searchFilesInCatalog
         QRegularExpressionMatch match;
         QRegularExpressionMatch foldermatch;
-        //QRegularExpressionMatch matchFileType;
 
         //Split the line text with tabulations into a list
         QRegularExpression     lineSplitExp("\t");
@@ -641,7 +542,6 @@ void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
                     fileIsMatchingTag = true;
                     break;
                 }
-                //else tagIsMatching==false
             }
 
             //If the file is not matching any of the paths, process the next file
@@ -652,8 +552,8 @@ void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
         //Finally, verify the text search criteria
         if (searchOnFileName==true){
             //Depending on the "Search in" criteria,
-            //reduce the abosulte path to the reaquired text string and match the search text
-            if(selectedSearchIn == tr("File names only"))
+            //reduce the absolute path to the required text string and match the search text
+            if(selectedSearchIn == SEARCH_IN_FILE_NAMES)
             {
                 // Extract the file name from the lineFilePath
                 QFileInfo file(lineFilePath);
@@ -661,12 +561,12 @@ void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
 
                 match = regex.match(reducedLine);
             }
-            else if(selectedSearchIn == tr("Folder path only"))
+            else if(selectedSearchIn == SEARCH_IN_FOLDER_PATH)
             {
                 //Keep only the folder name, so all characters left of the last occurence of / in the path.
                 reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
 
-                //Check the fodler name matches the search text
+                //Check the folder name matches the search text
                 regex.setPattern(regexSearchtext);
 
                 foldermatch = regex.match(reducedLine);
@@ -683,12 +583,10 @@ void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
             }
 
             //If the file is matching the criteria, add it and its catalog to the search results
-            //COMMON to searchFilesInCatalog
             if (match.hasMatch()){
 
                 filesFoundList << lineFilePath;
 
-                //COMMON to searchFilesInCatalog
                 //Retrieve other file info
                 QFileInfo file(lineFilePath);
 

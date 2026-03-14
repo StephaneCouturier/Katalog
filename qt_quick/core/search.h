@@ -32,17 +32,13 @@
 #ifndef SEARCH_SYNC_H
 #define SEARCH_SYNC_H
 
-#include <QDateTime>
-#include <QStandardItemModel>
-#include <QAbstractTableModel>
+#include "../../core/search.h"
 #include <QCoreApplication>
 #include <QSqlQuery>
 #include <QStringListModel>
 #include <QSqlQueryModel>
-#include "core/device.h"
-#include "filesview.h"
 
-class SearchSync : public QAbstractTableModel
+class SearchSync : public Search
 {
     Q_OBJECT
 
@@ -51,53 +47,60 @@ class SearchSync : public QAbstractTableModel
 public:
     SearchSync(QObject *parent = nullptr);
 
+    // QAbstractTableModel overrides for QML table display
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QHash<int, QByteArray> roleNames() const override;
+
     //Q_PROPERTY sources
     QVariantMap properties() const {
         QVariantMap map;
         //Search file
             //Search text
-            map["searchOnFileName"] = searchOnFileName;
-            map["searchText"] = searchText;
-            map["selectedSearchWith"] = selectedSearchWith;
-            map["selectedSearchIn"] = selectedSearchIn;
-            map["caseSensitive"] = caseSensitive;
-            map["selectedFileType"] = selectedFileType;
-            map["selectedSearchExclude"] = selectedSearchExclude;
+            map["searchOnFileName"]         = searchOnFileName;
+            map["searchText"]               = searchText;
+            map["selectedTextCriteria"]     = selectedTextCriteria;
+            map["selectedSearchIn"]         = selectedSearchIn;
+            map["caseSensitive"]            = caseSensitive;
+            map["selectedFileType"]         = selectedFileType;
+            map["selectedSearchExclude"]    = selectedSearchExclude;
             //File attributes
             //Size
-            map["searchOnSize"] = searchOnSize;
-            map["selectedMinimumSize"] = selectedMinimumSize;
-            map["selectedMaximumSize"] = selectedMaximumSize;
-            map["selectedMinSizeUnit"] = selectedMinSizeUnit;
-            map["selectedMaxSizeUnit"] = selectedMaxSizeUnit;
-            map["searchOnType"] = searchOnType;
+            map["searchOnSize"]             = searchOnSize;
+            map["selectedMinimumSize"]      = selectedMinimumSize;
+            map["selectedMaximumSize"]      = selectedMaximumSize;
+            map["selectedMinSizeUnit"]      = selectedMinSizeUnit;
+            map["selectedMaxSizeUnit"]      = selectedMaxSizeUnit;
+            map["searchOnType"]             = searchOnType;
             //Date
-            map["searchOnDate"] = searchOnDate;
-            map["selectedDateMin"] = selectedDateMin;
-            map["selectedDateMax"] = selectedDateMax;
+            map["searchOnDate"]             = searchOnDate;
+            map["selectedDateMin"]          = selectedDateMin;
+            map["selectedDateMax"]          = selectedDateMax;
             //Duplicates
-            map["searchOnDuplicates"] = searchOnDuplicates;
-            map["searchDuplicatesOnName"] = searchDuplicatesOnName;
-            map["searchDuplicatesOnSize"] = searchDuplicatesOnSize;
-            map["searchDuplicatesOnDate"] = searchDuplicatesOnDate;
+            map["searchOnDuplicates"]       = searchOnDuplicates;
+            map["searchDuplicatesOnName"]   = searchDuplicatesOnName;
+            map["searchDuplicatesOnSize"]   = searchDuplicatesOnSize;
+            map["searchDuplicatesOnDate"]   = searchDuplicatesOnDate;
             //Differences
-            map["searchOnDifferences"] = searchOnDifferences;
-            map["differencesOnName"] = differencesOnName;
-            map["differencesOnSize"] = differencesOnSize;
-            map["differencesOnDate"] = differencesOnDate;
-            map["differencesDevices"] = differencesDevices;
-            map["differencesDevice1"] = differencesDevice1;
-            map["differencesDevice2"] = differencesDevice2;
+            map["searchOnDifferences"]      = searchOnDifferences;
+            map["differencesOnName"]        = differencesOnName;
+            map["differencesOnSize"]        = differencesOnSize;
+            map["differencesOnDate"]        = differencesOnDate;
+            map["differencesDevices"]       = differencesDevices;
+            map["differencesDeviceID1"]     = differencesDeviceID1;
+            map["differencesDeviceID2"]     = differencesDeviceID2;
         //Search results
-            map["filesFoundNumber"] = filesFoundNumber;
-            map["filesFoundTotalSize"] = filesFoundTotalSize;
-            map["filesFoundAverageSize"] = filesFoundAverageSize;
-            map["filesFoundMinSize"] = filesFoundMinSize;
-            map["filesFoundMaxSize"] = filesFoundMaxSize;
-            map["filesFoundMinDate"] = filesFoundMinDate;
-            map["filesFoundMaxDate"] = filesFoundMaxDate;
+            map["filesFoundNumber"]         = filesFoundNumber;
+            map["filesFoundTotalSize"]      = filesFoundTotalSize;
+            map["filesFoundAverageSize"]    = filesFoundAverageSize;
+            map["filesFoundMinSize"]        = filesFoundMinSize;
+            map["filesFoundMaxSize"]        = filesFoundMaxSize;
+            map["filesFoundMinDate"]        = filesFoundMinDate;
+            map["filesFoundMaxDate"]        = filesFoundMaxDate;
         //Global search options
-            map["searchInCatalogsChecked"] = searchInCatalogsChecked;
+            map["searchInCatalogsChecked"]  = searchInCatalogsChecked;
 
         return map;
     }
@@ -106,10 +109,33 @@ public:
         //Search file name
             if (map.contains("searchOnFileName"))       { searchOnFileName          = map["searchOnFileName"].toBool(); }
             if (map.contains("searchText"))             { searchText                = map["searchText"].toString(); }
-            if (map.contains("selectedSearchWith"))     { selectedSearchWith        = map["selectedSearchWith"].toString(); }
-            if (map.contains("selectedSearchIn"))       { selectedSearchIn          = map["selectedSearchIn"].toString(); }
+            if (map.contains("selectedTextCriteria"))   {
+                QString val = map["selectedTextCriteria"].toString();
+                // Map QML display text to internal constants
+                if      (val == "Exact Phrase") val = TEXT_CRITERIA_EXACT_PHRASE;
+                else if (val == "Begins With")  val = TEXT_CRITERIA_BEGINS_WITH;
+                else if (val == "Any Word")     val = TEXT_CRITERIA_ANY_WORD;
+                else if (val == "All Words")    val = TEXT_CRITERIA_ALL_WORDS;
+                selectedTextCriteria = val;
+            }
+            // Also accept old key for backward compatibility
+            if (map.contains("selectedSearchWith"))     {
+                QString val = map["selectedSearchWith"].toString();
+                if      (val == "Exact Phrase") val = TEXT_CRITERIA_EXACT_PHRASE;
+                else if (val == "Begins With")  val = TEXT_CRITERIA_BEGINS_WITH;
+                else if (val == "Any Word")     val = TEXT_CRITERIA_ANY_WORD;
+                else if (val == "All Words")    val = TEXT_CRITERIA_ALL_WORDS;
+                selectedTextCriteria = val;
+            }
+            if (map.contains("selectedSearchIn"))       {
+                QString val = map["selectedSearchIn"].toString();
+                // Map QML display text to internal constants
+                if      (val == "File names only")              val = SEARCH_IN_FILE_NAMES;
+                else if (val == "File names or Folder paths")   val = SEARCH_IN_FILES_AND_FOLDERS;
+                else if (val == "Folder path only")             val = SEARCH_IN_FOLDER_PATH;
+                selectedSearchIn = val;
+            }
             if (map.contains("caseSensitive"))          { caseSensitive             = map["caseSensitive"].toBool(); }
-            if (map.contains("selectedFileType"))       { selectedFileType          = map["selectedFileType"].toString(); }
             if (map.contains("selectedSearchExclude"))  { selectedSearchExclude     = map["selectedSearchExclude"].toString(); }
 
         //File attributes
@@ -148,8 +174,8 @@ public:
             if (map.contains("differencesOnSize"))      { differencesOnSize         = map["differencesOnSize"].toBool(); }
             if (map.contains("differencesOnDate"))      { differencesOnDate         = map["differencesOnDate"].toBool(); }
             if (map.contains("differencesDevices"))     { differencesDevices        = map["differencesDevices"].toStringList(); }
-            if (map.contains("differencesDevice1"))     { differencesDevice1        = map["differencesDevice1"].toInt(); }
-            if (map.contains("differencesDevice2"))     { differencesDevice2        = map["differencesDevice2"].toInt(); }
+            if (map.contains("differencesDeviceID1"))   { differencesDeviceID1      = map["differencesDeviceID1"].toInt(); }
+            if (map.contains("differencesDeviceID2"))   { differencesDeviceID2      = map["differencesDeviceID2"].toInt(); }
 
         //Search results
             if (map.contains("filesFoundNumber"))       { filesFoundNumber          = map["filesFoundNumber"].toInt(); }
@@ -166,21 +192,7 @@ public:
         emit propertiesChanged();
     }
 
-    //Results data model
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-
-
-    //Attributes to move to Q_PROPERTY
-    //Search Inputs
-    QString searchDateTime;
-    QString regexPattern;
-    QString regexSearchtext;
-    QString regexFileType;
-
-    //FileTypes
+    //FileTypes (SearchSync-specific)
     QStringList fileType_Image;
     QStringList fileType_Audio;
     QStringList fileType_Video;
@@ -192,22 +204,6 @@ public:
     QStringList fileType_current;
     void setFileTypes();
 
-    QString selectedStorage;
-    QString selectedCatalog;
-    //bool searchInCatalogsChecked;
-    bool searchInConnectedChecked;
-    QString connectedDirectory;
-
-    //Results
-    QList<QString> fileNames;
-    QList<qint64>  fileSizes;
-    QList<QString> filePaths;
-    QList<QString> fileDateTimes;
-    QList<QString> fileCatalogs;
-
-    QStringList filesFoundList;
-    QStringList deviceFoundIDList;
-    QStandardItemModel *deviceFoundModel = new QStandardItemModel;
     QStringList searchTextList;
 
 signals:
@@ -217,72 +213,10 @@ signals:
 public slots:
     QString testFunction();
 
-    void setMultipliers();
-
     void resetSearchResults();
     void searchFiles(Device *selectedDevice);
-    void searchFilesInCatalog(Device *device);
-    void searchFilesInDirectory(const QString &sourceDirectory);
-
-private:
-    //File name search
-    bool searchOnFileName;
-    QString searchText;
-    QString selectedSearchWith;
-    QString selectedSearchIn;
-    bool caseSensitive;
-    QString selectedSearchExclude;
-
-    //File attributes
-    bool searchOnFileCriteria;
-
-    bool searchOnSize;
-    qint64 selectedMinimumSize;
-    qint64 selectedMaximumSize;
-    QString selectedMinSizeUnit;
-    QString selectedMaxSizeUnit;
-    qint64  sizeMultiplierMin;
-    qint64  sizeMultiplierMax;
-
-    bool searchOnType;
-    QString selectedFileType;
-
-    bool searchOnDate;
-    QDateTime selectedDateMin;
-    QDateTime selectedDateMax;
-
-    //Folder attributes
-    bool searchOnFolderCriteria;
-    bool showFoldersOnly;
-    bool searchOnTags;
-    QString selectedTagName;
-
-    //Duplicates
-    bool searchOnDuplicates;
-    bool searchDuplicatesOnName;
-    bool searchDuplicatesOnSize;
-    bool searchDuplicatesOnDate;
-
-    //Differences
-    bool searchOnDifferences;
-    bool differencesOnName;
-    bool differencesOnSize;
-    bool differencesOnDate;
-    QStringList differencesDevices;
-    int differencesDevice1;
-    int differencesDevice2;
-
-    //Search results
-    qint64 filesFoundNumber;
-    qint64 filesFoundTotalSize;
-    qint64 filesFoundAverageSize;
-    qint64 filesFoundMinSize;
-    qint64 filesFoundMaxSize;
-    QString filesFoundMinDate;
-    QString filesFoundMaxDate;
-
-    //Global search options
-    bool searchInCatalogsChecked;
+    void searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested) override;
+    void searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested) override;
 };
 
 #endif // SEARCH_SYNC_H

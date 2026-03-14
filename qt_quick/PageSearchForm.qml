@@ -16,7 +16,7 @@ Kirigami.FormLayout {
         //File name
         newSearch1.properties = {"searchOnFileName":        search_checkBox_FileNameCriteria.checked};
         newSearch1.properties = {"searchText":              search_TextField_FileNameText.text};
-        newSearch1.properties = {"selectedSearchWith":      search_ComboBox_TextCriteriaWith.currentText};
+        newSearch1.properties = {"selectedTextCriteria":    search_ComboBox_TextCriteriaWith.currentText};
         newSearch1.properties = {"selectedSearchIn":        search_ComboBox_TextCriteriaIn.currentText};
         newSearch1.properties = {"caseSensitive":           search_CheckBox_FileNameCaseSensitive.checked};
         newSearch1.properties = {"selectedSearchExclude":   search_TextField_FileNameExclude.text};
@@ -54,18 +54,9 @@ Kirigami.FormLayout {
         newSearch1.properties = {"searchDifferencesOnName": search_checkBox_DifferencesOnName.checked};
         newSearch1.properties = {"searchDifferencesOnSize": search_checkBox_DifferencesOnSize.checked};
         newSearch1.properties = {"searchDifferencesOnDate": search_checkBox_DifferencesOnDate.checked};
-        newSearch1.properties = {"differencesDevice1":      search_comboBox_DifferencesDevice1.selected_device_id};
-        newSearch1.properties = {"differencesDevice1":      search_comboBox_DifferencesDevice2.selected_device_id};
+        newSearch1.properties = {"differencesDeviceID1":    search_comboBox_DifferencesDevice1.selected_device_id};
+        newSearch1.properties = {"differencesDeviceID2":    search_comboBox_DifferencesDevice2.selected_device_id};
 
-        /*
-
-
-        newSearch1->selectedStorage          = ui->Filters_label_DisplayStorage->text();
-        newSearch1->selectedCatalog          = ui->Filters_label_DisplayCatalog->text();
-        newSearch1->searchInCatalogsChecked  = ui->Filters_checkBox_SearchInCatalogs->isChecked();
-        newSearch1->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
-        newSearch1->connectedDirectory       = ui->Filters_lineEdit_SeletedDirectory->text();
-        */
     }
     function resetSearch() {
         // Reset fileNameCriteria
