@@ -16,7 +16,8 @@ public:
         NameRole,
         DescriptionRole,
         IsActiveRole,
-        DeviceIdRole
+        DeviceIdRole,
+        LevelRole
     };
 
     explicit DeviceListModel(QObject *parent = nullptr);
@@ -35,6 +36,7 @@ public slots:
 private:
     struct DeviceItem {
         int id;
+        int level = 0;
         QString type;
         QString name;
         QString description;

@@ -1,6 +1,7 @@
 #include "devicelistmodel.h"
 #include <QDebug>
 #include <QLocale>
+#include <functional>
 #include <qdatetime.h>
 #include <qsqlerror.h>
 
@@ -35,6 +36,8 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device.isActive;
     case DeviceIdRole:
         return device.id;
+    case LevelRole:
+        return device.level;
     default:
         return QVariant();
     }
@@ -48,6 +51,7 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles[DescriptionRole] = "description";
     roles[IsActiveRole] = "isActive";
     roles[DeviceIdRole] = "deviceId";
+    roles[LevelRole] = "level";
     return roles;
 }
 
@@ -167,22 +171,21 @@ void DeviceListModel::loadDevicesFromDatabase()
         return;
     }
 
-    QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
-        SELECT
-            device_id,
-            device_name,
-            device_type,
-            device_total_file_size,
-            device_total_file_count,
-            device_total_space,
-            device_free_space,
-            device_active
+    // Load all devices flat — tree order built in C++ to avoid DB-specific SQL (|| vs CONCAT, CTE support)
+    QSqlQuery query(db);
+    query.prepare(QLatin1String(R"(
+        SELECT  device_id,
+                device_parent_id,
+                device_name,
+                device_type,
+                device_total_file_size,
+                device_total_file_count,
+                device_total_space,
+                device_free_space,
+                device_active
         FROM device
-        ORDER BY device_order, device_name
-    )");
-
-    query.prepare(querySQL);
+        ORDER BY device_parent_id ASC, device_order ASC, device_name ASC
+    )"));
 
     if (!query.exec()) {
         m_lastError = QString("Query failed: %1").arg(query.lastError().text());
@@ -190,15 +193,26 @@ void DeviceListModel::loadDevicesFromDatabase()
         return;
     }
 
-    int count = 0;
+    // Build parent → children map (same pattern as K2 QMap<id, item>)
+    QMap<int, QList<DeviceItem>> childrenOf;
     while (query.next()) {
         DeviceItem device;
-        device.id = query.value(0).toInt();
-        device.name = query.value(1).toString();
-        device.type = query.value(2).toString();
-        device.isActive = query.value(7).toBool();
-        device.description = formatDescription(device);
-        m_devices.append(device);
-        count++;
+        device.id       = query.value(0).toInt();
+        int parentId    = query.value(1).toInt();
+        device.name     = query.value(2).toString();
+        device.type     = query.value(3).toString();
+        device.isActive = query.value(8).toBool();
+        childrenOf[parentId].append(device);
     }
+
+    // Depth-first traversal → flat list in correct visual order with levels
+    std::function<void(int, int)> traverse = [&](int parentId, int level) {
+        for (DeviceItem &dev : childrenOf[parentId]) {
+            dev.level = level;
+            dev.description = formatDescription(dev);
+            m_devices.append(dev);
+            traverse(dev.id, level + 1);
+        }
+    };
+    traverse(0, 0);
 }

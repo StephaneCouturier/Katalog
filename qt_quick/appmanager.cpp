@@ -73,6 +73,9 @@ void AppManager::executeSearch()
              << "Name:" << selectedDevice->name
              << "Type:" << selectedDevice->type;
 
+    // Memory mode requires CSV loading during search
+    searchObject->setMemoryModeEnabled(collection->databaseMode == "Memory");
+
     // Execute search
     searchObject->searchFiles(selectedDevice);
 

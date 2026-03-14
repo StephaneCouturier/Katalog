@@ -8,9 +8,7 @@ Kirigami.AbstractCard {
     id: card
 
     anchors.left: parent.left
-    anchors.leftMargin: type === "Storage" ? 15 :
-                        type === "Catalog" ? 30 :
-                        0
+    anchors.leftMargin: model.level * Kirigami.Units.gridUnit
     anchors.right: parent.right
 
     property bool isSelected: appManager1.selectedDeviceId === model.deviceId
