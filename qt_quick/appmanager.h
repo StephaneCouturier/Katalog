@@ -81,7 +81,7 @@ public:
     Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
     Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
     Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
-    Search *searchObject = nullptr;
+    SearchSync *searchObject = nullptr;
     DeviceListModel *deviceListModel = nullptr;
 
 public slots:
@@ -108,7 +108,7 @@ public slots:
 
     //Useful functions
     void executeSearch();
-    void setSearchObject(Search *search);
+    void setSearchObject(SearchSync *search);
 
     DeviceListModel* getDeviceListModel() const { return deviceListModel; }
 

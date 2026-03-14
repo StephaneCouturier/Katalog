@@ -18,13 +18,8 @@ target_compile_definitions(appKatalog PRIVATE
 
 # Define core sources
 set(CORE_SOURCES
-    core/collection.h   core/collection.cpp
-    core/device.h       core/device.cpp
-    core/storage.h      core/storage.cpp
-    core/catalog.h      core/catalog.cpp
     core/search.h            core/search.cpp
     core/devicelistmodel.h   core/devicelistmodel.cpp
-    core/tag.h               core/tag.cpp
     #core/commandline.h core/commandline.cpp
     #core/database.cpp core/database.h
     #core/searchjob.cpp core/searchjob.h
@@ -75,6 +70,7 @@ set_target_properties(appKatalog PROPERTIES
 
 target_link_libraries(appKatalog
     PRIVATE
+    katalog-core
     Qt6::Quick
     Qt6::Qml
     Qt6::Gui
@@ -85,6 +81,11 @@ target_link_libraries(appKatalog
     KF6::CoreAddons
     KF6::Archive
     #KF6::IconThemes
+)
+
+target_include_directories(appKatalog PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}
 )
 
 include(GNUInstallDirs)

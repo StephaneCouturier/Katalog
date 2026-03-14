@@ -33,7 +33,7 @@ void AppManager::initiateApp()
 
     //TEMP
     selectedDevice->ID = 1; //Physical Group
-    selectedDevice->loadDevice();
+    selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
 
     // Verify the database file exists, fallback to default if not
     if (!QFile::exists(collection->databaseFilePath)) {
@@ -56,7 +56,7 @@ void AppManager::initiateApp()
     qDebug()<<"initiated App.";
 }
 //----------------------------------------------------------------------
-void AppManager::setSearchObject(Search *search)
+void AppManager::setSearchObject(SearchSync *search)
 {
     searchObject = search;
 }
@@ -315,12 +315,12 @@ void AppManager::refreshAllUI()
     // Reload selected device to ensure it's still valid
     if (selectedDevice && selectedDevice->ID > 0) {
         int currentID = selectedDevice->ID;
-        selectedDevice->loadDevice();
+        selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
 
         // If device no longer exists, reset to default
         if (selectedDevice->name.isEmpty()) {
             selectedDevice->ID = 1; // Physical Group
-            selectedDevice->loadDevice();
+            selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
             qDebug() << "Previous selected device not found, reset to Physical Group";
         }
     }
@@ -405,7 +405,7 @@ void AppManager::selectDeviceById(int deviceId)
     // Only emit signal if the device actually changes
     if (selectedDevice->ID != deviceId) {
         selectedDevice->ID = deviceId;
-        selectedDevice->loadDevice();
+        selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
 
         // Emit the signal to notify QML components
         emit selectedDeviceChanged(deviceId);

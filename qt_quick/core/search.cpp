@@ -31,25 +31,25 @@
 
 #include "search.h"
 #include<QGuiApplication>
-Search::Search(QObject *parent) : QAbstractTableModel(parent)
+SearchSync::SearchSync(QObject *parent) : QAbstractTableModel(parent)
 {
 
 }
 
 //file list model
-int Search::rowCount(const QModelIndex &parent) const
+int SearchSync::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return fileNames.length();
 }
 
-int Search::columnCount(const QModelIndex &parent) const
+int SearchSync::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 5;
 }
 
-QVariant Search::data(const QModelIndex &index, int role) const
+QVariant SearchSync::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || role != Qt::DisplayRole) {
         return QVariant();
@@ -64,7 +64,7 @@ QVariant Search::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant Search::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant SearchSync::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section){
@@ -78,14 +78,14 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
     return QVariant();
 }
 
-QString Search::testFunction()
+QString SearchSync::testFunction()
 {
     return "testObject: " + searchInCatalogsChecked;
 }
 
 //----------------------------------------------------------------------
 //methods
-void Search::setMultipliers()
+void SearchSync::setMultipliers()
 {//Define a size multiplier depending on the size unit selected
     sizeMultiplierMin=1;
     if      (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "KiB"))
@@ -113,7 +113,7 @@ void Search::setMultipliers()
 
 }
 //----------------------------------------------------------------------
-void Search::resetSearchResults()
+void SearchSync::resetSearchResults()
 {
     fileNames.clear();
     fileSizes.clear();
@@ -140,7 +140,7 @@ void Search::resetSearchResults()
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
 //Search process
-void Search::searchFiles(Device *selectedDevice)
+void SearchSync::searchFiles(Device *selectedDevice)
 {//Run a search of files in each selected catalog based on user inputs
 
     //Prepare the SEARCH -------------------------------
@@ -159,7 +159,7 @@ void Search::searchFiles(Device *selectedDevice)
                     if (row.type == "Catalog") {
                         Device *device = new Device;
                         device->ID = row.ID;
-                        device->loadDevice();
+                        device->loadDevice(QSqlDatabase::defaultConnection);
                         searchFilesInCatalog(device);
                         delete device;
                     }
@@ -187,7 +187,7 @@ void Search::searchFiles(Device *selectedDevice)
     Device loopDevice;
     for (const QString &ID : deviceFoundIDList) {
         loopDevice.ID = ID.toInt();
-        loopDevice.loadDevice();
+        loopDevice.loadDevice(QSqlDatabase::defaultConnection);
         QList<QStandardItem *> items;
         items << new QStandardItem(loopDevice.name);
         items << new QStandardItem(QString::number(loopDevice.ID));
@@ -242,7 +242,7 @@ void Search::searchFiles(Device *selectedDevice)
 
 }
 //----------------------------------------------------------------------
-void Search::searchFilesInCatalog(Device *device)
+void SearchSync::searchFilesInCatalog(Device *device)
 {//Run a search of files for the selected Catalog
     //Prepare Inputs including Regular Expression
     QFile catalogFile(device->catalog->sourcePath);
@@ -477,7 +477,7 @@ void Search::searchFilesInCatalog(Device *device)
     }
 }
 //----------------------------------------------------------------------
-void Search::searchFilesInDirectory(const QString &sourceDirectory)
+void SearchSync::searchFilesInDirectory(const QString &sourceDirectory)
 {//Run a search of files for the selected Directory
 
     //Search *newSearch = new Search; //TEMP
@@ -733,7 +733,7 @@ void Search::searchFilesInDirectory(const QString &sourceDirectory)
     }
 }
 //----------------------------------------------------------------------
-void Search::setFileTypes()
+void SearchSync::setFileTypes()
 {
     //Filetypes for cataloging
     fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg" << "*.aif";

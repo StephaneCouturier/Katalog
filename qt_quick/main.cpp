@@ -61,15 +61,15 @@ int main(int argc, char *argv[])
     appManager->collection->appVersion = appManager->currentVersion;
     appManager->startDatabase();
     appManager->selectedDevice->ID=1;
-    appManager->selectedDevice->loadDevice();
+    appManager->selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
     appManager->selectedDevice->type = "All";
 
-    Search *newSearch = new Search;
+    SearchSync *newSearch = new SearchSync;
     PageSearch pageSearch;
 
     // Connect the search object to AppManager
     appManager->setSearchObject(newSearch);
-    qmlRegisterType<Search>("Katalog", 3, 0, "Search");
+    qmlRegisterType<SearchSync>("Katalog", 3, 0, "Search");
     qmlRegisterType<DeviceListModel>("Katalog", 3, 0, "DeviceListModel");
 
     //App loading

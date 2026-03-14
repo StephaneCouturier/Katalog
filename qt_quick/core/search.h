@@ -29,8 +29,8 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
-#ifndef SEARCH_H
-#define SEARCH_H
+#ifndef SEARCH_SYNC_H
+#define SEARCH_SYNC_H
 
 #include <QDateTime>
 #include <QStandardItemModel>
@@ -39,17 +39,17 @@
 #include <QSqlQuery>
 #include <QStringListModel>
 #include <QSqlQueryModel>
-#include "device.h"
+#include "core/device.h"
 #include "filesview.h"
 
-class Search : public QAbstractTableModel
+class SearchSync : public QAbstractTableModel
 {
     Q_OBJECT
 
     Q_PROPERTY(QVariantMap properties READ properties WRITE setProperties NOTIFY propertiesChanged)
 
 public:
-    Search(QObject *parent = nullptr);
+    SearchSync(QObject *parent = nullptr);
 
     //Q_PROPERTY sources
     QVariantMap properties() const {
@@ -285,4 +285,4 @@ private:
     bool searchInCatalogsChecked;
 };
 
-#endif // SEARCH_H
+#endif // SEARCH_SYNC_H
