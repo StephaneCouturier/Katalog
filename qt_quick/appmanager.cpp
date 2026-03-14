@@ -1,5 +1,5 @@
 #include "appmanager.h"
-#include "database.h"
+#include "core/database.h"
 #include "version.h"
 
 AppManager::AppManager(QObject *parent) : QObject(parent)
@@ -28,26 +28,12 @@ void AppManager::initiateApp()
     }
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
 
-    // Load database path from settings, with fallback to default
-    QString defaultDbPath = "/home/stephane/Developments/Katalog/Data/newKatalogFile.db";
-    collection->databaseFilePath = settings.value("Database/FilePath", defaultDbPath).toString();
+    // Load collection folder (Memory mode) from settings
+    collection->folder = settings.value("LastCollectionFolder").toString();
 
     selectedDevice->ID = settings.value("Selection/SelectedDeviceID", 1).toInt();
     if (selectedDevice->ID == 0) selectedDevice->type = "All";
     selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
-
-    // Verify the database file exists, fallback to default if not
-    if (!QFile::exists(collection->databaseFilePath)) {
-        qWarning() << "Database file not found:" << collection->databaseFilePath;
-        collection->databaseFilePath = defaultDbPath;
-
-        // If even the default doesn't exist, log a warning
-        if (!QFile::exists(collection->databaseFilePath)) {
-            qWarning() << "Default database file not found:" << collection->databaseFilePath;
-        }
-    }
-
-    qDebug() << "Using database file:" << collection->databaseFilePath;
 
     //Check for new version
     checkVersionChoice = settings.value("Settings/CheckVersion", true).toBool();
@@ -116,22 +102,28 @@ void AppManager::checkVersion()
 //Database management --------------------------------------------------
 QString AppManager::startDatabase()
 {
-    qDebug()<<"Collection::startDatabase()";
-    //Check Sqlite driver
-    if (!QSqlDatabase::drivers().contains("QSQLITE")){
-        return "startDatabase: Unable to load database.<br/>The SQLite driver was not loaded.";
+    const QString conn = QSqlDatabase::defaultConnection;
+
+    QSqlError err = Database::initialize(conn, collection);
+    if (err.type() != QSqlError::NoError) {
+        qWarning() << "startDatabase: initialize failed:" << err.text();
+        return "startDatabase: " + err.text();
     }
 
-    // Initialize the database:
-    QSqlError err = initializeDatabase();
+    err = Database::createAllTables(conn);
     if (err.type() != QSqlError::NoError) {
-        return "startDatabase: The database could not be initialized.<br/>Create a new database or select an existing one.";
+        qWarning() << "startDatabase: createAllTables failed:" << err.text();
+        return "startDatabase: " + err.text();
     }
-    else {
-        // Add this: Initialize DeviceListModel after database is ready
-        initializeDeviceListModel();
-        return "startDatabase: No Error";
+
+    if (collection->databaseMode == "Memory") {
+        collection->generateCollectionFilesPaths();
+        collection->load();
     }
+
+    initializeDeviceListModel();
+    emit databaseModeChanged();
+    return "startDatabase: No Error";
 }
 //----------------------------------------------------------------------
 void AppManager::initializeDeviceListModel()
@@ -141,74 +133,6 @@ void AppManager::initializeDeviceListModel()
     }
     deviceListModel = new DeviceListModel(this);
     qDebug() << "DeviceListModel initialized with" << deviceListModel->rowCount() << "devices";
-}
-//----------------------------------------------------------------------
-QSqlError AppManager::initializeDatabase()
-{
-    QFile databaseFile(collection->databaseFilePath);
-    if (!databaseFile.exists()){
-        //return error
-    }
-    else{
-        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName(collection->databaseFilePath);
-        if (!db.open())
-            return db.lastError();
-    }
-
-    //Create tables if they do not exist
-    QSqlQuery q;
-
-    if (!q.exec(SQL_CREATE_DEVICE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_CATALOG))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_STORAGE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_DEVICE_CATALOG))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_FILE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_FILETEMP))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_FOLDER))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_METADATA))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_STATISTICS_DEVICE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_SEARCH))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_TAG))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_PARAMETER))
-        return q.lastError();
-
-    //Migration
-    if (!q.exec(SQL_CREATE_STATISTICS_CATALOG))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_STATISTICS_STORAGE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE_CATALOG))
-        return q.lastError();
-
-    return QSqlError();
 }
 //----------------------------------------------------------------------
 QString AppManager::testQuery()
@@ -277,26 +201,28 @@ void AppManager::setDatabaseFilePath(const QString &path)
         return;
     }
 
-    // Store the old path for rollback if needed
+    // Store old settings for rollback if needed
     QString oldPath = collection->databaseFilePath;
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    QString oldMode = settings.value("Settings/databaseMode").toString();
+    QString oldFilePath = settings.value("Settings/DatabaseFilePath").toString();
 
-    // Set new path
-    collection->databaseFilePath = path;
+    // Save new settings before reconnecting so Database::initialize() reads them
+    settings.setValue("Settings/databaseMode",    "File");
+    settings.setValue("Settings/DatabaseFilePath", path);
+    settings.sync();
 
-    // Try to reconnect to the new database
     if (reconnectToDatabase()) {
         qDebug() << "Successfully connected to new database:" << path;
-        emit databaseConnectionChanged(true, "Successfully connected to: " + QFileInfo(path).fileName());
-
-        // Save the new path to settings
-        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-        settings.setValue("Database/FilePath", path);
-        settings.sync();
+        emit databaseConnectionChanged(true, "Opened: " + QFileInfo(path).fileName());
     } else {
-        // Rollback on failure
+        // Rollback settings and connection
+        settings.setValue("Settings/databaseMode",    oldMode);
+        settings.setValue("Settings/DatabaseFilePath", oldFilePath);
+        settings.sync();
         collection->databaseFilePath = oldPath;
-        reconnectToDatabase(); // Restore old connection
-        emit databaseConnectionChanged(false, "Failed to connect to database: " + path);
+        reconnectToDatabase();
+        emit databaseConnectionChanged(false, "Failed to open database: " + lastDatabaseError);
     }
 }
 //----------------------------------------------------------------------
@@ -357,26 +283,37 @@ void AppManager::refreshStatistics()
 
 bool AppManager::reconnectToDatabase()
 {
-    // Close existing database connection
-    {
-        QSqlDatabase db = QSqlDatabase::database();
-        if (db.isOpen()) {
-            db.close();
-            qDebug() << "Closed existing database connection";
-        }
-    }
-    QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection);
+    const QString conn = QSqlDatabase::defaultConnection;
 
-    // Initialize with new database
-    QSqlError err = initializeDatabase();
+    {
+        QSqlDatabase db = QSqlDatabase::database(conn);
+        if (db.isOpen())
+            db.close();
+    }
+    QSqlDatabase::removeDatabase(conn);
+
+    QSqlError err = Database::initialize(conn, collection);
     if (err.type() != QSqlError::NoError) {
-        qWarning() << "AppManager::reconnectToDatabase failed:" << err.text();
+        lastDatabaseError = err.text();
+        qWarning() << "AppManager::reconnectToDatabase failed:" << lastDatabaseError;
         return false;
     }
 
-    // Refresh all UI components after successful database connection
-    refreshAllUI();
+    err = Database::createAllTables(conn);
+    if (err.type() != QSqlError::NoError) {
+        lastDatabaseError = err.text();
+        qWarning() << "AppManager::reconnectToDatabase createAllTables failed:" << lastDatabaseError;
+        return false;
+    }
+    lastDatabaseError.clear();
 
+    if (collection->databaseMode == "Memory") {
+        collection->generateCollectionFilesPaths();
+        collection->load();
+    }
+
+    refreshAllUI();
+    emit databaseModeChanged();
     return true;
 }
 
@@ -396,6 +333,49 @@ int AppManager::getSelectedDeviceId() const
     return -1;
 }
 
+QString AppManager::getHostName() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/databaseHostName").toString();
+}
+//----------------------------------------------------------------------
+QString AppManager::getDatabaseName() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/databaseName").toString();
+}
+//----------------------------------------------------------------------
+int AppManager::getDatabasePort() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/databasePort", 3306).toInt();
+}
+//----------------------------------------------------------------------
+QString AppManager::getDatabaseUserName() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/databaseUserName").toString();
+}
+//----------------------------------------------------------------------
+QString AppManager::getDatabasePassword() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/databasePassword").toString();
+}
+//----------------------------------------------------------------------
+bool AppManager::getHostedAutoConnect() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/HostedAutoConnect", false).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setHostedAutoConnect(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/HostedAutoConnect", value);
+    settings.sync();
+}
+//----------------------------------------------------------------------
 bool AppManager::shouldShowAlphaWarning() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
@@ -427,5 +407,50 @@ void AppManager::selectDeviceById(int deviceId)
         emit selectedDeviceChanged(deviceId);
 
         qDebug() << "Selected device changed to ID:" << deviceId << "Name:" << selectedDevice->name;
+    }
+}
+//----------------------------------------------------------------------
+QString AppManager::getDatabaseMode() const
+{
+    return collection->databaseMode;
+}
+//----------------------------------------------------------------------
+QString AppManager::getCollectionFolder() const
+{
+    return collection->folder;
+}
+//----------------------------------------------------------------------
+void AppManager::openCollectionMemory(const QString &folder)
+{
+    collection->folder = folder;
+
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/databaseMode",  "Memory");
+    settings.setValue("LastCollectionFolder",   folder);
+    settings.sync();
+
+    if (reconnectToDatabase()) {
+        emit databaseConnectionChanged(true, "Memory collection opened: " + QFileInfo(folder).fileName());
+    } else {
+        emit databaseConnectionChanged(false, "Failed to open Memory collection: " + lastDatabaseError);
+    }
+}
+//----------------------------------------------------------------------
+void AppManager::openCollectionHosted(const QString &hostName, const QString &dbName,
+                                      int port, const QString &userName, const QString &password)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/databaseMode",    "Hosted");
+    settings.setValue("Settings/databaseHostName", hostName);
+    settings.setValue("Settings/databaseName",     dbName);
+    settings.setValue("Settings/databasePort",     port);
+    settings.setValue("Settings/databaseUserName", userName);
+    settings.setValue("Settings/databasePassword", password);
+    settings.sync();
+
+    if (reconnectToDatabase()) {
+        emit databaseConnectionChanged(true, "Connected: " + hostName + "/" + dbName);
+    } else {
+        emit databaseConnectionChanged(false, "Hosted connection failed: " + lastDatabaseError);
     }
 }

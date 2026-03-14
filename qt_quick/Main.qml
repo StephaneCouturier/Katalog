@@ -87,21 +87,33 @@ Kirigami.ApplicationWindow {
                 icon.name: "document-open-data"
                 Kirigami.Action {
                     icon.name: "document-open-data"
-                    text: "Local Files "
-                    onTriggered: showPassiveNotification("Local Files mode not implemented yet")
+                    text: "Local Files"
+                    onTriggered: {
+                        var p = appManager1.getCollectionFolder()
+                        if (p.length > 0)
+                            memoryFolderDialog.currentFolder = "file://" + p
+                        memoryFolderDialog.open()
+                    }
                 }
                 Kirigami.Action {
                     icon.name: "document-open-data"
                     text: "SQLite Db"
                     onTriggered: {
-                        console.log("Opening SQLite database file dialog");
-                        databaseFileDialog.open();
+                        var p = appManager1.getDatabaseFilePath()
+                        if (p.length > 0) {
+                            var slash = p.lastIndexOf("/")
+                            databaseFileDialog.currentFolder = "file://" + (slash >= 0 ? p.substring(0, slash) : p)
+                        }
+                        databaseFileDialog.open()
                     }
                 }
                 Kirigami.Action {
                     icon.name: "document-open-data"
                     text: "Hosted Db"
-                    onTriggered: showPassiveNotification("Hosted Database mode not implemented yet")
+                    onTriggered: {
+                        pageSettings.showHostedForm = true
+                        pageStack.push(pageSettings)
+                    }
                 }
             },
             Kirigami.Action {
@@ -170,36 +182,15 @@ Kirigami.ApplicationWindow {
         ]
     }
 
-    // Database Selection Dialog
-        Dialogs.FileDialog {
-            id: databaseFileDialog
-            title: "Select SQLite Database File"
-            fileMode: Dialogs.FileDialog.OpenFile
-            nameFilters: ["SQLite Database (*.db *.sqlite *.sqlite3)", "All files (*)"]
-
-            onAccepted: {
-                var selectedFile = databaseFileDialog.selectedFile.toString();
-                // Remove file:// prefix if present
-                if (selectedFile.startsWith("file://")) {
-                    selectedFile = selectedFile.substring(7);
-                }
-                console.log("Selected database file:", selectedFile);
-                appManager1.setDatabaseFilePath(selectedFile);
-            }
-
-            onRejected: {
-                console.log("Database file selection cancelled");
-            }
-        }
-
         // Database status notification
         Connections {
             target: appManager1
             function onDatabaseConnectionChanged(success, message) {
                 if (success) {
-                    showPassiveNotification("✓ " + message, "positive");
+                    showPassiveNotification("✓ " + message, "positive")
+                    pageStack.currentIndex = 0
                 } else {
-                    showPassiveNotification("✗ " + message, "warning");
+                    showPassiveNotification("✗ " + message, "warning")
                 }
             }
         }
@@ -595,47 +586,28 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Settings
-    Kirigami.ScrollablePage {
+    PageSettings {
         id: pageSettings
-        title: "Settings"
         visible: false
+    }
 
-        actions: [
-            /*Kirigami.Action {
-                text: "Batch process"
-                icon.name: "document-export"
-                onTriggered: showPassiveNotification("Batch process clicked, no action")
-            },*/
-            Kirigami.Action {
-                text: "Close"
-                icon.name: "view-close"
-                //onTriggered: pageStack.removePage(pageSettings)
-                //onTriggered: pageStack.currentItem.visible = false //.removePage(pageSelection)
-                onTriggered: pageStack.pop() //.removePage(pageSelection)
-            }
-        ]
-
-        ListModel {
-        id: settingsList
-        // Each ListElement is an element on the list, containing information
-            ListElement {
-                name: "Local Drive"
-                description: "1Tb"
-            }
-            ListElement {
-                name: "External Drive 1"
-                description: "500Gb"
-            }
-            ListElement {
-                name: "External Drive 2"
-                description: ""
-            }
+    // Dialogs - triggered from Open Collection menu
+    Dialogs.FolderDialog {
+        id: memoryFolderDialog
+        title: "Select Collection Folder"
+        onAccepted: {
+            var path = selectedFolder.toString().replace("file://", "")
+            appManager1.openCollectionMemory(path)
         }
+    }
 
-        Kirigami.CardsListView {
-            id: settingsListView
-            model: settingsList
-            delegate: PageSelectionDelegate {}
+    Dialogs.FileDialog {
+        id: databaseFileDialog
+        title: "Open SQLite Database"
+        nameFilters: ["SQLite databases (*.db *.sqlite *.sqlite3)", "All files (*)"]
+        onAccepted: {
+            var path = selectedFile.toString().replace("file://", "")
+            appManager1.setDatabaseFilePath(path)
         }
     }
 }

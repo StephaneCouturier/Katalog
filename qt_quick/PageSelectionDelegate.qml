@@ -63,33 +63,33 @@ Kirigami.AbstractCard {
                 }
             }
 
-            Controls.Button {
-                Layout.alignment: Qt.AlignRight
-                Layout.columnSpan: 2
-                icon.name: "labplot-zoom-select"
-                onClicked: {
-                    console.log("Select clicked for device:", model.name, "ID:", model.deviceId)
+            // Controls.Button {
+            //     Layout.alignment: Qt.AlignRight
+            //     Layout.columnSpan: 2
+            //     icon.name: "labplot-zoom-select"
+            //     onClicked: {
+            //         console.log("Select clicked for device:", model.name, "ID:", model.deviceId)
 
-                    // Update the selected device through AppManager method
-                    appManager1.selectDeviceById(model.deviceId)
+            //         // Update the selected device through AppManager method
+            //         appManager1.selectDeviceById(model.deviceId)
 
-                    // Show confirmation with the updated device name
-                    //showPassiveNotification("Selected device: " + appManager1.getSelectedDeviceName())
-                    console.log("Selected device updated to:", appManager1.getSelectedDeviceName())
+            //         // Show confirmation with the updated device name
+            //         //showPassiveNotification("Selected device: " + appManager1.getSelectedDeviceName())
+            //         console.log("Selected device updated to:", appManager1.getSelectedDeviceName())
 
-                    // Force update of selection state for all cards
-                    selectionListView1.model.dataChanged(selectionListView1.model.index(0, 0),
-                                                         selectionListView1.model.index(selectionListView1.model.rowCount() - 1, 0))
-                }
-            }
-            Controls.Button {
-                Layout.alignment: Qt.AlignRight
-                Layout.columnSpan: 1
-                icon.name: "document-open"
-                Controls.ToolTip.visible: down
-                Controls.ToolTip.text: qsTr("Open the device")
-                onClicked: showPassiveNotification("Open clicked for: " + model.name)
-            }
+            //         // Force update of selection state for all cards
+            //         selectionListView1.model.dataChanged(selectionListView1.model.index(0, 0),
+            //                                              selectionListView1.model.index(selectionListView1.model.rowCount() - 1, 0))
+            //     }
+            // }
+            // Controls.Button {
+            //     Layout.alignment: Qt.AlignRight
+            //     Layout.columnSpan: 1
+            //     icon.name: "document-open"
+            //     Controls.ToolTip.visible: down
+            //     Controls.ToolTip.text: qsTr("Open the device")
+            //     onClicked: showPassiveNotification("Open clicked for: " + model.name)
+            // }
         }
         Rectangle {
             anchors.fill: parent

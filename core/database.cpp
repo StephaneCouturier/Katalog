@@ -414,17 +414,31 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 
-QString Database::getSQLCreateTableCatalogFilter()
+QString Database::getSQLCreateTableCatalogFilter(DatabaseType databaseType)
 {
-    return QLatin1String(R"(
+    QString autoIncrementSyntax;
+
+    switch (databaseType) {
+    case DatabaseType::SQLite:
+        autoIncrementSyntax = "INTEGER PRIMARY KEY AUTOINCREMENT";
+        break;
+    case DatabaseType::MySQL:
+        autoIncrementSyntax = "INT AUTO_INCREMENT PRIMARY KEY";
+        break;
+    case DatabaseType::PostgreSQL:
+        autoIncrementSyntax = "SERIAL PRIMARY KEY";
+        break;
+    }
+
+    return QString(R"(
         CREATE TABLE IF NOT EXISTS catalog_filter (
-            filter_id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            filter_id         %1,
             filter_catalog_id INTEGER NOT NULL,
             filter_type       TEXT    NOT NULL DEFAULT 'exclude_folder',
             filter_value      TEXT    NOT NULL,
             UNIQUE(filter_catalog_id, filter_type, filter_value)
         )
-    )");
+    )").arg(autoIncrementSyntax);
 }
 
 //----------------------------------------------------------------------
@@ -688,7 +702,7 @@ QSqlError Database::createAllTables(const QString &connectionName)
     error = executeSql(connectionName, getSQLCreateTableBackupMapping(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
-    error = executeSql(connectionName, getSQLCreateTableCatalogFilter());
+    error = executeSql(connectionName, getSQLCreateTableCatalogFilter(databaseType));
     if (error.type() != QSqlError::NoError) return error;
 
     return QSqlError(); // Success
@@ -1256,15 +1270,8 @@ QSqlError Database::runMigration_2_10(const QString &connectionName)
     } else {
     }
 
-    QSqlError filterErr = executeSql(connectionName, QLatin1String(R"(
-        CREATE TABLE IF NOT EXISTS catalog_filter (
-            filter_id         INTEGER PRIMARY KEY AUTOINCREMENT,
-            filter_catalog_id INTEGER NOT NULL,
-            filter_type       TEXT    NOT NULL DEFAULT 'exclude_folder',
-            filter_value      TEXT    NOT NULL,
-            UNIQUE(filter_catalog_id, filter_type, filter_value)
-        )
-    )"));
+    QSqlError filterErr = executeSql(connectionName,
+        getSQLCreateTableCatalogFilter(getDatabaseType(connectionName)));
     if (filterErr.type() != QSqlError::NoError) {
         qWarning() << "WARNING: Failed to create catalog_filter table:" << filterErr.text();
         return filterErr;

@@ -64,6 +64,7 @@ class AppManager : public QObject
     Q_OBJECT
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
     Q_PROPERTY(int selectedDeviceId READ getSelectedDeviceId NOTIFY selectedDeviceChanged)
+    Q_PROPERTY(QString databaseMode READ getDatabaseMode NOTIFY databaseModeChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -84,6 +85,7 @@ public:
     Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
     SearchSync *searchObject = nullptr;
     DeviceListModel *deviceListModel = nullptr;
+    QString lastDatabaseError;
 
 public slots:
     //Global
@@ -104,8 +106,14 @@ public slots:
 
     //Database
     QString startDatabase();
-    QSqlError initializeDatabase();
     QString testQuery();
+
+    // Collection management
+    Q_INVOKABLE QString getDatabaseMode() const;
+    Q_INVOKABLE QString getCollectionFolder() const;
+    Q_INVOKABLE void openCollectionMemory(const QString &folder);
+    Q_INVOKABLE void openCollectionHosted(const QString &hostName, const QString &dbName,
+                                          int port, const QString &userName, const QString &password);
 
     //Useful functions
     void executeSearch();
@@ -117,8 +125,17 @@ public slots:
     QString getSelectedDeviceName() const;
     int getSelectedDeviceId() const;
 
-    Q_INVOKABLE bool  shouldShowAlphaWarning() const;
-    Q_INVOKABLE void  setAlphaWarningShown();
+    Q_INVOKABLE bool    shouldShowAlphaWarning() const;
+    Q_INVOKABLE void    setAlphaWarningShown();
+
+    // Hosted database settings
+    Q_INVOKABLE QString getHostName() const;
+    Q_INVOKABLE QString getDatabaseName() const;
+    Q_INVOKABLE int     getDatabasePort() const;
+    Q_INVOKABLE QString getDatabaseUserName() const;
+    Q_INVOKABLE QString getDatabasePassword() const;
+    Q_INVOKABLE bool    getHostedAutoConnect() const;
+    Q_INVOKABLE void    setHostedAutoConnect(bool value);
 
 signals:
     void deviceListModelChanged();
@@ -129,6 +146,7 @@ signals:
     void statisticsRefreshed();
     void uiRefreshCompleted();
     void selectedDeviceChanged(int deviceId);
+    void databaseModeChanged();
 };
 
 #endif // APPMANAGER_H

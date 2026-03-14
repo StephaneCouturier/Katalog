@@ -125,7 +125,7 @@ public:
     static QString getSQLCreateTableTag(DatabaseType dbType);
     static QString getSQLCreateTableParameter(DatabaseType dbType);
     static QString getSQLCreateTableBackupMapping(DatabaseType dbType);
-    static QString getSQLCreateTableCatalogFilter();
+    static QString getSQLCreateTableCatalogFilter(DatabaseType dbType);
 
     // Helper methods
     /**
