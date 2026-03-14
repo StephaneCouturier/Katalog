@@ -12,47 +12,33 @@
 #include <KLocalizedContext>
 #include <KLocalizedString>
 
+#include "version.h"
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     //Set the application icon
-    app.setWindowIcon(QIcon::fromTheme(QIcon::ThemeIcon::GoHome));
-    //app.setWindowIcon(QIcon::fromTheme("drive-multipartition"));
-    //app.setWindowIcon(QIcon(":images/Katalog_logo_64.ico"));
-    //app.setWindowIcon(QIcon(":images/logo-64.ico"));
+    app.setWindowIcon(QIcon(":/images/Katalog_logo_64.ico"));
 
-    KLocalizedString::setApplicationDomain("KatalogPlus");
-    /*
+    KLocalizedString::setApplicationDomain("Katalog");
+
     KAboutData aboutData(
-        QStringLiteral("KatalogPlus"),
-        i18nc("@title", "Katalog Plus"),
-        QStringLiteral("1.0"),
-        i18n("KatalogPlus application"),
-        KAboutLicense::GPL,
-        i18n("(c) 2021"));
-    */
-    KAboutData aboutData(
-        QStringLiteral("KatalogPlus"),
-        "Katalog Plus",
-        QStringLiteral("1.0"),
-        "KatalogPlus application",
-        KAboutLicense::GPL,
-        "(c) 2020-2024");
+        QStringLiteral("Katalog"),
+        "Katalog",
+        QStringLiteral(KATALOG_VERSION_STRING),
+        "Katalog is an application to catalog, search, and manage files from any drive, permanent or removable.",
+        KAboutLicense::GPL_V3,
+        "(c) 2020-2025");
 
-    // aboutData.addAuthor(
-    //     i18nc("@info:credit", "Stephane Couturier"),
-    //     i18nc("@info:credit", "Founder & Main developper"),
-    //     QStringLiteral("your@email.com"),
-    //     QStringLiteral("https://yourwebsite.com"));
-
+    aboutData.setDesktopFileName(QStringLiteral("io.github.stephanecouturier.Katalog")); //Temporary, to hide the KDE GetInvolved Donation links
+    aboutData.setBugAddress(""); //Temporary, to hide the KDE Bug link
     aboutData.addAuthor(
         "Stéphane Couturier",
-        "Founder & Main developper",
-        QStringLiteral("your@email.com"),
-        QStringLiteral("https://yourwebsite.com"));
+        "Founder & Main Developer",
+        QStringLiteral("katalog@stephanecouturier.com"),
+        QStringLiteral("https://stephanecouturier.github.io/Katalog/"));
 
-    // Set aboutData as information about the app
     KAboutData::setApplicationData(aboutData);
 
     //Katalog objects
@@ -80,14 +66,17 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("Katalog3", "Main");
 
+    // Set context properties before loading QML so they are available on first evaluation
     QQmlContext *rootContext = engine.rootContext();
     rootContext->setContextProperty("appManager1", appManager);
     rootContext->setContextProperty("collection1", appManager->collection);
     rootContext->setContextProperty("newSearch1", newSearch);
     rootContext->setContextProperty("pageSearch1", &pageSearch);
     rootContext->setContextProperty("deviceListModel1", appManager->deviceListModel);
+    rootContext->setContextProperty("About", QVariant::fromValue(KAboutData::applicationData()));
+
+    engine.loadFromModule("Katalog3", "Main");
 
     appManager->testQuery();
 

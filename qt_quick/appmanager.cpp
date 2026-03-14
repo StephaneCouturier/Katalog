@@ -1,5 +1,6 @@
 #include "appmanager.h"
 #include "database.h"
+#include "version.h"
 
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
@@ -8,8 +9,8 @@ AppManager::AppManager(QObject *parent) : QObject(parent)
 //----------------------------------------------------------------------
 void AppManager::initiateApp()
 {
-    currentVersion  = "3.0.0";
-    releaseDate     = "2025-05-30";
+    currentVersion  = KATALOG_VERSION_STRING;
+    releaseDate     = KATALOG_RELEASE_DATE;
 
     //Prepare paths, user setting file, check version
     //Get user home path and application dir path

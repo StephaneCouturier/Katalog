@@ -1,4 +1,12 @@
-project(Katalog3 VERSION 0.1 LANGUAGES CXX)
+project(Katalog3 VERSION 3.0 LANGUAGES CXX)
+
+set(KATALOG_VERSION_STRING "3.alpha1")
+set(KATALOG_RELEASE_DATE  "2026-03-31")
+
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/version.h"
+)
 
 # Qt Quick-specific dependencies not already found by root CMakeLists.txt
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Sql)
@@ -10,6 +18,7 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appKatalog
     main.cpp
+    images.qrc
 )
 
 target_compile_definitions(appKatalog PRIVATE
@@ -85,6 +94,7 @@ target_link_libraries(appKatalog
 
 target_include_directories(appKatalog PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_SOURCE_DIR}
 )
 
