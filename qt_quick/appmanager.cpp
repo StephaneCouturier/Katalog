@@ -1,6 +1,7 @@
 #include "appmanager.h"
 #include "core/database.h"
 #include "version.h"
+#include <QGuiApplication>
 
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
@@ -468,6 +469,70 @@ void AppManager::setHostedAutoConnect(bool value)
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     settings.setValue("Settings/HostedAutoConnect", value);
     settings.sync();
+}
+//----------------------------------------------------------------------
+void AppManager::openFile(const QString &filePath)
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
+}
+//----------------------------------------------------------------------
+void AppManager::openFolder(const QString &folderPath)
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(folderPath));
+}
+//----------------------------------------------------------------------
+void AppManager::copyToClipboard(const QString &text)
+{
+    QGuiApplication::clipboard()->setText(text);
+}
+//----------------------------------------------------------------------
+QString AppManager::exportSearchResultsToCSV()
+{
+    if (!searchObject || searchObject->fileNames.isEmpty())
+        return QString();
+
+    // Determine export path
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+    if (dir.isEmpty())
+        dir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    QString timestamp = QDateTime::currentDateTime().toString("yyyyMMdd-HHmmss");
+    QString filePath  = dir + "/katalog_search_" + timestamp + ".csv";
+
+    QSaveFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return QString();
+
+    QTextStream out(&file);
+    out.setEncoding(QStringConverter::Utf8);
+
+    // Header row
+    out << "Name\tSize\tDate\tFolder\tCatalog\n";
+
+    int count = searchObject->fileNames.size();
+    for (int i = 0; i < count; ++i) {
+        out << searchObject->fileNames.value(i)     << "\t"
+            << searchObject->fileSizes.value(i)     << "\t"
+            << searchObject->fileDateTimes.value(i) << "\t"
+            << searchObject->filePaths.value(i)     << "\t"
+            << searchObject->fileCatalogs.value(i)  << "\n";
+    }
+
+    if (!file.commit())
+        return QString();
+
+    return filePath;
+}
+//----------------------------------------------------------------------
+QStringList AppManager::getTagNames() const
+{
+    Tag tag;
+    tag.loadFromDatabase(QSqlDatabase::defaultConnection);
+    QList<QString> names = tag.tagNames();
+    QStringList result;
+    //result << tr("All");
+    for (const QString &name : names)
+        result << name;
+    return result;
 }
 //----------------------------------------------------------------------
 bool AppManager::shouldShowAlphaWarning() const

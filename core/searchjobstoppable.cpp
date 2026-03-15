@@ -668,7 +668,11 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
             )");
             queryTag.prepare(queryTagSQL);
             queryTag.bindValue(":name", selectedTagName);
-            queryTag.exec();
+
+            if (!queryTag.exec()) {
+                qWarning() << "SearchJobStoppable::searchFilesInCatalog - Tag query failed:" << queryTag.lastError().text();
+                continue;
+            }
 
             while (queryTag.next()) {
                 if ((filePath + "/").contains(queryTag.value(0).toString() + "/")) {

@@ -74,19 +74,38 @@ public:
             map["searchOnDate"]             = searchOnDate;
             map["selectedDateMin"]          = selectedDateMin;
             map["selectedDateMax"]          = selectedDateMax;
+        //File metadata
+            map["searchOnFileMetadata"]     = searchOnFileMetadata;
+            map["searchOnMetadataText"]     = searchOnMetadataText;
+            map["metadataTextSearch"]       = metadataTextSearch;
+            map["searchOnMetadataSize"]     = searchOnMetadataSize;
+            map["metadataMinimumHeight"]    = metadataMinimumHeight;
+            map["metadataMaximumHeight"]    = metadataMaximumHeight;
+            map["metadataMinimumWidth"]     = metadataMinimumWidth;
+            map["metadataMaximumWidth"]     = metadataMaximumWidth;
+            map["searchOnMetadataDuration"] = searchOnMetadataDuration;
+            map["metadataDurationMin"]      = metadataDurationMin;
+            map["metadataDurationMax"]      = metadataDurationMax;
             //Duplicates
-            map["searchOnDuplicates"]       = searchOnDuplicates;
-            map["searchDuplicatesOnName"]   = searchDuplicatesOnName;
-            map["searchDuplicatesOnSize"]   = searchDuplicatesOnSize;
-            map["searchDuplicatesOnDate"]   = searchDuplicatesOnDate;
+            map["searchOnDuplicates"]             = searchOnDuplicates;
+            map["searchDuplicatesOnName"]         = searchDuplicatesOnName;
+            map["searchDuplicatesOnSize"]         = searchDuplicatesOnSize;
+            map["searchDuplicatesOnDate"]         = searchDuplicatesOnDate;
+            map["searchDuplicatesOnChecksum"]     = searchDuplicatesOnChecksum;
+            map["searchDuplicatesChecksumEqual"]  = searchDuplicatesChecksumEqual;
+            map["duplicatesCompareDevices"]       = duplicatesCompareDevices;
+            map["duplicatesDeviceID1"]            = duplicatesDeviceID1;
+            map["duplicatesDeviceID2"]            = duplicatesDeviceID2;
             //Differences
-            map["searchOnDifferences"]      = searchOnDifferences;
-            map["differencesOnName"]        = differencesOnName;
-            map["differencesOnSize"]        = differencesOnSize;
-            map["differencesOnDate"]        = differencesOnDate;
-            map["differencesDevices"]       = differencesDevices;
-            map["differencesDeviceID1"]     = differencesDeviceID1;
-            map["differencesDeviceID2"]     = differencesDeviceID2;
+            map["searchOnDifferences"]            = searchOnDifferences;
+            map["differencesOnName"]              = differencesOnName;
+            map["differencesOnSize"]              = differencesOnSize;
+            map["differencesOnDate"]              = differencesOnDate;
+            map["differencesOnChecksum"]          = differencesOnChecksum;
+            map["differencesChecksumEqual"]       = differencesChecksumEqual;
+            map["differencesDevices"]             = differencesDevices;
+            map["differencesDeviceID1"]           = differencesDeviceID1;
+            map["differencesDeviceID2"]           = differencesDeviceID2;
         //Search results
             map["filesFoundNumber"]         = filesFoundNumber;
             map["filesFoundTotalSize"]      = filesFoundTotalSize;
@@ -145,12 +164,40 @@ public:
             if (map.contains("selectedMaxSizeUnit"))    { selectedMaxSizeUnit       = map["selectedMaxSizeUnit"].toString(); }
             //Type
             if (map.contains("searchOnType"))           { searchOnType              = map["searchOnType"].toBool(); }
-            if (map.contains("selectedFileType"))       { selectedFileType          = map["selectedFileType"].toString(); }
+            if (map.contains("selectedFileType")) {
+                selectedFileType = map["selectedFileType"].toString();
+                if      (selectedFileType == "Audio") selectedUserFileType = FileTypeMapping::AUDIO;
+                else if (selectedFileType == "Image") selectedUserFileType = FileTypeMapping::IMAGE;
+                else if (selectedFileType == "Text")  selectedUserFileType = FileTypeMapping::TEXT;
+                else if (selectedFileType == "Video") selectedUserFileType = FileTypeMapping::VIDEO;
+                else if (selectedFileType == "Other") selectedUserFileType = FileTypeMapping::OTHER;
+                else if (selectedFileType == "None")  selectedUserFileType = FileTypeMapping::NONE;
+                else                                  selectedUserFileType = FileTypeMapping::ALL;
+            }
 
             //Date
             if (map.contains("searchOnDate"))           { searchOnDate              = map["searchOnDate"].toBool(); }
             if (map.contains("selectedDateMin"))        { selectedDateMin           = map["selectedDateMin"].toDateTime(); }
             if (map.contains("selectedDateMax"))        { selectedDateMax           = map["selectedDateMax"].toDateTime(); }
+
+        //File metadata
+            if (map.contains("searchOnFileMetadata"))   { searchOnFileMetadata      = map["searchOnFileMetadata"].toBool(); }
+            if (map.contains("searchOnMetadataText"))   { searchOnMetadataText      = map["searchOnMetadataText"].toBool(); }
+            if (map.contains("metadataTextSearch"))     { metadataTextSearch        = map["metadataTextSearch"].toString(); }
+            if (map.contains("searchOnMetadataSize"))   { searchOnMetadataSize      = map["searchOnMetadataSize"].toBool(); }
+            if (map.contains("metadataMinimumHeight"))  { metadataMinimumHeight     = map["metadataMinimumHeight"].toInt(); }
+            if (map.contains("metadataMaximumHeight"))  { metadataMaximumHeight     = map["metadataMaximumHeight"].toInt(); }
+            if (map.contains("metadataMinimumWidth"))   { metadataMinimumWidth      = map["metadataMinimumWidth"].toInt(); }
+            if (map.contains("metadataMaximumWidth"))   { metadataMaximumWidth      = map["metadataMaximumWidth"].toInt(); }
+            if (map.contains("searchOnMetadataDuration")){ searchOnMetadataDuration = map["searchOnMetadataDuration"].toBool(); }
+            if (map.contains("metadataDurationMin")) {
+                metadataDurationMin = QDateTime(QDate(1970, 1, 1),
+                                                QTime::fromString(map["metadataDurationMin"].toString(), "HH:mm:ss"));
+            }
+            if (map.contains("metadataDurationMax")) {
+                metadataDurationMax = QDateTime(QDate(2030, 1, 1),
+                                                QTime::fromString(map["metadataDurationMax"].toString(), "HH:mm:ss"));
+            }
 
         //Folder attributes
             if (map.contains("searchOnFolderCriteria")) { searchOnFolderCriteria    = map["searchOnFolderCriteria"].toBool(); }
@@ -159,19 +206,26 @@ public:
             if (map.contains("selectedTagName"))        { selectedTagName           = map["selectedTagName"].toString(); }
 
         //Duplicates
-            if (map.contains("searchOnDuplicates"))     { searchOnDuplicates        = map["searchOnDuplicates"].toBool(); }
-            if (map.contains("searchDuplicatesOnName")) { searchDuplicatesOnName    = map["searchDuplicatesOnName"].toBool(); }
-            if (map.contains("searchDuplicatesOnSize")) { searchDuplicatesOnSize    = map["searchDuplicatesOnSize"].toBool(); }
-            if (map.contains("searchDuplicatesOnDate")) { searchDuplicatesOnDate    = map["searchDuplicatesOnDate"].toBool(); }
+            if (map.contains("searchOnDuplicates"))            { searchOnDuplicates           = map["searchOnDuplicates"].toBool(); }
+            if (map.contains("searchDuplicatesOnName"))        { searchDuplicatesOnName       = map["searchDuplicatesOnName"].toBool(); }
+            if (map.contains("searchDuplicatesOnSize"))        { searchDuplicatesOnSize       = map["searchDuplicatesOnSize"].toBool(); }
+            if (map.contains("searchDuplicatesOnDate"))        { searchDuplicatesOnDate       = map["searchDuplicatesOnDate"].toBool(); }
+            if (map.contains("searchDuplicatesOnChecksum"))    { searchDuplicatesOnChecksum   = map["searchDuplicatesOnChecksum"].toBool(); }
+            if (map.contains("searchDuplicatesChecksumEqual")) { searchDuplicatesChecksumEqual= map["searchDuplicatesChecksumEqual"].toBool(); }
+            if (map.contains("duplicatesCompareDevices"))      { duplicatesCompareDevices     = map["duplicatesCompareDevices"].toBool(); }
+            if (map.contains("duplicatesDeviceID1"))           { duplicatesDeviceID1          = map["duplicatesDeviceID1"].toInt(); }
+            if (map.contains("duplicatesDeviceID2"))           { duplicatesDeviceID2          = map["duplicatesDeviceID2"].toInt(); }
 
         //Differences
-            if (map.contains("searchOnDifferences"))    { searchOnDifferences       = map["searchOnDifferences"].toBool(); }
-            if (map.contains("differencesOnName"))      { differencesOnName         = map["differencesOnName"].toBool(); }
-            if (map.contains("differencesOnSize"))      { differencesOnSize         = map["differencesOnSize"].toBool(); }
-            if (map.contains("differencesOnDate"))      { differencesOnDate         = map["differencesOnDate"].toBool(); }
-            if (map.contains("differencesDevices"))     { differencesDevices        = map["differencesDevices"].toStringList(); }
-            if (map.contains("differencesDeviceID1"))   { differencesDeviceID1      = map["differencesDeviceID1"].toInt(); }
-            if (map.contains("differencesDeviceID2"))   { differencesDeviceID2      = map["differencesDeviceID2"].toInt(); }
+            if (map.contains("searchOnDifferences"))           { searchOnDifferences          = map["searchOnDifferences"].toBool(); }
+            if (map.contains("differencesOnName"))             { differencesOnName            = map["differencesOnName"].toBool(); }
+            if (map.contains("differencesOnSize"))             { differencesOnSize            = map["differencesOnSize"].toBool(); }
+            if (map.contains("differencesOnDate"))             { differencesOnDate            = map["differencesOnDate"].toBool(); }
+            if (map.contains("differencesOnChecksum"))         { differencesOnChecksum        = map["differencesOnChecksum"].toBool(); }
+            if (map.contains("differencesChecksumEqual"))      { differencesChecksumEqual     = map["differencesChecksumEqual"].toBool(); }
+            if (map.contains("differencesDevices"))            { differencesDevices           = map["differencesDevices"].toStringList(); }
+            if (map.contains("differencesDeviceID1"))          { differencesDeviceID1         = map["differencesDeviceID1"].toInt(); }
+            if (map.contains("differencesDeviceID2"))          { differencesDeviceID2         = map["differencesDeviceID2"].toInt(); }
 
         //Search results
             if (map.contains("filesFoundNumber"))       { filesFoundNumber          = map["filesFoundNumber"].toInt(); }
@@ -184,6 +238,9 @@ public:
 
         //Global search options
             if (map.contains("searchInCatalogsChecked")){ searchInCatalogsChecked   = map["searchInCatalogsChecked"].toBool(); }
+
+        // Recalculate size multipliers whenever properties are set
+        setMultipliers();
 
         emit propertiesChanged();
     }

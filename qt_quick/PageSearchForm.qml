@@ -24,38 +24,58 @@ Kirigami.FormLayout {
         //File Attributes
         newSearch1.properties = {"searchOnFileCriteria":    checkBoxFileAttributesCriteria.checked};
         //Type
-        newSearch1.properties = {"searchOnType":            checkBoxFileAttributesCriteria.checked};
-        newSearch1.properties = {"selectedFileType":        search_comboBox_FileType.currentText};
+        newSearch1.properties = {"searchOnType":            checkBoxFileAttributesCriteria.checked && search_checkBox_Type.checked};
+        newSearch1.properties = {"selectedFileType":        search_comboBox_FileType.currentValue};
         //Size
-        newSearch1.properties = {"searchOnSize":            checkBoxFileAttributesCriteria.checked};
+        newSearch1.properties = {"searchOnSize":            checkBoxFileAttributesCriteria.checked && search_checkBox_Size.checked};
         newSearch1.properties = {"selectedMinimumSize":     search_spinBox_MinimumSize.value};
         newSearch1.properties = {"selectedMaximumSize":     search_spinBox_MaximumSize.value};
         newSearch1.properties = {"selectedMinSizeUnit":     search_comboBox_MinSizeUnit.currentText};
-        newSearch1.properties = {"selectedMaxSizeUnit":     search_comboBox_MaxSizeUnit.currentText};       
+        newSearch1.properties = {"selectedMaxSizeUnit":     search_comboBox_MaxSizeUnit.currentText};
         //Date
-        newSearch1.properties = {"searchOnDate":            checkBoxFileAttributesCriteria.checked};
+        newSearch1.properties = {"searchOnDate":            checkBoxFileAttributesCriteria.checked && search_checkBox_Date.checked};
         newSearch1.properties = {"selectedDateMin":         search_dateTimeEdit_Min.text};
         newSearch1.properties = {"selectedDateMax":         search_dateTimeEdit_Max.text};
+
+        //File metadata
+        newSearch1.properties = {"searchOnFileMetadata":    search_checkBox_FileMetadata.checked};
+        newSearch1.properties = {"searchOnMetadataText":    search_checkBox_FileMetadata.checked && search_checkBox_MetadataText.checked};
+        newSearch1.properties = {"metadataTextSearch":      search_lineEdit_MetadataText.text};
+        newSearch1.properties = {"searchOnMetadataSize":    search_checkBox_FileMetadata.checked && search_checkBox_MetadataSize.checked};
+        newSearch1.properties = {"metadataMinimumHeight":   search_spinBox_MetadataMinimumHeight.value};
+        newSearch1.properties = {"metadataMaximumHeight":   search_spinBox_MetadataMaximumHeight.value};
+        newSearch1.properties = {"metadataMinimumWidth":    search_spinBox_MetadataMinimumWidth.value};
+        newSearch1.properties = {"metadataMaximumWidth":    search_spinBox_MetadataMaximumWidth.value};
+        newSearch1.properties = {"searchOnMetadataDuration":search_checkBox_FileMetadata.checked && search_checkBox_MetadataDuration.checked};
+        newSearch1.properties = {"metadataDurationMin":     search_dateTimeEdit_MetadataDurationMin.text};
+        newSearch1.properties = {"metadataDurationMax":     search_dateTimeEdit_MetadataDurationMax.text};
 
         //Folder Attributes
         newSearch1.properties = {"searchOnFolderCriteria":  search_checkBox_FolderCriteria.checked};
         newSearch1.properties = {"showFoldersOnly":         search_checkBox_ShowFoldersOnly.checked};
         newSearch1.properties = {"searchOnTags":            search_checkBox_SearchOnTags.checked};
-        newSearch1.properties = {"selectedTagName":         search_comboBox_FolderTag.currentText};
+        newSearch1.properties = {"selectedTagName":         search_comboBox_FolderTag.currentIndex === 0 ? "" : search_comboBox_FolderTag.currentText};
 
         //Duplicates
-        newSearch1.properties = {"searchOnDuplicates":      search_checkBox_Duplicates.checked};
-        newSearch1.properties = {"searchDuplicatesOnName":  search_checkBox_DuplicatesOnName.checked};
-        newSearch1.properties = {"searchDuplicatesOnSize":  search_checkBox_DuplicatesOnSize.checked};
-        newSearch1.properties = {"searchDuplicatesOnDate":  search_checkBox_DuplicatesOnDate.checked};
+        newSearch1.properties = {"searchOnDuplicates":             search_checkBox_Duplicates.checked};
+        newSearch1.properties = {"searchDuplicatesOnName":         search_checkBox_DuplicatesOnName.checked};
+        newSearch1.properties = {"searchDuplicatesOnSize":         search_checkBox_DuplicatesOnSize.checked};
+        newSearch1.properties = {"searchDuplicatesOnDate":         search_checkBox_DuplicatesOnDate.checked};
+        newSearch1.properties = {"searchDuplicatesOnChecksum":     search_checkBox_DuplicatesOnChecksum.checked};
+        newSearch1.properties = {"searchDuplicatesChecksumEqual":  search_comboBox_DuplicateChecksumSign.currentIndex === 0};
+        newSearch1.properties = {"duplicatesCompareDevices":       search_radioButton_DuplicatesCompareTwoDevices.checked};
+        newSearch1.properties = {"duplicatesDeviceID1":            search_comboBox_DuplicatesDevice1.currentValue ?? 0};
+        newSearch1.properties = {"duplicatesDeviceID2":            search_comboBox_DuplicatesDevice2.currentValue ?? 0};
 
         //Differences
-        newSearch1.properties = {"searchOnDifferences":     search_checkBox_Differences.checked};
-        newSearch1.properties = {"searchDifferencesOnName": search_checkBox_DifferencesOnName.checked};
-        newSearch1.properties = {"searchDifferencesOnSize": search_checkBox_DifferencesOnSize.checked};
-        newSearch1.properties = {"searchDifferencesOnDate": search_checkBox_DifferencesOnDate.checked};
-        newSearch1.properties = {"differencesDeviceID1":    search_comboBox_DifferencesDevice1.selected_device_id};
-        newSearch1.properties = {"differencesDeviceID2":    search_comboBox_DifferencesDevice2.selected_device_id};
+        newSearch1.properties = {"searchOnDifferences":            search_checkBox_Differences.checked};
+        newSearch1.properties = {"differencesOnName":              search_checkBox_DifferencesOnName.checked};
+        newSearch1.properties = {"differencesOnSize":              search_checkBox_DifferencesOnSize.checked};
+        newSearch1.properties = {"differencesOnDate":              search_checkBox_DifferencesOnDate.checked};
+        newSearch1.properties = {"differencesOnChecksum":          search_checkBox_DifferencesOnChecksum.checked};
+        newSearch1.properties = {"differencesChecksumEqual":       search_comboBox_DifferenceChecksumSign.currentIndex === 0};
+        newSearch1.properties = {"differencesDeviceID1":           search_comboBox_DifferencesDevice1.currentValue ?? 0};
+        newSearch1.properties = {"differencesDeviceID2":           search_comboBox_DifferencesDevice2.currentValue ?? 0};
 
     }
     function resetSearch() {
@@ -68,27 +88,52 @@ Kirigami.FormLayout {
         search_TextField_FileNameExclude.text = ""
 
         // Reset fileAtrributes
-            //Size, Date, Type
             checkBoxFileAttributesCriteria.checked = false
+            //Size
+            search_checkBox_Size.checked = false
             search_spinBox_MinimumSize.value = 0
             search_comboBox_MinSizeUnit.currentIndex = 0 //"Bytes"
             search_spinBox_MaximumSize.value = 1000
-            search_comboBox_MaxSizeUnit.currentIndex = 3 //"Gb"
+            search_comboBox_MaxSizeUnit.currentIndex = 3 //"GiB"
+            //Date
+            search_checkBox_Date.checked = false
             search_dateTimeEdit_Min.text = "1970/01/01 00:00:00"
             search_dateTimeEdit_Max.text = "2030/01/01 00:00:00"
+            //Type
+            search_checkBox_Type.checked = false
             search_comboBox_FileType.currentIndex = 0
+
+        //File metadata
+        search_checkBox_FileMetadata.checked = false
+        search_checkBox_MetadataText.checked = false
+        search_lineEdit_MetadataText.text = ""
+        search_checkBox_MetadataSize.checked = false
+        search_spinBox_MetadataMinimumHeight.value = 0
+        search_spinBox_MetadataMaximumHeight.value = 30000
+        search_spinBox_MetadataMinimumWidth.value = 0
+        search_spinBox_MetadataMaximumWidth.value = 30000
+        search_checkBox_MetadataDuration.checked = false
+        search_dateTimeEdit_MetadataDurationMin.text = "00:00:00"
+        search_dateTimeEdit_MetadataDurationMax.text = "23:59:59"
 
         //Duplicates
         search_checkBox_Duplicates.checked = false
         search_checkBox_DuplicatesOnName.checked = true
         search_checkBox_DuplicatesOnSize.checked = false
         search_checkBox_DuplicatesOnDate.checked = false
+        search_checkBox_DuplicatesOnChecksum.checked = false
+        search_comboBox_DuplicateChecksumSign.currentIndex = 0
+        search_radioButton_DuplicatesWithinSelectedDevice.checked = true
+        search_comboBox_DuplicatesDevice1.currentIndex = 0
+        search_comboBox_DuplicatesDevice2.currentIndex = 0
 
         //Differences
         search_checkBox_Differences.checked = false
         search_checkBox_DifferencesOnName.checked = true
         search_checkBox_DifferencesOnSize.checked = false
         search_checkBox_DifferencesOnDate.checked = false
+        search_checkBox_DifferencesOnChecksum.checked = false
+        search_comboBox_DifferenceChecksumSign.currentIndex = 0
         search_comboBox_DifferencesDevice1.currentIndex = 0
         search_comboBox_DifferencesDevice2.currentIndex = 0
 
@@ -128,31 +173,8 @@ Kirigami.FormLayout {
         return yyyy + '/' + mm + '/' + dd + ' ' + hh + ':' + min + ':' + ss;
     }
     function executeSearch() {
-        console.log("=== QML SEARCH START ===");
-        // Trigger the search signal on root
-        root.searchTriggered();
-
-        // Get search criteria
-        getCriteria();
-
-        // Debug: Check what's set on newSearch1
-        console.log("QML - searchOnFileName:", newSearch1.properties.searchOnFileName);
-        console.log("QML - searchText:", newSearch1.properties.searchText);
-        console.log("QML - searchInCatalogsChecked:", newSearch1.properties.searchInCatalogsChecked);
-
-        // Execute search through AppManager
-        appManager1.executeSearch();
-
-        // Check results
-        console.log("QML - filesFoundNumber:", newSearch1.properties.filesFoundNumber);
-
-        // Navigate to results page
-        pageStack.removePage(pageSearchResults);
-        pageStack.insertPage(3, pageSearchResults);
-        pageSearchResultsForm.pageSearchResults_tableView_results.forceLayout();
-
-        // Show notification with results
-        showPassiveNotification("newSearch1.properties.filesFoundNumber: " + newSearch1.properties.filesFoundNumber);
+        getCriteria()
+        appManager1.executeSearch()
     }
 
     Kirigami.Dialog {
@@ -252,7 +274,7 @@ Kirigami.FormLayout {
     Controls.CheckBox {
         id: search_checkBox_FileNameCriteria
         checked: true
-        text: qsTr("File name criteria")
+        text: qsTr("File name")
         anchors.left: parent.left
         anchors.leftMargin: 10
         font.bold: checked ? true : false
@@ -330,9 +352,6 @@ Kirigami.FormLayout {
                 onClicked: search_TextField_FileNameExclude.text = pageSearch1.returnCleanedText(search_TextField_FileNameExclude.text)
             }
         }
-        Text {
-            id: separate0
-        }
     }
 
     //Section2: File attributes criteria
@@ -359,14 +378,23 @@ Kirigami.FormLayout {
         anchors.leftMargin: 10
 
         //File size
-        RowLayout{
-            Kirigami.FormData.label: "Size min"
-            Controls.Label{
-                id: search_label_SizeGreater
-                text: ">"
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Controls.CheckBox {
+                id: search_checkBox_Size
+                checked: false
+                text: qsTr("Size")
+                onCheckedChanged: {
+                    search_spinBox_MinimumSize.enabled = checked
+                    search_comboBox_MinSizeUnit.enabled = checked
+                    search_spinBox_MaximumSize.enabled = checked
+                    search_comboBox_MaxSizeUnit.enabled = checked
+                }
             }
+            Controls.Label { text: ">" }
             Controls.SpinBox {
                 id: search_spinBox_MinimumSize
+                enabled: false
                 from: 0
                 value: 0
                 to: 1000
@@ -374,20 +402,14 @@ Kirigami.FormLayout {
             }
             Controls.ComboBox {
                 id: search_comboBox_MinSizeUnit
+                enabled: false
                 model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
                 implicitWidth: 75
             }
-        }
-        RowLayout{
-            id: search_RowLayout_SizeLower
-            Kirigami.FormData.label: "Size max"
-            Controls.Label{
-                id: search_label_SizeLower
-                text: "<"
-                anchors.leftMargin: 100
-            }
+            Controls.Label { text: "<" }
             Controls.SpinBox {
                 id: search_spinBox_MaximumSize
+                enabled: false
                 from: 0
                 value: 1000
                 to: 1000
@@ -395,23 +417,31 @@ Kirigami.FormLayout {
             }
             Controls.ComboBox {
                 id: search_comboBox_MaxSizeUnit
+                enabled: false
                 model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
                 currentIndex: 3
                 implicitWidth: 75
             }
         }
-        Text {
-            id: separate1
-        }
+
         //File date
-        RowLayout{
-            Kirigami.FormData.label: "Date min"
-            Controls.Label{
-                id: search_label_DateGreater
-                text: ">"
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Controls.CheckBox {
+                id: search_checkBox_Date
+                checked: false
+                text: qsTr("Date")
+                onCheckedChanged: {
+                    search_dateTimeEdit_Min.enabled = checked
+                    search_button_ShowMinDateCalendar.enabled = checked
+                    search_dateTimeEdit_Max.enabled = checked
+                    search_button_ShowMaxDateCalendar.enabled = checked
+                }
             }
+            Controls.Label { text: ">" }
             Controls.TextField {
                 id: search_dateTimeEdit_Min
+                enabled: false
                 inputMask: "9999/99/99 99:99:99"
                 inputMethodHints: Qt.ImhDigitsOnly
                 text: "1970/01/01 00:00:00"
@@ -419,22 +449,17 @@ Kirigami.FormLayout {
             }
             Controls.Button {
                 id: search_button_ShowMinDateCalendar
+                enabled: false
                 icon.name: "view-calendar"
-                //onClicked: search_dateTimeEdit_Min.text = returnTodayDate()
                 onClicked: {
                     dateDialog.selectedDateField = "Min"
                     dateDialog.open()
                 }
             }
-        }
-        RowLayout{
-            Kirigami.FormData.label: "Date max"
-            Controls.Label{
-                id: search_label_DateLower
-                text: "<"
-            }
+            Controls.Label { text: "<" }
             Controls.TextField {
                 id: search_dateTimeEdit_Max
+                enabled: false
                 inputMask: "9999/99/99 99:99:99"
                 inputMethodHints: Qt.ImhDigitsOnly
                 text: "2030/01/01 00:00:00"
@@ -442,37 +467,196 @@ Kirigami.FormLayout {
             }
             Controls.Button {
                 id: search_button_ShowMaxDateCalendar
+                enabled: false
                 icon.name: "view-calendar"
-                property string selectedDate: "1970/01/01"
                 onClicked: {
                     dateDialog.selectedDateField = "Max"
                     dateDialog.open()
                 }
-
             }
         }
-        Text {
-            id: separate2
-        }      
 
-        //Type
-        RowLayout{
-            Kirigami.FormData.label: "File type:"
-            Controls.Label{
-                id: search_label_Spacer1
-                text: ">"
+        //File type
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Controls.CheckBox {
+                id: search_checkBox_Type
+                checked: false
+                text: qsTr("Type")
+                onCheckedChanged: {
+                    search_comboBox_FileType.enabled = checked
+                }
             }
-            Controls.ComboBox{
+            Controls.ComboBox {
                 id: search_comboBox_FileType
-                model: ["All", "Audio", "Image", "Text", "Video"]
+                enabled: false
+                textRole: "text"
+                valueRole: "value"
+                model: [
+                    {text: qsTr("All"),   value: "All",   iconName: "folder"},
+                    {text: qsTr("Audio"), value: "Audio", iconName: "audio-x-mpeg"},
+                    {text: qsTr("Image"), value: "Image", iconName: "image-jpeg"},
+                    {text: qsTr("Text"),  value: "Text",  iconName: "folder-text"},
+                    {text: qsTr("Video"), value: "Video", iconName: "video-mp4"},
+                    {text: qsTr("Other"), value: "Other", iconName: "document-open"},
+                    {text: qsTr("None"),  value: "None",  iconName: "application-x-zerosize"}
+                ]
+                delegate: Controls.ItemDelegate {
+                    width: search_comboBox_FileType.width
+                    text: modelData.text
+                    icon.name: modelData.iconName
+                    highlighted: search_comboBox_FileType.highlightedIndex === index
+                }
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+                    Item { width: Kirigami.Units.smallSpacing }
+                    Kirigami.Icon {
+                        source: search_comboBox_FileType.currentIndex >= 0
+                                ? search_comboBox_FileType.model[search_comboBox_FileType.currentIndex].iconName : ""
+                        implicitWidth:  Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
+                    }
+                    Controls.Label {
+                        text: search_comboBox_FileType.displayText
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
             }
-        }
-        Text {
-            id: separate3
         }
     }
 
-    //Section3: Folder criteria
+    //Section3: File metadata criteria
+    Kirigami.Separator {
+        Kirigami.FormData.isSection: true
+        anchors.left: parent.left
+    }
+    Controls.CheckBox {
+        id: search_checkBox_FileMetadata
+        checked: false
+        text: qsTr("File metadata")
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        font.bold: checked ? true : false
+        onCheckedChanged: {
+            search_FormLayout_FileMetadata.visible = checked
+        }
+    }
+    Kirigami.FormLayout {
+        id: search_FormLayout_FileMetadata
+        visible: false
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+
+        // Metadata text search row
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Controls.CheckBox {
+                id: search_checkBox_MetadataText
+                checked: false
+                text: qsTr("Text")
+                onCheckedChanged: {
+                    search_lineEdit_MetadataText.enabled = checked
+                }
+            }
+            Controls.TextField {
+                id: search_lineEdit_MetadataText
+                enabled: false
+                Layout.preferredWidth: 200
+            }
+        }
+
+        // Image dimensions row
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Controls.CheckBox {
+                id: search_checkBox_MetadataSize
+                checked: false
+                text: qsTr("Size")
+                onCheckedChanged: {
+                    search_spinBox_MetadataMinimumHeight.enabled = checked
+                    search_spinBox_MetadataMaximumHeight.enabled = checked
+                    search_spinBox_MetadataMinimumWidth.enabled  = checked
+                    search_spinBox_MetadataMaximumWidth.enabled  = checked
+                }
+            }
+            Controls.Label { text: qsTr("Height") }
+            Controls.Label { text: ">" }
+            Controls.SpinBox {
+                id: search_spinBox_MetadataMinimumHeight
+                enabled: false
+                from: 0
+                value: 0
+                to: 30000
+                implicitWidth: 110
+            }
+            Controls.Label { text: "<" }
+            Controls.SpinBox {
+                id: search_spinBox_MetadataMaximumHeight
+                enabled: false
+                from: 0
+                value: 30000
+                to: 30000
+                implicitWidth: 110
+            }
+        }
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Item { implicitWidth: search_checkBox_MetadataSize.implicitWidth }
+            Controls.Label { text: qsTr("Width") }
+            Controls.Label { text: ">" }
+            Controls.SpinBox {
+                id: search_spinBox_MetadataMinimumWidth
+                enabled: false
+                from: 0
+                value: 0
+                to: 30000
+                implicitWidth: 110
+            }
+            Controls.Label { text: "<" }
+            Controls.SpinBox {
+                id: search_spinBox_MetadataMaximumWidth
+                enabled: false
+                from: 0
+                value: 30000
+                to: 30000
+                implicitWidth: 110
+            }
+        }
+
+        // Duration row (audio/video)
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Controls.CheckBox {
+                id: search_checkBox_MetadataDuration
+                checked: false
+                text: qsTr("Duration")
+                onCheckedChanged: {
+                    search_dateTimeEdit_MetadataDurationMin.enabled = checked
+                    search_dateTimeEdit_MetadataDurationMax.enabled = checked
+                }
+            }
+            Controls.Label { text: ">" }
+            Controls.TextField {
+                id: search_dateTimeEdit_MetadataDurationMin
+                enabled: false
+                inputMask: "99:99:99"
+                text: "00:00:00"
+                Layout.preferredWidth: 80
+            }
+            Controls.Label { text: "<" }
+            Controls.TextField {
+                id: search_dateTimeEdit_MetadataDurationMax
+                enabled: false
+                inputMask: "99:99:99"
+                text: "23:59:59"
+                Layout.preferredWidth: 80
+            }
+        }
+    }
+
+    //Section4: Folder criteria
     Kirigami.Separator {
         Kirigami.FormData.isSection: true
         anchors.left: parent.left
@@ -480,7 +664,7 @@ Kirigami.FormLayout {
     Controls.CheckBox {
         id: search_checkBox_FolderCriteria
         checked: false
-        text: qsTr("Folder attributes")
+        text: qsTr("Folder criteria")
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.topMargin: 100
@@ -500,19 +684,15 @@ Kirigami.FormLayout {
         Controls.CheckBox {
             id: search_checkBox_ShowFoldersOnly
             checked: false
-            text: qsTr("Only show Folders in the results")
+            text: qsTr("only list folders in results")
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.topMargin: 100
         }
-        Text {
-            id: separate5
-        }
         Controls.CheckBox {
             id: search_checkBox_SearchOnTags
             checked: false
-
-            text: qsTr("Search On Tags")
+            text: qsTr("Tag")
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.topMargin: 100
@@ -520,18 +700,14 @@ Kirigami.FormLayout {
                 search_comboBox_FolderTag.enabled = checked
             }
         }
-        Controls.ComboBox{
+        Controls.ComboBox {
             id: search_comboBox_FolderTag
-            Kirigami.FormData.label: "Tag"
             enabled: false
-            model: ["All", "Tag1", "Tag2"]
-        }
-        Text {
-            id: separate4
+            model: appManager1.getTagNames()
         }
     }
 
-    //Section4: Duplicates
+    //Section5: Duplicates
     Kirigami.Separator {
         Kirigami.FormData.isSection: true
         anchors.left: parent.left
@@ -546,9 +722,8 @@ Kirigami.FormLayout {
 
         onCheckedChanged: {
             search_FormLayout_Duplicates.visible = checked
-
-            if (search_checkBox_Duplicates.checked && search_checkBox_Differences.checked) {
-                showPassiveNotification("Duplicates and Differences cannot be used at the same time")
+            if (checked && search_checkBox_Differences.checked) {
+                showPassiveNotification(qsTr("Duplicates and Differences cannot be used at the same time"))
                 search_checkBox_Differences.checked = false
             }
         }
@@ -559,50 +734,97 @@ Kirigami.FormLayout {
         anchors.left: parent.left
         anchors.leftMargin: 10
 
-       RowLayout {
-            id:search_RowLayout_Duplicates
-            Kirigami.FormData.label: "On"
+        // On row: Name / Size / Date Modified / [=|≠] Checksum
+        RowLayout {
+            Kirigami.FormData.label: qsTr("On")
             Controls.CheckBox {
                 id: search_checkBox_DuplicatesOnName
                 checked: true
-                //enabled: false
                 text: qsTr("Name")
                 onCheckedChanged: {
-                    //leave it checked if other 2 checkboxes are unchecked
-                    if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnDate.checked) {
+                    if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnDate.checked
+                            && !search_checkBox_DuplicatesOnChecksum.checked)
                         search_checkBox_DuplicatesOnName.checked = true
-                    }
                 }
             }
             Controls.CheckBox {
                 id: search_checkBox_DuplicatesOnSize
                 checked: false
-                //enabled: false
                 text: qsTr("Size")
                 onCheckedChanged: {
-                    if (!search_checkBox_DuplicatesOnName.checked && !search_checkBox_DuplicatesOnDate.checked) {
+                    if (!search_checkBox_DuplicatesOnName.checked && !search_checkBox_DuplicatesOnDate.checked
+                            && !search_checkBox_DuplicatesOnChecksum.checked)
                         search_checkBox_DuplicatesOnSize.checked = true
-                    }
                 }
             }
             Controls.CheckBox {
                 id: search_checkBox_DuplicatesOnDate
                 checked: false
-                //enabled: false
-                text: qsTr("Date")
+                text: qsTr("Date Modified")
                 onCheckedChanged: {
-                    if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnName.checked) {
+                    if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnName.checked
+                            && !search_checkBox_DuplicatesOnChecksum.checked)
                         search_checkBox_DuplicatesOnDate.checked = true
-                    }
+                }
+            }
+            Controls.ComboBox {
+                id: search_comboBox_DuplicateChecksumSign
+                model: ["=", "≠"]
+                implicitWidth: 60
+                enabled: search_checkBox_DuplicatesOnChecksum.checked
+            }
+            Controls.CheckBox {
+                id: search_checkBox_DuplicatesOnChecksum
+                checked: false
+                text: qsTr("Checksum")
+                onCheckedChanged: {
+                    search_comboBox_DuplicateChecksumSign.enabled = checked
+                    if (!search_checkBox_DuplicatesOnName.checked && !search_checkBox_DuplicatesOnSize.checked
+                            && !search_checkBox_DuplicatesOnDate.checked)
+                        search_checkBox_DuplicatesOnChecksum.checked = true
                 }
             }
         }
-        Text {
-            id: separate7
+
+        // Scope row: Within selected device / Compare two devices
+        RowLayout {
+            Kirigami.FormData.label: qsTr("Scope")
+            Controls.RadioButton {
+                id: search_radioButton_DuplicatesWithinSelectedDevice
+                checked: true
+                text: qsTr("Within selected device")
+            }
+            Controls.RadioButton {
+                id: search_radioButton_DuplicatesCompareTwoDevices
+                text: qsTr("Compare two devices")
+                onCheckedChanged: {
+                    search_FormLayout_DuplicatesDevices.visible = checked
+                }
+            }
+        }
+
+        // Device selection (only shown for "Compare two devices")
+        Kirigami.FormLayout {
+            id: search_FormLayout_DuplicatesDevices
+            visible: false
+            Controls.ComboBox {
+                id: search_comboBox_DuplicatesDevice1
+                Kirigami.FormData.label: qsTr("Device 1")
+                model: appManager1.deviceListModel
+                textRole: "name"
+                valueRole: "deviceId"
+            }
+            Controls.ComboBox {
+                id: search_comboBox_DuplicatesDevice2
+                Kirigami.FormData.label: qsTr("Device 2")
+                model: appManager1.deviceListModel
+                textRole: "name"
+                valueRole: "deviceId"
+            }
         }
     }
 
-    //Section5: Differences
+    //Section6: Differences
     Kirigami.Separator {
         Kirigami.FormData.isSection: true
         anchors.left: parent.left
@@ -617,9 +839,8 @@ Kirigami.FormLayout {
 
         onCheckedChanged: {
             search_FormLayout_Differences.visible = checked
-
-            if (search_checkBox_Differences.checked && search_checkBox_Duplicates.checked) {
-                showPassiveNotification("Duplicates and Differences cannot be used at the same time")
+            if (checked && search_checkBox_Duplicates.checked) {
+                showPassiveNotification(qsTr("Duplicates and Differences cannot be used at the same time"))
                 search_checkBox_Duplicates.checked = false
             }
         }
@@ -630,18 +851,17 @@ Kirigami.FormLayout {
         anchors.left: parent.left
         anchors.leftMargin: 10
 
+        // On row: Name / Size / Date Modified / [=|≠] Checksum
         RowLayout {
-            id:search_RowLayout_Differences
-            Kirigami.FormData.label: "On"
+            Kirigami.FormData.label: qsTr("On")
             Controls.CheckBox {
                 id: search_checkBox_DifferencesOnName
                 checked: true
                 text: qsTr("Name")
                 onCheckedChanged: {
-                    //leave it checked if other 2 checkboxes are unchecked
-                    if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnDate.checked) {
+                    if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnDate.checked
+                            && !search_checkBox_DifferencesOnChecksum.checked)
                         search_checkBox_DifferencesOnName.checked = true
-                    }
                 }
             }
             Controls.CheckBox {
@@ -649,96 +869,54 @@ Kirigami.FormLayout {
                 checked: false
                 text: qsTr("Size")
                 onCheckedChanged: {
-                    if (!search_checkBox_DifferencesOnName.checked && !search_checkBox_DifferencesOnDate.checked) {
+                    if (!search_checkBox_DifferencesOnName.checked && !search_checkBox_DifferencesOnDate.checked
+                            && !search_checkBox_DifferencesOnChecksum.checked)
                         search_checkBox_DifferencesOnSize.checked = true
-                    }
                 }
             }
             Controls.CheckBox {
                 id: search_checkBox_DifferencesOnDate
                 checked: false
-                text: qsTr("Date")
+                text: qsTr("Date Modified")
                 onCheckedChanged: {
-                    if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnName.checked) {
+                    if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnName.checked
+                            && !search_checkBox_DifferencesOnChecksum.checked)
                         search_checkBox_DifferencesOnDate.checked = true
-                    }
+                }
+            }
+            Controls.ComboBox {
+                id: search_comboBox_DifferenceChecksumSign
+                model: ["=", "≠"]
+                implicitWidth: 60
+                enabled: search_checkBox_DifferencesOnChecksum.checked
+            }
+            Controls.CheckBox {
+                id: search_checkBox_DifferencesOnChecksum
+                checked: false
+                text: qsTr("Checksum")
+                onCheckedChanged: {
+                    search_comboBox_DifferenceChecksumSign.enabled = checked
+                    if (!search_checkBox_DifferencesOnName.checked && !search_checkBox_DifferencesOnSize.checked
+                            && !search_checkBox_DifferencesOnDate.checked)
+                        search_checkBox_DifferencesOnChecksum.checked = true
                 }
             }
         }
-        ListModel {
-            id: selectedDevices
-            ListElement {
-                device_id: 1
-                type: "Virtual"
-                name: "1- Media"
-                description: "5Tb"
-                isActive: true
-            }
-            ListElement {
-                device_id: 2
-                type: "Virtual"
-                name: "2- BackUp"
-                description: "2Tb"
-                isActive: true
-            }
-            ListElement {
-                device_id: 3
-                type: "Storage"
-                name: "Drive1"
-                description: "1Tb"
-                isActive: true
-            }
-            ListElement {
-                device_id: 4
-                type: "Catalog"
-                name: "Catalog1"
-                description: "10 220 files, 200 Mb"
-                isActive: true
-            }
-            ListElement {
-                device_id: 5
-                type: "Storage"
-                name: "Drive2"
-                description: "1Tb"
-                isActive: true
-            }
-            ListElement {
-                device_id: 6
-                type: "Catalog"
-                name: "Catalog2"
-                description: ""
-                isActive: false
-            }
-            ListElement {
-                device_id: 333
-                type: "Catalog"
-                name: "Catalog3"
-                description: ""
-                isActive: false
-            }
-        }
+
+        // Device dropdowns (always visible when Differences section is open)
         Controls.ComboBox {
             id: search_comboBox_DifferencesDevice1
-            Kirigami.FormData.label: "Between"
-            model: selectedDevices
+            Kirigami.FormData.label: qsTr("Between")
+            model: appManager1.deviceListModel
             textRole: "name"
-            property int selected_device_id
-            onCurrentIndexChanged: {
-                selected_device_id = selectedDevices.get(currentIndex).device_id
-            }
+            valueRole: "deviceId"
         }
         Controls.ComboBox {
             id: search_comboBox_DifferencesDevice2
-            Kirigami.FormData.label: "And"
-            model: selectedDevices
+            Kirigami.FormData.label: qsTr("And")
+            model: appManager1.deviceListModel
             textRole: "name"
-            property int selected_device_id
-            onCurrentIndexChanged: {
-                selected_device_id = selectedDevices.get(currentIndex).device_id
-            }
-        }
-        Text {
-            id: separate8
+            valueRole: "deviceId"
         }
     }
 }

@@ -56,6 +56,7 @@
 //Katalog object classes
 #include "core/collection.h"
 #include "core/device.h"
+#include "core/tag.h"
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
 
@@ -142,6 +143,14 @@ public slots:
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
     int getSelectedDeviceId() const;
+
+    Q_INVOKABLE QStringList getTagNames() const;
+
+    // File / folder operations from results
+    Q_INVOKABLE void    openFile(const QString &filePath);
+    Q_INVOKABLE void    openFolder(const QString &folderPath);
+    Q_INVOKABLE void    copyToClipboard(const QString &text);
+    Q_INVOKABLE QString exportSearchResultsToCSV();
 
     Q_INVOKABLE bool    shouldShowAlphaWarning() const;
     Q_INVOKABLE void    setAlphaWarningShown();

@@ -335,80 +335,26 @@ Kirigami.ApplicationWindow {
     //Pages - Search
     Kirigami.ScrollablePage {
         id: pageSearch
-        title: "Search"
-        property int testValue: 333
-
-        Kirigami.Dialog {
-                id: search_Dialog_Submit
-                title: "Search criteria"
-                standardButtons: Kirigami.Dialog.Ok
-                padding: Kirigami.Units.largeSpacing
-                preferredWidth: Kirigami.Units.gridUnit * 20
-                Controls.Label {
-                    id: nameField
-                    //Kirigami.FormData.label: i18nc("@label:textbox", "Name*:")
-                    Kirigami.FormData.label: "Search criteria"
-                    text: "<br/>searchOnFileName:  " + newSearch1.properties.searchOnFileName
-                          + "<br/>searchText:  " + newSearch1.properties.searchText
-                          + "<br/>selectedSearchWith:  " + newSearch1.properties.selectedSearchWith
-                          + "<br/>selectedSearchIn:  " + newSearch1.properties.selectedSearchIn
-                          + "<br/>caseSensitive:  " + newSearch1.properties.caseSensitive
-                          + "<br/>selectedFileType:  " + newSearch1.properties.selectedFileType
-                          + "<br/>searchInCatalogsChecked:  " + newSearch1.properties.searchInCatalogsChecked
-                          + "<br/>searchOnDuplicates:  " + newSearch1.properties.searchOnDuplicates
-                          + "<br/>searchOnDifferences:  " + newSearch1.properties.searchOnDifferences
-                }
-        }
-
-        Kirigami.Dialog {
-            id: search_Dialog_Results
-            title: "Search criteria"
-            standardButtons: Kirigami.Dialog.Ok
-            padding: Kirigami.Units.largeSpacing
-            preferredWidth: Kirigami.Units.gridUnit * 20
-
-            Controls.Label {
-                id: nameField1
-                Kirigami.FormData.label: "Search criteria"
-                text: "<br/>filesFoundNumber:  " + newSearch1.properties.filesFoundNumber
-            }
-        }
-        ListModel {
-            id: emptyModel
-        }
+        title: qsTr("Search")
 
         actions: [
             Kirigami.Action {
-                text: "Search"
+                text: qsTr("Search")
                 icon.name: "search"
                 onTriggered: {
-                    root.searchTriggered();
-                    pageSearchForm.getCriteria();
-                    //search_Dialog_Submit.open()
-                    pageSearchForm.executeSearch();
-
-                    // Insert the new page into the PageStack
-                    pageStack.removePage(pageSearchResults);
-                    pageStack.insertPage(3, pageSearchResults);
-                    pageSearchForm.pageSearchResultsForm.pageSearchResults_tableView_results.forceLayout();
-
-                    //pageSearchForm.pageSearchResults_tableView_results.model = emptyModel;
-                    //pageSearchForm.pageSearchResults_column.pageSearchResults_tableView_results.model = emptyModel;
-                    //pageSearchForm.pageSearchResults_tableView_results.model = newSearch1;
-                    //pageSearchResults_tableView_results.model = newSearch1;
-                    //pageSearchForm.pageSearchResults_tableView_results.adjustColumnWidths();
-                    //search_Dialog_Results.open();
-
-                    showPassiveNotification( "newSearch1.properties.filesFoundNumber:   " + newSearch1.properties.filesFoundNumber );
+                    root.searchTriggered()
+                    pageSearchForm.executeSearch()
+                    pageStack.removePage(pageSearchResults)
+                    pageStack.insertPage(3, pageSearchResults)
                 }
             },
             Kirigami.Action {
-                text: "Reset"
+                text: qsTr("Reset")
                 icon.name: "edit-clear-all"
                 onTriggered: pageSearchForm.resetSearch()
             },
             Kirigami.Action {
-                text: "Close"
+                text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: pageStack.removePage(pageSearch)
             }
@@ -420,19 +366,34 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - SearchResults
-    Kirigami.ScrollablePage {
-        title: "Search Results"
+    Kirigami.Page {
         id: pageSearchResults
+        title: {
+            let n = newSearch1.properties.filesFoundNumber ?? 0
+            if (newSearch1.properties.searchOnDuplicates)
+                return qsTr("Duplicates (%1)").arg(n)
+            if (newSearch1.properties.searchOnDifferences)
+                return qsTr("Differences (%1)").arg(n)
+            return qsTr("Results (%1)").arg(n)
+        }
         visible: false
+        padding: 0
 
         actions: [
-            /*Kirigami.Action {
-                text: "Batch process"
-                icon.name: "document-export"
-                onTriggered: showPassiveNotification("Batch process clicked, no action")
-            },*/
             Kirigami.Action {
-                text: "Close"
+                text: qsTr("Export CSV")
+                icon.name: "document-save-as"
+                enabled: (newSearch1.properties.filesFoundNumber ?? 0) > 0
+                onTriggered: {
+                    let path = appManager1.exportSearchResultsToCSV()
+                    if (path)
+                        showPassiveNotification(qsTr("Exported to %1").arg(path))
+                    else
+                        showPassiveNotification(qsTr("Export failed or no results"))
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: pageStack.removePage(pageSearchResults)
             }
@@ -440,6 +401,7 @@ Kirigami.ApplicationWindow {
 
         PageSearchResultsForm {
             id: pageSearchResultsForm
+            anchors.fill: parent
         }
     }
 

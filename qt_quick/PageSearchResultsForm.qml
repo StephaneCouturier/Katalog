@@ -2,165 +2,267 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
-import Qt.labs.platform
-import Qt.labs.qmlmodels
 
-Column {
+ColumnLayout {
     id: pageSearchResults_column
-    anchors.fill: parent
+    spacing: 0
 
+    // ── Helpers ──────────────────────────────────────────────────────────
     function formatFileSize(size) {
-        if (size < 1024) {
-            return size + " B";
-        } else if (size < 1024 * 1024) {
-            return (size / 1024).toFixed(2) + " KB";
-        } else if (size < 1024 * 1024 * 1024) {
-            return (size / (1024 * 1024)).toFixed(2) + " MB";
-        } else if (size < 1024 * 1024 * 1024 * 1024) {
-            return (size / (1024 * 1024 * 1024)).toFixed(2) + " GB";
-        } else {
-            return (size / (1024 * 1024 * 1024 * 1024)).toFixed(2) + " TB";
+        let n = Number(size)
+        if (!n || n <= 0)                        return ""
+        if (n < 1024)                            return n + " B"
+        if (n < 1024 * 1024)                     return (n / 1024).toFixed(1) + " KB"
+        if (n < 1024 * 1024 * 1024)              return (n / (1024 * 1024)).toFixed(1) + " MB"
+        if (n < 1024 * 1024 * 1024 * 1024)       return (n / (1024 * 1024 * 1024)).toFixed(2) + " GB"
+        return (n / (1024 * 1024 * 1024 * 1024)).toFixed(2) + " TB"
+    }
+    function formatDate(dateStr) {
+        let s = String(dateStr ?? "")
+        return s.length >= 10 ? s.substring(0, 10) : s
+    }
+
+    // ── Summary bar ──────────────────────────────────────────────────────
+    Rectangle {
+        Layout.fillWidth: true
+        implicitHeight: summaryRow.implicitHeight + Kirigami.Units.largeSpacing * 2
+        color: Kirigami.Theme.alternateBackgroundColor
+
+        RowLayout {
+            id: summaryRow
+            anchors {
+                left: parent.left;  right: parent.right
+                verticalCenter: parent.verticalCenter
+                leftMargin:  Kirigami.Units.largeSpacing
+                rightMargin: Kirigami.Units.largeSpacing
+            }
+            spacing: Kirigami.Units.smallSpacing
+
+            Kirigami.Icon {
+                source: "search"
+                implicitWidth:  Kirigami.Units.iconSizes.small
+                implicitHeight: Kirigami.Units.iconSizes.small
+            }
+
+            Controls.Label {
+                font.bold: true
+                text: {
+                    let n = newSearch1.properties.filesFoundNumber ?? 0
+                    if (newSearch1.properties.searchOnDuplicates)
+                        return qsTr("%1 duplicate(s) found").arg(n)
+                    if (newSearch1.properties.searchOnDifferences)
+                        return qsTr("%1 difference(s) found").arg(n)
+                    if (newSearch1.properties.showFoldersOnly)
+                        return qsTr("%1 folder(s) found").arg(n)
+                    return qsTr("%1 file(s) found").arg(n)
+                }
+            }
+
+            Controls.Label { text: "·"; opacity: 0.4; visible: (newSearch1.properties.filesFoundTotalSize ?? 0) > 0 }
+            Controls.Label {
+                visible: (newSearch1.properties.filesFoundTotalSize ?? 0) > 0
+                text: qsTr("Total: %1").arg(formatFileSize(newSearch1.properties.filesFoundTotalSize))
+            }
+
+            Controls.Label { text: "·"; opacity: 0.4; visible: (newSearch1.properties.filesFoundMinSize ?? 0) > 0 }
+            Controls.Label {
+                visible: (newSearch1.properties.filesFoundMinSize ?? 0) > 0
+                text: qsTr("Min: %1   Max: %2")
+                      .arg(formatFileSize(newSearch1.properties.filesFoundMinSize))
+                      .arg(formatFileSize(newSearch1.properties.filesFoundMaxSize))
+                opacity: 0.8
+            }
+
+            Item { Layout.fillWidth: true }
+
+            Controls.Label {
+                text: {
+                    let d1 = formatDate(newSearch1.properties.filesFoundMinDate)
+                    let d2 = formatDate(newSearch1.properties.filesFoundMaxDate)
+                    if (d1 && d1 === d2) return d1
+                    if (d1 && d2)        return d1 + " – " + d2
+                    return ""
+                }
+                opacity: 0.7
+                font.pointSize: Kirigami.Theme.smallFont.pointSize
+            }
         }
     }
 
-    //Results statistics
-    RowLayout{
-        id: pageSearchResults_rowlayout_ResultStatistics
-        Text{
-            text: "Results statistics: "
-        }
-        Text{
-            text: "Files found: "
-        }
-        Text{
-            text: newSearch1.properties.filesFoundNumber
-            font.bold: true
-        }
-        Text{
-            text: "Total size: "
-        }
-        Text{
-            text: formatFileSize(newSearch1.properties.filesFoundTotalSize)
-            font.bold: true
-            //format value to be more readable as a file size (KB, MB, GB, etc)
+    Kirigami.Separator { Layout.fillWidth: true }
 
-        }
-        Text{
-            text: "Min size: "
-        }
-        Text{
-            text: formatFileSize(newSearch1.properties.filesFoundMinSize)
-            font.bold: true
-        }
-        Text{
-            text: "Max size: "
-        }
-        Text{
-            text: formatFileSize(newSearch1.properties.filesFoundMaxSize)
-            font.bold: true
-        }
-        Text{
-            text: "Min Date: "
-        }
-        Text{
-            text: newSearch1.properties.filesFoundMinDate.toString()
-            font.bold: true
-        }
-        Text{
-            text: "Max Date: "
-        }
-        Text{
-            text: newSearch1.properties.filesFoundMaxDate.toString()
-            font.bold: true
-        }
-    }
+    // ── Column headers + Table ───────────────────────────────────────────
+    Item {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
 
-    //Results table
-    TableView {
-        id: pageSearchResults_tableView_results
-        anchors.fill: parent
-        anchors.top: pageSearchResults_rowlayout_ResultStatistics.bottom
-        anchors.topMargin: 40
-        columnSpacing: 1
-        rowSpacing: 2
-        resizableColumns: true
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 0
 
-        model: newSearch1
+            Controls.HorizontalHeaderView {
+                id: headerView
+                Layout.fillWidth: true
+                syncView: tableView
+                clip: true
+            }
 
-        delegate: Item {
-            width: textElement.implicitWidth
-            implicitHeight: 30
+            Kirigami.Separator { Layout.fillWidth: true }
 
-            Rectangle {
-                anchors.fill: parent
-                //border.color: "lightgray"
-                //color: column === 0 ? "lightgrey" : "white"
+            TableView {
+                id: tableView
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                clip: true
+                columnSpacing: 0
+                rowSpacing: 0
+                model: newSearch1
 
-                Text {
-                    id: textElement
-                    clip: true
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        //horizontalCenter: column === 1 || column === 2 ? parent.horizontalCenter : undefined
-                        //left: column !== 1 && column !== 2 ? parent.left : undefined
-                        //leftMargin: column !== 1 && column !== 2 ? 20 : 0
+                property int selectedRow: -1
+
+                columnWidthProvider: function(column) {
+                    switch (column) {
+                        case 0: return 280   // Name
+                        case 1: return 90    // Size
+                        case 2: return 140   // Date
+                        case 3: return 380   // Folder
+                        case 4: return 160   // Catalog
                     }
-                    //color: column === 0 ? "black" : "grey"
-                    //text: column === 1 ? formatFileSize(model.display) : model.display
-                    text: model.display
+                    return 120
+                }
+
+                delegate: Rectangle {
+                    required property int     row
+                    required property int     column
+                    required property var     display
+                    implicitHeight: 26
+                    color: tableView.selectedRow === row
+                           ? Kirigami.Theme.highlightColor
+                           : (row % 2 === 0
+                              ? Kirigami.Theme.backgroundColor
+                              : Kirigami.Theme.alternateBackgroundColor)
+
+                    // Column separator
+                    Rectangle {
+                        visible: column > 0
+                        anchors { top: parent.top; bottom: parent.bottom; left: parent.left }
+                        width: 1
+                        color: Kirigami.Theme.separatorColor
+                        opacity: 0.4
+                    }
+
+                    Controls.Label {
+                        anchors {
+                            left: parent.left; right: parent.right
+                            verticalCenter: parent.verticalCenter
+                            leftMargin:  column === 0 ? 8 : 6
+                            rightMargin: 4
+                        }
+                        text: {
+                            if (!display) return ""
+                            if (column === 1) return formatFileSize(Number(display))
+                            return String(display)
+                        }
+                        color: tableView.selectedRow === row
+                               ? Kirigami.Theme.highlightedTextColor
+                               : Kirigami.Theme.textColor
+                        // Elide folder path from left to keep filename visible
+                        elide: column === 3 ? Text.ElideLeft : Text.ElideRight
+                        clip: true
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onClicked: function(mouse) {
+                            tableView.selectedRow = row
+                            if (mouse.button === Qt.RightButton) {
+                                let fileName = String(newSearch1.data(newSearch1.index(row, 0), Qt.DisplayRole) ?? "")
+                                let folder   = String(newSearch1.data(newSearch1.index(row, 3), Qt.DisplayRole) ?? "")
+                                resultContextMenu.openForRow(row, fileName, folder)
+                            }
+                        }
+                        onDoubleClicked: {
+                            let fileName = String(newSearch1.data(newSearch1.index(row, 0), Qt.DisplayRole) ?? "")
+                            let folder   = String(newSearch1.data(newSearch1.index(row, 3), Qt.DisplayRole) ?? "")
+                            appManager1.openFile(folder + "/" + fileName)
+                        }
+                    }
                 }
             }
         }
+    }
 
-        Component.onCompleted: {
-            adjustColumnWidths();
+    // ── Context menu ─────────────────────────────────────────────────────
+    Controls.Menu {
+        id: resultContextMenu
+        property string fileName: ""
+        property string folder:   ""
+        property string fullPath: ""
+
+        function openForRow(r, name, dir) {
+            fileName = name
+            folder   = dir
+            fullPath = dir + "/" + name
+            popup()
         }
 
-        onModelChanged: {
-            adjustColumnWidths();
+        Controls.MenuItem {
+            text: resultContextMenu.fileName || qsTr("(no selection)")
+            enabled: false
+            font.bold: true
         }
-
-        function adjustColumnWidths() {
-            pageSearchResults_tableView_results.setColumnWidth(0, 350); //Name
-            pageSearchResults_tableView_results.setColumnWidth(1, 100); //Size
-            pageSearchResults_tableView_results.setColumnWidth(2, 150); //Date
-            pageSearchResults_tableView_results.setColumnWidth(3, 600); //Path
-            pageSearchResults_tableView_results.setColumnWidth(4, 500); //Type
+        Controls.MenuSeparator {}
+        Controls.MenuItem {
+            text: qsTr("Open file")
+            icon.name: "document-open"
+            enabled: resultContextMenu.fileName !== ""
+            onTriggered: appManager1.openFile(resultContextMenu.fullPath)
         }
-
-        function calculateColumnWidth(column) {
-            var maxWidth = 300;
-            for (var i = 0; i < newSearch1.rowCount(); i++) {
-                var textWidth = textElementWidth(newSearch1.data(newSearch1.index(i, column), Qt.DisplayRole));
-                if (textWidth > maxWidth) {
-                    maxWidth = textWidth;
-                }
+        Controls.MenuItem {
+            text: qsTr("Open folder")
+            icon.name: "document-open-folder"
+            enabled: resultContextMenu.folder !== ""
+            onTriggered: appManager1.openFolder(resultContextMenu.folder)
+        }
+        Controls.MenuSeparator {}
+        Controls.MenuItem {
+            text: qsTr("Copy file name")
+            icon.name: "edit-copy"
+            onTriggered: {
+                appManager1.copyToClipboard(resultContextMenu.fileName)
+                showPassiveNotification(qsTr("File name copied to clipboard"))
             }
-            return maxWidth + 20; // Add some padding
         }
-
-        function textElementWidth(text) {
-            var textElement = Qt.createQmlObject('import QtQuick 2.15; Text { text: "' + text + '" }', pageSearchResults_tableView_results);
-            return textElement.implicitWidth;
+        Controls.MenuItem {
+            text: qsTr("Copy folder path")
+            icon.name: "edit-copy"
+            onTriggered: {
+                appManager1.copyToClipboard(resultContextMenu.folder)
+                showPassiveNotification(qsTr("Folder path copied to clipboard"))
+            }
+        }
+        Controls.MenuItem {
+            text: qsTr("Copy full path")
+            icon.name: "edit-copy"
+            onTriggered: {
+                appManager1.copyToClipboard(resultContextMenu.fullPath)
+                showPassiveNotification(qsTr("Full path copied to clipboard"))
+            }
         }
     }
 
-    ListModel {
-        id: emptyModel
-    }
+    // ── Refresh when a new search runs ───────────────────────────────────
+    ListModel { id: emptyModel }
 
     Connections {
         target: root
-        onSearchTriggered: {
-            // Set the TableView to an empty model
-            pageSearchResults_tableView_results.model = emptyModel;
-
-            // Set the TableView to the actual model with updated data
-            pageSearchResults_tableView_results.model = newSearch1;
-
-            // Force the TableView to refresh
-            pageSearchResults_tableView_results.forceLayout();
+        function onSearchTriggered() {
+            tableView.selectedRow = -1
+            tableView.model = emptyModel
+            tableView.model = newSearch1
+            tableView.forceLayout()
         }
     }
-
 }
