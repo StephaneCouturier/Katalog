@@ -63,6 +63,7 @@ class AppManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
+    Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel READ getDeviceFilterModel CONSTANT)
     Q_PROPERTY(int selectedDeviceId READ getSelectedDeviceId NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode READ getDatabaseMode NOTIFY databaseModeChanged)
 
@@ -85,6 +86,7 @@ public:
     Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
     SearchSync *searchObject = nullptr;
     DeviceListModel *deviceListModel = nullptr;
+    QSortFilterProxyModel *m_deviceFilterModel = nullptr;
     QString lastDatabaseError;
 
 public slots:
@@ -120,6 +122,9 @@ public slots:
     void setSearchObject(SearchSync *search);
 
     DeviceListModel* getDeviceListModel() const { return deviceListModel; }
+    QSortFilterProxyModel* getDeviceFilterModel() const { return m_deviceFilterModel; }
+
+    Q_INVOKABLE void setDeviceFilter(const QString &text);
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;

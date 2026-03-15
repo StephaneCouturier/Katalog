@@ -135,7 +135,21 @@ void AppManager::initializeDeviceListModel()
         delete deviceListModel;
     }
     deviceListModel = new DeviceListModel(this);
+
+    if (!m_deviceFilterModel) {
+        m_deviceFilterModel = new QSortFilterProxyModel(this);
+        m_deviceFilterModel->setFilterRole(DeviceListModel::NameRole);
+        m_deviceFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    }
+    m_deviceFilterModel->setSourceModel(deviceListModel);
+
     qDebug() << "DeviceListModel initialized with" << deviceListModel->rowCount() << "devices";
+}
+//----------------------------------------------------------------------
+void AppManager::setDeviceFilter(const QString &text)
+{
+    if (m_deviceFilterModel)
+        m_deviceFilterModel->setFilterFixedString(text);
 }
 //----------------------------------------------------------------------
 QString AppManager::testQuery()

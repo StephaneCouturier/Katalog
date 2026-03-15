@@ -129,31 +129,31 @@ Kirigami.ApplicationWindow {
                 text: "Search"
                 onTriggered: pageStack.push(pageSearch)//{pageSearchForm.executeSearch();}
             },
-            Kirigami.Action {
-                icon.name: "drive-multidisk"
-                text: "Devices"
-                onTriggered: pageStack.push(pageDevices)
-            },
-            Kirigami.Action {
-                icon.name: "view-list-tree"
-                text: "Explore"
-                onTriggered: pageStack.insertPage(4, pageExplore)
-            },
-            Kirigami.Action {
-                icon.name: "journal-new"
-                text: "Create"
-                onTriggered: pageStack.insertPage(5, pageCreate)
-            },
-            Kirigami.Action {
-                icon.name: "view-statistics"
-                text: "Statistics"
-                onTriggered: pageStack.insertPage(6, pageStatistics)
-            },
-            Kirigami.Action {
-                icon.name: "lastfm-tag"
-                text: "Tags"
-                onTriggered: pageStack.insertPage(7, pageTags)
-            },
+            // Kirigami.Action {
+            //     icon.name: "drive-multidisk"
+            //     text: "Devices"
+            //     onTriggered: pageStack.push(pageDevices)
+            // },
+            // Kirigami.Action {
+            //     icon.name: "view-list-tree"
+            //     text: "Explore"
+            //     onTriggered: pageStack.insertPage(4, pageExplore)
+            // },
+            // Kirigami.Action {
+            //     icon.name: "journal-new"
+            //     text: "Create"
+            //     onTriggered: pageStack.insertPage(5, pageCreate)
+            // },
+            // Kirigami.Action {
+            //     icon.name: "view-statistics"
+            //     text: "Statistics"
+            //     onTriggered: pageStack.insertPage(6, pageStatistics)
+            // },
+            // Kirigami.Action {
+            //     icon.name: "lastfm-tag"
+            //     text: "Tags"
+            //     onTriggered: pageStack.insertPage(7, pageTags)
+            // },
             Kirigami.Action {
                 icon.name: "settings-configure"
                 text: "Settings"
@@ -290,13 +290,25 @@ Kirigami.ApplicationWindow {
             }
         ]
 
-        PageSelectionView {
-            id: pageSelectionView
+        header: Item {
+            width: parent.width
+            height: deviceSearchField.implicitHeight + Kirigami.Units.smallSpacing * 2
+            Kirigami.SearchField {
+                id: deviceSearchField
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: Kirigami.Units.gridUnit
+                    rightMargin: Kirigami.Units.gridUnit
+                }
+                onTextChanged: appManager1.setDeviceFilter(text)
+            }
         }
 
         Kirigami.CardsListView {
             id: selectionListView1
-            model: appManager1.deviceListModel
+            model: appManager1.deviceFilterModel
             delegate: PageSelectionDelegate {}
         }
     }
