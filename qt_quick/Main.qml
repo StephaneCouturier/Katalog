@@ -107,8 +107,7 @@ Kirigami.ApplicationWindow {
                     icon.name: "document-open-data"
                     text: "Hosted Db"
                     onTriggered: {
-                        pageSettings.showHostedForm = true
-                        pageStack.push(pageSettings)
+                        pageStack.layers.push(settingsPageComponent, { showHostedForm: true })
                     }
                 }
             },
@@ -153,8 +152,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 icon.name: "settings-configure"
                 text: "Settings"
-                //onTriggered: pageStack.insertPage(8, pageSettings)
-                onTriggered: pageStack.push(pageSettings)
+                onTriggered: pageStack.layers.push(settingsPageComponent)
             },
             Kirigami.Action {
                 separator: true
@@ -531,7 +529,6 @@ Kirigami.ApplicationWindow {
         }
     }
 
-
     //Pages - Statistics
     Kirigami.ScrollablePage {
         id: pageStatistics
@@ -619,9 +616,9 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Settings
-    PageSettings {
-        id: pageSettings
-        visible: false
+    Component {
+        id: settingsPageComponent
+        PageSettings {}
     }
 
     // Dialogs - triggered from Open Collection menu

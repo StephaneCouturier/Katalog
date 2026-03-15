@@ -30,6 +30,13 @@ Kirigami.AbstractCard {
         id: contextMenu
 
         Controls.MenuItem {
+            text: model.name
+            enabled: false
+            font.bold: true
+        }
+        Controls.MenuSeparator {}
+
+        Controls.MenuItem {
             text: qsTr("Open folder")
             icon.name: "document-open-folder"
             onTriggered: appManager1.openDeviceFolder(model.deviceId)

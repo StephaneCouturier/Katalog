@@ -10,23 +10,29 @@ Kirigami.ScrollablePage {
     // Set to true when opened from Open Collection > Hosted Db menu
     property bool showHostedForm: false
 
-    // Refresh hosted fields whenever this page is pushed onto the stack
-    onVisibleChanged: {
-        if (visible) {
-            hostField.text         = appManager1.getHostName()
-            dbNameField.text       = appManager1.getDatabaseName()
-            portField.value        = appManager1.getDatabasePort()
-            userField.text         = appManager1.getDatabaseUserName()
-            passwordField.text     = appManager1.getDatabasePassword()
-            autoConnectBox.checked = appManager1.getHostedAutoConnect()
+    Connections {
+        target: appManager1
+        function onDatabaseModeChanged() {
+            if (appManager1.databaseMode !== "Hosted")
+                showHostedForm = false
         }
+    }
+
+    // Populate hosted fields when the page is created (dynamic instantiation via Component)
+    Component.onCompleted: {
+        hostField.text         = appManager1.getHostName()
+        dbNameField.text       = appManager1.getDatabaseName()
+        portField.value        = appManager1.getDatabasePort()
+        userField.text         = appManager1.getDatabaseUserName()
+        passwordField.text     = appManager1.getDatabasePassword()
+        autoConnectBox.checked = appManager1.getHostedAutoConnect()
     }
 
     actions: [
         Kirigami.Action {
             text: "Close"
             icon.name: "view-close"
-            onTriggered: pageStack.pop()
+            onTriggered: pageStack.layers.pop()
         }
     ]
 
@@ -38,7 +44,7 @@ Kirigami.ScrollablePage {
             Layout.fillWidth: true
 
             Controls.Label {
-                Kirigami.FormData.label: "Mode:"
+                Kirigami.FormData.label: "Database Mode:"
                 text: appManager1.databaseMode || "—"
                 font.bold: true
             }
