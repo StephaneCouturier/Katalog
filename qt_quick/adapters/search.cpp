@@ -46,36 +46,21 @@ int SearchSync::rowCount(const QModelIndex &parent) const
 int SearchSync::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 5;
+    return 21;
 }
 
 QVariant SearchSync::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || role != Qt::DisplayRole) {
+    if (!index.isValid())
         return QVariant();
-    }
-    switch (index.column()){
-        case 0: return QString(fileNames[index.row()]);
-        case 1: return qint64 (fileSizes[index.row()]);
-        case 3: return QString(filePaths[index.row()]);
-        case 2: return QString(fileDateTimes[index.row()]);
-        case 4: return QString(fileCatalogs[index.row()]);
-    }
-    return QVariant();
+
+    // All roles and all columns delegate to Search::data()
+    return Search::data(index, role);
 }
 
 QVariant SearchSync::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
-        switch (section){
-            case 0: return QString(tr("Name"));
-            case 1: return QString(tr("Size"));
-            case 3: return QString(tr("Folder"));
-            case 2: return QString(tr("Date"));
-            case 4: return QString(tr("Catalog"));
-        }
-    }
-    return QVariant();
+    return Search::headerData(section, orientation, role);
 }
 
 QHash<int, QByteArray> SearchSync::roleNames() const

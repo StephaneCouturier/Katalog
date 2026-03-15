@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
+import QtQuick.Controls   // required for ScrollBar attached property (namespace alias prevents it)
 import org.kde.kirigami as Kirigami
 
 ColumnLayout {
@@ -10,12 +11,20 @@ ColumnLayout {
     // ── Helpers ──────────────────────────────────────────────────────────
     function formatFileSize(size) {
         let n = Number(size)
-        if (!n || n <= 0)                        return ""
-        if (n < 1024)                            return n + " B"
-        if (n < 1024 * 1024)                     return (n / 1024).toFixed(1) + " KB"
-        if (n < 1024 * 1024 * 1024)              return (n / (1024 * 1024)).toFixed(1) + " MB"
-        if (n < 1024 * 1024 * 1024 * 1024)       return (n / (1024 * 1024 * 1024)).toFixed(2) + " GB"
-        return (n / (1024 * 1024 * 1024 * 1024)).toFixed(2) + " TB"
+        if (!n || n <= 0)              return ""
+        if (n < 1024)                  return n + " B"
+        if (n < 1024 * 1024)           return (n / 1024).toFixed(1) + " KiB"
+        if (n < 1024 * 1024 * 1024)    return (n / (1024 * 1024)).toFixed(1) + " MiB"
+        if (n < 1024 ** 4)             return (n / (1024 ** 3)).toFixed(2) + " GiB"
+        return                                (n / (1024 ** 4)).toFixed(2) + " TiB"
+    }
+    function formatDuration(secs) {
+        let s = Number(secs)
+        if (!s || s <= 0) return ""
+        let h   = Math.floor(s / 3600)
+        let m   = Math.floor((s % 3600) / 60)
+        let sec = Math.floor(s % 60)
+        return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(sec).padStart(2, '0')
     }
     function formatDate(dateStr) {
         let s = String(dateStr ?? "")
@@ -26,7 +35,7 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         implicitHeight: summaryRow.implicitHeight + Kirigami.Units.largeSpacing * 2
-        color: Kirigami.Theme.alternateBackgroundColor
+        color: Kirigami.Theme.backgroundColor
 
         RowLayout {
             id: summaryRow
@@ -89,14 +98,36 @@ ColumnLayout {
 
             Controls.ComboBox {
                 id: batchActionCombo
-                implicitWidth: 125
+                implicitWidth: 150
                 textRole: "text"
                 valueRole: "value"
                 model: [
-                    { text: qsTr("Export to CSV"),  value: "csv"   },
-                    { text: qsTr("Move to Trash"),  value: "trash" },
-                    { text: qsTr("Delete"),         value: "delete"}
+                    { text: qsTr("Export to CSV"),  value: "csv",    iconName: "document-save-as" },
+                    { text: qsTr("Move to Trash"),  value: "trash",  iconName: "user-trash"       },
+                    { text: qsTr("Delete"),         value: "delete", iconName: "edit-delete"      }
                 ]
+                delegate: Controls.ItemDelegate {
+                    width: batchActionCombo.width
+                    text: modelData.text
+                    icon.name: modelData.iconName
+                    highlighted: batchActionCombo.highlightedIndex === index
+                }
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+                    Item { width: Kirigami.Units.smallSpacing }
+                    Kirigami.Icon {
+                        source: batchActionCombo.currentIndex >= 0
+                                ? batchActionCombo.model[batchActionCombo.currentIndex].iconName : ""
+                        implicitWidth:  Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
+                    }
+                    Controls.Label {
+                        text: batchActionCombo.displayText
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
             }
 
             Controls.Button {
@@ -117,12 +148,14 @@ ColumnLayout {
                     }
                 }
             }
-
-
         }
     }
 
-    Kirigami.Separator { Layout.fillWidth: true }
+    Kirigami.Separator {
+        Layout.fillWidth: true
+        //color: Kirigami.Theme.separatorColor
+        color: Kirigami.Theme.alternateBackgroundColor
+    }
 
     // ── Column headers + Table ───────────────────────────────────────────
     Item {
@@ -138,6 +171,31 @@ ColumnLayout {
                 Layout.fillWidth: true
                 syncView: tableView
                 clip: true
+                implicitHeight: 34
+
+                delegate: Rectangle {
+                    required property string display
+                    color: Kirigami.Theme.backgroundColor
+                    implicitHeight: headerView.implicitHeight
+
+                    Controls.Label {
+                        anchors {
+                            left: parent.left; right: parent.right
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 6; rightMargin: 6
+                        }
+                        text: display
+                        elide: Text.ElideRight
+                        //clip: true
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                    }
+
+                    Rectangle {//Vertical separator
+                        anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
+                        width: 1
+                        color: Kirigami.Theme.separatorColor
+                    }
+                }
             }
 
             Kirigami.Separator { Layout.fillWidth: true }
@@ -153,22 +211,54 @@ ColumnLayout {
 
                 property int selectedRow: -1
 
+                ScrollBar.vertical:   ScrollBar { policy: ScrollBar.AsNeeded }
+                ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
+
                 columnWidthProvider: function(column) {
                     switch (column) {
-                        case 0: return 280   // Name
-                        case 1: return 90    // Size
-                        case 2: return 140   // Date
-                        case 3: return 380   // Folder
-                        case 4: return 160   // Catalog
+                        case  0: return 250  // Name
+                        case  1: return 90   // Size
+                        case  2: return 140  // Date
+                        case  3: return 320  // Directory
+                        case  4: return 140  // Catalog Name
+                        case  5: return 80   // Catalog ID
+                        case  6: return 0    // orderValue (hidden)
+                        case  7: return 0    // Path (hidden)
+                        case  8: return 80   // File Type
+                        case  9: return 140  // MIME Type
+                        case 10: return 60   // Width
+                        case 11: return 60   // Height
+                        case 12: return 80   // Duration
+                        case 13: return 80   // Video Width
+                        case 14: return 80   // Video Height
+                        case 15: return 90   // Audio Duration
+                        case 16: return 140  // Artist
+                        case 17: return 140  // Album
+                        case 18: return 140  // Title
+                        case 19: return 260  // Checksum (SHA256)
+                        case 20: return 130  // Checksum Date
                     }
-                    return 120
+                    return 100
                 }
 
                 delegate: Rectangle {
                     required property int     row
                     required property int     column
                     required property var     display
-                    implicitHeight: 26
+                    required property string  fileType
+                    implicitHeight: 30
+
+                    function iconForType(ft) {
+                        switch (ft) {
+                            case "folder": return "folder"
+                            case "audio":  return "audio-x-mpeg"
+                            case "image":  return "image-jpeg"
+                            case "video":  return "video-mp4"
+                            case "text":   return "view-list-text"
+                            case "other":  return "document-open"
+                            default:       return "application-x-zerosize"
+                        }
+                    }
 
                     readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
                     color: tableView.selectedRow === row
@@ -186,23 +276,40 @@ ColumnLayout {
                         opacity: 0.4
                     }
 
+                    // File type icon (column 0 only)
+                    Kirigami.Icon {
+                        id: fileTypeIcon
+                        visible: column === 0
+                        anchors {
+                            left: parent.left
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 6
+                        }
+                        source: iconForType(fileType)
+                        implicitWidth:  Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
+                    }
+
                     Controls.Label {
                         anchors {
-                            left: parent.left; right: parent.right
+                            left: column === 0 ? fileTypeIcon.right : parent.left
+                            right: parent.right
                             verticalCenter: parent.verticalCenter
-                            leftMargin:  column === 0 ? 8 : 6
+                            leftMargin:  column === 0 ? 4 : 6
                             rightMargin: 4
                         }
                         text: {
-                            if (!display) return ""
-                            if (column === 1) return formatFileSize(Number(display))
+                            if (display === undefined || display === null) return ""
+                            if (column === 1)  return formatFileSize(Number(display))
+                            if (column === 12 || column === 15) return formatDuration(Number(display))
                             return String(display)
                         }
+                        horizontalAlignment: (column === 1 || column === 12 || column === 15)
+                                             ? Text.AlignRight : Text.AlignLeft
                         color: tableView.selectedRow === row
                                ? Kirigami.Theme.highlightedTextColor
                                : Kirigami.Theme.textColor
-                        // Elide folder path from left to keep filename visible
-                        elide: column === 3 ? Text.ElideLeft : Text.ElideRight
+                        elide: (column === 3 || column === 7) ? Text.ElideLeft : Text.ElideRight
                         clip: true
                         font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                     }

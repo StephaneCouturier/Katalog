@@ -4,6 +4,7 @@ import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 import QtQuick.Dialogs as Dialogs
 import Qt.labs.platform
+import Qt.labs.settings 1.0
 import Katalog 3.0
 
 // Provides basic features needed for all kirigami applications
@@ -11,8 +12,11 @@ Kirigami.ApplicationWindow {
     // Unique identifier to reference this object
     id: root
 
-    minimumWidth:  1080
-    minimumHeight:  720
+    Settings {
+        id: windowSettings
+        property int savedWidth:  1080
+        property int savedHeight: 720
+    }
 
     signal searchTriggered()
     property real cardScale: 1.0
@@ -23,58 +27,6 @@ Kirigami.ApplicationWindow {
 
     // Global Drawer
     globalDrawer: Kirigami.GlobalDrawer {
-
-        // Global Drawer
-
-                    // Add the slider at the top
-                header: Column {
-                    spacing: Kirigami.Units.smallSpacing
-                    padding: Kirigami.Units.largeSpacing
-
-                    Controls.Label {
-                        text: "Card text size"
-                        font.bold: true
-                        width: parent.width
-                    }
-
-                    Row {
-                        width: parent.width
-                        spacing: Kirigami.Units.smallSpacing
-
-                        Kirigami.Icon {
-                            source: "zoom-out"
-                            width: Kirigami.Units.iconSizes.small
-                            height: Kirigami.Units.iconSizes.small
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-
-                        Controls.Slider {
-                            id: cardSizeSlider
-                            from: 0.7
-                            to: 1.5
-                            value: 1.0
-                            stepSize: 0.1
-                            Layout.fillWidth: true
-                            width: parent.width - 60
-
-                            // Store the scale factor globally
-                            onValueChanged: {
-                                root.cardScale = value
-                            }
-                        }
-
-                        Kirigami.Icon {
-                            source: "zoom-in"
-                            width: Kirigami.Units.iconSizes.small
-                            height: Kirigami.Units.iconSizes.small
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-
-                    Kirigami.Separator {
-                        width: parent.width
-                    }
-                }
 
         width: 200
         actions: [
@@ -98,7 +50,9 @@ Kirigami.ApplicationWindow {
                         var p = appManager1.getDatabaseFilePath()
                         if (p.length > 0) {
                             var slash = p.lastIndexOf("/")
-                            databaseFileDialog.currentFolder = "file://" + (slash >= 0 ? p.substring(0, slash) : p)
+                            var folder = slash >= 0 ? p.substring(0, slash) : p
+                            var parentSlash = folder.lastIndexOf("/")
+                            databaseFileDialog.currentFolder = "file://" + (parentSlash > 0 ? folder.substring(0, parentSlash) : folder)
                         }
                         databaseFileDialog.open()
                     }
@@ -174,6 +128,50 @@ Kirigami.ApplicationWindow {
                 onTriggered: Qt.quit()
             }
         ]
+
+        footer: Column {
+            spacing: Kirigami.Units.smallSpacing
+            padding: Kirigami.Units.largeSpacing
+
+            Kirigami.Separator {
+                width: parent.width
+            }
+
+            Controls.Label {
+                text: "Card text size"
+                font.bold: true
+                width: parent.width
+            }
+
+            Row {
+                width: parent.width
+                spacing: Kirigami.Units.smallSpacing
+
+                Kirigami.Icon {
+                    source: "zoom-out"
+                    width: Kirigami.Units.iconSizes.small
+                    height: Kirigami.Units.iconSizes.small
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Controls.Slider {
+                    id: cardSizeSlider
+                    from: 0.7
+                    to: 1.5
+                    value: 1.0
+                    stepSize: 0.1
+                    width: parent.width - 60
+                    onValueChanged: root.cardScale = value
+                }
+
+                Kirigami.Icon {
+                    source: "zoom-in"
+                    width: Kirigami.Units.iconSizes.small
+                    height: Kirigami.Units.iconSizes.small
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+        }
     }
 
         // Database status notification
@@ -193,9 +191,14 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: [ pageSelection, pageSearch ]
 
     Component.onCompleted: {
+        width  = windowSettings.savedWidth
+        height = windowSettings.savedHeight
         if (appManager1.shouldShowAlphaWarning())
             alphaWarningDialog.open()
     }
+
+    onWidthChanged:  windowSettings.savedWidth  = width
+    onHeightChanged: windowSettings.savedHeight = height
 
     Controls.Dialog {
         id: alphaWarningDialog
@@ -264,11 +267,6 @@ Kirigami.ApplicationWindow {
         }
 
         actions: [
-            Kirigami.Action {
-                //text: "Reset"
-                icon.name: "edit-clear-all"
-                onTriggered: showPassiveNotification("Reset clicked, no action")
-            },
             Kirigami.Action {
                 //text: "Refresh"
                 icon.name: "view-refresh"
