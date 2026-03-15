@@ -38,6 +38,10 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device.id;
     case LevelRole:
         return device.level;
+    case HasChildrenRole:
+        return device.hasChildren;
+    case IsCollapsedRole:
+        return device.isCollapsed;
     default:
         return QVariant();
     }
@@ -52,6 +56,8 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles[IsActiveRole] = "isActive";
     roles[DeviceIdRole] = "deviceId";
     roles[LevelRole] = "level";
+    roles[HasChildrenRole] = "hasChildren";
+    roles[IsCollapsedRole] = "isCollapsed";
     return roles;
 }
 
@@ -184,30 +190,46 @@ void DeviceListModel::loadDevicesFromDatabase()
         childrenOf[parentId].append(device);
     }
 
-    // Depth-first traversal → flat list in correct visual order with levels
+    // Depth-first traversal → flat list in correct visual order with levels.
+    // Children are visited when:
+    //   1. device is NOT in m_collapsedIds (explicit collapse wins over everything), AND
+    //   2. device IS in m_expandedIds (explicit expand overrides level), OR level allows it
     std::function<void(int, int)> traverse = [&](int parentId, int level) {
         for (DeviceItem &dev : childrenOf[parentId]) {
-            dev.level = level;
+            dev.level       = level;
+            dev.hasChildren = childrenOf.contains(dev.id) && !childrenOf[dev.id].isEmpty();
+
+            bool explicitlyCollapsed = m_collapsedIds.contains(dev.id);
+            bool explicitlyExpanded  = m_expandedIds.contains(dev.id);
+            bool levelAllows         = (m_maxLevel == -1) || (level < m_maxLevel);
+            bool recurse             = !explicitlyCollapsed && (explicitlyExpanded || levelAllows);
+
+            dev.isCollapsed = dev.hasChildren && !recurse;
             dev.description = formatDescription(dev);
             m_devices.append(dev);
-            traverse(dev.id, level + 1);
+            if (recurse)
+                traverse(dev.id, level + 1);
         }
     };
     traverse(0, 0);
-
-    if (m_maxLevel >= 0) {
-        auto it = m_devices.begin();
-        while (it != m_devices.end()) {
-            if (it->level > m_maxLevel)
-                it = m_devices.erase(it);
-            else
-                ++it;
-        }
-    }
 }
 //----------------------------------------------------------------------
 void DeviceListModel::setMaxLevel(int level)
 {
     m_maxLevel = level;
+    refreshData();
+}
+//----------------------------------------------------------------------
+void DeviceListModel::collapseDevice(int deviceId)
+{
+    m_collapsedIds.insert(deviceId);
+    m_expandedIds.remove(deviceId);
+    refreshData();
+}
+//----------------------------------------------------------------------
+void DeviceListModel::expandDevice(int deviceId)
+{
+    m_expandedIds.insert(deviceId);
+    m_collapsedIds.remove(deviceId);
     refreshData();
 }

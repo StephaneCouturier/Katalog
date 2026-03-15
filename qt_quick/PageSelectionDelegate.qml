@@ -63,6 +63,32 @@ Kirigami.AbstractCard {
 
             // Controls.Button {
             //     Layout.alignment: Qt.AlignRight
+            //     Layout.columnSpan: 1
+            //     icon.name: "document-open"
+            //     Controls.ToolTip.visible: down
+            //     onClicked: showPassiveNotification("Open clicked for: " + model.name)
+            // }
+
+            Controls.ToolButton {
+                icon.name: "go-up"
+                Layout.columnSpan: 1
+                visible: model.hasChildren && !model.isCollapsed
+                onClicked: appManager1.collapseDevice(model.deviceId)
+                Controls.ToolTip.text: "Collapse"
+                Controls.ToolTip.visible: hovered
+            }
+            Controls.ToolButton {
+                icon.name: "go-down"
+                Layout.columnSpan: 2
+                visible: model.hasChildren && model.isCollapsed
+                onClicked: appManager1.expandDevice(model.deviceId)
+                Controls.ToolTip.text: "Expand"
+                Controls.ToolTip.visible: hovered
+            }
+
+
+            // Controls.Button {
+            //     Layout.alignment: Qt.AlignRight
             //     Layout.columnSpan: 2
             //     icon.name: "labplot-zoom-select"
             //     onClicked: {
@@ -80,14 +106,7 @@ Kirigami.AbstractCard {
             //                                              selectionListView1.model.index(selectionListView1.model.rowCount() - 1, 0))
             //     }
             // }
-            // Controls.Button {
-            //     Layout.alignment: Qt.AlignRight
-            //     Layout.columnSpan: 1
-            //     icon.name: "document-open"
-            //     Controls.ToolTip.visible: down
-            //     Controls.ToolTip.text: qsTr("Open the device")
-            //     onClicked: showPassiveNotification("Open clicked for: " + model.name)
-            // }
+
         }
         Rectangle {
             anchors.fill: parent

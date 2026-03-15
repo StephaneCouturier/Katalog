@@ -147,6 +147,18 @@ void AppManager::initializeDeviceListModel()
     qDebug() << "DeviceListModel initialized with" << deviceListModel->rowCount() << "devices";
 }
 //----------------------------------------------------------------------
+void AppManager::expandDevice(int deviceId)
+{
+    if (deviceListModel)
+        deviceListModel->expandDevice(deviceId);
+}
+//----------------------------------------------------------------------
+void AppManager::collapseDevice(int deviceId)
+{
+    if (deviceListModel)
+        deviceListModel->collapseDevice(deviceId);
+}
+//----------------------------------------------------------------------
 void AppManager::setDeviceFilter(const QString &text)
 {
     if (m_deviceFilterModel)

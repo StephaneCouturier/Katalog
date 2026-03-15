@@ -2,6 +2,7 @@
 #define DEVICELISTMODEL_H
 
 #include <QAbstractListModel>
+#include <QSet>
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <qdatetime.h>
@@ -17,7 +18,9 @@ public:
         DescriptionRole,
         IsActiveRole,
         DeviceIdRole,
-        LevelRole
+        LevelRole,
+        HasChildrenRole,
+        IsCollapsedRole
     };
 
     explicit DeviceListModel(QObject *parent = nullptr);
@@ -31,6 +34,8 @@ public slots:
     void refreshData();
     void refreshDataSilently(); // Refresh without UI notifications
     void setMaxLevel(int level); // -1 = all, 0 = top-level only
+    void collapseDevice(int deviceId);
+    void expandDevice(int deviceId);
     bool hasData() const;
     QString getRefreshStatus() const;
 
@@ -42,6 +47,8 @@ private:
         QString name;
         QString description;
         bool isActive;
+        bool hasChildren  = false;
+        bool isCollapsed  = false;
         qint64 totalFileSize  = 0;
         qint64 totalFileCount = 0;
         qint64 totalSpace     = 0;
@@ -61,6 +68,8 @@ private:
     QString m_lastError;
     QDateTime m_lastRefresh;
     int m_maxLevel = -1; // -1 = show all levels
+    QSet<int> m_collapsedIds;  // device IDs explicitly collapsed (children hidden)
+    QSet<int> m_expandedIds;   // device IDs explicitly expanded (override level filter)
 };
 
 #endif // DEVICELISTMODEL_H
