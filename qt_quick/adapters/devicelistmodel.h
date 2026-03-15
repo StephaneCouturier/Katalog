@@ -42,6 +42,10 @@ private:
         QString name;
         QString description;
         bool isActive;
+        qint64 totalFileSize  = 0;
+        qint64 totalFileCount = 0;
+        qint64 totalSpace     = 0;
+        qint64 freeSpace      = 0;
     };
 
     QList<DeviceItem> m_devices;

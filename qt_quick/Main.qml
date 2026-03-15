@@ -303,11 +303,10 @@ Kirigami.ApplicationWindow {
                     Layout.fillWidth: true
                     onTextChanged: appManager1.setDeviceFilter(text)
                 }
-                Controls.ToolButton {
-                    icon.name: "go-down"
-                    enabled: appManager1.canExpandDevices
-                    onClicked: appManager1.expandDevices()
-                    Controls.ToolTip.text: "Expand one level"
+                Controls.CheckBox {
+                    checked: appManager1.showDeviceInfo
+                    onToggled: appManager1.showDeviceInfo = checked
+                    Controls.ToolTip.text: "Show device info"
                     Controls.ToolTip.visible: hovered
                 }
                 Controls.ToolButton {
@@ -317,6 +316,14 @@ Kirigami.ApplicationWindow {
                     Controls.ToolTip.text: "Collapse one level"
                     Controls.ToolTip.visible: hovered
                 }
+                Controls.ToolButton {
+                    icon.name: "go-down"
+                    enabled: appManager1.canExpandDevices
+                    onClicked: appManager1.expandDevices()
+                    Controls.ToolTip.text: "Expand one level"
+                    Controls.ToolTip.visible: hovered
+                }
+
             }
         }
 

@@ -49,14 +49,14 @@ Kirigami.AbstractCard {
                 }
                 Kirigami.Separator {
                     Layout.fillWidth: true
-                    visible: model.description.length > 0
+                    visible: appManager1.showDeviceInfo && model.description.length > 0
                 }
 
                 Controls.Label {
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     text: model.description
-                    visible: model.description.length > 0
+                    visible: appManager1.showDeviceInfo && model.description.length > 0
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale * 0.8
                 }
             }

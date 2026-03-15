@@ -183,6 +183,20 @@ void AppManager::collapseDevices()
     emit deviceExpandLevelChanged();
 }
 //----------------------------------------------------------------------
+bool AppManager::getShowDeviceInfo() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Selection/ShowDeviceInfo", true).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setShowDeviceInfo(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Selection/ShowDeviceInfo", value);
+    settings.sync();
+    emit showDeviceInfoChanged();
+}
+//----------------------------------------------------------------------
 bool AppManager::canExpandDevices() const
 {
     return m_deviceExpandLevel != -1; // -1 means already showing all

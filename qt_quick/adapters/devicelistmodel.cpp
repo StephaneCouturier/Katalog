@@ -57,51 +57,26 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
 
 QString DeviceListModel::formatDescription(const DeviceItem &device) const
 {
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QLocale locale;
+    QStringList lines;
 
-    if (device.type == "Virtual") {
-        // For virtual devices, show total space if available
-        query.prepare("SELECT device_total_space FROM device WHERE device_id = :id");
-        query.bindValue(":id", device.id);
-        if (query.exec() && query.next()) {
-            qint64 totalSpace = query.value(0).toLongLong();
-            if (totalSpace > 0) {
-                return QLocale().formattedDataSize(totalSpace);
-            }
+    // Files line — shown for all types that have file data
+    if (device.totalFileCount > 0) {
+        QString filesLine = QString("%1 files").arg(locale.toString(device.totalFileCount));
+        if (device.totalFileSize > 0)
+            filesLine += QString(" · %1").arg(locale.formattedDataSize(device.totalFileSize));
+        // Space details — Storage and Virtual only
+        if ((device.type == "Storage" || device.type == "Virtual") && device.totalSpace > 0) {
+            qint64 usedSpace = device.totalSpace - device.freeSpace;
+            filesLine += QString("  · %1 · %2 · %3")
+                             .arg(locale.formattedDataSize(usedSpace))
+                             .arg(locale.formattedDataSize(device.freeSpace))
+                             .arg(locale.formattedDataSize(device.totalSpace));
         }
-        return "";
+        lines << filesLine;
     }
-    else if (device.type == "Storage") {
-        // For storage devices, show total space
-        query.prepare("SELECT device_total_space FROM device WHERE device_id = :id");
-        query.bindValue(":id", device.id);
-        if (query.exec() && query.next()) {
-            qint64 totalSpace = query.value(0).toLongLong();
-            if (totalSpace > 0) {
-                return QLocale().formattedDataSize(totalSpace);
-            }
-        }
-        return "";
-    }
-    else if (device.type == "Catalog") {
-        // For catalogs, show file count and total size
-        query.prepare("SELECT device_total_file_count, device_total_file_size FROM device WHERE device_id = :id");
-        query.bindValue(":id", device.id);
-        if (query.exec() && query.next()) {
-            qint64 fileCount = query.value(0).toLongLong();
-            qint64 totalSize = query.value(1).toLongLong();
 
-            if (fileCount > 0 && totalSize > 0) {
-                return QString("%1, %2 files")
-                    .arg(QLocale().formattedDataSize(totalSize))
-                    .arg(QLocale().toString(fileCount));
-            } else if (fileCount > 0) {
-                return QString("%1 files").arg(QLocale().toString(fileCount));
-            }
-        }
-        return "";
-    }
-    return "";
+    return lines.join("\n");
 }
 
 void DeviceListModel::refreshData()
@@ -197,11 +172,15 @@ void DeviceListModel::loadDevicesFromDatabase()
     QMap<int, QList<DeviceItem>> childrenOf;
     while (query.next()) {
         DeviceItem device;
-        device.id       = query.value(0).toInt();
-        int parentId    = query.value(1).toInt();
-        device.name     = query.value(2).toString();
-        device.type     = query.value(3).toString();
-        device.isActive = query.value(8).toBool();
+        device.id            = query.value(0).toInt();
+        int parentId         = query.value(1).toInt();
+        device.name          = query.value(2).toString();
+        device.type          = query.value(3).toString();
+        device.totalFileSize  = query.value(4).toLongLong();
+        device.totalFileCount = query.value(5).toLongLong();
+        device.totalSpace    = query.value(6).toLongLong();
+        device.freeSpace     = query.value(7).toLongLong();
+        device.isActive      = query.value(8).toBool();
         childrenOf[parentId].append(device);
     }
 

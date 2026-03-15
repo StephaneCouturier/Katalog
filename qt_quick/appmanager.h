@@ -68,6 +68,7 @@ class AppManager : public QObject
     Q_PROPERTY(QString databaseMode READ getDatabaseMode NOTIFY databaseModeChanged)
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
+    Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -132,6 +133,8 @@ public slots:
     Q_INVOKABLE void collapseDevices();
     Q_INVOKABLE bool canExpandDevices() const;
     Q_INVOKABLE bool canCollapseDevices() const;
+    bool getShowDeviceInfo() const;
+    void setShowDeviceInfo(bool value);
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
@@ -152,6 +155,7 @@ public slots:
 signals:
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
+    void showDeviceInfoChanged();
     void databasePathChanged(const QString &newPath);
     void databaseConnectionChanged(bool success, const QString &message);
     void deviceListRefreshed();
