@@ -131,11 +131,15 @@
 
             if (index==2) { //"Begin With" is selected
                 ui->Search_comboBox_SearchIn->addItem(tr("File names only"));
+                ui->Search_comboBox_SearchIn->setItemData(0, Search::SEARCH_IN_FILE_NAMES, Qt::UserRole);
             }
             else {
                 ui->Search_comboBox_SearchIn->addItem(tr("File names only"));
                 ui->Search_comboBox_SearchIn->addItem(tr("File names or Folder paths"));
                 ui->Search_comboBox_SearchIn->addItem(tr("Folder path only"));
+                ui->Search_comboBox_SearchIn->setItemData(0, Search::SEARCH_IN_FILE_NAMES,        Qt::UserRole);
+                ui->Search_comboBox_SearchIn->setItemData(1, Search::SEARCH_IN_FILES_AND_FOLDERS, Qt::UserRole);
+                ui->Search_comboBox_SearchIn->setItemData(2, Search::SEARCH_IN_FOLDER_PATH,       Qt::UserRole);
             }
         }
         //----------------------------------------------------------------------

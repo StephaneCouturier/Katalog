@@ -991,7 +991,8 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
 
                 if (foldermatch.hasMatch() && searchOnType == true) {
                     regex.setPattern(regexFileType);
-                    match = regex.match(lineFilePath);
+                    QFileInfo fileInfo(lineFilePath);
+                    match = regex.match(fileInfo.fileName());
                 } else {
                     match = foldermatch;
                 }
