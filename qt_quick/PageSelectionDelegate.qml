@@ -70,6 +70,8 @@ Kirigami.AbstractCard {
                         Layout.fillWidth: true
                         level: 2
                         text: model.name
+                        elide: Text.ElideRight
+                        maximumLineCount: 1
                         font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale
                     }
                 }
