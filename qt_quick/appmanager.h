@@ -133,6 +133,7 @@ public slots:
     Q_INVOKABLE void collapseDevices();
     Q_INVOKABLE void expandDevice(int deviceId);
     Q_INVOKABLE void collapseDevice(int deviceId);
+    Q_INVOKABLE void openDeviceFolder(int deviceId);
     Q_INVOKABLE bool canExpandDevices() const;
     Q_INVOKABLE bool canCollapseDevices() const;
     bool getShowDeviceInfo() const;

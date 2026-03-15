@@ -147,6 +147,15 @@ void AppManager::initializeDeviceListModel()
     qDebug() << "DeviceListModel initialized with" << deviceListModel->rowCount() << "devices";
 }
 //----------------------------------------------------------------------
+void AppManager::openDeviceFolder(int deviceId)
+{
+    Device device;
+    device.ID = deviceId;
+    device.loadDevice(QSqlDatabase::defaultConnection);
+    if (!device.path.isEmpty())
+        QDesktopServices::openUrl(QUrl::fromLocalFile(device.path));
+}
+//----------------------------------------------------------------------
 void AppManager::expandDevice(int deviceId)
 {
     if (deviceListModel)

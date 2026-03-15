@@ -17,6 +17,25 @@ Kirigami.AbstractCard {
         onTapped: appManager1.selectDeviceById(model.deviceId)
     }
 
+    TapHandler {
+        acceptedButtons: Qt.RightButton
+        onTapped: contextMenu.popup()
+    }
+
+    TapHandler {
+        onLongPressed: contextMenu.popup()
+    }
+
+    Controls.Menu {
+        id: contextMenu
+
+        Controls.MenuItem {
+            text: qsTr("Open folder")
+            icon.name: "document-open-folder"
+            onTriggered: appManager1.openDeviceFolder(model.deviceId)
+        }
+    }
+
     contentItem: Item {
         implicitWidth: deviceDelegateLayout.implicitWidth
         implicitHeight: deviceDelegateLayout.implicitHeight
