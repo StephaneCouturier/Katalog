@@ -81,7 +81,9 @@ Kirigami.AbstractCard {
         Rectangle {
             anchors.fill: parent
             anchors.margins: -8  // Remove the negative margins
-            color: "transparent"
+            color: Qt.rgba(Kirigami.Theme.highlightColor.r,
+                           Kirigami.Theme.highlightColor.g,
+                           Kirigami.Theme.highlightColor.b, 0.12)
             border.color: Kirigami.Theme.highlightColor
             border.width: 2
             radius: Kirigami.Units.cornerRadius

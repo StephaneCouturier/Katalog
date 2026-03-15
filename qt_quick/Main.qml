@@ -288,7 +288,7 @@ Kirigami.ApplicationWindow {
 
         header: Item {
             width: parent.width
-            height: deviceSearchField.implicitHeight + Kirigami.Units.smallSpacing * 2
+            height: deviceSearchField.implicitHeight + Kirigami.Units.smallSpacing * 5
             RowLayout {
                 anchors {
                     left: parent.left
@@ -330,6 +330,7 @@ Kirigami.ApplicationWindow {
             id: selectionListView1
             model: appManager1.deviceFilterModel
             delegate: PageSelectionDelegate {}
+            topMargin: Kirigami.Units.smallSpacing
         }
     }
 
