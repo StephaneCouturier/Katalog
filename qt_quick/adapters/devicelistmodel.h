@@ -30,6 +30,7 @@ public:
 public slots:
     void refreshData();
     void refreshDataSilently(); // Refresh without UI notifications
+    void setMaxLevel(int level); // -1 = all, 0 = top-level only
     bool hasData() const;
     QString getRefreshStatus() const;
 
@@ -55,6 +56,7 @@ signals:
 private:
     QString m_lastError;
     QDateTime m_lastRefresh;
+    int m_maxLevel = -1; // -1 = show all levels
 };
 
 #endif // DEVICELISTMODEL_H

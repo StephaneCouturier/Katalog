@@ -135,6 +135,7 @@ void AppManager::initializeDeviceListModel()
         delete deviceListModel;
     }
     deviceListModel = new DeviceListModel(this);
+    m_deviceExpandLevel = -1; // reset to fully expanded on new connection
 
     if (!m_deviceFilterModel) {
         m_deviceFilterModel = new QSortFilterProxyModel(this);
@@ -150,6 +151,46 @@ void AppManager::setDeviceFilter(const QString &text)
 {
     if (m_deviceFilterModel)
         m_deviceFilterModel->setFilterFixedString(text);
+}
+//----------------------------------------------------------------------
+void AppManager::expandDevices()
+{
+    if (!deviceListModel || !canExpandDevices()) return;
+
+    if (m_deviceExpandLevel == -1) return;
+
+    int maxDepth = Device::getMaxHierarchyDepth(QSqlDatabase::defaultConnection);
+    m_deviceExpandLevel++;
+    if (m_deviceExpandLevel >= maxDepth)
+        m_deviceExpandLevel = -1; // show all once past max
+
+    deviceListModel->setMaxLevel(m_deviceExpandLevel);
+    emit deviceExpandLevelChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::collapseDevices()
+{
+    if (!deviceListModel || !canCollapseDevices()) return;
+
+    if (m_deviceExpandLevel == -1) {
+        int maxDepth = Device::getMaxHierarchyDepth(QSqlDatabase::defaultConnection);
+        m_deviceExpandLevel = qMax(0, maxDepth - 1);
+    } else {
+        m_deviceExpandLevel--;
+    }
+
+    deviceListModel->setMaxLevel(m_deviceExpandLevel);
+    emit deviceExpandLevelChanged();
+}
+//----------------------------------------------------------------------
+bool AppManager::canExpandDevices() const
+{
+    return m_deviceExpandLevel != -1; // -1 means already showing all
+}
+//----------------------------------------------------------------------
+bool AppManager::canCollapseDevices() const
+{
+    return m_deviceExpandLevel != 0; // 0 means only top-level visible
 }
 //----------------------------------------------------------------------
 QString AppManager::testQuery()

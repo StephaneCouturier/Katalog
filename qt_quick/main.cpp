@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         QStringLiteral(KATALOG_VERSION_STRING),
         "Katalog is an application to catalog, search, and manage files from any drive, permanent or removable.",
         KAboutLicense::GPL_V3,
-        "(c) 2020-2025");
+        "(c) 2020-2026");
 
     aboutData.setDesktopFileName(QStringLiteral("io.github.stephanecouturier.Katalog")); //Temporary, to hide the KDE GetInvolved Donation links
     aboutData.setBugAddress(""); //Temporary, to hide the KDE Bug link

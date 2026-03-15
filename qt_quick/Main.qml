@@ -23,11 +23,7 @@ Kirigami.ApplicationWindow {
 
     // Global Drawer
     globalDrawer: Kirigami.GlobalDrawer {
-/*
-        header: Kirigami.SearchField {
-            id: searchField
-        }
-*/
+
         // Global Drawer
 
                     // Add the slider at the top
@@ -293,8 +289,7 @@ Kirigami.ApplicationWindow {
         header: Item {
             width: parent.width
             height: deviceSearchField.implicitHeight + Kirigami.Units.smallSpacing * 2
-            Kirigami.SearchField {
-                id: deviceSearchField
+            RowLayout {
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -302,7 +297,26 @@ Kirigami.ApplicationWindow {
                     leftMargin: Kirigami.Units.gridUnit
                     rightMargin: Kirigami.Units.gridUnit
                 }
-                onTextChanged: appManager1.setDeviceFilter(text)
+                spacing: Kirigami.Units.smallSpacing
+                Kirigami.SearchField {
+                    id: deviceSearchField
+                    Layout.fillWidth: true
+                    onTextChanged: appManager1.setDeviceFilter(text)
+                }
+                Controls.ToolButton {
+                    icon.name: "go-down"
+                    enabled: appManager1.canExpandDevices
+                    onClicked: appManager1.expandDevices()
+                    Controls.ToolTip.text: "Expand one level"
+                    Controls.ToolTip.visible: hovered
+                }
+                Controls.ToolButton {
+                    icon.name: "go-up"
+                    enabled: appManager1.canCollapseDevices
+                    onClicked: appManager1.collapseDevices()
+                    Controls.ToolTip.text: "Collapse one level"
+                    Controls.ToolTip.visible: hovered
+                }
             }
         }
 

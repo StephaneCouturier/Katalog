@@ -215,4 +215,20 @@ void DeviceListModel::loadDevicesFromDatabase()
         }
     };
     traverse(0, 0);
+
+    if (m_maxLevel >= 0) {
+        auto it = m_devices.begin();
+        while (it != m_devices.end()) {
+            if (it->level > m_maxLevel)
+                it = m_devices.erase(it);
+            else
+                ++it;
+        }
+    }
+}
+//----------------------------------------------------------------------
+void DeviceListModel::setMaxLevel(int level)
+{
+    m_maxLevel = level;
+    refreshData();
 }

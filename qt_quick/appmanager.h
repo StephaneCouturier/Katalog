@@ -66,6 +66,8 @@ class AppManager : public QObject
     Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel READ getDeviceFilterModel CONSTANT)
     Q_PROPERTY(int selectedDeviceId READ getSelectedDeviceId NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode READ getDatabaseMode NOTIFY databaseModeChanged)
+    Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
+    Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -88,6 +90,7 @@ public:
     DeviceListModel *deviceListModel = nullptr;
     QSortFilterProxyModel *m_deviceFilterModel = nullptr;
     QString lastDatabaseError;
+    int m_deviceExpandLevel = -1; // -1=show all; 0..N=show levels 0..N
 
 public slots:
     //Global
@@ -125,6 +128,10 @@ public slots:
     QSortFilterProxyModel* getDeviceFilterModel() const { return m_deviceFilterModel; }
 
     Q_INVOKABLE void setDeviceFilter(const QString &text);
+    Q_INVOKABLE void expandDevices();
+    Q_INVOKABLE void collapseDevices();
+    Q_INVOKABLE bool canExpandDevices() const;
+    Q_INVOKABLE bool canCollapseDevices() const;
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
@@ -144,6 +151,7 @@ public slots:
 
 signals:
     void deviceListModelChanged();
+    void deviceExpandLevelChanged();
     void databasePathChanged(const QString &newPath);
     void databaseConnectionChanged(bool success, const QString &message);
     void deviceListRefreshed();
