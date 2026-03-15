@@ -16,12 +16,12 @@ find_package(KF6Archive)
 # Required for qt_add_qml_module (Qt 6.5+ QML module support)
 qt_standard_project_setup(REQUIRES 6.5)
 
-qt_add_executable(appKatalog
+qt_add_executable(Katalog3
     main.cpp
     images.qrc
 )
 
-target_compile_definitions(appKatalog PRIVATE
+target_compile_definitions(Katalog3 PRIVATE
     QT_OPENGL_ES_2_ANGLE_STATIC
 )
 
@@ -44,8 +44,9 @@ set(UI_SOURCES
     database.h
 )
 
-qt_add_qml_module(appKatalog
-    URI Katalog3
+# URI uses reverse-domain path (io/github/stephanecouturier/Katalog/) — no conflict with Katalog3 binary
+qt_add_qml_module(Katalog3
+    URI io.github.stephanecouturier.Katalog
     VERSION 1.0
     QML_FILES
         Main.qml
@@ -69,15 +70,15 @@ qt_add_qml_module(appKatalog
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
-set_target_properties(appKatalog PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appKatalog
+set_target_properties(Katalog3 PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Katalog3
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appKatalog
+target_link_libraries(Katalog3
     PRIVATE
     katalog-core
     Qt6::Quick
@@ -92,14 +93,14 @@ target_link_libraries(appKatalog
     #KF6::IconThemes
 )
 
-target_include_directories(appKatalog PRIVATE
+target_include_directories(Katalog3 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_SOURCE_DIR}
 )
 
 include(GNUInstallDirs)
-install(TARGETS appKatalog
+install(TARGETS Katalog3
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

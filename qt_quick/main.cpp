@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     rootContext->setContextProperty("deviceListModel1", appManager->deviceListModel);
     rootContext->setContextProperty("About", QVariant::fromValue(KAboutData::applicationData()));
 
-    engine.loadFromModule("Katalog3", "Main");
+    engine.loadFromModule("io.github.stephanecouturier.Katalog", "Main");
 
     appManager->testQuery();
 
