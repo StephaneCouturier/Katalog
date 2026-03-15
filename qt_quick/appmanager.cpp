@@ -523,6 +523,34 @@ QString AppManager::exportSearchResultsToCSV()
     return filePath;
 }
 //----------------------------------------------------------------------
+int AppManager::batchMoveSearchResultsToTrash()
+{
+    if (!searchObject || searchObject->fileNames.isEmpty())
+        return 0;
+    int count = 0;
+    int total = searchObject->fileNames.size();
+    for (int i = 0; i < total; ++i) {
+        QString path = searchObject->filePaths.value(i) + "/" + searchObject->fileNames.value(i);
+        if (QFile::moveToTrash(path))
+            ++count;
+    }
+    return count;
+}
+//----------------------------------------------------------------------
+int AppManager::batchDeleteSearchResults()
+{
+    if (!searchObject || searchObject->fileNames.isEmpty())
+        return 0;
+    int count = 0;
+    int total = searchObject->fileNames.size();
+    for (int i = 0; i < total; ++i) {
+        QString path = searchObject->filePaths.value(i) + "/" + searchObject->fileNames.value(i);
+        if (QFile::remove(path))
+            ++count;
+    }
+    return count;
+}
+//----------------------------------------------------------------------
 QStringList AppManager::getTagNames() const
 {
     Tag tag;

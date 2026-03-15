@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickWindow>
 
 #include "appmanager.h"
 #include "core/collection.h"
@@ -75,6 +76,12 @@ int main(int argc, char *argv[])
     rootContext->setContextProperty("About", QVariant::fromValue(KAboutData::applicationData()));
 
     engine.loadFromModule("io.github.stephanecouturier.Katalog", "Main");
+
+    // Set initial window size before the platform shows the window
+    if (!engine.rootObjects().isEmpty()) {
+        if (auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first()))
+            window->resize(1080, 720);
+    }
 
     appManager->testQuery();
 

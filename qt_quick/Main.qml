@@ -11,8 +11,8 @@ Kirigami.ApplicationWindow {
     // Unique identifier to reference this object
     id: root
 
-    width: 1080
-    height: 720
+    minimumWidth:  1080
+    minimumHeight:  720
 
     signal searchTriggered()
     property real cardScale: 1.0
@@ -374,24 +374,12 @@ Kirigami.ApplicationWindow {
                 return qsTr("Duplicates (%1)").arg(n)
             if (newSearch1.properties.searchOnDifferences)
                 return qsTr("Differences (%1)").arg(n)
-            return qsTr("Results (%1)").arg(n)
+            return qsTr("Results")  //return qsTr("Results (%1)").arg(n)
         }
         visible: false
         padding: 0
 
         actions: [
-            Kirigami.Action {
-                text: qsTr("Export CSV")
-                icon.name: "document-save-as"
-                enabled: (newSearch1.properties.filesFoundNumber ?? 0) > 0
-                onTriggered: {
-                    let path = appManager1.exportSearchResultsToCSV()
-                    if (path)
-                        showPassiveNotification(qsTr("Exported to %1").arg(path))
-                    else
-                        showPassiveNotification(qsTr("Export failed or no results"))
-                }
-            },
             Kirigami.Action {
                 text: qsTr("Close")
                 icon.name: "view-close"

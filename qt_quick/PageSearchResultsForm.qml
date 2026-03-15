@@ -72,20 +72,53 @@ ColumnLayout {
                       .arg(formatFileSize(newSearch1.properties.filesFoundMaxSize))
                 opacity: 0.8
             }
-
-            Item { Layout.fillWidth: true }
-
             Controls.Label {
                 text: {
                     let d1 = formatDate(newSearch1.properties.filesFoundMinDate)
                     let d2 = formatDate(newSearch1.properties.filesFoundMaxDate)
-                    if (d1 && d1 === d2) return d1
-                    if (d1 && d2)        return d1 + " – " + d2
+                    if (d1 && d1 === d2) return "  " + d1
+                    if (d1 && d2)        return "  " + d1 + " – " + d2
                     return ""
                 }
                 opacity: 0.7
                 font.pointSize: Kirigami.Theme.smallFont.pointSize
             }
+
+            Item { Layout.fillWidth: true }
+
+
+            Controls.ComboBox {
+                id: batchActionCombo
+                implicitWidth: 125
+                textRole: "text"
+                valueRole: "value"
+                model: [
+                    { text: qsTr("Export to CSV"),  value: "csv"   },
+                    { text: qsTr("Move to Trash"),  value: "trash" },
+                    { text: qsTr("Delete"),         value: "delete"}
+                ]
+            }
+
+            Controls.Button {
+                //text: qsTr("Run")
+                icon.name: "media-playback-start"
+                enabled: (newSearch1.properties.filesFoundNumber ?? 0) > 0
+                onClicked: {
+                    let action = batchActionCombo.currentValue
+                    if (action === "csv") {
+                        let path = appManager1.exportSearchResultsToCSV()
+                        if (path)
+                            showPassiveNotification(qsTr("Exported to: %1").arg(path))
+                        else
+                            showPassiveNotification(qsTr("Export failed — no results or write error"))
+                    } else {
+                        batchConfirmDialog.batchAction = action
+                        batchConfirmDialog.open()
+                    }
+                }
+            }
+
+
         }
     }
 
@@ -136,11 +169,13 @@ ColumnLayout {
                     required property int     column
                     required property var     display
                     implicitHeight: 26
+
+                    readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
                     color: tableView.selectedRow === row
                            ? Kirigami.Theme.highlightColor
                            : (row % 2 === 0
-                              ? Kirigami.Theme.backgroundColor
-                              : Kirigami.Theme.alternateBackgroundColor)
+                              ? (darkTheme ? Kirigami.Theme.backgroundColor : "#ffffff")
+                              : (darkTheme ? "#161b1d" : "#e9f7fc"))
 
                     // Column separator
                     Rectangle {
@@ -250,6 +285,51 @@ ColumnLayout {
                 appManager1.copyToClipboard(resultContextMenu.fullPath)
                 showPassiveNotification(qsTr("Full path copied to clipboard"))
             }
+        }
+    }
+
+    // ── Batch action bar ─────────────────────────────────────────────────
+    Kirigami.Separator { Layout.fillWidth: true }
+
+    RowLayout {
+        Layout.fillWidth: true
+        Layout.leftMargin:  Kirigami.Units.largeSpacing
+        Layout.rightMargin: Kirigami.Units.largeSpacing
+        Layout.topMargin:    Kirigami.Units.smallSpacing
+        Layout.bottomMargin: Kirigami.Units.smallSpacing
+        spacing: Kirigami.Units.smallSpacing
+
+        Controls.Label { text: qsTr("") }
+
+        Item { Layout.fillWidth: true }
+    }
+
+    Kirigami.Dialog {
+        id: batchConfirmDialog
+        property string batchAction: ""
+        title: batchAction === "trash" ? qsTr("Move to Trash") : qsTr("Delete Files")
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
+        padding: Kirigami.Units.largeSpacing
+        preferredWidth: Kirigami.Units.gridUnit * 28
+
+        contentItem: Controls.Label {
+            text: batchConfirmDialog.batchAction === "trash"
+                  ? qsTr("Move all %1 result(s) to trash?").arg(newSearch1.properties.filesFoundNumber ?? 0)
+                  : qsTr("Permanently delete all %1 result(s)? This cannot be undone.").arg(newSearch1.properties.filesFoundNumber ?? 0)
+            wrapMode: Text.WordWrap
+        }
+
+        onAccepted: {
+            let n = 0
+            if (batchAction === "trash")
+                n = appManager1.batchMoveSearchResultsToTrash()
+            else
+                n = appManager1.batchDeleteSearchResults()
+            showPassiveNotification(
+                batchAction === "trash"
+                ? qsTr("%1 file(s) moved to trash").arg(n)
+                : qsTr("%1 file(s) deleted").arg(n)
+            )
         }
     }
 

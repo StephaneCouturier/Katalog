@@ -581,29 +581,6 @@ Kirigami.FormLayout {
                     search_spinBox_MetadataMaximumWidth.enabled  = checked
                 }
             }
-            Controls.Label { text: qsTr("Height") }
-            Controls.Label { text: ">" }
-            Controls.SpinBox {
-                id: search_spinBox_MetadataMinimumHeight
-                enabled: false
-                from: 0
-                value: 0
-                to: 30000
-                implicitWidth: 110
-            }
-            Controls.Label { text: "<" }
-            Controls.SpinBox {
-                id: search_spinBox_MetadataMaximumHeight
-                enabled: false
-                from: 0
-                value: 30000
-                to: 30000
-                implicitWidth: 110
-            }
-        }
-        RowLayout {
-            Kirigami.FormData.label: " "
-            Item { implicitWidth: search_checkBox_MetadataSize.implicitWidth }
             Controls.Label { text: qsTr("Width") }
             Controls.Label { text: ">" }
             Controls.SpinBox {
@@ -624,6 +601,30 @@ Kirigami.FormLayout {
                 implicitWidth: 110
             }
         }
+        RowLayout {
+            Kirigami.FormData.label: " "
+            Item { implicitWidth: search_checkBox_MetadataSize.implicitWidth }
+            Controls.Label { text: qsTr("Height") }
+            Controls.Label { text: ">" }
+            Controls.SpinBox {
+                id: search_spinBox_MetadataMinimumHeight
+                enabled: false
+                from: 0
+                value: 0
+                to: 30000
+                implicitWidth: 110
+            }
+            Controls.Label { text: "<" }
+            Controls.SpinBox {
+                id: search_spinBox_MetadataMaximumHeight
+                enabled: false
+                from: 0
+                value: 30000
+                to: 30000
+                implicitWidth: 110
+            }
+        }
+
 
         // Duration row (audio/video)
         RowLayout {

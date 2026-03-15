@@ -151,6 +151,8 @@ public slots:
     Q_INVOKABLE void    openFolder(const QString &folderPath);
     Q_INVOKABLE void    copyToClipboard(const QString &text);
     Q_INVOKABLE QString exportSearchResultsToCSV();
+    Q_INVOKABLE int     batchMoveSearchResultsToTrash();
+    Q_INVOKABLE int     batchDeleteSearchResults();
 
     Q_INVOKABLE bool    shouldShowAlphaWarning() const;
     Q_INVOKABLE void    setAlphaWarningShown();
