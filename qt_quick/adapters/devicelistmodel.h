@@ -36,6 +36,7 @@ public slots:
     void setMaxLevel(int level); // -1 = all, 0 = top-level only
     void collapseDevice(int deviceId);
     void expandDevice(int deviceId);
+    void clearCollapsedUpToLevel(int maxLevel); // -1 = clear all
     bool hasData() const;
     QString getRefreshStatus() const;
 

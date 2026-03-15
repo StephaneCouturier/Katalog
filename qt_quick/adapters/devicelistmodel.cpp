@@ -74,9 +74,9 @@ QString DeviceListModel::formatDescription(const DeviceItem &device) const
         // Space details — Storage and Virtual only
         if ((device.type == "Storage" || device.type == "Virtual") && device.totalSpace > 0) {
             qint64 usedSpace = device.totalSpace - device.freeSpace;
-            filesLine += QString("  · %1 · %2 · %3")
+            filesLine += QString("  · %1 · %2")
                              .arg(locale.formattedDataSize(usedSpace))
-                             .arg(locale.formattedDataSize(device.freeSpace))
+                             //.arg(locale.formattedDataSize(device.freeSpace))
                              .arg(locale.formattedDataSize(device.totalSpace));
         }
         lines << filesLine;
@@ -218,6 +218,20 @@ void DeviceListModel::setMaxLevel(int level)
 {
     m_maxLevel = level;
     refreshData();
+}
+//----------------------------------------------------------------------
+void DeviceListModel::clearCollapsedUpToLevel(int maxLevel)
+{
+    if (maxLevel == -1) {
+        m_collapsedIds.clear();
+        return;
+    }
+    // A device at level L has children at L+1. Remove it from m_collapsedIds
+    // when the new level allows L+1, i.e. when L < maxLevel.
+    for (const DeviceItem &dev : m_devices) {
+        if (dev.level < maxLevel)
+            m_collapsedIds.remove(dev.id);
+    }
 }
 //----------------------------------------------------------------------
 void DeviceListModel::collapseDevice(int deviceId)

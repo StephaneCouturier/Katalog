@@ -176,6 +176,7 @@ void AppManager::expandDevices()
     if (m_deviceExpandLevel >= maxDepth)
         m_deviceExpandLevel = -1; // show all once past max
 
+    deviceListModel->clearCollapsedUpToLevel(m_deviceExpandLevel);
     deviceListModel->setMaxLevel(m_deviceExpandLevel);
     emit deviceExpandLevelChanged();
 }

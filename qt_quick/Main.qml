@@ -323,7 +323,6 @@ Kirigami.ApplicationWindow {
                     Controls.ToolTip.text: "Expand one level"
                     Controls.ToolTip.visible: hovered
                 }
-
             }
         }
 
