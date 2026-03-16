@@ -9,7 +9,7 @@ ColumnLayout {
     spacing: 0
 
     // Width of the left label column inside sub-sections
-    readonly property int labelW: Kirigami.Units.gridUnit * 6
+    readonly property int labelW: Kirigami.Units.gridUnit * 4
 
     function getCriteria() {
         //Global type of search
@@ -268,7 +268,7 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("Search text"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.TextField {
                 id: search_TextField_FileNameText
                 Layout.fillWidth: true
@@ -306,10 +306,13 @@ ColumnLayout {
                 model: ["File names only", "File names or Folder paths", "Folder path only"]
             }
         }
-        Controls.CheckBox {
-            id: search_CheckBox_FileNameCaseSensitive
-            checked: false
-            text: qsTr("Case sensitive")
+        RowLayout {
+            Controls.Label { text: ""; Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.CheckBox {
+                id: search_CheckBox_FileNameCaseSensitive
+                checked: false
+                text: qsTr("Case sensitive")
+            }
         }
         RowLayout {
             Layout.fillWidth: true
@@ -549,6 +552,7 @@ ColumnLayout {
         }
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.CheckBox {
                 id: search_checkBox_MetadataSize
                 checked: false
@@ -563,51 +567,59 @@ ColumnLayout {
                 }
             }
             ColumnLayout {
+                Layout.fillWidth: true
                 spacing: Kirigami.Units.smallSpacing
-                RowLayout {
-                    Controls.Label { text: qsTr("Width"); Layout.preferredWidth: 50 }
-                    Controls.Label { text: ">" }
-                    Controls.SpinBox {
-                        id: search_spinBox_MetadataMinimumWidth
-                        enabled: false
-                        from: 0; value: 0; to: 30000
-                        implicitWidth: 110
+                Flow {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.largeSpacing
+                    RowLayout {
+                        Controls.Label { text: qsTr("Width"); Layout.preferredWidth: 50 }
+                        Controls.Label { text: ">" }
+                        Controls.SpinBox {
+                            id: search_spinBox_MetadataMinimumWidth
+                            enabled: false
+                            from: 0; value: 0; to: 30000
+                            implicitWidth: 110
+                        }
+                    }
+                    RowLayout {
+                        Controls.Label { text: "<" }
+                        Controls.SpinBox {
+                            id: search_spinBox_MetadataMaximumWidth
+                            enabled: false
+                            from: 0; value: 30000; to: 30000
+                            implicitWidth: 110
+                        }
                     }
                 }
-                RowLayout {
-                    Item { Layout.preferredWidth: 50 }
-                    Controls.Label { text: "<" }
-                    Controls.SpinBox {
-                        id: search_spinBox_MetadataMaximumWidth
-                        enabled: false
-                        from: 0; value: 30000; to: 30000
-                        implicitWidth: 110
+                Flow {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.largeSpacing
+                    RowLayout {
+                        Controls.Label { text: qsTr("Height"); Layout.preferredWidth: 50 }
+                        Controls.Label { text: ">" }
+                        Controls.SpinBox {
+                            id: search_spinBox_MetadataMinimumHeight
+                            enabled: false
+                            from: 0; value: 0; to: 30000
+                            implicitWidth: 110
+                        }
                     }
-                }
-                RowLayout {
-                    Controls.Label { text: qsTr("Height"); Layout.preferredWidth: 50 }
-                    Controls.Label { text: ">" }
-                    Controls.SpinBox {
-                        id: search_spinBox_MetadataMinimumHeight
-                        enabled: false
-                        from: 0; value: 0; to: 30000
-                        implicitWidth: 110
-                    }
-                }
-                RowLayout {
-                    Item { Layout.preferredWidth: 50 }
-                    Controls.Label { text: "<" }
-                    Controls.SpinBox {
-                        id: search_spinBox_MetadataMaximumHeight
-                        enabled: false
-                        from: 0; value: 30000; to: 30000
-                        implicitWidth: 110
+                    RowLayout {
+                        Controls.Label { text: "<" }
+                        Controls.SpinBox {
+                            id: search_spinBox_MetadataMaximumHeight
+                            enabled: false
+                            from: 0; value: 30000; to: 30000
+                            implicitWidth: 110
+                        }
                     }
                 }
             }
         }
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.CheckBox {
                 id: search_checkBox_MetadataDuration
                 checked: false
@@ -619,8 +631,9 @@ ColumnLayout {
                     search_dateTimeEdit_MetadataDurationMax.enabled = checked
                 }
             }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
+            Flow {
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.largeSpacing
                 RowLayout {
                     Controls.Label { text: ">" }
                     Controls.TextField {
@@ -704,12 +717,15 @@ ColumnLayout {
         id: search_FormLayout_Duplicates
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
+            Flow {
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.largeSpacing
                 RowLayout {
                     Controls.CheckBox {
                         id: search_checkBox_DuplicatesOnName
@@ -734,7 +750,7 @@ ColumnLayout {
                     Controls.CheckBox {
                         id: search_checkBox_DuplicatesOnDate
                         checked: false
-                        text: qsTr("Date Modified")
+                        text: qsTr("Date")
                         onCheckedChanged: {
                             if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnName.checked
                                     && !search_checkBox_DuplicatesOnChecksum.checked)
@@ -765,9 +781,11 @@ ColumnLayout {
         }
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
+            Flow {
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.largeSpacing
                 Controls.RadioButton {
                     id: search_radioButton_DuplicatesWithinSelectedDevice
                     checked: true
@@ -781,14 +799,15 @@ ColumnLayout {
             }
         }
 
-        ColumnLayout {
+        Flow {
             id: search_FormLayout_DuplicatesDevices
             visible: false
             Layout.leftMargin: pageSearchForm.labelW + Kirigami.Units.largeSpacing
-            spacing: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.largeSpacing
 
             RowLayout {
-                Controls.Label { text: qsTr("Device 1"); Layout.preferredWidth: 70 }
+                Controls.Label { text: qsTr("Device 1");/* Layout.preferredWidth: 70*/}
                 Controls.ComboBox {
                     id: search_comboBox_DuplicatesDevice1
                     model: appManager1.deviceListModel
@@ -797,7 +816,7 @@ ColumnLayout {
                 }
             }
             RowLayout {
-                Controls.Label { text: qsTr("Device 2"); Layout.preferredWidth: 70 }
+                Controls.Label { text: qsTr("Device 2");/* Layout.preferredWidth: 70*/ }
                 Controls.ComboBox {
                     id: search_comboBox_DuplicatesDevice2
                     model: appManager1.deviceListModel
@@ -829,12 +848,15 @@ ColumnLayout {
         id: search_FormLayout_Differences
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
+            Flow {
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.largeSpacing
                 RowLayout {
                     Controls.CheckBox {
                         id: search_checkBox_DifferencesOnName
@@ -859,7 +881,7 @@ ColumnLayout {
                     Controls.CheckBox {
                         id: search_checkBox_DifferencesOnDate
                         checked: false
-                        text: qsTr("Date Modified")
+                        text: qsTr("Date")
                         onCheckedChanged: {
                             if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnName.checked
                                     && !search_checkBox_DifferencesOnChecksum.checked)
@@ -889,22 +911,27 @@ ColumnLayout {
             }
         }
 
-        RowLayout {
-            Controls.Label { text: qsTr("Between"); Layout.preferredWidth: pageSearchForm.labelW }
-            Controls.ComboBox {
-                id: search_comboBox_DifferencesDevice1
-                model: appManager1.deviceListModel
-                textRole: "name"
-                valueRole: "deviceId"
+        Flow {
+            Layout.leftMargin: pageSearchForm.labelW + Kirigami.Units.largeSpacing
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.largeSpacing
+            RowLayout {
+                Controls.Label { text: qsTr("Between") }
+                Controls.ComboBox {
+                    id: search_comboBox_DifferencesDevice1
+                    model: appManager1.deviceListModel
+                    textRole: "name"
+                    valueRole: "deviceId"
+                }
             }
-        }
-        RowLayout {
-            Controls.Label { text: qsTr("And"); Layout.preferredWidth: pageSearchForm.labelW }
-            Controls.ComboBox {
-                id: search_comboBox_DifferencesDevice2
-                model: appManager1.deviceListModel
-                textRole: "name"
-                valueRole: "deviceId"
+            RowLayout {
+                Controls.Label { text: qsTr("And") }
+                Controls.ComboBox {
+                    id: search_comboBox_DifferencesDevice2
+                    model: appManager1.deviceListModel
+                    textRole: "name"
+                    valueRole: "deviceId"
+                }
             }
         }
     }
