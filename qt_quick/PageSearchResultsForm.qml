@@ -320,9 +320,12 @@ ColumnLayout {
                         onClicked: function(mouse) {
                             tableView.selectedRow = row
                             if (mouse.button === Qt.RightButton) {
-                                let fileName = String(newSearch1.data(newSearch1.index(row, 0), Qt.DisplayRole) ?? "")
-                                let folder   = String(newSearch1.data(newSearch1.index(row, 3), Qt.DisplayRole) ?? "")
-                                resultContextMenu.openForRow(row, fileName, folder)
+                                let fileName    = String(newSearch1.data(newSearch1.index(row, 0),  Qt.DisplayRole) ?? "")
+                                let folder      = String(newSearch1.data(newSearch1.index(row, 3),  Qt.DisplayRole) ?? "")
+                                let catalogName = String(newSearch1.data(newSearch1.index(row, 4),  Qt.DisplayRole) ?? "")
+                                let catalogId   = Number(newSearch1.data(newSearch1.index(row, 5),  Qt.DisplayRole) ?? -1)
+                                let checksum    = String(newSearch1.data(newSearch1.index(row, 19), Qt.DisplayRole) ?? "")
+                                resultContextMenu.openForRow(row, fileName, folder, checksum, catalogId, catalogName)
                             }
                         }
                         onDoubleClicked: {
@@ -339,14 +342,20 @@ ColumnLayout {
     // ── Context menu ─────────────────────────────────────────────────────
     Controls.Menu {
         id: resultContextMenu
-        property string fileName: ""
-        property string folder:   ""
-        property string fullPath: ""
+        property string fileName:    ""
+        property string folder:      ""
+        property string fullPath:    ""
+        property string checksum:    ""
+        property int    catalogId:   -1
+        property string catalogName: ""
 
-        function openForRow(r, name, dir) {
-            fileName = name
-            folder   = dir
-            fullPath = dir + "/" + name
+        function openForRow(r, name, dir, cksum, catId, catName) {
+            fileName    = name
+            folder      = dir
+            fullPath    = dir + "/" + name
+            checksum    = cksum
+            catalogId   = catId
+            catalogName = catName
             popup()
         }
 
@@ -368,14 +377,46 @@ ColumnLayout {
             enabled: resultContextMenu.folder !== ""
             onTriggered: appManager1.openFolder(resultContextMenu.folder)
         }
+        Controls.MenuItem {
+            text: qsTr("Explore folder")
+            icon.name: "view-list-tree"
+            enabled: false
+        }
         Controls.MenuSeparator {}
         Controls.MenuItem {
-            text: qsTr("Copy file name")
-            icon.name: "edit-copy"
+            text: qsTr("Show extended metadata (JSON)")
+            icon.name: "document-properties"
+            readonly property bool hasMetadata:
+                resultContextMenu.catalogName !== "" &&
+                resultContextMenu.catalogName !== "Connected" &&
+                appManager1.catalogIncludesExtendedMetadata(resultContextMenu.catalogId)
+            visible: hasMetadata
+            height:  hasMetadata ? implicitHeight : 0
             onTriggered: {
-                appManager1.copyToClipboard(resultContextMenu.fileName)
-                showPassiveNotification(qsTr("File name copied to clipboard"))
+                let fields = appManager1.getFileMetadataParsedFields(
+                    resultContextMenu.catalogId,
+                    resultContextMenu.fileName,
+                    resultContextMenu.folder)
+                if (fields.length > 0) {
+                    metadataDialog.fields    = fields
+                    metadataDialog.jsonText  = appManager1.getFileMetadataJson(
+                        resultContextMenu.catalogId,
+                        resultContextMenu.fileName,
+                        resultContextMenu.folder)
+                    metadataDialog.fileLabel = resultContextMenu.fileName
+                    metadataDialog.open()
+                } else {
+                    showPassiveNotification(qsTr("No extended metadata available"))
+                }
             }
+        }
+        Controls.MenuSeparator {
+            readonly property bool hasMetadata:
+                resultContextMenu.catalogName !== "" &&
+                resultContextMenu.catalogName !== "Connected" &&
+                appManager1.catalogIncludesExtendedMetadata(resultContextMenu.catalogId)
+            visible: hasMetadata
+            height:  hasMetadata ? implicitHeight : 0
         }
         Controls.MenuItem {
             text: qsTr("Copy folder path")
@@ -386,12 +427,369 @@ ColumnLayout {
             }
         }
         Controls.MenuItem {
-            text: qsTr("Copy full path")
+            text: qsTr("Copy file absolute path")
             icon.name: "edit-copy"
             onTriggered: {
                 appManager1.copyToClipboard(resultContextMenu.fullPath)
                 showPassiveNotification(qsTr("Full path copied to clipboard"))
             }
+        }
+        Controls.MenuItem {
+            text: qsTr("Copy file name with extension")
+            icon.name: "edit-copy"
+            onTriggered: {
+                appManager1.copyToClipboard(resultContextMenu.fileName)
+                showPassiveNotification(qsTr("File name copied to clipboard"))
+            }
+        }
+        Controls.MenuItem {
+            text: qsTr("Copy file name without extension")
+            icon.name: "edit-copy"
+            onTriggered: {
+                let n = resultContextMenu.fileName
+                let dot = n.lastIndexOf(".")
+                appManager1.copyToClipboard(dot > 0 ? n.substring(0, dot) : n)
+                showPassiveNotification(qsTr("File name copied to clipboard"))
+            }
+        }
+        Controls.MenuSeparator {}
+        Controls.MenuItem {
+            text: qsTr("Calculate Checksum (SHA-256)")
+            icon.name: "document-properties"
+            visible: resultContextMenu.checksum === ""
+            height:  resultContextMenu.checksum === "" ? implicitHeight : 0
+            onTriggered: {
+                let cksum = appManager1.calculateAndSaveChecksum(
+                    resultContextMenu.fullPath,
+                    resultContextMenu.fileName,
+                    resultContextMenu.folder,
+                    resultContextMenu.catalogId)
+                if (cksum.length > 0) {
+                    resultContextMenu.checksum = cksum
+                    checksumResultDialog.checksumText = cksum
+                    checksumResultDialog.wasSaved = resultContextMenu.catalogId > 0
+                    checksumResultDialog.open()
+                } else {
+                    showPassiveNotification(qsTr("File not found or could not be read"))
+                }
+            }
+        }
+        Controls.MenuItem {
+            text: qsTr("Copy Checksum")
+            icon.name: "edit-copy"
+            visible: resultContextMenu.checksum !== ""
+            height:  resultContextMenu.checksum !== "" ? implicitHeight : 0
+            onTriggered: {
+                appManager1.copyToClipboard(resultContextMenu.checksum)
+                showPassiveNotification(qsTr("Checksum copied to clipboard"))
+            }
+        }
+        Controls.MenuItem {
+            text: qsTr("Verify Checksum (SHA-256)")
+            icon.name: "document-properties"
+            visible: resultContextMenu.checksum !== ""
+            height:  resultContextMenu.checksum !== "" ? implicitHeight : 0
+            onTriggered: {
+                let result = appManager1.verifyFileChecksum(
+                    resultContextMenu.fullPath,
+                    resultContextMenu.checksum)
+                if (result === "match") {
+                    checksumResultDialog.checksumText = resultContextMenu.checksum
+                    checksumResultDialog.wasSaved = false
+                    checksumResultDialog.open()
+                } else if (result.startsWith("mismatch:")) {
+                    checksumMismatchDialog.expectedChecksum = resultContextMenu.checksum
+                    checksumMismatchDialog.actualChecksum   = result.substring(9)
+                    checksumMismatchDialog.open()
+                } else {
+                    showPassiveNotification(qsTr("Error: ") + result.substring(6))
+                }
+            }
+        }
+        Controls.MenuSeparator {}
+        Controls.MenuItem {
+            text: qsTr("Move to Trash")
+            icon.name: "user-trash"
+            enabled: resultContextMenu.fileName !== ""
+            onTriggered: {
+                if (appManager1.moveFileToTrash(resultContextMenu.fullPath))
+                    showPassiveNotification(qsTr("File moved to trash"))
+                else
+                    showPassiveNotification(qsTr("Could not move file to trash"))
+            }
+        }
+        Controls.MenuItem {
+            text: qsTr("Delete file")
+            icon.name: "edit-delete"
+            enabled: resultContextMenu.fileName !== ""
+            onTriggered: {
+                deleteFileDialog.open()
+            }
+        }
+    }
+
+    // ── Metadata dialog ───────────────────────────────────────────────────
+    Kirigami.Dialog {
+        id: metadataDialog
+        property string   jsonText:    ""
+        property var      fields:      []   // QVariantList of {label, value}
+        property string   fileLabel:   ""
+
+        title: qsTr("Extended Metadata")
+        width: 500
+        preferredHeight: Kirigami.Units.gridUnit * 32
+
+        standardButtons: Kirigami.Dialog.Close
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Copy JSON")
+                icon.name: "edit-copy"
+                onTriggered: {
+                    appManager1.copyToClipboard(metadataDialog.jsonText)
+                    showPassiveNotification(qsTr("Metadata JSON copied to clipboard"))
+                }
+            }
+        ]
+
+        contentItem: ColumnLayout {
+            spacing: 0
+
+            // File name header
+            Rectangle {
+                Layout.fillWidth: true
+                implicitHeight: fileNameLabel.implicitHeight + Kirigami.Units.smallSpacing * 2
+                color: Kirigami.Theme.alternateBackgroundColor
+                radius: 4
+
+                Controls.Label {
+                    id: fileNameLabel
+                    anchors {
+                        left: parent.left; right: parent.right
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: Kirigami.Units.smallSpacing * 2
+                        rightMargin: Kirigami.Units.smallSpacing * 2
+                    }
+                    text: metadataDialog.fileLabel
+                    font.bold: true
+                    elide: Text.ElideMiddle
+                }
+            }
+
+            Kirigami.Separator { Layout.fillWidth: true }
+
+            // Column headers
+            Rectangle {
+                Layout.fillWidth: true
+                implicitHeight: 28
+                color: Kirigami.Theme.backgroundColor
+
+                Controls.Label {
+                    x: 8; y: 0
+                    width: 152
+                    height: parent.height
+                    text: qsTr("Field")
+                    font.bold: true
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                    verticalAlignment: Text.AlignVCenter
+                }
+                Rectangle {
+                    x: 160; y: 4
+                    width: 1; height: parent.height - 8
+                    color: Kirigami.Theme.separatorColor; opacity: 0.5
+                }
+                Controls.Label {
+                    x: 169; y: 0
+                    width: parent.width - x - 8
+                    height: parent.height
+                    text: qsTr("Value")
+                    font.bold: true
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            Kirigami.Separator { Layout.fillWidth: true }
+
+            // Scrollable table
+            Controls.ScrollView {
+                id: metadataScrollView
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                clip: true
+
+                ListView {
+                    id: metadataListView
+                    width: metadataScrollView.availableWidth
+                    model: metadataDialog.fields
+                    clip: true
+
+                    delegate: Rectangle {
+                        required property var   modelData
+                        required property int   index
+                        width: ListView.view.width
+
+                        readonly property int   colWidth: 160
+                        readonly property int   hPad:     8
+                        implicitHeight: Math.max(28, valueText.implicitHeight + 10)
+
+                        readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
+                        color: index % 2 === 0
+                               ? (darkTheme ? Kirigami.Theme.backgroundColor : "#ffffff")
+                               : (darkTheme ? "#161b1d" : "#f5f5f5")
+
+                        Controls.Label {
+                            x: hPad
+                            y: 5
+                            width: colWidth - hPad
+                            text: modelData.label
+                            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                            wrapMode: Text.NoWrap
+                            elide: Text.ElideRight
+                            opacity: 0.8
+                            color: Kirigami.Theme.textColor
+                        }
+
+                        Rectangle {
+                            x: colWidth
+                            y: 0
+                            width: 1
+                            height: parent.height
+                            color: Kirigami.Theme.separatorColor
+                            opacity: 0.4
+                        }
+
+                        Controls.Label {
+                            id: valueText
+                            x: colWidth + 1 + hPad
+                            y: 5
+                            width: parent.width - x - hPad
+                            text: modelData.value
+                            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                            wrapMode: Text.WrapAnywhere
+                            color: Kirigami.Theme.textColor
+                        }
+
+                        Kirigami.Separator {
+                            anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
+                            opacity: 0.3
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ── Checksum result dialog ────────────────────────────────────────────
+    Kirigami.Dialog {
+        id: checksumResultDialog
+        property string checksumText: ""
+        property bool   wasSaved: false
+        title: qsTr("Checksum (SHA-256)")
+        standardButtons: Kirigami.Dialog.Close
+        preferredWidth: Kirigami.Units.gridUnit * 36
+        padding: Kirigami.Units.largeSpacing
+
+        contentItem: ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                text: "SHA-256: " + checksumResultDialog.checksumText
+                wrapMode: Text.WrapAnywhere
+                Layout.fillWidth: true
+                font.family: "monospace"
+            }
+            Controls.Label {
+                text: checksumResultDialog.wasSaved
+                      ? qsTr("Checksum saved to database.")
+                      : qsTr("Checksums match.")
+                opacity: 0.7
+            }
+            Controls.Button {
+                text: qsTr("Copy to Clipboard")
+                icon.name: "edit-copy"
+                onClicked: {
+                    appManager1.copyToClipboard(checksumResultDialog.checksumText)
+                    showPassiveNotification(qsTr("Checksum copied to clipboard"))
+                }
+            }
+        }
+    }
+
+    // ── Checksum mismatch dialog ──────────────────────────────────────────
+    Kirigami.Dialog {
+        id: checksumMismatchDialog
+        property string expectedChecksum: ""
+        property string actualChecksum:   ""
+        title: qsTr("Checksum Mismatch")
+        standardButtons: Kirigami.Dialog.Cancel
+        preferredWidth: Kirigami.Units.gridUnit * 36
+        padding: Kirigami.Units.largeSpacing
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Update Checksum")
+                icon.name: "document-save"
+                onTriggered: {
+                    appManager1.calculateAndSaveChecksum(
+                        resultContextMenu.fullPath,
+                        resultContextMenu.fileName,
+                        resultContextMenu.folder,
+                        resultContextMenu.catalogId)
+                    resultContextMenu.checksum = checksumMismatchDialog.actualChecksum
+                    showPassiveNotification(qsTr("Checksum saved to database"))
+                    checksumMismatchDialog.close()
+                }
+            }
+        ]
+
+        contentItem: ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label { text: qsTr("Checksums do not match."); font.bold: true }
+            Controls.Label { text: qsTr("Expected:"); opacity: 0.7 }
+            Controls.Label {
+                text: checksumMismatchDialog.expectedChecksum
+                wrapMode: Text.WrapAnywhere
+                Layout.fillWidth: true
+                font.family: "monospace"
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+            Controls.Label { text: qsTr("Actual:"); opacity: 0.7 }
+            Controls.Label {
+                text: checksumMismatchDialog.actualChecksum
+                wrapMode: Text.WrapAnywhere
+                Layout.fillWidth: true
+                font.family: "monospace"
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+        }
+    }
+
+    // ── Delete confirmation dialog ────────────────────────────────────────
+    Kirigami.Dialog {
+        id: deleteFileDialog
+        title: qsTr("Delete File")
+        standardButtons: Kirigami.Dialog.Cancel
+        preferredWidth: Kirigami.Units.gridUnit * 28
+        padding: Kirigami.Units.largeSpacing
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Delete")
+                icon.name: "edit-delete"
+                onTriggered: {
+                    if (appManager1.deleteSingleFile(resultContextMenu.fullPath))
+                        showPassiveNotification(qsTr("File deleted"))
+                    else
+                        showPassiveNotification(qsTr("Could not delete file"))
+                    deleteFileDialog.close()
+                }
+            }
+        ]
+
+        contentItem: Controls.Label {
+            text: qsTr("Permanently delete this file? This cannot be undone.\n\n%1")
+                  .arg(resultContextMenu.fullPath)
+            wrapMode: Text.WordWrap
         }
     }
 

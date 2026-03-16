@@ -1282,7 +1282,14 @@ QList<QPair<QString,QString>> FileMetadata::parseExtendedMetadataFields(const QJ
         } else if (value.isObject()) {
             displayValue = "[Complex Object]";
         } else if (value.isString()) {
-            displayValue = value.toString();
+            QString strVal = value.toString();
+            if (key.contains("duration", Qt::CaseInsensitive)) {
+                bool ok = false;
+                int secs = strVal.toInt(&ok);
+                displayValue = (ok && secs > 0) ? formatDuration(secs) : strVal;
+            } else {
+                displayValue = strVal;
+            }
         } else if (value.isBool()) {
             displayValue = value.toBool() ? "Yes" : "No";
         } else {
@@ -1290,16 +1297,7 @@ QList<QPair<QString,QString>> FileMetadata::parseExtendedMetadataFields(const QJ
             if (key.contains("duration", Qt::CaseInsensitive)) {
                 int duration = value.toVariant().toInt();
                 if (duration > 0) {
-                    if (key.contains("video", Qt::CaseInsensitive)) {
-                        displayValue = formatDuration(duration); // HH:MM:SS
-                    } else {
-                        // Audio: MM:SS
-                        int minutes = duration / 60;
-                        int seconds = duration % 60;
-                        displayValue = QString("%1:%2")
-                                           .arg(minutes, 2, 10, QChar('0'))
-                                           .arg(seconds, 2, 10, QChar('0'));
-                    }
+                    displayValue = formatDuration(duration); // HH:MM:SS
                 } else {
                     displayValue = QString::number(duration);
                 }

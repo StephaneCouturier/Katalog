@@ -1,7 +1,13 @@
 #include "appmanager.h"
+#include "core/catalog.h"
 #include "core/database.h"
+#include "core/filechecksum.h"
+#include "core/filemetadata.h"
+#include <QJsonDocument>
+#include <QJsonObject>
 #include "version.h"
 #include <QGuiApplication>
+#include <QCryptographicHash>
 
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
@@ -549,6 +555,72 @@ int AppManager::batchDeleteSearchResults()
             ++count;
     }
     return count;
+}
+//----------------------------------------------------------------------
+bool AppManager::moveFileToTrash(const QString &fullPath)
+{
+    return QFile::moveToTrash(fullPath);
+}
+//----------------------------------------------------------------------
+bool AppManager::deleteSingleFile(const QString &fullPath)
+{
+    return QFile::remove(fullPath);
+}
+//----------------------------------------------------------------------
+bool AppManager::catalogIncludesExtendedMetadata(int catalogId)
+{
+    QSqlQuery query(QSqlDatabase::database(QSqlDatabase::defaultConnection));
+    query.prepare(QLatin1String("SELECT catalog_include_metadata FROM catalog WHERE catalog_id = :id"));
+    query.bindValue(":id", catalogId);
+    if (query.exec() && query.next())
+        return query.value(0).toString().contains("Extended");
+    return false;
+}
+//----------------------------------------------------------------------
+QString AppManager::getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath)
+{
+    return Catalog::getFileMetadataJson(catalogId, fileName, folderPath, QSqlDatabase::defaultConnection);
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getFileMetadataParsedFields(int catalogId, const QString &fileName, const QString &folderPath)
+{
+    QString json = Catalog::getFileMetadataJson(catalogId, fileName, folderPath, QSqlDatabase::defaultConnection);
+    if (json.isEmpty())
+        return {};
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(json.toUtf8(), &err);
+    if (err.error != QJsonParseError::NoError || !doc.isObject())
+        return {};
+
+    const auto pairs = FileMetadata::parseExtendedMetadataFields(doc.object());
+    QVariantList result;
+    result.reserve(pairs.size());
+    for (const auto &p : pairs) {
+        QVariantMap row;
+        row["label"] = p.first;
+        row["value"] = p.second;
+        result.append(row);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::calculateAndSaveChecksum(const QString &filePath, const QString &fileName, const QString &folderPath, int catalogId)
+{
+    if (!QFileInfo::exists(filePath))
+        return QString();
+    QString checksum = FileChecksum::calculateChecksum(filePath, QCryptographicHash::Sha256);
+    if (!checksum.isEmpty() && catalogId > 0)
+        FileChecksum::updateFileChecksum(QSqlDatabase::defaultConnection, catalogId, fileName, folderPath, checksum, "SHA256");
+    return checksum;
+}
+//----------------------------------------------------------------------
+QString AppManager::verifyFileChecksum(const QString &filePath, const QString &expectedChecksum)
+{
+    auto result = FileChecksum::verifyChecksum(filePath, expectedChecksum, QCryptographicHash::Sha256);
+    if (!result.success)
+        return "error:" + result.errorMessage;
+    return result.match ? "match" : "mismatch:" + result.actualChecksum;
 }
 //----------------------------------------------------------------------
 QStringList AppManager::getTagNames() const

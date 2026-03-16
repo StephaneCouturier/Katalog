@@ -154,6 +154,15 @@ public slots:
     Q_INVOKABLE int     batchMoveSearchResultsToTrash();
     Q_INVOKABLE int     batchDeleteSearchResults();
 
+    // Single-file operations from context menu
+    Q_INVOKABLE bool    moveFileToTrash(const QString &fullPath);
+    Q_INVOKABLE bool    deleteSingleFile(const QString &fullPath);
+    Q_INVOKABLE bool         catalogIncludesExtendedMetadata(int catalogId);
+    Q_INVOKABLE QString      getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath);
+    Q_INVOKABLE QVariantList getFileMetadataParsedFields(int catalogId, const QString &fileName, const QString &folderPath);
+    Q_INVOKABLE QString calculateAndSaveChecksum(const QString &filePath, const QString &fileName, const QString &folderPath, int catalogId);
+    Q_INVOKABLE QString verifyFileChecksum(const QString &filePath, const QString &expectedChecksum);
+
     Q_INVOKABLE bool    shouldShowAlphaWarning() const;
     Q_INVOKABLE void    setAlphaWarningShown();
 
