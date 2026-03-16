@@ -141,6 +141,8 @@ ColumnLayout {
 
         // Reset folderAttributes
         search_checkBox_FolderCriteria.checked = false
+        search_checkBox_ShowFoldersOnly.checked = false
+        search_checkBox_SearchOnTags.checked = false
         search_comboBox_FolderTag.currentIndex = 0
     }
 
