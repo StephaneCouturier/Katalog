@@ -14,8 +14,9 @@ Kirigami.ApplicationWindow {
 
     Settings {
         id: windowSettings
-        property int savedWidth:  1080
-        property int savedHeight: 720
+        property int  savedWidth:    1080
+        property int  savedHeight:   720
+        property bool drawerPinned:  false
     }
 
     signal searchTriggered()
@@ -27,7 +28,8 @@ Kirigami.ApplicationWindow {
 
     // Global Drawer
     globalDrawer: Kirigami.GlobalDrawer {
-
+        //isMenu: true
+        modal: !windowSettings.drawerPinned
         width: 200
         actions: [
             Kirigami.Action {
@@ -132,6 +134,31 @@ Kirigami.ApplicationWindow {
         footer: Column {
             spacing: Kirigami.Units.smallSpacing
             padding: Kirigami.Units.largeSpacing
+
+            Kirigami.Separator {
+                width: parent.width
+            }
+
+            Row {
+                width: parent.width - Kirigami.Units.largeSpacing * 2
+                spacing: Kirigami.Units.smallSpacing
+
+                Controls.ToolButton {
+                    icon.name: windowSettings.drawerPinned ? "window-unpin" : "pin"
+                    checkable: true
+                    checked: windowSettings.drawerPinned
+                    Controls.ToolTip.text: windowSettings.drawerPinned ? "Unpin drawer" : "Pin drawer open"
+                    Controls.ToolTip.visible: hovered
+                    onToggled: windowSettings.drawerPinned = checked
+                }
+
+                Controls.Label {
+                    text: windowSettings.drawerPinned ? "Drawer pinned" : "Drawer floating"
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                    opacity: 0.7
+                }
+            }
 
             Kirigami.Separator {
                 width: parent.width
