@@ -1,6 +1,7 @@
 #include "appmanager.h"
 #include "core/catalog.h"
 #include "core/database.h"
+#include "core/device.h"
 #include "core/filechecksum.h"
 #include "core/filemetadata.h"
 #include <QJsonDocument>
@@ -527,6 +528,153 @@ QString AppManager::exportSearchResultsToCSV()
         return QString();
 
     return filePath;
+}
+//----------------------------------------------------------------------
+QString AppManager::exportSearchResultsAsCatalog()
+{
+    if (!searchObject || searchObject->fileNames.isEmpty())
+        return QString();
+
+    const QString conn = QSqlDatabase::defaultConnection;
+    const QString timestamp = QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss");
+    const QString catalogName = tr("search_results") + "_" + timestamp;
+
+    // Find or create the "Search Results" virtual parent device
+    Device holder;
+    holder.name = tr("Search Results");
+    holder.getIDFromDeviceName();
+    if (holder.ID <= 0) {
+        holder.generateDeviceID();
+        holder.type     = "Virtual";
+        holder.groupID  = 1;
+        holder.parentID = 0;
+        holder.insertDevice();
+    }
+
+    // Create the new Device + Catalog
+    Device *newDevice = new Device();
+    newDevice->generateDeviceID();
+    newDevice->type     = "Catalog";
+    newDevice->name     = catalogName;
+    newDevice->groupID  = 1;
+    newDevice->parentID = holder.ID;
+    newDevice->path     = "EXPORT";
+    newDevice->totalFileCount = searchObject->filesFoundNumber;
+    newDevice->totalFileSize  = searchObject->filesFoundTotalSize;
+
+    newDevice->catalog->generateID();
+    newDevice->externalID        = newDevice->catalog->ID;
+    newDevice->catalog->name     = catalogName;
+    newDevice->catalog->setDateUpdated(QDateTime());
+    newDevice->catalog->setDateLoaded(QDateTime().addMSecs(100));
+    newDevice->catalog->fileType = searchObject->searchOnType
+                                   ? searchObject->selectedFileType : "All";
+    newDevice->insertDevice();
+    newDevice->catalog->sourcePath   = "EXPORT";
+    newDevice->catalog->appVersion   = currentVersion;
+    newDevice->catalog->insertCatalog();
+
+    // Prepare insert queries
+    const Database::DatabaseType dbType = Database::getDatabaseType(conn);
+    const QString insertOrIgnore = Database::getInsertOrIgnorePrefix(dbType);
+
+    const QString insertFolderSQL = QString(R"(
+        %1 INTO folder(folder_catalog_id, folder_path)
+        VALUES(:folder_catalog_id, :folder_path)
+    )").arg(insertOrIgnore)
+     + (dbType == Database::DatabaseType::PostgreSQL
+        ? " ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING" : "");
+
+    const QString insertFileSQL = QLatin1String(R"(
+        INSERT INTO file(
+            file_catalog_id, file_name, file_folder_path, file_size,
+            file_date_updated, file_catalog, file_full_path,
+            file_extension, file_type, mime_type, mime_verified, type_mismatch,
+            image_width, image_height, image_orientation,
+            video_duration_seconds, video_width, video_height,
+            video_codec, video_framerate, video_bitrate,
+            audio_duration_seconds, audio_artist, audio_album, audio_title,
+            audio_genre, audio_year, audio_track_number,
+            audio_bitrate, audio_sample_rate,
+            metadata_extended, metadata_extraction_date,
+            checksum_sha256, checksum_extraction_date
+        ) VALUES(
+            :file_catalog_id, :file_name, :file_folder_path, :file_size,
+            :file_date_updated, :file_catalog, :file_full_path,
+            :file_extension, :file_type, :mime_type, :mime_verified, :type_mismatch,
+            :image_width, :image_height, :image_orientation,
+            :video_duration_seconds, :video_width, :video_height,
+            :video_codec, :video_framerate, :video_bitrate,
+            :audio_duration_seconds, :audio_artist, :audio_album, :audio_title,
+            :audio_genre, :audio_year, :audio_track_number,
+            :audio_bitrate, :audio_sample_rate,
+            :metadata_extended, :metadata_extraction_date,
+            :checksum_sha256, :checksum_extraction_date
+        )
+    )");
+
+    QSqlQuery folderQ(QSqlDatabase::database(conn));
+    QSqlQuery fileQ(QSqlDatabase::database(conn));
+    folderQ.prepare(insertFolderSQL);
+    fileQ.prepare(insertFileSQL);
+
+    const int catId = newDevice->catalog->ID;
+    const int n = searchObject->fileNames.size();
+
+    for (int i = 0; i < n; ++i) {
+        // Insert folder
+        folderQ.bindValue(":folder_catalog_id", catId);
+        folderQ.bindValue(":folder_path", searchObject->filePaths.value(i));
+        folderQ.exec();
+
+        // Insert file — all columns, null if array too short
+        auto sv = [&](const QStringList &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+        auto iv = [&](const QList<int>    &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+        auto bv = [&](const QList<bool>   &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+        auto dv = [&](const QList<double> &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+
+        fileQ.bindValue(":file_catalog_id",            catId);
+        fileQ.bindValue(":file_name",                  searchObject->fileNames.value(i));
+        fileQ.bindValue(":file_folder_path",           searchObject->filePaths.value(i));
+        fileQ.bindValue(":file_size",                  searchObject->fileSizes.value(i));
+        fileQ.bindValue(":file_date_updated",          searchObject->fileDateTimes.value(i));
+        fileQ.bindValue(":file_catalog",               searchObject->fileCatalogs.value(i));
+        fileQ.bindValue(":file_full_path",             searchObject->filePaths.value(i));
+        fileQ.bindValue(":file_extension",             sv(searchObject->fileExtensions));
+        fileQ.bindValue(":file_type",                  sv(searchObject->fileTypes));
+        fileQ.bindValue(":mime_type",                  sv(searchObject->mimeTypes));
+        fileQ.bindValue(":mime_verified",              bv(searchObject->mimeVerified));
+        fileQ.bindValue(":type_mismatch",              bv(searchObject->typeMismatch));
+        fileQ.bindValue(":image_width",                iv(searchObject->imageWidths));
+        fileQ.bindValue(":image_height",               iv(searchObject->imageHeights));
+        fileQ.bindValue(":image_orientation",          iv(searchObject->imageOrientations));
+        fileQ.bindValue(":video_duration_seconds",     iv(searchObject->videoDurations));
+        fileQ.bindValue(":video_width",                iv(searchObject->videoWidths));
+        fileQ.bindValue(":video_height",               iv(searchObject->videoHeights));
+        fileQ.bindValue(":video_codec",                sv(searchObject->videoCodecs));
+        fileQ.bindValue(":video_framerate",            dv(searchObject->videoFramerates));
+        fileQ.bindValue(":video_bitrate",              iv(searchObject->videoBitrates));
+        fileQ.bindValue(":audio_duration_seconds",     iv(searchObject->audioDurations));
+        fileQ.bindValue(":audio_artist",               sv(searchObject->audioArtists));
+        fileQ.bindValue(":audio_album",                sv(searchObject->audioAlbums));
+        fileQ.bindValue(":audio_title",                sv(searchObject->audioTitles));
+        fileQ.bindValue(":audio_genre",                sv(searchObject->audioGenres));
+        fileQ.bindValue(":audio_year",                 iv(searchObject->audioYears));
+        fileQ.bindValue(":audio_track_number",         iv(searchObject->audioTrackNumbers));
+        fileQ.bindValue(":audio_bitrate",              iv(searchObject->audioBitrates));
+        fileQ.bindValue(":audio_sample_rate",          iv(searchObject->audioSampleRates));
+        fileQ.bindValue(":metadata_extended",          sv(searchObject->metadataExtendeds));
+        fileQ.bindValue(":metadata_extraction_date",   sv(searchObject->metadataExtractionDates));
+        fileQ.bindValue(":checksum_sha256",            sv(searchObject->checksumSha256s));
+        fileQ.bindValue(":checksum_extraction_date",   sv(searchObject->checksumExtractionDates));
+        fileQ.exec();
+    }
+
+    // Refresh device list so the new catalog appears in Selection
+    refreshDeviceList();
+
+    delete newDevice;
+    return catalogName;
 }
 //----------------------------------------------------------------------
 int AppManager::batchMoveSearchResultsToTrash()

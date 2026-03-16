@@ -102,22 +102,39 @@ ColumnLayout {
                 textRole: "text"
                 valueRole: "value"
                 model: [
-                    { text: qsTr("Export to CSV"),  value: "csv",    iconName: "document-save-as" },
-                    { text: qsTr("Move to Trash"),  value: "trash",  iconName: "user-trash"       },
-                    { text: qsTr("Delete"),         value: "delete", iconName: "edit-delete"      }
+                    { text: qsTr("Export to CSV"),     value: "csv",     iconName: "document-save-as" },
+                    { text: qsTr("Export to Catalog"), value: "catalog", iconName: "drive-optical"    },
+                    { text: "",                        value: "---",     iconName: ""                 },
+                    { text: qsTr("Move to Trash"),     value: "trash",   iconName: "user-trash"        },
+                    { text: qsTr("Delete"),            value: "delete",  iconName: "edit-delete"       }
                 ]
                 delegate: Controls.ItemDelegate {
-                    width: batchActionCombo.width
-                    text: modelData.text
-                    icon.name: modelData.iconName
+                    width:  batchActionCombo.width
+                    height: modelData.value === "---" ? 9 : implicitHeight
+                    text:      modelData.value === "---" ? "" : modelData.text
+                    icon.name: modelData.value === "---" ? "" : modelData.iconName
                     highlighted: batchActionCombo.highlightedIndex === index
+                    enabled: modelData.value !== "---"
+                    background: Rectangle {
+                        color: modelData.value === "---"
+                               ? Kirigami.Theme.backgroundColor
+                               : (highlighted ? Kirigami.Theme.highlightColor : "transparent")
+                    }
+                    Kirigami.Separator {
+                        visible: modelData.value === "---"
+                        anchors.centerIn: parent
+                        width: parent.width - Kirigami.Units.largeSpacing * 2
+                    }
                 }
                 contentItem: RowLayout {
                     spacing: Kirigami.Units.smallSpacing
                     Item { width: Kirigami.Units.smallSpacing }
                     Kirigami.Icon {
-                        source: batchActionCombo.currentIndex >= 0
-                                ? batchActionCombo.model[batchActionCombo.currentIndex].iconName : ""
+                        source: {
+                            let m = batchActionCombo.currentIndex >= 0
+                                    ? batchActionCombo.model[batchActionCombo.currentIndex] : null
+                            return (m && m.value !== "---") ? m.iconName : ""
+                        }
                         implicitWidth:  Kirigami.Units.iconSizes.small
                         implicitHeight: Kirigami.Units.iconSizes.small
                     }
@@ -132,16 +149,23 @@ ColumnLayout {
 
             Controls.Button {
                 //text: qsTr("Run")
-                icon.name: "media-playback-start"
+                icon.name: "document-export"
                 enabled: (newSearch1.properties.filesFoundNumber ?? 0) > 0
                 onClicked: {
                     let action = batchActionCombo.currentValue
+                    if (action === "---") return
                     if (action === "csv") {
                         let path = appManager1.exportSearchResultsToCSV()
                         if (path)
                             showPassiveNotification(qsTr("Exported to: %1").arg(path))
                         else
                             showPassiveNotification(qsTr("Export failed — no results or write error"))
+                    } else if (action === "catalog") {
+                        let name = appManager1.exportSearchResultsAsCatalog()
+                        if (name)
+                            showPassiveNotification(qsTr("Results exported to catalog: %1").arg(name))
+                        else
+                            showPassiveNotification(qsTr("Export failed — no results or database error"))
                     } else {
                         batchConfirmDialog.batchAction = action
                         batchConfirmDialog.open()
