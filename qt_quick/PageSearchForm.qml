@@ -346,6 +346,7 @@ ColumnLayout {
         id: fileAtrributeCriteria
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
@@ -396,6 +397,7 @@ ColumnLayout {
         }
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.CheckBox {
                 id: search_checkBox_Size
                 checked: false
@@ -409,8 +411,9 @@ ColumnLayout {
                     search_comboBox_MaxSizeUnit.enabled = checked
                 }
             }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
+            Flow {
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.largeSpacing
                 RowLayout {
                     Controls.Label { text: ">" }
                     Controls.SpinBox {
@@ -446,6 +449,7 @@ ColumnLayout {
         }
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.CheckBox {
                 id: search_checkBox_Date
                 checked: false
@@ -459,8 +463,9 @@ ColumnLayout {
                     search_button_ShowMaxDateCalendar.enabled = checked
                 }
             }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
+            Flow {
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.largeSpacing
                 RowLayout {
                     Controls.Label { text: ">" }
                     Controls.TextField {
