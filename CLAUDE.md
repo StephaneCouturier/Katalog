@@ -5,6 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
+> **CRITICAL — User-visible text:**
+> - **NEVER alter existing `tr()` strings or any user-visible label text** — not for brevity, not for layout reasons, not for any reason. Any change breaks all 30 translations and diverges K3 from K2.
+> - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.
+> - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
+
 > **PROMPT SHORTHANDS:**
 > - **K2** at the start of a prompt → Katalog 2, the Qt Widgets version (`qt_widgets/`)
 > - **K3** at the start of a prompt → Katalog 3, the Qt Quick / QML / Kirigami version (`qt_quick/`)

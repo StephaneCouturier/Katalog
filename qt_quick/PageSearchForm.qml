@@ -4,12 +4,14 @@ import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 import Qt.labs.platform
 
-Kirigami.FormLayout {
+ColumnLayout {
     id: pageSearchForm
+    spacing: 0
+
+    // Width of the left label column inside sub-sections
+    readonly property int labelW: Kirigami.Units.gridUnit * 6
 
     function getCriteria() {
-        //showPassiveNotification("debug");
-
         //Global type of search
         newSearch1.properties = {"searchInCatalogsChecked": true}; //DEV: TEMP
 
@@ -76,8 +78,8 @@ Kirigami.FormLayout {
         newSearch1.properties = {"differencesChecksumEqual":       search_comboBox_DifferenceChecksumSign.currentIndex === 0};
         newSearch1.properties = {"differencesDeviceID1":           search_comboBox_DifferencesDevice1.currentValue ?? 0};
         newSearch1.properties = {"differencesDeviceID2":           search_comboBox_DifferencesDevice2.currentValue ?? 0};
-
     }
+
     function resetSearch() {
         // Reset fileNameCriteria
         search_checkBox_FileNameCriteria.checked = true
@@ -141,8 +143,8 @@ Kirigami.FormLayout {
         search_checkBox_FolderCriteria.checked = false
         search_comboBox_FolderTag.currentIndex = 0
     }
+
     function returnCleanedDate(date) {
-        //Function to return a date formatted as yyyy/mm/dd hh:mm:ss
         var dateArray = date.split(" ");
         var datePart = dateArray[0].split("/");
         var timePart = dateArray[1].split(":");
@@ -154,24 +156,15 @@ Kirigami.FormLayout {
         var min = timePart[1];
         var ss = timePart[2];
 
-        if(dd<10) {
-            dd = '0'+dd
-        }
-        if(mm<10) {
-            mm = '0'+mm
-        }
-        if(hh<10) {
-            hh = '0'+hh
-        }
-        if(min<10) {
-            min = '0'+min
-        }
-        if(ss<10) {
-            ss = '0'+ss
-        }
+        if(dd<10) { dd = '0'+dd }
+        if(mm<10) { mm = '0'+mm }
+        if(hh<10) { hh = '0'+hh }
+        if(min<10) { min = '0'+min }
+        if(ss<10) { ss = '0'+ss }
 
         return yyyy + '/' + mm + '/' + dd + ' ' + hh + ':' + min + ':' + ss;
     }
+
     function executeSearch() {
         getCriteria()
         appManager1.executeSearch()
@@ -180,10 +173,7 @@ Kirigami.FormLayout {
     Kirigami.Dialog {
         id: dateDialog
         property string selectedDateField
-        //property alias selectedDate: search_button_ShowMaxDateCalendar.selectedDate
         title: "Select a date for " + selectedDateField + " date"
-        //Give the user the choice between: Now, 1 day ago, 1 month ago, 1 year ago.
-        //Apply it to the search_dateTimeEdit_Max or search_dateTimeEdit_Min depending on user selection,
 
         contentItem: ColumnLayout {
             RowLayout {
@@ -192,20 +182,16 @@ Kirigami.FormLayout {
                     onClicked: {
                         var today = new Date();
                         var dd = today.getDate();
-                        var mm = today.getMonth()+1; //January is 0!
+                        var mm = today.getMonth()+1;
                         var yyyy = today.getFullYear();
                         var hh = today.getHours();
                         var min = today.getMinutes();
                         var ss = today.getSeconds();
-
                         var todayDate = yyyy + '/' + mm + '/' + dd + ' ' + hh + ':' + min + ':' + ss;
-
-                        //update the search_dateTimeEdit_Max or search_dateTimeEdit_Min depending on selectedDateField
-                        if (dateDialog.selectedDateField === "Min") {
+                        if (dateDialog.selectedDateField === "Min")
                             search_dateTimeEdit_Min.text = returnCleanedDate(todayDate)
-                        } else {
+                        else
                             search_dateTimeEdit_Max.text = returnCleanedDate(todayDate)
-                        }
                         dateDialog.close()
                     }
                 }
@@ -216,11 +202,10 @@ Kirigami.FormLayout {
                         var yesterday = new Date(today);
                         yesterday.setDate(today.getDate() - 1);
                         var fullDate = yesterday.getFullYear() + '/' + (yesterday.getMonth()+1) + '/' + yesterday.getDate() + ' ' + yesterday.getHours() + ':' + yesterday.getMinutes() + ':' + yesterday.getSeconds();
-                        if (dateDialog.selectedDateField === "Min") {
+                        if (dateDialog.selectedDateField === "Min")
                             search_dateTimeEdit_Min.text = returnCleanedDate(fullDate)
-                        } else {
+                        else
                             search_dateTimeEdit_Max.text = returnCleanedDate(fullDate)
-                        }
                         dateDialog.close()
                     }
                 }
@@ -231,11 +216,10 @@ Kirigami.FormLayout {
                         var lastMonth = new Date(today);
                         lastMonth.setMonth(today.getMonth() - 1);
                         var fullDate = lastMonth.getFullYear() + '/' + (lastMonth.getMonth()+1) + '/' + lastMonth.getDate() + ' ' + lastMonth.getHours() + ':' + lastMonth.getMinutes() + ':' + lastMonth.getSeconds();
-                        if (dateDialog.selectedDateField === "Min") {
+                        if (dateDialog.selectedDateField === "Min")
                             search_dateTimeEdit_Min.text = returnCleanedDate(fullDate)
-                        } else {
+                        else
                             search_dateTimeEdit_Max.text = returnCleanedDate(fullDate)
-                        }
                         dateDialog.close()
                     }
                 }
@@ -246,23 +230,20 @@ Kirigami.FormLayout {
                         var lastYear = new Date(today);
                         lastYear.setFullYear(today.getFullYear() - 1);
                         var fullDate = lastYear.getFullYear() + '/' + (lastYear.getMonth()+1) + '/' + lastYear.getDate() + ' ' + lastYear.getHours() + ':' + lastYear.getMinutes() + ':' + lastYear.getSeconds();
-                        if (dateDialog.selectedDateField === "Min") {
+                        if (dateDialog.selectedDateField === "Min")
                             search_dateTimeEdit_Min.text = returnCleanedDate(fullDate)
-                        } else {
+                        else
                             search_dateTimeEdit_Max.text = returnCleanedDate(fullDate)
-                        }
                         dateDialog.close()
                     }
                 }
-                //Add a button "Reset" to reset the date and time to its default
                 Controls.Button {
                     text: "Reset"
                     onClicked: {
-                        if (dateDialog.selectedDateField === "Min") {
+                        if (dateDialog.selectedDateField === "Min")
                             search_dateTimeEdit_Min.text = "1970/01/01 00:00:00"
-                        } else {
+                        else
                             search_dateTimeEdit_Max.text = "2030/01/01 00:00:00"
-                        }
                         dateDialog.close()
                     }
                 }
@@ -270,32 +251,24 @@ Kirigami.FormLayout {
         }
     }
 
-    //Section1: File name criteria
+    // ── Section 1: File name ──────────────────────────────────────────────────
     Controls.CheckBox {
         id: search_checkBox_FileNameCriteria
         checked: true
         text: qsTr("File name")
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 10
         font.bold: checked ? true : false
-        onCheckedChanged: {
-            search_FormLayout_FileNameCriteria.visible = checked
-        }
+        onCheckedChanged: search_FormLayout_FileNameCriteria.visible = checked
     }
-    Kirigami.FormLayout {
+    ColumnLayout {
         id: search_FormLayout_FileNameCriteria
-        anchors.left: parent.left
-        anchors.leftMargin: 25
+        Layout.leftMargin: 25
+        spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
-            id:search_RowLayout_FileNameTextRow
-            Kirigami.FormData.label: "Search text"
-            //property int textFieldWidth: search_TextField_FileNameText.width
+            Controls.Label { text: qsTr("Search text"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.TextField {
                 id: search_TextField_FileNameText
-                Kirigami.FormData.label: "File name"
-
-                // When Enter is pressed, trigger the search
                 onAccepted: pageSearchForm.executeSearch()
             }
             Controls.Button {
@@ -307,39 +280,38 @@ Kirigami.FormLayout {
                 id: search_Button_CleanText
                 icon.name: "edit-clear-history"
                 onClicked: search_TextField_FileNameText.text = pageSearch1.returnCleanedText(search_TextField_FileNameText.text)
-            }           
+            }
         }
-        Controls.ComboBox {
-            id: search_ComboBox_TextCriteriaWith
-            Kirigami.FormData.label: "with"
-            model: ["All Words", "Exact Phrase", "Begins With", "Any Word"]
-            onCurrentIndexChanged: {
-                //For Begins with, only "File names only" should be available
-                 if (currentIndex === 2) { // "Begins With" is selected
-                     search_ComboBox_TextCriteriaIn.model = ["File names only"];
-                 } else {
-                     search_ComboBox_TextCriteriaIn.model = ["File names only", "File names or Folder paths", "Folder path only"];
-                 }
-             }
+        RowLayout {
+            Controls.Label { text: qsTr("with"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.ComboBox {
+                id: search_ComboBox_TextCriteriaWith
+                model: ["All Words", "Exact Phrase", "Begins With", "Any Word"]
+                onCurrentIndexChanged: {
+                    if (currentIndex === 2) {
+                        search_ComboBox_TextCriteriaIn.model = ["File names only"];
+                    } else {
+                        search_ComboBox_TextCriteriaIn.model = ["File names only", "File names or Folder paths", "Folder path only"];
+                    }
+                }
+            }
         }
-        Controls.ComboBox {
-            id: search_ComboBox_TextCriteriaIn
-            Kirigami.FormData.label: "in"
-            model: ["File names only", "File names or Folder paths", "Folder path only"]
+        RowLayout {
+            Controls.Label { text: qsTr("in"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.ComboBox {
+                id: search_ComboBox_TextCriteriaIn
+                model: ["File names only", "File names or Folder paths", "Folder path only"]
+            }
         }
         Controls.CheckBox {
             id: search_CheckBox_FileNameCaseSensitive
             checked: false
             text: qsTr("Case sensitive")
         }
-
         RowLayout {
-            id:search_RowLayout_FileNameExclude
-            Kirigami.FormData.label: "Exclude"
-            //property int textFieldWidth: search_TextField_FileNameText.width
+            Controls.Label { text: qsTr("Exclude"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.TextField {
                 id: search_TextField_FileNameExclude
-                //Kirigami.FormData.label: "Exclude"
             }
             Controls.Button {
                 id: search_Button_ExcludePasteClipboard
@@ -354,138 +326,29 @@ Kirigami.FormLayout {
         }
     }
 
-    //Section2: File attributes criteria
-    Kirigami.Separator {
-        Kirigami.FormData.isSection: true
-        anchors.left: parent.left
-    }
+    // ── Section 2: File attributes ────────────────────────────────────────────
+    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
     Controls.CheckBox {
         id: checkBoxFileAttributesCriteria
         checked: false
         text: qsTr("File attributes")
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 10
         font.bold: checked ? true : false
-
-        onCheckedChanged: {
-            fileAtrributeCriteria.visible = checked
-        }
+        onCheckedChanged: fileAtrributeCriteria.visible = checked
     }
-    Kirigami.FormLayout {
+    ColumnLayout {
         id: fileAtrributeCriteria
         visible: false
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 25
+        spacing: Kirigami.Units.smallSpacing
 
-        //File size
         RowLayout {
-            Kirigami.FormData.label: " "
-            Controls.CheckBox {
-                id: search_checkBox_Size
-                checked: false
-                text: qsTr("Size")
-                onCheckedChanged: {
-                    search_spinBox_MinimumSize.enabled = checked
-                    search_comboBox_MinSizeUnit.enabled = checked
-                    search_spinBox_MaximumSize.enabled = checked
-                    search_comboBox_MaxSizeUnit.enabled = checked
-                }
-            }
-            Controls.Label { text: ">" }
-            Controls.SpinBox {
-                id: search_spinBox_MinimumSize
-                enabled: false
-                from: 0
-                value: 0
-                to: 1000
-                implicitWidth: 110
-            }
-            Controls.ComboBox {
-                id: search_comboBox_MinSizeUnit
-                enabled: false
-                model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
-                implicitWidth: 75
-            }
-            Controls.Label { text: "<" }
-            Controls.SpinBox {
-                id: search_spinBox_MaximumSize
-                enabled: false
-                from: 0
-                value: 1000
-                to: 1000
-                implicitWidth: 110
-            }
-            Controls.ComboBox {
-                id: search_comboBox_MaxSizeUnit
-                enabled: false
-                model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
-                currentIndex: 3
-                implicitWidth: 75
-            }
-        }
-
-        //File date
-        RowLayout {
-            Kirigami.FormData.label: " "
-            Controls.CheckBox {
-                id: search_checkBox_Date
-                checked: false
-                text: qsTr("Date")
-                onCheckedChanged: {
-                    search_dateTimeEdit_Min.enabled = checked
-                    search_button_ShowMinDateCalendar.enabled = checked
-                    search_dateTimeEdit_Max.enabled = checked
-                    search_button_ShowMaxDateCalendar.enabled = checked
-                }
-            }
-            Controls.Label { text: ">" }
-            Controls.TextField {
-                id: search_dateTimeEdit_Min
-                enabled: false
-                inputMask: "9999/99/99 99:99:99"
-                inputMethodHints: Qt.ImhDigitsOnly
-                text: "1970/01/01 00:00:00"
-                Layout.preferredWidth: 150
-            }
-            Controls.Button {
-                id: search_button_ShowMinDateCalendar
-                enabled: false
-                icon.name: "view-calendar"
-                onClicked: {
-                    dateDialog.selectedDateField = "Min"
-                    dateDialog.open()
-                }
-            }
-            Controls.Label { text: "<" }
-            Controls.TextField {
-                id: search_dateTimeEdit_Max
-                enabled: false
-                inputMask: "9999/99/99 99:99:99"
-                inputMethodHints: Qt.ImhDigitsOnly
-                text: "2030/01/01 00:00:00"
-                Layout.preferredWidth: 150
-            }
-            Controls.Button {
-                id: search_button_ShowMaxDateCalendar
-                enabled: false
-                icon.name: "view-calendar"
-                onClicked: {
-                    dateDialog.selectedDateField = "Max"
-                    dateDialog.open()
-                }
-            }
-        }
-
-        //File type
-        RowLayout {
-            Kirigami.FormData.label: " "
             Controls.CheckBox {
                 id: search_checkBox_Type
                 checked: false
                 text: qsTr("Type")
-                onCheckedChanged: {
-                    search_comboBox_FileType.enabled = checked
-                }
+                Layout.preferredWidth: pageSearchForm.labelW
+                onCheckedChanged: search_comboBox_FileType.enabled = checked
             }
             Controls.ComboBox {
                 id: search_comboBox_FileType
@@ -525,55 +388,146 @@ Kirigami.FormLayout {
                 }
             }
         }
+
+        RowLayout {
+            Controls.CheckBox {
+                id: search_checkBox_Size
+                checked: false
+                text: qsTr("Size")
+                Layout.preferredWidth: pageSearchForm.labelW
+                onCheckedChanged: {
+                    search_spinBox_MinimumSize.enabled = checked
+                    search_comboBox_MinSizeUnit.enabled = checked
+                    search_spinBox_MaximumSize.enabled = checked
+                    search_comboBox_MaxSizeUnit.enabled = checked
+                }
+            }
+            ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+                RowLayout {
+                    Controls.Label { text: ">" }
+                    Controls.SpinBox {
+                        id: search_spinBox_MinimumSize
+                        enabled: false
+                        from: 0; value: 0; to: 1000
+                        implicitWidth: 110
+                    }
+                    Controls.ComboBox {
+                        id: search_comboBox_MinSizeUnit
+                        enabled: false
+                        model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
+                        implicitWidth: 75
+                    }
+                }
+                RowLayout {
+                    Controls.Label { text: "<" }
+                    Controls.SpinBox {
+                        id: search_spinBox_MaximumSize
+                        enabled: false
+                        from: 0; value: 1000; to: 1000
+                        implicitWidth: 110
+                    }
+                    Controls.ComboBox {
+                        id: search_comboBox_MaxSizeUnit
+                        enabled: false
+                        model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
+                        currentIndex: 3
+                        implicitWidth: 75
+                    }
+                }
+            }
+        }
+
+        RowLayout {
+            Controls.CheckBox {
+                id: search_checkBox_Date
+                checked: false
+                text: qsTr("Date")
+                Layout.preferredWidth: pageSearchForm.labelW
+                onCheckedChanged: {
+                    search_dateTimeEdit_Min.enabled = checked
+                    search_button_ShowMinDateCalendar.enabled = checked
+                    search_dateTimeEdit_Max.enabled = checked
+                    search_button_ShowMaxDateCalendar.enabled = checked
+                }
+            }
+            ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+                RowLayout {
+                    Controls.Label { text: ">" }
+                    Controls.TextField {
+                        id: search_dateTimeEdit_Min
+                        enabled: false
+                        inputMask: "9999/99/99 99:99:99"
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        text: "1970/01/01 00:00:00"
+                        implicitWidth: 150
+                    }
+                    Controls.Button {
+                        id: search_button_ShowMinDateCalendar
+                        enabled: false
+                        icon.name: "view-calendar"
+                        onClicked: { dateDialog.selectedDateField = "Min"; dateDialog.open() }
+                    }
+                }
+                RowLayout {
+                    Controls.Label { text: "<" }
+                    Controls.TextField {
+                        id: search_dateTimeEdit_Max
+                        enabled: false
+                        inputMask: "9999/99/99 99:99:99"
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        text: "2030/01/01 00:00:00"
+                        implicitWidth: 150
+                    }
+                    Controls.Button {
+                        id: search_button_ShowMaxDateCalendar
+                        enabled: false
+                        icon.name: "view-calendar"
+                        onClicked: { dateDialog.selectedDateField = "Max"; dateDialog.open() }
+                    }
+                }
+            }
+        }
     }
 
-    //Section3: File metadata criteria
-    Kirigami.Separator {
-        Kirigami.FormData.isSection: true
-        anchors.left: parent.left
-    }
+    // ── Section 3: File metadata ──────────────────────────────────────────────
+    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
     Controls.CheckBox {
         id: search_checkBox_FileMetadata
         checked: false
         text: qsTr("File metadata")
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 10
         font.bold: checked ? true : false
-        onCheckedChanged: {
-            search_FormLayout_FileMetadata.visible = checked
-        }
+        onCheckedChanged: search_FormLayout_FileMetadata.visible = checked
     }
-    Kirigami.FormLayout {
+    ColumnLayout {
         id: search_FormLayout_FileMetadata
         visible: false
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 25
+        spacing: Kirigami.Units.smallSpacing
 
-        // Metadata text search row
         RowLayout {
-            Kirigami.FormData.label: " "
             Controls.CheckBox {
                 id: search_checkBox_MetadataText
                 checked: false
                 text: qsTr("Text")
-                onCheckedChanged: {
-                    search_lineEdit_MetadataText.enabled = checked
-                }
+                Layout.preferredWidth: pageSearchForm.labelW
+                onCheckedChanged: search_lineEdit_MetadataText.enabled = checked
             }
             Controls.TextField {
                 id: search_lineEdit_MetadataText
                 enabled: false
-                Layout.preferredWidth: 200
+                implicitWidth: 200
             }
         }
 
-        // Image dimensions row
         RowLayout {
-            Kirigami.FormData.label: " "
             Controls.CheckBox {
                 id: search_checkBox_MetadataSize
                 checked: false
                 text: qsTr("Size")
+                Layout.preferredWidth: pageSearchForm.labelW
                 onCheckedChanged: {
                     search_spinBox_MetadataMinimumHeight.enabled = checked
                     search_spinBox_MetadataMaximumHeight.enabled = checked
@@ -581,146 +535,133 @@ Kirigami.FormLayout {
                     search_spinBox_MetadataMaximumWidth.enabled  = checked
                 }
             }
-            Controls.Label { text: qsTr("Width") }
-            Controls.Label { text: ">" }
-            Controls.SpinBox {
-                id: search_spinBox_MetadataMinimumWidth
-                enabled: false
-                from: 0
-                value: 0
-                to: 30000
-                implicitWidth: 110
-            }
-            Controls.Label { text: "<" }
-            Controls.SpinBox {
-                id: search_spinBox_MetadataMaximumWidth
-                enabled: false
-                from: 0
-                value: 30000
-                to: 30000
-                implicitWidth: 110
-            }
-        }
-        RowLayout {
-            Kirigami.FormData.label: " "
-            Item { implicitWidth: search_checkBox_MetadataSize.implicitWidth }
-            Controls.Label { text: qsTr("Height") }
-            Controls.Label { text: ">" }
-            Controls.SpinBox {
-                id: search_spinBox_MetadataMinimumHeight
-                enabled: false
-                from: 0
-                value: 0
-                to: 30000
-                implicitWidth: 110
-            }
-            Controls.Label { text: "<" }
-            Controls.SpinBox {
-                id: search_spinBox_MetadataMaximumHeight
-                enabled: false
-                from: 0
-                value: 30000
-                to: 30000
-                implicitWidth: 110
+            ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+                RowLayout {
+                    Controls.Label { text: qsTr("Width"); Layout.preferredWidth: 50 }
+                    Controls.Label { text: ">" }
+                    Controls.SpinBox {
+                        id: search_spinBox_MetadataMinimumWidth
+                        enabled: false
+                        from: 0; value: 0; to: 30000
+                        implicitWidth: 110
+                    }
+                }
+                RowLayout {
+                    Item { Layout.preferredWidth: 50 }
+                    Controls.Label { text: "<" }
+                    Controls.SpinBox {
+                        id: search_spinBox_MetadataMaximumWidth
+                        enabled: false
+                        from: 0; value: 30000; to: 30000
+                        implicitWidth: 110
+                    }
+                }
+                RowLayout {
+                    Controls.Label { text: qsTr("Height"); Layout.preferredWidth: 50 }
+                    Controls.Label { text: ">" }
+                    Controls.SpinBox {
+                        id: search_spinBox_MetadataMinimumHeight
+                        enabled: false
+                        from: 0; value: 0; to: 30000
+                        implicitWidth: 110
+                    }
+                }
+                RowLayout {
+                    Item { Layout.preferredWidth: 50 }
+                    Controls.Label { text: "<" }
+                    Controls.SpinBox {
+                        id: search_spinBox_MetadataMaximumHeight
+                        enabled: false
+                        from: 0; value: 30000; to: 30000
+                        implicitWidth: 110
+                    }
+                }
             }
         }
 
-
-        // Duration row (audio/video)
         RowLayout {
-            Kirigami.FormData.label: " "
             Controls.CheckBox {
                 id: search_checkBox_MetadataDuration
                 checked: false
                 text: qsTr("Duration")
+                Layout.preferredWidth: pageSearchForm.labelW
                 onCheckedChanged: {
                     search_dateTimeEdit_MetadataDurationMin.enabled = checked
                     search_dateTimeEdit_MetadataDurationMax.enabled = checked
                 }
             }
-            Controls.Label { text: ">" }
-            Controls.TextField {
-                id: search_dateTimeEdit_MetadataDurationMin
-                enabled: false
-                inputMask: "99:99:99"
-                text: "00:00:00"
-                Layout.preferredWidth: 80
-            }
-            Controls.Label { text: "<" }
-            Controls.TextField {
-                id: search_dateTimeEdit_MetadataDurationMax
-                enabled: false
-                inputMask: "99:99:99"
-                text: "23:59:59"
-                Layout.preferredWidth: 80
+            ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+                RowLayout {
+                    Controls.Label { text: ">" }
+                    Controls.TextField {
+                        id: search_dateTimeEdit_MetadataDurationMin
+                        enabled: false
+                        inputMask: "99:99:99"
+                        text: "00:00:00"
+                        implicitWidth: 80
+                    }
+                }
+                RowLayout {
+                    Controls.Label { text: "<" }
+                    Controls.TextField {
+                        id: search_dateTimeEdit_MetadataDurationMax
+                        enabled: false
+                        inputMask: "99:99:99"
+                        text: "23:59:59"
+                        implicitWidth: 80
+                    }
+                }
             }
         }
     }
 
-    //Section4: Folder criteria
-    Kirigami.Separator {
-        Kirigami.FormData.isSection: true
-        anchors.left: parent.left
-    }
+    // ── Section 4: Folder criteria ────────────────────────────────────────────
+    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
     Controls.CheckBox {
         id: search_checkBox_FolderCriteria
         checked: false
         text: qsTr("Folder criteria")
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.topMargin: 100
+        Layout.leftMargin: 10
         font.bold: checked ? true : false
-
-        onCheckedChanged: {
-            search_FormLayout_folderCriteria.visible = checked
-        }
+        onCheckedChanged: search_FormLayout_folderCriteria.visible = checked
     }
-    Kirigami.FormLayout {
-        //anchors.fill: parent
+    ColumnLayout {
         id: search_FormLayout_folderCriteria
         visible: false
-        anchors.left: parent.left
-        anchors.leftMargin: 25
+        Layout.leftMargin: 25
+        spacing: Kirigami.Units.smallSpacing
 
         Controls.CheckBox {
             id: search_checkBox_ShowFoldersOnly
             checked: false
             text: qsTr("only list folders in results")
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.topMargin: 100
         }
-        Controls.CheckBox {
-            id: search_checkBox_SearchOnTags
-            checked: false
-            text: qsTr("Tag")
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.topMargin: 100
-            onCheckedChanged: {
-                search_comboBox_FolderTag.enabled = checked
+        RowLayout {
+            Controls.CheckBox {
+                id: search_checkBox_SearchOnTags
+                checked: false
+                text: qsTr("Tag")
+                Layout.preferredWidth: pageSearchForm.labelW
+                onCheckedChanged: search_comboBox_FolderTag.enabled = checked
             }
-        }
-        Controls.ComboBox {
-            id: search_comboBox_FolderTag
-            enabled: false
-            model: appManager1.getTagNames()
+            Controls.ComboBox {
+                id: search_comboBox_FolderTag
+                enabled: false
+                model: appManager1.getTagNames()
+            }
         }
     }
 
-    //Section5: Duplicates
-    Kirigami.Separator {
-        Kirigami.FormData.isSection: true
-        anchors.left: parent.left
-    }
+    // ── Section 5: Duplicates ─────────────────────────────────────────────────
+    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
     Controls.CheckBox {
         id: search_checkBox_Duplicates
         checked: false
         text: qsTr("Duplicates")
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 10
         font.bold: checked ? true : false
-
         onCheckedChanged: {
             search_FormLayout_Duplicates.visible = checked
             if (checked && search_checkBox_Differences.checked) {
@@ -729,115 +670,122 @@ Kirigami.FormLayout {
             }
         }
     }
-    Kirigami.FormLayout {
+    ColumnLayout {
         id: search_FormLayout_Duplicates
         visible: false
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 25
+        spacing: Kirigami.Units.smallSpacing
 
-        // On row: Name / Size / Date Modified / [=|≠] Checksum
         RowLayout {
-            Kirigami.FormData.label: qsTr("On")
-            Controls.CheckBox {
-                id: search_checkBox_DuplicatesOnName
-                checked: true
-                text: qsTr("Name")
-                onCheckedChanged: {
-                    if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnDate.checked
-                            && !search_checkBox_DuplicatesOnChecksum.checked)
-                        search_checkBox_DuplicatesOnName.checked = true
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW }
+            ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+                RowLayout {
+                    Controls.CheckBox {
+                        id: search_checkBox_DuplicatesOnName
+                        checked: true
+                        text: qsTr("Name")
+                        onCheckedChanged: {
+                            if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnDate.checked
+                                    && !search_checkBox_DuplicatesOnChecksum.checked)
+                                search_checkBox_DuplicatesOnName.checked = true
+                        }
+                    }
+                    Controls.CheckBox {
+                        id: search_checkBox_DuplicatesOnSize
+                        checked: false
+                        text: qsTr("Size")
+                        onCheckedChanged: {
+                            if (!search_checkBox_DuplicatesOnName.checked && !search_checkBox_DuplicatesOnDate.checked
+                                    && !search_checkBox_DuplicatesOnChecksum.checked)
+                                search_checkBox_DuplicatesOnSize.checked = true
+                        }
+                    }
+                    Controls.CheckBox {
+                        id: search_checkBox_DuplicatesOnDate
+                        checked: false
+                        text: qsTr("Date Modified")
+                        onCheckedChanged: {
+                            if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnName.checked
+                                    && !search_checkBox_DuplicatesOnChecksum.checked)
+                                search_checkBox_DuplicatesOnDate.checked = true
+                        }
+                    }
                 }
-            }
-            Controls.CheckBox {
-                id: search_checkBox_DuplicatesOnSize
-                checked: false
-                text: qsTr("Size")
-                onCheckedChanged: {
-                    if (!search_checkBox_DuplicatesOnName.checked && !search_checkBox_DuplicatesOnDate.checked
-                            && !search_checkBox_DuplicatesOnChecksum.checked)
-                        search_checkBox_DuplicatesOnSize.checked = true
-                }
-            }
-            Controls.CheckBox {
-                id: search_checkBox_DuplicatesOnDate
-                checked: false
-                text: qsTr("Date Modified")
-                onCheckedChanged: {
-                    if (!search_checkBox_DuplicatesOnSize.checked && !search_checkBox_DuplicatesOnName.checked
-                            && !search_checkBox_DuplicatesOnChecksum.checked)
-                        search_checkBox_DuplicatesOnDate.checked = true
-                }
-            }
-            Controls.ComboBox {
-                id: search_comboBox_DuplicateChecksumSign
-                model: ["=", "≠"]
-                implicitWidth: 60
-                enabled: search_checkBox_DuplicatesOnChecksum.checked
-            }
-            Controls.CheckBox {
-                id: search_checkBox_DuplicatesOnChecksum
-                checked: false
-                text: qsTr("Checksum")
-                onCheckedChanged: {
-                    search_comboBox_DuplicateChecksumSign.enabled = checked
-                    if (!search_checkBox_DuplicatesOnName.checked && !search_checkBox_DuplicatesOnSize.checked
-                            && !search_checkBox_DuplicatesOnDate.checked)
-                        search_checkBox_DuplicatesOnChecksum.checked = true
+                RowLayout {
+                    Controls.ComboBox {
+                        id: search_comboBox_DuplicateChecksumSign
+                        model: ["=", "≠"]
+                        implicitWidth: 60
+                        enabled: search_checkBox_DuplicatesOnChecksum.checked
+                    }
+                    Controls.CheckBox {
+                        id: search_checkBox_DuplicatesOnChecksum
+                        checked: false
+                        text: qsTr("Checksum")
+                        onCheckedChanged: {
+                            search_comboBox_DuplicateChecksumSign.enabled = checked
+                            if (!search_checkBox_DuplicatesOnName.checked && !search_checkBox_DuplicatesOnSize.checked
+                                    && !search_checkBox_DuplicatesOnDate.checked)
+                                search_checkBox_DuplicatesOnChecksum.checked = true
+                        }
+                    }
                 }
             }
         }
 
-        // Scope row: Within selected device / Compare two devices
         RowLayout {
-            Kirigami.FormData.label: qsTr("Scope")
-            Controls.RadioButton {
-                id: search_radioButton_DuplicatesWithinSelectedDevice
-                checked: true
-                text: qsTr("Within selected device")
-            }
-            Controls.RadioButton {
-                id: search_radioButton_DuplicatesCompareTwoDevices
-                text: qsTr("Compare two devices")
-                onCheckedChanged: {
-                    search_FormLayout_DuplicatesDevices.visible = checked
+            Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW }
+            ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+                Controls.RadioButton {
+                    id: search_radioButton_DuplicatesWithinSelectedDevice
+                    checked: true
+                    text: qsTr("Within selected device")
+                }
+                Controls.RadioButton {
+                    id: search_radioButton_DuplicatesCompareTwoDevices
+                    text: qsTr("Compare two devices")
+                    onCheckedChanged: search_FormLayout_DuplicatesDevices.visible = checked
                 }
             }
         }
 
-        // Device selection (only shown for "Compare two devices")
-        Kirigami.FormLayout {
+        ColumnLayout {
             id: search_FormLayout_DuplicatesDevices
             visible: false
-            Controls.ComboBox {
-                id: search_comboBox_DuplicatesDevice1
-                Kirigami.FormData.label: qsTr("Device 1")
-                model: appManager1.deviceListModel
-                textRole: "name"
-                valueRole: "deviceId"
+            Layout.leftMargin: pageSearchForm.labelW + Kirigami.Units.largeSpacing
+            spacing: Kirigami.Units.smallSpacing
+
+            RowLayout {
+                Controls.Label { text: qsTr("Device 1"); Layout.preferredWidth: 70 }
+                Controls.ComboBox {
+                    id: search_comboBox_DuplicatesDevice1
+                    model: appManager1.deviceListModel
+                    textRole: "name"
+                    valueRole: "deviceId"
+                }
             }
-            Controls.ComboBox {
-                id: search_comboBox_DuplicatesDevice2
-                Kirigami.FormData.label: qsTr("Device 2")
-                model: appManager1.deviceListModel
-                textRole: "name"
-                valueRole: "deviceId"
+            RowLayout {
+                Controls.Label { text: qsTr("Device 2"); Layout.preferredWidth: 70 }
+                Controls.ComboBox {
+                    id: search_comboBox_DuplicatesDevice2
+                    model: appManager1.deviceListModel
+                    textRole: "name"
+                    valueRole: "deviceId"
+                }
             }
         }
     }
 
-    //Section6: Differences
-    Kirigami.Separator {
-        Kirigami.FormData.isSection: true
-        anchors.left: parent.left
-    }
+    // ── Section 6: Differences ────────────────────────────────────────────────
+    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
     Controls.CheckBox {
         id: search_checkBox_Differences
         checked: false
         text: qsTr("Differences")
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 10
         font.bold: checked ? true : false
-
         onCheckedChanged: {
             search_FormLayout_Differences.visible = checked
             if (checked && search_checkBox_Duplicates.checked) {
@@ -846,78 +794,89 @@ Kirigami.FormLayout {
             }
         }
     }
-    Kirigami.FormLayout {
+    ColumnLayout {
         id: search_FormLayout_Differences
         visible: false
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        Layout.leftMargin: 25
+        spacing: Kirigami.Units.smallSpacing
 
-        // On row: Name / Size / Date Modified / [=|≠] Checksum
         RowLayout {
-            Kirigami.FormData.label: qsTr("On")
-            Controls.CheckBox {
-                id: search_checkBox_DifferencesOnName
-                checked: true
-                text: qsTr("Name")
-                onCheckedChanged: {
-                    if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnDate.checked
-                            && !search_checkBox_DifferencesOnChecksum.checked)
-                        search_checkBox_DifferencesOnName.checked = true
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW }
+            ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+                RowLayout {
+                    Controls.CheckBox {
+                        id: search_checkBox_DifferencesOnName
+                        checked: true
+                        text: qsTr("Name")
+                        onCheckedChanged: {
+                            if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnDate.checked
+                                    && !search_checkBox_DifferencesOnChecksum.checked)
+                                search_checkBox_DifferencesOnName.checked = true
+                        }
+                    }
+                    Controls.CheckBox {
+                        id: search_checkBox_DifferencesOnSize
+                        checked: false
+                        text: qsTr("Size")
+                        onCheckedChanged: {
+                            if (!search_checkBox_DifferencesOnName.checked && !search_checkBox_DifferencesOnDate.checked
+                                    && !search_checkBox_DifferencesOnChecksum.checked)
+                                search_checkBox_DifferencesOnSize.checked = true
+                        }
+                    }
+                    Controls.CheckBox {
+                        id: search_checkBox_DifferencesOnDate
+                        checked: false
+                        text: qsTr("Date Modified")
+                        onCheckedChanged: {
+                            if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnName.checked
+                                    && !search_checkBox_DifferencesOnChecksum.checked)
+                                search_checkBox_DifferencesOnDate.checked = true
+                        }
+                    }
                 }
-            }
-            Controls.CheckBox {
-                id: search_checkBox_DifferencesOnSize
-                checked: false
-                text: qsTr("Size")
-                onCheckedChanged: {
-                    if (!search_checkBox_DifferencesOnName.checked && !search_checkBox_DifferencesOnDate.checked
-                            && !search_checkBox_DifferencesOnChecksum.checked)
-                        search_checkBox_DifferencesOnSize.checked = true
-                }
-            }
-            Controls.CheckBox {
-                id: search_checkBox_DifferencesOnDate
-                checked: false
-                text: qsTr("Date Modified")
-                onCheckedChanged: {
-                    if (!search_checkBox_DifferencesOnSize.checked && !search_checkBox_DifferencesOnName.checked
-                            && !search_checkBox_DifferencesOnChecksum.checked)
-                        search_checkBox_DifferencesOnDate.checked = true
-                }
-            }
-            Controls.ComboBox {
-                id: search_comboBox_DifferenceChecksumSign
-                model: ["=", "≠"]
-                implicitWidth: 60
-                enabled: search_checkBox_DifferencesOnChecksum.checked
-            }
-            Controls.CheckBox {
-                id: search_checkBox_DifferencesOnChecksum
-                checked: false
-                text: qsTr("Checksum")
-                onCheckedChanged: {
-                    search_comboBox_DifferenceChecksumSign.enabled = checked
-                    if (!search_checkBox_DifferencesOnName.checked && !search_checkBox_DifferencesOnSize.checked
-                            && !search_checkBox_DifferencesOnDate.checked)
-                        search_checkBox_DifferencesOnChecksum.checked = true
+                RowLayout {
+                    Controls.ComboBox {
+                        id: search_comboBox_DifferenceChecksumSign
+                        model: ["=", "≠"]
+                        implicitWidth: 60
+                        enabled: search_checkBox_DifferencesOnChecksum.checked
+                    }
+                    Controls.CheckBox {
+                        id: search_checkBox_DifferencesOnChecksum
+                        checked: false
+                        text: qsTr("Checksum")
+                        onCheckedChanged: {
+                            search_comboBox_DifferenceChecksumSign.enabled = checked
+                            if (!search_checkBox_DifferencesOnName.checked && !search_checkBox_DifferencesOnSize.checked
+                                    && !search_checkBox_DifferencesOnDate.checked)
+                                search_checkBox_DifferencesOnChecksum.checked = true
+                        }
+                    }
                 }
             }
         }
 
-        // Device dropdowns (always visible when Differences section is open)
-        Controls.ComboBox {
-            id: search_comboBox_DifferencesDevice1
-            Kirigami.FormData.label: qsTr("Between")
-            model: appManager1.deviceListModel
-            textRole: "name"
-            valueRole: "deviceId"
+        RowLayout {
+            Controls.Label { text: qsTr("Between"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.ComboBox {
+                id: search_comboBox_DifferencesDevice1
+                model: appManager1.deviceListModel
+                textRole: "name"
+                valueRole: "deviceId"
+            }
         }
-        Controls.ComboBox {
-            id: search_comboBox_DifferencesDevice2
-            Kirigami.FormData.label: qsTr("And")
-            model: appManager1.deviceListModel
-            textRole: "name"
-            valueRole: "deviceId"
+        RowLayout {
+            Controls.Label { text: qsTr("And"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.ComboBox {
+                id: search_comboBox_DifferencesDevice2
+                model: appManager1.deviceListModel
+                textRole: "name"
+                valueRole: "deviceId"
+            }
         }
     }
+
+    Item { Layout.fillHeight: true }
 }
