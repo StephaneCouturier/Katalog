@@ -256,19 +256,22 @@ ColumnLayout {
         id: search_checkBox_FileNameCriteria
         checked: true
         text: qsTr("File name")
-        Layout.leftMargin: 10
+        Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
         onCheckedChanged: search_FormLayout_FileNameCriteria.visible = checked
     }
     ColumnLayout {
         id: search_FormLayout_FileNameCriteria
-        Layout.leftMargin: 25
+        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.Label { text: qsTr("Search text"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.TextField {
                 id: search_TextField_FileNameText
+                Layout.fillWidth: true
                 onAccepted: pageSearchForm.executeSearch()
             }
             Controls.Button {
@@ -309,9 +312,11 @@ ColumnLayout {
             text: qsTr("Case sensitive")
         }
         RowLayout {
+            Layout.fillWidth: true
             Controls.Label { text: qsTr("Exclude"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.TextField {
                 id: search_TextField_FileNameExclude
+                Layout.fillWidth: true
             }
             Controls.Button {
                 id: search_Button_ExcludePasteClipboard
@@ -325,6 +330,7 @@ ColumnLayout {
             }
         }
     }
+    Controls.Label { text: ""}
 
     // ── Section 2: File attributes ────────────────────────────────────────────
     Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
@@ -332,14 +338,14 @@ ColumnLayout {
         id: checkBoxFileAttributesCriteria
         checked: false
         text: qsTr("File attributes")
-        Layout.leftMargin: 10
+        Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
         onCheckedChanged: fileAtrributeCriteria.visible = checked
     }
     ColumnLayout {
         id: fileAtrributeCriteria
         visible: false
-        Layout.leftMargin: 25
+        Layout.leftMargin: Kirigami.Units.largeSpacing
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
@@ -395,6 +401,7 @@ ColumnLayout {
                 checked: false
                 text: qsTr("Size")
                 Layout.preferredWidth: pageSearchForm.labelW
+                Layout.alignment: Qt.AlignTop
                 onCheckedChanged: {
                     search_spinBox_MinimumSize.enabled = checked
                     search_comboBox_MinSizeUnit.enabled = checked
@@ -444,6 +451,7 @@ ColumnLayout {
                 checked: false
                 text: qsTr("Date")
                 Layout.preferredWidth: pageSearchForm.labelW
+                Layout.alignment: Qt.AlignTop
                 onCheckedChanged: {
                     search_dateTimeEdit_Min.enabled = checked
                     search_button_ShowMinDateCalendar.enabled = checked
@@ -490,6 +498,7 @@ ColumnLayout {
             }
         }
     }
+    Controls.Label { text: ""}
 
     // ── Section 3: File metadata ──────────────────────────────────────────────
     Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
@@ -497,17 +506,19 @@ ColumnLayout {
         id: search_checkBox_FileMetadata
         checked: false
         text: qsTr("File metadata")
-        Layout.leftMargin: 10
+        Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
         onCheckedChanged: search_FormLayout_FileMetadata.visible = checked
     }
     ColumnLayout {
         id: search_FormLayout_FileMetadata
         visible: false
-        Layout.leftMargin: 25
+        Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.CheckBox {
                 id: search_checkBox_MetadataText
                 checked: false
@@ -518,7 +529,17 @@ ColumnLayout {
             Controls.TextField {
                 id: search_lineEdit_MetadataText
                 enabled: false
-                implicitWidth: 200
+                Layout.fillWidth: true
+            }
+            Controls.Button {
+                icon.name: "edit-paste"
+                enabled: search_checkBox_MetadataText.checked
+                onClicked: search_lineEdit_MetadataText.text = pageSearch1.returnClipboard()
+            }
+            Controls.Button {
+                icon.name: "edit-clear-history"
+                enabled: search_checkBox_MetadataText.checked
+                onClicked: search_lineEdit_MetadataText.text = pageSearch1.returnCleanedText(search_lineEdit_MetadataText.text)
             }
         }
 
@@ -528,6 +549,7 @@ ColumnLayout {
                 checked: false
                 text: qsTr("Size")
                 Layout.preferredWidth: pageSearchForm.labelW
+                Layout.alignment: Qt.AlignTop
                 onCheckedChanged: {
                     search_spinBox_MetadataMinimumHeight.enabled = checked
                     search_spinBox_MetadataMaximumHeight.enabled = checked
@@ -586,6 +608,7 @@ ColumnLayout {
                 checked: false
                 text: qsTr("Duration")
                 Layout.preferredWidth: pageSearchForm.labelW
+                Layout.alignment: Qt.AlignTop
                 onCheckedChanged: {
                     search_dateTimeEdit_MetadataDurationMin.enabled = checked
                     search_dateTimeEdit_MetadataDurationMax.enabled = checked
@@ -616,6 +639,7 @@ ColumnLayout {
             }
         }
     }
+    Controls.Label { text: ""}
 
     // ── Section 4: Folder criteria ────────────────────────────────────────────
     Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
@@ -623,14 +647,14 @@ ColumnLayout {
         id: search_checkBox_FolderCriteria
         checked: false
         text: qsTr("Folder criteria")
-        Layout.leftMargin: 10
+        Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
         onCheckedChanged: search_FormLayout_folderCriteria.visible = checked
     }
     ColumnLayout {
         id: search_FormLayout_folderCriteria
         visible: false
-        Layout.leftMargin: 25
+        Layout.leftMargin: Kirigami.Units.largeSpacing
         spacing: Kirigami.Units.smallSpacing
 
         Controls.CheckBox {
@@ -653,6 +677,7 @@ ColumnLayout {
             }
         }
     }
+    Controls.Label { text: ""}
 
     // ── Section 5: Duplicates ─────────────────────────────────────────────────
     Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
@@ -660,7 +685,7 @@ ColumnLayout {
         id: search_checkBox_Duplicates
         checked: false
         text: qsTr("Duplicates")
-        Layout.leftMargin: 10
+        Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
         onCheckedChanged: {
             search_FormLayout_Duplicates.visible = checked
@@ -673,11 +698,11 @@ ColumnLayout {
     ColumnLayout {
         id: search_FormLayout_Duplicates
         visible: false
-        Layout.leftMargin: 25
+        Layout.leftMargin: Kirigami.Units.largeSpacing
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
-            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
             ColumnLayout {
                 spacing: Kirigami.Units.smallSpacing
                 RowLayout {
@@ -735,7 +760,7 @@ ColumnLayout {
         }
 
         RowLayout {
-            Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
             ColumnLayout {
                 spacing: Kirigami.Units.smallSpacing
                 Controls.RadioButton {
@@ -777,6 +802,7 @@ ColumnLayout {
             }
         }
     }
+    Controls.Label { text: ""}
 
     // ── Section 6: Differences ────────────────────────────────────────────────
     Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
@@ -784,7 +810,7 @@ ColumnLayout {
         id: search_checkBox_Differences
         checked: false
         text: qsTr("Differences")
-        Layout.leftMargin: 10
+        Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
         onCheckedChanged: {
             search_FormLayout_Differences.visible = checked
@@ -797,11 +823,11 @@ ColumnLayout {
     ColumnLayout {
         id: search_FormLayout_Differences
         visible: false
-        Layout.leftMargin: 25
+        Layout.leftMargin: Kirigami.Units.largeSpacing
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
-            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
             ColumnLayout {
                 spacing: Kirigami.Units.smallSpacing
                 RowLayout {
