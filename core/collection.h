@@ -57,6 +57,9 @@ public:
 
     QString loadDatabaseSchemaVersion();
     void setDatabaseSchemaVersion();
+    QString imageFolderPath;
+    void loadImageFolderPath();
+    void saveImageFolderPath();
 
     //Database management
     QString databaseMode;

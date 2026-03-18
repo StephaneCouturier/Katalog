@@ -7705,6 +7705,29 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            </property>
                           </widget>
                          </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="Storage_horizontalLayout_Picture">
+                           <item>
+                            <widget class="QComboBox" name="Storage_comboBox_PicturePath"/>
+                           </item>
+                           <item>
+                            <widget class="QPushButton" name="Storage_pushButton_ReloadPictures">
+                             <property name="maximumSize">
+                              <size>
+                               <width>30</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="icon">
+                              <iconset theme="view-refresh"/>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
                         </layout>
                        </widget>
                       </item>
@@ -12607,6 +12630,50 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
+            </item>
+            <item row="2" column="0">
+             <layout class="QHBoxLayout" name="Settings_horizontalLayout_ImageFolder">
+              <property name="leftMargin">
+               <number>12</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="Settings_label_ImageFolder">
+                <property name="text">
+                 <string>Images folder</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="Settings_lineEdit_ImageFolderPath">
+                <property name="placeholderText">
+                 <string>Default: collection folder/images</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Settings_pushButton_SelectImageFolder">
+                <property name="text">
+                 <string>Select</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-select"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="Settings_horizontalSpacer_ImageFolder">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </item>
             <item row="3" column="0">
              <widget class="Line" name="Settings_line_2">

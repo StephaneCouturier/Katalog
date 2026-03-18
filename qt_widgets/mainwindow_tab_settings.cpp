@@ -344,6 +344,25 @@
         QDesktopServices::openUrl(QUrl::fromLocalFile(collection->folder));
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_SelectImageFolder_clicked()
+    {
+        QString newFolder = QFileDialog::getExistingDirectory(this, tr("Select the folder for device images"),
+                                                              collection->imageFolderPath,
+                                                              QFileDialog::ShowDirsOnly
+                                                                  | QFileDialog::DontResolveSymlinks);
+        if (!newFolder.isEmpty()) {
+            collection->imageFolderPath = newFolder;
+            collection->saveImageFolderPath();
+            ui->Settings_lineEdit_ImageFolderPath->setText(collection->imageFolderPath);
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_ImageFolderPath_returnPressed()
+    {
+        collection->imageFolderPath = ui->Settings_lineEdit_ImageFolderPath->text();
+        collection->saveImageFolderPath();
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
     {
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
@@ -701,6 +720,10 @@
         if(collection->databaseMode != "Memory"){
             runDatabaseMigrations();
         }
+
+        // Load per-collection parameters
+        collection->loadImageFolderPath();
+        ui->Settings_lineEdit_ImageFolderPath->setText(collection->imageFolderPath);
 
         // Refresh UI views to show updated data
         loadDevicesView("");                // Refresh main device tree with updated dates

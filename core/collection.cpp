@@ -103,6 +103,48 @@ void Collection::setDatabaseSchemaVersion()
 }
 //----------------------------------------------------------------------
 
+//----------------------------------------------------------------------
+void Collection::loadImageFolderPath()
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        SELECT parameter_value1
+        FROM parameter
+        WHERE parameter_type = 'collection'
+        AND parameter_name = 'imageFolderPath'
+    )"));
+    query.exec();
+    if (query.next())
+        imageFolderPath = query.value(0).toString();
+    else
+        imageFolderPath = folder + "/images";
+}
+//----------------------------------------------------------------------
+void Collection::saveImageFolderPath()
+{
+    QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
+    updateQuery.prepare(QLatin1String(R"(
+        UPDATE parameter
+        SET parameter_value1 = :value
+        WHERE parameter_type = 'collection'
+        AND parameter_name = 'imageFolderPath'
+    )"));
+    updateQuery.bindValue(":value", imageFolderPath);
+    updateQuery.exec();
+    if (updateQuery.numRowsAffected() == 0) {
+        QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
+        insertQuery.prepare(QLatin1String(R"(
+            INSERT INTO parameter (parameter_name, parameter_type, parameter_value1)
+            VALUES ('imageFolderPath', 'collection', :value)
+        )"));
+        insertQuery.bindValue(":value", imageFolderPath);
+        insertQuery.exec();
+    }
+    if (databaseMode == "Memory")
+        saveParameterTableToFile();
+}
+//----------------------------------------------------------------------
+
 //File paths and creation -----------------------------------------------
 void Collection::generateCollectionFilesPaths()
 {
@@ -596,7 +638,8 @@ void Collection::loadStorageFileToTable()
                                         storage_build_date,
                                         storage_comment1,
                                         storage_comment2,
-                                        storage_comment3)
+                                        storage_comment3,
+                                        storage_picture_path)
                                   values(
                                         :storage_id,
                                         :storage_name,
@@ -613,7 +656,8 @@ void Collection::loadStorageFileToTable()
                                         :storage_build_date,
                                         :storage_comment1,
                                         :storage_comment2,
-                                        :storage_comment3)
+                                        :storage_comment3,
+                                        :storage_picture_path)
                                 )");
 
                     QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
@@ -634,6 +678,7 @@ void Collection::loadStorageFileToTable()
                     insertQuery.bindValue(":storage_comment1",      fieldList[13]);
                     insertQuery.bindValue(":storage_comment2",      fieldList[14]);
                     insertQuery.bindValue(":storage_comment3",      fieldList[15]);
+                    insertQuery.bindValue(":storage_picture_path",  fieldList.size() > 16 ? fieldList[16] : "");
 
                     if(line!="")
                         insertQuery.exec();
@@ -1272,6 +1317,7 @@ void Collection::saveStorageTableToFile()
             << "Comment1"      << "\t"
             << "Comment2"      << "\t"
             << "Comment3"      << "\t"
+            << "PicturePath"   << "\t"
             << '\n';
 
         //Get data
@@ -1293,7 +1339,8 @@ void Collection::saveStorageTableToFile()
                             storage_build_date    ,
                             storage_comment1      ,
                             storage_comment2      ,
-                            storage_comment3
+                            storage_comment3      ,
+                            storage_picture_path
                         FROM storage
                                     )");
         query.prepare(querySQL);

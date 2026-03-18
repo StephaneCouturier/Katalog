@@ -418,6 +418,7 @@ class MainWindow : public KXmlGuiWindow
             int lastStorageSortOrder;
             void updateStorageSelectionStatistics();
             void displayStoragePicture();
+            void loadStoragePictureComboBox();
 
         //TAB: Devices
             void setupDeviceManager();
@@ -584,6 +585,8 @@ class MainWindow : public KXmlGuiWindow
 
             void on_Settings_pushButton_SelectFolder_clicked();
             void on_Settings_pushButton_OpenFolder_clicked();
+            void on_Settings_pushButton_SelectImageFolder_clicked();
+            void on_Settings_lineEdit_ImageFolderPath_returnPressed();
             void on_Settings_lineEdit_CollectionFolder_returnPressed();
             void on_Settings_checkBox_KeepOneBackUp_stateChanged();
             void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
@@ -790,6 +793,8 @@ class MainWindow : public KXmlGuiWindow
 
             //Storage
             void on_Storage_pushButton_UpdateStorage_clicked();
+            void on_Storage_pushButton_ReloadPictures_clicked();
+            void on_Storage_comboBox_PicturePath_currentIndexChanged(int index);
 
             //BackUp
             void on_BackUp_pushButton_CreateLinkShowHide_clicked();

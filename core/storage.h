@@ -80,6 +80,7 @@ public:
     QString comment1;
     QString comment2;
     QString comment3;
+    QString picturePath;
     QDateTime dateTimeUpdated;
 
     // Constructor

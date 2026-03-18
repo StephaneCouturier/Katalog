@@ -128,7 +128,8 @@ QString Database::getSQLCreateTableStorage(DatabaseType dbType)
                     storage_build_date    TEXT,
                     storage_comment1      TEXT,
                     storage_comment2      TEXT,
-                    storage_comment3      TEXT)
+                    storage_comment3      TEXT,
+                    storage_picture_path  TEXT)
             )").arg(largeNumeric);
 }
 
@@ -993,6 +994,20 @@ QSqlError Database::dropTableIfExists(const QString &connectionName, const QStri
 
 //----------------------------------------------------------------------
 // Updates per Version
+//----------------------------------------------------------------------
+QSqlError Database::runMigration_2_11(const QString &connectionName)
+{
+    QStringList existingColumns = getTableColumns(connectionName, "storage");
+    if (!existingColumns.contains("storage_picture_path")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE storage ADD COLUMN storage_picture_path TEXT");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add storage_picture_path column:" << err.text();
+            return err;
+        }
+    }
+    return QSqlError();
+}
 //----------------------------------------------------------------------
 
 QSqlError Database::runMigration_2_6(const QString &connectionName)

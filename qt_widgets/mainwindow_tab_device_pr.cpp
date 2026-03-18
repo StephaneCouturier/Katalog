@@ -431,10 +431,7 @@ void MainWindow::editDevice()
     loadParentsList();
 
     //Load panel and values
-    if(collection->databaseMode=="Memory")
-        ui->Storage_label_Picture_2->setVisible(true);
-    else
-        ui->Storage_label_Picture_2->setVisible(false);
+    ui->Storage_label_Picture_2->setVisible(true);
 
     ui->Devices_widget_Edit->setVisible(true);
     ui->Devices_lineEdit_Name->setText(activeDevice->name);
@@ -505,7 +502,7 @@ void MainWindow::editDevice()
         ui->Storage_lineEdit_Panel_Comment2->setText(activeDevice->storage->comment2);
         ui->Storage_lineEdit_Panel_Comment3->setText(activeDevice->storage->comment3);
 
-        displayStoragePicture();
+        loadStoragePictureComboBox();
     }
     else{
         ui->Devices_widget_EditStorageFields->hide();
@@ -745,7 +742,8 @@ void MainWindow::saveDeviceForm()
                                         storage_build_date =:storage_build_date,
                                         storage_comment1 =:storage_comment1,
                                         storage_comment2 =:storage_comment2,
-                                        storage_comment3 =:storage_comment3
+                                        storage_comment3 =:storage_comment3,
+                                        storage_picture_path =:storage_picture_path
                                     WHERE storage_id =:storage_id
                                 )");
 
@@ -761,6 +759,7 @@ void MainWindow::saveDeviceForm()
         queryStorage.bindValue(":storage_comment1",      ui->Storage_lineEdit_Panel_Comment1->text());
         queryStorage.bindValue(":storage_comment2",      ui->Storage_lineEdit_Panel_Comment2->text());
         queryStorage.bindValue(":storage_comment3",      ui->Storage_lineEdit_Panel_Comment3->text());
+        queryStorage.bindValue(":storage_picture_path",  ui->Storage_comboBox_PicturePath->currentText());
         queryStorage.bindValue(":storage_id",            activeDevice->storage->ID);
         queryStorage.exec();
 
@@ -2076,19 +2075,57 @@ void MainWindow::loadStorageList()
     }
 }
 //--------------------------------------------------------------------------
+void MainWindow::loadStoragePictureComboBox()
+{// Populate the picture combobox with image files found in the images folder
+    const QString currentPicture = activeDevice->storage->picturePath;
+
+    // Block signals while rebuilding to avoid triggering currentIndexChanged
+    ui->Storage_comboBox_PicturePath->blockSignals(true);
+    ui->Storage_comboBox_PicturePath->clear();
+    ui->Storage_comboBox_PicturePath->addItem("");  // empty = no picture
+
+    QDir dir(collection->imageFolderPath);
+    if (dir.exists()) {
+        const QStringList filters = {"*.png","*.jpg","*.jpeg","*.bmp","*.gif","*.webp"};
+        const QStringList files = dir.entryList(filters, QDir::Files, QDir::Name);
+        for (const QString &f : files)
+            ui->Storage_comboBox_PicturePath->addItem(f);
+    }
+
+    // Restore current selection
+    int idx = ui->Storage_comboBox_PicturePath->findText(currentPicture);
+    ui->Storage_comboBox_PicturePath->setCurrentIndex(idx >= 0 ? idx : 0);
+    ui->Storage_comboBox_PicturePath->blockSignals(false);
+
+    displayStoragePicture();
+}
+//--------------------------------------------------------------------------
 void MainWindow::displayStoragePicture()
-{//Load and display the picture of the storage device
-    QString picturePath = collection->folder + "/images/" + QString::number(activeDevice->storage->ID) + ".jpg";
-    QPixmap pic(picturePath);
+{// Load and display the picture of the storage device
+    QString pictureFileName = ui->Storage_comboBox_PicturePath->currentText();
+    QString picturePath;
+    if (pictureFileName.isEmpty())
+        picturePath = collection->imageFolderPath + "/" + QString::number(activeDevice->storage->ID) + ".jpg";
+    else
+        picturePath = collection->imageFolderPath + "/" + pictureFileName;
+
     QFile file(picturePath);
-    if(file.exists()){
-        ui->Storage_label_Picture_2->setScaledContents(true);
-        ui->Storage_label_Picture_2->setPixmap(pic.scaled(350, 300, Qt::KeepAspectRatio));
+    if (file.exists()) {
+        QPixmap pic(picturePath);
+        ui->Storage_label_Picture_2->setPixmap(pic.scaled(350, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    } else {
+        ui->Storage_label_Picture_2->setPixmap(QPixmap());
     }
-    else{
-        QPixmap empty("");
-        ui->Storage_label_Picture_2->setPixmap(empty);
-    }
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Storage_comboBox_PicturePath_currentIndexChanged(int /*index*/)
+{
+    displayStoragePicture();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Storage_pushButton_ReloadPictures_clicked()
+{
+    loadStoragePictureComboBox();
 }
 //--------------------------------------------------------------------------
 void MainWindow::updateStorageSelectionStatistics()

@@ -21,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
 >
 > **New fields added in 2.11 (unreleased — edit in place, no extra migration needed):**
-> - (no new field yet) — added by migration 2.11
+> - `storage.storage_picture_path` TEXT — filename of the device picture image (stored relative to `Collection.imageFolderPath`)
 
 ## Project Overview
 

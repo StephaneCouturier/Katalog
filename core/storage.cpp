@@ -129,7 +129,8 @@ void Storage::loadStorage(QString connectionName)
                                 storage_build_date,
                                 storage_comment1,
                                 storage_comment2,
-                                storage_comment3
+                                storage_comment3,
+                                storage_picture_path
                             FROM storage
                             WHERE storage_id=:storage_id
                         )");
@@ -152,6 +153,7 @@ void Storage::loadStorage(QString connectionName)
             comment1     = query.value(11).toString();
             comment2     = query.value(12).toString();
             comment3     = query.value(13).toString();
+            picturePath  = query.value(14).toString();
         } else {
         }
     } else {
