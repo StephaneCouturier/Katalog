@@ -82,10 +82,10 @@ export default {
                 'SpecProgressReport',
                 'SpecVersions'],
       },
+       'Development-Repository',
        'Development-Build-from-source',
        'Development-Release',
-       'Development-Documentation',
-       'Development-RepositoryRestructuring'
+       'Development-Documentation'
               ],
     },
   ],

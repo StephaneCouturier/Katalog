@@ -3,7 +3,7 @@ This page documents the practices for developing Katalog.<br/>
 
 ## Features management
 ### Roadmap
-* [Roadmap](Development-Roadmap)
+* [Roadmap](Development-Roadmap), introducing Katalog 3
 
 ### Backlog
 Katalo's Backlog is available in GitHub with 3 views:

@@ -313,12 +313,12 @@ ColumnLayout {
             Controls.CheckBox {
                 id: search_CheckBox_FileNameCaseSensitive
                 checked: false
-                text: qsTr("Case sensitive")
+                text: qsTr("case sensitive")
             }
         }
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("Exclude"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.TextField {
                 id: search_TextField_FileNameExclude
                 Layout.fillWidth: true
