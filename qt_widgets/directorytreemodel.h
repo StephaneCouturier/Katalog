@@ -75,9 +75,9 @@ public:
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex()) override;
 
-    QString modelCatalogName;
+    int modelCatalogId = 0;
     QString modelCatalogPath;
-    void setModelCatlog(QString newModelCatalogName, QString newModelCatalogPath);
+    void setModelCatlog(int newModelCatalogId, QString newModelCatalogPath);
     void setupModelData(DirectoryTreeItem *parent);
 
 private:

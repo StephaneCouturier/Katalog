@@ -2607,11 +2607,11 @@ void MainWindow::importFromVVV()
             QString statsSQL = QLatin1String(R"(
                                                         SELECT COUNT(*), SUM(file_size)
                                                         FROM file
-                                                        WHERE file_catalog =:file_catalog
+                                                        WHERE file_catalog_id =:file_catalog_id
                                                 )");
             QSqlQuery statsQuery(QSqlDatabase::database(m_connectionName));
             statsQuery.prepare(statsSQL);
-            statsQuery.bindValue(":file_catalog", importedDevice->name);
+            statsQuery.bindValue(":file_catalog_id", importedDevice->externalID);
             statsQuery.exec();
             statsQuery.next();
 
@@ -2650,11 +2650,11 @@ void MainWindow::importFromVVV()
                                                         file_size,
                                                         file_date_updated
                                                     FROM file
-                                                    WHERE file_catalog =:file_catalog
+                                                    WHERE file_catalog_id =:file_catalog_id
                                                 )");
             QSqlQuery listFilesQuery(QSqlDatabase::database(m_connectionName));
             listFilesQuery.prepare(listFilesSQL);
-            listFilesQuery.bindValue(":file_catalog", importedDevice->name);
+            listFilesQuery.bindValue(":file_catalog_id", importedDevice->externalID);
             listFilesQuery.exec();
 
             //Write the results in the file

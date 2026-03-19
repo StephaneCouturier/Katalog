@@ -38,7 +38,7 @@
 #include <QDebug>
 
 QList<FolderNode*> FolderTreeLoader::loadDirectoryTree(const QString &connectionName,
-                                                        const QString &catalogName,
+                                                        int catalogId,
                                                         const QString &catalogPath)
 {
     QList<FolderNode*> nodes;
@@ -52,7 +52,7 @@ QList<FolderNode*> FolderTreeLoader::loadDirectoryTree(const QString &connection
         querySQL = QLatin1String(R"(
             SELECT DISTINCT (REPLACE(file_path, :selectedCatalogPath||'/', ''))
             FROM filesall
-            WHERE   file_catalog =:file_catalog
+            WHERE   file_catalog_id =:file_catalog_id
             ORDER BY file_path ASC
         )");
     } else {
@@ -60,13 +60,13 @@ QList<FolderNode*> FolderTreeLoader::loadDirectoryTree(const QString &connection
         querySQL = QLatin1String(R"(
             SELECT DISTINCT (REPLACE(file_path, CONCAT(:selectedCatalogPath, '/'), ''))
             FROM filesall
-            WHERE   file_catalog =:file_catalog
+            WHERE   file_catalog_id =:file_catalog_id
             ORDER BY file_path ASC
         )");
     }
 
     query.prepare(querySQL);
-    query.bindValue(":file_catalog", catalogName);
+    query.bindValue(":file_catalog_id", catalogId);
     query.bindValue(":selectedCatalogPath", catalogPath);
     query.exec();
 

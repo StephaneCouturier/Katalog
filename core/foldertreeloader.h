@@ -52,7 +52,7 @@ public:
      * Returns a flat list of directory paths relative to catalogPath.
      */
     static QList<FolderNode*> loadDirectoryTree(const QString &connectionName,
-                                                 const QString &catalogName,
+                                                 int catalogId,
                                                  const QString &catalogPath);
 
     /**

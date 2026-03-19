@@ -507,7 +507,17 @@ void Catalog::renameCatalog(QString newCatalogName)
     query.bindValue(":new_catalog_name",newCatalogName);
     query.bindValue(":catalog_id",ID);
     query.exec();
-    query.next();
+
+    // Keep denormalized file_catalog display copy in sync
+    QSqlQuery syncQuery(QSqlDatabase::database(m_connectionName));
+    syncQuery.prepare(QLatin1String(R"(
+                                UPDATE file
+                                SET   file_catalog=:new_catalog_name
+                                WHERE file_catalog_id=:catalog_id
+                            )"));
+    syncQuery.bindValue(":new_catalog_name", newCatalogName);
+    syncQuery.bindValue(":catalog_id", ID);
+    syncQuery.exec();
 
     //Rename value of current object
     name = newCatalogName;

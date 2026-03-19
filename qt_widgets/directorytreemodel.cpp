@@ -212,7 +212,7 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
 {
     // Load data from core (UI-agnostic)
     QList<FolderNode*> nodes = FolderTreeLoader::loadDirectoryTree(
-        m_connectionName, modelCatalogName, modelCatalogPath);
+        m_connectionName, modelCatalogId, modelCatalogPath);
 
     // Convert FolderNode list to DirectoryTreeItem hierarchy
     QVector<DirectoryTreeItem*> parents;
@@ -248,9 +248,9 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
     qDeleteAll(nodes);
 }
 
-void DirectoryTreeModel::setModelCatlog(QString newModelCatalogName, QString newModelCatalogPath)
+void DirectoryTreeModel::setModelCatlog(int newModelCatalogId, QString newModelCatalogPath)
 {
-    modelCatalogName = newModelCatalogName;
+    modelCatalogId = newModelCatalogId;
     modelCatalogPath = newModelCatalogPath;
     setupModelData(rootItem);
 }
