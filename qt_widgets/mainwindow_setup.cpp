@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/database.h"
+#include "core/databasemanager.h"
 #include <QTimer>
 #include <QVersionNumber>
 
@@ -422,84 +423,25 @@
     //--- Database management -----------------------------------------------
     void MainWindow::runDatabaseMigrations()
     {
-        QString currentSchemaVersion = collection->loadDatabaseSchemaVersion();
+        const QString currentSchemaVersion = collection->loadDatabaseSchemaVersion();
+        const bool needs2_6DataStep = QVersionNumber::fromString(currentSchemaVersion)
+                                      < QVersionNumber::fromString("2.6");
 
-        //Run in ascending version order
-            QVersionNumber schemaVersion = QVersionNumber::fromString(currentSchemaVersion);
+        QApplication::setOverrideCursor(Qt::BusyCursor);
+        QSqlError migrationError = DatabaseManager::runMigrations(m_connectionName, collection);
+        QApplication::restoreOverrideCursor();
 
-            if (schemaVersion < QVersionNumber::fromString("2.6")) {
-                collection->dbSchemaVersion = "2.6";
+        if (migrationError.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Database migration failed:" << migrationError.text();
+            QMessageBox::critical(this, "Migration Failed",
+                                  QString("Database migration failed: %1\n\n"
+                                          "Your original database backup is safe.\n"
+                                          "Contact support for assistance.").arg(migrationError.text()));
+            return;
+        }
 
-                QSqlError migrationError = Database::runMigration_2_6(m_connectionName);
-                if (migrationError.type() == QSqlError::NoError) {
-                    collection->setDatabaseSchemaVersion();
-                    migrateExistingSearchDeviceData_2_6();
-                } else {
-                    qWarning() << "WARNING: Database migration to 2.6 failed:" << migrationError.text();
-                    return;
-                }
-            }
-
-            if (schemaVersion < QVersionNumber::fromString("2.8")) {
-                collection->dbSchemaVersion = "2.8";
-
-                // Use the safe migration method
-                QApplication::setOverrideCursor(Qt::BusyCursor);
-                QSqlError migrationError = Database::runMigration_2_8(m_connectionName);
-                QApplication::restoreOverrideCursor();
-                if (migrationError.type() == QSqlError::NoError) {
-                    collection->setDatabaseSchemaVersion();
-                } else {
-                    qWarning() << "WARNING: Database migration to 2.8 failed:" << migrationError.text();
-                    QMessageBox::critical(this, "Migration Failed",
-                                          QString("Database migration failed: %1\n\n"
-                                                  "Your original database backup is safe.\n"
-                                                  "Contact support for assistance.").arg(migrationError.text()));
-                    return;
-                }
-            }
-
-            if (schemaVersion < QVersionNumber::fromString("2.9")) {
-                collection->dbSchemaVersion = "2.9";
-
-                QApplication::setOverrideCursor(Qt::BusyCursor);
-                QSqlError migrationError = Database::runMigration_2_9(m_connectionName);
-                QApplication::restoreOverrideCursor();
-                if (migrationError.type() == QSqlError::NoError) {
-                    collection->setDatabaseSchemaVersion();
-                } else {
-                    qWarning() << "WARNING: Database migration to 2.9 failed:" << migrationError.text();
-                    QMessageBox::critical(this, "Migration Failed",
-                                          QString("Database migration to 2.9 failed: %1\n\n"
-                                                  "Please check the logs and contact support if needed.")
-                                              .arg(migrationError.text()));
-                    return;
-                }
-            }
-
-            if (schemaVersion < QVersionNumber::fromString("2.10")) {
-                collection->dbSchemaVersion = "2.10";
-
-                QSqlError migrationError = Database::runMigration_2_10(m_connectionName);
-                if (migrationError.type() == QSqlError::NoError) {
-                    collection->setDatabaseSchemaVersion();
-                } else {
-                    qWarning() << "WARNING: Database migration to 2.10 failed:" << migrationError.text();
-                    return;
-                }
-            }
-
-            if (schemaVersion < QVersionNumber::fromString("2.11")) {
-                collection->dbSchemaVersion = "2.11";
-
-                QSqlError migrationError = Database::runMigration_2_11(m_connectionName);
-                if (migrationError.type() == QSqlError::NoError) {
-                    collection->setDatabaseSchemaVersion();
-                } else {
-                    qWarning() << "WARNING: Database migration to 2.11 failed:" << migrationError.text();
-                    return;
-                }
-            }
+        if (needs2_6DataStep)
+            migrateExistingSearchDeviceData_2_6();
 
         // Refresh display
         loadSearchHistoryTableToModel();

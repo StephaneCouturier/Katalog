@@ -1,6 +1,7 @@
 #include "appmanager.h"
 #include "core/catalog.h"
 #include "core/database.h"
+#include "core/databasemanager.h"
 #include "core/device.h"
 #include "core/filechecksum.h"
 #include "core/filemetadata.h"
@@ -115,21 +116,10 @@ QString AppManager::startDatabase()
 {
     const QString conn = QSqlDatabase::defaultConnection;
 
-    QSqlError err = Database::initialize(conn, collection);
+    QSqlError err = DatabaseManager::connect(conn, collection);
     if (err.type() != QSqlError::NoError) {
-        qWarning() << "startDatabase: initialize failed:" << err.text();
+        qWarning() << "startDatabase failed:" << err.text();
         return "startDatabase: " + err.text();
-    }
-
-    err = Database::createAllTables(conn);
-    if (err.type() != QSqlError::NoError) {
-        qWarning() << "startDatabase: createAllTables failed:" << err.text();
-        return "startDatabase: " + err.text();
-    }
-
-    if (collection->databaseMode == "Memory") {
-        collection->generateCollectionFilesPaths();
-        collection->load();
     }
 
     initializeDeviceListModel();
@@ -388,33 +378,19 @@ bool AppManager::reconnectToDatabase()
 {
     const QString conn = QSqlDatabase::defaultConnection;
 
-    {
-        QSqlDatabase db = QSqlDatabase::database(conn);
-        if (db.isOpen())
-            db.close();
-    }
-    QSqlDatabase::removeDatabase(conn);
-
-    QSqlError err = Database::initialize(conn, collection);
+    QSqlError err = DatabaseManager::reconnect(conn, collection);
     if (err.type() != QSqlError::NoError) {
         lastDatabaseError = err.text();
         qWarning() << "AppManager::reconnectToDatabase failed:" << lastDatabaseError;
         return false;
     }
 
-    err = Database::createAllTables(conn);
-    if (err.type() != QSqlError::NoError) {
-        lastDatabaseError = err.text();
-        qWarning() << "AppManager::reconnectToDatabase createAllTables failed:" << lastDatabaseError;
-        return false;
+    QSqlError migErr = DatabaseManager::runMigrations(conn, collection);
+    if (migErr.type() != QSqlError::NoError) {
+        qWarning() << "AppManager::reconnectToDatabase: migrations failed (non-fatal):" << migErr.text();
     }
+
     lastDatabaseError.clear();
-
-    if (collection->databaseMode == "Memory") {
-        collection->generateCollectionFilesPaths();
-        collection->load();
-    }
-
     refreshAllUI();
     emit databaseModeChanged();
     return true;

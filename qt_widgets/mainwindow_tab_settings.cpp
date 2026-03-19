@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/database.h"
+#include "core/databasemanager.h"
 #include <QVersionNumber>
 
 //SETTINGS / GLOBAL -----------------------------------------------------------------
@@ -449,18 +450,8 @@
             //Set the new path in Settings tab
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-            //Close the existing database connection if open
-            QString connectionName;
-            {
-                QSqlDatabase db = QSqlDatabase::database();
-                connectionName = db.connectionName();
-                connectionName = connectionName.isEmpty() ? m_connectionName : connectionName;
-                db.close();
-            }
-            QSqlDatabase::removeDatabase(connectionName);
-
-            //Open the new database file
-            Database::initialize(m_connectionName, collection);
+            //Reconnect to the new database file
+            DatabaseManager::reconnect(m_connectionName, collection);
 
             //Load the collection data from the new database
             loadCollection();
@@ -535,18 +526,8 @@
             //Set the new path in Settings tab
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-            //Close the existing database connection if open
-            QString connectionName;
-            {
-                QSqlDatabase db = QSqlDatabase::database();
-                connectionName = db.connectionName();
-                connectionName = connectionName.isEmpty() ? m_connectionName : connectionName;
-                db.close();
-            }
-            QSqlDatabase::removeDatabase(connectionName);
-
-            //Open the new database file
-            Database::initialize(m_connectionName, collection);
+            //Reconnect to the new database file
+            DatabaseManager::reconnect(m_connectionName, collection);
 
             //Load the collection data from the new database
             loadCollection();
@@ -756,18 +737,8 @@
             //Set the new path in Settings tab
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-            //Close the existing database connection if open
-            QString connectionName;
-            {
-                QSqlDatabase db = QSqlDatabase::database();
-                connectionName = db.connectionName();
-                connectionName = connectionName.isEmpty() ? m_connectionName : connectionName;
-                db.close();
-            }
-            QSqlDatabase::removeDatabase(connectionName);
-
-            //Open the new database file
-            Database::initialize(m_connectionName, collection);
+            //Reconnect to the new database file
+            DatabaseManager::reconnect(m_connectionName, collection);
 
             //Load the collection data from the new database
             loadCollection();

@@ -28,6 +28,7 @@ set(CORE_HEADERS
     backupmappingmanager.h
     filechecksum.h
     foldertreeloader.h
+    databasemanager.h
     catalogdifferenceengine.h
     directoryreplicator.h
     backupjob.h
@@ -64,6 +65,7 @@ set(CORE_SOURCES
     backupmappingmanager.cpp
     filechecksum.cpp
     foldertreeloader.cpp
+    databasemanager.cpp
     catalogdifferenceengine.cpp
     directoryreplicator.cpp
     backupjob.cpp
