@@ -22,7 +22,7 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   devicetreeview.h
+// File Name:   directorytreemodel.h
 // Purpose:     Class/model to display a tree of directories
 // Description:
 // Author:      Stephane Couturier

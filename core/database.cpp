@@ -65,27 +65,39 @@ QString Database::getSQLCreateTableDevice(DatabaseType dbType)
 
 QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
 {
+    QString catalogIdType;
     QString catalogNameType;
     QString largeNumeric;
+    QString primaryKey;
+    QString uniqueCatalogName;
 
     switch (databaseType) {
     case DatabaseType::SQLite:
-        catalogNameType = "TEXT";
-        largeNumeric = "NUMERIC";
+        catalogIdType     = "NUMERIC";
+        catalogNameType   = "TEXT";
+        largeNumeric      = "NUMERIC";
+        primaryKey        = "PRIMARY KEY(catalog_id)";
+        uniqueCatalogName = "UNIQUE(catalog_name)";
         break;
     case DatabaseType::MySQL:
-        catalogNameType = "VARCHAR(500)";
-        largeNumeric = "BIGINT";
+        catalogIdType     = "BIGINT NOT NULL";
+        catalogNameType   = "VARCHAR(500)";
+        largeNumeric      = "BIGINT";
+        primaryKey        = "PRIMARY KEY(catalog_id)";
+        uniqueCatalogName = "UNIQUE KEY (catalog_name(500))";
         break;
     case DatabaseType::PostgreSQL:
-        catalogNameType = "VARCHAR(500)";
-        largeNumeric = "BIGINT";
+        catalogIdType     = "BIGINT NOT NULL";
+        catalogNameType   = "VARCHAR(500)";
+        largeNumeric      = "BIGINT";
+        primaryKey        = "PRIMARY KEY(catalog_id)";
+        uniqueCatalogName = "UNIQUE(catalog_name)";
         break;
     }
 
     return QString(R"(
                 CREATE TABLE IF NOT EXISTS catalog(
-                    catalog_id                    %2,
+                    catalog_id                    %3,
                     catalog_file_path             TEXT,
                     catalog_name                  %1,
                     catalog_date_updated          TEXT,
@@ -102,8 +114,9 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_include_metadata      TEXT,
                     catalog_include_checksum      TEXT,
                     catalog_app_version           TEXT,
-                    PRIMARY KEY(catalog_name))
-    )").arg(catalogNameType, largeNumeric);
+                    %4,
+                    %5)
+    )").arg(catalogNameType, largeNumeric, catalogIdType, primaryKey, uniqueCatalogName);
 }
 
 QString Database::getSQLCreateTableStorage(DatabaseType dbType)
@@ -997,6 +1010,7 @@ QSqlError Database::dropTableIfExists(const QString &connectionName, const QStri
 //----------------------------------------------------------------------
 QSqlError Database::runMigration_2_11(const QString &connectionName)
 {
+    // --- Part 1: Add storage_picture_path column ---
     QStringList existingColumns = getTableColumns(connectionName, "storage");
     if (!existingColumns.contains("storage_picture_path")) {
         QSqlError err = executeSql(connectionName,
@@ -1006,6 +1020,97 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
             return err;
         }
     }
+
+    // --- Part 2: Fix catalog PRIMARY KEY (catalog_name → catalog_id) ---
+    // Idempotency check: only migrate if catalog_name is still the PK
+    DatabaseType dbType = getDatabaseType(connectionName);
+    bool needsCatalogPkMigration = false;
+    {
+        QSqlQuery pkCheckQuery(QSqlDatabase::database(connectionName));
+        if (dbType == DatabaseType::SQLite) {
+            // PRAGMA table_info columns: cid(0), name(1), type(2), notnull(3), dflt_value(4), pk(5)
+            // pk=1 marks the primary key column
+            if (pkCheckQuery.exec("PRAGMA table_info(catalog)")) {
+                while (pkCheckQuery.next()) {
+                    if (pkCheckQuery.value(5).toInt() == 1) {
+                        needsCatalogPkMigration = (pkCheckQuery.value(1).toString() == "catalog_name");
+                        break;
+                    }
+                }
+            }
+        } else if (dbType == DatabaseType::MySQL) {
+            if (pkCheckQuery.exec(
+                    "SELECT COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE "
+                    "WHERE TABLE_NAME = 'catalog' AND CONSTRAINT_NAME = 'PRIMARY' "
+                    "AND TABLE_SCHEMA = DATABASE()")) {
+                if (pkCheckQuery.next())
+                    needsCatalogPkMigration = (pkCheckQuery.value(0).toString() == "catalog_name");
+            }
+        }
+    }
+
+    if (needsCatalogPkMigration) {
+        QSqlError err;
+        if (dbType == DatabaseType::SQLite) {
+            // SQLite cannot alter a PRIMARY KEY in-place — rebuild the table
+            if (!beginTransaction(connectionName))
+                return QSqlError("transaction", "Failed to begin transaction for catalog PK migration",
+                                 QSqlError::UnknownError);
+
+            err = executeSql(connectionName, QLatin1String(R"(
+                CREATE TABLE catalog_new (
+                    catalog_id                    NUMERIC,
+                    catalog_file_path             TEXT,
+                    catalog_name                  TEXT,
+                    catalog_date_updated          TEXT,
+                    catalog_source_path           TEXT,
+                    catalog_file_count            NUMERIC default 0,
+                    catalog_total_file_size       NUMERIC default 0,
+                    catalog_source_path_is_active NUMERIC,
+                    catalog_include_hidden        TEXT,
+                    catalog_file_type             TEXT,
+                    catalog_storage               TEXT,
+                    catalog_include_symblinks     TEXT,
+                    catalog_is_full_device        TEXT,
+                    catalog_date_loaded           TEXT,
+                    catalog_include_metadata      TEXT,
+                    catalog_include_checksum      TEXT,
+                    catalog_app_version           TEXT,
+                    PRIMARY KEY(catalog_id),
+                    UNIQUE(catalog_name)
+                )
+            )"));
+            if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+
+            err = executeSql(connectionName, "INSERT INTO catalog_new SELECT * FROM catalog");
+            if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+
+            err = executeSql(connectionName, "DROP TABLE catalog");
+            if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+
+            err = executeSql(connectionName, "ALTER TABLE catalog_new RENAME TO catalog");
+            if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+
+            if (!commitTransaction(connectionName)) {
+                rollbackTransaction(connectionName);
+                return QSqlError("transaction", "Failed to commit catalog PK migration",
+                                 QSqlError::UnknownError);
+            }
+        } else if (dbType == DatabaseType::MySQL) {
+            err = executeSql(connectionName, QLatin1String(R"(
+                ALTER TABLE catalog
+                    MODIFY catalog_id BIGINT NOT NULL,
+                    DROP PRIMARY KEY,
+                    ADD PRIMARY KEY (catalog_id),
+                    ADD UNIQUE KEY (catalog_name(500))
+            )"));
+            if (err.type() != QSqlError::NoError) {
+                qWarning() << "WARNING: Failed to migrate catalog PRIMARY KEY (MySQL):" << err.text();
+                return err;
+            }
+        }
+    }
+
     return QSqlError();
 }
 //----------------------------------------------------------------------
