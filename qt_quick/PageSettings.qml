@@ -18,7 +18,6 @@ Kirigami.ScrollablePage {
         }
     }
 
-    // Populate hosted fields when the page is created (dynamic instantiation via Component)
     Component.onCompleted: {
         hostField.text         = appManager1.getHostName()
         dbNameField.text       = appManager1.getDatabaseName()
@@ -36,122 +35,165 @@ Kirigami.ScrollablePage {
         }
     ]
 
-    ColumnLayout {
-        spacing: Kirigami.Units.largeSpacing
+    // Single GridLayout so column 0 width is shared across all sections
+    GridLayout {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.leftMargin: Kirigami.Units.gridUnit
+        anchors.rightMargin: Kirigami.Units.gridUnit
+        columns: 2
+        columnSpacing: Kirigami.Units.largeSpacing
+        rowSpacing: Kirigami.Units.smallSpacing
 
-        // ── Current connection status ──────────────────────────────────
-        Kirigami.FormLayout {
-            Layout.fillWidth: true
-
-            Controls.Label {
-                Kirigami.FormData.label: "Database Mode:"
-                text: appManager1.databaseMode || "—"
-                font.bold: true
-            }
-
-            Controls.Label {
-                Kirigami.FormData.label: "Collection:"
-                text: {
-                    var mode = appManager1.databaseMode
-                    if (mode === "Memory") return appManager1.getCollectionFolder() || "(none)"
-                    if (mode === "File")   return appManager1.getDatabaseFilePath() || "(none)"
-                    if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
-                    return "—"
-                }
-                elide: Text.ElideMiddle
-                Layout.fillWidth: true
-            }
-        }
-
-        Kirigami.Separator { Layout.fillWidth: true }
-
-        // ── Search layout ──────────────────────────────────────────────
+        // ── Collection & Database ──────────────────────────────────────
         Kirigami.Heading {
-            level: 3
-            text: "Search"
+            level: 3; text: "Collection & Database"
+            Layout.columnSpan: 2
+            Layout.topMargin: Kirigami.Units.smallSpacing
         }
 
-        Kirigami.FormLayout {
-            Layout.fillWidth: true
+        Controls.Label { text: "Database Mode:";    opacity: 0.7 }
+        Controls.Label { text: appManager1.databaseMode || "—"; font.bold: true }
 
-            Controls.CheckBox {
-                Kirigami.FormData.label: "Layout:"
-                text: "Keep Selection visible with Search and Results"
-                checked: appManager1.searchKeepsSelection
-                onCheckedChanged: appManager1.searchKeepsSelection = checked
+        Controls.Label { text: "Collection:";       opacity: 0.7 }
+        Controls.Label {
+            text: {
+                var mode = appManager1.databaseMode
+                if (mode === "Memory") return appManager1.getCollectionFolder() || "(none)"
+                if (mode === "File")   return appManager1.getDatabaseFilePath() || "(none)"
+                if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
+                return "—"
             }
+            elide: Text.ElideMiddle
+            Layout.fillWidth: true
         }
 
-        Kirigami.Separator {
+        Controls.Label { text: "Database Version:"; opacity: 0.7 }
+        Controls.Label { text: appManager1.databaseSchemaVersion || "—" }
+
+        // ── Hosted database fields (only when Hosted mode) ─────────────
+        Controls.Label {
+            text: "Host name:";  opacity: 0.7
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.TextField {
+            id: hostField
+            placeholderText: "localhost"
             Layout.fillWidth: true
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
 
-        // ── Hosted database ────────────────────────────────────────────
-        Kirigami.Heading {
-            level: 3
-            text: "Hosted Database"
+        Controls.Label {
+            text: "Database name:"; opacity: 0.7
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.TextField {
+            id: dbNameField
+            placeholderText: "katalog"
+            Layout.fillWidth: true
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
 
-        Kirigami.FormLayout {
+        Controls.Label {
+            text: "Port:"; opacity: 0.7
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.SpinBox {
+            id: portField
+            from: 1; to: 65535; value: 3306
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+
+        Controls.Label {
+            text: "User name:"; opacity: 0.7
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.TextField {
+            id: userField
+            placeholderText: "katalog_user"
             Layout.fillWidth: true
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
 
-            Controls.TextField {
-                id: hostField
-                Kirigami.FormData.label: "Host name:"
-                placeholderText: "localhost"
+        Controls.Label {
+            text: "Password:"; opacity: 0.7
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.TextField {
+            id: passwordField
+            echoMode: TextInput.Password
+            Layout.fillWidth: true
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+
+        Controls.Label {
+            text: "Startup:"; opacity: 0.7
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.CheckBox {
+            id: autoConnectBox
+            text: "Connect automatically on startup"
+            onCheckedChanged: appManager1.setHostedAutoConnect(checked)
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+
+        Controls.Label {
+            text: " "
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.Button {
+            text: "Connect"
+            icon.name: "network-connect"
+            enabled: hostField.text.length > 0 && dbNameField.text.length > 0
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+            onClicked: {
+                appManager1.openCollectionHosted(
+                    hostField.text, dbNameField.text, portField.value,
+                    userField.text, passwordField.text
+                )
             }
+        }
 
-            Controls.TextField {
-                id: dbNameField
-                Kirigami.FormData.label: "Database name:"
-                placeholderText: "katalog"
-            }
+        // ── Separator ──────────────────────────────────────────────────
+        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2 }
 
-            Controls.SpinBox {
-                id: portField
-                Kirigami.FormData.label: "Port:"
-                from: 1
-                to: 65535
-                value: 3306
-            }
+        // ── Application ────────────────────────────────────────────────
+        Kirigami.Heading { level: 3; text: "Application"; Layout.columnSpan: 2 }
 
-            Controls.TextField {
-                id: userField
-                Kirigami.FormData.label: "User name:"
-                placeholderText: "katalog_user"
-            }
-
-            Controls.TextField {
-                id: passwordField
-                Kirigami.FormData.label: "Password:"
-                echoMode: TextInput.Password
-            }
-
-            Controls.CheckBox {
-                id: autoConnectBox
-                Kirigami.FormData.label: "Startup:"
-                text: "Connect automatically on startup"
-                onCheckedChanged: appManager1.setHostedAutoConnect(checked)
-            }
-
+        Controls.Label { text: "Version:"; opacity: 0.7; Layout.alignment: Qt.AlignTop }
+        ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label { text: About.version; opacity: 0.7 }
             Controls.Button {
-                Kirigami.FormData.label: " "
-                text: "Connect"
-                icon.name: "network-connect"
-                enabled: hostField.text.length > 0 && dbNameField.text.length > 0
-                onClicked: {
-                    appManager1.openCollectionHosted(
-                        hostField.text,
-                        dbNameField.text,
-                        portField.value,
-                        userField.text,
-                        passwordField.text
-                    )
-                }
+                text: "Release Notes"
+                icon.name: "view-list-text"
+                onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
             }
+            Controls.CheckBox {
+                text: "Check for a new version on startup"
+                checked: appManager1.checkVersionChoice
+                onCheckedChanged: appManager1.checkVersionChoice = checked
+            }
+        }
+
+        Controls.Label { text: "Settings file:"; opacity: 0.7 }
+        Controls.Button {
+            text: "Open"
+            icon.name: "document-edit"
+            onClicked: appManager1.openSettingsFile()
+        }
+
+        // ── Separator ──────────────────────────────────────────────────
+        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2 }
+
+        // ── Search ────────────────────────────────────────────────────
+        Kirigami.Heading { level: 3; text: "Search"; Layout.columnSpan: 2 }
+
+        Controls.Label { text: "Layout:"; opacity: 0.7 }
+        Controls.CheckBox {
+            text: "Keep Selection visible with Search and Results"
+            checked: appManager1.searchKeepsSelection
+            onCheckedChanged: appManager1.searchKeepsSelection = checked
         }
     }
 }

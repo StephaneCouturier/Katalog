@@ -66,11 +66,13 @@ class AppManager : public QObject
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
     Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel READ getDeviceFilterModel CONSTANT)
     Q_PROPERTY(int selectedDeviceId READ getSelectedDeviceId NOTIFY selectedDeviceChanged)
-    Q_PROPERTY(QString databaseMode READ getDatabaseMode NOTIFY databaseModeChanged)
+    Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)
+    Q_PROPERTY(QString databaseSchemaVersion  READ getDatabaseSchemaVersion  NOTIFY databaseModeChanged FINAL)
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
     Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
+    Q_PROPERTY(bool checkVersionChoice READ getCheckVersionChoice WRITE setCheckVersionChoice NOTIFY checkVersionChoiceChanged)
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
@@ -145,6 +147,10 @@ public slots:
     void setShowDeviceInfo(bool value);
     bool getSearchKeepsSelection() const;
     void setSearchKeepsSelection(bool value);
+    bool getCheckVersionChoice() const;
+    void setCheckVersionChoice(bool value);
+    Q_INVOKABLE void openSettingsFile();
+    Q_INVOKABLE QString getDatabaseSchemaVersion();
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
@@ -193,6 +199,7 @@ signals:
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
     void searchKeepsSelectionChanged();
+    void checkVersionChoiceChanged();
     void databasePathChanged(const QString &newPath);
     void databaseConnectionChanged(bool success, const QString &message);
     void deviceListRefreshed();

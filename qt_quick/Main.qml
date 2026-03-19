@@ -436,6 +436,13 @@ Kirigami.ApplicationWindow {
         id: aboutPage
         Kirigami.AboutPage {
             aboutData: About
+            actions: [
+                Kirigami.Action {
+                    text: "Close"
+                    icon.name: "view-close"
+                    onTriggered: pageStack.layers.pop()
+                }
+            ]
         }
     }
 

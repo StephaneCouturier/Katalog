@@ -234,6 +234,31 @@ void AppManager::setSearchKeepsSelection(bool value)
     emit searchKeepsSelectionChanged();
 }
 //----------------------------------------------------------------------
+bool AppManager::getCheckVersionChoice() const
+{
+    return checkVersionChoice;
+}
+//----------------------------------------------------------------------
+void AppManager::setCheckVersionChoice(bool value)
+{
+    if (checkVersionChoice == value)
+        return;
+    checkVersionChoice = value;
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/CheckVersion", value);
+    emit checkVersionChoiceChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::openSettingsFile()
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(collection->settingsFilePath));
+}
+//----------------------------------------------------------------------
+QString AppManager::getDatabaseSchemaVersion()
+{
+    return collection->loadDatabaseSchemaVersion();
+}
+//----------------------------------------------------------------------
 bool AppManager::canExpandDevices() const
 {
     return m_deviceExpandLevel != -1; // -1 means already showing all
