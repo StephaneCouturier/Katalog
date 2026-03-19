@@ -1,11 +1,11 @@
 # Roadmap
-![Draft](https://img.shields.io/badge/Status-Draft-orange) ![All](https://img.shields.io/badge/Version-All-green)
+![Katalog2](https://img.shields.io/badge/Version-Katalog2-green) ![Katalog3](https://img.shields.io/badge/Version-Katalog3-orange)
 
 ## Vision
 
 Katalog aims to provide the richest set of features for device and file management across as many platforms as possible — starting from KDE Plasma on Linux, extending toward Windows, mobile, and web.
 
-## Ideas and directions
+## Ideas
 
 ```mermaid
 mindmap
@@ -51,26 +51,32 @@ The common use of `/core` means that **Collections will remain compatible to bot
 At some point, it is possible that new features, especially if involving a lot of UI work, will only be developped in Katalog 3 directly.
 
  
-## Development phases
+### Development phases
 
-| Phase | Scope                                          | Status | K3 Notes |
+Legend: ✅ Done · 🚧 Partial · 🔲 Not started
+
+| Phase | Feature Scope                                  | Status | K3 Notes |
 |-------|------------------------------------------------|--------|----------|
 | 1     | READ ONLY, Basic Search features, English Only |   🚧   |          |
 | 2     | Theme & Translations                           |   🔲   |          |
 | 3     | READ ONLY advanced / graphical features        |   🔲   |          |
 | 4     | CREATE / EDIT features                         |   🔲   |          |
 
-Legend: ✅ Done · 🚧 Partial · 🔲 Not started
+| Platform |  Status | Notes                       |
+|----------|---------|-----------------------------|
+| Linux    |    🚧   | Primary dev environment     |
+| Windows  |    🚧   | Build works with Craft      |
+| macOS    |    🔲   | Never tried                 |
+| Android  |    🔲   | Never tried                 |
 
-## Detailed Status
+### Detailed status by Feature 
 
-
-| Screen / Feature      | K2 | K3 | Remaining |
-|-----------------------|----|----|----------|
-| **Open Collection**   | ✅ | 🚧 | (code improvement only) DatabaseManager refactor.<br/> Move reconnect/settings orchestration from AppManager to core |
-| **Selection**         | ✅ | 🚧 | Refresh from db |
+| Screen / Feature      | K2 | K3 | Remaining | New vs K2 |
+|-----------------------|----|----|-----------|-----------|
+| **Open Collection**   | ✅ | 🚧 | (code improvement only) <br/> DatabaseManager refactor.<br/> Move reconnect/settings orchestration from AppManager to core | - Open recent collections|
+| **Selection**         | ✅ | 🚧 | Refresh from db | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of entries
 | **Search**            | ✅ | 🚧 | |
-| — Search criteria     | ✅ | ✅ | |
+| — Search criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|
 | — Search results      | ✅ | ✅ | |
 | — Search history      | ✅ | 🔲 | |
 | — Search in Connected | ✅ | 🔲 | |
@@ -91,6 +97,6 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Various             | ✅ | 🔲 | check version at start|
 | — Themes              | ✅ | 🔲 | |
 | — Language            | ✅ | 🔲 | |
-| **About**             | ✅ | ✅ | |
+| **About**             | ✅ | 🚧 | link to release notes |
 
   

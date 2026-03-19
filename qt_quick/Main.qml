@@ -21,23 +21,49 @@ Kirigami.ApplicationWindow {
 
     signal searchTriggered()
     property real cardScale: 1.0
-    // Window title
-    // i18nc() makes a string translatable
-    // and provides additional context for the translators
-    //title: "Katalog"
 
     // Global Drawer
     globalDrawer: Kirigami.GlobalDrawer {
         //isMenu: true
         modal: !windowSettings.drawerPinned
         width: 200
+
+        header: Item {
+            implicitHeight: Kirigami.Units.iconSizes.smallMedium + Kirigami.Units.largeSpacing * 2.5
+
+            RowLayout {
+                anchors {
+                    left: parent.left; right: parent.right
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: Kirigami.Units.largeSpacing
+                    rightMargin: Kirigami.Units.largeSpacing
+                }
+                Kirigami.Icon {
+                    source: appManager1.currentCollectionIconName
+                    Layout.preferredWidth:  Kirigami.Units.iconSizes.smallMedium
+                    Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+                    Layout.alignment: Qt.AlignVCenter
+                }
+                Controls.Label {
+                    text: appManager1.currentCollectionDisplayName
+                    font.bold: true
+                    elide: Text.ElideRight
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignVCenter
+                }
+            }
+        }
+
         actions: [
+            Kirigami.Action {
+                separator: true
+            },
             Kirigami.Action {
                 text: "Open Collection..."
                 icon.name: "document-open-data"
                 Kirigami.Action {
-                    icon.name: "document-open-data"
-                    text: "Local Files"
+                    icon.name: "folder"
+                    text: "Collection Folder..."
                     onTriggered: {
                         var p = appManager1.getCollectionFolder()
                         if (p.length > 0)
@@ -46,8 +72,8 @@ Kirigami.ApplicationWindow {
                     }
                 }
                 Kirigami.Action {
-                    icon.name: "document-open-data"
-                    text: "SQLite Db"
+                    icon.name: "server-database"
+                    text: "SQLite Database..."
                     onTriggered: {
                         var p = appManager1.getDatabaseFilePath()
                         if (p.length > 0) {
@@ -60,11 +86,45 @@ Kirigami.ApplicationWindow {
                     }
                 }
                 Kirigami.Action {
-                    icon.name: "document-open-data"
-                    text: "Hosted Db"
+                    icon.name: "network-server"
+                    text: "Hosted Database..."
                     onTriggered: {
                         pageStack.layers.push(settingsPageComponent, { showHostedForm: true })
                     }
+                }
+                Kirigami.Action {
+                    separator: true
+                    visible: appManager1.recentCollections.length > 0
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 0
+                    icon.name: appManager1.recentCollections.length > 0 ? appManager1.recentCollections[0].iconName : ""
+                    text:      appManager1.recentCollections.length > 0 ? appManager1.recentCollections[0].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[0])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 1
+                    icon.name: appManager1.recentCollections.length > 1 ? appManager1.recentCollections[1].iconName : ""
+                    text:      appManager1.recentCollections.length > 1 ? appManager1.recentCollections[1].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[1])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 2
+                    icon.name: appManager1.recentCollections.length > 2 ? appManager1.recentCollections[2].iconName : ""
+                    text:      appManager1.recentCollections.length > 2 ? appManager1.recentCollections[2].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[2])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 3
+                    icon.name: appManager1.recentCollections.length > 3 ? appManager1.recentCollections[3].iconName : ""
+                    text:      appManager1.recentCollections.length > 3 ? appManager1.recentCollections[3].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[3])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 4
+                    icon.name: appManager1.recentCollections.length > 4 ? appManager1.recentCollections[4].iconName : ""
+                    text:      appManager1.recentCollections.length > 4 ? appManager1.recentCollections[4].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[4])
                 }
             },
             Kirigami.Action {
@@ -135,10 +195,6 @@ Kirigami.ApplicationWindow {
             spacing: Kirigami.Units.smallSpacing
             padding: Kirigami.Units.largeSpacing
 
-            Kirigami.Separator {
-                width: parent.width
-            }
-
             Row {
                 width: parent.width - Kirigami.Units.largeSpacing * 2
                 spacing: Kirigami.Units.smallSpacing
@@ -160,13 +216,9 @@ Kirigami.ApplicationWindow {
                 }
             }
 
-            Kirigami.Separator {
-                width: parent.width
-            }
-
             Controls.Label {
                 text: "Card text size"
-                font.bold: true
+                //font.bold: true
                 width: parent.width
             }
 

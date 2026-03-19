@@ -70,6 +70,9 @@ class AppManager : public QObject
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
+    Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
+    Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
+    Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -167,6 +170,12 @@ public slots:
     Q_INVOKABLE bool    shouldShowAlphaWarning() const;
     Q_INVOKABLE void    setAlphaWarningShown();
 
+    // Recent collections
+    QVariantList getRecentCollections() const;
+    Q_INVOKABLE void openRecentCollection(const QVariantMap &entry);
+    QString getCurrentCollectionDisplayName() const;
+    QString getCurrentCollectionIconName() const;
+
     // Hosted database settings
     Q_INVOKABLE QString getHostName() const;
     Q_INVOKABLE QString getDatabaseName() const;
@@ -188,6 +197,16 @@ signals:
     void uiRefreshCompleted();
     void selectedDeviceChanged(int deviceId);
     void databaseModeChanged();
+    void recentCollectionsChanged();
+
+private:
+    void saveToRecentCollections(const QString &mode, const QString &path,
+                                 const QString &displayName,
+                                 const QString &hostName = QString(),
+                                 const QString &dbName   = QString(),
+                                 int port = 3306,
+                                 const QString &userName = QString(),
+                                 const QString &password = QString());
 };
 
 #endif // APPMANAGER_H

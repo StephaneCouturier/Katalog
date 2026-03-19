@@ -316,6 +316,7 @@ void AppManager::setDatabaseFilePath(const QString &path)
 
     if (reconnectToDatabase()) {
         qDebug() << "Successfully connected to new database:" << path;
+        saveToRecentCollections("File", path, QFileInfo(path).fileName());
         emit databaseConnectionChanged(true, "Opened: " + QFileInfo(path).fileName());
     } else {
         // Rollback settings and connection
@@ -837,6 +838,7 @@ void AppManager::openCollectionMemory(const QString &folder)
     settings.sync();
 
     if (reconnectToDatabase()) {
+        saveToRecentCollections("Memory", folder, QFileInfo(folder).fileName());
         emit databaseConnectionChanged(true, "Memory collection opened: " + QFileInfo(folder).fileName());
     } else {
         emit databaseConnectionChanged(false, "Failed to open Memory collection: " + lastDatabaseError);
@@ -856,8 +858,138 @@ void AppManager::openCollectionHosted(const QString &hostName, const QString &db
     settings.sync();
 
     if (reconnectToDatabase()) {
+        saveToRecentCollections("Hosted", hostName + "/" + dbName, hostName + "/" + dbName,
+                                hostName, dbName, port, userName, password);
         emit databaseConnectionChanged(true, "Connected: " + hostName + "/" + dbName);
     } else {
         emit databaseConnectionChanged(false, "Hosted connection failed: " + lastDatabaseError);
     }
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getRecentCollections() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    int count = qMin(settings.value("Recent/count", 0).toInt(), 5);
+    QVariantList result;
+    for (int i = 0; i < count; ++i) {
+        QVariantMap entry;
+        entry["mode"]        = settings.value(QString("Recent/%1/mode").arg(i)).toString();
+        entry["path"]        = settings.value(QString("Recent/%1/path").arg(i)).toString();
+        entry["displayName"] = settings.value(QString("Recent/%1/displayName").arg(i)).toString();
+        entry["iconName"]    = settings.value(QString("Recent/%1/iconName").arg(i)).toString();
+        entry["hostName"]    = settings.value(QString("Recent/%1/hostName").arg(i)).toString();
+        entry["dbName"]      = settings.value(QString("Recent/%1/dbName").arg(i)).toString();
+        entry["port"]        = settings.value(QString("Recent/%1/port").arg(i), 3306).toInt();
+        entry["userName"]    = settings.value(QString("Recent/%1/userName").arg(i)).toString();
+        entry["password"]    = settings.value(QString("Recent/%1/password").arg(i)).toString();
+        result.append(entry);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::getCurrentCollectionDisplayName() const
+{
+    QString mode = getDatabaseMode();
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    if (mode == "Memory")
+        return QFileInfo(collection->folder).fileName();
+    if (mode == "File")
+        return QFileInfo(settings.value("Settings/DatabaseFilePath").toString()).fileName();
+    if (mode == "Hosted")
+        return settings.value("Settings/databaseHostName").toString()
+               + "/" + settings.value("Settings/databaseName").toString();
+    return QString();
+}
+//----------------------------------------------------------------------
+QString AppManager::getCurrentCollectionIconName() const
+{
+    QString mode = getDatabaseMode();
+    if (mode == "Memory") return "folder";
+    if (mode == "File")   return "server-database";
+    return "network-server";
+}
+//----------------------------------------------------------------------
+void AppManager::openRecentCollection(const QVariantMap &entry)
+{
+    QString mode = entry["mode"].toString();
+    if (mode == "Memory") {
+        openCollectionMemory(entry["path"].toString());
+    } else if (mode == "File") {
+        setDatabaseFilePath(entry["path"].toString());
+    } else if (mode == "Hosted") {
+        openCollectionHosted(entry["hostName"].toString(),
+                             entry["dbName"].toString(),
+                             entry["port"].toInt(),
+                             entry["userName"].toString(),
+                             entry["password"].toString());
+    }
+}
+//----------------------------------------------------------------------
+void AppManager::saveToRecentCollections(const QString &mode, const QString &path,
+                                         const QString &displayName,
+                                         const QString &hostName, const QString &dbName,
+                                         int port, const QString &userName, const QString &password)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    int count = qMin(settings.value("Recent/count", 0).toInt(), 5);
+
+    // Load existing entries
+    QVariantList existing;
+    for (int i = 0; i < count; ++i) {
+        QVariantMap e;
+        e["mode"]        = settings.value(QString("Recent/%1/mode").arg(i)).toString();
+        e["path"]        = settings.value(QString("Recent/%1/path").arg(i)).toString();
+        e["displayName"] = settings.value(QString("Recent/%1/displayName").arg(i)).toString();
+        e["iconName"]    = settings.value(QString("Recent/%1/iconName").arg(i)).toString();
+        e["hostName"]    = settings.value(QString("Recent/%1/hostName").arg(i)).toString();
+        e["dbName"]      = settings.value(QString("Recent/%1/dbName").arg(i)).toString();
+        e["port"]        = settings.value(QString("Recent/%1/port").arg(i), 3306).toInt();
+        e["userName"]    = settings.value(QString("Recent/%1/userName").arg(i)).toString();
+        e["password"]    = settings.value(QString("Recent/%1/password").arg(i)).toString();
+        existing.append(e);
+    }
+
+    // Remove any existing entry with the same path (dedup)
+    for (int i = existing.size() - 1; i >= 0; --i) {
+        if (existing[i].toMap()["path"].toString() == path)
+            existing.removeAt(i);
+    }
+
+    // Build and prepend new entry
+    QString iconName = (mode == "Memory") ? "folder"
+                     : (mode == "File")   ? "server-database"
+                                          : "network-server";
+    QVariantMap newEntry;
+    newEntry["mode"]        = mode;
+    newEntry["path"]        = path;
+    newEntry["displayName"] = displayName;
+    newEntry["iconName"]    = iconName;
+    newEntry["hostName"]    = hostName;
+    newEntry["dbName"]      = dbName;
+    newEntry["port"]        = port;
+    newEntry["userName"]    = userName;
+    newEntry["password"]    = password;
+    existing.prepend(newEntry);
+
+    // Trim to 5
+    while (existing.size() > 5)
+        existing.removeLast();
+
+    // Persist
+    settings.setValue("Recent/count", existing.size());
+    for (int i = 0; i < existing.size(); ++i) {
+        QVariantMap e = existing[i].toMap();
+        settings.setValue(QString("Recent/%1/mode").arg(i),        e["mode"]);
+        settings.setValue(QString("Recent/%1/path").arg(i),        e["path"]);
+        settings.setValue(QString("Recent/%1/displayName").arg(i), e["displayName"]);
+        settings.setValue(QString("Recent/%1/iconName").arg(i),    e["iconName"]);
+        settings.setValue(QString("Recent/%1/hostName").arg(i),    e["hostName"]);
+        settings.setValue(QString("Recent/%1/dbName").arg(i),      e["dbName"]);
+        settings.setValue(QString("Recent/%1/port").arg(i),        e["port"]);
+        settings.setValue(QString("Recent/%1/userName").arg(i),    e["userName"]);
+        settings.setValue(QString("Recent/%1/password").arg(i),    e["password"]);
+    }
+    settings.sync();
+
+    emit recentCollectionsChanged();
 }
