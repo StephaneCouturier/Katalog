@@ -70,6 +70,7 @@ class AppManager : public QObject
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
+    Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
@@ -142,6 +143,8 @@ public slots:
     Q_INVOKABLE bool canCollapseDevices() const;
     bool getShowDeviceInfo() const;
     void setShowDeviceInfo(bool value);
+    bool getSearchKeepsSelection() const;
+    void setSearchKeepsSelection(bool value);
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
@@ -189,6 +192,7 @@ signals:
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
+    void searchKeepsSelectionChanged();
     void databasePathChanged(const QString &newPath);
     void databaseConnectionChanged(bool success, const QString &message);
     void deviceListRefreshed();

@@ -202,6 +202,8 @@ public:
     QStringList checksumSha256s;
     QStringList checksumExtractionDates;
 
+    QString devicePath;    // path of the device used for this search (set at search time)
+
     qint64 filesFoundNumber;
     qint64 filesFoundTotalSize;
     qint64 filesFoundAverageSize;

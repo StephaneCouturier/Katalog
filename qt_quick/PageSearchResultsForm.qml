@@ -31,6 +31,39 @@ ColumnLayout {
         return s.length >= 10 ? s.substring(0, 10) : s
     }
 
+    // ── Device path ──────────────────────────────────────────────────────
+    Rectangle {
+        Layout.fillWidth: true
+        implicitHeight: devicePathLabel.implicitHeight + Kirigami.Units.largeSpacing * 2
+        //color: Kirigami.Theme.activeBackgroundColor
+
+        RowLayout {
+            anchors {
+                left: parent.left; right: parent.right
+                verticalCenter: parent.verticalCenter
+                leftMargin:  Kirigami.Units.largeSpacing
+                rightMargin: Kirigami.Units.largeSpacing
+                topMargin: Kirigami.Units.largeSpacing
+                bottomMargin: Kirigami.Units.largeSpacing
+            }
+            spacing: Kirigami.Units.smallSpacing
+            Kirigami.Icon {
+                source: "drive-harddisk"
+                implicitWidth:  Kirigami.Units.iconSizes.smallMedium
+                implicitHeight: Kirigami.Units.iconSizes.smallMedium
+                opacity: 0.7
+            }
+            Controls.Label {
+                id: devicePathLabel
+                text: newSearch1.properties.devicePath ?? ""
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                elide: Text.ElideLeft
+                Layout.fillWidth: true
+                opacity: 0.8
+            }
+        }
+    }
+
     // ── Summary bar ──────────────────────────────────────────────────────
     Rectangle {
         Layout.fillWidth: true

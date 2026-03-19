@@ -107,6 +107,7 @@ public:
             map["differencesDeviceID1"]           = differencesDeviceID1;
             map["differencesDeviceID2"]           = differencesDeviceID2;
         //Search results
+            map["devicePath"]               = devicePath;
             map["filesFoundNumber"]         = filesFoundNumber;
             map["filesFoundTotalSize"]      = filesFoundTotalSize;
             map["filesFoundAverageSize"]    = filesFoundAverageSize;

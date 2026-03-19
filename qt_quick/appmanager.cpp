@@ -85,6 +85,9 @@ void AppManager::executeSearch()
     // Memory mode requires CSV loading during search
     searchObject->setMemoryModeEnabled(collection->databaseMode == "Memory");
 
+    // Capture device path at search time so Results page shows the right device
+    searchObject->devicePath = Device::getDevicePath(selectedDevice->ID, QSqlDatabase::defaultConnection);
+
     // Execute search
     searchObject->searchFiles(selectedDevice);
 
@@ -215,6 +218,20 @@ void AppManager::setShowDeviceInfo(bool value)
     settings.setValue("Selection/ShowDeviceInfo", value);
     settings.sync();
     emit showDeviceInfoChanged();
+}
+//----------------------------------------------------------------------
+bool AppManager::getSearchKeepsSelection() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Search/KeepsSelection", true).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setSearchKeepsSelection(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Search/KeepsSelection", value);
+    settings.sync();
+    emit searchKeepsSelectionChanged();
 }
 //----------------------------------------------------------------------
 bool AppManager::canExpandDevices() const

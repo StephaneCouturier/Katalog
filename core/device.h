@@ -155,7 +155,8 @@ public:
         static bool assignCatalogToDevice(Device *catalogDevice, Device *parentDevice, const QString &connectionName);
         static bool assignStorageToDevice(Storage *storage, int parentDeviceId, const QString &connectionName);
         static bool unassignFromDevice(int deviceID, int deviceParentID, const QString &connectionName);
-        static int  getMaxHierarchyDepth(const QString &connectionName);
+        static int     getMaxHierarchyDepth(const QString &connectionName);
+        static QString getDevicePath(int deviceId, const QString &connectionName);
 
         /**
          * @brief Update storage information only (no catalog processing)

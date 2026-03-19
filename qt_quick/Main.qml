@@ -22,6 +22,107 @@ Kirigami.ApplicationWindow {
     signal searchTriggered()
     property real cardScale: 1.0
 
+    // ── Page navigation ────────────────────────────────────────────────────
+    //
+    // Stack layout:
+    //   col 0 : pageSelection  — permanent, never removed, no Close button
+    //   col 1 : one active feature page at a time (Search by default)
+    //           Switching feature pages replaces col 1, so Search is hidden
+    //           when Devices / Explore / etc. is open — matching K2 tab behaviour.
+    //   col 2 : SearchResults — only when Search is at col 1
+    //
+    // Layer stack (pageStack.layers, overlay):
+    //   Settings, About — one at a time via showLayer().
+    //   layers.replace() breaks Kirigami's page header, so we pop then push
+    //   after the pop animation completes (tracked via layers.onBusyChanged).
+
+    // Pending layer state — used to sequence pop → push
+    property var  _pendingLayerComponent:   null
+    property var  _pendingLayerProperties:  null
+
+    Connections {
+        target: pageStack.layers
+        function onBusyChanged() {
+            if (!pageStack.layers.busy && root._pendingLayerComponent !== null) {
+                let comp  = root._pendingLayerComponent
+                let props = root._pendingLayerProperties
+                root._pendingLayerComponent  = null
+                root._pendingLayerProperties = null
+                if (props)
+                    pageStack.layers.push(comp, props)
+                else
+                    pageStack.layers.push(comp)
+            }
+        }
+    }
+
+    // Navigate to a main-stack page.
+    // Always closes any open layer overlay first.
+    // pageSelection : clears col 1+, goes to col 0.
+    // Any other page: if already in stack → navigate there (preserving pages above it,
+    //                 e.g. SearchResults stays when navigating to Search).
+    //                 If not in stack → clear col 1+, push at col 1.
+    function showPage(page) {
+        // Close any open layer so main content is visible
+        if (pageStack.layers.depth > 1)
+            pageStack.layers.pop()
+
+        if (page === pageSelection) {
+            while (pageStack.depth > 1) {
+                let p = pageStack.get(pageStack.depth - 1)
+                pageStack.removePage(p)
+                p.visible = false
+            }
+            return
+        }
+
+        // If page is already in the stack, navigate to it (preserves pages above)
+        for (var i = 1; i < pageStack.depth; i++) {
+            if (pageStack.get(i) === page) {
+                pageStack.currentIndex = i
+                return
+            }
+        }
+
+        // Not in stack: clear col 1+, push at col 1
+        while (pageStack.depth > 1) {
+            let p = pageStack.get(pageStack.depth - 1)
+            pageStack.removePage(p)
+            p.visible = false
+        }
+        page.visible = true
+        pageStack.push(page)
+    }
+
+    // Show a layer overlay (Settings, About).
+    // If another layer is already open: pop it first, then push the new one
+    // once the pop animation ends (avoids the broken-header bug from replace()).
+    function showLayer(component, properties) {
+        if (pageStack.layers.depth > 1) {
+            _pendingLayerComponent  = component
+            _pendingLayerProperties = properties || null
+            pageStack.layers.pop()
+        } else {
+            if (properties)
+                pageStack.layers.push(component, properties)
+            else
+                pageStack.layers.push(component)
+        }
+    }
+
+    // Close a col-1 feature page: remove it and return to Selection only.
+    // Called from the Close button of every col-1 page for consistent behaviour.
+    function closeFeaturePage(page) {
+        pageStack.removePage(page)
+        page.visible = false
+        // Clear any remaining col 1+ pages (e.g. SearchResults if Search was closed)
+        while (pageStack.depth > 1) {
+            let p = pageStack.get(pageStack.depth - 1)
+            pageStack.removePage(p)
+            p.visible = false
+        }
+    }
+
     // Global Drawer
     globalDrawer: Kirigami.GlobalDrawer {
         //isMenu: true
@@ -88,9 +189,7 @@ Kirigami.ApplicationWindow {
                 Kirigami.Action {
                     icon.name: "network-server"
                     text: "Hosted Database..."
-                    onTriggered: {
-                        pageStack.layers.push(settingsPageComponent, { showHostedForm: true })
-                    }
+                    onTriggered: root.showLayer(settingsPageComponent, { showHostedForm: true })
                 }
                 Kirigami.Action {
                     separator: true
@@ -133,42 +232,47 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 icon.name: "select"
                 text: "Selection"
-                onTriggered: pageStack.insertPage(0, pageSelection)
+                onTriggered: root.showPage(pageSelection)
             },
             Kirigami.Action {
                 icon.name: "search"
                 text: "Search"
-                onTriggered: pageStack.push(pageSearch)//{pageSearchForm.executeSearch();}
+                onTriggered: root.showPage(pageSearch)
             },
-            // Kirigami.Action {
-            //     icon.name: "drive-multidisk"
-            //     text: "Devices"
-            //     onTriggered: pageStack.push(pageDevices)
-            // },
-            // Kirigami.Action {
-            //     icon.name: "view-list-tree"
-            //     text: "Explore"
-            //     onTriggered: pageStack.insertPage(4, pageExplore)
-            // },
-            // Kirigami.Action {
-            //     icon.name: "journal-new"
-            //     text: "Create"
-            //     onTriggered: pageStack.insertPage(5, pageCreate)
-            // },
-            // Kirigami.Action {
-            //     icon.name: "view-statistics"
-            //     text: "Statistics"
-            //     onTriggered: pageStack.insertPage(6, pageStatistics)
-            // },
-            // Kirigami.Action {
-            //     icon.name: "lastfm-tag"
-            //     text: "Tags"
-            //     onTriggered: pageStack.insertPage(7, pageTags)
-            // },
+            Kirigami.Action {
+                icon.name: "drive-multidisk"
+                text: "Devices"
+                onTriggered: root.showPage(pageDevices)
+            },
+            Kirigami.Action {
+                icon.name: "view-list-tree"
+                text: "Explore"
+                onTriggered: root.showPage(pageExplore)
+            },
+            Kirigami.Action {
+                icon.name: "journal-new"
+                text: "Create"
+                onTriggered: root.showPage(pageCreate)
+            },
+            Kirigami.Action {
+                icon.name: "view-statistics"
+                text: "Statistics"
+                onTriggered: root.showPage(pageStatistics)
+            },
+            Kirigami.Action {
+                icon.name: "lastfm-tag"
+                text: "Tags"
+                onTriggered: root.showPage(pageTags)
+            },
+            Kirigami.Action {
+                icon.name: "backup"
+                text: "Backup"
+                onTriggered: root.showPage(pageBackup)
+            },
             Kirigami.Action {
                 icon.name: "settings-configure"
                 text: "Settings"
-                onTriggered: pageStack.layers.push(settingsPageComponent)
+                onTriggered: root.showLayer(settingsPageComponent)
             },
             Kirigami.Action {
                 separator: true
@@ -181,7 +285,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: "About" //i18n("About")
                 icon.name: "help-about"
-                onTriggered: pageStack.layers.push(aboutPage)
+                onTriggered: root.showLayer(aboutPage)
             },
             Kirigami.Action {
                 text: "Quit"
@@ -253,13 +357,26 @@ Kirigami.ApplicationWindow {
         }
     }
 
+    // When searchKeepsSelection is on, prevent Kirigami from scrolling
+    // away from col 0 (Selection) while Search+Results are open.
+    Connections {
+        target: pageStack
+        function onCurrentIndexChanged() {
+            if (appManager1.searchKeepsSelection
+                    && pageStack.depth >= 3
+                    && pageStack.currentIndex !== 0) {
+                pageStack.currentIndex = 0
+            }
+        }
+    }
+
         // Database status notification
         Connections {
             target: appManager1
             function onDatabaseConnectionChanged(success, message) {
                 if (success) {
                     showPassiveNotification("✓ " + message, "positive")
-                    pageStack.currentIndex = 0
+                    root.showPage(pageSelection)  // clear col 2, go to Selection
                 } else {
                     showPassiveNotification("✗ " + message, "warning")
                 }
@@ -345,22 +462,6 @@ Kirigami.ApplicationWindow {
             }
         }
 
-        actions: [
-            Kirigami.Action {
-                //text: "Refresh"
-                icon.name: "view-refresh"
-                onTriggered: {
-                    appManager1.refreshDeviceList();
-                    showPassiveNotification("Device list refreshed");
-                }
-            },
-            Kirigami.Action {
-                //text: "Close"
-                icon.name: "view-close"
-                onTriggered: pageStack.removePage(pageSelection)
-            }
-        ]
-
         header: Item {
             width: parent.width
             height: deviceSearchField.implicitHeight + Kirigami.Units.smallSpacing * 5
@@ -421,8 +522,19 @@ Kirigami.ApplicationWindow {
                 onTriggered: {
                     root.searchTriggered()
                     pageSearchForm.executeSearch()
-                    pageStack.removePage(pageSearchResults)
-                    pageStack.insertPage(3, pageSearchResults)
+                    // Remove any stale col-2+ pages (old Results)
+                    while (pageStack.depth > 2) {
+                        let p = pageStack.get(pageStack.depth - 1)
+                        pageStack.removePage(p)
+                        p.visible = false
+                    }
+                    // Use insertPage (not push) to append Results at the end without
+                    // Kirigami auto-changing currentIndex asynchronously via its animation.
+                    pageSearchResults.visible = true
+                    pageStack.insertPage(pageStack.depth, pageSearchResults)
+                    // Anchor view: keepSelection=0 (wide screens see Selection+Search+Results);
+                    // default=depth-1 (2-col screens see Search+Results).
+                    pageStack.currentIndex = appManager1.searchKeepsSelection ? 0 : (pageStack.depth - 1)
                 }
             },
             Kirigami.Action {
@@ -433,7 +545,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: qsTr("Close")
                 icon.name: "view-close"
-                onTriggered: pageStack.removePage(pageSearch)
+                onTriggered: root.closeFeaturePage(pageSearch)
             }
         ]
 
@@ -445,6 +557,7 @@ Kirigami.ApplicationWindow {
     //Pages - SearchResults
     Kirigami.Page {
         id: pageSearchResults
+        visible: false
         title: {
             let n = newSearch1.properties.filesFoundNumber ?? 0
             if (newSearch1.properties.searchOnDuplicates)
@@ -453,14 +566,17 @@ Kirigami.ApplicationWindow {
                 return qsTr("Differences (%1)").arg(n)
             return qsTr("Results")  //return qsTr("Results (%1)").arg(n)
         }
-        visible: false
         padding: 0
 
         actions: [
             Kirigami.Action {
                 text: qsTr("Close")
                 icon.name: "view-close"
-                onTriggered: pageStack.removePage(pageSearchResults)
+                onTriggered: {
+                    pageStack.removePage(pageSearchResults)
+                    pageSearchResults.visible = false
+                    pageStack.currentIndex = 1  // back to Search
+                }
             }
         ]
 
@@ -473,8 +589,8 @@ Kirigami.ApplicationWindow {
     //Pages - Devices
     Kirigami.ScrollablePage {
         id: pageDevices
-        title: "Devices"
         visible: false
+        title: "Devices"
 
         actions: [
             /*Kirigami.Action {
@@ -485,7 +601,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: "Close"
                 icon.name: "view-close"
-                onTriggered: pageStack.pop()
+                onTriggered: root.closeFeaturePage(pageDevices)
             }
         ]
 
@@ -497,8 +613,8 @@ Kirigami.ApplicationWindow {
     //Pages - Explore
     Kirigami.ScrollablePage {
         id: pageExplore
-        title: "Explore"
         visible: false
+        title: "Explore"
 
         actions: [
             /*Kirigami.Action {
@@ -509,45 +625,28 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: "Close"
                 icon.name: "view-close"
-                onTriggered: pageStack.removePage(pageExplore)
+                onTriggered: root.closeFeaturePage(pageExplore)
             }
         ]
 
-        ListModel {
-        id: exploreList
-        // Each ListElement is an element on the list, containing information
-            ListElement {
-                name: "Local Drive"
-                description: "1Tb"
-            }
-            ListElement {
-                name: "External Drive 1"
-                description: "500Gb"
-            }
-            ListElement {
-                name: "External Drive 2"
-                description: ""
-            }
-        }
-
-        Kirigami.CardsListView {
-            id: exploreListView
-            model: exploreList
-            delegate: PageSelectionDelegate {}
+        Kirigami.PlaceholderMessage {
+            anchors.centerIn: parent
+            text: "Explore — coming soon"
+            icon.name: "view-list-tree"
         }
     }
 
     //Pages - Create
     Kirigami.ScrollablePage {
         id: pageCreate
-        title: "Create"
         visible: false
+        title: "Create"
 
         actions: [
             Kirigami.Action {
                 text: "Close"
                 icon.name: "view-close"
-                onTriggered: pageStack.removePage(pageCreate)
+                onTriggered: root.closeFeaturePage(pageCreate)
             }
         ]
 
@@ -559,8 +658,8 @@ Kirigami.ApplicationWindow {
     //Pages - Statistics
     Kirigami.ScrollablePage {
         id: pageStatistics
-        title: "Statistics"
         visible: false
+        title: "Statistics"
 
         actions: [
             /*Kirigami.Action {
@@ -571,39 +670,22 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: "Close"
                 icon.name: "view-close"
-                onTriggered: pageStack.removePage(pageStatistics)
+                onTriggered: root.closeFeaturePage(pageStatistics)
             }
         ]
 
-        ListModel {
-        id: statisticsList
-        // Each ListElement is an element on the list, containing information
-            ListElement {
-                name: "Stat1"
-                description: "1Tb"
-            }
-            ListElement {
-                name: "Stat2"
-                description: "500Gb"
-            }
-            ListElement {
-                name: "Stat3"
-                description: ""
-            }
-        }
-
-        Kirigami.CardsListView {
-            id: statisticsListView
-            model: statisticsList
-            delegate: PageSelectionDelegate {}
+        Kirigami.PlaceholderMessage {
+            anchors.centerIn: parent
+            text: "Statistics — coming soon"
+            icon.name: "view-statistics"
         }
     }
 
     //Pages - Tags
     Kirigami.ScrollablePage {
         id: pageTags
-        title: "Tags"
         visible: false
+        title: "Tags"
 
         actions: [
             /*Kirigami.Action {
@@ -614,31 +696,35 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: "Close"
                 icon.name: "view-close"
-                onTriggered: pageStack.removePage(pageTags)
+                onTriggered: root.closeFeaturePage(pageTags)
             }
         ]
 
-        ListModel {
-        id: tagsList
-        // Each ListElement is an element on the list, containing information
-            ListElement {
-                name: "Local Drive"
-                description: "1Tb"
-            }
-            ListElement {
-                name: "External Drive 1"
-                description: "500Gb"
-            }
-            ListElement {
-                name: "External Drive 2"
-                description: ""
-            }
+        Kirigami.PlaceholderMessage {
+            anchors.centerIn: parent
+            text: "Tags — coming soon"
+            icon.name: "lastfm-tag"
         }
+    }
 
-        Kirigami.CardsListView {
-            id: tagsListView
-            model: tagsList
-            delegate: PageSelectionDelegate {}
+    //Pages - Backup
+    Kirigami.ScrollablePage {
+        id: pageBackup
+        visible: false
+        title: "Backup"
+
+        actions: [
+            Kirigami.Action {
+                text: "Close"
+                icon.name: "view-close"
+                onTriggered: root.closeFeaturePage(pageBackup)
+            }
+        ]
+
+        Kirigami.PlaceholderMessage {
+            anchors.centerIn: parent
+            text: "Backup — coming soon"
+            icon.name: "backup"
         }
     }
 

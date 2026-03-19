@@ -63,6 +63,25 @@ Kirigami.ScrollablePage {
             }
         }
 
+        Kirigami.Separator { Layout.fillWidth: true }
+
+        // ── Search layout ──────────────────────────────────────────────
+        Kirigami.Heading {
+            level: 3
+            text: "Search"
+        }
+
+        Kirigami.FormLayout {
+            Layout.fillWidth: true
+
+            Controls.CheckBox {
+                Kirigami.FormData.label: "Layout:"
+                text: "Keep Selection visible with Search and Results"
+                checked: appManager1.searchKeepsSelection
+                onCheckedChanged: appManager1.searchKeepsSelection = checked
+            }
+        }
+
         Kirigami.Separator {
             Layout.fillWidth: true
             visible: appManager1.databaseMode === "Hosted" || showHostedForm

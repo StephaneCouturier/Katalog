@@ -961,3 +961,21 @@ int Device::getMaxHierarchyDepth(const QString &connectionName)
     }
     return 4; // safe default
 }
+//----------------------------------------------------------------------
+QString Device::getDevicePath(int deviceId, const QString &connectionName)
+{
+    // Walk up via device_parent_id, building the ancestor chain iteratively.
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    QStringList parts;
+    int id = deviceId;
+    while (id > 0) {
+        QSqlQuery q(db);
+        q.prepare("SELECT device_name, device_parent_id FROM device WHERE device_id = :id");
+        q.bindValue(":id", id);
+        if (!q.exec() || !q.next())
+            break;
+        parts.prepend(q.value(0).toString());
+        id = q.value(1).toInt();
+    }
+    return parts.join(" / ");
+}
