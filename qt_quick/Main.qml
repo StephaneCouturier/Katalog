@@ -232,47 +232,47 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 icon.name: "select"
                 text: "Selection"
-                onTriggered: root.showPage(pageSelection)
+                onTriggered: { appManager1.setLastPage("Selection"); root.showPage(pageSelection) }
             },
             Kirigami.Action {
                 icon.name: "search"
                 text: "Search"
-                onTriggered: root.showPage(pageSearch)
+                onTriggered: { appManager1.setLastPage("Search"); root.showPage(pageSearch) }
             },
             Kirigami.Action {
                 icon.name: "drive-multidisk"
                 text: "Devices"
-                onTriggered: root.showPage(pageDevices)
+                onTriggered: { appManager1.setLastPage("Devices"); root.showPage(pageDevices) }
             },
             Kirigami.Action {
                 icon.name: "view-list-tree"
                 text: "Explore"
-                onTriggered: root.showPage(pageExplore)
+                onTriggered: { appManager1.setLastPage("Explore"); root.showPage(pageExplore) }
             },
             Kirigami.Action {
                 icon.name: "journal-new"
                 text: "Create"
-                onTriggered: root.showPage(pageCreate)
+                onTriggered: { appManager1.setLastPage("Create"); root.showPage(pageCreate) }
             },
             Kirigami.Action {
                 icon.name: "view-statistics"
                 text: "Statistics"
-                onTriggered: root.showPage(pageStatistics)
+                onTriggered: { appManager1.setLastPage("Statistics"); root.showPage(pageStatistics) }
             },
             Kirigami.Action {
                 icon.name: "lastfm-tag"
                 text: "Tags"
-                onTriggered: root.showPage(pageTags)
+                onTriggered: { appManager1.setLastPage("Tags"); root.showPage(pageTags) }
             },
             Kirigami.Action {
                 icon.name: "backup"
                 text: "Backup"
-                onTriggered: root.showPage(pageBackup)
+                onTriggered: { appManager1.setLastPage("Backup"); root.showPage(pageBackup) }
             },
             Kirigami.Action {
                 icon.name: "settings-configure"
                 text: "Settings"
-                onTriggered: root.showLayer(settingsPageComponent)
+                onTriggered: { appManager1.setLastPage("Settings"); root.showLayer(settingsPageComponent) }
             },
             Kirigami.Action {
                 separator: true
@@ -391,6 +391,24 @@ Kirigami.ApplicationWindow {
         height = windowSettings.savedHeight
         if (appManager1.shouldShowAlphaWarning())
             alphaWarningDialog.open()
+
+        // Restore last active page
+        var last = appManager1.getLastPage()
+        if (last === "Settings") {
+            root.showLayer(settingsPageComponent)
+        } else {
+            var pageMap = {
+                "Search":     pageSearch,
+                "Devices":    pageDevices,
+                "Explore":    pageExplore,
+                "Create":     pageCreate,
+                "Statistics": pageStatistics,
+                "Tags":       pageTags,
+                "Backup":     pageBackup
+            }
+            if (last !== "Selection" && pageMap[last])
+                root.showPage(pageMap[last])
+        }
     }
 
     onWidthChanged:  windowSettings.savedWidth  = width

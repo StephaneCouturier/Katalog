@@ -151,6 +151,8 @@ public slots:
     void setCheckVersionChoice(bool value);
     Q_INVOKABLE void openSettingsFile();
     Q_INVOKABLE QString getDatabaseSchemaVersion();
+    Q_INVOKABLE void    setLastPage(const QString &pageName);
+    Q_INVOKABLE QString getLastPage() const;
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;

@@ -259,6 +259,18 @@ QString AppManager::getDatabaseSchemaVersion()
     return collection->loadDatabaseSchemaVersion();
 }
 //----------------------------------------------------------------------
+void AppManager::setLastPage(const QString &pageName)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/lastPage", pageName);
+}
+//----------------------------------------------------------------------
+QString AppManager::getLastPage() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/lastPage", "Search").toString();
+}
+//----------------------------------------------------------------------
 bool AppManager::canExpandDevices() const
 {
     return m_deviceExpandLevel != -1; // -1 means already showing all

@@ -50,12 +50,13 @@ Kirigami.ScrollablePage {
             level: 3; text: "Collection & Database"
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
+            color: Kirigami.Theme.linkColor;
         }
 
-        Controls.Label { text: "Database Mode:";    opacity: 0.7 }
+        Controls.Label { text: "Database Mode";    opacity: 0.7; }
         Controls.Label { text: appManager1.databaseMode || "—"; font.bold: true }
 
-        Controls.Label { text: "Collection:";       opacity: 0.7 }
+        Controls.Label { text: "Collection";       opacity: 0.7; }
         Controls.Label {
             text: {
                 var mode = appManager1.databaseMode
@@ -68,19 +69,21 @@ Kirigami.ScrollablePage {
             Layout.fillWidth: true
         }
 
-        Controls.Label { text: "Database Version:"; opacity: 0.7 }
+        Controls.Label { text: "Database Version"; opacity: 0.7; }
         Controls.Label { text: appManager1.databaseSchemaVersion || "—" }
 
         // ── Hosted database fields (only when Hosted mode) ─────────────
         Controls.Label {
-            text: "Host name:";  opacity: 0.7
+            text: "Host name";  opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
         }
         Controls.TextField {
             id: hostField
             placeholderText: "localhost"
             Layout.fillWidth: true
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
         }
 
         Controls.Label {
@@ -155,19 +158,23 @@ Kirigami.ScrollablePage {
         }
 
         // ── Separator ──────────────────────────────────────────────────
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2 }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
 
         // ── Application ────────────────────────────────────────────────
-        Kirigami.Heading { level: 3; text: "Application"; Layout.columnSpan: 2 }
+        Kirigami.Heading { level: 3; text: "Application"; Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; font.bold: true }
 
-        Controls.Label { text: "Version:"; opacity: 0.7; Layout.alignment: Qt.AlignTop }
+        Controls.Label { text: "Version"; opacity: 0.7; Layout.alignment: Qt.AlignTop; }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
-            Controls.Label { text: About.version; opacity: 0.7 }
+            RowLayout {
+            Controls.Label { text: About.version; font.bold: true}
             Controls.Button {
                 text: "Release Notes"
                 icon.name: "view-list-text"
-                onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
+                //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
+                onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
+                Layout.leftMargin: Kirigami.Units.largeSpacing * 2
+            }
             }
             Controls.CheckBox {
                 text: "Check for a new version on startup"
@@ -176,20 +183,21 @@ Kirigami.ScrollablePage {
             }
         }
 
-        Controls.Label { text: "Settings file:"; opacity: 0.7 }
+        Controls.Label { text: "Settings file"; opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
         Controls.Button {
             text: "Open"
             icon.name: "document-edit"
             onClicked: appManager1.openSettingsFile()
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
         }
 
         // ── Separator ──────────────────────────────────────────────────
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2 }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
 
         // ── Search ────────────────────────────────────────────────────
-        Kirigami.Heading { level: 3; text: "Search"; Layout.columnSpan: 2 }
+        Kirigami.Heading { level: 3; text: "Search"; Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; }
 
-        Controls.Label { text: "Layout:"; opacity: 0.7 }
+        Controls.Label { text: "Layout"; opacity: 0.7; }
         Controls.CheckBox {
             text: "Keep Selection visible with Search and Results"
             checked: appManager1.searchKeepsSelection
