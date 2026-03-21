@@ -167,7 +167,8 @@ Kirigami.ScrollablePage {
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             RowLayout {
-            Controls.Label { text: About.version; font.bold: true}
+            Controls.Label { text: About.version; font.bold: true }
+            Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7 }
             Controls.Button {
                 text: "Release Notes"
                 icon.name: "view-list-text"

@@ -8,6 +8,8 @@ ColumnLayout {
     id: pageSearchResults_column
     spacing: 0
 
+    signal closeRequested()
+
     // ── Helpers ──────────────────────────────────────────────────────────
     function formatFileSize(size) {
         let n = Number(size)
@@ -35,7 +37,7 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         implicitHeight: devicePathLabel.implicitHeight + Kirigami.Units.largeSpacing * 2
-        //color: Kirigami.Theme.activeBackgroundColor
+        color: Kirigami.Theme.backgroundColor
 
         RowLayout {
             anchors {
@@ -218,17 +220,14 @@ ColumnLayout {
     Item {
         Layout.fillWidth: true
         Layout.fillHeight: true
+        clip: true
 
-        ColumnLayout {
-            anchors.fill: parent
-            spacing: 0
-
-            Controls.HorizontalHeaderView {
-                id: headerView
-                Layout.fillWidth: true
-                syncView: tableView
-                clip: true
-                implicitHeight: 34
+        Controls.HorizontalHeaderView {
+            id: headerView
+            anchors { top: parent.top; left: parent.left; right: parent.right }
+            syncView: tableView
+            clip: true
+            implicitHeight: 34
 
                 delegate: Rectangle {
                     required property string display
@@ -255,13 +254,14 @@ ColumnLayout {
                 }
             }
 
-            Kirigami.Separator { Layout.fillWidth: true }
+        Kirigami.Separator {
+            id: headerSep
+            anchors { top: headerView.bottom; left: parent.left; right: parent.right }
+        }
 
-            TableView {
-                id: tableView
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                clip: true
+        TableView {
+            id: tableView
+            anchors { top: headerSep.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
                 columnSpacing: 0
                 rowSpacing: 0
                 model: newSearch1
@@ -392,7 +392,6 @@ ColumnLayout {
                         }
                     }
                 }
-            }
         }
     }
 

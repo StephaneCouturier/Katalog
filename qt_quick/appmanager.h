@@ -67,6 +67,7 @@ class AppManager : public QObject
     Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel READ getDeviceFilterModel CONSTANT)
     Q_PROPERTY(int selectedDeviceId READ getSelectedDeviceId NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)
+    Q_PROPERTY(QString appReleaseDate         READ getAppReleaseDate         CONSTANT)
     Q_PROPERTY(QString databaseSchemaVersion  READ getDatabaseSchemaVersion  NOTIFY databaseModeChanged FINAL)
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
@@ -147,6 +148,7 @@ public slots:
     void setShowDeviceInfo(bool value);
     bool getSearchKeepsSelection() const;
     void setSearchKeepsSelection(bool value);
+    QString getAppReleaseDate() const { return releaseDate; }
     bool getCheckVersionChoice() const;
     void setCheckVersionChoice(bool value);
     Q_INVOKABLE void openSettingsFile();

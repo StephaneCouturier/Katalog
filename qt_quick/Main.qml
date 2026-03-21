@@ -370,7 +370,7 @@ Kirigami.ApplicationWindow {
         }
     }
 
-        // Database status notification
+    // Database status notification
         Connections {
             target: appManager1
             function onDatabaseConnectionChanged(success, message) {
@@ -570,7 +570,12 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: qsTr("Close")
                 icon.name: "view-close"
-                onTriggered: root.closeFeaturePage(pageSearch)
+                onTriggered: {
+                    pageStack.removePage(pageSearch)
+                    pageSearch.visible = false
+                    // Results stays in the stack if present; navigate to it or Selection
+                    pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
+                }
             }
         ]
 
@@ -600,14 +605,21 @@ Kirigami.ApplicationWindow {
                 onTriggered: {
                     pageStack.removePage(pageSearchResults)
                     pageSearchResults.visible = false
-                    pageStack.currentIndex = 1  // back to Search
+                    // Go to Search if still in stack, otherwise Selection
+                    pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
                 }
             }
         ]
 
         PageSearchResultsForm {
             id: pageSearchResultsForm
-            anchors.fill: parent
+            width:  pageSearchResults.availableWidth
+            height: pageSearchResults.availableHeight
+            onCloseRequested: {
+                pageStack.removePage(pageSearchResults)
+                pageSearchResults.visible = false
+                pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
+            }
         }
     }
 
