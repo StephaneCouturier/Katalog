@@ -66,8 +66,8 @@ ColumnLayout {
         newSearch1.properties = {"searchDuplicatesOnChecksum":     search_checkBox_DuplicatesOnChecksum.checked};
         newSearch1.properties = {"searchDuplicatesChecksumEqual":  search_comboBox_DuplicateChecksumSign.currentIndex === 0};
         newSearch1.properties = {"duplicatesCompareDevices":       search_radioButton_DuplicatesCompareTwoDevices.checked};
-        newSearch1.properties = {"duplicatesDeviceID1":            search_comboBox_DuplicatesDevice1.currentValue ?? 0};
-        newSearch1.properties = {"duplicatesDeviceID2":            search_comboBox_DuplicatesDevice2.currentValue ?? 0};
+        newSearch1.properties = {"duplicatesDeviceID1":            search_comboBox_DuplicatesDevice1.selectedDeviceId};
+        newSearch1.properties = {"duplicatesDeviceID2":            search_comboBox_DuplicatesDevice2.selectedDeviceId};
 
         //Differences
         newSearch1.properties = {"searchOnDifferences":            search_checkBox_Differences.checked};
@@ -76,8 +76,8 @@ ColumnLayout {
         newSearch1.properties = {"differencesOnDate":              search_checkBox_DifferencesOnDate.checked};
         newSearch1.properties = {"differencesOnChecksum":          search_checkBox_DifferencesOnChecksum.checked};
         newSearch1.properties = {"differencesChecksumEqual":       search_comboBox_DifferenceChecksumSign.currentIndex === 0};
-        newSearch1.properties = {"differencesDeviceID1":           search_comboBox_DifferencesDevice1.currentValue ?? 0};
-        newSearch1.properties = {"differencesDeviceID2":           search_comboBox_DifferencesDevice2.currentValue ?? 0};
+        newSearch1.properties = {"differencesDeviceID1":           search_comboBox_DifferencesDevice1.selectedDeviceId};
+        newSearch1.properties = {"differencesDeviceID2":           search_comboBox_DifferencesDevice2.selectedDeviceId};
     }
 
     function resetSearch() {
@@ -126,8 +126,8 @@ ColumnLayout {
         search_checkBox_DuplicatesOnChecksum.checked = false
         search_comboBox_DuplicateChecksumSign.currentIndex = 0
         search_radioButton_DuplicatesWithinSelectedDevice.checked = true
-        search_comboBox_DuplicatesDevice1.currentIndex = 0
-        search_comboBox_DuplicatesDevice2.currentIndex = 0
+        search_comboBox_DuplicatesDevice1.resetSelection()
+        search_comboBox_DuplicatesDevice2.resetSelection()
 
         //Differences
         search_checkBox_Differences.checked = false
@@ -136,8 +136,8 @@ ColumnLayout {
         search_checkBox_DifferencesOnDate.checked = false
         search_checkBox_DifferencesOnChecksum.checked = false
         search_comboBox_DifferenceChecksumSign.currentIndex = 0
-        search_comboBox_DifferencesDevice1.currentIndex = 0
-        search_comboBox_DifferencesDevice2.currentIndex = 0
+        search_comboBox_DifferencesDevice1.resetSelection()
+        search_comboBox_DifferencesDevice2.resetSelection()
 
         // Reset folderAttributes
         search_checkBox_FolderCriteria.checked = false
@@ -811,22 +811,12 @@ ColumnLayout {
             spacing: Kirigami.Units.largeSpacing
 
             RowLayout {
-                Controls.Label { text: qsTr("Device 1");/* Layout.preferredWidth: 70*/}
-                Controls.ComboBox {
-                    id: search_comboBox_DuplicatesDevice1
-                    model: appManager1.deviceListModel
-                    textRole: "name"
-                    valueRole: "deviceId"
-                }
+                Controls.Label { text: qsTr("Device 1") }
+                DeviceTreeComboBox { id: search_comboBox_DuplicatesDevice1 }
             }
             RowLayout {
-                Controls.Label { text: qsTr("Device 2");/* Layout.preferredWidth: 70*/ }
-                Controls.ComboBox {
-                    id: search_comboBox_DuplicatesDevice2
-                    model: appManager1.deviceListModel
-                    textRole: "name"
-                    valueRole: "deviceId"
-                }
+                Controls.Label { text: qsTr("Device 2") }
+                DeviceTreeComboBox { id: search_comboBox_DuplicatesDevice2 }
             }
         }
     }
@@ -921,21 +911,11 @@ ColumnLayout {
             spacing: Kirigami.Units.largeSpacing
             RowLayout {
                 Controls.Label { text: qsTr("Between") }
-                Controls.ComboBox {
-                    id: search_comboBox_DifferencesDevice1
-                    model: appManager1.deviceListModel
-                    textRole: "name"
-                    valueRole: "deviceId"
-                }
+                DeviceTreeComboBox { id: search_comboBox_DifferencesDevice1 }
             }
             RowLayout {
                 Controls.Label { text: qsTr("And") }
-                Controls.ComboBox {
-                    id: search_comboBox_DifferencesDevice2
-                    model: appManager1.deviceListModel
-                    textRole: "name"
-                    valueRole: "deviceId"
-                }
+                DeviceTreeComboBox { id: search_comboBox_DifferencesDevice2 }
             }
         }
     }
