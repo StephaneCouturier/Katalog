@@ -367,6 +367,7 @@ ColumnLayout {
                 enabled: false
                 textRole: "text"
                 valueRole: "value"
+                displayText: ""
                 model: [
                     {text: qsTr("All"),   value: "All",   iconName: "folder"},
                     {text: qsTr("Audio"), value: "Audio", iconName: "audio-x-mpeg"},
@@ -392,7 +393,8 @@ ColumnLayout {
                         implicitHeight: Kirigami.Units.iconSizes.small
                     }
                     Controls.Label {
-                        text: search_comboBox_FileType.displayText
+                        text: search_comboBox_FileType.currentIndex >= 0
+                              ? search_comboBox_FileType.model[search_comboBox_FileType.currentIndex].text : ""
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                         verticalAlignment: Text.AlignVCenter

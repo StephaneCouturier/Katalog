@@ -192,7 +192,6 @@ Kirigami.ScrollablePage {
             onClicked: appManager1.openSettingsFile()
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
         }
-
         /*
         // ── Separator ──────────────────────────────────────────────────
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}

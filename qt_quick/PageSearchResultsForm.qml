@@ -136,6 +136,7 @@ ColumnLayout {
                 implicitWidth: 150
                 textRole: "text"
                 valueRole: "value"
+                displayText: ""
                 model: [
                     { text: qsTr("Export to CSV"),     value: "csv",     iconName: "document-save-as" },
                     { text: qsTr("Export to Catalog"), value: "catalog", iconName: "drive-optical"    },
@@ -174,7 +175,9 @@ ColumnLayout {
                         implicitHeight: Kirigami.Units.iconSizes.small
                     }
                     Controls.Label {
-                        text: batchActionCombo.displayText
+                        //text: batchActionCombo.displayText
+                        text: batchActionCombo.currentIndex >= 0
+                              ? batchActionCombo.model[batchActionCombo.currentIndex].text : ""
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                         verticalAlignment: Text.AlignVCenter

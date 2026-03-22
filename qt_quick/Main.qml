@@ -540,6 +540,11 @@ Kirigami.ApplicationWindow {
                         pageStack.removePage(p)
                         p.visible = false
                     }
+                    // Ensure currentIndex points to Search (depth-1) before pushing.
+                    // Kirigami's push() truncates pages forward of currentIndex, so if
+                    // the user back-navigated to Selection (currentIndex=0) without
+                    // removing pages, push() would drop Search and land on [Selection, Results].
+                    pageStack.currentIndex = pageStack.depth - 1
                     pageSearchResults.visible = true
                     pageStack.push(pageSearchResults)
                 }

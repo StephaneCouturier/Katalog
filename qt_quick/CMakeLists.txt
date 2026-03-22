@@ -86,7 +86,7 @@ target_link_libraries(Katalog3
     Qt6::Gui
     Qt6::Sql
     #Qt6::QuickControls2
-    #Qt6::Widgets
+    Qt6::Widgets
     KF6::I18n
     KF6::CoreAddons
     KF6::Archive
