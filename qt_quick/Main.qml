@@ -14,9 +14,10 @@ Kirigami.ApplicationWindow {
 
     Settings {
         id: windowSettings
-        property int  savedWidth:    1080
-        property int  savedHeight:   720
-        property bool drawerPinned:  false
+        property int  savedWidth:     1080
+        property int  savedHeight:    720
+        property bool drawerPinned:   false
+        property real savedCardScale: 1.0
     }
 
     signal searchTriggered()
@@ -296,6 +297,8 @@ Kirigami.ApplicationWindow {
         ]
 
         footer: Column {
+            Controls.MenuSeparator { width: parent.width - 20}
+
             spacing: Kirigami.Units.smallSpacing
             padding: Kirigami.Units.largeSpacing
 
@@ -330,28 +333,33 @@ Kirigami.ApplicationWindow {
                 width: parent.width
                 spacing: Kirigami.Units.smallSpacing
 
-                Kirigami.Icon {
-                    source: "zoom-out"
-                    width: Kirigami.Units.iconSizes.small
-                    height: Kirigami.Units.iconSizes.small
-                    anchors.verticalCenter: parent.verticalCenter
+                Controls.ToolButton {
+                    icon.name: "zoom-out"
+                    implicitWidth:  Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
+                    implicitHeight: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
+                    onClicked: cardSizeSlider.value = Math.max(cardSizeSlider.from,
+                                   cardSizeSlider.value - cardSizeSlider.stepSize)
                 }
 
                 Controls.Slider {
                     id: cardSizeSlider
                     from: 0.7
-                    to: 1.5
-                    value: 1.0
+                    to: 1.3
+                    value: windowSettings.savedCardScale
                     stepSize: 0.1
-                    width: parent.width - 60
-                    onValueChanged: root.cardScale = value
+                    width: parent.width - 80
+                    onValueChanged: {
+                        root.cardScale = value
+                        windowSettings.savedCardScale = value
+                    }
                 }
 
-                Kirigami.Icon {
-                    source: "zoom-in"
-                    width: Kirigami.Units.iconSizes.small
-                    height: Kirigami.Units.iconSizes.small
-                    anchors.verticalCenter: parent.verticalCenter
+                Controls.ToolButton {
+                    icon.name: "zoom-in"
+                    implicitWidth:  Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
+                    implicitHeight: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
+                    onClicked: cardSizeSlider.value = Math.min(cardSizeSlider.to,
+                                   cardSizeSlider.value + cardSizeSlider.stepSize)
                 }
             }
         }
@@ -374,8 +382,9 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: pageSelection
 
     Component.onCompleted: {
-        width  = windowSettings.savedWidth
-        height = windowSettings.savedHeight
+        width         = windowSettings.savedWidth
+        height        = windowSettings.savedHeight
+        root.cardScale = windowSettings.savedCardScale
         if (appManager1.shouldShowAlphaWarning())
             alphaWarningDialog.open()
 

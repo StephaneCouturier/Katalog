@@ -96,6 +96,7 @@ Kirigami.AbstractCard {
                 onClicked: appManager1.collapseDevice(model.deviceId)
                 Controls.ToolTip.text: "Collapse"
                 Controls.ToolTip.visible: hovered
+                //Layout.height: Kirigami.Units.smallSpacing
             }
             Controls.ToolButton {
                 icon.name: "go-down"
