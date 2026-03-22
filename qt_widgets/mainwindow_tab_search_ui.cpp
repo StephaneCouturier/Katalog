@@ -36,6 +36,7 @@
 #include "core/database.h"
 #include "core/filemetadata.h"
 #include "core/filechecksum.h"
+#include "core/statusbarmessagebuilder.h"
 
 //TAB: SEARCH FILES ------------------------------------------------------------
 
@@ -1074,6 +1075,8 @@
             ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(2, "Rename (KRename)", Qt::UserRole);
+            ui->Search_comboBox_SelectProcess->insertItem(3, QIcon::fromTheme("checkmark"),         tr("Verify Checksums"));
+            ui->Search_comboBox_SelectProcess->insertItem(4, QIcon::fromTheme("document-properties"), tr("Include Metadata"));
 
             //Prepare list of size units for the Catalog selection combobox
             //The first line is the one displayed by default
@@ -1610,6 +1613,103 @@
                     msgBox.setIcon(QMessageBox::Information);
                     msgBox.exec();
                 }
+            }
+
+            //Verify Checksums
+            else if (selectedProcess == tr("Verify Checksums")) {
+                int total = currentSearch->fileNames.size();
+                int matched = 0, mismatched = 0, calculated = 0, errors = 0;
+
+                statusBar()->show();
+                statusBarTimer->stop();
+
+                for (int i = 0; i < total; ++i) {
+                    const QString &fileName  = currentSearch->fileNames[i];
+                    const QString &folder    = currentSearch->filePaths[i];
+                    const QString  filePath  = folder + "/" + fileName;
+                    const int      catalogId = currentSearch->fileCatalogIDs.value(i, -1);
+                    const QString  stored    = currentSearch->checksumSha256s.value(i);
+
+                    StatusBarMessageBuilder builder;
+                    builder.setOperation(tr("Verify Checksums"))
+                           .setProcess(tr("Processing"), i + 1, total)
+                           .setCurrentItem(filePath);
+                    statusBarLabel->setText(builder.build());
+                    QApplication::processEvents();
+
+                    if (!QFileInfo::exists(filePath)) { ++errors; continue; }
+
+                    QString actual = FileChecksum::calculateChecksum(filePath, QCryptographicHash::Sha256);
+                    if (actual.isEmpty()) { ++errors; continue; }
+
+                    if (stored.isEmpty()) {
+                        if (catalogId > 0)
+                            FileChecksum::updateFileChecksum(m_connectionName,
+                                                            catalogId, fileName, folder, actual, "SHA256");
+                        ++calculated;
+                    } else {
+                        actual == stored ? ++matched : ++mismatched;
+                    }
+                }
+
+                StatusBarMessageBuilder doneBuilder;
+                doneBuilder.setOperation(tr("Verify Checksums"))
+                           .setStatus(tr("Completed"))
+                           .setProcess(tr("Processed"), total, total);
+                statusBarLabel->setText(doneBuilder.build());
+                statusBarTimer->start(5000);
+
+                QMessageBox::information(this, tr("Verify Checksums"),
+                    tr("Checksum verification complete.\n\nMatched: %1\nMismatched: %2\nNew checksums calculated: %3\nErrors: %4")
+                    .arg(matched).arg(mismatched).arg(calculated).arg(errors));
+                ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
+            }
+
+            //Include Metadata
+            else if (selectedProcess == tr("Include Metadata")) {
+                int total = currentSearch->fileNames.size();
+                int updated = 0, skipped = 0, errors = 0;
+
+                statusBar()->show();
+                statusBarTimer->stop();
+
+                for (int i = 0; i < total; ++i) {
+                    const QString &fileName  = currentSearch->fileNames[i];
+                    const QString &folder    = currentSearch->filePaths[i];
+                    const QString  filePath  = folder + "/" + fileName;
+                    const int      catalogId = currentSearch->fileCatalogIDs.value(i, -1);
+
+                    StatusBarMessageBuilder builder;
+                    builder.setOperation(tr("Include Metadata"))
+                           .setProcess(tr("Processing"), i + 1, total)
+                           .setCurrentItem(filePath);
+                    statusBarLabel->setText(builder.build());
+                    QApplication::processEvents();
+
+                    if (!QFileInfo::exists(filePath)) { ++errors; continue; }
+                    if (catalogId <= 0)               { ++skipped; continue; }
+
+                    QVariantMap metadata = FileMetadata::extractMetadata(filePath, Catalog::METADATA_MEDIA_EXTENDED);
+                    if (metadata.isEmpty())           { ++skipped; continue; }
+
+                    if (FileMetadata::updateFileMetadata(m_connectionName,
+                                                        catalogId, fileName, folder, metadata))
+                        ++updated;
+                    else
+                        ++errors;
+                }
+
+                StatusBarMessageBuilder doneBuilder;
+                doneBuilder.setOperation(tr("Include Metadata"))
+                           .setStatus(tr("Completed"))
+                           .setProcess(tr("Processed"), total, total);
+                statusBarLabel->setText(doneBuilder.build());
+                statusBarTimer->start(5000);
+
+                QMessageBox::information(this, tr("Include Metadata"),
+                    tr("Metadata extraction complete.\n\nUpdated: %1\nSkipped: %2\nErrors: %3")
+                    .arg(updated).arg(skipped).arg(errors));
+                ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
             }
         }
         //----------------------------------------------------------------------

@@ -168,8 +168,10 @@ public slots:
     Q_INVOKABLE void    copyToClipboard(const QString &text);
     Q_INVOKABLE QString exportSearchResultsToCSV();
     Q_INVOKABLE QString exportSearchResultsAsCatalog();
-    Q_INVOKABLE int     batchMoveSearchResultsToTrash();
-    Q_INVOKABLE int     batchDeleteSearchResults();
+    Q_INVOKABLE int          batchMoveSearchResultsToTrash();
+    Q_INVOKABLE int          batchDeleteSearchResults();
+    Q_INVOKABLE QVariantMap  batchVerifyChecksums();
+    Q_INVOKABLE QVariantMap  batchGetMetadata();
 
     // Single-file operations from context menu
     Q_INVOKABLE bool    moveFileToTrash(const QString &fullPath);

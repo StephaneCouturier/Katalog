@@ -765,6 +765,80 @@ int AppManager::batchDeleteSearchResults()
     return count;
 }
 //----------------------------------------------------------------------
+QVariantMap AppManager::batchVerifyChecksums()
+{
+    int total = 0, matched = 0, mismatched = 0, calculated = 0, errors = 0;
+
+    if (searchObject) {
+        const int n = searchObject->fileNames.size();
+        for (int i = 0; i < n; ++i) {
+            ++total;
+            const QString &fileName  = searchObject->fileNames[i];
+            const QString &folder    = searchObject->filePaths[i];
+            const QString  filePath  = folder + "/" + fileName;
+            const int      catalogId = searchObject->fileCatalogIDs.value(i, -1);
+            const QString  stored    = searchObject->checksumSha256s.value(i);
+
+            if (!QFileInfo::exists(filePath)) { ++errors; continue; }
+
+            QString actual = FileChecksum::calculateChecksum(filePath, QCryptographicHash::Sha256);
+            if (actual.isEmpty()) { ++errors; continue; }
+
+            if (stored.isEmpty()) {
+                if (catalogId > 0)
+                    FileChecksum::updateFileChecksum(QSqlDatabase::defaultConnection,
+                                                    catalogId, fileName, folder, actual, "SHA256");
+                ++calculated;
+            } else {
+                actual == stored ? ++matched : ++mismatched;
+            }
+        }
+    }
+
+    QVariantMap result;
+    result["total"]      = total;
+    result["matched"]    = matched;
+    result["mismatched"] = mismatched;
+    result["calculated"] = calculated;
+    result["errors"]     = errors;
+    return result;
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::batchGetMetadata()
+{
+    int total = 0, updated = 0, skipped = 0, errors = 0;
+
+    if (searchObject) {
+        const int n = searchObject->fileNames.size();
+        for (int i = 0; i < n; ++i) {
+            ++total;
+            const QString &fileName  = searchObject->fileNames[i];
+            const QString &folder    = searchObject->filePaths[i];
+            const QString  filePath  = folder + "/" + fileName;
+            const int      catalogId = searchObject->fileCatalogIDs.value(i, -1);
+
+            if (!QFileInfo::exists(filePath)) { ++errors; continue; }
+            if (catalogId <= 0)               { ++skipped; continue; }
+
+            QVariantMap metadata = FileMetadata::extractMetadata(filePath, Catalog::METADATA_MEDIA_EXTENDED);
+            if (metadata.isEmpty())           { ++skipped; continue; }
+
+            if (FileMetadata::updateFileMetadata(QSqlDatabase::defaultConnection,
+                                                catalogId, fileName, folder, metadata))
+                ++updated;
+            else
+                ++errors;
+        }
+    }
+
+    QVariantMap result;
+    result["total"]   = total;
+    result["updated"] = updated;
+    result["skipped"] = skipped;
+    result["errors"]  = errors;
+    return result;
+}
+//----------------------------------------------------------------------
 bool AppManager::moveFileToTrash(const QString &fullPath)
 {
     return QFile::moveToTrash(fullPath);

@@ -985,17 +985,33 @@ void Search::clearResults()
     deviceFoundIDList.clear();
     deviceFoundModel->clear();
 
+    fileExtensions.clear();
     fileTypes.clear();
     mimeTypes.clear();
+    mimeVerified.clear();
+    typeMismatch.clear();
     imageWidths.clear();
     imageHeights.clear();
+    imageOrientations.clear();
     videoDurations.clear();
     videoWidths.clear();
     videoHeights.clear();
+    videoCodecs.clear();
+    videoFramerates.clear();
+    videoBitrates.clear();
     audioDurations.clear();
     audioArtists.clear();
     audioAlbums.clear();
     audioTitles.clear();
+    audioGenres.clear();
+    audioYears.clear();
+    audioTrackNumbers.clear();
+    audioBitrates.clear();
+    audioSampleRates.clear();
+    metadataExtendeds.clear();
+    metadataExtractionDates.clear();
+    checksumSha256s.clear();
+    checksumExtractionDates.clear();
 
     filesFoundNumber = 0;
     filesFoundTotalSize = 0;

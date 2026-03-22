@@ -131,18 +131,36 @@ ColumnLayout {
             Item { Layout.fillWidth: true }
 
 
+            FontMetrics {
+                id: batchComboFontMetrics
+                font: batchActionCombo.font
+            }
+
             Controls.ComboBox {
                 id: batchActionCombo
-                implicitWidth: 150
+                implicitWidth: {
+                    var maxW = 0
+                    for (var i = 0; i < model.length; i++) {
+                        var w = batchComboFontMetrics.advanceWidth(model[i].text || "")
+                        if (w > maxW) maxW = w
+                    }
+                    return maxW
+                         + Kirigami.Units.iconSizes.small
+                         + Kirigami.Units.smallSpacing * 3
+                         + leftPadding + rightPadding
+                         + (indicator ? indicator.width : 0)
+                }
                 textRole: "text"
                 valueRole: "value"
                 displayText: ""
                 model: [
-                    { text: qsTr("Export to CSV"),     value: "csv",     iconName: "document-save-as" },
-                    { text: qsTr("Export to Catalog"), value: "catalog", iconName: "drive-optical"    },
-                    { text: "",                        value: "---",     iconName: ""                 },
-                    { text: qsTr("Move to Trash"),     value: "trash",   iconName: "user-trash"        },
-                    { text: qsTr("Delete"),            value: "delete",  iconName: "edit-delete"       }
+                    { text: qsTr("Export to CSV"),     value: "csv",              iconName: "document-save-as" },
+                    { text: qsTr("Export to Catalog"), value: "catalog",          iconName: "drive-optical"    },
+                    { text: qsTr("Verify Checksums"),  value: "verify-checksums", iconName: "checkmark"        },
+                    { text: qsTr("Include Metadata"),   value: "get-metadata",     iconName: "document-properties" },
+                    { text: "",                        value: "---",              iconName: ""                 },
+                    { text: qsTr("Move to Trash"),     value: "trash",            iconName: "user-trash"       },
+                    { text: qsTr("Delete"),            value: "delete",           iconName: "edit-delete"      }
                 ]
                 delegate: Controls.ItemDelegate {
                     width:  batchActionCombo.width
@@ -871,29 +889,69 @@ ColumnLayout {
     Kirigami.Dialog {
         id: batchConfirmDialog
         property string batchAction: ""
-        title: batchAction === "trash" ? qsTr("Move to Trash") : qsTr("Delete Files")
+        title: {
+            if (batchAction === "trash")            return qsTr("Move to Trash")
+            if (batchAction === "delete")           return qsTr("Delete Files")
+            if (batchAction === "verify-checksums") return qsTr("Verify Checksums")
+            if (batchAction === "get-metadata")     return qsTr("Include Metadata")
+            return ""
+        }
         standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
         padding: Kirigami.Units.largeSpacing
         preferredWidth: Kirigami.Units.gridUnit * 28
 
         contentItem: Controls.Label {
-            text: batchConfirmDialog.batchAction === "trash"
-                  ? qsTr("Move all %1 result(s) to trash?").arg(newSearch1.properties.filesFoundNumber ?? 0)
-                  : qsTr("Permanently delete all %1 result(s)? This cannot be undone.").arg(newSearch1.properties.filesFoundNumber ?? 0)
+            text: {
+                let n = newSearch1.properties.filesFoundNumber ?? 0
+                if (batchConfirmDialog.batchAction === "trash")
+                    return qsTr("Move all %1 result(s) to trash?").arg(n)
+                if (batchConfirmDialog.batchAction === "delete")
+                    return qsTr("Permanently delete all %1 result(s)? This cannot be undone.").arg(n)
+                if (batchConfirmDialog.batchAction === "verify-checksums")
+                    return qsTr("Calculate and verify checksums for all %1 result(s)?").arg(n)
+                if (batchConfirmDialog.batchAction === "get-metadata")
+                    return qsTr("Include metadata for all %1 result(s)?").arg(n)
+                return ""
+            }
             wrapMode: Text.WordWrap
         }
 
         onAccepted: {
-            let n = 0
-            if (batchAction === "trash")
-                n = appManager1.batchMoveSearchResultsToTrash()
-            else
-                n = appManager1.batchDeleteSearchResults()
-            showPassiveNotification(
-                batchAction === "trash"
-                ? qsTr("%1 file(s) moved to trash").arg(n)
-                : qsTr("%1 file(s) deleted").arg(n)
-            )
+            if (batchAction === "trash") {
+                let n = appManager1.batchMoveSearchResultsToTrash()
+                showPassiveNotification(qsTr("%1 file(s) moved to trash").arg(n))
+            } else if (batchAction === "delete") {
+                let n = appManager1.batchDeleteSearchResults()
+                showPassiveNotification(qsTr("%1 file(s) deleted").arg(n))
+            } else if (batchAction === "verify-checksums") {
+                let r = appManager1.batchVerifyChecksums()
+                batchResultDialog.batchAction = "verify-checksums"
+                batchResultDialog.resultText =
+                    qsTr("Matched: %1\nMismatched: %2\nNew checksums calculated: %3\nErrors: %4")
+                    .arg(r.matched ?? 0).arg(r.mismatched ?? 0).arg(r.calculated ?? 0).arg(r.errors ?? 0)
+                batchResultDialog.open()
+            } else if (batchAction === "get-metadata") {
+                let r = appManager1.batchGetMetadata()
+                batchResultDialog.batchAction = "get-metadata"
+                batchResultDialog.resultText =
+                    qsTr("Updated: %1\nSkipped: %2\nErrors: %3")
+                    .arg(r.updated ?? 0).arg(r.skipped ?? 0).arg(r.errors ?? 0)
+                batchResultDialog.open()
+            }
+        }
+    }
+
+    Kirigami.Dialog {
+        id: batchResultDialog
+        property string batchAction: ""
+        property string resultText: ""
+        title: batchAction === "verify-checksums" ? qsTr("Verify Checksums") : qsTr("Include Metadata")
+        standardButtons: Kirigami.Dialog.Ok
+        padding: Kirigami.Units.largeSpacing
+        preferredWidth: Kirigami.Units.gridUnit * 24
+        contentItem: Controls.Label {
+            text: batchResultDialog.resultText
+            wrapMode: Text.WordWrap
         }
     }
 
