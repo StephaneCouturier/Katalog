@@ -185,6 +185,70 @@ Kirigami.ScrollablePage {
             }
         }
 
+        Controls.Label { text: "Language"; opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }
+        ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
+
+            Controls.ComboBox {
+                id: languageComboBox
+                Layout.fillWidth: true
+                textRole: "displayName"
+                valueRole: "code"
+
+                model: appManager1.getLanguageList()
+
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+                    Image {
+                        source: languageComboBox.currentIndex >= 0
+                                ? "qrc" + languageComboBox.model[languageComboBox.currentIndex].flagPath
+                                : ""
+                        width:  20; height: 14
+                        fillMode: Image.PreserveAspectFit
+                        sourceSize.width: 20; sourceSize.height: 14
+                    }
+                    Controls.Label {
+                        text: languageComboBox.currentIndex >= 0
+                              ? languageComboBox.model[languageComboBox.currentIndex].displayName
+                              : ""
+                        Layout.fillWidth: true
+                        elide: Text.ElideRight
+                    }
+                }
+
+                delegate: Controls.ItemDelegate {
+                    width: languageComboBox.width
+                    contentItem: RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+                        Image {
+                            source: "qrc" + modelData.flagPath
+                            width:  20; height: 14
+                            fillMode: Image.PreserveAspectFit
+                            sourceSize.width: 20; sourceSize.height: 14
+                        }
+                        Controls.Label {
+                            text: modelData.displayName
+                            Layout.fillWidth: true
+                        }
+                    }
+                    highlighted: languageComboBox.highlightedIndex === index
+                }
+
+                Component.onCompleted: {
+                    var lang = appManager1.getCurrentLanguage()
+                    var langs = appManager1.getLanguageList()
+                    for (var i = 0; i < langs.length; i++) {
+                        if (langs[i].code === lang) { currentIndex = i; break }
+                    }
+                }
+
+                onActivated: {
+                    appManager1.setLanguage(currentValue)
+                }
+            }
+        }
+
         Controls.Label { text: "Settings file"; opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
         Controls.Button {
             text: "Open"

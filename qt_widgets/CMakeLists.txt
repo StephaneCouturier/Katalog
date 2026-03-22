@@ -71,6 +71,20 @@ set(UI_FILES
     mainwindow.ui
 )
 
+# K3 QML files — included in lupdate scan so qsTr() strings land in the shared .ts files
+set(K3_QML_FILES
+    ${CMAKE_SOURCE_DIR}/qt_quick/Main.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchResultsForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageSelectionDelegate.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageSelectionView.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageSettings.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageDevicesView.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageDevicesViewDelegate.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageCreateForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/DeviceTreeComboBox.qml
+)
+
 set(TS_FILES
     ${CMAKE_SOURCE_DIR}/translations/Katalog_bg_BG.ts
     ${CMAKE_SOURCE_DIR}/translations/Katalog_cz_CZ.ts
@@ -115,8 +129,8 @@ set(QRC_FILES
 if(${Qt6_VERSION} VERSION_GREATER_EQUAL "6.2")
     qt6_add_translations(Katalog
         TS_FILES ${TS_FILES}
-        SOURCES ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES}
-        LUPDATE_OPTIONS "-extensions" "cpp,h,ui" "-locations" "relative"
+        SOURCES ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES} ${K3_QML_FILES}
+        LUPDATE_OPTIONS "-extensions" "cpp,h,ui,qml" "-locations" "relative"
         LRELEASE_OPTIONS "-compress" "-nounfinished"
     )
 
@@ -133,7 +147,7 @@ endif()
 
 # Custom lupdate target for manual control
 add_custom_target(lupdate_manual
-    COMMAND Qt6::lupdate ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES} -ts ${TS_FILES}
+    COMMAND Qt6::lupdate ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES} ${K3_QML_FILES} -ts ${TS_FILES}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Manually updating translation source files"
 )

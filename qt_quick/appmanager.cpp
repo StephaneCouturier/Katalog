@@ -1,5 +1,6 @@
 #include "appmanager.h"
 #include "core/catalog.h"
+#include "core/language.h"
 #include "core/database.h"
 #include "core/databasemanager.h"
 #include "core/device.h"
@@ -507,6 +508,34 @@ void AppManager::setHostedAutoConnect(bool value)
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     settings.setValue("Settings/HostedAutoConnect", value);
     settings.sync();
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getLanguageList() const
+{
+    QVariantList result;
+    const QStringList codes = Language::getSupportedLanguages();
+    for (const QString &code : codes) {
+        QVariantMap entry;
+        entry["code"]        = code;
+        entry["displayName"] = Language::getDisplayName(code);
+        entry["flagPath"]    = Language::getFlagPath(code);
+        result.append(entry);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::getCurrentLanguage() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/Language", "en_US").toString();
+}
+//----------------------------------------------------------------------
+void AppManager::setLanguage(const QString &languageCode)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/Language", languageCode);
+    settings.sync();
+    emit languageChanged(languageCode);
 }
 //----------------------------------------------------------------------
 void AppManager::openFile(const QString &filePath)

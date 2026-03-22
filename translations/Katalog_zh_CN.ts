@@ -4204,4 +4204,471 @@ to the trash?</source>
         <translation>标签</translation>
     </message>
 </context>
+
+<context>
+    <name>DeviceTreeComboBox</name>
+    <message>
+        <source>— select —</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Main</name>
+    <message>
+        <source>Search</source>
+        <translation>搜索</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <source>Duplicates (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differences (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageCreateForm</name>
+    <message>
+        <source>All</source>
+        <translation>全部</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>图像</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>音频</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>文本</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>视频</translation>
+    </message>
+</context>
+<context>
+    <name>PageSearchForm</name>
+    <message>
+        <source>File name</source>
+        <translation>文件名</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>with</source>
+        <translation>包含</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation>在</translation>
+    </message>
+    <message>
+        <source>case sensitive</source>
+        <translation>区分大小写</translation>
+    </message>
+    <message>
+        <source>exclude</source>
+        <translation>排除</translation>
+    </message>
+    <message>
+        <source>File attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>类型</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>全部</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>音频</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>图像</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>文本</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>视频</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>其他</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>大小</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>日期</translation>
+    </message>
+    <message>
+        <source>File metadata</source>
+        <translation>文件元数据</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation>宽度</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation>高度</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation>时长</translation>
+    </message>
+    <message>
+        <source>Folder criteria</source>
+        <translation>文件夹条件</translation>
+    </message>
+    <message>
+        <source>only list folders in results</source>
+        <translation>仅在结果中列出文件夹</translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation>标签</translation>
+    </message>
+    <message>
+        <source>Duplicates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicates and Differences cannot be used at the same time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <source>Checksum</source>
+        <translation>校验和</translation>
+    </message>
+    <message>
+        <source>Scope</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Within selected device</source>
+        <translation>在所选设备内</translation>
+    </message>
+    <message>
+        <source>Compare two devices</source>
+        <translation>比较两个设备</translation>
+    </message>
+    <message>
+        <source>Device 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Between</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>And</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSearchResultsForm</name>
+    <message>
+        <source>%1 duplicate(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 difference(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 folder(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min: %1   Max: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to Trash</source>
+        <translation>移动到回收站</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported to: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export failed — no results or write error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results exported to catalog: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export failed — no results or database error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(no selection)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation>打开文件</translation>
+    </message>
+    <message>
+        <source>Open folder</source>
+        <translation>打开文件夹</translation>
+    </message>
+    <message>
+        <source>Explore folder</source>
+        <translation>浏览文件夹</translation>
+    </message>
+    <message>
+        <source>Show extended metadata (JSON)</source>
+        <translation>显示扩展元数据（JSON）</translation>
+    </message>
+    <message>
+        <source>No extended metadata available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy folder path</source>
+        <translation>复制文件夹路径</translation>
+    </message>
+    <message>
+        <source>Folder path copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file absolute path</source>
+        <translation>复制文件绝对路径</translation>
+    </message>
+    <message>
+        <source>Full path copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name with extension</source>
+        <translation>复制带扩展名的文件名</translation>
+    </message>
+    <message>
+        <source>File name copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name without extension</source>
+        <translation>复制不带扩展名的文件名</translation>
+    </message>
+    <message>
+        <source>Calculate Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File not found or could not be read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Checksum</source>
+        <translation>复制校验和</translation>
+    </message>
+    <message>
+        <source>Checksum copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verify Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File moved to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not move file to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete file</source>
+        <translation>删除文件</translation>
+    </message>
+    <message>
+        <source>Extended Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy JSON</source>
+        <translation>复制JSON</translation>
+    </message>
+    <message>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>值</translation>
+    </message>
+    <message>
+        <source>Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum saved to database.</source>
+        <translation>校验和已保存到数据库。</translation>
+    </message>
+    <message>
+        <source>Checksums match.</source>
+        <translation>校验和匹配。</translation>
+    </message>
+    <message>
+        <source>Copy to Clipboard</source>
+        <translation>复制到剪贴板</translation>
+    </message>
+    <message>
+        <source>Checksum Mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Checksum</source>
+        <translation>更新校验和</translation>
+    </message>
+    <message>
+        <source>Checksum saved to database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksums do not match.</source>
+        <translation>校验和不匹配。</translation>
+    </message>
+    <message>
+        <source>Expected:</source>
+        <translation>预期：</translation>
+    </message>
+    <message>
+        <source>Actual:</source>
+        <translation>实际：</translation>
+    </message>
+    <message>
+        <source>Delete File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File deleted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not delete file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Permanently delete this file? This cannot be undone.\n\n%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move all %1 result(s) to trash?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file(s) moved to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file(s) deleted</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSelectionDelegate</name>
+    <message>
+        <source>Open folder</source>
+        <translation>打开文件夹</translation>
+    </message>
+</context>
 </TS>

@@ -71,14 +71,14 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | Screen / Feature      | K2 | K3 | Remaining | New vs K2 |
 |-----------------------|----|----|-----------|-----------|
 | **Screen/tabs**       | ✅ | ✅ | | - Access via a "Drawer" now, which can be hidden or pinned" |
-| **Open Collection**   | ✅ | 🚧 | dialog to open is not well readable in light theme | - Open recent collections|
-| **Selection**         | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of entries
+| **Open Collection**   | ✅ | ✅ | | - Open recent collections|
+| **Selection**         | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of Devices
 | **Search**            | ✅ | 🚧 | |
-| — Search Criteria     | ✅ | ✅ | closing Serach also coses Resuts | - Paste/Clean buttons for all text input fields|
+| — Search Criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|
 | — Search Results      | ✅ | ✅ | | - Select Device path is displayed
 | — Search History      | ✅ | 🔲 | |
 | — Search in Connected | ✅ | 🔲 | |
-| — Search Pause/Stop   | ✅ | 🔲 | review thread mechanism, compared to BackUp |
+| — Search Pause/Stop   | ✅ | 🔲 | Review thread mechanism, compared to BackUp |
 | — Search Progress     | ✅ | 🔲 | |
 | **Devices**           | ✅ | 🔲 | |
 | — View                | ✅ | 🔲 | |
@@ -98,3 +98,15 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Themes              | ✅ | 🔲 | |
 | — Language            | ✅ | 🔲 | |
 | **About**             | ✅ | 🚧 | link to release notes |
+
+
+### UI / Page system
+
+Default: do not keep Selection page visible when 
+
+1st time
+Selection > Search (enter criteria & click Search action) > Results are displayed & Selection gets hidden 
+
+2nd time
+navigate back to Selection, Search (enter criteria & click Search action) > Results are displayed but Selection statys and Search gets hidden 
+

@@ -49,6 +49,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
      // Static methods for accessing language data
      static QStringList getSupportedLanguages();
      static QIcon getFlagIcon(const QString& languageCode);
+     static QString getFlagPath(const QString& languageCode);
      static QString getDisplayName(const QString& languageCode);
      static QString getSystemLanguage();
      static bool isLanguageSupported(const QString& languageCode);

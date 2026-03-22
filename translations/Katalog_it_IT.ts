@@ -4204,4 +4204,471 @@ nel cestino?</translation>
         <translation>Tag</translation>
     </message>
 </context>
+
+<context>
+    <name>DeviceTreeComboBox</name>
+    <message>
+        <source>— select —</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Main</name>
+    <message>
+        <source>Search</source>
+        <translation>Cerca</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Reimposta</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Chiudi</translation>
+    </message>
+    <message>
+        <source>Duplicates (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differences (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageCreateForm</name>
+    <message>
+        <source>All</source>
+        <translation>Tutto</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>Immagine</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Testo</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+</context>
+<context>
+    <name>PageSearchForm</name>
+    <message>
+        <source>File name</source>
+        <translation>Nome file</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>with</source>
+        <translation>con</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation>in</translation>
+    </message>
+    <message>
+        <source>case sensitive</source>
+        <translation>sensibile alle maiuscole</translation>
+    </message>
+    <message>
+        <source>exclude</source>
+        <translation>escludi</translation>
+    </message>
+    <message>
+        <source>File attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Tutto</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>Immagine</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Testo</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Altro</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nessuno</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Dimensione</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Data</translation>
+    </message>
+    <message>
+        <source>File metadata</source>
+        <translation>Metadati del file</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation>Larghezza</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation>Altezza</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation>Durata</translation>
+    </message>
+    <message>
+        <source>Folder criteria</source>
+        <translation>Criteri cartella</translation>
+    </message>
+    <message>
+        <source>only list folders in results</source>
+        <translation>elenca solo cartelle nei risultati</translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation>Tag</translation>
+    </message>
+    <message>
+        <source>Duplicates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicates and Differences cannot be used at the same time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Checksum</source>
+        <translation>Checksum</translation>
+    </message>
+    <message>
+        <source>Scope</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Within selected device</source>
+        <translation>All'interno del dispositivo selezionato</translation>
+    </message>
+    <message>
+        <source>Compare two devices</source>
+        <translation>Confronta due dispositivi</translation>
+    </message>
+    <message>
+        <source>Device 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Between</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>And</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSearchResultsForm</name>
+    <message>
+        <source>%1 duplicate(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 difference(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 folder(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file(s) found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min: %1   Max: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to Trash</source>
+        <translation>Sposta nel cestino</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Elimina</translation>
+    </message>
+    <message>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported to: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export failed — no results or write error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results exported to catalog: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export failed — no results or database error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(no selection)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation>Apri file</translation>
+    </message>
+    <message>
+        <source>Open folder</source>
+        <translation>Apri cartella</translation>
+    </message>
+    <message>
+        <source>Explore folder</source>
+        <translation>Esplora cartella</translation>
+    </message>
+    <message>
+        <source>Show extended metadata (JSON)</source>
+        <translation>Mostra metadati estesi (JSON)</translation>
+    </message>
+    <message>
+        <source>No extended metadata available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy folder path</source>
+        <translation>Copia percorso cartella</translation>
+    </message>
+    <message>
+        <source>Folder path copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file absolute path</source>
+        <translation>Copia percorso assoluto file</translation>
+    </message>
+    <message>
+        <source>Full path copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name with extension</source>
+        <translation>Copia nome file con estensione</translation>
+    </message>
+    <message>
+        <source>File name copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name without extension</source>
+        <translation>Copia nome file senza estensione</translation>
+    </message>
+    <message>
+        <source>Calculate Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File not found or could not be read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Checksum</source>
+        <translation>Copia checksum</translation>
+    </message>
+    <message>
+        <source>Checksum copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verify Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File moved to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not move file to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete file</source>
+        <translation>Elimina file</translation>
+    </message>
+    <message>
+        <source>Extended Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy JSON</source>
+        <translation>Copia JSON</translation>
+    </message>
+    <message>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valore</translation>
+    </message>
+    <message>
+        <source>Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum saved to database.</source>
+        <translation>Checksum salvato nel database.</translation>
+    </message>
+    <message>
+        <source>Checksums match.</source>
+        <translation>I checksum corrispondono.</translation>
+    </message>
+    <message>
+        <source>Copy to Clipboard</source>
+        <translation>Copia negli appunti</translation>
+    </message>
+    <message>
+        <source>Checksum Mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Checksum</source>
+        <translation>Aggiorna checksum</translation>
+    </message>
+    <message>
+        <source>Checksum saved to database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksums do not match.</source>
+        <translation>I checksum non corrispondono.</translation>
+    </message>
+    <message>
+        <source>Expected:</source>
+        <translation>Previsto:</translation>
+    </message>
+    <message>
+        <source>Actual:</source>
+        <translation>Effettivo:</translation>
+    </message>
+    <message>
+        <source>Delete File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File deleted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not delete file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Permanently delete this file? This cannot be undone.\n\n%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move all %1 result(s) to trash?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file(s) moved to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file(s) deleted</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSelectionDelegate</name>
+    <message>
+        <source>Open folder</source>
+        <translation>Apri cartella</translation>
+    </message>
+</context>
 </TS>

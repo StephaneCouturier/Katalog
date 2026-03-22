@@ -198,6 +198,11 @@ public slots:
     Q_INVOKABLE bool    getHostedAutoConnect() const;
     Q_INVOKABLE void    setHostedAutoConnect(bool value);
 
+    // Language
+    Q_INVOKABLE QVariantList getLanguageList() const;
+    Q_INVOKABLE QString      getCurrentLanguage() const;
+    Q_INVOKABLE void         setLanguage(const QString &languageCode);
+
 signals:
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
@@ -213,6 +218,7 @@ signals:
     void selectedDeviceChanged(int deviceId);
     void databaseModeChanged();
     void recentCollectionsChanged();
+    void languageChanged(const QString &code);
 
 private:
     void saveToRecentCollections(const QString &mode, const QString &path,

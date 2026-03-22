@@ -1,15 +1,18 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QTranslator>
+#include <QSettings>
+#include <QStandardPaths>
 
 #include "appmanager.h"
 #include "core/collection.h"
+#include "core/language.h"
 #include "adapters/search.h"
 #include "PageSearch.h"
 #include "adapters/devicelistmodel.h"
 
 #include <KAboutData>
-#include <KLocalizedContext>
 #include <KLocalizedString>
 
 #include "version.h"
@@ -21,7 +24,24 @@ int main(int argc, char *argv[])
     //Set the application icon
     app.setWindowIcon(QIcon(":/images/Katalog_logo_64.ico"));
 
-    KLocalizedString::setApplicationDomain("Katalog");
+    // Load translation — same mechanism as K2
+    QTranslator *translator = new QTranslator(&app);
+    {
+        QString homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
+        QString settingsFilePath = homePath + "/.config/katalog_settings.ini";
+        QSettings settings(settingsFilePath, QSettings::IniFormat);
+        QString userLanguage = settings.value("Settings/Language").toString();
+
+        if (userLanguage.isEmpty()) {
+            userLanguage = Language::getSystemLanguage();
+            if (!Language::isLanguageSupported(userLanguage))
+                userLanguage = "en_US";
+            settings.setValue("Settings/Language", userLanguage);
+        }
+
+        if (translator->load("Katalog_" + userLanguage, ":translations"))
+            app.installTranslator(translator);
+    }
 
     KAboutData aboutData(
         QStringLiteral("Katalog"),
@@ -75,6 +95,15 @@ int main(int argc, char *argv[])
     rootContext->setContextProperty("About", QVariant::fromValue(KAboutData::applicationData()));
 
     engine.loadFromModule("io.github.stephanecouturier.Katalog", "Main");
+
+    // Apply language change at runtime without restart
+    QObject::connect(appManager, &AppManager::languageChanged, &engine,
+        [&app, &engine, translator](const QString &code) {
+            app.removeTranslator(translator);
+            if (translator->load("Katalog_" + code, ":translations"))
+                app.installTranslator(translator);
+            engine.retranslate();
+        });
 
     appManager->testQuery();
 

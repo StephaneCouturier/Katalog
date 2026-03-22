@@ -103,6 +103,16 @@ QString Language::getSystemLanguage()
     return "en_US"; // Fallback
 }
 
+QString Language::getFlagPath(const QString& languageCode)
+{
+    for (const auto& lang : supportedLanguages) {
+        if (lang.code == languageCode) {
+            return lang.flagPath;
+        }
+    }
+    return ":/images/flags/us.png"; // Default
+}
+
 bool Language::isLanguageSupported(const QString& languageCode)
 {
     return getSupportedLanguages().contains(languageCode);
