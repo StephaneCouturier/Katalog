@@ -357,19 +357,6 @@ Kirigami.ApplicationWindow {
         }
     }
 
-    // When searchKeepsSelection is on, prevent Kirigami from scrolling
-    // away from col 0 (Selection) while Search+Results are open.
-    Connections {
-        target: pageStack
-        function onCurrentIndexChanged() {
-            if (appManager1.searchKeepsSelection
-                    && pageStack.depth >= 3
-                    && pageStack.currentIndex !== 0) {
-                pageStack.currentIndex = 0
-            }
-        }
-    }
-
     // Database status notification
         Connections {
             target: appManager1
@@ -384,7 +371,7 @@ Kirigami.ApplicationWindow {
         }
 
     //Pages ---------------------------------------------------------------------
-    pageStack.initialPage: [ pageSelection, pageSearch ]
+    pageStack.initialPage: pageSelection
 
     Component.onCompleted: {
         width  = windowSettings.savedWidth
@@ -547,19 +534,14 @@ Kirigami.ApplicationWindow {
                 onTriggered: {
                     root.searchTriggered()
                     pageSearchForm.executeSearch()
-                    // Remove any stale col-2+ pages (old Results)
+                    // Remove any stale Results page, then push fresh
                     while (pageStack.depth > 2) {
                         let p = pageStack.get(pageStack.depth - 1)
                         pageStack.removePage(p)
                         p.visible = false
                     }
-                    // Use insertPage (not push) to append Results at the end without
-                    // Kirigami auto-changing currentIndex asynchronously via its animation.
                     pageSearchResults.visible = true
-                    pageStack.insertPage(pageStack.depth, pageSearchResults)
-                    // Anchor view: keepSelection=0 (wide screens see Selection+Search+Results);
-                    // default=depth-1 (2-col screens see Search+Results).
-                    pageStack.currentIndex = appManager1.searchKeepsSelection ? 0 : (pageStack.depth - 1)
+                    pageStack.push(pageSearchResults)
                 }
             },
             Kirigami.Action {

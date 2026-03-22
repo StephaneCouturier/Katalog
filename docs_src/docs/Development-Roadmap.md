@@ -32,32 +32,29 @@ Active and planned work items are tracked in the [GitHub Backlog — Major Featu
 ## Katalog 3
 
 ### Introduction
-Katalog 3 is a major Version of Katalog, marking the transition to a more modern UI, usable even on tablets/smartphones.
-It relies on QtQuick and Kirigami from KDE.
+
+**Katalog 3** is a new major version of Katalog, transitionning to a more modern UI, and fitting future tablets & smartphones use. It relies on QtQuick and Kirigami from KDE.
+
+**Katalog 2** remains the current major version, until Katalog 3 covers all features. It may be maintained beyond Katalog 3 release, as long as UI work is light.
+
+**Katalog 3.0.0** will therefore be first complete release and will become then the main version. <br/>Until then, the release will still be 2.x but will include binaries **Katalog 3.alpha.x**.
+
+This is enabled by having done a full split of UI and backend, and the common use of `/core` (backend) means that **Collections will remain compatible to both versions**.
+
 
 ![Preview of Katalog 3 interface](/img/K3_Search_Results_3Pages.png)
-
-###  Codebase structure & transitions
-
-Katalog 2 will continue to be maintained, at least until Katalog 3 covers all features.
-
-This is enabled by having done a full split of UI and backend (the `/core` directory).
-
-The common use of `/core` means that **Collections will remain compatible to both versions**.
-* core/           shared business logic (SQL, search, catalog ops, device ops)
-* qt_widgets/     Katalog2 — Qt Widgets, KXmlGui
-* qt_quick/       Katalog3 — Qt Quick, QML, Kirigami
-
-At some point, it is possible that new features, especially if involving a lot of UI work, will only be developped in Katalog 3 directly.
-
  
 ### Development phases
 
+#### Code management:
+see [Development-Repository](http://localhost:3000/Katalog/docs/Development-Repository)
+
+#### Phases
 Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 
 | Phase | Feature Scope                                  | Status | K3 Notes |
 |-------|------------------------------------------------|--------|----------|
-| 1     | READ ONLY, Basic Search features, English Only |   🚧   |          |
+| 1     | READ ONLY, Search features, English Only       |   🚧   |          |
 | 2     | Theme & Translations                           |   🔲   |          |
 | 3     | READ ONLY advanced / graphical features        |   🔲   |          |
 | 4     | CREATE / EDIT features                         |   🔲   |          |
@@ -73,17 +70,20 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 
 | Screen / Feature      | K2 | K3 | Remaining | New vs K2 |
 |-----------------------|----|----|-----------|-----------|
-| **Open Collection**   | ✅ | 🚧 | (code improvement only) <br/> DatabaseManager refactor.<br/> Move reconnect/settings orchestration from AppManager to core | - Open recent collections|
-| **Selection**         | ✅ | 🚧 | Refresh from db | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of entries
+| **Screen/tabs**       | ✅ | ✅ | | - Access via a "Drawer" now, which can be hidden or pinned" |
+| **Open Collection**   | ✅ | 🚧 | dialog to open is not well readable in light theme | - Open recent collections|
+| **Selection**         | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of entries
 | **Search**            | ✅ | 🚧 | |
-| — Search criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|
-| — Search results      | ✅ | ✅ | |
-| — Search history      | ✅ | 🔲 | |
+| — Search Criteria     | ✅ | ✅ | closing Serach also coses Resuts | - Paste/Clean buttons for all text input fields|
+| — Search Results      | ✅ | ✅ | | - Select Device path is displayed
+| — Search History      | ✅ | 🔲 | |
 | — Search in Connected | ✅ | 🔲 | |
-| — Search pause/stop   | ✅ | 🔲 | |
+| — Search Pause/Stop   | ✅ | 🔲 | review thread mechanism, compared to BackUp |
+| — Search Progress     | ✅ | 🔲 | |
 | **Devices**           | ✅ | 🔲 | |
 | — View                | ✅ | 🔲 | |
 | — Create/Edit         | ✅ | 🔲 | |
+| — Update progress     | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
 | **Create**            | ✅ | 🔲 | |
 | **Statistics**        | ✅ | 🔲 | |
@@ -91,12 +91,10 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | **Backup**            | ✅ | 🔲 | |
 | — View                | ✅ | 🔲 | |
 | — Create              | ✅ | 🔲 | |
-| — Execute             | ✅ | 🔲 | |
-| **Settings**          | ✅ | 🚧 | |
+| — Execute/progress    | ✅ | 🔲 | |
+| **Settings**          | ✅ | 🚧 | glitch: showing search page when transition to or from About|
 | — SettingsFile        | ✅ | ✅ | |
-| — Various             | ✅ | 🔲 | check version at start|
+| — Version             | ✅ | ✅ | |
 | — Themes              | ✅ | 🔲 | |
 | — Language            | ✅ | 🔲 | |
 | **About**             | ✅ | 🚧 | link to release notes |
-
-  

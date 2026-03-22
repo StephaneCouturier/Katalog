@@ -166,16 +166,17 @@ Kirigami.ScrollablePage {
         Controls.Label { text: "Version"; opacity: 0.7; Layout.alignment: Qt.AlignTop; }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
-            RowLayout {
-            Controls.Label { text: About.version; font.bold: true }
-            Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7 }
-            Controls.Button {
-                text: "Release Notes"
-                icon.name: "view-list-text"
-                //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
-                onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
-                Layout.leftMargin: Kirigami.Units.largeSpacing * 2
-            }
+            Flow {
+                spacing: Kirigami.Units.largeSpacing
+                Layout.fillWidth: true
+                Controls.Label { text: About.version; font.bold: true }
+                Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7 }
+                Controls.Button {
+                    text: "Release Notes"
+                    icon.name: "view-list-text"
+                    //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
+                    onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
+                }
             }
             Controls.CheckBox {
                 text: "Check for a new version on startup"
@@ -192,6 +193,7 @@ Kirigami.ScrollablePage {
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
         }
 
+        /*
         // ── Separator ──────────────────────────────────────────────────
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
 
@@ -204,5 +206,6 @@ Kirigami.ScrollablePage {
             checked: appManager1.searchKeepsSelection
             onCheckedChanged: appManager1.searchKeepsSelection = checked
         }
+        */
     }
 }

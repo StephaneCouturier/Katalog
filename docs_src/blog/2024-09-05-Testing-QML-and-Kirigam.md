@@ -6,7 +6,7 @@ tags: [pre-development]
 ---
 
 Looking at the future of Katalog, a few direction have been here since the start of the project:
-- Multi-platform: why not even consider Mobile ? (ok, iOS should really be covered first)
+- Multi-platform: why not even consider Mobile ? (ok, macOS should really be covered first)
 - Using KDE KF6 librairies: this could be the best way to grow capabilities such a archives indexing or media files meta data
 - User Experience: nicer interface, more responsive.
 
