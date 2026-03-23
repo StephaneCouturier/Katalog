@@ -553,6 +553,7 @@ void Collection::loadCatalogFilesToTable()
                 //Insert a line in the table with available data
 
                 Catalog newCatalog;
+                newCatalog.setConnectionName(m_connectionName); // use this collection's connection
                 newCatalog.ID               = catalogValues[11].toInt(); //catalog_id
                 newCatalog.filePath         = path; //catalog_file_path
                 newCatalog.name             = catalogFileInfo.completeBaseName(); //catalog_name

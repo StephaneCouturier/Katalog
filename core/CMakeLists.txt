@@ -33,6 +33,7 @@ set(CORE_HEADERS
     directoryreplicator.h
     backupjob.h
     backupjobstoppable.h
+    collectionimporter.h
 )
 
 set(CORE_SOURCES
@@ -70,6 +71,7 @@ set(CORE_SOURCES
     directoryreplicator.cpp
     backupjob.cpp
     backupjobstoppable.cpp
+    collectionimporter.cpp
 )
 
 add_library(katalog-core STATIC ${CORE_SOURCES} ${CORE_HEADERS})

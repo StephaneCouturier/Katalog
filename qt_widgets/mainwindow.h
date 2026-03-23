@@ -48,6 +48,7 @@
 #include "core/backupmappingmanager.h"
 #include "core/backupjob.h"
 #include "core/backupjobstoppable.h"
+#include "core/collectionimporter.h"
 #include <QThread>
 #include <QElapsedTimer>
 #include "widgets/treecombobox.h"
@@ -530,6 +531,9 @@ class MainWindow : public KXmlGuiWindow
             void pauseCurrentBackup();
             void resumeCurrentBackup();
 
+        //TAB: Import
+            CollectionImporter *m_importer = nullptr;
+
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);
             enum InvalidFolderAction {
@@ -575,6 +579,10 @@ class MainWindow : public KXmlGuiWindow
             void on_Filters_treeView_Devices_customContextMenuRequested(const QPoint &pos);
             void on_Filters_treeView_Directory_clicked(const QModelIndex &index);
             void on_Filter_pushButton_PickPath_clicked();
+
+        //Import
+            void on_Import_pushButton_select_clicked();
+            void on_Import_pushButton_importSelected_clicked();
 
         //Settings
             void on_tabWidget_currentChanged(int index);

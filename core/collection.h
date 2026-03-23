@@ -154,6 +154,9 @@ public:
     CollectionFolderStatus validateCollectionFolder(const QString& folderPath, const QString& targetMode) const;
     QString getValidationMessage(CollectionFolderStatus status) const; // For UI messages
 
+    void setConnectionName(const QString &name) { m_connectionName = name; }
+    QString connectionName() const { return m_connectionName; }
+
 private:
     QString m_connectionName = "defaultConnection";
 

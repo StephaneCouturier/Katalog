@@ -168,6 +168,9 @@ public:
                                   const QString& newIncludeMetadata);
     bool hasFilesNeedingMigration() const;
 
+    void setConnectionName(const QString &name) { m_connectionName = name; }
+    QString connectionName() const { return m_connectionName; }
+
 private:
     QString m_connectionName = "defaultConnection";
     QStringList fileExtensions;

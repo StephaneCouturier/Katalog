@@ -20,6 +20,7 @@ set(MAINWINDOW_IMPL_SOURCES
     mainwindow_setup.cpp
     mainwindow_tab_backup.cpp
     mainwindow_tab_create.cpp
+    mainwindow_tab_import.cpp
     mainwindow_tab_device_pr.cpp
     mainwindow_tab_device_ui.cpp
     mainwindow_tab_explore.cpp

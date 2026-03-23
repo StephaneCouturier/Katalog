@@ -424,7 +424,8 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_backup_last_size    %2,
                     mapping_strict_copy                   INTEGER DEFAULT 1,
                     mapping_conflict_mode                 TEXT DEFAULT 'RenameOldest',
-                    mapping_source_mode                   TEXT DEFAULT 'Catalog')
+                    mapping_source_mode                   TEXT DEFAULT 'Catalog',
+                    mapping_source_collection             TEXT)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
 
@@ -1108,6 +1109,17 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
                 qWarning() << "WARNING: Failed to migrate catalog PRIMARY KEY (MySQL):" << err.text();
                 return err;
             }
+        }
+    }
+
+    // --- Part 3: Add mapping_source_collection column to device_mapping ---
+    QStringList mappingColumns = getTableColumns(connectionName, "device_mapping");
+    if (!mappingColumns.contains("mapping_source_collection")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE device_mapping ADD COLUMN mapping_source_collection TEXT");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add mapping_source_collection column:" << err.text();
+            return err;
         }
     }
 
