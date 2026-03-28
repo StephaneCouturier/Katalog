@@ -533,6 +533,7 @@ class MainWindow : public KXmlGuiWindow
 
         //TAB: Import
             CollectionImporter *m_importer = nullptr;
+            void openImportSource(const QString &path);
 
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);
@@ -582,6 +583,7 @@ class MainWindow : public KXmlGuiWindow
 
         //Import
             void on_Import_pushButton_select_clicked();
+            void on_Import_lineEdit_sourcePath_returnPressed();
             void on_Import_pushButton_importSelected_clicked();
 
         //Settings

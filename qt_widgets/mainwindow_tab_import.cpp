@@ -48,31 +48,12 @@ static void persistImportToFiles(Collection *collection)
 }
 
 //----------------------------------------------------------------------
-void MainWindow::on_Import_pushButton_select_clicked()
+void MainWindow::openImportSource(const QString &path)
 {
-    QString mode = ui->Import_comboBox_mode->currentText();
-    QString path;
-
-    if (mode == "File") {
-        path = QFileDialog::getOpenFileName(
-            this,
-            tr("Select source collection file"),
-            QString(),
-            tr("Katalog database (*.db);;All files (*)"));
-    } else {
-        path = QFileDialog::getExistingDirectory(
-            this,
-            tr("Select source collection folder (Memory mode)"));
-    }
-
-    if (path.isEmpty())
-        return;
-
     ui->Import_lineEdit_sourcePath->setText(path);
     ui->Import_label_status->setText(tr("Opening source..."));
     QApplication::processEvents();
 
-    // Auto-open the source
     if (!m_importer)
         m_importer = new CollectionImporter(collection, this);
 
@@ -89,7 +70,6 @@ void MainWindow::on_Import_pushButton_select_clicked()
         return;
     }
 
-    // Populate the source device TreeComboBox
     QStandardItemModel *model = m_importer->buildSourceDeviceModel();
     ui->Import_comboBox_sourceDevice->setTreeModel(model);
     ui->Import_comboBox_sourceDevice->setIdColumn(2);
@@ -98,6 +78,42 @@ void MainWindow::on_Import_pushButton_select_clicked()
     ui->Import_label_status->setText(
         tr("Source opened (%1 mode). Select a device and click Import.")
             .arg(m_importer->sourceMode()));
+}
+
+//----------------------------------------------------------------------
+void MainWindow::on_Import_pushButton_select_clicked()
+{
+    QString startDir = ui->Import_lineEdit_sourcePath->text().trimmed();
+    if (startDir.isEmpty())
+        startDir = collection->folder;
+
+    QString path;
+
+    if (ui->Import_comboBox_mode->currentIndex() == 0) { // File mode
+        path = QFileDialog::getOpenFileName(
+            this,
+            tr("Select source collection file"),
+            startDir,
+            tr("Katalog database (*.db);;All files (*)"));
+    } else {
+        path = QFileDialog::getExistingDirectory(
+            this,
+            tr("Select source collection folder (Memory mode)"),
+            startDir);
+    }
+
+    if (path.isEmpty())
+        return;
+
+    openImportSource(path);
+}
+
+//----------------------------------------------------------------------
+void MainWindow::on_Import_lineEdit_sourcePath_returnPressed()
+{
+    QString path = ui->Import_lineEdit_sourcePath->text().trimmed();
+    if (!path.isEmpty())
+        openImportSource(path);
 }
 
 //----------------------------------------------------------------------
