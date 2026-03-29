@@ -1,18 +1,18 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Paramètres
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Paramètres** et comment les utiliser.
-* Gestion de données
+* Gestion des données et des collections
 * Langue et thème
 * À propos
 
 ![Aperçu général de l'écran Paramètres](/img/screen_settings_01.png)
 
-## Gestion de données
+## Gestion des données et des collections
 
 ### Collection
 
@@ -23,9 +23,7 @@ Il est possible d'avoir plusieurs Collections.
 ### Modes de données
 Katalog propose 3 "*Modes de données*" ou différentes manières de stocker et de gérer les données.
 
-Remarque 1 : il n'existe pas encore de fonctionnalité permettant de convertir une collection d'un mode vers un autre.
-
-Remarque 2 : changer de mode nécessite de cliquer sur *Appliquer et redémarrer*
+Remarque : changer de mode nécessite de cliquer sur *Appliquer et redémarrer*.
 
 | Mode | Type de base de données | Stockage de données | Fichiers | Vitesse de recherche | Vitesse de catalogage |
 | -------| -------------------|---|---|---|---|
@@ -42,7 +40,7 @@ Actions du dossier de collection :
 * Saisir le chemin du dossier Collection et appuyer sur Entrée pour charger la collection
 * Sélectionner le chemin du dossier Collection et charger la collection
 * Ouvrir le dossier de collection dans le gestionnaire de fichiers par défaut du système
-* Exporter la collection vers un fichier de base de données SQLite, pour basculer vers le mode *Fichier*
+* *Exporter vers un fichier SQLite* : exporter la collection vers un fichier de base de données SQLite unique, pour basculer vers le mode *Fichier*
 
 Paramètres du mode mémoire :
 * *Sauvegarde* : activer ou désactiver (par défaut) la conservation d'une copie d'un catalogue avant de le mettre à jour (la copie aura une extension `.bak`)
@@ -57,7 +55,7 @@ Actions du fichier de collection :
 * *Sélectionner et ouvrir le fichier de base de données* : sélectionner et charger un fichier de collection existant
 * *Modifier* : ouvrir la base de données SQLite dans un éditeur de base de données (ex : [SQLite Browser](http://sqlitebrowser.org))
 * *Nouveau* : créer un nouveau fichier de collection et le charger
-* *Exporter vers le mode mémoire* : exporter la collection vers des fichiers CSV et d'index, pour basculer vers le mode *Mémoire*
+* *Exporter vers le mode mémoire (csv)* : exporter la collection vers des fichiers CSV et d'index, pour basculer vers le mode *Mémoire*
 
 ### Mode hébergé de base de données
 ![Paramètres du mode hébergé affichant les champs de connexion au serveur](/img/screen_settings_05_hosted.png)
@@ -73,6 +71,11 @@ Paramètres de connexion :
 
 Remplir tous les champs et cliquer sur *Appliquer et redémarrer* pour se connecter.
 
+#### Export
+Une collection hébergée peut être exportée vers un format local pour une utilisation hors ligne ou pour la partager :
+* *Exporter vers un fichier SQLite* : exporter l'intégralité de la collection hébergée vers un fichier SQLite local (mode *Fichier*)
+* *Exporter vers le mode mémoire (csv)* : exporter la collection vers des fichiers CSV et d'index (mode *Mémoire*)
+
 #### Sécurité
 * Seuls les noms d'hôtes **locaux** (localhost, 127.x.x.x) et de **réseau privé** (192.168.x.x, 10.x.x.x, 172.16-31.x.x) sont acceptés. Les adresses IP publiques et les noms de domaine sont rejetés.
 * Lors de la connexion à une adresse réseau privée, une boîte de dialogue de confirmation s'affiche avant de procéder.
@@ -81,6 +84,52 @@ Remplir tous les champs et cliquer sur *Appliquer et redémarrer* pour se connec
 * Un serveur MySQL/MariaDB doit être en cours d'exécution et accessible.
 * La base de données doit déjà exister sur le serveur (Katalog créera automatiquement les tables requises).
 * Le pilote SQL Qt correspondant doit être installé (`QMYSQL` pour MySQL/MariaDB).
+
+### Résumé des exports de collection
+
+Chaque mode peut être exporté vers un autre format. Les collections exportées peuvent ensuite être ouvertes directement dans le mode cible, ou utilisées comme source pour importer des appareils dans une autre collection (voir [Import et mise à jour](#import-update)).
+
+| Mode actuel | Export vers fichier SQLite | Export vers mode mémoire |
+|---|---|---|
+| **Mémoire** | ✅ | — |
+| **Fichier** | — | ✅ |
+| **Hébergé** | ✅ | ✅ |
+
+> L'import et la mise à jour depuis une collection hébergée nécessitent une étape d'export intermédiaire : exporter d'abord vers le mode Fichier ou Mémoire, puis utiliser la collection exportée comme source d'import.
+
+### Import et mise à jour {#import-update}
+
+<!-- screenshot: screen_import_01.png -->
+
+Katalog peut importer des appareils depuis une autre collection, ou rafraîchir le contenu des catalogues d'appareils précédemment importés lorsque la source change.
+
+**Source et cible**
+
+* La collection **source** est une collection Katalog existante ouverte en lecture seule — elle n'est jamais modifiée.
+* La **cible** est la collection active actuelle dans laquelle les appareils et catalogues sont ajoutés.
+
+**Ce qui est importé**
+
+Les appareils, leurs catalogues, les index de fichiers des catalogues, les statistiques et les liens de sauvegarde sont transférés. La structure de dossiers de la source est préservée dans la cible en insérant les niveaux parents nécessaires comme appareils conteneurs. Si un nom d'appareil ou de catalogue existe déjà dans la cible, il est automatiquement renommé (par exemple, `Mon Disque (2)`) pour éviter les conflits.
+
+**Opérations**
+
+| Opération | Description |
+|---|---|
+| *Importer l'appareil sélectionné* | Importe un appareil et tout son contenu depuis la source dans la cible. Sélectionner la collection source, choisir un appareil dans l'arborescence source, puis cliquer sur *Importer l'appareil sélectionné*. Sélectionner la racine de la collection importe tous les appareils et inclut également les étiquettes. |
+| *Mettre à jour l'appareil sélectionné* | Rafraîchit le contenu des catalogues d'un appareil précédemment importé avec les dernières données de sa source. La source est rouverte automatiquement — inutile de la rechercher à nouveau. Les appareils conteneurs dans la hiérarchie cible ne sont pas affectés. |
+
+:::note
+*Mettre à jour l'appareil sélectionné* n'est actif que lorsque l'appareil sélectionné (ou l'un de ses enfants) a été précédemment importé et possède encore un lien valide vers une collection source.
+:::
+
+**Format de la collection source**
+
+| Format source | Comment ouvrir |
+|---|---|
+| **Mémoire** (dossier CSV) | Sélectionner le dossier de la collection |
+| **Fichier** (fichier SQLite `.db`) | Sélectionner le fichier `.db` |
+| **Hébergé** (MySQL/MariaDB) | Exporter d'abord vers le mode *Fichier* ou *Mémoire* (voir [export du mode hébergé](#export)), puis utiliser la collection exportée comme source |
 
 ## Langue et thème
 * Choisir la langue de l'application.

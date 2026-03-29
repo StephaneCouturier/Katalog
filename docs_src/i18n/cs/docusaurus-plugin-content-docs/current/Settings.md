@@ -1,18 +1,18 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Nastavení
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je používat.
-* Správa dat
+* Správa dat a kolekcí
 * Jazyk a téma
 * O aplikaci
 
 ![Přehled obrazovky Nastavení](/img/screen_settings_01.png)
 
-## Správa dat
+## Správa dat a kolekcí
 
 ### Kolekce {#collection}
 
@@ -23,9 +23,7 @@ Je možné mít více kolekcí.
 ### Datové režimy
 Katalog poskytuje 3 "*Datové režimy*" nebo různé způsoby ukládání a práce s daty.
 
-Poznámka 1: zatím neexistuje žádná funkce pro převod kolekce z jednoho režimu do jiného.
-
-Poznámka 2: Změna režimu vyžaduje kliknutí na *Použít a restartovat*
+Poznámka: Změna režimu vyžaduje kliknutí na *Použít a restartovat*.
 
 | Režim | Typ databáze | Ukládání dat | Soubory | Rychlost vyhledávání | Rychlost katalogizace |
 | -------| -------------------|---|---|---|---|
@@ -42,7 +40,7 @@ Akce složky kolekce:
 * Zadat cestu ke složce Kolekce a stisknutím klávesy Enter načíst kolekci
 * Vybrat cestu ke složce Kolekce a načíst kolekci
 * Otevřít složku kolekce ve výchozím správci souborů systému
-* Exportovat kolekci do souboru databáze SQLite, pro přechod na režim *Soubor*
+* *Exportovat do souboru SQLite*: exportovat kolekci do jediného souboru SQLite, pro přechod na režim *Soubor*
 
 Nastavení pro paměťový režim:
 * *Záloha*: povolit nebo zakázat (výchozí) uchování kopie katalogu před jeho aktualizací (kopie bude mít příponu `.bak`)
@@ -57,7 +55,7 @@ Akce souboru kolekce:
 * *Vybrat a otevřít databázový soubor*: vybrat a načíst existující soubor kolekce
 * *Upravit*: Otevřít databázi SQLite v editoru databáze (např. [SQLite Browser](http://sqlitebrowser.org))
 * *Nový*: Vytvořit nový soubor kolekce a načíst jej
-* *Exportovat do paměťového režimu*: exportovat kolekci do souborů CSV a indexů, pro přechod na režim *Paměť*
+* *Exportovat do paměťového režimu (csv)*: exportovat kolekci do souborů CSV a indexů, pro přechod na režim *Paměť*
 
 ### Hostovaný režim databáze
 ![Nastavení hostovaného režimu zobrazující pole pro připojení k serveru](/img/screen_settings_05_hosted.png)
@@ -73,6 +71,11 @@ Nastavení připojení:
 
 Vyplňte všechna pole a klikněte na *Použít a restartovat* pro připojení.
 
+#### Export
+Hostovanou kolekci lze exportovat do lokálního formátu pro offline použití nebo sdílení:
+* *Exportovat do souboru SQLite*: exportovat celou hostovanou kolekci do lokálního souboru SQLite (režim *Soubor*)
+* *Exportovat do paměťového režimu (csv)*: exportovat kolekci do souborů CSV a indexů (režim *Paměť*)
+
 #### Zabezpečení
 * Jsou přijímány pouze **lokální** (localhost, 127.x.x.x) a **privátní síťové** (192.168.x.x, 10.x.x.x, 172.16-31.x.x) názvy hostitelů. Veřejné IP adresy a názvy domén jsou odmítnuty.
 * Při připojení k privátní síťové adrese se zobrazí potvrzovací dialog.
@@ -81,6 +84,52 @@ Vyplňte všechna pole a klikněte na *Použít a restartovat* pro připojení.
 * Musí být spuštěn a přístupný server MySQL/MariaDB.
 * Databáze musí na serveru již existovat (Katalog automaticky vytvoří potřebné tabulky).
 * Musí být nainstalován odpovídající ovladač Qt SQL (`QMYSQL` pro MySQL/MariaDB).
+
+### Přehled exportů kolekcí
+
+Každý režim lze exportovat do jiného formátu. Exportované kolekce lze poté přímo otevřít v cílovém režimu nebo je použít jako zdroj pro import zařízení do jiné kolekce (viz [Import a aktualizace](#import-update)).
+
+| Aktuální režim | Export do souboru SQLite | Export do paměťového režimu |
+|---|---|---|
+| **Paměť** | ✅ | — |
+| **Soubor** | — | ✅ |
+| **Hostovaný** | ✅ | ✅ |
+
+> Import a aktualizace z hostované kolekce vyžadují mezikrok exportu: nejprve exportujte do režimu Soubor nebo Paměť, poté použijte exportovanou kolekci jako zdroj importu.
+
+### Import a aktualizace {#import-update}
+
+<!-- screenshot: screen_import_01.png -->
+
+Katalog umožňuje importovat zařízení z jiné kolekce nebo obnovit obsah katalogů dříve importovaných zařízení při změně zdroje.
+
+**Zdroj a cíl**
+
+* **Zdrojová** kolekce je existující kolekce Katalog otevřená pouze pro čtení — nikdy není změněna.
+* **Cílová** kolekce je aktuálně aktivní kolekce, do které jsou přidána zařízení a katalogy.
+
+**Co se importuje**
+
+Jsou přenesena zařízení, jejich katalogy, indexy souborů katalogů, statistiky a zálohovací vazby. Struktura složek zdroje je v cíli zachována vložením nezbytných nadřazených úrovní jako kontejnerových zařízení. Pokud název zařízení nebo katalogu v cíli již existuje, je automaticky přejmenován (například `Moje Jednotka (2)`), aby nedošlo ke konfliktům.
+
+**Operace**
+
+| Operace | Popis |
+|---|---|
+| *Importovat vybrané zařízení* | Importuje jedno zařízení a veškerý jeho obsah ze zdroje do cíle. Vybrat zdrojovou kolekci, zvolit zařízení ve stromu zdroje a kliknout na *Importovat vybrané zařízení*. Výběr kořene kolekce importuje všechna zařízení a zároveň zahrnuje štítky. |
+| *Aktualizovat vybrané zařízení* | Obnoví obsah katalogů dříve importovaného zařízení nejnovějšími daty ze zdroje. Zdroj je znovu otevřen automaticky — není třeba ho znovu vyhledávat. Kontejnerová zařízení v cílové hierarchii nejsou dotčena. |
+
+:::note
+*Aktualizovat vybrané zařízení* je aktivní pouze tehdy, když vybrané zařízení (nebo některý z jeho potomků) bylo dříve importováno a stále má platný odkaz na zdrojovou kolekci.
+:::
+
+**Formát zdrojové kolekce**
+
+| Formát zdroje | Jak otevřít |
+|---|---|
+| **Paměť** (složka CSV) | Vybrat složku kolekce |
+| **Soubor** (soubor SQLite `.db`) | Vybrat soubor `.db` |
+| **Hostovaný** (MySQL/MariaDB) | Nejprve exportovat do režimu *Soubor* nebo *Paměť* (viz [export hostovaného režimu](#export)), poté použít exportovanou kolekci jako zdroj |
 
 ## Jazyk a téma
 * Vybrat jazyk aplikace.
