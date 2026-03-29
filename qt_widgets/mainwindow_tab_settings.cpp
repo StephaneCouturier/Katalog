@@ -471,6 +471,16 @@
         exportToMemoryMode();
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_Hosted_ExportToSQLiteFile_clicked()
+    {
+        exportToSQLiteFile();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_Hosted_ExportToMemoryMode_clicked()
+    {
+        exportToMemoryMode();
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_lineEdit_DatabaseFilePath_returnPressed()
     {
         QString newDatabaseFile = ui->Settings_lineEdit_DatabaseFilePath->text();

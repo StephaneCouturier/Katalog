@@ -1912,6 +1912,101 @@ bool Collection::exportAllToMemoryMode(const QString &exportFolder)
     return true;
 }
 //----------------------------------------------------------------------
+bool Collection::exportToSQLiteFile(
+    const QString &filePath,
+    std::function<bool(int current, int total, const QString &tableName)> progressCallback)
+{
+    const QString exportConn = QStringLiteral("katalogExportSQLiteConn");
+
+    // Remove existing file so we start fresh
+    QFile existingFile(filePath);
+    if (existingFile.exists())
+        existingFile.remove();
+
+    // Create and open the target SQLite database
+    {
+        QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"), exportConn);
+        db.setDatabaseName(filePath);
+        if (!db.open()) {
+            QSqlDatabase::removeDatabase(exportConn);
+            return false;
+        }
+    }
+
+    // Create the full schema in the target
+    Database::createAllTables(exportConn);
+
+    // Tables copied in FK-safe order; file and folder last (potentially large)
+    const QStringList tables = {
+        QStringLiteral("parameter"),
+        QStringLiteral("device"),
+        QStringLiteral("storage"),
+        QStringLiteral("catalog"),
+        QStringLiteral("device_mapping"),
+        QStringLiteral("catalog_filter"),
+        QStringLiteral("tag"),
+        QStringLiteral("statistics_device"),
+        QStringLiteral("search"),
+        QStringLiteral("file"),
+        QStringLiteral("folder")
+    };
+
+    const int totalTables = tables.size();
+    bool success = true;
+
+    for (int idx = 0; idx < totalTables; ++idx) {
+        const QString &table = tables.at(idx);
+
+        if (progressCallback && !progressCallback(idx + 1, totalTables, table)) {
+            success = false;
+            break;
+        }
+
+        QSqlQuery srcQ(QSqlDatabase::database(m_connectionName));
+        srcQ.setForwardOnly(true);
+        if (!srcQ.exec(QStringLiteral("SELECT * FROM ") + table))
+            continue; // table absent in older schemas — skip silently
+
+        if (!srcQ.next())
+            continue; // empty table
+
+        // Build INSERT from the first record's column names
+        const QSqlRecord rec = srcQ.record();
+        QStringList cols;
+        QStringList placeholders;
+        for (int i = 0; i < rec.count(); ++i) {
+            cols << rec.fieldName(i);
+            placeholders << QStringLiteral("?");
+        }
+
+        const QString insertSQL =
+            QStringLiteral("INSERT OR IGNORE INTO %1 (%2) VALUES (%3)")
+                .arg(table, cols.join(QLatin1Char(',')), placeholders.join(QLatin1Char(',')));
+
+        QSqlDatabase targetDb = QSqlDatabase::database(exportConn);
+        targetDb.transaction();
+        QSqlQuery ins(targetDb);
+        ins.prepare(insertSQL);
+
+        do {
+            for (int i = 0; i < rec.count(); ++i)
+                ins.bindValue(i, srcQ.value(i));
+            ins.exec();
+        } while (srcQ.next());
+
+        targetDb.commit();
+    }
+
+    QSqlDatabase::database(exportConn).close();
+    QSqlDatabase::removeDatabase(exportConn);
+
+    if (!success) {
+        QFile(filePath).remove();
+        return false;
+    }
+    return true;
+}
+//----------------------------------------------------------------------
 bool Collection::exportAllCatalogFiles(const QString &outputFolder,
                                         std::function<bool(int current, int total, const QString &catalogName)> progressCallback)
 {

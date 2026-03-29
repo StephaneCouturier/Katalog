@@ -13269,6 +13269,49 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </item>
                    </layout>
                   </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_HostedExport">
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_Hosted_ExportToSQLiteFile">
+                      <property name="toolTip">
+                       <string>Export the hosted collection to a local SQLite (.db) file.</string>
+                      </property>
+                      <property name="text">
+                       <string>Export to SQLite file</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-export"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_Hosted_ExportToMemoryMode">
+                      <property name="toolTip">
+                       <string>Export the hosted collection to a local Memory mode folder (CSV + index files).</string>
+                      </property>
+                      <property name="text">
+                       <string>Export to Memory mode (csv)</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-export"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_HostedExport">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
                  </layout>
                 </widget>
                </item>

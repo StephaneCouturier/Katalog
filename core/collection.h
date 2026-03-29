@@ -136,6 +136,8 @@ public:
     bool exportAllCatalogFiles(const QString &outputFolder,
                                std::function<bool(int current, int total, const QString &catalogName)> progressCallback = nullptr);
     bool exportSingleCatalogFoldersFile(int catalogId, const QString &filePath);
+    bool exportToSQLiteFile(const QString &filePath,
+                            std::function<bool(int current, int total, const QString &tableName)> progressCallback = nullptr);
 
     //Data management
     bool insertPhysicalStorageGroup();

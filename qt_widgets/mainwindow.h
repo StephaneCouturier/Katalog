@@ -612,6 +612,8 @@ class MainWindow : public KXmlGuiWindow
             void on_Settings_lineEdit_DatabaseFilePath_textChanged();
             void on_Settings_lineEdit_DatabaseFilePath_returnPressed();
             void on_Settings_pushButton_ExportToMemoryMode_clicked();
+            void on_Settings_pushButton_Hosted_ExportToSQLiteFile_clicked();
+            void on_Settings_pushButton_Hosted_ExportToMemoryMode_clicked();
 
             void on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1);
             void on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1);

@@ -32,33 +32,40 @@
 #include "mainwindow.h"
 
 // Export to SQLite File mode
+// Supported source modes: Memory, Hosted
 void MainWindow::exportToSQLiteFile()
 {
-    if (collection->databaseMode == "Memory") {
+    const bool isMemory = (collection->databaseMode == "Memory");
+    const bool isHosted = (collection->databaseMode == "Hosted");
 
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
+    if (!isMemory && !isHosted)
+        return;
 
-        //Folder and file name selection
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
 
-        //Default folder and file name
-        QString backupFilePath = collection->folder + "/export.db"; // Path to the output file
+    // Default output path
+    QString backupFilePath = collection->folder + "/export.db";
 
-        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-        QString selectedBackupFilePath = QFileDialog::getSaveFileName(this, tr("Select the directory and file name for his export."),
-                                                                      backupFilePath);
+    QString selectedBackupFilePath = QFileDialog::getSaveFileName(
+        this,
+        tr("Select the directory and file name for this export."),
+        backupFilePath);
 
-        //Unless the selection was cancelled, set the new collection folder, and refresh all data
-        if ( selectedBackupFilePath !=""){
-            QFile newBackupFile(selectedBackupFilePath);
-            if( newBackupFile.exists())
-                newBackupFile.moveToTrash();
+    if (selectedBackupFilePath.isEmpty())
+        return;
 
-            backupFilePath = selectedBackupFilePath;
-        }
+    backupFilePath = selectedBackupFilePath;
 
-        // Load all catalog indexes into memory, with progress
-        QProgressDialog progress("Loading devices...", "Cancel", 0, 100, this);
+    QFile existingFile(backupFilePath);
+    if (existingFile.exists())
+        existingFile.moveToTrash();
+
+    bool ok = false;
+
+    if (isMemory) {
+        // Memory → SQLite: load all catalog indexes into memory first, then backup
+        QProgressDialog progress(tr("Loading devices..."), tr("Cancel"), 0, 100, this);
         progress.setWindowModality(Qt::WindowModal);
 
         bool cancelled = !collection->loadAllCatalogFiles(
@@ -75,84 +82,103 @@ void MainWindow::exportToSQLiteFile()
         if (cancelled)
             return;
 
-        //Dump all the database in Memory to the sql File
-        if (!backupMemoryDatabaseToFile(m_connectionName, backupFilePath)) {
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                       "Failed to export in-memory database to file.<br/>"
-                                                       "<br/> Export file path: <br/><b>%1</b><br/>"
-                                                       ).arg( backupFilePath ));
-        } else {
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                       "Successful export of collection to SQLite database file.<br/>"
-                                                       "<br/> Export file path: <br/><b>%1</b><br/>"
-                                                       ).arg( backupFilePath ));
-        }
+        ok = backupMemoryDatabaseToFile(m_connectionName, backupFilePath);
 
-        //Inform of end of process
-        msgBox.exec();
-    }
-}
-
-// Export to Memory mode
-void MainWindow::exportToMemoryMode()
-{
-    if (collection->databaseMode == "File") {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-
-        // Folder selection for export
-        QString exportFolderPath = collection->folder;
-
-        QString selectedExportFolder = QFileDialog::getExistingDirectory(this,
-                                                                         tr("Select the directory for the CSV export"),
-                                                                         exportFolderPath);
-
-        if (selectedExportFolder.isEmpty()) {
-            return;
-        }
-
-        exportFolderPath = selectedExportFolder;
-
-        // Create a progress dialog
-        QProgressDialog progress("Exporting database to CSV files...", "Cancel", 0, 100, this);
+    } else {
+        // Hosted → SQLite: copy all tables to a fresh SQLite file
+        QProgressDialog progress(tr("Exporting to SQLite..."), tr("Cancel"), 0, 100, this);
         progress.setWindowModality(Qt::WindowModal);
         progress.setValue(0);
 
-        try {
-            // Export all tables via core
-            progress.setValue(10);
-            progress.setLabelText("Exporting tables...");
-            collection->exportAllToMemoryMode(exportFolderPath);
+        ok = collection->exportToSQLiteFile(backupFilePath,
+            [&progress](int current, int total, const QString &tableName) -> bool {
+                int percent = total > 0 ? (current * 100) / total : 0;
+                progress.setValue(percent);
+                progress.setLabelText(
+                    QCoreApplication::translate("MainWindow",
+                        "Exporting table: <b>%1</b> (%2 of %3)")
+                        .arg(tableName, QString::number(current), QString::number(total)));
+                return !progress.wasCanceled();
+            });
+    }
 
-            progress.setValue(40);
+    if (!ok) {
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setText(QCoreApplication::translate("MainWindow",
+            "Failed to export collection to SQLite file.<br/>"
+            "<br/>Export file path:<br/><b>%1</b>").arg(backupFilePath));
+    } else {
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setText(QCoreApplication::translate("MainWindow",
+            "Successfully exported collection to SQLite database file.<br/>"
+            "<br/>Export file path:<br/><b>%1</b>").arg(backupFilePath));
+    }
 
-            // Export catalogs to idx files via core
-            collection->exportAllCatalogFiles(exportFolderPath,
-                [&progress](int current, int total, const QString &catalogName) -> bool {
-                    int progressValue = 40 + (current * 55) / total;
-                    progress.setValue(progressValue);
-                    progress.setLabelText(QString("Exporting catalog: %1 (%2/%3)")
-                                              .arg(catalogName)
-                                              .arg(current)
-                                              .arg(total));
-                    return !progress.wasCanceled();
-                });
+    msgBox.exec();
+}
 
-            progress.setValue(100);
+// Export to Memory mode (CSV folder)
+// Supported source modes: File, Hosted
+void MainWindow::exportToMemoryMode()
+{
+    const bool isFile   = (collection->databaseMode == "File");
+    const bool isHosted = (collection->databaseMode == "Hosted");
 
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.setText(tr("Successfully exported database to CSV files.<br/>"
-                              "<br/>Export directory: <br/><b>%1</b><br/>"
-                              "<br/>You can now switch to Memory mode and load this collection.")
-                               .arg(exportFolderPath));
-            msgBox.exec();
-        }
-        catch (const std::exception& e) {
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setText(tr("Export failed: %1").arg(e.what()));
-            msgBox.exec();
-        }
+    if (!isFile && !isHosted)
+        return;
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+
+    QString exportFolderPath = collection->folder;
+
+    QString selectedExportFolder = QFileDialog::getExistingDirectory(
+        this,
+        tr("Select the directory for the CSV export"),
+        exportFolderPath);
+
+    if (selectedExportFolder.isEmpty())
+        return;
+
+    exportFolderPath = selectedExportFolder;
+
+    QProgressDialog progress(tr("Exporting database to CSV files..."), tr("Cancel"), 0, 100, this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setValue(0);
+
+    try {
+        // Export all CSV table files
+        progress.setValue(10);
+        progress.setLabelText(tr("Exporting tables..."));
+        collection->exportAllToMemoryMode(exportFolderPath);
+
+        progress.setValue(40);
+
+        // Export per-catalog .idx files
+        collection->exportAllCatalogFiles(exportFolderPath,
+            [&progress](int current, int total, const QString &catalogName) -> bool {
+                int progressValue = 40 + (current * 55) / total;
+                progress.setValue(progressValue);
+                progress.setLabelText(QString("Exporting catalog: %1 (%2/%3)")
+                                          .arg(catalogName)
+                                          .arg(current)
+                                          .arg(total));
+                return !progress.wasCanceled();
+            });
+
+        progress.setValue(100);
+
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setText(tr("Successfully exported collection to CSV files.<br/>"
+                          "<br/>Export directory:<br/><b>%1</b><br/>"
+                          "<br/>You can now switch to Memory mode and load this collection.")
+                           .arg(exportFolderPath));
+        msgBox.exec();
+    }
+    catch (const std::exception& e) {
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setText(tr("Export failed: %1").arg(e.what()));
+        msgBox.exec();
     }
 }
 
@@ -174,4 +200,3 @@ bool MainWindow::exportSingleCatalogFoldersFile(int catalogId, const QString &fi
 {
     return collection->exportSingleCatalogFoldersFile(catalogId, filePath);
 }
-
