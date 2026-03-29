@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/collectionimporter.h"
+#include "core/statusbarmessagebuilder.h"
 
 #include <QFileDialog>
 
@@ -54,21 +55,28 @@ static void persistImportToFiles(Collection *collection)
 void MainWindow::openImportSource(const QString &path)
 {
     ui->Import_lineEdit_sourcePath->setText(path);
-    ui->Import_label_status->setText(tr("Opening source..."));
-    QApplication::processEvents();
 
     if (!m_importer)
         m_importer = new CollectionImporter(collection, this);
 
     QSqlError err = m_importer->openSource(path);
     if (err.type() != QSqlError::NoError) {
-        ui->Import_label_status->setText(tr("Error opening source: %1").arg(err.text()));
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION IMPORT"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(err.text())
+                .build());
         return;
     }
 
     if (!m_importer->checkSchemaCompatibility()) {
-        ui->Import_label_status->setText(
-            tr("Schema version mismatch — import aborted. (%1)").arg(m_importer->lastError()));
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION IMPORT"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(tr("Schema version mismatch. Import cancelled. (%1)").arg(m_importer->lastError()))
+                .build());
         m_importer->close();
         return;
     }
@@ -77,10 +85,6 @@ void MainWindow::openImportSource(const QString &path)
     ui->Import_comboBox_sourceDevice->setTreeModel(model);
     ui->Import_comboBox_sourceDevice->setIdColumn(2);
     ui->Import_comboBox_sourceDevice->expandAll();
-
-    ui->Import_label_status->setText(
-        tr("Source opened (%1 mode). Select a device and click Import.")
-            .arg(m_importer->sourceMode()));
 }
 
 //----------------------------------------------------------------------
@@ -123,13 +127,22 @@ void MainWindow::on_Import_lineEdit_sourcePath_returnPressed()
 void MainWindow::on_Import_pushButton_importSelected_clicked()
 {
     if (!m_importer || !m_importer->isSourceOpen()) {
-        ui->Import_label_status->setText(tr("No source collection is open."));
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION IMPORT"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(tr("No source collection is open."))
+                .build());
         return;
     }
 
     int srcDeviceId = ui->Import_comboBox_sourceDevice->selectedDeviceId();
 
-    ui->Import_label_status->setText(tr("Importing..."));
+    updateStatusBarMessage(
+        StatusBarMessageBuilder()
+            .setOperation(tr("COLLECTION IMPORT"))
+            .setStatus(tr("Importing"))
+            .build());
     QApplication::processEvents();
 
     bool ok;
@@ -141,11 +154,19 @@ void MainWindow::on_Import_pushButton_importSelected_clicked()
     }
 
     if (ok) {
-        ui->Import_label_status->setText(tr("Import completed successfully."));
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION IMPORT"))
+                .setStatus(tr("Completed"))
+                .build());
         persistImportToFiles(collection);
         loadCollection();
     } else {
-        ui->Import_label_status->setText(
-            tr("Import failed: %1").arg(m_importer->lastError()));
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION IMPORT"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(m_importer->lastError())
+                .build());
     }
 }

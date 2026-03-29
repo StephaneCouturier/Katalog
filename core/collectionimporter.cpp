@@ -682,12 +682,12 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId)
 void CollectionImporter::insertCatalogFilter(int srcCatalogId, int newCatalogId)
 {
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
-    srcQ.prepare("SELECT filter_path, filter_type FROM catalog_filter WHERE filter_catalog_id = :id");
+    srcQ.prepare("SELECT filter_value, filter_type FROM catalog_filter WHERE filter_catalog_id = :id");
     srcQ.bindValue(":id", srcCatalogId);
     srcQ.exec();
 
     QSqlQuery ins(QSqlDatabase::database(m_target->connectionName()));
-    ins.prepare("INSERT INTO catalog_filter (filter_catalog_id, filter_path, filter_type) "
+    ins.prepare("INSERT OR IGNORE INTO catalog_filter (filter_catalog_id, filter_value, filter_type) "
                 "VALUES (:cid, :path, :type)");
     while (srcQ.next()) {
         ins.bindValue(":cid",  newCatalogId);
