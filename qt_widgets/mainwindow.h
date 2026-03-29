@@ -585,6 +585,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Import_pushButton_select_clicked();
             void on_Import_lineEdit_sourcePath_returnPressed();
             void on_Import_pushButton_importSelected_clicked();
+            void on_Import_pushButton_updateSelected_clicked();
 
         //Settings
             void on_tabWidget_currentChanged(int index);

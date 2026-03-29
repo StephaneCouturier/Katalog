@@ -170,3 +170,46 @@ void MainWindow::on_Import_pushButton_importSelected_clicked()
                 .build());
     }
 }
+
+//----------------------------------------------------------------------
+void MainWindow::on_Import_pushButton_updateSelected_clicked()
+{
+    if (!selectedDevice || selectedDevice->ID == 0) {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION UPDATE"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(tr("No device selected."))
+                .build());
+        return;
+    }
+
+    if (!m_importer)
+        m_importer = new CollectionImporter(collection, this);
+
+    updateStatusBarMessage(
+        StatusBarMessageBuilder()
+            .setOperation(tr("COLLECTION UPDATE"))
+            .setStatus(tr("Updating..."))
+            .build());
+    QApplication::processEvents();
+
+    bool ok = m_importer->updateDeviceFromExternalCollection(selectedDevice->ID);
+
+    if (ok) {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION UPDATE"))
+                .setStatus(tr("Completed"))
+                .build());
+        persistImportToFiles(collection);
+        loadCollection();
+    } else {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("COLLECTION UPDATE"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(m_importer->lastError())
+                .build());
+    }
+}

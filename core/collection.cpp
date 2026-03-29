@@ -1149,7 +1149,8 @@ void Collection::loadMappingFileToTable()
                                             mapping_backup_last_size,
                                             mapping_strict_copy,
                                             mapping_conflict_mode,
-                                            mapping_source_mode
+                                            mapping_source_mode,
+                                            mapping_source_collection
                                         )
                                         VALUES(
                                             :mapping_id,
@@ -1161,7 +1162,8 @@ void Collection::loadMappingFileToTable()
                                             :mapping_backup_last_size,
                                             :mapping_strict_copy,
                                             :mapping_conflict_mode,
-                                            :mapping_source_mode
+                                            :mapping_source_mode,
+                                            :mapping_source_collection
                                         )
                                         )");
                 insertQuery.prepare(insertQuerySQL);
@@ -1180,6 +1182,9 @@ void Collection::loadMappingFileToTable()
                 // field[9] = source_mode ('Catalog'/'Drive') — defaults to 'Catalog' if absent
                 insertQuery.bindValue(":mapping_source_mode",
                     fieldList.size() > 9 ? fieldList[9] : QStringLiteral("Catalog"));
+                // field[10] = source_collection path — empty for BackUp mappings, populated for CollectionImport
+                insertQuery.bindValue(":mapping_source_collection",
+                    fieldList.size() > 10 ? fieldList[10] : QString());
                 insertQuery.exec();
             }
         }
@@ -1650,14 +1655,25 @@ void Collection::saveMappingTableToFile()
             << "strict_copy"               << "\t"
             << "conflict_mode"             << "\t"
             << "source_mode"               << "\t"
+            << "source_collection"         << "\t"
             << '\n';
 
         //Get data
         QSqlQuery query(QSqlDatabase::database(m_connectionName));
         QString querySQL = QLatin1String(R"(
-                                    SELECT *
+                                    SELECT
+                                        mapping_id,
+                                        mapping_name,
+                                        mapping_type,
+                                        mapping_device_source_id,
+                                        mapping_device_target_id,
+                                        mapping_backup_last_date,
+                                        mapping_backup_last_size,
+                                        mapping_strict_copy,
+                                        mapping_conflict_mode,
+                                        mapping_source_mode,
+                                        mapping_source_collection
                                     FROM device_mapping
-                                    WHERE mapping_type != 'CollectionImport'
                                 )");
         query.prepare(querySQL);
         query.exec();

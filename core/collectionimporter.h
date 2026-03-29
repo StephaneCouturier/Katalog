@@ -47,7 +47,7 @@
  * Usage:
  *   1. Construct with the target Collection.
  *   2. Call openSource() — populates the source device tree.
- *   3. Call importDevice() / importAllDevices() / updateDevice() as needed.
+ *   3. Call importDevice() / importAllDevices() / updateDeviceFromExternalCollection() as needed.
  *   4. Call close() when done.
  */
 class CollectionImporter : public QObject
@@ -101,7 +101,7 @@ public:
      * @param targetDeviceId  device_id in the target collection.
      * @return true on success.
      */
-    bool updateDevice(int targetDeviceId);
+    bool updateDeviceFromExternalCollection(int targetDeviceId);
 
     /** Request cancellation of an in-progress operation. */
     void requestStop() { m_stopRequested.storeRelease(1); }

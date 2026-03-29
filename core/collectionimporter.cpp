@@ -879,100 +879,194 @@ int CollectionImporter::importAllDevices()
     return importedCount;
 }
 
-bool CollectionImporter::updateDevice(int targetDeviceId)
+bool CollectionImporter::updateDeviceFromExternalCollection(int targetDeviceId)
 {
-    if (!isSourceOpen()) {
-        m_lastError = "No source collection is open";
-        return false;
-    }
-
     QString tgtConn = m_target->connectionName();
 
-    // Find the CollectionImport mapping for this target device
-    QSqlQuery mapQ(QSqlDatabase::database(tgtConn));
-    mapQ.prepare(QLatin1String(R"(
-        SELECT mapping_device_source_id
-        FROM device_mapping
-        WHERE mapping_type = 'CollectionImport'
-          AND mapping_device_target_id = :id
-    )"));
-    mapQ.bindValue(":id", targetDeviceId);
-    mapQ.exec();
-    if (!mapQ.next()) {
+    // Step 1: Collect all CollectionImport mappings for the selected device and all
+    // its descendants (handles both Catalog-type and container selections).
+    struct MappingRow { int srcDeviceId; int tgtDeviceId; QString sourcePath; };
+    QList<MappingRow> mappings;
+    QString sourcePath;
+
+    {
+        QSqlQuery mapQ(QSqlDatabase::database(tgtConn));
+        mapQ.prepare(QLatin1String(R"(
+            WITH RECURSIVE descendants(device_id) AS (
+                SELECT device_id FROM device WHERE device_id = :rootId
+                UNION ALL
+                SELECT d.device_id FROM device d
+                JOIN descendants p ON d.device_parent_id = p.device_id
+            )
+            SELECT dm.mapping_device_source_id,
+                   dm.mapping_device_target_id,
+                   dm.mapping_source_collection
+            FROM device_mapping dm
+            JOIN descendants desc ON dm.mapping_device_target_id = desc.device_id
+            WHERE dm.mapping_type = 'CollectionImport'
+        )"));
+        mapQ.bindValue(":rootId", targetDeviceId);
+        mapQ.exec();
+
+        while (mapQ.next()) {
+            MappingRow row;
+            row.srcDeviceId = mapQ.value(0).toInt();
+            row.tgtDeviceId = mapQ.value(1).toInt();
+            row.sourcePath  = mapQ.value(2).toString();
+            if (sourcePath.isEmpty())
+                sourcePath = row.sourcePath;
+            mappings.append(row);
+        }
+    }
+
+    if (mappings.isEmpty()) {
         m_lastError = "No CollectionImport link found for target device";
         return false;
     }
-    int srcDeviceId = mapQ.value(0).toInt();
 
-    // Get target catalog id
-    QSqlQuery devQ(QSqlDatabase::database(tgtConn));
-    devQ.prepare("SELECT device_external_id FROM device WHERE device_id = :id");
-    devQ.bindValue(":id", targetDeviceId);
-    devQ.exec();
-    if (!devQ.next()) {
-        m_lastError = "Target device not found";
-        return false;
+    // Step 2: Open source from the stored path if not already open.
+    if (!isSourceOpen()) {
+        QSqlError err = openSource(sourcePath);
+        if (err.type() != QSqlError::NoError) {
+            m_lastError = err.text();
+            return false;
+        }
     }
-    int targetCatalogId = devQ.value(0).toInt();
-
-    // Get source catalog id
-    QSqlQuery srcDevQ(QSqlDatabase::database(m_sourceConnectionName));
-    srcDevQ.prepare("SELECT device_external_id FROM device WHERE device_id = :id");
-    srcDevQ.bindValue(":id", srcDeviceId);
-    srcDevQ.exec();
-    if (!srcDevQ.next()) {
-        m_lastError = "Source device not found for update";
-        return false;
-    }
-    int srcCatalogId = srcDevQ.value(0).toInt();
 
     if (!Database::beginTransaction(tgtConn)) {
         m_lastError = "Failed to begin transaction for update";
         return false;
     }
 
-    // Delete existing file + folder rows for this catalog in target
-    {
-        QSqlQuery del(QSqlDatabase::database(tgtConn));
-        del.prepare("DELETE FROM file WHERE file_catalog_id = :id");
-        del.bindValue(":id", targetCatalogId);
-        del.exec();
-        del.prepare("DELETE FROM folder WHERE folder_catalog_id = :id");
-        del.bindValue(":id", targetCatalogId);
-        del.exec();
-    }
+    int updatedCount = 0;
+    const int total  = mappings.size();
 
-    // Re-import without ID offset (catalog already exists in target with same IDs)
-    int savedDeviceOffset  = m_deviceIdOffset;
-    int savedCatalogOffset = m_catalogIdOffset;
-    m_deviceIdOffset  = 0;
-    m_catalogIdOffset = 0;
-    insertFileData(srcCatalogId, targetCatalogId);
-    m_deviceIdOffset  = savedDeviceOffset;
-    m_catalogIdOffset = savedCatalogOffset;
+    for (const MappingRow &mapping : mappings) {
+        // Fetch source device metadata
+        QSqlQuery srcDevQ(QSqlDatabase::database(m_sourceConnectionName));
+        srcDevQ.prepare(QLatin1String(R"(
+            SELECT device_name, device_type, device_path,
+                   device_total_file_size, device_total_file_count,
+                   device_total_space, device_free_space, device_active,
+                   device_group_id, device_date_updated, device_order,
+                   device_external_id
+            FROM device WHERE device_id = :id
+        )"));
+        srcDevQ.bindValue(":id", mapping.srcDeviceId);
+        srcDevQ.exec();
 
-    // Update catalog metadata
-    QSqlQuery srcCatQ(QSqlDatabase::database(m_sourceConnectionName));
-    srcCatQ.prepare("SELECT catalog_file_count, catalog_total_file_size, catalog_date_updated "
-                    "FROM catalog WHERE catalog_id = :id");
-    srcCatQ.bindValue(":id", srcCatalogId);
-    srcCatQ.exec();
-    if (srcCatQ.next()) {
-        QSqlQuery upd(QSqlDatabase::database(tgtConn));
-        upd.prepare("UPDATE catalog SET catalog_file_count = :fc, catalog_total_file_size = :fs, "
-                    "catalog_date_updated = :du WHERE catalog_id = :id");
-        upd.bindValue(":fc", srcCatQ.value(0));
-        upd.bindValue(":fs", srcCatQ.value(1));
-        upd.bindValue(":du", srcCatQ.value(2));
-        upd.bindValue(":id", targetCatalogId);
-        upd.exec();
+        if (!srcDevQ.next()) {
+            qWarning() << "CollectionImporter::updateDeviceFromExternalCollection:"
+                       << "source device" << mapping.srcDeviceId << "not found — skipping";
+            continue;
+        }
+
+        const QString deviceName = srcDevQ.value(0).toString();
+        const QString deviceType = srcDevQ.value(1).toString();
+        const int     srcCatalogId = srcDevQ.value(11).toInt();
+
+        // Update target device row — source is authoritative for all metadata
+        {
+            QSqlQuery upd(QSqlDatabase::database(tgtConn));
+            upd.prepare(QLatin1String(R"(
+                UPDATE device SET
+                    device_name             = :name,
+                    device_type             = :type,
+                    device_path             = :path,
+                    device_total_file_size  = :tfs,
+                    device_total_file_count = :tfc,
+                    device_total_space      = :ts,
+                    device_free_space       = :fs,
+                    device_active           = :active,
+                    device_group_id         = :gid,
+                    device_date_updated     = :du,
+                    device_order            = :dorder
+                WHERE device_id = :id
+            )"));
+            upd.bindValue(":name",   srcDevQ.value(0));
+            upd.bindValue(":type",   srcDevQ.value(1));
+            upd.bindValue(":path",   srcDevQ.value(2));
+            upd.bindValue(":tfs",    srcDevQ.value(3));
+            upd.bindValue(":tfc",    srcDevQ.value(4));
+            upd.bindValue(":ts",     srcDevQ.value(5));
+            upd.bindValue(":fs",     srcDevQ.value(6));
+            upd.bindValue(":active", srcDevQ.value(7));
+            upd.bindValue(":gid",    srcDevQ.value(8));
+            upd.bindValue(":du",     srcDevQ.value(9));
+            upd.bindValue(":dorder", srcDevQ.value(10));
+            upd.bindValue(":id",     mapping.tgtDeviceId);
+            upd.exec();
+        }
+
+        // Only Catalog-type devices carry file/folder/catalog data
+        if (deviceType != QLatin1String("Catalog")) {
+            updatedCount++;
+            emit importProgress(updatedCount, total, deviceName);
+            continue;
+        }
+
+        // Get target catalog id
+        int targetCatalogId = 0;
+        {
+            QSqlQuery tgtDevQ(QSqlDatabase::database(tgtConn));
+            tgtDevQ.prepare("SELECT device_external_id FROM device WHERE device_id = :id");
+            tgtDevQ.bindValue(":id", mapping.tgtDeviceId);
+            tgtDevQ.exec();
+            if (!tgtDevQ.next()) {
+                qWarning() << "CollectionImporter::updateDeviceFromExternalCollection:"
+                           << "target device_external_id not found for device" << mapping.tgtDeviceId;
+                continue;
+            }
+            targetCatalogId = tgtDevQ.value(0).toInt();
+        }
+
+        // Replace file, folder, catalog_filter rows
+        {
+            QSqlQuery del(QSqlDatabase::database(tgtConn));
+            del.prepare("DELETE FROM file WHERE file_catalog_id = :id");
+            del.bindValue(":id", targetCatalogId); del.exec();
+            del.prepare("DELETE FROM folder WHERE folder_catalog_id = :id");
+            del.bindValue(":id", targetCatalogId); del.exec();
+            del.prepare("DELETE FROM catalog_filter WHERE filter_catalog_id = :id");
+            del.bindValue(":id", targetCatalogId); del.exec();
+        }
+
+        // insertFileData / insertCatalogFilter use the explicit IDs passed as arguments;
+        // m_deviceIdOffset / m_catalogIdOffset are not involved here.
+        insertFileData(srcCatalogId, targetCatalogId);
+        insertCatalogFilter(srcCatalogId, targetCatalogId);
+
+        // Update catalog metadata from source
+        {
+            QSqlQuery srcCatQ(QSqlDatabase::database(m_sourceConnectionName));
+            srcCatQ.prepare("SELECT catalog_file_count, catalog_total_file_size, "
+                            "catalog_date_updated FROM catalog WHERE catalog_id = :id");
+            srcCatQ.bindValue(":id", srcCatalogId);
+            srcCatQ.exec();
+            if (srcCatQ.next()) {
+                QSqlQuery upd(QSqlDatabase::database(tgtConn));
+                upd.prepare("UPDATE catalog SET catalog_file_count = :fc, "
+                            "catalog_total_file_size = :fs, catalog_date_updated = :du "
+                            "WHERE catalog_id = :id");
+                upd.bindValue(":fc", srcCatQ.value(0));
+                upd.bindValue(":fs", srcCatQ.value(1));
+                upd.bindValue(":du", srcCatQ.value(2));
+                upd.bindValue(":id", targetCatalogId);
+                upd.exec();
+            }
+        }
+
+        updatedCount++;
+        emit importProgress(updatedCount, total, deviceName);
     }
 
     if (!Database::commitTransaction(tgtConn)) {
+        Database::rollbackTransaction(tgtConn);
         m_lastError = "Failed to commit update transaction";
         return false;
     }
-    return true;
+
+    return updatedCount > 0;
 }
 
 //----------------------------------------------------------------------
