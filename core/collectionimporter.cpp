@@ -33,6 +33,9 @@
 #include "catalog.h"
 
 #include <QFileInfo>
+#include <QFile>
+#include <QDir>
+#include <QSet>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -100,6 +103,11 @@ QSqlError CollectionImporter::openSource(const QString &sourcePath)
         m_sourceCollection->loadDeviceFileToTable();
         m_sourceCollection->loadCatalogFilesToTable();
         m_sourceCollection->loadCatalogFilterFileToTable();
+        m_sourceCollection->loadStorageFileToTable();
+        m_sourceCollection->loadStatisticsDeviceFileToTable();
+        m_sourceCollection->loadTagFileToTable();
+        m_sourceCollection->loadMappingFileToTable();
+        m_sourceCollection->loadImageFolderPath();
     } else {
         m_lastError = QString("Path does not exist: %1").arg(sourcePath);
         return QSqlError("path", m_lastError, QSqlError::ConnectionError);
@@ -119,6 +127,8 @@ void CollectionImporter::close()
     m_sourcePath.clear();
     m_sourceMode.clear();
     m_deviceIdMap.clear();
+    m_catalogIdMap.clear();
+    m_storageIdOffset = 0;
 }
 
 bool CollectionImporter::isSourceOpen() const
@@ -169,6 +179,11 @@ void CollectionImporter::buildIdOffsets()
         QSqlQuery q(QSqlDatabase::database(tgtConn));
         q.exec("SELECT MAX(catalog_id) FROM catalog");
         m_catalogIdOffset = q.next() ? q.value(0).toInt() + 1 : 1;
+    }
+    {
+        QSqlQuery q(QSqlDatabase::database(tgtConn));
+        q.exec("SELECT MAX(storage_id) FROM storage");
+        m_storageIdOffset = q.next() ? q.value(0).toInt() + 1 : 1;
     }
 }
 
@@ -732,13 +747,16 @@ bool CollectionImporter::importSubTree(int srcDeviceId, int targetParentId,
             int srcCatalogId = extQ.value(0).toInt();
             int newCatalogId = remapAndInsertCatalog(srcCatalogId);
             if (newCatalogId > 0) {
+                m_catalogIdMap[srcCatalogId] = newCatalogId;
                 insertFileData(srcCatalogId, newCatalogId);
                 insertCatalogFilter(srcCatalogId, newCatalogId);
+                importStorageForCatalog(srcCatalogId);
             }
         }
         recordImportLink(srcDeviceId, newDeviceId);
     }
 
+    importStatisticsForDevice(srcDeviceId, newDeviceId);
     imported++;
     emit importProgress(imported, total, srcDeviceName(srcDeviceId));
 
@@ -768,6 +786,7 @@ bool CollectionImporter::importDevice(int sourceDeviceId)
 
     m_stopRequested.storeRelease(0);
     m_deviceIdMap.clear();
+    m_catalogIdMap.clear();
     buildIdOffsets();
 
     QString tgtConn = m_target->connectionName();
@@ -796,6 +815,10 @@ bool CollectionImporter::importDevice(int sourceDeviceId)
         return false;
     }
 
+    // Phase 2: cross-device data — run inside same transaction
+    importBackupMappings();
+    importTagsForAllCatalogs();
+
     if (!Database::commitTransaction(tgtConn)) {
         m_lastError = "Failed to commit transaction";
         return false;
@@ -814,6 +837,10 @@ int CollectionImporter::importAllDevices()
     QList<int> roots = sourceRootDeviceIds();
     int importedCount = 0;
 
+    m_deviceIdMap.clear();
+    m_catalogIdMap.clear();
+    buildIdOffsets();
+
     int total = 0;
     {
         QSqlQuery cntQ(QSqlDatabase::database(m_sourceConnectionName));
@@ -822,15 +849,15 @@ int CollectionImporter::importAllDevices()
     }
     int imported = 0;
 
-    for (int rootId : roots) {
-        if (wasStopRequested())
-            break;
-        m_deviceIdMap.clear();
-        buildIdOffsets();
+    const QString tgtConn = m_target->connectionName();
+    if (!Database::beginTransaction(tgtConn))
+        return -1;
 
-        QString tgtConn = m_target->connectionName();
-        if (!Database::beginTransaction(tgtConn))
+    for (int rootId : roots) {
+        if (wasStopRequested()) {
+            Database::rollbackTransaction(tgtConn);
             return -1;
+        }
 
         bool ok = importSubTree(rootId, 0, imported, total);
 
@@ -838,11 +865,17 @@ int CollectionImporter::importAllDevices()
             Database::rollbackTransaction(tgtConn);
             return -1;
         }
-        if (!Database::commitTransaction(tgtConn))
-            return -1;
 
         importedCount++;
     }
+
+    // Phase 2: all roots processed — all device/catalog IDs now in maps
+    importBackupMappings();
+    importTagsForAllCatalogs();
+
+    if (!Database::commitTransaction(tgtConn))
+        return -1;
+
     return importedCount;
 }
 
@@ -940,6 +973,244 @@ bool CollectionImporter::updateDevice(int targetDeviceId)
         return false;
     }
     return true;
+}
+
+//----------------------------------------------------------------------
+// Storage
+//----------------------------------------------------------------------
+QString CollectionImporter::sourceImageFolderPath() const
+{
+    QSqlQuery q(QSqlDatabase::database(m_sourceConnectionName));
+    q.prepare("SELECT parameter_value1 FROM parameter "
+              "WHERE parameter_name = 'imageFolderPath' AND parameter_type = 'collection'");
+    q.exec();
+    if (q.next()) {
+        QString path = q.value(0).toString();
+        if (!path.isEmpty())
+            return path;
+    }
+    if (m_sourceMode == "File")
+        return QFileInfo(m_sourcePath).dir().absolutePath() + "/images";
+    return m_sourcePath + "/images";
+}
+
+void CollectionImporter::copyStorageImage(const QString &picturePath)
+{
+    if (picturePath.isEmpty())
+        return;
+
+    QString tgtFolder = m_target->imageFolderPath.isEmpty()
+                      ? m_target->folder + "/images"
+                      : m_target->imageFolderPath;
+    QDir().mkpath(tgtFolder);
+
+    QString src = sourceImageFolderPath() + "/" + picturePath;
+    QString dst = tgtFolder + "/" + picturePath;
+    if (QFile::exists(src) && !QFile::exists(dst))
+        QFile::copy(src, dst);
+}
+
+void CollectionImporter::importStorageForCatalog(int srcCatalogId)
+{
+    // Identify the storage name referenced by this catalog
+    QSqlQuery catQ(QSqlDatabase::database(m_sourceConnectionName));
+    catQ.prepare("SELECT catalog_storage FROM catalog WHERE catalog_id = :id");
+    catQ.bindValue(":id", srcCatalogId);
+    catQ.exec();
+    if (!catQ.next()) return;
+    const QString storageName = catQ.value(0).toString();
+    if (storageName.isEmpty()) return;
+
+    const QString tgtConn = m_target->connectionName();
+
+    // Skip if the same storage name already exists in the target
+    {
+        QSqlQuery chk(QSqlDatabase::database(tgtConn));
+        chk.prepare("SELECT COUNT(*) FROM storage WHERE storage_name = :n");
+        chk.bindValue(":n", storageName);
+        chk.exec();
+        if (chk.next() && chk.value(0).toInt() > 0)
+            return;
+    }
+
+    // Read the full source storage row
+    QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
+    srcQ.prepare(QLatin1String(R"(
+        SELECT storage_id, storage_name, storage_type, storage_location, storage_path,
+               storage_label, storage_file_system, storage_total_space, storage_free_space,
+               storage_brand, storage_model, storage_serial_number, storage_build_date,
+               storage_comment1, storage_comment2, storage_comment3, storage_picture_path
+        FROM storage WHERE storage_name = :n
+    )"));
+    srcQ.bindValue(":n", storageName);
+    srcQ.exec();
+    if (!srcQ.next()) return;
+
+    int newStorageId = srcQ.value(0).toInt() + m_storageIdOffset;
+    {
+        QSqlQuery chkId(QSqlDatabase::database(tgtConn));
+        chkId.prepare("SELECT COUNT(*) FROM storage WHERE storage_id = :id");
+        chkId.bindValue(":id", newStorageId);
+        chkId.exec();
+        if (chkId.next() && chkId.value(0).toInt() > 0) {
+            QSqlQuery maxQ(QSqlDatabase::database(tgtConn));
+            maxQ.exec("SELECT MAX(storage_id) FROM storage");
+            newStorageId = (maxQ.next() ? maxQ.value(0).toInt() : 0) + 1;
+        }
+    }
+
+    QSqlQuery ins(QSqlDatabase::database(tgtConn));
+    ins.prepare(QLatin1String(R"(
+        INSERT INTO storage (
+            storage_id, storage_name, storage_type, storage_location, storage_path,
+            storage_label, storage_file_system, storage_total_space, storage_free_space,
+            storage_brand, storage_model, storage_serial_number, storage_build_date,
+            storage_comment1, storage_comment2, storage_comment3, storage_picture_path)
+        VALUES (
+            :id, :name, :type, :loc, :path,
+            :label, :fs, :total, :free,
+            :brand, :model, :serial, :build,
+            :c1, :c2, :c3, :pic)
+    )"));
+    ins.bindValue(":id",     newStorageId);
+    ins.bindValue(":name",   srcQ.value(1));
+    ins.bindValue(":type",   srcQ.value(2));
+    ins.bindValue(":loc",    srcQ.value(3));
+    ins.bindValue(":path",   srcQ.value(4));
+    ins.bindValue(":label",  srcQ.value(5));
+    ins.bindValue(":fs",     srcQ.value(6));
+    ins.bindValue(":total",  srcQ.value(7));
+    ins.bindValue(":free",   srcQ.value(8));
+    ins.bindValue(":brand",  srcQ.value(9));
+    ins.bindValue(":model",  srcQ.value(10));
+    ins.bindValue(":serial", srcQ.value(11));
+    ins.bindValue(":build",  srcQ.value(12));
+    ins.bindValue(":c1",     srcQ.value(13));
+    ins.bindValue(":c2",     srcQ.value(14));
+    ins.bindValue(":c3",     srcQ.value(15));
+    ins.bindValue(":pic",    srcQ.value(16));
+    ins.exec();
+
+    copyStorageImage(srcQ.value(16).toString());
+}
+
+//----------------------------------------------------------------------
+// Statistics_device
+//----------------------------------------------------------------------
+void CollectionImporter::importStatisticsForDevice(int srcDeviceId, int newDeviceId)
+{
+    QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
+    srcQ.prepare(QLatin1String(R"(
+        SELECT date_time, device_name, device_type, device_file_count,
+               device_total_file_size, device_free_space, device_total_space, record_type
+        FROM statistics_device WHERE device_id = :id
+    )"));
+    srcQ.bindValue(":id", srcDeviceId);
+    srcQ.exec();
+
+    QSqlQuery ins(QSqlDatabase::database(m_target->connectionName()));
+    ins.prepare(QLatin1String(R"(
+        INSERT INTO statistics_device (
+            date_time, device_id, device_name, device_type, device_file_count,
+            device_total_file_size, device_free_space, device_total_space, record_type)
+        VALUES (:dt, :id, :name, :type, :fc, :fs, :free, :total, :rt)
+    )"));
+
+    while (srcQ.next()) {
+        ins.bindValue(":dt",    srcQ.value(0));
+        ins.bindValue(":id",    newDeviceId);
+        ins.bindValue(":name",  srcQ.value(1));
+        ins.bindValue(":type",  srcQ.value(2));
+        ins.bindValue(":fc",    srcQ.value(3));
+        ins.bindValue(":fs",    srcQ.value(4));
+        ins.bindValue(":free",  srcQ.value(5));
+        ins.bindValue(":total", srcQ.value(6));
+        ins.bindValue(":rt",    srcQ.value(7));
+        ins.exec();
+    }
+}
+
+//----------------------------------------------------------------------
+// Device_mapping BackUp entries
+//----------------------------------------------------------------------
+void CollectionImporter::importBackupMappings()
+{
+    QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
+    srcQ.exec(QLatin1String(R"(
+        SELECT mapping_type, mapping_name, mapping_device_source_id, mapping_device_target_id,
+               mapping_backup_last_date, mapping_backup_last_size,
+               mapping_strict_copy, mapping_conflict_mode, mapping_source_mode
+        FROM device_mapping WHERE mapping_type != 'CollectionImport'
+    )"));
+
+    QSqlQuery ins(QSqlDatabase::database(m_target->connectionName()));
+    ins.prepare(QLatin1String(R"(
+        INSERT INTO device_mapping (
+            mapping_type, mapping_name,
+            mapping_device_source_id, mapping_device_target_id,
+            mapping_backup_last_date, mapping_backup_last_size,
+            mapping_strict_copy, mapping_conflict_mode, mapping_source_mode)
+        VALUES (
+            :type, :name,
+            :src, :tgt,
+            :date, :size,
+            :strict, :conflict, :srcmode)
+    )"));
+
+    while (srcQ.next()) {
+        int srcId = srcQ.value(2).toInt();
+        int tgtId = srcQ.value(3).toInt();
+        // Only import if both devices were imported in this session
+        if (!m_deviceIdMap.contains(srcId) || !m_deviceIdMap.contains(tgtId))
+            continue;
+
+        ins.bindValue(":type",    srcQ.value(0));
+        ins.bindValue(":name",    srcQ.value(1));
+        ins.bindValue(":src",     m_deviceIdMap.value(srcId));
+        ins.bindValue(":tgt",     m_deviceIdMap.value(tgtId));
+        ins.bindValue(":date",    srcQ.value(4));
+        ins.bindValue(":size",    srcQ.value(5));
+        ins.bindValue(":strict",  srcQ.value(6));
+        ins.bindValue(":conflict",srcQ.value(7));
+        ins.bindValue(":srcmode", srcQ.value(8));
+        ins.exec();
+    }
+}
+
+//----------------------------------------------------------------------
+// Tags
+//----------------------------------------------------------------------
+void CollectionImporter::importTagsForAllCatalogs()
+{
+    // Tags are folder-level labels (name + directory path), independent of any
+    // catalog or device. Copy all source tags, skipping duplicates by (name, path).
+    const QString tgtConn = m_target->connectionName();
+
+    QSqlQuery srcTags(QSqlDatabase::database(m_sourceConnectionName));
+    srcTags.exec("SELECT name, path, type, date_time FROM tag");
+
+    QSqlQuery ins(QSqlDatabase::database(tgtConn));
+    ins.prepare("INSERT INTO tag (name, path, type, date_time) VALUES (:n, :p, :t, :dt)");
+
+    while (srcTags.next()) {
+        const QString name = srcTags.value(0).toString();
+        const QString path = srcTags.value(1).toString();
+
+        // Skip if (name, path) already exists in target
+        QSqlQuery chk(QSqlDatabase::database(tgtConn));
+        chk.prepare("SELECT COUNT(*) FROM tag WHERE name = :n AND path = :p");
+        chk.bindValue(":n", name);
+        chk.bindValue(":p", path);
+        chk.exec();
+        if (chk.next() && chk.value(0).toInt() > 0)
+            continue;
+
+        ins.bindValue(":n",  name);
+        ins.bindValue(":p",  path);
+        ins.bindValue(":t",  srcTags.value(2));
+        ins.bindValue(":dt", srcTags.value(3));
+        ins.exec();
+    }
 }
 
 //----------------------------------------------------------------------

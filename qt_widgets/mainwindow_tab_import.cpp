@@ -45,6 +45,9 @@ static void persistImportToFiles(Collection *collection)
     collection->saveDeviceTableToFile();
     collection->saveMappingTableToFile();
     collection->saveCatalogFilterTableToFile();
+    collection->saveStorageTableToFile();
+    collection->saveTagTableToFile();
+    collection->saveStatiticsTableToFile();
 }
 
 //----------------------------------------------------------------------

@@ -81,7 +81,7 @@ QString BackupMappingManager::buildSelectFromJoin()
 
 QString BackupMappingManager::buildBaseQuery()
 {
-    return buildSelectFromJoin() + " WHERE 1=1";
+    return buildSelectFromJoin() + " WHERE dm.mapping_type != 'CollectionImport'";
 }
 
 QString BackupMappingManager::buildFilterClause(const MappingFilter& filter)
@@ -358,7 +358,7 @@ int BackupMappingManager::getMappingCount()
 
 int BackupMappingManager::getFilteredMappingCount(const MappingFilter& filter)
 {
-    QString querySQL = "SELECT COUNT(*) FROM device_mapping dm WHERE 1=1";
+    QString querySQL = "SELECT COUNT(*) FROM device_mapping dm WHERE dm.mapping_type != 'CollectionImport'";
     querySQL += buildFilterClause(filter);
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
@@ -393,7 +393,7 @@ MappingTotals BackupMappingManager::calculateTotals(const MappingFilter& filter)
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
-        WHERE 1=1
+        WHERE dm.mapping_type != 'CollectionImport'
     )");
 
     querySQL += buildFilterClause(filter);
@@ -480,7 +480,7 @@ QSqlQuery BackupMappingManager::executeTableDisplayQuery(const MappingFilter& fi
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
-        WHERE 1=1
+        WHERE dm.mapping_type != 'CollectionImport'
     )");
 
     querySQL += buildFilterClause(filter);

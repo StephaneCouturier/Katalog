@@ -1657,6 +1657,7 @@ void Collection::saveMappingTableToFile()
         QString querySQL = QLatin1String(R"(
                                     SELECT *
                                     FROM device_mapping
+                                    WHERE mapping_type != 'CollectionImport'
                                 )");
         query.prepare(querySQL);
         query.exec();

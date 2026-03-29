@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   collectionimporter.h
 // Purpose:     Import / Merge / Update across Collections (#750)
-// Description: Phase 1 — device/catalog hierarchy and file lists
+// Description: device/catalog hierarchy, file lists, and extended data
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
@@ -157,6 +157,14 @@ private:
     /** Recursively import srcDeviceId and all its children into the target. */
     bool importSubTree(int srcDeviceId, int targetParentId, int &imported, int total);
 
+    // Extended data
+    void importStorageForCatalog(int srcCatalogId);
+    void importStatisticsForDevice(int srcDeviceId, int newDeviceId);
+    void importBackupMappings();
+    void importTagsForAllCatalogs();    // tags are folder-level, no catalog dependency
+    QString sourceImageFolderPath() const;
+    void copyStorageImage(const QString &picturePath);
+
     // Members
     Collection         *m_target;
     Collection         *m_sourceCollection = nullptr;  // Used for Memory mode loading
@@ -167,9 +175,13 @@ private:
 
     int  m_deviceIdOffset  = 0;
     int  m_catalogIdOffset = 0;
+    int  m_storageIdOffset = 0;
 
     // Maps srcDeviceId → newDeviceId, populated during an import operation
     QMap<int, int>  m_deviceIdMap;
+
+    // srcCatalogId → newCatalogId, populated during import for Phase 2 tag/storage tracking
+    QMap<int, int>  m_catalogIdMap;
 
     QAtomicInt m_stopRequested{0};
 };
