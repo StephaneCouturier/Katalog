@@ -1823,6 +1823,25 @@ QStringList Collection::getExcludeDirectories()
     }
     return directories;
 }
+
+QStringList Collection::getImportSourcePaths()
+{
+    QStringList paths;
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    if (!query.exec(QLatin1String(R"(
+        SELECT DISTINCT mapping_source_collection
+        FROM device_mapping
+        WHERE mapping_type = 'CollectionImport'
+          AND mapping_source_collection != ''
+        ORDER BY mapping_source_collection
+    )"))) {
+        qWarning() << "WARNING: Failed to get import source paths:" << query.lastError().text();
+        return paths;
+    }
+    while (query.next())
+        paths << query.value(0).toString();
+    return paths;
+}
 //----------------------------------------------------------------------
 
 //Tag CRUD -------------------------------------------------------------

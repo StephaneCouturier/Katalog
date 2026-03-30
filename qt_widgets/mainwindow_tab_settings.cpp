@@ -722,6 +722,7 @@
         loadBackUpMapping();               // Refresh backup mappings for the new collection
         loadBackUpDeviceLists("Source");   // Refresh source selection list for the new collection
         loadBackUpDeviceLists("Target");   // Refresh target selection list for the new collection
+        refreshImportUpdateSourceList();   // Refresh update source combo from CollectionImport mappings
 
     }
     //----------------------------------------------------------------------

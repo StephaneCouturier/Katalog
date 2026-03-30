@@ -127,6 +127,9 @@ public:
     bool removeExcludeDirectory(const QString &path);
     QStringList getExcludeDirectories();
 
+    //Import source management
+    QStringList getImportSourcePaths();
+
     //Tag CRUD
     bool createTag(const QString &name, const QString &path, const QString &type, const QDateTime &dateTime);
     bool deleteTag(int tagID);

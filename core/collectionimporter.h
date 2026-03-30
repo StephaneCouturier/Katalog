@@ -103,6 +103,14 @@ public:
      */
     bool updateDeviceFromExternalCollection(int targetDeviceId);
 
+    /**
+     * Update all devices previously imported from a given source collection path.
+     * Opens the source automatically if needed.
+     * @param sourcePath  path to the source collection (same as used during import).
+     * @return true if at least one device was updated.
+     */
+    bool updateAllImportsFromSource(const QString &sourcePath);
+
     /** Request cancellation of an in-progress operation. */
     void requestStop() { m_stopRequested.storeRelease(1); }
 
@@ -159,9 +167,11 @@ private:
 
     // Extended data
     void importStorageForCatalog(int srcCatalogId);
+    void updateStorageRecord(int srcStorageId, int targetStorageId);
     void importStatisticsForDevice(int srcDeviceId, int newDeviceId);
     void importBackupMappings();
     void importTagsForAllCatalogs();    // tags are folder-level, no catalog dependency
+    void importExcludeDirectories();    // parameter rows with type 'exclude_directory'
     QString sourceImageFolderPath() const;
     void copyStorageImage(const QString &picturePath);
 

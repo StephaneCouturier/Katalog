@@ -753,8 +753,12 @@ bool CollectionImporter::importSubTree(int srcDeviceId, int targetParentId,
                 importStorageForCatalog(srcCatalogId);
             }
         }
-        recordImportLink(srcDeviceId, newDeviceId);
     }
+
+    // Record a CollectionImport link for every imported device (except id=1, the Physical
+    // root group that always exists in both collections and is never re-inserted).
+    if (srcDeviceId != 1)
+        recordImportLink(srcDeviceId, newDeviceId);
 
     importStatisticsForDevice(srcDeviceId, newDeviceId);
     imported++;
@@ -818,6 +822,7 @@ bool CollectionImporter::importDevice(int sourceDeviceId)
     // Phase 2: cross-device data — run inside same transaction
     importBackupMappings();
     importTagsForAllCatalogs();
+    importExcludeDirectories();
 
     if (!Database::commitTransaction(tgtConn)) {
         m_lastError = "Failed to commit transaction";
@@ -872,6 +877,7 @@ int CollectionImporter::importAllDevices()
     // Phase 2: all roots processed — all device/catalog IDs now in maps
     importBackupMappings();
     importTagsForAllCatalogs();
+    importExcludeDirectories();
 
     if (!Database::commitTransaction(tgtConn))
         return -1;
@@ -998,7 +1004,26 @@ bool CollectionImporter::updateDeviceFromExternalCollection(int targetDeviceId)
             upd.exec();
         }
 
-        // Only Catalog-type devices carry file/folder/catalog data
+        // Storage: update the storage table row via device_external_id → storage_id
+        if (deviceType == QLatin1String("Storage")) {
+            const int srcStorageId = srcDevQ.value(11).toInt();
+            int targetStorageId = 0;
+            {
+                QSqlQuery tgtDevQ(QSqlDatabase::database(tgtConn));
+                tgtDevQ.prepare("SELECT device_external_id FROM device WHERE device_id = :id");
+                tgtDevQ.bindValue(":id", mapping.tgtDeviceId);
+                tgtDevQ.exec();
+                if (tgtDevQ.next())
+                    targetStorageId = tgtDevQ.value(0).toInt();
+            }
+            if (targetStorageId > 0)
+                updateStorageRecord(srcStorageId, targetStorageId);
+            updatedCount++;
+            emit importProgress(updatedCount, total, deviceName);
+            continue;
+        }
+
+        // Virtual and other container types: device row already updated above — nothing more to do
         if (deviceType != QLatin1String("Catalog")) {
             updatedCount++;
             emit importProgress(updatedCount, total, deviceName);
@@ -1188,6 +1213,63 @@ void CollectionImporter::importStorageForCatalog(int srcCatalogId)
     copyStorageImage(srcQ.value(16).toString());
 }
 
+void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorageId)
+{
+    QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
+    srcQ.prepare(QLatin1String(R"(
+        SELECT storage_name, storage_type, storage_location, storage_path,
+               storage_label, storage_file_system, storage_total_space, storage_free_space,
+               storage_brand, storage_model, storage_serial_number, storage_build_date,
+               storage_comment1, storage_comment2, storage_comment3, storage_picture_path
+        FROM storage WHERE storage_id = :id
+    )"));
+    srcQ.bindValue(":id", srcStorageId);
+    srcQ.exec();
+    if (!srcQ.next()) return;
+
+    QSqlQuery upd(QSqlDatabase::database(m_target->connectionName()));
+    upd.prepare(QLatin1String(R"(
+        UPDATE storage SET
+            storage_name           = :name,
+            storage_type           = :type,
+            storage_location       = :loc,
+            storage_path           = :path,
+            storage_label          = :label,
+            storage_file_system    = :fs,
+            storage_total_space    = :total,
+            storage_free_space     = :free,
+            storage_brand          = :brand,
+            storage_model          = :model,
+            storage_serial_number  = :serial,
+            storage_build_date     = :build,
+            storage_comment1       = :c1,
+            storage_comment2       = :c2,
+            storage_comment3       = :c3,
+            storage_picture_path   = :pic
+        WHERE storage_id = :id
+    )"));
+    upd.bindValue(":name",   srcQ.value(0));
+    upd.bindValue(":type",   srcQ.value(1));
+    upd.bindValue(":loc",    srcQ.value(2));
+    upd.bindValue(":path",   srcQ.value(3));
+    upd.bindValue(":label",  srcQ.value(4));
+    upd.bindValue(":fs",     srcQ.value(5));
+    upd.bindValue(":total",  srcQ.value(6));
+    upd.bindValue(":free",   srcQ.value(7));
+    upd.bindValue(":brand",  srcQ.value(8));
+    upd.bindValue(":model",  srcQ.value(9));
+    upd.bindValue(":serial", srcQ.value(10));
+    upd.bindValue(":build",  srcQ.value(11));
+    upd.bindValue(":c1",     srcQ.value(12));
+    upd.bindValue(":c2",     srcQ.value(13));
+    upd.bindValue(":c3",     srcQ.value(14));
+    upd.bindValue(":pic",    srcQ.value(15));
+    upd.bindValue(":id",     targetStorageId);
+    upd.exec();
+
+    copyStorageImage(srcQ.value(15).toString());
+}
+
 //----------------------------------------------------------------------
 // Statistics_device
 //----------------------------------------------------------------------
@@ -1308,17 +1390,49 @@ void CollectionImporter::importTagsForAllCatalogs()
 }
 
 //----------------------------------------------------------------------
-// Source device model (for the UI tree view)
+// Exclude directories (parameter table, type='exclude_directory')
 //----------------------------------------------------------------------
-QStandardItemModel *CollectionImporter::buildSourceDeviceModel()
+void CollectionImporter::importExcludeDirectories()
 {
-    auto *model = new QStandardItemModel(this);
-    model->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Device ID")});
+    QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
+    srcQ.exec("SELECT parameter_name, parameter_type, parameter_value1, parameter_value2 "
+              "FROM parameter WHERE parameter_type = 'exclude_directory'");
 
-    if (!isSourceOpen())
-        return model;
+    const QString tgtConn = m_target->connectionName();
+    QSqlQuery chk(QSqlDatabase::database(tgtConn));
+    chk.prepare("SELECT COUNT(*) FROM parameter "
+                "WHERE parameter_type = 'exclude_directory' AND parameter_value2 = :path");
 
-    QSqlQuery q(QSqlDatabase::database(m_sourceConnectionName));
+    QSqlQuery ins(QSqlDatabase::database(tgtConn));
+    ins.prepare("INSERT INTO parameter (parameter_name, parameter_type, parameter_value1, parameter_value2) "
+                "VALUES (:name, :type, :val1, :val2)");
+
+    while (srcQ.next()) {
+        const QString path = srcQ.value(3).toString();
+        chk.bindValue(":path", path);
+        chk.exec();
+        if (chk.next() && chk.value(0).toInt() > 0)
+            continue;
+
+        ins.bindValue(":name", srcQ.value(0));
+        ins.bindValue(":type", srcQ.value(1));
+        ins.bindValue(":val1", srcQ.value(2));
+        ins.bindValue(":val2", path);
+        ins.exec();
+    }
+}
+
+//----------------------------------------------------------------------
+// Device tree models (for the UI tree view)
+//----------------------------------------------------------------------
+static QStandardItemModel *buildDeviceTreeModel(
+        const QString &connectionName, bool addCollectionRoot, QObject *parent)
+{
+    auto *model = new QStandardItemModel(parent);
+    model->setHorizontalHeaderLabels({QObject::tr("Name"), QObject::tr("Type"),
+                                      QObject::tr("Device ID")});
+
+    QSqlQuery q(QSqlDatabase::database(connectionName));
     q.exec(QLatin1String(R"(
         SELECT device_id, device_parent_id, device_name, device_type
         FROM device ORDER BY device_parent_id, device_order, device_id
@@ -1330,7 +1444,6 @@ QStandardItemModel *CollectionImporter::buildSourceDeviceModel()
         rows.append({q.value(0).toInt(), q.value(1).toInt(),
                      q.value(2).toString(), q.value(3).toString()});
 
-    // Build all items first
     QMap<int, QList<QStandardItem*>> itemMap;
     for (const Row &r : rows) {
         QStandardItem *nameItem = new QStandardItem(r.name);
@@ -1347,24 +1460,88 @@ QStandardItemModel *CollectionImporter::buildSourceDeviceModel()
         itemMap[r.id] = {nameItem, typeItem, idItem};
     }
 
-    // Synthetic "Collection" root — sentinel ID=0 means "import all"
-    QStandardItem *collRoot = new QStandardItem(tr("Collection"));
-    collRoot->setData(0, Qt::UserRole);         // sentinel: importAllDevices()
-    collRoot->setData(0, Qt::UserRole + 1);
-    collRoot->setFlags(collRoot->flags() & ~Qt::ItemIsEditable);
-    model->appendRow({collRoot,
-                      new QStandardItem(),
-                      new QStandardItem("0")});
+    QStandardItem *root = nullptr;
+    if (addCollectionRoot) {
+        // Synthetic "Collection" root — sentinel ID=0 means "import all"
+        root = new QStandardItem(QObject::tr("Collection"));
+        root->setData(0, Qt::UserRole);
+        root->setData(0, Qt::UserRole + 1);
+        root->setFlags(root->flags() & ~Qt::ItemIsEditable);
+        model->appendRow({root, new QStandardItem(), new QStandardItem("0")});
+    }
 
-    // Attach each item to its parent (or to the Collection root)
     for (const Row &r : rows) {
         auto rowItems = itemMap.value(r.id);
-        if (r.parentId == 0 || !itemMap.contains(r.parentId)) {
-            collRoot->appendRow(rowItems);
+        if (addCollectionRoot && (r.parentId == 0 || !itemMap.contains(r.parentId))) {
+            root->appendRow(rowItems);
+        } else if (!addCollectionRoot && (r.parentId == 0 || !itemMap.contains(r.parentId))) {
+            model->appendRow(rowItems);
         } else {
             itemMap[r.parentId][0]->appendRow(rowItems);
         }
     }
 
     return model;
+}
+
+QStandardItemModel *CollectionImporter::buildSourceDeviceModel()
+{
+    if (!isSourceOpen()) {
+        auto *m = new QStandardItemModel(this);
+        m->setHorizontalHeaderLabels({tr("Name"), tr("Type"), tr("Device ID")});
+        return m;
+    }
+    return buildDeviceTreeModel(m_sourceConnectionName, /*addCollectionRoot=*/true, this);
+}
+
+bool CollectionImporter::updateAllImportsFromSource(const QString &sourcePath)
+{
+    // Ensure the source is open on the given path.
+    if (!isSourceOpen() || m_sourcePath != sourcePath) {
+        QSqlError err = openSource(sourcePath);
+        if (err.type() != QSqlError::NoError) {
+            m_lastError = err.text();
+            return false;
+        }
+    }
+
+    const QString tgtConn = m_target->connectionName();
+
+    // Find root target devices for this source: those whose direct parent is NOT
+    // also a CollectionImport target from the same source.
+    QSqlQuery q(QSqlDatabase::database(tgtConn));
+    q.prepare(QLatin1String(R"(
+        SELECT DISTINCT dm.mapping_device_target_id
+        FROM device_mapping dm
+        JOIN device d ON d.device_id = dm.mapping_device_target_id
+        WHERE dm.mapping_type = 'CollectionImport'
+          AND dm.mapping_source_collection = :src
+          AND NOT EXISTS (
+              SELECT 1 FROM device_mapping dm2
+              WHERE dm2.mapping_type = 'CollectionImport'
+                AND dm2.mapping_source_collection = :src2
+                AND dm2.mapping_device_target_id = d.device_parent_id
+          )
+    )"));
+    q.bindValue(":src",  sourcePath);
+    q.bindValue(":src2", sourcePath);
+    q.exec();
+
+    QList<int> rootIds;
+    while (q.next())
+        rootIds.append(q.value(0).toInt());
+
+    if (rootIds.isEmpty()) {
+        m_lastError = "No previously imported devices found from this source";
+        return false;
+    }
+
+    bool anyOk = false;
+    for (int rootId : rootIds) {
+        if (updateDeviceFromExternalCollection(rootId))
+            anyOk = true;
+        else if (!m_lastError.isEmpty())
+            return false;   // propagate hard errors
+    }
+    return anyOk;
 }

@@ -110,7 +110,7 @@ Katalog umožňuje importovat zařízení z jiné kolekce nebo obnovit obsah kat
 
 **Co se importuje**
 
-Jsou přenesena zařízení, jejich katalogy, indexy souborů katalogů, statistiky a zálohovací vazby. Struktura složek zdroje je v cíli zachována vložením nezbytných nadřazených úrovní jako kontejnerových zařízení. Pokud název zařízení nebo katalogu v cíli již existuje, je automaticky přejmenován (například `Moje Jednotka (2)`), aby nedošlo ke konfliktům.
+Jsou přenesena zařízení, jejich katalogy, indexy souborů katalogů, statistiky, zálohovací vazby a nastavení vyloučených složek. Struktura složek zdroje je v cíli zachována vložením nezbytných nadřazených úrovní jako kontejnerových zařízení. Pokud název zařízení nebo katalogu v cíli již existuje, je automaticky přejmenován (například `Moje Jednotka (2)`), aby nedošlo ke konfliktům.
 
 **Operace**
 

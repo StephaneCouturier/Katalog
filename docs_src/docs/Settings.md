@@ -110,7 +110,7 @@ Katalog can import devices from another collection, or refresh the catalog conte
 
 **What is imported**
 
-Devices, their catalogs, catalog file indexes, statistics, and backup links are transferred. The source folder structure is preserved in the target by inserting the necessary parent levels as container devices. If a device or catalog name already exists in the target, it is automatically renamed (for example, `My Drive (2)`) to avoid conflicts.
+Devices, their catalogs, catalog file indexes, statistics, backup links, and exclude folder settings are transferred. The source folder structure is preserved in the target by inserting the necessary parent levels as container devices. If a device or catalog name already exists in the target, it is automatically renamed (for example, `My Drive (2)`) to avoid conflicts.
 
 **Operations**
 

@@ -110,7 +110,7 @@ Katalog peut importer des appareils depuis une autre collection, ou rafraîchir 
 
 **Ce qui est importé**
 
-Les appareils, leurs catalogues, les index de fichiers des catalogues, les statistiques et les liens de sauvegarde sont transférés. La structure de dossiers de la source est préservée dans la cible en insérant les niveaux parents nécessaires comme appareils conteneurs. Si un nom d'appareil ou de catalogue existe déjà dans la cible, il est automatiquement renommé (par exemple, `Mon Disque (2)`) pour éviter les conflits.
+Les appareils, leurs catalogues, les index de fichiers des catalogues, les statistiques, les liens de sauvegarde et les paramètres de dossiers exclus sont transférés. La structure de dossiers de la source est préservée dans la cible en insérant les niveaux parents nécessaires comme appareils conteneurs. Si un nom d'appareil ou de catalogue existe déjà dans la cible, il est automatiquement renommé (par exemple, `Mon Disque (2)`) pour éviter les conflits.
 
 **Opérations**
 

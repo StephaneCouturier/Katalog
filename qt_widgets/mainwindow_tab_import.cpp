@@ -37,6 +37,14 @@
 #include <QFileDialog>
 
 //----------------------------------------------------------------------
+void MainWindow::refreshImportUpdateSourceList()
+{
+    QStringList paths = collection->getImportSourcePaths();
+    ui->Import_comboBox_updateSource->clear();
+    ui->Import_comboBox_updateSource->addItems(paths);
+}
+
+//----------------------------------------------------------------------
 // In Memory mode, the import writes to the in-memory SQLite but loadCollection()
 // wipes and reloads from CSV files.  Persist the affected tables to disk first.
 static void persistImportToFiles(Collection *collection)
@@ -161,6 +169,7 @@ void MainWindow::on_Import_pushButton_importSelected_clicked()
                 .build());
         persistImportToFiles(collection);
         loadCollection();
+        refreshImportUpdateSourceList();
     } else {
         updateStatusBarMessage(
             StatusBarMessageBuilder()
@@ -174,12 +183,13 @@ void MainWindow::on_Import_pushButton_importSelected_clicked()
 //----------------------------------------------------------------------
 void MainWindow::on_Import_pushButton_updateSelected_clicked()
 {
-    if (!selectedDevice || selectedDevice->ID == 0) {
+    QString sourcePath = ui->Import_comboBox_updateSource->currentText().trimmed();
+    if (sourcePath.isEmpty()) {
         updateStatusBarMessage(
             StatusBarMessageBuilder()
                 .setOperation(tr("COLLECTION UPDATE"))
                 .setStatus(tr("Error"))
-                .setCurrentItem(tr("No device selected."))
+                .setCurrentItem(tr("No source collection selected for update."))
                 .build());
         return;
     }
@@ -194,7 +204,7 @@ void MainWindow::on_Import_pushButton_updateSelected_clicked()
             .build());
     QApplication::processEvents();
 
-    bool ok = m_importer->updateDeviceFromExternalCollection(selectedDevice->ID);
+    bool ok = m_importer->updateAllImportsFromSource(sourcePath);
 
     if (ok) {
         updateStatusBarMessage(
