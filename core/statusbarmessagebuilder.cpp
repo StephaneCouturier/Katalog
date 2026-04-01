@@ -76,13 +76,14 @@ StatusBarMessageBuilder& StatusBarMessageBuilder::setDeviceContext(int currentIn
     return *this;
 }
 
-StatusBarMessageBuilder& StatusBarMessageBuilder::setProcess(const QString& title, int currentCount, int totalCount)
+StatusBarMessageBuilder& StatusBarMessageBuilder::setProcess(const QString& title, qint64 currentCount, qint64 totalCount)
 {
     m_processTitle = title;
     m_processCurrentCount = currentCount;
     m_processTotalCount = totalCount;
     return *this;
 }
+
 
 StatusBarMessageBuilder& StatusBarMessageBuilder::setResult(const QString& title, int count)
 {
@@ -298,6 +299,7 @@ QString StatusBarMessageBuilder::formatProcess() const
         processText += QLocale().toString(m_processCurrentCount);
     }
 
+
     // Apply optional color
     if (!m_formatOptions.processColor.isEmpty()) {
         processText = QString("<span style='color:%1;'>%2</span>")
@@ -383,5 +385,6 @@ double StatusBarMessageBuilder::calculatePercent() const
         return 0.0;
     }
 
-    return (static_cast<double>(m_processCurrentCount) * 100.0) / static_cast<double>(m_processTotalCount);
+    return (static_cast<double>(m_processCurrentCount) * 100.0)
+           / static_cast<double>(m_processTotalCount);
 }

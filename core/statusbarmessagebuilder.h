@@ -137,8 +137,9 @@ public:
      * @return Reference to this builder for chaining
      *
      * Generates: "Title: X of Y (Z%)" or "Title: X" if total is 0
+     * qint64 overload handles row counts beyond INT_MAX (e.g. billions of file rows).
      */
-    StatusBarMessageBuilder& setProcess(const QString& title, int currentCount, int totalCount = 0);
+    StatusBarMessageBuilder& setProcess(const QString& title, qint64 currentCount, qint64 totalCount = 0);
 
     /**
      * @brief Set result information (single result — replaces any previously added results)
@@ -235,8 +236,8 @@ private:
     int m_deviceTotalCount = 0;
     QString m_catalogName;
     QString m_processTitle;
-    int m_processCurrentCount = -1;
-    int m_processTotalCount = -1;
+    qint64 m_processCurrentCount = -1;
+    qint64 m_processTotalCount = -1;
     QList<ResultItem> m_results;
     qint64  m_sizeProgressCurrent = -1;
     qint64  m_sizeProgressTotal   = -1;

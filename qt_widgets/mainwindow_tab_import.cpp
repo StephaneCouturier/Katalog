@@ -33,7 +33,10 @@
 #include "ui_mainwindow.h"
 #include "core/collectionimporter.h"
 #include "core/statusbarmessagebuilder.h"
+#include "devicetreeview.h"
 
+#include <QCoreApplication>
+#include <QElapsedTimer>
 #include <QFileDialog>
 
 //----------------------------------------------------------------------
@@ -90,8 +93,11 @@ void MainWindow::openImportSource(const QString &path)
     }
 
     QStandardItemModel *model = m_importer->buildSourceDeviceModel();
-    ui->Import_comboBox_sourceDevice->setTreeModel(model);
-    ui->Import_comboBox_sourceDevice->setIdColumn(2);
+    DeviceTreeView *proxy = new DeviceTreeView(this);
+    proxy->setSourceModel(model);
+    proxy->setKatalogTheme(themeID > 0);
+    ui->Import_comboBox_sourceDevice->setTreeModel(proxy);
+    ui->Import_comboBox_sourceDevice->setIdColumn(3);  // col 3 = DEVICE_ID in DeviceTreeColumns layout
     ui->Import_comboBox_sourceDevice->expandAll();
 }
 
@@ -153,6 +159,41 @@ void MainWindow::on_Import_pushButton_importSelected_clicked()
             .build());
     QApplication::processEvents();
 
+    // Track elapsed time so we can compute ETA for large file tables.
+    QElapsedTimer importTimer;
+    importTimer.start();
+
+    QMetaObject::Connection progressConn = connect(
+        m_importer, &CollectionImporter::fileImportProgress,
+        this, [this, &importTimer](int catalogIndex, int totalCatalogs,
+                                   const QString &catalogName,
+                                   qint64 done, qint64 total) {
+            StatusBarMessageBuilder builder;
+            builder.setOperation(tr("COLLECTION IMPORT"))
+                   .setStatus(tr("Importing"))
+                   .setDeviceContext(catalogIndex, totalCatalogs, catalogName)
+                   .setProcess(tr("Files"), done, total);
+
+            // ETA — only after ≥ 500 ms to avoid wild numbers at the very start.
+            const qint64 elapsedMs = importTimer.elapsed();
+            if (elapsedMs >= 500 && total > 0 && done > 0) {
+                const qint64 etaSec = (elapsedMs * (total - done)) / (done * 1000);
+                QString etaStr;
+                if (etaSec < 60)
+                    etaStr = tr("%1s").arg(etaSec);
+                else if (etaSec < 3600)
+                    etaStr = tr("%1m %2s").arg(etaSec / 60).arg(etaSec % 60);
+                else
+                    etaStr = tr("%1h %2m").arg(etaSec / 3600).arg((etaSec % 3600) / 60);
+                builder.setTimeToCompletion(tr("%1").arg(etaStr));
+            }
+
+            updateStatusBarMessage(builder.build());
+            // Allow repaints without processing user-input events (avoids re-entrancy).
+            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+        },
+        Qt::DirectConnection);
+
     bool ok;
     if (srcDeviceId == 0) {
         // Synthetic "Collection" root — import all root-level devices
@@ -160,6 +201,8 @@ void MainWindow::on_Import_pushButton_importSelected_clicked()
     } else {
         ok = m_importer->importDevice(srcDeviceId);
     }
+
+    disconnect(progressConn);
 
     if (ok) {
         updateStatusBarMessage(

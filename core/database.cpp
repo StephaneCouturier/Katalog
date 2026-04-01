@@ -1153,6 +1153,38 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
                     "  (SELECT old_id FROM _cat_id_fix GROUP BY old_id HAVING COUNT(*) = 1)");
 
                 executeSql(connectionName, "DROP TABLE IF EXISTS _cat_id_fix");
+
+                // The HAVING COUNT(*) = 1 guard above intentionally skips ambiguous
+                // old_ids (e.g. all rows had catalog_id = 0 in pre-v2.8 exports from
+                // Memory collections).  For those rows we recover via name matching:
+                //  - file.file_catalog      → catalog.catalog_name  (reliable string field)
+                //  - device.device_external_id → catalog.catalog_name for Catalog devices
+                //  - folder.folder_catalog_id  → file.file_catalog_id (after fixing files)
+                // These run against catalog_new (already has correct rowid-based IDs).
+
+                // Step 1: fix file_catalog_id via the catalog-name string in file_catalog.
+                executeSql(connectionName,
+                    "UPDATE file SET file_catalog_id = "
+                    "  (SELECT catalog_id FROM catalog_new "
+                    "   WHERE catalog_name = file.file_catalog) "
+                    "WHERE file.file_catalog IS NOT NULL AND file.file_catalog != '' "
+                    "AND file_catalog_id NOT IN (SELECT catalog_id FROM catalog_new)");
+
+                // Step 2: fix device.device_external_id for Catalog-type devices via name.
+                executeSql(connectionName,
+                    "UPDATE device SET device_external_id = "
+                    "  (SELECT catalog_id FROM catalog_new "
+                    "   WHERE catalog_name = device.device_name) "
+                    "WHERE device_type = 'Catalog' "
+                    "AND device_external_id NOT IN (SELECT catalog_id FROM catalog_new)");
+
+                // Step 3: fix folder_catalog_id using the now-correct file_catalog_id
+                // (join on folder_path; empty folders cannot be recovered this way).
+                executeSql(connectionName,
+                    "UPDATE folder SET folder_catalog_id = "
+                    "  (SELECT file_catalog_id FROM file "
+                    "   WHERE file_folder_path = folder.folder_path LIMIT 1) "
+                    "WHERE folder_catalog_id NOT IN (SELECT catalog_id FROM catalog_new)");
             }
 
             err = executeSql(connectionName, "DROP TABLE catalog");

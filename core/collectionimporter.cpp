@@ -41,6 +41,7 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QMutex>
+#include <QElapsedTimer>
 
 static const QString SOURCE_CONN = "importSourceConnection";
 
@@ -508,7 +509,8 @@ int CollectionImporter::remapAndInsertDevice(int srcDeviceId, int newParentId)
 //----------------------------------------------------------------------
 // File + folder data
 //----------------------------------------------------------------------
-void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId)
+void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
+                                        const QString &catalogName)
 {
     if (m_sourceMode == "Memory") {
         // Load .idx file into source connection so we can query it uniformly
@@ -537,24 +539,79 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId)
 
     QString tgtConn = m_target->connectionName();
 
+    // Robustness: source DBs exported from Memory collections and then migrated
+    // with the old migration code may have file_catalog_id = 0 for all rows even
+    // though catalog.catalog_id has been repaired to rowid values.  In that case
+    // fall back to matching via the file_catalog string column (catalog name).
+    QString srcCatalogNameFallback;
+    if (m_sourceMode != "Memory") {
+        QSqlQuery cntQ(QSqlDatabase::database(m_sourceConnectionName));
+        cntQ.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :id");
+        cntQ.bindValue(":id", srcCatalogId);
+        cntQ.exec();
+        bool hasRowsById = cntQ.next() && cntQ.value(0).toInt() > 0;
+        if (!hasRowsById) {
+            QSqlQuery nameQ(QSqlDatabase::database(m_sourceConnectionName));
+            nameQ.prepare("SELECT catalog_name FROM catalog WHERE catalog_id = :id");
+            nameQ.bindValue(":id", srcCatalogId);
+            nameQ.exec();
+            if (nameQ.next())
+                srcCatalogNameFallback = nameQ.value(0).toString();
+        }
+    }
+
     // Copy file rows: source → target with remapped catalog_id
     {
         QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
-        srcQ.prepare(QLatin1String(R"(
-            SELECT file_name, file_folder_path, file_size, file_date_updated,
-                   file_catalog, file_full_path, file_extension, file_type,
-                   mime_type, mime_verified, type_mismatch,
-                   image_width, image_height, image_orientation,
-                   video_duration_seconds, video_width, video_height, video_codec,
-                   video_framerate, video_bitrate,
-                   audio_duration_seconds, audio_artist, audio_album, audio_title,
-                   audio_genre, audio_year, audio_track_number, audio_bitrate, audio_sample_rate,
-                   metadata_extended, metadata_extraction_date,
-                   checksum_sha256, checksum_extraction_date
-            FROM file WHERE file_catalog_id = :id
-        )"));
-        srcQ.bindValue(":id", srcCatalogId);
+        if (srcCatalogNameFallback.isEmpty()) {
+            srcQ.prepare(QLatin1String(R"(
+                SELECT file_name, file_folder_path, file_size, file_date_updated,
+                       file_catalog, file_full_path, file_extension, file_type,
+                       mime_type, mime_verified, type_mismatch,
+                       image_width, image_height, image_orientation,
+                       video_duration_seconds, video_width, video_height, video_codec,
+                       video_framerate, video_bitrate,
+                       audio_duration_seconds, audio_artist, audio_album, audio_title,
+                       audio_genre, audio_year, audio_track_number, audio_bitrate, audio_sample_rate,
+                       metadata_extended, metadata_extraction_date,
+                       checksum_sha256, checksum_extraction_date
+                FROM file WHERE file_catalog_id = :id
+            )"));
+            srcQ.bindValue(":id", srcCatalogId);
+        } else {
+            srcQ.prepare(QLatin1String(R"(
+                SELECT file_name, file_folder_path, file_size, file_date_updated,
+                       file_catalog, file_full_path, file_extension, file_type,
+                       mime_type, mime_verified, type_mismatch,
+                       image_width, image_height, image_orientation,
+                       video_duration_seconds, video_width, video_height, video_codec,
+                       video_framerate, video_bitrate,
+                       audio_duration_seconds, audio_artist, audio_album, audio_title,
+                       audio_genre, audio_year, audio_track_number, audio_bitrate, audio_sample_rate,
+                       metadata_extended, metadata_extraction_date,
+                       checksum_sha256, checksum_extraction_date
+                FROM file WHERE file_catalog = :name
+            )"));
+            srcQ.bindValue(":name", srcCatalogNameFallback);
+        }
         srcQ.exec();
+
+        // Count total rows so the UI can show progress + ETA.
+        qint64 totalFileRows = 0;
+        {
+            QSqlQuery cntQ(QSqlDatabase::database(m_sourceConnectionName));
+            if (srcCatalogNameFallback.isEmpty()) {
+                cntQ.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :id");
+                cntQ.bindValue(":id", srcCatalogId);
+            } else {
+                cntQ.prepare("SELECT COUNT(*) FROM file WHERE file_catalog = :name");
+                cntQ.bindValue(":name", srcCatalogNameFallback);
+            }
+            cntQ.exec();
+            if (cntQ.next())
+                totalFileRows = cntQ.value(0).toLongLong();
+        }
+        emit fileImportProgress(m_catalogImportIndex, m_catalogImportTotal, catalogName, 0, totalFileRows);
 
         QSqlQuery ins(QSqlDatabase::database(tgtConn));
         ins.prepare(QLatin1String(R"(
@@ -578,6 +635,10 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId)
                 :ad, :aa, :ab, :at, :ag, :ay, :atn, :abr, :asr,
                 :meta_ext, :meta_date, :csum, :csum_date)
         )"));
+
+        qint64 rowsDone = 0;
+        QElapsedTimer progressTimer;
+        progressTimer.start();
 
         while (srcQ.next()) {
             ins.bindValue(":cid",           newCatalogId);
@@ -615,14 +676,30 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId)
             ins.bindValue(":csum",          srcQ.value(31));
             ins.bindValue(":csum_date",     srcQ.value(32));
             ins.exec();
+            ++rowsDone;
+            // Emit progress every ~200 ms to keep the UI responsive without flooding it.
+            if (progressTimer.elapsed() >= 200) {
+                emit fileImportProgress(m_catalogImportIndex, m_catalogImportTotal,
+                                        catalogName, rowsDone, totalFileRows);
+                progressTimer.restart();
+            }
         }
+        emit fileImportProgress(m_catalogImportIndex, m_catalogImportTotal,
+                                catalogName, rowsDone, totalFileRows);  // final (100%)
     }
 
     // Copy folder rows (deduplicated)
     {
         QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
-        srcQ.prepare("SELECT DISTINCT folder_path FROM folder WHERE folder_catalog_id = :id");
-        srcQ.bindValue(":id", srcCatalogId);
+        if (srcCatalogNameFallback.isEmpty()) {
+            srcQ.prepare("SELECT DISTINCT folder_path FROM folder WHERE folder_catalog_id = :id");
+            srcQ.bindValue(":id", srcCatalogId);
+        } else {
+            // folder table has no catalog-name column; derive from files of this catalog.
+            srcQ.prepare(
+                "SELECT DISTINCT file_folder_path FROM file WHERE file_catalog = :name");
+            srcQ.bindValue(":name", srcCatalogNameFallback);
+        }
         srcQ.exec();
 
         QSqlQuery ins(QSqlDatabase::database(tgtConn));
@@ -745,10 +822,31 @@ bool CollectionImporter::importSubTree(int srcDeviceId, int targetParentId,
         extQ.exec();
         if (extQ.next()) {
             int srcCatalogId = extQ.value(0).toInt();
+            ++m_catalogImportIndex;
+
+            // Robustness: if device_external_id doesn't point to a real catalog
+            // (can happen in source DBs exported from Memory collections, where all
+            // catalog_ids were 0 before migration and device_external_id was left
+            // stale), fall back to finding the catalog by the device's name.
+            {
+                QSqlQuery chkQ(QSqlDatabase::database(m_sourceConnectionName));
+                chkQ.prepare("SELECT COUNT(*) FROM catalog WHERE catalog_id = :id");
+                chkQ.bindValue(":id", srcCatalogId);
+                chkQ.exec();
+                if (chkQ.next() && chkQ.value(0).toInt() == 0) {
+                    QSqlQuery nameQ(QSqlDatabase::database(m_sourceConnectionName));
+                    nameQ.prepare("SELECT catalog_id FROM catalog WHERE catalog_name = :name");
+                    nameQ.bindValue(":name", srcDeviceName(srcDeviceId));
+                    nameQ.exec();
+                    if (nameQ.next())
+                        srcCatalogId = nameQ.value(0).toInt();
+                }
+            }
+
             int newCatalogId = remapAndInsertCatalog(srcCatalogId);
             if (newCatalogId > 0) {
                 m_catalogIdMap[srcCatalogId] = newCatalogId;
-                insertFileData(srcCatalogId, newCatalogId);
+                insertFileData(srcCatalogId, newCatalogId, srcDeviceName(srcDeviceId));
                 insertCatalogFilter(srcCatalogId, newCatalogId);
                 importStorageForCatalog(srcCatalogId);
             }
@@ -792,6 +890,24 @@ bool CollectionImporter::importDevice(int sourceDeviceId)
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
     buildIdOffsets();
+
+    // Count Catalog-type devices in the sub-tree being imported for progress display.
+    m_catalogImportIndex = 0;
+    {
+        QSqlQuery cntQ(QSqlDatabase::database(m_sourceConnectionName));
+        cntQ.prepare(QLatin1String(R"(
+            WITH RECURSIVE sub(id) AS (
+                SELECT :rootId
+                UNION ALL
+                SELECT d.device_id FROM device d JOIN sub ON d.device_parent_id = sub.id
+            )
+            SELECT COUNT(*) FROM device WHERE device_id IN (SELECT id FROM sub)
+              AND device_type = 'Catalog'
+        )"));
+        cntQ.bindValue(":rootId", sourceDeviceId);
+        cntQ.exec();
+        m_catalogImportTotal = cntQ.next() ? cntQ.value(0).toInt() : 0;
+    }
 
     QString tgtConn = m_target->connectionName();
     if (!Database::beginTransaction(tgtConn)) {
@@ -845,6 +961,14 @@ int CollectionImporter::importAllDevices()
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
     buildIdOffsets();
+
+    // Count all Catalog-type devices in the source for per-catalog progress display.
+    m_catalogImportIndex = 0;
+    {
+        QSqlQuery cntQ(QSqlDatabase::database(m_sourceConnectionName));
+        cntQ.exec("SELECT COUNT(*) FROM device WHERE device_type = 'Catalog'");
+        m_catalogImportTotal = cntQ.next() ? cntQ.value(0).toInt() : 0;
+    }
 
     int total = 0;
     {
@@ -1058,7 +1182,7 @@ bool CollectionImporter::updateDeviceFromExternalCollection(int targetDeviceId)
 
         // insertFileData / insertCatalogFilter use the explicit IDs passed as arguments;
         // m_deviceIdOffset / m_catalogIdOffset are not involved here.
-        insertFileData(srcCatalogId, targetCatalogId);
+        insertFileData(srcCatalogId, targetCatalogId, deviceName);
         insertCatalogFilter(srcCatalogId, targetCatalogId);
 
         // Update catalog metadata from source
@@ -1429,20 +1553,24 @@ static QStandardItemModel *buildDeviceTreeModel(
         const QString &connectionName, bool addCollectionRoot, QObject *parent)
 {
     auto *model = new QStandardItemModel(parent);
+    // Column layout matches DeviceTreeColumns so DeviceTreeView proxy can provide icons:
+    // col 0=Name, col 1=Type, col 2=IS_ACTIVE, col 3=DEVICE_ID, col 4=PARENT_ID
     model->setHorizontalHeaderLabels({QObject::tr("Name"), QObject::tr("Type"),
-                                      QObject::tr("Device ID")});
+                                      QObject::tr("Active"), QObject::tr("Device ID"),
+                                      QObject::tr("Parent ID")});
 
     QSqlQuery q(QSqlDatabase::database(connectionName));
     q.exec(QLatin1String(R"(
-        SELECT device_id, device_parent_id, device_name, device_type
+        SELECT device_id, device_parent_id, device_name, device_type, device_active
         FROM device ORDER BY device_parent_id, device_order, device_id
     )"));
 
-    struct Row { int id; int parentId; QString name; QString type; };
+    struct Row { int id; int parentId; QString name; QString type; QString active; };
     QList<Row> rows;
     while (q.next())
         rows.append({q.value(0).toInt(), q.value(1).toInt(),
-                     q.value(2).toString(), q.value(3).toString()});
+                     q.value(2).toString(), q.value(3).toString(),
+                     q.value(4).toString()});
 
     QMap<int, QList<QStandardItem*>> itemMap;
     for (const Row &r : rows) {
@@ -1451,13 +1579,17 @@ static QStandardItemModel *buildDeviceTreeModel(
         nameItem->setData(r.parentId, Qt::UserRole + 1);
         nameItem->setFlags(nameItem->flags() & ~Qt::ItemIsEditable);
 
-        QStandardItem *typeItem = new QStandardItem(r.type);
-        typeItem->setFlags(typeItem->flags() & ~Qt::ItemIsEditable);
+        auto makeItem = [](const QString &text) {
+            auto *it = new QStandardItem(text);
+            it->setFlags(it->flags() & ~Qt::ItemIsEditable);
+            return it;
+        };
 
-        QStandardItem *idItem = new QStandardItem(QString::number(r.id));
-        idItem->setFlags(idItem->flags() & ~Qt::ItemIsEditable);
-
-        itemMap[r.id] = {nameItem, typeItem, idItem};
+        itemMap[r.id] = {nameItem,
+                         makeItem(r.type),
+                         makeItem(r.active),
+                         makeItem(QString::number(r.id)),
+                         makeItem(QString::number(r.parentId))};
     }
 
     QStandardItem *root = nullptr;
@@ -1467,7 +1599,11 @@ static QStandardItemModel *buildDeviceTreeModel(
         root->setData(0, Qt::UserRole);
         root->setData(0, Qt::UserRole + 1);
         root->setFlags(root->flags() & ~Qt::ItemIsEditable);
-        model->appendRow({root, new QStandardItem(), new QStandardItem("0")});
+        model->appendRow({root,
+                          new QStandardItem("Virtual"),
+                          new QStandardItem("1"),
+                          new QStandardItem("0"),
+                          new QStandardItem("0")});
     }
 
     for (const Row &r : rows) {

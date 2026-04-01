@@ -134,12 +134,18 @@ public:
 
 signals:
     void importProgress(int current, int total, const QString &itemName);
+    // Emitted periodically during file-row insertion for a single catalog.
+    // catalogIndex/totalCatalogs allow the UI to show "Catalog X of Y | Name".
+    // done/total are row counts (qint64 because catalogs can have billions of entries).
+    void fileImportProgress(int catalogIndex, int totalCatalogs,
+                            const QString &catalogName,
+                            qint64 done, qint64 total);
 
 private:
     // Internal helpers
     int  remapAndInsertCatalog(int srcCatalogId);
     int  remapAndInsertDevice(int srcDeviceId, int newParentId);
-    void insertFileData(int srcCatalogId, int newCatalogId);
+    void insertFileData(int srcCatalogId, int newCatalogId, const QString &catalogName);
     void insertCatalogFilter(int srcCatalogId, int newCatalogId);
     void recordImportLink(int srcDeviceId, int newDeviceId);
     QString resolveNameConflict(const QString &name, const QStringList &existingNames) const;
@@ -186,6 +192,10 @@ private:
     int  m_deviceIdOffset  = 0;
     int  m_catalogIdOffset = 0;
     int  m_storageIdOffset = 0;
+
+    // Per-operation catalog progress counters (reset in importDevice / importAllDevices)
+    int  m_catalogImportIndex = 0;   // incremented each time insertFileData is called
+    int  m_catalogImportTotal = 0;   // total Catalog-type devices in the source sub-tree
 
     // Maps srcDeviceId → newDeviceId, populated during an import operation
     QMap<int, int>  m_deviceIdMap;
