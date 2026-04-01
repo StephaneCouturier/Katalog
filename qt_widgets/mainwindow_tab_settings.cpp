@@ -664,6 +664,33 @@
             translateDefaultDevices();
         }
 
+        //Verify Collection version and trigger updates (Memory mode)
+        if(collection->databaseMode=="Memory"){
+            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString("2.0")){
+                QMessageBox::warning(this, "Katalog",
+                    tr("This collection was created with Katalog version %1, which is no longer supported."
+                       "<br/><br/>To convert it, open it with Katalog 2.10 first."
+                       "<br/><br/>Please select a different collection folder.")
+                        .arg(collection->dbSchemaVersion));
+                on_Settings_pushButton_SelectFolder_clicked();
+                return;
+            }
+            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString(collection->appVersion) and QVersionNumber::fromString(collection->dbSchemaVersion) >= QVersionNumber::fromString("2.0")){
+                //Update collection version
+                collection->dbSchemaVersion = collection->appVersion;
+                collection->setDatabaseSchemaVersion();
+                collection->saveParameterTableToFile();
+            }
+        }
+
+        // Run database migrations BEFORE loading any UI models.
+        // QSqlQueryModel keeps its underlying sqlite3_stmt alive as long as the model
+        // exists.  If any model queries the catalog table before the migration runs,
+        // DROP TABLE catalog inside the migration fails with SQLITE_LOCKED.
+        if(collection->databaseMode != "Memory"){
+            runDatabaseMigrations();
+        }
+
         //Check active status and synch it
         collection->updateAllDeviceActive();
 
@@ -688,29 +715,6 @@
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
         proxyModel->setSourceModel(model);
         ui->Create_treeView_Excluded->setModel(proxyModel);
-
-        //Verify Collection version and trigger updates
-        if(collection->databaseMode=="Memory"){
-            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString("2.0")){
-                QMessageBox::warning(this, "Katalog",
-                    tr("This collection was created with Katalog version %1, which is no longer supported."
-                       "<br/><br/>To convert it, open it with Katalog 2.10 first."
-                       "<br/><br/>Please select a different collection folder.")
-                        .arg(collection->dbSchemaVersion));
-                on_Settings_pushButton_SelectFolder_clicked();
-                return;
-            }
-            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString(collection->appVersion) and QVersionNumber::fromString(collection->dbSchemaVersion) >= QVersionNumber::fromString("2.0")){
-                //Update collection version
-                collection->dbSchemaVersion = collection->appVersion;
-                collection->setDatabaseSchemaVersion();
-                collection->saveParameterTableToFile();
-            }
-        }
-
-        if(collection->databaseMode != "Memory"){
-            runDatabaseMigrations();
-        }
 
         // Load per-collection parameters
         collection->loadImageFolderPath();

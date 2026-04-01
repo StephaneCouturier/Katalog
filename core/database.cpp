@@ -1053,6 +1053,26 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
     if (needsCatalogPkMigration) {
         QSqlError err;
         if (dbType == DatabaseType::SQLite) {
+            // Check whether catalog_id values are already unique and non-NULL.
+            // Must be done BEFORE beginTransaction to avoid running a SELECT cursor
+            // inside an active write transaction (which can cause SQLITE_LOCKED after
+            // DDL changes like CREATE TABLE catalog_new have already been executed).
+            // Old databases may have duplicate or zero catalog_id values because the
+            // column was not enforced as a primary key before this migration.
+            bool hasDuplicateCatalogIds = false;
+            {
+                QSqlQuery dupCheck(QSqlDatabase::database(connectionName));
+                if (dupCheck.exec("SELECT COUNT(*), COUNT(DISTINCT catalog_id) FROM catalog")) {
+                    if (dupCheck.next()) {
+                        int total    = dupCheck.value(0).toInt();
+                        int distinct = dupCheck.value(1).toInt();
+                        // Duplicates exist, or some rows have NULL catalog_id (NULL is excluded
+                        // from COUNT(DISTINCT), so total > distinct covers both cases).
+                        hasDuplicateCatalogIds = (total > 0) && (total != distinct);
+                    }
+                }
+            }
+
             // SQLite cannot alter a PRIMARY KEY in-place — rebuild the table
             if (!beginTransaction(connectionName))
                 return QSqlError("transaction", "Failed to begin transaction for catalog PK migration",
@@ -1083,8 +1103,57 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
             )"));
             if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
 
-            err = executeSql(connectionName, "INSERT INTO catalog_new SELECT * FROM catalog");
-            if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+            if (!hasDuplicateCatalogIds) {
+                // Normal path: catalog_id values are already unique — copy directly.
+                err = executeSql(connectionName, "INSERT INTO catalog_new SELECT * FROM catalog");
+                if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+            } else {
+                // Repair path: assign new unique IDs using SQLite rowid (always unique).
+                // Build a temporary mapping: old rowid → new catalog_id (= rowid).
+                err = executeSql(connectionName,
+                    "CREATE TEMP TABLE _cat_id_fix AS "
+                    "SELECT rowid AS new_id, catalog_id AS old_id FROM catalog");
+                if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+
+                // Insert into catalog_new using rowid as the new catalog_id.
+                err = executeSql(connectionName, QLatin1String(R"(
+                    INSERT INTO catalog_new
+                    SELECT c.rowid,
+                           c.catalog_file_path, c.catalog_name, c.catalog_date_updated,
+                           c.catalog_source_path, c.catalog_file_count, c.catalog_total_file_size,
+                           c.catalog_source_path_is_active, c.catalog_include_hidden,
+                           c.catalog_file_type, c.catalog_storage, c.catalog_include_symblinks,
+                           c.catalog_is_full_device, c.catalog_date_loaded,
+                           c.catalog_include_metadata, c.catalog_include_checksum,
+                           c.catalog_app_version
+                    FROM catalog c
+                )"));
+                if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
+
+                // Update file/folder/catalog_filter tables to use the new IDs.
+                // Only unambiguous remappings are applied (old_id maps to exactly one new_id).
+                // If multiple catalogs shared the same old_id the data was already inconsistent;
+                // we leave those rows unchanged rather than silently corrupt them further.
+                executeSql(connectionName,
+                    "UPDATE file SET file_catalog_id = "
+                    "  (SELECT new_id FROM _cat_id_fix WHERE old_id = file_catalog_id LIMIT 1) "
+                    "WHERE file_catalog_id IN "
+                    "  (SELECT old_id FROM _cat_id_fix GROUP BY old_id HAVING COUNT(*) = 1)");
+
+                executeSql(connectionName,
+                    "UPDATE folder SET folder_catalog_id = "
+                    "  (SELECT new_id FROM _cat_id_fix WHERE old_id = folder_catalog_id LIMIT 1) "
+                    "WHERE folder_catalog_id IN "
+                    "  (SELECT old_id FROM _cat_id_fix GROUP BY old_id HAVING COUNT(*) = 1)");
+
+                executeSql(connectionName,
+                    "UPDATE catalog_filter SET filter_catalog_id = "
+                    "  (SELECT new_id FROM _cat_id_fix WHERE old_id = filter_catalog_id LIMIT 1) "
+                    "WHERE filter_catalog_id IN "
+                    "  (SELECT old_id FROM _cat_id_fix GROUP BY old_id HAVING COUNT(*) = 1)");
+
+                executeSql(connectionName, "DROP TABLE IF EXISTS _cat_id_fix");
+            }
 
             err = executeSql(connectionName, "DROP TABLE catalog");
             if (err.type() != QSqlError::NoError) { rollbackTransaction(connectionName); return err; }
