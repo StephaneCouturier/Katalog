@@ -42,7 +42,8 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 {
     //Set current version and release date from CMake-generated values
     currentVersion  = KatalogVersion::string();
-    releaseDate     = KatalogVersion::buildDate();
+    releaseDate     = "2026-03-08";
+    //releaseDate     = KatalogVersion::buildDate(); //Commented out for release
 
     // MainWindow is stack-allocated in main.cpp; prevent KMainWindow from
     // calling deleteLater() on close (which would try to delete a stack object).
