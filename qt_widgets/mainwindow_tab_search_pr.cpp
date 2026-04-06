@@ -658,7 +658,7 @@ void MainWindow::displayExtendedMetadataJson(int catalogId, const QString &folde
 
     // Close button
     QPushButton *closeButton = new QPushButton(tr("Close"));
-    closeButton->setIcon(QIcon::fromTheme("dialog-close"));
+    closeButton->setIcon(QIcon::fromTheme("window-close"));
     closeButton->setDefault(true);
     connect(closeButton, &QPushButton::clicked, metadataDialog, &QDialog::accept);
 

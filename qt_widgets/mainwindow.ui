@@ -11179,7 +11179,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_BackUp">
            <attribute name="icon">
-            <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+            <iconset theme="backup"/>
            </attribute>
            <attribute name="title">
             <string>BackUp</string>

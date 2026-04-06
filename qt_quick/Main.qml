@@ -162,7 +162,7 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 text: "Open Collection..."
-                icon.name: "document-open-data"
+                icon.name: "document-open"
                 Kirigami.Action {
                     icon.name: "folder"
                     text: "Collection Folder..."
@@ -174,7 +174,7 @@ Kirigami.ApplicationWindow {
                     }
                 }
                 Kirigami.Action {
-                    icon.name: "server-database"
+                    icon.name: "network-server-database"
                     text: "SQLite Database..."
                     onTriggered: {
                         var p = appManager1.getDatabaseFilePath()
@@ -188,7 +188,7 @@ Kirigami.ApplicationWindow {
                     }
                 }
                 Kirigami.Action {
-                    icon.name: "network-server"
+                    icon.name: "network-workgroup"
                     text: "Hosted Database..."
                     onTriggered: root.showLayer(settingsPageComponent, { showHostedForm: true })
                 }
@@ -231,12 +231,12 @@ Kirigami.ApplicationWindow {
                 separator: true
             },
             Kirigami.Action {
-                icon.name: "select"
+                icon.name: "edit-select"
                 text: "Selection"
                 onTriggered: { appManager1.setLastPage("Selection"); root.showPage(pageSelection) }
             },
             Kirigami.Action {
-                icon.name: "search"
+                icon.name: "edit-find"
                 text: "Search"
                 onTriggered: { appManager1.setLastPage("Search"); root.showPage(pageSearch) }
             },
@@ -261,7 +261,7 @@ Kirigami.ApplicationWindow {
                 onTriggered: { appManager1.setLastPage("Statistics"); root.showPage(pageStatistics) }
             },
             Kirigami.Action {
-                icon.name: "lastfm-tag"
+                icon.name: "tag"
                 text: "Tags"
                 onTriggered: { appManager1.setLastPage("Tags"); root.showPage(pageTags) }
             },
@@ -271,7 +271,7 @@ Kirigami.ApplicationWindow {
                 onTriggered: { appManager1.setLastPage("Backup"); root.showPage(pageBackup) }
             },
             Kirigami.Action {
-                icon.name: "settings-configure"
+                icon.name: "configure"
                 text: "Settings"
                 onTriggered: { appManager1.setLastPage("Settings"); root.showLayer(settingsPageComponent) }
             },
@@ -290,7 +290,7 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 text: "Quit"
-                icon.name: "application-exit-symbolic"
+                icon.name: "application-exit"
                 shortcut: StandardKey.Quit
                 onTriggered: Qt.quit()
             }
@@ -307,7 +307,7 @@ Kirigami.ApplicationWindow {
                 spacing: Kirigami.Units.smallSpacing
 
                 Controls.ToolButton {
-                    icon.name: windowSettings.drawerPinned ? "window-unpin" : "pin"
+                    icon.name: windowSettings.drawerPinned ? "window-unpin" : "window-pin"
                     checkable: true
                     checked: windowSettings.drawerPinned
                     Controls.ToolTip.text: windowSettings.drawerPinned ? "Unpin drawer" : "Pin drawer open"
@@ -539,7 +539,7 @@ Kirigami.ApplicationWindow {
         actions: [
             Kirigami.Action {
                 text: qsTr("Search")
-                icon.name: "search"
+                icon.name: "edit-find"
                 onTriggered: {
                     root.searchTriggered()
                     pageSearchForm.executeSearch()
@@ -560,7 +560,7 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 text: qsTr("Reset")
-                icon.name: "edit-clear-all"
+                icon.name: "edit-clear-history"
                 onTriggered: pageSearchForm.resetSearch()
             },
             Kirigami.Action {
@@ -736,7 +736,7 @@ Kirigami.ApplicationWindow {
         Kirigami.PlaceholderMessage {
             anchors.centerIn: parent
             text: "Tags — coming soon"
-            icon.name: "lastfm-tag"
+            icon.name: "tag"
         }
     }
 

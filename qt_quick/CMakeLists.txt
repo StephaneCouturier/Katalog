@@ -19,6 +19,7 @@ qt_standard_project_setup(REQUIRES 6.5)
 qt_add_executable(Katalog3
     main.cpp
     images.qrc
+    icons.qrc
     translations.qrc
 )
 

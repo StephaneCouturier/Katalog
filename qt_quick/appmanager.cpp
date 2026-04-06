@@ -1009,7 +1009,10 @@ QVariantList AppManager::getRecentCollections() const
         entry["mode"]        = settings.value(QString("Recent/%1/mode").arg(i)).toString();
         entry["path"]        = settings.value(QString("Recent/%1/path").arg(i)).toString();
         entry["displayName"] = settings.value(QString("Recent/%1/displayName").arg(i)).toString();
-        entry["iconName"]    = settings.value(QString("Recent/%1/iconName").arg(i)).toString();
+        QString storedIcon   = settings.value(QString("Recent/%1/iconName").arg(i)).toString();
+        if      (storedIcon == "server-database") storedIcon = "network-server-database";
+        else if (storedIcon == "network-server")  storedIcon = "network-workgroup";
+        entry["iconName"]    = storedIcon;
         entry["hostName"]    = settings.value(QString("Recent/%1/hostName").arg(i)).toString();
         entry["dbName"]      = settings.value(QString("Recent/%1/dbName").arg(i)).toString();
         entry["port"]        = settings.value(QString("Recent/%1/port").arg(i), 3306).toInt();
@@ -1038,8 +1041,8 @@ QString AppManager::getCurrentCollectionIconName() const
 {
     QString mode = getDatabaseMode();
     if (mode == "Memory") return "folder";
-    if (mode == "File")   return "server-database";
-    return "network-server";
+    if (mode == "File")   return "network-server-database";
+    return "network-workgroup";
 }
 //----------------------------------------------------------------------
 void AppManager::openRecentCollection(const QVariantMap &entry)
@@ -1090,8 +1093,8 @@ void AppManager::saveToRecentCollections(const QString &mode, const QString &pat
 
     // Build and prepend new entry
     QString iconName = (mode == "Memory") ? "folder"
-                     : (mode == "File")   ? "server-database"
-                                          : "network-server";
+                     : (mode == "File")   ? "network-server-database"
+                                          : "network-workgroup";
     QVariantMap newEntry;
     newEntry["mode"]        = mode;
     newEntry["path"]        = path;

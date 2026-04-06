@@ -83,7 +83,7 @@ ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
 
             Kirigami.Icon {
-                source: "search"
+                source: "edit-find"
                 implicitWidth:  Kirigami.Units.iconSizes.small
                 implicitHeight: Kirigami.Units.iconSizes.small
             }
@@ -154,10 +154,10 @@ ColumnLayout {
                 valueRole: "value"
                 displayText: ""
                 model: [
-                    { text: qsTr("Export to CSV"),     value: "csv",              iconName: "document-save-as" },
-                    { text: qsTr("Export to Catalog"), value: "catalog",          iconName: "drive-optical"    },
-                    { text: qsTr("Verify Checksums"),  value: "verify-checksums", iconName: "checkmark"        },
-                    { text: qsTr("Include Metadata"),   value: "get-metadata",     iconName: "document-properties" },
+                    { text: qsTr("Export to CSV"),     value: "csv",              iconName: "document-save"    },
+                    { text: qsTr("Export to Catalog"), value: "catalog",          iconName: "media-optical"    },
+                    { text: qsTr("Verify Checksums"),  value: "verify-checksums", iconName: "dialog-ok-apply"  },
+                    { text: qsTr("Include Metadata"),   value: "get-metadata",     iconName: "configure"        },
                     { text: "",                        value: "---",              iconName: ""                 },
                     { text: qsTr("Move to Trash"),     value: "trash",            iconName: "user-trash"       },
                     { text: qsTr("Delete"),            value: "delete",           iconName: "edit-delete"      }
@@ -450,7 +450,7 @@ ColumnLayout {
         }
         Controls.MenuItem {
             text: qsTr("Open folder")
-            icon.name: "document-open-folder"
+            icon.name: "document-open"
             enabled: resultContextMenu.folder !== ""
             onTriggered: appManager1.openFolder(resultContextMenu.folder)
         }
@@ -462,7 +462,7 @@ ColumnLayout {
         Controls.MenuSeparator {}
         Controls.MenuItem {
             text: qsTr("Show extended metadata (JSON)")
-            icon.name: "document-properties"
+            icon.name: "configure"
             readonly property bool hasMetadata:
                 resultContextMenu.catalogName !== "" &&
                 resultContextMenu.catalogName !== "Connected" &&
@@ -532,7 +532,7 @@ ColumnLayout {
         Controls.MenuSeparator {}
         Controls.MenuItem {
             text: qsTr("Calculate Checksum (SHA-256)")
-            icon.name: "document-properties"
+            icon.name: "configure"
             visible: resultContextMenu.checksum === ""
             height:  resultContextMenu.checksum === "" ? implicitHeight : 0
             onTriggered: {
@@ -563,7 +563,7 @@ ColumnLayout {
         }
         Controls.MenuItem {
             text: qsTr("Verify Checksum (SHA-256)")
-            icon.name: "document-properties"
+            icon.name: "configure"
             visible: resultContextMenu.checksum !== ""
             height:  resultContextMenu.checksum !== "" ? implicitHeight : 0
             onTriggered: {

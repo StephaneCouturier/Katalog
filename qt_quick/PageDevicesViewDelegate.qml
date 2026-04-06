@@ -52,7 +52,7 @@ Kirigami.AbstractCard {
                 Layout.alignment: Qt.AlignRight
                 Layout.columnSpan: 2
                 //text: "Select" //i18n("Select")
-                icon.name: "labplot-zoom-select"
+                icon.name: "edit-select"
                 onClicked: showPassiveNotification("Select clicked, no action")
             }
         }

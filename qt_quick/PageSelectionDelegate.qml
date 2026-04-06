@@ -38,7 +38,7 @@ Kirigami.AbstractCard {
 
         Controls.MenuItem {
             text: qsTr("Open folder")
-            icon.name: "document-open-folder"
+            icon.name: "document-open"
             onTriggered: appManager1.openDeviceFolder(model.deviceId)
         }
     }
@@ -63,7 +63,7 @@ Kirigami.AbstractCard {
                     Kirigami.Icon {
                         source: model.type === "Virtual" ? "drive-multidisk" :
                                 model.type === "Storage" ? "drive-harddisk" :
-                                model.isActive ? "preferences-devices-drive-optical-check" : "drive-optical"
+                                model.isActive ? "media-optical-blu-ray" : "media-optical"
                     }
 
                     Kirigami.Heading {

@@ -1,5 +1,5 @@
-name: Build linux Qt6
-#v2025-10-02 run1
+name: Katalog 3 - Build linux Qt6
+#v2026-04-04 run1
 on:
   # Trigger on new releases
   # release:
@@ -17,7 +17,7 @@ on:
   push:
     branches: [ main, katalog_master, katalog_development ]
     paths:
-      - '.github/workflows/Build_linux_qt6_appimage.yml'   # Only triggers if THIS file changes
+      - '.github/workflows/Katalog_3_Build_linux_qt6_appimage.yml'   # Only triggers if THIS file changes
 
 jobs:
   build-appimage-qt6:
@@ -61,31 +61,29 @@ jobs:
           qt6-tools-dev-tools \
           qt6-l10n-tools \
           qt6-charts-dev \
+          qt6-declarative-dev \
           libqt6sql6-sqlite \
           qt6-networkauth-dev
 
         # Install KF6 packages - try different possible names
-        # UPDATED: Added libkf6filemetadata-dev for metadata extraction
         sudo apt-get install -y \
           libkf6coreaddons-dev \
           libkf6i18n-dev \
-          libkf6xmlgui-dev \
           libkf6config-dev \
           libkf6iconthemes-dev \
           libkf6filemetadata-dev \
-          libkf6completion-dev || \
+          libkf6archive-dev || \
         sudo apt-get install -y \
           kf6-kcoreaddons-dev \
           kf6-ki18n-dev \
-          kf6-kxmlgui-dev \
           kf6-kconfig-dev \
           kf6-kiconthemes-dev \
           kf6-kfilemetadata-dev \
-          kf6-kcompletion-dev || \
+          kf6-karchive-dev || \
         {
           echo "Failed to install KF6 packages from KDE neon repository"
           echo "Attempting alternative installation methods..."
-          
+
           # Fallback: Try building from source or use alternative repos
           echo "This might require manual KF6 installation"
           exit 1
@@ -145,31 +143,31 @@ jobs:
 
     - name: Create packaging directory and files
       run: |
-        mkdir -p packaging
+        mkdir -p packaging/qt_quick
 
         # Create desktop file
-        cat > packaging/Katalog.desktop << EOF
+        cat > packaging/qt_quick/Katalog3.desktop << EOF
         [Desktop Entry]
         Type=Application
-        Name=Katalog
+        Name=Katalog3
         GenericName=File Catalog Manager
         Comment=Create and manage catalogs of your files and folders
         Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
-        Exec=Katalog
-        Icon=Katalog
+        Exec=Katalog3
+        Icon=Katalog3
         Terminal=false
         Categories=Utility;FileManager;Qt;
         Keywords=catalog;files;folders;organization;storage;backup;
         StartupNotify=true
-        StartupWMClass=Katalog
+        StartupWMClass=Katalog3
         EOF
 
         # Create AppData file
-        cat > packaging/io.github.stephanecouturier.katalog.appdata.xml << EOF
+        cat > packaging/qt_quick/io.github.stephanecouturier.katalog3.appdata.xml << EOF
         <?xml version="1.0" encoding="UTF-8"?>
         <component type="desktop-application">
-          <id>io.github.stephanecouturier.katalog</id>
-          <name>Katalog</name>
+          <id>io.github.stephanecouturier.katalog3</id>
+          <name>Katalog3</name>
           <summary>File Catalog Manager</summary>
           <description>
             <p>
@@ -193,25 +191,25 @@ jobs:
           <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
           <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
           <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
-          <launchable type="desktop-id">io.github.stephanecouturier.katalog.desktop</launchable>
+          <launchable type="desktop-id">io.github.stephanecouturier.katalog3.desktop</launchable>
           <provides>
-            <binary>Katalog</binary>
+            <binary>Katalog3</binary>
           </provides>
           <content_rating type="oars-1.1"/>
           <releases>
-            <release version="2.6" date="2024-01-01"/>
+            <release version="3.0" date="2026-01-01"/>
           </releases>
         </component>
         EOF
 
     - name: Set version information
       run: |
-        # Extract version from qt_widgets/CMakeLists.txt (version is owned by the variant)
-        KATALOG_VERSION=$(grep -E "^project\(Katalog VERSION" qt_widgets/CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
+        # Extract version from qt_quick/CMakeLists.txt (version is owned by the variant)
+        KATALOG_VERSION=$(grep -E "^project\(Katalog3 VERSION" qt_quick/CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
 
         if [ -z "$KATALOG_VERSION" ]; then
           echo "Warning: Could not extract version from CMakeLists.txt, using default"
-          KATALOG_VERSION="2.x"
+          KATALOG_VERSION="3.x"
         fi
 
         # Build VERSION_TAG: platform_vX.X
@@ -219,7 +217,7 @@ jobs:
         echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
         echo "Building version: linux_qt6_v${KATALOG_VERSION}"
 
-    - name: Build Katalog
+    - name: Build Katalog3
       run: |
         mkdir build
         cd build
@@ -229,13 +227,13 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr \
           -DCMAKE_PREFIX_PATH=/usr \
-          -DBUILD_QT_WIDGETS=ON \
-          -DBUILD_QT_QUICK=OFF \
+          -DBUILD_QT_WIDGETS=OFF \
+          -DBUILD_QT_QUICK=ON \
           -DBUILD_TESTS=OFF
 
         # Build translations first
         echo "Building translations..."
-        ninja Katalog_lrelease || echo "Translation build failed, continuing..."
+        ninja translations_lrelease || ninja Katalog3_lrelease || echo "Translation build failed, continuing..."
 
         # Check what .qm files are available
         echo "Available .qm files:"
@@ -261,11 +259,11 @@ jobs:
 
         # Create AppDir and install manually if needed
         mkdir -p AppDir/usr/bin
-        cp Katalog AppDir/usr/bin/
+        cp Katalog3 AppDir/usr/bin/
 
         # Or try the install target with proper environment
         export DESTDIR="$(pwd)/AppDir"
-        ninja install || echo "Install target failed, but binary copied manually"D/AppDir ninja install
+        ninja install || echo "Install target failed, but binary copied manually"
 
     - name: Prepare AppDir structure
       run: |
@@ -277,36 +275,36 @@ jobs:
         mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
 
         # Copy desktop file
-        cp ../packaging/qt_widgets/Katalog.desktop AppDir/usr/share/applications/
+        cp ../packaging/qt_quick/Katalog3.desktop AppDir/usr/share/applications/
 
         # Copy AppData
-        cp ../packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
+        cp ../packaging/qt_quick/io.github.stephanecouturier.katalog3.appdata.xml AppDir/usr/share/metainfo/
 
         # Create proper 64x64 icon
         if [ -f "../assets/Katalog_logo_64.ico" ]; then
           # Convert ico to png with exact 64x64 size
           sudo apt-get install -y imagemagick
-          convert "../assets/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
+          convert "../assets/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png 2>/dev/null || \
           {
             echo "ICO conversion failed, creating fallback icon"
-            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
           }
         else
           echo "ICO file not found, creating fallback icon"
           sudo apt-get install -y imagemagick
-          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
         fi
 
         # Verify icon dimensions
         echo "Icon information:"
-        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
-        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png || echo "Could not identify icon"
+        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
+        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png || echo "Could not identify icon"
 
         # Validate desktop file
-        desktop-file-validate AppDir/usr/share/applications/Katalog.desktop || echo "Desktop file validation warnings (non-critical)"
+        desktop-file-validate AppDir/usr/share/applications/Katalog3.desktop || echo "Desktop file validation warnings (non-critical)"
 
         # Validate AppData
-        appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.katalog.appdata.xml || echo "AppData validation warnings (non-critical)"
+        appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.katalog3.appdata.xml || echo "AppData validation warnings (non-critical)"
 
     - name: Create AppImage
       run: |
@@ -325,21 +323,21 @@ jobs:
 
         # Check AppDir structure
         echo "AppDir contents:"
-        find AppDir -type f -name "Katalog*" || true
+        find AppDir -type f -name "Katalog3*" || true
         ls -la AppDir/usr/bin/ || true
 
         # Create AppImage
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
-          --executable AppDir/usr/bin/Katalog \
-          --desktop-file AppDir/usr/share/applications/Katalog.desktop \
-          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png \
+          --executable AppDir/usr/bin/Katalog3 \
+          --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
           --output appimage
 
         # Rename AppImage with version
-        if ls Katalog-*.AppImage 1> /dev/null 2>&1; then
-          mv Katalog-*.AppImage Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        if ls Katalog3-*.AppImage 1> /dev/null 2>&1; then
+          mv Katalog3-*.AppImage Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
         else
           echo "Warning: AppImage not found with expected pattern"
           ls -la *.AppImage || echo "No AppImage files found"
@@ -351,14 +349,14 @@ jobs:
         cd build
 
         # Basic test - check if AppImage can show version
-        chmod +x Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        chmod +x Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
 
         # Test extraction
-        ./Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
+        ./Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
 
         # Get AppImage size and info
-        ls -lh Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-        file Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        ls -lh Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        file Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
 
     - name: Upload AppImage to Release
       if: env.IS_RELEASE == 'true'
@@ -367,16 +365,16 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-        asset_name: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_path: build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_name: Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
         asset_content_type: application/octet-stream
 
     - name: Upload AppImage as Artifact
       if: env.IS_RELEASE != 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog-AppImage-${{ env.VERSION_TAG }}
-        path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        name: Katalog3-AppImage-${{ env.VERSION_TAG }}
+        path: build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
         retention-days: 30
 
     - name: Summary
@@ -384,8 +382,8 @@ jobs:
         echo "## Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
-        echo "- **Size**: $(ls -lh build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size**: $(ls -lh build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
 
         if [ "${{ env.IS_RELEASE }}" = "true" ]; then
           echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY

@@ -1075,7 +1075,7 @@
             ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
             ui->Search_comboBox_SelectProcess->setItemData(2, "Rename (KRename)", Qt::UserRole);
-            ui->Search_comboBox_SelectProcess->insertItem(3, QIcon::fromTheme("checkmark"),         tr("Verify Checksums"));
+            ui->Search_comboBox_SelectProcess->insertItem(3, QIcon::fromTheme("dialog-ok-apply"),    tr("Verify Checksums"));
             ui->Search_comboBox_SelectProcess->insertItem(4, QIcon::fromTheme("document-properties"), tr("Include Metadata"));
 
             //Prepare list of size units for the Catalog selection combobox

@@ -4,6 +4,7 @@
 #include <QTranslator>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QIcon>
 
 #include "appmanager.h"
 #include "core/collection.h"
@@ -23,6 +24,21 @@ int main(int argc, char *argv[])
 
     //Set the application icon
     app.setWindowIcon(QIcon(":/images/Katalog_logo_64.ico"));
+
+    // Icon theme setup — mirrors K2 platform-specific behaviour.
+    // On Linux, the system KDE theme provides icons for QML icon.name;
+    // fallback paths cover any icon the theme is missing.
+    // On Windows, there is no system theme so we set "breeze" explicitly.
+    {
+        bool darkTheme = (app.palette().window().color().lightness() < 128);
+#ifdef Q_OS_WINDOWS
+        QIcon::setThemeName("breeze");
+#endif
+        QStringList fallbackPaths = QIcon::fallbackSearchPaths();
+        fallbackPaths << (darkTheme ? QStringLiteral(":/fallback-icons-dark")
+                                    : QStringLiteral(":/fallback-icons"));
+        QIcon::setFallbackSearchPaths(fallbackPaths);
+    }
 
     // Load translation — same mechanism as K2
     QTranslator *translator = new QTranslator(&app);

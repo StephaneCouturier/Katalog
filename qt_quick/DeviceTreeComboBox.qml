@@ -63,7 +63,7 @@ Controls.Button {
         Kirigami.Icon {
             source: control.selectedDeviceType === "Virtual" ? "drive-multidisk"
                   : control.selectedDeviceType === "Storage" ? "drive-harddisk"
-                  : control.selectedDeviceName.length > 0    ? "drive-optical"
+                  : control.selectedDeviceName.length > 0    ? "media-optical"
                   :                                            "drive-harddisk"
             implicitWidth:  Kirigami.Units.iconSizes.small
             implicitHeight: Kirigami.Units.iconSizes.small
@@ -73,7 +73,7 @@ Controls.Button {
         Controls.Label {
             text:               control.selectedDeviceName.length > 0
                                     ? control.selectedDeviceName
-                                    : qsTr("— select —")
+                                    : qsTr("Select")
             elide:              Text.ElideRight
             horizontalAlignment: Text.AlignLeft
             verticalAlignment:   Text.AlignVCenter
@@ -81,7 +81,7 @@ Controls.Button {
         }
 
         Kirigami.Icon {
-            source: "arrow-down"
+            source: "go-down"
             implicitWidth:  Kirigami.Units.iconSizes.small
             implicitHeight: Kirigami.Units.iconSizes.small
             opacity: 0.6
@@ -138,7 +138,7 @@ Controls.Button {
                         Kirigami.Icon {
                             source: type === "Virtual"  ? "drive-multidisk"
                                   : type === "Storage"  ? "drive-harddisk"
-                                  :                       "drive-optical"
+                                  :                       "media-optical"
                             implicitWidth:  Kirigami.Units.iconSizes.small
                             implicitHeight: Kirigami.Units.iconSizes.small
                             color: control.selectedDeviceId === deviceId

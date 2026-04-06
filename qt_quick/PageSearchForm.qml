@@ -372,7 +372,7 @@ ColumnLayout {
                     {text: qsTr("All"),   value: "All",   iconName: "folder"},
                     {text: qsTr("Audio"), value: "Audio", iconName: "audio-x-mpeg"},
                     {text: qsTr("Image"), value: "Image", iconName: "image-jpeg"},
-                    {text: qsTr("Text"),  value: "Text",  iconName: "folder-text"},
+                    {text: qsTr("Text"),  value: "Text",  iconName: "view-list-text"},
                     {text: qsTr("Video"), value: "Video", iconName: "video-mp4"},
                     {text: qsTr("Other"), value: "Other", iconName: "document-open"},
                     {text: qsTr("None"),  value: "None",  iconName: "application-x-zerosize"}
