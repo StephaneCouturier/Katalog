@@ -50,7 +50,7 @@ jobs:
         fi
 
         # Check for modern features (KJob, etc.)
-        if find src -name "*job*" -type f | head -5; then
+        if find qt_widgets/src -name "*job*" -type f | head -5; then
           echo "✅ Found job-related files (modern KF6 features)"
         else
           echo "⚠️  No job files found"
@@ -388,8 +388,8 @@ jobs:
 
     - name: Set version information
       run: |
-        # Extract version from CMakeLists.txt
-        KATALOG_VERSION=$(grep -E "^project\(Katalog VERSION" CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
+        # Extract version from qt_widgets/CMakeLists.txt (version is owned by the variant)
+        KATALOG_VERSION=$(grep -E "^project\(Katalog VERSION" qt_widgets/CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
 
         if [ -z "$KATALOG_VERSION" ]; then
           echo "Warning: Could not extract version from CMakeLists.txt, using default"
@@ -456,7 +456,7 @@ jobs:
         echo "=== Running CMake configuration ==="
         echo "Working directory: $(pwd)"
         echo "Source directory contents:"
-        ls -la ../CMakeLists.txt ../src/ | head -5
+        ls -la ../CMakeLists.txt ../qt_widgets/src/ | head -5
 
         # First try: Standard configuration with all KF6 components
         if cmake .. \
@@ -465,6 +465,8 @@ jobs:
           -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
           -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
           -DBUILD_TESTS=OFF \
+          -DBUILD_QT_WIDGETS=ON \
+          -DBUILD_QT_QUICK=OFF \
           -DCMAKE_INSTALL_PREFIX=/Applications \
           -DKF6XmlGui_DIR="$KF6XmlGui_DIR" \
           -DKF6CoreAddons_DIR="$KF6CoreAddons_DIR" \
@@ -537,9 +539,9 @@ jobs:
           ' CMakeLists.txt.original > CMakeLists.txt
 
           # Enhanced mainwindow.h modification with proper conditional compilation
-          if [ -f "src/mainwindow.h" ]; then
-            if [ ! -f "src/mainwindow.h.original" ]; then
-              cp src/mainwindow.h src/mainwindow.h.original
+          if [ -f "qt_widgets/src/mainwindow.h" ]; then
+            if [ ! -f "qt_widgets/src/mainwindow.h.original" ]; then
+              cp qt_widgets/src/mainwindow.h qt_widgets/src/mainwindow.h.original
             fi
 
             awk '
@@ -601,18 +603,18 @@ jobs:
             }
 
             { print }
-            ' src/mainwindow.h.original > src/mainwindow.h
+            ' qt_widgets/src/mainwindow.h.original > qt_widgets/src/mainwindow.h
 
-            echo "Modified src/mainwindow.h for conditional compilation"
+            echo "Modified qt_widgets/src/mainwindow.h for conditional compilation"
           fi
 
           # Fix runtime code issues in .cpp files - proper C++ syntax
           echo "Fixing C++ syntax errors in .cpp files..."
 
           # Fix mainwindow.cpp constructor - use proper conditional compilation
-          if [ -f "src/mainwindow.cpp" ]; then
-            if [ ! -f "src/mainwindow.cpp.backup" ]; then
-              cp src/mainwindow.cpp src/mainwindow.cpp.backup
+          if [ -f "qt_widgets/src/mainwindow.cpp" ]; then
+            if [ ! -f "qt_widgets/src/mainwindow.cpp.backup" ]; then
+              cp qt_widgets/src/mainwindow.cpp qt_widgets/src/mainwindow.cpp.backup
             fi
 
             # Fix constructor initialization list properly
@@ -626,36 +628,36 @@ jobs:
               next
             }
             { print }
-            ' src/mainwindow.cpp.backup > src/mainwindow.cpp
+            ' qt_widgets/src/mainwindow.cpp.backup > qt_widgets/src/mainwindow.cpp
 
             echo "Fixed mainwindow.cpp constructor syntax"
           fi
 
           # Patch filemetadata.cpp for KF6FileMetaData API compatibility
-          if [ -f "src/core/filemetadata.cpp" ]; then
+          if [ -f "core/filemetadata.cpp" ]; then
             echo "Patching filemetadata.cpp to remove VideoCodec..."
-            sed -i.bak '/VideoCodec/d' src/core/filemetadata.cpp
+            sed -i.bak '/VideoCodec/d' core/filemetadata.cpp
             echo "VideoCodec lines removed"
           fi
 
           # Fix mainwindow_setup.cpp - function name and calls
-          if [ -f "../src/mainwindow_setup.cpp" ]; then
-            if [ ! -f "../src/mainwindow_setup.cpp.backup" ]; then
-              cp ../src/mainwindow_setup.cpp ../src/mainwindow_setup.cpp.backup
+          if [ -f "qt_widgets/src/mainwindow_setup.cpp" ]; then
+            if [ ! -f "qt_widgets/src/mainwindow_setup.cpp.backup" ]; then
+              cp qt_widgets/src/mainwindow_setup.cpp qt_widgets/src/mainwindow_setup.cpp.backup
             fi
 
             # Fix function name and KXmlGuiWindow calls
             sed -e 's/setupWindowsIconTheme();/setupIconTheme();/g' \
                 -e 's/setupWindowsIconThemeKF6Test();/setupIconTheme();/g' \
                 -e 's/KXmlGuiWindow::changeEvent(event);/#ifdef KATALOG_HAS_KXMLGUI\n        KXmlGuiWindow::changeEvent(event);\n#else\n        QMainWindow::changeEvent(event);\n#endif/' \
-                ../src/mainwindow_setup.cpp.backup > ../src/mainwindow_setup.cpp
+                qt_widgets/src/mainwindow_setup.cpp.backup > qt_widgets/src/mainwindow_setup.cpp
 
             echo "Fixed mainwindow_setup.cpp function calls"
           fi
 
           # Fix override warning in mainwindow.h
-          if [ -f "src/mainwindow.h" ]; then
-            sed -i.override 's/void closeEvent (QCloseEvent \*event);/void closeEvent (QCloseEvent *event) override;/' src/mainwindow.h
+          if [ -f "qt_widgets/src/mainwindow.h" ]; then
+            sed -i.override 's/void closeEvent (QCloseEvent \*event);/void closeEvent (QCloseEvent *event) override;/' qt_widgets/src/mainwindow.h
             echo "Added override keyword to closeEvent"
           fi
 
@@ -668,9 +670,9 @@ jobs:
           echo "  - FOCUS on core: KF6CoreAddons, KF6Config (essential for KJob)"
 
           # Patch filemetadata.cpp for KF6FileMetaData API compatibility
-          if [ -f "src/core/filemetadata.cpp" ]; then
+          if [ -f "core/filemetadata.cpp" ]; then
             echo "Patching filemetadata.cpp to remove VideoCodec..."
-            sed -i.bak '/VideoCodec/d' src/core/filemetadata.cpp
+            sed -i.bak '/VideoCodec/d' core/filemetadata.cpp
             echo "VideoCodec lines removed"
           fi
 
@@ -692,6 +694,8 @@ jobs:
             -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
             -DBUILD_TESTS=OFF \
+            -DBUILD_QT_WIDGETS=ON \
+            -DBUILD_QT_QUICK=OFF \
             -DCMAKE_INSTALL_PREFIX=/Applications \
             -DCMAKE_VERBOSE_MAKEFILE=ON; then
             echo "✅ CMake configuration successful with conditional compilation"
@@ -739,11 +743,11 @@ jobs:
         echo "=== Build output ==="
         find . -name "Katalog*" -o -name "*.app" | sort
 
-        if [ -f "Katalog.app/Contents/MacOS/Katalog" ]; then
+        if [ -f "qt_widgets/Katalog.app/Contents/MacOS/Katalog" ]; then
           echo "✅ Katalog executable found"
-          ls -la Katalog.app/Contents/MacOS/Katalog
+          ls -la qt_widgets/Katalog.app/Contents/MacOS/Katalog
           echo "Executable dependencies:"
-          otool -L Katalog.app/Contents/MacOS/Katalog | head -20
+          otool -L qt_widgets/Katalog.app/Contents/MacOS/Katalog | head -20
         else
           echo "❌ Katalog executable not found"
           exit 1
@@ -756,14 +760,14 @@ jobs:
         # Create app bundle structure
         echo "=== Creating macOS app bundle ==="
 
-        if [ ! -f "Katalog.app/Contents/MacOS/Katalog" ]; then
+        if [ ! -f "qt_widgets/Katalog.app/Contents/MacOS/Katalog" ]; then
           echo "❌ Katalog executable not found"
           exit 1
         fi
 
         # App bundle already exists from CMake build, just verify it's there
         echo "✅ Using existing app bundle created by CMake"
-        ls -la Katalog.app/Contents/MacOS/Katalog
+        ls -la qt_widgets/Katalog.app/Contents/MacOS/Katalog
 
         echo "✅ App bundle structure verified"
 
@@ -778,13 +782,13 @@ jobs:
 
         if [ -x "$QT_DEPLOY_TOOL" ]; then
           echo "Using macdeployqt: $QT_DEPLOY_TOOL"
-          "$QT_DEPLOY_TOOL" Katalog.app -verbose=2
+          "$QT_DEPLOY_TOOL" qt_widgets/Katalog.app -verbose=2
         else
           echo "macdeployqt not found, manual dependency deployment"
 
           # Manual dependency handling
           echo "Analyzing dependencies..."
-          otool -L Katalog.app/Contents/MacOS/Katalog | grep -E "(Qt6|KF6|$(brew --prefix))" > deps.txt || echo "No Qt/KF6 dependencies found"
+          otool -L qt_widgets/Katalog.app/Contents/MacOS/Katalog | grep -E "(Qt6|KF6|$(brew --prefix))" > deps.txt || echo "No Qt/KF6 dependencies found"
 
           # Copy frameworks manually if needed
           while read -r line; do
@@ -792,7 +796,7 @@ jobs:
             if [ -n "$lib_path" ] && [ -f "$lib_path" ]; then
               lib_name=$(basename "$lib_path")
               echo "Copying $lib_name"
-              cp "$lib_path" Katalog.app/Contents/Frameworks/ || echo "Failed to copy $lib_name"
+              cp "$lib_path" qt_widgets/Katalog.app/Contents/Frameworks/ || echo "Failed to copy $lib_name"
             fi
           done < deps.txt
         fi
@@ -809,7 +813,7 @@ jobs:
 
         # Create temporary DMG directory
         mkdir dmg_temp
-        cp -R Katalog.app dmg_temp/
+        cp -R qt_widgets/Katalog.app dmg_temp/
 
         # Create DMG using macOS hdiutil
         if command -v create-dmg >/dev/null 2>&1; then
@@ -826,7 +830,7 @@ jobs:
             "dmg_temp/"
           else
             echo "Using hdiutil fallback..."
-            hdiutil create -srcfolder Katalog.app -format UDZO -o "$DMG_NAME"
+            hdiutil create -srcfolder qt_widgets/Katalog.app -format UDZO -o "$DMG_NAME"
         fi
 
         echo "DMG created: $DMG_NAME"
@@ -840,19 +844,19 @@ jobs:
       run: |
         cd build
 
-        if [ -d "Katalog.app" ]; then
+        if [ -d "qt_widgets/Katalog.app" ]; then
           echo "✅ App bundle exists"
 
-          if [ -x "Katalog.app/Contents/MacOS/Katalog" ]; then
+          if [ -x "qt_widgets/Katalog.app/Contents/MacOS/Katalog" ]; then
             echo "✅ Executable found and is executable"
 
             # Check dependencies
             echo "Dependencies:"
-            otool -L Katalog.app/Contents/MacOS/Katalog | head -15
+            otool -L qt_widgets/Katalog.app/Contents/MacOS/Katalog | head -15
 
             # Check for KF6 libraries
             echo "Checking for KF6 libraries in bundle..."
-            find Katalog.app -name "*KF6*" || echo "No KF6 libraries found in bundle"
+            find qt_widgets/Katalog.app -name "*KF6*" || echo "No KF6 libraries found in bundle"
 
           else
             echo "❌ Executable not found or not executable"
@@ -872,7 +876,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Katalog_${{ env.VERSION_TAG }}_bundle
-        path: build/Katalog.app
+        path: build/qt_widgets/Katalog.app
         retention-days: 7
 
     - name: Summary

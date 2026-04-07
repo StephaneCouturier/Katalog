@@ -276,7 +276,7 @@ jobs:
 
         # Create AppDir and install manually if needed
         mkdir -p AppDir/usr/bin
-        cp Katalog AppDir/usr/bin/
+        cp qt_widgets/Katalog AppDir/usr/bin/
 
         # Or try the install target with proper environment
         export DESTDIR="$(pwd)/AppDir"
