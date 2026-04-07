@@ -220,14 +220,14 @@ jobs:
 
     - name: Prepare Qt5/KF5 build configuration
       run: |
-        # Use the Qt5/KF5 specific CMakeLists.txt file
+        # Copy the Qt5/KF5 specific CMakeLists.txt into qt_widgets/ (replaces Qt6 version for this build)
         if [ -f "qt_widgets/CMakeLists_qt5.txt" ]; then
           echo "Using Qt5/KF5 specific CMakeLists.txt"
-          cp qt_widgets/CMakeLists_qt5.txt CMakeLists.txt
+          cp qt_widgets/CMakeLists_qt5.txt qt_widgets/CMakeLists.txt
         else
-          echo "Warning: qt_widgets/CMakeLists_qt5.txt not found. The build may not work properly with Qt5/KF5"
+          echo "Warning: qt_widgets/CMakeLists_qt5.txt not found."
           echo "Available CMakeLists files:"
-          ls -la CMakeLists*.txt qt_widgets/CMakeLists*.txt || echo "No CMakeLists files found"
+          ls -la qt_widgets/CMakeLists*.txt || echo "No CMakeLists files found"
         fi
 
     - name: Build Katalog with Qt5/KF5
@@ -239,14 +239,12 @@ jobs:
         export QT_SELECT=5
         export CMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5
 
-        cmake .. \
+        # Build directly from qt_widgets/ so src/ paths resolve correctly
+        cmake ../qt_widgets \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_PREFIX_PATH=/usr \
-          -DBUILD_QT_WIDGETS=ON \
-          -DBUILD_QT_QUICK=OFF \
-          -DBUILD_TESTS=OFF
+          -DCMAKE_PREFIX_PATH=/usr
 
         # Build translations first (may fail, but continue)
         echo "Building translations..."
@@ -276,7 +274,7 @@ jobs:
 
         # Create AppDir and install manually if needed
         mkdir -p AppDir/usr/bin
-        cp qt_widgets/Katalog AppDir/usr/bin/
+        cp Katalog AppDir/usr/bin/
 
         # Or try the install target with proper environment
         export DESTDIR="$(pwd)/AppDir"

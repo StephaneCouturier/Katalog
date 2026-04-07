@@ -270,13 +270,13 @@ set(UI_FILES
 #     )
 # endforeach()
 
-# Resource files
+# Resource files (located at qt_widgets/ root, not src/)
 set(QRC_FILES
-    src/icons.qrc
-    src/images.qrc
-    src/Resources.qrc
-    src/styles.qrc
-    src/translations.qrc
+    icons.qrc
+    images.qrc
+    Resources.qrc
+    styles.qrc
+    translations.qrc
 )
 
 # Create the core library (reusable, UI-agnostic for future QtQuick support)

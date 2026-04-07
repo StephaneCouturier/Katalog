@@ -240,15 +240,15 @@ if(WIN32)
         -DWIN32_LEAN_AND_MEAN
     )
 
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/images/Katalog_logo_64.ico")
-        set(RC_CONTENT "IDI_ICON1 ICON \"${CMAKE_CURRENT_SOURCE_DIR}/images/Katalog_logo_64.ico\"")
+    if(EXISTS "${CMAKE_SOURCE_DIR}/assets/Katalog_logo_64.ico")
+        set(RC_CONTENT "IDI_ICON1 ICON \"${CMAKE_SOURCE_DIR}/assets/Katalog_logo_64.ico\"")
         file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/katalog.rc" ${RC_CONTENT})
         target_sources(Katalog PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/katalog.rc")
     endif()
 endif()
 
 if(APPLE)
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/images/Katalog_logo_64.ico")
+    if(EXISTS "${CMAKE_SOURCE_DIR}/assets/Katalog_logo_64.ico")
         set_target_properties(Katalog PROPERTIES
             MACOSX_BUNDLE TRUE
             MACOSX_BUNDLE_ICON_FILE "Katalog_logo_64.ico"

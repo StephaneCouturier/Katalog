@@ -327,13 +327,72 @@ jobs:
         find AppDir -type f -name "Katalog3*" || true
         ls -la AppDir/usr/bin/ || true
 
-        # Create AppImage
+        # Phase 1: bundle Qt/system dependencies into AppDir (no --output yet)
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
           --executable AppDir/usr/bin/Katalog3 \
           --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
-          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
+
+        # Phase 2: deploy QML modules that linuxdeploy-plugin-qt misses for Qt6
+        echo "Deploying QML modules..."
+        QT_QML_DIR=""
+        for dir in \
+          /usr/lib/x86_64-linux-gnu/qt6/qml \
+          /usr/lib/qt6/qml \
+          /usr/lib64/qt6/qml; do
+          if [ -d "$dir" ]; then QT_QML_DIR="$dir"; break; fi
+        done
+
+        if [ -n "$QT_QML_DIR" ]; then
+          echo "Qt6 QML dir: $QT_QML_DIR"
+          DEST="AppDir/usr/qml"
+          mkdir -p "$DEST"
+
+          for module in \
+            "QtQuick" \
+            "QtQuick/Controls" \
+            "QtQuick/Layouts" \
+            "QtQuick/Dialogs" \
+            "Qt/labs/settings" \
+            "Qt/labs/platform"; do
+            src="$QT_QML_DIR/$module"
+            dst_parent="$DEST/$(dirname "$module")"
+            if [ -d "$src" ]; then
+              mkdir -p "$dst_parent"
+              cp -rn "$src" "$dst_parent/"
+              echo "Bundled: $module"
+            else
+              echo "Not found: $src"
+            fi
+          done
+
+          # Kirigami QML plugin
+          for kirigami_src in \
+            "$QT_QML_DIR/org/kde/kirigami" \
+            /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami; do
+            if [ -d "$kirigami_src" ]; then
+              mkdir -p "$DEST/org/kde"
+              cp -rn "$kirigami_src" "$DEST/org/kde/"
+              echo "Bundled: org.kde.kirigami"
+              break
+            fi
+          done
+
+          # Patch AppRun to export QML import paths at runtime
+          APPRUN="AppDir/AppRun"
+          if [ -f "$APPRUN" ] && ! grep -q "QML_IMPORT_PATH" "$APPRUN"; then
+            sed -i 's|^exec |export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"\nexport QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"\nexec |' "$APPRUN"
+            echo "Patched AppRun with QML import paths"
+          fi
+        else
+          echo "Warning: Qt6 QML directory not found — QML modules not bundled"
+        fi
+
+        # Phase 3: package as AppImage
+        linuxdeploy \
+          --appdir AppDir \
           --output appimage
 
         # Rename AppImage with version
