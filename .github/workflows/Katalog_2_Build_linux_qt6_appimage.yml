@@ -17,7 +17,7 @@ on:
   push:
     branches: [ main, katalog_master, katalog_development ]
     paths:
-      - '.github/workflows/Build_linux_qt6_appimage.yml'   # Only triggers if THIS file changes
+      - '.github/workflows/Katalog_2_Build_linux_qt6_appimage.yml'   # Only triggers if THIS file changes
 
 jobs:
   build-appimage-qt6:
@@ -44,7 +44,8 @@ jobs:
           fuse3 \
           libfuse2t64 \
           software-properties-common \
-          gpg
+          gpg \
+          gettext
 
         # Add KDE neon repository for KF6
         wget -qO - https://archive.neon.kde.org/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg

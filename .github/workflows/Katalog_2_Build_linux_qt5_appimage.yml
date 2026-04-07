@@ -17,7 +17,7 @@ on:
   push:
     branches: [ main, katalog_master, katalog_development ]
     paths:
-      - '.github/workflows/Build_linux_qt5_appimage.yml'   # Only triggers if THIS file changes
+      - '.github/workflows/Katalog_2_Build_linux_qt5_appimage.yml'   # Only triggers if THIS file changes
 
 jobs:
   build-appimage-qt5:

@@ -44,7 +44,8 @@ jobs:
           fuse3 \
           libfuse2t64 \
           software-properties-common \
-          gpg
+          gpg \
+          gettext
 
         # Add KDE neon repository for KF6
         wget -qO - https://archive.neon.kde.org/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg
