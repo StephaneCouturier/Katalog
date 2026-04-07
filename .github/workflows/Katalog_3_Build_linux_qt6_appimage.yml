@@ -328,6 +328,9 @@ jobs:
         ls -la AppDir/usr/bin/ || true
 
         # Phase 1: bundle Qt/system dependencies into AppDir (no --output yet)
+        # QMLDIR tells linuxdeploy-plugin-qt to scan QML sources and bundle Qt6Qml/Quick libs
+        # (without this, all-resource QML apps are not detected and Qt6Qml is left out)
+        export QMLDIR=$(pwd)/../qt_quick
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \

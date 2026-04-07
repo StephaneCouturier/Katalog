@@ -11,10 +11,10 @@ set(KATALOG_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
 string(TIMESTAMP KATALOG_BUILD_DATE "%Y-%m-%d %H:%M:%S" UTC)
 string(TIMESTAMP KATALOG_BUILD_YEAR "%Y" UTC)
 
-# Configure version header
+# Configure version header (version.h.in is at qt_widgets/ root, not src/)
 configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/src/version.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/version.h"
     @ONLY
 )
 
@@ -345,7 +345,7 @@ set_target_properties(katalog-core PROPERTIES
 # Add include directories to help with relative paths
 target_include_directories(Katalog PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_BINARY_DIR}/src  # Add this line for generated version.h
+    ${CMAKE_CURRENT_BINARY_DIR}      # For generated version.h (at build root)
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${KF5CoreAddons_INCLUDE_DIRS}
     ${KF5I18n_INCLUDE_DIRS}
