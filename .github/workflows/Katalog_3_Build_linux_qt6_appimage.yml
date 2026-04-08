@@ -374,16 +374,16 @@ jobs:
         # The binary AppRun linuxdeploy creates does not reliably set LD_LIBRARY_PATH,
         # so Qt6 QML libs bundled in usr/lib/ are bypassed and the system's (older)
         # libQt6Qml.so.6 gets loaded instead, causing the Qt_6_PRIVATE_API error.
-        cat > AppDir/AppRun << 'APPRUN_EOF'
-#!/bin/bash
-HERE="$(dirname "$(readlink -f "${0}")")"
-export APPDIR="${HERE}"
-export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
-export QT_PLUGIN_PATH="${HERE}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
-export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
-export QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
-exec "${HERE}/usr/bin/Katalog3" "$@"
-APPRUN_EOF
+        printf '%s\n' \
+          '#!/bin/bash' \
+          'HERE="$(dirname "$(readlink -f "${0}")")"' \
+          'export APPDIR="${HERE}"' \
+          'export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"' \
+          'export QT_PLUGIN_PATH="${HERE}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"' \
+          'export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"' \
+          'export QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"' \
+          'exec "${HERE}/usr/bin/Katalog3" "$@"' \
+          > AppDir/AppRun
         chmod +x AppDir/AppRun
         echo "Created shell script AppRun"
 
