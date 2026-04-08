@@ -13,11 +13,9 @@ on:
         required: false
         default: 'dev-build-qt6'
 
-  # Optional, trigger on push
+  # Trigger on push to main branches
   push:
     branches: [ main, katalog_master, katalog_development ]
-    paths:
-      - '.github/workflows/Katalog_3_Build_linux_qt6_appimage.yml'   # Only triggers if THIS file changes
 
 jobs:
   build-appimage-qt6:
@@ -328,9 +326,11 @@ jobs:
         ls -la AppDir/usr/bin/ || true
 
         # Phase 1: bundle Qt/system dependencies into AppDir (no --output yet)
-        # QMLDIR tells linuxdeploy-plugin-qt to scan QML sources and bundle Qt6Qml/Quick libs
-        # (without this, all-resource QML apps are not detected and Qt6Qml is left out)
+        # QMLDIR: tells linuxdeploy-plugin-qt where to scan QML sources for import detection
+        # EXTRA_QT_MODULES: force-bundle the full Qt Quick stack (QML files are in Qt
+        # resources so the scanner doesn't auto-detect them without both env vars)
         export QMLDIR=$(pwd)/../qt_quick
+        export EXTRA_QT_MODULES="qml;quick;quickcontrols2;quicktemplates2;quickdialogs2;quicklayouts;labs.settings;labs.platform"
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
