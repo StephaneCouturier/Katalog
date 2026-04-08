@@ -89,8 +89,9 @@ jobs:
 
         for component in "${KF6_COMPONENTS[@]}"; do
           # Skip if already installed via Homebrew
-          cmake_config="${component^}Config.cmake"  # rough approximation
-          if pkg-config --exists "KF6${component^}" 2>/dev/null; then
+          # ${component^} (bash 4+ only) not available on macOS bash 3.2 — use awk
+          component_cap=$(echo "$component" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
+          if pkg-config --exists "KF6${component_cap}" 2>/dev/null; then
             echo "⏭ Skipping $component (already installed)"
             continue
           fi

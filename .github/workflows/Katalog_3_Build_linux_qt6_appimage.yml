@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6
-#v2026-04-04 run1
+#v2026-04-08 run1
 on:
   # Trigger on new releases
   # release:
@@ -370,22 +370,27 @@ jobs:
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
           $LIBRARY_FLAGS
 
-        # Replace linuxdeploy's binary AppRun with an explicit shell script.
-        # The binary AppRun linuxdeploy creates does not reliably set LD_LIBRARY_PATH,
-        # so Qt6 QML libs bundled in usr/lib/ are bypassed and the system's (older)
-        # libQt6Qml.so.6 gets loaded instead, causing the Qt_6_PRIVATE_API error.
+        # Replace linuxdeploy's AppRun (a binary or symlink to the main binary) with
+        # an explicit shell script. The binary AppRun does not set LD_LIBRARY_PATH, so
+        # bundled Qt6 QML libs are bypassed in favour of the system's Qt6 version.
+        # rm -f is essential: linuxdeploy may create AppRun as a symlink to usr/bin/Katalog3;
+        # writing through a symlink would overwrite the binary instead of creating a new file.
+        # Use $APPDIR (set by the AppImage runtime before invoking AppRun) rather than
+        # computing HERE from BASH_SOURCE[0]: the runtime always sets APPDIR correctly,
+        # while BASH_SOURCE[0] dirname can resolve to usr/bin instead of the AppImage
+        # root, causing a doubled /usr/bin/usr/bin/ path in the exec target.
+        rm -f AppDir/AppRun
         printf '%s\n' \
           '#!/bin/bash' \
-          'HERE="$(dirname "$(readlink -f "${0}")")"' \
-          'export APPDIR="${HERE}"' \
-          'export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"' \
-          'export QT_PLUGIN_PATH="${HERE}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"' \
-          'export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"' \
-          'export QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"' \
-          'exec "${HERE}/usr/bin/Katalog3" "$@"' \
+          'export LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}"' \
+          'export QT_PLUGIN_PATH="${APPDIR}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"' \
+          'export QML2_IMPORT_PATH="${APPDIR}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"' \
+          'export QML_IMPORT_PATH="${APPDIR}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"' \
+          'exec "${APPDIR}/usr/bin/Katalog3" "$@"' \
           > AppDir/AppRun
         chmod +x AppDir/AppRun
-        echo "Created shell script AppRun"
+        echo "AppRun contents:"
+        cat AppDir/AppRun
 
         # Phase 2: deploy QML module plugins
         echo "Deploying QML modules..."
