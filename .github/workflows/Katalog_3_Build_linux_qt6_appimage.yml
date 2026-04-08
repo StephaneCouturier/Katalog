@@ -338,13 +338,18 @@ jobs:
         # QMLDIR hints at QML source location so qmlimportscanner finds import statements.
         export QMLDIR=$(pwd)/../qt_quick
 
-        # Build --library flags for Qt6 QML/Quick shared libs
+        # Build --library flags for Qt6 QML/Quick shared libs.
+        # libQt6QuickLayouts.so.6 must be bundled explicitly: libqquicklayoutsplugin.so
+        # (the bundled QtQuick.Layouts QML plugin) depends on it. Without it the plugin
+        # loader falls back to the system Qt6QuickLayouts (e.g. 6.10.2 on openSUSE),
+        # which then requires Qt_6.10.2_PRIVATE_API from the older bundled libQt6Quick.
         LIBRARY_FLAGS=""
         for lib in \
           libQt6Qml.so.6 \
           libQt6Quick.so.6 \
           libQt6QuickControls2.so.6 \
           libQt6QuickTemplates2.so.6 \
+          libQt6QuickLayouts.so.6 \
           libQt6QmlModels.so.6 \
           libQt6QmlWorkerScript.so.6 \
           libQt6QuickDialogs2.so.6; do
@@ -365,10 +370,22 @@ jobs:
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
           $LIBRARY_FLAGS
 
-        # Patch binary RPATH so the bundled libs in usr/lib take priority at runtime
-        patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/Katalog3 \
-          && echo "Patched binary RPATH to \$ORIGIN/../lib" \
-          || echo "patchelf failed (non-fatal)"
+        # Replace linuxdeploy's binary AppRun with an explicit shell script.
+        # The binary AppRun linuxdeploy creates does not reliably set LD_LIBRARY_PATH,
+        # so Qt6 QML libs bundled in usr/lib/ are bypassed and the system's (older)
+        # libQt6Qml.so.6 gets loaded instead, causing the Qt_6_PRIVATE_API error.
+        cat > AppDir/AppRun << 'APPRUN_EOF'
+#!/bin/bash
+HERE="$(dirname "$(readlink -f "${0}")")"
+export APPDIR="${HERE}"
+export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
+export QT_PLUGIN_PATH="${HERE}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
+export QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
+exec "${HERE}/usr/bin/Katalog3" "$@"
+APPRUN_EOF
+        chmod +x AppDir/AppRun
+        echo "Created shell script AppRun"
 
         # Phase 2: deploy QML module plugins
         echo "Deploying QML modules..."
@@ -415,19 +432,14 @@ jobs:
             fi
           done
 
-          # Patch AppRun to export QML import paths at runtime
-          APPRUN="AppDir/AppRun"
-          if [ -f "$APPRUN" ] && ! grep -q "QML_IMPORT_PATH" "$APPRUN"; then
-            sed -i 's|^exec |export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"\nexport QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"\nexec |' "$APPRUN"
-            echo "Patched AppRun with QML import paths"
-          fi
+          echo "  QML paths already set in AppRun shell script"
         else
           echo "Warning: Qt6 QML directory not found — QML modules not bundled"
         fi
 
         # Verify critical Qt6 QML libs are present before packaging
         echo "=== Verifying bundled Qt6 QML libs ==="
-        for lib in libQt6Qml.so.6 libQt6Quick.so.6 libQt6QuickControls2.so.6; do
+        for lib in libQt6Qml.so.6 libQt6Quick.so.6 libQt6QuickControls2.so.6 libQt6QuickLayouts.so.6; do
           if [ -f "AppDir/usr/lib/$lib" ]; then
             echo "  OK: $lib ($(ls -lh AppDir/usr/lib/$lib | awk '{print $5}'))"
           else
