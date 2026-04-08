@@ -109,6 +109,8 @@ set(CORE_HEADERS
     ../core/directoryreplicator.h
     ../core/backupjob.h
     ../core/backupjobstoppable.h
+    ../core/databasemanager.h
+    ../core/collectionimporter.h
 )
 
 set(CORE_SOURCES
@@ -145,6 +147,8 @@ set(CORE_SOURCES
     ../core/directoryreplicator.cpp
     ../core/backupjob.cpp
     ../core/backupjobstoppable.cpp
+    ../core/databasemanager.cpp
+    ../core/collectionimporter.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6
-#v2026-04-08 run2
+#v2026-04-08 run4
 on:
   # Trigger on new releases
   # release:
@@ -364,7 +364,22 @@ jobs:
           libQt6QmlModels.so.6 \
           libQt6QmlWorkerScript.so.6 \
           libQt6QuickDialogs2.so.6 \
-          libQt6QuickDialogs2QuickImpl.so.6; do
+          libQt6QuickDialogs2QuickImpl.so.6 \
+          libQt6QuickDialogs2Utils.so.6 \
+          libQt6QuickControls2Impl.so.6 \
+          libQt6QuickControls2FusionStyleImpl.so.6 \
+          libQt6QuickControls2MaterialStyleImpl.so.6 \
+          libQt6QuickControls2BasicStyleImpl.so.6 \
+          libQt6QuickControls2ImagineStyleImpl.so.6 \
+          libQt6QuickControls2UniversalStyleImpl.so.6 \
+          libQt6QuickWidgets.so.6 \
+          libQt6LabsPlatform.so.6 \
+          libQt6LabsSettings.so.6 \
+          libQt6LabsAnimation.so.6 \
+          libQt6LabsFolderListModel.so.6 \
+          libQt6LabsQmlModels.so.6 \
+          libQt6QuickShapes.so.6 \
+          libQt6QuickEffects.so.6; do
           src="$QT6_LIB_DIR/$lib"
           if [ -f "$src" ] || [ -L "$src" ]; then
             LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"

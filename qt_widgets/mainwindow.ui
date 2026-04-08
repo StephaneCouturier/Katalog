@@ -14165,7 +14165,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   <customwidget>
    <class>QChartView</class>
    <extends>QGraphicsView</extends>
-   <header location="global">QChartView&gt;</header>
+   <header location="global">QChartView</header>
   </customwidget>
   <customwidget>
    <class>TreeComboBox</class>
