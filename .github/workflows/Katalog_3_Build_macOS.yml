@@ -41,7 +41,8 @@ jobs:
         brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git || echo "KDE tap failed"
 
         # K3-specific KF6 packages (no KXmlGui/KCompletion; needs KArchive + Kirigami)
-        for kf6_pkg in kf6-kcoreaddons kf6-ki18n kf6-kconfig kf6-kiconthemes kf6-karchive kf6-kirigami; do
+        # kf6-kfilemetadata is required because katalog-core includes KFileMetaData headers
+        for kf6_pkg in kf6-kcoreaddons kf6-ki18n kf6-kconfig kf6-kiconthemes kf6-karchive kf6-kirigami kf6-kfilemetadata; do
           if brew install "$kf6_pkg" 2>/dev/null; then
             echo "✅ Installed $kf6_pkg via Homebrew"
           else
@@ -68,8 +69,12 @@ jobs:
         mkdir -p ~/kf6-build
         cd ~/kf6-build
 
+        # CMAKE_PREFIX_PATH must include $(brew --prefix) so that each component
+        # can find the KF6 packages built earlier in the same loop (they are all
+        # installed to $(brew --prefix)/lib/cmake/KF6*/). Without this, kfilemetadata
+        # cannot find KCoreAddons/KI18n/KConfig that were built just before it.
         CMAKE_ARGS=(
-          "-DCMAKE_PREFIX_PATH=$(brew --prefix qt@6)"
+          "-DCMAKE_PREFIX_PATH=$(brew --prefix qt@6):$(brew --prefix)"
           "-DCMAKE_BUILD_TYPE=Release"
           "-DCMAKE_INSTALL_PREFIX=$(brew --prefix)"
           "-DCMAKE_OSX_DEPLOYMENT_TARGET=11.0"
@@ -84,7 +89,7 @@ jobs:
           "extra-cmake-modules"
           "kcoreaddons" "ki18n" "kconfig" "kwidgetsaddons"
           "kcodecs" "kguiaddons" "kcolorscheme" "kitemviews" "karchive"
-          "kconfigwidgets" "kiconthemes" "kirigami"
+          "kconfigwidgets" "kiconthemes" "kfilemetadata" "kirigami"
         )
 
         for component in "${KF6_COMPONENTS[@]}"; do

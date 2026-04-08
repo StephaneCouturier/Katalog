@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6
-#v2026-04-08 run1
+#v2026-04-08 run2
 on:
   # Trigger on new releases
   # release:
@@ -343,16 +343,28 @@ jobs:
         # (the bundled QtQuick.Layouts QML plugin) depends on it. Without it the plugin
         # loader falls back to the system Qt6QuickLayouts (e.g. 6.10.2 on openSUSE),
         # which then requires Qt_6.10.2_PRIVATE_API from the older bundled libQt6Quick.
+        # libQt6QuickControls2Fusion.so.6 (and sibling style libs) must also be bundled:
+        # each QML style plugin (e.g. libqtquickcontrols2fusionstyleplugin.so) links
+        # against its matching style shared lib. If it is absent from AppDir/usr/lib/ the
+        # runtime linker falls back to the system's older Qt6 copy which lacks the
+        # Qt_6_PRIVATE_API version symbol built into the bundled plugin.
         LIBRARY_FLAGS=""
         for lib in \
           libQt6Qml.so.6 \
           libQt6Quick.so.6 \
           libQt6QuickControls2.so.6 \
+          libQt6QuickControls2Fusion.so.6 \
+          libQt6QuickControls2Material.so.6 \
+          libQt6QuickControls2Basic.so.6 \
+          libQt6QuickControls2BasicStyle.so.6 \
+          libQt6QuickControls2Imagine.so.6 \
+          libQt6QuickControls2Universal.so.6 \
           libQt6QuickTemplates2.so.6 \
           libQt6QuickLayouts.so.6 \
           libQt6QmlModels.so.6 \
           libQt6QmlWorkerScript.so.6 \
-          libQt6QuickDialogs2.so.6; do
+          libQt6QuickDialogs2.so.6 \
+          libQt6QuickDialogs2QuickImpl.so.6; do
           src="$QT6_LIB_DIR/$lib"
           if [ -f "$src" ] || [ -L "$src" ]; then
             LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"
@@ -444,7 +456,7 @@ jobs:
 
         # Verify critical Qt6 QML libs are present before packaging
         echo "=== Verifying bundled Qt6 QML libs ==="
-        for lib in libQt6Qml.so.6 libQt6Quick.so.6 libQt6QuickControls2.so.6 libQt6QuickLayouts.so.6; do
+        for lib in libQt6Qml.so.6 libQt6Quick.so.6 libQt6QuickControls2.so.6 libQt6QuickControls2Fusion.so.6 libQt6QuickLayouts.so.6; do
           if [ -f "AppDir/usr/lib/$lib" ]; then
             echo "  OK: $lib ($(ls -lh AppDir/usr/lib/$lib | awk '{print $5}'))"
           else
