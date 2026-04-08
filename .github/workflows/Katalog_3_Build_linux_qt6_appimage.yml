@@ -43,7 +43,8 @@ jobs:
           libfuse2t64 \
           software-properties-common \
           gpg \
-          gettext
+          gettext \
+          patchelf
 
         # Add KDE neon repository for KF6
         wget -qO - https://archive.neon.kde.org/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg
@@ -326,11 +327,8 @@ jobs:
         ls -la AppDir/usr/bin/ || true
 
         # Phase 1: bundle Qt/system dependencies into AppDir (no --output yet)
-        # QMLDIR: tells linuxdeploy-plugin-qt where to scan QML sources for import detection
-        # EXTRA_QT_MODULES: force-bundle the full Qt Quick stack (QML files are in Qt
-        # resources so the scanner doesn't auto-detect them without both env vars)
+        # QMLDIR hints at QML source location so linuxdeploy-plugin-qt runs qmlimportscanner
         export QMLDIR=$(pwd)/../qt_quick
-        export EXTRA_QT_MODULES="qml;quick;quickcontrols2;quicktemplates2;quickdialogs2;quicklayouts;labs.settings;labs.platform"
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
@@ -338,7 +336,36 @@ jobs:
           --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
 
-        # Phase 2: deploy QML modules that linuxdeploy-plugin-qt misses for Qt6
+        # Force-bundle Qt6 QML/Quick shared libs.
+        # linuxdeploy-plugin-qt cannot detect them when all QML is in Qt resources
+        # (no on-disk .qml files for qmlimportscanner to find).
+        echo "Force-bundling Qt6 QML/Quick libraries..."
+        QT6_LIB_DIR=/usr/lib/x86_64-linux-gnu
+        mkdir -p AppDir/usr/lib
+        for lib in \
+          libQt6Qml.so.6 \
+          libQt6Quick.so.6 \
+          libQt6QuickControls2.so.6 \
+          libQt6QuickTemplates2.so.6 \
+          libQt6QmlModels.so.6 \
+          libQt6QmlWorkerScript.so.6 \
+          libQt6QuickDialogs2.so.6; do
+          src="$QT6_LIB_DIR/$lib"
+          if [ -f "$src" ]; then
+            cp -n "$src" AppDir/usr/lib/
+            echo "  Bundled: $lib"
+          else
+            echo "  Not found: $lib"
+          fi
+        done
+
+        # Patch binary RPATH so AppRun's LD_LIBRARY_PATH takes priority over the
+        # CI build path embedded in the binary at link time
+        patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/Katalog3 \
+          && echo "Patched binary RPATH" \
+          || echo "patchelf failed (non-fatal)"
+
+        # Phase 2: deploy QML module plugins
         echo "Deploying QML modules..."
         QT_QML_DIR=""
         for dir in \

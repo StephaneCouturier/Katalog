@@ -89,7 +89,7 @@ jobs:
 
         # Try installing KF6 via official KDE Homebrew tap first
         echo "=== Attempting KF6 installation via KDE Homebrew tap ==="
-        brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git --force-auto-update || echo "KDE tap failed"
+        brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git || echo "KDE tap failed"
 
         # Try installing essential KF6 packages
         for kf6_pkg in kf6-kcoreaddons kf6-ki18n kf6-kxmlgui kf6-kconfig kf6-kiconthemes; do

@@ -1,0 +1,243 @@
+name: Katalog 3 - Build macOS
+#v2026-04-08 run1
+on:
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Version tag'
+        required: false
+        default: 'v3.0-macos'
+
+  push:
+    branches: [ main, katalog_master, katalog_development ]
+
+jobs:
+  build-macos-k3:
+    runs-on: macos-14  # macOS Sonoma (Apple Silicon)
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install base dependencies
+      run: |
+        echo "=== Installing build tools ==="
+        brew update
+
+        if ! command -v cmake >/dev/null 2>&1; then brew install cmake; fi
+        if ! command -v ninja >/dev/null 2>&1; then brew install ninja; fi
+
+        echo "Installing Qt6 with Quick/QML support..."
+        if ! brew list qt@6 >/dev/null 2>&1; then
+          brew install qt@6
+        fi
+
+        brew install extra-cmake-modules || echo "extra-cmake-modules install failed"
+        brew install git wget python3 || echo "Some tools already installed"
+
+        # Try KDE Homebrew tap for KF6 packages
+        brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git || echo "KDE tap failed"
+
+        # K3-specific KF6 packages (no KXmlGui/KCompletion; needs KArchive + Kirigami)
+        for kf6_pkg in kf6-kcoreaddons kf6-ki18n kf6-kconfig kf6-kiconthemes kf6-karchive kf6-kirigami; do
+          if brew install "$kf6_pkg" 2>/dev/null; then
+            echo "✅ Installed $kf6_pkg via Homebrew"
+          else
+            echo "❌ Failed to install $kf6_pkg via Homebrew - will build from source"
+          fi
+        done
+
+        if ! command -v magick >/dev/null 2>&1; then
+          brew install imagemagick
+        fi
+
+    - name: Set Qt6 environment
+      run: |
+        echo "$(brew --prefix qt@6)/bin" >> $GITHUB_PATH
+        echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
+        echo "Qt6_DIR=$(brew --prefix qt@6)/lib/cmake/Qt6" >> $GITHUB_ENV
+        echo "CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
+
+    - name: Build KF6 from source (if Homebrew install failed)
+      run: |
+        echo "=== Building required KF6 components from source ==="
+
+        KF6_VERSION="v6.22.0"
+        mkdir -p ~/kf6-build
+        cd ~/kf6-build
+
+        CMAKE_ARGS=(
+          "-DCMAKE_PREFIX_PATH=$(brew --prefix qt@6)"
+          "-DCMAKE_BUILD_TYPE=Release"
+          "-DCMAKE_INSTALL_PREFIX=$(brew --prefix)"
+          "-DCMAKE_OSX_DEPLOYMENT_TARGET=11.0"
+          "-DBUILD_TESTING=OFF"
+          "-DBUILD_QCH=OFF"
+          "-DQT_MAJOR_VERSION=6"
+        )
+
+        # K3 needs: KCoreAddons, KI18n, KConfig, KIconThemes, KArchive, Kirigami
+        # Skip components that Homebrew already installed successfully
+        KF6_COMPONENTS=(
+          "extra-cmake-modules"
+          "kcoreaddons" "ki18n" "kconfig" "kwidgetsaddons"
+          "kcodecs" "kguiaddons" "kcolorscheme" "kitemviews" "karchive"
+          "kconfigwidgets" "kiconthemes" "kirigami"
+        )
+
+        for component in "${KF6_COMPONENTS[@]}"; do
+          # Skip if already installed via Homebrew
+          cmake_config="${component^}Config.cmake"  # rough approximation
+          if pkg-config --exists "KF6${component^}" 2>/dev/null; then
+            echo "⏭ Skipping $component (already installed)"
+            continue
+          fi
+
+          echo "=== Building $component ==="
+          if [ "$component" = "extra-cmake-modules" ]; then
+            REPO_URL="https://invent.kde.org/frameworks/extra-cmake-modules.git"
+          elif [ "$component" = "kirigami" ]; then
+            REPO_URL="https://invent.kde.org/frameworks/kirigami.git"
+          else
+            REPO_URL="https://invent.kde.org/frameworks/$component.git"
+          fi
+
+          rm -rf "$component"
+          if ! git clone "$REPO_URL" "$component" --depth=1 --branch "$KF6_VERSION" 2>&1; then
+            if ! git clone "$REPO_URL" "$component" --depth=1 2>&1; then
+              echo "❌ Failed to clone $component"
+              continue
+            fi
+          fi
+
+          if [ "$component" = "kiconthemes" ]; then
+            sed -i.bak 's/find_package(KF6BreezeIcons/# PATCHED: find_package(KF6BreezeIcons/g' "$component/CMakeLists.txt"
+            sed -i.bak2 's/BreezeIcons::initIcons();/\/\/ PATCHED: BreezeIcons::initIcons();/g' "$component/src/kicontheme.cpp" 2>/dev/null || true
+          fi
+
+          cd "$component"
+          rm -rf build && mkdir build && cd build
+
+          if cmake .. "${CMAKE_ARGS[@]}" 2>&1 | tail -5; then
+            if make -j$(sysctl -n hw.ncpu) 2>&1 | tail -5 && make install 2>&1 | tail -3; then
+              echo "✅ Built and installed $component"
+            else
+              echo "❌ Build/install failed for $component"
+            fi
+          else
+            echo "❌ CMake failed for $component"
+          fi
+
+          cd ~/kf6-build
+        done
+
+    - name: Set version information
+      run: |
+        KATALOG_VERSION=$(grep -E "^project\(Katalog3 VERSION" qt_quick/CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
+        if [ -z "$KATALOG_VERSION" ]; then
+          KATALOG_VERSION="3.x"
+        fi
+        echo "VERSION_TAG=macos_v${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "Building version: macos_v${KATALOG_VERSION}"
+
+    - name: Build Katalog 3
+      run: |
+        mkdir build && cd build
+
+        # Build comprehensive CMAKE_PREFIX_PATH
+        BASE_PATHS="$(brew --prefix qt@6):$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        export CMAKE_PREFIX_PATH="$BASE_PATHS"
+
+        echo "=== Running CMake configuration ==="
+        cmake .. \
+          -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
+          -DBUILD_TESTS=OFF \
+          -DBUILD_QT_WIDGETS=OFF \
+          -DBUILD_QT_QUICK=ON \
+          -DCMAKE_INSTALL_PREFIX=/Applications
+
+        # Build translations
+        ninja translations_lrelease || ninja Katalog3_lrelease || echo "Translation build skipped"
+
+        # Build main application
+        if ninja; then
+          echo "✅ Build successful!"
+        else
+          echo "❌ Build failed"
+          exit 1
+        fi
+
+        echo "=== Build output ==="
+        find . -name "Katalog3*" -o -name "*.app" | sort
+
+        if [ -f "qt_quick/Katalog3.app/Contents/MacOS/Katalog3" ]; then
+          echo "✅ Katalog3 app bundle found"
+        else
+          echo "❌ Katalog3 app bundle not found"
+          exit 1
+        fi
+
+    - name: Deploy Qt6 dependencies
+      run: |
+        cd build
+        QT_DEPLOY_TOOL="$(brew --prefix qt@6)/bin/macdeployqt"
+        if [ -x "$QT_DEPLOY_TOOL" ]; then
+          "$QT_DEPLOY_TOOL" qt_quick/Katalog3.app -verbose=1 || echo "macdeployqt completed with warnings"
+        else
+          echo "macdeployqt not found"
+        fi
+
+    - name: Create DMG
+      run: |
+        cd build
+        DMG_NAME="Katalog3-$VERSION_TAG-macOS.dmg"
+        mkdir dmg_temp
+        cp -R qt_quick/Katalog3.app dmg_temp/
+
+        if command -v create-dmg >/dev/null 2>&1; then
+          create-dmg \
+            --volname "Katalog3 $VERSION_TAG" \
+            --window-pos 200 120 \
+            --window-size 600 300 \
+            --icon-size 100 \
+            --icon "Katalog3.app" 175 120 \
+            --hide-extension "Katalog3.app" \
+            --app-drop-link 425 120 \
+            "$DMG_NAME" \
+            "dmg_temp/" || true
+        fi
+
+        # Fallback if create-dmg failed or not installed
+        if [ ! -f "$DMG_NAME" ]; then
+          hdiutil create -srcfolder qt_quick/Katalog3.app -format UDZO -o "$DMG_NAME"
+        fi
+
+        echo "DMG created: $DMG_NAME"
+        ls -lh *.dmg
+
+    - name: Upload DMG as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Katalog3_${{ env.VERSION_TAG }}_dmg
+        path: build/Katalog3-${{ env.VERSION_TAG }}-macOS.dmg
+        retention-days: 30
+
+    - name: Upload App Bundle as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Katalog3_${{ env.VERSION_TAG }}_bundle
+        path: build/qt_quick/Katalog3.app
+        retention-days: 7
+
+    - name: Summary
+      run: |
+        echo "## Katalog 3 macOS Build" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: Katalog3-${{ env.VERSION_TAG }}-macOS.dmg" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY
