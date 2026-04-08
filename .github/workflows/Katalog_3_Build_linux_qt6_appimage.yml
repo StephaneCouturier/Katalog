@@ -108,15 +108,17 @@ jobs:
         mkdir -p $HOME/linuxdeploy
         cd $HOME/linuxdeploy
 
-        # Download linuxdeploy and Qt plugin
+        # Download linuxdeploy, Qt plugin, and appimagetool
         wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
         wget -c "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+        wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 
         chmod +x *.AppImage
 
-        # Extract both AppImages to separate directories
+        # Extract all AppImages to separate directories
         mkdir -p linuxdeploy-extracted
         mkdir -p linuxdeploy-qt-extracted
+        mkdir -p appimagetool-extracted
 
         cd linuxdeploy-extracted
         ../linuxdeploy-x86_64.AppImage --appimage-extract
@@ -126,6 +128,10 @@ jobs:
         ../linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
         cd ..
 
+        cd appimagetool-extracted
+        ../appimagetool-x86_64.AppImage --appimage-extract
+        cd ..
+
         # Create proper executable scripts
         echo '#!/bin/bash' > linuxdeploy
         echo 'exec "$HOME/linuxdeploy/linuxdeploy-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy
@@ -133,13 +139,18 @@ jobs:
         echo '#!/bin/bash' > linuxdeploy-plugin-qt
         echo 'exec "$HOME/linuxdeploy/linuxdeploy-qt-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy-plugin-qt
 
-        chmod +x linuxdeploy linuxdeploy-plugin-qt
+        echo '#!/bin/bash' > appimagetool
+        echo 'exec "$HOME/linuxdeploy/appimagetool-extracted/squashfs-root/AppRun" "$@"' >> appimagetool
+
+        chmod +x linuxdeploy linuxdeploy-plugin-qt appimagetool
 
         # Test the tools
         echo "Testing main linuxdeploy tool:"
         ./linuxdeploy --help | head -5
         echo "Testing Qt plugin:"
         ./linuxdeploy-plugin-qt --help | head -5
+        echo "Testing appimagetool:"
+        ./appimagetool --help | head -5 || echo "appimagetool --help returned non-zero (expected)"
 
     - name: Create packaging directory and files
       run: |
@@ -310,40 +321,25 @@ jobs:
       run: |
         cd build
 
-        # Set up environment for linuxdeploy
+        # Set up environment
         export PATH="$HOME/linuxdeploy:$PATH"
         export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-
-        # Verify tools work
-        echo "Testing linuxdeploy..."
-        linuxdeploy --version || linuxdeploy --help | head -3
-
-        echo "Testing linuxdeploy-plugin-qt..."
-        linuxdeploy-plugin-qt --version || linuxdeploy-plugin-qt --help | head -3
+        QT6_LIB_DIR=/usr/lib/x86_64-linux-gnu
 
         # Check AppDir structure
-        echo "AppDir contents:"
-        find AppDir -type f -name "Katalog3*" || true
+        echo "AppDir binary:"
         ls -la AppDir/usr/bin/ || true
 
-        # Phase 1: bundle Qt/system dependencies into AppDir (no --output yet)
-        # QMLDIR hints at QML source location so linuxdeploy-plugin-qt runs qmlimportscanner
+        # Phase 1: bundle Qt/system dependencies into AppDir.
+        # Pass Qt6 QML/Quick libs explicitly via --library so linuxdeploy handles
+        # RPATH setup correctly. linuxdeploy-plugin-qt may not detect them
+        # automatically when all QML is embedded in Qt resources (no on-disk .qml
+        # files for qmlimportscanner to discover).
+        # QMLDIR hints at QML source location so qmlimportscanner finds import statements.
         export QMLDIR=$(pwd)/../qt_quick
-        linuxdeploy \
-          --appdir AppDir \
-          --plugin qt \
-          --executable AppDir/usr/bin/Katalog3 \
-          --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
-          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
 
-        # Force-bundle Qt6 QML/Quick shared libs.
-        # linuxdeploy-plugin-qt cannot detect them when all QML is in Qt resources
-        # (no on-disk .qml files for qmlimportscanner to find).
-        # Use cp -L to dereference symlinks — this embeds the actual versioned .so
-        # content under the .so.6 name, avoiding broken symlinks in the AppImage.
-        echo "Force-bundling Qt6 QML/Quick libraries..."
-        QT6_LIB_DIR=/usr/lib/x86_64-linux-gnu
-        mkdir -p AppDir/usr/lib
+        # Build --library flags for Qt6 QML/Quick shared libs
+        LIBRARY_FLAGS=""
         for lib in \
           libQt6Qml.so.6 \
           libQt6Quick.so.6 \
@@ -354,17 +350,24 @@ jobs:
           libQt6QuickDialogs2.so.6; do
           src="$QT6_LIB_DIR/$lib"
           if [ -f "$src" ] || [ -L "$src" ]; then
-            cp -Lf "$src" AppDir/usr/lib/
-            echo "  Bundled: $lib ($(ls -lh AppDir/usr/lib/$lib | awk '{print $5}'))"
+            LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"
+            echo "  Will bundle: $lib"
           else
-            echo "  Not found: $lib"
+            echo "  Not found (skip): $lib"
           fi
         done
 
-        # Patch binary RPATH so AppRun's LD_LIBRARY_PATH takes priority over the
-        # CI build path embedded in the binary at link time
+        linuxdeploy \
+          --appdir AppDir \
+          --plugin qt \
+          --executable AppDir/usr/bin/Katalog3 \
+          --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
+          $LIBRARY_FLAGS
+
+        # Patch binary RPATH so the bundled libs in usr/lib take priority at runtime
         patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/Katalog3 \
-          && echo "Patched binary RPATH" \
+          && echo "Patched binary RPATH to \$ORIGIN/../lib" \
           || echo "patchelf failed (non-fatal)"
 
         # Phase 2: deploy QML module plugins
@@ -394,9 +397,9 @@ jobs:
             if [ -d "$src" ]; then
               mkdir -p "$dst_parent"
               cp -rn "$src" "$dst_parent/"
-              echo "Bundled: $module"
+              echo "  Bundled: $module"
             else
-              echo "Not found: $src"
+              echo "  Not found: $src"
             fi
           done
 
@@ -407,7 +410,7 @@ jobs:
             if [ -d "$kirigami_src" ]; then
               mkdir -p "$DEST/org/kde"
               cp -rn "$kirigami_src" "$DEST/org/kde/"
-              echo "Bundled: org.kde.kirigami"
+              echo "  Bundled: org.kde.kirigami"
               break
             fi
           done
@@ -422,16 +425,26 @@ jobs:
           echo "Warning: Qt6 QML directory not found — QML modules not bundled"
         fi
 
-        # Phase 3: package as AppImage
-        linuxdeploy \
-          --appdir AppDir \
-          --output appimage
+        # Verify critical Qt6 QML libs are present before packaging
+        echo "=== Verifying bundled Qt6 QML libs ==="
+        for lib in libQt6Qml.so.6 libQt6Quick.so.6 libQt6QuickControls2.so.6; do
+          if [ -f "AppDir/usr/lib/$lib" ]; then
+            echo "  OK: $lib ($(ls -lh AppDir/usr/lib/$lib | awk '{print $5}'))"
+          else
+            echo "  MISSING: $lib — AppImage will fail on systems with older Qt6!"
+          fi
+        done
 
-        # Rename AppImage with version
-        if ls Katalog3-*.AppImage 1> /dev/null 2>&1; then
-          mv Katalog3-*.AppImage Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
-        else
-          echo "Warning: AppImage not found with expected pattern"
+        # Phase 3: package as AppImage using appimagetool.
+        # appimagetool just wraps the AppDir as-is, without re-analysing or
+        # modifying libraries. This avoids a second linuxdeploy pass that could
+        # interfere with the manually bundled Qt6 QML libs.
+        export ARCH=x86_64
+        appimagetool AppDir Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+        # Verify the AppImage was created
+        if [ ! -f "Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage" ]; then
+          echo "Error: AppImage not created"
           ls -la *.AppImage || echo "No AppImage files found"
           exit 1
         fi
