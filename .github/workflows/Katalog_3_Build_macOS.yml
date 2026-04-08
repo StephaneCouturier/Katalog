@@ -50,7 +50,7 @@ jobs:
         done
 
         if ! command -v magick >/dev/null 2>&1; then
-          brew install imagemagick
+          brew install imagemagick || true
         fi
 
     - name: Set Qt6 environment

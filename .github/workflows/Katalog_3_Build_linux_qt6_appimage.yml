@@ -339,6 +339,8 @@ jobs:
         # Force-bundle Qt6 QML/Quick shared libs.
         # linuxdeploy-plugin-qt cannot detect them when all QML is in Qt resources
         # (no on-disk .qml files for qmlimportscanner to find).
+        # Use cp -L to dereference symlinks — this embeds the actual versioned .so
+        # content under the .so.6 name, avoiding broken symlinks in the AppImage.
         echo "Force-bundling Qt6 QML/Quick libraries..."
         QT6_LIB_DIR=/usr/lib/x86_64-linux-gnu
         mkdir -p AppDir/usr/lib
@@ -351,9 +353,9 @@ jobs:
           libQt6QmlWorkerScript.so.6 \
           libQt6QuickDialogs2.so.6; do
           src="$QT6_LIB_DIR/$lib"
-          if [ -f "$src" ]; then
-            cp -n "$src" AppDir/usr/lib/
-            echo "  Bundled: $lib"
+          if [ -f "$src" ] || [ -L "$src" ]; then
+            cp -Lf "$src" AppDir/usr/lib/
+            echo "  Bundled: $lib ($(ls -lh AppDir/usr/lib/$lib | awk '{print $5}'))"
           else
             echo "  Not found: $lib"
           fi
