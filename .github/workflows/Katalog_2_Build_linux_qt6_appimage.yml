@@ -144,10 +144,10 @@ jobs:
 
     - name: Create packaging directory and files
       run: |
-        mkdir -p packaging
+        mkdir -p packaging/qt_widgets
 
         # Create desktop file
-        cat > packaging/Katalog.desktop << EOF
+        cat > packaging/qt_widgets/Katalog.desktop << EOF
         [Desktop Entry]
         Type=Application
         Name=Katalog
@@ -164,7 +164,7 @@ jobs:
         EOF
 
         # Create AppData file
-        cat > packaging/io.github.stephanecouturier.katalog.appdata.xml << EOF
+        cat > packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml << EOF
         <?xml version="1.0" encoding="UTF-8"?>
         <component type="desktop-application">
           <id>io.github.stephanecouturier.katalog</id>
