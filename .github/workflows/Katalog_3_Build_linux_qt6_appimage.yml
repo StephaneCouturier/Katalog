@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6
-#v2026-04-08 run4
+#v2026-04-09 run1
 on:
   # Trigger on new releases
   # release:
@@ -452,16 +452,35 @@ jobs:
             fi
           done
 
-          # Kirigami QML plugin
+          # Kirigami QML plugin — search all plausible install locations
           for kirigami_src in \
             "$QT_QML_DIR/org/kde/kirigami" \
-            /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami; do
+            /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami \
+            /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami2; do
             if [ -d "$kirigami_src" ]; then
               mkdir -p "$DEST/org/kde"
               cp -rn "$kirigami_src" "$DEST/org/kde/"
-              echo "  Bundled: org.kde.kirigami"
+              echo "  Bundled: $(basename $kirigami_src) from $kirigami_src"
               break
             fi
+          done
+
+          # Bundle KDE Frameworks shared libs that the bundled QML plugins depend on.
+          # linuxdeploy only analyses libs passed via --executable/--library; it never
+          # sees QML plugins we copy in Phase 2. Any missing KF6 lib causes a generic
+          # "module not installed" error at runtime on systems without KDE installed.
+          echo "  Bundling KDE Frameworks dependencies of QML plugins..."
+          find AppDir/usr/qml -name "*.so" -o -name "*.so.*" 2>/dev/null | while read so_file; do
+            ldd "$so_file" 2>/dev/null | awk '/=> \// {print $3}' | while read dep; do
+              dep_base=$(basename "$dep")
+              # Only bundle KDE/KF6 libs not already present in AppDir/usr/lib
+              if echo "$dep_base" | grep -qE '^lib(KF6|Kirigami)' && \
+                 [ -f "$dep" ] && \
+                 [ ! -f "AppDir/usr/lib/$dep_base" ]; then
+                cp "$dep" "AppDir/usr/lib/"
+                echo "    + $dep_base"
+              fi
+            done
           done
 
           echo "  QML paths already set in AppRun shell script"
