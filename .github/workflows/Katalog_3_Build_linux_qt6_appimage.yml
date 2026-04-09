@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6
-#v2026-04-09 run1
+#v2026-04-09 run2
 on:
   # Trigger on new releases
   # release:
@@ -88,6 +88,18 @@ jobs:
           echo "This might require manual KF6 installation"
           exit 1
         }
+
+        # Install Kirigami — required by K3 at runtime (QML import org.kde.kirigami).
+        # Without it the QML module is absent from the AppDir and the app fails to start.
+        # Try several package names used across KDE Neon / Ubuntu releases.
+        sudo apt-get install -y \
+          libkf6kirigami-dev \
+          qml6-module-org-kde-kirigami 2>/dev/null || \
+        sudo apt-get install -y \
+          kirigami6-dev 2>/dev/null || \
+        sudo apt-get install -y \
+          kf6-kirigami 2>/dev/null || \
+        echo "WARNING: Kirigami package not found by any known name — bundling may fail"
 
         # Verify critical KF6 packages are installed
         echo "=== Verifying KF6 installations ==="
