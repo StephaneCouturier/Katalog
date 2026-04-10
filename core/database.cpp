@@ -1228,6 +1228,21 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
 }
 //----------------------------------------------------------------------
 
+QSqlError Database::ensureMappingSourceCollectionColumn(const QString &connectionName)
+{
+    QStringList mappingColumns = getTableColumns(connectionName, "device_mapping");
+    if (!mappingColumns.contains("mapping_source_collection")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE device_mapping ADD COLUMN mapping_source_collection TEXT");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add mapping_source_collection column:" << err.text();
+            return err;
+        }
+    }
+    return QSqlError();
+}
+//----------------------------------------------------------------------
+
 QSqlError Database::runMigration_2_6(const QString &connectionName)
 {
 

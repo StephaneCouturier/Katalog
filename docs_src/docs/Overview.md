@@ -74,11 +74,33 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 
 ---
 ## Multi-Platform Support
-| Main OS           | Distributions / Versions    | Packaging    |
+
+| Main OS           | Distributions / Minimum Versions    | Packaging    |
 |-------------------|-------------|-------------|
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Any 64bits, glibc 2.38+ <br/>Any 32bits, glibc 2.35     | AppImage <br/>Portable |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | 64bits, glibc 2.38+ <br/>32bits, glibc 2.35     | Flatpak from FlatHub<br/>AppImage <br/>Portable |
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits:  Windows 10 & Windows 11    | Installer <br/> Portable       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14+      | Installer<br/> Portable       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 13 (Ventura)  | Installer<br/> Portable       |
+
+
+### macOS Compatibility
+
+- **Minimum macOS version**: macOS 13 (Ventura) or later
+- **Architecture**: Apple Silicon (M1/M2/M3) native. Intel Macs may work via Rosetta 2 but are untested.
+- **Build environment**: Built on macOS 14 (Sonoma) with Qt 6 and KDE Frameworks 6 (KF6), via Homebrew
+
+**Important: the app is not code-signed or notarized.**
+
+macOS will block the app by default. To run Katalog, try one of these methods:
+
+1. Right-click the app → select "Open" (not double-click) → confirm in the dialog
+2. Or go to System Settings → Privacy & Security → scroll down and click "Open Anyway"
+3. Or run in Terminal: `xattr -cr /path/to/Katalog.app` then open normally
+
+**Known limitation**: 
+
+on Macs managed by an organization (MDM/corporate profile), these workarounds may be blocked by security policy. There is currently no solution for managed Macs — this would require signing the app with an Apple Developer certificate.
+
+A legacy build (v2.5, pure Qt6, no KF6 dependencies) is also available with the same macOS requirements.
 
 ---
 ## Multi-Language Support

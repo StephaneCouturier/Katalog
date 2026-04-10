@@ -52,12 +52,11 @@ see [Development-Repository](http://localhost:3000/Katalog/docs/Development-Repo
 #### Phases
 Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 
-| Phase | Feature Scope                                  | Status | K3 Notes |
-|-------|------------------------------------------------|--------|----------|
-| 1     | READ ONLY, Search features, English Only       |   🚧   |          |
-| 2     | Theme & Translations                           |   🔲   |          |
-| 3     | READ ONLY advanced / graphical features        |   🔲   |          |
-| 4     | CREATE / EDIT features                         |   🔲   |          |
+| Phase | Feature Scope                                                | Status | K3 Notes |
+|-------|--------------------------------------------------------------|--------|----------|
+| 1     | READ ONLY, Search features, English Only, Translations       |   🚧   |          |
+| 2     | READ ONLY advanced / graphical features / Themes             |   🔲   |          |
+| 3     | CREATE / EDIT features                                       |   🔲   |          |
 
 | Platform |  Status | Notes                       |
 |----------|---------|-----------------------------|
@@ -68,10 +67,10 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 
 ### Detailed status by Feature 
 
-| Screen / Feature      | K2 | K3 | Remaining | New vs K2 |
+| Screen / Feature      | K2 | K3 | Remaining | New feature vs K2 |
 |-----------------------|----|----|-----------|-----------|
 | **Screen/tabs**       | ✅ | ✅ | | - Access via a "Drawer" now, which can be hidden or pinned" |
-| **Open Collection**   | ✅ | ✅ | | - Open recent collections|
+| **Open Collection**   | ✅ | ✅ | | - Clearer selection of mode and Collection. Open recent collections (last 5 entries)|
 | **Selection**         | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of Devices
 | **Search**            | ✅ | 🚧 | |
 | — Search Criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|
@@ -92,12 +91,12 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — View                | ✅ | 🔲 | |
 | — Create              | ✅ | 🔲 | |
 | — Execute/progress    | ✅ | 🔲 | |
-| **Settings**          | ✅ | 🚧 | glitch: showing search page when transition to or from About|
+| **Settings**          | ✅ | 🚧 | |
 | — SettingsFile        | ✅ | ✅ | |
 | — Version             | ✅ | ✅ | |
 | — Themes              | ✅ | 🔲 | |
-| — Language            | ✅ | 🔲 | |
-| **About**             | ✅ | 🚧 | link to release notes |
+| — Languages           | ✅ | ✅ | |
+| **About**             | ✅ | ✅ | |
 
 
 ### UI / Page system

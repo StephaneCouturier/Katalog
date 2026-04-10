@@ -270,7 +270,7 @@ ColumnLayout {
                     Rectangle {//Vertical separator
                         anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
                         width: 1
-                        color: Kirigami.Theme.separatorColor
+                        color: Kirigami.Theme.separatorColor ?? "transparent"
                     }
                 }
             }
@@ -673,7 +673,7 @@ ColumnLayout {
                 Rectangle {
                     x: 160; y: 4
                     width: 1; height: parent.height - 8
-                    color: Kirigami.Theme.separatorColor; opacity: 0.5
+                    color: Kirigami.Theme.separatorColor ?? "transparent"; opacity: 0.5
                 }
                 Controls.Label {
                     x: 169; y: 0

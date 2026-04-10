@@ -201,6 +201,7 @@ public:
     static QSqlError runMigration_2_9(const QString &connectionName);
     static QSqlError runMigration_2_10(const QString &connectionName);
     static QSqlError runMigration_2_11(const QString &connectionName);
+    static QSqlError ensureMappingSourceCollectionColumn(const QString &connectionName);
 
 private:
     // Helper method to execute SQL with error checking

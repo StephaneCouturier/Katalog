@@ -39,18 +39,35 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Configuration
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
-# Use dedicated build directory outside of synced source
-BUILD_BASE_DIR="/home/shared/Development/Katalog/Build/AppImage"
-BUILD_DIR="$BUILD_BASE_DIR/build-appimage"
-APPDIR="$BUILD_DIR/AppDir"
+# ---------------------------------------------------------------------------
+# Directory configuration — defaults match the standard dev layout.
+# Both can be overridden on the command line:
+#   --source <path>   Override SOURCE_DIR
+#   --build  <path>   Override BUILD_BASE_DIR
+# ---------------------------------------------------------------------------
+
+# SOURCE_DIR — root of the Katalog source tree (contains core/, qt_widgets/, qt_quick/, …)
+# This script is meant to be copied/run outside the source tree, so the path is explicit.
+# Override with:  --source <path>
+SOURCE_DIR="/home/stephane/Documents/Informatique/Katalog/_Source_Katalog2"
+
+# BUILD_BASE_DIR — top-level output directory for AppImage artefacts.
+# The cmake build tree goes in BUILD_BASE_DIR/build-appimage/;
+# the final .AppImage file is placed directly in BUILD_BASE_DIR/.
+BUILD_BASE_DIR="/home/stephane/Developments/Katalog/Application/Portable/AppImage"
+
+# Derived paths — do not edit these; change SOURCE_DIR / BUILD_BASE_DIR above.
+# BUILD_DIR is finalised in configure_variant() so K2 and K3 get separate cmake caches.
+PROJECT_ROOT="$SOURCE_DIR"           # alias used throughout the script
+BUILD_DIR=""                         # set by configure_variant: build-appimage-k2 or build-appimage-k3
+APPDIR=""                            # set by configure_variant: $BUILD_DIR/AppDir
+
+# ---------------------------------------------------------------------------
 VERBOSE=false
 CLEAN_BUILD=false
 CMAKE_BUILD_TYPE="Release"
-LINUXDEPLOY_DIR="$HOME/.local/share/linuxdeploy"
-APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"
+LINUXDEPLOY_DIR="$HOME/.local/share/linuxdeploy"   # linuxdeploy wrapper scripts
+APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"  # optional local appimagetool (avoids network)
 
 # Variant selection (K2 = Qt Widgets, K3 = Qt Quick/QML)
 VARIANT="K2"
@@ -90,20 +107,23 @@ show_help() {
     echo "Usage: $0 [options]"
     echo ""
     echo "Options:"
-    echo "  -h, --help          Show this help message"
-    echo "  -v, --verbose       Enable verbose output"
-    echo "  -c, --clean         Clean build (remove build directory first)"
-    echo "  -d, --debug         Build in Debug mode instead of Release"
-    echo "  --k2                Build Katalog 2 (Qt Widgets) [default]"
-    echo "  --k3                Build Katalog 3 (Qt Quick / QML)"
-    echo "  --install-deps      Install required dependencies"
+    echo "  -h, --help           Show this help message"
+    echo "  -v, --verbose        Enable verbose output"
+    echo "  -c, --clean          Clean build (remove build directory first)"
+    echo "  -d, --debug          Build in Debug mode instead of Release"
+    echo "  --k2                 Build Katalog 2 (Qt Widgets) [default]"
+    echo "  --k3                 Build Katalog 3 (Qt Quick / QML)"
+    echo "  --install-deps       Install required dependencies"
+    echo "  --source <path>      Source tree root  (default: $SOURCE_DIR)"
+    echo "  --build  <path>      AppImage output directory (default: $BUILD_BASE_DIR)"
     echo ""
     echo "Examples:"
-    echo "  $0                  # Normal build (K2)"
-    echo "  $0 --k3             # Build K3"
-    echo "  $0 -c               # Clean build"
-    echo "  $0 -v -d            # Verbose debug build"
-    echo "  $0 --install-deps   # Install dependencies first"
+    echo "  $0                   # Normal build (K2)"
+    echo "  $0 --k3              # Build K3"
+    echo "  $0 -c                # Clean build"
+    echo "  $0 -v -d             # Verbose debug build"
+    echo "  $0 --install-deps    # Install dependencies first"
+    echo "  $0 --source /path/to/source --build /tmp/appimage-out"
     echo ""
 }
 
@@ -138,6 +158,17 @@ parse_arguments() {
             --install-deps)
                 install_dependencies
                 exit 0
+                ;;
+            --source)
+                SOURCE_DIR="$2"
+                PROJECT_ROOT="$SOURCE_DIR"
+                shift 2
+                ;;
+            --build)
+                BUILD_BASE_DIR="$2"
+                APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"
+                # BUILD_DIR and APPDIR are recalculated in configure_variant
+                shift 2
                 ;;
             *)
                 echo "Unknown option: $1"
@@ -175,6 +206,10 @@ configure_variant() {
         QT6_EXTRA_APT=""
         QT6_EXTRA_ZYPPER=""
     fi
+
+    # Each variant gets its own build directory so cmake caches never cross-contaminate.
+    BUILD_DIR="$BUILD_BASE_DIR/build-appimage-${VARIANT,,}"
+    APPDIR="$BUILD_DIR/AppDir"
 }
 
 # Check dependencies

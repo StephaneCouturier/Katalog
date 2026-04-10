@@ -109,5 +109,13 @@ QSqlError DatabaseManager::runMigrations(const QString &connectionName, Collecti
         collection->setDatabaseSchemaVersion();
     }
 
+    // Unconditional column guard: mapping_source_collection was added to runMigration_2_11
+    // after some databases had already been migrated to schema 2.11, so it may be absent
+    // even when schemaVersion == "2.11".
+    {
+        QSqlError err = Database::ensureMappingSourceCollectionColumn(connectionName);
+        if (err.type() != QSqlError::NoError) return err;
+    }
+
     return QSqlError();
 }

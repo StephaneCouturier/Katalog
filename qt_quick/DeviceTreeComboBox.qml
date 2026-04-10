@@ -103,7 +103,7 @@ Controls.Button {
 
         background: Rectangle {
             color:        Kirigami.Theme.backgroundColor
-            border.color: Kirigami.Theme.separatorColor
+            border.color: Kirigami.Theme.separatorColor ?? "transparent"
             border.width: 1
             radius:       4
         }
