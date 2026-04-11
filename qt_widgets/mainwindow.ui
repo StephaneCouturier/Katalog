@@ -12587,9 +12587,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </item>
                     <item>
                      <widget class="QPushButton" name="Settings_pushButton_ExportToMemoryMode">
-                      <property name="toolTip">
-                       <string>Export to convert and open the collection in &quot;File&quot; mode.</string>
-                      </property>
                       <property name="text">
                        <string>Export to Memory mode (csv)</string>
                       </property>
@@ -13273,9 +13270,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <layout class="QHBoxLayout" name="Settings_horizontalLayout_HostedExport">
                     <item>
                      <widget class="QPushButton" name="Settings_pushButton_Hosted_ExportToSQLiteFile">
-                      <property name="toolTip">
-                       <string>Export the hosted collection to a local SQLite (.db) file.</string>
-                      </property>
                       <property name="text">
                        <string>Export to SQLite file</string>
                       </property>
@@ -13286,9 +13280,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </item>
                     <item>
                      <widget class="QPushButton" name="Settings_pushButton_Hosted_ExportToMemoryMode">
-                      <property name="toolTip">
-                       <string>Export the hosted collection to a local Memory mode folder (CSV + index files).</string>
-                      </property>
                       <property name="text">
                        <string>Export to Memory mode (csv)</string>
                       </property>
@@ -13340,9 +13331,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <width>16777215</width>
                      <height>16777215</height>
                     </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Select a different Collection folder</string>
                    </property>
                    <property name="text">
                     <string>Apply and restart</string>
@@ -13820,11 +13808,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="Settings_lineEdit_ImageFolderPath">
-                <property name="placeholderText">
-                 <string>Default: collection folder/images</string>
-                </property>
-               </widget>
+               <widget class="QLineEdit" name="Settings_lineEdit_ImageFolderPath"/>
               </item>
               <item>
                <widget class="QPushButton" name="Settings_pushButton_SelectImageFolder">
@@ -13893,7 +13877,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="2" column="1">
                <widget class="QLabel" name="Import_label_mode">
                 <property name="text">
-                 <string>Mode:</string>
+                 <string>Data mode</string>
                 </property>
                </widget>
               </item>
@@ -13914,14 +13898,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="2" column="3">
                <widget class="QLineEdit" name="Import_lineEdit_sourcePath">
                 <property name="placeholderText">
-                 <string>Source path</string>
+                 <string>Path</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="4">
                <widget class="QPushButton" name="Import_pushButton_select">
                 <property name="text">
-                 <string>Select...</string>
+                 <string>Select</string>
                 </property>
                </widget>
               </item>
@@ -13941,7 +13925,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="3" column="1">
                <widget class="QLabel" name="Import_label_source">
                 <property name="text">
-                 <string>Source device:</string>
+                 <string>Import</string>
                 </property>
                </widget>
               </item>
@@ -13951,14 +13935,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="3" column="4">
                <widget class="QPushButton" name="Import_pushButton_importSelected">
                 <property name="text">
-                 <string>Import Selected Device</string>
+                 <string>Import</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="1">
                <widget class="QLabel" name="Import_label_update">
                 <property name="text">
-                 <string>Update source:</string>
+                 <string>Update</string>
                 </property>
                </widget>
               </item>
@@ -13974,8 +13958,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
               <item row="4" column="4">
                <widget class="QPushButton" name="Import_pushButton_updateSelected">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
-                 <string>Update from Source</string>
+                 <string>Update</string>
                 </property>
                </widget>
               </item>

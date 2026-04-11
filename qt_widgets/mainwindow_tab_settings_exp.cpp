@@ -23,13 +23,21 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_settings_exp.cpp
-// Purpose:     methods for the Settings panel and collection export features
+// Purpose:     methods for the Settings panel, collection export, and collection import features
 // Description: https://stephanecouturier.github.io/Katalog/docs/Features/Settings
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
 
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "core/collectionimporter.h"
+#include "core/statusbarmessagebuilder.h"
+#include "devicetreeview.h"
+
+#include <QCoreApplication>
+#include <QElapsedTimer>
+#include <QFileDialog>
 
 // Export to SQLite File mode
 // Supported source modes: Memory, Hosted
@@ -49,7 +57,7 @@ void MainWindow::exportToSQLiteFile()
 
     QString selectedBackupFilePath = QFileDialog::getSaveFileName(
         this,
-        tr("Select the directory and file name for this export."),
+        tr("Select"),
         backupFilePath);
 
     if (selectedBackupFilePath.isEmpty())
@@ -65,17 +73,14 @@ void MainWindow::exportToSQLiteFile()
 
     if (isMemory) {
         // Memory → SQLite: load all catalog indexes into memory first, then backup
-        QProgressDialog progress(tr("Loading devices..."), tr("Cancel"), 0, 100, this);
+        QProgressDialog progress(tr("Loading"), tr("Cancel"), 0, 100, this);
         progress.setWindowModality(Qt::WindowModal);
 
         bool cancelled = !collection->loadAllCatalogFiles(
             [&progress](int filesLoaded, int totalFiles, const QString &deviceName) -> bool {
                 int percent = totalFiles > 0 ? (filesLoaded * 100) / totalFiles : 0;
                 progress.setValue(percent);
-                progress.setLabelText(
-                    QCoreApplication::translate("MainWindow",
-                        "Loading all catalogs prior to export<br/> %1 <br/><br/> %2 files loaded out of %3")
-                        .arg(deviceName, QLocale().toString(filesLoaded), QLocale().toString(totalFiles)));
+                progress.setLabelText(tr("Loading") + " " + deviceName + " (" + QLocale().toString(filesLoaded) + "/" + QLocale().toString(totalFiles) + ")");
                 return !progress.wasCanceled();
             });
 
@@ -86,7 +91,7 @@ void MainWindow::exportToSQLiteFile()
 
     } else {
         // Hosted → SQLite: copy all tables to a fresh SQLite file
-        QProgressDialog progress(tr("Exporting to SQLite..."), tr("Cancel"), 0, 100, this);
+        QProgressDialog progress(tr("Export"), tr("Cancel"), 0, 100, this);
         progress.setWindowModality(Qt::WindowModal);
         progress.setValue(0);
 
@@ -94,24 +99,17 @@ void MainWindow::exportToSQLiteFile()
             [&progress](int current, int total, const QString &tableName) -> bool {
                 int percent = total > 0 ? (current * 100) / total : 0;
                 progress.setValue(percent);
-                progress.setLabelText(
-                    QCoreApplication::translate("MainWindow",
-                        "Exporting table: <b>%1</b> (%2 of %3)")
-                        .arg(tableName, QString::number(current), QString::number(total)));
+                progress.setLabelText(tr("Export") + " " + tableName + " (" + QString::number(current) + "/" + QString::number(total) + ")");
                 return !progress.wasCanceled();
             });
     }
 
     if (!ok) {
         msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setText(QCoreApplication::translate("MainWindow",
-            "Failed to export collection to SQLite file.<br/>"
-            "<br/>Export file path:<br/><b>%1</b>").arg(backupFilePath));
+        msgBox.setText(tr("Export") + "<br/><br/>" + backupFilePath);
     } else {
         msgBox.setIcon(QMessageBox::Information);
-        msgBox.setText(QCoreApplication::translate("MainWindow",
-            "Successfully exported collection to SQLite database file.<br/>"
-            "<br/>Export file path:<br/><b>%1</b>").arg(backupFilePath));
+        msgBox.setText(tr("Export") + "<br/><br/>" + backupFilePath);
     }
 
     msgBox.exec();
@@ -134,7 +132,7 @@ void MainWindow::exportToMemoryMode()
 
     QString selectedExportFolder = QFileDialog::getExistingDirectory(
         this,
-        tr("Select the directory for the CSV export"),
+        tr("Select a folder"),
         exportFolderPath);
 
     if (selectedExportFolder.isEmpty())
@@ -142,14 +140,14 @@ void MainWindow::exportToMemoryMode()
 
     exportFolderPath = selectedExportFolder;
 
-    QProgressDialog progress(tr("Exporting database to CSV files..."), tr("Cancel"), 0, 100, this);
+    QProgressDialog progress(tr("Export"), tr("Cancel"), 0, 100, this);
     progress.setWindowModality(Qt::WindowModal);
     progress.setValue(0);
 
     try {
         // Export all CSV table files
         progress.setValue(10);
-        progress.setLabelText(tr("Exporting tables..."));
+        progress.setLabelText(tr("Export"));
         collection->exportAllToMemoryMode(exportFolderPath);
 
         progress.setValue(40);
@@ -159,25 +157,19 @@ void MainWindow::exportToMemoryMode()
             [&progress](int current, int total, const QString &catalogName) -> bool {
                 int progressValue = 40 + (current * 55) / total;
                 progress.setValue(progressValue);
-                progress.setLabelText(QString("Exporting catalog: %1 (%2/%3)")
-                                          .arg(catalogName)
-                                          .arg(current)
-                                          .arg(total));
+                progress.setLabelText(tr("Export") + " " + catalogName + " (" + QString::number(current) + "/" + QString::number(total) + ")");
                 return !progress.wasCanceled();
             });
 
         progress.setValue(100);
 
         msgBox.setIcon(QMessageBox::Information);
-        msgBox.setText(tr("Successfully exported collection to CSV files.<br/>"
-                          "<br/>Export directory:<br/><b>%1</b><br/>"
-                          "<br/>You can now switch to Memory mode and load this collection.")
-                           .arg(exportFolderPath));
+        msgBox.setText(tr("Export") + "<br/><br/>" + exportFolderPath);
         msgBox.exec();
     }
     catch (const std::exception& e) {
         msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setText(tr("Export failed: %1").arg(e.what()));
+        msgBox.setText(tr("Export") + ": " + tr("Error") + "\n" + QString::fromStdString(e.what()));
         msgBox.exec();
     }
 }
@@ -199,4 +191,226 @@ bool MainWindow::exportAllCatalogFiles(QProgressDialog &progress)
 bool MainWindow::exportSingleCatalogFoldersFile(int catalogId, const QString &filePath)
 {
     return collection->exportSingleCatalogFoldersFile(catalogId, filePath);
+}
+
+//----------------------------------------------------------------------
+// Collection Import / Update
+//----------------------------------------------------------------------
+
+void MainWindow::refreshImportUpdateSourceList()
+{
+    QStringList paths = collection->getImportSourcePaths();
+    ui->Import_comboBox_updateSource->clear();
+    ui->Import_comboBox_updateSource->addItems(paths);
+    ui->Import_pushButton_updateSelected->setEnabled(!paths.isEmpty());
+}
+
+//----------------------------------------------------------------------
+// In Memory mode, the import writes to the in-memory SQLite but loadCollection()
+// wipes and reloads from CSV files.  Persist the affected tables to disk first.
+static void persistImportToFiles(Collection *collection)
+{
+    if (collection->databaseMode != "Memory")
+        return;
+    collection->saveDeviceTableToFile();
+    collection->saveMappingTableToFile();
+    collection->saveCatalogFilterTableToFile();
+    collection->saveStorageTableToFile();
+    collection->saveTagTableToFile();
+    collection->saveStatiticsTableToFile();
+}
+
+//----------------------------------------------------------------------
+void MainWindow::openImportSource(const QString &path)
+{
+    ui->Import_lineEdit_sourcePath->setText(path);
+
+    if (!m_importer)
+        m_importer = new CollectionImporter(collection, this);
+
+    QSqlError err = m_importer->openSource(path);
+    if (err.type() != QSqlError::NoError) {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Collection Import"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(err.text())
+                .build());
+        return;
+    }
+
+    if (!m_importer->checkSchemaCompatibility()) {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Collection Import"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(tr("Schema version mismatch. Import cancelled. (%1)").arg(m_importer->lastError()))
+                .build());
+        m_importer->close();
+        return;
+    }
+
+    QStandardItemModel *model = m_importer->buildSourceDeviceModel();
+    DeviceTreeView *proxy = new DeviceTreeView(this);
+    proxy->setSourceModel(model);
+    proxy->setKatalogTheme(themeID > 0);
+    ui->Import_comboBox_sourceDevice->setTreeModel(proxy);
+    ui->Import_comboBox_sourceDevice->setIdColumn(3);  // col 3 = DEVICE_ID in DeviceTreeColumns layout
+    ui->Import_comboBox_sourceDevice->expandAll();
+}
+
+//----------------------------------------------------------------------
+void MainWindow::on_Import_pushButton_select_clicked()
+{
+    QString startDir = ui->Import_lineEdit_sourcePath->text().trimmed();
+    if (startDir.isEmpty())
+        startDir = collection->folder;
+
+    QString path;
+
+    if (ui->Import_comboBox_mode->currentIndex() == 0) { // File mode
+        path = QFileDialog::getOpenFileName(
+            this,
+            tr("Select"),
+            startDir);
+    } else {
+        path = QFileDialog::getExistingDirectory(
+            this,
+            tr("Select"),
+            startDir);
+    }
+
+    if (path.isEmpty())
+        return;
+
+    openImportSource(path);
+}
+
+//----------------------------------------------------------------------
+void MainWindow::on_Import_lineEdit_sourcePath_returnPressed()
+{
+    QString path = ui->Import_lineEdit_sourcePath->text().trimmed();
+    if (!path.isEmpty())
+        openImportSource(path);
+}
+
+//----------------------------------------------------------------------
+void MainWindow::on_Import_pushButton_importSelected_clicked()
+{
+    if (!m_importer || !m_importer->isSourceOpen()) {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Collection Import"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(tr("No source collection is open."))
+                .build());
+        return;
+    }
+
+    int srcDeviceId = ui->Import_comboBox_sourceDevice->selectedDeviceId();
+
+    updateStatusBarMessage(
+        StatusBarMessageBuilder()
+            .setOperation(tr("Collection Import"))
+            .setStatus(tr("In Progress"))
+            .build());
+    QApplication::processEvents();
+
+    // Track elapsed time so we can compute ETA for large file tables.
+    QElapsedTimer importTimer;
+    importTimer.start();
+
+    QMetaObject::Connection progressConn = connect(
+        m_importer, &CollectionImporter::fileImportProgress,
+        this, [this, &importTimer](int catalogIndex, int totalCatalogs,
+                                   const QString &catalogName,
+                                   qint64 done, qint64 total) {
+            StatusBarMessageBuilder builder;
+            builder.setOperation(tr("Collection Import"))
+                   .setStatus(tr("In Progress"))
+                   .setDeviceContext(catalogIndex, totalCatalogs, catalogName)
+                   .setProcess(tr("Files"), done, total);
+
+            // ETA — only after ≥ 500 ms to avoid wild numbers at the very start.
+            const qint64 elapsedMs = importTimer.elapsed();
+            if (elapsedMs >= 500 && total > 0 && done > 0) {
+                const qint64 etaSec = (elapsedMs * (total - done)) / (done * 1000);
+                QString etaStr;
+                if (etaSec < 60)
+                    etaStr = tr("%1s").arg(etaSec);
+                else if (etaSec < 3600)
+                    etaStr = tr("%1m %2s").arg(etaSec / 60).arg(etaSec % 60);
+                else
+                    etaStr = tr("%1h %2m").arg(etaSec / 3600).arg((etaSec % 3600) / 60);
+                builder.setTimeToCompletion(tr("%1").arg(etaStr));
+            }
+
+            updateStatusBarMessage(builder.build());
+            // Allow repaints without processing user-input events (avoids re-entrancy).
+            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+        },
+        Qt::DirectConnection);
+
+    bool ok;
+    if (srcDeviceId == 0) {
+        // Synthetic "Collection" root — import all root-level devices
+        ok = (m_importer->importAllDevices() >= 0);
+    } else {
+        ok = m_importer->importDevice(srcDeviceId);
+    }
+
+    disconnect(progressConn);
+
+    if (ok) {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Collection Import"))
+                .setStatus(tr("Completed"))
+                .build());
+        persistImportToFiles(collection);
+        loadCollection();
+        refreshImportUpdateSourceList();
+    } else {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Collection Import"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(m_importer->lastError())
+                .build());
+    }
+}
+
+//----------------------------------------------------------------------
+void MainWindow::on_Import_pushButton_updateSelected_clicked()
+{
+    QString sourcePath = ui->Import_comboBox_updateSource->currentText().trimmed();
+
+    if (!m_importer)
+        m_importer = new CollectionImporter(collection, this);
+
+    updateStatusBarMessage(
+        StatusBarMessageBuilder()
+            .setOperation(tr("Collection Update"))
+            .setStatus(tr("In Progress"))
+            .build());
+    QApplication::processEvents();
+
+    bool ok = m_importer->updateAllImportsFromSource(sourcePath);
+
+    if (ok) {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Collection Update"))
+                .setStatus(tr("Completed"))
+                .build());
+        persistImportToFiles(collection);
+        loadCollection();
+    } else {
+        updateStatusBarMessage(
+            StatusBarMessageBuilder()
+                .setOperation(tr("Collection Update"))
+                .setStatus(tr("Error"))
+                .setCurrentItem(m_importer->lastError())
+                .build());
+    }
 }

@@ -1632,7 +1632,7 @@
 
                     StatusBarMessageBuilder builder;
                     builder.setOperation(tr("Verify Checksums"))
-                           .setProcess(tr("Processing"), i + 1, total)
+                           .setProcess(tr("Evaluated"), i + 1, total)
                            .setCurrentItem(filePath);
                     statusBarLabel->setText(builder.build());
                     QApplication::processEvents();
@@ -1655,13 +1655,10 @@
                 StatusBarMessageBuilder doneBuilder;
                 doneBuilder.setOperation(tr("Verify Checksums"))
                            .setStatus(tr("Completed"))
-                           .setProcess(tr("Processed"), total, total);
+                           .setProcess(tr("Evaluated"), total, total);
                 statusBarLabel->setText(doneBuilder.build());
                 statusBarTimer->start(5000);
 
-                QMessageBox::information(this, tr("Verify Checksums"),
-                    tr("Checksum verification complete.\n\nMatched: %1\nMismatched: %2\nNew checksums calculated: %3\nErrors: %4")
-                    .arg(matched).arg(mismatched).arg(calculated).arg(errors));
                 ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
             }
 
@@ -1681,7 +1678,7 @@
 
                     StatusBarMessageBuilder builder;
                     builder.setOperation(tr("Include Metadata"))
-                           .setProcess(tr("Processing"), i + 1, total)
+                           .setProcess(tr("Evaluated"), i + 1, total)
                            .setCurrentItem(filePath);
                     statusBarLabel->setText(builder.build());
                     QApplication::processEvents();
@@ -1702,13 +1699,10 @@
                 StatusBarMessageBuilder doneBuilder;
                 doneBuilder.setOperation(tr("Include Metadata"))
                            .setStatus(tr("Completed"))
-                           .setProcess(tr("Processed"), total, total);
+                           .setProcess(tr("Evaluated"), total, total);
                 statusBarLabel->setText(doneBuilder.build());
                 statusBarTimer->start(5000);
 
-                QMessageBox::information(this, tr("Include Metadata"),
-                    tr("Metadata extraction complete.\n\nUpdated: %1\nSkipped: %2\nErrors: %3")
-                    .arg(updated).arg(skipped).arg(errors));
                 ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
             }
         }

@@ -347,7 +347,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_SelectImageFolder_clicked()
     {
-        QString newFolder = QFileDialog::getExistingDirectory(this, tr("Select the folder for device images"),
+        QString newFolder = QFileDialog::getExistingDirectory(this, tr("Select"),
                                                               collection->imageFolderPath,
                                                               QFileDialog::ShowDirsOnly
                                                                   | QFileDialog::DontResolveSymlinks);
