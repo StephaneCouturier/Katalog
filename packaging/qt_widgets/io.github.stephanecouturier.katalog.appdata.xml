@@ -3,7 +3,7 @@
   <id>io.github.stephanecouturier.Katalog</id>
   <metadata_license>CC0-1.0</metadata_license>
   <name>Katalog</name>
-  <summary>File Catalog Manager</summary>
+  <summary>File catalog manager</summary>
   <description>
     <p>
       Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
@@ -25,6 +25,10 @@
       and track large collections of files across multiple storage devices.
     </p>
   </description>
+  <branding>
+    <color type="primary" scheme_preference="light">#e9f7fc</color>
+    <color type="primary" scheme_preference="dark">#0D79A6</color>
+  </branding>
   <categories>
     <category>Utility</category>
     <category>FileManager</category>
@@ -42,8 +46,8 @@
   </keywords>
   <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
   <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
-  <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
-  <url type="donation">https://github.com/sponsors/StephaneCouturier</url>
+  <url type="help">https://stephanecouturier.github.io/Katalog/docs/Overview</url>
+  <url type="donation">https://www.paypal.com/donate/?business=FQXB8ETUW9PAG&no_recurring=0&item_name=Support+the+development+of+Katalog&currency_code=EUR</url>
   <url type="vcs-browser">https://github.com/StephaneCouturier/Katalog</url>
   <launchable type="desktop-id">io.github.stephanecouturier.Katalog.desktop</launchable>
   <provides>

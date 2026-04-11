@@ -8,14 +8,13 @@ finish-args:
   - --share=ipc
   - --socket=wayland
   - --socket=fallback-x11
-  - --device=all
+  - --device=dri
   # File system: Katalog's core purpose is cataloging arbitrary storage locations
   # (external drives, NAS, removable media) so host access is required
   - --filesystem=host
   # DBus: needed for KDE integration (theming, file dialogs)
   - --talk-name=org.kde.StatusNotifierWatcher
   - --talk-name=com.canonical.AppMenu.Registrar
-  #- --env=QT_XCB_GL_INTEGRATION=none
 
 modules:
   - name: Katalog

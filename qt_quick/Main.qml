@@ -14,8 +14,8 @@ Kirigami.ApplicationWindow {
 
     Settings {
         id: windowSettings
-        property int  savedWidth:     1080
-        property int  savedHeight:    720
+        property int  savedWidth:     900
+        property int  savedHeight:    600
         property bool drawerPinned:   false
         property real savedCardScale: 1.0
     }
