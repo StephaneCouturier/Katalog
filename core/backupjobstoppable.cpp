@@ -103,6 +103,12 @@ bool BackupJobStoppable::copyFileChunked(const QString &source, const QString &t
 {
     static constexpr qint64 kChunkSize = 1 * 1024 * 1024; // 1 MB
 
+    // Capture all source timestamps before opening (QFileInfo caches on first use)
+    const QFileInfo srcInfo(source);
+    const QDateTime srcModTime    = srcInfo.lastModified();
+    const QDateTime srcAccessTime = srcInfo.lastRead();
+    const QDateTime srcBirthTime  = srcInfo.birthTime();
+
     QFile src(source);
     if (!src.open(QIODevice::ReadOnly)) {
         qWarning() << "BackupJobStoppable::copyFileChunked - cannot open source:" << source;
@@ -152,6 +158,20 @@ bool BackupJobStoppable::copyFileChunked(const QString &source, const QString &t
         qWarning() << "BackupJobStoppable::copyFileChunked - size mismatch for" << source
                    << "expected" << fileSize << "got" << bytesWrittenForFile;
     }
+
+    // Flush Qt's write buffer to the kernel BEFORE setting timestamps.
+    // Without this, close() would flush buffered data after setFileTime(), letting
+    // the kernel overwrite mtime with the current time — making setFileTime a no-op.
+    dst.flush();
+
+    // Preserve source file timestamps (dst must still be open for setFileTime to use its fd).
+    // FileBirthTime is a best-effort: silently ignored on filesystems that don't support it.
+    if (srcModTime.isValid())
+        dst.setFileTime(srcModTime,    QFileDevice::FileModificationTime);
+    if (srcAccessTime.isValid())
+        dst.setFileTime(srcAccessTime, QFileDevice::FileAccessTime);
+    if (srcBirthTime.isValid())
+        dst.setFileTime(srcBirthTime,  QFileDevice::FileBirthTime);
 
     return true;
 }
