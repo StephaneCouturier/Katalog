@@ -444,14 +444,8 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
             //Reload Storage file data to table
             collection->loadStorageFileToTable();
-
-            event->accept();
-            return;
         }
-        else if ( result ==QMessageBox::Discard){
-            event->accept();
-            return;
-        }
+        // Discard: fall through to shutdown
     }
 
     // Stop backup thread if running so it doesn't outlive the window
@@ -474,4 +468,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     group.sync();
 
     event->accept();
+    // MainWindow is stack-allocated (WA_DeleteOnClose = false), so KMainWindow's
+    // normal quit-on-delete path never fires. Quit the event loop explicitly.
+    QApplication::quit();
 }
