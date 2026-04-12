@@ -7,6 +7,9 @@ version: "2.11"
 ## Summary
 This page describes all the features of the **Settings** screen and how to use them.
 * Data & Collection management
+  * Collection folder and data mode (Memory / File / Hosted)
+  * [Collection Import & Update](Settings#import-update): import devices from another collection or refresh previously imported ones
+  * [Images folder](Settings#images-folder): configure where device pictures are stored
 * Language & Theme
 * About
 
@@ -108,6 +111,8 @@ Katalog can import devices from another collection, or refresh the catalog conte
 * The **source** collection is an existing Katalog collection opened read-only — it is never modified.
 * The **target** is the current active collection where devices and catalogs are added.
 
+![Settings page showing the an example of imported collection](/img/screen_settings_06_import_collection.png)
+
 **What is imported**
 
 Devices, their catalogs, catalog file indexes, statistics, backup links, and exclude folder settings are transferred. The source folder structure is preserved in the target by inserting the necessary parent levels as container devices. If a device or catalog name already exists in the target, it is automatically renamed (for example, `My Drive (2)`) to avoid conflicts.
@@ -130,6 +135,15 @@ Devices, their catalogs, catalog file indexes, statistics, backup links, and exc
 | **Memory** (CSV folder) | Select the collection folder |
 | **File** (SQLite `.db` file) | Select the `.db` file |
 | **Hosted** (MySQL/MariaDB) | Export to *File* or *Memory* mode first (see [Hosted mode export](#export)), then use the exported collection as the source |
+
+### Images folder {#images-folder}
+
+The *Images folder* is the folder where device pictures are stored. It is a per-collection setting.
+
+* Type a path directly in the field and press Enter, or click *Select* to browse for a folder.
+* Defaults to `<collection_folder>/images` if not configured.
+
+Pictures placed in this folder can then be assigned to storage devices in the [Devices](DevicesStorage#device-picture) screen.
 
 ## Language & Theme
 * Choose the Language for the application.
