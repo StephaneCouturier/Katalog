@@ -5,6 +5,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
+> **CRITICAL — UI structure:**
+> - **NEVER create a new source file** (`.cpp`, `.h`, `.qml`) for a new tab, section, or page without the user explicitly requesting it.
+> - **NEVER add a new entry to any `CMakeLists.txt`** for a file that does not already exist on disk.
+> - When implementing a feature that touches the Settings screen or any existing tab, **add the code to the existing `_exp` or tab file** — do not split it into a new file unless the user asks.
+> - If unsure where new code belongs, **ask before creating anything**.
+
 > **CRITICAL — User-visible text:**
 > - **NEVER alter existing `tr()` strings or any user-visible label text** — not for brevity, not for layout reasons, not for any reason. Any change breaks all 30 translations and diverges K3 from K2.
 > - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.

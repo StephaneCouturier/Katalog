@@ -47,7 +47,7 @@
   <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
   <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
   <url type="help">https://stephanecouturier.github.io/Katalog/docs/Overview</url>
-  <url type="donation">https://www.paypal.com/donate/?business=FQXB8ETUW9PAG&no_recurring=0&item_name=Support+the+development+of+Katalog&currency_code=EUR</url>
+  <url type="donation">https://www.paypal.com/donate/?business=FQXB8ETUW9PAG&amp;no_recurring=0&amp;item_name=Support+the+development+of+Katalog&amp;currency_code=EUR</url>
   <url type="vcs-browser">https://github.com/StephaneCouturier/Katalog</url>
   <launchable type="desktop-id">io.github.stephanecouturier.Katalog.desktop</launchable>
   <provides>
@@ -73,9 +73,9 @@
     <name>Stéphane Couturier</name>
   </developer>
   <releases>
-    <release version="2.10" date="2026-03-09">
+    <release version="2.11" date="2026-04-12">
       <description>
-        <p>Incremental BackUp and Archive, Exclude folders.</p>
+        <p>Import aned Update data from a different Collection</p>
       </description>
     </release>
   </releases>
