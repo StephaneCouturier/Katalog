@@ -1,0 +1,281 @@
+/*LICENCE
+    This file is part of Katalog
+
+    Copyright (C) 2020, the Katalog Development team
+
+    Author: Stephane Couturier (Symbioxy)
+
+    Katalog is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    Katalog is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Katalog; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+/*FILE DESCRIPTION
+/////////////////////////////////////////////////////////////////////////////
+// Application: Katalog
+// File Name:   searchmanager.cpp
+// Purpose:     Class/model to manage search operations using KJob framework
+// Description:
+// Author:      Stephane Couturier
+/////////////////////////////////////////////////////////////////////////////
+*/
+
+#include "searchmanager.h"
+#include <QDebug>
+
+SearchManager::SearchManager(QObject *parent)
+    : QObject(parent)
+{
+}
+
+SearchManager::~SearchManager()
+{
+    if (m_currentJob) {
+        m_currentJob->kill();
+        m_currentJob->setParent(nullptr);
+        m_currentJob->deleteLater();
+    }
+}
+//----------------------------------------------------------------------
+void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, Device *targetDevice)
+{
+    if (m_currentJob) {
+        return;
+    }
+
+    if (!searchEngine || !targetDevice) {
+        emit searchError("Invalid search configuration");
+        return;
+    }
+
+    // Save search criteria to history immediately when search is initiated
+    searchEngine->saveSearchHistoryToTable(m_connectionName);
+
+    m_currentJob = new SearchJob(this);
+    m_currentJob->setSearchJobStoppable(searchEngine);
+    m_currentJob->setTargetDevice(targetDevice);
+
+    // Connect job signals with enhanced progress handling
+    connect(m_currentJob, &KJob::result, this, &SearchManager::onJobResult);
+
+    // Enhanced progress connection that handles special values
+    connect(m_currentJob, &SearchJob::searchProgress, this, [this](int filesProcessed) {
+        if (m_currentJob && m_currentJob->getSearchEngine()) {
+            Search* engine = m_currentJob->getSearchEngine();
+
+            // Handle special signals (-2, -3)
+            if (filesProcessed == -2) {
+                setCurrentCatalogName(engine->currentCatalogName);
+                setStatus(QString("Loading catalog: %1").arg(engine->currentCatalogName));
+                return;
+            }
+            if (filesProcessed == -3) {
+                setStatus("Processing files...");
+                return;
+            }
+            // Handle catalog loading progress (-4)
+            if (filesProcessed == -4) {
+                SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(engine);
+                if (searchJobStoppable && searchJobStoppable->currentCatalogTotalFiles > 0) {
+                    double percent = (double)searchJobStoppable->currentCatalogFilesLoaded /
+                                     searchJobStoppable->currentCatalogTotalFiles * 100.0;
+                    setStatus(QString("Loading catalog: %1 | %2/%3 files (%4%)")
+                                  .arg(engine->currentCatalogName)
+                                  .arg(searchJobStoppable->currentCatalogFilesLoaded)
+                                  .arg(searchJobStoppable->currentCatalogTotalFiles)
+                                  .arg(QString::number(percent, 'f', 1)));
+                }
+                return;
+            }
+            // Regular progress updates (works for both catalog and directory)
+            if (filesProcessed >= 0) {
+                if (engine->estimatedTotalFiles > 0) {
+                #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+                    int percent = qMin(100, static_cast<int>((filesProcessed * 100) / engine->estimatedTotalFiles));
+                #else
+                    int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
+                #endif
+                    setProgress(percent);
+                }
+                setCurrentCatalogName(engine->currentCatalogName);
+                setStatus(QString("Searching - %1 files processed").arg(filesProcessed));
+            }
+        }
+    });
+
+    // Connect catalog-specific signals if available
+    connect(m_currentJob, &SearchJob::catalogLoadingStarted, this, &SearchManager::onCatalogLoadingStarted);
+    connect(m_currentJob, &SearchJob::catalogLoadingFinished, this, &SearchManager::onCatalogLoadingFinished);
+
+    setStatus("Starting search...");
+    setSearchRunning(true);
+    setProgress(0);
+    m_isPaused = false;
+
+    // Start the job
+    m_currentJob->startJob();
+}
+//----------------------------------------------------------------------
+void SearchManager::stopSearch()
+{
+
+    if (!m_currentJob) {
+        return;
+    }
+
+    setStatus("Stopping search...");
+
+    // Disconnect signals first to prevent double handling
+    disconnect(m_currentJob, nullptr, this, nullptr);
+
+    // Kill the job
+    m_currentJob->kill();
+
+    // Force immediate cleanup since result signal might not be emitted
+    setSearchRunning(false);
+    setProgress(0);
+    setCurrentCatalogName("");
+    m_isPaused = false;
+
+    // Clean up immediately
+    if (m_currentJob) {
+        m_currentJob->setParent(nullptr);
+        m_currentJob->deleteLater();
+        m_currentJob = nullptr;
+    }
+
+    emit searchCancelled();
+}
+//----------------------------------------------------------------------
+void SearchManager::pauseSearch()
+{
+    if (!m_currentJob || m_isPaused) {
+        return;
+    }
+
+    if (m_currentJob->suspend()) {
+        m_isPaused = true;
+    }
+}
+//----------------------------------------------------------------------
+void SearchManager::resumeSearch()
+{
+    if (!m_currentJob || !m_isPaused) {
+        return;
+    }
+
+    if (m_currentJob->resume()) {
+        m_isPaused = false;
+    }
+}
+//----------------------------------------------------------------------
+Search* SearchManager::getCurrentSearch() const
+{
+    if (m_currentJob) {
+        return m_currentJob->getSearchEngine();
+    }
+    return nullptr;
+}
+//----------------------------------------------------------------------
+void SearchManager::onJobResult(KJob *job)
+{
+
+    if (job->error() == KJob::KilledJobError) {
+        setStatus("Search cancelled");
+        emit searchCancelled();
+    } else if (job->error()) {
+        QString errorMsg = QString("Search failed: %1").arg(job->errorString());
+        setStatus(errorMsg);
+        emit searchError(errorMsg);
+    } else {
+        setStatus("Search completed successfully!");
+        emit searchCompleted();
+    }
+
+    setSearchRunning(false);
+    setProgress(job->error() ? 0 : 100);
+    setCurrentCatalogName("");
+    m_isPaused = false;
+
+    //qDebug() << "About to cleanup job...";
+    cleanupJob();
+    //qDebug() << "Job cleanup finished";
+}
+//----------------------------------------------------------------------
+void SearchManager::onJobPercent()
+{
+    if (m_currentJob) {
+        unsigned long percent = m_currentJob->percent();
+        setProgress(static_cast<int>(percent));
+    }
+}
+//----------------------------------------------------------------------
+void SearchManager::onJobInfoMessage(KJob *job, const QString &message)
+{
+    Q_UNUSED(job);
+    setStatus(message);
+}
+//----------------------------------------------------------------------
+void SearchManager::onCatalogLoadingStarted(const QString &catalogName)
+{
+    setCurrentCatalogName(catalogName);
+    setStatus(QString("Loading catalog: %1").arg(catalogName));
+}
+//----------------------------------------------------------------------
+void SearchManager::onCatalogLoadingFinished()
+{
+    setStatus("Processing files...");
+}
+//----------------------------------------------------------------------
+void SearchManager::setSearchRunning(bool running)
+{
+    if (m_searchRunning != running) {
+        m_searchRunning = running;
+        emit searchRunningChanged();
+    }
+}
+//----------------------------------------------------------------------
+void SearchManager::setProgress(int progress)
+{
+    if (m_progress != progress) {
+        m_progress = progress;
+        emit progressChanged();
+    }
+}
+//----------------------------------------------------------------------
+void SearchManager::setStatus(const QString &status)
+{
+    if (m_status != status) {
+        m_status = status;
+        emit statusChanged();
+    }
+}
+//----------------------------------------------------------------------
+void SearchManager::setCurrentCatalogName(const QString &catalog)
+{
+    if (m_currentCatalogName != catalog) {
+        m_currentCatalogName = catalog;
+        emit currentCatalogChanged();
+    }
+}
+//----------------------------------------------------------------------
+void SearchManager::cleanupJob()
+{
+    if (m_currentJob) {
+        //qDebug() << "Cleaning up search job...";
+        m_currentJob->setParent(nullptr);
+        m_currentJob->deleteLater();
+        m_currentJob = nullptr;
+        //qDebug() << "Search job cleanup complete";
+    }
+}
+//----------------------------------------------------------------------

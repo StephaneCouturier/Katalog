@@ -23,7 +23,6 @@
 #/////////////////////////////////////////////////////////////////////////////
 # Application: Katalog
 # File Name:   Katalog_linux_create_portable.sh
-# Version:     1.0
 # Purpose:     Fixed Katalog Portable Creator, Supports both specific Qt installations and system Qt
 # Description:
 # Author:      Stephane Couturier

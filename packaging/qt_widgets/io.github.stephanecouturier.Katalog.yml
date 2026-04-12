@@ -1,0 +1,29 @@
+id: io.github.stephanecouturier.Katalog
+runtime: org.kde.Platform
+runtime-version: "6.10"
+sdk: org.kde.Sdk
+command: Katalog
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  # File system: Katalog's core purpose is cataloging arbitrary storage locations
+  # (external drives, NAS, removable media) so host access is required
+  - --filesystem=host
+  # DBus: needed for KDE integration (theming, file dialogs)
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=com.canonical.AppMenu.Registrar
+
+modules:
+  - name: Katalog
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_TESTS=OFF
+    sources:
+      - type: git
+        url: https://github.com/StephaneCouturier/Katalog.git
+        tag: v2.10.4
+        commit: e4c3dd70018919879726bb409adbf75243865c17

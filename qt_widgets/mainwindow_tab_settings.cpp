@@ -1,0 +1,808 @@
+/*LICENCE
+    This file is part of Katalog
+
+    Copyright (C) 2020, the Katalog Development team
+
+    Author: Stephane Couturier (Symbioxy)
+
+    Katalog is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    Katalog is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Katalog; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+/*FILE DESCRIPTION
+/////////////////////////////////////////////////////////////////////////////
+// Application: Katalog
+// File Name:   mainwindow_tab_settings.cpp
+// Purpose:     methods for the Settings panel
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Settings
+// Author:      Stephane Couturier
+/////////////////////////////////////////////////////////////////////////////
+*/
+
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "core/database.h"
+#include "core/databasemanager.h"
+#include <QVersionNumber>
+
+//SETTINGS / GLOBAL -----------------------------------------------------------------
+    void MainWindow::on_splitter_splitterMoved()
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+
+        QSize widget1Size = ui->splitter_widget_Filters->size();
+        QSize widget2Size = ui->splitter_widget_TabWidget->size();
+
+        settings.setValue("Settings/SplitterWidget1Size", widget1Size);
+        settings.setValue("Settings/SplitterWidget2Size", widget2Size);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_tabWidget_currentChanged(int index)
+    {
+        selectedTab = index;
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
+    }
+    //----------------------------------------------------------------------
+
+//SETTINGS / Data management
+    void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged()
+    {
+        applyDatabaseModeToUI();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::applyDatabaseModeToUI()
+    {
+        QString newDatabaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
+
+        if(newDatabaseMode=="Memory"){
+            ui->Settings_widget_DataMode_CSVFiles->show();
+            ui->Settings_widget_DataMode_LocalSQLite->hide();
+            ui->Settings_widget_DataMode_Hosted->hide();
+        }
+        else if(newDatabaseMode=="File"){
+            ui->Settings_widget_DataMode_CSVFiles->hide();
+            ui->Settings_widget_DataMode_LocalSQLite->show();
+            ui->Settings_widget_DataMode_Hosted->hide();
+        }
+        else if(newDatabaseMode=="Hosted"){
+            ui->Settings_widget_DataMode_CSVFiles->hide();
+            ui->Settings_widget_DataMode_LocalSQLite->hide();
+            ui->Settings_widget_DataMode_Hosted->show();
+        }
+
+        if(newDatabaseMode != collection->databaseMode)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+        else
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(false);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_DatabaseModeApplyAndRestart_clicked()
+    {
+        //Save choice of mode
+        collection->databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(), Qt::UserRole).toString();
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        settings.setValue("Settings/databaseMode", collection->databaseMode);
+
+        //Save folder
+        if(collection->databaseMode=="Memory"){
+            settings.setValue("LastCollectionFolder", collection->folder);
+        }
+        //Save sqlite file path
+        else if(collection->databaseMode=="File"){
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+        }
+        //Save host parameters
+        else if(collection->databaseMode=="Hosted"){
+            // Validate hostname before saving
+            QString hostname = ui->Settings_lineEdit_DataMode_Hosted_HostName->text().trimmed();
+
+            // Set default if empty
+            if (hostname.isEmpty()) {
+                hostname = "localhost";
+                ui->Settings_lineEdit_DataMode_Hosted_HostName->setText(hostname);
+            }
+
+            Database::HostnameValidationType validationType = Database::validateHostname(hostname);
+
+            if (validationType == Database::PublicOrInvalid) {
+                // Invalid hostname - show error and abort
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(tr("Invalid hostname."));
+                msgBox.setInformativeText(tr("Only local or private network allowed.") + "\n\n"
+                                          + tr("Valid:") + " localhost, 127.x.x.x, 192.168.x.x, 10.x.x.x, 172.16-31.x.x");
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.exec();
+                return;  // Abort the save and restart
+            }
+            else if (validationType == Database::PrivateNetwork) {
+                // Private network IP - show confirmation dialog
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(tr("Private network connection") + ": " + hostname);
+                msgBox.setInformativeText(tr("Your data will be sent to this network database.") + "\n\n"
+                                          + tr("Continue?"));
+                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                msgBox.setDefaultButton(QMessageBox::No);
+
+                int result = msgBox.exec();
+                if (result != QMessageBox::Yes) {
+                    return;  // User cancelled
+                }
+            }
+            // If Localhost, proceed without warning
+
+            settings.setValue("Settings/databaseHostName", hostname);
+            settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->text());
+            settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Hosted_Port->text());
+            settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Hosted_UserName->text());
+            settings.setValue("Settings/databasePassword", ui->Settings_lineEdit_DataMode_Hosted_Password->text());
+        }
+
+        //Trigger the restart action
+        QProcess::startDetached(QApplication::applicationFilePath(), QStringList() << "restart");
+        QApplication::exit();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::changeCollectionFolder(QString newDirectory)
+    {
+        //Test the new directory path is not empty
+        if (newDirectory != "") {
+            //Test if the directory exists, and propose to create it otherwise. If refused, set back the current folder.
+            if (!QDir(newDirectory).exists()) {
+
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "The directory does not exist. Create it?"));
+                msgBox.setIcon(QMessageBox::Warning);
+                QPushButton *createButton = msgBox.addButton(tr("Create"), QMessageBox::YesRole);
+                createButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogYesButton));
+                QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::NoRole);
+                cancelButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
+                msgBox.exec();
+
+                if (msgBox.clickedButton() == createButton) {
+                    //Create the folder and set it as the new collection folder
+                    QDir().mkdir(newDirectory);
+                } else if (msgBox.clickedButton() == cancelButton) {
+                    //Reset the former folder path and exit procedure
+                    ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+                    ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
+                    return;
+                }
+            }
+
+            // Validate folder before attempting to load
+            Collection::CollectionFolderStatus status = collection->validateCollectionFolder(newDirectory, collection->databaseMode);
+
+            switch (status) {
+            case Collection::VALID_EMPTY:
+            case Collection::VALID_MEMORY_MODE:
+            case Collection::VALID_FILE_MODE:
+                // Valid folder - proceed with loading
+                break;
+
+            case Collection::INVALID_MEMORY_FILES:
+            case Collection::INVALID_FILE_FILES:
+            case Collection::INVALID_USER_DATA:
+            case Collection::INVALID_MIXED_DATA: {
+                // Invalid folder - show user options
+                MainWindow::InvalidFolderAction action = showInvalidFolderDialog(newDirectory, status, false);
+
+                switch (action) {
+                case MainWindow::ACTION_CREATE_SUBFOLDER: {
+                    // Create new collection in subfolder
+                    QString newCollectionPath = newDirectory + "/Katalog_Collection_" +
+                                                QDateTime::currentDateTime().toString("yyyyMMdd");
+                    QDir().mkpath(newCollectionPath);
+                    changeCollectionFolder(newCollectionPath); // Recursive call with empty folder
+                    return;
+                }
+                case MainWindow::ACTION_SELECT_DIFFERENT:
+                    on_Settings_pushButton_SelectFolder_clicked(); // Let user pick again
+                    return;
+
+                case MainWindow::ACTION_CANCEL:
+                default:
+                    // Cancel: restore previous folder and return
+                    ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+                    ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
+                    return;
+                }
+            }
+            }
+
+            //Set the new collection folder
+            collection->folder = newDirectory;
+            ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+
+            //Save Settings for the new collection folder value
+            QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+            settings.setValue("LastCollectionFolder", collection->folder);
+
+            //Load the collection from this new folder;
+            loadCollection();
+
+            //Reset selected values (to avoid actions on the last selected ones)
+            resetSelection();
+
+            ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
+        }
+    }
+
+    MainWindow::InvalidFolderAction MainWindow::showInvalidFolderDialog(const QString& folderPath,
+                                                                        Collection::CollectionFolderStatus status,
+                                                                        bool isFirstRun)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Invalid Collection Folder"));
+
+        QString message = collection->getValidationMessage(status);
+        message += tr("<br/><br/>Selected folder: <i>%1</i>").arg(folderPath);
+
+        if (isFirstRun) {
+            message += tr("<br/><br/>For your first collection, please choose a suitable folder.");
+        }
+
+        // Enable HTML rendering
+        msgBox.setTextFormat(Qt::RichText);
+        msgBox.setInformativeText(message);
+        msgBox.setIcon(QMessageBox::Warning);
+
+        QPushButton *createButton = nullptr;
+        QPushButton *selectButton = nullptr;
+        QPushButton *defaultOrCancelButton = nullptr;
+
+        if (collection->databaseMode == "Memory") {
+            createButton = msgBox.addButton(tr("Create New Collection Here"), QMessageBox::YesRole);
+            selectButton = msgBox.addButton(tr("Select Different Folder"), QMessageBox::NoRole);
+
+            if (isFirstRun) {
+                defaultOrCancelButton = msgBox.addButton(tr("Use Application Folder"), QMessageBox::AcceptRole);
+            } else {
+                defaultOrCancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+            }
+        }
+        else { // File mode
+            selectButton = msgBox.addButton(tr("Select Different Folder"), QMessageBox::AcceptRole);
+
+            if (isFirstRun) {
+                defaultOrCancelButton = msgBox.addButton(tr("Use Application Folder"), QMessageBox::RejectRole);
+            } else {
+                defaultOrCancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+            }
+        }
+
+        msgBox.exec();
+
+        if (createButton && msgBox.clickedButton() == createButton) {
+            return ACTION_CREATE_SUBFOLDER;
+        }
+        else if (msgBox.clickedButton() == selectButton) {
+            return ACTION_SELECT_DIFFERENT;
+        }
+        else if (msgBox.clickedButton() == defaultOrCancelButton) {
+            return isFirstRun ? ACTION_USE_DEFAULT : ACTION_CANCEL;
+        }
+
+        return isFirstRun ? ACTION_USE_DEFAULT : ACTION_CANCEL;
+    }
+    //Memory ---------------------------------------------------------------
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
+    {
+        QString dir = ui->Settings_lineEdit_CollectionFolder->text();
+        changeCollectionFolder(dir);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_CollectionFolder_textChanged()
+    {
+        ui->Settings_pushButton_ApplyFolderpath->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_ApplyFolderpath_clicked()
+    {
+        //Set the new collection folder, and refresh all data
+        QString newDirectory = ui->Settings_lineEdit_CollectionFolder->text();
+        changeCollectionFolder(newDirectory);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_SelectFolder_clicked()
+    {
+        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+        QString newDirectory = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                        collection->folder,
+                                                        QFileDialog::ShowDirsOnly
+                                                            | QFileDialog::DontResolveSymlinks);
+
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
+        if ( newDirectory !=""){
+            changeCollectionFolder(newDirectory);
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_OpenFolder_clicked()
+    {
+        //Open the selected collection folder
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->folder));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_SelectImageFolder_clicked()
+    {
+        QString newFolder = QFileDialog::getExistingDirectory(this, tr("Select"),
+                                                              collection->imageFolderPath,
+                                                              QFileDialog::ShowDirsOnly
+                                                                  | QFileDialog::DontResolveSymlinks);
+        if (!newFolder.isEmpty()) {
+            collection->imageFolderPath = newFolder;
+            collection->saveImageFolderPath();
+            ui->Settings_lineEdit_ImageFolderPath->setText(collection->imageFolderPath);
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_ImageFolderPath_returnPressed()
+    {
+        collection->imageFolderPath = ui->Settings_lineEdit_ImageFolderPath->text();
+        collection->saveImageFolderPath();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1)
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/PreloadCatalogs", arg1);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_ExportToSQLitFile_clicked()
+    {
+        exportToSQLiteFile();
+    }
+    //----------------------------------------------------------------------
+
+    //File -----------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_SelectDatabaseFilePath_clicked()
+    {
+        selectDatabaseFilePath();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_EditDatabaseFile_clicked()
+    {
+        collection->databaseFilePath = ui->Settings_lineEdit_DatabaseFilePath->text();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->databaseFilePath));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_NewDatabaseFile_clicked()
+    {
+        selectNewDatabaseFolderPath();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::changeDatabaseFilePath(QString newDatabaseFilePath)
+    {
+        //Test the new directory path is not empty
+        if ( newDatabaseFilePath !=""){
+            //Test if the file exists, and propose to create it otherwise. If refused, set back the current file.
+            QFileInfo fileInfo(newDatabaseFilePath);
+            if (!fileInfo.exists()) {
+
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "The database file does not exist. Create it?"));
+                msgBox.setIcon(QMessageBox::Warning);
+                QPushButton *createButton = msgBox.addButton(tr("Create"), QMessageBox::YesRole);
+                createButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogYesButton));
+                QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::NoRole);
+                cancelButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
+                msgBox.exec();
+
+                if (msgBox.clickedButton() == createButton) {
+                    //Create the file and set it as the new collection folder
+                    collection->databaseFilePath = newDatabaseFilePath;
+
+                    QFile fileOut(collection->databaseFilePath);
+                    if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+                        //create an empty file
+
+                        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+                        db.setDatabaseName(collection->databaseFilePath);
+                        if (!db.open())
+                            qWarning()<< db.lastError();
+                    }
+                    fileOut.close();
+
+                } else  if (msgBox.clickedButton() == cancelButton){
+                    //Reset the former file path and exit procedure
+                    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+                    ui->Settings_pushButton_ApplyFilepath->setEnabled(false);
+                    return;
+                }
+            }
+
+            collection->databaseFilePath = newDatabaseFilePath;
+
+            //Save Settings for the new collection folder value;
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+
+            //Reconnect to the new database file
+            DatabaseManager::reconnect(m_connectionName, collection);
+
+            //Load the collection data from the new database
+            loadCollection();
+
+            //Reset selected values (to avoid actions on the last selected ones)
+            resetSelection();
+
+            // After successfully changing the database file and reloading the collection
+            resetSearchState();
+
+            ui->Settings_pushButton_ApplyFilepath->setEnabled(false);
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_ExportToMemoryMode_clicked()
+    {
+        exportToMemoryMode();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_Hosted_ExportToSQLiteFile_clicked()
+    {
+        exportToSQLiteFile();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_Hosted_ExportToMemoryMode_clicked()
+    {
+        exportToMemoryMode();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_returnPressed()
+    {
+        QString newDatabaseFile = ui->Settings_lineEdit_DatabaseFilePath->text();
+        changeDatabaseFilePath(newDatabaseFile);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_ApplyFilepath_clicked()
+    {
+        QString newDatabaseFile = ui->Settings_lineEdit_DatabaseFilePath->text();
+        changeDatabaseFilePath(newDatabaseFile);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_textChanged()
+    {
+        ui->Settings_pushButton_ApplyFilepath->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::selectNewDatabaseFolderPath()
+    {
+        //Get last db file location if "File" mode, otherwise use collection folder
+        QString newFileFolder;
+        if(collection->databaseFilePath !=""){
+            QFileInfo fileInfo(collection->databaseFilePath);
+            newFileFolder = fileInfo.absolutePath();
+        }
+        else
+            newFileFolder = collection->folder;
+
+        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+        QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to create and open:"),
+                                                                   newFileFolder + "/newKatalogFile.db","*.db");
+
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
+        if ( newDatabaseFilePath !=""){
+
+            collection->databaseFilePath = newDatabaseFilePath;
+
+            QFile fileOut(collection->databaseFilePath);
+            if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+                //create an empty file
+
+                QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+                db.setDatabaseName(collection->databaseFilePath);
+                if (!db.open())
+                    qWarning()<< db.lastError();
+            }
+            fileOut.close();
+
+            //Save Settings for the new collection folder value;
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+
+            //Reconnect to the new database file
+            DatabaseManager::reconnect(m_connectionName, collection);
+
+            //Load the collection data from the new database
+            loadCollection();
+        }
+
+        //Reset selected values (to avoid actions on the last selected ones)
+        resetSelection();
+    }
+
+    //Hosted ---------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseHostName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Port_textChanged(const QString &arg1)
+    {
+        int newPort = arg1.toInt();
+        if(newPort !=collection->databasePort)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_UserName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseUserName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Password_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databasePassword)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+
+//SETTINGS / Language & Theme ----------------------------------------------
+    void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/Language", selectedLanguage);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_comboBox_Theme_currentIndexChanged(int index)
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/Theme", index);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1)
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/LoadLastCatalog", arg1);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_OpenSettingsFile_clicked()
+    {
+        //Open the selected collection folder
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->settingsFilePath));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_BiggerIconSize_stateChanged(int arg1)
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/ThemeBiggerIconSize", arg1);
+
+        QSize size;
+        if(arg1==2){
+            size.setHeight(32);
+            size.setWidth(32);}
+        else{
+            size.setHeight(22);
+            size.setWidth(22);
+        }
+        ui->Filters_treeView_Devices->setIconSize(size);
+        ui->Filters_treeView_Directory->setIconSize(size);
+        ui->Search_treeView_FilesFound->setIconSize(size);
+        ui->Explore_treeview_Directories->setIconSize(size);
+        ui->Explore_treeView_FileList->setIconSize(size);
+        ui->Create_treeView_Explorer->setIconSize(size);
+        ui->Devices_treeView_DeviceList->setIconSize(size);
+        ui->Tags_treeview_Explorer->setIconSize(size);
+    }
+    //----------------------------------------------------------------------
+
+//SETTINGS / About ---------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_Documentation_clicked()
+    {
+        QDesktopServices::openUrl(QUrl("https://stephanecouturier.github.io/Katalog/"));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
+    {
+        QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases"));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_CheckVersion_stateChanged()
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_SettingsFileCaseSensitiveSort_stateChanged()
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/FileCaseSensitiveSort", ui->Settings_checkBox_SettingsFileCaseSensitiveSort->isChecked());
+        fileSortCaseSensitive = ui->Settings_checkBox_SettingsFileCaseSensitiveSort->isChecked();
+    }
+    //----------------------------------------------------------------------
+
+//SETTINGS / data methods --------------------------------------------------
+    void MainWindow::loadCollection()
+    {
+
+        bool defaultsCreated = collection->load();
+
+        if (defaultsCreated) {
+            translateDefaultDevices();
+        }
+
+        //Verify Collection version and trigger updates (Memory mode)
+        if(collection->databaseMode=="Memory"){
+            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString("2.0")){
+                QMessageBox::warning(this, "Katalog",
+                    tr("This collection was created with Katalog version %1, which is no longer supported."
+                       "<br/><br/>To convert it, open it with Katalog 2.10 first."
+                       "<br/><br/>Please select a different collection folder.")
+                        .arg(collection->dbSchemaVersion));
+                on_Settings_pushButton_SelectFolder_clicked();
+                return;
+            }
+            if ( QVersionNumber::fromString(collection->dbSchemaVersion) < QVersionNumber::fromString(collection->appVersion) and QVersionNumber::fromString(collection->dbSchemaVersion) >= QVersionNumber::fromString("2.0")){
+                //Update collection version
+                collection->dbSchemaVersion = collection->appVersion;
+                collection->setDatabaseSchemaVersion();
+                collection->saveParameterTableToFile();
+            }
+        }
+
+        // Run database migrations BEFORE loading any UI models.
+        // QSqlQueryModel keeps its underlying sqlite3_stmt alive as long as the model
+        // exists.  If any model queries the catalog table before the migration runs,
+        // DROP TABLE catalog inside the migration fails with SQLITE_LOCKED.
+        if(collection->databaseMode != "Memory"){
+            runDatabaseMigrations();
+        }
+
+        //Check active status and synch it
+        collection->updateAllDeviceActive();
+
+        //Load data from tables to models and update display
+        loadSearchHistoryTableToModel();
+        filterFromSelectedDevice();
+
+        //Reload models
+        loadDevicesTreeToModel("Filters");
+        loadParentsList();
+
+        //Load Statistics
+        loadStatisticsDataTypes();
+        collection->loadStatisticsDeviceFileToTable();
+        loadStatisticsChart();
+
+        //Load Tags
+        reloadTagsData();
+
+        //Load directories to exclude
+        QStringListModel *model = new QStringListModel(collection->getExcludeDirectories(), this);
+        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+        proxyModel->setSourceModel(model);
+        ui->Create_treeView_Excluded->setModel(proxyModel);
+
+        // Load per-collection parameters
+        collection->loadImageFolderPath();
+        ui->Settings_lineEdit_ImageFolderPath->setText(collection->imageFolderPath);
+
+        // Refresh UI views to show updated data
+        loadDevicesView("");                // Refresh main device tree with updated dates
+        loadDevicesTreeToModel("Filters");  // Refresh filters tree view
+        loadBackUpMapping();               // Refresh backup mappings for the new collection
+        loadBackUpDeviceLists("Source");   // Refresh source selection list for the new collection
+        loadBackUpDeviceLists("Target");   // Refresh target selection list for the new collection
+        refreshImportUpdateSourceList();   // Refresh update source combo from CollectionImport mappings
+
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::preloadCatalogs()
+    {
+        collection->loadAllCatalogFiles();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::selectDatabaseFilePath()
+    {
+        //Open a dialog for the user to select the database file
+        QString newDatabaseFilePath = QFileDialog::getOpenFileName(this, tr("Select the database to open:"),
+                                                                   collection->databaseFilePath, "*.db");
+
+        //Unless the selection was cancelled, set the new database file and refresh all data
+        if (!newDatabaseFilePath.isEmpty()) {
+            collection->databaseFilePath = newDatabaseFilePath;
+
+            //Save Settings for the new database file path
+            QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+
+            //Reconnect to the new database file
+            DatabaseManager::reconnect(m_connectionName, collection);
+
+            //Load the collection data from the new database
+            loadCollection();
+
+            // After successfully loading the new database
+            resetSearchState();
+        }
+    }
+
+    //----------------------------------------------------------------------
+    void MainWindow::translateDefaultDevices()
+    {
+        // Update device with ID=1 (Physical Group)
+        Device physicalGroup;
+        physicalGroup.ID = 1;
+        physicalGroup.loadDevice(m_connectionName);
+        physicalGroup.name = tr(" Physical Group");
+        physicalGroup.saveDevice();
+
+        // Update device with ID=2 (Virtual device)
+        Device virtualDevice;
+        virtualDevice.ID = 2;
+        virtualDevice.loadDevice(m_connectionName);
+        virtualDevice.name = tr("Virtual device");
+        virtualDevice.saveDevice();
+
+        // Update default storage device (find the one created by insertPhysicalStorageGroup)
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
+        QString querySQL = QLatin1String(R"(
+                                SELECT device_id
+                                FROM device
+                                WHERE device_type='Storage'
+                                AND device_name='Local disk'
+                                LIMIT 1
+                            )");
+        query.prepare(querySQL);
+        query.exec();
+
+        if (query.next()) {
+            Device localStorage;
+            localStorage.ID = query.value(0).toInt();
+            localStorage.loadDevice(m_connectionName);
+            localStorage.name = tr("Local disk");
+            localStorage.saveDevice();
+        }
+
+        // Save the updated device data to file (for Memory mode)
+        if (collection->databaseMode == "Memory") {
+            collection->saveDeviceTableToFile();
+            collection->saveStorageTableToFile();
+        }
+    }

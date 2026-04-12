@@ -23,7 +23,7 @@
 #/////////////////////////////////////////////////////////////////////////////
 # Application: Katalog
 # File Name:   Katalog_create_appimage_local.sh
-# Version:     1.0
+# Version:     1.1
 # Purpose:     Katalog Local AppImage Builder
 # Description: Based on the portable script architecture but creates AppImage instead
 # Author:      Stephane Couturier
@@ -39,18 +39,38 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Configuration
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
-# Use dedicated build directory outside of synced source
-BUILD_BASE_DIR="/home/shared/Development/Katalog/Build/AppImage"
-BUILD_DIR="$BUILD_BASE_DIR/build-appimage"
-APPDIR="$BUILD_DIR/AppDir"
+# ---------------------------------------------------------------------------
+# Directory configuration — defaults match the standard dev layout.
+# Both can be overridden on the command line:
+#   --source <path>   Override SOURCE_DIR
+#   --build  <path>   Override BUILD_BASE_DIR
+# ---------------------------------------------------------------------------
+
+# SOURCE_DIR — root of the Katalog source tree (contains core/, qt_widgets/, qt_quick/, …)
+# This script is meant to be copied/run outside the source tree, so the path is explicit.
+# Override with:  --source <path>
+SOURCE_DIR="/home/stephane/Documents/Informatique/Katalog/_Source_Katalog2"
+
+# BUILD_BASE_DIR — top-level output directory for AppImage artefacts.
+# The cmake build tree goes in BUILD_BASE_DIR/build-appimage/;
+# the final .AppImage file is placed directly in BUILD_BASE_DIR/.
+BUILD_BASE_DIR="/home/stephane/Developments/Katalog/Application/Portable/AppImage"
+
+# Derived paths — do not edit these; change SOURCE_DIR / BUILD_BASE_DIR above.
+# BUILD_DIR is finalised in configure_variant() so K2 and K3 get separate cmake caches.
+PROJECT_ROOT="$SOURCE_DIR"           # alias used throughout the script
+BUILD_DIR=""                         # set by configure_variant: build-appimage-k2 or build-appimage-k3
+APPDIR=""                            # set by configure_variant: $BUILD_DIR/AppDir
+
+# ---------------------------------------------------------------------------
 VERBOSE=false
 CLEAN_BUILD=false
 CMAKE_BUILD_TYPE="Release"
-LINUXDEPLOY_DIR="$HOME/.local/share/linuxdeploy"
-APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"
+LINUXDEPLOY_DIR="$HOME/.local/share/linuxdeploy"   # linuxdeploy wrapper scripts
+APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"  # optional local appimagetool (avoids network)
+
+# Variant selection (K2 = Qt Widgets, K3 = Qt Quick/QML)
+VARIANT="K2"
 
 # Print functions
 print_header() {
@@ -87,17 +107,23 @@ show_help() {
     echo "Usage: $0 [options]"
     echo ""
     echo "Options:"
-    echo "  -h, --help          Show this help message"
-    echo "  -v, --verbose       Enable verbose output"
-    echo "  -c, --clean         Clean build (remove build directory first)"
-    echo "  -d, --debug         Build in Debug mode instead of Release"
-    echo "  --install-deps      Install required dependencies"
+    echo "  -h, --help           Show this help message"
+    echo "  -v, --verbose        Enable verbose output"
+    echo "  -c, --clean          Clean build (remove build directory first)"
+    echo "  -d, --debug          Build in Debug mode instead of Release"
+    echo "  --k2                 Build Katalog 2 (Qt Widgets) [default]"
+    echo "  --k3                 Build Katalog 3 (Qt Quick / QML)"
+    echo "  --install-deps       Install required dependencies"
+    echo "  --source <path>      Source tree root  (default: $SOURCE_DIR)"
+    echo "  --build  <path>      AppImage output directory (default: $BUILD_BASE_DIR)"
     echo ""
     echo "Examples:"
-    echo "  $0                  # Normal build"
-    echo "  $0 -c               # Clean build"
-    echo "  $0 -v -d            # Verbose debug build"
-    echo "  $0 --install-deps   # Install dependencies first"
+    echo "  $0                   # Normal build (K2)"
+    echo "  $0 --k3              # Build K3"
+    echo "  $0 -c                # Clean build"
+    echo "  $0 -v -d             # Verbose debug build"
+    echo "  $0 --install-deps    # Install dependencies first"
+    echo "  $0 --source /path/to/source --build /tmp/appimage-out"
     echo ""
 }
 
@@ -121,9 +147,28 @@ parse_arguments() {
                 CMAKE_BUILD_TYPE="Debug"
                 shift
                 ;;
+            --k2)
+                VARIANT="K2"
+                shift
+                ;;
+            --k3)
+                VARIANT="K3"
+                shift
+                ;;
             --install-deps)
                 install_dependencies
                 exit 0
+                ;;
+            --source)
+                SOURCE_DIR="$2"
+                PROJECT_ROOT="$SOURCE_DIR"
+                shift 2
+                ;;
+            --build)
+                BUILD_BASE_DIR="$2"
+                APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"
+                # BUILD_DIR and APPDIR are recalculated in configure_variant
+                shift 2
                 ;;
             *)
                 echo "Unknown option: $1"
@@ -132,6 +177,39 @@ parse_arguments() {
                 ;;
         esac
     done
+}
+
+# Configure variant-specific variables
+configure_variant() {
+    if [ "$VARIANT" = "K3" ]; then
+        APP_NAME="Katalog3"
+        APP_ID="io.github.stephanecouturier.katalog3"
+        BUILD_QT_WIDGETS="OFF"
+        BUILD_QT_QUICK="ON"
+        CMAKELISTS_PATH="$PROJECT_ROOT/qt_quick/CMakeLists.txt"
+        PROJECT_CMAKE_NAME="Katalog3"
+        # KF6 packages specific to K3 (no xmlgui/completion; adds archive)
+        KF6_EXTRA_ZYPPER="kf6-karchive-devel"
+        KF6_EXTRA_APT="libkf6archive-dev"
+        QT6_EXTRA_APT="qt6-declarative-dev"
+        QT6_EXTRA_ZYPPER="qt6-quick-devel"
+    else
+        APP_NAME="Katalog"
+        APP_ID="io.github.stephanecouturier.katalog"
+        BUILD_QT_WIDGETS="ON"
+        BUILD_QT_QUICK="OFF"
+        CMAKELISTS_PATH="$PROJECT_ROOT/qt_widgets/CMakeLists.txt"
+        PROJECT_CMAKE_NAME="Katalog"
+        # KF6 packages specific to K2
+        KF6_EXTRA_ZYPPER="kf6-kxmlgui-devel kf6-kcompletion-devel"
+        KF6_EXTRA_APT="libkf6xmlgui-dev libkf6completion-dev"
+        QT6_EXTRA_APT=""
+        QT6_EXTRA_ZYPPER=""
+    fi
+
+    # Each variant gets its own build directory so cmake caches never cross-contaminate.
+    BUILD_DIR="$BUILD_BASE_DIR/build-appimage-${VARIANT,,}"
+    APPDIR="$BUILD_DIR/AppDir"
 }
 
 # Check dependencies
@@ -163,7 +241,7 @@ check_dependencies() {
     done
 
     # Check Qt6 development packages
-    if ! pkg-config --exists Qt6Core Qt6Widgets Qt6Gui Qt6Sql Qt6Charts Qt6Network 2>/dev/null; then
+    if ! pkg-config --exists Qt6Core Qt6Gui Qt6Sql Qt6Charts Qt6Network 2>/dev/null; then
         missing_deps+=("qt6-dev-packages")
     fi
 
@@ -172,12 +250,12 @@ check_dependencies() {
 
     if command -v zypper &> /dev/null; then
         # openSUSE: Check if KF6 devel packages are installed
-        if zypper search --installed-only kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kxmlgui-devel kf6-kconfig-devel kf6-kiconthemes-devel &>/dev/null; then
+        if zypper search --installed-only kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kconfig-devel kf6-kiconthemes-devel $KF6_EXTRA_ZYPPER &>/dev/null; then
             kf6_found=true
         fi
     else
         # Ubuntu/Debian: Check pkg-config
-        if pkg-config --exists KF6CoreAddons KF6I18n KF6XmlGui KF6Config KF6IconThemes 2>/dev/null; then
+        if pkg-config --exists KF6CoreAddons KF6I18n KF6Config KF6IconThemes 2>/dev/null; then
             kf6_found=true
         fi
     fi
@@ -198,10 +276,10 @@ check_dependencies() {
         echo ""
         if command -v zypper &> /dev/null; then
             echo "Or install manually on openSUSE:"
-            echo "  sudo zypper install cmake ninja qt6-base-devel qt6-charts-devel qt6-tools-devel kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kxmlgui-devel kf6-kconfig-devel kf6-kiconthemes-devel desktop-file-utils appstream-glib-devel ImageMagick"
+            echo "  sudo zypper install cmake ninja qt6-base-devel qt6-charts-devel qt6-tools-devel $QT6_EXTRA_ZYPPER kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kconfig-devel kf6-kiconthemes-devel $KF6_EXTRA_ZYPPER desktop-file-utils appstream-glib-devel ImageMagick"
         else
             echo "Or install manually on Ubuntu/Debian:"
-            echo "  sudo apt install cmake ninja-build qt6-base-dev qt6-charts-dev qt6-tools-dev libkf6coreaddons-dev libkf6i18n-dev libkf6xmlgui-dev libkf6config-dev libkf6iconthemes-dev desktop-file-utils appstream-util imagemagick"
+            echo "  sudo apt install cmake ninja-build qt6-base-dev qt6-charts-dev qt6-tools-dev $QT6_EXTRA_APT libkf6coreaddons-dev libkf6i18n-dev libkf6config-dev libkf6iconthemes-dev $KF6_EXTRA_APT desktop-file-utils appstream-util imagemagick"
         fi
         exit 1
     fi
@@ -230,7 +308,7 @@ install_dependencies() {
 
 # Install dependencies for openSUSE
 install_deps_opensuse() {
-    print_info "Installing packages for openSUSE..."
+    print_info "Installing packages for openSUSE ($VARIANT)..."
     sudo zypper refresh
     sudo zypper install -y \
         cmake \
@@ -240,11 +318,12 @@ install_deps_opensuse() {
         qt6-charts-devel \
         qt6-sql-sqlite \
         qt6-networkauth-devel \
+        $QT6_EXTRA_ZYPPER \
         kf6-kcoreaddons-devel \
         kf6-ki18n-devel \
-        kf6-kxmlgui-devel \
         kf6-kconfig-devel \
         kf6-kiconthemes-devel \
+        $KF6_EXTRA_ZYPPER \
         desktop-file-utils \
         appstream-glib-devel \
         ImageMagick \
@@ -254,7 +333,7 @@ install_deps_opensuse() {
 
 # Install dependencies for Ubuntu/Debian
 install_deps_ubuntu() {
-    print_info "Installing packages for Ubuntu/Debian..."
+    print_info "Installing packages for Ubuntu/Debian ($VARIANT)..."
     sudo apt update
     sudo apt install -y \
         cmake \
@@ -267,11 +346,12 @@ install_deps_ubuntu() {
         qt6-charts-dev \
         libqt6sql6-sqlite \
         qt6-networkauth-dev \
+        $QT6_EXTRA_APT \
         libkf6coreaddons-dev \
         libkf6i18n-dev \
-        libkf6xmlgui-dev \
         libkf6config-dev \
         libkf6iconthemes-dev \
+        $KF6_EXTRA_APT \
         desktop-file-utils \
         appstream-util \
         imagemagick \
@@ -355,12 +435,12 @@ build_translations() {
     print_step "Building translations"
 
     # Build translations first (if available)
-    if ninja Katalog_lrelease 2>/dev/null; then
+    if ninja translations_lrelease 2>/dev/null || ninja ${APP_NAME}_lrelease 2>/dev/null; then
         print_success "Translations built successfully"
     else
         print_warning "Translation build failed, creating empty .qm files"
         # Create empty .qm files for missing translations
-        for ts_file in "$PROJECT_ROOT"/src/translations/*.ts; do
+        for ts_file in "$PROJECT_ROOT"/translations/*.ts; do
             if [ -f "$ts_file" ]; then
                 qm_file="${ts_file%.ts}.qm"
                 if [ ! -f "$qm_file" ]; then
@@ -381,6 +461,8 @@ build_application() {
         -GNinja
         -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE"
         -DCMAKE_INSTALL_PREFIX=/usr
+        -DBUILD_QT_WIDGETS="$BUILD_QT_WIDGETS"
+        -DBUILD_QT_QUICK="$BUILD_QT_QUICK"
         -DBUILD_TESTS=OFF
     )
 
@@ -390,7 +472,7 @@ build_application() {
 
     cmake "${cmake_args[@]}" || print_error "CMake configuration failed"
 
-    print_step "Building Katalog ($CMAKE_BUILD_TYPE mode)"
+    print_step "Building $APP_NAME ($CMAKE_BUILD_TYPE mode)"
 
     # Build translations first
     build_translations
@@ -429,30 +511,30 @@ prepare_desktop_files() {
     mkdir -p "$APPDIR/usr/share/icons/hicolor/64x64/apps"
 
     # Create desktop file
-    cat > "$APPDIR/usr/share/applications/Katalog.desktop" << EOF
+    cat > "$APPDIR/usr/share/applications/$APP_NAME.desktop" << EOF
 [Desktop Entry]
 Type=Application
-Name=Katalog
+Name=$APP_NAME
 GenericName=File Catalog Manager
 Comment=Create and manage catalogs of your files and folders
 Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
-Exec=Katalog
-Icon=Katalog
+Exec=$APP_NAME
+Icon=$APP_NAME
 Terminal=false
 Categories=Utility;System;FileManager;
 Keywords=catalog;files;folders;organization;storage;backup;
 StartupNotify=true
-StartupWMClass=Katalog
+StartupWMClass=$APP_NAME
 EOF
 
     # Create AppData file
-    cat > "$APPDIR/usr/share/metainfo/io.github.stephanecouturier.katalog.appdata.xml" << EOF
+    cat > "$APPDIR/usr/share/metainfo/$APP_ID.appdata.xml" << EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.stephanecouturier.katalog</id>
+  <id>$APP_ID</id>
   <metadata_license>MIT</metadata_license>
   <project_license>GPL-3.0+</project_license>
-  <name>Katalog</name>
+  <name>$APP_NAME</name>
   <summary>File Catalog Manager</summary>
   <description>
     <p>
@@ -472,21 +554,18 @@ EOF
   </categories>
   <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
   <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
-  <launchable type="desktop-id">io.github.stephanecouturier.katalog.desktop</launchable>
+  <launchable type="desktop-id">$APP_ID.desktop</launchable>
   <provides>
-    <binary>Katalog</binary>
+    <binary>$APP_NAME</binary>
   </provides>
   <content_rating type="oars-1.1"/>
-  <releases>
-    <release version="2.7" date="2025-08-31"/>
-  </releases>
 </component>
 EOF
 
     # Create/copy icon
-    if [ -f "$PROJECT_ROOT/src/images/Katalog_logo_64.ico" ]; then
+    if [ -f "$PROJECT_ROOT/assets/Katalog_logo_64.ico" ]; then
         # Convert ICO to PNG with exact 64x64 size
-        convert "$PROJECT_ROOT/src/images/Katalog_logo_64.ico[0]" -resize 64x64! "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png" 2>/dev/null || {
+        convert "$PROJECT_ROOT/assets/Katalog_logo_64.ico[0]" -resize 64x64! "$APPDIR/usr/share/icons/hicolor/64x64/apps/$APP_NAME.png" 2>/dev/null || {
             print_warning "ICO conversion failed, creating fallback icon"
             create_fallback_icon
         }
@@ -496,31 +575,111 @@ EOF
     fi
 
     # Validate files
-    desktop-file-validate "$APPDIR/usr/share/applications/Katalog.desktop" 2>/dev/null || print_warning "Desktop file validation warnings"
-    appstream-util validate "$APPDIR/usr/share/metainfo/io.github.stephanecouturier.katalog.appdata.xml" 2>/dev/null || print_warning "AppData validation warnings"
+    desktop-file-validate "$APPDIR/usr/share/applications/$APP_NAME.desktop" 2>/dev/null || print_warning "Desktop file validation warnings"
+    appstream-util validate "$APPDIR/usr/share/metainfo/$APP_ID.appdata.xml" 2>/dev/null || print_warning "AppData validation warnings"
 
     print_success "Desktop integration files prepared"
 }
 
 # Create fallback icon
 create_fallback_icon() {
-    convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png"
+    convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" "$APPDIR/usr/share/icons/hicolor/64x64/apps/$APP_NAME.png"
+}
+
+# Manually deploy QML modules for K3 (Qt Quick) builds.
+# linuxdeploy-plugin-qt often fails to bundle QML plugins for Qt6 even
+# with QMLDIR set, so we copy the required module directories explicitly
+# and patch AppRun to export the QML import path at runtime.
+deploy_k3_qml_modules() {
+    print_step "Deploying K3 QML modules"
+
+    # Find Qt6 QML installation directory
+    local qt_qml_dir
+    qt_qml_dir=$(qmake6 -query QT_INSTALL_QML 2>/dev/null || \
+                 qmake -query QT_INSTALL_QML 2>/dev/null)
+
+    if [ -z "$qt_qml_dir" ] || [ ! -d "$qt_qml_dir" ]; then
+        # Try common locations
+        for dir in \
+            /usr/lib/x86_64-linux-gnu/qt6/qml \
+            /usr/lib/qt6/qml \
+            /usr/lib64/qt6/qml; do
+            if [ -d "$dir" ]; then
+                qt_qml_dir="$dir"
+                break
+            fi
+        done
+    fi
+
+    if [ -z "$qt_qml_dir" ] || [ ! -d "$qt_qml_dir" ]; then
+        print_warning "Could not find Qt6 QML directory — QML modules will not be bundled"
+        return
+    fi
+
+    print_info "Qt6 QML directory: $qt_qml_dir"
+
+    local dest="$APPDIR/usr/qml"
+    mkdir -p "$dest"
+
+    # Qt Quick modules required by K3
+    local modules=(
+        "QtQuick"
+        "QtQuick/Controls"
+        "QtQuick/Layouts"
+        "QtQuick/Dialogs"
+        "Qt/labs/settings"
+        "Qt/labs/platform"
+    )
+
+    for module in "${modules[@]}"; do
+        local src="$qt_qml_dir/$module"
+        local dst_parent="$dest/$(dirname "$module")"
+        if [ -d "$src" ]; then
+            mkdir -p "$dst_parent"
+            cp -rn "$src" "$dst_parent/" 2>/dev/null || true
+            print_success "Bundled: $module"
+        else
+            print_warning "Not found: $src"
+        fi
+    done
+
+    # Kirigami QML plugin
+    local kirigami_src="$qt_qml_dir/org/kde/kirigami"
+    if [ -d "$kirigami_src" ]; then
+        mkdir -p "$dest/org/kde"
+        cp -rn "$kirigami_src" "$dest/org/kde/"
+        print_success "Bundled: org.kde.kirigami"
+    else
+        print_warning "Kirigami QML not found at $kirigami_src"
+        print_info "Install libkf6kirigami-dev (or kirigami2) to bundle Kirigami"
+    fi
+
+    # Patch AppRun to export QML import paths at runtime.
+    # linuxdeploy's AppRun uses $HERE for the AppImage mount point.
+    local apprun="$APPDIR/AppRun"
+    if [ -f "$apprun" ] && ! grep -q "QML_IMPORT_PATH" "$apprun"; then
+        sed -i 's|^exec |export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"\nexport QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"\nexec |' "$apprun"
+        print_success "Patched AppRun with QML import paths"
+    fi
+
+    print_success "K3 QML modules deployed"
 }
 
 # Create AppImage
 create_appimage() {
     print_step "Creating AppImage"
 
-    # Set up environment
     export PATH="$LINUXDEPLOY_DIR:$PATH"
 
     # Get version info
-    local version="2.7-$(date +%Y%m%d-%H%M)"
-    local appimage_name="Katalog-$version-x86_64.AppImage"
+    local version
+    version=$(grep -E "^project\($PROJECT_CMAKE_NAME VERSION" "$CMAKELISTS_PATH" | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
+    [ -z "$version" ] && version="x.x"
+    local appimage_name="$APP_NAME-$version-$(date +%Y%m%d-%H%M)-x86_64.AppImage"
 
     # Verify AppDir structure
-    if [ ! -f "$APPDIR/usr/bin/Katalog" ]; then
-        print_error "Katalog executable not found in AppDir"
+    if [ ! -f "$APPDIR/usr/bin/$APP_NAME" ]; then
+        print_error "$APP_NAME executable not found in AppDir"
     fi
 
     if [ "$VERBOSE" = true ]; then
@@ -528,28 +687,29 @@ create_appimage() {
         find "$APPDIR" -type f | head -20
     fi
 
-    # Check for local appimagetool and use direct approach
+    # Step 1: Run linuxdeploy to bundle Qt/system dependencies (without --output
+    # appimage so we can post-process the AppDir before packaging)
+    print_info "Running linuxdeploy to bundle dependencies..."
+    linuxdeploy \
+        --appdir "$APPDIR" \
+        --plugin qt \
+        --executable "$APPDIR/usr/bin/$APP_NAME" \
+        --desktop-file "$APPDIR/usr/share/applications/$APP_NAME.desktop" \
+        --icon-file "$APPDIR/usr/share/icons/hicolor/64x64/apps/$APP_NAME.png"
+
+    if [ $? -ne 0 ]; then
+        print_error "Dependency bundling failed"
+    fi
+
+    # Step 2: For K3, manually deploy QML modules and patch AppRun
+    if [ "$VARIANT" = "K3" ]; then
+        deploy_k3_qml_modules
+    fi
+
+    # Step 3: Package as AppImage
     if [ -f "$APPIMAGETOOL_PATH" ]; then
-        print_info "Using local appimagetool directly (offline mode)"
-        print_info "Appimagetool location: $APPIMAGETOOL_PATH"
+        print_info "Using local appimagetool (offline mode)..."
 
-        # First run linuxdeploy without the appimage plugin
-        print_info "Running linuxdeploy to bundle dependencies..."
-        linuxdeploy \
-            --appdir "$APPDIR" \
-            --plugin qt \
-            --executable "$APPDIR/usr/bin/Katalog" \
-            --desktop-file "$APPDIR/usr/share/applications/Katalog.desktop" \
-            --icon-file "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png"
-
-        if [ $? -ne 0 ]; then
-            print_error "Dependency bundling failed"
-        fi
-
-        # Now create AppImage directly with local appimagetool
-        print_info "Creating AppImage with local appimagetool..."
-
-        # Copy your downloaded runtime to the appimagetool cache
         mkdir -p ~/.cache/appimagetool
         if [ -f ~/Downloads/runtime-x86_64 ]; then
             cp ~/Downloads/runtime-x86_64 ~/.cache/appimagetool/
@@ -557,13 +717,10 @@ create_appimage() {
             print_info "Using your downloaded runtime file"
         fi
 
-        # Use the local appimagetool directly
         "$APPIMAGETOOL_PATH" "$APPDIR" "$appimage_name"
-
     else
-        print_info "Using linuxdeploy with online appimagetool..."
+        print_info "Using linuxdeploy --output appimage..."
 
-        # Try to ensure runtime is cached
         if [ ! -f ~/.cache/appimagetool/runtime-x86_64 ]; then
             print_step "Pre-downloading AppImage runtime to avoid network issues"
             mkdir -p ~/.cache/appimagetool
@@ -579,13 +736,8 @@ create_appimage() {
             fi
         fi
 
-        # Create AppImage with linuxdeploy
         linuxdeploy \
             --appdir "$APPDIR" \
-            --plugin qt \
-            --executable "$APPDIR/usr/bin/Katalog" \
-            --desktop-file "$APPDIR/usr/share/applications/Katalog.desktop" \
-            --icon-file "$APPDIR/usr/share/icons/hicolor/64x64/apps/Katalog.png" \
             --output appimage
     fi
 
@@ -597,8 +749,8 @@ create_appimage() {
     local created_appimage=""
     if [ -f "$appimage_name" ]; then
         created_appimage="$appimage_name"
-    elif ls Katalog-*.AppImage 1> /dev/null 2>&1; then
-        created_appimage=$(ls Katalog-*.AppImage | head -1)
+    elif ls ${APP_NAME}-*.AppImage 1> /dev/null 2>&1; then
+        created_appimage=$(ls ${APP_NAME}-*.AppImage | head -1)
         mv "$created_appimage" "$appimage_name"
         created_appimage="$appimage_name"
     fi
@@ -606,13 +758,11 @@ create_appimage() {
     if [ -n "$created_appimage" ]; then
         print_success "AppImage created: $created_appimage"
 
-        # Show file info
         echo ""
         echo "📦 AppImage Information:"
         ls -lh "$created_appimage"
         file "$created_appimage"
 
-        # Test basic functionality
         print_step "Testing AppImage"
         chmod +x "$created_appimage"
         if ./"$created_appimage" --version 2>/dev/null; then
@@ -623,20 +773,13 @@ create_appimage() {
 
         # Move AppImage to build base directory (final location)
         mv "$created_appimage" "$BUILD_BASE_DIR/"
-        print_success "AppImage created in build directory: $BUILD_BASE_DIR/$created_appimage"
-
-        # Create a symlink in the project root for easy access
-        #ln -sf "$BUILD_BASE_DIR/$created_appimage" "$PROJECT_ROOT/$(basename "$created_appimage")"
-        #print_info "Symlink created in project root: $PROJECT_ROOT/$(basename "$created_appimage")"
+        print_success "AppImage saved to: $BUILD_BASE_DIR/$created_appimage"
 
         echo ""
-        print_info "To test themes and icons:"
+        print_info "To test:"
         echo "  cd $BUILD_BASE_DIR"
         echo "  ./$created_appimage"
         echo ""
-        #print_info "Or use the symlink from project root:"
-        #echo "  cd $PROJECT_ROOT"
-        #echo "  ./$(basename "$created_appimage")"
 
     else
         print_error "AppImage file not found after creation"
@@ -648,8 +791,10 @@ main() {
     print_header
 
     parse_arguments "$@"
+    configure_variant
 
     echo "Build Configuration:"
+    echo "  Variant:      $VARIANT ($APP_NAME)"
     echo "  Project Root: $PROJECT_ROOT"
     echo "  Build Base Dir: $BUILD_BASE_DIR"
     echo "  Build Dir: $BUILD_DIR"

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.stephanecouturier.Katalog</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Katalog</name>
+  <summary>File catalog manager</summary>
+  <description>
+    <p>
+      Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
+      Create catalogs of your DVDs, external drives, and folders to quickly find files without having to connect the device.
+    </p>
+    <ul>
+      <li>Create comprehensive catalogs of files and folders from any storage device</li>
+      <li>Search across multiple catalogs simultaneously with advanced filters</li>
+      <li>Track files on external devices (DVDs, USB drives, network storage)</li>
+      <li>Generate detailed statistics and file analysis reports</li>
+      <li>Multiple language support</li>
+      <li>Cross-platform compatibility (Linux, Windows, macOS)</li>
+      <li>Backup and synchronization features</li>
+      <li>Custom device and storage management</li>
+      <li>Metadata extraction for media files</li>
+    </ul>
+    <p>
+      Perfect for digital archivists, content creators, system administrators, and anyone who needs to organize 
+      and track large collections of files across multiple storage devices.
+    </p>
+  </description>
+  <branding>
+    <color type="primary" scheme_preference="light">#e9f7fc</color>
+    <color type="primary" scheme_preference="dark">#0D79A6</color>
+  </branding>
+  <categories>
+    <category>Utility</category>
+    <category>FileManager</category>
+    <category>Office</category>
+  </categories>
+  <keywords>
+    <keyword>catalog</keyword>
+    <keyword>files</keyword>
+    <keyword>folders</keyword>
+    <keyword>organization</keyword>
+    <keyword>storage</keyword>
+    <keyword>backup</keyword>
+    <keyword>archiving</keyword>
+    <keyword>inventory</keyword>
+  </keywords>
+  <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
+  <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
+  <url type="help">https://stephanecouturier.github.io/Katalog/docs/Overview</url>
+  <url type="donation">https://www.paypal.com/donate/?business=FQXB8ETUW9PAG&no_recurring=0&item_name=Support+the+development+of+Katalog&currency_code=EUR</url>
+  <url type="vcs-browser">https://github.com/StephaneCouturier/Katalog</url>
+  <launchable type="desktop-id">io.github.stephanecouturier.Katalog.desktop</launchable>
+  <provides>
+    <binary>Katalog</binary>
+  </provides>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main interface showing a Search operation</caption>
+      <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/docs_src/static/img/screen_search_01.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>catalog creation screen</caption>
+      <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/docs_src/static/img/screen_create_04_exclude.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>BackUp and Archive management screen</caption>
+      <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/docs_src/static/img/screen_backup_01.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer id="io.github.stephanecouturier">
+    <name>Stéphane Couturier</name>
+  </developer>
+  <releases>
+    <release version="2.10" date="2026-03-09">
+      <description>
+        <p>Incremental BackUp and Archive, Exclude folders.</p>
+      </description>
+    </release>
+  </releases>
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+  <recommends>
+    <memory compare="ge" unit="MiB">512</memory>
+  </recommends>
+</component>

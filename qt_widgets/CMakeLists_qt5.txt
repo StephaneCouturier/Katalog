@@ -1,0 +1,452 @@
+# CMakeList.txt version adapted to build Katalog on systems with Qt5/KF5.
+cmake_minimum_required(VERSION 3.16)
+project(Katalog VERSION 2.8 LANGUAGES CXX)
+
+# Add this section immediately after project():
+set(KATALOG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(KATALOG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(KATALOG_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+
+# Generate build timestamp
+string(TIMESTAMP KATALOG_BUILD_DATE "%Y-%m-%d %H:%M:%S" UTC)
+string(TIMESTAMP KATALOG_BUILD_YEAR "%Y" UTC)
+
+# Configure version header (version.h.in is at qt_widgets/ root, not src/)
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/version.h"
+    @ONLY
+)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2")
+set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+
+# Windows-specific: Better dependency tracking
+if(WIN32)
+    # Force CMake to use file timestamps for dependency checking
+    set(CMAKE_DEPENDS_USE_COMPILER FALSE)
+    set(CMAKE_DEPENDS_CHECK_CXX 1)
+
+    # Use Ninja generator for better incremental builds on Windows
+    if(CMAKE_GENERATOR STREQUAL "Ninja")
+        set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    endif()
+endif()
+
+# Find required Qt5 packages
+find_package(Qt5 REQUIRED COMPONENTS
+    Core
+    Widgets
+    Gui
+    Sql
+    Charts
+    Network
+    LinguistTools      # Required for translations
+)
+
+# Find KF5 components
+find_package(KF5CoreAddons REQUIRED)
+find_package(KF5I18n REQUIRED)
+find_package(KF5XmlGui REQUIRED)
+find_package(KF5Config REQUIRED)
+find_package(KF5IconThemes REQUIRED)
+find_package(KF5FileMetaData REQUIRED)
+
+find_package(Qt5Charts REQUIRED)
+add_definitions(-DQTCHARTS_USE_NAMESPACE)
+
+# Enable Qt's automatic processing
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+# Add Qt5 features check (equivalent to requires() in .pro)
+if(NOT TARGET Qt5::Widgets)
+    message(FATAL_ERROR "Qt5 Widgets not found - tableview, treeview, listview required")
+endif()
+
+# Add compile definitions
+add_definitions(-DQT_DEPRECATED_WARNINGS)
+# Uncomment if you want to disable deprecated APIs
+# add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050000)
+
+# Core library sources (located at ../core/ relative to qt_widgets/)
+set(CORE_HEADERS
+    ../core/collection.h
+    ../core/commandline.h
+    ../core/catalog.h
+    ../core/database.h
+    ../core/device.h
+    ../core/search.h
+    ../core/searchjob.h
+    ../core/searchjobstoppable.h
+    ../core/searchmanager.h
+    ../core/searchprogressmanager.h
+    ../core/searchresultsthrottler.h
+    ../core/storage.h
+    ../core/tag.h
+    ../core/language.h
+    ../core/catalogjob.h
+    ../core/catalogjobstoppable.h
+    ../core/catalogmanager.h
+    ../core/catalogprogressmanager.h
+    ../core/devicejobstoppable.h
+    ../core/devicemanager.h
+    ../core/deviceupdatemanager.h
+    ../core/filemetadata.h
+    ../core/filetypemapping.h
+    ../core/parallelmetadataextractor.h
+    ../core/statusbarmessagebuilder.h
+    ../core/backupprofilegenerator.h
+    ../core/backupmappingmanager.h
+    ../core/filechecksum.h
+    ../core/foldertreeloader.h
+    ../core/catalogdifferenceengine.h
+    ../core/directoryreplicator.h
+    ../core/backupjob.h
+    ../core/backupjobstoppable.h
+    ../core/databasemanager.h
+    ../core/collectionimporter.h
+)
+
+set(CORE_SOURCES
+    ../core/collection.cpp
+    ../core/commandline.cpp
+    ../core/catalog.cpp
+    ../core/database.cpp
+    ../core/device.cpp
+    ../core/search.cpp
+    ../core/searchjob.cpp
+    ../core/searchjobstoppable.cpp
+    ../core/searchmanager.cpp
+    ../core/searchprogressmanager.cpp
+    ../core/searchresultsthrottler.cpp
+    ../core/storage.cpp
+    ../core/tag.cpp
+    ../core/language.cpp
+    ../core/catalogjob.cpp
+    ../core/catalogjobstoppable.cpp
+    ../core/catalogmanager.cpp
+    ../core/catalogprogressmanager.cpp
+    ../core/devicejobstoppable.cpp
+    ../core/devicemanager.cpp
+    ../core/deviceupdatemanager.cpp
+    ../core/filemetadata.cpp
+    ../core/filetypemapping.cpp
+    ../core/parallelmetadataextractor.cpp
+    ../core/statusbarmessagebuilder.cpp
+    ../core/backupprofilegenerator.cpp
+    ../core/backupmappingmanager.cpp
+    ../core/filechecksum.cpp
+    ../core/foldertreeloader.cpp
+    ../core/catalogdifferenceengine.cpp
+    ../core/directoryreplicator.cpp
+    ../core/backupjob.cpp
+    ../core/backupjobstoppable.cpp
+    ../core/databasemanager.cpp
+    ../core/collectionimporter.cpp
+)
+
+# ALL mainwindow implementation files - compile them all separately
+# This ensures they're treated as actual compilation units, not just included files
+# Files are directly in qt_widgets/ (no src/ subdirectory)
+set(MAINWINDOW_IMPL_SOURCES
+    mainwindow_setup.cpp
+    mainwindow_tab_backup.cpp
+    mainwindow_tab_create.cpp
+    mainwindow_tab_device_pr.cpp
+    mainwindow_tab_device_ui.cpp
+    mainwindow_tab_explore.cpp
+    mainwindow_tab_filters.cpp
+    mainwindow_tab_search_pr.cpp
+    mainwindow_tab_search_ui.cpp
+    mainwindow_tab_settings.cpp
+    mainwindow_tab_settings_exp.cpp
+    mainwindow_tab_statistics.cpp
+    mainwindow_tab_tags.cpp
+    mainwindow_tab_import.cpp
+)
+
+# Main application sources (excluding the included ones)
+# Files are directly in qt_widgets/ (no src/ subdirectory)
+set(MAIN_SOURCES
+    devicemappingview.cpp
+    devicetreeview.cpp
+    directorytreeitem.cpp
+    directorytreemodel.cpp
+    exploretreeitem.cpp
+    exploretreemodel.cpp
+    exploretreeview.cpp
+    filesview.cpp
+    main.cpp
+    mainwindow.cpp
+    mainwindow_ui_wrapper_device.cpp
+    mainwindow_ui_wrapper_storage.cpp
+    mainwindow_ui_wrapper_catalog.cpp
+    widgets/treecombobox.cpp
+    ${MAINWINDOW_IMPL_SOURCES}  # Always include these as separate compilation units
+)
+
+set(MAIN_HEADERS
+    devicemappingview.h
+    devicetreeview.h
+    directorytreeitem.h
+    directorytreemodel.h
+    exploretreeitem.h
+    exploretreemodel.h
+    exploretreeview.h
+    filesview.h
+    mainwindow.h
+    mainwindow_ui_wrapper_device.h
+    mainwindow_ui_wrapper_storage.h
+    mainwindow_ui_wrapper_catalog.h
+    widgets/treecombobox.h
+)
+
+# UI files
+set(UI_FILES
+    mainwindow.ui
+)
+
+# Translation files (30 languages as mentioned)
+# set(TS_FILES
+#     src/translations/Katalog_bg_BG.ts
+#     src/translations/Katalog_cz_CZ.ts
+#     src/translations/Katalog_da_DK.ts
+#     src/translations/Katalog_de_DE.ts
+#     src/translations/Katalog_en_US.ts
+#     src/translations/Katalog_el_GR.ts
+#     src/translations/Katalog_es_ES.ts
+#     src/translations/Katalog_et_EE.ts
+#     src/translations/Katalog_fr_FR.ts
+#     src/translations/Katalog_fi_FI.ts
+#     src/translations/Katalog_hi_IN.ts
+#     src/translations/Katalog_hu_HU.ts
+#     src/translations/Katalog_it_IT.ts
+#     src/translations/Katalog_ja_JP.ts
+#     src/translations/Katalog_lt_LT.ts
+#     src/translations/Katalog_lv_LV.ts
+#     src/translations/Katalog_nl_NL.ts
+#     src/translations/Katalog_nb_NO.ts
+#     src/translations/Katalog_pl_PL.ts
+#     src/translations/Katalog_pt_PT.ts
+#     src/translations/Katalog_ro_RO.ts
+#     src/translations/Katalog_sv_SE.ts
+#     src/translations/Katalog_zh_CN.ts
+#     src/translations/Katalog_sk_SK.ts
+#     src/translations/Katalog_si_SI.ts
+#     src/translations/Katalog_sr_RS.ts
+#     src/translations/Katalog_uk_UA.ts
+#     src/translations/Katalog_hr_HR.ts
+#     src/translations/Katalog_id_ID.ts
+# )
+
+# Qt5 Translation handling
+# qt5_create_translation(QM_FILES
+#     ${MAIN_SOURCES} ${CORE_SOURCES} ${MAIN_HEADERS} ${CORE_HEADERS} ${UI_FILES}
+#     ${TS_FILES}
+#     OPTIONS -extensions cpp,h,ui -locations relative
+# )
+
+# Custom lupdate target for manual control
+# add_custom_target(lupdate_manual
+#     COMMAND Qt5::lupdate ${MAIN_SOURCES} ${CORE_SOURCES} ${MAIN_HEADERS} ${CORE_HEADERS} ${UI_FILES} -ts ${TS_FILES}
+#     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+#     COMMENT "Manually updating translation source files"
+# )
+
+# Optional: Create a target to copy translations manually
+# add_custom_target(translations_copy
+#     COMMENT "Copy .qm files from build to source directory"
+# )
+#
+# foreach(ts_file ${TS_FILES})
+#     get_filename_component(qm_filename ${ts_file} NAME_WE)
+#     set(qm_file_build "${CMAKE_CURRENT_BINARY_DIR}/${qm_filename}.qm")
+#     set(qm_file_source "${CMAKE_CURRENT_SOURCE_DIR}/src/translations/${qm_filename}.qm")
+#
+#     add_custom_command(TARGET translations_copy POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#                 ${qm_file_build}
+#                 ${qm_file_source}
+#         COMMENT "Copying ${qm_filename}.qm to source directory"
+#     )
+# endforeach()
+
+# Resource files (located at qt_widgets/ root, not src/)
+set(QRC_FILES
+    icons.qrc
+    images.qrc
+    Resources.qrc
+    styles.qrc
+    translations.qrc
+)
+
+# Create the core library (reusable, UI-agnostic for future QtQuick support)
+add_library(katalog-core STATIC ${CORE_SOURCES} ${CORE_HEADERS})
+
+target_link_libraries(katalog-core PUBLIC
+    Qt5::Core
+    Qt5::Gui     # Required for QStandardItemModel and other model classes
+    Qt5::Sql
+    Qt5::Network
+    Qt5::Widgets # Temporarily needed for QApplication in catalog.cpp
+    Qt5::Charts  # Required for QDateTimeAxis used in mainwindow.h
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::XmlGui
+    KF5::FileMetaData
+)
+
+target_include_directories(katalog-core PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/../core
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${KF5CoreAddons_INCLUDE_DIRS}
+    ${KF5I18n_INCLUDE_DIRS}
+    ${KF5XmlGui_INCLUDE_DIRS}
+)
+
+# Create the main executable with all sources
+add_executable(Katalog
+    ${MAIN_SOURCES}
+    ${MAIN_HEADERS}
+    ${UI_FILES}
+    ${QRC_FILES}
+    ${QM_FILES}  # Include compiled translations
+)
+
+# Link libraries to the main executable
+target_link_libraries(Katalog PRIVATE
+    katalog-core
+    Qt5::Core
+    Qt5::Widgets
+    Qt5::Gui
+    Qt5::Sql
+    Qt5::Charts
+    Qt5::Network
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::XmlGui
+    KF5::ConfigCore
+    KF5::IconThemes
+    KF5::FileMetaData
+)
+
+# Windows-specific settings to avoid freetype dll detection issues
+if(WIN32)
+    target_compile_definitions(Katalog PRIVATE
+        QT_NO_FREETYPE
+        -DNOMINMAX
+        -DWIN32_LEAN_AND_MEAN
+    )
+endif()
+
+set_target_properties(katalog-core PROPERTIES
+    AUTOMOC_MOC_OPTIONS "-I${CMAKE_CURRENT_SOURCE_DIR}/../core;-I${CMAKE_CURRENT_SOURCE_DIR}"
+)
+
+# Add include directories to help with relative paths
+target_include_directories(Katalog PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../core
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
+    ${CMAKE_CURRENT_BINARY_DIR}      # For generated version.h (at build root)
+    ${KF5CoreAddons_INCLUDE_DIRS}
+    ${KF5I18n_INCLUDE_DIRS}
+    ${KF5XmlGui_INCLUDE_DIRS}
+    ${KF5Config_INCLUDE_DIRS}
+)
+
+# Platform-specific settings
+if(WIN32)
+    # Enable RC compiler for Windows resources
+    enable_language(RC)
+
+    # Set application icon for Windows
+    set_target_properties(Katalog PROPERTIES
+        WIN32_EXECUTABLE TRUE
+    )
+
+    # Windows-specific: Force dependency checking
+    set_target_properties(Katalog PROPERTIES
+        ADDITIONAL_CLEAN_FILES "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/Katalog.dir"
+    )
+
+    # Force CMake to always check file timestamps on Windows
+    set(CMAKE_DEPENDS_CHECK_CXX 1)
+
+    # Windows-specific compiler flags to help with included files
+    target_compile_definitions(Katalog PRIVATE
+        -DNOMINMAX  # Prevent min/max macro conflicts
+        -DWIN32_LEAN_AND_MEAN  # Reduce Windows header bloat
+    )
+
+    # Add Windows resource file for icon and version info
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../assets/Katalog_logo_64.ico")
+        # Create a basic .rc file content
+        set(RC_CONTENT "IDI_ICON1 ICON \"${CMAKE_CURRENT_SOURCE_DIR}/../assets/Katalog_logo_64.ico\"")
+        file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/katalog.rc" ${RC_CONTENT})
+        target_sources(Katalog PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/katalog.rc")
+    endif()
+endif()
+
+if(APPLE)
+    # Set application icon for macOS
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../assets/Katalog_logo_64.ico")
+        set_target_properties(Katalog PROPERTIES
+            MACOSX_BUNDLE TRUE
+            MACOSX_BUNDLE_ICON_FILE "Katalog_logo_64.ico"
+        )
+    endif()
+endif()
+
+# Installation
+install(TARGETS Katalog
+    BUNDLE DESTINATION .
+    RUNTIME DESTINATION bin
+)
+
+# Debug information
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "Building Katalog in Debug mode")
+    target_compile_definitions(Katalog PRIVATE DEBUG_BUILD)
+
+    # Windows: Add custom command to force dependency checks
+    if(WIN32)
+        add_custom_command(TARGET Katalog PRE_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "Checking dependencies..."
+            COMMENT "Force dependency check on Windows"
+        )
+    endif()
+endif()
+
+# Print configuration summary
+message(STATUS "Katalog Configuration Summary:")
+message(STATUS "  Version: ${PROJECT_VERSION}")
+message(STATUS "  Qt5 Version: ${Qt5_VERSION}")
+message(STATUS "  Build Type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
+
+# Optional: Enable testing
+option(BUILD_TESTS "Build unit tests" OFF)
+if(BUILD_TESTS)
+    enable_testing()
+    # Add test subdirectory when you create tests
+    # add_subdirectory(tests)
+endif()
+
+# Optional: Future QtQuick support
+option(BUILD_QUICK_UI "Build QtQuick UI" OFF)
+if(BUILD_QUICK_UI)
+    find_package(Qt5 REQUIRED COMPONENTS Quick)
+
+    # This would be for a future QtQuick application
+    # add_subdirectory(src/quick)
+
+    message(STATUS "QtQuick UI support enabled (future)")
+endif()

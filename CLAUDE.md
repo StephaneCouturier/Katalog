@@ -5,6 +5,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
+> **CRITICAL — User-visible text:**
+> - **NEVER alter existing `tr()` strings or any user-visible label text** — not for brevity, not for layout reasons, not for any reason. Any change breaks all 30 translations and diverges K3 from K2.
+> - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.
+> - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
+
+> **PROMPT SHORTHANDS:**
+> - **K2** at the start of a prompt → Katalog 2, the Qt Widgets version (`qt_widgets/`)
+> - **K3** at the start of a prompt → Katalog 3, the Qt Quick / QML / Kirigami version (`qt_quick/`)
+
 > **CRITICAL — Version context:**
 > - Last **released** version: **2.10**
 > - Current **development** version: **2.11** (branch `katalog_development`)
@@ -12,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
 >
 > **New fields added in 2.11 (unreleased — edit in place, no extra migration needed):**
-> - (no new field yet) — added by migration 2.11
+> - `storage.storage_picture_path` TEXT — filename of the device picture image (stored relative to `Collection.imageFolderPath`)
 
 ## Project Overview
 
@@ -42,12 +51,15 @@ ninja translations_lrelease
 
 ## Architecture
 
-### Two-Layer Design toward future porting to QtQuick
+### Three-Part Structure
 
-1. **Core Library (`src/core/`)** - UI-agnostic business logic compiled as `katalog-core` static library
-2. **UI Layer (`src/`)** - Qt/KDE UI components, linked against `katalog-core`
+| Directory | Role |
+|-----------|------|
+| `core/` | UI-agnostic business logic, compiled as `katalog-core` static library |
+| `qt_widgets/` | K2 — Qt Widgets / KXmlGui UI, linked against `katalog-core` |
+| `qt_quick/` | K3 — Qt Quick / QML / Kirigami UI, linked against `katalog-core` |
 
-### Core Module Organization (`src/core/`)
+### Core Module Organization (`core/`)
 
 | Component | Files | Purpose |
 |-----------|-------|---------|
@@ -57,7 +69,7 @@ ninja translations_lrelease
 | Device Ops | `devicejobstoppable`, `devicemanager`, `deviceupdatemanager` | Device management and updates |
 | File Processing | `filemetadata`, `filetypemapping`, `parallelmetadataextractor`, `filechecksum` | Metadata extraction and checksums |
 
-### UI Layer Organization (`src/`)
+### K2 UI Layer Organization (`qt_widgets/`)
 
 The main window (`mainwindow.h/cpp`) is split across multiple implementation files by tab:
 
@@ -97,8 +109,9 @@ The two-layer separation is enforced for future **QtQuick compatibility**. The g
 - Error dialogs and user confirmations
 
 **Enforcement rules:**
-- `src/core/` files must **never** include Qt Widgets headers (`QWidget`, `QDialog`, `QMessageBox`, etc.)
-- `mainwindow_tab_*.cpp` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
+- `core/` files must **never** include Qt Widgets headers (`QWidget`, `QDialog`, `QMessageBox`, etc.)
+- `qt_widgets/mainwindow_tab_*.cpp` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
+- `qt_quick/` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
 - Core methods return plain Qt value types (`QString`, `QList`, `QStringList`, `QPair`, etc.), never widget types
 
 **Reference implementations (established patterns):**
@@ -107,6 +120,41 @@ The two-layer separation is enforced for future **QtQuick compatibility**. The g
 - Model self-loading: `Tag::loadFromDatabase(connectionName, filterName)`
 - Structured data for display: `FileMetadata::parseExtendedMetadataFields(jsonObj)` → `QList<QPair<QString,QString>>`
 - Collection-level query: `Collection::getExcludeDirectories()` → `QStringList`
+
+### K3 UI Layer Organization (`qt_quick/`)
+
+| File / Directory | Role |
+|-----------------|------|
+| `main.cpp` | App entry point — creates AppManager, registers QML types, sets context properties |
+| `appmanager.h/cpp` | Central QML context object: exposes core to QML via Q_PROPERTY / Q_INVOKABLE / signals |
+| `adapters/search.h/cpp` | QML-visible Search adapter inheriting `SearchJobStoppable` |
+| `adapters/devicelistmodel.h/cpp` | `QAbstractListModel` exposing the device list to QML |
+| `Main.qml` | Application window, GlobalDrawer, page stack, dialogs |
+| `PageSelection*.qml` | Device selection page and card delegate |
+| `PageSearch*.qml` | Search form and results pages |
+| `PageDevices*.qml` | Devices page (placeholder) |
+| `PageSettings.qml` | Settings page: current connection status + hosted DB config |
+| `version.h.in` | CMake-generated version header |
+
+**K3 build commands:**
+```bash
+cd qt_quick
+mkdir -p build/Debug && cd build/Debug
+cmake ../.. -GNinja -DCMAKE_BUILD_TYPE=Debug -DBUILD_QT_QUICK=ON
+ninja
+```
+
+**K3 current state (alpha 1):**
+- Working: Open Collection (Memory/File/SQLite/Hosted), device selection, search, about, alpha warning
+- Placeholder pages: Devices, Explore, Create, Statistics, Tags
+- `AppManager` carries too much orchestration logic (reconnect, settings management) that should eventually move to a core `DatabaseManager` — acceptable for now
+
+**K3 / K2 key differences:**
+- K3 uses live `reconnectToDatabase()` — no app restart needed when switching collection
+- K2 saves settings + restarts; K3 saves settings + reconnects in-place
+- Settings `.ini` keys are intentionally aligned so both versions share the same settings file
+- K3 `qt_quick/adapters/` contains QML-specific adapter classes; `core/` is shared unchanged
+- Password is stored plain-text in `.ini` (same as K2) and must be loaded back to pre-fill the Settings form
 
 ## Dependencies
 
@@ -147,12 +195,12 @@ In File/Hosted mode, the data is already in the SQLite database and no pre-loadi
 
 Any change that affects users or future developers must be documented:
 
-- **User-facing feature or change** → document in `specs/Katalog-pages/docs/` (the feature page for the relevant screen)
-- **Technical practice, architecture decision, limitation, or risk** → document in `specs/Katalog-pages/docs/` as a Markdown file with the `Spec` prefix (e.g. `SpecBackupStrategy.md`)
+- **User-facing feature or change** → document in `docs_src/docs/` (the feature page for the relevant screen)
+- **Technical practice, architecture decision, limitation, or risk** → document in `docs_src/docs/` as a Markdown file with the `Spec` prefix (e.g. `SpecBackupStrategy.md`)
 
 ### Documentation page rules
 
-All documentation pages must follow the design guidelines in `specs/Katalog-pages/docs/Development-Documentation.md`. Key rules:
+All documentation pages must follow the design guidelines in `docs_src/docs/Development-Documentation.md`. Key rules:
 
 - Every page starts with a YAML frontmatter block (`id`, `title`, `description`), then `# Title`, then Status + Version shields (shields.io)
 - **Feature pages are for end-users**: no code, no method names, no variable names, no source filenames
