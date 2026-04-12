@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkmy_website=globalThis.webpackChunkmy_website||[]).push([[6489],{19989(e){e.exports=JSON.parse('{"authors":[{"name":"Stephane Couturier","title":"Developer of Katalog","url":"https://github.com/StephaneCouturier","imageURL":"https://avatars.githubusercontent.com/u/8320281?v=4","key":"StephaneCouturier","page":null,"count":6}]}')}}]);

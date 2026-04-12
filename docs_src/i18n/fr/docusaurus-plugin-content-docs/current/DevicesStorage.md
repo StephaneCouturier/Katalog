@@ -68,7 +68,7 @@ Le panneau de modification permet de changer tous les champs du périphérique d
 | *Image* | Une image associée à ce stockage — voir [Image du périphérique](#device-picture) ci-dessous |
 | *Périphérique parent* | Le périphérique virtuel ou groupe auquel ce stockage appartient |
 
-## Image du périphérique
+## Image du périphérique {#device-picture}
 
 Il est possible d'associer une image à un périphérique de stockage pour l'identifier visuellement.
 

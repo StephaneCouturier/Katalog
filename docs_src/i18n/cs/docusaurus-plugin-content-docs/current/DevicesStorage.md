@@ -68,7 +68,7 @@ Panel úprav umožňuje změnit všechna pole úložného zařízení:
 | *Obrázek* | Obrázek přidružený k tomuto úložišti — viz [Obrázek zařízení](#device-picture) níže |
 | *Nadřazené zařízení* | Virtuální zařízení nebo skupina, do které toto úložiště patří |
 
-## Obrázek zařízení
+## Obrázek zařízení {#device-picture}
 
 K úložnému zařízení lze přiřadit obrázek pro snadnou vizuální identifikaci.
 

@@ -4,10 +4,61 @@
         <title>Katalog Blog</title>
         <link>https://StephaneCouturier.github.io/Katalog/fr/blog</link>
         <description>Katalog Blog</description>
-        <lastBuildDate>Sat, 07 Mar 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 12 Apr 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>fr</language>
+        <item>
+            <title><![CDATA[Release 2.11]]></title>
+            <link>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-11</link>
+            <guid>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-11</guid>
+            <pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[✨ Main improvements:]]></description>
+            <content:encoded><![CDATA[<p>✨ Main improvements:</p>
+<ul>
+<li class=""><strong>#750 SETTINGS: Import &amp; update data from a different Collection</strong>
+It is now possible to import devices &amp; catalogs from another collection, or the entire collection (equivalent to a merge).
+Once an import is done, a link between collection and catalogs is kept so as to enable Updates from the source collection.
+See <a href="http://localhost:3000/Katalog/docs/Settings#import-update" target="_blank" rel="noopener noreferrer" class="">Settings#import-update</a>
+⚠️ this can only work with collections that where opened/converted to v2.11</li>
+</ul>
+<ul>
+<li class="">
+<p><strong>#731 DEVICES: Storage images options</strong>
+Image folder is now a parameter of the Collection
+Image name flexibility: selection of the picture from the image folder, no limitation on name or image type.</p>
+</li>
+<li class="">
+<p><strong>#747 Katalog 3 (Alpha 1): initial Read-Only version (Collection &amp; Search) for testing and feedback</strong>
+See:<a href="https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a>
+Versions: Linux AppImage only, Windows Portable only, macOS.</p>
+</li>
+<li class="">
+<p><strong>#683  SEARCH: batch process for Metadata or Checksum for the results files</strong></p>
+</li>
+<li class="">
+<p><strong>#751 COLLECTION: import from/export to Hosted mode</strong></p>
+</li>
+</ul>
+<p>⚠️ Technical changes:</p>
+<ul>
+<li class="">As for any new version, it is highly recommended to <strong>backup the collections</strong> 💾, and test the new version on other copies.</li>
+<li class=""><strong>Database updates</strong>: added fields to support collections import and image folder</li>
+</ul>
+<p>📦 Distribution Formats:</p>
+<ul>
+<li class="">As usual, <strong>Window 64</strong>, <strong>Linux</strong>, <strong>macOS</strong></li>
+<li class=""><strong>Linux</strong>: for easier Linux deployment, now available on <a href="https://flathub.org/en/apps/io.github.stephanecouturier.Katalog" target="_blank" rel="noopener noreferrer" class=""><strong>Flathub/Flatpak</strong></a></li>
+</ul>
+<p>📋 Release details:</p>
+<ul>
+<li class="">Full list of updates: <a href="https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.11+sort%3Acreated-asc" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.11+sort%3Acreated-asc</a></li>
+<li class="">Full code changelog: <a href="https://github.com/StephaneCouturier/Katalog/compare/v2.10...v2.11" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/compare/v2.10...v2.11</a></li>
+<li class="">📥 <strong>Download Katalog</strong>: <a href="https://sourceforge.net/projects/katalogg" target="_blank" rel="noopener noreferrer" class="">https://sourceforge.net/projects/katalogg</a></li>
+<li class="">📚 <strong>Documentation</strong>: <a href="https://stephanecouturier.github.io/Katalog" target="_blank" rel="noopener noreferrer" class="">https://stephanecouturier.github.io/Katalog</a></li>
+</ul>]]></content:encoded>
+            <category>release</category>
+        </item>
         <item>
             <title><![CDATA[Release 2.10]]></title>
             <link>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-10</link>
@@ -16,13 +67,11 @@
             <description><![CDATA[✨ Main improvements:]]></description>
             <content:encoded><![CDATA[<p>✨ Main improvements:</p>
 <ul>
-<li class="">
-<p><strong>#723 BACKUP: Incremental BackUp from source Catalog to target Catalog</strong></p>
-</li>
-<li class="">
-<p><strong>#738 BACKUP: Archive (move) files from source Catalog to target Catalog</strong>
-It is now possible to Backup (incremental copy) or Archive (move) files using the catalog links defined in the <a href="https://stephanecouturier.github.io/Katalog/docs/BackUp" target="_blank" rel="noopener noreferrer" class="">BackUp</a> screen.</p>
-</li>
+<li class=""><strong>#723 BACKUP: Incremental BackUp from source Catalog to target Catalog</strong></li>
+<li class=""><strong>#738 BACKUP: Archive (move) files from source Catalog to target Catalog</strong>
+It is now possible to Backup (incremental copy) or Archive (move) files using the catalog links defined in the <a href="https://stephanecouturier.github.io/Katalog/docs/BackUp" target="_blank" rel="noopener noreferrer" class="">BackUp</a> screen.</li>
+</ul>
+<ul>
 <li class="">
 <p><strong>#713 CREATE: Exclude folders / folder paths per catalog or globally</strong>
 On Create or Devices edit screen, it is now possible to add folders to be excluded with the Catalog itself. The feature to exclude globally from collection remain on screen Create.</p>
@@ -156,7 +205,7 @@ Updating a device will only process new or modified files, which is a critical n
             <description><![CDATA[Looking at the future of Katalog, a few direction have been here since the start of the project:]]></description>
             <content:encoded><![CDATA[<p>Looking at the future of Katalog, a few direction have been here since the start of the project:</p>
 <ul>
-<li class="">Multi-platform: why not even consider Mobile ? (ok, iOS should really be covered first)</li>
+<li class="">Multi-platform: why not even consider Mobile ? (ok, macOS should really be covered first)</li>
 <li class="">Using KDE KF6 librairies: this could be the best way to grow capabilities such a archives indexing or media files meta data</li>
 <li class="">User Experience: nicer interface, more responsive.</li>
 </ul>
