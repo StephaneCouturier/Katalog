@@ -168,7 +168,6 @@ set(MAINWINDOW_IMPL_SOURCES
     mainwindow_tab_settings_exp.cpp
     mainwindow_tab_statistics.cpp
     mainwindow_tab_tags.cpp
-    mainwindow_tab_import.cpp
 )
 
 # Main application sources (excluding the included ones)
