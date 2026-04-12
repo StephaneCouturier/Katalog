@@ -467,6 +467,17 @@ void MainWindow::closeEvent (QCloseEvent *event)
     group.writeEntry("y", pos().y());
     group.sync();
 
+    // Explicitly close and remove all database connections before exit.
+    // Without this, SQLite WAL checkpoints or KDE/Qt cleanup threads can keep
+    // the process alive in the Windows Task Manager "Background processes" list.
+    {
+        const QStringList connections = QSqlDatabase::connectionNames();
+        for (const QString &conn : connections) {
+            QSqlDatabase::database(conn, false).close();
+            QSqlDatabase::removeDatabase(conn);
+        }
+    }
+
     event->accept();
     // MainWindow is stack-allocated (WA_DeleteOnClose = false), so KMainWindow's
     // normal quit-on-delete path never fires. Quit the event loop explicitly.
