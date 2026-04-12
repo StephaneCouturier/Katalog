@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Zařízení: Úložiště
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Souhrn
 Tato stránka popisuje všechny funkce zobrazení **Seznam úložiště** na obrazovce [Zařízení](Devices).
@@ -65,16 +65,19 @@ Panel úprav umožňuje změnit všechna pole úložného zařízení:
 | *Sériové číslo* | Sériové číslo disku |
 | *Datum výroby* | Datum výroby disku |
 | *Komentář 1 / 2 / 3* | Volná textová pole pro poznámky |
-| *Obrázek* | Obrázek přidružený k tomuto úložišti (pouze v režimu Paměť — viz níže) |
+| *Obrázek* | Obrázek přidružený k tomuto úložišti — viz [Obrázek zařízení](#device-picture) níže |
 | *Nadřazené zařízení* | Virtuální zařízení nebo skupina, do které toto úložiště patří |
 
 ## Obrázek zařízení
 
-K úložnému zařízení lze přiřadit obrázek. Tato funkce je aktuálně dostupná pouze v [režimu databáze Paměť](Settings#database-memory-mode), protože obrázky jsou uloženy ve složce kolekce.
+K úložnému zařízení lze přiřadit obrázek pro snadnou vizuální identifikaci.
 
 Postup:
-1. Vytvořte složku `images` ve složce kolekce.
-2. Umístěte soubor obrázku pojmenovaný podle ID úložiště (nikoli ID zařízení) — například: `/home/user/Documents/KatalogKolekce/images/3.jpg`
+1. Umístěte soubory obrázků do **složky obrázků** (konfigurovatelné v [Nastavení](Settings#images-folder), výchozí hodnota: `<složka_kolekce>/images`).
+2. V panelu úprav úložiště vyberte požadovaný obrázek z rozevíracího seznamu *Obrázek* — zobrazuje všechny soubory obrázků nalezené ve složce obrázků.
+3. Uložte úložiště pro použití přiřazení.
+
+Pokud není obrázek explicitně přiřazen, Katalog jako záložní možnost hledá soubor pojmenovaný `<IDúložiště>.jpg` ve složce obrázků.
 
 ![Úložné zařízení s přidruženým obrázkem zobrazeným v panelu úprav](/img/devices_storage_04_picture.png)
 

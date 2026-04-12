@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Devices
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Summary
 This page describes the concept of **Device** in Katalog and the top part of the **Devices** screen.

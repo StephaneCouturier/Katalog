@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Périphériques : Catalogues
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de la vue **Liste des catalogues** de l'écran [Périphériques](Devices).

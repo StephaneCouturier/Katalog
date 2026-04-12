@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Přehled
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Indexování souborů a správce úložných zařízení
 Katalog je výkonný <b>správce katalogů souborů</b>, který vám pomáhá organizovat a vyhledávat soubory.<br/>
@@ -60,6 +60,7 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 - **[Organizace zařízení](Devices)**: Organizujte úložná zařízení v hierarchické struktuře (Virtuální > Úložiště > Katalogy)
 - **[Aktualizace](DevicesCatalogs)**: Udržujte katalogy aktuální pomocí ručních aktualizací nebo automatických aktualizací
 - **[Podpora importu](DevicesCatalogs#import)**: Importujte katalogy z jiných nástrojů, jako je VVV
+- **[Import a aktualizace kolekce](Settings#import-update)**: Importujte zařízení z jiné kolekce Katalog nebo aktualizujte dříve importovaná zařízení při změně zdroje
 
 
 ### Analýza a správa
@@ -76,9 +77,9 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 ## Podpora více platforem
 | Hlavní operační systém | Distribuce / Verze    | Balíčky    |
 |-------------------|-------------|-------------|
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Jakýkoli 64bitový, glibc 2.38+ <br/>Jakýkoli 32bitový, glibc 2.35     | AppImage <br/>Přenosný |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bitový: Windows 10 a Windows 11    | Instalátor <br/> Přenosný       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14+      | Instalátor<br/> Přenosný       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Jakýkoli 64bitový, glibc 2.38+ <br/>Jakýkoli 32bitový, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Přenosný](https://sourceforge.net/projects/katalogg/files/) |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bitový: Windows 10 a Windows 11    | [Instalátor](https://sourceforge.net/projects/katalogg/files/) <br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14+      | [Instalátor](https://sourceforge.net/projects/katalogg/files/)<br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
 
 ---
 ## Podpora více jazyků

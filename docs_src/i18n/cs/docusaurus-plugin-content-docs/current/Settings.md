@@ -7,6 +7,9 @@ version: "2.11"
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je používat.
 * Správa dat a kolekcí
+  * Složka kolekce a datový režim (Paměť / Soubor / Hostovaný)
+  * [Import a aktualizace kolekce](Settings#import-update): importovat zařízení z jiné kolekce nebo aktualizovat dříve importovaná zařízení
+  * [Složka obrázků](Settings#images-folder): nastavit umístění obrázků zařízení
 * Jazyk a téma
 * O aplikaci
 
@@ -108,6 +111,8 @@ Katalog umožňuje importovat zařízení z jiné kolekce nebo obnovit obsah kat
 * **Zdrojová** kolekce je existující kolekce Katalog otevřená pouze pro čtení — nikdy není změněna.
 * **Cílová** kolekce je aktuálně aktivní kolekce, do které jsou přidána zařízení a katalogy.
 
+![Stránka Nastavení zobrazující příklad importované kolekce](/img/screen_settings_06_import_collection.png)
+
 **Co se importuje**
 
 Jsou přenesena zařízení, jejich katalogy, indexy souborů katalogů, statistiky, zálohovací vazby a nastavení vyloučených složek. Struktura složek zdroje je v cíli zachována vložením nezbytných nadřazených úrovní jako kontejnerových zařízení. Pokud název zařízení nebo katalogu v cíli již existuje, je automaticky přejmenován (například `Moje Jednotka (2)`), aby nedošlo ke konfliktům.
@@ -130,6 +135,15 @@ Jsou přenesena zařízení, jejich katalogy, indexy souborů katalogů, statist
 | **Paměť** (složka CSV) | Vybrat složku kolekce |
 | **Soubor** (soubor SQLite `.db`) | Vybrat soubor `.db` |
 | **Hostovaný** (MySQL/MariaDB) | Nejprve exportovat do režimu *Soubor* nebo *Paměť* (viz [export hostovaného režimu](#export)), poté použít exportovanou kolekci jako zdroj |
+
+### Složka obrázků {#images-folder}
+
+*Složka obrázků* je složka, kde jsou uloženy obrázky zařízení. Jde o nastavení na úrovni kolekce.
+
+* Zadejte cestu přímo do pole a stiskněte Enter, nebo klikněte na *Vybrat* pro procházení složek.
+* Výchozí hodnota: `<složka_kolekce>/images`, pokud není nastavena.
+
+Obrázky umístěné v této složce lze přiřadit úložným zařízením na obrazovce [Zařízení](DevicesStorage#device-picture).
 
 ## Jazyk a téma
 * Vybrat jazyk aplikace.

@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Devices: Storage
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Summary
 This page describes all the features of the **Storage list** view of the [Devices](Devices) screen and how to use them.
@@ -65,16 +65,19 @@ The edit panel gives access to modify all storage device fields:
 | *Serial Number* | The drive's serial number |
 | *Build Date* | The manufacturing date of the drive |
 | *Comment 1 / 2 / 3* | Free-text fields for notes |
-| *Picture* | An image associated with this storage (Memory mode only — see below) |
+| *Picture* | An image associated with this storage — see [Device picture](#device-picture) below |
 | *Parent device* | The virtual device or group this storage belongs to |
 
 ## Device picture
 
-A picture can be associated with a storage device. This feature is currently only available in [Memory database mode](Settings#database-memory-mode), as the images are stored in the collection folder.
+A picture can be associated with a storage device to help visually identify it.
 
 To use it:
-1. Create a folder named `images` inside the collection folder.
-2. Place an image file named with the storage ID (not the device ID) — for example: `/home/user/Documents/KatalogCollection/images/3.jpg`
+1. Place image files in the **images folder** (configurable in [Settings](Settings#images-folder), defaults to `<collection_folder>/images`).
+2. In the storage edit panel, select the desired image from the *Picture* dropdown — it lists all image files found in the images folder.
+3. Save the storage to apply the association.
+
+If no picture is explicitly assigned, Katalog looks for a file named `<storageID>.jpg` in the images folder as a fallback.
 
 ![Storage device with an associated picture displayed in the edit panel](/img/devices_storage_04_picture.png)
 

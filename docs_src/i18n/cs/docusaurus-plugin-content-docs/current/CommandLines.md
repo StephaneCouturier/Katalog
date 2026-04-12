@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Příkazová Řádka
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Shrnutí
 Tato stránka popisuje dostupné funkce a možnosti příkazové řádky, které lze spouštět z konzole.

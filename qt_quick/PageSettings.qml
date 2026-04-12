@@ -185,6 +185,7 @@ Kirigami.ScrollablePage {
             }
         }
 
+/*
         Controls.Label { text: "Language"; opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
@@ -248,7 +249,7 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-
+*/
         Controls.Label { text: "Settings file"; opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
         Controls.Button {
             text: "Open"

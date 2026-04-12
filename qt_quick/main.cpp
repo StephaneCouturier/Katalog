@@ -40,24 +40,26 @@ int main(int argc, char *argv[])
         QIcon::setFallbackSearchPaths(fallbackPaths);
     }
 
-    // Load translation — same mechanism as K2
+    // K3 alpha1: translations not yet complete — always run in English.
+    // The language setting is left untouched in the shared settings file
+    // so K2 continues to use it normally.
     QTranslator *translator = new QTranslator(&app);
-    {
-        QString homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
-        QString settingsFilePath = homePath + "/.config/katalog_settings.ini";
-        QSettings settings(settingsFilePath, QSettings::IniFormat);
-        QString userLanguage = settings.value("Settings/Language").toString();
-
-        if (userLanguage.isEmpty()) {
-            userLanguage = Language::getSystemLanguage();
-            if (!Language::isLanguageSupported(userLanguage))
-                userLanguage = "en_US";
-            settings.setValue("Settings/Language", userLanguage);
-        }
-
-        if (translator->load("Katalog_" + userLanguage, ":translations"))
-            app.installTranslator(translator);
-    }
+    // {
+    //     QString homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
+    //     QString settingsFilePath = homePath + "/.config/katalog_settings.ini";
+    //     QSettings settings(settingsFilePath, QSettings::IniFormat);
+    //     QString userLanguage = settings.value("Settings/Language").toString();
+    //
+    //     if (userLanguage.isEmpty()) {
+    //         userLanguage = Language::getSystemLanguage();
+    //         if (!Language::isLanguageSupported(userLanguage))
+    //             userLanguage = "en_US";
+    //         settings.setValue("Settings/Language", userLanguage);
+    //     }
+    //
+    //     if (translator->load("Katalog_" + userLanguage, ":translations"))
+    //         app.installTranslator(translator);
+    // }
 
     KAboutData aboutData(
         QStringLiteral("Katalog"),
@@ -112,14 +114,14 @@ int main(int argc, char *argv[])
 
     engine.loadFromModule("io.github.stephanecouturier.Katalog", "Main");
 
-    // Apply language change at runtime without restart
-    QObject::connect(appManager, &AppManager::languageChanged, &engine,
-        [&app, &engine, translator](const QString &code) {
-            app.removeTranslator(translator);
-            if (translator->load("Katalog_" + code, ":translations"))
-                app.installTranslator(translator);
-            engine.retranslate();
-        });
+    // // Apply language change at runtime without restart
+    // QObject::connect(appManager, &AppManager::languageChanged, &engine,
+    //     [&app, &engine, translator](const QString &code) {
+    //         app.removeTranslator(translator);
+    //         if (translator->load("Katalog_" + code, ":translations"))
+    //             app.installTranslator(translator);
+    //         engine.retranslate();
+    //     });
 
     appManager->testQuery();
 

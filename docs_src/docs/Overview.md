@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Overview
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Files indexing & Storage devices manager
 Katalog is a powerful <b>file catalog manager</b> that helps you organize and find files.<br/>
@@ -60,6 +60,7 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 - **[Device Organization](Devices)**: Organize storage devices in a hierarchical structure (Virtual > Storage > Catalogs)
 - **[Update](DevicesCatalogs)**: Keep catalogs current with manual updates or automatic updates
 - **[Import Support](DevicesCatalogs#import)**: Import catalogs from other tools like VVV
+- **[Collection Import & Update](Settings#import-update)**: Import devices from another Katalog collection, or refresh previously imported devices when the source changes
 
 
 ### Analysis & Management
@@ -77,9 +78,9 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 
 | Main OS           | Distributions / Minimum Versions    | Packaging    |
 |-------------------|-------------|-------------|
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | 64bits, glibc 2.38+ <br/>32bits, glibc 2.35     | Flatpak from FlatHub<br/>AppImage <br/>Portable |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits:  Windows 10 & Windows 11    | Installer <br/> Portable       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 13 (Ventura)  | Installer<br/> Portable       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | 64bits, glibc 2.38+ <br/>32bits, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Portable](https://sourceforge.net/projects/katalogg/files/) |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits:  Windows 10 & Windows 11    | [Installer](https://sourceforge.net/projects/katalogg/files/) <br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 13 (Ventura)  | [Installer](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
 
 
 ### macOS Compatibility

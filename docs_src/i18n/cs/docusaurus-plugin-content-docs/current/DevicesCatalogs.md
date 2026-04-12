@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Zařízení: Katalogy
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Souhrn
 Tato stránka popisuje všechny funkce zobrazení **Seznam katalogů** na obrazovce [Zařízení](Devices).

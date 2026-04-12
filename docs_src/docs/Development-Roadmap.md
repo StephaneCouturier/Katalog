@@ -35,9 +35,9 @@ Active and planned work items are tracked in the [GitHub Backlog — Major Featu
 
 **Katalog 3** is a new major version of Katalog, transitionning to a more modern UI, and fitting future tablets & smartphones use. It relies on QtQuick and Kirigami from KDE.
 
-**Katalog 2** remains the current major version, until Katalog 3 covers all features. It may be maintained beyond Katalog 3 release, as long as UI work is light.
+**Katalog 2** remains the current major version, until Katalog 3 covers all existing features. Katalog 2 may be maintained beyond Katalog 3 full release, as long as UI work is light.
 
-**Katalog 3.0.0** will therefore be first complete release and will become then the main version. <br/>Until then, the release will still be 2.x but will include binaries **Katalog 3.alpha.x**.
+**Katalog 3.0** will therefore be the first complete release and will become then the main version. <br/>Until then, the main release will still be 2.x but will include binaries **Katalog 3.alpha.x**.
 
 This is enabled by having done a full split of UI and backend, and the common use of `/core` (backend) means that **Collections will remain compatible to both versions**.
 
@@ -52,18 +52,17 @@ see [Development-Repository](http://localhost:3000/Katalog/docs/Development-Repo
 #### Phases
 Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 
-| Phase | Feature Scope                                                | Status | K3 Notes |
-|-------|--------------------------------------------------------------|--------|----------|
-| 1     | READ ONLY, Search features, English Only, Translations       |   🚧   |          |
-| 2     | READ ONLY advanced / graphical features / Themes             |   🔲   |          |
-| 3     | CREATE / EDIT features                                       |   🔲   |          |
+| Phase | Feature Scope                                                      | Status | Katalog 3 Version |
+|-------|--------------------------------------------------------------------|--------|-------------------|
+| 1     | READ ONLY, Search features, English Only                           |   ✅   | Katalog 3.alpha1  |
+| 2     | READ ONLY advanced / graphical features / Themes / Translations    |   🔲   |                   |
+| 3     | CREATE / EDIT features                                             |   🔲   |                   |
 
-| Platform |  Status | Notes                       |
-|----------|---------|-----------------------------|
-| Linux    |    🚧   | Primary dev environment     |
-| Windows  |    🚧   | Build works with Craft      |
-| macOS    |    🔲   | Never tried                 |
-| Android  |    🔲   | Never tried                 |
+| Platform |  Status | Notes                           |
+|----------|---------|---------------------------------|
+| Linux    |    ✅   | Primary dev environment         |
+| Windows  |    ✅   | Build works with Craft          |
+| macOS    |    ✅   | Build works in GitHub Actions   |
 
 ### Detailed status by Feature 
 
@@ -95,17 +94,13 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — SettingsFile        | ✅ | ✅ | |
 | — Version             | ✅ | ✅ | |
 | — Themes              | ✅ | 🔲 | |
-| — Languages           | ✅ | ✅ | |
+| — Languages           | ✅ | 🚧 | |
 | **About**             | ✅ | ✅ | |
 
 
-### UI / Page system
+### Feedback & Support
 
-Default: do not keep Selection page visible when 
+Bugs: https://github.com/StephaneCouturier/Katalog/issues
 
-1st time
-Selection > Search (enter criteria & click Search action) > Results are displayed & Selection gets hidden 
-
-2nd time
-navigate back to Selection, Search (enter criteria & click Search action) > Results are displayed but Selection statys and Search gets hidden 
+Feedback (UI, ideas, etc.): https://github.com/StephaneCouturier/Katalog/discussions
 

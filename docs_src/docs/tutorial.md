@@ -1,16 +1,16 @@
 ---
 sidebar_position: 1
-version: "2.10"
+version: "2.11"
 ---
 
 # Tutorial
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 Let's discover **Katalog in less than 5 minutes**.
 
 ## Download
-[Download latest version](https://sourceforge.net/projects/katalogg/files/latest/download) from SourceForge.
-<br/>Your Operating System (Linux or Windows) should be detected.
+For Linux, the best option is [Flatpak from Flathub](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog).
+<br/>otherwise [Download latest version](https://sourceforge.net/projects/katalogg/files/latest/download) from SourceForge. Your Operating System (Linux, Windows, or macOS) should be detected.
 
 A portable version for Windows is also available in the [Katalog files](https://sourceforge.net/projects/katalogg/files).
 

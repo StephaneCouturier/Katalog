@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Search
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Summary
 This page describes all the features of the **Search** screen and how to use them.
@@ -268,6 +268,8 @@ The *Process Results* button opens a menu of batch operations applied to all fil
 |--------|-------------|
 | *Export Results* | Export to a new catalog (for further refined searching) **or** to a CSV file named with the date and saved in the [Collection folder](Settings#database-memory-mode) |
 | *Rename (KRename)* | Opens all result files in [KRename](https://apps.kde.org/krename/) for batch renaming |
+| *Verify Checksums* | For each result file: if no checksum is stored yet, calculates and saves the SHA-256 hash; if a checksum is already stored, compares the actual value against the stored one (matched / mismatched). Progress is shown in the status bar. |
+| *Include Metadata* | Extracts extended metadata (image dimensions, audio/video duration, etc.) for each result file and saves it to the catalog. Useful for files originally indexed without metadata. Progress is shown in the status bar. |
 | ⚠ *Move to Trash* | Moves all result files to the system trash (with confirmation showing count and total size) |
 | ⚠ *Delete* | Permanently deletes all result files (with confirmation — no recovery) |
 

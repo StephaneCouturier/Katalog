@@ -1,18 +1,16 @@
 ---
 sidebar_position: 1
-version: "2.10"
+version: "2.11"
 ---
 
 # Tutoriel
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 Découvrons **Katalog en moins de 5 minutes**.
 
 ## Télécharger
-[Télécharger la dernière version](https://sourceforge.net/projects/katalogg/files/latest/download) à partir de SourceForge.
-<br/>Votre système d'exploitation (Linux ou Windows) devrait être détecté.
-
-Une version portable pour Windows est également disponible dans les [Fichiers Katalog](https://sourceforge.net/projects/katalogg/files).
+Pour Linux, la meilleure option est [Flatpak depuis Flathub](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog).
+<br/>Sinon, [télécharger la dernière version](https://sourceforge.net/projects/katalogg/files/latest/download) depuis SourceForge. Votre système d'exploitation (Linux, Windows ou macOS) devrait être détecté.
 
 ## Installer et lancer
 - **Linux / portable** : extraire le fichier *Katalog_linux_portable_x.xx.tar.gz*, puis exécuter le fichier **Katalog.sh**

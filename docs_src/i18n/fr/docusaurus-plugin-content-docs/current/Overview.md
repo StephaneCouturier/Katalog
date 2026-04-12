@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Aperçu général
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Indexation de fichiers & Gestionnaire de périphériques de stockage
 Katalog est un puissant <b>gestionnaire de catalogue de fichiers</b> qui vous aide à organiser et à retrouver vos fichiers.<br/>
@@ -60,6 +60,7 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 - **[Organisation des périphériques](Devices)** : Organisez les périphériques de stockage dans une structure hiérarchique (Virtuel > Stockage > Catalogues)
 - **[Mise à jour](DevicesCatalogs)** : Maintenez les catalogues à jour avec des mises à jour manuelles ou automatiques
 - **[Support d'importation](DevicesCatalogs#import)** : Importez des catalogues d'autres outils comme VVV
+- **[Import et mise à jour de collection](Settings#import-update)** : Importez des appareils depuis une autre collection Katalog, ou actualisez des appareils précédemment importés lorsque la source change
 
 
 ### Analyse et gestion
@@ -76,9 +77,9 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 ## Support multi-plateformes
 | Système d'exploitation principal | Distributions / Versions    | Packaging    |
 |-------------------|-------------|-------------|
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Tout 64bits, glibc 2.38+ <br/>Tout 32bits, glibc 2.35     | AppImage <br/>Portable |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits : Windows 10 & Windows 11    | Installateur <br/> Portable       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14+      | Installateur<br/> Portable       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Tout 64bits, glibc 2.38+ <br/>Tout 32bits, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Portable](https://sourceforge.net/projects/katalogg/files/) |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits : Windows 10 & Windows 11    | [Installateur](https://sourceforge.net/projects/katalogg/files/) <br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14+      | [Installateur](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
 
 ---
 ## Support multilingue

@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Rechercher
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Rechercher** et comment les utiliser.
@@ -268,6 +268,8 @@ Le bouton *Traiter les résultats* ouvre un menu d'opérations appliquées à to
 |--------|-------------|
 | *Exporter les résultats* | Exporter vers un nouveau catalogue (pour des recherches plus précises) **ou** vers un fichier CSV nommé avec la date et enregistré dans le [dossier Collection](Settings#database-memory-mode) |
 | *Renommer (KRename)* | Ouvre tous les fichiers des résultats dans [KRename](https://apps.kde.org/krename/) pour le renommage par lot |
+| *Vérifier les sommes de contrôle* | Pour chaque fichier des résultats : si aucune somme de contrôle n'est encore enregistrée, calcule et sauvegarde le hachage SHA-256 ; si une somme est déjà enregistrée, compare la valeur réelle avec la valeur stockée (correspondance / divergence). La progression est affichée dans la barre d'état. |
+| *Inclure les métadonnées* | Extrait les métadonnées étendues (dimensions des images, durée audio/vidéo, etc.) pour chaque fichier des résultats et les enregistre dans le catalogue. Utile pour les fichiers initialement indexés sans métadonnées. La progression est affichée dans la barre d'état. |
 | ⚠ *Déplacer vers la corbeille* | Déplace tous les fichiers des résultats vers la corbeille système (avec confirmation affichant le nombre et la taille totale) |
 | ⚠ *Supprimer* | Supprime définitivement tous les fichiers des résultats (avec confirmation — aucune récupération possible) |
 

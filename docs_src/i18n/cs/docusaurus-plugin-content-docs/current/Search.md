@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Vyhledávání
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Vyhledávání** a jak je používat.
@@ -268,6 +268,8 @@ Tlačítko *Zpracovat výsledky* otevře nabídku dávkových operací aplikovan
 |------|-------|
 | *Exportovat výsledky* | Exportovat do nového katalogu (pro další přesnější vyhledávání) **nebo** do souboru CSV pojmenovaného s datem a uloženého ve [složce Kolekce](Settings#database-memory-mode) |
 | *Přejmenovat (KRename)* | Otevře všechny soubory výsledků v [KRename](https://apps.kde.org/krename/) pro dávkové přejmenování |
+| *Ověřit kontrolní součty* | Pro každý soubor výsledků: pokud není kontrolní součet dosud uložen, vypočítá a uloží hash SHA-256; pokud je kontrolní součet již uložen, porovná skutečnou hodnotu s uloženou (shoda / neshoda). Průběh je zobrazen ve stavovém řádku. |
+| *Zahrnout metadata* | Extrahuje rozšířená metadata (rozměry obrázků, délka audia/videa atd.) pro každý soubor výsledků a uloží je do katalogu. Užitečné pro soubory původně indexované bez metadat. Průběh je zobrazen ve stavovém řádku. |
 | ⚠ *Přesunout do koše* | Přesune všechny soubory výsledků do systémového koše (s potvrzením zobrazujícím počet a celkovou velikost) |
 | ⚠ *Smazat* | Trvale smaže všechny soubory výsledků (s potvrzením — bez možnosti obnovy) |
 

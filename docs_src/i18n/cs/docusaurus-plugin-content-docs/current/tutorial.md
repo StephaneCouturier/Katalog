@@ -1,19 +1,16 @@
 ---
 sidebar_position: 1
-version: "2.10"
+version: "2.11"
 ---
 
 # Tutoriál
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 Pojďme objevit **Katalog za méně než 5 minut**.
 
 ## Stažení
-[Stáhněte si nejnovější verzi](https://sourceforge.net/projects/katalogg/files/latest/download).
-
-Ze SourceForge by měl být detekován váš operační systém (Linux nebo Windows).
-
-Přenosná verze pro Windows je také k dispozici v [souborech katalogu](https://sourceforge.net/projects/katalogg/files).
+Pro Linux je nejlepší volbou [Flatpak z Flathub](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog).
+<br/>Jinak [stáhněte nejnovější verzi](https://sourceforge.net/projects/katalogg/files/latest/download) ze SourceForge. Váš operační systém (Linux, Windows nebo macOS) by měl být detekován.
 
 ## Nainstalujte a spusťte
 - **Linux / přenosný**: rozbalte soubor *Katalog_linux_portable_x.xx.tar.gz* a poté spusťte soubor **Katalog.sh**

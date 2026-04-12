@@ -7,6 +7,9 @@ version: "2.11"
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Paramètres** et comment les utiliser.
 * Gestion des données et des collections
+  * Dossier de collection et mode de données (Mémoire / Fichier / Hébergé)
+  * [Import et mise à jour de collection](Settings#import-update) : importer des appareils depuis une autre collection ou actualiser les appareils précédemment importés
+  * [Dossier d'images](Settings#images-folder) : configurer l'emplacement des images des périphériques
 * Langue et thème
 * À propos
 
@@ -108,6 +111,8 @@ Katalog peut importer des appareils depuis une autre collection, ou rafraîchir 
 * La collection **source** est une collection Katalog existante ouverte en lecture seule — elle n'est jamais modifiée.
 * La **cible** est la collection active actuelle dans laquelle les appareils et catalogues sont ajoutés.
 
+![Page Paramètres montrant un exemple de collection importée](/img/screen_settings_06_import_collection.png)
+
 **Ce qui est importé**
 
 Les appareils, leurs catalogues, les index de fichiers des catalogues, les statistiques, les liens de sauvegarde et les paramètres de dossiers exclus sont transférés. La structure de dossiers de la source est préservée dans la cible en insérant les niveaux parents nécessaires comme appareils conteneurs. Si un nom d'appareil ou de catalogue existe déjà dans la cible, il est automatiquement renommé (par exemple, `Mon Disque (2)`) pour éviter les conflits.
@@ -130,6 +135,15 @@ Les appareils, leurs catalogues, les index de fichiers des catalogues, les stati
 | **Mémoire** (dossier CSV) | Sélectionner le dossier de la collection |
 | **Fichier** (fichier SQLite `.db`) | Sélectionner le fichier `.db` |
 | **Hébergé** (MySQL/MariaDB) | Exporter d'abord vers le mode *Fichier* ou *Mémoire* (voir [export du mode hébergé](#export)), puis utiliser la collection exportée comme source |
+
+### Dossier d'images {#images-folder}
+
+Le *Dossier d'images* est le dossier où sont stockées les images des périphériques. Il s'agit d'un paramètre par collection.
+
+* Saisir un chemin directement dans le champ et appuyer sur Entrée, ou cliquer sur *Sélectionner* pour parcourir.
+* Par défaut : `<dossier_collection>/images` si non configuré.
+
+Les images placées dans ce dossier peuvent ensuite être associées aux périphériques de stockage dans l'écran [Périphériques](DevicesStorage#device-picture).
 
 ## Langue et thème
 * Choisir la langue de l'application.

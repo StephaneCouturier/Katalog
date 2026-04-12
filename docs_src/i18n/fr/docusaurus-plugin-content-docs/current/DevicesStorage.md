@@ -1,8 +1,8 @@
 ---
-version: "2.10"
+version: "2.11"
 ---
 # Périphériques : Stockage
-![2.10](https://img.shields.io/badge/Version-2.10-blue)
+![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de la vue **Liste de stockage** de l'écran [Périphériques](Devices).
@@ -65,16 +65,19 @@ Le panneau de modification permet de changer tous les champs du périphérique d
 | *Numéro de série* | Le numéro de série du lecteur |
 | *Date de construction* | La date de fabrication du lecteur |
 | *Commentaire 1 / 2 / 3* | Champs de texte libre pour des notes |
-| *Image* | Une image associée à ce stockage (mode Mémoire uniquement — voir ci-dessous) |
+| *Image* | Une image associée à ce stockage — voir [Image du périphérique](#device-picture) ci-dessous |
 | *Périphérique parent* | Le périphérique virtuel ou groupe auquel ce stockage appartient |
 
 ## Image du périphérique
 
-Il est possible d'associer une image à un périphérique de stockage. Cette fonctionnalité n'est actuellement disponible qu'en [mode base de données Mémoire](Settings#database-memory-mode), car les images sont stockées dans le dossier de collection.
+Il est possible d'associer une image à un périphérique de stockage pour l'identifier visuellement.
 
 Pour l'utiliser :
-1. Créer un dossier nommé `images` dans le dossier de collection.
-2. Placer un fichier image nommé avec l'identifiant de stockage (pas l'identifiant du périphérique) — par exemple : `/home/user/Documents/KatalogCollection/images/3.jpg`
+1. Placer des fichiers image dans le **dossier d'images** (configurable dans [Paramètres](Settings#images-folder), par défaut `<dossier_collection>/images`).
+2. Dans le panneau de modification du stockage, sélectionner l'image souhaitée dans la liste déroulante *Image* — elle liste tous les fichiers image trouvés dans le dossier d'images.
+3. Enregistrer le stockage pour appliquer l'association.
+
+Si aucune image n'est explicitement assignée, Katalog recherche un fichier nommé `<IDstockage>.jpg` dans le dossier d'images comme solution de repli.
 
 ![Périphérique de stockage avec une image associée affichée dans le panneau de modification](/img/devices_storage_04_picture.png)
 
