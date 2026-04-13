@@ -6,24 +6,16 @@
   <summary>File catalog manager</summary>
   <description>
     <p>
-      Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
-      Create catalogs of your DVDs, external drives, and folders to quickly find files without having to connect the device.
+        Catalog your devices to search, analyze, and backup your files:
     </p>
     <ul>
-      <li>Create comprehensive catalogs of files and folders from any storage device</li>
-      <li>Search across multiple catalogs simultaneously with advanced filters</li>
-      <li>Track files on external devices (DVDs, USB drives, network storage)</li>
-      <li>Generate detailed statistics and file analysis reports</li>
-      <li>Multiple language support</li>
-      <li>Cross-platform compatibility (Linux, Windows, macOS)</li>
-      <li>Backup and synchronization features</li>
-      <li>Custom device and storage management</li>
-      <li>Metadata extraction for media files</li>
+      <li>Create catalogs from different devices, including metadata or checksums</li>
+      <li>Search and explore files even when the devices are disconnected</li>
+      <li>Search with advanced filters using including metadata or checksums, and find duplicates or differences</li>
+      <li>Organize your collection of devices and files, and get statistics</li>
+      <li>Backup or Archive files between catalogs</li>
+      <li>Multiple language support, OpenSource, Cross-platform (Linux, Windows, macOS)</li>
     </ul>
-    <p>
-      Perfect for digital archivists, content creators, system administrators, and anyone who needs to organize 
-      and track large collections of files across multiple storage devices.
-    </p>
   </description>
   <branding>
     <color type="primary" scheme_preference="light">#e9f7fc</color>
@@ -59,7 +51,7 @@
       <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/docs_src/static/img/screen_search_01.png</image>
     </screenshot>
     <screenshot>
-      <caption>catalog creation screen</caption>
+      <caption>Catalog creation screen</caption>
       <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/docs_src/static/img/screen_create_04_exclude.png</image>
     </screenshot>
     <screenshot>
@@ -75,7 +67,7 @@
   <releases>
     <release version="2.11" date="2026-04-12">
       <description>
-        <p>Import aned Update data from a different Collection</p>
+        <p>Import and Update data from a different Collection</p>
       </description>
     </release>
   </releases>

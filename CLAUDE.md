@@ -2,23 +2,21 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **PROMPT SHORTHANDS:**
+> - **K2** at the start of a prompt → Katalog 2, the Qt Widgets version (`qt_widgets/`)
+> - **K3** at the start of a prompt → Katalog 3, the Qt Quick / QML / Kirigami version (`qt_quick/`)
+
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
 > **CRITICAL — UI structure:**
-> - **NEVER create a new source file** (`.cpp`, `.h`, `.qml`) for a new tab, section, or page without the user explicitly requesting it.
-> - **NEVER add a new entry to any `CMakeLists.txt`** for a file that does not already exist on disk.
-> - When implementing a feature that touches the Settings screen or any existing tab, **add the code to the existing `_exp` or tab file** — do not split it into a new file unless the user asks.
-> - If unsure where new code belongs, **ask before creating anything**.
+> - **NEVER create a new source file** (`.cpp`, `.h`, `.qml`) for a new tab (Katalog2), section, or Page (Katalog3) without the user explicitly requesting it.
+> - If unsure where new code belongs, **ask before creating new files**.
 
 > **CRITICAL — User-visible text:**
 > - **NEVER alter existing `tr()` strings or any user-visible label text** — not for brevity, not for layout reasons, not for any reason. Any change breaks all 30 translations and diverges K3 from K2.
 > - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.
 > - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
-
-> **PROMPT SHORTHANDS:**
-> - **K2** at the start of a prompt → Katalog 2, the Qt Widgets version (`qt_widgets/`)
-> - **K3** at the start of a prompt → Katalog 3, the Qt Quick / QML / Kirigami version (`qt_quick/`)
 
 > **CRITICAL — Version context:**
 > - Last **released** version: **2.10**
@@ -26,15 +24,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - Database migrations 2.11 were introduced **during** the 2.11 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
 >
-> **New fields added in 2.11 (unreleased — edit in place, no extra migration needed):**
-> - `storage.storage_picture_path` TEXT — filename of the device picture image (stored relative to `Collection.imageFolderPath`)
+> **New fields added in 2.12 (unreleased — edit in place, no extra migration needed):**
+> none for now
 
 ## Project Overview
 
-Katalog is a Qt6/KDE desktop application for managing file catalogs across storage devices. Users can create catalogs from folders/drives, search files when devices are disconnected, explore catalog contents offline, and find duplicates/differences between files.
+Catalog your devices to search, analyze, and backup your files.
 
-**Tech Stack:** C++17, Qt6 (Widgets, Sql, Charts), KDE Frameworks 6 (KF6)
-**Platforms:** Linux (KDE Plasma), Windows
+**Tech Stack:** C++17, Qt6 (Widgets, QtQuick, Sql, Charts), KDE Frameworks 6 (KF6)
+**Platforms:** Linux (KDE Plasma), Windows, macOS
 
 ## Build Commands
 
