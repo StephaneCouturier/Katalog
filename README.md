@@ -14,8 +14,7 @@
 - Backup or Archive files between catalogs
 - Multiple language support, OpenSource, Cross-platform (Linux, Windows, macOS)
 
-### User Documentation
-User documentation:
+User Documentation
 - Get started/Tutorial: https://stephanecouturier.github.io/Katalog/docs/tutorial
 - Download (Linux Flathub):  https://flathub.org/en/apps/io.github.stephanecouturier.Katalog
 - Download (other versions): https://sourceforge.net/projects/katalogg
