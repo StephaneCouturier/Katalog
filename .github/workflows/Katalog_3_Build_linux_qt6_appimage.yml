@@ -46,9 +46,20 @@ jobs:
           gettext \
           patchelf
 
-        # Add Kubuntu backports PPA — provides KF6 for Ubuntu 24.04 LTS
-        # (KF6 dev packages are not in Ubuntu 24.04 standard repos; available from 24.10+)
-        sudo add-apt-repository ppa:kubuntu-ppa/backports -y
+        # Add KDE neon repository for KF6 dev packages.
+        # KF6 is not in Ubuntu 24.04 standard repos; KDE neon is the reliable source.
+        # Fetch the signing key from keyserver.ubuntu.com — avoids the unreliable
+        # archive.neon.kde.org/public.key HTTPS endpoint that has been returning errors.
+        sudo mkdir -p /etc/apt/keyrings
+        gpg --no-default-keyring \
+            --keyring /tmp/neon-keyring.gpg \
+            --keyserver hkps://keyserver.ubuntu.com \
+            --recv-keys 444DABE460A3B89DC03B5E75D3B7D6F6E26A9372
+        gpg --no-default-keyring \
+            --keyring /tmp/neon-keyring.gpg \
+            --export | sudo tee /etc/apt/keyrings/neon.gpg > /dev/null
+        echo "deb [signed-by=/etc/apt/keyrings/neon.gpg] http://archive.neon.kde.org/user noble main" \
+          | sudo tee /etc/apt/sources.list.d/neon.list
         sudo apt-get update
 
         # Install Qt6 packages
@@ -63,7 +74,7 @@ jobs:
           libqt6sql6-sqlite \
           qt6-networkauth-dev
 
-        # Install KF6 packages (from Kubuntu backports PPA)
+        # Install KF6 packages (from KDE neon)
         sudo apt-get install -y \
           libkf6coreaddons-dev \
           libkf6i18n-dev \
