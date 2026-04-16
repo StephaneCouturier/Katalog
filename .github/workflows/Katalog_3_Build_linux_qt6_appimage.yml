@@ -47,8 +47,10 @@ jobs:
           patchelf
 
         # Add KDE neon repository for KF6
-        wget -qO - https://archive.neon.kde.org/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg
-        echo "deb http://archive.neon.kde.org/user noble main" | sudo tee /etc/apt/sources.list.d/neon.list
+        sudo mkdir -p /etc/apt/keyrings
+        wget -qO /tmp/neon.asc https://archive.neon.kde.org/public.key
+        gpg --dearmor < /tmp/neon.asc | sudo tee /etc/apt/keyrings/neon.gpg > /dev/null
+        echo "deb [signed-by=/etc/apt/keyrings/neon.gpg] http://archive.neon.kde.org/user noble main" | sudo tee /etc/apt/sources.list.d/neon.list
 
         # Update with new repository
         sudo apt-get update
