@@ -58,7 +58,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6-6.3.0-ubuntu24.04-v1
+        key: kf6-6.0.0-ubuntu24.04-v1
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -66,8 +66,8 @@ jobs:
         # KF6 dev packages are not in Ubuntu 24.04 repos (added in 24.10).
         # Build the required subset from official KDE tarballs.
         # Cached after first run — subsequent builds restore in ~30 s.
-        KF6_VER="6.3.0"
-        KF6_MIN="6.3"
+        KF6_VER="6.0.0"
+        KF6_MIN="6.0"
         BASE="https://download.kde.org/stable/frameworks/${KF6_MIN}"
         PREFIX="/opt/kf6"
 
