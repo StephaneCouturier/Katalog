@@ -14,8 +14,8 @@ on:
         default: 'v6.22.0'
 
   # Trigger on push to main branches
-  push:
-    branches: [ main, katalog_master, katalog_development ]
+  # push:
+  #   branches: [ main, katalog_master, katalog_development ]
 
 jobs:
   build-macos-qt6-kf6:

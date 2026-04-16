@@ -10,10 +10,10 @@ on:
         default: 'v2.5-macos-build'
 
   # Trigger on push to the macos-legacy-build branch only
-  push:
-    branches: [ macos-legacy-build ]
-    paths: 
-      - '.github/workflows/macos-legacy-build.yml'  # Only when workflow changes
+  # push:
+  #   branches: [ macos-legacy-build ]
+  #   paths:
+  #     - '.github/workflows/macos-legacy-build.yml'  # Only when workflow changes
 
 jobs:
   build-macos-legacy:

@@ -8,8 +8,8 @@ on:
         required: false
         default: 'v3.0-macos'
 
-  push:
-    branches: [ main, katalog_master, katalog_development ]
+  # push:
+  #   branches: [ main, katalog_master, katalog_development ]
 
 jobs:
   build-macos-k3:
