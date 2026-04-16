@@ -46,8 +46,12 @@ jobs:
           gettext \
           patchelf
 
-        # Install Qt6 packages with correct names
-        # Note: KF6 is available directly from Ubuntu 24.04 universe — no extra repo needed
+        # Add Kubuntu backports PPA — provides KF6 for Ubuntu 24.04 LTS
+        # (KF6 dev packages are not in Ubuntu 24.04 standard repos; available from 24.10+)
+        sudo add-apt-repository ppa:kubuntu-ppa/backports -y
+        sudo apt-get update
+
+        # Install Qt6 packages
         sudo apt-get install -y \
           qt6-base-dev \
           qt6-base-dev-tools \
@@ -59,41 +63,20 @@ jobs:
           libqt6sql6-sqlite \
           qt6-networkauth-dev
 
-        # Install KF6 packages - try different possible names
+        # Install KF6 packages (from Kubuntu backports PPA)
         sudo apt-get install -y \
           libkf6coreaddons-dev \
           libkf6i18n-dev \
           libkf6config-dev \
           libkf6iconthemes-dev \
           libkf6filemetadata-dev \
-          libkf6archive-dev || \
-        sudo apt-get install -y \
-          kf6-kcoreaddons-dev \
-          kf6-ki18n-dev \
-          kf6-kconfig-dev \
-          kf6-kiconthemes-dev \
-          kf6-kfilemetadata-dev \
-          kf6-karchive-dev || \
-        {
-          echo "Failed to install KF6 packages from KDE neon repository"
-          echo "Attempting alternative installation methods..."
+          libkf6archive-dev
 
-          # Fallback: Try building from source or use alternative repos
-          echo "This might require manual KF6 installation"
-          exit 1
-        }
-
-        # Install Kirigami — required by K3 at runtime (QML import org.kde.kirigami).
-        # Without it the QML module is absent from the AppDir and the app fails to start.
-        # Try several package names used across KDE Neon / Ubuntu releases.
+        # Install Kirigami — required by K3 at runtime (QML import org.kde.kirigami)
         sudo apt-get install -y \
           libkf6kirigami-dev \
-          qml6-module-org-kde-kirigami 2>/dev/null || \
-        sudo apt-get install -y \
-          kirigami6-dev 2>/dev/null || \
-        sudo apt-get install -y \
-          kf6-kirigami 2>/dev/null || \
-        echo "WARNING: Kirigami package not found by any known name — bundling may fail"
+          qml6-module-org-kde-kirigami || \
+        echo "WARNING: Kirigami package not found — bundling may fail"
 
         # Verify critical KF6 packages are installed
         echo "=== Verifying KF6 installations ==="
