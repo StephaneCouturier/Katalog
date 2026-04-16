@@ -45,16 +45,8 @@ jobs:
           gpg \
           gettext
 
-        # Add KDE neon repository for KF6
-        sudo mkdir -p /etc/apt/keyrings
-        wget -qO /tmp/neon.asc https://archive.neon.kde.org/public.key
-        gpg --dearmor < /tmp/neon.asc | sudo tee /etc/apt/keyrings/neon.gpg > /dev/null
-        echo "deb [signed-by=/etc/apt/keyrings/neon.gpg] http://archive.neon.kde.org/user noble main" | sudo tee /etc/apt/sources.list.d/neon.list
-
-        # Update with new repository
-        sudo apt-get update
-
         # Install Qt6 packages with correct names
+        # Note: KF6 is available directly from Ubuntu 24.04 universe — no extra repo needed
         sudo apt-get install -y \
           qt6-base-dev \
           qt6-base-dev-tools \
