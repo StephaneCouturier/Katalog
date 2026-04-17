@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2025-10-02 run1
+#v2026-04-18 run1
 on:
   # Trigger on new releases
   # release:
@@ -114,24 +114,28 @@ jobs:
         sudo ninja -C build-pwp install
         rm -rf build-pwp pwp-src
 
-        # Qt 6.10 aqtinstall does not include Qt6::GuiPrivate in Qt6GuiTargets.cmake.
-        # KGuiAddons uses it via target_link_libraries without calling find_package,
-        # expecting Qt's own cmake to create it. We inject it into the targets file.
+        # Qt 6.10.0 via aqtinstall/jurplel does not add a Qt6::GuiPrivate INTERFACE
+        # target to Qt6GuiTargets.cmake. kguiaddons 6.10.0 calls
+        # target_link_libraries(... Qt6::GuiPrivate) without a find_package guard,
+        # so cmake fails with "Target Qt6::GuiPrivate not found".
+        # Workaround: inject the INTERFACE IMPORTED target directly into the file.
+        # NOTE: heredoc body must be indented to 8+ spaces so the YAML literal block
+        # scalar does not terminate early (YAML strips 8 spaces; bash then sees 0-indent
+        # heredoc body, which is valid for CMake syntax).
         QT6_GUI_TARGETS=$(find "${QT_ROOT_DIR}" -name "Qt6GuiTargets.cmake" 2>/dev/null | head -1)
         echo "Qt6GuiTargets.cmake: ${QT6_GUI_TARGETS:-NOT FOUND}"
         if [ -n "${QT6_GUI_TARGETS}" ] && ! grep -q "GuiPrivate" "${QT6_GUI_TARGETS}"; then
           echo "Injecting Qt6::GuiPrivate into ${QT6_GUI_TARGETS}"
           cat >> "${QT6_GUI_TARGETS}" << EOF
-
-# Injected workaround: Qt 6.10 aqtinstall omits Qt6::GuiPrivate from this file.
-if(NOT TARGET Qt6::GuiPrivate)
-  add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)
-  set_target_properties(Qt6::GuiPrivate PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES
-    "${QT_ROOT_DIR}/include/QtGui/6.10.0;${QT_ROOT_DIR}/include/QtGui/6.10.0/QtGui"
-  )
-endif()
-EOF
+        # Injected workaround: Qt 6.10 aqtinstall omits Qt6::GuiPrivate from this file.
+        if(NOT TARGET Qt6::GuiPrivate)
+          add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)
+          set_target_properties(Qt6::GuiPrivate PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES
+            "${QT_ROOT_DIR}/include/QtGui/6.10.0;${QT_ROOT_DIR}/include/QtGui/6.10.0/QtGui"
+          )
+        endif()
+        EOF
         fi
 
         build kguiaddons
