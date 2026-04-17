@@ -53,12 +53,44 @@ jobs:
         modules: 'qtcharts qtnetworkauth'
         cache: true
 
+    - name: Patch Qt6 for GuiPrivate target
+      # Qt 6.10.0 installed by jurplel/install-qt-action does not create the
+      # Qt6::GuiPrivate INTERFACE target in Qt6GuiTargets.cmake.
+      # kguiaddons calls target_link_libraries(... Qt6::GuiPrivate) without a
+      # find_package guard, so cmake fails at generate time.
+      # This step runs unconditionally (not gated on KF6 cache) so the injection
+      # is always present regardless of whether the KF6 build step is skipped.
+      run: |
+        QT6_GUI_TARGETS=$(find "${QT_ROOT_DIR}" -name "Qt6GuiTargets.cmake" 2>/dev/null | head -1)
+        echo "Qt6GuiTargets.cmake: ${QT6_GUI_TARGETS:-NOT FOUND}"
+        if [ -z "${QT6_GUI_TARGETS}" ]; then
+          echo "ERROR: Qt6GuiTargets.cmake not found — Qt install may be broken"
+          exit 1
+        fi
+        if grep -q "GuiPrivate" "${QT6_GUI_TARGETS}"; then
+          echo "Qt6::GuiPrivate already present (cached Qt install) — skipping injection"
+        else
+          echo "Injecting Qt6::GuiPrivate into ${QT6_GUI_TARGETS}"
+          cat >> "${QT6_GUI_TARGETS}" << EOF
+        # Injected: Qt 6.10 aqtinstall omits Qt6::GuiPrivate from this file.
+        if(NOT TARGET Qt6::GuiPrivate)
+          add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)
+          set_target_properties(Qt6::GuiPrivate PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES
+            "${QT_ROOT_DIR}/include/QtGui/6.10.0;${QT_ROOT_DIR}/include/QtGui/6.10.0/QtGui"
+          )
+        endif()
+        EOF
+          echo "Injection done. Verifying:"
+          grep -A5 "GuiPrivate" "${QT6_GUI_TARGETS}" | head -10
+        fi
+
     - name: Restore KF6 cache
       id: kf6-cache
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v1
+        key: kf6.10.0-ubuntu24.04-v2
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -113,30 +145,6 @@ jobs:
           -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}"
         sudo ninja -C build-pwp install
         rm -rf build-pwp pwp-src
-
-        # Qt 6.10.0 via aqtinstall/jurplel does not add a Qt6::GuiPrivate INTERFACE
-        # target to Qt6GuiTargets.cmake. kguiaddons 6.10.0 calls
-        # target_link_libraries(... Qt6::GuiPrivate) without a find_package guard,
-        # so cmake fails with "Target Qt6::GuiPrivate not found".
-        # Workaround: inject the INTERFACE IMPORTED target directly into the file.
-        # NOTE: heredoc body must be indented to 8+ spaces so the YAML literal block
-        # scalar does not terminate early (YAML strips 8 spaces; bash then sees 0-indent
-        # heredoc body, which is valid for CMake syntax).
-        QT6_GUI_TARGETS=$(find "${QT_ROOT_DIR}" -name "Qt6GuiTargets.cmake" 2>/dev/null | head -1)
-        echo "Qt6GuiTargets.cmake: ${QT6_GUI_TARGETS:-NOT FOUND}"
-        if [ -n "${QT6_GUI_TARGETS}" ] && ! grep -q "GuiPrivate" "${QT6_GUI_TARGETS}"; then
-          echo "Injecting Qt6::GuiPrivate into ${QT6_GUI_TARGETS}"
-          cat >> "${QT6_GUI_TARGETS}" << EOF
-        # Injected workaround: Qt 6.10 aqtinstall omits Qt6::GuiPrivate from this file.
-        if(NOT TARGET Qt6::GuiPrivate)
-          add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)
-          set_target_properties(Qt6::GuiPrivate PROPERTIES
-            INTERFACE_INCLUDE_DIRECTORIES
-            "${QT_ROOT_DIR}/include/QtGui/6.10.0;${QT_ROOT_DIR}/include/QtGui/6.10.0/QtGui"
-          )
-        endif()
-        EOF
-        fi
 
         build kguiaddons
         build kwidgetsaddons
