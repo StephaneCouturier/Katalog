@@ -114,7 +114,15 @@ jobs:
         sudo ninja -C build-pwp install
         rm -rf build-pwp pwp-src
 
-        build kguiaddons
+        # Diagnostic: verify Qt6::GuiPrivate cmake files are present
+        echo "=== Qt cmake layout (Gui-related) ==="
+        echo "QT_ROOT_DIR=${QT_ROOT_DIR}"
+        ls "${QT_ROOT_DIR}/lib/cmake/" 2>/dev/null | grep -i gui || echo "No Gui cmake dirs found"
+        ls "${QT_ROOT_DIR}/lib/cmake/Qt6GuiPrivate/" 2>/dev/null || echo "Qt6GuiPrivate cmake dir missing"
+
+        build kguiaddons \
+          -DQt6_DIR="${QT_ROOT_DIR}/lib/cmake/Qt6" \
+          -DQt6GuiPrivate_DIR="${QT_ROOT_DIR}/lib/cmake/Qt6GuiPrivate"
         build kwidgetsaddons
         build kcolorscheme
         build kconfigwidgets

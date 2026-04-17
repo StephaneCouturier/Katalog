@@ -14,7 +14,7 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <img src="img/Banner_1.20_3.png" width="900"></img>
+        <img src="img/Banner_2.11.png" width="900"></img>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
