@@ -40,6 +40,7 @@ jobs:
           fuse3 \
           libfuse2t64 \
           gettext \
+          gperf \
           libwayland-dev
 
     - name: Install Qt 6.10.0
