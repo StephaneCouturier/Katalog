@@ -68,10 +68,19 @@ jobs:
         KF6_PREFIX="/opt/kf6"
 
         # --- Qt 6.7.2 via aqtinstall ---
-        pip3 install aqtinstall
+        # Pin to 3.1.7 — stable, known-good version of aqtinstall
+        pip3 install "aqtinstall==3.1.7"
+        # Install base Qt (no -m here — avoids XML-parse issues with add-on names)
+        aqt install-qt linux desktop ${QT_VER} gcc_64 \
+          --outputdir /opt/qt6
+        # qtdeclarative (QtQuick/QML) is required for K3; install first as critical step
         aqt install-qt linux desktop ${QT_VER} gcc_64 \
           --outputdir /opt/qt6 \
-          -m qtcharts qtnetworkauth qtsvg qtdeclarative
+          -m qtdeclarative
+        # Additional add-on modules (non-fatal)
+        aqt install-qt linux desktop ${QT_VER} gcc_64 \
+          --outputdir /opt/qt6 \
+          -m qtcharts qtnetworkauth qtsvg || echo "Add-on modules install failed (non-critical)"
 
         export PATH="${QT_DIR}/bin:$PATH"
         export LD_LIBRARY_PATH="${QT_DIR}/lib:$LD_LIBRARY_PATH"

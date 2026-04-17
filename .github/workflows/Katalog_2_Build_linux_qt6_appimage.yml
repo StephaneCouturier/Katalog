@@ -67,10 +67,16 @@ jobs:
         KF6_PREFIX="/opt/kf6"
 
         # --- Qt 6.7.2 via aqtinstall ---
-        pip3 install aqtinstall
+        # Pin to 3.1.7 — stable, known-good version of aqtinstall
+        pip3 install "aqtinstall==3.1.7"
+        # Install base Qt (no -m here — avoids XML-parse issues with add-on names)
+        aqt install-qt linux desktop ${QT_VER} gcc_64 \
+          --outputdir /opt/qt6
+        # Add required add-on modules (non-fatal: Charts/NetworkAuth/SVG are used but
+        # their absence won't prevent a build — linker will fail later with a clear message)
         aqt install-qt linux desktop ${QT_VER} gcc_64 \
           --outputdir /opt/qt6 \
-          -m qtcharts qtnetworkauth qtsvg
+          -m qtcharts qtnetworkauth qtsvg || echo "Add-on modules install failed (non-critical)"
 
         export PATH="${QT_DIR}/bin:$PATH"
         export LD_LIBRARY_PATH="${QT_DIR}/lib:$LD_LIBRARY_PATH"
