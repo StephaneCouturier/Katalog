@@ -99,6 +99,22 @@ jobs:
         build kcoreaddons
         build ki18n
         build kconfig
+
+        # plasma-wayland-protocols is required by kguiaddons ≥ 6.8 but is not
+        # available at the required version (≥ 1.15.0) in Ubuntu 24.04.
+        # It is protocol-definition files + CMake config only — very fast to build.
+        echo "=== Building plasma-wayland-protocols ==="
+        git clone --depth=1 --branch v1.15.0 \
+          https://invent.kde.org/libraries/plasma-wayland-protocols.git pwp-src 2>/dev/null || \
+        git clone --depth=1 \
+          https://invent.kde.org/libraries/plasma-wayland-protocols.git pwp-src
+        cmake -B build-pwp pwp-src \
+          -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}"
+        sudo ninja -C build-pwp install
+        rm -rf build-pwp pwp-src
+
         build kguiaddons
         build kwidgetsaddons
         build kcolorscheme
