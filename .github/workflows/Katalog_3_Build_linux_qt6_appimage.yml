@@ -41,58 +41,39 @@ jobs:
           libfuse2t64 \
           gettext \
           patchelf \
-          libwayland-dev \
-          python3-pip
+          libwayland-dev
 
-    - name: Restore Qt6 and KF6 cache
-      id: qt-kf6-cache
+    - name: Install Qt 6.10.0
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.10.0'
+        host: 'linux'
+        target: 'desktop'
+        dir: '/opt/qt'
+        modules: 'qtdeclarative qtcharts qtnetworkauth qtsvg'
+        cache: true
+
+    - name: Restore KF6 cache
+      id: kf6-cache
       uses: actions/cache@v4
       with:
-        path: |
-          /opt/qt6
-          /opt/kf6
-        key: qt6.10.0-kf6.10.0-ubuntu24.04-v2
+        path: /opt/kf6
+        key: kf6.10.0-ubuntu24.04-v1
 
-    - name: Install Qt6 and build KF6 from source
-      if: steps.qt-kf6-cache.outputs.cache-hit != 'true'
+    - name: Build KF6 from source
+      if: steps.kf6-cache.outputs.cache-hit != 'true'
       run: |
         # No KF6 dev packages in Ubuntu 24.04 (added in 24.10), and every KF6
         # version requires Qt ≥ 6.5 while Ubuntu 24.04 ships Qt 6.4.2.
-        # Solution: install Qt 6.10.0 via aqtinstall, then build KF6 against it.
-        # Both are cached — first run ~30 min, subsequent runs ~30 s.
-        QT_VER="6.10.0"
+        # Qt is installed by install-qt-action; QT_ROOT_DIR points to it.
+        # KF6 is built from source and cached separately.
         KF6_VER="6.10.0"
         KF6_MIN="6.10"
         KF6_BASE="https://download.kde.org/stable/frameworks/${KF6_MIN}"
         KF6_PREFIX="/opt/kf6"
 
-        # --- Qt 6.10.0 via aqtinstall ---
-        pip3 install aqtinstall
-        # Qt 6.8+ renamed the Linux x86_64 arch — detect it rather than hardcoding.
-        echo "=== Available Qt ${QT_VER} archs ==="
-        QT_ARCH_LIST=$(aqt list-qt linux desktop --arch ${QT_VER} 2>&1)
-        echo "${QT_ARCH_LIST}"
-        QT_ARCH=$(echo "${QT_ARCH_LIST}" | tr ' ' '\n' | grep -v '^$' | head -1)
-        if [ -z "${QT_ARCH}" ]; then
-          echo "ERROR: aqt could not list archs for Qt ${QT_VER} — cannot continue"
-          exit 1
-        fi
-        echo "Selected arch: ${QT_ARCH}"
-        QT_DIR="/opt/qt6/${QT_VER}/${QT_ARCH}"
-        # Install base Qt (no -m to avoid batch XML-parse failures)
-        aqt install-qt linux desktop ${QT_VER} ${QT_ARCH} \
-          --outputdir /opt/qt6
-        # qtdeclarative (QtQuick/QML) is required for K3
-        aqt install-qt linux desktop ${QT_VER} ${QT_ARCH} \
-          --outputdir /opt/qt6 \
-          -m qtdeclarative
-        # Additional add-on modules (non-fatal)
-        aqt install-qt linux desktop ${QT_VER} ${QT_ARCH} \
-          --outputdir /opt/qt6 \
-          -m qtcharts qtnetworkauth qtsvg || echo "Add-on modules install failed (non-critical)"
-
-        export PATH="${QT_DIR}/bin:$PATH"
-        export LD_LIBRARY_PATH="${QT_DIR}/lib:$LD_LIBRARY_PATH"
+        export PATH="${QT_ROOT_DIR}/bin:$PATH"
+        export LD_LIBRARY_PATH="${QT_ROOT_DIR}/lib:$LD_LIBRARY_PATH"
 
         # --- KF6 modules (dependency order) ---
         build() {
@@ -104,7 +85,7 @@ jobs:
             -GNinja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}" \
-            -DCMAKE_PREFIX_PATH="${KF6_PREFIX};${QT_DIR}" \
+            -DCMAKE_PREFIX_PATH="${KF6_PREFIX};${QT_ROOT_DIR}" \
             -DBUILD_TESTING=OFF \
             "$@"
           ninja -C "build-${name}"
@@ -126,18 +107,6 @@ jobs:
         build kcompletion
         build kfilemetadata
         build karchive
-
-    - name: Set Qt environment paths
-      run: |
-        # Discover the actual Qt install path (arch name varies by Qt version)
-        QT_DIR=$(find /opt/qt6/6.10.0 -maxdepth 1 -mindepth 1 -type d | head -1)
-        if [ -z "$QT_DIR" ]; then
-          echo "ERROR: Qt 6.10.0 not found under /opt/qt6/"
-          ls -la /opt/qt6/ || true
-          exit 1
-        fi
-        echo "Qt installed at: $QT_DIR"
-        echo "QT_DIR=$QT_DIR" >> $GITHUB_ENV
 
     - name: Download and setup linuxdeploy
       run: |
@@ -266,8 +235,8 @@ jobs:
 
     - name: Build Katalog3
       run: |
-        export PATH="$QT_DIR/bin:$PATH"
-        export LD_LIBRARY_PATH="$QT_DIR/lib:$LD_LIBRARY_PATH"
+        export PATH="$QT_ROOT_DIR/bin:$PATH"
+        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:$LD_LIBRARY_PATH"
 
         mkdir build
         cd build
@@ -276,7 +245,7 @@ jobs:
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_PREFIX_PATH="/opt/kf6;$QT_DIR" \
+          -DCMAKE_PREFIX_PATH="/opt/kf6;$QT_ROOT_DIR" \
           -DBUILD_QT_WIDGETS=OFF \
           -DBUILD_QT_QUICK=ON \
           -DBUILD_TESTS=OFF
@@ -361,10 +330,10 @@ jobs:
         cd build
 
         # Set up environment
-        export PATH="$HOME/linuxdeploy:$QT_DIR/bin:$PATH"
-        export LD_LIBRARY_PATH="$QT_DIR/lib:/opt/kf6/lib:$LD_LIBRARY_PATH"
-        export QMAKE="$QT_DIR/bin/qmake"
-        QT6_LIB_DIR="$QT_DIR/lib"
+        export PATH="$HOME/linuxdeploy:$QT_ROOT_DIR/bin:$PATH"
+        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:/opt/kf6/lib:$LD_LIBRARY_PATH"
+        export QMAKE="$QT_ROOT_DIR/bin/qmake"
+        QT6_LIB_DIR="$QT_ROOT_DIR/lib"
 
         # Check AppDir structure
         echo "AppDir binary:"
@@ -463,7 +432,7 @@ jobs:
         echo "Deploying QML modules..."
         QT_QML_DIR=""
         for dir in \
-          "$QT_DIR/qml" \
+          "$QT_ROOT_DIR/qml" \
           /usr/lib/x86_64-linux-gnu/qt6/qml \
           /usr/lib/qt6/qml \
           /usr/lib64/qt6/qml; do
