@@ -49,7 +49,7 @@ jobs:
         host: 'linux'
         target: 'desktop'
         dir: '/opt/qt'
-        modules: 'qtcharts qtnetworkauth qtsvg'
+        modules: 'qtcharts qtnetworkauth'
         cache: true
 
     - name: Restore KF6 cache
