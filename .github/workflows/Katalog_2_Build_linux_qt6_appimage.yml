@@ -60,7 +60,6 @@ jobs:
         # Solution: install Qt 6.10.0 via aqtinstall, then build KF6 against it.
         # Both are cached — first run ~30 min, subsequent runs ~30 s.
         QT_VER="6.10.0"
-        QT_DIR="/opt/qt6/${QT_VER}/linux_gcc_64"
         KF6_VER="6.10.0"
         KF6_MIN="6.10"
         KF6_BASE="https://download.kde.org/stable/frameworks/${KF6_MIN}"
@@ -68,12 +67,22 @@ jobs:
 
         # --- Qt 6.10.0 via aqtinstall ---
         pip3 install aqtinstall
-        # Install base Qt (no -m here — avoids XML-parse issues with add-on names)
-        aqt install-qt linux desktop ${QT_VER} linux_gcc_64 \
+        # Qt 6.8+ renamed the Linux x86_64 arch — detect it rather than hardcoding.
+        echo "=== Available Qt ${QT_VER} archs ==="
+        QT_ARCH_LIST=$(aqt list-qt linux desktop --arch ${QT_VER} 2>&1)
+        echo "${QT_ARCH_LIST}"
+        QT_ARCH=$(echo "${QT_ARCH_LIST}" | tr ' ' '\n' | grep -v '^$' | head -1)
+        if [ -z "${QT_ARCH}" ]; then
+          echo "ERROR: aqt could not list archs for Qt ${QT_VER} — cannot continue"
+          exit 1
+        fi
+        echo "Selected arch: ${QT_ARCH}"
+        QT_DIR="/opt/qt6/${QT_VER}/${QT_ARCH}"
+        # Install base Qt (no -m to avoid batch XML-parse failures)
+        aqt install-qt linux desktop ${QT_VER} ${QT_ARCH} \
           --outputdir /opt/qt6
-        # Add required add-on modules (non-fatal: Charts/NetworkAuth/SVG are used but
-        # their absence won't prevent a build — linker will fail later with a clear message)
-        aqt install-qt linux desktop ${QT_VER} linux_gcc_64 \
+        # Add required add-on modules (non-fatal)
+        aqt install-qt linux desktop ${QT_VER} ${QT_ARCH} \
           --outputdir /opt/qt6 \
           -m qtcharts qtnetworkauth qtsvg || echo "Add-on modules install failed (non-critical)"
 
@@ -111,6 +120,18 @@ jobs:
         build kxmlgui
         build kcompletion
         build kfilemetadata
+
+    - name: Set Qt environment paths
+      run: |
+        # Discover the actual Qt install path (arch name varies by Qt version)
+        QT_DIR=$(find /opt/qt6/6.10.0 -maxdepth 1 -mindepth 1 -type d | head -1)
+        if [ -z "$QT_DIR" ]; then
+          echo "ERROR: Qt 6.10.0 not found under /opt/qt6/"
+          ls -la /opt/qt6/ || true
+          exit 1
+        fi
+        echo "Qt installed at: $QT_DIR"
+        echo "QT_DIR=$QT_DIR" >> $GITHUB_ENV
 
     - name: Download and setup linuxdeploy
       run: |
@@ -231,14 +252,14 @@ jobs:
         mkdir build
         cd build
 
-        export PATH="/opt/qt6/6.10.0/linux_gcc_64/bin:$PATH"
-        export LD_LIBRARY_PATH="/opt/qt6/6.10.0/linux_gcc_64/lib:$LD_LIBRARY_PATH"
+        export PATH="$QT_DIR/bin:$PATH"
+        export LD_LIBRARY_PATH="$QT_DIR/lib:$LD_LIBRARY_PATH"
 
         cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_PREFIX_PATH="/opt/kf6;/opt/qt6/6.10.0/linux_gcc_64" \
+          -DCMAKE_PREFIX_PATH="/opt/kf6;$QT_DIR" \
           -DBUILD_QT_WIDGETS=ON \
           -DBUILD_QT_QUICK=OFF \
           -DBUILD_TESTS=OFF
@@ -323,9 +344,9 @@ jobs:
         cd build
 
         # Set up environment for linuxdeploy
-        export PATH="$HOME/linuxdeploy:/opt/qt6/6.10.0/linux_gcc_64/bin:$PATH"
-        export LD_LIBRARY_PATH="/opt/qt6/6.10.0/linux_gcc_64/lib:/opt/kf6/lib:$LD_LIBRARY_PATH"
-        export QMAKE="/opt/qt6/6.10.0/linux_gcc_64/bin/qmake"
+        export PATH="$HOME/linuxdeploy:$QT_DIR/bin:$PATH"
+        export LD_LIBRARY_PATH="$QT_DIR/lib:/opt/kf6/lib:$LD_LIBRARY_PATH"
+        export QMAKE="$QT_DIR/bin/qmake"
 
         # Verify tools work
         echo "Testing linuxdeploy..."
