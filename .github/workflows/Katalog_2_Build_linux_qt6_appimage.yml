@@ -54,35 +54,58 @@ jobs:
         cache: true
 
     - name: Patch Qt6 for GuiPrivate target
-      # Qt 6.10.0 installed by jurplel/install-qt-action does not create the
-      # Qt6::GuiPrivate INTERFACE target in Qt6GuiTargets.cmake.
-      # kguiaddons calls target_link_libraries(... Qt6::GuiPrivate) without a
-      # find_package guard, so cmake fails at generate time.
-      # This step runs unconditionally (not gated on KF6 cache) so the injection
-      # is always present regardless of whether the KF6 build step is skipped.
+      # kguiaddons 6.10.0 calls target_link_libraries(KF6GuiAddons Qt6::GuiPrivate)
+      # without first calling find_package(Qt6GuiPrivate). Qt6::GuiPrivate is defined
+      # in Qt6GuiPrivateConfig.cmake but that file is never auto-loaded when only
+      # find_package(Qt6 COMPONENTS Gui) is called. Fix: append an include of
+      # Qt6GuiPrivateConfig.cmake to Qt6GuiConfig.cmake so it loads automatically
+      # when Qt6::Gui is found. Fall back to manually defining the target if the
+      # private config file is absent from the aqtinstall package.
+      # Uses printf (not heredoc) to avoid YAML literal-block-scalar indentation issues.
       run: |
-        QT6_GUI_TARGETS=$(find "${QT_ROOT_DIR}" -name "Qt6GuiTargets.cmake" 2>/dev/null | head -1)
-        echo "Qt6GuiTargets.cmake: ${QT6_GUI_TARGETS:-NOT FOUND}"
-        if [ -z "${QT6_GUI_TARGETS}" ]; then
-          echo "ERROR: Qt6GuiTargets.cmake not found — Qt install may be broken"
+        echo "QT_ROOT_DIR=${QT_ROOT_DIR}"
+
+        QT6_GUI_CONFIG=$(find "${QT_ROOT_DIR}" -path "*/Qt6Gui/Qt6GuiConfig.cmake" 2>/dev/null | head -1)
+        QT6_GUI_TARGETS=$(find "${QT_ROOT_DIR}" -path "*/Qt6Gui/Qt6GuiTargets.cmake" 2>/dev/null | head -1)
+        QT6_GUI_PRIVATE_CONFIG=$(find "${QT_ROOT_DIR}" -name "Qt6GuiPrivateConfig.cmake" 2>/dev/null | head -1)
+
+        echo "Qt6GuiConfig.cmake:        ${QT6_GUI_CONFIG:-NOT FOUND}"
+        echo "Qt6GuiTargets.cmake:       ${QT6_GUI_TARGETS:-NOT FOUND}"
+        echo "Qt6GuiPrivateConfig.cmake: ${QT6_GUI_PRIVATE_CONFIG:-NOT FOUND}"
+
+        if [ -z "${QT6_GUI_CONFIG}" ]; then
+          echo "ERROR: Qt6GuiConfig.cmake not found — Qt install broken"
           exit 1
         fi
-        if grep -q "GuiPrivate" "${QT6_GUI_TARGETS}"; then
-          echo "Qt6::GuiPrivate already present (cached Qt install) — skipping injection"
+
+        if grep -q "GuiPrivate" "${QT6_GUI_CONFIG}"; then
+          echo "Qt6::GuiPrivate already referenced in Qt6GuiConfig.cmake — nothing to do"
+          exit 0
+        fi
+
+        # Make files writable (aqtinstall may install read-only)
+        chmod u+w "${QT6_GUI_CONFIG}"  2>/dev/null || sudo chmod u+w "${QT6_GUI_CONFIG}"  || true
+        chmod u+w "${QT6_GUI_TARGETS}" 2>/dev/null || sudo chmod u+w "${QT6_GUI_TARGETS}" || true
+
+        if [ -n "${QT6_GUI_PRIVATE_CONFIG}" ]; then
+          echo "=== Strategy: include Qt6GuiPrivateConfig.cmake from Qt6GuiConfig.cmake ==="
+          printf '\n# Injected: load Qt6::GuiPrivate when Qt6::Gui is found (not done by default)\n' >> "${QT6_GUI_CONFIG}"
+          printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                                  >> "${QT6_GUI_CONFIG}"
+          printf '  include("%s" OPTIONAL)\n' "${QT6_GUI_PRIVATE_CONFIG}"                            >> "${QT6_GUI_CONFIG}"
+          printf 'endif()\n'                                                                          >> "${QT6_GUI_CONFIG}"
+          echo "Done. Last 8 lines of Qt6GuiConfig.cmake:"
+          tail -8 "${QT6_GUI_CONFIG}"
         else
-          echo "Injecting Qt6::GuiPrivate into ${QT6_GUI_TARGETS}"
-          cat >> "${QT6_GUI_TARGETS}" << EOF
-        # Injected: Qt 6.10 aqtinstall omits Qt6::GuiPrivate from this file.
-        if(NOT TARGET Qt6::GuiPrivate)
-          add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)
-          set_target_properties(Qt6::GuiPrivate PROPERTIES
-            INTERFACE_INCLUDE_DIRECTORIES
-            "${QT_ROOT_DIR}/include/QtGui/6.10.0;${QT_ROOT_DIR}/include/QtGui/6.10.0/QtGui"
-          )
-        endif()
-        EOF
-          echo "Injection done. Verifying:"
-          grep -A5 "GuiPrivate" "${QT6_GUI_TARGETS}" | head -10
+          echo "=== Strategy: Qt6GuiPrivateConfig.cmake absent — define target manually ==="
+          printf '\n# Injected: Qt6::GuiPrivate not provided by this aqtinstall package\n' >> "${QT6_GUI_CONFIG}"
+          printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                        >> "${QT6_GUI_CONFIG}"
+          printf '  add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)\n'              >> "${QT6_GUI_CONFIG}"
+          printf '  target_include_directories(Qt6::GuiPrivate INTERFACE\n'                >> "${QT6_GUI_CONFIG}"
+          printf '    "%s/include/QtGui/6.10.0"\n'       "${QT_ROOT_DIR}"                  >> "${QT6_GUI_CONFIG}"
+          printf '    "%s/include/QtGui/6.10.0/QtGui")\n' "${QT_ROOT_DIR}"                 >> "${QT6_GUI_CONFIG}"
+          printf 'endif()\n'                                                                >> "${QT6_GUI_CONFIG}"
+          echo "Done. Last 10 lines of Qt6GuiConfig.cmake:"
+          tail -10 "${QT6_GUI_CONFIG}"
         fi
 
     - name: Restore KF6 cache
