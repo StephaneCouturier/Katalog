@@ -41,7 +41,9 @@ jobs:
           libfuse2t64 \
           gettext \
           gperf \
-          libwayland-dev
+          libwayland-dev \
+          libbz2-dev \
+          liblzma-dev
 
     - name: Install Qt 6.10.0
       uses: jurplel/install-qt-action@v4
@@ -88,7 +90,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v4
+        key: kf6.10.0-ubuntu24.04-v5
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
