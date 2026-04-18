@@ -131,7 +131,8 @@ jobs:
             "$@"
           ninja -C "build-${name}"
           sudo ninja -C "build-${name}" install
-          rm -rf "build-${name}" "${name}-${KF6_VER}" "${name}-${KF6_VER}.tar.xz"
+          sudo rm -rf "build-${name}"
+          rm -rf "${name}-${KF6_VER}" "${name}-${KF6_VER}.tar.xz"
         }
 
         build extra-cmake-modules -DBUILD_HTML_DOCS=OFF -DBUILD_QTHELP_DOCS=OFF
