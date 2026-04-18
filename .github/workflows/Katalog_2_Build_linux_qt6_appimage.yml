@@ -88,7 +88,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v2
+        key: kf6.10.0-ubuntu24.04-v3
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -111,6 +111,15 @@ jobs:
           echo "=== Building ${name}-${KF6_VER} ==="
           wget -q "${KF6_BASE}/${name}-${KF6_VER}.tar.xz"
           tar xf "${name}-${KF6_VER}.tar.xz"
+          # Multiple KF6 components (kguiaddons, kcolorscheme, ...) link against
+          # Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate) first.
+          # Prepend the call to every src/CMakeLists.txt that exists so cmake
+          # finds the Qt6GuiPrivateConfig.cmake created in the "Patch Qt6" step.
+          local src_cml="${name}-${KF6_VER}/src/CMakeLists.txt"
+          if [ -f "${src_cml}" ]; then
+            { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${src_cml}"; } > /tmp/patched_src_cml.cmake
+            mv /tmp/patched_src_cml.cmake "${src_cml}"
+          fi
           cmake -B "build-${name}" "${name}-${KF6_VER}" \
             -GNinja \
             -DCMAKE_BUILD_TYPE=Release \
@@ -144,35 +153,7 @@ jobs:
         sudo ninja -C build-pwp install
         rm -rf build-pwp pwp-src
 
-        # kguiaddons is inlined (not via build()) so we can patch src/CMakeLists.txt
-        # between extraction and cmake. kguiaddons src/CMakeLists.txt uses
-        # Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate) first.
-        # We prepend that call so cmake finds Qt6GuiPrivateConfig.cmake (created
-        # in the "Patch Qt6" step) before it hits the target_link_libraries line.
-        echo "=== Building kguiaddons-${KF6_VER} ==="
-        wget -q "${KF6_BASE}/kguiaddons-${KF6_VER}.tar.xz"
-        tar xf "kguiaddons-${KF6_VER}.tar.xz"
-
-        KG_SRC="kguiaddons-${KF6_VER}/src/CMakeLists.txt"
-        if [ -f "${KG_SRC}" ]; then
-          { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${KG_SRC}"; } > /tmp/kg_src_patched.cmake
-          mv /tmp/kg_src_patched.cmake "${KG_SRC}"
-          echo "Patched kguiaddons src/CMakeLists.txt — first 2 lines:"
-          head -2 "${KG_SRC}"
-        else
-          echo "WARNING: expected ${KG_SRC} not found; listing CMakeLists.txt files:"
-          find "kguiaddons-${KF6_VER}" -name "CMakeLists.txt" | head -10
-        fi
-
-        cmake -B "build-kguiaddons" "kguiaddons-${KF6_VER}" \
-          -GNinja \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}" \
-          -DCMAKE_PREFIX_PATH="${KF6_PREFIX};${QT_ROOT_DIR}" \
-          -DBUILD_TESTING=OFF
-        ninja -C "build-kguiaddons"
-        sudo ninja -C "build-kguiaddons" install
-        rm -rf "build-kguiaddons" "kguiaddons-${KF6_VER}" "kguiaddons-${KF6_VER}.tar.xz"
+        build kguiaddons
         build kwidgetsaddons
         build kcolorscheme
         build kconfigwidgets
