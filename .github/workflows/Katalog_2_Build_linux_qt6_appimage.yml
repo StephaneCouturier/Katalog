@@ -90,7 +90,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v6
+        key: kf6.10.0-ubuntu24.04-v7
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -163,6 +163,7 @@ jobs:
         build karchive
         build breeze-icons
         build kiconthemes
+        build kglobalaccel
         build kxmlgui
         build kcompletion
         build kfilemetadata
