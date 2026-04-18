@@ -98,12 +98,11 @@ const config: Config = {
           position: 'left'},
         {
           href: 'https://sourceforge.net/projects/katalogg/files/latest/download',
-          label: 'Flatpak',
-          position: 'right',
-        },
-        {
-          href: 'https://sourceforge.net/projects/katalogg/files/latest/download',
           label: 'Download',
+          position: 'right',
+        },        {
+          href: 'https://flathub.org/en/apps/io.github.stephanecouturier.Katalog',
+          label: 'Flatpak',
           position: 'right',
         },
         {
