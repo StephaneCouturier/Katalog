@@ -88,7 +88,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v3
+        key: kf6.10.0-ubuntu24.04-v4
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -157,6 +157,7 @@ jobs:
         build kwidgetsaddons
         build kcolorscheme
         build kconfigwidgets
+        build karchive
         build kiconthemes
         build kxmlgui
         build kcompletion
