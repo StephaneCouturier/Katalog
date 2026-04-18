@@ -98,6 +98,11 @@ const config: Config = {
           position: 'left'},
         {
           href: 'https://sourceforge.net/projects/katalogg/files/latest/download',
+          label: 'Flatpak',
+          position: 'right',
+        },
+        {
+          href: 'https://sourceforge.net/projects/katalogg/files/latest/download',
           label: 'Download',
           position: 'right',
         },
@@ -156,7 +161,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Katalog (Pages built with Docusaurus)`,
+      copyright: `Copyright © 2026 Katalog`,
     },
     prism: {
       theme: prismThemes.github,

@@ -18,10 +18,17 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
+            to="https://flathub.org/en/apps/io.github.stephanecouturier.Katalog">
+            <Translate id="homepage.header.downloadButton" description="Download Katalog from sourceforge">
+            Install (Flatpak)
+            </Translate>&nbsp;&#10515;
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
             to="https://sourceforge.net/projects/katalogg/files/latest/download">
             <Translate id="homepage.header.downloadButton" description="Download Katalog from sourceforge">
               Download
-            </Translate>&nbsp;&#10176;
+            </Translate>&nbsp;&#10515;
           </Link>
           <Link
             className="button button--secondary button--lg"

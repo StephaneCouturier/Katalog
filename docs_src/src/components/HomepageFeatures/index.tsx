@@ -28,7 +28,7 @@ const FeatureList: FeatureItem[] = [
     image: deviceImage,
     description: translate({
       id: 'feature.deviceManagement.description',
-      message: 'Katalog brings extensive file search and comparison capabilities and management of devices storing data.',
+      message: 'Katalog brings extensive file search, comparison capabilities, and management of devices storing data including backup or archiving.',
       description: 'Main features'
     })
   },
