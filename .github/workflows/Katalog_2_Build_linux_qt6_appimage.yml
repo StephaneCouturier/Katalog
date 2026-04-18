@@ -54,58 +54,33 @@ jobs:
         cache: true
 
     - name: Patch Qt6 for GuiPrivate target
-      # kguiaddons 6.10.0 calls target_link_libraries(KF6GuiAddons Qt6::GuiPrivate)
-      # without first calling find_package(Qt6GuiPrivate). Qt6::GuiPrivate is defined
-      # in Qt6GuiPrivateConfig.cmake but that file is never auto-loaded when only
-      # find_package(Qt6 COMPONENTS Gui) is called. Fix: append an include of
-      # Qt6GuiPrivateConfig.cmake to Qt6GuiConfig.cmake so it loads automatically
-      # when Qt6::Gui is found. Fall back to manually defining the target if the
-      # private config file is absent from the aqtinstall package.
-      # Uses printf (not heredoc) to avoid YAML literal-block-scalar indentation issues.
+      # kguiaddons 6.10.0 uses Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate).
+      # aqtinstall may not include Qt6GuiPrivateConfig.cmake, so we create it ourselves
+      # in the Qt cmake directory. find_package(Qt6GuiPrivate) will find it via
+      # CMAKE_PREFIX_PATH when kguiaddons is built. Uses printf (no heredoc) to avoid
+      # YAML literal-block indentation issues.
       run: |
         echo "QT_ROOT_DIR=${QT_ROOT_DIR}"
+        echo "=== Qt cmake layout ==="
+        ls "${QT_ROOT_DIR}/lib/cmake/" 2>/dev/null | grep -i gui || echo "(no Gui entries)"
 
-        QT6_GUI_CONFIG=$(find "${QT_ROOT_DIR}" -path "*/Qt6Gui/Qt6GuiConfig.cmake" 2>/dev/null | head -1)
-        QT6_GUI_TARGETS=$(find "${QT_ROOT_DIR}" -path "*/Qt6Gui/Qt6GuiTargets.cmake" 2>/dev/null | head -1)
-        QT6_GUI_PRIVATE_CONFIG=$(find "${QT_ROOT_DIR}" -name "Qt6GuiPrivateConfig.cmake" 2>/dev/null | head -1)
+        PRIVATE_DIR="${QT_ROOT_DIR}/lib/cmake/Qt6GuiPrivate"
+        PRIVATE_CFG="${PRIVATE_DIR}/Qt6GuiPrivateConfig.cmake"
 
-        echo "Qt6GuiConfig.cmake:        ${QT6_GUI_CONFIG:-NOT FOUND}"
-        echo "Qt6GuiTargets.cmake:       ${QT6_GUI_TARGETS:-NOT FOUND}"
-        echo "Qt6GuiPrivateConfig.cmake: ${QT6_GUI_PRIVATE_CONFIG:-NOT FOUND}"
-
-        if [ -z "${QT6_GUI_CONFIG}" ]; then
-          echo "ERROR: Qt6GuiConfig.cmake not found — Qt install broken"
-          exit 1
-        fi
-
-        if grep -q "GuiPrivate" "${QT6_GUI_CONFIG}"; then
-          echo "Qt6::GuiPrivate already referenced in Qt6GuiConfig.cmake — nothing to do"
-          exit 0
-        fi
-
-        # Make files writable (aqtinstall may install read-only)
-        chmod u+w "${QT6_GUI_CONFIG}"  2>/dev/null || sudo chmod u+w "${QT6_GUI_CONFIG}"  || true
-        chmod u+w "${QT6_GUI_TARGETS}" 2>/dev/null || sudo chmod u+w "${QT6_GUI_TARGETS}" || true
-
-        if [ -n "${QT6_GUI_PRIVATE_CONFIG}" ]; then
-          echo "=== Strategy: include Qt6GuiPrivateConfig.cmake from Qt6GuiConfig.cmake ==="
-          printf '\n# Injected: load Qt6::GuiPrivate when Qt6::Gui is found (not done by default)\n' >> "${QT6_GUI_CONFIG}"
-          printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                                  >> "${QT6_GUI_CONFIG}"
-          printf '  include("%s" OPTIONAL)\n' "${QT6_GUI_PRIVATE_CONFIG}"                            >> "${QT6_GUI_CONFIG}"
-          printf 'endif()\n'                                                                          >> "${QT6_GUI_CONFIG}"
-          echo "Done. Last 8 lines of Qt6GuiConfig.cmake:"
-          tail -8 "${QT6_GUI_CONFIG}"
+        if [ -f "${PRIVATE_CFG}" ]; then
+          echo "Qt6GuiPrivateConfig.cmake already present at ${PRIVATE_CFG}"
         else
-          echo "=== Strategy: Qt6GuiPrivateConfig.cmake absent — define target manually ==="
-          printf '\n# Injected: Qt6::GuiPrivate not provided by this aqtinstall package\n' >> "${QT6_GUI_CONFIG}"
-          printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                        >> "${QT6_GUI_CONFIG}"
-          printf '  add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)\n'              >> "${QT6_GUI_CONFIG}"
-          printf '  target_include_directories(Qt6::GuiPrivate INTERFACE\n'                >> "${QT6_GUI_CONFIG}"
-          printf '    "%s/include/QtGui/6.10.0"\n'       "${QT_ROOT_DIR}"                  >> "${QT6_GUI_CONFIG}"
-          printf '    "%s/include/QtGui/6.10.0/QtGui")\n' "${QT_ROOT_DIR}"                 >> "${QT6_GUI_CONFIG}"
-          printf 'endif()\n'                                                                >> "${QT6_GUI_CONFIG}"
-          echo "Done. Last 10 lines of Qt6GuiConfig.cmake:"
-          tail -10 "${QT6_GUI_CONFIG}"
+          echo "Creating ${PRIVATE_CFG}"
+          mkdir -p "${PRIVATE_DIR}"
+          printf 'set(Qt6GuiPrivate_FOUND TRUE)\n'                                 >  "${PRIVATE_CFG}"
+          printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                >> "${PRIVATE_CFG}"
+          printf '  add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)\n'      >> "${PRIVATE_CFG}"
+          printf '  target_include_directories(Qt6::GuiPrivate INTERFACE\n'        >> "${PRIVATE_CFG}"
+          printf '    "%s/include/QtGui/6.10.0"\n'       "${QT_ROOT_DIR}"          >> "${PRIVATE_CFG}"
+          printf '    "%s/include/QtGui/6.10.0/QtGui")\n' "${QT_ROOT_DIR}"         >> "${PRIVATE_CFG}"
+          printf 'endif()\n'                                                        >> "${PRIVATE_CFG}"
+          echo "Created:"
+          cat "${PRIVATE_CFG}"
         fi
 
     - name: Restore KF6 cache
@@ -168,6 +143,21 @@ jobs:
           -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}"
         sudo ninja -C build-pwp install
         rm -rf build-pwp pwp-src
+
+        # kguiaddons src/CMakeLists.txt uses Qt6::GuiPrivate without calling
+        # find_package(Qt6GuiPrivate) first. Prepend the call to its src/CMakeLists.txt
+        # so cmake loads Qt6GuiPrivateConfig.cmake (which we created in the patch step)
+        # before reaching the target_link_libraries line that needs Qt6::GuiPrivate.
+        echo "=== Patching kguiaddons src/CMakeLists.txt ==="
+        KG_SRC="kguiaddons-${KF6_VER}/src/CMakeLists.txt"
+        if [ -f "${KG_SRC}" ]; then
+          { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${KG_SRC}"; } > /tmp/kguiaddons_src.cmake
+          mv /tmp/kguiaddons_src.cmake "${KG_SRC}"
+          echo "Patched. First 2 lines:"
+          head -2 "${KG_SRC}"
+        else
+          echo "WARNING: ${KG_SRC} not found — patch skipped"
+        fi
 
         build kguiaddons
         build kwidgetsaddons
