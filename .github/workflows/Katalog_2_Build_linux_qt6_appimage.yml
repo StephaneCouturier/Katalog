@@ -144,22 +144,35 @@ jobs:
         sudo ninja -C build-pwp install
         rm -rf build-pwp pwp-src
 
-        # kguiaddons src/CMakeLists.txt uses Qt6::GuiPrivate without calling
-        # find_package(Qt6GuiPrivate) first. Prepend the call to its src/CMakeLists.txt
-        # so cmake loads Qt6GuiPrivateConfig.cmake (which we created in the patch step)
-        # before reaching the target_link_libraries line that needs Qt6::GuiPrivate.
-        echo "=== Patching kguiaddons src/CMakeLists.txt ==="
+        # kguiaddons is inlined (not via build()) so we can patch src/CMakeLists.txt
+        # between extraction and cmake. kguiaddons src/CMakeLists.txt uses
+        # Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate) first.
+        # We prepend that call so cmake finds Qt6GuiPrivateConfig.cmake (created
+        # in the "Patch Qt6" step) before it hits the target_link_libraries line.
+        echo "=== Building kguiaddons-${KF6_VER} ==="
+        wget -q "${KF6_BASE}/kguiaddons-${KF6_VER}.tar.xz"
+        tar xf "kguiaddons-${KF6_VER}.tar.xz"
+
         KG_SRC="kguiaddons-${KF6_VER}/src/CMakeLists.txt"
         if [ -f "${KG_SRC}" ]; then
-          { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${KG_SRC}"; } > /tmp/kguiaddons_src.cmake
-          mv /tmp/kguiaddons_src.cmake "${KG_SRC}"
-          echo "Patched. First 2 lines:"
+          { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${KG_SRC}"; } > /tmp/kg_src_patched.cmake
+          mv /tmp/kg_src_patched.cmake "${KG_SRC}"
+          echo "Patched kguiaddons src/CMakeLists.txt — first 2 lines:"
           head -2 "${KG_SRC}"
         else
-          echo "WARNING: ${KG_SRC} not found — patch skipped"
+          echo "WARNING: expected ${KG_SRC} not found; listing CMakeLists.txt files:"
+          find "kguiaddons-${KF6_VER}" -name "CMakeLists.txt" | head -10
         fi
 
-        build kguiaddons
+        cmake -B "build-kguiaddons" "kguiaddons-${KF6_VER}" \
+          -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}" \
+          -DCMAKE_PREFIX_PATH="${KF6_PREFIX};${QT_ROOT_DIR}" \
+          -DBUILD_TESTING=OFF
+        ninja -C "build-kguiaddons"
+        sudo ninja -C "build-kguiaddons" install
+        rm -rf "build-kguiaddons" "kguiaddons-${KF6_VER}" "kguiaddons-${KF6_VER}.tar.xz"
         build kwidgetsaddons
         build kcolorscheme
         build kconfigwidgets
