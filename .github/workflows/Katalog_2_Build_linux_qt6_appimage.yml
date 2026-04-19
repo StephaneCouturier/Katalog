@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run2
+#v2026-04-19 run3
 on:
   # Trigger on new releases
   # release:
@@ -43,6 +43,7 @@ jobs:
           gettext \
           gperf \
           libwayland-dev \
+          wayland-protocols \
           libbz2-dev \
           liblzma-dev \
           libxcb-icccm4-dev \
