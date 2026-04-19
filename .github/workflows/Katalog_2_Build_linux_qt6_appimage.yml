@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run16
+#v2026-04-19 run17
 on:
   # Trigger on new releases
   # release:
@@ -104,7 +104,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.24.0-ubuntu24.04-v16
+        key: kf6.24.0-ubuntu24.04-v17
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -136,14 +136,16 @@ jobs:
             { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${src_cml}"; } > /tmp/patched_src_cml.cmake
             mv /tmp/patched_src_cml.cmake "${src_cml}"
           fi
-          # kcoreaddons >= 6.20 calls find_package(Shiboken6 REQUIRED) unconditionally
-          # before any option gate, so cmake flags cannot suppress it.  Remove REQUIRED
-          # from all Shiboken6/PySide6 find_package calls so they fail silently.
+          # kcoreaddons >= 6.20 adds unconditional Python bindings (Shiboken6/PySide6).
+          # Shiboken6 is not available in CI; remove REQUIRED so it fails silently,
+          # then blank python/CMakeLists.txt so ECMGeneratePythonBindings never runs.
           if [ "${name}" = "kcoreaddons" ]; then
             find "${name}-${KF6_VER}" -name "CMakeLists.txt" | xargs sed -i \
               -e 's/find_package(\(Shiboken6[^)]*\)REQUIRED\([^)]*\))/find_package(\1\2)/g' \
               -e 's/find_package(\(PySide6[^)]*\)REQUIRED\([^)]*\))/find_package(\1\2)/g' \
               2>/dev/null || true
+            printf '# Python bindings disabled in CI\n' \
+              > "${name}-${KF6_VER}/python/CMakeLists.txt"
           fi
           cmake -B "build-${name}" "${name}-${KF6_VER}" \
             -GNinja \
