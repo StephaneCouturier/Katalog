@@ -213,6 +213,7 @@
 
             if ( iconName == "go-down"){ //Hide
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
+                    ui->Search_widget_HistoryActions->setHidden(true);
                     ui->Search_treeView_History->setHidden(true);
 
                     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
@@ -220,10 +221,37 @@
             }
             else{ //Show
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-down"));
+                    ui->Search_widget_HistoryActions->setHidden(false);
                     ui->Search_treeView_History->setHidden(false);
 
                     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchHistory", "go-down");
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_ClearHistory_clicked()
+        {
+            if (QMessageBox::critical(this,
+                                      "Katlog",
+                                      "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
+                                          +tr("Search history")+".<br/><br/>"+tr("Continue?"),
+                                      QMessageBox::Yes|QMessageBox::Cancel)
+                == QMessageBox::Yes) {
+                collection->clearSearchHistory(m_connectionName);
+                loadSearchHistoryTableToModel();
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_KeepLastHistory_clicked()
+        {
+            if (QMessageBox::warning(this,
+                                     tr("Confirmation"),
+                                     "<span style='color:orange;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
+                                         +tr("Search history")+"<br/>"+tr("Keep last 10"),
+                                     QMessageBox::Yes|QMessageBox::Cancel)
+                == QMessageBox::Yes) {
+                collection->keepLastSearchHistory(10, m_connectionName);
+                loadSearchHistoryTableToModel();
             }
         }
         //----------------------------------------------------------------------

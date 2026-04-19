@@ -233,6 +233,7 @@
             //Show or Hide ShowHideSearchHistory
             if ( settings.value("Settings/ShowHideSearchHistory") == "go-up"){ //Hide
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
+                    ui->Search_widget_HistoryActions->setHidden(true);
                     ui->Search_treeView_History->setHidden(true);
             }
             //Show or Hide ShowHideGlobalParameters

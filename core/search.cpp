@@ -1104,7 +1104,8 @@ QString Search::mapTextCriteriaToInternal(const QString& dbValue)
     if (dbValue == TEXT_CRITERIA_EXACT_PHRASE ||
         dbValue == TEXT_CRITERIA_BEGINS_WITH ||
         dbValue == TEXT_CRITERIA_ANY_WORD ||
-        dbValue == TEXT_CRITERIA_ALL_WORDS) {
+        dbValue == TEXT_CRITERIA_ALL_WORDS ||
+        dbValue == TEXT_CRITERIA_REGEX) {
         return dbValue;
     }
 
@@ -1159,7 +1160,10 @@ int Search::mapTextCriteriaToComboBoxIndex(const QString& internalValue)
     if (internalValue == TEXT_CRITERIA_ANY_WORD) {
         return 3;
     }
-    return 1; // Default to "All Words"
+    if (internalValue == TEXT_CRITERIA_REGEX) {
+        return 4;
+    }
+    return 0; // Default to "All Words"
 }
 
 QString Search::mapSizeUnitToInternal(const QString& dbValue)

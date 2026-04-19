@@ -1467,6 +1467,24 @@ void Collection::saveParameterTableToFile()
     }
 }
 //----------------------------------------------------------------------
+void Collection::keepLastSearchHistory(int count, const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare("DELETE FROM search WHERE rowid NOT IN "
+                  "(SELECT rowid FROM search ORDER BY date_time DESC LIMIT :count)");
+    query.bindValue(":count", count);
+    query.exec();
+    saveSearchHistoryTableToFile();
+}
+//----------------------------------------------------------------------
+void Collection::clearSearchHistory(const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare("DELETE FROM search");
+    query.exec();
+    saveSearchHistoryTableToFile();
+}
+//----------------------------------------------------------------------
 void Collection::saveSearchHistoryTableToFile()
 {//To keep forward compatibility, new field shall be added at the end of the column list, not in the order of the table
     if(databaseMode=="Memory"){

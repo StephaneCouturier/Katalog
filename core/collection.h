@@ -113,6 +113,10 @@ public:
     void saveMappingTableToFile();
     void saveCatalogFilterTableToFile();
 
+    //Search history management
+    void clearSearchHistory(const QString &connectionName);
+    void keepLastSearchHistory(int count, const QString &connectionName);
+
     //File deleting
     enum DeleteCatalogResult {
         DeleteSuccess = 0,

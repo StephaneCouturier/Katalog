@@ -697,7 +697,8 @@ class MainWindow : public KXmlGuiWindow
             void on_SearchTreeViewFilesFoundHeaderSortOrderChanged();
             void on_SearchTreeViewHistoryHeaderSortOrderChanged();
             void on_Search_splitter_Results_splitterMoved();
-
+            void on_Search_pushButton_ClearHistory_clicked();
+            void on_Search_pushButton_KeepLastHistory_clicked();
             void setupFileContextMenus();
 
             //Context menu
@@ -858,7 +859,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
 
-            void on_BackUp_comboBox_MappingType_currentIndexChanged(int index);
+            void on_BackUp_comboBox_MappingType_currentIndexChanged(int index);           
 
         protected:
             void changeEvent(QEvent *event) override;
