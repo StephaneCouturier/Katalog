@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run1
+#v2026-04-19 run2
 on:
   # Trigger on new releases
   # release:
@@ -48,6 +48,11 @@ jobs:
           libxcb-icccm4-dev \
           libxcb-keysyms1-dev \
           libxcb-res0-dev
+        # ECM FindXCB.cmake looks for libxcb-icccm.so / libxcb-keysyms.so / libxcb-res.so
+        # but Ubuntu 24.04 ships them with version suffixes in the name.
+        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-icccm4.so  /usr/lib/x86_64-linux-gnu/libxcb-icccm.so
+        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-keysyms1.so /usr/lib/x86_64-linux-gnu/libxcb-keysyms.so
+        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-res0.so     /usr/lib/x86_64-linux-gnu/libxcb-res.so
 
     - name: Install Qt 6.10.0
       uses: jurplel/install-qt-action@v4
