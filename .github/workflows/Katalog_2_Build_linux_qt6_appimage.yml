@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run8
+#v2026-04-19 run9
 on:
   # Trigger on new releases
   # release:
@@ -179,6 +179,7 @@ jobs:
         build kitemviews
         build kwindowsystem
         build kcompletion
+        build sonnet
         build ktextwidgets
         build kxmlgui
         build kfilemetadata
