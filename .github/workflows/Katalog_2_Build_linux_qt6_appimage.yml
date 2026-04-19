@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run5
+#v2026-04-19 run6
 on:
   # Trigger on new releases
   # release:
@@ -64,7 +64,7 @@ jobs:
         host: 'linux'
         target: 'desktop'
         dir: '/opt/qt'
-        modules: 'qtcharts qtnetworkauth'
+        modules: 'qtcharts qtnetworkauth qtspeech'
         cache: true
 
     - name: Patch Qt6 for GuiPrivate target
