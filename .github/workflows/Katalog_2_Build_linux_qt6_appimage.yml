@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run10
+#v2026-04-19 run11
 on:
   # Trigger on new releases
   # release:
@@ -51,7 +51,8 @@ jobs:
           libxcb-res0-dev \
           libxfixes-dev \
           libxcb-xfixes0-dev \
-          libhunspell-dev
+          libhunspell-dev \
+          libattr1-dev
         # ECM FindXCB.cmake looks for libxcb-icccm.so / libxcb-keysyms.so / libxcb-res.so
         # but Ubuntu 24.04 ships them with version suffixes in the name.
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-icccm4.so  /usr/lib/x86_64-linux-gnu/libxcb-icccm.so
@@ -103,7 +104,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v10
+        key: kf6.10.0-ubuntu24.04-v11
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
