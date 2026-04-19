@@ -291,7 +291,7 @@ ColumnLayout {
             Controls.Label { text: qsTr("with"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.ComboBox {
                 id: search_ComboBox_TextCriteriaWith
-                model: ["All Words", "Exact Phrase", "Begins With", "Any Word"]
+                model: ["All Words", "Exact Phrase", "Begins With", "Any Word", "Regex"]
                 onCurrentIndexChanged: {
                     if (currentIndex === 2) {
                         search_ComboBox_TextCriteriaIn.model = ["File names only"];

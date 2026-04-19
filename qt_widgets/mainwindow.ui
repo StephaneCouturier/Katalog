@@ -1276,6 +1276,11 @@
                           <string>Any Word</string>
                          </property>
                         </item>
+                        <item>
+                         <property name="text">
+                          <string>Regex</string>
+                         </property>
+                        </item>
                        </widget>
                       </item>
                       <item>

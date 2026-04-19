@@ -44,6 +44,7 @@ const QString Search::TEXT_CRITERIA_ALL_WORDS = "AllWords";
 const QString Search::TEXT_CRITERIA_EXACT_PHRASE = "ExactPhrase";
 const QString Search::TEXT_CRITERIA_BEGINS_WITH = "BeginsWith";
 const QString Search::TEXT_CRITERIA_ANY_WORD = "AnyWord";
+const QString Search::TEXT_CRITERIA_REGEX = "Regex";
 
 const QString Search::SIZE_UNIT_BYTES = "Bytes";
 const QString Search::SIZE_UNIT_KIB = "KiB";
@@ -295,21 +296,21 @@ QString Search::buildMetadataSearchConditions() const
 void Search::prepareSearchPatterns()
 {
     // Define how to use the search text
-    if (selectedTextCriteria == TEXT_CRITERIA_EXACT_PHRASE)
-        regexSearchtext = searchText; // Just search for the exact text entered including spaces, as one text string
-    else if (selectedTextCriteria == TEXT_CRITERIA_BEGINS_WITH)
-        regexSearchtext = "(^" + searchText + ")";
-    else if (selectedTextCriteria == TEXT_CRITERIA_ANY_WORD)
-        regexSearchtext = searchText.replace(" ", "|");
-    else if (selectedTextCriteria == TEXT_CRITERIA_ALL_WORDS) {
-        QString searchTextToSplit = searchText;
+    if (selectedTextCriteria == TEXT_CRITERIA_REGEX) {
+        regexSearchtext = searchText; // User supplies the regex pattern directly — no escaping
+    } else if (selectedTextCriteria == TEXT_CRITERIA_EXACT_PHRASE) {
+        regexSearchtext = QRegularExpression::escape(searchText);
+    } else if (selectedTextCriteria == TEXT_CRITERIA_BEGINS_WITH) {
+        regexSearchtext = "(^" + QRegularExpression::escape(searchText) + ")";
+    } else if (selectedTextCriteria == TEXT_CRITERIA_ANY_WORD) {
+        QStringList words = searchText.split(" ", Qt::SkipEmptyParts);
+        for (QString &w : words) w = QRegularExpression::escape(w);
+        regexSearchtext = words.join("|");
+    } else if (selectedTextCriteria == TEXT_CRITERIA_ALL_WORDS) {
         QString groupRegEx = "";
-        QRegularExpression lineSplitExp(" ");
-        QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-        int numberOfSearchWords = lineFieldList.count();
-        // Build regex group for one word
-        for (int i = 0; i < numberOfSearchWords; i++) {
-            groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
+        QStringList lineFieldList = searchText.split(" ", Qt::SkipEmptyParts);
+        for (const QString &word : lineFieldList) {
+            groupRegEx += "(?=.*" + QRegularExpression::escape(word) + ")";
         }
         regexSearchtext = groupRegEx;
     }
@@ -331,22 +332,16 @@ void Search::prepareSearchPatterns()
 
     // Add the words to exclude to the Regular Expression
     if (selectedSearchExclude != "") {
-        // Prepare
-        QString searchTextToSplit = selectedSearchExclude;
-        QString excludeGroupRegEx = "";
-        QRegularExpression lineSplitExp(" ");
-        QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-        int numberOfSearchWords = lineFieldList.count();
-        // Build regex group to exclude all words
-        // Generate first part = first characters + the first word
-        excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
-        // Add more words
-        for (int i = 1; i < numberOfSearchWords; i++) {
-            excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
+        bool escapeExclude = (selectedTextCriteria != TEXT_CRITERIA_REGEX);
+        QStringList lineFieldList = selectedSearchExclude.split(" ", Qt::SkipEmptyParts);
+        if (escapeExclude) {
+            for (QString &w : lineFieldList) w = QRegularExpression::escape(w);
         }
-        // Last part
-        excludeGroupRegEx = excludeGroupRegEx + "))";
-        // Add regex group to exclude to the global regexPattern
+        QString excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
+        for (int i = 1; i < lineFieldList.count(); i++) {
+            excludeGroupRegEx += "|" + lineFieldList[i];
+        }
+        excludeGroupRegEx += "))";
         regexPattern = excludeGroupRegEx + regexPattern;
     }
 }

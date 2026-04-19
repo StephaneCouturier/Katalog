@@ -1065,6 +1065,7 @@
             ui->Search_comboBox_TextCriteria->setItemData(1, Search::TEXT_CRITERIA_EXACT_PHRASE, Qt::UserRole);
             ui->Search_comboBox_TextCriteria->setItemData(2, Search::TEXT_CRITERIA_BEGINS_WITH,  Qt::UserRole);
             ui->Search_comboBox_TextCriteria->setItemData(3, Search::TEXT_CRITERIA_ANY_WORD,     Qt::UserRole);
+            ui->Search_comboBox_TextCriteria->setItemData(4, Search::TEXT_CRITERIA_REGEX,        Qt::UserRole);
 
             // Add internal constants for SearchIn:
             ui->Search_comboBox_SearchIn->setItemData(0, Search::SEARCH_IN_FILE_NAMES,        Qt::UserRole);

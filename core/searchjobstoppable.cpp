@@ -403,6 +403,10 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     if (!caseSensitive) {
         regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
     }
+    if (!regex.isValid()) {
+        emit searchProgress(-1);
+        return;
+    }
 
     // Ensure file types are populated for File mode catalogs
     if (!memoryModeEnabled && device->catalog) {

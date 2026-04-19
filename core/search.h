@@ -91,6 +91,7 @@ public:
     static const QString TEXT_CRITERIA_BEGINS_WITH;
     static const QString TEXT_CRITERIA_ANY_WORD;
     static const QString TEXT_CRITERIA_ALL_WORDS;
+    static const QString TEXT_CRITERIA_REGEX;
 
     static const QString SIZE_UNIT_BYTES;
     static const QString SIZE_UNIT_KIB;

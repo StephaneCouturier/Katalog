@@ -132,6 +132,7 @@ public:
                 else if (val == "Begins With")  val = TEXT_CRITERIA_BEGINS_WITH;
                 else if (val == "Any Word")     val = TEXT_CRITERIA_ANY_WORD;
                 else if (val == "All Words")    val = TEXT_CRITERIA_ALL_WORDS;
+                else if (val == "Regex")        val = TEXT_CRITERIA_REGEX;
                 selectedTextCriteria = val;
             }
             // Also accept old key for backward compatibility
@@ -141,6 +142,7 @@ public:
                 else if (val == "Begins With")  val = TEXT_CRITERIA_BEGINS_WITH;
                 else if (val == "Any Word")     val = TEXT_CRITERIA_ANY_WORD;
                 else if (val == "All Words")    val = TEXT_CRITERIA_ALL_WORDS;
+                else if (val == "Regex")        val = TEXT_CRITERIA_REGEX;
                 selectedTextCriteria = val;
             }
             if (map.contains("selectedSearchIn"))       {
