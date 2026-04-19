@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run15
+#v2026-04-19 run16
 on:
   # Trigger on new releases
   # release:
@@ -104,7 +104,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.24.0-ubuntu24.04-v15
+        key: kf6.24.0-ubuntu24.04-v16
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -136,6 +136,15 @@ jobs:
             { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${src_cml}"; } > /tmp/patched_src_cml.cmake
             mv /tmp/patched_src_cml.cmake "${src_cml}"
           fi
+          # kcoreaddons >= 6.20 calls find_package(Shiboken6 REQUIRED) unconditionally
+          # before any option gate, so cmake flags cannot suppress it.  Remove REQUIRED
+          # from all Shiboken6/PySide6 find_package calls so they fail silently.
+          if [ "${name}" = "kcoreaddons" ]; then
+            find "${name}-${KF6_VER}" -name "CMakeLists.txt" | xargs sed -i \
+              -e 's/find_package(\(Shiboken6[^)]*\)REQUIRED\([^)]*\))/find_package(\1\2)/g' \
+              -e 's/find_package(\(PySide6[^)]*\)REQUIRED\([^)]*\))/find_package(\1\2)/g' \
+              2>/dev/null || true
+          fi
           cmake -B "build-${name}" "${name}-${KF6_VER}" \
             -GNinja \
             -DCMAKE_BUILD_TYPE=Release \
@@ -151,7 +160,7 @@ jobs:
 
         build extra-cmake-modules -DBUILD_HTML_DOCS=OFF -DBUILD_QTHELP_DOCS=OFF
         build kcodecs
-        build kcoreaddons  -DWITH_PYTHON_BINDINGS=OFF
+        build kcoreaddons
         build ki18n        -DBUILD_WITH_QML=OFF
         build kconfig
 
