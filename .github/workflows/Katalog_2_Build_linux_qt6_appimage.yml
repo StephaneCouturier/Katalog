@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run13
+#v2026-04-19 run15
 on:
   # Trigger on new releases
   # release:
@@ -104,7 +104,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.24.0-ubuntu24.04-v13
+        key: kf6.24.0-ubuntu24.04-v15
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -151,16 +151,15 @@ jobs:
 
         build extra-cmake-modules -DBUILD_HTML_DOCS=OFF -DBUILD_QTHELP_DOCS=OFF
         build kcodecs
-        build kcoreaddons
+        build kcoreaddons  -DWITH_PYTHON_BINDINGS=OFF
         build ki18n        -DBUILD_WITH_QML=OFF
         build kconfig
 
         # plasma-wayland-protocols is required by kguiaddons ≥ 6.8 but is not
-        # available at the required version (≥ 1.15.0) in Ubuntu 24.04.
+        # available at a recent enough version in Ubuntu 24.04.
         # It is protocol-definition files + CMake config only — very fast to build.
+        # Always use latest HEAD — this repo only ever holds stable XML/cmake files.
         echo "=== Building plasma-wayland-protocols ==="
-        git clone --depth=1 --branch v1.15.0 \
-          https://invent.kde.org/libraries/plasma-wayland-protocols.git pwp-src 2>/dev/null || \
         git clone --depth=1 \
           https://invent.kde.org/libraries/plasma-wayland-protocols.git pwp-src
         cmake -B build-pwp pwp-src \
