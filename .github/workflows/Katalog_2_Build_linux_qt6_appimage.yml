@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run9
+#v2026-04-19 run10
 on:
   # Trigger on new releases
   # release:
@@ -50,7 +50,8 @@ jobs:
           libxcb-keysyms1-dev \
           libxcb-res0-dev \
           libxfixes-dev \
-          libxcb-xfixes0-dev
+          libxcb-xfixes0-dev \
+          libhunspell-dev
         # ECM FindXCB.cmake looks for libxcb-icccm.so / libxcb-keysyms.so / libxcb-res.so
         # but Ubuntu 24.04 ships them with version suffixes in the name.
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-icccm4.so  /usr/lib/x86_64-linux-gnu/libxcb-icccm.so
