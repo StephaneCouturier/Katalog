@@ -90,7 +90,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v8
+        key: kf6.10.0-ubuntu24.04-v9
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -111,7 +111,7 @@ jobs:
         build() {
           local name=$1; shift
           echo "=== Building ${name}-${KF6_VER} ==="
-          wget -q "${KF6_BASE}/${name}-${KF6_VER}.tar.xz"
+          wget -q --tries=5 --waitretry=15 "${KF6_BASE}/${name}-${KF6_VER}.tar.xz"
           tar xf "${name}-${KF6_VER}.tar.xz"
           # Multiple KF6 components (kguiaddons, kcolorscheme, ...) link against
           # Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate) first.
