@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run12
+#v2026-04-19 run13
 on:
   # Trigger on new releases
   # release:
@@ -104,7 +104,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.12.0-ubuntu24.04-v12
+        key: kf6.24.0-ubuntu24.04-v13
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -113,8 +113,8 @@ jobs:
         # version requires Qt ≥ 6.5 while Ubuntu 24.04 ships Qt 6.4.2.
         # Qt is installed by install-qt-action; QT_ROOT_DIR points to it.
         # Both are cached — first run ~30 min, subsequent runs ~30 s.
-        KF6_VER="6.12.0"
-        KF6_MIN="6.12"
+        KF6_VER="6.24.0"
+        KF6_MIN="6.24"
         KF6_BASE="https://download.kde.org/stable/frameworks/${KF6_MIN}"
         KF6_PREFIX="/opt/kf6"
 
