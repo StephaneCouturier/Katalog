@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6
-#v2026-04-18 run1
+#v2026-04-19 run1
 on:
   # Trigger on new releases
   # release:
@@ -13,9 +13,10 @@ on:
         required: false
         default: 'dev-build-qt6'
 
-  # Trigger on push to main branches
-  # push:
-  #   branches: [ main, katalog_master, katalog_development ]
+  # Trigger automatically when this workflow file is updated
+  push:
+    paths:
+      - '.github/workflows/Katalog_2_Build_linux_qt6_appimage.yml'
 
 jobs:
   build-appimage-qt6:
@@ -43,7 +44,10 @@ jobs:
           gperf \
           libwayland-dev \
           libbz2-dev \
-          liblzma-dev
+          liblzma-dev \
+          libxcb-icccm4-dev \
+          libxcb-keysyms1-dev \
+          libxcb-res0-dev
 
     - name: Install Qt 6.10.0
       uses: jurplel/install-qt-action@v4
@@ -90,7 +94,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.10.0-ubuntu24.04-v9
+        key: kf6.10.0-ubuntu24.04-v10
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
