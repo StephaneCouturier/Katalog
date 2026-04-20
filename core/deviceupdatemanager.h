@@ -40,6 +40,12 @@ public:
                                const QString& collectionFolder,
                                const QString& updateType = "update");
 
+    void replaceStorageRoot(Device* storageDevice,
+                            const QString& oldRoot,
+                            const QString& newRoot,
+                            const QString& databaseMode,
+                            const QString& collectionFolder);
+
     // ===== CONTROL INTERFACE =====
     void requestGentleStop();
     void requestHardStop();

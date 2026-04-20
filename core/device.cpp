@@ -33,6 +33,8 @@
 #include <QSqlError>
 #include <QCoreApplication>
 #include <qelapsedtimer.h>
+#include <QDir>
+#include <QMutex>
 
 void Device::loadDevice(QString connectionName){
     QElapsedTimer totalTimer;
@@ -978,4 +980,154 @@ QString Device::getDevicePath(int deviceId, const QString &connectionName)
         id = q.value(1).toInt();
     }
     return parts.join(" / ");
+}
+//----------------------------------------------------------------------
+Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
+    const QString& oldRoot,
+    const QString& newRoot,
+    const QString& connectionName,
+    const QString& databaseMode,
+    const QString& collectionFolder)
+{
+    StorageRootReplaceResult result;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen())
+        return result;
+
+    // Normalize: forward slashes, no trailing slash (except lone "/")
+    auto normalize = [](const QString& p) -> QString {
+        QString n = QDir::fromNativeSeparators(p);
+        if (n.length() > 1 && n.endsWith('/'))
+            n.chop(1);
+        return n;
+    };
+    const QString oldN = normalize(oldRoot);
+    const QString newN = normalize(newRoot);
+    const QString pattern = oldN + '%';
+    const int     oldLen  = oldN.length();
+
+    // Find all Catalog-type descendants of this Storage device (mirrors loadSubDeviceList CTE)
+    QSqlQuery findQ(db);
+    findQ.prepare(QLatin1String(R"(
+        SELECT device_id
+        FROM   device
+        WHERE  device_id IN (
+            WITH RECURSIVE hierarchy AS (
+                SELECT device_id FROM device WHERE device_id = :pid
+                UNION ALL
+                SELECT t.device_id FROM device t
+                JOIN hierarchy h ON t.device_parent_id = h.device_id
+            )
+            SELECT device_id FROM hierarchy
+        )
+          AND  device_id   != :pid
+          AND  device_type  = 'Catalog'
+    )"));
+    findQ.bindValue(":pid", ID);
+    if (!findQ.exec()) {
+        qWarning() << "WARNING: replaceStorageRootInIndexes: failed to list child catalogs:" << findQ.lastError().text();
+        return result;
+    }
+
+    QList<int> childIds;
+    while (findQ.next())
+        childIds << findQ.value(0).toInt();
+
+    for (int devId : childIds) {
+
+        Device catalogDev;
+        catalogDev.ID = devId;
+        catalogDev.catalog->setConnectionName(connectionName);
+        catalogDev.loadDevice(connectionName);
+
+        if (catalogDev.type != "Catalog" || !catalogDev.catalog)
+            continue;
+
+        // Skip if this catalog's source is not under oldRoot
+        const QString src = QDir::fromNativeSeparators(catalogDev.catalog->sourcePath);
+        if (!src.startsWith(oldN))
+            continue;
+
+        const int catId = catalogDev.catalog->ID;
+
+        // Memory mode: ensure file/folder data is loaded into the in-memory tables
+        if (databaseMode == "Memory") {
+            QMutex mutex;
+            bool stop = false;
+            catalogDev.catalog->loadCatalogFileListToTable(mutex, stop);
+            catalogDev.catalog->loadFoldersToTable();
+        }
+
+        // Precompute start position (1-based) for SUBSTR — avoids in-SQL arithmetic
+        // and prevents Qt/QSQLITE silent failure when the same named param appears
+        // multiple times in one SET clause.
+        const int startPos = oldLen + 1;
+
+        // UPDATE file paths
+        QSqlQuery fileQ(db);
+        fileQ.prepare(QLatin1String(R"(
+            UPDATE file
+            SET    file_full_path   = :newRootF || SUBSTR(file_full_path,   :startPosF),
+                   file_folder_path = :newRootFP || SUBSTR(file_folder_path, :startPosFP)
+            WHERE  file_catalog_id  = :catIdF
+              AND  file_full_path   LIKE :patternF
+        )"));
+        fileQ.bindValue(":newRootF",    newN);
+        fileQ.bindValue(":startPosF",   startPos);
+        fileQ.bindValue(":newRootFP",   newN);
+        fileQ.bindValue(":startPosFP",  startPos);
+        fileQ.bindValue(":catIdF",      catId);
+        fileQ.bindValue(":patternF",    pattern);
+        if (fileQ.exec())
+            result.filesUpdated += fileQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes: file UPDATE failed:" << fileQ.lastError().text();
+
+        // UPDATE folder paths
+        QSqlQuery folderQ(db);
+        folderQ.prepare(QLatin1String(R"(
+            UPDATE folder
+            SET    folder_path       = :newRootD || SUBSTR(folder_path, :startPosD)
+            WHERE  folder_catalog_id = :catIdD
+              AND  folder_path       LIKE :patternD
+        )"));
+        folderQ.bindValue(":newRootD",   newN);
+        folderQ.bindValue(":startPosD",  startPos);
+        folderQ.bindValue(":catIdD",     catId);
+        folderQ.bindValue(":patternD",   pattern);
+        if (folderQ.exec())
+            result.foldersUpdated += folderQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes: folder UPDATE failed:" << folderQ.lastError().text();
+
+        // UPDATE catalog source path in the catalog table, device table, and C++ object
+        const QString newSrc = newN + src.mid(oldLen);
+        catalogDev.catalog->sourcePath = newSrc;
+        catalogDev.catalog->saveCatalog();
+
+        // Keep device.device_path in sync with catalog.catalog_source_path
+        QSqlQuery devPathQ(db);
+        devPathQ.prepare("UPDATE device SET device_path = :newPath WHERE device_id = :devId");
+        devPathQ.bindValue(":newPath", newSrc);
+        devPathQ.bindValue(":devId",   devId);
+        if (!devPathQ.exec())
+            qWarning() << "WARNING: replaceStorageRootInIndexes: device_path UPDATE failed:" << devPathQ.lastError().text();
+
+        // Memory mode: persist corrected data back to .idx / .folders.idx files
+        if (databaseMode == "Memory")
+            catalogDev.catalog->saveCatalogToFile(databaseMode, collectionFolder);
+
+        result.catalogsUpdated++;
+    }
+
+    // UPDATE storage_path
+    QSqlQuery storQ(db);
+    storQ.prepare(QLatin1String("UPDATE storage SET storage_path = :path WHERE storage_id = :id"));
+    storQ.bindValue(":path", newN);
+    storQ.bindValue(":id",   externalID);
+    if (!storQ.exec())
+        qWarning() << "WARNING: replaceStorageRootInIndexes: storage_path UPDATE failed:" << storQ.lastError().text();
+
+    return result;
 }

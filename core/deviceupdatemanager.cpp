@@ -121,6 +121,46 @@ void DeviceUpdateManager::updateParentStorageAfterCatalogUpdate(Device *device)
     }
 }
 
+void DeviceUpdateManager::replaceStorageRoot(Device* storageDevice,
+                                              const QString& oldRoot,
+                                              const QString& newRoot,
+                                              const QString& databaseMode,
+                                              const QString& collectionFolder)
+{
+    if (!storageDevice) {
+        emit operationError("Invalid storage device");
+        return;
+    }
+
+    m_updateType       = "replaceRoot";
+    m_rootDevice       = storageDevice;
+    m_databaseMode     = databaseMode;
+    m_collectionFolder = collectionFolder;
+    m_operationRunning = true;
+
+    emit operationStarted();
+    emit operationRunningChanged();
+
+    Device::StorageRootReplaceResult r =
+        storageDevice->replaceStorageRootInIndexes(oldRoot, newRoot, m_connectionName, databaseMode, collectionFolder);
+
+    m_operationRunning = false;
+
+    QList<qint64> results;
+    results << 1                   // [0] success flag
+            << r.catalogsUpdated   // [1]
+            << r.filesUpdated      // [2]
+            << r.foldersUpdated;   // [3]
+
+    emit operationRunningChanged();
+
+    // Defer operationCompleted so it fires after the current call stack (saveDeviceForm)
+    // unwinds — matching the async behaviour of updateDeviceHierarchy.
+    QTimer::singleShot(0, this, [this, results]() {
+        emit operationCompleted(results);
+    });
+}
+//----------------------------------------------------------------------
 void DeviceUpdateManager::updateDeviceHierarchy(Device* rootDevice,
                                                 const QString& databaseMode,
                                                 const QString& collectionFolder,

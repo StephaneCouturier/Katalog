@@ -614,10 +614,40 @@ void MainWindow::saveDeviceForm()
     activeDevice->freeSpace  = ui->Storage_lineEdit_Panel_Free->text().toLongLong();
     activeDevice->saveDevice();
     //Update device if path was changed (for non-Catalog types; Catalogs are handled in saveCatalogChanges)
-    if (activeDevice->type != "Catalog" && activeDevice->path != previousPath){
-        // Set UI state for operation
+    if (activeDevice->type == "Storage" && !previousPath.isEmpty() && activeDevice->path != previousPath){
+        // Ask user how to handle the path change in child catalog indexes
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("The storage path changed.")
+                       + "<br/><br/><table>"
+                       + "<tr><td>" + tr("Old path:") + "</td><td><b>" + previousPath          + "</b></td></tr>"
+                       + "<tr><td>" + tr("New path:") + "</td><td><b>" + activeDevice->path    + "</b></td></tr>"
+                       + "</table><br/>"
+                       + tr("How should the catalog indexes be updated?"));
+        msgBox.setIcon(QMessageBox::Question);
+        QPushButton *btnReplace  = msgBox.addButton(tr("Update path prefix"), QMessageBox::AcceptRole);
+        QPushButton *btnRescan   = msgBox.addButton(tr("Full re-scan"),        QMessageBox::AcceptRole);
+        /*QPushButton *btnSkip =*/ msgBox.addButton(tr("Skip"),                QMessageBox::RejectRole);
+        msgBox.exec();
+
+        if (msgBox.clickedButton() == btnReplace) {
+            setCatalogUpdateUIState(true);
+            deviceUpdateManager->replaceStorageRoot(activeDevice,
+                                                    previousPath,
+                                                    activeDevice->path,
+                                                    collection->databaseMode,
+                                                    collection->folder);
+        } else if (msgBox.clickedButton() == btnRescan) {
+            setCatalogUpdateUIState(true);
+            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                       collection->databaseMode,
+                                                       collection->folder,
+                                                       "update");
+        }
+        // else Skip — do nothing further
+    } else if (activeDevice->type != "Catalog" && activeDevice->path != previousPath){
+        // Other non-Catalog device types (Virtual, Group…)
         setCatalogUpdateUIState(true);
-        //Update device
         deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                    collection->databaseMode,
                                                    collection->folder,
@@ -1822,6 +1852,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     // Determine report device and correct updateType for reportAllUpdates
     Device* reportDevice = deviceUpdateManager->m_rootDevice;
     bool isCatalogCreation = (deviceUpdateManager->m_updateType == "create");
+    bool isReplaceRoot     = (deviceUpdateManager->m_updateType == "replaceRoot");
 
     // Save collection data
     collection->saveDeviceTableToFile();
@@ -1831,6 +1862,19 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     if (reportDevice) {
         reportAllUpdates(reportDevice, results, deviceUpdateManager->m_updateType);
     } else {
+    }
+
+    // replaceRoot: minimal UI refresh then done
+    if (isReplaceRoot) {
+        setCatalogUpdateUIState(false);
+        loadDevicesView("");
+        loadDevicesTreeToModel("Filters");
+        if (selectedDevice) {
+            selectedDevice->loadDevice(m_connectionName);
+            updateCatalogsScreenStatistics();
+        }
+        currentUpdateDevice = nullptr;
+        return;
     }
 
     // STEP 2: UI restoration (existing logic continues...)
@@ -2912,6 +2956,18 @@ void MainWindow::verifyCatalogChecksums()
 bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
 {//Provide a report for any combinaison of updates (updateType = create, single, or list) and devices
     QApplication::restoreOverrideCursor();
+
+    //Storage root path replace
+    if (updateType == "replaceRoot") {
+        if (list.size() >= 4 && list[0] == 1) {
+            statusBarLabel->setText(
+                tr("Storage path updated:")
+                + " " + QString::number(list[1]) + " " + tr("catalog(s),")
+                + " " + QString::number(list[2]) + " " + tr("file(s),")
+                + " " + QString::number(list[3]) + " " + tr("folder(s)"));
+        }
+        return true;
+    }
 
     QMessageBox msgBox;
     QString message;

@@ -166,6 +166,19 @@ public:
          */
         QList<qint64> updateStorageOnly(const QString& statisticsRequestSource);
 
+        struct StorageRootReplaceResult {
+            int catalogsUpdated = 0;
+            int filesUpdated    = 0;
+            int foldersUpdated  = 0;
+        };
+
+        StorageRootReplaceResult replaceStorageRootInIndexes(
+            const QString& oldRoot,
+            const QString& newRoot,
+            const QString& connectionName,
+            const QString& databaseMode,
+            const QString& collectionFolder);
+
 private:
         QString m_connectionName = "defaultConnection";
         void loadSubDeviceList(QString connectionName);
