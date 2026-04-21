@@ -625,7 +625,7 @@ void MainWindow::saveDeviceForm()
                        + "</table><br/>"
                        + tr("How should the catalog indexes be updated?"));
         msgBox.setIcon(QMessageBox::Question);
-        QPushButton *btnReplace  = msgBox.addButton(tr("Update path prefix"), QMessageBox::AcceptRole);
+        QPushButton *btnReplace  = msgBox.addButton(tr("Replace path root"), QMessageBox::AcceptRole);
         QPushButton *btnRescan   = msgBox.addButton(tr("Full re-scan"),        QMessageBox::AcceptRole);
         /*QPushButton *btnSkip =*/ msgBox.addButton(tr("Skip"),                QMessageBox::RejectRole);
         msgBox.exec();
@@ -2343,19 +2343,52 @@ void MainWindow::saveCatalogChanges(const QString &previousPath)
     }
 
     // Update the list of files if the changes impact the contents (i.e. path, file type, hidden, checksum)
-    if( rescanNeeded){
-        int updatechoice = QMessageBox::warning(this, "Katalog",
-                                                tr("Update the catalog content with the new criteria?\n")
-                                                , QMessageBox::Yes
-                                                    | QMessageBox::No);
-        if ( updatechoice == QMessageBox::Yes){
-            activeDevice->catalog->loadCatalog();
-            setCatalogUpdateUIState(true);
-            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
-                                                       collection->databaseMode,
-                                                       collection->folder,
-                                                       "update");
+    if (rescanNeeded) {
+        if (activeDevice->path != previousPath) {
+            // Path changed: offer quick prefix update or full re-scan
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("The catalog source path changed.")
+                           + "<br/><br/><table>"
+                           + "<tr><td>" + tr("Old path:") + "</td><td><b>" + previousPath          + "</b></td></tr>"
+                           + "<tr><td>" + tr("New path:") + "</td><td><b>" + activeDevice->path    + "</b></td></tr>"
+                           + "</table><br/>"
+                           + tr("How should the catalog indexes be updated?"));
+            msgBox.setIcon(QMessageBox::Question);
+            QPushButton *btnReplace = msgBox.addButton(tr("Replace path root"), QMessageBox::AcceptRole);
+            QPushButton *btnRescan  = msgBox.addButton(tr("Full re-index"),        QMessageBox::AcceptRole);
+            /*QPushButton *btnSkip =*/ msgBox.addButton(tr("Skip"),               QMessageBox::RejectRole);
+            msgBox.exec();
 
+            if (msgBox.clickedButton() == btnReplace) {
+                setCatalogUpdateUIState(true);
+                deviceUpdateManager->replaceStorageRoot(activeDevice,
+                                                        previousPath,
+                                                        activeDevice->path,
+                                                        collection->databaseMode,
+                                                        collection->folder);
+            } else if (msgBox.clickedButton() == btnRescan) {
+                activeDevice->catalog->loadCatalog();
+                setCatalogUpdateUIState(true);
+                deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                           collection->databaseMode,
+                                                           collection->folder,
+                                                           "update");
+            }
+            // else Skip — do nothing further
+        } else {
+            // Other criteria changed (file type, hidden, checksum…): original Yes/No
+            int updatechoice = QMessageBox::warning(this, "Katalog",
+                                                    tr("Update the catalog content with the new criteria?\n"),
+                                                    QMessageBox::Yes | QMessageBox::No);
+            if (updatechoice == QMessageBox::Yes) {
+                activeDevice->catalog->loadCatalog();
+                setCatalogUpdateUIState(true);
+                deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                           collection->databaseMode,
+                                                           collection->folder,
+                                                           "update");
+            }
         }
     }
 

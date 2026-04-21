@@ -1007,6 +1007,61 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
     const QString pattern = oldN + '%';
     const int     oldLen  = oldN.length();
 
+    // --- Catalog device: update its own file/folder tables directly ---
+    // device.device_path and catalog.catalog_source_path already saved by saveDeviceForm/saveCatalogChanges.
+    if (type == "Catalog") {
+        const int catId   = catalog->ID;
+        const int startPos = oldLen + 1;
+
+        if (databaseMode == "Memory") {
+            QMutex mutex;
+            bool stop = false;
+            catalog->loadCatalogFileListToTable(mutex, stop);
+            catalog->loadFoldersToTable();
+        }
+
+        QSqlQuery fileQ(db);
+        fileQ.prepare(QLatin1String(R"(
+            UPDATE file
+            SET    file_full_path   = :newRootF  || SUBSTR(file_full_path,   :startPosF),
+                   file_folder_path = :newRootFP || SUBSTR(file_folder_path, :startPosFP)
+            WHERE  file_catalog_id  = :catIdF
+              AND  file_full_path   LIKE :patternF
+        )"));
+        fileQ.bindValue(":newRootF",   newN);
+        fileQ.bindValue(":startPosF",  startPos);
+        fileQ.bindValue(":newRootFP",  newN);
+        fileQ.bindValue(":startPosFP", startPos);
+        fileQ.bindValue(":catIdF",     catId);
+        fileQ.bindValue(":patternF",   pattern);
+        if (fileQ.exec())
+            result.filesUpdated += fileQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes(Catalog): file UPDATE failed:" << fileQ.lastError().text();
+
+        QSqlQuery folderQ(db);
+        folderQ.prepare(QLatin1String(R"(
+            UPDATE folder
+            SET    folder_path       = :newRootD || SUBSTR(folder_path, :startPosD)
+            WHERE  folder_catalog_id = :catIdD
+              AND  folder_path       LIKE :patternD
+        )"));
+        folderQ.bindValue(":newRootD",  newN);
+        folderQ.bindValue(":startPosD", startPos);
+        folderQ.bindValue(":catIdD",    catId);
+        folderQ.bindValue(":patternD",  pattern);
+        if (folderQ.exec())
+            result.foldersUpdated += folderQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes(Catalog): folder UPDATE failed:" << folderQ.lastError().text();
+
+        if (databaseMode == "Memory")
+            catalog->saveCatalogToFile(databaseMode, collectionFolder);
+
+        result.catalogsUpdated = 1;
+        return result;
+    }
+
     // Find all Catalog-type descendants of this Storage device (mirrors loadSubDeviceList CTE)
     QSqlQuery findQ(db);
     findQ.prepare(QLatin1String(R"(
