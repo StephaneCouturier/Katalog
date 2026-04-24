@@ -391,23 +391,17 @@ jobs:
         #   2. KF6 data lookup: XDG_DATA_DIRS must include the AppDir share path so
         #      KXmlGui, KIconThemes, and other KF6 components find their data files.
         cat > AppDir/AppRun << 'APPRUN_EOF'
-#!/bin/bash
-APPDIR="$(dirname "$(readlink -f "${0}")")"
-
-export PATH="${APPDIR}/usr/bin${PATH:+:$PATH}"
-export LD_LIBRARY_PATH="${APPDIR}/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-export QT_PLUGIN_PATH="${APPDIR}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
-export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
-
-# On non-KDE desktops, unset QT_QPA_PLATFORMTHEME to prevent Qt from trying to
-# load a platform theme plugin (e.g. kde, qt6ct, gnome) that is not bundled here.
-# Qt6 detects a live KDE session automatically via KDE_SESSION_VERSION.
-if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then
-    unset QT_QPA_PLATFORMTHEME
-fi
-
-exec "${APPDIR}/usr/bin/Katalog" "$@"
-APPRUN_EOF
+        #!/bin/bash
+        APPDIR="$(dirname "$(readlink -f "${0}")")"
+        export PATH="${APPDIR}/usr/bin${PATH:+:$PATH}"
+        export LD_LIBRARY_PATH="${APPDIR}/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        export QT_PLUGIN_PATH="${APPDIR}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+        export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+        if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then
+            unset QT_QPA_PLATFORMTHEME
+        fi
+        exec "${APPDIR}/usr/bin/Katalog" "$@"
+        APPRUN_EOF
         chmod +x AppDir/AppRun
 
         # Ensure proper AppDir structure
