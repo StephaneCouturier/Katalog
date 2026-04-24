@@ -142,6 +142,22 @@ jobs:
         echo "Testing Qt plugin:"
         ./linuxdeploy-plugin-qt --help | head -5
 
+        # Download appimagetool and the type2 runtime (supports fuse2, fuse3, and
+        # fuse-free fallback via bwrap/uidmap — required on modern distros like Arch)
+        wget -q "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
+        chmod +x appimagetool-x86_64.AppImage
+        mkdir -p appimagetool-extracted
+        cd appimagetool-extracted
+        ../appimagetool-x86_64.AppImage --appimage-extract
+        cd ..
+        echo '#!/bin/bash' > appimagetool
+        echo 'exec "$HOME/linuxdeploy/appimagetool-extracted/squashfs-root/AppRun" "$@"' >> appimagetool
+        chmod +x appimagetool
+
+        wget -q "https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64" -O runtime-x86_64
+        chmod +x runtime-x86_64
+        echo "type2-runtime downloaded: $(ls -lh runtime-x86_64 | awk '{print $5}')"
+
     - name: Create packaging directory and files
       run: |
         mkdir -p packaging/qt_widgets
@@ -270,6 +286,35 @@ jobs:
       run: |
         cd build
 
+        # Custom AppRun: must be created before linuxdeploy runs (it won't overwrite
+        # an existing AppRun).  Two issues fixed here:
+        #   1. SIGSEGV on non-KDE desktops (Cinnamon, GNOME, etc.): the session may
+        #      export QT_QPA_PLATFORMTHEME=kde/qt6ct/gnome, pointing to a plugin that
+        #      is not bundled in this AppImage.  Qt6 auto-detects KDE via
+        #      KDE_SESSION_VERSION without needing the env var, so unsetting it on
+        #      non-KDE desktops is safe.
+        #   2. KF6 data lookup: XDG_DATA_DIRS must include the AppDir share path so
+        #      KXmlGui, KIconThemes, and other KF6 components find their data files.
+        cat > AppDir/AppRun << 'APPRUN_EOF'
+#!/bin/bash
+APPDIR="$(dirname "$(readlink -f "${0}")")"
+
+export PATH="${APPDIR}/usr/bin${PATH:+:$PATH}"
+export LD_LIBRARY_PATH="${APPDIR}/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export QT_PLUGIN_PATH="${APPDIR}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+
+# On non-KDE desktops, unset QT_QPA_PLATFORMTHEME to prevent Qt from trying to
+# load a platform theme plugin (e.g. kde, qt6ct, gnome) that is not bundled here.
+# Qt6 detects a live KDE session automatically via KDE_SESSION_VERSION.
+if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then
+    unset QT_QPA_PLATFORMTHEME
+fi
+
+exec "${APPDIR}/usr/bin/Katalog" "$@"
+APPRUN_EOF
+        chmod +x AppDir/AppRun
+
         # Ensure proper AppDir structure
         mkdir -p AppDir/usr/share/applications
         mkdir -p AppDir/usr/share/metainfo
@@ -327,23 +372,24 @@ jobs:
         find AppDir -type f -name "Katalog*" || true
         ls -la AppDir/usr/bin/ || true
 
-        # Create AppImage
+        # Step 1: deploy Qt and all shared-library dependencies into AppDir.
+        # Omit --output appimage so we can pack with a custom runtime below.
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
           --executable AppDir/usr/bin/Katalog \
           --desktop-file AppDir/usr/share/applications/Katalog.desktop \
-          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png \
-          --output appimage
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
 
-        # Rename AppImage with version
-        if ls Katalog-*.AppImage 1> /dev/null 2>&1; then
-          mv Katalog-*.AppImage Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-        else
-          echo "Warning: AppImage not found with expected pattern"
-          ls -la *.AppImage || echo "No AppImage files found"
-          exit 1
-        fi
+        # Step 2: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
+        # The default linuxdeploy runtime only supports libfuse2 and fails with
+        # "dlopen(): error loading libfuse.so.2" on modern distros (Arch, CachyOS, etc.)
+        # that ship only libfuse3.
+        ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
+          --appimage-extract-and-run \
+          --runtime-file "$HOME/linuxdeploy/runtime-x86_64" \
+          AppDir \
+          Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
 
     - name: Test AppImage
       run: |
