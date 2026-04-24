@@ -46,7 +46,11 @@ jobs:
           gettext
 
         # Add KDE neon repository for KF6
-        wget -qO - https://archive.neon.kde.org/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg
+        # Download to file first so wget failures are not silently swallowed by the pipe.
+        # The key may be armored or binary — try dearmor, fall back to direct copy.
+        wget -q https://archive.neon.kde.org/public.key -O /tmp/neon.key
+        sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg /tmp/neon.key 2>/dev/null \
+          || sudo cp /tmp/neon.key /etc/apt/trusted.gpg.d/neon.gpg
         echo "deb http://archive.neon.kde.org/user noble main" | sudo tee /etc/apt/sources.list.d/neon.list
 
         # Update with new repository
