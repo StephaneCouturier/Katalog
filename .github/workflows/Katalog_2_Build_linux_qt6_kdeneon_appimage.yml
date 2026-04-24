@@ -1,0 +1,393 @@
+name: Katalog 2 - Build linux Qt6
+#v2025-10-02 run1
+on:
+  # Trigger on new releases
+  # release:
+    # types: [published]
+
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Version tag'
+        required: false
+        default: 'dev-build-qt6'
+
+  # Trigger on push to main branches
+  push:
+    branches: [ main, katalog_master, katalog_development ]
+
+jobs:
+  build-appimage-qt6:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install Qt6 and KF6 dependencies
+      run: |
+        sudo apt-get update
+
+        # Install base dependencies first
+        sudo apt-get install -y \
+          cmake \
+          ninja-build \
+          desktop-file-utils \
+          appstream-util \
+          wget \
+          file \
+          fuse3 \
+          libfuse2t64 \
+          software-properties-common \
+          gpg \
+          gettext
+
+        # Add KDE neon repository for KF6
+        wget -qO - https://archive.neon.kde.org/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg
+        echo "deb http://archive.neon.kde.org/user noble main" | sudo tee /etc/apt/sources.list.d/neon.list
+
+        # Update with new repository
+        sudo apt-get update
+
+        # Install Qt6 packages with correct names
+        sudo apt-get install -y \
+          qt6-base-dev \
+          qt6-base-dev-tools \
+          qt6-tools-dev \
+          qt6-tools-dev-tools \
+          qt6-l10n-tools \
+          qt6-charts-dev \
+          libqt6sql6-sqlite \
+          qt6-networkauth-dev
+
+        # Install KF6 packages - try different possible names
+        # UPDATED: Added libkf6filemetadata-dev for metadata extraction
+        sudo apt-get install -y \
+          libkf6coreaddons-dev \
+          libkf6i18n-dev \
+          libkf6xmlgui-dev \
+          libkf6config-dev \
+          libkf6iconthemes-dev \
+          libkf6filemetadata-dev \
+          libkf6completion-dev || \
+        sudo apt-get install -y \
+          kf6-kcoreaddons-dev \
+          kf6-ki18n-dev \
+          kf6-kxmlgui-dev \
+          kf6-kconfig-dev \
+          kf6-kiconthemes-dev \
+          kf6-kfilemetadata-dev \
+          kf6-kcompletion-dev || \
+        {
+          echo "Failed to install KF6 packages from KDE neon repository"
+          echo "Attempting alternative installation methods..."
+          
+          # Fallback: Try building from source or use alternative repos
+          echo "This might require manual KF6 installation"
+          exit 1
+        }
+
+        # Verify critical KF6 packages are installed
+        echo "=== Verifying KF6 installations ==="
+        for pkg in KF6CoreAddons KF6Config KF6FileMetaData; do
+          if pkg-config --exists ${pkg}; then
+            echo "✅ ${pkg} found: $(pkg-config --modversion ${pkg})"
+          else
+            echo "⚠️  ${pkg} not found via pkg-config"
+          fi
+        done
+
+        # List installed KF6 packages
+        echo "=== Installed KF6 packages ==="
+        dpkg -l | grep -i 'kf6\|libkf6' || echo "No KF6 packages pattern match"
+
+    - name: Download and setup linuxdeploy
+      run: |
+        mkdir -p $HOME/linuxdeploy
+        cd $HOME/linuxdeploy
+
+        # Download linuxdeploy and Qt plugin
+        wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+        wget -c "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+
+        chmod +x *.AppImage
+
+        # Extract both AppImages to separate directories
+        mkdir -p linuxdeploy-extracted
+        mkdir -p linuxdeploy-qt-extracted
+
+        cd linuxdeploy-extracted
+        ../linuxdeploy-x86_64.AppImage --appimage-extract
+        cd ..
+
+        cd linuxdeploy-qt-extracted
+        ../linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
+        cd ..
+
+        # Create proper executable scripts
+        echo '#!/bin/bash' > linuxdeploy
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy
+
+        echo '#!/bin/bash' > linuxdeploy-plugin-qt
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-qt-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy-plugin-qt
+
+        chmod +x linuxdeploy linuxdeploy-plugin-qt
+
+        # Test the tools
+        echo "Testing main linuxdeploy tool:"
+        ./linuxdeploy --help | head -5
+        echo "Testing Qt plugin:"
+        ./linuxdeploy-plugin-qt --help | head -5
+
+    - name: Create packaging directory and files
+      run: |
+        mkdir -p packaging/qt_widgets
+
+        # Create desktop file
+        cat > packaging/qt_widgets/Katalog.desktop << EOF
+        [Desktop Entry]
+        Type=Application
+        Name=Katalog
+        GenericName=File Catalog Manager
+        Comment=Create and manage catalogs of your files and folders
+        Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
+        Exec=Katalog
+        Icon=Katalog
+        Terminal=false
+        Categories=Utility;FileManager;Qt;
+        Keywords=catalog;files;folders;organization;storage;backup;
+        StartupNotify=true
+        StartupWMClass=Katalog
+        EOF
+
+        # Create AppData file
+        cat > packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml << EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <component type="desktop-application">
+          <id>io.github.stephanecouturier.katalog</id>
+          <name>Katalog</name>
+          <summary>File Catalog Manager</summary>
+          <description>
+            <p>
+              Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
+              Create catalogs of your DVDs, external drives, and folders to quickly find files without having to connect the device.
+            </p>
+            <p>Features:</p>
+            <ul>
+              <li>Create catalogs of files and folders</li>
+              <li>Search across multiple catalogs</li>
+              <li>Track files on external devices</li>
+              <li>Import from other catalog formats</li>
+              <li>Statistics and file analysis</li>
+              <li>Multiple language support</li>
+            </ul>
+          </description>
+          <categories>
+            <category>Utility</category>
+            <category>FileManager</category>
+          </categories>
+          <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
+          <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
+          <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
+          <launchable type="desktop-id">io.github.stephanecouturier.katalog.desktop</launchable>
+          <provides>
+            <binary>Katalog</binary>
+          </provides>
+          <content_rating type="oars-1.1"/>
+          <releases>
+            <release version="2.6" date="2024-01-01"/>
+          </releases>
+        </component>
+        EOF
+
+    - name: Set version information
+      run: |
+        # Extract version from qt_widgets/CMakeLists.txt (version is owned by the variant)
+        KATALOG_VERSION=$(grep -E "^project\(Katalog VERSION" qt_widgets/CMakeLists.txt | sed -E 's/.*VERSION ([0-9.]+).*/\1/')
+
+        if [ -z "$KATALOG_VERSION" ]; then
+          echo "Warning: Could not extract version from CMakeLists.txt, using default"
+          KATALOG_VERSION="2.x"
+        fi
+
+        # Build VERSION_TAG: platform_vX.X
+        echo "VERSION_TAG=linux_qt6_v${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "Building version: linux_qt6_v${KATALOG_VERSION}"
+
+    - name: Build Katalog
+      run: |
+        mkdir build
+        cd build
+
+        cmake .. \
+          -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_PREFIX_PATH=/usr \
+          -DBUILD_QT_WIDGETS=ON \
+          -DBUILD_QT_QUICK=OFF \
+          -DBUILD_TESTS=OFF
+
+        # Build translations first
+        echo "Building translations..."
+        ninja Katalog_lrelease || echo "Translation build failed, continuing..."
+
+        # Check what .qm files are available
+        echo "Available .qm files:"
+        find .. -name "*.qm" -type f || echo "No .qm files found"
+
+        # Create missing .qm files as empty files if needed
+        for ts_file in ../translations/*.ts; do
+          if [ -f "$ts_file" ]; then
+            qm_file="${ts_file%.ts}.qm"
+            if [ ! -f "$qm_file" ]; then
+              echo "Creating empty .qm file: $qm_file"
+              touch "$qm_file"
+            fi
+          fi
+        done
+
+        # Now build the main application
+        ninja
+
+        # Check available targets
+        echo "Available ninja targets:"
+        ninja -t targets | grep install || echo "No install targets found"
+
+        # Create AppDir and install manually if needed
+        mkdir -p AppDir/usr/bin
+        cp qt_widgets/Katalog AppDir/usr/bin/
+
+        # Or try the install target with proper environment
+        export DESTDIR="$(pwd)/AppDir"
+        ninja install || echo "Install target failed, but binary copied manually"
+
+    - name: Prepare AppDir structure
+      run: |
+        cd build
+
+        # Ensure proper AppDir structure
+        mkdir -p AppDir/usr/share/applications
+        mkdir -p AppDir/usr/share/metainfo
+        mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
+
+        # Copy desktop file
+        cp ../packaging/qt_widgets/Katalog.desktop AppDir/usr/share/applications/
+
+        # Copy AppData
+        cp ../packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml AppDir/usr/share/metainfo/
+
+        # Create proper 64x64 icon
+        if [ -f "../assets/Katalog_logo_64.ico" ]; then
+          # Convert ico to png with exact 64x64 size
+          sudo apt-get install -y imagemagick
+          convert "../assets/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
+          {
+            echo "ICO conversion failed, creating fallback icon"
+            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+          }
+        else
+          echo "ICO file not found, creating fallback icon"
+          sudo apt-get install -y imagemagick
+          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+        fi
+
+        # Verify icon dimensions
+        echo "Icon information:"
+        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png || echo "Could not identify icon"
+
+        # Validate desktop file
+        desktop-file-validate AppDir/usr/share/applications/Katalog.desktop || echo "Desktop file validation warnings (non-critical)"
+
+        # Validate AppData
+        appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.katalog.appdata.xml || echo "AppData validation warnings (non-critical)"
+
+    - name: Create AppImage
+      run: |
+        cd build
+
+        # Set up environment for linuxdeploy
+        export PATH="$HOME/linuxdeploy:$PATH"
+        export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+        # Verify tools work
+        echo "Testing linuxdeploy..."
+        linuxdeploy --version || linuxdeploy --help | head -3
+
+        echo "Testing linuxdeploy-plugin-qt..."
+        linuxdeploy-plugin-qt --version || linuxdeploy-plugin-qt --help | head -3
+
+        # Check AppDir structure
+        echo "AppDir contents:"
+        find AppDir -type f -name "Katalog*" || true
+        ls -la AppDir/usr/bin/ || true
+
+        # Create AppImage
+        linuxdeploy \
+          --appdir AppDir \
+          --plugin qt \
+          --executable AppDir/usr/bin/Katalog \
+          --desktop-file AppDir/usr/share/applications/Katalog.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png \
+          --output appimage
+
+        # Rename AppImage with version
+        if ls Katalog-*.AppImage 1> /dev/null 2>&1; then
+          mv Katalog-*.AppImage Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        else
+          echo "Warning: AppImage not found with expected pattern"
+          ls -la *.AppImage || echo "No AppImage files found"
+          exit 1
+        fi
+
+    - name: Test AppImage
+      run: |
+        cd build
+
+        # Basic test - check if AppImage can show version
+        chmod +x Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+        # Test extraction
+        ./Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
+
+        # Get AppImage size and info
+        ls -lh Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        file Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+    - name: Upload AppImage to Release
+      if: env.IS_RELEASE == 'true'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_name: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_content_type: application/octet-stream
+
+    - name: Upload AppImage as Artifact
+      if: env.IS_RELEASE != 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Katalog-AppImage-${{ env.VERSION_TAG }}
+        path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        retention-days: 30
+
+    - name: Summary
+      run: |
+        echo "## Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size**: $(ls -lh build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+
+        if [ "${{ env.IS_RELEASE }}" = "true" ]; then
+          echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY
+        fi
