@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6 (KDE neon)
-#v2026-04-25 run2 — manual-only; KDE neon repo is unreliable, kept as fallback
+#2026-04-25 23:20 — manual-only; KDE neon repo is unreliable, kept as fallback
 on:
   # Trigger on new releases
   # release:
