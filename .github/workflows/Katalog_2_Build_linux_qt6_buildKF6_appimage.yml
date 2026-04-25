@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6 (inc KF6)
-#v2026-04-25 run18
+#v2026-04-26 run19
 on:
   # Trigger on new releases
   # release:
@@ -104,7 +104,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.24.0-ubuntu24.04-v18
+        key: kf6.24.0-ubuntu24.04-v19
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -121,6 +121,22 @@ jobs:
         export PATH="${QT_ROOT_DIR}/bin:$PATH"
         export LD_LIBRARY_PATH="${QT_ROOT_DIR}/lib:$LD_LIBRARY_PATH"
 
+        # Multiple KF6 6.x modules (kcoreaddons, kguiaddons, kwindowsystem, ...)
+        # call find_package(Shiboken6/PySide6 REQUIRED) for optional Python bindings.
+        # Shiboken6 is not in CI.  The find_package calls are often multi-line so
+        # sed regex is unreliable.  Instead, place fake config stubs in /tmp and
+        # export the _DIR env vars so every cmake invocation finds them automatically
+        # without needing CMAKE_PREFIX_PATH changes.  Each module's python/
+        # subdirectory is blanked inside build() so no Python code is actually built.
+        FAKE_STUBS="/tmp/fake-cmake-stubs"
+        mkdir -p "${FAKE_STUBS}/Shiboken6" "${FAKE_STUBS}/PySide6"
+        printf 'set(Shiboken6_FOUND TRUE)\nset(Shiboken6_VERSION "6.8.0")\n' \
+          > "${FAKE_STUBS}/Shiboken6/Shiboken6Config.cmake"
+        printf 'set(PySide6_FOUND TRUE)\nset(PySide6_VERSION "6.8.0")\n' \
+          > "${FAKE_STUBS}/PySide6/PySide6Config.cmake"
+        export Shiboken6_DIR="${FAKE_STUBS}/Shiboken6"
+        export PySide6_DIR="${FAKE_STUBS}/PySide6"
+
         # --- KF6 modules (dependency order) ---
         build() {
           local name=$1; shift
@@ -136,18 +152,9 @@ jobs:
             { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${src_cml}"; } > /tmp/patched_src_cml.cmake
             mv /tmp/patched_src_cml.cmake "${src_cml}"
           fi
-          # kcoreaddons >= 6.20 calls find_package(Shiboken6 REQUIRED) which is
-          # often multi-line — [^)]* sed regex does not match across lines.
-          # Instead, pre-install fake cmake stubs in KF6_PREFIX so the call
-          # succeeds unconditionally regardless of formatting.  python/CMakeLists.txt
-          # is blanked so no Python code is actually configured or built.
-          if [ "${name}" = "kcoreaddons" ]; then
-            sudo mkdir -p "${KF6_PREFIX}/lib/cmake/Shiboken6"
-            printf 'set(Shiboken6_FOUND TRUE)\nset(Shiboken6_VERSION "6.8.0")\n' | \
-              sudo tee "${KF6_PREFIX}/lib/cmake/Shiboken6/Shiboken6Config.cmake" > /dev/null
-            sudo mkdir -p "${KF6_PREFIX}/lib/cmake/PySide6"
-            printf 'set(PySide6_FOUND TRUE)\nset(PySide6_VERSION "6.8.0")\n' | \
-              sudo tee "${KF6_PREFIX}/lib/cmake/PySide6/PySide6Config.cmake" > /dev/null
+          # Blank python/ for any module that has it so ECMGeneratePythonBindings
+          # never runs (the fake Shiboken6 stub has no real targets to link against).
+          if [ -f "${name}-${KF6_VER}/python/CMakeLists.txt" ]; then
             printf '# Python bindings disabled in CI\n' \
               > "${name}-${KF6_VER}/python/CMakeLists.txt"
           fi
@@ -167,14 +174,6 @@ jobs:
         build extra-cmake-modules -DBUILD_HTML_DOCS=OFF -DBUILD_QTHELP_DOCS=OFF
         build kcodecs
         build kcoreaddons
-        # Remove the fake Shiboken6/PySide6 stubs now that kcoreaddons is installed.
-        # Also strip any find_dependency(Shiboken6/PySide6) lines that kcoreaddons
-        # may have written into its installed cmake config files, so they do not
-        # cause a hard error when the Katalog build runs find_package(KF6CoreAddons).
-        sudo rm -rf "${KF6_PREFIX}/lib/cmake/Shiboken6" "${KF6_PREFIX}/lib/cmake/PySide6"
-        sudo find "${KF6_PREFIX}" -name "*.cmake" -print0 2>/dev/null | \
-          xargs -0 grep -lZ "Shiboken6\|PySide6" 2>/dev/null | \
-          xargs -0 sudo sed -i '/[Ss]hiboken6\|[Pp][Yy][Ss]ide6/d' 2>/dev/null || true
         build ki18n        -DBUILD_WITH_QML=OFF
         build kconfig
 
@@ -207,6 +206,13 @@ jobs:
         build ktextwidgets
         build kxmlgui
         build kfilemetadata
+
+        # Strip any Shiboken6/PySide6 find_dependency lines from ALL installed cmake
+        # files. KF6 modules may have written them into their exported configs, and
+        # they would cause a hard find_package failure in the subsequent Katalog build.
+        sudo find "${KF6_PREFIX}" -name "*.cmake" -print0 2>/dev/null | \
+          xargs -0 grep -lZ "Shiboken6\|PySide6" 2>/dev/null | \
+          xargs -0 sudo sed -i '/[Ss]hiboken6\|[Pp][Yy][Ss]ide6/d' 2>/dev/null || true
 
     - name: Download and setup linuxdeploy
       run: |
