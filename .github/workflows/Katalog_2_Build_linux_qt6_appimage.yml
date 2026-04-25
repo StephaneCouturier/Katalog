@@ -471,12 +471,30 @@ jobs:
           --desktop-file AppDir/usr/share/applications/Katalog.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
 
-        # Step 2: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
+        # Step 2: strip plugins/libs not used by Katalog.
+        # KF6FileMetaData pulls in GStreamer, FFmpeg, and PulseAudio as transitive
+        # deps — ~150 MB that Katalog never loads at runtime.
+        rm -rf AppDir/usr/plugins/multimedia
+        rm -rf AppDir/usr/plugins/geoservices
+        rm -rf AppDir/usr/plugins/position
+        for lib in \
+            libavcodec libavformat libavutil libswresample libswscale \
+            libgst libgstreamer libgstpbutils libgstallocators libgstapp \
+            libgstplay libgstphotography libgstgl libgstvideo libgstbase \
+            libgstaudio libgsttag \
+            libpulse libpulsecommon \
+            libshaderc libSPIRV libglslang \
+            libsndfile libFLAC libogg libvorbis \
+            libgudev libdw libelf liborc libzvbi; do
+          find AppDir/usr/lib -maxdepth 1 -name "${lib}*.so*" -delete 2>/dev/null || true
+        done
+        echo "AppDir size after stripping: $(du -sh AppDir | cut -f1)"
+
+        # Step 3: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
         # The default linuxdeploy runtime only supports libfuse2 and fails with
         # "dlopen(): error loading libfuse.so.2" on modern distros (Arch, CachyOS, etc.)
         # that ship only libfuse3.
         ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
-          --appimage-extract-and-run \
           --runtime-file "$HOME/linuxdeploy/runtime-x86_64" \
           AppDir \
           Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage

@@ -1,11 +1,11 @@
-name: Katalog 2 - Build linux Qt6
-#v2025-10-02 run1
+name: Katalog 2 - Build linux Qt6 (KDE neon)
+#v2026-04-25 run2 — manual-only; KDE neon repo is unreliable, kept as fallback
 on:
   # Trigger on new releases
   # release:
     # types: [published]
 
-  # Allow manual triggering
+  # Allow manual triggering only — KDE neon repo drifts from Ubuntu 24.04
   workflow_dispatch:
     inputs:
       version_tag:
@@ -13,9 +13,10 @@ on:
         required: false
         default: 'dev-build-qt6'
 
-  # Trigger on push to main branches
+  # Trigger automatically when this workflow file is updated
   push:
-    branches: [ main, katalog_master, katalog_development ]
+    paths:
+      - '.github/workflows/Katalog_2_Build_linux_qt6_kdeneon_appimage.yml'
 
 jobs:
   build-appimage-qt6:
@@ -357,6 +358,8 @@ jobs:
         # Set up environment for linuxdeploy
         export PATH="$HOME/linuxdeploy:$PATH"
         export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+        export QMAKE=$(command -v qmake6 || command -v qmake)
+        echo "Using QMAKE: $QMAKE  ($(${QMAKE} -query QT_VERSION 2>/dev/null || echo 'version query failed'))"
 
         # Verify tools work
         echo "Testing linuxdeploy..."
@@ -379,12 +382,30 @@ jobs:
           --desktop-file AppDir/usr/share/applications/Katalog.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
 
-        # Step 2: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
+        # Step 2: strip plugins/libs not used by Katalog.
+        # KF6FileMetaData pulls in GStreamer, FFmpeg, and PulseAudio as transitive
+        # deps — ~150 MB that Katalog never loads at runtime.
+        rm -rf AppDir/usr/plugins/multimedia
+        rm -rf AppDir/usr/plugins/geoservices
+        rm -rf AppDir/usr/plugins/position
+        for lib in \
+            libavcodec libavformat libavutil libswresample libswscale \
+            libgst libgstreamer libgstpbutils libgstallocators libgstapp \
+            libgstplay libgstphotography libgstgl libgstvideo libgstbase \
+            libgstaudio libgsttag \
+            libpulse libpulsecommon \
+            libshaderc libSPIRV libglslang \
+            libsndfile libFLAC libogg libvorbis \
+            libgudev libdw libelf liborc libzvbi; do
+          find AppDir/usr/lib -maxdepth 1 -name "${lib}*.so*" -delete 2>/dev/null || true
+        done
+        echo "AppDir size after stripping: $(du -sh AppDir | cut -f1)"
+
+        # Step 3: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
         # The default linuxdeploy runtime only supports libfuse2 and fails with
         # "dlopen(): error loading libfuse.so.2" on modern distros (Arch, CachyOS, etc.)
         # that ship only libfuse3.
         ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
-          --appimage-extract-and-run \
           --runtime-file "$HOME/linuxdeploy/runtime-x86_64" \
           AppDir \
           Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
