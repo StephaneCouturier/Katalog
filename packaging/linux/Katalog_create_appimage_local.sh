@@ -66,8 +66,7 @@ APPDIR=""                            # set by configure_variant: $BUILD_DIR/AppD
 VERBOSE=false
 CLEAN_BUILD=false
 CMAKE_BUILD_TYPE="Release"
-LINUXDEPLOY_DIR="$HOME/.local/share/linuxdeploy"   # linuxdeploy wrapper scripts
-APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"  # optional local appimagetool (avoids network)
+LINUXDEPLOY_DIR="$HOME/.local/share/linuxdeploy"   # linuxdeploy + appimagetool wrapper scripts
 
 # Variant selection (K2 = Qt Widgets, K3 = Qt Quick/QML)
 VARIANT="K2"
@@ -166,7 +165,6 @@ parse_arguments() {
                 ;;
             --build)
                 BUILD_BASE_DIR="$2"
-                APPIMAGETOOL_PATH="$BUILD_BASE_DIR/appimagetool-x86_64.AppImage"
                 # BUILD_DIR and APPDIR are recalculated in configure_variant
                 shift 2
                 ;;
@@ -264,9 +262,14 @@ check_dependencies() {
         missing_deps+=("kf6-dev-packages")
     fi
 
-    # Check linuxdeploy
-    if [ ! -f "$LINUXDEPLOY_DIR/linuxdeploy" ]; then
-        missing_deps+=("linuxdeploy")
+    # Check linuxdeploy tools — auto-install if missing.
+    # Check squashfs-root content, not just wrapper scripts: a previous failed run
+    # may have created the wrappers but left the squashfs-root directories empty.
+    if [ ! -f "$LINUXDEPLOY_DIR/linuxdeploy-extracted/squashfs-root/AppRun" ] || \
+       [ ! -f "$LINUXDEPLOY_DIR/linuxdeploy-qt-extracted/squashfs-root/AppRun" ] || \
+       [ ! -f "$LINUXDEPLOY_DIR/runtime-x86_64" ]; then
+        print_warning "linuxdeploy tools not found or incomplete — downloading/extracting now..."
+        install_linuxdeploy
     fi
 
     if [ ${#missing_deps[@]} -ne 0 ]; then
@@ -328,7 +331,9 @@ install_deps_opensuse() {
         appstream-glib-devel \
         ImageMagick \
         wget \
-        file
+        file \
+        squashfs \
+        qt6-positioning
 }
 
 # Install dependencies for Ubuntu/Debian
@@ -355,18 +360,67 @@ install_deps_ubuntu() {
         desktop-file-utils \
         appstream-util \
         imagemagick \
+        squashfs-tools \
         wget \
         file
 }
 
-# Install linuxdeploy
+# Extract an AppImage to squashfs-root/ in the current directory.
+# First tries the AppImage's own --appimage-extract (needs libfuse2 on the host).
+# Falls back to unsquashfs on the raw SquashFS payload (no FUSE required).
+# This fallback is essential on openSUSE Tumbleweed and other distros that ship
+# only libfuse3 — many AppImages (including appimagetool itself) still embed the
+# old runtime that requires libfuse.so.2.
+extract_appimage() {
+    local appimage_path="$1"   # absolute path to the .AppImage file
+    local dest_label="$2"      # human-readable name for log messages
+
+    # Attempt 1: built-in extraction (works when libfuse2 is available)
+    if "$appimage_path" --appimage-extract 2>/dev/null && [ -d "squashfs-root" ]; then
+        print_success "Extracted $dest_label via --appimage-extract"
+        return 0
+    fi
+
+    # Attempt 2: unsquashfs on the raw SquashFS payload.
+    # AppImages are [ELF runtime][SquashFS]; find the SquashFS magic 'hsqs'
+    # (little-endian) to get its byte offset, then feed it to unsquashfs.
+    local unsquashfs_bin
+    unsquashfs_bin=$(command -v unsquashfs 2>/dev/null || echo "")
+    if [ -n "$unsquashfs_bin" ]; then
+        # 'hsqs' (SquashFS little-endian magic) can appear multiple times in an
+        # AppImage — the first hit is often inside the ELF body and is invalid.
+        # Iterate over ALL occurrences until unsquashfs accepts one.
+        local offsets_list tried_count=0
+        offsets_list=$(LANG=C grep -boa 'hsqs' "$appimage_path" 2>/dev/null | cut -d: -f1)
+        if [ -z "$offsets_list" ]; then
+            print_error "No SquashFS magic found in $dest_label — file may be corrupt. Re-run --install-deps."
+        fi
+        for try_offset in $offsets_list; do
+            tried_count=$((tried_count + 1))
+            rm -rf squashfs-root
+            if "$unsquashfs_bin" -o "$try_offset" -d squashfs-root "$appimage_path" 2>/dev/null \
+               && [ -f "squashfs-root/AppRun" ]; then
+                print_success "Extracted $dest_label via unsquashfs (offset $try_offset)"
+                return 0
+            fi
+        done
+        rm -rf squashfs-root
+        print_error "unsquashfs tried $tried_count offset(s) — none produced a valid AppDir for $dest_label."
+    else
+        print_error "unsquashfs not found. Run: sudo zypper install squashfs   (openSUSE) or   sudo apt install squashfs-tools   (Ubuntu)"
+    fi
+}
+
+# Install linuxdeploy + type2-runtime.
+# We do NOT download a separate appimagetool — linuxdeploy bundles its own.
+# The type2-runtime is cached to ~/.cache/appimagetool/runtime-x86_64, which
+# linuxdeploy's internal appimagetool checks automatically before packaging.
 install_linuxdeploy() {
-    print_step "Installing linuxdeploy"
+    print_step "Installing linuxdeploy and type2-runtime"
 
     mkdir -p "$LINUXDEPLOY_DIR"
     cd "$LINUXDEPLOY_DIR"
 
-    # Download if not present
     if [ ! -f "linuxdeploy-x86_64.AppImage" ]; then
         wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
         chmod +x linuxdeploy-x86_64.AppImage
@@ -377,18 +431,24 @@ install_linuxdeploy() {
         chmod +x linuxdeploy-plugin-qt-x86_64.AppImage
     fi
 
-    # Extract AppImages
-    if [ ! -d "linuxdeploy-extracted" ]; then
+    if [ ! -f "runtime-x86_64" ]; then
+        wget -q "https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64" \
+            -O runtime-x86_64
+        chmod +x runtime-x86_64
+    fi
+
+    # Extract AppImages — uses unsquashfs fallback when libfuse2 is unavailable
+    if [ ! -d "linuxdeploy-extracted/squashfs-root" ]; then
         mkdir -p linuxdeploy-extracted
         cd linuxdeploy-extracted
-        ../linuxdeploy-x86_64.AppImage --appimage-extract > /dev/null
+        extract_appimage "$LINUXDEPLOY_DIR/linuxdeploy-x86_64.AppImage" "linuxdeploy"
         cd ..
     fi
 
-    if [ ! -d "linuxdeploy-qt-extracted" ]; then
+    if [ ! -d "linuxdeploy-qt-extracted/squashfs-root" ]; then
         mkdir -p linuxdeploy-qt-extracted
         cd linuxdeploy-qt-extracted
-        ../linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract > /dev/null
+        extract_appimage "$LINUXDEPLOY_DIR/linuxdeploy-plugin-qt-x86_64.AppImage" "linuxdeploy-plugin-qt"
         cd ..
     fi
 
@@ -405,7 +465,7 @@ EOF
 
     chmod +x linuxdeploy linuxdeploy-plugin-qt
 
-    print_success "linuxdeploy installed to $LINUXDEPLOY_DIR"
+    print_success "linuxdeploy and type2-runtime installed to $LINUXDEPLOY_DIR"
 }
 
 # Clean build directory
@@ -665,11 +725,57 @@ deploy_k3_qml_modules() {
     print_success "K3 QML modules deployed"
 }
 
+# Write a custom AppRun into AppDir BEFORE linuxdeploy runs.
+# linuxdeploy respects a pre-existing AppRun and will not overwrite it.
+# This fixes two issues on non-KDE desktops (e.g. Cinnamon):
+#   - SIGSEGV: QT_QPA_PLATFORMTHEME set by the session (kde/qt6ct/gnome) points
+#     to a plugin not bundled in the AppImage.  Qt6 auto-detects KDE via
+#     KDE_SESSION_VERSION, so unsetting the var on non-KDE desktops is safe.
+#   - KF6 data lookup: XDG_DATA_DIRS must include the AppDir share path.
+write_apprun() {
+    print_step "Writing custom AppRun"
+    {
+        printf '#!/bin/bash\n'
+        printf 'HERE="$(dirname "$(readlink -f "${0}")")"\n'
+        printf 'export PATH="${HERE}/usr/bin${PATH:+:$PATH}"\n'
+        printf 'export LD_LIBRARY_PATH="${HERE}/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"\n'
+        printf 'export QT_PLUGIN_PATH="${HERE}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"\n'
+        printf 'export XDG_DATA_DIRS="${HERE}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"\n'
+        if [ "$VARIANT" = "K3" ]; then
+            printf 'export QML2_IMPORT_PATH="${HERE}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"\n'
+            printf 'export QML_IMPORT_PATH="${HERE}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"\n'
+        fi
+        printf 'if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then\n'
+        printf '    unset QT_QPA_PLATFORMTHEME\n'
+        printf 'fi\n'
+        printf 'exec "${HERE}/usr/bin/%s" "$@"\n' "$APP_NAME"
+    } > "$APPDIR/AppRun"
+    chmod +x "$APPDIR/AppRun"
+    print_success "AppRun written"
+}
+
 # Create AppImage
 create_appimage() {
     print_step "Creating AppImage"
 
     export PATH="$LINUXDEPLOY_DIR:$PATH"
+
+    # Tell linuxdeploy-plugin-qt which Qt to use and set LD_LIBRARY_PATH so
+    # the plugin's ldd calls resolve Qt from the correct installation.
+    # On openSUSE, Qt lives in /usr/lib64; without this, the plugin may bundle
+    # a different version than the binary was compiled against.
+    local qmake_bin
+    qmake_bin=$(command -v qmake6 2>/dev/null \
+             || command -v qmake-qt6 2>/dev/null \
+             || command -v qmake 2>/dev/null)
+    export QMAKE="$qmake_bin"
+    local qt_install_libs
+    qt_install_libs=$(env -i PATH="$PATH" "$qmake_bin" -query QT_INSTALL_LIBS 2>/dev/null)
+    if [ -n "$qt_install_libs" ] && [ -d "$qt_install_libs" ]; then
+        export LD_LIBRARY_PATH="$qt_install_libs${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        print_info "Qt libs path: $qt_install_libs"
+    fi
+    print_info "Using qmake: $QMAKE ($("$QMAKE" -query QT_VERSION 2>/dev/null || echo 'version unknown'))"
 
     # Get version info
     local version
@@ -687,8 +793,10 @@ create_appimage() {
         find "$APPDIR" -type f | head -20
     fi
 
-    # Step 1: Run linuxdeploy to bundle Qt/system dependencies (without --output
-    # appimage so we can post-process the AppDir before packaging)
+    # Step 1: Write custom AppRun before linuxdeploy (linuxdeploy won't overwrite it)
+    write_apprun
+
+    # Step 2: Run linuxdeploy to bundle Qt/system dependencies
     print_info "Running linuxdeploy to bundle dependencies..."
     linuxdeploy \
         --appdir "$APPDIR" \
@@ -701,58 +809,82 @@ create_appimage() {
         print_error "Dependency bundling failed"
     fi
 
-    # Step 2: For K3, manually deploy QML modules and patch AppRun
+    # Step 2b: Report the Qt version bundled by linuxdeploy.
+    # We no longer replace Qt libs here. linuxdeploy resolves Qt via ldd on the
+    # Katalog binary, picking up the RUNTIME system Qt — the same version KF6 was
+    # compiled against. Replacing with qmake6 -query QT_INSTALL_LIBS (the dev Qt
+    # path) caused KF6 to crash because the dev Qt may omit backward-compat
+    # private API symbols that the runtime Qt includes.
+    local bundled_qt_ver
+    bundled_qt_ver=$(strings "$APPDIR/usr/lib/libQt6Core.so.6" 2>/dev/null \
+        | grep -E "^6\.[0-9]+\.[0-9]+$" | head -1)
+    print_info "Bundled Qt: ${bundled_qt_ver:-unknown}  |  Build Qt: $("$qmake_bin" -query QT_VERSION 2>/dev/null)"
+
+    # Step 2c: Strip plugins/libs not used by Katalog.
+    # KF6FileMetaData pulls in GStreamer, FFmpeg, and PulseAudio as transitive
+    # deps — ~150 MB that Katalog never loads at runtime.
+    print_step "Stripping unused multimedia plugins"
+    rm -rf "$APPDIR/usr/plugins/multimedia"
+    rm -rf "$APPDIR/usr/plugins/geoservices"
+    rm -rf "$APPDIR/usr/plugins/position"
+    # Strip GStreamer/FFmpeg/audio libs (not needed for file cataloging)
+    for lib in \
+        libavcodec libavformat libavutil libswresample libswscale \
+        libgst libgstreamer libgst-1.0 \
+        libpulse libpulsecommon \
+        libshaderc libSPIRV libglslang \
+        libsndfile libFLAC libogg libvorbis \
+        libgudev libdw libelf liborc; do
+        find "$APPDIR/usr/lib" -maxdepth 1 -name "${lib}*.so*" -delete 2>/dev/null || true
+    done
+    print_success "Multimedia plugins removed"
+
+    # Step 3: For K3, manually deploy QML modules
     if [ "$VARIANT" = "K3" ]; then
         deploy_k3_qml_modules
     fi
 
-    # Step 3: Package as AppImage
-    if [ -f "$APPIMAGETOOL_PATH" ]; then
-        print_info "Using local appimagetool (offline mode)..."
-
-        mkdir -p ~/.cache/appimagetool
-        if [ -f ~/Downloads/runtime-x86_64 ]; then
-            cp ~/Downloads/runtime-x86_64 ~/.cache/appimagetool/
-            chmod +x ~/.cache/appimagetool/runtime-x86_64
-            print_info "Using your downloaded runtime file"
-        fi
-
-        "$APPIMAGETOOL_PATH" "$APPDIR" "$appimage_name"
-    else
-        print_info "Using linuxdeploy --output appimage..."
-
-        if [ ! -f ~/.cache/appimagetool/runtime-x86_64 ]; then
-            print_step "Pre-downloading AppImage runtime to avoid network issues"
-            mkdir -p ~/.cache/appimagetool
-            if [ -f ~/Downloads/runtime-x86_64 ]; then
-                cp ~/Downloads/runtime-x86_64 ~/.cache/appimagetool/
-                chmod +x ~/.cache/appimagetool/runtime-x86_64
-                print_success "Runtime copied from Downloads"
-            elif wget -O ~/.cache/appimagetool/runtime-x86_64 https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64; then
-                chmod +x ~/.cache/appimagetool/runtime-x86_64
-                print_success "Runtime cached successfully"
-            else
-                print_warning "Runtime download failed, appimagetool will try to download it"
-            fi
-        fi
-
-        linuxdeploy \
-            --appdir "$APPDIR" \
-            --output appimage
+    # Step 4: Package as AppImage using linuxdeploy's bundled appimagetool with
+    # the type2 runtime (fuse2 + fuse3 + fuse-free bwrap fallback).
+    # We avoid downloading a separate appimagetool AppImage entirely — it uses a
+    # newer format that cannot be reliably extracted without FUSE on the build host.
+    # Instead: cache the type2-runtime to ~/.cache/appimagetool/runtime-x86_64,
+    # the path linuxdeploy's own appimagetool checks automatically before embedding.
+    local runtime_bin="$LINUXDEPLOY_DIR/runtime-x86_64"
+    if [ ! -f "$runtime_bin" ]; then
+        print_error "type2-runtime not found. Run: $0 --install-deps"
     fi
+    # Use appimagetool bundled inside linuxdeploy's squashfs directly with
+    # --runtime-file, bypassing its automatic (and slow/broken) GitHub download.
+    local ld_appimagetool
+    ld_appimagetool=$(find "$LINUXDEPLOY_DIR/linuxdeploy-extracted/squashfs-root" \
+        -name "appimagetool" -type f 2>/dev/null | head -1)
+    if [ -z "$ld_appimagetool" ] || [ ! -x "$ld_appimagetool" ]; then
+        print_error "Could not find appimagetool inside linuxdeploy squashfs at $LINUXDEPLOY_DIR/linuxdeploy-extracted/squashfs-root"
+    fi
+    print_info "Using appimagetool: $ld_appimagetool"
+    print_info "Packaging with type2-runtime (local, no download)..."
+    ARCH=x86_64 "$ld_appimagetool" \
+        --runtime-file "$runtime_bin" \
+        "$APPDIR" \
+        "$appimage_name"
 
     if [ $? -ne 0 ]; then
         print_error "AppImage creation failed"
     fi
 
-    # Check for created AppImage (different naming depending on method)
+    # linuxdeploy names the output file after the desktop file Name + ARCH,
+    # e.g. Katalog-x86_64.AppImage. Rename to our versioned filename.
     local created_appimage=""
     if [ -f "$appimage_name" ]; then
         created_appimage="$appimage_name"
-    elif ls ${APP_NAME}-*.AppImage 1> /dev/null 2>&1; then
-        created_appimage=$(ls ${APP_NAME}-*.AppImage | head -1)
-        mv "$created_appimage" "$appimage_name"
-        created_appimage="$appimage_name"
+    else
+        local found
+        found=$(ls ${APP_NAME}-*.AppImage 2>/dev/null | head -1)
+        if [ -n "$found" ]; then
+            mv "$found" "$appimage_name"
+            created_appimage="$appimage_name"
+        fi
     fi
 
     if [ -n "$created_appimage" ]; then
@@ -801,7 +933,7 @@ main() {
     echo "  Build Type: $CMAKE_BUILD_TYPE"
     echo "  Clean Build: $CLEAN_BUILD"
     echo "  Verbose: $VERBOSE"
-    echo "  Appimagetool: $([ -f "$APPIMAGETOOL_PATH" ] && echo "✅ Found" || echo "❌ Missing")"
+    echo "  type2-runtime: $([ -f "$LINUXDEPLOY_DIR/runtime-x86_64" ] && echo "✅ Found" || echo "⬇️  Will be downloaded")"
     echo ""
 
     check_dependencies
