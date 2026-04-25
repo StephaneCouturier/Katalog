@@ -465,9 +465,11 @@ jobs:
       run: |
         cd build
 
-        # Set up environment for linuxdeploy
+        # Set up environment for linuxdeploy.
+        # KF6 is installed with GNUInstallDirs, so on Ubuntu 24.04 (multiarch)
+        # libraries land in /opt/kf6/lib/x86_64-linux-gnu/ — include both paths.
         export PATH="$HOME/linuxdeploy:$QT_ROOT_DIR/bin:$PATH"
-        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:/opt/kf6/lib:$LD_LIBRARY_PATH"
+        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:/opt/kf6/lib/x86_64-linux-gnu:/opt/kf6/lib:$LD_LIBRARY_PATH"
         export QMAKE="$QT_ROOT_DIR/bin/qmake"
 
         # Verify tools work
