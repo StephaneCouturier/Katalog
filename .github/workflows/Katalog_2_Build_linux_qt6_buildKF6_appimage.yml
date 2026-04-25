@@ -16,7 +16,7 @@ on:
   # Trigger automatically when this workflow file is updated
   push:
     paths:
-      - '.github/workflows/Katalog_2_Build_linux_qt6_appimage.yml'
+      - '.github/workflows/Katalog_2_Build_linux_qt6_buildKF6_appimage.yml'
 
 jobs:
   build-appimage-qt6:
