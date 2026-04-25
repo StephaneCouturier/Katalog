@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6 (inc KF6)
-#v2026-04-26 run19
+#v2026-04-26 run20
 on:
   # Trigger on new releases
   # release:
@@ -58,6 +58,8 @@ jobs:
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-icccm4.so  /usr/lib/x86_64-linux-gnu/libxcb-icccm.so
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-keysyms1.so /usr/lib/x86_64-linux-gnu/libxcb-keysyms.so
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-res0.so     /usr/lib/x86_64-linux-gnu/libxcb-res.so
+        # breeze-icons generate-24px-versions.py requires lxml
+        pip install lxml
 
     - name: Install Qt 6.10.0
       uses: jurplel/install-qt-action@v4
@@ -104,7 +106,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        key: kf6.24.0-ubuntu24.04-v19
+        key: kf6.24.0-ubuntu24.04-v20
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
