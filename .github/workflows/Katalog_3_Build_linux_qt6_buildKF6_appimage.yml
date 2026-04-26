@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6 (inc KF6)
-#v2026-04-26 run2
+#v2026-04-26 run3
 on:
   # Trigger on new releases
   # release:
@@ -68,7 +68,7 @@ jobs:
         host: 'linux'
         target: 'desktop'
         dir: '/opt/qt'
-        modules: 'qtcharts qtnetworkauth qtmultimedia qtspeech'
+        modules: 'qtcharts qtnetworkauth qtmultimedia qtspeech qtshadertools'
         cache: true
 
     - name: Patch Qt6 for GuiPrivate target
@@ -108,7 +108,7 @@ jobs:
         path: /opt/kf6
         # K3 uses a separate cache from K2 because it also requires kirigami (a QML
         # module not needed by the Qt Widgets K2 build).
-        key: kf6.24.0-ubuntu24.04-k3-v21
+        key: kf6.24.0-ubuntu24.04-k3-v22
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
