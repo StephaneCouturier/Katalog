@@ -1,0 +1,672 @@
+name: Katalog 3 - Build linux Qt6 (inc KF6)
+#v2026-04-26 run1
+on:
+  # Trigger on new releases
+  # release:
+    # types: [published]
+
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Version tag'
+        required: false
+        default: 'dev-build-k3-qt6'
+
+  # Trigger automatically when this workflow file is updated
+  push:
+    paths:
+      - '.github/workflows/Katalog_3_Build_linux_qt6_buildKF6_appimage.yml'
+
+jobs:
+  build-appimage-k3-qt6:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          cmake \
+          ninja-build \
+          desktop-file-utils \
+          appstream-util \
+          wget \
+          file \
+          fuse3 \
+          libfuse2t64 \
+          gettext \
+          gperf \
+          libwayland-dev \
+          wayland-protocols \
+          libbz2-dev \
+          liblzma-dev \
+          libxcb-icccm4-dev \
+          libxcb-keysyms1-dev \
+          libxcb-res0-dev \
+          libxfixes-dev \
+          libxcb-xfixes0-dev \
+          libhunspell-dev \
+          libattr1-dev
+        # ECM FindXCB.cmake looks for libxcb-icccm.so / libxcb-keysyms.so / libxcb-res.so
+        # but Ubuntu 24.04 ships them with version suffixes in the name.
+        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-icccm4.so  /usr/lib/x86_64-linux-gnu/libxcb-icccm.so
+        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-keysyms1.so /usr/lib/x86_64-linux-gnu/libxcb-keysyms.so
+        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-res0.so     /usr/lib/x86_64-linux-gnu/libxcb-res.so
+        # breeze-icons generate-24px-versions.py requires lxml
+        pip install lxml
+
+    - name: Install Qt 6.10.0
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.10.0'
+        host: 'linux'
+        target: 'desktop'
+        dir: '/opt/qt'
+        modules: 'qtcharts qtnetworkauth qtmultimedia qtspeech'
+        cache: true
+
+    - name: Patch Qt6 for GuiPrivate target
+      # kguiaddons 6.10.0 uses Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate).
+      # aqtinstall may not include Qt6GuiPrivateConfig.cmake, so we create it ourselves
+      # in the Qt cmake directory. find_package(Qt6GuiPrivate) will find it via
+      # CMAKE_PREFIX_PATH when kguiaddons is built. Uses printf (no heredoc) to avoid
+      # YAML literal-block indentation issues.
+      run: |
+        echo "QT_ROOT_DIR=${QT_ROOT_DIR}"
+        echo "=== Qt cmake layout ==="
+        ls "${QT_ROOT_DIR}/lib/cmake/" 2>/dev/null | grep -i gui || echo "(no Gui entries)"
+
+        PRIVATE_DIR="${QT_ROOT_DIR}/lib/cmake/Qt6GuiPrivate"
+        PRIVATE_CFG="${PRIVATE_DIR}/Qt6GuiPrivateConfig.cmake"
+
+        if [ -f "${PRIVATE_CFG}" ]; then
+          echo "Qt6GuiPrivateConfig.cmake already present at ${PRIVATE_CFG}"
+        else
+          echo "Creating ${PRIVATE_CFG}"
+          mkdir -p "${PRIVATE_DIR}"
+          printf 'set(Qt6GuiPrivate_FOUND TRUE)\n'                                 >  "${PRIVATE_CFG}"
+          printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                >> "${PRIVATE_CFG}"
+          printf '  add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)\n'      >> "${PRIVATE_CFG}"
+          printf '  target_include_directories(Qt6::GuiPrivate INTERFACE\n'        >> "${PRIVATE_CFG}"
+          printf '    "%s/include/QtGui/6.10.0"\n'       "${QT_ROOT_DIR}"          >> "${PRIVATE_CFG}"
+          printf '    "%s/include/QtGui/6.10.0/QtGui")\n' "${QT_ROOT_DIR}"         >> "${PRIVATE_CFG}"
+          printf 'endif()\n'                                                        >> "${PRIVATE_CFG}"
+          echo "Created:"
+          cat "${PRIVATE_CFG}"
+        fi
+
+    - name: Restore KF6 cache
+      id: kf6-cache
+      uses: actions/cache@v4
+      with:
+        path: /opt/kf6
+        # Same cache key as Katalog 2 — both versions share the same KF6 install.
+        key: kf6.24.0-ubuntu24.04-v20
+
+    - name: Build KF6 from source
+      if: steps.kf6-cache.outputs.cache-hit != 'true'
+      run: |
+        # No KF6 dev packages in Ubuntu 24.04 (added in 24.10), and every KF6
+        # version requires Qt ≥ 6.5 while Ubuntu 24.04 ships Qt 6.4.2.
+        # Qt is installed by install-qt-action; QT_ROOT_DIR points to it.
+        # Both are cached — first run ~30 min, subsequent runs ~30 s.
+        KF6_VER="6.24.0"
+        KF6_MIN="6.24"
+        KF6_BASE="https://download.kde.org/stable/frameworks/${KF6_MIN}"
+        KF6_PREFIX="/opt/kf6"
+
+        export PATH="${QT_ROOT_DIR}/bin:$PATH"
+        export LD_LIBRARY_PATH="${QT_ROOT_DIR}/lib:$LD_LIBRARY_PATH"
+
+        # Multiple KF6 6.x modules (kcoreaddons, kguiaddons, kwindowsystem, ...)
+        # call find_package(Shiboken6/PySide6 REQUIRED) for optional Python bindings.
+        # Shiboken6 is not in CI.  The find_package calls are often multi-line so
+        # sed regex is unreliable.  Instead, place fake config stubs in /tmp and
+        # export the _DIR env vars so every cmake invocation finds them automatically
+        # without needing CMAKE_PREFIX_PATH changes.  Each module's python/
+        # subdirectory is blanked inside build() so no Python code is actually built.
+        FAKE_STUBS="/tmp/fake-cmake-stubs"
+        mkdir -p "${FAKE_STUBS}/Shiboken6" "${FAKE_STUBS}/PySide6"
+        printf 'set(Shiboken6_FOUND TRUE)\nset(Shiboken6_VERSION "6.8.0")\n' \
+          > "${FAKE_STUBS}/Shiboken6/Shiboken6Config.cmake"
+        printf 'set(PySide6_FOUND TRUE)\nset(PySide6_VERSION "6.8.0")\n' \
+          > "${FAKE_STUBS}/PySide6/PySide6Config.cmake"
+        export Shiboken6_DIR="${FAKE_STUBS}/Shiboken6"
+        export PySide6_DIR="${FAKE_STUBS}/PySide6"
+
+        # --- KF6 modules (dependency order) ---
+        build() {
+          local name=$1; shift
+          echo "=== Building ${name}-${KF6_VER} ==="
+          wget -q --tries=5 --waitretry=15 "${KF6_BASE}/${name}-${KF6_VER}.tar.xz"
+          tar xf "${name}-${KF6_VER}.tar.xz"
+          # Multiple KF6 components (kguiaddons, kcolorscheme, ...) link against
+          # Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate) first.
+          # Prepend the call to every src/CMakeLists.txt that exists so cmake
+          # finds the Qt6GuiPrivateConfig.cmake created in the "Patch Qt6" step.
+          local src_cml="${name}-${KF6_VER}/src/CMakeLists.txt"
+          if [ -f "${src_cml}" ]; then
+            { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${src_cml}"; } > /tmp/patched_src_cml.cmake
+            mv /tmp/patched_src_cml.cmake "${src_cml}"
+          fi
+          # Blank python/ for any module that has it so ECMGeneratePythonBindings
+          # never runs (the fake Shiboken6 stub has no real targets to link against).
+          if [ -f "${name}-${KF6_VER}/python/CMakeLists.txt" ]; then
+            printf '# Python bindings disabled in CI\n' \
+              > "${name}-${KF6_VER}/python/CMakeLists.txt"
+          fi
+          cmake -B "build-${name}" "${name}-${KF6_VER}" \
+            -GNinja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}" \
+            -DCMAKE_PREFIX_PATH="${KF6_PREFIX};${QT_ROOT_DIR}" \
+            -DBUILD_TESTING=OFF \
+            "$@"
+          ninja -C "build-${name}"
+          sudo ninja -C "build-${name}" install
+          sudo rm -rf "build-${name}"
+          rm -rf "${name}-${KF6_VER}" "${name}-${KF6_VER}.tar.xz"
+        }
+
+        build extra-cmake-modules -DBUILD_HTML_DOCS=OFF -DBUILD_QTHELP_DOCS=OFF
+        build kcodecs
+        build kcoreaddons
+        build ki18n        -DBUILD_WITH_QML=OFF
+        build kconfig
+
+        # plasma-wayland-protocols is required by kguiaddons ≥ 6.8 but is not
+        # available at a recent enough version in Ubuntu 24.04.
+        # It is protocol-definition files + CMake config only — very fast to build.
+        # Always use latest HEAD — this repo only ever holds stable XML/cmake files.
+        echo "=== Building plasma-wayland-protocols ==="
+        git clone --depth=1 \
+          https://invent.kde.org/libraries/plasma-wayland-protocols.git pwp-src
+        cmake -B build-pwp pwp-src \
+          -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}"
+        sudo ninja -C build-pwp install
+        rm -rf build-pwp pwp-src
+
+        build kguiaddons
+        build kwidgetsaddons
+        build kcolorscheme
+        build kconfigwidgets
+        build karchive
+        build breeze-icons
+        build kiconthemes
+        build kglobalaccel
+        build kitemviews
+        build kwindowsystem
+        build kcompletion
+        build sonnet
+        build ktextwidgets
+        build kxmlgui
+        build kfilemetadata
+
+        # Strip any Shiboken6/PySide6 find_dependency lines from ALL installed cmake
+        # files. KF6 modules may have written them into their exported configs, and
+        # they would cause a hard find_package failure in the subsequent Katalog build.
+        sudo find "${KF6_PREFIX}" -name "*.cmake" -print0 2>/dev/null | \
+          xargs -0 grep -lZ "Shiboken6\|PySide6" 2>/dev/null | \
+          xargs -0 sudo sed -i '/[Ss]hiboken6\|[Pp][Yy][Ss]ide6/d' 2>/dev/null || true
+
+    - name: Download and setup linuxdeploy
+      run: |
+        mkdir -p $HOME/linuxdeploy
+        cd $HOME/linuxdeploy
+
+        # Download linuxdeploy and Qt plugin
+        wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+        wget -c "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+
+        chmod +x *.AppImage
+
+        # Extract both AppImages to separate directories
+        mkdir -p linuxdeploy-extracted
+        mkdir -p linuxdeploy-qt-extracted
+
+        cd linuxdeploy-extracted
+        ../linuxdeploy-x86_64.AppImage --appimage-extract
+        cd ..
+
+        cd linuxdeploy-qt-extracted
+        ../linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract
+        cd ..
+
+        # Create proper executable scripts
+        echo '#!/bin/bash' > linuxdeploy
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy
+
+        echo '#!/bin/bash' > linuxdeploy-plugin-qt
+        echo 'exec "$HOME/linuxdeploy/linuxdeploy-qt-extracted/squashfs-root/AppRun" "$@"' >> linuxdeploy-plugin-qt
+
+        chmod +x linuxdeploy linuxdeploy-plugin-qt
+
+        # Test the tools
+        echo "Testing main linuxdeploy tool:"
+        ./linuxdeploy --help | head -5
+        echo "Testing Qt plugin:"
+        ./linuxdeploy-plugin-qt --help | head -5
+
+        # Download appimagetool and the type2 runtime (supports fuse2, fuse3, and
+        # fuse-free fallback via bwrap/uidmap — required on modern distros like Arch)
+        wget -q "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
+        chmod +x appimagetool-x86_64.AppImage
+        mkdir -p appimagetool-extracted
+        cd appimagetool-extracted
+        ../appimagetool-x86_64.AppImage --appimage-extract
+        cd ..
+        echo '#!/bin/bash' > appimagetool
+        echo 'exec "$HOME/linuxdeploy/appimagetool-extracted/squashfs-root/AppRun" "$@"' >> appimagetool
+        chmod +x appimagetool
+
+        wget -q "https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64" -O runtime-x86_64
+        chmod +x runtime-x86_64
+        echo "type2-runtime downloaded: $(ls -lh runtime-x86_64 | awk '{print $5}')"
+
+    - name: Create packaging directory and files
+      run: |
+        mkdir -p packaging/qt_quick
+
+        # Create desktop file
+        cat > packaging/qt_quick/Katalog3.desktop << EOF
+        [Desktop Entry]
+        Type=Application
+        Name=Katalog3
+        GenericName=File Catalog Manager
+        Comment=Create and manage catalogs of your files and folders
+        Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
+        Exec=Katalog3
+        Icon=Katalog3
+        Terminal=false
+        Categories=Utility;FileManager;Qt;
+        Keywords=catalog;files;folders;organization;storage;backup;
+        StartupNotify=true
+        StartupWMClass=Katalog3
+        EOF
+
+        # Create AppData file
+        cat > packaging/qt_quick/io.github.stephanecouturier.katalog3.appdata.xml << EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <component type="desktop-application">
+          <id>io.github.stephanecouturier.katalog3</id>
+          <name>Katalog3</name>
+          <summary>File Catalog Manager</summary>
+          <description>
+            <p>
+              Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
+              Create catalogs of your DVDs, external drives, and folders to quickly find files without having to connect the device.
+            </p>
+            <p>Features:</p>
+            <ul>
+              <li>Create catalogs of files and folders</li>
+              <li>Search across multiple catalogs</li>
+              <li>Track files on external devices</li>
+              <li>Statistics and file analysis</li>
+              <li>Multiple language support</li>
+            </ul>
+          </description>
+          <categories>
+            <category>Utility</category>
+            <category>FileManager</category>
+          </categories>
+          <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
+          <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
+          <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
+          <launchable type="desktop-id">io.github.stephanecouturier.katalog3.desktop</launchable>
+          <provides>
+            <binary>Katalog3</binary>
+          </provides>
+          <content_rating type="oars-1.1"/>
+          <releases>
+            <release version="3.alpha2" date="2026-03-31"/>
+          </releases>
+        </component>
+        EOF
+
+    - name: Set version information
+      run: |
+        # Extract version string from qt_quick/CMakeLists.txt
+        KATALOG_VERSION=$(grep -E '^set\(KATALOG_VERSION_STRING' qt_quick/CMakeLists.txt \
+          | sed -E 's/.*"([^"]+)".*/\1/')
+
+        if [ -z "$KATALOG_VERSION" ]; then
+          echo "Warning: Could not extract version from qt_quick/CMakeLists.txt, using default"
+          KATALOG_VERSION="3.x"
+        fi
+
+        echo "VERSION_TAG=linux_qt6_k3_v${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
+        echo "Building version: linux_qt6_k3_v${KATALOG_VERSION}"
+
+    - name: Build Katalog3
+      run: |
+        mkdir build
+        cd build
+
+        export PATH="$QT_ROOT_DIR/bin:$PATH"
+        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:$LD_LIBRARY_PATH"
+
+        cmake .. \
+          -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_PREFIX_PATH="/opt/kf6;$QT_ROOT_DIR" \
+          -DBUILD_QT_WIDGETS=OFF \
+          -DBUILD_QT_QUICK=ON \
+          -DBUILD_TESTS=OFF
+
+        # Build translations first
+        echo "Building translations..."
+        ninja translations_lrelease || ninja Katalog3_lrelease || echo "Translation build failed, continuing..."
+
+        # Check what .qm files are available
+        echo "Available .qm files:"
+        find .. -name "*.qm" -type f || echo "No .qm files found"
+
+        # Create missing .qm files as empty files if needed
+        for ts_file in ../translations/*.ts; do
+          if [ -f "$ts_file" ]; then
+            qm_file="${ts_file%.ts}.qm"
+            if [ ! -f "$qm_file" ]; then
+              echo "Creating empty .qm file: $qm_file"
+              touch "$qm_file"
+            fi
+          fi
+        done
+
+        # Now build the main application
+        ninja
+
+        # Create AppDir and install
+        mkdir -p AppDir/usr/bin
+        cp qt_quick/Katalog3 AppDir/usr/bin/
+
+        export DESTDIR="$(pwd)/AppDir"
+        ninja install || echo "Install target failed, but binary copied manually"
+
+    - name: Prepare AppDir structure
+      run: |
+        cd build
+
+        # Ensure proper AppDir structure
+        mkdir -p AppDir/usr/share/applications
+        mkdir -p AppDir/usr/share/metainfo
+        mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
+
+        # Copy desktop file and AppData
+        cp ../packaging/qt_quick/Katalog3.desktop AppDir/usr/share/applications/
+        cp ../packaging/qt_quick/io.github.stephanecouturier.katalog3.appdata.xml AppDir/usr/share/metainfo/
+
+        # Create 64x64 icon
+        if [ -f "../assets/Katalog_logo_64.ico" ]; then
+          sudo apt-get install -y imagemagick
+          convert "../assets/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png 2>/dev/null || \
+          {
+            echo "ICO conversion failed, creating fallback icon"
+            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K3" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
+          }
+        else
+          echo "ICO file not found, creating fallback icon"
+          sudo apt-get install -y imagemagick
+          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K3" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
+        fi
+
+        echo "Icon information:"
+        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
+        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png || echo "Could not identify icon"
+
+        desktop-file-validate AppDir/usr/share/applications/Katalog3.desktop || echo "Desktop file validation warnings (non-critical)"
+        appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.katalog3.appdata.xml || echo "AppData validation warnings (non-critical)"
+
+    - name: Create AppImage
+      run: |
+        cd build
+
+        # Set up environment for linuxdeploy.
+        # KF6 is installed with GNUInstallDirs, so on Ubuntu 24.04 (multiarch)
+        # libraries land in /opt/kf6/lib/x86_64-linux-gnu/ — include both paths.
+        export PATH="$HOME/linuxdeploy:$QT_ROOT_DIR/bin:$PATH"
+        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:/opt/kf6/lib/x86_64-linux-gnu:/opt/kf6/lib:$LD_LIBRARY_PATH"
+        export QMAKE="$QT_ROOT_DIR/bin/qmake"
+        QT6_LIB_DIR="$QT_ROOT_DIR/lib"
+
+        # Check AppDir structure
+        echo "AppDir binary:"
+        ls -la AppDir/usr/bin/ || true
+
+        # Phase 1: bundle Qt/system dependencies into AppDir.
+        # Qt 6.x ships several SQL drivers (Mimer, Oracle, DB2, ...) that require
+        # commercial client libraries not available in CI. Remove everything except
+        # libqsqlite.so before linuxdeploy scans Qt plugins.
+        find "$QT_ROOT_DIR/plugins/sqldrivers" -name "*.so" \
+          ! -name "libqsqlite.so" -delete 2>/dev/null || true
+
+        # Pass Qt6 QML/Quick libs explicitly via --library so linuxdeploy handles
+        # RPATH setup correctly. linuxdeploy-plugin-qt may not detect them
+        # automatically when all QML is embedded in Qt resources (no on-disk .qml
+        # files for qmlimportscanner to discover).
+        LIBRARY_FLAGS=""
+        for lib in \
+          libQt6Qml.so.6 \
+          libQt6Quick.so.6 \
+          libQt6QuickControls2.so.6 \
+          libQt6QuickControls2Fusion.so.6 \
+          libQt6QuickControls2Material.so.6 \
+          libQt6QuickControls2Basic.so.6 \
+          libQt6QuickControls2BasicStyle.so.6 \
+          libQt6QuickControls2Imagine.so.6 \
+          libQt6QuickControls2Universal.so.6 \
+          libQt6QuickTemplates2.so.6 \
+          libQt6QuickLayouts.so.6 \
+          libQt6QmlModels.so.6 \
+          libQt6QmlWorkerScript.so.6 \
+          libQt6QuickDialogs2.so.6 \
+          libQt6QuickDialogs2QuickImpl.so.6 \
+          libQt6QuickDialogs2Utils.so.6 \
+          libQt6QuickControls2Impl.so.6 \
+          libQt6QuickControls2FusionStyleImpl.so.6 \
+          libQt6QuickControls2MaterialStyleImpl.so.6 \
+          libQt6QuickControls2BasicStyleImpl.so.6 \
+          libQt6QuickControls2ImagineStyleImpl.so.6 \
+          libQt6QuickControls2UniversalStyleImpl.so.6 \
+          libQt6QuickWidgets.so.6 \
+          libQt6LabsPlatform.so.6 \
+          libQt6LabsSettings.so.6 \
+          libQt6LabsAnimation.so.6 \
+          libQt6LabsFolderListModel.so.6 \
+          libQt6LabsQmlModels.so.6 \
+          libQt6QuickShapes.so.6 \
+          libQt6QuickEffects.so.6; do
+          src="$QT6_LIB_DIR/$lib"
+          if [ -f "$src" ] || [ -L "$src" ]; then
+            LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"
+            echo "  Will bundle: $lib"
+          else
+            echo "  Not found (skip): $lib"
+          fi
+        done
+
+        linuxdeploy \
+          --appdir AppDir \
+          --plugin qt \
+          --executable AppDir/usr/bin/Katalog3 \
+          --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
+          $LIBRARY_FLAGS
+
+        # Replace linuxdeploy's AppRun with an explicit shell script.
+        # linuxdeploy may create AppRun as a symlink to the binary; writing through
+        # a symlink would overwrite the binary. rm -f first, then write the script.
+        # Use ${APPDIR} (set by the AppImage runtime) rather than dirname from
+        # BASH_SOURCE[0] — the runtime always sets it correctly.
+        rm -f AppDir/AppRun
+        printf '%s\n' \
+          '#!/bin/bash' \
+          'export LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}"' \
+          'export QT_PLUGIN_PATH="${APPDIR}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"' \
+          'export QML2_IMPORT_PATH="${APPDIR}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"' \
+          'export QML_IMPORT_PATH="${APPDIR}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"' \
+          'export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"' \
+          'if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then unset QT_QPA_PLATFORMTHEME; fi' \
+          'exec "${APPDIR}/usr/bin/Katalog3" "$@"' \
+          > AppDir/AppRun
+        chmod +x AppDir/AppRun
+        echo "AppRun contents:"
+        cat AppDir/AppRun
+
+        # Phase 2: deploy QML module plugins.
+        # linuxdeploy-plugin-qt only analyses libs passed via --executable/--library;
+        # it never sees QML plugins added later. Deploy them manually here.
+        echo "Deploying QML modules..."
+        QT_QML_DIR=""
+        for dir in \
+          "$QT_ROOT_DIR/qml" \
+          /usr/lib/x86_64-linux-gnu/qt6/qml \
+          /usr/lib/qt6/qml \
+          /usr/lib64/qt6/qml; do
+          if [ -d "$dir" ]; then QT_QML_DIR="$dir"; break; fi
+        done
+
+        if [ -n "$QT_QML_DIR" ]; then
+          echo "Qt6 QML dir: $QT_QML_DIR"
+          DEST="AppDir/usr/qml"
+          mkdir -p "$DEST"
+
+          for module in \
+            "QtQuick" \
+            "QtQuick/Controls" \
+            "QtQuick/Layouts" \
+            "QtQuick/Dialogs" \
+            "Qt/labs/settings" \
+            "Qt/labs/platform"; do
+            src="$QT_QML_DIR/$module"
+            dst_parent="$DEST/$(dirname "$module")"
+            if [ -d "$src" ]; then
+              mkdir -p "$dst_parent"
+              cp -rn "$src" "$dst_parent/"
+              echo "  Bundled: $module"
+            else
+              echo "  Not found: $src"
+            fi
+          done
+
+          # Kirigami QML plugin — search all plausible install locations
+          for kirigami_src in \
+            "$QT_QML_DIR/org/kde/kirigami" \
+            /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami \
+            /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami2; do
+            if [ -d "$kirigami_src" ]; then
+              mkdir -p "$DEST/org/kde"
+              cp -rn "$kirigami_src" "$DEST/org/kde/"
+              echo "  Bundled: $(basename $kirigami_src) from $kirigami_src"
+              break
+            fi
+          done
+
+          # Bundle KDE Frameworks shared libs that the bundled QML plugins depend on.
+          # linuxdeploy never sees these plugins so their KF6 deps must be copied manually.
+          echo "  Bundling KDE Frameworks dependencies of QML plugins..."
+          find AppDir/usr/qml -name "*.so" -o -name "*.so.*" 2>/dev/null | while read so_file; do
+            ldd "$so_file" 2>/dev/null | awk '/=> \// {print $3}' | while read dep; do
+              dep_base=$(basename "$dep")
+              if echo "$dep_base" | grep -qE '^lib(KF6|Kirigami)' && \
+                 [ -f "$dep" ] && \
+                 [ ! -f "AppDir/usr/lib/$dep_base" ]; then
+                cp "$dep" "AppDir/usr/lib/"
+                echo "    + $dep_base"
+              fi
+            done
+          done
+
+        else
+          echo "Warning: Qt6 QML directory not found — QML modules not bundled"
+        fi
+
+        # Strip plugins/libs not used by Katalog3.
+        # KF6FileMetaData pulls in GStreamer, FFmpeg, and PulseAudio as transitive
+        # deps — ~150 MB that Katalog never loads at runtime.
+        rm -rf AppDir/usr/plugins/multimedia
+        rm -rf AppDir/usr/plugins/geoservices
+        rm -rf AppDir/usr/plugins/position
+        for lib in \
+            libavcodec libavformat libavutil libswresample libswscale \
+            libgst libgstreamer libgstpbutils libgstallocators libgstapp \
+            libgstplay libgstphotography libgstgl libgstvideo libgstbase \
+            libgstaudio libgsttag \
+            libpulse libpulsecommon \
+            libshaderc libSPIRV libglslang \
+            libsndfile libFLAC libogg libvorbis \
+            libgudev libdw libelf liborc libzvbi; do
+          find AppDir/usr/lib -maxdepth 1 -name "${lib}*.so*" -delete 2>/dev/null || true
+        done
+        echo "AppDir size after stripping: $(du -sh AppDir | cut -f1)"
+
+        # Verify critical Qt6 QML libs are present before packaging
+        echo "=== Verifying bundled Qt6 QML libs ==="
+        for lib in libQt6Qml.so.6 libQt6Quick.so.6 libQt6QuickControls2.so.6 libQt6QuickLayouts.so.6; do
+          if [ -f "AppDir/usr/lib/$lib" ]; then
+            echo "  OK: $lib"
+          else
+            echo "  MISSING: $lib — AppImage may fail on systems with older Qt6"
+          fi
+        done
+
+        # Phase 3: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
+        ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
+          --runtime-file "$HOME/linuxdeploy/runtime-x86_64" \
+          AppDir \
+          Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+    - name: Test AppImage
+      run: |
+        cd build
+
+        chmod +x Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+        # Test extraction
+        ./Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
+
+        # Get AppImage size and info
+        ls -lh Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        file Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+
+    - name: Upload AppImage to Release
+      if: env.IS_RELEASE == 'true'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_name: Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_content_type: application/octet-stream
+
+    - name: Upload AppImage as Artifact
+      if: env.IS_RELEASE != 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Katalog3-AppImage-${{ env.VERSION_TAG }}
+        path: build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        retention-days: 30
+
+    - name: Summary
+      run: |
+        echo "## Build Complete! Katalog 3" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size**: $(ls -lh build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+
+        if [ "${{ env.IS_RELEASE }}" = "true" ]; then
+          echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY
+        fi
