@@ -486,6 +486,9 @@ jobs:
 
         # Step 1: deploy Qt and all shared-library dependencies into AppDir.
         # Omit --output appimage so we can pack with a custom runtime below.
+        # Qt 6.x ships a Mimer SQL driver that requires the commercial libmimerapi.so
+        # which is not available in CI. Remove it before linuxdeploy scans Qt plugins.
+        rm -f "$QT_ROOT_DIR/plugins/sqldrivers/libqsqlmimer.so"
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
