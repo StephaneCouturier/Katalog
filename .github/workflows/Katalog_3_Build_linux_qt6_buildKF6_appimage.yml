@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6 (inc KF6)
-#v2026-04-26 run1
+#v2026-04-26 run2
 on:
   # Trigger on new releases
   # release:
@@ -106,8 +106,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/kf6
-        # Same cache key as Katalog 2 — both versions share the same KF6 install.
-        key: kf6.24.0-ubuntu24.04-v20
+        # K3 uses a separate cache from K2 because it also requires kirigami (a QML
+        # module not needed by the Qt Widgets K2 build).
+        key: kf6.24.0-ubuntu24.04-k3-v21
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
@@ -209,6 +210,10 @@ jobs:
         build ktextwidgets
         build kxmlgui
         build kfilemetadata
+        # Kirigami is a QML/Quick UI framework required by K3 at runtime.
+        # Must come after kcoreaddons, ki18n, kconfig, kcolorscheme, kwidgetsaddons,
+        # kguiaddons, kwindowsystem, kconfigwidgets — all already built above.
+        build kirigami
 
         # Strip any Shiboken6/PySide6 find_dependency lines from ALL installed cmake
         # files. KF6 modules may have written them into their exported configs, and
@@ -526,6 +531,11 @@ jobs:
         # linuxdeploy-plugin-qt only analyses libs passed via --executable/--library;
         # it never sees QML plugins added later. Deploy them manually here.
         echo "Deploying QML modules..."
+
+        # Diagnostic: show where KF6 installed its QML modules (helps debug path issues)
+        echo "=== KF6 QML module locations ==="
+        find /opt/kf6 -path "*/qml/org/kde*" -type d 2>/dev/null | head -20 || echo "(none)"
+
         QT_QML_DIR=""
         for dir in \
           "$QT_ROOT_DIR/qml" \
@@ -558,18 +568,38 @@ jobs:
             fi
           done
 
-          # Kirigami QML plugin — search all plausible install locations
+          # Kirigami QML plugin — built from source into /opt/kf6.
+          # On Ubuntu 24.04 (multiarch) ECM installs QML modules under
+          # lib/x86_64-linux-gnu/qt6/qml; also check the non-multiarch path and
+          # system paths as fallbacks (for KDE Neon / KDE Plasma runners).
+          kirigami_found=""
           for kirigami_src in \
+            "/opt/kf6/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami" \
+            "/opt/kf6/lib/qt6/qml/org/kde/kirigami" \
+            "/opt/kf6/lib/x86_64-linux-gnu/qml/org/kde/kirigami" \
+            "/opt/kf6/lib/qml/org/kde/kirigami" \
             "$QT_QML_DIR/org/kde/kirigami" \
             /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami \
             /usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/kirigami2; do
             if [ -d "$kirigami_src" ]; then
               mkdir -p "$DEST/org/kde"
               cp -rn "$kirigami_src" "$DEST/org/kde/"
-              echo "  Bundled: $(basename $kirigami_src) from $kirigami_src"
+              echo "  Bundled: kirigami from $kirigami_src"
+              kirigami_found="$kirigami_src"
               break
             fi
           done
+          # If none of the known paths worked, do a broad find as a last resort
+          if [ -z "$kirigami_found" ]; then
+            kirigami_src=$(find /opt/kf6 "$QT_ROOT_DIR" -path "*/org/kde/kirigami" -type d 2>/dev/null | head -1)
+            if [ -n "$kirigami_src" ]; then
+              mkdir -p "$DEST/org/kde"
+              cp -rn "$kirigami_src" "$DEST/org/kde/"
+              echo "  Bundled: kirigami from $kirigami_src (found via find)"
+            else
+              echo "  WARNING: Kirigami QML module not found in any search path — app will fail to start"
+            fi
+          fi
 
           # Bundle KDE Frameworks shared libs that the bundled QML plugins depend on.
           # linuxdeploy never sees these plugins so their KF6 deps must be copied manually.
