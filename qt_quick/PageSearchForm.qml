@@ -274,7 +274,22 @@ ColumnLayout {
             Controls.TextField {
                 id: search_TextField_FileNameText
                 Layout.fillWidth: true
+                leftPadding: Kirigami.Units.largeSpacing
+                rightPadding: text.length > 0
+                              ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                              : Kirigami.Units.smallSpacing
                 onAccepted: pageSearchForm.executeSearch()
+                Kirigami.Icon {
+                    anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
+                    source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
+                    implicitWidth: Kirigami.Units.iconSizes.small
+                    implicitHeight: Kirigami.Units.iconSizes.small
+                    visible: parent.text.length > 0
+                    opacity: nameClearTap.pressed ? 0.5 : 1.0
+                    Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                    HoverHandler { cursorShape: Qt.ArrowCursor }
+                    TapHandler { id: nameClearTap; onTapped: search_TextField_FileNameText.clear() }
+                }
             }
             Controls.Button {
                 id: search_Button_PasteClipboard
@@ -322,6 +337,21 @@ ColumnLayout {
             Controls.TextField {
                 id: search_TextField_FileNameExclude
                 Layout.fillWidth: true
+                leftPadding: Kirigami.Units.largeSpacing
+                rightPadding: text.length > 0
+                              ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                              : Kirigami.Units.smallSpacing
+                Kirigami.Icon {
+                    anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
+                    source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
+                    implicitWidth: Kirigami.Units.iconSizes.small
+                    implicitHeight: Kirigami.Units.iconSizes.small
+                    visible: parent.text.length > 0
+                    opacity: excludeClearTap.pressed ? 0.5 : 1.0
+                    Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                    HoverHandler { cursorShape: Qt.ArrowCursor }
+                    TapHandler { id: excludeClearTap; onTapped: search_TextField_FileNameExclude.clear() }
+                }
             }
             Controls.Button {
                 id: search_Button_ExcludePasteClipboard
@@ -542,6 +572,21 @@ ColumnLayout {
                 id: search_lineEdit_MetadataText
                 enabled: false
                 Layout.fillWidth: true
+                leftPadding: Kirigami.Units.largeSpacing
+                rightPadding: text.length > 0
+                              ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                              : Kirigami.Units.smallSpacing
+                Kirigami.Icon {
+                    anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
+                    source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
+                    implicitWidth: Kirigami.Units.iconSizes.small
+                    implicitHeight: Kirigami.Units.iconSizes.small
+                    visible: parent.text.length > 0
+                    opacity: metaClearTap.pressed ? 0.5 : 1.0
+                    Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                    HoverHandler { cursorShape: Qt.ArrowCursor }
+                    TapHandler { id: metaClearTap; onTapped: search_lineEdit_MetadataText.clear() }
+                }
             }
             Controls.Button {
                 icon.name: "edit-paste"
