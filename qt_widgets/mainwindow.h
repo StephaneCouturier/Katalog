@@ -651,7 +651,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Search_pushButton_ResetAll_clicked();
             void on_Search_pushButton_ProcessResults_clicked();
             void on_Search_pushButton_PasteFromClipboard_clicked();
-            void on_Search_lineEdit_SearchText_returnPressed();
+            bool eventFilter(QObject *obj, QEvent *event) override;
             void on_Search_comboBox_TextCriteria_currentIndexChanged(int index);
 
             void on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index);

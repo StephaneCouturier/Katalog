@@ -293,29 +293,46 @@ QString Search::buildMetadataSearchConditions() const
 }
 
 //Search Processing
+// Build a regex pattern for a single term string under the given criteria.
+static QString buildTermPattern(const QString &term, const QString &criteria)
+{
+    if (term.trimmed().isEmpty())
+        return QString();
+    if (criteria == Search::TEXT_CRITERIA_REGEX)
+        return term;
+    if (criteria == Search::TEXT_CRITERIA_EXACT_PHRASE)
+        return QRegularExpression::escape(term);
+    if (criteria == Search::TEXT_CRITERIA_BEGINS_WITH)
+        return "(^" + QRegularExpression::escape(term) + ")";
+    if (criteria == Search::TEXT_CRITERIA_ANY_WORD) {
+        QStringList words = term.split(" ", Qt::SkipEmptyParts);
+        for (QString &w : words) w = QRegularExpression::escape(w);
+        return words.join("|");
+    }
+    // ALL_WORDS (default)
+    QString group;
+    for (const QString &word : term.split(" ", Qt::SkipEmptyParts))
+        group += "(?=.*" + QRegularExpression::escape(word) + ")";
+    return group;
+}
+
 void Search::prepareSearchPatterns()
 {
-    // Define how to use the search text
-    if (selectedTextCriteria == TEXT_CRITERIA_REGEX) {
-        regexSearchtext = searchText; // User supplies the regex pattern directly — no escaping
-    } else if (selectedTextCriteria == TEXT_CRITERIA_EXACT_PHRASE) {
-        regexSearchtext = QRegularExpression::escape(searchText);
-    } else if (selectedTextCriteria == TEXT_CRITERIA_BEGINS_WITH) {
-        regexSearchtext = "(^" + QRegularExpression::escape(searchText) + ")";
-    } else if (selectedTextCriteria == TEXT_CRITERIA_ANY_WORD) {
-        QStringList words = searchText.split(" ", Qt::SkipEmptyParts);
-        for (QString &w : words) w = QRegularExpression::escape(w);
-        regexSearchtext = words.join("|");
-    } else if (selectedTextCriteria == TEXT_CRITERIA_ALL_WORDS) {
-        QString groupRegEx = "";
-        QStringList lineFieldList = searchText.split(" ", Qt::SkipEmptyParts);
-        for (const QString &word : lineFieldList) {
-            groupRegEx += "(?=.*" + QRegularExpression::escape(word) + ")";
+    // Multi-line input: each line is an independent OR term.
+    // Single-line input: existing behaviour unchanged.
+    QStringList lines = searchText.split('\n', Qt::SkipEmptyParts);
+    if (lines.size() > 1) {
+        QStringList termPatterns;
+        for (const QString &line : lines) {
+            QString pat = buildTermPattern(line.trimmed(), selectedTextCriteria);
+            if (!pat.isEmpty())
+                termPatterns << pat;
         }
-        regexSearchtext = groupRegEx;
-    }
-    else {
-        regexSearchtext = "";
+        regexSearchtext = termPatterns.join("|");
+    } else {
+        // Single-term — original logic
+        const QString term = lines.isEmpty() ? searchText : lines.first();
+        regexSearchtext = buildTermPattern(term, selectedTextCriteria);
     }
     regexPattern = regexSearchtext;
 

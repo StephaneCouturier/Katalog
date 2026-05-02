@@ -861,7 +861,7 @@
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background: url(:/images/link-tree-mid.png) repeat-y left;</string>
+                      <string notr="true">background: url(:/images/link-tree-mid.png) no-repeat left center;</string>
                      </property>
                      <property name="text">
                       <string/>
@@ -897,21 +897,24 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="Search_lineEdit_SearchText">
+                    <widget class="QPlainTextEdit" name="Search_lineEdit_SearchText">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>32</height>
+                       <height>40</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>32</height>
+                       <height>64</height>
                       </size>
-                     </property>
-                     <property name="clearButtonEnabled">
-                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -930,6 +933,25 @@
                       </size>
                      </property>
                     </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="Search_pushButton_ClearSearchText">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Clear the search text</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-clear"/>
+                     </property>
+                    </widget>
                    </item>
                    <item>
                     <widget class="QPushButton" name="Search_pushButton_PasteFromClipboard">
@@ -5305,10 +5327,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QWidget" name="Search_widget_HistoryActions">
                 <layout class="QHBoxLayout" name="Search_horizontalLayout_HistoryActions">
-                 <property name="leftMargin"><number>0</number></property>
-                 <property name="topMargin"><number>0</number></property>
-                 <property name="rightMargin"><number>0</number></property>
-                 <property name="bottomMargin"><number>0</number></property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
                   <spacer name="Search_horizontalSpacer_HistoryActions">
                    <property name="orientation">
@@ -5328,7 +5358,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>Keep last 10</string>
                    </property>
                    <property name="icon">
-                     <iconset theme="edit-clear-history"/>
+                    <iconset theme="edit-clear-history"/>
                    </property>
                   </widget>
                  </item>

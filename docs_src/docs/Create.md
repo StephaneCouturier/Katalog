@@ -170,36 +170,38 @@ The new catalog is automatically selected in the [Selection](Selection) panel, r
 
 ### What Affects Scanning Speed?
 
-#### 1. Metadata Extraction (Biggest Impact: ~10× slowdown)
-- Image metadata: ~2-3ms/file (reads header)
-- Video metadata: ~5-15ms/file (seeks, parses container)
-- Solution: Use "Media Basic" only, not "Full Extended"
 
-#### 2. Database Mode
-- Memory mode: Faster, uses RAM
-- SQLite File mode: Slower, I/O bound
-- Recommendation: Use Memory for development
+| # | Factor | Impact Level | What drives it | Notes |
+|---|--------|:---:|---|---|
+| 1 | **File Checksum** | ⚫⚫⚫⚫⚫ Critical | **Total data volume** (reads 100% of bytes, 8 MB buffer), then disk speed, then file count | SHA-256 via Qt `QCryptographicHash`. A 2 TB HDD at ~100 MB/s = ~5.5 hours just for I/O. SSD at ~500 MB/s ≈ 1 hour. Resumable if interrupted. |
+| 2 | **Storage hardware** | ⚫⚫⚫⚫ Very High | Sequential vs random I/O, throughput, latency | SSD ~100K files/min, HDD ~20–30K (fragmentation makes it worse). Network: highly variable. Affects ALL other factors. |
+| 3 | **Metadata: Full Extended** | ⚫⚫⚫ High | **File count** (especially video: 5–15 ms/file parsing containers), file type distribution | Uses KFileMetaData. Video/audio require seeking into file structure. ~10× slowdown vs None reported. |
+| 4 | **Metadata: Media Basic/Extended** | ⚫⚫⚫ High | File count of media files only | Reads headers only (images: ~2–3 ms). Non-media files skipped entirely — so file type mix matters a lot. |
+| 6 | **Include Hidden files**  | ⚫⚫  Medium | Additional file count (can be massive on system/home drives: `.cache`, `.local`, `node_modules`…) | Multiplier effect: more files = more of everything above. Excluded directories are the mitigation. |
+| 7 | **Database mode** | ⚫ Low-Medium | Write throughput during indexing | Memory > File > Hosted. Memory avoids SQLite write I/O during scan; File mode is I/O-bound on writes. Batch transactions (1000 files/batch) already mitigate this. |
+| 8 | **File type filter** | ⚫ Low-Medium | Reduces file count processed for metadata | Filtering to Audio/Video/Image skips all Text/Other for metadata — significant if indexing a mixed drive. |
+| 9 | **File count (total)** | ⚫ Low | Drives filesystem walk time, DB insert count | Even without any options, enumerating 500K files takes time. Independent of sizes. |
+| 10 | **Excluded directories** | ⚫ Low | Reduces effective file count | `node_modules`, `.cache`, temp dirs can represent 20–30% of home drive file count. |
+| 11 | **System load / CPU** | ⚫ Low | Parallel metadata extraction uses 4–8 cores | Checksum is I/O-bound so CPU matters less there. Metadata is CPU-bound. |
 
-#### 3. Storage Type
-- SSD: ~100K files/min
-- HDD: ~20-30K files/min (fragmentation matters)
-- Network storage: Highly variable
+Other long processes, NOT USED in CREATE/UPDATE 
+| # | Factor | Impact Level | What drives it | Notes |
+|---|--------|:---:|---|---|
+| 5 | **MIME type verification** | ⚫⚫⚫⚫ Very High | File count (reads partial content of each file) | Update-only operation. "Guessing" from extension is free; verification reads file bytes. Impact scales with file count, not size. |
+| 12 | **Collection Export** | ⚫⚫⚫⚫ Very High | Export of tables to SQLite or csv|| 20 to over 1 hour for 1M files
 
-#### 4. Excluded Folders
-- More exclusions = faster scanning
-- Example: Exclude .cache, node_modules, etc.
 
-#### 5. System Load
-- Parallel extraction uses 4-8 cores
-- Other heavy processes will interfere
+Test Sample / data set:  60Gb, 40 000 files, with a file of 20Gb, and mix of text, images, video.
 
-### Performance Benchmarks
+| Test | Sample  | SSD 2 TB (extrapolated) | HDD 2 TB (estimated) | Scaling basis |
+|---------|:-:|:-:|:-:|---|
+| Baseline indexing | 00:00:04 | **~00:02:37** | ~00:05–08:00 | File count |
+| Media Basic | 00:01:23 | **~00:54:00** | ~02:00–03:00 | File count (media files only) |
+| Media Extended | 00:01:52 | **~01:13:00** | ~03:00–04:00 | File count (heavier per video) |
+| Full Extended | 00:01:23 | **~00:54:00** | ~02:00–03:00 | File count  |
+| Checksum only | 00:09:20 | **~06:06:00** | ~20:00–30:00 | Total bytes / throughput |
+| Checksum + Media Basic | 00:11:06 | **~07:15:00** | ~22:00–33:00 | Bytes (dominant) + count |
 
-| Files | Storage | Metadata | Time |
-|-------|---------|----------|------|
-| 5K | SSD | None | 10s |
-| 5K | SSD | Basic | 50s |
-| 95K | HDD | Basic | 47s (1st) / 10s (cached) |
 
 ## Development
 Some ideas of developments for this screen:
