@@ -59,6 +59,7 @@ QString Catalog::metadataLevelDisplayName(const QString &internalValue)
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
     includeMetadata = METADATA_NONE;
     includeChecksum = CHECKSUM_NONE;
+    includeSubDir   = true;
 }
 
 Catalog::~Catalog() {
@@ -270,7 +271,8 @@ void Catalog::insertCatalog()
                                                         catalog_date_loaded,
                                                         catalog_include_metadata,
                                                         catalog_include_checksum,
-                                                        catalog_app_version
+                                                        catalog_app_version,
+                                                        catalog_include_sub_dir
                                                         )
                                         VALUES(         :catalog_id,
                                                         :catalog_file_path,
@@ -287,7 +289,8 @@ void Catalog::insertCatalog()
                                                         :catalog_date_loaded,
                                                         :catalog_include_metadata,
                                                         :catalog_include_checksum,
-                                                        :catalog_app_version )
+                                                        :catalog_app_version,
+                                                        :catalog_include_sub_dir )
                                     )");
 
     insertCatalogQuery.prepare(insertCatalogQuerySQL);
@@ -307,6 +310,7 @@ void Catalog::insertCatalog()
     insertCatalogQuery.bindValue(":catalog_include_metadata", includeMetadata);
     insertCatalogQuery.bindValue(":catalog_include_checksum", includeChecksum);
     insertCatalogQuery.bindValue(":catalog_app_version", appVersion);
+    insertCatalogQuery.bindValue(":catalog_include_sub_dir", includeSubDir);
     insertCatalogQuery.exec();
 }
 
@@ -351,7 +355,8 @@ void Catalog::saveCatalog()
             catalog_include_metadata  =:catalog_include_metadata,
             catalog_include_checksum  =:catalog_include_checksum,
             catalog_include_symblinks =:catalog_include_symblinks,
-            catalog_app_version       =:catalog_app_version
+            catalog_app_version       =:catalog_app_version,
+            catalog_include_sub_dir   =:catalog_include_sub_dir
         WHERE catalog_id=:catalog_id
     )");
     query.prepare(querySQL);
@@ -365,6 +370,7 @@ void Catalog::saveCatalog()
     query.bindValue(":catalog_include_checksum", includeChecksum);
     query.bindValue(":catalog_include_symblinks", includeSymblinks);
     query.bindValue(":catalog_app_version", appVersion);
+    query.bindValue(":catalog_include_sub_dir", includeSubDir);
     query.exec();
 }
 
@@ -417,6 +423,7 @@ bool Catalog::updateCatalogFileHeaders(QString databaseMode)
         fullFileText.append("<catalogFileType>" + fileType +"\n");
         fullFileText.append("<catalogStorage>" + storageName +"\n");
         fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
+        fullFileText.append("<catalogIncludeSubDir>"   + QVariant(includeSubDir).toString()   +"\n");
         fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
         fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
         fullFileText.append("<catalogIncludeChecksum>" + QVariant(includeChecksum).toString() +"\n");  // ADD THIS LINE
@@ -464,7 +471,8 @@ void Catalog::loadCatalog()
                                 catalog_date_loaded          ,
                                 catalog_include_metadata     ,
                                 catalog_include_checksum     ,
-                                catalog_app_version
+                                catalog_app_version          ,
+                                catalog_include_sub_dir
                             FROM catalog
                             WHERE catalog_id=:catalog_id
                         )");
@@ -490,6 +498,7 @@ void Catalog::loadCatalog()
         includeMetadata    = query.value(13).toString();
         includeChecksum    = query.value(14).toString();
         appVersion         = query.value(15).toString();
+        includeSubDir      = query.value(16).isNull() ? true : query.value(16).toBool();
     }
 }
 
@@ -1274,6 +1283,7 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         fileList.prepend("<catalogIncludeChecksum>" + QVariant(includeChecksum).toString());
         fileList.prepend("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString());
         fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
+        fileList.prepend("<catalogIncludeSubDir>"   + QVariant(includeSubDir).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
         fileList.prepend("<catalogStorage>"         + storageName);
         fileList.prepend("<catalogFileType>"        + fileType);

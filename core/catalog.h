@@ -68,6 +68,7 @@ public:
         QString fileType;
         QString storageName;
         bool    includeSymblinks;
+        bool    includeSubDir;
         bool    isFullDevice;
         QDateTime dateLoaded;
         QString includeMetadata;

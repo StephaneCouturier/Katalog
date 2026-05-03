@@ -296,7 +296,9 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         filters |= QDir::Hidden;
     }
 
-    QDirIterator::IteratorFlags iteratorFlags = QDirIterator::Subdirectories;
+    QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
+                                                ? QDirIterator::Subdirectories
+                                                : QDirIterator::NoIteratorFlags;
     if (catalog->includeSymblinks) {
         iteratorFlags |= QDirIterator::FollowSymlinks;
     }
@@ -429,7 +431,9 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
         filters |= QDir::Hidden;
     }
 
-    QDirIterator::IteratorFlags iteratorFlags = QDirIterator::Subdirectories;
+    QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
+                                                ? QDirIterator::Subdirectories
+                                                : QDirIterator::NoIteratorFlags;
     if (catalog->includeSymblinks) {
         iteratorFlags |= QDirIterator::FollowSymlinks;
     }
@@ -1977,7 +1981,9 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
         filters |= QDir::Hidden;
     }
 
-    QDirIterator::IteratorFlags iteratorFlags = QDirIterator::Subdirectories;
+    QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
+                                                ? QDirIterator::Subdirectories
+                                                : QDirIterator::NoIteratorFlags;
     if (catalog->includeSymblinks) {
         iteratorFlags |= QDirIterator::FollowSymlinks;
     }

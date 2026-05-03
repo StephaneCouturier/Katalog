@@ -529,11 +529,11 @@ void Collection::loadCatalogFilesToTable()
             //Prepare a textsteam for the file
             QTextStream textStreamCatalogs(&catalogFile);
 
-            //Read the first 12 lines and put values in a stringlist
+            //Read the first 13 lines and put values in a stringlist
             QStringList catalogValues;
             QString line;
             QString value;
-            for (int i=0; i<12; i++) {
+            for (int i=0; i<13; i++) {
                 line = textStreamCatalogs.readLine();
                 if (line !="" and QVariant(line.at(0)).toString()=="<"){
                     value = line.right(line.size() - line.indexOf(">") - 1);
@@ -546,13 +546,14 @@ void Collection::loadCatalogFilesToTable()
             if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion (v2.7)
             if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID (v2.8)
             if (catalogValues.count()==11) catalogValues.insert(9, "None");  //for older catalog without includeChecksum (v2.9)
+            if (catalogValues.count()==12) catalogValues.insert(7, "true");  //for older catalog without includeSubDir (v2.12)
 
             if(catalogValues.length()>0){
                 //Insert a line in the table with available data
 
                 Catalog newCatalog;
                 newCatalog.setConnectionName(m_connectionName); // use this collection's connection
-                newCatalog.ID               = catalogValues[11].toInt(); //catalog_id
+                newCatalog.ID               = catalogValues[12].toInt(); //catalog_id
                 newCatalog.filePath         = path; //catalog_file_path
                 newCatalog.name             = catalogFileInfo.completeBaseName(); //catalog_name
                 newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
@@ -563,16 +564,17 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.fileType         = catalogValues[4]; //catalog_file_type
                 newCatalog.storageName      = catalogValues[5]; //catalog_storage
                 newCatalog.includeSymblinks = catalogValues[6].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_symblinks
-                newCatalog.isFullDevice     = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
-                newCatalog.includeMetadata  = catalogValues[8];
+                newCatalog.includeSubDir    = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_sub_dir
+                newCatalog.isFullDevice     = catalogValues[8].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
+                newCatalog.includeMetadata  = catalogValues[9];
                 if (newCatalog.includeMetadata == "false") {
                     newCatalog.includeMetadata = Catalog::METADATA_NONE;
                 }
-                newCatalog.includeChecksum  = catalogValues[9]; //catalog_include_checksum
+                newCatalog.includeChecksum  = catalogValues[10]; //catalog_include_checksum
                 if (newCatalog.includeChecksum == "false" || newCatalog.includeChecksum.isEmpty()) {
                     newCatalog.includeChecksum = Catalog::CHECKSUM_NONE;
                 }
-                newCatalog.appVersion       = catalogValues[10]; //catalog_app_version
+                newCatalog.appVersion       = catalogValues[11]; //catalog_app_version
                 newCatalog.insertCatalog();
             }
             catalogFile.close();

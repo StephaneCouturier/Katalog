@@ -114,6 +114,7 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_include_metadata      TEXT,
                     catalog_include_checksum      TEXT,
                     catalog_app_version           TEXT,
+                    catalog_include_sub_dir       TEXT,
                     %4,
                     %5)
     )").arg(catalogNameType, largeNumeric, catalogIdType, primaryKey, uniqueCatalogName);
@@ -1224,6 +1225,21 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
         }
     }
 
+    return QSqlError();
+}
+//----------------------------------------------------------------------
+
+QSqlError Database::runMigration_2_12(const QString &connectionName)
+{
+    QStringList existingColumns = getTableColumns(connectionName, "catalog");
+    if (!existingColumns.contains("catalog_include_sub_dir")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE catalog ADD COLUMN catalog_include_sub_dir TEXT DEFAULT 'true'");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add catalog_include_sub_dir column:" << err.text();
+            return err;
+        }
+    }
     return QSqlError();
 }
 //----------------------------------------------------------------------

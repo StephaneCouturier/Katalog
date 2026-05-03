@@ -20,13 +20,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
 
 > **CRITICAL — Version context:**
-> - Last **released** version: **2.10**
-> - Current **development** version: **2.11** (branch `katalog_development`)
-> - Database migrations 2.11 were introduced **during** the 2.11 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
+> - Last **released** version: **2.11**
+> - Current **development** version: **2.12** (branch `katalog_development`)
+> - Database migrations 2.12 were introduced **during** the 2.12 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
 >
 > **New fields added in 2.12 (unreleased — edit in place, no extra migration needed):**
-> none for now
+> - `catalog.catalog_include_sub_dir` INTEGER DEFAULT 1 — whether the catalog scanner recurses into subdirectories; `false` for the `(root)` split catalog in the Devices Split feature
 
 ## Project Overview
 
