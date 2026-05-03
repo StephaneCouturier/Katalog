@@ -443,6 +443,7 @@ class MainWindow : public KXmlGuiWindow
             void assignStorageToDevice(int storageID,int deviceID);
             void unassignPhysicalFromDevice(int deviceID, int deviceParentID);
             void deleteDeviceItem();
+            void splitCatalogBySubDirectory();
 
             void loadDevicesView(QString sourceTrigger);
             void loadDevicesTreeToModel(QString targetTreeModel);

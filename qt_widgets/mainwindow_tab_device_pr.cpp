@@ -41,6 +41,8 @@
 
 #include <QSet>
 #include <QMap>
+#include <QFile>
+#include <QMutex>
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
@@ -139,6 +141,92 @@ void MainWindow::deleteDeviceItem()
     }
 
     //Reload data to models
+    updateStorageSelectionStatistics();
+    loadDevicesTreeToModel("Filters");
+    loadDevicesView("");
+    filterFromSelectedDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::splitCatalogBySubDirectory()
+{
+    // activeDevice has already been loaded in the context menu handler
+
+    if (collection->databaseMode == "Memory")
+        activeDevice->catalog->loadFoldersToTable();
+
+    QStringList subDirs = activeDevice->catalog->listImmediateSubdirectories();
+    if (subDirs.isEmpty()) {
+        QMessageBox::information(this, "Katalog",
+            tr("This catalog has no immediate sub-directories to split by."));
+        return;
+    }
+
+    int confirmed = QMessageBox::warning(this, "Katalog",
+        tr("Split catalog \"%1\"?\n\n"
+           "This will create %2 new catalogs "
+           "(one per sub-directory plus one for root files) "
+           "and remove the original.\n"
+           "This operation cannot be undone.")
+            .arg(activeDevice->catalog->name)
+            .arg(subDirs.count() + 1),
+        QMessageBox::Yes | QMessageBox::Cancel);
+    if (confirmed != QMessageBox::Yes)
+        return;
+
+    // Memory mode: load file data before splitting
+    if (collection->databaseMode == "Memory") {
+        QMutex mutex;
+        bool stop = false;
+        activeDevice->catalog->loadCatalogFileListToTable(mutex, stop);
+    }
+
+    QList<Catalog*> newCatalogs = activeDevice->catalog->executeSplitBySubDirectory(
+        collection->databaseMode, collection->folder);
+
+    if (newCatalogs.isEmpty()) {
+        QMessageBox::warning(this, "Katalog", tr("Split failed: no catalogs were created."));
+        return;
+    }
+
+    // Load parent device to inherit groupID for new device rows
+    Device parentDevice;
+    parentDevice.ID = activeDevice->parentID;
+    parentDevice.loadDevice(m_connectionName);
+
+    // Create a device row for each new catalog
+    for (Catalog *c : std::as_const(newCatalogs)) {
+        Device newDev;
+        newDev.ID             = Device::generateNextDeviceID(m_connectionName);
+        newDev.parentID       = parentDevice.ID;
+        newDev.name           = c->name;
+        newDev.type           = "Catalog";
+        newDev.externalID     = c->ID;
+        newDev.path           = c->sourcePath;
+        newDev.totalFileSize  = c->totalFileSize;
+        newDev.totalFileCount = c->fileCount;
+        newDev.groupID        = parentDevice.groupID;
+        newDev.active         = activeDevice->active;
+        newDev.order          = 0;
+        newDev.insertDevice();
+    }
+
+    // Save original .idx paths before deletion (Memory mode)
+    QString origFilePath        = activeDevice->catalog->filePath;
+    QString origFoldersFilePath = origFilePath;
+    origFoldersFilePath.replace(origFoldersFilePath.lastIndexOf(".idx"), 4, ".folders.idx");
+
+    // Delete the original device and catalog (files/folders already redistributed)
+    activeDevice->deleteDevice(false);
+
+    if (collection->databaseMode == "Memory") {
+        collection->saveDeviceTableToFile();
+        QFile::remove(origFilePath);
+        QFile::remove(origFoldersFilePath);
+    }
+
+    qDeleteAll(newCatalogs);
+    newCatalogs.clear();
+
     updateStorageSelectionStatistics();
     loadDevicesTreeToModel("Filters");
     loadDevicesView("");

@@ -147,6 +147,11 @@ public:
     void cleanupTempID();
     int getTempID() const;
 
+    // Split operations
+    QStringList listImmediateSubdirectories() const;
+    QList<Catalog*> executeSplitBySubDirectory(const QString &databaseMode,
+                                                const QString &collectionFolder);
+
     //Metadata
     static const QString METADATA_NONE;
     static const QString METADATA_MEDIA_BASIC;
