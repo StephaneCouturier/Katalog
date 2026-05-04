@@ -1,6 +1,6 @@
 # DEVICES: Split a Catalog
 
-![Draft](https://img.shields.io/badge/Status-Draft-orange) ![Not implemented](https://img.shields.io/badge/Implementation-not%20started-lightgrey)
+![Draft](https://img.shields.io/badge/Status-Draft-orange) ![Implemented](https://img.shields.io/badge/Implementation-complete-brightgreen)
 
 ## Context
 
@@ -36,7 +36,7 @@ Both entries are only shown when the selected device is of type `Catalog`; they 
 
 ---
 
-## Mode A — Split per Sub Directory ![Not implemented](https://img.shields.io/badge/status-not%20implemented-lightgrey)
+## Mode A — Split per Sub Directory ![Implemented](https://img.shields.io/badge/status-implemented-brightgreen)
 
 ### Definition
 
@@ -72,7 +72,7 @@ This catalog is created with `includeSubDir = false` so that a subsequent update
 
 ---
 
-## Mode B — Split per File Type ![Not implemented](https://img.shields.io/badge/status-not%20implemented-lightgrey)
+## Mode B — Split per File Type ![Implemented](https://img.shields.io/badge/status-implemented-brightgreen)
 
 ### Definition
 
@@ -121,7 +121,7 @@ A catalog is created for every type, even if it contains no files. This is consi
 
 ### Text sub-categories
 
-All six `TEXT` sub-categories (Documents, Code, Scripts, Data, Web, Ebooks) are grouped together into a single `[CatalogName]_Text` catalog. No further split by text sub-category.
+All six `TEXT` sub-categories (Documents, Code, Scripts, Data, Web, Ebooks) are grouped together into a single `[CatalogName]_(Text)` catalog. No further split by text sub-category.
 
 ---
 
@@ -171,26 +171,29 @@ For large catalogs the split may take a few seconds. A progress indicator should
 
 ## Impact Summary
 
-| Component | Change |
-|-----------|--------|
-| UI — Devices context menu | Add two new entries, enabled only for Catalog-type devices |
-| Core — new method | `Catalog::splitBySubDirectory()` / `Catalog::splitByFileType()` returning `QList<Catalog>` |
-| Core — catalog creation | Reuse existing catalog-write logic for each sub-catalog |
-| Core — catalog deletion | Delete original after all sub-catalogs are written successfully |
-| Core — device assignment | Update `device_catalog` assignments for virtual/physical devices |
-| `Catalog` field | New `includeSubDir` bool (default `true`); set to `false` for the `(root)` catalog in Mode A |
-| `CatalogJobStoppable` | Respect `includeSubDir` when setting `QDirIterator` flags (3 scanner sites) — **done** |
-| Database | New column `catalog_include_sub_dir INTEGER DEFAULT 1` — added to migration 2.11 and CREATE TABLE — **done** |
+| Component | Change | Status |
+|-----------|--------|--------|
+| UI — Devices context menu | Two new entries, enabled only for Catalog-type devices | done |
+| Core — `Catalog::executeSplitBySubDirectory()` | Returns `QList<Catalog*>` of new catalogs | done |
+| Core — `Catalog::executeSplitByFileType()` | Returns `QList<Catalog*>` of new catalogs | done |
+| Core — `Collection::executeSplitBySubDirectory(Device*)` | Full operation: preload + split + device tree update | done |
+| Core — `Collection::executeSplitByFileType(Device*)` | Full operation: preload + split + device tree update | done |
+| Core — virtual device reassignment | `Collection::applySplitResult` re-assigns splits to all virtual devices the original was on; `Device::deleteDevice` cleans up orphan assignment rows | done |
+| Core — virtual assignment redirect | `Collection::resolvePhysicalDevice` redirects split to primary row when triggered from a virtual assignment | done |
+| `Catalog` field | New `includeSubDir` bool (default `true`); set to `false` for the `(root)` catalog in Mode A | done |
+| `CatalogJobStoppable` | Respects `includeSubDir` when setting `QDirIterator` flags | done |
+| Database | New column `catalog_include_sub_dir INTEGER DEFAULT 1` — added to migration 2.12 and CREATE TABLE | done |
 
 ---
 
 ## Suggested Implementation Order
 
-| Step | Description |
-|------|-------------|
-| 1 | Add context menu entries (disabled skeleton) | **done** |
-| 2 | Implement `splitBySubDirectory` in core | **done** |
-| 3 | Wire up sub-directory split end-to-end | **done** |
-| 4 | Implement `splitByFileType` in core — simpler (fixed set of groups) | **done** |
-| 5 | Wire up file-type split end-to-end with confirmation dialog | **done** |
-| 6 | Handle virtual device reassignment |
+| Step | Description | Status |
+|------|-------------|--------|
+| 1 | Add context menu entries | done |
+| 2 | Implement `Catalog::executeSplitBySubDirectory` in core | done |
+| 3 | Wire up sub-directory split end-to-end | done |
+| 4 | Implement `Catalog::executeSplitByFileType` in core | done |
+| 5 | Wire up file-type split end-to-end with verify dialog | done |
+| 6 | Handle virtual device reassignment | done |
+| 7 | Redirect split to physical device when triggered from virtual assignment | done |
