@@ -101,6 +101,7 @@ The two-layer separation is enforced for future **QtQuick compatibility**. The g
 
 **What belongs in `src/core/`:**
 - All SQL queries (`QSqlQuery`) — wrap in methods on the relevant domain class (`Catalog`, `Device`, `Collection`, `Tag`, `FileMetadata`, etc.)
+- All domain object operations: creating, inserting, updating, deleting `Device`, `Catalog`, `Storage`, `Tag`, etc. — even if they don't contain raw SQL
 - File I/O for data files
 - Business logic, data transformations, algorithms
 - Domain-specific sorting/formatting logic (e.g. metadata field priority order)
@@ -112,12 +113,15 @@ The two-layer separation is enforced for future **QtQuick compatibility**. The g
 - HTML/CSS generation for display
 - Qt Charts series building
 - Error dialogs and user confirmations
+- Calling core methods and refreshing UI from their results
 
 **Enforcement rules:**
 - `core/` files must **never** include Qt Widgets headers (`QWidget`, `QDialog`, `QMessageBox`, etc.)
 - `qt_widgets/mainwindow_tab_*.cpp` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
+- `qt_widgets/mainwindow_tab_*.cpp` files must **not** call domain mutating methods directly (`insertDevice()`, `deleteDevice()`, `generateNextDeviceID()`, `saveDevice()`, `insertPhysicalStorageGroup()`, etc.) — wrap multi-step domain operations in a single core method
 - `qt_quick/` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
 - Core methods return plain Qt value types (`QString`, `QList`, `QStringList`, `QPair`, etc.), never widget types
+- **When reviewing any `mainwindow_tab_*.cpp` method:** ask "does this touch domain objects or the database?" — if yes, it belongs in core regardless of whether it uses raw SQL
 
 **Reference implementations (established patterns):**
 - Single-row DB lookup: `Catalog::getFileChecksum(fileName, folderPath)` → `QString`

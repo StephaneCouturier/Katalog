@@ -173,64 +173,97 @@ void MainWindow::splitCatalogBySubDirectory()
     if (confirmed != QMessageBox::Yes)
         return;
 
-    // Memory mode: load file data before splitting
-    if (collection->databaseMode == "Memory") {
-        QMutex mutex;
-        bool stop = false;
-        activeDevice->catalog->loadCatalogFileListToTable(mutex, stop);
-    }
-
-    QList<Catalog*> newCatalogs = activeDevice->catalog->executeSplitBySubDirectory(
-        collection->databaseMode, collection->folder);
-
-    if (newCatalogs.isEmpty()) {
+    if (!collection->executeSplitBySubDirectory(activeDevice)) {
         QMessageBox::warning(this, "Katalog", tr("Split failed: no catalogs were created."));
         return;
     }
-
-    // Load parent device to inherit groupID for new device rows
-    Device parentDevice;
-    parentDevice.ID = activeDevice->parentID;
-    parentDevice.loadDevice(m_connectionName);
-
-    // Create a device row for each new catalog
-    for (Catalog *c : std::as_const(newCatalogs)) {
-        Device newDev;
-        newDev.ID             = Device::generateNextDeviceID(m_connectionName);
-        newDev.parentID       = parentDevice.ID;
-        newDev.name           = c->name;
-        newDev.type           = "Catalog";
-        newDev.externalID     = c->ID;
-        newDev.path           = c->sourcePath;
-        newDev.totalFileSize  = c->totalFileSize;
-        newDev.totalFileCount = c->fileCount;
-        newDev.groupID        = parentDevice.groupID;
-        newDev.active         = activeDevice->active;
-        newDev.order          = 0;
-        newDev.insertDevice();
-    }
-
-    // Save original .idx paths before deletion (Memory mode)
-    QString origFilePath        = activeDevice->catalog->filePath;
-    QString origFoldersFilePath = origFilePath;
-    origFoldersFilePath.replace(origFoldersFilePath.lastIndexOf(".idx"), 4, ".folders.idx");
-
-    // Delete the original device and catalog (files/folders already redistributed)
-    activeDevice->deleteDevice(false);
-
-    if (collection->databaseMode == "Memory") {
-        collection->saveDeviceTableToFile();
-        QFile::remove(origFilePath);
-        QFile::remove(origFoldersFilePath);
-    }
-
-    qDeleteAll(newCatalogs);
-    newCatalogs.clear();
 
     updateStorageSelectionStatistics();
     loadDevicesTreeToModel("Filters");
     loadDevicesView("");
     filterFromSelectedDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::splitCatalogByFileType()
+{
+    // activeDevice has already been loaded in the context menu handler
+
+    bool deviceActive = activeDevice->active;
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setText(tr("Verify file types before splitting?") + "\n\n" +
+                   tr("File types in the catalog may be based on file extensions only. "
+                      "Running a verification reads each file from disk and ensures "
+                      "the split uses accurate types. The device must be connected."));
+    msgBox.setIcon(QMessageBox::Question);
+
+    QPushButton *btnVerify = msgBox.addButton(tr("Verify then Split"), QMessageBox::AcceptRole);
+    QPushButton *btnSplit  = msgBox.addButton(tr("Split without verifying"), QMessageBox::AcceptRole);
+    QPushButton *btnCancel = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+    Q_UNUSED(btnSplit)
+
+    if (!deviceActive) {
+        btnVerify->setEnabled(false);
+        btnVerify->setToolTip(tr("The device must be connected to verify file types."));
+    }
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == btnCancel)
+        return;
+
+    auto performSplit = [this]() {
+        if (!collection->executeSplitByFileType(activeDevice)) {
+            QMessageBox::warning(this, "Katalog", tr("Split failed: no catalogs were created."));
+            return;
+        }
+        updateStorageSelectionStatistics();
+        loadDevicesTreeToModel("Filters");
+        loadDevicesView("");
+        filterFromSelectedDevice();
+    };
+
+    if (msgBox.clickedButton() == btnVerify) {
+        if (!deviceUpdateManager)
+            setupDeviceUpdateManager();
+        if (deviceUpdateManager->operationRunning()) {
+            QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+            return;
+        }
+
+        int capturedDeviceID = activeDevice->ID;
+
+        CatalogJobStoppable *catalogJob = new CatalogJobStoppable(this);
+        catalogJob->configureOperation(activeDevice,
+                                       CatalogJobStoppable::VerifyMimeTypes,
+                                       collection->databaseMode,
+                                       collection->folder);
+
+        connect(catalogJob, &CatalogJobStoppable::mimeVerificationCompleted,
+                this, [this, catalogJob, capturedDeviceID, performSplit](int, const QString&) {
+                    catalogJob->deleteLater();
+                    setCatalogUpdateUIState(false);
+                    activeDevice->ID = capturedDeviceID;
+                    activeDevice->loadDevice(m_connectionName);
+                    performSplit();
+                });
+
+        connect(catalogJob, &CatalogJobStoppable::catalogOperationError,
+                this, [this, catalogJob](const QString &error) {
+                    catalogJob->deleteLater();
+                    setCatalogUpdateUIState(false);
+                    QMessageBox::warning(this, "Katalog",
+                        tr("MIME verification failed: %1\nSplit was not performed.").arg(error));
+                });
+
+        setCatalogUpdateUIState(true);
+        catalogJob->processCatalog();
+        return;
+    }
+
+    // Split without verifying
+    performSplit();
 }
 //--------------------------------------------------------------------------
 void MainWindow::recordDevicesSnapshot()

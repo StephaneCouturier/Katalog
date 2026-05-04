@@ -1697,6 +1697,122 @@ QList<Catalog*> Catalog::executeSplitBySubDirectory(const QString &databaseMode,
     return created;
 }
 
+QList<Catalog*> Catalog::executeSplitByFileType(const QString &databaseMode,
+                                                  const QString &collectionFolder)
+{
+    // Fixed groups: Audio, Images, Videos, Text, Other (Other absorbs None)
+    struct Group {
+        QString suffix;     // catalog name suffix
+        QString fileType;   // catalog.fileType value used by the scanner
+        QString sqlFilter;  // WHERE fragment matching file rows for this group
+    };
+
+    const QString noneFilter = FileTypeMapping::getSqlFilter(FileTypeMapping::NONE);
+    const QString otherFilter= FileTypeMapping::getSqlFilter(FileTypeMapping::OTHER);
+
+    const QList<Group> groups = {
+        { "_" + tr("Audio"),  "Audio", FileTypeMapping::getSqlFilter(FileTypeMapping::AUDIO) },
+        { "_" + tr("Images"), "Image", FileTypeMapping::getSqlFilter(FileTypeMapping::IMAGE) },
+        { "_" + tr("Videos"), "Video", FileTypeMapping::getSqlFilter(FileTypeMapping::VIDEO) },
+        { "_" + tr("Text"),   "Text",  FileTypeMapping::getSqlFilter(FileTypeMapping::TEXT)  },
+        { "_" + tr("Other"),  "Other", "(" + otherFilter + ") OR (" + noneFilter + ")"       },
+    };
+
+    QList<Catalog*> created;
+
+    // Find a unique catalog name (append _2, _3, ... on collision)
+    auto makeUniqueName = [&](const QString &baseName) -> QString {
+        QString candidate = baseName;
+        int suffix = 2;
+        while (true) {
+            QSqlQuery chk(QSqlDatabase::database(m_connectionName));
+            chk.prepare("SELECT COUNT(*) FROM catalog WHERE catalog_name = :n");
+            chk.bindValue(":n", candidate);
+            if (chk.exec() && chk.next() && chk.value(0).toInt() == 0)
+                return candidate;
+            candidate = baseName + "_" + QString::number(suffix++);
+        }
+    };
+
+    // Update the catalog row's file count and total size from the actual file data
+    auto updateCounts = [&](Catalog *c) {
+        QSqlQuery q(QSqlDatabase::database(m_connectionName));
+        q.prepare(QLatin1String(R"(
+            UPDATE catalog
+            SET catalog_file_count      = (SELECT COUNT(*)                    FROM file WHERE file_catalog_id = :id),
+                catalog_total_file_size = (SELECT COALESCE(SUM(file_size), 0) FROM file WHERE file_catalog_id = :id2)
+            WHERE catalog_id = :id3
+        )"));
+        q.bindValue(":id",  c->ID);
+        q.bindValue(":id2", c->ID);
+        q.bindValue(":id3", c->ID);
+        q.exec();
+        c->updateFileCount();
+        c->updateTotalFileSize();
+    };
+
+    for (const Group &g : groups) {
+        QString newName = makeUniqueName(name + g.suffix);
+
+        Catalog *c = new Catalog();
+        c->setConnectionName(m_connectionName);
+        c->name             = newName;
+        c->sourcePath       = sourcePath;   // same root for all file-type catalogs
+        c->includeSubDir    = includeSubDir;
+        c->includeHidden    = includeHidden;
+        c->includeSymblinks = includeSymblinks;
+        c->fileType         = g.fileType;   // scanner will filter by this on next update
+        c->storageName      = storageName;
+        c->isFullDevice     = isFullDevice;
+        c->includeMetadata  = includeMetadata;
+        c->includeChecksum  = includeChecksum;
+        c->appVersion       = appVersion;
+        c->dateUpdated      = dateUpdated;
+        c->fileCount        = 0;
+        c->totalFileSize    = 0;
+        c->filePath         = collectionFolder + "/" + newName + ".idx";
+        c->generateID();
+        c->insertCatalog();
+
+        // Move matching file rows to this catalog
+        if (!g.sqlFilter.isEmpty()) {
+            QSqlQuery qf(QSqlDatabase::database(m_connectionName));
+            qf.prepare(QString(R"(
+                UPDATE file
+                SET file_catalog_id = :newId, file_catalog = :newName
+                WHERE file_catalog_id = :oldId AND (%1)
+            )").arg(g.sqlFilter));
+            qf.bindValue(":newId",   c->ID);
+            qf.bindValue(":newName", c->name);
+            qf.bindValue(":oldId",   ID);
+            qf.exec();
+        }
+
+        // Copy all folder rows (all type-split catalogs share the same folder tree)
+        QSqlQuery qfold(QSqlDatabase::database(m_connectionName));
+        qfold.prepare(QLatin1String(R"(
+            INSERT INTO folder (folder_catalog_id, folder_path)
+            SELECT :newId, folder_path
+            FROM folder
+            WHERE folder_catalog_id = :oldId
+        )"));
+        qfold.bindValue(":newId",  c->ID);
+        qfold.bindValue(":oldId",  ID);
+        qfold.exec();
+
+        updateCounts(c);
+
+        if (databaseMode == "Memory") {
+            c->saveCatalogToFile(databaseMode, collectionFolder);
+            c->saveFoldersToFile(databaseMode, collectionFolder);
+        }
+
+        created << c;
+    }
+
+    return created;
+}
+
 QString Catalog::getFileChecksum(const QString &fileName, const QString &folderPath) const
 {// Retrieve the stored SHA-256 checksum for a specific file in this catalog
     QSqlQuery query(QSqlDatabase::database(m_connectionName));

@@ -2425,4 +2425,79 @@ QString Collection::getValidationMessage(CollectionFolderStatus status) const
                   "Collections should be stored in dedicated folders to avoid mixing with personal files.");
     }
 }
+//--------------------------------------------------------------------------
+bool Collection::executeSplitBySubDirectory(Device *activeDevice)
+{
+    if (databaseMode == "Memory") {
+        activeDevice->catalog->loadFoldersToTable();
+        QMutex mutex;
+        bool stop = false;
+        activeDevice->catalog->loadCatalogFileListToTable(mutex, stop);
+    }
+
+    QList<Catalog*> newCatalogs = activeDevice->catalog->executeSplitBySubDirectory(databaseMode, folder);
+    if (newCatalogs.isEmpty()) {
+        qDeleteAll(newCatalogs);
+        return false;
+    }
+
+    applySplitResult(activeDevice, newCatalogs);
+    qDeleteAll(newCatalogs);
+    return true;
+}
+//--------------------------------------------------------------------------
+bool Collection::executeSplitByFileType(Device *activeDevice)
+{
+    if (databaseMode == "Memory") {
+        activeDevice->catalog->loadFoldersToTable();
+        QMutex mutex;
+        bool stop = false;
+        activeDevice->catalog->loadCatalogFileListToTable(mutex, stop);
+    }
+
+    QList<Catalog*> newCatalogs = activeDevice->catalog->executeSplitByFileType(databaseMode, folder);
+    if (newCatalogs.isEmpty()) {
+        qDeleteAll(newCatalogs);
+        return false;
+    }
+
+    applySplitResult(activeDevice, newCatalogs);
+    qDeleteAll(newCatalogs);
+    return true;
+}
+//--------------------------------------------------------------------------
+void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &newCatalogs)
+{
+    Device parentDevice;
+    parentDevice.ID = activeDevice->parentID;
+    parentDevice.loadDevice(m_connectionName);
+
+    for (Catalog *c : std::as_const(newCatalogs)) {
+        Device newDev;
+        newDev.ID             = Device::generateNextDeviceID(m_connectionName);
+        newDev.parentID       = parentDevice.ID;
+        newDev.name           = c->name;
+        newDev.type           = "Catalog";
+        newDev.externalID     = c->ID;
+        newDev.path           = c->sourcePath;
+        newDev.totalFileSize  = c->totalFileSize;
+        newDev.totalFileCount = c->fileCount;
+        newDev.groupID        = parentDevice.groupID;
+        newDev.active         = activeDevice->active;
+        newDev.order          = 0;
+        newDev.insertDevice();
+    }
+
+    QString origFilePath        = activeDevice->catalog->filePath;
+    QString origFoldersFilePath = origFilePath;
+    origFoldersFilePath.replace(origFoldersFilePath.lastIndexOf(".idx"), 4, ".folders.idx");
+
+    activeDevice->deleteDevice(false);
+
+    if (databaseMode == "Memory") {
+        saveDeviceTableToFile();
+        QFile::remove(origFilePath);
+        QFile::remove(origFoldersFilePath);
+    }
+}
 //----------------------------------------------------------------------

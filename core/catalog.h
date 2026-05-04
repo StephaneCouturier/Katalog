@@ -151,6 +151,8 @@ public:
     QStringList listImmediateSubdirectories() const;
     QList<Catalog*> executeSplitBySubDirectory(const QString &databaseMode,
                                                 const QString &collectionFolder);
+    QList<Catalog*> executeSplitByFileType(const QString &databaseMode,
+                                            const QString &collectionFolder);
 
     //Metadata
     static const QString METADATA_NONE;

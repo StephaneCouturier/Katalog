@@ -383,8 +383,10 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         });
 
         QAction *menuSplitByFileType = new QAction(QIcon::fromTheme("edit-cut"), tr("Split catalog by file type"), this);
-        menuSplitByFileType->setEnabled(false);
         deviceContextMenu.addAction(menuSplitByFileType);
+        connect(menuSplitByFileType, &QAction::triggered, this, [this]() {
+            splitCatalogByFileType();
+        });
 
         deviceContextMenu.addSeparator();
 

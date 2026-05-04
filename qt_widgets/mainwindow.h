@@ -444,6 +444,7 @@ class MainWindow : public KXmlGuiWindow
             void unassignPhysicalFromDevice(int deviceID, int deviceParentID);
             void deleteDeviceItem();
             void splitCatalogBySubDirectory();
+            void splitCatalogByFileType();
 
             void loadDevicesView(QString sourceTrigger);
             void loadDevicesTreeToModel(QString targetTreeModel);
