@@ -2468,6 +2468,7 @@ bool Collection::executeSplitByFileType(Device *activeDevice)
 //--------------------------------------------------------------------------
 void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &newCatalogs)
 {
+    // Insert new device rows under the same parent as the original
     Device parentDevice;
     parentDevice.ID = activeDevice->parentID;
     parentDevice.loadDevice(m_connectionName);
@@ -2486,6 +2487,59 @@ void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &n
         newDev.active         = activeDevice->active;
         newDev.order          = 0;
         newDev.insertDevice();
+    }
+
+    // Find any virtual device assignment rows for the original catalog
+    // (same externalID, different device_id — created via "Assign selected catalog")
+    QList<int> virtualParentIDs;
+    QSqlQuery queryAssignments(QSqlDatabase::database(m_connectionName));
+    queryAssignments.prepare(QLatin1String(R"(
+        SELECT d.device_id, d.device_parent_id
+        FROM device d
+        JOIN device p ON p.device_id = d.device_parent_id
+        WHERE d.device_external_id = :externalID
+          AND d.device_id          != :activeDeviceID
+          AND d.device_type        = 'Catalog'
+          AND p.device_type        = 'Virtual'
+    )"));
+    queryAssignments.bindValue(":externalID",     activeDevice->externalID);
+    queryAssignments.bindValue(":activeDeviceID", activeDevice->ID);
+    queryAssignments.exec();
+
+    QSqlQuery queryDeleteAssignment(QSqlDatabase::database(m_connectionName));
+    queryDeleteAssignment.prepare(QLatin1String(
+        "DELETE FROM device WHERE device_id = :device_id"));
+
+    while (queryAssignments.next()) {
+        int assignmentDeviceID = queryAssignments.value(0).toInt();
+        int virtualParentID    = queryAssignments.value(1).toInt();
+        virtualParentIDs.append(virtualParentID);
+
+        queryDeleteAssignment.bindValue(":device_id", assignmentDeviceID);
+        queryDeleteAssignment.exec();
+    }
+
+    // Re-assign each split catalog to every virtual device the original was on
+    for (int virtualParentID : std::as_const(virtualParentIDs)) {
+        Device virtualParent;
+        virtualParent.ID = virtualParentID;
+        virtualParent.loadDevice(m_connectionName);
+
+        for (Catalog *c : std::as_const(newCatalogs)) {
+            Device newDev;
+            newDev.ID             = Device::generateNextDeviceID(m_connectionName);
+            newDev.parentID       = virtualParentID;
+            newDev.name           = c->name;
+            newDev.type           = "Catalog";
+            newDev.externalID     = c->ID;
+            newDev.path           = c->sourcePath;
+            newDev.totalFileSize  = c->totalFileSize;
+            newDev.totalFileCount = c->fileCount;
+            newDev.groupID        = virtualParent.groupID;
+            newDev.active         = activeDevice->active;
+            newDev.order          = 0;
+            newDev.insertDevice();
+        }
     }
 
     QString origFilePath        = activeDevice->catalog->filePath;
