@@ -2428,42 +2428,82 @@ QString Collection::getValidationMessage(CollectionFolderStatus status) const
 //--------------------------------------------------------------------------
 bool Collection::executeSplitBySubDirectory(Device *activeDevice)
 {
+    Device primaryBuffer;
+    Device *device = resolvePhysicalDevice(activeDevice, primaryBuffer);
+
     if (databaseMode == "Memory") {
-        activeDevice->catalog->loadFoldersToTable();
+        device->catalog->loadFoldersToTable();
         QMutex mutex;
         bool stop = false;
-        activeDevice->catalog->loadCatalogFileListToTable(mutex, stop);
+        device->catalog->loadCatalogFileListToTable(mutex, stop);
     }
 
-    QList<Catalog*> newCatalogs = activeDevice->catalog->executeSplitBySubDirectory(databaseMode, folder);
+    QList<Catalog*> newCatalogs = device->catalog->executeSplitBySubDirectory(databaseMode, folder);
     if (newCatalogs.isEmpty()) {
         qDeleteAll(newCatalogs);
         return false;
     }
 
-    applySplitResult(activeDevice, newCatalogs);
+    applySplitResult(device, newCatalogs);
     qDeleteAll(newCatalogs);
     return true;
 }
 //--------------------------------------------------------------------------
 bool Collection::executeSplitByFileType(Device *activeDevice)
 {
+    Device primaryBuffer;
+    Device *device = resolvePhysicalDevice(activeDevice, primaryBuffer);
+
     if (databaseMode == "Memory") {
-        activeDevice->catalog->loadFoldersToTable();
+        device->catalog->loadFoldersToTable();
         QMutex mutex;
         bool stop = false;
-        activeDevice->catalog->loadCatalogFileListToTable(mutex, stop);
+        device->catalog->loadCatalogFileListToTable(mutex, stop);
     }
 
-    QList<Catalog*> newCatalogs = activeDevice->catalog->executeSplitByFileType(databaseMode, folder);
+    QList<Catalog*> newCatalogs = device->catalog->executeSplitByFileType(databaseMode, folder);
     if (newCatalogs.isEmpty()) {
         qDeleteAll(newCatalogs);
         return false;
     }
 
-    applySplitResult(activeDevice, newCatalogs);
+    applySplitResult(device, newCatalogs);
     qDeleteAll(newCatalogs);
     return true;
+}
+//--------------------------------------------------------------------------
+Device* Collection::resolvePhysicalDevice(Device *activeDevice, Device &buffer)
+{
+    QSqlQuery queryParentType(QSqlDatabase::database(m_connectionName));
+    queryParentType.prepare(QLatin1String(
+        "SELECT device_type FROM device WHERE device_id = :parentID"));
+    queryParentType.bindValue(":parentID", activeDevice->parentID);
+    if (!queryParentType.exec() || !queryParentType.next())
+        return activeDevice;
+
+    if (queryParentType.value(0).toString() != "Virtual")
+        return activeDevice;
+
+    // activeDevice is a virtual assignment — find the primary (non-virtual-parented) row
+    QSqlQuery queryPrimary(QSqlDatabase::database(m_connectionName));
+    queryPrimary.prepare(QLatin1String(R"(
+        SELECT d.device_id FROM device d
+        JOIN device p ON p.device_id = d.device_parent_id
+        WHERE d.device_external_id = :externalID
+          AND d.device_id          != :activeDeviceID
+          AND d.device_type        = 'Catalog'
+          AND p.device_type        != 'Virtual'
+        LIMIT 1
+    )"));
+    queryPrimary.bindValue(":externalID",     activeDevice->externalID);
+    queryPrimary.bindValue(":activeDeviceID", activeDevice->ID);
+    if (!queryPrimary.exec() || !queryPrimary.next())
+        return activeDevice;
+
+    buffer.ID = queryPrimary.value(0).toInt();
+    buffer.catalog->setConnectionName(m_connectionName);
+    buffer.loadDevice(m_connectionName);
+    return &buffer;
 }
 //--------------------------------------------------------------------------
 void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &newCatalogs)
@@ -2489,12 +2529,12 @@ void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &n
         newDev.insertDevice();
     }
 
-    // Find any virtual device assignment rows for the original catalog
-    // (same externalID, different device_id — created via "Assign selected catalog")
+    // Find virtual devices the original catalog was assigned to, so the splits
+    // can be assigned to the same virtual devices after deleteDevice() removes the originals
     QList<int> virtualParentIDs;
     QSqlQuery queryAssignments(QSqlDatabase::database(m_connectionName));
     queryAssignments.prepare(QLatin1String(R"(
-        SELECT d.device_id, d.device_parent_id
+        SELECT d.device_parent_id
         FROM device d
         JOIN device p ON p.device_id = d.device_parent_id
         WHERE d.device_external_id = :externalID
@@ -2505,19 +2545,15 @@ void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &n
     queryAssignments.bindValue(":externalID",     activeDevice->externalID);
     queryAssignments.bindValue(":activeDeviceID", activeDevice->ID);
     queryAssignments.exec();
+    while (queryAssignments.next())
+        virtualParentIDs.append(queryAssignments.value(0).toInt());
 
-    QSqlQuery queryDeleteAssignment(QSqlDatabase::database(m_connectionName));
-    queryDeleteAssignment.prepare(QLatin1String(
-        "DELETE FROM device WHERE device_id = :device_id"));
+    QString origFilePath        = activeDevice->catalog->filePath;
+    QString origFoldersFilePath = origFilePath;
+    origFoldersFilePath.replace(origFoldersFilePath.lastIndexOf(".idx"), 4, ".folders.idx");
 
-    while (queryAssignments.next()) {
-        int assignmentDeviceID = queryAssignments.value(0).toInt();
-        int virtualParentID    = queryAssignments.value(1).toInt();
-        virtualParentIDs.append(virtualParentID);
-
-        queryDeleteAssignment.bindValue(":device_id", assignmentDeviceID);
-        queryDeleteAssignment.exec();
-    }
+    // deleteDevice() also removes virtual assignment rows for this catalog
+    activeDevice->deleteDevice(false);
 
     // Re-assign each split catalog to every virtual device the original was on
     for (int virtualParentID : std::as_const(virtualParentIDs)) {
@@ -2541,12 +2577,6 @@ void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &n
             newDev.insertDevice();
         }
     }
-
-    QString origFilePath        = activeDevice->catalog->filePath;
-    QString origFoldersFilePath = origFilePath;
-    origFoldersFilePath.replace(origFoldersFilePath.lastIndexOf(".idx"), 4, ".folders.idx");
-
-    activeDevice->deleteDevice(false);
 
     if (databaseMode == "Memory") {
         saveDeviceTableToFile();

@@ -4,6 +4,7 @@
 
 The current Search tab accepts a **single text string** as the file name criterion. This forces users who need to find multiple specific files or apply several unrelated patterns to run repeated searches and mentally combine results. This spec explores scenarios where the text input becomes a **list of terms**, covering the need, each scenario's UI and backend impact, and a suggested phasing.
 
+
 ---
 
 ## Current State
@@ -20,7 +21,7 @@ The current Search tab accepts a **single text string** as the file name criteri
 
 ## Scenarios
 
-### S1 — OR list: find files matching any of N terms
+### S1 — OR list: find files matching any of N terms ![implemented](https://img.shields.io/badge/K2-2.12-brightgreen) ![implemented](https://img.shields.io/badge/K3-pending-lightgrey)
 
 **Need:** A list search is equivalent to running one search per term with the same criteria, then combining all results. User wants to locate files whose name or path matches at least one item in the list.
 
@@ -53,7 +54,7 @@ Results — a file appears if it matches **any** of the three terms:
 
 ---
 
-### S2 — AND list: file name must contain all N terms
+### S2 — AND list: file name must contain all N terms ![not implemented](https://img.shields.io/badge/status-not%20implemented-lightgrey)
 
 **Need:** User wants to narrow results to files whose name/path contains every term simultaneously. Currently partially achievable with *All Words* when terms are space-separated within a single string, but not for *Exact Phrase* or *Regex* per-term.
 
@@ -84,7 +85,7 @@ Not matched:
 
 ---
 
-### S3 — Exact filename list (lookup mode)
+### S3 — Exact filename list (lookup mode) ![not implemented](https://img.shields.io/badge/status-not%20implemented-lightgrey)
 
 **Need:** User has a manifest of specific filenames (from a colleague, a backup log, or a delivery list) and wants to find every item across all catalogs in one operation. The list may be large (dozens of filenames); the matching mode is always *Exact Phrase*.
 
@@ -115,7 +116,7 @@ photo_passport_john.jpg→ (not found)
 
 ---
 
-### S4 — Multiple exclude terms
+### S4 — Multiple exclude terms ![not implemented](https://img.shields.io/badge/status-not%20implemented-lightgrey)
 
 **Need:** The *exclude* field has the same single-string limitation. Users want to exclude several unrelated patterns in one search.
 
@@ -139,7 +140,7 @@ Results: files containing `photo` anywhere, but **none** of the three excluded p
 
 ---
 
-### S5 — Per-term AND/OR flag
+### S5 — Per-term AND/OR flag ![not implemented](https://img.shields.io/badge/status-not%20implemented-lightgrey)
 
 **Need:** Advanced users want mixed logic — some terms required, others optional — within a single search.
 
@@ -170,7 +171,7 @@ Not matched:
 
 ---
 
-### S6 — Clipboard import
+### S6 — Clipboard import ![implemented](https://img.shields.io/badge/K2-2.12-brightgreen) ![implemented](https://img.shields.io/badge/K3-pending-lightgrey)
 
 **Need:** User copies a column from a spreadsheet, a selection from a text editor, or output from a file manager and pastes it into the search form. Each line becomes one search term.
 
@@ -192,7 +193,7 @@ Clicks *Paste list* (or simply pastes into the textarea) → the three terms fil
 
 ---
 
-### S7 — Load list from file
+### S7 — Load list from file ![not implemented](https://img.shields.io/badge/status-not%20implemented-lightgrey)
 
 **Need:** User maintains a text file of search terms that they reuse across sessions (licensed asset list, backup manifest, project file inventory).
 

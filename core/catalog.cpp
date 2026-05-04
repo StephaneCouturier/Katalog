@@ -1711,11 +1711,11 @@ QList<Catalog*> Catalog::executeSplitByFileType(const QString &databaseMode,
     const QString otherFilter= FileTypeMapping::getSqlFilter(FileTypeMapping::OTHER);
 
     const QList<Group> groups = {
-        { "_" + tr("Audio"),  "Audio", FileTypeMapping::getSqlFilter(FileTypeMapping::AUDIO) },
-        { "_" + tr("Images"), "Image", FileTypeMapping::getSqlFilter(FileTypeMapping::IMAGE) },
-        { "_" + tr("Videos"), "Video", FileTypeMapping::getSqlFilter(FileTypeMapping::VIDEO) },
-        { "_" + tr("Text"),   "Text",  FileTypeMapping::getSqlFilter(FileTypeMapping::TEXT)  },
-        { "_" + tr("Other"),  "Other", "(" + otherFilter + ") OR (" + noneFilter + ")"       },
+        { "_(" + tr("Audio")  + ")", "Audio", FileTypeMapping::getSqlFilter(FileTypeMapping::AUDIO) },
+        { "_(" + tr("Images") + ")", "Image", FileTypeMapping::getSqlFilter(FileTypeMapping::IMAGE) },
+        { "_(" + tr("Videos") + ")", "Video", FileTypeMapping::getSqlFilter(FileTypeMapping::VIDEO) },
+        { "_(" + tr("Text")   + ")", "Text",  FileTypeMapping::getSqlFilter(FileTypeMapping::TEXT)  },
+        { "_(" + tr("Other")  + ")", "Other", "(" + otherFilter + ") OR (" + noneFilter + ")"       },
     };
 
     QList<Catalog*> created;

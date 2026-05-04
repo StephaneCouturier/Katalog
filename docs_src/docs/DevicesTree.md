@@ -1,7 +1,7 @@
 ---
 version: "2.11"
 ---
-# Device Tree
+# Devices: Device Tree
 ![2.11](https://img.shields.io/badge/Version-2.11-blue)
 
 ## Summary

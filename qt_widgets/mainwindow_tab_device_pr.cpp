@@ -142,7 +142,7 @@ void MainWindow::deleteDeviceItem()
 
     //Reload data to models
     updateStorageSelectionStatistics();
-    loadDevicesTreeToModel("Filters");
+    loadDevicesTreeToModel("All");
     loadDevicesView("");
     filterFromSelectedDevice();
 }
@@ -179,7 +179,7 @@ void MainWindow::splitCatalogBySubDirectory()
     }
 
     updateStorageSelectionStatistics();
-    loadDevicesTreeToModel("Filters");
+    loadDevicesTreeToModel("All");
     loadDevicesView("");
     filterFromSelectedDevice();
 }
@@ -219,7 +219,7 @@ void MainWindow::splitCatalogByFileType()
             return;
         }
         updateStorageSelectionStatistics();
-        loadDevicesTreeToModel("Filters");
+        loadDevicesTreeToModel("All");
         loadDevicesView("");
         filterFromSelectedDevice();
     };

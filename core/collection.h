@@ -171,6 +171,7 @@ public:
 private:
     QString m_connectionName = "defaultConnection";
     void applySplitResult(Device *activeDevice, const QList<Catalog*> &newCatalogs);
+    Device* resolvePhysicalDevice(Device *activeDevice, Device &buffer);
 
 };
 

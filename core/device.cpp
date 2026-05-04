@@ -687,6 +687,19 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
 
     if (type == "Catalog") {
         catalog->deleteCatalog();
+
+        // Remove any virtual device assignment rows for the same catalog
+        // (rows with the same externalID created via "Assign selected catalog")
+        QSqlQuery queryCleanup(QSqlDatabase::database(m_connectionName));
+        queryCleanup.prepare(QLatin1String(R"(
+            DELETE FROM device
+            WHERE device_external_id = :externalID
+              AND device_id          != :device_id
+              AND device_type        = 'Catalog'
+        )"));
+        queryCleanup.bindValue(":externalID", externalID);
+        queryCleanup.bindValue(":device_id",  ID);
+        queryCleanup.exec();
     }
 
     result.result = DeleteSuccess;
