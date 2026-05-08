@@ -120,7 +120,6 @@ set(TS_FILES
 set(QRC_FILES
     icons.qrc
     images.qrc
-    Resources.qrc
     styles.qrc
     translations.qrc
 )
