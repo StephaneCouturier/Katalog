@@ -2190,53 +2190,94 @@ void MainWindow::onDeviceUpdateProgress()
 //--------------------------------------------------------------------------
 //--- Storage --------------------------------------------------------------
 void MainWindow::loadStorageList()
-{//Load Storage selection to comboBoxes
+{//Load Storage selection tree — all Storage devices with their ancestor context
 
-    //Get data
+    // Query Storage devices and all their ancestors to build the hierarchy
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL = QLatin1String(R"(
-                                SELECT device_id, device_name
-                                FROM   device
-                                WHERE  device_type = 'Storage'
-
-                            )");//AND    device_group_id = 0
-
-    if ( selectedDevice->type == "Storage" ){
-        querySQL += QLatin1String(R"( AND device_name ='%1' )").arg(selectedDevice->name);
-        ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name);
-    }
-    else if ( selectedDevice->type == "Catalog" ){
-        querySQL += " AND device_id =:device_parent_id";
-    }
-    else if ( selectedDevice->type == "Virtual" ){
-        QString prepareSQL = QLatin1String(R"(
-                                AND device_id IN (
-                                WITH RECURSIVE hierarchy AS (
-                                     SELECT device_id, device_parent_id, device_name
-                                     FROM device
-                                     WHERE device_id = :device_id
-                                     UNION ALL
-                                     SELECT t.device_id, t.device_parent_id, t.device_name
-                                     FROM device t
-                                     JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                )
-                                SELECT device_id
-                                FROM hierarchy)
-            )");
-        querySQL += prepareSQL;
-    }
-
-    querySQL += " ORDER BY device_name ";
-    query.prepare(querySQL);
-    query.bindValue(":device_id", selectedDevice->ID);
-    query.bindValue(":device_parent_id", selectedDevice->parentID);
+    query.prepare(QLatin1String(R"(
+        WITH RECURSIVE device_and_ancestors AS (
+            SELECT device_id, device_parent_id, device_name, device_type, device_active
+            FROM   device
+            WHERE  device_type = 'Storage'
+            UNION ALL
+            SELECT d.device_id, d.device_parent_id, d.device_name, d.device_type, d.device_active
+            FROM   device d
+            JOIN   device_and_ancestors a ON d.device_id = a.device_parent_id
+        )
+        SELECT DISTINCT device_id, device_parent_id, device_name, device_type, device_active
+        FROM   device_and_ancestors
+        ORDER  BY device_parent_id, device_name
+    )"));
     query.exec();
 
-    //Clear comboboxes and load selected Storage device list
-    ui->Create_comboBox_StorageSelection->clear();
-    while(query.next())
-    {
-        ui->Create_comboBox_StorageSelection->addItem(query.value(1).toString(),query.value(0).toInt());
+    // Build hierarchical tree model — col 0=Name, col 1=Type, col 2=Active, col 3=ID, col 4=ParentID
+    // Non-Storage rows (ancestor context) are visible but not selectable
+    QStandardItemModel *treeModel = new QStandardItemModel(this);
+    QMap<int, QStandardItem*> itemMap;
+
+    while (query.next()) {
+        int id         = query.value(0).toInt();
+        int parentId   = query.value(1).toInt();
+        QString type   = query.value(3).toString();
+        bool isStorage = (type == "Storage");
+
+        QList<QStandardItem*> row = {
+            new QStandardItem(query.value(2).toString()),  // Name
+            new QStandardItem(type),                       // Type
+            new QStandardItem(query.value(4).toString()),  // Active
+            new QStandardItem(QString::number(id)),        // ID
+            new QStandardItem(QString::number(parentId))   // ParentID
+        };
+
+        // Non-Storage ancestors are context only — disable selection so only Storage can be chosen
+        if (!isStorage) {
+            for (QStandardItem *cell : row)
+                cell->setFlags(Qt::ItemIsEnabled);
+        }
+
+        QStandardItem *parentItem = itemMap.value(parentId, nullptr);
+        if (!parentItem)
+            treeModel->appendRow(row);
+        else
+            parentItem->appendRow(row);
+        itemMap.insert(id, row[0]);
+    }
+
+    DeviceTreeView *proxy = new DeviceTreeView(this);
+    proxy->setSourceModel(treeModel);
+    proxy->setKatalogTheme(themeID > 0);
+    ui->Create_comboBox_StorageSelection->setTreeModel(proxy);
+    ui->Create_comboBox_StorageSelection->expandToDepth(2);
+    ui->Create_comboBox_StorageSelection->setCurrentIndex(-1); // clear auto-selection from setModel()
+
+    // Pre-select based on selected device
+    if (selectedDevice->type == "Storage") {
+        ui->Create_comboBox_StorageSelection->setSelectedDeviceId(selectedDevice->ID);
+    } else if (selectedDevice->type == "Catalog") {
+        ui->Create_comboBox_StorageSelection->setSelectedDeviceId(selectedDevice->parentID);
+    } else if (selectedDevice->type == "Virtual") {
+        // Recursively search the full subtree for the first Storage descendant
+        QSqlQuery queryStorage(QSqlDatabase::database(m_connectionName));
+        queryStorage.prepare(QLatin1String(R"(
+            WITH RECURSIVE subtree AS (
+                SELECT device_id, device_name, device_type
+                FROM   device
+                WHERE  device_parent_id = :virtualId
+                UNION ALL
+                SELECT d.device_id, d.device_name, d.device_type
+                FROM   device d
+                JOIN   subtree s ON d.device_parent_id = s.device_id
+            )
+            SELECT device_id
+            FROM   subtree
+            WHERE  device_type = 'Storage'
+            ORDER  BY device_name
+            LIMIT  1
+        )"));
+        queryStorage.bindValue(":virtualId", selectedDevice->ID);
+        queryStorage.exec();
+        if (queryStorage.next())
+            ui->Create_comboBox_StorageSelection->setSelectedDeviceId(queryStorage.value(0).toInt());
     }
 }
 //--------------------------------------------------------------------------
