@@ -37,7 +37,6 @@
         <file alias="images/screenshots/Filters_catalogs_virtual.png">../assets/screenshots/Filters_catalogs_virtual.png</file>
         <file alias="images/screenshots/Filters_connecteddrives.png">../assets/screenshots/Filters_connecteddrives.png</file>
         <file alias="images/screenshots/Virtual_screen.png">../assets/screenshots/Virtual_screen.png</file>
-        <file alias="images/Appname_Logo.png">../assets/Appname_Logo.png</file>
         <file alias="images/Banner.png">../assets/Banner.png</file>
         <file alias="images/drive_blue.png">../assets/drive_blue.png</file>
         <file alias="images/drive_gray.png">../assets/drive_gray.png</file>
@@ -48,6 +47,5 @@
         <file alias="images/link-tree-end.png">../assets/link-tree-end.png</file>
         <file alias="images/link-tree-mid.png">../assets/link-tree-mid.png</file>
         <file alias="images/link-v.png">../assets/link-v.png</file>
-        <file alias="images/logo-64.png">../assets/logo-64.png</file>
     </qresource>
 </RCC>

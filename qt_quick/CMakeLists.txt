@@ -65,9 +65,7 @@ qt_add_qml_module(Katalog3
         ${CORE_SOURCES}
         ${UI_SOURCES}
     RESOURCES
-        ../assets/logo-64.png
         ../assets/Katalog_logo_64.ico
-        ../assets/logo-64.ico
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
