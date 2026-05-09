@@ -431,21 +431,27 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
-            Controls.TextArea {
-                id: search_TextField_FileNameText
+            Controls.ScrollView {
                 Layout.fillWidth: true
-                //placeholderText: qsTr("Shit+Enter to enter a new line")
-                wrapMode: TextArea.Wrap
-                implicitHeight: Kirigami.Units.gridUnit * 4
-                Keys.onPressed: function(event) {
-                    if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
-                            && (event.modifiers & Qt.ControlModifier)) {
-                        pageSearchForm.executeSearch()
-                        event.accepted = true
+                implicitHeight: Kirigami.Units.gridUnit * 2
+                background: Rectangle {
+                    color: palette.base
+                }
+                Controls.TextArea {
+                    id: search_TextField_FileNameText
+                    width: parent.availableWidth
+                    wrapMode: TextArea.Wrap
+                    background: Item {}
+                    Keys.onPressed: function(event) {
+                        if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
+                                && (event.modifiers & Qt.ControlModifier)) {
+                            pageSearchForm.executeSearch()
+                            event.accepted = true
+                        }
                     }
                 }
             }
-            ColumnLayout {
+            RowLayout {
                 Layout.alignment: Qt.AlignTop
                 spacing: Kirigami.Units.smallSpacing
                 Controls.Button {
