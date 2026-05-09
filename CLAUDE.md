@@ -14,6 +14,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - If unsure where new code belongs, **ask before creating new files**.
 > - **K2 UI is in maintenance mode:** keep K2 changes minimal (bug fixes, small tweaks). New major UI features are designed and built in K3 only, and only after the full K2 feature set has been migrated to K3.
 
+> **CRITICAL — K3 migration process:**
+> - Before implementing any K3 feature that mirrors a K2 feature, **read ALL of the K2 source code** for that feature: the loading method, the display/model population, every user interaction handler (including destructive actions and their confirmation dialogs), side-effects triggered on search/save/complete events, and the restoration/apply logic. Never implement a partial migration.
+> - K3 must achieve **full feature parity** with K2 for each migrated feature. Checklist for every migrated feature:
+>   1. **Display** — same data shown to the user (all fields, not just a subset)
+>   2. **Destructive actions** — every Clear/Delete/Keep button must have a confirmation dialog matching K2
+>   3. **Lifecycle hooks** — any side-effect K2 triggers on search start, search complete, or save (e.g. saving to history table, persisting to CSV) must be replicated in K3
+>   4. **Restore/apply** — clicking a history/saved entry must restore all criteria, not just the visible ones
+
 > **CRITICAL — User-visible text:**
 > - **NEVER alter existing `tr()` strings or any user-visible label text** — not for brevity, not for layout reasons, not for any reason. Any change breaks all 30 translations and diverges K3 from K2.
 > - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.

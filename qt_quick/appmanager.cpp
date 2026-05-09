@@ -89,8 +89,14 @@ void AppManager::executeSearch()
     // Capture device path at search time so Results page shows the right device
     searchObject->devicePath = Device::getDevicePath(selectedDevice->ID, QSqlDatabase::defaultConnection);
 
+    // Save criteria to history table before search (mirrors SearchManager::startSearchJobStoppable)
+    searchObject->saveSearchHistoryToTable(QSqlDatabase::defaultConnection);
+
     // Execute search
     searchObject->searchFiles(selectedDevice);
+
+    // Persist history to CSV file (no-op for File/Hosted modes — guarded inside the method)
+    collection->saveSearchHistoryTableToFile();
 
     // Debug: Check results
     QVariantMap resultProps = searchObject->properties();
@@ -907,15 +913,101 @@ QString AppManager::verifyFileChecksum(const QString &filePath, const QString &e
 //----------------------------------------------------------------------
 QVariantList AppManager::getSearchHistory() const
 {
+    // Column index map (matches SELECT order below):
+    // 0  date_time
+    // 1  text_checked         2  text_phrase      3  text_criteria
+    // 4  case_sensitive       5  text_exclude
+    // 6  file_criteria_checked
+    // 7  file_type_checked    8  file_type
+    // 9  file_size_checked    10 file_size_min     11 file_size_min_unit
+    //                         12 file_size_max     13 file_size_max_unit
+    // 14 date_modified_checked 15 date_modified_min 16 date_modified_max
+    // 17 metadata_checked
+    // 18 duplicates_checked   19 dup_name  20 dup_size  21 dup_date  22 dup_checksum
+    // 23 differences_checked
+    // 24 folder_criteria_checked  25 show_folders  26 tag_checked  27 tag
+
     QVariantList result;
     QSqlQuery query(QSqlDatabase::database(QSqlDatabase::defaultConnection));
-    query.prepare(QLatin1String("SELECT date_time, text_phrase FROM search ORDER BY date_time DESC"));
+    query.prepare(QLatin1String(R"(
+        SELECT date_time,
+               text_checked, text_phrase, text_criteria, case_sensitive, text_exclude,
+               file_criteria_checked,
+               file_type_checked, file_type,
+               file_size_checked, file_size_min, file_size_min_unit, file_size_max, file_size_max_unit,
+               date_modified_checked, date_modified_min, date_modified_max,
+               metadata_checked,
+               duplicates_checked, duplicates_name, duplicates_size, duplicates_date_modified, duplicates_checksum,
+               differences_checked,
+               folder_criteria_checked, show_folders, tag_checked, tag
+        FROM search ORDER BY date_time DESC
+    )"));
     if (!query.exec())
         return result;
+
     while (query.next()) {
+        QStringList parts;
+
+        // ── File name ──────────────────────────────────────────────────────
+        if (query.value(1).toBool()) {
+            QString phrase = query.value(2).toString();
+            QString criteria = query.value(3).toString();
+            if (!phrase.isEmpty()) {
+                QString item = QLatin1Char('"') + phrase + QLatin1Char('"');
+                if (!criteria.isEmpty() && criteria != QLatin1String("All Words"))
+                    item += QLatin1String(" (") + criteria + QLatin1Char(')');
+                parts << item;
+            }
+            if (query.value(4).toBool())
+                parts << tr("Case sensitive");
+            QString exclude = query.value(5).toString();
+            if (!exclude.isEmpty())
+                parts << tr("Exclude: %1").arg(exclude);
+        }
+
+        // ── File criteria ──────────────────────────────────────────────────
+        if (query.value(6).toBool()) {
+            if (query.value(7).toBool())
+                parts << tr("Type: %1").arg(query.value(8).toString());
+            if (query.value(9).toBool())
+                parts << tr("Size: %1 %2 – %3 %4")
+                          .arg(query.value(10).toString(), query.value(11).toString(),
+                               query.value(12).toString(), query.value(13).toString());
+            if (query.value(14).toBool())
+                parts << tr("Date: %1 – %2")
+                          .arg(query.value(15).toString(), query.value(16).toString());
+        }
+
+        // ── Metadata ───────────────────────────────────────────────────────
+        if (query.value(17).toBool())
+            parts << tr("Metadata");
+
+        // ── Duplicates ─────────────────────────────────────────────────────
+        if (query.value(18).toBool()) {
+            QStringList dup;
+            if (query.value(19).toBool()) dup << tr("Name");
+            if (query.value(20).toBool()) dup << tr("Size");
+            if (query.value(21).toBool()) dup << tr("Date");
+            if (query.value(22).toBool()) dup << tr("Checksum");
+            parts << tr("Duplicates: %1").arg(dup.isEmpty() ? QStringLiteral("–") : dup.join(QLatin1String(", ")));
+        }
+
+        // ── Differences ────────────────────────────────────────────────────
+        if (query.value(23).toBool())
+            parts << tr("Differences");
+
+        // ── Folder criteria ────────────────────────────────────────────────
+        if (query.value(24).toBool()) {
+            if (query.value(25).toBool()) parts << tr("Folders only");
+            if (query.value(26).toBool()) {
+                QString tag = query.value(27).toString();
+                parts << (tag.isEmpty() ? tr("Tag") : tr("Tag: %1").arg(tag));
+            }
+        }
+
         QVariantMap entry;
         entry["dateTime"] = query.value(0).toString();
-        entry["summary"]  = query.value(1).toString();
+        entry["summary"]  = parts.join(QLatin1String("  |  "));
         result.append(entry);
     }
     return result;

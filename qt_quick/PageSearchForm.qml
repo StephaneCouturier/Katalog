@@ -357,6 +357,28 @@ ColumnLayout {
         }
     }
 
+    Kirigami.PromptDialog {
+        id: clearHistoryConfirmDialog
+        title: qsTr("Delete search history")
+        subtitle: qsTr("This will delete all search history entries. Continue?")
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
+        onAccepted: {
+            appManager1.clearSearchHistory()
+            historyListModel.clear()
+        }
+    }
+
+    Kirigami.PromptDialog {
+        id: keepLastHistoryConfirmDialog
+        title: qsTr("Keep last 10")
+        subtitle: qsTr("This will delete all but the last 10 search history entries. Continue?")
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
+        onAccepted: {
+            appManager1.keepLastSearchHistory(10)
+            pageSearchForm._refreshHistoryModel()
+        }
+    }
+
     Kirigami.Dialog {
         id: searchHistoryDialog
         title: qsTr("Search History")
@@ -364,19 +386,13 @@ ColumnLayout {
         customFooterActions: [
             Kirigami.Action {
                 text: qsTr("Keep Last 10")
-                icon.name: "list-remove"
-                onTriggered: {
-                    appManager1.keepLastSearchHistory(10)
-                    pageSearchForm._refreshHistoryModel()
-                }
+                icon.name: "edit-delete"
+                onTriggered: keepLastHistoryConfirmDialog.open()
             },
             Kirigami.Action {
                 text: qsTr("Clear")
                 icon.name: "edit-delete"
-                onTriggered: {
-                    appManager1.clearSearchHistory()
-                    historyListModel.clear()
-                }
+                onTriggered: clearHistoryConfirmDialog.open()
             }
         ]
 
@@ -390,7 +406,7 @@ ColumnLayout {
             delegate: Controls.ItemDelegate {
                 width: historyListView.width
                 contentItem: ColumnLayout {
-                    spacing: 0
+                    spacing: Kirigami.Units.smallSpacing / 2
                     Controls.Label {
                         text: model.dateTime
                         font.bold: true
@@ -398,7 +414,7 @@ ColumnLayout {
                     }
                     Controls.Label {
                         text: model.summary.length > 0 ? model.summary : qsTr("(no text filter)")
-                        elide: Text.ElideRight
+                        wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         color: Kirigami.Theme.disabledTextColor
                         font.italic: model.summary.length === 0
