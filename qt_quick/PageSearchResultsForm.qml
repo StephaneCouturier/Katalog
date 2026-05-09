@@ -157,8 +157,7 @@ ColumnLayout {
                     { text: qsTr("Export to CSV"),     value: "csv",              iconName: "document-save"    },
                     { text: qsTr("Export to Catalog"), value: "catalog",          iconName: "media-optical"    },
                     { text: qsTr("Verify Checksums"),  value: "verify-checksums", iconName: "dialog-ok-apply"  },
-                    { text: qsTr("Include Metadata"),   value: "get-metadata",     iconName: "configure"        },
-                    { text: "",                        value: "---",              iconName: ""                 },
+                    { text: qsTr("Extract Metadata"),  value: "get-metadata",     iconName: "video-mp4"        },
                     { text: qsTr("Move to Trash"),     value: "trash",            iconName: "user-trash"       },
                     { text: qsTr("Delete"),            value: "delete",           iconName: "edit-delete"      }
                 ]

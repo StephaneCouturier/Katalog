@@ -270,36 +270,39 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW }
-            Controls.TextField {
+            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            Controls.TextArea {
                 id: search_TextField_FileNameText
                 Layout.fillWidth: true
-                leftPadding: Kirigami.Units.largeSpacing
-                rightPadding: text.length > 0
-                              ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
-                              : Kirigami.Units.smallSpacing
-                onAccepted: pageSearchForm.executeSearch()
-                Kirigami.Icon {
-                    anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
-                    source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
-                    implicitWidth: Kirigami.Units.iconSizes.small
-                    implicitHeight: Kirigami.Units.iconSizes.small
-                    visible: parent.text.length > 0
-                    opacity: nameClearTap.pressed ? 0.5 : 1.0
-                    Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
-                    HoverHandler { cursorShape: Qt.ArrowCursor }
-                    TapHandler { id: nameClearTap; onTapped: search_TextField_FileNameText.clear() }
+                //placeholderText: qsTr("Shit+Enter to enter a new line")
+                wrapMode: TextArea.Wrap
+                implicitHeight: Kirigami.Units.gridUnit * 4
+                Keys.onPressed: function(event) {
+                    if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
+                            && (event.modifiers & Qt.ControlModifier)) {
+                        pageSearchForm.executeSearch()
+                        event.accepted = true
+                    }
                 }
             }
-            Controls.Button {
-                id: search_Button_PasteClipboard
-                icon.name: "edit-paste"
-                onClicked: search_TextField_FileNameText.text = pageSearch1.returnClipboard()
-            }
-            Controls.Button {
-                id: search_Button_CleanText
-                icon.name: "edit-clear-history"
-                onClicked: search_TextField_FileNameText.text = pageSearch1.returnCleanedText(search_TextField_FileNameText.text)
+            ColumnLayout {
+                Layout.alignment: Qt.AlignTop
+                spacing: Kirigami.Units.smallSpacing
+                Controls.Button {
+                    id: search_Button_ClearSearchText
+                    icon.name: "edit-clear"
+                    onClicked: search_TextField_FileNameText.clear()
+                }
+                Controls.Button {
+                    id: search_Button_PasteClipboard
+                    icon.name: "edit-paste"
+                    onClicked: search_TextField_FileNameText.text = pageSearch1.returnClipboard()
+                }
+                Controls.Button {
+                    id: search_Button_CleanText
+                    icon.name: "edit-clear-history"
+                    onClicked: search_TextField_FileNameText.text = pageSearch1.returnCleanedText(search_TextField_FileNameText.text)
+                }
             }
         }
         RowLayout {

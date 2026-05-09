@@ -22,7 +22,7 @@ The current Search tab accepts a **single text string** as the file name criteri
 ## Scenarios
 
 ### S1 — OR list: find files matching any of N terms
-![implemented](https://img.shields.io/badge/K2-2.12-brightgreen) ![implemented](https://img.shields.io/badge/K3-pending-lightgrey)
+![implemented](https://img.shields.io/badge/K2-2.12-brightgreen) ![implemented](https://img.shields.io/badge/K3-2.12-brightgreen)
 
 **Need:** A list search is equivalent to running one search per term with the same criteria, then combining all results. User wants to locate files whose name or path matches at least one item in the list.
 
@@ -176,7 +176,7 @@ Not matched:
 ---
 
 ### S6 — Clipboard import
-![implemented](https://img.shields.io/badge/K2-2.12-brightgreen) ![implemented](https://img.shields.io/badge/K3-pending-lightgrey)
+![implemented](https://img.shields.io/badge/K2-2.12-brightgreen) ![implemented](https://img.shields.io/badge/K3-2.12-brightgreen)
 
 **Need:** User copies a column from a spreadsheet, a selection from a text editor, or output from a file manager and pastes it into the search form. Each line becomes one search term.
 
