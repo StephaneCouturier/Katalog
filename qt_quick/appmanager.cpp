@@ -905,6 +905,41 @@ QString AppManager::verifyFileChecksum(const QString &filePath, const QString &e
     return result.match ? "match" : "mismatch:" + result.actualChecksum;
 }
 //----------------------------------------------------------------------
+QVariantList AppManager::getSearchHistory() const
+{
+    QVariantList result;
+    QSqlQuery query(QSqlDatabase::database(QSqlDatabase::defaultConnection));
+    query.prepare(QLatin1String("SELECT date_time, text_phrase FROM search ORDER BY date_time DESC"));
+    if (!query.exec())
+        return result;
+    while (query.next()) {
+        QVariantMap entry;
+        entry["dateTime"] = query.value(0).toString();
+        entry["summary"]  = query.value(1).toString();
+        result.append(entry);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::restoreSearchHistory(const QString &dateTime)
+{
+    if (!searchObject)
+        return {};
+    searchObject->searchDateTime = dateTime;
+    searchObject->loadSearchHistoryCriteria(QSqlDatabase::defaultConnection);
+    return searchObject->properties();
+}
+//----------------------------------------------------------------------
+void AppManager::clearSearchHistory()
+{
+    collection->clearSearchHistory(QSqlDatabase::defaultConnection);
+}
+//----------------------------------------------------------------------
+void AppManager::keepLastSearchHistory(int count)
+{
+    collection->keepLastSearchHistory(count, QSqlDatabase::defaultConnection);
+}
+//----------------------------------------------------------------------
 QStringList AppManager::getTagNames() const
 {
     Tag tag;

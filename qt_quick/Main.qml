@@ -564,6 +564,11 @@ Kirigami.ApplicationWindow {
                 onTriggered: pageSearchForm.resetSearch()
             },
             Kirigami.Action {
+                text: qsTr("History")
+                icon.name: "view-history"
+                onTriggered: pageSearchForm.openHistorySheet()
+            },
+            Kirigami.Action {
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: {

@@ -162,6 +162,12 @@ public slots:
 
     Q_INVOKABLE QStringList getTagNames() const;
 
+    // Search history
+    Q_INVOKABLE QVariantList getSearchHistory() const;
+    Q_INVOKABLE QVariantMap  restoreSearchHistory(const QString &dateTime);
+    Q_INVOKABLE void         clearSearchHistory();
+    Q_INVOKABLE void         keepLastSearchHistory(int count);
+
     // File / folder operations from results
     Q_INVOKABLE void    openFile(const QString &filePath);
     Q_INVOKABLE void    openFolder(const QString &folderPath);

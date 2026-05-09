@@ -172,6 +172,110 @@ ColumnLayout {
         appManager1.executeSearch()
     }
 
+    function openHistorySheet() {
+        _refreshHistoryModel()
+        searchHistoryDialog.open()
+    }
+
+    function _refreshHistoryModel() {
+        historyListModel.clear()
+        var hist = appManager1.getSearchHistory()
+        for (var i = 0; i < hist.length; ++i)
+            historyListModel.append(hist[i])
+    }
+
+    function applyHistoryCriteria(map) {
+        // File name
+        search_checkBox_FileNameCriteria.checked          = map.searchOnFileName ?? false
+        search_TextField_FileNameText.text                = map.searchText ?? ""
+        var idx = search_ComboBox_TextCriteriaWith.find(map.selectedTextCriteria ?? "")
+        if (idx >= 0) search_ComboBox_TextCriteriaWith.currentIndex = idx
+        idx = search_ComboBox_TextCriteriaIn.find(map.selectedSearchIn ?? "")
+        if (idx >= 0) search_ComboBox_TextCriteriaIn.currentIndex = idx
+        search_CheckBox_FileNameCaseSensitive.checked     = map.caseSensitive ?? false
+        search_TextField_FileNameExclude.text             = map.selectedSearchExclude ?? ""
+
+        // File attributes
+        checkBoxFileAttributesCriteria.checked            = map.searchOnFileCriteria ?? false
+        search_checkBox_Type.checked                      = map.searchOnType ?? false
+        for (var i = 0; i < search_comboBox_FileType.count; ++i) {
+            if (search_comboBox_FileType.model[i].value === (map.selectedFileType ?? "All")) {
+                search_comboBox_FileType.currentIndex = i
+                break
+            }
+        }
+        search_checkBox_Size.checked                      = map.searchOnSize ?? false
+        search_spinBox_MinimumSize.value                  = map.selectedMinimumSize ?? 0
+        idx = search_comboBox_MinSizeUnit.find(map.selectedMinSizeUnit ?? "Bytes")
+        if (idx >= 0) search_comboBox_MinSizeUnit.currentIndex = idx
+        search_spinBox_MaximumSize.value                  = map.selectedMaximumSize ?? 1000
+        idx = search_comboBox_MaxSizeUnit.find(map.selectedMaxSizeUnit ?? "GiB")
+        if (idx >= 0) search_comboBox_MaxSizeUnit.currentIndex = idx
+        search_checkBox_Date.checked                      = map.searchOnDate ?? false
+        search_dateTimeEdit_Min.text                      = map.selectedDateMin ?? "1970/01/01 00:00:00"
+        search_dateTimeEdit_Max.text                      = map.selectedDateMax ?? "2030/01/01 00:00:00"
+
+        // File metadata
+        search_checkBox_FileMetadata.checked              = map.searchOnFileMetadata ?? false
+        search_checkBox_MetadataText.checked              = map.searchOnMetadataText ?? false
+        search_lineEdit_MetadataText.text                 = map.metadataTextSearch ?? ""
+        search_checkBox_MetadataSize.checked              = map.searchOnMetadataSize ?? false
+        search_spinBox_MetadataMinimumHeight.value        = map.metadataMinimumHeight ?? 0
+        search_spinBox_MetadataMaximumHeight.value        = map.metadataMaximumHeight ?? 30000
+        search_spinBox_MetadataMinimumWidth.value         = map.metadataMinimumWidth ?? 0
+        search_spinBox_MetadataMaximumWidth.value         = map.metadataMaximumWidth ?? 30000
+        search_checkBox_MetadataDuration.checked          = map.searchOnMetadataDuration ?? false
+        search_dateTimeEdit_MetadataDurationMin.text      = map.metadataDurationMin ?? "00:00:00"
+        search_dateTimeEdit_MetadataDurationMax.text      = map.metadataDurationMax ?? "23:59:59"
+
+        // Folder attributes
+        search_checkBox_FolderCriteria.checked            = map.searchOnFolderCriteria ?? false
+        search_checkBox_ShowFoldersOnly.checked           = map.showFoldersOnly ?? false
+        search_checkBox_SearchOnTags.checked              = map.searchOnTags ?? false
+        if (map.selectedTagName) {
+            idx = search_comboBox_FolderTag.find(map.selectedTagName)
+            if (idx >= 0) search_comboBox_FolderTag.currentIndex = idx
+        } else {
+            search_comboBox_FolderTag.currentIndex = 0
+        }
+
+        // Duplicates
+        search_checkBox_Duplicates.checked                = map.searchOnDuplicates ?? false
+        search_checkBox_DuplicatesOnName.checked          = map.searchDuplicatesOnName ?? true
+        search_checkBox_DuplicatesOnSize.checked          = map.searchDuplicatesOnSize ?? false
+        search_checkBox_DuplicatesOnDate.checked          = map.searchDuplicatesOnDate ?? false
+        search_checkBox_DuplicatesOnChecksum.checked      = map.searchDuplicatesOnChecksum ?? false
+        search_comboBox_DuplicateChecksumSign.currentIndex = (map.searchDuplicatesChecksumEqual ?? true) ? 0 : 1
+        if (map.duplicatesCompareDevices ?? false)
+            search_radioButton_DuplicatesCompareTwoDevices.checked = true
+        else
+            search_radioButton_DuplicatesWithinSelectedDevice.checked = true
+        if ((map.duplicatesDeviceID1 ?? 0) > 0)
+            search_comboBox_DuplicatesDevice1._applyDevice(map.duplicatesDeviceID1)
+        else
+            search_comboBox_DuplicatesDevice1.resetSelection()
+        if ((map.duplicatesDeviceID2 ?? 0) > 0)
+            search_comboBox_DuplicatesDevice2._applyDevice(map.duplicatesDeviceID2)
+        else
+            search_comboBox_DuplicatesDevice2.resetSelection()
+
+        // Differences
+        search_checkBox_Differences.checked               = map.searchOnDifferences ?? false
+        search_checkBox_DifferencesOnName.checked         = map.differencesOnName ?? true
+        search_checkBox_DifferencesOnSize.checked         = map.differencesOnSize ?? false
+        search_checkBox_DifferencesOnDate.checked         = map.differencesOnDate ?? false
+        search_checkBox_DifferencesOnChecksum.checked     = map.differencesOnChecksum ?? false
+        search_comboBox_DifferenceChecksumSign.currentIndex = (map.differencesChecksumEqual ?? true) ? 0 : 1
+        if ((map.differencesDeviceID1 ?? 0) > 0)
+            search_comboBox_DifferencesDevice1._applyDevice(map.differencesDeviceID1)
+        else
+            search_comboBox_DifferencesDevice1.resetSelection()
+        if ((map.differencesDeviceID2 ?? 0) > 0)
+            search_comboBox_DifferencesDevice2._applyDevice(map.differencesDeviceID2)
+        else
+            search_comboBox_DifferencesDevice2.resetSelection()
+    }
+
     Kirigami.Dialog {
         id: dateDialog
         property string selectedDateField
@@ -248,6 +352,62 @@ ColumnLayout {
                             search_dateTimeEdit_Max.text = "2030/01/01 00:00:00"
                         dateDialog.close()
                     }
+                }
+            }
+        }
+    }
+
+    Kirigami.Dialog {
+        id: searchHistoryDialog
+        title: qsTr("Search History")
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Keep Last 10")
+                icon.name: "list-remove"
+                onTriggered: {
+                    appManager1.keepLastSearchHistory(10)
+                    pageSearchForm._refreshHistoryModel()
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("Clear")
+                icon.name: "edit-delete"
+                onTriggered: {
+                    appManager1.clearSearchHistory()
+                    historyListModel.clear()
+                }
+            }
+        ]
+
+        contentItem: ListView {
+            id: historyListView
+            implicitWidth: Kirigami.Units.gridUnit * 30
+            implicitHeight: Math.min(contentHeight, Kirigami.Units.gridUnit * 20)
+            clip: true
+            model: ListModel { id: historyListModel }
+
+            delegate: Controls.ItemDelegate {
+                width: historyListView.width
+                contentItem: ColumnLayout {
+                    spacing: 0
+                    Controls.Label {
+                        text: model.dateTime
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+                    Controls.Label {
+                        text: model.summary.length > 0 ? model.summary : qsTr("(no text filter)")
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                        color: Kirigami.Theme.disabledTextColor
+                        font.italic: model.summary.length === 0
+                    }
+                }
+                onClicked: {
+                    var map = appManager1.restoreSearchHistory(model.dateTime)
+                    pageSearchForm.applyHistoryCriteria(map)
+                    searchHistoryDialog.close()
                 }
             }
         }
