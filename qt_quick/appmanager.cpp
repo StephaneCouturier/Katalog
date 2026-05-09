@@ -6,11 +6,15 @@
 #include "core/device.h"
 #include "core/filechecksum.h"
 #include "core/filemetadata.h"
+#include "core/searchjobstoppable.h"
+#include "core/statusbarmessagebuilder.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "version.h"
 #include <QGuiApplication>
+#include <QCoreApplication>
 #include <QCryptographicHash>
+#include <QTimer>
 
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
@@ -56,6 +60,54 @@ void AppManager::initiateApp()
 void AppManager::setSearchObject(SearchSync *search)
 {
     searchObject = search;
+    connect(search, &Search::searchProgress, this, &AppManager::onSearchProgress);
+}
+//----------------------------------------------------------------------
+void AppManager::onSearchProgress(int filesProcessed)
+{
+    if (!searchObject) return;
+
+    StatusBarMessageBuilder builder;
+    builder.setOperation(tr("Search"));
+
+    if (filesProcessed == -1) {
+        // Search stopped/cancelled
+        builder.setStatus(tr("Stopped"));
+        if (!searchObject->currentCatalogName.isEmpty())
+            builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
+        if (searchObject->totalFilesProcessed > 0)
+            builder.setProcess(tr("Evaluated"), searchObject->totalFilesProcessed);
+        if (searchObject->fileNames.size() > 0)
+            builder.setResult(searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
+    } else if (filesProcessed == -4) {
+        // Loading progress tick (Memory mode CSV loading)
+        builder.setStatus(tr("In Progress"));
+        SearchJobStoppable *sjs = dynamic_cast<SearchJobStoppable*>(searchObject);
+        if (sjs) {
+            if (searchObject->totalCatalogs > 0)
+                builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
+            builder.setProcess(sjs->currentOperationVerb, sjs->currentCatalogFilesLoaded, sjs->currentCatalogTotalFiles);
+        }
+    } else if (filesProcessed < 0) {
+        // -2 (loading started) and -3 (loading finished)
+        builder.setStatus(tr("In Progress"));
+        if (searchObject->totalCatalogs > 0)
+            builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
+        if (searchObject->fileNames.size() > 0)
+            builder.setResult(searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
+    } else {
+        // Regular progress (filesProcessed >= 0)
+        builder.setStatus(tr("In Progress"));
+        if (searchObject->searchInCatalogsChecked && searchObject->totalCatalogs > 0)
+            builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
+        builder.setProcess(tr("Evaluated"), filesProcessed, searchObject->estimatedTotalFiles);
+        if (searchObject->fileNames.size() > 0)
+            builder.setResult(searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
+    }
+
+    m_searchStatusText = builder.build();
+    emit searchStatusTextChanged();
+    QCoreApplication::processEvents();
 }
 //----------------------------------------------------------------------
 void AppManager::executeSearch()
@@ -92,8 +144,34 @@ void AppManager::executeSearch()
     // Save criteria to history table before search (mirrors SearchManager::startSearchJobStoppable)
     searchObject->saveSearchHistoryToTable(QSqlDatabase::defaultConnection);
 
-    // Execute search
+    m_searchIsRunning = true;
+    m_searchStatusText = StatusBarMessageBuilder().setOperation(tr("Search")).setStatus(tr("In Progress")).build();
+    emit searchStateChanged();
+    emit searchStatusTextChanged();
+
+    // Execute search (synchronous — onSearchProgress() fires via direct connection during this call)
     searchObject->searchFiles(selectedDevice);
+
+    m_searchIsRunning = false;
+    emit searchStateChanged();
+
+    // Build completion message
+    {
+        StatusBarMessageBuilder builder;
+        builder.setOperation(tr("Search")).setStatus(tr("Completed"));
+        if (searchObject->totalCatalogs > 0 && !searchObject->currentCatalogName.isEmpty())
+            builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
+        if (searchObject->totalFilesProcessed > 0)
+            builder.setProcess(tr("Evaluated"), searchObject->totalFilesProcessed);
+        QString resultTitle = searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found");
+        builder.setResult(resultTitle, searchObject->fileNames.size());
+        m_searchStatusText = builder.build();
+        emit searchStatusTextChanged();
+        QTimer::singleShot(5000, this, [this]() {
+            m_searchStatusText.clear();
+            emit searchStatusTextChanged();
+        });
+    }
 
     // Persist history to CSV file (no-op for File/Hosted modes — guarded inside the method)
     collection->saveSearchHistoryTableToFile();

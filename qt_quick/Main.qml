@@ -580,6 +580,26 @@ Kirigami.ApplicationWindow {
             }
         ]
 
+        footer: RowLayout {
+            visible: appManager1.searchIsRunning || appManager1.searchStatusText.length > 0
+            spacing: Kirigami.Units.smallSpacing
+            Controls.BusyIndicator {
+                running: appManager1.searchIsRunning
+                visible: appManager1.searchIsRunning
+                implicitWidth:  Kirigami.Units.gridUnit * 1.5
+                implicitHeight: Kirigami.Units.gridUnit * 1.5
+                Layout.leftMargin: Kirigami.Units.smallSpacing
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.smallSpacing
+                text: appManager1.searchStatusText
+                textFormat: Text.StyledText
+                elide: Text.ElideRight
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+        }
+
         PageSearchForm {
             id: pageSearchForm
         }
@@ -611,6 +631,19 @@ Kirigami.ApplicationWindow {
                 }
             }
         ]
+
+        footer: RowLayout {
+            visible: appManager1.searchStatusText.length > 0
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.smallSpacing
+                text: appManager1.searchStatusText
+                textFormat: Text.StyledText
+                elide: Text.ElideRight
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+        }
 
         PageSearchResultsForm {
             id: pageSearchResultsForm

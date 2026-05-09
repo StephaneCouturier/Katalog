@@ -77,6 +77,8 @@ class AppManager : public QObject
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
+    Q_PROPERTY(bool    searchIsRunning   READ getSearchIsRunning   NOTIFY searchStateChanged)
+    Q_PROPERTY(QString searchStatusText  READ getSearchStatusText  NOTIFY searchStatusTextChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -162,6 +164,11 @@ public slots:
 
     Q_INVOKABLE QStringList getTagNames() const;
 
+    // Search progress
+    bool    getSearchIsRunning()  const { return m_searchIsRunning; }
+    QString getSearchStatusText() const { return m_searchStatusText; }
+    void onSearchProgress(int filesProcessed);
+
     // Search history
     Q_INVOKABLE QVariantList getSearchHistory() const;
     Q_INVOKABLE QVariantMap  restoreSearchHistory(const QString &dateTime);
@@ -212,6 +219,8 @@ public slots:
     Q_INVOKABLE void         setLanguage(const QString &languageCode);
 
 signals:
+    void searchStateChanged();
+    void searchStatusTextChanged();
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
@@ -229,6 +238,9 @@ signals:
     void languageChanged(const QString &code);
 
 private:
+    bool    m_searchIsRunning  = false;
+    QString m_searchStatusText;
+
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,
                                  const QString &hostName = QString(),
