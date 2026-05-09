@@ -74,8 +74,8 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | **Search**            | ✅ | 🚧 | |
 | — Search Criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|
 | — Search Results      | ✅ | ✅ | | - Select Device path is displayed
-| — Search History      | ✅ | 🔲 | |
-| — Search in Connected | ✅ | 🔲 | |
+| — Search History      | ✅ | ✅ | |
+| — Search in Connected | ✅ | ✅ | |
 | — Search Pause/Stop   | ✅ | 🔲 | Review thread mechanism, compared to BackUp |
 | — Search Progress     | ✅ | 🔲 | |
 | **Devices**           | ✅ | 🔲 | |

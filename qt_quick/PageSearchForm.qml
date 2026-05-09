@@ -13,7 +13,9 @@ ColumnLayout {
 
     function getCriteria() {
         //Global type of search
-        newSearch1.properties = {"searchInCatalogsChecked": true}; //DEV: TEMP
+        newSearch1.properties = {"searchInCatalogsChecked":  search_radioButton_SearchInCatalogs.checked};
+        newSearch1.properties = {"searchInConnectedChecked": search_radioButton_SearchInConnected.checked};
+        newSearch1.properties = {"connectedDirectory":       search_lineEdit_ConnectedDirectory.text};
 
         //File name
         newSearch1.properties = {"searchOnFileName":        search_checkBox_FileNameCriteria.checked};
@@ -81,6 +83,10 @@ ColumnLayout {
     }
 
     function resetSearch() {
+        // Reset search scope
+        search_radioButton_SearchInCatalogs.checked = true
+        search_lineEdit_ConnectedDirectory.text = ""
+
         // Reset fileNameCriteria
         search_checkBox_FileNameCriteria.checked = true
         search_TextField_FileNameText.text = ""
@@ -185,6 +191,14 @@ ColumnLayout {
     }
 
     function applyHistoryCriteria(map) {
+        // Search scope
+        if (map.searchInConnectedChecked ?? false) {
+            search_radioButton_SearchInConnected.checked = true
+        } else {
+            search_radioButton_SearchInCatalogs.checked = true
+        }
+        search_lineEdit_ConnectedDirectory.text           = map.connectedDirectory ?? ""
+
         // File name
         search_checkBox_FileNameCriteria.checked          = map.searchOnFileName ?? false
         search_TextField_FileNameText.text                = map.searchText ?? ""
@@ -428,6 +442,52 @@ ColumnLayout {
             }
         }
     }
+
+    // ── Section 0: Search scope ───────────────────────────────────────────────
+    FolderDialog {
+        id: connectedDirectoryDialog
+        onAccepted: search_lineEdit_ConnectedDirectory.text = folder.toString().replace("file://", "")
+    }
+
+    RowLayout {
+        Layout.fillWidth: true
+        Layout.leftMargin: Kirigami.Units.smallSpacing
+
+        Controls.RadioButton {
+            id: search_radioButton_SearchInCatalogs
+            text: qsTr("Catalogs")
+            checked: true
+            onCheckedChanged: {
+                if (checked) search_lineEdit_ConnectedDirectory.text = ""
+            }
+        }
+        Controls.RadioButton {
+            id: search_radioButton_SearchInConnected
+            text: qsTr("Connected drive")
+        }
+    }
+
+    RowLayout {
+        id: search_RowLayout_ConnectedDirectory
+        Layout.fillWidth: true
+        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.topMargin: Kirigami.Units.smallSpacing * 2
+        visible: search_radioButton_SearchInConnected.checked
+
+        Controls.TextField {
+            id: search_lineEdit_ConnectedDirectory
+            Layout.fillWidth: true
+            placeholderText: qsTr("Path to connected drive or folder")
+        }
+        Controls.Button {
+            icon.name: "folder-open"
+            onClicked: connectedDirectoryDialog.open()
+        }
+    }
+
+    Controls.Label { text: ""}
+
+    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
 
     // ── Section 1: File name ──────────────────────────────────────────────────
     Controls.CheckBox {
@@ -1057,6 +1117,7 @@ ColumnLayout {
     Controls.CheckBox {
         id: search_checkBox_Differences
         checked: false
+        enabled: search_radioButton_SearchInCatalogs.checked
         text: qsTr("Differences")
         Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
