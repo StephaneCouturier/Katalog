@@ -8,6 +8,7 @@
 #include "core/filemetadata.h"
 #include "core/searchjobstoppable.h"
 #include "core/statusbarmessagebuilder.h"
+#include "core/catalog.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "version.h"
@@ -1333,4 +1334,227 @@ void AppManager::saveToRecentCollections(const QString &mode, const QString &pat
     settings.sync();
 
     emit recentCollectionsChanged();
+}
+//----------------------------------------------------------------------
+// Catalog creation
+//----------------------------------------------------------------------
+void AppManager::setupDeviceUpdateManager()
+{
+    if (!m_deviceUpdateManager) {
+        m_deviceUpdateManager = new DeviceUpdateManager(this);
+    }
+    disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
+
+    if (!m_catalogProgressManager) {
+        m_catalogProgressManager = new CatalogProgressManager(this);
+        connect(m_catalogProgressManager, &CatalogProgressManager::statusMessageChanged,
+                this, [this](const QString &message, int /*timeout*/) {
+                    m_catalogStatusText = message;
+                    emit catalogStatusTextChanged();
+                });
+    }
+    m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
+
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+            this, &AppManager::onCatalogCreationCompleted);
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,
+            this, &AppManager::onCatalogCreationError);
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
+            this, &AppManager::onCatalogCreationCancelled);
+}
+//----------------------------------------------------------------------
+QString AppManager::createCatalog(const QString &name, const QString &path,
+                                   int storageId,
+                                   const QString &fileType, bool includeSubDir,
+                                   bool includeHidden, bool includeSymlinks,
+                                   bool isFullDevice,
+                                   const QString &includeMetadata,
+                                   const QString &includeChecksum,
+                                   const QStringList &perCatalogExcludes)
+{
+    // Validation
+    if (name.trimmed().isEmpty())
+        return tr("Provide a name for this new catalog.");
+    if (path.trimmed().isEmpty())
+        return tr("Provide a path for this new catalog.");
+    if (storageId <= 0)
+        return tr("Select a Storage for this new catalog.\n(Selection panel on the left and dropdown list)");
+    QDir sourceDir(path);
+    if (!sourceDir.exists())
+        return tr("The source directory does not exist.");
+
+    // Duplicate name check
+    Device *newDevice = new Device();
+    newDevice->generateDeviceID();
+    newDevice->type = "Catalog";
+    newDevice->name = name.trimmed();
+    if (newDevice->verifyDeviceNameExists()) {
+        delete newDevice;
+        return tr("There is already a catalog with this name:\n%1\n\nChoose a different name and try again.").arg(name.trimmed());
+    }
+
+    // Populate device and catalog
+    newDevice->parentID = storageId;
+    newDevice->catalog->generateID();
+    newDevice->externalID = newDevice->catalog->ID;
+    newDevice->groupID    = 0;
+    newDevice->path       = path;
+    newDevice->insertDevice();
+
+    // Load storage name for catalog record
+    Device parentDevice;
+    parentDevice.ID = storageId;
+    parentDevice.loadDevice(QSqlDatabase::defaultConnection);
+
+    newDevice->catalog->name             = newDevice->name;
+    newDevice->catalog->filePath         = collection->folder + "/" + newDevice->name + ".idx";
+    newDevice->catalog->sourcePath       = path;
+    newDevice->catalog->fileType         = fileType;
+    newDevice->catalog->includeSubDir    = includeSubDir;
+    newDevice->catalog->includeHidden    = includeHidden;
+    newDevice->catalog->includeSymblinks = includeSymlinks;
+    newDevice->catalog->isFullDevice     = isFullDevice;
+    newDevice->catalog->includeMetadata  = includeMetadata;
+    newDevice->catalog->includeChecksum  = includeChecksum;
+    newDevice->catalog->storageName      = parentDevice.name;
+    newDevice->catalog->appVersion       = currentVersion;
+    newDevice->catalog->insertCatalog();
+
+    // Per-catalog exclude folders
+    for (const QString &folder : perCatalogExcludes)
+        newDevice->catalog->addExcludeFolder(folder);
+    collection->saveCatalogFilterTableToFile();
+
+    // Update parent Storage path if it was empty
+    if (parentDevice.path.isEmpty()) {
+        parentDevice.path = path;
+        parentDevice.saveDevice();
+        collection->saveStorageTableToFile();
+    }
+
+    // Setup manager and check for concurrent operation
+    setupDeviceUpdateManager();
+    if (m_deviceUpdateManager->operationRunning()) {
+        delete newDevice;
+        return tr("A device operation is already running.");
+    }
+
+    m_creatingDevice = newDevice;
+    m_catalogIsCreating = true;
+    m_catalogCreateStartTime = QDateTime::currentDateTime();
+    m_catalogStatusText = StatusBarMessageBuilder().setOperation(tr("Create")).setStatus(tr("In Progress")).build();
+    emit catalogIsCreatingChanged();
+    emit catalogStatusTextChanged();
+
+    m_deviceUpdateManager->updateDeviceHierarchy(newDevice,
+                                                  collection->databaseMode,
+                                                  collection->folder,
+                                                  "create");
+    return QString();
+}
+//----------------------------------------------------------------------
+void AppManager::stopCatalogCreation()
+{
+    if (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())
+        m_deviceUpdateManager->requestHardStop();
+}
+//----------------------------------------------------------------------
+bool AppManager::isDirectoryEmpty(const QString &path) const
+{
+    QDir dir(path);
+    return dir.exists() && dir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty();
+}
+//----------------------------------------------------------------------
+void AppManager::onCatalogCreationCompleted(const QList<qint64> &/*results*/)
+{
+    collection->saveDeviceTableToFile();
+    collection->saveStatiticsTableToFile();
+
+    const QDateTime endTime  = QDateTime::currentDateTime();
+    const qint64 elapsedMs   = m_catalogCreateStartTime.msecsTo(endTime);
+    const int totalSec       = static_cast<int>(elapsedMs / 1000);
+    const QString duration   = QString("%1:%2:%3")
+        .arg(totalSec / 3600,        2, 10, QLatin1Char('0'))
+        .arg((totalSec % 3600) / 60, 2, 10, QLatin1Char('0'))
+        .arg(totalSec % 60,          2, 10, QLatin1Char('0'));
+    const QString report = tr("Indexing — Start: %1 | End: %2 | Duration: %3")
+        .arg(m_catalogCreateStartTime.toString("hh:mm:ss"))
+        .arg(endTime.toString("hh:mm:ss"))
+        .arg(duration);
+
+    m_catalogIsCreating = false;
+    m_catalogStatusText = report;
+    emit catalogIsCreatingChanged();
+    emit catalogStatusTextChanged();
+    QTimer::singleShot(8000, this, [this]() {
+        m_catalogStatusText.clear();
+        emit catalogStatusTextChanged();
+    });
+
+    refreshDeviceList();
+    emit catalogCreationCompleted(true, report);
+    m_creatingDevice = nullptr;
+}
+//----------------------------------------------------------------------
+void AppManager::onCatalogCreationError(const QString &error)
+{
+    if (m_creatingDevice) {
+        m_creatingDevice->deleteDevice(false);
+        m_creatingDevice = nullptr;
+    }
+    m_catalogIsCreating = false;
+    m_catalogStatusText.clear();
+    emit catalogIsCreatingChanged();
+    emit catalogStatusTextChanged();
+    refreshDeviceList();
+    emit catalogCreationCompleted(false, error);
+}
+//----------------------------------------------------------------------
+void AppManager::onCatalogCreationCancelled()
+{
+    if (m_creatingDevice) {
+        m_creatingDevice->deleteDevice(false);
+        m_creatingDevice = nullptr;
+    }
+    m_catalogIsCreating = false;
+    m_catalogStatusText.clear();
+    emit catalogIsCreatingChanged();
+    emit catalogStatusTextChanged();
+    refreshDeviceList();
+    emit catalogCreationCompleted(false, tr("Catalog creation was stopped."));
+}
+//----------------------------------------------------------------------
+// Storage pre-selection for Create page (used by DeviceTreeComboBox storageOnly mode)
+//----------------------------------------------------------------------
+int AppManager::getDefaultStorageId() const
+{
+    const QString type = selectedDevice->type;
+    if (type == "Storage")
+        return selectedDevice->ID;
+    if (type == "Catalog")
+        return selectedDevice->parentID;
+    if (type == "Virtual")
+        return Device::getFirstStorageDescendantId(selectedDevice->ID, QSqlDatabase::defaultConnection);
+    return 0;
+}
+
+// Exclude directories (collection-level)
+//----------------------------------------------------------------------
+QStringList AppManager::getExcludeDirectories() const
+{
+    return collection->getExcludeDirectories();
+}
+//----------------------------------------------------------------------
+bool AppManager::addExcludeDirectory(const QString &path)
+{
+    if (path.trimmed().isEmpty()) return false;
+    bool ok = collection->addExcludeDirectory(path.trimmed());
+    if (ok) emit excludeDirectoriesChanged();
+    return ok;
+}
+//----------------------------------------------------------------------
+void AppManager::removeExcludeDirectory(const QString &path)
+{
+    collection->removeExcludeDirectory(path);
+    emit excludeDirectoriesChanged();
 }

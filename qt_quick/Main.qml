@@ -446,6 +446,52 @@ Kirigami.ApplicationWindow {
         }
     }
 
+    Controls.Dialog {
+        id: createValidationDialog
+        property alias message: createValidationLabel.text
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
+        Controls.Label {
+            id: createValidationLabel
+            width: parent.width
+            wrapMode: Text.WordWrap
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("OK")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: createValidationDialog.close()
+        }
+    }
+
+    Controls.Dialog {
+        id: createEmptyDirDialog
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
+        Controls.Label {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: qsTr("The source folder does not contain any file.\nThis could mean that the source is empty or the device is not mounted to this folder.\nDo you want to save it anyway (the catalog would be empty)?")
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Yes")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            Controls.Button {
+                text: qsTr("No")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onAccepted: { createEmptyDirDialog.close(); pageCreate_formLayout_Create.doCreate() }
+            onRejected: createEmptyDirDialog.close()
+        }
+    }
+
     Component {
         id: aboutPage
         Kirigami.AboutPage {
@@ -713,13 +759,70 @@ Kirigami.ApplicationWindow {
         visible: false
         title: "Create"
 
+        Connections {
+            target: appManager1
+            function onCatalogCreationCompleted(success, report) {
+                if (pageCreate.visible) {
+                    showPassiveNotification(
+                        success ? qsTr("Catalog created successfully.") : qsTr("Catalog creation failed: ") + report,
+                        success ? "short" : "long"
+                    )
+                    if (success)
+                        appManager1.refreshDeviceList()
+                }
+            }
+        }
+
+        Connections {
+            target: pageCreate_formLayout_Create
+            function onValidationError(message) {
+                createValidationDialog.message = message
+                createValidationDialog.open()
+            }
+            function onEmptyDirConfirmNeeded() {
+                createEmptyDirDialog.open()
+            }
+        }
+
         actions: [
             Kirigami.Action {
-                text: "Close"
+                text: qsTr("Create")
+                icon.name: "document-save"
+                enabled: !appManager1.catalogIsCreating
+                onTriggered: pageCreate_formLayout_Create.triggerCreate()
+            },
+            Kirigami.Action {
+                text: qsTr("Stop")
+                icon.name: "process-stop"
+                enabled: appManager1.catalogIsCreating
+                onTriggered: pageCreate_formLayout_Create.triggerStop()
+            },
+            Kirigami.Action {
+                text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageCreate)
             }
         ]
+
+        footer: RowLayout {
+            visible: appManager1.catalogIsCreating || appManager1.catalogStatusText.length > 0
+            spacing: Kirigami.Units.smallSpacing
+            Controls.BusyIndicator {
+                running: appManager1.catalogIsCreating
+                visible: appManager1.catalogIsCreating
+                implicitWidth:  Kirigami.Units.gridUnit * 1.5
+                implicitHeight: Kirigami.Units.gridUnit * 1.5
+                Layout.leftMargin: Kirigami.Units.smallSpacing
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.smallSpacing
+                text: appManager1.catalogStatusText
+                textFormat: Text.StyledText
+                elide: Text.ElideRight
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+        }
 
         PageCreateForm {
             id: pageCreate_formLayout_Create

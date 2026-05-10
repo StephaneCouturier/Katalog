@@ -6,12 +6,15 @@ import org.kde.kirigami as Kirigami
 // A button + popup that shows the device tree with indentation.
 // Use selectedDeviceId (int) and selectedDeviceName (string) to read the selection.
 // Call resetSelection() to clear back to the current app-selected device.
+// Set storageOnly: true to restrict selection to Storage-type devices only
+// (ancestor groups are shown as non-selectable context, pre-selection uses getDefaultStorageId()).
 Controls.Button {
     id: control
 
     property int    selectedDeviceId:   0
     property string selectedDeviceName: ""
     property string selectedDeviceType: ""
+    property bool   storageOnly:        false
 
     // Source model — defaults to the shared device list
     property var sourceModel: appManager1.deviceListModel
@@ -31,6 +34,13 @@ Controls.Button {
     function _applyDevice(id) {
         var dev = _findDevice(id)
         if (dev) {
+            if (storageOnly && dev.type !== "Storage") {
+                // In storage-only mode, non-Storage results clear the selection (K2 behaviour)
+                selectedDeviceId   = 0
+                selectedDeviceName = ""
+                selectedDeviceType = ""
+                return
+            }
             selectedDeviceId   = id
             selectedDeviceName = dev.name
             selectedDeviceType = dev.type
@@ -38,7 +48,10 @@ Controls.Button {
     }
 
     function resetSelection() {
-        _applyDevice(appManager1.selectedDeviceId)
+        if (storageOnly)
+            _applyDevice(appManager1.getDefaultStorageId())
+        else
+            _applyDevice(appManager1.selectedDeviceId)
     }
 
     // Initialise from the currently selected device, and follow changes
@@ -47,6 +60,7 @@ Controls.Button {
     Connections {
         target: appManager1
         function onSelectedDeviceChanged() { control.resetSelection() }
+        function onDeviceListRefreshed()   { control.resetSelection() }
     }
 
     // ── Button appearance ─────────────────────────────────────────────────
@@ -73,7 +87,8 @@ Controls.Button {
         Controls.Label {
             text:               control.selectedDeviceName.length > 0
                                     ? control.selectedDeviceName
-                                    : qsTr("Select")
+                                    : control.storageOnly ? qsTr("Select a Storage")
+                                                          : qsTr("Select")
             elide:              Text.ElideRight
             horizontalAlignment: Text.AlignLeft
             verticalAlignment:   Text.AlignVCenter
@@ -102,7 +117,7 @@ Controls.Button {
         closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
 
         background: Rectangle {
-            color:        Kirigami.Theme.backgroundColor
+            color:        popup.palette.base
             border.color: Kirigami.Theme.separatorColor ?? "transparent"
             border.width: 1
             radius:       4
@@ -125,6 +140,7 @@ Controls.Button {
                     width:       ListView.view.width
                     leftPadding: Kirigami.Units.smallSpacing + level * Kirigami.Units.gridUnit
                     highlighted: control.selectedDeviceId === deviceId
+                    enabled:     !control.storageOnly || type === "Storage"
 
                     background: Rectangle {
                         color: control.selectedDeviceId === deviceId

@@ -57,6 +57,8 @@
 #include "core/collection.h"
 #include "core/device.h"
 #include "core/tag.h"
+#include "core/deviceupdatemanager.h"
+#include "core/catalogprogressmanager.h"
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
 
@@ -79,6 +81,8 @@ class AppManager : public QObject
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
     Q_PROPERTY(bool    searchIsRunning   READ getSearchIsRunning   NOTIFY searchStateChanged)
     Q_PROPERTY(QString searchStatusText  READ getSearchStatusText  NOTIFY searchStatusTextChanged)
+    Q_PROPERTY(bool    catalogIsCreating READ getCatalogIsCreating NOTIFY catalogIsCreatingChanged)
+    Q_PROPERTY(QString catalogStatusText READ getCatalogStatusText NOTIFY catalogStatusTextChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -169,6 +173,30 @@ public slots:
     QString getSearchStatusText() const { return m_searchStatusText; }
     void onSearchProgress(int filesProcessed);
 
+    // Catalog creation progress
+    bool    getCatalogIsCreating()  const { return m_catalogIsCreating; }
+    QString getCatalogStatusText()  const { return m_catalogStatusText; }
+
+    // Catalog creation
+    Q_INVOKABLE QString      createCatalog(const QString &name, const QString &path,
+                                           int storageId,
+                                           const QString &fileType, bool includeSubDir,
+                                           bool includeHidden, bool includeSymlinks,
+                                           bool isFullDevice,
+                                           const QString &includeMetadata,
+                                           const QString &includeChecksum,
+                                           const QStringList &perCatalogExcludes);
+    Q_INVOKABLE void         stopCatalogCreation();
+    Q_INVOKABLE bool         isDirectoryEmpty(const QString &path) const;
+
+    // Storage pre-selection for Create page (used by DeviceTreeComboBox storageOnly mode)
+    Q_INVOKABLE int getDefaultStorageId() const;
+
+    // Exclude directories (collection-level)
+    Q_INVOKABLE QStringList  getExcludeDirectories() const;
+    Q_INVOKABLE bool         addExcludeDirectory(const QString &path);
+    Q_INVOKABLE void         removeExcludeDirectory(const QString &path);
+
     // Search history
     Q_INVOKABLE QVariantList getSearchHistory() const;
     Q_INVOKABLE QVariantMap  restoreSearchHistory(const QString &dateTime);
@@ -221,6 +249,10 @@ public slots:
 signals:
     void searchStateChanged();
     void searchStatusTextChanged();
+    void catalogIsCreatingChanged();
+    void catalogStatusTextChanged();
+    void catalogCreationCompleted(bool success, const QString &report);
+    void excludeDirectoriesChanged();
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
@@ -240,6 +272,17 @@ signals:
 private:
     bool    m_searchIsRunning  = false;
     QString m_searchStatusText;
+    bool    m_catalogIsCreating = false;
+    QString m_catalogStatusText;
+    Device *m_creatingDevice   = nullptr;
+    QDateTime m_catalogCreateStartTime;
+    DeviceUpdateManager    *m_deviceUpdateManager    = nullptr;
+    CatalogProgressManager *m_catalogProgressManager = nullptr;
+
+    void setupDeviceUpdateManager();
+    void onCatalogCreationCompleted(const QList<qint64> &results);
+    void onCatalogCreationError(const QString &error);
+    void onCatalogCreationCancelled();
 
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,

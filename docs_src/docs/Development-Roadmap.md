@@ -78,12 +78,13 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Search in Connected | ✅ | ✅ | |
 | — Search Progress     | ✅ | ✅ | result throttler|
 | — Search Pause/Stop   | ✅ | 🔲 | Review thread mechanism, compared to BackUp |
+| **Create**            | ✅ | ✅ | |
 | **Devices**           | ✅ | 🔲 | |
 | — View                | ✅ | 🔲 | |
 | — Create/Edit         | ✅ | 🔲 | |
 | — Update progress     | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
-| **Create**            | ✅ | 🔲 | |
+
 | **Statistics**        | ✅ | 🔲 | |
 | **Tags**              | ✅ | 🔲 | |
 | **Backup**            | ✅ | 🔲 | |

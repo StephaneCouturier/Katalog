@@ -995,6 +995,30 @@ QString Device::getDevicePath(int deviceId, const QString &connectionName)
     return parts.join(" / ");
 }
 //----------------------------------------------------------------------
+int Device::getFirstStorageDescendantId(int virtualDeviceId, const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare(QLatin1String(R"(
+        WITH RECURSIVE subtree AS (
+            SELECT device_id, device_name, device_type
+            FROM   device
+            WHERE  device_parent_id = :virtualId
+            UNION ALL
+            SELECT d.device_id, d.device_name, d.device_type
+            FROM   device d
+            JOIN   subtree s ON d.device_parent_id = s.device_id
+        )
+        SELECT device_id FROM subtree
+        WHERE  device_type = 'Storage'
+        ORDER  BY device_name
+        LIMIT  1
+    )"));
+    query.bindValue(":virtualId", virtualDeviceId);
+    if (query.exec() && query.next())
+        return query.value(0).toInt();
+    return 0;
+}
+//----------------------------------------------------------------------
 Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
     const QString& oldRoot,
     const QString& newRoot,
