@@ -76,9 +76,9 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Search Results      | ✅ | ✅ | | - Select Device path is displayed
 | — Search History      | ✅ | ✅ | |
 | — Search in Connected | ✅ | ✅ | |
-| — Search Progress     | ✅ | ✅ | result throttler|
-| — Search Pause/Stop   | ✅ | 🔲 | Review thread mechanism, compared to BackUp |
-| **Create**            | ✅ | ✅ | |
+| — Search Progress     | ✅ | ✅ | result throttler| |
+| — Search Pause/Stop   | ✅ | 🔲 | Review thread mechanism compared to BackUp | |
+| **Create**            | ✅ | ✅ | Review thread mechanism compared to BackUp, Add Paste button, Add Paste from selected path & name | |
 | **Devices**           | ✅ | 🔲 | |
 | — View                | ✅ | 🔲 | |
 | — Create/Edit         | ✅ | 🔲 | |

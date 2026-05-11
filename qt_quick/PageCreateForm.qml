@@ -106,7 +106,7 @@ ColumnLayout {
         // ── Section 1: Required ───────────────────────────────────────────────
         Kirigami.Heading {
             level: 3
-            text: qsTr("1- Select the source path")
+            text: qsTr("Catalog definition")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
@@ -126,12 +126,39 @@ ColumnLayout {
             }
         }
 
+        Controls.Label { text: qsTr("Storage"); opacity: 0.7 }
+        DeviceTreeComboBox {
+            id: create_storageComboBox
+            storageOnly: true
+            Layout.fillWidth: true
+        }
+
+        Controls.Label { text: qsTr("Catalog name"); opacity: 0.7 }
+        RowLayout {
+            Layout.fillWidth: true
+            Controls.TextField {
+                id: create_lineEdit_NewCatalogName
+                Layout.fillWidth: true
+                placeholderText: qsTr("New catalog name")
+            }
+            Controls.Button {
+                icon.name: "tools-wizard"
+                Controls.ToolTip.text: qsTr("Generate name from path")
+                Controls.ToolTip.visible: hovered
+                onClicked: {
+                    var generated = create_lineEdit_NewCatalogPath.text
+                    generated = generated.replace(/\//g, "_").replace(/:/g, "_")
+                    create_lineEdit_NewCatalogName.text = generated
+                }
+            }
+        }
+
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing }
 
         // ── Section 2: Catalog Options ────────────────────────────────────────
         Kirigami.Heading {
             level: 3
-            text: qsTr("2- Select content options")
+            text: qsTr("Content options")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
@@ -221,55 +248,7 @@ ColumnLayout {
             currentIndex: 0
         }
 
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing }
-
-        // ── Section 3: Define and Create ──────────────────────────────────────
-        Kirigami.Heading {
-            level: 3
-            text: qsTr("3- Define and Create catalog")
-            color: Kirigami.Theme.linkColor
-            Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.smallSpacing
-        }
-
-        Controls.Label { text: qsTr("Storage"); opacity: 0.7 }
-        DeviceTreeComboBox {
-            id: create_storageComboBox
-            storageOnly: true
-            Layout.fillWidth: true
-        }
-
-        Controls.Label { text: qsTr("Catalog name"); opacity: 0.7 }
-        RowLayout {
-            Layout.fillWidth: true
-            Controls.TextField {
-                id: create_lineEdit_NewCatalogName
-                Layout.fillWidth: true
-                placeholderText: qsTr("New catalog name")
-            }
-            Controls.Button {
-                icon.name: "tools-wizard"
-                Controls.ToolTip.text: qsTr("Generate name from path")
-                Controls.ToolTip.visible: hovered
-                onClicked: {
-                    var generated = create_lineEdit_NewCatalogPath.text
-                    generated = generated.replace(/\//g, "_").replace(/:/g, "_")
-                    create_lineEdit_NewCatalogName.text = generated
-                }
-            }
-        }
-
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing }
-
-        // ── Section 4: Per-catalog Exclude Folders ────────────────────────────
-        Kirigami.Heading {
-            level: 3
-            text: qsTr("Exclude folders (this catalog)")
-            color: Kirigami.Theme.linkColor
-            Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.smallSpacing
-        }
-
+        //Folder exclusion (catalog only)
         Controls.Label { text: qsTr("Folder to exclude"); opacity: 0.7 }
         RowLayout {
             Layout.fillWidth: true
@@ -321,7 +300,8 @@ ColumnLayout {
 
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing }
 
-        // ── Section 5: Global Parameters (collapsible) ────────────────────────
+
+        // Global Parameters (collapsible) ────────────────────────
         RowLayout {
             Layout.columnSpan: 2
             Layout.fillWidth: true
