@@ -6,8 +6,10 @@ import org.kde.kirigami as Kirigami
 // A button + popup that shows the device tree with indentation.
 // Use selectedDeviceId (int) and selectedDeviceName (string) to read the selection.
 // Call resetSelection() to clear back to the current app-selected device.
+// Call selectById(id) to pre-select a specific device by ID.
 // Set storageOnly: true to restrict selection to Storage-type devices only
 // (ancestor groups are shown as non-selectable context, pre-selection uses getDefaultStorageId()).
+// Set hideCatalogs: true to hide Catalog-type devices from the list entirely.
 Controls.Button {
     id: control
 
@@ -15,6 +17,8 @@ Controls.Button {
     property string selectedDeviceName: ""
     property string selectedDeviceType: ""
     property bool   storageOnly:        false
+    property bool   hideCatalogs:       false
+    property bool   hideStorages:       false
 
     // Source model — defaults to the shared device list
     property var sourceModel: appManager1.deviceListModel
@@ -53,6 +57,8 @@ Controls.Button {
         else
             _applyDevice(appManager1.selectedDeviceId)
     }
+
+    function selectById(id) { _applyDevice(id) }
 
     // Initialise from the currently selected device, and follow changes
     Component.onCompleted: resetSelection()
@@ -137,6 +143,9 @@ Controls.Button {
                     required property int    level
                     required property string type
 
+                    visible:     !(control.hideCatalogs && type === "Catalog")
+                                 && !(control.hideStorages && type === "Storage")
+                    height:      visible ? implicitHeight : 0
                     width:       ListView.view.width
                     leftPadding: Kirigami.Units.smallSpacing + level * Kirigami.Units.gridUnit
                     highlighted: control.selectedDeviceId === deviceId

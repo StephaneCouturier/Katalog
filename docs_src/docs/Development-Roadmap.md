@@ -80,8 +80,8 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Search Pause/Stop   | ✅ | 🔲 | Review thread mechanism compared to BackUp | |
 | **Create**            | ✅ | ✅ | Review thread mechanism compared to BackUp, Add Paste button, Add Paste from selected path & name | |
 | **Devices**           | ✅ | 🔲 | |
-| — View                | ✅ | 🔲 | |
-| — Create/Edit         | ✅ | 🔲 | |
+| — View list           | ✅ | 🔲 | |
+| — Edit                | ✅ | 🔲 | |
 | — Update progress     | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
 

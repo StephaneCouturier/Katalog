@@ -59,6 +59,7 @@ qt_add_qml_module(Katalog3
         PageDevicesView.qml
         PageDevicesViewDelegate.qml
         PageCreateForm.qml
+        PageDeviceEditForm.qml
         PageSelectionView.qml
         DeviceTreeComboBox.qml
     SOURCES

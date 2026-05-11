@@ -1538,6 +1538,372 @@ int AppManager::getDefaultStorageId() const
     return 0;
 }
 
+// Device edit
+//----------------------------------------------------------------------
+QVariantMap AppManager::getDeviceDetails(int deviceId) const
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+
+    QVariantMap r;
+    r["type"]     = dev.type;
+    r["name"]     = dev.name;
+    r["parentId"] = dev.parentID;
+    r["path"]     = dev.path;
+    r["deviceId"] = dev.ID;
+
+    if (dev.type == "Catalog") {
+        r["fileType"]        = dev.catalog->fileType;
+        r["includeHidden"]   = dev.catalog->includeHidden;
+        r["includeMetadata"] = dev.catalog->includeMetadata;
+        r["includeChecksum"] = dev.catalog->includeChecksum;
+        r["isFullDevice"]    = dev.catalog->isFullDevice;
+        r["excludeFolders"]  = dev.catalog->getExcludeFolders();
+    } else if (dev.type == "Storage") {
+        r["storageExtId"]         = dev.externalID;
+        r["storageType"]          = dev.storage->type;
+        r["storageLabel"]         = dev.storage->label;
+        r["storageFileSystem"]    = dev.storage->fileSystem;
+        r["totalSpace"]           = (qlonglong)dev.totalSpace;
+        r["freeSpace"]            = (qlonglong)dev.freeSpace;
+        r["storageBrand"]         = dev.storage->brand;
+        r["storageModel"]         = dev.storage->model;
+        r["storageSerialNumber"]  = dev.storage->serialNumber;
+        r["storageBuildDate"]     = dev.storage->buildDate;
+        r["storageComment1"]      = dev.storage->comment1;
+        r["storageComment2"]      = dev.storage->comment2;
+        r["storageComment3"]      = dev.storage->comment3;
+        r["storagePicturePath"]   = dev.storage->picturePath;
+    }
+    return r;
+}
+//----------------------------------------------------------------------
+QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int parentId, const QString &path)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+
+    // Name uniqueness for Catalog
+    if (dev.type == "Catalog" && name != dev.name) {
+        Device check;
+        check.name = name;
+        if (check.verifyDeviceNameExists())
+            return tr("There is already a catalog with this name: %1\nChoose a different name.").arg(name);
+    }
+
+    dev.name = name;
+    dev.path = path;
+
+    // Trim trailing slash (except root "/")
+    if (dev.path.length() > 1 && dev.path.endsWith('/'))
+        dev.path.chop(1);
+
+    dev.catalog->sourcePath = dev.path;
+
+    // Parent + groupId cascade
+    Device newParent;
+    newParent.ID = parentId;
+    if (parentId > 0)
+        newParent.loadDevice(conn);
+
+    if (dev.type == "Catalog" && dev.groupID == 0 && parentId > 0
+        && newParent.type != "Storage") {
+        return tr("A Catalog in the Physical group can only be set under a Storage device.");
+    }
+
+    int newGroupId = (parentId == 0) ? 1 : newParent.groupID;
+    if (dev.groupID != newGroupId) {
+        dev.loadDevice(conn); // reload to get deviceIDList
+        Device sub;
+        for (int id : dev.deviceIDList) {
+            sub.ID = id;
+            sub.loadDevice(conn);
+            sub.groupID = newGroupId;
+            sub.saveDevice();
+        }
+    }
+
+    dev.parentID = parentId;
+    dev.groupID  = newGroupId;
+    dev.saveDevice();
+    collection->saveDeviceTableToFile();
+    return {};
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::checkCatalogOptionChanges(int deviceId, const QString &fileType, bool includeHidden,
+                                                   const QString &includeMetadata, const QString &includeChecksum,
+                                                   bool isFullDevice) const
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device prev;
+    prev.ID = deviceId;
+    prev.loadDevice(conn);
+
+    QStringList changedFields;
+    bool rescanNeeded = false;
+
+    if (fileType != prev.catalog->fileType) {
+        changedFields << tr("File type: %1 → %2").arg(prev.catalog->fileType, fileType);
+        rescanNeeded = true;
+    }
+    if (includeHidden != prev.catalog->includeHidden) {
+        changedFields << tr("Include hidden: %1 → %2")
+                             .arg(prev.catalog->includeHidden ? tr("All") : tr("None"),
+                                  includeHidden              ? tr("All") : tr("None"));
+        rescanNeeded = true;
+    }
+    if (includeMetadata != prev.catalog->includeMetadata) {
+        changedFields << tr("Include metadata: %1 → %2").arg(prev.catalog->includeMetadata, includeMetadata);
+        rescanNeeded = true;
+    }
+    if (includeChecksum != prev.catalog->includeChecksum) {
+        changedFields << tr("Include checksum: %1 → %2").arg(prev.catalog->includeChecksum, includeChecksum);
+        bool toNone = (prev.catalog->includeChecksum != Catalog::CHECKSUM_NONE
+                       && includeChecksum == Catalog::CHECKSUM_NONE);
+        if (!toNone) rescanNeeded = true;
+    }
+    if (isFullDevice != prev.catalog->isFullDevice) {
+        changedFields << tr("Is full device: %1 → %2")
+                             .arg(prev.catalog->isFullDevice ? tr("yes") : tr("no"),
+                                  isFullDevice               ? tr("yes") : tr("no"));
+        rescanNeeded = true;
+    }
+
+    QVariantMap result;
+    result["needsConfirmation"] = !changedFields.isEmpty();
+    result["message"]           = changedFields.join('\n');
+    result["rescanNeeded"]      = rescanNeeded;
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::saveCatalogOptions(int deviceId, const QString &fileType, bool includeHidden,
+                                        const QString &includeMetadata, const QString &includeChecksum,
+                                        bool isFullDevice)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+
+    const QString prevMetadata = dev.catalog->includeMetadata;
+
+    dev.catalog->fileType        = fileType;
+    dev.catalog->includeHidden   = includeHidden;
+    dev.catalog->includeMetadata = includeMetadata;
+    dev.catalog->includeChecksum = includeChecksum;
+    dev.catalog->isFullDevice    = isFullDevice;
+
+    dev.catalog->saveCatalog();
+    dev.catalog->updateCatalogFileHeaders(collection->databaseMode);
+    dev.catalog->renameCatalogFile(dev.name);
+
+    if (prevMetadata != includeMetadata)
+        dev.catalog->handleMetadataTransition(prevMetadata, includeMetadata);
+
+    return {};
+}
+//----------------------------------------------------------------------
+QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+
+    // Check Storage external ID uniqueness if changed
+    int newExtId = fields.value("storageExtId", dev.externalID).toInt();
+    if (newExtId != dev.externalID) {
+        Device check;
+        check.externalID = newExtId;
+        if (check.verifyStorageExternalIDExists())
+            return tr("There is already a Storage with this ID. Choose a different ID.");
+        dev.externalID = newExtId;
+    }
+
+    dev.totalSpace = fields.value("totalSpace", (qlonglong)dev.totalSpace).toLongLong();
+    dev.freeSpace  = fields.value("freeSpace",  (qlonglong)dev.freeSpace).toLongLong();
+    dev.saveDevice();
+
+    dev.storage->type         = fields.value("storageType",         dev.storage->type).toString();
+    dev.storage->label        = fields.value("storageLabel",        dev.storage->label).toString();
+    dev.storage->fileSystem   = fields.value("storageFileSystem",   dev.storage->fileSystem).toString();
+    dev.storage->brand        = fields.value("storageBrand",        dev.storage->brand).toString();
+    dev.storage->model        = fields.value("storageModel",        dev.storage->model).toString();
+    dev.storage->serialNumber = fields.value("storageSerialNumber", dev.storage->serialNumber).toString();
+    dev.storage->buildDate    = fields.value("storageBuildDate",    dev.storage->buildDate).toString();
+    dev.storage->comment1     = fields.value("storageComment1",     dev.storage->comment1).toString();
+    dev.storage->comment2     = fields.value("storageComment2",     dev.storage->comment2).toString();
+    dev.storage->comment3     = fields.value("storageComment3",     dev.storage->comment3).toString();
+    dev.storage->picturePath  = fields.value("storagePicturePath",  dev.storage->picturePath).toString();
+
+    // Persist via SQL (mirrors K2 saveDeviceForm Storage branch)
+    QSqlQuery q(QSqlDatabase::database(conn));
+    q.prepare(QLatin1String(R"(
+        UPDATE storage
+        SET storage_id           = :storage_id,
+            storage_type         = :type,
+            storage_label        = :label,
+            storage_file_system  = :fs,
+            storage_total_space  = :total,
+            storage_free_space   = :free,
+            storage_brand        = :brand,
+            storage_model        = :model,
+            storage_serial_number= :serial,
+            storage_build_date   = :build,
+            storage_comment1     = :c1,
+            storage_comment2     = :c2,
+            storage_comment3     = :c3,
+            storage_picture_path = :pic
+        WHERE storage_id = :old_id
+    )"));
+    q.bindValue(":storage_id", newExtId);
+    q.bindValue(":type",   dev.storage->type);
+    q.bindValue(":label",  dev.storage->label);
+    q.bindValue(":fs",     dev.storage->fileSystem);
+    q.bindValue(":total",  dev.totalSpace);
+    q.bindValue(":free",   dev.freeSpace);
+    q.bindValue(":brand",  dev.storage->brand);
+    q.bindValue(":model",  dev.storage->model);
+    q.bindValue(":serial", dev.storage->serialNumber);
+    q.bindValue(":build",  dev.storage->buildDate);
+    q.bindValue(":c1",     dev.storage->comment1);
+    q.bindValue(":c2",     dev.storage->comment2);
+    q.bindValue(":c3",     dev.storage->comment3);
+    q.bindValue(":pic",    dev.storage->picturePath);
+    q.bindValue(":old_id", dev.externalID);
+    if (!q.exec())
+        return q.lastError().text();
+
+    collection->saveStorageTableToFile();
+    return {};
+}
+//----------------------------------------------------------------------
+void AppManager::triggerDeviceRescan(int deviceId)
+{
+    Device *dev = new Device();
+    dev->ID = deviceId;
+    dev->loadDevice(QSqlDatabase::defaultConnection);
+    if (!m_deviceUpdateManager)
+        setupDeviceUpdateManager();
+    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+}
+//----------------------------------------------------------------------
+void AppManager::triggerStoragePathReplace(int deviceId, const QString &previousPath, const QString &newPath)
+{
+    Device *dev = new Device();
+    dev->ID = deviceId;
+    dev->loadDevice(QSqlDatabase::defaultConnection);
+    if (!m_deviceUpdateManager)
+        setupDeviceUpdateManager();
+    m_deviceUpdateManager->replaceStorageRoot(dev, previousPath, newPath,
+                                              collection->databaseMode, collection->folder);
+}
+//----------------------------------------------------------------------
+QStringList AppManager::getDeviceExcludeFolders(int deviceId) const
+{
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(QSqlDatabase::defaultConnection);
+    if (dev.type != "Catalog") return {};
+    return dev.catalog->getExcludeFolders();
+}
+//----------------------------------------------------------------------
+bool AppManager::addDeviceExcludeFolder(int deviceId, const QString &path)
+{
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(QSqlDatabase::defaultConnection);
+    if (dev.type != "Catalog") return false;
+    bool ok = dev.catalog->addExcludeFolder(path.trimmed());
+    if (ok) collection->saveCatalogFilterTableToFile();
+    return ok;
+}
+//----------------------------------------------------------------------
+bool AppManager::removeDeviceExcludeFolder(int deviceId, const QString &path)
+{
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(QSqlDatabase::defaultConnection);
+    if (dev.type != "Catalog") return false;
+    bool ok = dev.catalog->removeExcludeFolder(path);
+    if (ok) collection->saveCatalogFilterTableToFile();
+    return ok;
+}
+
+// Storage helpers
+//----------------------------------------------------------------------
+QStringList AppManager::getStoragePictureList() const
+{
+    QStringList result;
+    result << QString();  // empty = no picture
+    QDir dir(collection->imageFolderPath);
+    if (dir.exists()) {
+        const QStringList filters = {"*.png","*.jpg","*.jpeg","*.bmp","*.gif","*.webp"};
+        result << dir.entryList(filters, QDir::Files, QDir::Name);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::getStorageImageFolderPath() const
+{
+    return collection->imageFolderPath;
+}
+//----------------------------------------------------------------------
+QString AppManager::formatDataSize(qlonglong bytes) const
+{
+    if (bytes <= 0) return QString();
+    return QLocale().formattedDataSize(bytes);
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::refreshStorageFromDisk(int deviceId)
+{
+    QVariantMap r;
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+
+    if (dev.type != "Storage") {
+        r["error"] = tr("Not a Storage device.");
+        return r;
+    }
+
+    Storage::UpdateResult sr = dev.storage->updateStorageInfo();
+
+    if (sr.errorCode == Storage::ErrorNoPath
+     || sr.errorCode == Storage::ErrorEmptyDirectory
+     || sr.errorCode == Storage::ErrorCannotGetValues) {
+        r["error"] = sr.errorMessage;
+        return r;
+    }
+
+    collection->saveDeviceTableToFile();
+    refreshDeviceList();
+
+    r["error"]        = QString();
+    r["totalSpace"]   = (qlonglong)dev.storage->totalSpace;
+    r["freeSpace"]    = (qlonglong)dev.storage->freeSpace;
+    r["storageType"]  = dev.storage->type;
+    r["storageLabel"] = dev.storage->label;
+    r["fileSystem"]   = dev.storage->fileSystem;
+    return r;
+}
+
+//----------------------------------------------------------------------
+QString AppManager::pathToFileUrl(const QString &path) const
+{
+    return QUrl::fromLocalFile(path).toString();
+}
+//----------------------------------------------------------------------
+QString AppManager::pathFromFileUrl(const QString &url) const
+{
+    return QUrl(url).toLocalFile();
+}
+
 // Exclude directories (collection-level)
 //----------------------------------------------------------------------
 QStringList AppManager::getExcludeDirectories() const

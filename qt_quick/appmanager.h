@@ -7,6 +7,7 @@
 //QtCore
 #include <QFile>
 #include <QFileInfo>
+#include <QLocale>
 #include <QStringList>
 #include <QStringListModel>
 #include <QTranslator>
@@ -191,6 +192,32 @@ public slots:
 
     // Storage pre-selection for Create page (used by DeviceTreeComboBox storageOnly mode)
     Q_INVOKABLE int getDefaultStorageId() const;
+
+    // Device edit
+    Q_INVOKABLE QVariantMap  getDeviceDetails(int deviceId) const;
+    Q_INVOKABLE QString      saveDeviceBasicFields(int deviceId, const QString &name, int parentId, const QString &path);
+    Q_INVOKABLE QVariantMap  checkCatalogOptionChanges(int deviceId, const QString &fileType, bool includeHidden,
+                                                       const QString &includeMetadata, const QString &includeChecksum,
+                                                       bool isFullDevice) const;
+    Q_INVOKABLE QString      saveCatalogOptions(int deviceId, const QString &fileType, bool includeHidden,
+                                                const QString &includeMetadata, const QString &includeChecksum,
+                                                bool isFullDevice);
+    Q_INVOKABLE QString      saveStorageDetails(int deviceId, const QVariantMap &fields);
+    Q_INVOKABLE void         triggerDeviceRescan(int deviceId);
+    Q_INVOKABLE void         triggerStoragePathReplace(int deviceId, const QString &previousPath, const QString &newPath);
+    Q_INVOKABLE QStringList  getDeviceExcludeFolders(int deviceId) const;
+    Q_INVOKABLE bool         addDeviceExcludeFolder(int deviceId, const QString &path);
+    Q_INVOKABLE bool         removeDeviceExcludeFolder(int deviceId, const QString &path);
+
+    // Storage helpers
+    Q_INVOKABLE QStringList  getStoragePictureList() const;
+    Q_INVOKABLE QString      getStorageImageFolderPath() const;
+    Q_INVOKABLE QString      formatDataSize(qlonglong bytes) const;
+    Q_INVOKABLE QVariantMap  refreshStorageFromDisk(int deviceId);
+
+    // URL / path conversion helpers (cross-platform, wrap QUrl)
+    Q_INVOKABLE QString      pathToFileUrl(const QString &path) const;
+    Q_INVOKABLE QString      pathFromFileUrl(const QString &url) const;
 
     // Exclude directories (collection-level)
     Q_INVOKABLE QStringList  getExcludeDirectories() const;

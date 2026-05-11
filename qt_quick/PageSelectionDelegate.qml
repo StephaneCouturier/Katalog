@@ -41,6 +41,16 @@ Kirigami.AbstractCard {
             icon.name: "document-open"
             onTriggered: appManager1.openDeviceFolder(model.deviceId)
         }
+
+        Controls.MenuItem {
+            text: qsTr("Edit")
+            icon.name: "document-edit"
+            onTriggered: {
+                pageDeviceEdit_form.deviceId = model.deviceId
+                pageDeviceEdit_form.loadDevice()
+                root.showPage(pageDeviceEdit)
+            }
+        }
     }
 
     contentItem: Item {

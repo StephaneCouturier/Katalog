@@ -446,6 +446,144 @@ Kirigami.ApplicationWindow {
         }
     }
 
+    // Edit device dialogs
+    Controls.Dialog {
+        id: editValidationDialog
+        property alias message: editValidationLabel.text
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
+        Controls.Label {
+            id: editValidationLabel
+            width: parent.width
+            wrapMode: Text.WordWrap
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("OK")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: editValidationDialog.close()
+        }
+    }
+
+    Controls.Dialog {
+        id: editCatalogConfirmDialog
+        property bool rescanNeeded: false
+        property bool pathChanged:  false
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(520, root.width - Kirigami.Units.largeSpacing * 4)
+        Controls.Label {
+            id: editCatalogConfirmLabel
+            width: parent.width
+            wrapMode: Text.WordWrap
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Yes")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            Controls.Button {
+                text: qsTr("Cancel")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onAccepted: {
+                editCatalogConfirmDialog.close()
+                pageDeviceEdit_form.confirmCatalogSave(editCatalogConfirmDialog.rescanNeeded,
+                                                       editCatalogConfirmDialog.pathChanged)
+            }
+            onRejected: editCatalogConfirmDialog.close()
+        }
+    }
+
+    Controls.Dialog {
+        id: editCatalogUpdateDialog
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
+        Controls.Label {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: qsTr("Update the catalog content with the new criteria?")
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Yes")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            Controls.Button {
+                text: qsTr("No")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onAccepted: {
+                editCatalogUpdateDialog.close()
+                appManager1.triggerDeviceRescan(pageDeviceEdit_form.deviceId)
+                pageDeviceEdit_form.finalizeSave()
+            }
+            onRejected: { editCatalogUpdateDialog.close(); pageDeviceEdit_form.finalizeSave() }
+        }
+    }
+
+    Controls.Dialog {
+        id: editStoragePathDialog
+        property string previousPath: ""
+        property string newPath: ""
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(520, root.width - Kirigami.Units.largeSpacing * 4)
+        Column {
+            width: parent.width
+            spacing: 0
+            Controls.Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                text: qsTr("The source path changed.\n\nOld path: %1\nNew path: %2\n\nHow should the catalog indexes be updated?")
+                      .arg(editStoragePathDialog.previousPath)
+                      .arg(editStoragePathDialog.newPath)
+            }
+            Item { width: 1; height: Kirigami.Units.gridUnit }
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Replace path root")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            Controls.Button {
+                id: editPathRescanBtn
+                text: qsTr("Full re-index")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.ApplyRole
+            }
+            Controls.Button {
+                text: qsTr("Skip")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onAccepted: {
+                editStoragePathDialog.close()
+                appManager1.triggerStoragePathReplace(pageDeviceEdit_form.deviceId,
+                                                      editStoragePathDialog.previousPath,
+                                                      editStoragePathDialog.newPath)
+                pageDeviceEdit_form.finalizeSave()
+            }
+            onRejected: { editStoragePathDialog.close(); pageDeviceEdit_form.finalizeSave() }
+        }
+        Connections {
+            target: editStoragePathDialog.footer
+            function onClicked(button) {
+                if (button === editPathRescanBtn) {
+                    editStoragePathDialog.close()
+                    appManager1.triggerDeviceRescan(pageDeviceEdit_form.deviceId)
+                    pageDeviceEdit_form.finalizeSave()
+                }
+            }
+        }
+    }
+
+    // Create validation dialogs
     Controls.Dialog {
         id: createValidationDialog
         property alias message: createValidationLabel.text
@@ -826,6 +964,55 @@ Kirigami.ApplicationWindow {
 
         PageCreateForm {
             id: pageCreate_formLayout_Create
+        }
+    }
+
+    //Pages - Device Edit
+    Kirigami.ScrollablePage {
+        id: pageDeviceEdit
+        visible: false
+        title: qsTr("Edit Device")
+
+        Connections {
+            target: pageDeviceEdit_form
+            function onSaveError(message) {
+                editValidationDialog.message = message
+                editValidationDialog.open()
+            }
+            function onCatalogConfirmNeeded(message, rescanNeeded, pathChanged) {
+                editCatalogConfirmLabel.text = qsTr("Save changes to the catalog definition?\n\n%1\n\n(The catalog must be updated to reflect these changes)").arg(message)
+                editCatalogConfirmDialog.rescanNeeded = rescanNeeded
+                editCatalogConfirmDialog.pathChanged  = pathChanged
+                editCatalogConfirmDialog.open()
+            }
+            function onCatalogUpdateContentNeeded() {
+                editCatalogUpdateDialog.open()
+            }
+            function onStoragePathChangeNeeded(previousPath, newPath) {
+                editStoragePathDialog.previousPath = previousPath
+                editStoragePathDialog.newPath = newPath
+                editStoragePathDialog.open()
+            }
+            function onSaveCompleted() {
+                root.closeFeaturePage(pageDeviceEdit)
+            }
+        }
+
+        actions: [
+            Kirigami.Action {
+                text: qsTr("Save")
+                icon.name: "document-save"
+                onTriggered: pageDeviceEdit_form.triggerSave()
+            },
+            Kirigami.Action {
+                text: qsTr("Close")
+                icon.name: "view-close"
+                onTriggered: root.closeFeaturePage(pageDeviceEdit)
+            }
+        ]
+
+        PageDeviceEditForm {
+            id: pageDeviceEdit_form
         }
     }
 

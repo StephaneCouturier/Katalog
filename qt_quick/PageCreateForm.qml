@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
-import Qt.labs.platform
+import QtQuick.Dialogs
 
 ColumnLayout {
     id: pageCreateForm
@@ -82,15 +82,15 @@ ColumnLayout {
     // ── Folder dialogs ─────────────────────────────────────────────────────────
     FolderDialog {
         id: sourcePathDialog
-        onAccepted: create_lineEdit_NewCatalogPath.text = folder.toString().replace("file://", "")
+        onAccepted: create_lineEdit_NewCatalogPath.text = appManager1.pathFromFileUrl(selectedFolder.toString())
     }
     FolderDialog {
         id: perCatalogExcludeDialog
-        onAccepted: create_lineEdit_NewExcludeFolder.text = folder.toString().replace("file://", "")
+        onAccepted: create_lineEdit_NewExcludeFolder.text = appManager1.pathFromFileUrl(selectedFolder.toString())
     }
     FolderDialog {
         id: globalExcludeDialog
-        onAccepted: create_lineEdit_FolderToExclude.text = folder.toString().replace("file://", "")
+        onAccepted: create_lineEdit_FolderToExclude.text = appManager1.pathFromFileUrl(selectedFolder.toString())
     }
 
     // ════════════════════════════════════════════════════════════════════════════
@@ -122,7 +122,11 @@ ColumnLayout {
             }
             Controls.Button {
                 icon.name: "folder-open"
-                onClicked: sourcePathDialog.open()
+                onClicked: {
+                    var p = create_lineEdit_NewCatalogPath.text.trim()
+                    if (p !== "") sourcePathDialog.currentFolder = appManager1.pathToFileUrl(p)
+                    sourcePathDialog.open()
+                }
             }
         }
 
@@ -130,6 +134,7 @@ ColumnLayout {
         DeviceTreeComboBox {
             id: create_storageComboBox
             storageOnly: true
+            hideCatalogs: true
             Layout.fillWidth: true
         }
 
@@ -259,7 +264,11 @@ ColumnLayout {
             }
             Controls.Button {
                 icon.name: "folder-open"
-                onClicked: perCatalogExcludeDialog.open()
+                onClicked: {
+                    var p = create_lineEdit_NewCatalogPath.text.trim()
+                    if (p !== "") perCatalogExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
+                    perCatalogExcludeDialog.open()
+                }
             }
             Controls.Button {
                 icon.name: "list-add"
@@ -336,7 +345,11 @@ ColumnLayout {
             }
             Controls.Button {
                 icon.name: "folder-open"
-                onClicked: globalExcludeDialog.open()
+                onClicked: {
+                    var p = create_lineEdit_NewCatalogPath.text.trim()
+                    if (p !== "") globalExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
+                    globalExcludeDialog.open()
+                }
             }
             Controls.Button {
                 icon.name: "list-add"
