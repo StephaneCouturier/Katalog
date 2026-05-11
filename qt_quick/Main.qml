@@ -454,9 +454,9 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        Controls.Label {
+        contentItem: Controls.Label {
             id: editValidationLabel
-            width: parent.width
+            width: editValidationDialog.availableWidth
             wrapMode: Text.WordWrap
         }
         footer: Controls.DialogButtonBox {
@@ -476,9 +476,9 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, root.width - Kirigami.Units.largeSpacing * 4)
-        Controls.Label {
+        contentItem: Controls.Label {
             id: editCatalogConfirmLabel
-            width: parent.width
+            width: editCatalogConfirmDialog.availableWidth
             wrapMode: Text.WordWrap
         }
         footer: Controls.DialogButtonBox {
@@ -505,8 +505,8 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        Controls.Label {
-            width: parent.width
+        contentItem: Controls.Label {
+            width: editCatalogUpdateDialog.availableWidth
             wrapMode: Text.WordWrap
             text: qsTr("Update the catalog content with the new criteria?")
         }
@@ -536,17 +536,15 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, root.width - Kirigami.Units.largeSpacing * 4)
-        Column {
-            width: parent.width
-            spacing: 0
+        contentItem: Column {
+            spacing: Kirigami.Units.largeSpacing
             Controls.Label {
-                width: parent.width
+                width: editStoragePathDialog.availableWidth
                 wrapMode: Text.WordWrap
                 text: qsTr("The source path changed.\n\nOld path: %1\nNew path: %2\n\nHow should the catalog indexes be updated?")
                       .arg(editStoragePathDialog.previousPath)
                       .arg(editStoragePathDialog.newPath)
             }
-            Item { width: 1; height: Kirigami.Units.gridUnit }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -591,9 +589,9 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        Controls.Label {
+        contentItem: Controls.Label {
             id: createValidationLabel
-            width: parent.width
+            width: createValidationDialog.availableWidth
             wrapMode: Text.WordWrap
         }
         footer: Controls.DialogButtonBox {
@@ -611,8 +609,8 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        Controls.Label {
-            width: parent.width
+        contentItem: Controls.Label {
+            width: createEmptyDirDialog.availableWidth
             wrapMode: Text.WordWrap
             text: qsTr("The source folder does not contain any file.\nThis could mean that the source is empty or the device is not mounted to this folder.\nDo you want to save it anyway (the catalog would be empty)?")
         }

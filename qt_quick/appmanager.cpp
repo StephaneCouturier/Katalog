@@ -531,6 +531,7 @@ bool AppManager::reconnectToDatabase()
     }
 
     lastDatabaseError.clear();
+    collection->loadImageFolderPath();
     refreshAllUI();
     emit databaseModeChanged();
     return true;

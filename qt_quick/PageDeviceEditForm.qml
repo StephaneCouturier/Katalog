@@ -474,6 +474,23 @@ ColumnLayout {
             }
         }
 
+        Item { visible: root.deviceType === "Storage"; Layout.preferredWidth: 1 }
+        Controls.Button {
+            visible: root.deviceType === "Storage"
+            text: qsTr("Refresh from disk")
+            icon.name: "view-refresh"
+            onClicked: {
+                var updated = appManager1.refreshStorageFromDisk(root.deviceId)
+                if (updated.error === "") {
+                    edit_lineEdit_TotalSpace.text   = String(updated.totalSpace)
+                    edit_lineEdit_FreeSpace.text    = String(updated.freeSpace)
+                    edit_lineEdit_StorageType.text  = updated.storageType
+                    edit_lineEdit_StorageLabel.text = updated.storageLabel
+                    edit_lineEdit_StorageFS.text    = updated.fileSystem
+                }
+            }
+        }
+
         Controls.Label { text: qsTr("Brand"); opacity: 0.7; visible: root.deviceType === "Storage" }
         Controls.TextField { id: edit_lineEdit_Brand; Layout.fillWidth: true; visible: root.deviceType === "Storage" }
 
@@ -534,30 +551,12 @@ ColumnLayout {
             source: {
                 if (root.deviceType !== "Storage") return ""
                 var folder = appManager1.getStorageImageFolderPath()
+                if (folder === "") return ""
                 var sel = (edit_comboBox_StoragePicture.currentIndex >= 0 && root.storagePictureList.length > 0)
                           ? root.storagePictureList[edit_comboBox_StoragePicture.currentIndex] : ""
                 if (sel !== "")
-                    return "file://" + folder + "/" + sel
-                // fallback: {storageId}.jpg
-                return "file://" + folder + "/" + root.deviceId + ".jpg"
-            }
-        }
-
-        // ── Storage refresh from disk ──────────────────────────────────────────
-        Item { visible: root.deviceType === "Storage"; Layout.preferredWidth: 1 }
-        Controls.Button {
-            visible: root.deviceType === "Storage"
-            text: qsTr("Refresh from disk")
-            icon.name: "view-refresh"
-            onClicked: {
-                var updated = appManager1.refreshStorageFromDisk(root.deviceId)
-                if (updated.error === "") {
-                    edit_lineEdit_TotalSpace.text   = String(updated.totalSpace)
-                    edit_lineEdit_FreeSpace.text    = String(updated.freeSpace)
-                    edit_lineEdit_StorageType.text  = updated.storageType
-                    edit_lineEdit_StorageLabel.text = updated.storageLabel
-                    edit_lineEdit_StorageFS.text    = updated.fileSystem
-                }
+                    return appManager1.pathToFileUrl(folder + "/" + sel)
+                return appManager1.pathToFileUrl(folder + "/" + root.deviceId + ".jpg")
             }
         }
 
