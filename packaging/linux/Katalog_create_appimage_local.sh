@@ -67,6 +67,7 @@ VERBOSE=false
 CLEAN_BUILD=false
 CMAKE_BUILD_TYPE="Release"
 LINUXDEPLOY_DIR="$HOME/.local/share/linuxdeploy"   # linuxdeploy + appimagetool wrapper scripts
+BUILD_QT_LIB_DIR=""   # resolved by capture_build_qt_path() from ldd on the build binary
 
 # Variant selection (K2 = Qt Widgets, K3 = Qt Quick/QML)
 VARIANT="K2"
@@ -551,6 +552,37 @@ build_application() {
     print_success "Build completed"
 }
 
+# Identify the Qt lib directory actually used by the compiled binary.
+# We read ldd output on the BUILD binary (before ninja install strips its RPATH),
+# so the RPATH is still present and ldd resolves against the correct Qt even when
+# multiple Qt installations coexist on the build host.
+capture_build_qt_path() {
+    print_step "Detecting Qt lib dir used by build binary"
+
+    # Binary lives in a subdirectory of $BUILD_DIR named after the variant
+    local build_binary
+    build_binary=$(find "$BUILD_DIR" -name "$APP_NAME" -type f -executable \
+                        -not -path "*/AppDir/*" 2>/dev/null | head -1)
+
+    if [ -z "$build_binary" ]; then
+        print_warning "capture_build_qt_path: binary '$APP_NAME' not found in $BUILD_DIR — Qt lib dir unknown"
+        return
+    fi
+
+    local qt_core_path
+    qt_core_path=$(ldd "$build_binary" 2>/dev/null \
+                   | awk '/libQt6Core\.so\.6[[:space:]]/{print $3}' | head -1)
+
+    if [ -z "$qt_core_path" ] || [ ! -f "$qt_core_path" ]; then
+        print_warning "capture_build_qt_path: could not resolve libQt6Core.so.6 from ldd on $build_binary"
+        return
+    fi
+
+    # Resolve any symlink so we get the real lib directory
+    BUILD_QT_LIB_DIR=$(dirname "$(readlink -f "$qt_core_path")")
+    print_success "Build Qt lib dir: $BUILD_QT_LIB_DIR"
+}
+
 # Install to AppDir
 install_to_appdir() {
     print_step "Installing to AppDir"
@@ -722,7 +754,55 @@ deploy_k3_qml_modules() {
         print_success "Patched AppRun with QML import paths"
     fi
 
+    # Sweep all bundled QML plugins with ldd and copy any libQt6* they need
+    # that linuxdeploy missed (it only traces ldd on the binary, not on plugins
+    # loaded at QML runtime — libQt6QuickLayouts, libQt6QuickControls2, etc.)
+    bundle_missing_qml_libs
+
     print_success "K3 QML modules deployed"
+}
+
+# Resolve and bundle Qt6 shared libraries needed by the QML plugins but absent
+# from $APPDIR/usr/lib (linuxdeploy misses them because they're not in the
+# binary's ldd output — they are loaded dynamically by the QML engine).
+bundle_missing_qml_libs() {
+    print_step "Bundling Qt6 libs needed by QML plugins"
+
+    local lib_dest="$APPDIR/usr/lib"
+    # Prefer the authoritative Qt lib dir captured before install (same Qt as the binary).
+    local qt_lib_dir="${BUILD_QT_LIB_DIR}"
+    if [ -z "$qt_lib_dir" ] || [ ! -d "$qt_lib_dir" ]; then
+        qt_lib_dir=$(env -i PATH="$PATH" "${QMAKE:-qmake6}" -query QT_INSTALL_LIBS 2>/dev/null)
+    fi
+    [ -d "$qt_lib_dir" ] || { print_warning "Could not find Qt lib dir — skipping QML lib sweep"; return; }
+
+    local added=0
+
+    while IFS= read -r -d '' qml_so; do
+        while IFS= read -r ldd_line; do
+            # ldd format: "  libFoo.so.6 => /resolved/path (0xaddr)"
+            local lib_name lib_path
+            lib_name=$(awk '{print $1}' <<< "$ldd_line")
+            lib_path=$(awk '{print $3}' <<< "$ldd_line")
+            [[ "$lib_name" =~ ^libQt6 ]] || continue
+            [ -f "$lib_dest/$lib_name" ] && continue          # already bundled
+            # Prefer the dev Qt lib dir (same version as QML plugins); fall back to ldd path
+            local src="$qt_lib_dir/$lib_name"
+            [ -f "$src" ] || src="$lib_path"
+            if [ -f "$src" ]; then
+                cp -Ln "$src" "$lib_dest/$lib_name" 2>/dev/null \
+                    || cp -n "$src" "$lib_dest/$lib_name" 2>/dev/null
+                added=$((added + 1))
+                print_success "  Added: $lib_name  (needed by $(basename "$qml_so"))"
+            fi
+        done < <(ldd "$qml_so" 2>/dev/null)
+    done < <(find "$APPDIR/usr/qml" -name "*.so" -print0 2>/dev/null)
+
+    if [ "$added" -gt 0 ]; then
+        print_success "Bundled $added missing Qt6 runtime libraries"
+    else
+        print_info "No missing Qt6 runtime libraries found"
+    fi
 }
 
 # Write a custom AppRun into AppDir BEFORE linuxdeploy runs.
@@ -748,10 +828,39 @@ write_apprun() {
         printf 'if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then\n'
         printf '    unset QT_QPA_PLATFORMTHEME\n'
         printf 'fi\n'
+        # Fall back to xcb when the Wayland platform plugin is not bundled.
+        # Prevents "Could not find the Qt platform plugin wayland" warning and
+        # lets the app run on Wayland compositors via XWayland instead.
+        printf 'if [ ! -f "${HERE}/usr/plugins/platforms/libqwayland.so" ]; then\n'
+        printf '    export QT_QPA_PLATFORM="${QT_QPA_PLATFORM:-xcb}"\n'
+        printf 'fi\n'
         printf 'exec "${HERE}/usr/bin/%s" "$@"\n' "$APP_NAME"
     } > "$APPDIR/AppRun"
     chmod +x "$APPDIR/AppRun"
     print_success "AppRun written"
+}
+
+# Replace Qt libs in the AppDir with the version from $qt_lib_dir.
+# Only libs already present in $APPDIR/usr/lib are replaced — we never add
+# libs that linuxdeploy chose not to bundle (to avoid pulling in unneeded deps).
+replace_bundled_qt_libs() {
+    local qt_lib_dir="$1"
+    [ -d "$qt_lib_dir" ] || { print_warning "replace_bundled_qt_libs: Qt lib dir not found ($qt_lib_dir)"; return; }
+
+    local lib_dest="$APPDIR/usr/lib"
+    local replaced=0
+
+    for src in "$qt_lib_dir"/libQt6*.so*; do
+        [ -f "$src" ] || continue
+        local lib_name
+        lib_name=$(basename "$src")
+        if [ -f "$lib_dest/$lib_name" ]; then
+            cp -Lf "$src" "$lib_dest/$lib_name" \
+                && replaced=$((replaced + 1))
+        fi
+    done
+
+    print_success "Replaced $replaced Qt libraries from $qt_lib_dir"
 }
 
 # Create AppImage
@@ -809,16 +918,19 @@ create_appimage() {
         print_error "Dependency bundling failed"
     fi
 
-    # Step 2b: Report the Qt version bundled by linuxdeploy.
-    # We no longer replace Qt libs here. linuxdeploy resolves Qt via ldd on the
-    # Katalog binary, picking up the RUNTIME system Qt — the same version KF6 was
-    # compiled against. Replacing with qmake6 -query QT_INSTALL_LIBS (the dev Qt
-    # path) caused KF6 to crash because the dev Qt may omit backward-compat
-    # private API symbols that the runtime Qt includes.
-    local bundled_qt_ver
-    bundled_qt_ver=$(strings "$APPDIR/usr/lib/libQt6Core.so.6" 2>/dev/null \
-        | grep -E "^6\.[0-9]+\.[0-9]+$" | head -1)
-    print_info "Bundled Qt: ${bundled_qt_ver:-unknown}  |  Build Qt: $("$qmake_bin" -query QT_VERSION 2>/dev/null)"
+    # Step 2b: Replace bundled Qt libs with the version the binary was compiled
+    # against.  cmake strips RPATH on install, so linuxdeploy's ldd may resolve
+    # Qt from the wrong system path.  BUILD_QT_LIB_DIR was captured before install
+    # via ldd on the build binary (RPATH still intact) and is always authoritative.
+    if [ -n "$BUILD_QT_LIB_DIR" ]; then
+        local bundled_qt_ver
+        bundled_qt_ver=$(strings "$APPDIR/usr/lib/libQt6Core.so.6" 2>/dev/null \
+            | grep -E "^6\.[0-9]+\.[0-9]+$" | head -1)
+        print_info "Bundled Qt: ${bundled_qt_ver:-unknown}  |  Build Qt lib dir: $BUILD_QT_LIB_DIR"
+        replace_bundled_qt_libs "$BUILD_QT_LIB_DIR"
+    else
+        print_warning "Step 2b skipped: BUILD_QT_LIB_DIR not set (capture_build_qt_path may have failed)"
+    fi
 
     # Step 2c: Strip plugins/libs not used by Katalog.
     # KF6FileMetaData pulls in GStreamer, FFmpeg, and PulseAudio as transitive
@@ -940,6 +1052,7 @@ main() {
     clean_build
     setup_build_dir
     build_application
+    capture_build_qt_path   # must run before install_to_appdir strips RPATH
     install_to_appdir
     prepare_desktop_files
     create_appimage
