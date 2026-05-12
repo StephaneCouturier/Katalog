@@ -10,19 +10,6 @@ Kirigami.ScrollablePage {
 
     // Set to true when opened from Open Collection > Hosted Db menu
     property bool showHostedForm: false
-    property string importStatus: ""
-
-    function loadImportSource(path) {
-        var devices = appManager1.openImportSource(path)
-        importDeviceModel.clear()
-        if (devices.length === 0) {
-            pageSettingsRoot.importStatus = qsTr("Error: could not open collection")
-        } else {
-            for (var i = 0; i < devices.length; i++)
-                importDeviceModel.append(devices[i])
-            pageSettingsRoot.importStatus = ""
-        }
-    }
 
     Connections {
         target: appManager1
@@ -32,6 +19,7 @@ Kirigami.ScrollablePage {
         }
         function onImportSourceChanged() {
             importUpdateSourceCombo.model = appManager1.getImportSourcePaths()
+            importDeviceCombo.selectById(0)
         }
         function onImageFolderPathChanged() {
             imageFolderField.text = appManager1.imageFolderPath
@@ -61,7 +49,7 @@ Kirigami.ScrollablePage {
         onAccepted: {
             var path = appManager1.pathFromFileUrl(selectedFile.toString())
             importPathField.text = path
-            loadImportSource(path)
+            appManager1.openImportSource(path)
         }
     }
 
@@ -70,11 +58,9 @@ Kirigami.ScrollablePage {
         onAccepted: {
             var path = appManager1.pathFromFileUrl(selectedFolder.toString())
             importPathField.text = path
-            loadImportSource(path)
+            appManager1.openImportSource(path)
         }
     }
-
-    ListModel { id: importDeviceModel }
 
     actions: [
         Kirigami.Action {
@@ -83,6 +69,25 @@ Kirigami.ScrollablePage {
             onTriggered: pageStack.layers.pop()
         }
     ]
+
+    footer: RowLayout {
+        visible: appManager1.importIsRunning || appManager1.importStatusText.length > 0
+        spacing: Kirigami.Units.smallSpacing
+        Controls.BusyIndicator {
+            running: appManager1.importIsRunning
+            visible: appManager1.importIsRunning
+            implicitWidth:  Kirigami.Units.gridUnit * 1.5
+            implicitHeight: Kirigami.Units.gridUnit * 1.5
+            Layout.leftMargin: Kirigami.Units.smallSpacing
+        }
+        Controls.Label {
+            Layout.fillWidth: true
+            Layout.margins: Kirigami.Units.smallSpacing
+            text: appManager1.importStatusText
+            elide: Text.ElideRight
+            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+        }
+    }
 
     // Single GridLayout so column 0 width is shared across all sections
     GridLayout {
@@ -270,28 +275,17 @@ Kirigami.ScrollablePage {
         RowLayout {
             Layout.fillWidth: true
             spacing: Kirigami.Units.smallSpacing
-            Controls.ComboBox {
+            DeviceTreeComboBox {
                 id: importDeviceCombo
                 Layout.fillWidth: true
-                model: importDeviceModel
-                textRole: "name"
-                valueRole: "id"
-                enabled: importDeviceModel.count > 0
+                sourceModel: appManager1.importSourceDeviceModel
+                enabled: selectedDeviceName.length > 0 && !appManager1.importIsRunning
             }
             Controls.Button {
                 text: qsTr("Import")
                 icon.name: "document-import"
-                enabled: importDeviceModel.count > 0
-                onClicked: {
-                    var result = appManager1.importDevice(importDeviceCombo.currentValue)
-                    pageSettingsRoot.importStatus = result === "" ? qsTr("Completed") : result
-                }
-            }
-            Controls.Label {
-                text: pageSettingsRoot.importStatus
-                visible: pageSettingsRoot.importStatus !== ""
-                color: pageSettingsRoot.importStatus === qsTr("Completed")
-                       ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.negativeTextColor
+                enabled: importDeviceCombo.selectedDeviceName.length > 0 && !appManager1.importIsRunning
+                onClicked: appManager1.importDevice(importDeviceCombo.selectedDeviceId)
             }
         }
 
@@ -302,15 +296,13 @@ Kirigami.ScrollablePage {
             Controls.ComboBox {
                 id: importUpdateSourceCombo
                 Layout.fillWidth: true
+                enabled: !appManager1.importIsRunning
             }
             Controls.Button {
                 text: qsTr("Update")
                 icon.name: "view-refresh"
-                enabled: importUpdateSourceCombo.count > 0
-                onClicked: {
-                    var result = appManager1.updateAllImportsFromSource(importUpdateSourceCombo.currentText)
-                    pageSettingsRoot.importStatus = result === "" ? qsTr("Completed") : result
-                }
+                enabled: importUpdateSourceCombo.count > 0 && !appManager1.importIsRunning
+                onClicked: appManager1.updateAllImportsFromSource(importUpdateSourceCombo.currentText)
             }
         }
 

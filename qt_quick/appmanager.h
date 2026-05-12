@@ -86,6 +86,9 @@ class AppManager : public QObject
     Q_PROPERTY(QString searchStatusText  READ getSearchStatusText  NOTIFY searchStatusTextChanged)
     Q_PROPERTY(bool    catalogIsCreating READ getCatalogIsCreating NOTIFY catalogIsCreatingChanged)
     Q_PROPERTY(QString catalogStatusText READ getCatalogStatusText NOTIFY catalogStatusTextChanged)
+    Q_PROPERTY(bool    importIsRunning   READ getImportIsRunning   NOTIFY importIsRunningChanged)
+    Q_PROPERTY(QString importStatusText  READ getImportStatusText  NOTIFY importStatusTextChanged)
+    Q_PROPERTY(QAbstractListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -179,6 +182,10 @@ public slots:
     // Catalog creation progress
     bool    getCatalogIsCreating()  const { return m_catalogIsCreating; }
     QString getCatalogStatusText()  const { return m_catalogStatusText; }
+
+    // Import progress
+    bool    getImportIsRunning()  const { return m_importIsRunning; }
+    QString getImportStatusText() const { return m_importStatusText; }
 
     // Catalog creation
     Q_INVOKABLE QString      createCatalog(const QString &name, const QString &path,
@@ -279,9 +286,10 @@ public slots:
     Q_INVOKABLE void    setImageFolderPath(const QString &path);
 
     // Collection import
-    Q_INVOKABLE QStringList  getImportSourcePaths() const;
-    Q_INVOKABLE QVariantList openImportSource(const QString &path);
-    Q_INVOKABLE QString      importDevice(int srcDeviceId);
+    Q_INVOKABLE QStringList       getImportSourcePaths() const;
+    Q_INVOKABLE void              openImportSource(const QString &path);
+    Q_INVOKABLE QString           importDevice(int srcDeviceId);
+    QAbstractListModel           *getImportSourceDeviceModel() const { return m_importSourceDeviceModel; }
     Q_INVOKABLE QString      updateAllImportsFromSource(const QString &path);
 
     // Language
@@ -313,6 +321,8 @@ signals:
     void languageChanged(const QString &code);
     void imageFolderPathChanged();
     void importSourceChanged();
+    void importIsRunningChanged();
+    void importStatusTextChanged();
 
 private:
     bool    m_searchIsRunning  = false;
@@ -324,6 +334,9 @@ private:
     DeviceUpdateManager    *m_deviceUpdateManager    = nullptr;
     CatalogProgressManager *m_catalogProgressManager = nullptr;
     CollectionImporter     *m_importer               = nullptr;
+    bool    m_importIsRunning  = false;
+    QString m_importStatusText;
+    QAbstractListModel     *m_importSourceDeviceModel = nullptr;
 
     void setupDeviceUpdateManager();
     void onCatalogCreationCompleted(const QList<qint64> &results);

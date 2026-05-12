@@ -17,9 +17,67 @@
 #include <QCryptographicHash>
 #include <QTimer>
 
+// Flat list model for import source device tree — same roles as DeviceListModel
+// so it can be used directly as the sourceModel of DeviceTreeComboBox.
+class ImportSourceDeviceModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    struct Item { int id; int level; QString name; QString type; };
+
+    explicit ImportSourceDeviceModel(QObject *parent = nullptr)
+        : QAbstractListModel(parent) {}
+
+    void populate(QStandardItemModel *treeModel) {
+        beginResetModel();
+        m_items.clear();
+        std::function<void(QModelIndex, int)> flatten = [&](QModelIndex parent, int level) {
+            int rows = treeModel->rowCount(parent);
+            for (int i = 0; i < rows; i++) {
+                QModelIndex nameIdx = treeModel->index(i, 0, parent);
+                QModelIndex typeIdx = treeModel->index(i, 1, parent);
+                m_items.append({treeModel->data(nameIdx, Qt::UserRole).toInt(),
+                                level,
+                                treeModel->data(nameIdx, Qt::DisplayRole).toString(),
+                                treeModel->data(typeIdx, Qt::DisplayRole).toString()});
+                flatten(nameIdx, level + 1);
+            }
+        };
+        flatten(QModelIndex(), 0);
+        endResetModel();
+    }
+
+    void clear() { beginResetModel(); m_items.clear(); endResetModel(); }
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override
+        { return parent.isValid() ? 0 : m_items.count(); }
+
+    QVariant data(const QModelIndex &index, int role) const override {
+        if (!index.isValid() || index.row() >= m_items.count()) return {};
+        const Item &it = m_items.at(index.row());
+        switch (role) {
+        case DeviceListModel::TypeRole:     return it.type;
+        case DeviceListModel::NameRole:     return it.name;
+        case DeviceListModel::DeviceIdRole: return it.id;
+        case DeviceListModel::LevelRole:    return it.level;
+        default:                            return {};
+        }
+    }
+
+    QHash<int, QByteArray> roleNames() const override {
+        return {{DeviceListModel::TypeRole,     "type"},
+                {DeviceListModel::NameRole,     "name"},
+                {DeviceListModel::DeviceIdRole, "deviceId"},
+                {DeviceListModel::LevelRole,    "level"}};
+    }
+
+private:
+    QList<Item> m_items;
+};
+
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
-
+    m_importSourceDeviceModel = new ImportSourceDeviceModel(this);
 }
 //----------------------------------------------------------------------
 void AppManager::initiateApp()
@@ -1941,7 +1999,7 @@ QStringList AppManager::getImportSourcePaths() const
     return collection->getImportSourcePaths();
 }
 //----------------------------------------------------------------------
-QVariantList AppManager::openImportSource(const QString &path)
+void AppManager::openImportSource(const QString &path)
 {
     if (!m_importer)
         m_importer = new CollectionImporter(collection, this);
@@ -1949,33 +2007,24 @@ QVariantList AppManager::openImportSource(const QString &path)
     QSqlError err = m_importer->openSource(path);
     if (err.type() != QSqlError::NoError) {
         qWarning() << "AppManager::openImportSource error:" << err.text();
-        return {};
+        m_importStatusText = tr("Error: could not open collection");
+        emit importStatusTextChanged();
+        static_cast<ImportSourceDeviceModel *>(m_importSourceDeviceModel)->clear();
+        emit importSourceChanged();
+        return;
     }
 
     if (!m_importer->checkSchemaCompatibility()) {
         qWarning() << "AppManager::openImportSource: schema mismatch (proceeding):" << m_importer->lastError();
     }
 
-    // Flatten the source device tree into {id, name} entries for QML ComboBox.
-    QStandardItemModel *model = m_importer->buildSourceDeviceModel();
-    QVariantList result;
+    QStandardItemModel *treeModel = m_importer->buildSourceDeviceModel();
+    static_cast<ImportSourceDeviceModel *>(m_importSourceDeviceModel)->populate(treeModel);
+    delete treeModel;
 
-    std::function<void(QModelIndex, int)> flatten = [&](QModelIndex parent, int level) {
-        int rows = model->rowCount(parent);
-        for (int i = 0; i < rows; i++) {
-            QModelIndex idx = model->index(i, 0, parent);
-            QVariantMap entry;
-            entry["id"]    = model->data(idx, Qt::UserRole).toInt();
-            entry["name"]  = QString("  ").repeated(level) + model->data(idx).toString();
-            result.append(entry);
-            flatten(idx, level + 1);
-        }
-    };
-    flatten(QModelIndex(), 0);
-
-    delete model;
+    m_importStatusText = QString();
+    emit importStatusTextChanged();
     emit importSourceChanged();
-    return result;
 }
 //----------------------------------------------------------------------
 QString AppManager::importDevice(int srcDeviceId)
@@ -1983,14 +2032,41 @@ QString AppManager::importDevice(int srcDeviceId)
     if (!m_importer || !m_importer->isSourceOpen())
         return tr("No source collection is open.");
 
+    m_importIsRunning  = true;
+    m_importStatusText = tr("Collection Import") + " | " + tr("In Progress");
+    emit importIsRunningChanged();
+    emit importStatusTextChanged();
+
+    QMetaObject::Connection progressConn = connect(
+        m_importer, &CollectionImporter::fileImportProgress,
+        this, [this](int catalogIndex, int totalCatalogs, const QString &catalogName,
+                     qint64 done, qint64 total) {
+            m_importStatusText =
+                tr("Collection Import") + " | "
+                + QString("%1/%2: %3 | ").arg(catalogIndex).arg(totalCatalogs).arg(catalogName)
+                + tr("Files") + QString(": %1 / %2")
+                    .arg(QLocale().toString(done))
+                    .arg(QLocale().toString(total));
+            emit importStatusTextChanged();
+            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+        },
+        Qt::DirectConnection);
+
     bool ok;
     if (srcDeviceId == 0)
         ok = (m_importer->importAllDevices() >= 0);
     else
         ok = m_importer->importDevice(srcDeviceId);
 
-    if (!ok)
+    disconnect(progressConn);
+    m_importIsRunning = false;
+    emit importIsRunningChanged();
+
+    if (!ok) {
+        m_importStatusText = tr("Collection Import") + " | " + tr("Error") + ": " + m_importer->lastError();
+        emit importStatusTextChanged();
         return m_importer->lastError();
+    }
 
     // Persist to CSV files in Memory mode
     if (collection->databaseMode == "Memory") {
@@ -2001,6 +2077,9 @@ QString AppManager::importDevice(int srcDeviceId)
         collection->saveTagTableToFile();
         collection->saveStatiticsTableToFile();
     }
+
+    m_importStatusText = tr("Collection Import") + " | " + tr("Completed");
+    emit importStatusTextChanged();
 
     refreshAllUI();
     emit importSourceChanged();
@@ -2012,10 +2091,22 @@ QString AppManager::updateAllImportsFromSource(const QString &path)
     if (!m_importer)
         m_importer = new CollectionImporter(collection, this);
 
+    m_importIsRunning  = true;
+    m_importStatusText = tr("Collection Update") + " | " + tr("In Progress");
+    emit importIsRunningChanged();
+    emit importStatusTextChanged();
+    QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
     bool ok = m_importer->updateAllImportsFromSource(path);
 
-    if (!ok)
+    m_importIsRunning = false;
+    emit importIsRunningChanged();
+
+    if (!ok) {
+        m_importStatusText = tr("Collection Update") + " | " + tr("Error") + ": " + m_importer->lastError();
+        emit importStatusTextChanged();
         return m_importer->lastError();
+    }
 
     // Persist to CSV files in Memory mode
     if (collection->databaseMode == "Memory") {
@@ -2026,6 +2117,9 @@ QString AppManager::updateAllImportsFromSource(const QString &path)
         collection->saveTagTableToFile();
         collection->saveStatiticsTableToFile();
     }
+
+    m_importStatusText = tr("Collection Update") + " | " + tr("Completed");
+    emit importStatusTextChanged();
 
     refreshAllUI();
     return QString();
@@ -2102,3 +2196,6 @@ void AppManager::removeExcludeDirectory(const QString &path)
     collection->removeExcludeDirectory(path);
     emit excludeDirectoriesChanged();
 }
+
+// Required for Q_OBJECT classes defined inside a .cpp file (AUTOMOC)
+#include "appmanager.moc"
