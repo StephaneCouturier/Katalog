@@ -448,6 +448,46 @@ Kirigami.ApplicationWindow {
 
     // Edit device dialogs
     Controls.Dialog {
+        id: editDeleteDeviceDialog
+        property string deviceName: ""
+        property string deviceType: ""
+        property int    deviceId:   0
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            width: editDeleteDeviceDialog.availableWidth
+            wrapMode: Text.WordWrap
+            textFormat: Text.RichText
+            text: qsTr("Do you want to <b>delete</b> this %1 device?<br/><br/>Name: <b>%2</b>")
+                  .arg(editDeleteDeviceDialog.deviceType)
+                  .arg(editDeleteDeviceDialog.deviceName)
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Yes")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            Controls.Button {
+                text: qsTr("Cancel")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onAccepted: {
+                editDeleteDeviceDialog.close()
+                var err = appManager1.deleteDevice(editDeleteDeviceDialog.deviceId)
+                if (err !== "") {
+                    editValidationDialog.message = err
+                    editValidationDialog.open()
+                } else {
+                    root.closeFeaturePage(pageDeviceEdit)
+                }
+            }
+            onRejected: editDeleteDeviceDialog.close()
+        }
+    }
+
+    Controls.Dialog {
         id: editValidationDialog
         property alias message: editValidationLabel.text
         title: "Katalog"
@@ -1001,6 +1041,23 @@ Kirigami.ApplicationWindow {
                 text: qsTr("Save")
                 icon.name: "document-save"
                 onTriggered: pageDeviceEdit_form.triggerSave()
+            },
+            Kirigami.Action {
+                text: qsTr("Delete")
+                icon.name: "edit-delete"
+                onTriggered: {
+                    var check = appManager1.checkDeviceDeleteAllowed(pageDeviceEdit_form.deviceId)
+                    if (!check.allowed) {
+                        editValidationDialog.message = check.errorMessage
+                        editValidationDialog.open()
+                    } else {
+                        var d = appManager1.getDeviceDetails(pageDeviceEdit_form.deviceId)
+                        editDeleteDeviceDialog.deviceId   = pageDeviceEdit_form.deviceId
+                        editDeleteDeviceDialog.deviceType = pageDeviceEdit_form.deviceType
+                        editDeleteDeviceDialog.deviceName = d.name
+                        editDeleteDeviceDialog.open()
+                    }
+                }
             },
             Kirigami.Action {
                 text: qsTr("Close")

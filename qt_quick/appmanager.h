@@ -211,6 +211,10 @@ public slots:
     Q_INVOKABLE bool         addDeviceExcludeFolder(int deviceId, const QString &path);
     Q_INVOKABLE bool         removeDeviceExcludeFolder(int deviceId, const QString &path);
 
+    // Device delete
+    Q_INVOKABLE QVariantMap  checkDeviceDeleteAllowed(int deviceId) const;
+    Q_INVOKABLE QString      deleteDevice(int deviceId);
+
     // Storage helpers
     Q_INVOKABLE QStringList  getStoragePictureList() const;
     Q_INVOKABLE QString      getStorageImageFolderPath() const;

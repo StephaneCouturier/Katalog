@@ -1539,6 +1539,72 @@ int AppManager::getDefaultStorageId() const
     return 0;
 }
 
+// Device delete
+//----------------------------------------------------------------------
+QVariantMap AppManager::checkDeviceDeleteAllowed(int deviceId) const
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+    dev.verifyHasSubDevice(conn);
+
+    QVariantMap result;
+    if (dev.hasSubDevice) {
+        result["allowed"]      = false;
+        result["errorMessage"] = tr("The selected device cannot be deleted as long as it has sub-devices.");
+    } else {
+        result["allowed"]      = true;
+        result["errorMessage"] = QString();
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::deleteDevice(int deviceId)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+
+    Device::DeleteOperationResult res = dev.deleteDevice(false);
+
+    switch (res.result) {
+    case Device::DeleteHasSubDevices:
+        return tr("The selected device cannot be deleted as long as it has sub-devices.");
+    case Device::DeleteError:
+        return res.errorMessage;
+    case Device::DeleteCancelled:
+        return tr("Deletion cancelled.");
+    case Device::DeleteSuccess:
+        break;
+    }
+
+    // Update parent numbers (mirrors K2 deleteDeviceItem)
+    if (dev.parentID > 0) {
+        Device parent;
+        parent.ID = dev.parentID;
+        parent.loadDevice(conn);
+        parent.updateNumbersFromChildren();
+        parent.updateParentsNumbers();
+    }
+
+    // Persist to files
+    collection->saveDeviceTableToFile();
+    collection->saveStorageTableToFile();
+
+    // In Memory mode, move the catalog index files to trash
+    if (dev.type == "Catalog") {
+        Collection::DeleteCatalogResult fileResult = collection->deleteCatalogFile(&dev);
+        if (fileResult == Collection::DeleteFailedToMoveToTrash) {
+            return tr("Deletion failed");
+        }
+    }
+
+    refreshAllUI();
+    return QString();
+}
+
 // Device edit
 //----------------------------------------------------------------------
 QVariantMap AppManager::getDeviceDetails(int deviceId) const
