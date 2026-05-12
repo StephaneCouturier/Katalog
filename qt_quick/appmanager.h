@@ -60,6 +60,7 @@
 #include "core/tag.h"
 #include "core/deviceupdatemanager.h"
 #include "core/catalogprogressmanager.h"
+#include "core/collectionimporter.h"
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
 
@@ -72,6 +73,7 @@ class AppManager : public QObject
     Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)
     Q_PROPERTY(QString appReleaseDate         READ getAppReleaseDate         CONSTANT)
     Q_PROPERTY(QString databaseSchemaVersion  READ getDatabaseSchemaVersion  NOTIFY databaseModeChanged FINAL)
+    Q_PROPERTY(QString imageFolderPath        READ getImageFolderPath        WRITE setImageFolderPath   NOTIFY imageFolderPathChanged)
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
@@ -268,6 +270,16 @@ public slots:
     Q_INVOKABLE bool    getHostedAutoConnect() const;
     Q_INVOKABLE void    setHostedAutoConnect(bool value);
 
+    // Image folder
+    Q_INVOKABLE QString getImageFolderPath() const;
+    Q_INVOKABLE void    setImageFolderPath(const QString &path);
+
+    // Collection import
+    Q_INVOKABLE QStringList  getImportSourcePaths() const;
+    Q_INVOKABLE QVariantList openImportSource(const QString &path);
+    Q_INVOKABLE QString      importDevice(int srcDeviceId);
+    Q_INVOKABLE QString      updateAllImportsFromSource(const QString &path);
+
     // Language
     Q_INVOKABLE QVariantList getLanguageList() const;
     Q_INVOKABLE QString      getCurrentLanguage() const;
@@ -295,6 +307,8 @@ signals:
     void databaseModeChanged();
     void recentCollectionsChanged();
     void languageChanged(const QString &code);
+    void imageFolderPathChanged();
+    void importSourceChanged();
 
 private:
     bool    m_searchIsRunning  = false;
@@ -305,6 +319,7 @@ private:
     QDateTime m_catalogCreateStartTime;
     DeviceUpdateManager    *m_deviceUpdateManager    = nullptr;
     CatalogProgressManager *m_catalogProgressManager = nullptr;
+    CollectionImporter     *m_importer               = nullptr;
 
     void setupDeviceUpdateManager();
     void onCatalogCreationCompleted(const QList<qint64> &results);

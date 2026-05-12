@@ -81,10 +81,9 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | **Create**            | ✅ | ✅ | Review thread mechanism compared to BackUp, Add Paste button, Add Paste from selected path & name | |
 | **Devices**           | ✅ | 🔲 | |
 | — View list           | ✅ | 🔲 | |
-| — Edit                | ✅ | 🔲 | |
+| — Edit                | ✅ | ✅ | |
 | — Update progress     | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
-
 | **Statistics**        | ✅ | 🔲 | |
 | **Tags**              | ✅ | 🔲 | |
 | **Backup**            | ✅ | 🔲 | |
@@ -94,6 +93,8 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | **Settings**          | ✅ | 🚧 | |
 | — SettingsFile        | ✅ | ✅ | |
 | — Version             | ✅ | ✅ | |
+| — Image folder        | ✅ | ✅ | |
+| — New & Import        | ✅ | ✅ | |
 | — Themes              | ✅ | 🔲 | |
 | — Languages           | ✅ | 🚧 | |
 | **About**             | ✅ | ✅ | |

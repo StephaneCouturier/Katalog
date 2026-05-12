@@ -1854,6 +1854,117 @@ QString AppManager::getStorageImageFolderPath() const
     return collection->imageFolderPath;
 }
 //----------------------------------------------------------------------
+QString AppManager::getImageFolderPath() const
+{
+    return collection->imageFolderPath;
+}
+//----------------------------------------------------------------------
+void AppManager::setImageFolderPath(const QString &path)
+{
+    if (collection->imageFolderPath == path)
+        return;
+    collection->imageFolderPath = path;
+    collection->saveImageFolderPath();
+    emit imageFolderPathChanged();
+}
+
+// Collection import
+//----------------------------------------------------------------------
+QStringList AppManager::getImportSourcePaths() const
+{
+    return collection->getImportSourcePaths();
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::openImportSource(const QString &path)
+{
+    if (!m_importer)
+        m_importer = new CollectionImporter(collection, this);
+
+    QSqlError err = m_importer->openSource(path);
+    if (err.type() != QSqlError::NoError) {
+        qWarning() << "AppManager::openImportSource error:" << err.text();
+        return {};
+    }
+
+    if (!m_importer->checkSchemaCompatibility()) {
+        qWarning() << "AppManager::openImportSource: schema mismatch (proceeding):" << m_importer->lastError();
+    }
+
+    // Flatten the source device tree into {id, name} entries for QML ComboBox.
+    QStandardItemModel *model = m_importer->buildSourceDeviceModel();
+    QVariantList result;
+
+    std::function<void(QModelIndex, int)> flatten = [&](QModelIndex parent, int level) {
+        int rows = model->rowCount(parent);
+        for (int i = 0; i < rows; i++) {
+            QModelIndex idx = model->index(i, 0, parent);
+            QVariantMap entry;
+            entry["id"]    = model->data(idx, Qt::UserRole).toInt();
+            entry["name"]  = QString("  ").repeated(level) + model->data(idx).toString();
+            result.append(entry);
+            flatten(idx, level + 1);
+        }
+    };
+    flatten(QModelIndex(), 0);
+
+    delete model;
+    emit importSourceChanged();
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::importDevice(int srcDeviceId)
+{
+    if (!m_importer || !m_importer->isSourceOpen())
+        return tr("No source collection is open.");
+
+    bool ok;
+    if (srcDeviceId == 0)
+        ok = (m_importer->importAllDevices() >= 0);
+    else
+        ok = m_importer->importDevice(srcDeviceId);
+
+    if (!ok)
+        return m_importer->lastError();
+
+    // Persist to CSV files in Memory mode
+    if (collection->databaseMode == "Memory") {
+        collection->saveDeviceTableToFile();
+        collection->saveMappingTableToFile();
+        collection->saveCatalogFilterTableToFile();
+        collection->saveStorageTableToFile();
+        collection->saveTagTableToFile();
+        collection->saveStatiticsTableToFile();
+    }
+
+    refreshAllUI();
+    emit importSourceChanged();
+    return QString();
+}
+//----------------------------------------------------------------------
+QString AppManager::updateAllImportsFromSource(const QString &path)
+{
+    if (!m_importer)
+        m_importer = new CollectionImporter(collection, this);
+
+    bool ok = m_importer->updateAllImportsFromSource(path);
+
+    if (!ok)
+        return m_importer->lastError();
+
+    // Persist to CSV files in Memory mode
+    if (collection->databaseMode == "Memory") {
+        collection->saveDeviceTableToFile();
+        collection->saveMappingTableToFile();
+        collection->saveCatalogFilterTableToFile();
+        collection->saveStorageTableToFile();
+        collection->saveTagTableToFile();
+        collection->saveStatiticsTableToFile();
+    }
+
+    refreshAllUI();
+    return QString();
+}
+//----------------------------------------------------------------------
 QString AppManager::formatDataSize(qlonglong bytes) const
 {
     if (bytes <= 0) return QString();
