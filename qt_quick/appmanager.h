@@ -88,7 +88,7 @@ class AppManager : public QObject
     Q_PROPERTY(QString catalogStatusText READ getCatalogStatusText NOTIFY catalogStatusTextChanged)
     Q_PROPERTY(bool    importIsRunning   READ getImportIsRunning   NOTIFY importIsRunningChanged)
     Q_PROPERTY(QString importStatusText  READ getImportStatusText  NOTIFY importStatusTextChanged)
-    Q_PROPERTY(QAbstractListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
+    Q_PROPERTY(DeviceListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -289,7 +289,7 @@ public slots:
     Q_INVOKABLE QStringList       getImportSourcePaths() const;
     Q_INVOKABLE void              openImportSource(const QString &path);
     Q_INVOKABLE QString           importDevice(int srcDeviceId);
-    QAbstractListModel           *getImportSourceDeviceModel() const { return m_importSourceDeviceModel; }
+    DeviceListModel              *getImportSourceDeviceModel() const { return m_importSourceDeviceModel; }
     Q_INVOKABLE QString      updateAllImportsFromSource(const QString &path);
 
     // Language
@@ -336,7 +336,7 @@ private:
     CollectionImporter     *m_importer               = nullptr;
     bool    m_importIsRunning  = false;
     QString m_importStatusText;
-    QAbstractListModel     *m_importSourceDeviceModel = nullptr;
+    DeviceListModel        *m_importSourceDeviceModel = nullptr;
 
     void setupDeviceUpdateManager();
     void onCatalogCreationCompleted(const QList<qint64> &results);

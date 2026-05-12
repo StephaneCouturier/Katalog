@@ -142,10 +142,30 @@ QString DeviceListModel::getRefreshStatus() const
     return "Not loaded";
 }
 
+void DeviceListModel::loadFromConnection(const QString &connectionName)
+{
+    m_connectionName = connectionName;
+    refreshDataSilently();
+}
+//----------------------------------------------------------------------
+void DeviceListModel::setIncludeCollectionRoot(bool value)
+{
+    m_includeCollectionRoot = value;
+}
+//----------------------------------------------------------------------
+void DeviceListModel::clear()
+{
+    m_connectionName.clear();
+    beginResetModel();
+    m_devices.clear();
+    endResetModel();
+}
+//----------------------------------------------------------------------
 void DeviceListModel::loadDevicesFromDatabase()
 {
-    // Enhanced error handling
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = m_connectionName.isEmpty()
+                      ? QSqlDatabase::database()
+                      : QSqlDatabase::database(m_connectionName);
     if (!db.isOpen()) {
         m_lastError = "Database not connected";
         qWarning() << "DeviceListModel::loadDevicesFromDatabase:" << m_lastError;
@@ -212,6 +232,18 @@ void DeviceListModel::loadDevicesFromDatabase()
         }
     };
     traverse(0, 0);
+
+    if (m_includeCollectionRoot) {
+        DeviceItem root;
+        root.id           = 0;
+        root.level        = 0;
+        root.name         = tr("Collection");
+        root.type         = "Virtual";
+        root.isActive     = true;
+        root.hasChildren  = !m_devices.isEmpty();
+        root.isCollapsed  = false;
+        m_devices.prepend(root);
+    }
 }
 //----------------------------------------------------------------------
 void DeviceListModel::setMaxLevel(int level)

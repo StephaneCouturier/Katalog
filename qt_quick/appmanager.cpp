@@ -17,67 +17,10 @@
 #include <QCryptographicHash>
 #include <QTimer>
 
-// Flat list model for import source device tree — same roles as DeviceListModel
-// so it can be used directly as the sourceModel of DeviceTreeComboBox.
-class ImportSourceDeviceModel : public QAbstractListModel
-{
-    Q_OBJECT
-public:
-    struct Item { int id; int level; QString name; QString type; };
-
-    explicit ImportSourceDeviceModel(QObject *parent = nullptr)
-        : QAbstractListModel(parent) {}
-
-    void populate(QStandardItemModel *treeModel) {
-        beginResetModel();
-        m_items.clear();
-        std::function<void(QModelIndex, int)> flatten = [&](QModelIndex parent, int level) {
-            int rows = treeModel->rowCount(parent);
-            for (int i = 0; i < rows; i++) {
-                QModelIndex nameIdx = treeModel->index(i, 0, parent);
-                QModelIndex typeIdx = treeModel->index(i, 1, parent);
-                m_items.append({treeModel->data(nameIdx, Qt::UserRole).toInt(),
-                                level,
-                                treeModel->data(nameIdx, Qt::DisplayRole).toString(),
-                                treeModel->data(typeIdx, Qt::DisplayRole).toString()});
-                flatten(nameIdx, level + 1);
-            }
-        };
-        flatten(QModelIndex(), 0);
-        endResetModel();
-    }
-
-    void clear() { beginResetModel(); m_items.clear(); endResetModel(); }
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override
-        { return parent.isValid() ? 0 : m_items.count(); }
-
-    QVariant data(const QModelIndex &index, int role) const override {
-        if (!index.isValid() || index.row() >= m_items.count()) return {};
-        const Item &it = m_items.at(index.row());
-        switch (role) {
-        case DeviceListModel::TypeRole:     return it.type;
-        case DeviceListModel::NameRole:     return it.name;
-        case DeviceListModel::DeviceIdRole: return it.id;
-        case DeviceListModel::LevelRole:    return it.level;
-        default:                            return {};
-        }
-    }
-
-    QHash<int, QByteArray> roleNames() const override {
-        return {{DeviceListModel::TypeRole,     "type"},
-                {DeviceListModel::NameRole,     "name"},
-                {DeviceListModel::DeviceIdRole, "deviceId"},
-                {DeviceListModel::LevelRole,    "level"}};
-    }
-
-private:
-    QList<Item> m_items;
-};
-
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
-    m_importSourceDeviceModel = new ImportSourceDeviceModel(this);
+    m_importSourceDeviceModel = new DeviceListModel(this);
+    m_importSourceDeviceModel->setIncludeCollectionRoot(true);
 }
 //----------------------------------------------------------------------
 void AppManager::initiateApp()
@@ -2009,7 +1952,7 @@ void AppManager::openImportSource(const QString &path)
         qWarning() << "AppManager::openImportSource error:" << err.text();
         m_importStatusText = tr("Error: could not open collection");
         emit importStatusTextChanged();
-        static_cast<ImportSourceDeviceModel *>(m_importSourceDeviceModel)->clear();
+        m_importSourceDeviceModel->clear();
         emit importSourceChanged();
         return;
     }
@@ -2018,9 +1961,7 @@ void AppManager::openImportSource(const QString &path)
         qWarning() << "AppManager::openImportSource: schema mismatch (proceeding):" << m_importer->lastError();
     }
 
-    QStandardItemModel *treeModel = m_importer->buildSourceDeviceModel();
-    static_cast<ImportSourceDeviceModel *>(m_importSourceDeviceModel)->populate(treeModel);
-    delete treeModel;
+    m_importSourceDeviceModel->loadFromConnection(m_importer->sourceConnectionName());
 
     m_importStatusText = QString();
     emit importStatusTextChanged();
@@ -2197,5 +2138,3 @@ void AppManager::removeExcludeDirectory(const QString &path)
     emit excludeDirectoriesChanged();
 }
 
-// Required for Q_OBJECT classes defined inside a .cpp file (AUTOMOC)
-#include "appmanager.moc"
