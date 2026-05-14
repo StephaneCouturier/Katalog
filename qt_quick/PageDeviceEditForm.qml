@@ -181,7 +181,7 @@ ColumnLayout {
 
     ListModel { id: excludeFoldersModel }
 
-    // ════════════════════════════════════════════════════════════════════════════
+    // ═══ Main Form ═════════════════════════════════════════════════════════════
     GridLayout {
         Layout.fillWidth: true
         Layout.margins: Kirigami.Units.gridUnit
@@ -446,15 +446,19 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             visible: root.deviceType === "Storage"
-            Controls.TextField {
-                id: edit_lineEdit_TotalSpace
-                Layout.fillWidth: true
-                inputMethodHints: Qt.ImhDigitsOnly
-            }
             Controls.Label {
                 text: appManager1.formatDataSize(parseInt(edit_lineEdit_TotalSpace.text) || 0)
                 opacity: 0.7
                 visible: text.length > 0
+                Layout.preferredWidth: 75
+                horizontalAlignment: Text.AlignRight
+
+            }
+            Controls.TextField {
+                id: edit_lineEdit_TotalSpace
+                Layout.fillWidth: true
+                inputMethodHints: Qt.ImhDigitsOnly
+                horizontalAlignment: Text.AlignLeft
             }
         }
 
@@ -462,17 +466,19 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             visible: root.deviceType === "Storage"
+            Controls.Label {
+                text: appManager1.formatDataSize(parseInt(edit_lineEdit_FreeSpace.text) || 0)
+                opacity: 0.7
+                visible: text.length > 0
+                Layout.preferredWidth: 75
+                horizontalAlignment: Text.AlignRight
+            }
             Controls.TextField {
                 id: edit_lineEdit_FreeSpace
                 Layout.fillWidth: true
                 inputMethodHints: Qt.ImhDigitsOnly
             }
-            Controls.Label {
-                text: appManager1.formatDataSize(parseInt(edit_lineEdit_FreeSpace.text) || 0)
-                opacity: 0.7
-                visible: text.length > 0
-            }
-        }
+       }
 
         Item { visible: root.deviceType === "Storage"; Layout.preferredWidth: 1 }
         Controls.Button {
