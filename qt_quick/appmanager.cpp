@@ -485,6 +485,7 @@ void AppManager::refreshAllUI()
         }
     }
 
+    emit tagsChanged();
     emit uiRefreshCompleted();
     qDebug() << "AppManager::refreshAllUI() - Completed";
 }
@@ -1115,14 +1116,46 @@ void AppManager::keepLastSearchHistory(int count)
 //----------------------------------------------------------------------
 QStringList AppManager::getTagNames() const
 {
+    collection->loadTagFileToTable();
     Tag tag;
     tag.loadFromDatabase(QSqlDatabase::defaultConnection);
-    QList<QString> names = tag.tagNames();
     QStringList result;
-    //result << tr("All");
-    for (const QString &name : names)
-        result << name;
+    for (const QString &name : tag.tagNames())
+        if (!result.contains(name))
+            result << name;
+    result.sort();
     return result;
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getTagEntries(const QString &filterName) const
+{
+    collection->loadTagFileToTable();
+    Tag tagModel;
+    tagModel.loadFromDatabase(QSqlDatabase::defaultConnection, filterName);
+    QVariantList result;
+    for (int i = 0; i < tagModel.rowCount(); ++i) {
+        QModelIndex idx = tagModel.index(i, 0);
+        QVariantMap entry;
+        entry[QStringLiteral("tagId")]  = tagModel.data(idx, Tag::IdRole);
+        entry[QStringLiteral("name")]   = tagModel.data(idx, Tag::NameRole);
+        entry[QStringLiteral("folder")] = tagModel.data(idx, Tag::FolderRole);
+        result << entry;
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+bool AppManager::createTag(const QString &name, const QString &path)
+{
+    bool ok = collection->createTag(name, path, QString(), QDateTime::currentDateTime());
+    if (ok) emit tagsChanged();
+    return ok;
+}
+//----------------------------------------------------------------------
+bool AppManager::deleteTag(int tagID)
+{
+    bool ok = collection->deleteTag(tagID);
+    if (ok) emit tagsChanged();
+    return ok;
 }
 //----------------------------------------------------------------------
 bool AppManager::shouldShowAlphaWarning() const

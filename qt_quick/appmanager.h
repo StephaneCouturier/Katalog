@@ -172,7 +172,10 @@ public slots:
     QString getSelectedDeviceName() const;
     int getSelectedDeviceId() const;
 
-    Q_INVOKABLE QStringList getTagNames() const;
+    Q_INVOKABLE QStringList  getTagNames() const;
+    Q_INVOKABLE QVariantList getTagEntries(const QString &filterName = QString()) const;
+    Q_INVOKABLE bool         createTag(const QString &name, const QString &path);
+    Q_INVOKABLE bool         deleteTag(int tagID);
 
     // Search progress
     bool    getSearchIsRunning()  const { return m_searchIsRunning; }
@@ -323,6 +326,7 @@ signals:
     void importSourceChanged();
     void importIsRunningChanged();
     void importStatusTextChanged();
+    void tagsChanged();
 
 private:
     bool    m_searchIsRunning  = false;

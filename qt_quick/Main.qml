@@ -1104,23 +1104,14 @@ Kirigami.ApplicationWindow {
         title: "Tags"
 
         actions: [
-            /*Kirigami.Action {
-                text: "Batch process"
-                icon.name: "document-export"
-                onTriggered: showPassiveNotification("Batch process clicked, no action")
-            },*/
             Kirigami.Action {
-                text: "Close"
+                text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageTags)
             }
         ]
 
-        Kirigami.PlaceholderMessage {
-            anchors.centerIn: parent
-            text: "Tags — coming soon"
-            icon.name: "tag"
-        }
+        PageTagsForm {}
     }
 
     //Pages - Backup

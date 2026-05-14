@@ -11,6 +11,15 @@ ColumnLayout {
     // Width of the left label column inside sub-sections
     readonly property int labelW: Kirigami.Units.gridUnit * 4
 
+    property var tagNames: []
+
+    Connections {
+        target: appManager1
+        function onTagsChanged() { pageSearchForm.tagNames = appManager1.getTagNames() }
+    }
+
+    Component.onCompleted: { pageSearchForm.tagNames = appManager1.getTagNames() }
+
     function getCriteria() {
         //Global type of search
         newSearch1.properties = {"searchInCatalogsChecked":  search_radioButton_SearchInCatalogs.checked};
@@ -985,7 +994,7 @@ ColumnLayout {
             Controls.ComboBox {
                 id: search_comboBox_FolderTag
                 enabled: false
-                model: appManager1.getTagNames()
+                model: pageSearchForm.tagNames
             }
         }
     }
