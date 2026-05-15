@@ -46,9 +46,6 @@ ColumnLayout {
         series1Line.clear()
         series2Line.clear()
         series3Line.clear()
-        series1Scatter.clear()
-        series2Scatter.clear()
-        series3Scatter.clear()
 
         if (!data.hasData) {
             chart.title = qsTr("No data")
@@ -56,38 +53,23 @@ ColumnLayout {
         }
 
         var i
-        if (data.loadSeries1) {
+        if (data.loadSeries1)
             for (i = 0; i < data.series1.length; i++)
                 series1Line.append(data.series1[i].x, data.series1[i].y)
-            if (root.displayEachValue) {
-                for (i = 0; i < data.series1.length; i++)
-                    series1Scatter.append(data.series1[i].x, data.series1[i].y)
-            }
-        }
-        if (data.loadSeries2) {
+        if (data.loadSeries2)
             for (i = 0; i < data.series2.length; i++)
                 series2Line.append(data.series2[i].x, data.series2[i].y)
-            if (root.displayEachValue) {
-                for (i = 0; i < data.series2.length; i++)
-                    series2Scatter.append(data.series2[i].x, data.series2[i].y)
-            }
-        }
-        if (data.loadSeries3) {
+        if (data.loadSeries3)
             for (i = 0; i < data.series3.length; i++)
                 series3Line.append(data.series3[i].x, data.series3[i].y)
-            if (root.displayEachValue) {
-                for (i = 0; i < data.series3.length; i++)
-                    series3Scatter.append(data.series3[i].x, data.series3[i].y)
-            }
-        }
 
-        // Series visibility
-        series1Line.visible    = data.loadSeries1
-        series2Line.visible    = data.loadSeries2
-        series3Line.visible    = data.loadSeries3
-        series1Scatter.visible = data.loadSeries1 && root.displayEachValue
-        series2Scatter.visible = data.loadSeries2 && root.displayEachValue
-        series3Scatter.visible = data.loadSeries3 && root.displayEachValue
+        // Series visibility and point markers
+        series1Line.visible       = data.loadSeries1
+        series2Line.visible       = data.loadSeries2
+        series3Line.visible       = data.loadSeries3
+        series1Line.pointsVisible = data.loadSeries1 && root.displayEachValue
+        series2Line.pointsVisible = data.loadSeries2 && root.displayEachValue
+        series3Line.pointsVisible = data.loadSeries3 && root.displayEachValue
 
         // Y axis: round up to next leading digit (e.g. 848 365 → 900 000)
         var maxVal = data.maxValue
@@ -195,15 +177,15 @@ ColumnLayout {
             Controls.TextField {
                 id: startDateField
                 placeholderText: "yyyy-MM-dd"
-                inputMask: "9999-99-99"
-                onEditingFinished: {
-                    root.startDateText = text
-                    appManager1.setStatisticsSetting("graphStartDate", text)
-                    root.refresh()
-                }
+                readOnly: true
+                implicitWidth: 100
             }
             Controls.Button {
-                text: qsTr("Clear")
+                icon.name: "view-calendar"
+                onClicked: statsDateDialog.open()
+            }
+            Controls.Button {
+                icon.name: "edit-clear-history"
                 onClicked: {
                     startDateField.text = ""
                     root.startDateText  = ""
@@ -220,10 +202,46 @@ ColumnLayout {
             onCheckedChanged: {
                 root.displayEachValue = checked
                 appManager1.setStatisticsSetting("DisplayEachValue", checked ? "true" : "false")
-                // Toggle scatter series without full redraw
-                series1Scatter.visible = checked && series1Line.visible
-                series2Scatter.visible = checked && series2Line.visible
-                series3Scatter.visible = checked && series3Line.visible
+                series1Line.pointsVisible = checked && series1Line.visible
+                series2Line.pointsVisible = checked && series2Line.visible
+                series3Line.pointsVisible = checked && series3Line.visible
+            }
+        }
+    }
+
+    Kirigami.Dialog {
+        id: statsDateDialog
+        title: qsTr("Select start date")
+
+        function applyDate(d) {
+            var mm = d.getMonth() + 1
+            var dd = d.getDate()
+            var text = d.getFullYear() + '-'
+                + (mm < 10 ? '0' : '') + mm + '-'
+                + (dd < 10 ? '0' : '') + dd
+            startDateField.text = text
+            root.startDateText  = text
+            appManager1.setStatisticsSetting("graphStartDate", text)
+            root.refresh()
+            statsDateDialog.close()
+        }
+
+        contentItem: RowLayout {
+            Controls.Button {
+                text: qsTr("1 day ago")
+                onClicked: { var d = new Date(); d.setDate(d.getDate() - 1);   statsDateDialog.applyDate(d) }
+            }
+            Controls.Button {
+                text: qsTr("1 week ago")
+                onClicked: { var d = new Date(); d.setDate(d.getDate() - 7);   statsDateDialog.applyDate(d) }
+            }
+            Controls.Button {
+                text: qsTr("1 month ago")
+                onClicked: { var d = new Date(); d.setMonth(d.getMonth() - 1); statsDateDialog.applyDate(d) }
+            }
+            Controls.Button {
+                text: qsTr("1 year ago")
+                onClicked: { var d = new Date(); d.setFullYear(d.getFullYear() - 1); statsDateDialog.applyDate(d) }
             }
         }
     }
@@ -252,54 +270,30 @@ ColumnLayout {
 
         LineSeries {
             id: series1Line
-            name:  qsTr("Catalogs") + " / " + qsTr("Total File Size")
-            color: "#209fdf"
-            width: 2
-            axisX: axisX
-            axisY: axisY
-        }
-        ScatterSeries {
-            id: series1Scatter
-            name:       ""
-            color:      "#209fdf"
-            markerSize: 10
-            visible:    false
+            name:          qsTr("Catalogs") + " / " + qsTr("Total File Size")
+            color:         "#209fdf"
+            width:         2
+            pointsVisible: false
             axisX: axisX
             axisY: axisY
         }
 
         LineSeries {
             id: series2Line
-            name:  qsTr("Storage") + " / " + qsTr("Used Space")
-            color: "#f6a625"
-            width: 2
-            axisX: axisX
-            axisY: axisY
-        }
-        ScatterSeries {
-            id: series2Scatter
-            name:       ""
-            color:      "#f6a625"
-            markerSize: 10
-            visible:    false
+            name:          qsTr("Storage") + " / " + qsTr("Used Space")
+            color:         "#f6a625"
+            width:         2
+            pointsVisible: false
             axisX: axisX
             axisY: axisY
         }
 
         LineSeries {
             id: series3Line
-            name:  qsTr("Storage") + " / " + qsTr("Total Space")
-            color: "#99ca53"
-            width: 2
-            axisX: axisX
-            axisY: axisY
-        }
-        ScatterSeries {
-            id: series3Scatter
-            name:       ""
-            color:      "#99ca53"
-            markerSize: 10
-            visible:    false
+            name:          qsTr("Storage") + " / " + qsTr("Total Space")
+            color:         "#99ca53"
+            width:         2
+            pointsVisible: false
             axisX: axisX
             axisY: axisY
         }

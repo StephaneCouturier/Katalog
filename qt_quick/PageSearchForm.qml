@@ -339,6 +339,20 @@ ColumnLayout {
                     }
                 }
                 Controls.Button {
+                    text: "1 week ago"
+                    onClicked: {
+                        var today = new Date();
+                        var lastWeek = new Date(today);
+                        lastWeek.setDate(today.getDate() - 7);
+                        var fullDate = lastWeek.getFullYear() + '/' + (lastWeek.getMonth()+1) + '/' + lastWeek.getDate() + ' ' + lastWeek.getHours() + ':' + lastWeek.getMinutes() + ':' + lastWeek.getSeconds();
+                        if (dateDialog.selectedDateField === "Min")
+                            search_dateTimeEdit_Min.text = returnCleanedDate(fullDate)
+                        else
+                            search_dateTimeEdit_Max.text = returnCleanedDate(fullDate)
+                        dateDialog.close()
+                    }
+                }
+                Controls.Button {
                     text: "1 month ago"
                     onClicked: {
                         var today = new Date();
