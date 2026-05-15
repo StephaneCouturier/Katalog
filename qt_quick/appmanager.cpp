@@ -2532,12 +2532,21 @@ void AppManager::runBackup(int mappingId)
     targetDevice.ID = mapping.targetDeviceId;
     targetDevice.loadDevice(QSqlDatabase::defaultConnection);
 
-    if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog"))
+    if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
+        emit backupNotification(tr("Both source and target must be Catalog devices."), true);
         return;
+    }
 
     sourceDevice.updateActiveState(QSqlDatabase::defaultConnection);
     targetDevice.updateActiveState(QSqlDatabase::defaultConnection);
-    if (!sourceDevice.active || !targetDevice.active) return;
+    if (!sourceDevice.active) {
+        emit backupNotification(tr("Source not available: %1").arg(sourceDevice.name), true);
+        return;
+    }
+    if (!targetDevice.active) {
+        emit backupNotification(tr("Target not available: %1").arg(targetDevice.name), true);
+        return;
+    }
 
     m_backupTargetDevice     = targetDevice;
     m_runningBackupMappingId = mappingId;

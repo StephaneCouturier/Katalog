@@ -29,6 +29,20 @@ ColumnLayout {
         var deviceId = appManager1.selectedDeviceId
         root.mappings = appManager1.getBackupMappings(root.filterType, deviceId, root.mappingTypeFilter)
         root.totals   = appManager1.getBackupTotals(root.filterType, deviceId, root.mappingTypeFilter)
+        Qt.callLater(forceCardLayouts)
+    }
+
+    // Re-run the inner ColumnLayout of every card.  A window-width resize triggers
+    // this automatically via widthChanged; we must do it explicitly after any
+    // visibility cycle (layer push/pop, page close/reopen) because height-only
+    // changes do not re-invalidate vertical ColumnLayout spacing calculations.
+    function forceCardLayouts() {
+        root.forceLayout()
+        for (var i = 0; i < mappingRepeater.count; i++) {
+            var card = mappingRepeater.itemAt(i)
+            if (card && card.contentItem && typeof card.contentItem.forceLayout === "function")
+                card.contentItem.forceLayout()
+        }
     }
 
     function formatDiff(diff, unit) {
@@ -76,6 +90,9 @@ ColumnLayout {
         function onBackupNotification(message, isError) {
             root.lastReportIsError = isError
             root.lastReportSummary = message
+            // Reset running state if an error arrives before the job started
+            if (isError && root.runningMappingId !== -1)
+                root.runningMappingId = -1
         }
     }
 
@@ -177,13 +194,15 @@ ColumnLayout {
 
     // ─── Mapping cards ────────────────────────────────────────────────────────
     Repeater {
+        id: mappingRepeater
         model: root.mappings
         delegate: Kirigami.AbstractCard {
             id: mappingCard
             required property var modelData
             required property int index
 
-            Layout.fillWidth:    true
+            Layout.fillWidth:       true
+            Layout.preferredHeight: implicitHeight
             Layout.topMargin:    Kirigami.Units.smallSpacing
             Layout.leftMargin:   Kirigami.Units.largeSpacing
             Layout.rightMargin:  Kirigami.Units.largeSpacing
@@ -285,24 +304,42 @@ ColumnLayout {
                     }
                 }
 
-                // Progress bar (when this card's backup is running)
-                ColumnLayout {
+                // Loader keeps progress items truly absent (not just hidden) when not
+                // running — prevents Qt Quick Layouts from retaining phantom spacing
+                // after layer push/pop navigation.
+                Loader {
+                    id: progressLoader
+                    Layout.fillWidth: true
+                    active:  mappingCard.isRunning
                     visible: mappingCard.isRunning
-                    spacing: Kirigami.Units.smallSpacing
 
-                    Controls.ProgressBar {
-                        Layout.fillWidth: true
-                        from: 0; to: 1
-                        value: root.progressFraction
+                    sourceComponent: ColumnLayout {
+                        width: progressLoader.width
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Controls.ProgressBar {
+                            Layout.fillWidth: true
+                            from: 0; to: 1
+                            value: root.progressFraction
+                        }
+                        Controls.Label {
+                            Layout.fillWidth: true
+                            text: Math.round(root.progressFraction * 100) + "% · "
+                                + root.progressFilesDone + "/" + root.progressTotalFiles
+                                + (root.progressFile ? " · " + root.progressFile : "")
+                            elide: Text.ElideRight
+                            font.pixelSize: Kirigami.Units.gridUnit * 0.85
+                            opacity: 0.8
+                        }
                     }
-                    Controls.Label {
-                        text: Math.round(root.progressFraction * 100) + "% · "
-                            + root.progressFilesDone + "/" + root.progressTotalFiles
-                            + (root.progressFile ? " · " + root.progressFile : "")
-                        elide: Text.ElideRight
-                        Layout.fillWidth: true
-                        font.pixelSize: Kirigami.Units.gridUnit * 0.85
-                        opacity: 0.8
+                }
+
+                RowLayout { //test
+                    Controls.Button {
+                        visible:  true
+                        text:     qsTr("TEST")
+                        icon.name: "view-preview"
+                        //onClicked: root.requestPreviewMapping(modelData.mappingId)
                     }
                 }
 

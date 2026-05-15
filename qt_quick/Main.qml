@@ -54,6 +54,11 @@ Kirigami.ApplicationWindow {
                 else
                     pageStack.layers.push(comp)
             }
+            // Re-layout backup cards after the layer animation fully completes.
+            // Having two Connections blocks with the same signal can cause one to be
+            // silently dropped, so this is merged here rather than in a second block.
+            if (!pageStack.layers.busy && pageStack.layers.depth === 1 && pageStack.currentItem === pageBackup)
+                Qt.callLater(function() { backupPageForm.refresh() })
         }
     }
 
@@ -1113,6 +1118,11 @@ Kirigami.ApplicationWindow {
         id: pageBackup
         visible: false
         title: qsTr("BackUp")
+
+        onVisibleChanged: {
+            if (visible)
+                Qt.callLater(function() { backupPageForm.forceCardLayouts() })
+        }
 
         actions: [
             Kirigami.Action {
