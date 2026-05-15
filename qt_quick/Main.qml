@@ -1112,11 +1112,11 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageBackup
         visible: false
-        title: qsTr("Backup")
+        title: qsTr("BackUp")
 
         actions: [
             Kirigami.Action {
-                text:      qsTr("Add mapping")
+                text:      qsTr("Add")
                 icon.name: "list-add"
                 onTriggered: root.showLayer(backupMappingFormComponent)
             },

@@ -2253,6 +2253,23 @@ QVariantList AppManager::getBackupMappings(const QString &filterType, int device
     const MappingFilter filter = buildMappingFilter(filterType, deviceId, mappingType);
     const QList<MappingInfo> mappings = manager.getFilteredMappings(filter);
 
+    // Refresh device_active for every referenced device so the active indicator
+    // reflects whether the path currently exists on disk.
+    QHash<int, bool> activeByDeviceId;
+    for (const MappingInfo &m : mappings) {
+        for (int pass = 0; pass < 2; ++pass) {
+            int devId    = (pass == 0) ? m.sourceDeviceId : m.targetDeviceId;
+            QString path = (pass == 0) ? m.sourcePath     : m.targetPath;
+            if (!activeByDeviceId.contains(devId)) {
+                Device d;
+                d.ID   = devId;
+                d.path = path;
+                d.updateActiveState(QSqlDatabase::defaultConnection);
+                activeByDeviceId[devId] = d.active;
+            }
+        }
+    }
+
     QVariantList result;
     result.reserve(mappings.size());
     for (const MappingInfo &m : mappings) {
@@ -2265,14 +2282,14 @@ QVariantList AppManager::getBackupMappings(const QString &filterType, int device
         map[QStringLiteral("sourceSize")]          = m.sourceSize;
         map[QStringLiteral("sourceSizeStr")]       = QLocale().formattedDataSize(m.sourceSize);
         map[QStringLiteral("sourceFileCount")]     = m.sourceFileCount;
-        map[QStringLiteral("sourceActive")]        = m.sourceActive;
+        map[QStringLiteral("sourceActive")]        = activeByDeviceId.value(m.sourceDeviceId, false);
         map[QStringLiteral("sourceDateUpdated")]   = m.sourceDateUpdated;
         map[QStringLiteral("targetName")]          = m.targetName;
         map[QStringLiteral("targetPath")]          = m.targetPath;
         map[QStringLiteral("targetSize")]          = m.targetSize;
         map[QStringLiteral("targetSizeStr")]       = QLocale().formattedDataSize(m.targetSize);
         map[QStringLiteral("targetFileCount")]     = m.targetFileCount;
-        map[QStringLiteral("targetActive")]        = m.targetActive;
+        map[QStringLiteral("targetActive")]        = activeByDeviceId.value(m.targetDeviceId, false);
         map[QStringLiteral("targetDateUpdated")]   = m.targetDateUpdated;
         map[QStringLiteral("sizeDiff")]            = m.sourceSize - m.targetSize;
         map[QStringLiteral("sizeDiffStr")]         = QLocale().formattedDataSize(qAbs(m.sourceSize - m.targetSize));
@@ -2316,7 +2333,7 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
     const QString &conflictMode, bool sourceDrive)
 {
     if (name.trimmed().isEmpty())
-        return tr("Provide a mapping name.");
+        return tr("Provide a link name.");
     if (sourceId <= 0)
         return tr("Select a source catalog first.");
     if (targetId <= 0)
@@ -2326,7 +2343,7 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
 
     BackupMappingManager manager(QSqlDatabase::defaultConnection);
     if (!manager.createMapping(name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive))
-        return tr("Failed to create mapping.");
+        return tr("Failed to create link.");
 
     collection->saveMappingTableToFile();
     emit backupMappingsChanged();
@@ -2409,7 +2426,7 @@ QVariantMap AppManager::previewBackup(int mappingId)
     BackupMappingManager manager(QSqlDatabase::defaultConnection);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) {
-        result[QStringLiteral("error")] = tr("Mapping not found.");
+        result[QStringLiteral("error")] = tr("Link not found.");
         return result;
     }
 
@@ -2611,7 +2628,7 @@ QVariantMap AppManager::replicateDirectories(int mappingId)
     BackupMappingManager manager(QSqlDatabase::defaultConnection);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) {
-        result[QStringLiteral("error")] = tr("Mapping not found.");
+        result[QStringLiteral("error")] = tr("Link not found.");
         return result;
     }
 

@@ -5,7 +5,7 @@ import org.kde.kirigami as Kirigami
 
 Kirigami.ScrollablePage {
     id: root
-    title: qsTr("Add Mapping")
+    title: qsTr("Add Link")
 
     // Generate a suggested name from source → target names
     function generateName() {

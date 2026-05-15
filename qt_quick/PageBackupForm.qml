@@ -123,12 +123,6 @@ ColumnLayout {
         }
 
         Item { Layout.fillWidth: true }
-
-        Controls.Button {
-            icon.name: "list-add"
-            text: qsTr("Add mapping")
-            onClicked: root.requestAddMapping()
-        }
     }
 
     // ─── Coverage summary ─────────────────────────────────────────────────────
@@ -144,7 +138,7 @@ ColumnLayout {
         text: {
             if (!root.totals.deviceName) return ""
             return root.totals.deviceName
-                + " — " + (root.totals.totalMappings || 0) + " " + qsTr("mapping(s)")
+                + " — " + (root.totals.totalMappings || 0) + " " + qsTr("link(s)")
                 + " · " + (root.totals.totalSourceSizeStr || "0") + " " + qsTr("source")
                 + " · " + (root.totals.coveragePct || "0") + "% " + qsTr("covered")
         }
@@ -169,8 +163,8 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.margins:    Kirigami.Units.largeSpacing * 2
         visible:           root.mappings.length === 0
-        text:              qsTr("No backup mappings")
-        explanation:       qsTr("Create a mapping to define a source and target for backup or archive operations.")
+        text:              qsTr("No backup links")
+        explanation:       qsTr("Create a link to define a source and target for backup or archive operations.")
         icon.name:         "backup"
     }
 
@@ -231,11 +225,12 @@ ColumnLayout {
                     Controls.Label { text: qsTr("Source"); opacity: 0.7 }
                     RowLayout {
                         spacing: Kirigami.Units.smallSpacing
-                        Kirigami.Icon {
-                            source: modelData.sourceActive ? "media-record" : "media-record-symbolic"
-                            color:  modelData.sourceActive ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.disabledTextColor
-                            implicitWidth:  Kirigami.Units.iconSizes.small
-                            implicitHeight: Kirigami.Units.iconSizes.small
+                        Rectangle {
+                            implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
+                            implicitHeight: implicitWidth
+                            radius: width / 2
+                            color: modelData.sourceActive ? Kirigami.Theme.positiveTextColor
+                                                          : Kirigami.Theme.disabledTextColor
                         }
                         Controls.Label {
                             text: modelData.sourceName
@@ -250,11 +245,12 @@ ColumnLayout {
                     Controls.Label { text: qsTr("Target"); opacity: 0.7 }
                     RowLayout {
                         spacing: Kirigami.Units.smallSpacing
-                        Kirigami.Icon {
-                            source: modelData.targetActive ? "media-record" : "media-record-symbolic"
-                            color:  modelData.targetActive ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.disabledTextColor
-                            implicitWidth:  Kirigami.Units.iconSizes.small
-                            implicitHeight: Kirigami.Units.iconSizes.small
+                        Rectangle {
+                            implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
+                            implicitHeight: implicitWidth
+                            radius: width / 2
+                            color: modelData.targetActive ? Kirigami.Theme.positiveTextColor
+                                                          : Kirigami.Theme.disabledTextColor
                         }
                         Controls.Label {
                             text: modelData.targetName
@@ -409,8 +405,8 @@ ColumnLayout {
 
                         Kirigami.PromptDialog {
                             id: deleteDialog
-                            title: qsTr("Delete mapping")
-                            subtitle: qsTr("Delete mapping \"%1\"? This cannot be undone.").arg(modelData.mappingName)
+                            title: qsTr("Delete link")
+                            subtitle: qsTr("Delete link \"%1\"? This cannot be undone.").arg(modelData.mappingName)
                             standardButtons: Kirigami.Dialog.Yes | Kirigami.Dialog.No
                             onAccepted: {
                                 if (appManager1.deleteBackupMapping(modelData.mappingId))
