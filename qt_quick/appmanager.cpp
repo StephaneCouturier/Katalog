@@ -9,6 +9,11 @@
 #include "core/searchjobstoppable.h"
 #include "core/statusbarmessagebuilder.h"
 #include "core/catalog.h"
+#include "core/backupjobstoppable.h"
+#include "core/backupprofilegenerator.h"
+#include "core/directoryreplicator.h"
+#include "core/storage.h"
+#include <QThread>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "version.h"
@@ -1198,14 +1203,6 @@ QVariantMap AppManager::getStatisticsData(const QString &source, const QString &
     result[QStringLiteral("unitKey")]     = data.unitKey;
     result[QStringLiteral("deviceName")]  = selectedDevice->name;
     result[QStringLiteral("hasData")]     = !data.series1.isEmpty();
-    qDebug() << "getStatisticsData:"
-             << "deviceId="   << selectedDevice->ID
-             << "deviceType=" << selectedDevice->type
-             << "source="     << source
-             << "dataType="   << dataType
-             << "points="     << data.series1.size()
-             << "maxValue="   << data.maxValue
-             << "unitKey="    << data.unitKey;
     return result;
 }
 //----------------------------------------------------------------------
@@ -2233,5 +2230,463 @@ void AppManager::removeExcludeDirectory(const QString &path)
 {
     collection->removeExcludeDirectory(path);
     emit excludeDirectoriesChanged();
+}
+
+//----------------------------------------------------------------------
+// Backup
+//----------------------------------------------------------------------
+
+static MappingFilter buildMappingFilter(const QString &filterType, int deviceId, const QString &mappingType)
+{
+    MappingFilter filter;
+    filter.mappingType = mappingType;
+    if (filterType == QLatin1String("Source") && deviceId > 0)
+        return MappingFilter(MappingFilter::SourceDevice, deviceId, mappingType);
+    if (filterType == QLatin1String("Target") && deviceId > 0)
+        return MappingFilter(MappingFilter::TargetDevice, deviceId, mappingType);
+    return filter;
+}
+
+QVariantList AppManager::getBackupMappings(const QString &filterType, int deviceId, const QString &mappingType) const
+{
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    const MappingFilter filter = buildMappingFilter(filterType, deviceId, mappingType);
+    const QList<MappingInfo> mappings = manager.getFilteredMappings(filter);
+
+    QVariantList result;
+    result.reserve(mappings.size());
+    for (const MappingInfo &m : mappings) {
+        QVariantMap map;
+        map[QStringLiteral("mappingId")]          = m.mappingId;
+        map[QStringLiteral("mappingName")]         = m.mappingName;
+        map[QStringLiteral("mappingType")]         = m.mappingType;
+        map[QStringLiteral("sourceName")]          = m.sourceName;
+        map[QStringLiteral("sourcePath")]          = m.sourcePath;
+        map[QStringLiteral("sourceSize")]          = m.sourceSize;
+        map[QStringLiteral("sourceSizeStr")]       = QLocale().formattedDataSize(m.sourceSize);
+        map[QStringLiteral("sourceFileCount")]     = m.sourceFileCount;
+        map[QStringLiteral("sourceActive")]        = m.sourceActive;
+        map[QStringLiteral("sourceDateUpdated")]   = m.sourceDateUpdated;
+        map[QStringLiteral("targetName")]          = m.targetName;
+        map[QStringLiteral("targetPath")]          = m.targetPath;
+        map[QStringLiteral("targetSize")]          = m.targetSize;
+        map[QStringLiteral("targetSizeStr")]       = QLocale().formattedDataSize(m.targetSize);
+        map[QStringLiteral("targetFileCount")]     = m.targetFileCount;
+        map[QStringLiteral("targetActive")]        = m.targetActive;
+        map[QStringLiteral("targetDateUpdated")]   = m.targetDateUpdated;
+        map[QStringLiteral("sizeDiff")]            = m.sourceSize - m.targetSize;
+        map[QStringLiteral("sizeDiffStr")]         = QLocale().formattedDataSize(qAbs(m.sourceSize - m.targetSize));
+        map[QStringLiteral("fileCountDiff")]       = m.sourceFileCount - m.targetFileCount;
+        map[QStringLiteral("strictCopy")]          = m.strictCopy;
+        map[QStringLiteral("conflictMode")]        = conflictModeToString(m.conflictMode);
+        map[QStringLiteral("sourceDrive")]         = m.sourceDrive;
+        result.append(map);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::getBackupTotals(const QString &filterType, int deviceId, const QString &mappingType) const
+{
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    const MappingFilter filter  = buildMappingFilter(filterType, deviceId, mappingType);
+    const MappingTotals  totals = manager.calculateTotals(filter);
+
+    const qint64 deviceSize  = selectedDevice->totalFileSize;
+    const qint64 mapped      = totals.totalSourceSize;
+    const float  coveragePct = (deviceSize > 0)
+        ? static_cast<float>(mapped) / static_cast<float>(deviceSize) * 100.0f
+        : 0.0f;
+
+    QVariantMap result;
+    result[QStringLiteral("totalMappings")]         = totals.totalMappings;
+    result[QStringLiteral("totalSourceSizeStr")]    = QLocale().formattedDataSize(totals.totalSourceSize);
+    result[QStringLiteral("totalTargetSizeStr")]    = QLocale().formattedDataSize(totals.totalTargetSize);
+    result[QStringLiteral("totalSizeDiffStr")]      = QLocale().formattedDataSize(qAbs(totals.totalSizeDifference));
+    result[QStringLiteral("totalSourceFileCount")]  = totals.totalSourceFileCount;
+    result[QStringLiteral("totalTargetFileCount")]  = totals.totalTargetFileCount;
+    result[QStringLiteral("totalFileCountDiff")]    = totals.totalFileCountDifference;
+    result[QStringLiteral("deviceName")]            = selectedDevice->name;
+    result[QStringLiteral("deviceSizeStr")]         = QLocale().formattedDataSize(deviceSize);
+    result[QStringLiteral("coveragePct")]           = QString::number(static_cast<double>(coveragePct), 'f', 1);
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::createBackupMapping(const QString &name, const QString &type,
+    int sourceId, int targetId, bool strictCopy,
+    const QString &conflictMode, bool sourceDrive)
+{
+    if (name.trimmed().isEmpty())
+        return tr("Provide a mapping name.");
+    if (sourceId <= 0)
+        return tr("Select a source catalog first.");
+    if (targetId <= 0)
+        return tr("Select a target catalog first.");
+    if (sourceId == targetId)
+        return tr("Select a different source or target (a device shall not be mapped to itself).");
+
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    if (!manager.createMapping(name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive))
+        return tr("Failed to create mapping.");
+
+    collection->saveMappingTableToFile();
+    emit backupMappingsChanged();
+    return QString();
+}
+//----------------------------------------------------------------------
+bool AppManager::deleteBackupMapping(int mappingId)
+{
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    if (!manager.deleteMapping(mappingId))
+        return false;
+    collection->saveMappingTableToFile();
+    emit backupMappingsChanged();
+    return true;
+}
+//----------------------------------------------------------------------
+bool AppManager::invertBackupMapping(int mappingId)
+{
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    if (!manager.invertMapping(mappingId))
+        return false;
+    collection->saveMappingTableToFile();
+    emit backupMappingsChanged();
+    return true;
+}
+//----------------------------------------------------------------------
+AppManager::BackupCompareResult AppManager::compareForBackup(
+    const Device &sourceDevice, const Device &targetDevice,
+    bool strictCopy, bool sourceDrive)
+{
+    BackupCompareResult out;
+
+    if (strictCopy) {
+        CatalogDifferenceEngine engine(QSqlDatabase::defaultConnection);
+        StrictDifferenceResult r;
+        if (sourceDrive) {
+            r = engine.compareStrictFromDrive(sourceDevice.path, targetDevice.externalID, targetDevice.path);
+        } else {
+            r = engine.compareStrict(sourceDevice.externalID, targetDevice.externalID,
+                                     sourceDevice.path, targetDevice.path);
+        }
+        out.filesToCopy   = r.filesToCopy;
+        out.fileConflicts = r.conflicts;
+        out.skippedCount  = r.skippedCount;
+    } else {
+        CatalogDifferenceEngine engine(QSqlDatabase::defaultConnection);
+        const QList<int> sourceIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
+            const_cast<Device*>(&sourceDevice), QSqlDatabase::defaultConnection);
+        const QList<int> targetIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
+            const_cast<Device*>(&targetDevice), QSqlDatabase::defaultConnection);
+        const DifferenceResult diff = engine.compare(
+            sourceIds, targetIds,
+            CatalogDifferenceEngine::Name | CatalogDifferenceEngine::Size,
+            false, QStringLiteral("file"));
+
+        BackupMappingManager manager(QSqlDatabase::defaultConnection);
+        const QSet<QString> targetPaths  = manager.getCatalogFilePaths(targetDevice.externalID);
+        const int           srcRootLen   = sourceDevice.path.length();
+        for (const DifferenceFileEntry &e : diff.onlyInSource) {
+            const QString relFolder    = e.folderPath.mid(srcRootLen);
+            const QString expectedPath = targetDevice.path + relFolder + QLatin1Char('/') + e.fileName;
+            if (targetPaths.contains(expectedPath))
+                out.fileConflicts.append(e);
+            else
+                out.filesToCopy.append(e);
+        }
+        out.skippedCount = manager.getCatalogFileCount(sourceDevice.externalID)
+                           - out.filesToCopy.size()
+                           - out.fileConflicts.size();
+    }
+    return out;
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::previewBackup(int mappingId)
+{
+    QVariantMap result;
+    result[QStringLiteral("hasData")] = false;
+    result[QStringLiteral("error")]   = QString();
+
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    MappingInfo mapping = manager.getMappingById(mappingId);
+    if (mapping.mappingId < 0) {
+        result[QStringLiteral("error")] = tr("Mapping not found.");
+        return result;
+    }
+
+    Device sourceDevice;
+    sourceDevice.ID = mapping.sourceDeviceId;
+    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    Device targetDevice;
+    targetDevice.ID = mapping.targetDeviceId;
+    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+
+    if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
+        result[QStringLiteral("error")] = tr("Both source and target must be Catalog devices.");
+        return result;
+    }
+
+    sourceDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    targetDevice.updateActiveState(QSqlDatabase::defaultConnection);
+
+    if (collection->databaseMode == QLatin1String("Memory")) {
+        QMutex mutex;
+        bool stopRequested = false;
+        sourceDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+        targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+    }
+
+    const BackupCompareResult cmp      = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
+    const bool                isArchive = (mapping.mappingType == QLatin1String("Archive"));
+
+    const BackupSpaceCheck spaceCheck = evaluateBackupSpace(
+        Storage::availableSpace(targetDevice.path),
+        cmp.filesToCopy, cmp.fileConflicts, mapping.conflictMode);
+
+    QString spaceStatusStr;
+    switch (spaceCheck.status) {
+        case BackupSpaceStatus::OK:           spaceStatusStr = QStringLiteral("OK");           break;
+        case BackupSpaceStatus::Low:          spaceStatusStr = QStringLiteral("Low");          break;
+        case BackupSpaceStatus::Insufficient: spaceStatusStr = QStringLiteral("Insufficient"); break;
+        default:                              spaceStatusStr = QStringLiteral("Unknown");      break;
+    }
+
+    m_lastPreviewRows.clear();
+    QVariantList filesToCopy;
+    for (const DifferenceFileEntry &e : cmp.filesToCopy) {
+        QVariantMap row;
+        row[QStringLiteral("status")]      = isArchive ? tr("Move") : tr("Copy");
+        row[QStringLiteral("fileName")]    = e.fileName;
+        row[QStringLiteral("folderPath")]  = e.folderPath;
+        row[QStringLiteral("fileSize")]    = e.fileSize;
+        row[QStringLiteral("fileSizeStr")] = QLocale().formattedDataSize(e.fileSize);
+        filesToCopy.append(row);
+        BackupPreviewRow pr;
+        pr.status    = isArchive ? tr("Move") : tr("Copy");
+        pr.fileName  = e.fileName;
+        pr.folderPath= e.folderPath;
+        pr.fileSize  = e.fileSize;
+        m_lastPreviewRows.append(pr);
+    }
+    QVariantList fileConflicts;
+    for (const DifferenceFileEntry &e : cmp.fileConflicts) {
+        QVariantMap row;
+        row[QStringLiteral("status")]      = tr("Conflict");
+        row[QStringLiteral("fileName")]    = e.fileName;
+        row[QStringLiteral("folderPath")]  = e.folderPath;
+        row[QStringLiteral("fileSize")]    = e.fileSize;
+        row[QStringLiteral("fileSizeStr")] = QLocale().formattedDataSize(e.fileSize);
+        fileConflicts.append(row);
+        BackupPreviewRow pr;
+        pr.status    = tr("Conflict");
+        pr.fileName  = e.fileName;
+        pr.folderPath= e.folderPath;
+        pr.fileSize  = e.fileSize;
+        m_lastPreviewRows.append(pr);
+    }
+
+    result[QStringLiteral("hasData")]        = true;
+    result[QStringLiteral("isArchive")]      = isArchive;
+    result[QStringLiteral("filesToCopy")]    = filesToCopy;
+    result[QStringLiteral("fileConflicts")]  = fileConflicts;
+    result[QStringLiteral("skippedCount")]   = cmp.skippedCount;
+    result[QStringLiteral("spaceStatus")]    = spaceStatusStr;
+    result[QStringLiteral("spaceAvailable")] = spaceCheck.available;
+    result[QStringLiteral("spaceRequired")]  = spaceCheck.required;
+    result[QStringLiteral("sourceName")]     = sourceDevice.name;
+    result[QStringLiteral("targetName")]     = targetDevice.name;
+    result[QStringLiteral("sourceActive")]   = sourceDevice.active;
+    result[QStringLiteral("targetActive")]   = targetDevice.active;
+    result[QStringLiteral("mappingName")]    = mapping.mappingName;
+    return result;
+}
+//----------------------------------------------------------------------
+void AppManager::runBackup(int mappingId)
+{
+    if (m_backupJob) return;
+
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    MappingInfo mapping = manager.getMappingById(mappingId);
+    if (mapping.mappingId < 0) return;
+
+    Device sourceDevice;
+    sourceDevice.ID = mapping.sourceDeviceId;
+    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    Device targetDevice;
+    targetDevice.ID = mapping.targetDeviceId;
+    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+
+    if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog"))
+        return;
+
+    sourceDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    targetDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    if (!sourceDevice.active || !targetDevice.active) return;
+
+    m_backupTargetDevice     = targetDevice;
+    m_runningBackupMappingId = mappingId;
+
+    if (collection->databaseMode == QLatin1String("Memory")) {
+        QMutex mutex;
+        bool stopRequested = false;
+        sourceDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+        targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+    }
+
+    if (mapping.sourceDrive) {
+        DirectoryReplicator replicator(QSqlDatabase::defaultConnection);
+        replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+    }
+
+    const BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
+    if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
+        m_runningBackupMappingId = -1;
+        emit backupFinished(0, 0, 0, 0, 0, 0, false);
+        return;
+    }
+
+    const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
+    m_backupIsArchive = isArchive;
+
+    m_backupJob = new BackupJobStoppable();
+    m_backupJob->setFiles(cmp.filesToCopy);
+    m_backupJob->setConflictMode(mapping.conflictMode);
+    if (mapping.conflictMode == ConflictMode::RenameOldest)
+        m_backupJob->setConflictFiles(cmp.fileConflicts);
+    m_backupJob->setSourcePath(sourceDevice.path);
+    m_backupJob->setTargetPath(targetDevice.path);
+    m_backupJob->setArchiveMode(isArchive);
+
+    m_backupThread = new QThread();
+    m_backupJob->moveToThread(m_backupThread);
+    connect(m_backupThread, &QThread::started,   m_backupJob,    &BackupJobStoppable::runBackup);
+    connect(m_backupJob,    &BackupJobStoppable::backupProgress, this, &AppManager::onBackupProgressInternal);
+    connect(m_backupJob,    &BackupJobStoppable::backupFinished, this, &AppManager::onBackupFinishedInternal);
+    connect(m_backupJob,    &BackupJobStoppable::backupFinished, m_backupThread, &QThread::quit);
+    connect(m_backupThread, &QThread::finished,  m_backupJob,    &QObject::deleteLater);
+    connect(m_backupThread, &QThread::finished,  m_backupThread, &QObject::deleteLater);
+
+    m_backupTimer.start();
+    m_backupThread->start();
+}
+//----------------------------------------------------------------------
+void AppManager::stopBackup()
+{
+    if (m_backupJob) m_backupJob->stopBackup();
+}
+//----------------------------------------------------------------------
+void AppManager::pauseBackup()
+{
+    if (m_backupJob) m_backupJob->pauseBackup();
+}
+//----------------------------------------------------------------------
+void AppManager::resumeBackup()
+{
+    if (m_backupJob) m_backupJob->resumeBackup();
+}
+//----------------------------------------------------------------------
+void AppManager::onBackupProgressInternal(int filesDone, int totalFiles,
+    qint64 bytesCopied, qint64 totalBytes, const QString &currentFile)
+{
+    emit backupProgress(filesDone, totalFiles, bytesCopied, totalBytes, currentFile);
+}
+//----------------------------------------------------------------------
+void AppManager::onBackupFinishedInternal(const BackupReport &report)
+{
+    m_backupJob              = nullptr;
+    m_backupThread           = nullptr;
+    m_runningBackupMappingId = -1;
+    emit backupFinished(
+        report.copiedCount(),
+        report.movedCount(),
+        report.renamedCount(),
+        report.conflictCount(),
+        report.errorCount(),
+        report.totalBytesCopied,
+        report.wasCancelled);
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::replicateDirectories(int mappingId)
+{
+    QVariantMap result;
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    MappingInfo mapping = manager.getMappingById(mappingId);
+    if (mapping.mappingId < 0) {
+        result[QStringLiteral("error")] = tr("Mapping not found.");
+        return result;
+    }
+
+    Device sourceDevice;
+    sourceDevice.ID = mapping.sourceDeviceId;
+    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    Device targetDevice;
+    targetDevice.ID = mapping.targetDeviceId;
+    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+
+    if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
+        result[QStringLiteral("error")] = tr("Both source and target must be Catalog devices.");
+        return result;
+    }
+    sourceDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    targetDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    if (!sourceDevice.active) {
+        result[QStringLiteral("error")] = tr("Source not available: %1").arg(sourceDevice.name);
+        return result;
+    }
+    if (!targetDevice.active) {
+        result[QStringLiteral("error")] = tr("Target not available: %1").arg(targetDevice.name);
+        return result;
+    }
+
+    DirectoryReplicator replicator(QSqlDatabase::defaultConnection);
+    ReplicationResult repResult;
+    if (mapping.sourceDrive) {
+        repResult = replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+    } else {
+        if (collection->databaseMode == QLatin1String("Memory"))
+            sourceDevice.catalog->loadFoldersToTable();
+        repResult = replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path);
+    }
+
+    result[QStringLiteral("error")]   = QString();
+    result[QStringLiteral("created")] = repResult.createdCount();
+    result[QStringLiteral("skipped")] = repResult.skippedCount();
+    result[QStringLiteral("errors")]  = repResult.errorCount();
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::exportLastBackupPreviewToCsv()
+{
+    if (m_lastPreviewRows.isEmpty())
+        return tr("No preview data to export.");
+    const QString filePath = BackupMappingManager::exportPreviewToCsv(m_lastPreviewRows, collection->folder);
+    if (filePath.isEmpty())
+        return tr("Export failed.");
+    return filePath;
+}
+//----------------------------------------------------------------------
+QString AppManager::generateLuckyBackupProfile(const QVariantList &mappingIds)
+{
+    QList<int> ids;
+    for (const QVariant &v : mappingIds)
+        ids.append(v.toInt());
+
+    BackupProfileGenerator generator(QSqlDatabase::defaultConnection);
+    const BackupProfileResult result = generator.generateProfile(ids);
+    if (!result.success)
+        return tr("Failed to generate backup profile: %1").arg(result.errorMessage);
+    return tr("Backup profile created: %1").arg(result.profilePath);
+}
+//----------------------------------------------------------------------
+QString AppManager::getBackupSetting(const QString &key) const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("BackUp/" + key).toString();
+}
+//----------------------------------------------------------------------
+void AppManager::setBackupSetting(const QString &key, const QVariant &value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("BackUp/" + key, value);
+    settings.sync();
 }
 

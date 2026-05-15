@@ -62,8 +62,14 @@
 #include "core/catalogprogressmanager.h"
 #include "core/collectionimporter.h"
 #include "core/statistics.h"
+#include "core/backupmappingmanager.h"
+#include "core/catalogdifferenceengine.h"
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
+#include <QElapsedTimer>
+
+class BackupJobStoppable;
+class QThread;
 
 class AppManager : public QObject
 {
@@ -179,6 +185,24 @@ public slots:
     Q_INVOKABLE QVariantMap getStatisticsData(const QString &source, const QString &dataType, const QString &startDate) const;
     Q_INVOKABLE QString     getStatisticsSetting(const QString &key) const;
     Q_INVOKABLE void        setStatisticsSetting(const QString &key, const QVariant &value);
+
+    // Backup
+    Q_INVOKABLE QVariantList getBackupMappings(const QString &filterType = "None", int deviceId = -1, const QString &mappingType = "All") const;
+    Q_INVOKABLE QVariantMap  getBackupTotals(const QString &filterType = "None", int deviceId = -1, const QString &mappingType = "All") const;
+    Q_INVOKABLE QString      createBackupMapping(const QString &name, const QString &type, int sourceId, int targetId, bool strictCopy, const QString &conflictMode, bool sourceDrive);
+    Q_INVOKABLE bool         deleteBackupMapping(int mappingId);
+    Q_INVOKABLE bool         invertBackupMapping(int mappingId);
+    Q_INVOKABLE QVariantMap  previewBackup(int mappingId);
+    Q_INVOKABLE void         runBackup(int mappingId);
+    Q_INVOKABLE void         stopBackup();
+    Q_INVOKABLE void         pauseBackup();
+    Q_INVOKABLE void         resumeBackup();
+    Q_INVOKABLE QVariantMap  replicateDirectories(int mappingId);
+    Q_INVOKABLE QString      exportLastBackupPreviewToCsv();
+    Q_INVOKABLE QString      generateLuckyBackupProfile(const QVariantList &mappingIds);
+    Q_INVOKABLE QString      getBackupSetting(const QString &key) const;
+    Q_INVOKABLE void         setBackupSetting(const QString &key, const QVariant &value);
+
     Q_INVOKABLE QVariantList getTagEntries(const QString &filterName = QString()) const;
     Q_INVOKABLE bool         createTag(const QString &name, const QString &path);
     Q_INVOKABLE bool         deleteTag(int tagID);
@@ -333,6 +357,9 @@ signals:
     void importIsRunningChanged();
     void importStatusTextChanged();
     void tagsChanged();
+    void backupMappingsChanged();
+    void backupProgress(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
+    void backupFinished(int copiedCount, int movedCount, int renamedCount, int conflictCount, int errorCount, qint64 totalBytesCopied, bool wasCancelled);
 
 private:
     bool    m_searchIsRunning  = false;
@@ -352,6 +379,24 @@ private:
     void onCatalogCreationCompleted(const QList<qint64> &results);
     void onCatalogCreationError(const QString &error);
     void onCatalogCreationCancelled();
+
+    // Backup helpers
+    struct BackupCompareResult {
+        QList<DifferenceFileEntry> filesToCopy;
+        QList<DifferenceFileEntry> fileConflicts;
+        int skippedCount = 0;
+    };
+    BackupCompareResult compareForBackup(const Device &src, const Device &tgt, bool strictCopy, bool sourceDrive);
+    void onBackupProgressInternal(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
+    void onBackupFinishedInternal(const BackupReport &report);
+
+    BackupJobStoppable     *m_backupJob             = nullptr;
+    QThread                *m_backupThread          = nullptr;
+    bool                    m_backupIsArchive        = false;
+    QElapsedTimer           m_backupTimer;
+    Device                  m_backupTargetDevice;
+    int                     m_runningBackupMappingId = -1;
+    QList<BackupPreviewRow> m_lastPreviewRows;
 
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,

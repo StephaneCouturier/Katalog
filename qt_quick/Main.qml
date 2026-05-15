@@ -1112,21 +1112,36 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageBackup
         visible: false
-        title: "Backup"
+        title: qsTr("Backup")
 
         actions: [
             Kirigami.Action {
-                text: "Close"
+                text:      qsTr("Add mapping")
+                icon.name: "list-add"
+                onTriggered: root.showLayer(backupMappingFormComponent)
+            },
+            Kirigami.Action {
+                text:      qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageBackup)
             }
         ]
 
-        Kirigami.PlaceholderMessage {
-            anchors.centerIn: parent
-            text: "Backup — coming soon"
-            icon.name: "backup"
+        PageBackupForm {
+            id: backupPageForm
+            onRequestAddMapping:        root.showLayer(backupMappingFormComponent)
+            onRequestPreviewMapping: (mappingId) => root.showLayer(backupPreviewFormComponent, { mappingId: mappingId })
         }
+    }
+
+    Component {
+        id: backupMappingFormComponent
+        PageBackupMappingForm {}
+    }
+
+    Component {
+        id: backupPreviewFormComponent
+        PageBackupPreviewForm {}
     }
 
     //Pages - Settings

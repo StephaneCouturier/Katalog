@@ -62,6 +62,9 @@ qt_add_qml_module(Katalog3
         PageDeviceEditForm.qml
         PageTagsForm.qml
         PageStatisticsForm.qml
+        PageBackupForm.qml
+        PageBackupMappingForm.qml
+        PageBackupPreviewForm.qml
         PageSelectionView.qml
         DeviceTreeComboBox.qml
     SOURCES

@@ -69,7 +69,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | Screen / Feature      | K2 | K3 | Remaining | New feature vs K2 |
 |-----------------------|----|----|-----------|-----------|
 | **Screen/tabs**       | ✅ | ✅ | | - Access via a "Drawer" now, which can be hidden or pinned" |
-| **Open Collection**   | ✅ | ✅ | | - Clearer selection of mode and Collection. Open recent collections (last 5 entries)|
+| **Open Collection**   | ✅ | 🚧 |create collection (File mode) | - Clearer selection of mode and Collection. Open recent collections (last 5 entries)|
 | **Selection**         | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of Devices
 | **Search**            | ✅ | 🚧 | |
 | — Search Criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|
@@ -84,9 +84,9 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Edit                | ✅ | ✅ | |
 | — Update progress     | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
-| **Statistics**        | ✅ | 🚧 | |
+| **Statistics**        | ✅ | 🚧 | zoom in feature, axis labels|
 | **Tags**              | ✅ | ✅ | |
-| **Backup**            | ✅ | 🔲 | |
+| **Backup**            | ✅ | 🚧 | |
 | — View                | ✅ | 🔲 | |
 | — Create              | ✅ | 🔲 | |
 | — Execute/progress    | ✅ | 🔲 | |

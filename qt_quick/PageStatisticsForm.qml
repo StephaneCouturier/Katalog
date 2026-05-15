@@ -38,11 +38,6 @@ ColumnLayout {
     }
 
     function updateChart(data) {
-        console.log("Statistics updateChart: hasData=" + data.hasData
-            + " series1=" + (data.series1 ? data.series1.length : "undef")
-            + " deviceName=" + data.deviceName
-            + " maxValue=" + data.maxValue
-            + " unitKey=" + data.unitKey)
         series1Line.clear()
         series2Line.clear()
         series3Line.clear()
