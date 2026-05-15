@@ -360,6 +360,7 @@ signals:
     void backupMappingsChanged();
     void backupProgress(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
     void backupFinished(int copiedCount, int movedCount, int renamedCount, int conflictCount, int errorCount, qint64 totalBytesCopied, bool wasCancelled);
+    void backupNotification(const QString &message, bool isError);
 
 private:
     bool    m_searchIsRunning  = false;

@@ -9,6 +9,8 @@ import org.kde.kirigami as Kirigami
 // Call selectById(id) to pre-select a specific device by ID.
 // Set storageOnly: true to restrict selection to Storage-type devices only
 // (ancestor groups are shown as non-selectable context, pre-selection uses getDefaultStorageId()).
+// Set catalogOnly: true to restrict selection to Catalog-type devices only
+// (Virtual ancestors shown as non-selectable context; Storage hidden; no auto-reset on selection change).
 // Set hideCatalogs: true to hide Catalog-type devices from the list entirely.
 Controls.Button {
     id: control
@@ -17,6 +19,7 @@ Controls.Button {
     property string selectedDeviceName: ""
     property string selectedDeviceType: ""
     property bool   storageOnly:        false
+    property bool   catalogOnly:        false
     property bool   hideCatalogs:       false
     property bool   hideStorages:       false
 
@@ -39,7 +42,12 @@ Controls.Button {
         var dev = _findDevice(id)
         if (dev) {
             if (storageOnly && dev.type !== "Storage") {
-                // In storage-only mode, non-Storage results clear the selection (K2 behaviour)
+                selectedDeviceId   = 0
+                selectedDeviceName = ""
+                selectedDeviceType = ""
+                return
+            }
+            if (catalogOnly && dev.type !== "Catalog") {
                 selectedDeviceId   = 0
                 selectedDeviceName = ""
                 selectedDeviceType = ""
@@ -52,6 +60,7 @@ Controls.Button {
     }
 
     function resetSelection() {
+        if (catalogOnly) return   // catalogOnly pickers start empty; caller uses selectById()
         if (storageOnly)
             _applyDevice(appManager1.getDefaultStorageId())
         else
@@ -93,8 +102,9 @@ Controls.Button {
         Controls.Label {
             text:               control.selectedDeviceName.length > 0
                                     ? control.selectedDeviceName
-                                    : control.storageOnly ? qsTr("Select a Storage")
-                                                          : qsTr("Select")
+                                    : control.storageOnly  ? qsTr("Select a Storage")
+                                    : control.catalogOnly  ? qsTr("Select a Catalog")
+                                    :                        qsTr("Select")
             elide:              Text.ElideRight
             horizontalAlignment: Text.AlignLeft
             verticalAlignment:   Text.AlignVCenter
@@ -145,11 +155,13 @@ Controls.Button {
 
                     visible:     !(control.hideCatalogs && type === "Catalog")
                                  && !(control.hideStorages && type === "Storage")
+                                 && !(control.catalogOnly  && type === "Storage")
                     height:      visible ? implicitHeight : 0
                     width:       ListView.view.width
                     leftPadding: Kirigami.Units.smallSpacing + level * Kirigami.Units.gridUnit
                     highlighted: control.selectedDeviceId === deviceId
-                    enabled:     !control.storageOnly || type === "Storage"
+                    enabled:     (!control.storageOnly  || type === "Storage")
+                                 && (!control.catalogOnly || type === "Catalog")
 
                     background: Rectangle {
                         color: control.selectedDeviceId === deviceId

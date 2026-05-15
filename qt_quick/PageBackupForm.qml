@@ -19,6 +19,7 @@ ColumnLayout {
     property real   progressFraction:  0.0
     property string progressFile:      ""
     property string lastReportSummary: ""
+    property bool   lastReportIsError: false
 
     // Signals for sub-page navigation (connected in Main.qml)
     signal requestAddMapping()
@@ -59,10 +60,11 @@ ColumnLayout {
             root.progressFile       = currentFile
         }
         function onBackupFinished(copiedCount, movedCount, renamedCount, conflictCount, errorCount, totalBytesCopied, wasCancelled) {
-            root.runningMappingId = -1
-            root.isPaused         = false
-            root.progressFraction = 1.0
-            root.progressFile     = ""
+            root.runningMappingId  = -1
+            root.isPaused          = false
+            root.progressFraction  = 1.0
+            root.progressFile      = ""
+            root.lastReportIsError = false
             var status = wasCancelled ? qsTr("Cancelled") : qsTr("Completed")
             root.lastReportSummary = status + " — "
                 + qsTr("Copied: %1").arg(copiedCount + movedCount)
@@ -70,6 +72,10 @@ ColumnLayout {
                 + (conflictCount > 0 ? " · " + qsTr("Conflicts: %1").arg(conflictCount) : "")
                 + (errorCount    > 0 ? " · " + qsTr("Errors: %1").arg(errorCount)        : "")
             root.refresh()
+        }
+        function onBackupNotification(message, isError) {
+            root.lastReportIsError = isError
+            root.lastReportSummary = message
         }
     }
 
@@ -144,17 +150,18 @@ ColumnLayout {
         }
     }
 
-    // ─── Report summary (after backup finished) ───────────────────────────────
+    // ─── Report summary (backup finished / profile generated / error) ─────────
     Kirigami.InlineMessage {
         Layout.fillWidth:    true
         Layout.topMargin:    Kirigami.Units.smallSpacing
         Layout.leftMargin:   Kirigami.Units.largeSpacing
         Layout.rightMargin:  Kirigami.Units.largeSpacing
         visible:             root.lastReportSummary !== ""
-        type:                Kirigami.MessageType.Positive
+        type:                root.lastReportIsError ? Kirigami.MessageType.Error
+                                                    : Kirigami.MessageType.Positive
         showCloseButton:     true
         text:                root.lastReportSummary
-        onVisibleChanged:    if (!visible) root.lastReportSummary = ""
+        onVisibleChanged:    if (!visible) { root.lastReportSummary = ""; root.lastReportIsError = false }
     }
 
     // ─── No mappings placeholder ──────────────────────────────────────────────
@@ -385,14 +392,6 @@ ColumnLayout {
                                 onTriggered: {
                                     var path = appManager1.exportLastBackupPreviewToCsv()
                                     root.lastReportSummary = path
-                                }
-                            }
-                            Controls.MenuItem {
-                                text: qsTr("Generate LuckyBackup profile")
-                                icon.name: "application-x-executable"
-                                onTriggered: {
-                                    var msg = appManager1.generateLuckyBackupProfile([modelData.mappingId])
-                                    root.lastReportSummary = msg
                                 }
                             }
                             Controls.MenuSeparator {}

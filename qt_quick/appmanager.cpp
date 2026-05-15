@@ -2689,9 +2689,14 @@ QString AppManager::generateLuckyBackupProfile(const QVariantList &mappingIds)
 
     BackupProfileGenerator generator(QSqlDatabase::defaultConnection);
     const BackupProfileResult result = generator.generateProfile(ids);
-    if (!result.success)
-        return tr("Failed to generate backup profile: %1").arg(result.errorMessage);
-    return tr("Backup profile created: %1").arg(result.profilePath);
+    if (!result.success) {
+        const QString msg = tr("Failed to generate Backup profile") + ": " + result.errorMessage;
+        emit backupNotification(msg, true);
+        return msg;
+    }
+    const QString msg = tr("Backup profile created.") + " " + result.profilePath;
+    emit backupNotification(msg, false);
+    return msg;
 }
 //----------------------------------------------------------------------
 QString AppManager::getBackupSetting(const QString &key) const

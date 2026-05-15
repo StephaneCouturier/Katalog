@@ -1121,6 +1121,15 @@ Kirigami.ApplicationWindow {
                 onTriggered: root.showLayer(backupMappingFormComponent)
             },
             Kirigami.Action {
+                text:      qsTr("Generate LuckyBackup profile")
+                icon.name: "application-x-executable"
+                enabled:   backupPageForm.mappings.length > 0
+                onTriggered: {
+                    var ids = backupPageForm.mappings.map(function(m) { return m.mappingId })
+                    appManager1.generateLuckyBackupProfile(ids)
+                }
+            },
+            Kirigami.Action {
                 text:      qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageBackup)

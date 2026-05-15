@@ -108,7 +108,7 @@ Kirigami.ScrollablePage {
                 id: sourceCombo
                 Kirigami.FormData.label: qsTr("Source catalog")
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 24
-                hideStorages: true
+                catalogOnly: true
             }
 
             // Target
@@ -121,7 +121,7 @@ Kirigami.ScrollablePage {
                 id: targetCombo
                 Kirigami.FormData.label: qsTr("Target catalog")
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 24
-                hideStorages: true
+                catalogOnly: true
             }
 
             // Options
@@ -143,8 +143,8 @@ Kirigami.ScrollablePage {
                 textRole:  "text"
                 valueRole: "value"
                 model: [
-                    { value: "Skip",         text: qsTr("Skip — leave target untouched") },
-                    { value: "RenameOldest", text: qsTr("Rename oldest — rename target, copy source") }
+                    { value: "RenameOldest", text: qsTr("Rename oldest — rename target, copy source") },
+                    { value: "Skip",         text: qsTr("Skip — leave target untouched") }
                 ]
             }
 
