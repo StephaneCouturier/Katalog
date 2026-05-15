@@ -9,7 +9,7 @@ configure_file(
 )
 
 # Qt Quick-specific dependencies not already found by root CMakeLists.txt
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Sql)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Sql Charts)
 find_package(KF6I18n REQUIRED)
 find_package(KF6Archive)
 
@@ -61,6 +61,7 @@ qt_add_qml_module(Katalog3
         PageCreateForm.qml
         PageDeviceEditForm.qml
         PageTagsForm.qml
+        PageStatisticsForm.qml
         PageSelectionView.qml
         DeviceTreeComboBox.qml
     SOURCES
@@ -89,6 +90,7 @@ target_link_libraries(Katalog3
     Qt6::Gui
     Qt6::Sql
     #Qt6::QuickControls2
+    Qt6::Charts
     Qt6::Widgets
     KF6::I18n
     KF6::CoreAddons

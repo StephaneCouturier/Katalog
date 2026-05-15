@@ -61,6 +61,7 @@
 #include "core/deviceupdatemanager.h"
 #include "core/catalogprogressmanager.h"
 #include "core/collectionimporter.h"
+#include "core/statistics.h"
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
 
@@ -173,6 +174,11 @@ public slots:
     int getSelectedDeviceId() const;
 
     Q_INVOKABLE QStringList  getTagNames() const;
+
+    // Statistics
+    Q_INVOKABLE QVariantMap getStatisticsData(const QString &source, const QString &dataType, const QString &startDate) const;
+    Q_INVOKABLE QString     getStatisticsSetting(const QString &key) const;
+    Q_INVOKABLE void        setStatisticsSetting(const QString &key, const QVariant &value);
     Q_INVOKABLE QVariantList getTagEntries(const QString &filterName = QString()) const;
     Q_INVOKABLE bool         createTag(const QString &name, const QString &path);
     Q_INVOKABLE bool         deleteTag(int tagID);

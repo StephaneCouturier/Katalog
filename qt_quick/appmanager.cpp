@@ -1158,6 +1158,70 @@ bool AppManager::deleteTag(int tagID)
     return ok;
 }
 //----------------------------------------------------------------------
+QVariantMap AppManager::getStatisticsData(const QString &source, const QString &dataType, const QString &startDate) const
+{
+    collection->loadStatisticsDeviceFileToTable();
+
+    QDateTime dt;
+    if (!startDate.isEmpty())
+        dt = QDateTime::fromString(startDate, "yyyy-MM-dd");
+
+    StatChartData data = Statistics::getChartData(
+        QSqlDatabase::defaultConnection,
+        selectedDevice->ID,
+        selectedDevice->type,
+        source,
+        dataType,
+        dt
+    );
+
+    auto toVarList = [](const QList<StatPoint> &pts) {
+        QVariantList list;
+        list.reserve(pts.size());
+        for (const auto &p : pts) {
+            QVariantMap m;
+            m[QStringLiteral("x")] = p.msecsSinceEpoch;
+            m[QStringLiteral("y")] = p.value;
+            list << m;
+        }
+        return list;
+    };
+
+    QVariantMap result;
+    result[QStringLiteral("series1")]     = toVarList(data.series1);
+    result[QStringLiteral("series2")]     = toVarList(data.series2);
+    result[QStringLiteral("series3")]     = toVarList(data.series3);
+    result[QStringLiteral("loadSeries1")] = data.loadSeries1;
+    result[QStringLiteral("loadSeries2")] = data.loadSeries2;
+    result[QStringLiteral("loadSeries3")] = data.loadSeries3;
+    result[QStringLiteral("maxValue")]    = data.maxValue;
+    result[QStringLiteral("unitKey")]     = data.unitKey;
+    result[QStringLiteral("deviceName")]  = selectedDevice->name;
+    result[QStringLiteral("hasData")]     = !data.series1.isEmpty();
+    qDebug() << "getStatisticsData:"
+             << "deviceId="   << selectedDevice->ID
+             << "deviceType=" << selectedDevice->type
+             << "source="     << source
+             << "dataType="   << dataType
+             << "points="     << data.series1.size()
+             << "maxValue="   << data.maxValue
+             << "unitKey="    << data.unitKey;
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::getStatisticsSetting(const QString &key) const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Statistics/" + key).toString();
+}
+//----------------------------------------------------------------------
+void AppManager::setStatisticsSetting(const QString &key, const QVariant &value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Statistics/" + key, value);
+    settings.sync();
+}
+//----------------------------------------------------------------------
 bool AppManager::shouldShowAlphaWarning() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);

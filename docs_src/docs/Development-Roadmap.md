@@ -84,8 +84,8 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Edit                | ✅ | ✅ | |
 | — Update progress     | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
-| **Statistics**        | ✅ | 🔲 | |
-| **Tags**              | ✅ | 🔲 | |
+| **Statistics**        | ✅ | 🚧 | |
+| **Tags**              | ✅ | ✅ | |
 | **Backup**            | ✅ | 🔲 | |
 | — View                | ✅ | 🔲 | |
 | — Create              | ✅ | 🔲 | |

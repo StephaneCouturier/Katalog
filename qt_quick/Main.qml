@@ -1072,28 +1072,22 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Statistics
-    Kirigami.ScrollablePage {
+    Kirigami.Page {
         id: pageStatistics
         visible: false
         title: "Statistics"
+        padding: 0
 
         actions: [
-            /*Kirigami.Action {
-                text: "Batch process"
-                icon.name: "document-export"
-                onTriggered: showPassiveNotification("Batch process clicked, no action")
-            },*/
             Kirigami.Action {
-                text: "Close"
+                text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageStatistics)
             }
         ]
 
-        Kirigami.PlaceholderMessage {
-            anchors.centerIn: parent
-            text: "Statistics — coming soon"
-            icon.name: "view-statistics"
+        PageStatisticsForm {
+            anchors.fill: parent
         }
     }
 

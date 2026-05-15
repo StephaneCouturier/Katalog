@@ -34,6 +34,7 @@ set(CORE_HEADERS
     backupjob.h
     backupjobstoppable.h
     collectionimporter.h
+    statistics.h
 )
 
 set(CORE_SOURCES
@@ -72,6 +73,7 @@ set(CORE_SOURCES
     backupjob.cpp
     backupjobstoppable.cpp
     collectionimporter.cpp
+    statistics.cpp
 )
 
 add_library(katalog-core STATIC ${CORE_SOURCES} ${CORE_HEADERS})
