@@ -29,20 +29,6 @@ ColumnLayout {
         var deviceId = appManager1.selectedDeviceId
         root.mappings = appManager1.getBackupMappings(root.filterType, deviceId, root.mappingTypeFilter)
         root.totals   = appManager1.getBackupTotals(root.filterType, deviceId, root.mappingTypeFilter)
-        Qt.callLater(forceCardLayouts)
-    }
-
-    // Re-run the inner ColumnLayout of every card.  A window-width resize triggers
-    // this automatically via widthChanged; we must do it explicitly after any
-    // visibility cycle (layer push/pop, page close/reopen) because height-only
-    // changes do not re-invalidate vertical ColumnLayout spacing calculations.
-    function forceCardLayouts() {
-        root.forceLayout()
-        for (var i = 0; i < mappingRepeater.count; i++) {
-            var card = mappingRepeater.itemAt(i)
-            if (card && card.contentItem && typeof card.contentItem.forceLayout === "function")
-                card.contentItem.forceLayout()
-        }
     }
 
     function formatDiff(diff, unit) {
@@ -90,7 +76,6 @@ ColumnLayout {
         function onBackupNotification(message, isError) {
             root.lastReportIsError = isError
             root.lastReportSummary = message
-            // Reset running state if an error arrives before the job started
             if (isError && root.runningMappingId !== -1)
                 root.runningMappingId = -1
         }
@@ -132,9 +117,9 @@ ColumnLayout {
                 ]
                 delegate: Controls.Button {
                     required property var modelData
-                    text:     modelData.label
-                    flat:     root.filterType !== modelData.value
-                    checked:  root.filterType === modelData.value
+                    text:      modelData.label
+                    flat:      root.filterType !== modelData.value
+                    checked:   root.filterType === modelData.value
                     checkable: true
                     onClicked: {
                         root.filterType = modelData.value
@@ -193,110 +178,171 @@ ColumnLayout {
     }
 
     // ─── Mapping cards ────────────────────────────────────────────────────────
+    //
+    // Rectangle + anchored ColumnLayout instead of Kirigami.AbstractCard:
+    // AbstractCard is a QQC2 ItemDelegate whose internal layout chain goes stale
+    // after any page visibility cycle (layer push/pop, close/reopen).
+    // Rectangle.implicitHeight is a direct binding to the inner ColumnLayout's
+    // implicitHeight — no QQC2 internals, always correct by construction.
     Repeater {
         id: mappingRepeater
         model: root.mappings
-        delegate: Kirigami.AbstractCard {
+        delegate: Rectangle {
             id: mappingCard
             required property var modelData
             required property int index
 
-            Layout.fillWidth:       true
-            Layout.preferredHeight: implicitHeight
+            Layout.fillWidth:    true
             Layout.topMargin:    Kirigami.Units.smallSpacing
             Layout.leftMargin:   Kirigami.Units.largeSpacing
             Layout.rightMargin:  Kirigami.Units.largeSpacing
             Layout.bottomMargin: index === root.mappings.length - 1 ? Kirigami.Units.largeSpacing : 0
 
-            property bool isRunning: root.runningMappingId === modelData.mappingId
+            // Height is a direct binding — never stale after visibility cycles
+            implicitHeight: cardContent.implicitHeight + Kirigami.Units.largeSpacing * 2
 
-            header: RowLayout {
-                spacing: Kirigami.Units.smallSpacing
+            Kirigami.Theme.inherit:   false
+            Kirigami.Theme.colorSet:  Kirigami.Theme.View
 
-                Kirigami.Icon {
-                    source: modelData.mappingType === "Archive" ? "archive-extract" : "backup"
-                    implicitWidth:  Kirigami.Units.iconSizes.small
-                    implicitHeight: Kirigami.Units.iconSizes.small
-                }
-                Controls.Label {
-                    text: modelData.mappingName
-                    font.bold: true
-                    elide: Text.ElideRight
-                    Layout.fillWidth: true
-                }
-                Controls.Label {
-                    text:  modelData.mappingType
-                    color: modelData.mappingType === "Archive"
-                           ? Kirigami.Theme.neutralTextColor
-                           : Kirigami.Theme.positiveTextColor
-                    font.pixelSize: Kirigami.Units.gridUnit * 0.75
-                    padding: 3
-                    background: Rectangle {
-                        color:        parent.color
-                        opacity:      0.15
-                        radius:       3
-                    }
-                }
+            color:        Kirigami.Theme.backgroundColor
+            border.width: 1
+            border.color: Kirigami.ColorUtils.linearInterpolation(
+                              Kirigami.Theme.backgroundColor,
+                              Kirigami.Theme.textColor,
+                              Kirigami.Theme.frameContrast)
+            radius:       Kirigami.Units.cornerRadius
+
+            // Drop shadow matching Kirigami DefaultCardBackground
+            Rectangle {
+                anchors { left: parent.left; right: parent.right; top: parent.top }
+                anchors.topMargin: Math.round(Kirigami.Units.smallSpacing / 4)
+                radius: parent.radius
+                height: parent.height
+                color:  Qt.darker(Qt.rgba(Kirigami.Theme.backgroundColor.r,
+                                          Kirigami.Theme.backgroundColor.g,
+                                          Kirigami.Theme.backgroundColor.b, 0.6), 1.1)
+                z: -1
             }
 
-            contentItem: ColumnLayout {
+            property bool isRunning: root.runningMappingId === modelData.mappingId
+
+            ColumnLayout {
+                id: cardContent
+                anchors {
+                    top:   parent.top
+                    left:  parent.left
+                    right: parent.right
+                    margins: Kirigami.Units.largeSpacing
+                }
                 spacing: Kirigami.Units.smallSpacing
 
-                // Source / Target rows
-                GridLayout {
-                    columns: 3
-                    columnSpacing: Kirigami.Units.largeSpacing
-                    rowSpacing:    Kirigami.Units.smallSpacing
+                // ── Header: icon + name + type badge ──────────────────────────
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
 
-                    Controls.Label { text: qsTr("Source"); opacity: 0.7 }
-                    RowLayout {
-                        spacing: Kirigami.Units.smallSpacing
-                        Rectangle {
-                            implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
-                            implicitHeight: implicitWidth
-                            radius: width / 2
-                            color: modelData.sourceActive ? Kirigami.Theme.positiveTextColor
-                                                          : Kirigami.Theme.disabledTextColor
-                        }
-                        Controls.Label {
-                            text: modelData.sourceName
-                            elide: Text.ElideRight
-                        }
+                    Kirigami.Icon {
+                        source: modelData.mappingType === "Archive" ? "archive-extract" : "backup"
+                        implicitWidth:  Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
                     }
                     Controls.Label {
-                        text: modelData.sourceSizeStr + " · " + modelData.sourceFileCount + " " + qsTr("files")
+                        text: modelData.mappingName
+                        font.bold: true
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                    }
+                    Controls.Label {
+                        text:  modelData.mappingType
+                        color: modelData.mappingType === "Archive"
+                               ? Kirigami.Theme.neutralTextColor
+                               : Kirigami.Theme.positiveTextColor
+                        font.pixelSize: Kirigami.Units.gridUnit * 0.75
+                        padding: 3
+                        background: Rectangle {
+                            color:   parent.color
+                            opacity: 0.15
+                            radius:  3
+                        }
+                    }
+                }
+
+                Kirigami.Separator { Layout.fillWidth: true; opacity: 0.5 }
+
+                // ── Source ────────────────────────────────────────────────────
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.Label {
+                        text:    qsTr("Source")
                         opacity: 0.7
+                        Layout.preferredWidth: Kirigami.Units.gridUnit * 4
                     }
-
-                    Controls.Label { text: qsTr("Target"); opacity: 0.7 }
-                    RowLayout {
-                        spacing: Kirigami.Units.smallSpacing
-                        Rectangle {
-                            implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
-                            implicitHeight: implicitWidth
-                            radius: width / 2
-                            color: modelData.targetActive ? Kirigami.Theme.positiveTextColor
-                                                          : Kirigami.Theme.disabledTextColor
-                        }
-                        Controls.Label {
-                            text: modelData.targetName
-                            elide: Text.ElideRight
-                        }
+                    Rectangle {
+                        implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
+                        implicitHeight: implicitWidth
+                        radius: width / 2
+                        color: modelData.sourceActive ? Kirigami.Theme.positiveTextColor
+                                                      : Kirigami.Theme.disabledTextColor
                     }
                     Controls.Label {
-                        text: modelData.targetSizeStr + " · " + modelData.targetFileCount + " " + qsTr("files")
+                        text:  modelData.sourceName
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                    }
+                    Controls.Label {
+                        text:    modelData.sourceSizeStr + " · " + modelData.sourceFileCount + " " + qsTr("files")
                         opacity: 0.7
+                        elide:   Text.ElideRight
                     }
+                }
 
-                    Controls.Label { text: qsTr("Diff"); opacity: 0.7 }
+                // ── Target ────────────────────────────────────────────────────
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
                     Controls.Label {
-                        Layout.columnSpan: 2
+                        text:    qsTr("Target")
+                        opacity: 0.7
+                        Layout.preferredWidth: Kirigami.Units.gridUnit * 4
+                    }
+                    Rectangle {
+                        implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
+                        implicitHeight: implicitWidth
+                        radius: width / 2
+                        color: modelData.targetActive ? Kirigami.Theme.positiveTextColor
+                                                      : Kirigami.Theme.disabledTextColor
+                    }
+                    Controls.Label {
+                        text:  modelData.targetName
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                    }
+                    Controls.Label {
+                        text:    modelData.targetSizeStr + " · " + modelData.targetFileCount + " " + qsTr("files")
+                        opacity: 0.7
+                        elide:   Text.ElideRight
+                    }
+                }
+
+                // ── Diff ──────────────────────────────────────────────────────
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.Label {
+                        text:    qsTr("Diff")
+                        opacity: 0.7
+                        Layout.preferredWidth: Kirigami.Units.gridUnit * 4
+                    }
+                    Controls.Label {
+                        Layout.fillWidth: true
+                        elide: Text.ElideRight
                         text: {
-                            var sizeSign  = modelData.sizeDiff  > 0 ? "+" : (modelData.sizeDiff  < 0 ? "−" : "")
-                            var filesSign = modelData.fileCountDiff > 0 ? "+" : (modelData.fileCountDiff < 0 ? "−" : "")
+                            var sizeSign  = modelData.sizeDiff       > 0 ? "+" : (modelData.sizeDiff       < 0 ? "−" : "")
+                            var filesSign = modelData.fileCountDiff   > 0 ? "+" : (modelData.fileCountDiff   < 0 ? "−" : "")
                             if (modelData.sizeDiff === 0 && modelData.fileCountDiff === 0)
                                 return qsTr("in sync")
-                            return sizeSign  + modelData.sizeDiffStr
+                            return sizeSign + modelData.sizeDiffStr
                                 + " · " + filesSign + Math.abs(modelData.fileCountDiff) + " " + qsTr("files")
                                 + (modelData.sourceDateUpdated ? " · " + modelData.sourceDateUpdated : "")
                         }
@@ -304,9 +350,7 @@ ColumnLayout {
                     }
                 }
 
-                // Loader keeps progress items truly absent (not just hidden) when not
-                // running — prevents Qt Quick Layouts from retaining phantom spacing
-                // after layer push/pop navigation.
+                // ── Progress (only while running) ─────────────────────────────
                 Loader {
                     id: progressLoader
                     Layout.fillWidth: true
@@ -334,34 +378,25 @@ ColumnLayout {
                     }
                 }
 
-                RowLayout { //test
-                    Controls.Button {
-                        visible:  true
-                        text:     qsTr("TEST")
-                        icon.name: "view-preview"
-                        //onClicked: root.requestPreviewMapping(modelData.mappingId)
-                    }
-                }
-
-                // Action buttons
-                RowLayout {
+                // ── Action buttons — Flow wraps on narrow windows ──────────────
+                Flow {
+                    Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
 
-                    // Run / Pause / Resume button
                     Controls.Button {
-                        visible: !mappingCard.isRunning
-                        text:    modelData.mappingType === "Archive" ? qsTr("Run Archive") : qsTr("Run Backup")
+                        visible:   !mappingCard.isRunning
+                        text:      modelData.mappingType === "Archive" ? qsTr("Run Archive") : qsTr("Run Backup")
                         icon.name: "media-playback-start"
-                        enabled: modelData.sourceActive && modelData.targetActive
-                                 && root.runningMappingId === -1
+                        enabled:   modelData.sourceActive && modelData.targetActive
+                                   && root.runningMappingId === -1
                         onClicked: {
-                            root.runningMappingId  = modelData.mappingId
-                            root.isPaused          = false
-                            root.progressFraction  = 0
-                            root.progressFilesDone = 0
-                            root.progressTotalFiles= 0
-                            root.progressFile      = ""
-                            root.lastReportSummary = ""
+                            root.runningMappingId   = modelData.mappingId
+                            root.isPaused           = false
+                            root.progressFraction   = 0
+                            root.progressFilesDone  = 0
+                            root.progressTotalFiles = 0
+                            root.progressFile       = ""
+                            root.lastReportSummary  = ""
                             appManager1.runBackup(modelData.mappingId)
                         }
                     }
@@ -383,22 +418,17 @@ ColumnLayout {
                         icon.name: "process-stop"
                         onClicked: appManager1.stopBackup()
                     }
-
                     Controls.Button {
-                        visible:  !mappingCard.isRunning
-                        text:     modelData.mappingType === "Archive" ? qsTr("Preview Archive") : qsTr("Preview Backup")
+                        visible:   !mappingCard.isRunning
+                        text:      modelData.mappingType === "Archive" ? qsTr("Preview Archive") : qsTr("Preview Backup")
                         icon.name: "view-preview"
                         onClicked: root.requestPreviewMapping(modelData.mappingId)
                     }
-
-                    Item { Layout.fillWidth: true }
-
-                    // More actions menu
                     Controls.Button {
-                        visible:  !mappingCard.isRunning
+                        visible:   !mappingCard.isRunning
                         icon.name: "overflow-menu"
-                        display:  Controls.AbstractButton.IconOnly
-                        Controls.ToolTip.text: qsTr("More actions")
+                        display:   Controls.AbstractButton.IconOnly
+                        Controls.ToolTip.text:    qsTr("More actions")
                         Controls.ToolTip.visible: hovered
                         onClicked: moreMenu.open()
 

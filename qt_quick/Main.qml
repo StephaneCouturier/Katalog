@@ -1121,7 +1121,7 @@ Kirigami.ApplicationWindow {
 
         onVisibleChanged: {
             if (visible)
-                Qt.callLater(function() { backupPageForm.forceCardLayouts() })
+                Qt.callLater(function() { backupPageForm.refresh() })
         }
 
         actions: [
