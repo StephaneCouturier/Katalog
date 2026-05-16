@@ -7,6 +7,9 @@ import QtQuick.Dialogs
 Kirigami.ScrollablePage {
     id: pageSettingsRoot
     title: qsTr("Settings")
+    titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
+        Kirigami.Icon { source: "configure"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
+        Kirigami.Heading { text: pageSettingsRoot.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
 
     // Set to true when opened from Open Collection > Hosted Db menu
     property bool showHostedForm: false

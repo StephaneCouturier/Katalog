@@ -86,10 +86,10 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | **Explore**           | ✅ | 🔲 | |
 | **Statistics**        | ✅ | 🚧 | zoom in feature, axis labels|
 | **Tags**              | ✅ | ✅ | |
-| **Backup**            | ✅ | 🚧 | |
-| — View                | ✅ | 🔲 | |
-| — Create              | ✅ | 🔲 | |
-| — Execute/progress    | ✅ | 🔲 | |
+| **Backup**            | ✅ | ✅ | |
+| — View                | ✅ | ✅ | |
+| — Create              | ✅ | ✅ | |
+| — Execute/progress    | ✅ | ✅ | |
 | **Settings**          | ✅ | 🚧 | |
 | — SettingsFile        | ✅ | ✅ | |
 | — Version             | ✅ | ✅ | |

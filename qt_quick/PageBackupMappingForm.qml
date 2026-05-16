@@ -6,6 +6,9 @@ import org.kde.kirigami as Kirigami
 Kirigami.ScrollablePage {
     id: root
     title: qsTr("Add Link")
+    titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
+        Kirigami.Icon { source: "list-add"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
+        Kirigami.Heading { text: root.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
 
     // Generate a suggested name from source → target names
     function generateName() {
