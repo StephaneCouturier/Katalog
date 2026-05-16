@@ -559,6 +559,13 @@ int AppManager::getSelectedDeviceId() const
     }
     return -1;
 }
+//----------------------------------------------------------------------
+QString AppManager::getSelectedDeviceType() const
+{
+    if (selectedDevice)
+        return selectedDevice->type;
+    return QString();
+}
 
 QString AppManager::getHostName() const
 {
@@ -1699,6 +1706,641 @@ QString AppManager::deleteDevice(int deviceId)
     refreshAllUI();
     return QString();
 }
+
+// Devices page operations
+//----------------------------------------------------------------------
+QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDeviceId) const
+{
+    QVariantList result;
+    auto db = QSqlDatabase::database(QSqlDatabase::defaultConnection);
+    if (!db.isValid() || !db.isOpen()) return result;
+
+    QSqlQuery query(db);
+    QString sql;
+
+    if (viewFilter == "Catalogs" || viewFilter == "Storage") {
+        QString typeStr = (viewFilter == "Catalogs") ? QStringLiteral("Catalog") : QStringLiteral("Storage");
+        sql = QStringLiteral(
+            "SELECT device_id, device_parent_id, device_name, device_type,"
+            "       device_path, device_total_file_size, device_total_file_count,"
+            "       device_total_space, device_free_space, device_active, device_date_updated, 0,"
+            "       COALESCE((SELECT device_type FROM device p WHERE p.device_id = device.device_parent_id),''),"
+            "       device_group_id"
+            " FROM device WHERE device_type = :dtype");
+        if (scopeDeviceId > 0) {
+            sql += QStringLiteral(
+                " AND device_id IN ("
+                "   WITH RECURSIVE sub AS ("
+                "     SELECT device_id FROM device WHERE device_id = :scope"
+                "     UNION ALL"
+                "     SELECT d.device_id FROM device d JOIN sub s ON d.device_parent_id = s.device_id"
+                "   ) SELECT device_id FROM sub)");
+        }
+        sql += QStringLiteral(" ORDER BY device_name ASC");
+        query.prepare(sql);
+        query.bindValue(":dtype", typeStr);
+        if (scopeDeviceId > 0) query.bindValue(":scope", scopeDeviceId);
+    } else {
+        QString startCond = (scopeDeviceId > 0)
+            ? QStringLiteral("device_id = :scope")
+            : QStringLiteral("device_parent_id = 0");
+        sql = QStringLiteral(
+            "WITH RECURSIVE device_tree AS ("
+            "  SELECT device_id, device_parent_id, device_name, device_type,"
+            "         device_path, device_total_file_size, device_total_file_count,"
+            "         device_total_space, device_free_space, device_active, device_date_updated, 0 AS level,"
+            "         device_group_id"
+            "  FROM device WHERE ") + startCond + QStringLiteral(
+            "  UNION ALL"
+            "  SELECT c.device_id, c.device_parent_id, c.device_name, c.device_type,"
+            "         c.device_path, c.device_total_file_size, c.device_total_file_count,"
+            "         c.device_total_space, c.device_free_space, c.device_active, c.device_date_updated, p.level+1,"
+            "         c.device_group_id"
+            "  FROM device c JOIN device_tree p ON c.device_parent_id = p.device_id"
+            ")"
+            "SELECT device_id, device_parent_id, device_name, device_type,"
+            "       device_path, device_total_file_size, device_total_file_count,"
+            "       device_total_space, device_free_space, device_active, device_date_updated, level,"
+            "       COALESCE((SELECT device_type FROM device p WHERE p.device_id = device_tree.device_parent_id),''),"
+            "       device_group_id"
+            " FROM device_tree"
+            " ORDER BY level ASC, device_type DESC, device_parent_id ASC, device_id ASC");
+        query.prepare(sql);
+        if (scopeDeviceId > 0) query.bindValue(":scope", scopeDeviceId);
+    }
+
+    if (!query.exec()) {
+        qWarning() << "getDeviceList error:" << query.lastError().text();
+        return result;
+    }
+    while (query.next()) {
+        QVariantMap item;
+        item[QStringLiteral("deviceId")]      = query.value(0).toInt();
+        item[QStringLiteral("parentId")]      = query.value(1).toInt();
+        item[QStringLiteral("name")]          = query.value(2).toString();
+        item[QStringLiteral("type")]          = query.value(3).toString();
+        item[QStringLiteral("path")]          = query.value(4).toString();
+        item[QStringLiteral("totalFileSize")] = query.value(5).toLongLong();
+        item[QStringLiteral("fileCount")]     = query.value(6).toLongLong();
+        item[QStringLiteral("totalSpace")]    = query.value(7).toLongLong();
+        item[QStringLiteral("freeSpace")]     = query.value(8).toLongLong();
+        item[QStringLiteral("active")]        = query.value(9).toBool();
+        item[QStringLiteral("dateUpdated")]   = query.value(10).toString();
+        item[QStringLiteral("level")]         = query.value(11).toInt();
+        item[QStringLiteral("parentType")]    = query.value(12).toString();
+        item[QStringLiteral("groupId")]       = query.value(13).toInt();
+        result.append(item);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+int AppManager::addDeviceVirtual(int parentId)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device parent;
+    parent.ID = parentId;
+    parent.loadDevice(conn);
+
+    Device *newDevice = new Device();
+    newDevice->generateDeviceID();
+    newDevice->type     = QStringLiteral("Virtual");
+    newDevice->name     = tr("Virtual") + "_" + QString::number(newDevice->ID);
+    newDevice->parentID = parentId;
+    newDevice->groupID  = (parentId == 0) ? 1 : parent.groupID;
+    newDevice->externalID = 0;
+    newDevice->insertDevice();
+
+    collection->saveDeviceTableToFile();
+    emit deviceListChanged();
+    refreshDeviceList();
+
+    int id = newDevice->ID;
+    delete newDevice;
+    return id;
+}
+//----------------------------------------------------------------------
+int AppManager::addDeviceStorage(int parentId)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device parent;
+    parent.ID = parentId;
+    parent.loadDevice(conn);
+
+    Device *newDevice = new Device();
+    newDevice->generateDeviceID();
+    newDevice->type     = QStringLiteral("Storage");
+    newDevice->name     = tr("Storage") + "_" + QString::number(newDevice->ID);
+    newDevice->parentID = parentId;
+    newDevice->groupID  = 0;
+    newDevice->storage->generateID();
+    newDevice->externalID = newDevice->storage->ID;
+    newDevice->insertDevice();
+    newDevice->storage->name = newDevice->name;
+    newDevice->storage->insertStorage();
+
+    collection->saveDeviceTableToFile();
+    collection->saveStorageTableToFile();
+    emit deviceListChanged();
+    refreshDeviceList();
+
+    int id = newDevice->ID;
+    delete newDevice;
+    return id;
+}
+//----------------------------------------------------------------------
+void AppManager::setupDeviceUpdateManagerForDevices()
+{
+    if (!m_deviceUpdateManager)
+        m_deviceUpdateManager = new DeviceUpdateManager(this);
+    disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
+
+    if (!m_catalogProgressManager) {
+        m_catalogProgressManager = new CatalogProgressManager(this);
+    }
+    disconnect(m_catalogProgressManager, nullptr, this, nullptr);
+    connect(m_catalogProgressManager, &CatalogProgressManager::statusMessageChanged,
+            this, [this](const QString &msg, int) {
+                m_deviceUpdateStatusText = msg;
+                emit deviceUpdateStatusChanged();
+            });
+    m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
+
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+            this, &AppManager::onDevicePageUpdateCompleted);
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,
+            this, [this](const QString &err) {
+                m_deviceUpdateIsRunning = false;
+                m_deviceUpdateStatusText = tr("Error: %1").arg(err);
+                emit deviceUpdateStateChanged();
+                emit deviceUpdateStatusChanged();
+                startNextDeviceUpdate();
+            });
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
+            this, [this]() {
+                m_pendingDeviceUpdates.clear();
+                m_deviceUpdateIsRunning = false;
+                m_deviceUpdateStatusText.clear();
+                emit deviceUpdateStateChanged();
+                emit deviceUpdateStatusChanged();
+                emit deviceListChanged();
+                setupDeviceUpdateManager();
+            });
+}
+//----------------------------------------------------------------------
+void AppManager::onDevicePageUpdateCompleted(const QList<qint64> &)
+{
+    collection->saveDeviceTableToFile();
+    collection->saveStatiticsTableToFile();
+    emit deviceListChanged();
+    refreshDeviceList();
+    startNextDeviceUpdate();
+}
+//----------------------------------------------------------------------
+void AppManager::startNextDeviceUpdate()
+{
+    if (m_pendingDeviceUpdates.isEmpty()) {
+        m_deviceUpdateIsRunning = false;
+        m_deviceUpdateStatusText.clear();
+        emit deviceUpdateStateChanged();
+        emit deviceUpdateStatusChanged();
+        setupDeviceUpdateManager();
+        return;
+    }
+    int nextId = m_pendingDeviceUpdates.takeFirst();
+    Device *dev = new Device();
+    dev->ID = nextId;
+    dev->loadDevice(QSqlDatabase::defaultConnection);
+    m_deviceUpdateStatusText = tr("Updating %1…").arg(dev->name);
+    emit deviceUpdateStatusChanged();
+    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+}
+//----------------------------------------------------------------------
+void AppManager::updateDevice(int deviceId)
+{
+    if (m_deviceUpdateIsRunning) return;
+    m_pendingDeviceUpdates.clear();
+    m_pendingDeviceUpdates.append(deviceId);
+    m_deviceUpdateIsRunning = true;
+    emit deviceUpdateStateChanged();
+    setupDeviceUpdateManagerForDevices();
+    startNextDeviceUpdate();
+}
+//----------------------------------------------------------------------
+void AppManager::updateAllActiveDevices()
+{
+    if (m_deviceUpdateIsRunning) return;
+
+    QSqlQuery q(QSqlDatabase::database(QSqlDatabase::defaultConnection));
+    q.exec("SELECT device_id FROM device WHERE device_type='Catalog' AND device_active=1 ORDER BY device_id");
+    m_pendingDeviceUpdates.clear();
+    while (q.next())
+        m_pendingDeviceUpdates.append(q.value(0).toInt());
+
+    if (m_pendingDeviceUpdates.isEmpty()) return;
+
+    m_deviceUpdateIsRunning = true;
+    emit deviceUpdateStateChanged();
+    setupDeviceUpdateManagerForDevices();
+    startNextDeviceUpdate();
+}
+//----------------------------------------------------------------------
+void AppManager::stopDeviceUpdate()
+{
+    if (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning()) {
+        m_pendingDeviceUpdates.clear();
+        m_deviceUpdateManager->requestHardStop();
+    }
+}
+//----------------------------------------------------------------------
+void AppManager::gentleStopDeviceUpdate()
+{
+    if (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())
+        m_deviceUpdateManager->requestGentleStop();
+}
+//----------------------------------------------------------------------
+QString AppManager::assignCatalogToDevice(int catalogDeviceId, int virtualDeviceId)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+
+    Device catalogDev;
+    catalogDev.ID = catalogDeviceId;
+    catalogDev.loadDevice(conn);
+    if (catalogDev.type != QStringLiteral("Catalog"))
+        return tr("The selected device is not a catalog.");
+
+    Device virtualDev;
+    virtualDev.ID = virtualDeviceId;
+    virtualDev.loadDevice(conn);
+
+    if (Device::isCatalogAssigned(catalogDev.externalID, virtualDeviceId, conn))
+        return tr("The catalog is already assigned to this Virtual device.");
+
+    if (!Device::assignCatalogToDevice(&catalogDev, &virtualDev, conn))
+        return tr("Failed to assign catalog to device.");
+
+    collection->saveDeviceTableToFile();
+    emit deviceListChanged();
+    return QString();
+}
+//----------------------------------------------------------------------
+void AppManager::launchFilelight(int deviceId)
+{
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(QSqlDatabase::defaultConnection);
+    QString path = (dev.type == QStringLiteral("Catalog") && dev.catalog)
+                   ? dev.catalog->sourcePath : dev.path;
+    if (!path.isEmpty())
+        QProcess::startDetached(QStringLiteral("filelight"), {path});
+}
+//----------------------------------------------------------------------
+void AppManager::openDeviceListFile()
+{
+    if (collection && !collection->deviceFilePath.isEmpty())
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->deviceFilePath));
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::recordDevicesSnapshot()
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+
+    auto sumQuery = [&](const QString &type) -> QList<qint64> {
+        QSqlQuery q(QSqlDatabase::database(conn));
+        q.prepare(QStringLiteral(
+            "SELECT SUM(device_file_count),SUM(device_total_file_size),"
+            "       SUM(device_free_space),SUM(device_total_space)"
+            " FROM statistics_device"
+            " WHERE date_time=(SELECT MAX(date_time) FROM statistics_device WHERE record_type='snapshot')"
+            "   AND device_type=:t GROUP BY date_time"));
+        q.bindValue(":t", type);
+        q.exec(); q.next();
+        return {q.value(0).toLongLong(), q.value(1).toLongLong(),
+                q.value(2).toLongLong(), q.value(3).toLongLong()};
+    };
+
+    auto prevCat = sumQuery("Catalog");
+    auto prevSto = sumQuery("Storage");
+
+    // Record current values
+    QDateTime now = QDateTime::currentDateTime();
+    QSqlQuery all(QSqlDatabase::database(conn));
+    all.exec("SELECT device_id FROM device");
+    while (all.next()) {
+        Device dev;
+        dev.ID = all.value(0).toInt();
+        dev.loadDevice(conn);
+        dev.saveStatistics(now, "snapshot");
+    }
+    collection->saveStatiticsTableToFile();
+
+    auto newCat = sumQuery("Catalog");
+    auto newSto = sumQuery("Storage");
+
+    QVariantMap result;
+    result["newCatalogFileCount"]  = newCat.value(0, 0);
+    result["newCatalogFileSize"]   = newCat.value(1, 0);
+    result["deltaCatalogFileCount"]= newCat.value(0, 0) - prevCat.value(0, 0);
+    result["deltaCatalogFileSize"] = newCat.value(1, 0) - prevCat.value(1, 0);
+    result["newStorageFreeSpace"]  = newSto.value(2, 0);
+    result["newStorageTotalSpace"] = newSto.value(3, 0);
+    result["deltaStorageFree"]     = newSto.value(2, 0) - prevSto.value(2, 0);
+    result["deltaStorageTotal"]    = newSto.value(3, 0) - prevSto.value(3, 0);
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::splitCatalogBySubDirectory(int deviceId)
+{
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(QSqlDatabase::defaultConnection);
+
+    if (collection->databaseMode == "Memory")
+        dev.catalog->loadFoldersToTable();
+
+    if (!collection->executeSplitBySubDirectory(&dev))
+        return tr("Split failed: no catalogs were created.");
+
+    collection->saveDeviceTableToFile();
+    emit deviceListChanged();
+    refreshDeviceList();
+    return QString();
+}
+//----------------------------------------------------------------------
+void AppManager::splitCatalogByFileType(int deviceId, bool verifyFirst)
+{
+    Device *dev = new Device();
+    dev->ID = deviceId;
+    dev->loadDevice(QSqlDatabase::defaultConnection);
+
+    auto performSplit = [this, dev]() {
+        if (!collection->executeSplitByFileType(dev)) {
+            emit splitCompleted(false, tr("Split failed: no catalogs were created."));
+        } else {
+            collection->saveDeviceTableToFile();
+            emit deviceListChanged();
+            refreshDeviceList();
+            emit splitCompleted(true, QString());
+        }
+        delete dev;
+    };
+
+    if (!verifyFirst) {
+        performSplit();
+        return;
+    }
+
+    // Verify MIME types first, then split
+    setupDeviceUpdateManagerForDevices();
+    m_deviceUpdateIsRunning = true;
+    m_deviceUpdateStatusText = tr("Verifying MIME types for %1…").arg(dev->name);
+    emit deviceUpdateStateChanged();
+    emit deviceUpdateStatusChanged();
+
+    // Disconnect generic handler, wire split-specific completion
+    disconnect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+               this, &AppManager::onDevicePageUpdateCompleted);
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+            this, [this, performSplit](const QList<qint64> &) {
+                m_deviceUpdateIsRunning = false;
+                m_deviceUpdateStatusText.clear();
+                emit deviceUpdateStateChanged();
+                emit deviceUpdateStatusChanged();
+                setupDeviceUpdateManager();
+                performSplit();
+            });
+
+    // Run MIME verification via DeviceUpdateManager (uses same CatalogJobStoppable internally)
+    // DeviceUpdateManager handles VerifyMimeTypes through its catalog job
+    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::verifyDeviceChecksums(int deviceId)
+{
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(QSqlDatabase::defaultConnection);
+
+    if (!dev.catalog) return QVariantMap{{ "error", tr("Device has no catalog.") }};
+
+    if (collection->databaseMode == "Memory") {
+        bool stop = false;
+        QMutex mutex;
+        dev.catalog->loadCatalogFileListToTable(mutex, stop);
+    }
+
+    int total = FileChecksum::countFilesWithChecksum(QSqlDatabase::defaultConnection, dev.externalID);
+    if (total == 0)
+        return QVariantMap{{ "noChecksums", true }, { "verified", 0 }, { "mismatches", 0 }, { "missing", 0 }};
+
+    bool continueFlag = true;
+    auto shouldContinue = [&]() { return continueFlag; };
+    auto progressCb = [this](int current, int total, const QString &) {
+        m_deviceUpdateStatusText = tr("Verifying checksums: %1 / %2").arg(current).arg(total);
+        emit deviceUpdateStatusChanged();
+        QCoreApplication::processEvents();
+    };
+
+    auto res = FileChecksum::verifyCatalogChecksums(
+        QSqlDatabase::defaultConnection,
+        dev.externalID, dev.catalog->sourcePath,
+        shouldContinue, progressCb);
+
+    m_deviceUpdateStatusText.clear();
+    emit deviceUpdateStatusChanged();
+
+    QVariantMap result;
+    result["noChecksums"] = false;
+    result["total"]       = total;
+    result["verified"]    = res.verified;
+    result["mismatches"]  = res.mismatches;
+    result["missing"]     = res.missing;
+    QStringList mm; for (const auto &f : res.mismatchedFiles) mm << f;
+    QStringList ms; for (const auto &f : res.missingFiles)    ms << f;
+    result["mismatchedFiles"] = mm;
+    result["missingFiles"]    = ms;
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::unassignDevice(int deviceId, int parentId)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    if (!Device::unassignFromDevice(deviceId, parentId, conn))
+        return tr("Failed to unassign device.");
+    if (collection->databaseMode == "Memory")
+        collection->saveDeviceTableToFile();
+    emit deviceListChanged();
+    refreshDeviceList();
+    return QString();
+}
+//----------------------------------------------------------------------
+QString AppManager::importFromVVV(const QString &path)
+{
+    const QString conn = QSqlDatabase::defaultConnection;
+    QFile sourceFile(path);
+
+    if (!sourceFile.open(QIODevice::ReadOnly))
+        return tr("Could not open file.");
+
+    QTextStream ts(&sourceFile);
+    QString line = ts.readLine();
+    if (!line.startsWith("Volume")) {
+        sourceFile.close();
+        return tr("File format not recognized (expected VVV CSV).");
+    }
+
+    QString dt = "_" + QDateTime::currentDateTime().toString("yy-MM-dd hh-mm-ss");
+    QSet<QString> uniqueNames;
+    while (!ts.atEnd()) {
+        line = ts.readLine();
+        if (line.isEmpty()) continue;
+        QStringList f = line.split('\t');
+        if (f.count() == 7) {
+            QString n = QString(f[0]).remove('"').replace('/', '_') + dt;
+            uniqueNames.insert(n);
+        }
+    }
+    sourceFile.close();
+
+    if (uniqueNames.isEmpty())
+        return tr("No catalog data found in file.");
+
+    // Create virtual device to host imported catalogs
+    Device importVirtual;
+    importVirtual.generateDeviceID();
+    importVirtual.type     = "Virtual";
+    importVirtual.name     = "imports from VVV" + dt;
+    importVirtual.parentID = 0;
+    importVirtual.groupID  = 1;
+    importVirtual.path     = "/import";
+    importVirtual.dateTimeUpdated = QDateTime::currentDateTime();
+    importVirtual.insertDevice();
+    collection->saveDeviceTableToFile();
+
+    QMap<QString, qint64>   nameToId;
+    QMap<QString, Device*>  nameToDev;
+
+    for (const QString &catName : uniqueNames) {
+        Device *d = new Device();
+        d->generateDeviceID();
+        d->name     = catName;
+        d->type     = "Catalog";
+        d->parentID = importVirtual.ID;
+        d->groupID  = 1;
+        d->path     = "/import";
+        d->catalog->generateID();
+        d->externalID = d->catalog->ID;
+        d->dateTimeUpdated = QDateTime::currentDateTime();
+        d->insertDevice();
+        d->catalog->name        = d->name;
+        d->catalog->filePath    = collection->folder + "/" + d->name + ".idx";
+        d->catalog->sourcePath  = "/import";
+        d->catalog->includeHidden     = 1;
+        d->catalog->includeSymblinks  = 0;
+        d->catalog->isFullDevice      = 0;
+        d->catalog->includeMetadata   = Catalog::METADATA_NONE;
+        d->catalog->appVersion        = currentVersion;
+        d->catalog->insertCatalog();
+        nameToId[catName]  = d->catalog->ID;
+        nameToDev[catName] = d;
+    }
+
+    QSqlQuery delQ(QSqlDatabase::database(conn));
+    delQ.exec("DELETE FROM file");
+    delQ.exec("DELETE FROM folder");
+
+    QSqlQuery insFile(QSqlDatabase::database(conn));
+    insFile.prepare("INSERT INTO file(file_catalog_id,file_name,file_folder_path,file_size,file_date_updated,file_catalog)"
+                    " VALUES(:cid,:name,:path,:size,:date,:cat)");
+
+    QSqlQuery insFolder(QSqlDatabase::database(conn));
+    insFolder.prepare("INSERT OR IGNORE INTO folder(folder_catalog_id,folder_path) VALUES(:cid,:path)");
+
+    if (!sourceFile.open(QIODevice::ReadOnly))
+        return tr("Could not open file: %1").arg(path);
+    ts.setDevice(&sourceFile);
+    ts.readLine(); // skip header
+    while (!ts.atEnd()) {
+        line = ts.readLine();
+        if (line.isEmpty()) continue;
+        QStringList f = line.split('\t');
+        if (f.count() != 7) continue;
+        QString catName  = QString(f[0]).remove('"').replace('/', '_') + dt;
+        qint64 catId     = nameToId.value(catName, 0);
+        QString folder   = "/import" + QString(f[1]).remove('"');
+        insFile.bindValue(":cid",  catId);
+        insFile.bindValue(":name", QString(f[2]).remove('"'));
+        insFile.bindValue(":path", folder);
+        insFile.bindValue(":size", f[3].toLongLong());
+        insFile.bindValue(":date", f[5]);
+        insFile.bindValue(":cat",  catName);
+        insFile.exec();
+        insFolder.bindValue(":cid",  catId);
+        insFolder.bindValue(":path", folder);
+        insFolder.exec();
+    }
+    sourceFile.close();
+
+    // Root folders
+    for (auto it = nameToId.begin(); it != nameToId.end(); ++it) {
+        insFolder.bindValue(":cid",  it.value());
+        insFolder.bindValue(":path", "/import");
+        insFolder.exec();
+    }
+
+    // Export catalog files and update stats
+    for (auto it = nameToDev.begin(); it != nameToDev.end(); ++it) {
+        Device *d = it.value();
+        QSqlQuery stats(QSqlDatabase::database(conn));
+        stats.prepare("SELECT COUNT(*),SUM(file_size) FROM file WHERE file_catalog_id=:id");
+        stats.bindValue(":id", d->externalID);
+        stats.exec(); stats.next();
+        d->totalFileCount = stats.value(0).toLongLong();
+        d->totalFileSize  = stats.value(1).toLongLong();
+        d->saveDevice();
+
+        QFile out(d->catalog->filePath);
+        if (out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            QTextStream s(&out);
+            s << "<catalogSourcePath>/import\n"
+              << "<catalogFileCount>" << d->totalFileCount << "\n"
+              << "<catalogTotalFileSize>" << d->totalFileSize << "\n"
+              << "<catalogIncludeHidden>\n<catalogFileType>\n<catalogStorage>\n"
+              << "<catalogIncludeSymblinks>\n<catalogIsFullDevice>\n<catalogIncludeMetadata>\n"
+              << "<catalogAppVersion>" << currentVersion << "\n"
+              << "<catalogID>" << d->externalID << "\n";
+            QSqlQuery files(QSqlDatabase::database(conn));
+            files.prepare("SELECT file_folder_path,file_name,file_size,file_date_updated FROM file WHERE file_catalog_id=:id");
+            files.bindValue(":id", d->externalID);
+            files.exec();
+            while (files.next())
+                s << files.value(0).toString() << "/" << files.value(1).toString()
+                  << "\t" << files.value(2).toString() << "\t" << files.value(3).toString() << "\n";
+            out.close();
+        }
+
+        QFile fout(collection->folder + "/" + d->name + ".folders.idx");
+        if (fout.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            QTextStream s(&fout);
+            QSqlQuery folders(QSqlDatabase::database(conn));
+            folders.prepare("SELECT folder_catalog_id,folder_path FROM folder WHERE folder_catalog_id=:id");
+            folders.bindValue(":id", d->externalID);
+            folders.exec();
+            while (folders.next())
+                s << folders.value(0).toString() << "\t" << folders.value(1).toString() << "\n";
+            fout.close();
+        }
+    }
+
+    qDeleteAll(nameToDev);
+    importVirtual.updateNumbersFromChildren();
+    collection->saveDeviceTableToFile();
+    if (collection->databaseMode == "Memory")
+        collection->loadCatalogFilesToTable();
+
+    refreshAllUI();
+    return QString();
+}
+//----------------------------------------------------------------------
 
 // Device edit
 //----------------------------------------------------------------------

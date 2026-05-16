@@ -2,61 +2,220 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
-import Qt.labs.platform
 
 Kirigami.AbstractCard {
+    id: card
+
+    required property var modelData
+    required property int index
+
+    property real delegateCardScale: 1.0
+
+    signal editRequested(int deviceId)
+    signal splitSubDirRequested(int deviceId, string deviceName)
+    signal splitFileTypeRequested(int deviceId, string deviceName, bool deviceActive)
+    signal verifyRequested(int deviceId, string deviceName)
+    signal unassignRequested(int deviceId, int parentId, string deviceName)
+    signal deleteRequested(int deviceId, string deviceName, string deviceType)
+    signal addVirtualChildRequested(int parentId)
+    signal addStorageChildRequested(int parentId)
+    signal assignCatalogRequested(int virtualDeviceId)
+    signal filelightRequested(int deviceId)
+
+    readonly property int    devId:        modelData.deviceId
+    readonly property int    devParent:    modelData.parentId
+    readonly property string devName:      modelData.name
+    readonly property string devType:      modelData.type
+    readonly property string devPath:      modelData.path
+    readonly property string devParentType: modelData.parentType ?? ""
+    readonly property int    devLevel:     modelData.level
+    readonly property bool   devActive:    modelData.active
+    readonly property int    devGroupId:   modelData.groupId ?? 0
+
+    // Unassign: parent is a Virtual device (K2: groupID != 0 && path != "EXPORT")
+    readonly property bool canUnassign: devParent > 0 && devParentType === "Virtual"
+
+    anchors.left:       parent ? parent.left  : undefined
+    anchors.leftMargin: devLevel * Kirigami.Units.gridUnit
+    anchors.right:      parent ? parent.right : undefined
+
+    TapHandler {
+        acceptedButtons: Qt.RightButton
+        onTapped: contextMenu.popup()
+    }
+    TapHandler {
+        onLongPressed: contextMenu.popup()
+    }
+
+    Controls.Menu {
+        id: contextMenu
+
+        Controls.MenuItem {
+            text: card.devName
+            enabled: false
+            font.bold: true
+        }
+        Controls.MenuSeparator {}
+
+        // Update — Catalog: active only; Storage/Virtual: always
+        Controls.MenuItem {
+            text: qsTr("Update")
+            icon.name: "media-playlist-repeat"
+            visible: (card.devType === "Catalog" && card.devActive)
+                     || card.devType === "Storage"
+                     || card.devType === "Virtual"
+            enabled: !appManager1.deviceUpdateIsRunning
+            onTriggered: appManager1.updateDevice(card.devId)
+        }
+        Controls.MenuSeparator {}
+
+        Controls.MenuItem {
+            text: qsTr("Edit")
+            icon.name: "document-edit-sign"
+            onTriggered: card.editRequested(card.devId)
+        }
+        Controls.MenuItem {
+            text: qsTr("Open folder")
+            icon.name: "document-open-folder"
+            visible: card.devPath.length > 0 && card.devPath !== "EXPORT"
+            onTriggered: appManager1.openDeviceFolder(card.devId)
+        }
+
+        // Catalog-specific items
+        Controls.MenuSeparator { visible: card.devType === "Catalog" }
+        Controls.MenuItem {
+            text: qsTr("Verify Checksums")
+            icon.name: "document-properties"
+            visible: card.devType === "Catalog"
+            onTriggered: card.verifyRequested(card.devId, card.devName)
+        }
+        Controls.MenuSeparator { visible: card.devType === "Catalog" }
+        Controls.MenuItem {
+            text: qsTr("Filelight")
+            icon.name: "view-statistics"
+            visible: (card.devType === "Catalog" || card.devType === "Storage") && card.devActive
+            onTriggered: card.filelightRequested(card.devId)
+        }
+        Controls.MenuSeparator { visible: card.devType === "Catalog" }
+        Controls.MenuItem {
+            text: qsTr("Split catalog by sub-directory")
+            icon.name: "edit-cut"
+            visible: card.devType === "Catalog"
+            onTriggered: card.splitSubDirRequested(card.devId, card.devName)
+        }
+        Controls.MenuItem {
+            text: qsTr("Split catalog by file type")
+            icon.name: "edit-cut"
+            visible: card.devType === "Catalog"
+            onTriggered: card.splitFileTypeRequested(card.devId, card.devName, card.devActive)
+        }
+
+        // Virtual-specific items
+        Controls.MenuSeparator { visible: card.devType === "Virtual" }
+        Controls.MenuItem {
+            text: qsTr("Add Virtual device")
+            icon.name: "document-new"
+            visible: card.devType === "Virtual"
+            onTriggered: card.addVirtualChildRequested(card.devId)
+        }
+        Controls.MenuItem {
+            text: qsTr("Add Storage device")
+            icon.name: "document-new"
+            visible: card.devType === "Virtual" && card.devGroupId === 0
+            onTriggered: card.addStorageChildRequested(card.devId)
+        }
+        Controls.MenuItem {
+            text: qsTr("Assign selected catalog")
+            icon.name: "document-new"
+            visible: card.devType === "Virtual" && card.devGroupId !== 0
+            enabled: appManager1.selectedDeviceType === "Catalog"
+            onTriggered: card.assignCatalogRequested(card.devId)
+        }
+
+        // Unassign / Delete
+        Controls.MenuSeparator { visible: card.canUnassign || card.devType === "Storage" || card.devType === "Virtual" }
+        Controls.MenuItem {
+            text: card.devType === "Storage" ? qsTr("Unassign this storage") : qsTr("Unassign this catalog")
+            icon.name: "edit-cut"
+            visible: card.canUnassign
+            onTriggered: card.unassignRequested(card.devId, card.devParent, card.devName)
+        }
+        Controls.MenuItem {
+            text: card.devType === "Catalog" ? qsTr("Delete this catalog")
+                : card.devType === "Storage" ? qsTr("Delete this storage")
+                : qsTr("Delete")
+            icon.name: "edit-delete"
+            visible: (card.devType === "Catalog" && !card.canUnassign)
+                     || card.devType === "Storage"
+                     || card.devType === "Virtual"
+            onTriggered: card.deleteRequested(card.devId, card.devName, card.devType)
+        }
+    }
+
     contentItem: Item {
-        // implicitWidth/Height define the natural width/height
-        // of an item if no width or height is specified.
-        // The setting below defines a component's preferred size based on its content
-        implicitWidth: deviceDelegateLayout.implicitWidth
+        implicitWidth:  deviceDelegateLayout.implicitWidth
         implicitHeight: deviceDelegateLayout.implicitHeight
 
-        GridLayout {
+        RowLayout {
             id: deviceDelegateLayout
             anchors {
-                left: parent.left
-                top: parent.top
+                left:  parent.left
+                top:   parent.top
                 right: parent.right
             }
-            rowSpacing: Kirigami.Units.largeSpacing
-            columnSpacing: Kirigami.Units.largeSpacing
-            columns: root.wideScreen ? 4 : 2
+            spacing: Kirigami.Units.largeSpacing
+
+            Kirigami.Icon {
+                source: {
+                    if (card.devType === "Storage") return "drive-harddisk"
+                    if (card.devType === "Catalog")
+                        return card.devActive ? "media-optical-blu-ray" : "media-optical"
+                    return "drive-multidisk"
+                }
+                implicitWidth:  Kirigami.Units.iconSizes.medium
+                implicitHeight: Kirigami.Units.iconSizes.medium
+            }
 
             ColumnLayout {
-                RowLayout {
-                    Kirigami.Icon {
-                        source: "drive-harddisk"
-                    }
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
 
-                    Kirigami.Heading {
-                        Layout.fillWidth: true
-                        level: 2
-                        text: name
-                    }
-                }
-                Kirigami.Separator {
+                Kirigami.Heading {
                     Layout.fillWidth: true
-                    visible: description.length > 0
+                    level: 2
+                    text: card.devName
+                    elide: Text.ElideRight
+                    maximumLineCount: 1
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
                 }
 
                 Controls.Label {
                     Layout.fillWidth: true
-                    wrapMode: Text.WordWrap
-                    text: description
-                    visible: description.length > 0
+                    elide: Text.ElideRight
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale * 0.8
+                    text: {
+                        var d = card.modelData
+                        var parts = []
+                        if (d.type !== "Virtual") parts.push(d.type)
+                        if (d.fileCount > 0)
+                            parts.push(d.fileCount.toLocaleString() + " " + qsTr("files")
+                                       + "  " + appManager1.formatDataSize(d.totalFileSize))
+                        if (d.type === "Storage" && d.freeSpace > 0)
+                            parts.push(qsTr("free") + ": " + appManager1.formatDataSize(d.freeSpace))
+                        if (d.dateUpdated && d.dateUpdated.length > 0)
+                            parts.push(d.dateUpdated)
+                        return parts.join("  ·  ")
+                    }
+                    visible: text.length > 0
                 }
             }
 
-            Controls.Button {
-                Layout.alignment: Qt.AlignRight
-                Layout.columnSpan: 2
-                //text: "Select" //i18n("Select")
-                icon.name: "edit-select"
-                onClicked: showPassiveNotification("Select clicked, no action")
+            Controls.ToolButton {
+                icon.name: "application-menu"
+                onClicked: contextMenu.popup()
+                Controls.ToolTip.text: qsTr("Actions")
+                Controls.ToolTip.visible: hovered
             }
         }
     }
 }
-
-

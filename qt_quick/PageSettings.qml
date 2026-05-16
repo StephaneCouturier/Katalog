@@ -65,6 +65,15 @@ Kirigami.ScrollablePage {
         }
     }
 
+    FileDialog {
+        id: vvvFileDialog
+        fileMode: FileDialog.OpenFile
+        onAccepted: {
+            var path = appManager1.pathFromFileUrl(selectedFile.toString())
+            vvvPathField.text = path
+        }
+    }
+
     actions: [
         Kirigami.Action {
             text: qsTr("Close")
@@ -307,6 +316,43 @@ Kirigami.ScrollablePage {
                 enabled: importUpdateSourceCombo.count > 0 && !appManager1.importIsRunning
                 onClicked: appManager1.updateAllImportsFromSource(importUpdateSourceCombo.currentText)
             }
+        }
+
+        Controls.Label { text: qsTr("VVV"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Controls.TextField {
+                id: vvvPathField
+                placeholderText: qsTr("VVV export file (.tsv)")
+                Layout.fillWidth: true
+                readOnly: true
+            }
+            Controls.Button {
+                text: qsTr("Select")
+                icon.name: "edit-select"
+                onClicked: vvvFileDialog.open()
+            }
+            Controls.Button {
+                text: qsTr("Import")
+                icon.name: "document-import"
+                enabled: vvvPathField.text.length > 0 && !appManager1.importIsRunning
+                onClicked: {
+                    var err = appManager1.importFromVVV(vvvPathField.text)
+                    if (err.length > 0)
+                        vvvErrorMessage.text = err
+                    vvvErrorMessage.visible = err.length > 0
+                }
+            }
+        }
+
+        Controls.Label { visible: vvvErrorMessage.visible }
+        Kirigami.InlineMessage {
+            id: vvvErrorMessage
+            Layout.fillWidth: true
+            type: Kirigami.MessageType.Error
+            visible: false
+            showCloseButton: true
         }
 
         // ── Separator ──────────────────────────────────────────────────

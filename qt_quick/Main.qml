@@ -484,6 +484,9 @@ Kirigami.ApplicationWindow {
                 if (err !== "") {
                     editValidationDialog.message = err
                     editValidationDialog.open()
+                } else if (pageDeviceEdit.fromDevicesPage) {
+                    pageDeviceEdit.fromDevicesPage = false
+                    root.showPage(pageDevices)
                 } else {
                     root.closeFeaturePage(pageDeviceEdit)
                 }
@@ -586,9 +589,12 @@ Kirigami.ApplicationWindow {
             Controls.Label {
                 width: editStoragePathDialog.availableWidth
                 wrapMode: Text.WordWrap
-                text: qsTr("The source path changed.\n\nOld path: %1\nNew path: %2\n\nHow should the catalog indexes be updated?")
-                      .arg(editStoragePathDialog.previousPath)
-                      .arg(editStoragePathDialog.newPath)
+                text: (pageDeviceEdit_form.deviceType === "Catalog"
+                       ? qsTr("The catalog source path changed.")
+                       : qsTr("The storage path changed."))
+                      + "\n\nOld path: " + editStoragePathDialog.previousPath
+                      + "\nNew path: " + editStoragePathDialog.newPath
+                      + "\n\n" + qsTr("How should the catalog indexes be updated?")
             }
         }
         footer: Controls.DialogButtonBox {
@@ -621,6 +627,84 @@ Kirigami.ApplicationWindow {
                     editStoragePathDialog.close()
                     appManager1.triggerDeviceRescan(pageDeviceEdit_form.deviceId)
                     pageDeviceEdit_form.finalizeSave()
+                }
+            }
+        }
+    }
+
+    // Device page snapshot dialog
+    Controls.Dialog {
+        id: devSnapshotDialog
+        property var data: null
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(500, root.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            textFormat: Text.RichText
+            wrapMode: Text.WordWrap
+            text: {
+                if (!devSnapshotDialog.data) return ""
+                var d = devSnapshotDialog.data
+                var fc    = (d.newCatalogFileCount   || 0)
+                var dfc   = (d.deltaCatalogFileCount || 0)
+                var fs    = appManager1.formatDataSize(d.newCatalogFileSize   || 0)
+                var dfs   = appManager1.formatDataSize(Math.abs(d.deltaCatalogFileSize  || 0))
+                var spc   = appManager1.formatDataSize(d.newStorageFreeSpace  || 0)
+                var dspc  = appManager1.formatDataSize(Math.abs(d.deltaStorageFree      || 0))
+                var stot  = appManager1.formatDataSize(d.newStorageTotalSpace || 0)
+                var dstot = appManager1.formatDataSize(Math.abs(d.deltaStorageTotal     || 0))
+                return "<br/>" + qsTr("A snapshot of this collection was recorded:") +
+                    "<table>" +
+                    "<tr><td><br/><b>" + qsTr("Catalogs") + "</b></td><td></td><td></td></tr>" +
+                    "<tr><td>" + qsTr("Number of files:") + " </td><td style='text-align:right;'><b> " + fc.toLocaleString() + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((dfc >= 0) ? "+" : "") + dfc.toLocaleString() + " </b>)</td></tr>" +
+                    "<tr><td>" + qsTr("Total file size:") + " </td><td style='text-align:right;'><b> " + fs + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaCatalogFileSize >= 0) ? "+" : "") + dfs + " </b>)</td></tr>" +
+                    "<tr><td><br/><b>" + qsTr("Storage") + "</b></td><td></td><td></td></tr>" +
+                    "<tr><td>" + qsTr("Storage free space:") + " </td><td style='text-align:right;'><b> " + spc + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaStorageFree >= 0) ? "+" : "") + dspc + " </b>)</td></tr>" +
+                    "<tr><td>" + qsTr("Storage total space:") + " </td><td style='text-align:right;'><b> " + stot + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaStorageTotal >= 0) ? "+" : "") + dstot + " </b>)</td></tr>" +
+                    "</table>"
+            }
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("OK")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: devSnapshotDialog.close()
+        }
+    }
+
+    // Update All Active — pre-confirmation dialog
+    Controls.Dialog {
+        id: devUpdateAllDialog
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(440, root.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            wrapMode: Text.WordWrap
+            text: qsTr("Do you want a the summary of updates for each catalog?")
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Yes")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.YesRole
+            }
+            Controls.Button {
+                text: qsTr("No")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.NoRole
+            }
+            Controls.Button {
+                text: qsTr("Cancel")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onClicked: (button) => {
+                var role = devUpdateAllDialog.footer.buttonRole(button)
+                if (role === Controls.DialogButtonBox.RejectRole) {
+                    devUpdateAllDialog.close()
+                } else {
+                    devUpdateAllDialog.close()
+                    appManager1.updateAllActiveDevices()
                 }
             }
         }
@@ -894,29 +978,120 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Devices
-    Kirigami.ScrollablePage {
+    Kirigami.Page {
         id: pageDevices
         visible: false
+        padding: 0
         title: "Devices"
         titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
             Kirigami.Icon { source: "drive-multidisk"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
             Kirigami.Heading { text: pageDevices.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
 
         actions: [
-            /*Kirigami.Action {
-                text: "Batch process"
-                icon.name: "document-export"
-                onTriggered: showPassiveNotification("Batch process clicked, no action")
-            },*/
             Kirigami.Action {
-                text: "Close"
+                text: qsTr("All active")
+                icon.name: "view-refresh"
+                enabled: !appManager1.deviceUpdateIsRunning
+                onTriggered: devUpdateAllDialog.open()
+            },
+            Kirigami.Action {
+                text: qsTr("Snapshot")
+                icon.name: "camera-photo"
+                enabled: !appManager1.deviceUpdateIsRunning
+                onTriggered: {
+                    var result = appManager1.recordDevicesSnapshot()
+                    devSnapshotDialog.data = result
+                    devSnapshotDialog.open()
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("Insert Virtual Group")
+                icon.name: "folder-new"
+                enabled: !appManager1.deviceUpdateIsRunning
+                onTriggered: {
+                    var newId = appManager1.addDeviceVirtual(0)
+                    if (newId > 0) {
+                        pageDeviceEdit.fromDevicesPage = true
+                        pageDeviceEdit_form.deviceId = newId
+                        pageDeviceEdit_form.loadDevice()
+                        root.showPage(pageDeviceEdit)
+                    }
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("Add Storage")
+                icon.name: "drive-harddisk"
+                enabled: !appManager1.deviceUpdateIsRunning
+                onTriggered: {
+                    var newId = appManager1.addDeviceStorage(0)
+                    if (newId > 0) {
+                        pageDeviceEdit.fromDevicesPage = true
+                        pageDeviceEdit_form.deviceId = newId
+                        pageDeviceEdit_form.loadDevice()
+                        root.showPage(pageDeviceEdit)
+                    }
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("Import")
+                icon.name: "document-import"
+                visible: pageDevicesView.viewFilter === "Catalogs"
+                enabled: !appManager1.deviceUpdateIsRunning
+                onTriggered: devVvvFileDialog.open()
+            },
+            Kirigami.Action {
+                text: qsTr("Edit List")
+                icon.name: "document-edit"
+                enabled: !appManager1.deviceUpdateIsRunning
+                onTriggered: appManager1.openDeviceListFile()
+            },
+            Kirigami.Action {
+                text: qsTr("Stop")
+                icon.name: "process-stop"
+                visible: appManager1.deviceUpdateIsRunning
+                onTriggered: appManager1.stopDeviceUpdate()
+            },
+            Kirigami.Action {
+                text: qsTr("Gentle stop")
+                icon.name: "media-playback-stop"
+                visible: appManager1.deviceUpdateIsRunning
+                onTriggered: appManager1.gentleStopDeviceUpdate()
+            },
+            Kirigami.Action {
+                text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageDevices)
             }
         ]
 
+        footer: RowLayout {
+            visible: appManager1.deviceUpdateIsRunning || appManager1.deviceUpdateStatusText.length > 0
+            spacing: Kirigami.Units.smallSpacing
+            Controls.BusyIndicator {
+                running: appManager1.deviceUpdateIsRunning
+                visible: appManager1.deviceUpdateIsRunning
+                implicitWidth:  Kirigami.Units.gridUnit * 1.5
+                implicitHeight: Kirigami.Units.gridUnit * 1.5
+                Layout.leftMargin: Kirigami.Units.smallSpacing
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.smallSpacing
+                text: appManager1.deviceUpdateStatusText
+                elide: Text.ElideRight
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+        }
+
         PageDevicesView {
             id: pageDevicesView
+            cardScale: root.cardScale
+            onEditDeviceRequested: (deviceId) => {
+                pageDeviceEdit.fromDevicesPage = true
+                pageDeviceEdit_form.deviceId = deviceId
+                pageDeviceEdit_form.loadDevice()
+                root.showPage(pageDeviceEdit)
+            }
         }
     }
 
@@ -1033,6 +1208,7 @@ Kirigami.ApplicationWindow {
         id: pageDeviceEdit
         visible: false
         title: qsTr("Edit Device")
+        property bool fromDevicesPage: false
         titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
             Kirigami.Icon { source: "document-edit"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
             Kirigami.Heading { text: pageDeviceEdit.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
@@ -1058,7 +1234,12 @@ Kirigami.ApplicationWindow {
                 editStoragePathDialog.open()
             }
             function onSaveCompleted() {
-                root.closeFeaturePage(pageDeviceEdit)
+                if (pageDeviceEdit.fromDevicesPage) {
+                    pageDeviceEdit.fromDevicesPage = false
+                    root.showPage(pageDevices)
+                } else {
+                    root.closeFeaturePage(pageDeviceEdit)
+                }
             }
         }
 
@@ -1086,9 +1267,16 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
-                text: qsTr("Close")
+                text: qsTr("Cancel")
                 icon.name: "view-close"
-                onTriggered: root.closeFeaturePage(pageDeviceEdit)
+                onTriggered: {
+                    if (pageDeviceEdit.fromDevicesPage) {
+                        pageDeviceEdit.fromDevicesPage = false
+                        root.showPage(pageDevices)
+                    } else {
+                        root.closeFeaturePage(pageDeviceEdit)
+                    }
+                }
             }
         ]
 
@@ -1216,6 +1404,40 @@ Kirigami.ApplicationWindow {
         onAccepted: {
             var path = selectedFile.toString().replace("file://", "")
             appManager1.setDatabaseFilePath(path)
+        }
+    }
+
+    Dialogs.FileDialog {
+        id: devVvvFileDialog
+        title: qsTr("Import from VVV")
+        nameFilters: ["VVV files (*.vvv)", "All files (*)"]
+        onAccepted: {
+            var path = selectedFile.toString().replace("file://", "")
+            var err = appManager1.importFromVVV(path)
+            if (err.length > 0) {
+                devVvvErrorDialog.text = err
+                devVvvErrorDialog.open()
+            }
+        }
+    }
+
+    Controls.Dialog {
+        id: devVvvErrorDialog
+        property alias text: devVvvErrorLabel.text
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(420, root.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            id: devVvvErrorLabel
+            wrapMode: Text.WordWrap
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("OK")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: devVvvErrorDialog.close()
         }
     }
 }

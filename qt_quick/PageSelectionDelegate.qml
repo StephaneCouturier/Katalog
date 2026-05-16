@@ -46,6 +46,7 @@ Kirigami.AbstractCard {
             text: qsTr("Edit")
             icon.name: "document-edit"
             onTriggered: {
+                pageDeviceEdit.fromDevicesPage = false
                 pageDeviceEdit_form.deviceId = model.deviceId
                 pageDeviceEdit_form.loadDevice()
                 root.showPage(pageDeviceEdit)

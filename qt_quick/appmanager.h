@@ -76,7 +76,8 @@ class AppManager : public QObject
     Q_OBJECT
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
     Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel READ getDeviceFilterModel CONSTANT)
-    Q_PROPERTY(int selectedDeviceId READ getSelectedDeviceId NOTIFY selectedDeviceChanged)
+    Q_PROPERTY(int     selectedDeviceId   READ getSelectedDeviceId   NOTIFY selectedDeviceChanged)
+    Q_PROPERTY(QString selectedDeviceType READ getSelectedDeviceType NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)
     Q_PROPERTY(QString appReleaseDate         READ getAppReleaseDate         CONSTANT)
     Q_PROPERTY(QString databaseSchemaVersion  READ getDatabaseSchemaVersion  NOTIFY databaseModeChanged FINAL)
@@ -98,6 +99,8 @@ class AppManager : public QObject
     Q_PROPERTY(DeviceListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
     Q_PROPERTY(bool updateBeforeBackup READ updateBeforeBackup WRITE setUpdateBeforeBackup NOTIFY updateBeforeBackupChanged)
     Q_PROPERTY(bool catalogUpdateForBackupRunning READ catalogUpdateForBackupRunning NOTIFY catalogUpdateForBackupRunningChanged)
+    Q_PROPERTY(bool    deviceUpdateIsRunning  READ getDeviceUpdateIsRunning  NOTIFY deviceUpdateStateChanged)
+    Q_PROPERTY(QString deviceUpdateStatusText READ getDeviceUpdateStatusText NOTIFY deviceUpdateStatusChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -179,7 +182,8 @@ public slots:
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
-    int getSelectedDeviceId() const;
+    int     getSelectedDeviceId()   const;
+    QString getSelectedDeviceType() const;
 
     Q_INVOKABLE QStringList  getTagNames() const;
 
@@ -262,6 +266,26 @@ public slots:
     // Device delete
     Q_INVOKABLE QVariantMap  checkDeviceDeleteAllowed(int deviceId) const;
     Q_INVOKABLE QString      deleteDevice(int deviceId);
+
+    // Devices page operations
+    Q_INVOKABLE QVariantList getDeviceList(const QString &viewFilter = "All", int scopeDeviceId = 0) const;
+    Q_INVOKABLE int          addDeviceVirtual(int parentId);
+    Q_INVOKABLE int          addDeviceStorage(int parentId);
+    Q_INVOKABLE void         updateDevice(int deviceId);
+    Q_INVOKABLE void         updateAllActiveDevices();
+    Q_INVOKABLE void         stopDeviceUpdate();
+    Q_INVOKABLE void         gentleStopDeviceUpdate();
+    Q_INVOKABLE QVariantMap  recordDevicesSnapshot();
+    Q_INVOKABLE QString      splitCatalogBySubDirectory(int deviceId);
+    Q_INVOKABLE void         splitCatalogByFileType(int deviceId, bool verifyFirst);
+    Q_INVOKABLE QVariantMap  verifyDeviceChecksums(int deviceId);
+    Q_INVOKABLE QString      unassignDevice(int deviceId, int parentId);
+    Q_INVOKABLE QString      assignCatalogToDevice(int catalogDeviceId, int virtualDeviceId);
+    Q_INVOKABLE void         launchFilelight(int deviceId);
+    Q_INVOKABLE void         openDeviceListFile();
+    Q_INVOKABLE QString      importFromVVV(const QString &path);
+    bool    getDeviceUpdateIsRunning()  const { return m_deviceUpdateIsRunning; }
+    QString getDeviceUpdateStatusText() const { return m_deviceUpdateStatusText; }
 
     // Storage helpers
     Q_INVOKABLE QStringList  getStoragePictureList() const;
@@ -372,6 +396,11 @@ signals:
     void updateBeforeBackupChanged();
     void catalogUpdateForBackupRunningChanged();
     void catalogsForMappingPrepared(int mappingId, bool success, const QString &error);
+    void deviceUpdateStateChanged();
+    void deviceUpdateStatusChanged();
+    void deviceListChanged();
+    void checksumVerificationCompleted(QVariantMap result);
+    void splitCompleted(bool success, const QString &error);
 
 private:
     bool    m_searchIsRunning  = false;
@@ -421,6 +450,14 @@ private:
     bool                     m_catalogUpdateForBackupRunning  = false;
     void setupCatalogUpdateForBackupConnections();
     void onCatalogUpdateForBackupStep();
+
+    // Devices page state
+    bool    m_deviceUpdateIsRunning  = false;
+    QString m_deviceUpdateStatusText;
+    QList<int> m_pendingDeviceUpdates;
+    void setupDeviceUpdateManagerForDevices();
+    void onDevicePageUpdateCompleted(const QList<qint64> &results);
+    void startNextDeviceUpdate();
 
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,

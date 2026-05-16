@@ -93,6 +93,8 @@ ColumnLayout {
         }
 
         var path     = (deviceType !== "Virtual") ? edit_lineEdit_Path.text.trim() : ""
+        if (path.length > 1 && path.endsWith("/"))
+            path = path.slice(0, -1)
         var parentId = edit_storageComboBox.selectedDeviceId
 
         var err = appManager1.saveDeviceBasicFields(deviceId, name, parentId, path)
