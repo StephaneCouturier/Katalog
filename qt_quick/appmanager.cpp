@@ -2521,6 +2521,18 @@ void AppManager::runBackup(int mappingId)
 {
     if (m_backupJob) return;
 
+    // If "update before" is on, update both catalogs first then call executeBackupJob()
+    if (updateBeforeBackup() && !m_catalogUpdateForBackupRunning) {
+        m_pendingBackupAfterUpdate = mappingId;
+        prepareCatalogsForMapping(mappingId);
+        return;
+    }
+
+    executeBackupJob(mappingId);
+}
+//----------------------------------------------------------------------
+void AppManager::executeBackupJob(int mappingId)
+{
     BackupMappingManager manager(QSqlDatabase::defaultConnection);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) return;
@@ -2629,6 +2641,22 @@ void AppManager::onBackupFinishedInternal(const BackupReport &report)
         report.errorCount(),
         report.totalBytesCopied,
         report.wasCancelled);
+
+    // Update target catalog after successful backup (same rule as K2: same checkbox controls before AND after)
+    if (!report.wasCancelled && updateBeforeBackup() && !m_catalogUpdateForBackupRunning) {
+        if (!m_deviceUpdateManager)
+            setupDeviceUpdateManager();
+        disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
+        connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+                this, [this]() { setupDeviceUpdateManager(); emit backupMappingsChanged(); });
+        connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,
+                this, [this](const QString &) { setupDeviceUpdateManager(); });
+        connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
+                this, [this]() { setupDeviceUpdateManager(); });
+        Device *dev = new Device();
+        *dev = m_backupTargetDevice;
+        m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+    }
 }
 //----------------------------------------------------------------------
 QVariantMap AppManager::replicateDirectories(int mappingId)
@@ -2719,5 +2747,113 @@ void AppManager::setBackupSetting(const QString &key, const QVariant &value)
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     settings.setValue("BackUp/" + key, value);
     settings.sync();
+}
+//----------------------------------------------------------------------
+bool AppManager::updateBeforeBackup() const
+{
+    return getBackupSetting(QStringLiteral("UpdateBeforeBackup")) == QLatin1String("true");
+}
+//----------------------------------------------------------------------
+void AppManager::setUpdateBeforeBackup(bool v)
+{
+    setBackupSetting(QStringLiteral("UpdateBeforeBackup"), v ? QStringLiteral("true") : QStringLiteral("false"));
+    emit updateBeforeBackupChanged();
+}
+//----------------------------------------------------------------------
+// Async: updates source catalog then target catalog for the given mapping.
+// Emits catalogsForMappingPrepared() when both are done (or on error).
+// runBackup() uses this internally; QML preview page calls it directly.
+void AppManager::prepareCatalogsForMapping(int mappingId)
+{
+    if (m_catalogUpdateForBackupRunning) {
+        emit catalogsForMappingPrepared(mappingId, false,
+            tr("A catalog update is already in progress. Please wait and try again."));
+        return;
+    }
+
+    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    MappingInfo mapping = manager.getMappingById(mappingId);
+    if (mapping.mappingId < 0) {
+        emit catalogsForMappingPrepared(mappingId, false, tr("Mapping not found."));
+        return;
+    }
+
+    Device sourceDevice;
+    sourceDevice.ID = mapping.sourceDeviceId;
+    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    Device targetDevice;
+    targetDevice.ID = mapping.targetDeviceId;
+    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+
+    m_pendingCatalogUpdateMappingId    = mappingId;
+    m_pendingCatalogUpdateSourceDevice = sourceDevice;
+    m_pendingCatalogUpdateTargetDevice = targetDevice;
+    m_backupCatalogUpdatePhase         = BackupCatalogUpdatePhase::UpdatingSource;
+    m_catalogUpdateForBackupRunning    = true;
+    emit catalogUpdateForBackupRunningChanged();
+
+    setupCatalogUpdateForBackupConnections();
+
+    Device *dev = new Device();
+    *dev = m_pendingCatalogUpdateSourceDevice;
+    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+}
+//----------------------------------------------------------------------
+void AppManager::setupCatalogUpdateForBackupConnections()
+{
+    if (!m_deviceUpdateManager)
+        setupDeviceUpdateManager();
+    disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
+
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
+            this, &AppManager::onCatalogUpdateForBackupStep);
+
+    auto onFail = [this](const QString &error) {
+        m_catalogUpdateForBackupRunning = false;
+        m_backupCatalogUpdatePhase      = BackupCatalogUpdatePhase::None;
+        m_pendingBackupAfterUpdate      = -1;
+        int id                          = m_pendingCatalogUpdateMappingId;
+        m_pendingCatalogUpdateMappingId = -1;
+        setupDeviceUpdateManager();
+        emit catalogUpdateForBackupRunningChanged();
+        emit catalogsForMappingPrepared(id, false, error);
+    };
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,     this, onFail);
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled, this,
+            [onFail]() { onFail(QString()); });
+}
+//----------------------------------------------------------------------
+void AppManager::onCatalogUpdateForBackupStep()
+{
+    if (m_backupCatalogUpdatePhase == BackupCatalogUpdatePhase::UpdatingSource) {
+        // Source done — update target next.
+        // DeviceUpdateManager defers cleanup ~10 ms after operationCompleted; delay
+        // past that window so the manager is fully reset before the next operation.
+        m_backupCatalogUpdatePhase = BackupCatalogUpdatePhase::UpdatingTarget;
+        QTimer::singleShot(50, this, [this]() {
+            Device *dev = new Device();
+            *dev = m_pendingCatalogUpdateTargetDevice;
+            m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+        });
+        return;
+    }
+
+    // Both catalogs updated — reload device data then continue
+    m_backupCatalogUpdatePhase = BackupCatalogUpdatePhase::None;
+    m_pendingCatalogUpdateSourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    m_pendingCatalogUpdateTargetDevice.loadDevice(QSqlDatabase::defaultConnection);
+
+    int id                          = m_pendingCatalogUpdateMappingId;
+    m_pendingCatalogUpdateMappingId = -1;
+    int pendingBackup               = m_pendingBackupAfterUpdate;
+    m_pendingBackupAfterUpdate      = -1;
+    m_catalogUpdateForBackupRunning = false;
+
+    setupDeviceUpdateManager();  // restore normal catalog/device connections
+    emit catalogUpdateForBackupRunningChanged();
+    emit catalogsForMappingPrepared(id, true, QString());
+
+    if (pendingBackup >= 0)
+        executeBackupJob(pendingBackup);
 }
 

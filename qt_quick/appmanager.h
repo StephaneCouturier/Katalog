@@ -96,6 +96,8 @@ class AppManager : public QObject
     Q_PROPERTY(bool    importIsRunning   READ getImportIsRunning   NOTIFY importIsRunningChanged)
     Q_PROPERTY(QString importStatusText  READ getImportStatusText  NOTIFY importStatusTextChanged)
     Q_PROPERTY(DeviceListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
+    Q_PROPERTY(bool updateBeforeBackup READ updateBeforeBackup WRITE setUpdateBeforeBackup NOTIFY updateBeforeBackupChanged)
+    Q_PROPERTY(bool catalogUpdateForBackupRunning READ catalogUpdateForBackupRunning NOTIFY catalogUpdateForBackupRunningChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -202,6 +204,12 @@ public slots:
     Q_INVOKABLE QString      generateLuckyBackupProfile(const QVariantList &mappingIds);
     Q_INVOKABLE QString      getBackupSetting(const QString &key) const;
     Q_INVOKABLE void         setBackupSetting(const QString &key, const QVariant &value);
+
+    // Catalog-update-before-backup
+    bool updateBeforeBackup() const;
+    void setUpdateBeforeBackup(bool v);
+    bool catalogUpdateForBackupRunning() const { return m_catalogUpdateForBackupRunning; }
+    Q_INVOKABLE void prepareCatalogsForMapping(int mappingId);
 
     Q_INVOKABLE QVariantList getTagEntries(const QString &filterName = QString()) const;
     Q_INVOKABLE bool         createTag(const QString &name, const QString &path);
@@ -361,6 +369,9 @@ signals:
     void backupProgress(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
     void backupFinished(int copiedCount, int movedCount, int renamedCount, int conflictCount, int errorCount, qint64 totalBytesCopied, bool wasCancelled);
     void backupNotification(const QString &message, bool isError);
+    void updateBeforeBackupChanged();
+    void catalogUpdateForBackupRunningChanged();
+    void catalogsForMappingPrepared(int mappingId, bool success, const QString &error);
 
 private:
     bool    m_searchIsRunning  = false;
@@ -388,6 +399,7 @@ private:
         int skippedCount = 0;
     };
     BackupCompareResult compareForBackup(const Device &src, const Device &tgt, bool strictCopy, bool sourceDrive);
+    void executeBackupJob(int mappingId);
     void onBackupProgressInternal(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
     void onBackupFinishedInternal(const BackupReport &report);
 
@@ -398,6 +410,17 @@ private:
     Device                  m_backupTargetDevice;
     int                     m_runningBackupMappingId = -1;
     QList<BackupPreviewRow> m_lastPreviewRows;
+
+    // Catalog-update-before-backup state
+    enum class BackupCatalogUpdatePhase { None, UpdatingSource, UpdatingTarget };
+    BackupCatalogUpdatePhase m_backupCatalogUpdatePhase       = BackupCatalogUpdatePhase::None;
+    int                      m_pendingCatalogUpdateMappingId  = -1;
+    int                      m_pendingBackupAfterUpdate       = -1;
+    Device                   m_pendingCatalogUpdateSourceDevice;
+    Device                   m_pendingCatalogUpdateTargetDevice;
+    bool                     m_catalogUpdateForBackupRunning  = false;
+    void setupCatalogUpdateForBackupConnections();
+    void onCatalogUpdateForBackupStep();
 
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,

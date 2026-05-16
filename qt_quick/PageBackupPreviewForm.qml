@@ -10,8 +10,20 @@ Kirigami.ScrollablePage {
     property int mappingId: -1
     property var previewData: null
 
+    property bool updatingCatalogs: false
+
     function loadPreview() {
         if (root.mappingId < 0) return
+        if (appManager1.updateBeforeBackup) {
+            root.updatingCatalogs = true
+            appManager1.prepareCatalogsForMapping(root.mappingId)
+        } else {
+            doPreview()
+        }
+    }
+
+    function doPreview() {
+        root.updatingCatalogs = false
         root.previewData = appManager1.previewBackup(root.mappingId)
         if (root.previewData && root.previewData.mappingName)
             root.title = qsTr("Preview") + " — " + root.previewData.mappingName
@@ -19,6 +31,19 @@ Kirigami.ScrollablePage {
 
     function closeLayer() {
         pageStack.layers.pop()
+    }
+
+    Connections {
+        target: appManager1
+        function onCatalogsForMappingPrepared(mappingId, success, error) {
+            if (mappingId !== root.mappingId) return
+            if (!success) {
+                root.updatingCatalogs = false
+                root.previewData = ({ error: error, hasData: false, filesToCopy: [], fileConflicts: [] })
+                return
+            }
+            root.doPreview()
+        }
     }
 
     Component.onCompleted: loadPreview()
@@ -49,8 +74,8 @@ Kirigami.ScrollablePage {
         Kirigami.PlaceholderMessage {
             Layout.fillWidth: true
             visible: root.previewData === null
-            text: qsTr("Computing preview…")
-            icon.name: "hourglass"
+            text: root.updatingCatalogs ? qsTr("Updating catalogs…") : qsTr("Computing preview…")
+            icon.name: root.updatingCatalogs ? "view-refresh" : "hourglass"
         }
 
         // Error state
@@ -118,27 +143,22 @@ Kirigami.ScrollablePage {
                 showCloseButton: false
             }
 
-            // Files to copy / move
+            // Unified file table: Status | File Name | Path | Size
+            // Status values mirror K2: "Copy"/"Move" for filesToCopy, "Conflict" for conflicts
             ColumnLayout {
-                visible: root.previewData && root.previewData.filesToCopy && root.previewData.filesToCopy.length > 0
+                visible: root.previewData !== null && root.previewData.hasData
+                         && (root.previewData.filesToCopy.length + root.previewData.fileConflicts.length) > 0
                 spacing: Kirigami.Units.smallSpacing
                 Layout.fillWidth: true
-
-                Controls.Label {
-                    text: root.previewData
-                        ? (root.previewData.isArchive ? qsTr("Files to move") : qsTr("Files to copy"))
-                            + " (" + (root.previewData.filesToCopy ? root.previewData.filesToCopy.length : 0) + ")"
-                        : ""
-                    font.bold: true
-                }
 
                 // Column headers
                 RowLayout {
                     Layout.fillWidth: true
                     spacing: 0
-                    Controls.Label { text: qsTr("File Name");  Layout.preferredWidth: Kirigami.Units.gridUnit * 12; font.bold: true; opacity: 0.7 }
-                    Controls.Label { text: qsTr("Path");       Layout.fillWidth: true;                              font.bold: true; opacity: 0.7 }
-                    Controls.Label { text: qsTr("Size");       Layout.preferredWidth: Kirigami.Units.gridUnit * 7;  font.bold: true; opacity: 0.7 }
+                    Controls.Label { text: qsTr("Status");    Layout.preferredWidth: Kirigami.Units.gridUnit * 7;  font.bold: true; opacity: 0.7 }
+                    Controls.Label { text: qsTr("File Name"); Layout.preferredWidth: Kirigami.Units.gridUnit * 12; font.bold: true; opacity: 0.7 }
+                    Controls.Label { text: qsTr("Path");      Layout.fillWidth: true;                              font.bold: true; opacity: 0.7 }
+                    Controls.Label { text: qsTr("Size");      Layout.preferredWidth: Kirigami.Units.gridUnit * 7;  font.bold: true; opacity: 0.7 }
                 }
                 Kirigami.Separator { Layout.fillWidth: true }
 
@@ -149,46 +169,28 @@ Kirigami.ScrollablePage {
                         Layout.fillWidth: true
                         spacing: 0
                         Controls.Label {
+                            text:  root.previewData && root.previewData.isArchive ? qsTr("Move") : qsTr("Copy")
+                            color: Kirigami.Theme.positiveTextColor
+                            Layout.preferredWidth: Kirigami.Units.gridUnit * 7
+                        }
+                        Controls.Label {
                             text:  modelData.fileName
                             elide: Text.ElideRight
                             Layout.preferredWidth: Kirigami.Units.gridUnit * 12
                         }
                         Controls.Label {
-                            text:  modelData.folderPath
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
+                            text:    modelData.folderPath
+                            elide:   Text.ElideRight
                             opacity: 0.7
+                            Layout.fillWidth: true
                         }
                         Controls.Label {
-                            text:  modelData.fileSizeStr
+                            text:               modelData.fileSizeStr
                             horizontalAlignment: Text.AlignRight
                             Layout.preferredWidth: Kirigami.Units.gridUnit * 7
                         }
                     }
                 }
-            }
-
-            // Conflicts
-            ColumnLayout {
-                visible: root.previewData && root.previewData.fileConflicts && root.previewData.fileConflicts.length > 0
-                spacing: Kirigami.Units.smallSpacing
-                Layout.fillWidth: true
-
-                Controls.Label {
-                    text: qsTr("Conflicts")
-                        + " (" + (root.previewData && root.previewData.fileConflicts ? root.previewData.fileConflicts.length : 0) + ")"
-                    font.bold: true
-                    color: Kirigami.Theme.neutralTextColor
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 0
-                    Controls.Label { text: qsTr("File Name"); Layout.preferredWidth: Kirigami.Units.gridUnit * 12; font.bold: true; opacity: 0.7 }
-                    Controls.Label { text: qsTr("Path");      Layout.fillWidth: true;                              font.bold: true; opacity: 0.7 }
-                    Controls.Label { text: qsTr("Size");      Layout.preferredWidth: Kirigami.Units.gridUnit * 7;  font.bold: true; opacity: 0.7 }
-                }
-                Kirigami.Separator { Layout.fillWidth: true }
 
                 Repeater {
                     model: root.previewData ? root.previewData.fileConflicts : []
@@ -197,18 +199,23 @@ Kirigami.ScrollablePage {
                         Layout.fillWidth: true
                         spacing: 0
                         Controls.Label {
+                            text:  qsTr("Conflict")
+                            color: Kirigami.Theme.neutralTextColor
+                            Layout.preferredWidth: Kirigami.Units.gridUnit * 7
+                        }
+                        Controls.Label {
                             text:  modelData.fileName
                             elide: Text.ElideRight
                             Layout.preferredWidth: Kirigami.Units.gridUnit * 12
                         }
                         Controls.Label {
-                            text:  modelData.folderPath
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
+                            text:    modelData.folderPath
+                            elide:   Text.ElideRight
                             opacity: 0.7
+                            Layout.fillWidth: true
                         }
                         Controls.Label {
-                            text:  modelData.fileSizeStr
+                            text:                modelData.fileSizeStr
                             horizontalAlignment: Text.AlignRight
                             Layout.preferredWidth: Kirigami.Units.gridUnit * 7
                         }
@@ -220,7 +227,7 @@ Kirigami.ScrollablePage {
         // Empty preview (in sync)
         Kirigami.PlaceholderMessage {
             Layout.fillWidth: true
-            visible: root.previewData !== null && root.previewData.hasData
+            visible: root.previewData !== null
                      && root.previewData.filesToCopy.length === 0
                      && root.previewData.fileConflicts.length === 0
             text: qsTr("Everything is in sync")

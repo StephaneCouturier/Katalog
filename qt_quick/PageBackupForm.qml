@@ -131,6 +131,12 @@ ColumnLayout {
         }
 
         Item { Layout.fillWidth: true }
+
+        Controls.CheckBox {
+            text:    qsTr("Update catalogs before backup")
+            checked: appManager1.updateBeforeBackup
+            onToggled: appManager1.updateBeforeBackup = checked
+        }
     }
 
     // ─── Coverage summary ─────────────────────────────────────────────────────
@@ -389,6 +395,7 @@ ColumnLayout {
                         icon.name: "media-playback-start"
                         enabled:   modelData.sourceActive && modelData.targetActive
                                    && root.runningMappingId === -1
+                                   && !appManager1.catalogUpdateForBackupRunning
                         onClicked: {
                             root.runningMappingId   = modelData.mappingId
                             root.isPaused           = false
