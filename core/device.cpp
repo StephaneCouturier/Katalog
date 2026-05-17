@@ -1014,23 +1014,122 @@ QList<Device*> Device::getActiveCatalogList(const QString &connectionName, int s
         query.bindValue(":scope", scopeDeviceId);
     }
 
-    if (!query.exec()) {
-        qWarning() << "getActiveCatalogList: query failed:" << query.lastError().text();
+    if (!query.exec())
         return result;
-    }
 
     while (query.next()) {
         Device *dev = new Device();
         dev->ID = query.value(0).toInt();
         dev->loadDevice(connectionName);   // sets path, calls updateActiveState()
-        qDebug() << "getActiveCatalogList: id=" << dev->ID << "name=" << dev->name << "path=" << dev->path << "active=" << dev->active;
         if (dev->active)
             result.append(dev);
         else
             delete dev;
     }
 
-    qDebug() << "getActiveCatalogList: returning" << result.count() << "active catalogs";
+    return result;
+}
+//----------------------------------------------------------------------
+QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionName,
+                                                     int scopeDeviceId)
+{
+    QList<DeviceTreeNode> result;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen())
+        return result;
+
+    // Recursive CTE: depth-first order via sort_path (zero-padded device_order + lower name).
+    // scopeDeviceId == 0 → start from all root devices (device_parent_id = 0).
+    // scopeDeviceId  > 0 → start from that single device and recurse into its subtree.
+    QString startCond = (scopeDeviceId > 0)
+        ? QLatin1String("device_id = :scope")
+        : QLatin1String("device_parent_id = 0");
+
+    QString sql = QLatin1String(R"(
+        WITH RECURSIVE device_tree AS (
+            SELECT  device_id,
+                    device_parent_id,
+                    device_name,
+                    device_type,
+                    device_path,
+                    device_total_file_size,
+                    device_total_file_count,
+                    device_total_space,
+                    device_free_space,
+                    device_active,
+                    device_date_updated,
+                    device_group_id,
+                    0 AS level,
+                    SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS TEXT), -10)
+                        || '|' || LOWER(device_name) AS sort_path
+            FROM device
+            WHERE )") + startCond + QLatin1String(R"(
+            UNION ALL
+            SELECT  c.device_id,
+                    c.device_parent_id,
+                    c.device_name,
+                    c.device_type,
+                    c.device_path,
+                    c.device_total_file_size,
+                    c.device_total_file_count,
+                    c.device_total_space,
+                    c.device_free_space,
+                    c.device_active,
+                    c.device_date_updated,
+                    c.device_group_id,
+                    p.level + 1,
+                    p.sort_path || '/' ||
+                        SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS TEXT), -10)
+                        || '|' || LOWER(c.device_name)
+            FROM device c
+            JOIN device_tree p ON c.device_parent_id = p.device_id
+        )
+        SELECT  device_id,
+                device_parent_id,
+                device_name,
+                device_type,
+                device_path,
+                device_total_file_size,
+                device_total_file_count,
+                device_total_space,
+                device_free_space,
+                device_active,
+                device_date_updated,
+                device_group_id,
+                level
+        FROM device_tree
+        ORDER BY sort_path
+    )");
+
+    QSqlQuery query(db);
+    query.prepare(sql);
+    if (scopeDeviceId > 0)
+        query.bindValue(":scope", scopeDeviceId);
+
+    if (!query.exec()) {
+        qWarning() << "Device::loadDeviceTree query failed:" << query.lastError().text();
+        return result;
+    }
+
+    while (query.next()) {
+        DeviceTreeNode node;
+        node.id             = query.value(0).toInt();
+        node.parentId       = query.value(1).toInt();
+        node.name           = query.value(2).toString();
+        node.type           = query.value(3).toString();
+        node.path           = query.value(4).toString();
+        node.totalFileSize  = query.value(5).toLongLong();
+        node.totalFileCount = query.value(6).toLongLong();
+        node.totalSpace     = query.value(7).toLongLong();
+        node.freeSpace      = query.value(8).toLongLong();
+        node.isActive       = query.value(9).toBool();
+        node.dateUpdated    = query.value(10).toString();
+        node.groupId        = query.value(11).toInt();
+        node.level          = query.value(12).toInt();
+        result.append(node);
+    }
+
     return result;
 }
 //----------------------------------------------------------------------

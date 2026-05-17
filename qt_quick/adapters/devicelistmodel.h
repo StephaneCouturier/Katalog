@@ -3,8 +3,6 @@
 
 #include <QAbstractListModel>
 #include <QSet>
-#include <QSqlQuery>
-#include <QSqlDatabase>
 #include <qdatetime.h>
 
 class DeviceListModel : public QAbstractListModel

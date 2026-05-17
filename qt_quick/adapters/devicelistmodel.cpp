@@ -1,9 +1,8 @@
 #include "devicelistmodel.h"
+#include "core/device.h"
 #include <QDebug>
 #include <QLocale>
-#include <functional>
 #include <qdatetime.h>
-#include <qsqlerror.h>
 
 DeviceListModel::DeviceListModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -163,51 +162,31 @@ void DeviceListModel::clear()
 //----------------------------------------------------------------------
 void DeviceListModel::loadDevicesFromDatabase()
 {
-    QSqlDatabase db = m_connectionName.isEmpty()
-                      ? QSqlDatabase::database()
-                      : QSqlDatabase::database(m_connectionName);
-    if (!db.isOpen()) {
-        m_lastError = "Database not connected";
-        qWarning() << "DeviceListModel::loadDevicesFromDatabase:" << m_lastError;
+    const QString conn = m_connectionName.isEmpty()
+                         ? QSqlDatabase::defaultConnection
+                         : m_connectionName;
+
+    const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(conn);
+    if (nodes.isEmpty() && !m_includeCollectionRoot) {
+        // Could be a genuine empty collection or a DB error — either way nothing to show.
+        // loadDeviceTree already logs a warning on query failure.
         return;
     }
 
-    // Load all devices flat — tree order built in C++ to avoid DB-specific SQL (|| vs CONCAT, CTE support)
-    QSqlQuery query(db);
-    query.prepare(QLatin1String(R"(
-        SELECT  device_id,
-                device_parent_id,
-                device_name,
-                device_type,
-                device_total_file_size,
-                device_total_file_count,
-                device_total_space,
-                device_free_space,
-                device_active
-        FROM device
-        ORDER BY device_parent_id ASC, COALESCE(device_order, 0) ASC, LOWER(device_name) ASC
-    )"));
-
-    if (!query.exec()) {
-        m_lastError = QString("Query failed: %1").arg(query.lastError().text());
-        qWarning() << "DeviceListModel::loadDevicesFromDatabase:" << m_lastError;
-        return;
-    }
-
-    // Build parent → children map (same pattern as K2 QMap<id, item>)
+    // Build parent → children map from the DFS-ordered core result.
+    // We preserve the already-correct DFS order by building an ordered list per parent.
     QMap<int, QList<DeviceItem>> childrenOf;
-    while (query.next()) {
-        DeviceItem device;
-        device.id            = query.value(0).toInt();
-        int parentId         = query.value(1).toInt();
-        device.name          = query.value(2).toString();
-        device.type          = query.value(3).toString();
-        device.totalFileSize  = query.value(4).toLongLong();
-        device.totalFileCount = query.value(5).toLongLong();
-        device.totalSpace    = query.value(6).toLongLong();
-        device.freeSpace     = query.value(7).toLongLong();
-        device.isActive      = query.value(8).toBool();
-        childrenOf[parentId].append(device);
+    for (const Device::DeviceTreeNode &node : nodes) {
+        DeviceItem dev;
+        dev.id             = node.id;
+        dev.name           = node.name;
+        dev.type           = node.type;
+        dev.totalFileSize  = node.totalFileSize;
+        dev.totalFileCount = node.totalFileCount;
+        dev.totalSpace     = node.totalSpace;
+        dev.freeSpace      = node.freeSpace;
+        dev.isActive       = node.isActive;
+        childrenOf[node.parentId].append(dev);
     }
 
     // Depth-first traversal → flat list in correct visual order with levels.

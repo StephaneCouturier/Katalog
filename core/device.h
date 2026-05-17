@@ -163,6 +163,26 @@ public:
         // scopeDeviceId == 0 → all catalogs; otherwise → catalog descendants of that device.
         static QList<Device*> getActiveCatalogList(const QString &connectionName, int scopeDeviceId = 0);
 
+        // Flat DFS-ordered device tree — single canonical query used by all UI consumers.
+        // scopeDeviceId == 0 → full tree from root; otherwise → subtree rooted at that device.
+        struct DeviceTreeNode {
+            int     id             = 0;
+            int     parentId       = 0;
+            int     level          = 0;
+            int     groupId        = 0;
+            QString name;
+            QString type;
+            QString path;
+            qint64  totalFileSize  = 0;
+            qint64  totalFileCount = 0;
+            qint64  totalSpace     = 0;
+            qint64  freeSpace      = 0;
+            bool    isActive       = false;
+            QString dateUpdated;
+        };
+        static QList<DeviceTreeNode> loadDeviceTree(const QString &connectionName,
+                                                    int scopeDeviceId = 0);
+
         /**
          * @brief Update storage information only (no catalog processing)
          * Simple storage update for initialization and basic operations

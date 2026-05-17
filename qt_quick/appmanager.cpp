@@ -1728,88 +1728,40 @@ QString AppManager::deleteDevice(int deviceId)
 //----------------------------------------------------------------------
 QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDeviceId) const
 {
+    const QString conn = QSqlDatabase::defaultConnection;
+    const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(conn, scopeDeviceId);
+
+    // Build id → type map so each node can resolve its parent's type without a second query.
+    QHash<int, QString> typeById;
+    typeById.reserve(nodes.size());
+    for (const Device::DeviceTreeNode &n : nodes)
+        typeById.insert(n.id, n.type);
+
     QVariantList result;
-    auto db = QSqlDatabase::database(QSqlDatabase::defaultConnection);
-    if (!db.isValid() || !db.isOpen()) return result;
+    result.reserve(nodes.size());
 
-    QSqlQuery query(db);
-    QString sql;
+    for (const Device::DeviceTreeNode &n : nodes) {
+        // Apply type filter — "All" (or any unrecognised value) passes everything through.
+        if (viewFilter == QLatin1String("Catalogs") && n.type != QLatin1String("Catalog"))
+            continue;
+        if (viewFilter == QLatin1String("Storage") && n.type != QLatin1String("Storage"))
+            continue;
 
-    if (viewFilter == "Catalogs" || viewFilter == "Storage") {
-        QString typeStr = (viewFilter == "Catalogs") ? QStringLiteral("Catalog") : QStringLiteral("Storage");
-        sql = QStringLiteral(
-            "SELECT device_id, device_parent_id, device_name, device_type,"
-            "       device_path, device_total_file_size, device_total_file_count,"
-            "       device_total_space, device_free_space, device_active, device_date_updated, 0,"
-            "       COALESCE((SELECT device_type FROM device p WHERE p.device_id = device.device_parent_id),''),"
-            "       device_group_id"
-            " FROM device WHERE device_type = :dtype");
-        if (scopeDeviceId > 0) {
-            sql += QStringLiteral(
-                " AND device_id IN ("
-                "   WITH RECURSIVE sub AS ("
-                "     SELECT device_id FROM device WHERE device_id = :scope"
-                "     UNION ALL"
-                "     SELECT d.device_id FROM device d JOIN sub s ON d.device_parent_id = s.device_id"
-                "   ) SELECT device_id FROM sub)");
-        }
-        sql += QStringLiteral(" ORDER BY device_name ASC");
-        query.prepare(sql);
-        query.bindValue(":dtype", typeStr);
-        if (scopeDeviceId > 0) query.bindValue(":scope", scopeDeviceId);
-    } else {
-        QString startCond = (scopeDeviceId > 0)
-            ? QStringLiteral("device_id = :scope")
-            : QStringLiteral("device_parent_id = 0");
-        // sort_path encodes depth-first traversal using device_order+name per level (same as DeviceListModel).
-        // Sibling order: device_order ASC, then device_name ASC (case-insensitive).
-        sql = QStringLiteral(
-            "WITH RECURSIVE device_tree AS ("
-            "  SELECT device_id, device_parent_id, device_name, device_type,"
-            "         device_path, device_total_file_size, device_total_file_count,"
-            "         device_total_space, device_free_space, device_active, device_date_updated, 0 AS level,"
-            "         device_group_id,"
-            "         SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS TEXT), -10) || '|' || LOWER(device_name) AS sort_path"
-            "  FROM device WHERE ") + startCond + QStringLiteral(
-            "  UNION ALL"
-            "  SELECT c.device_id, c.device_parent_id, c.device_name, c.device_type,"
-            "         c.device_path, c.device_total_file_size, c.device_total_file_count,"
-            "         c.device_total_space, c.device_free_space, c.device_active, c.device_date_updated, p.level+1,"
-            "         c.device_group_id,"
-            "         p.sort_path || '/' || SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS TEXT), -10) || '|' || LOWER(c.device_name)"
-            "  FROM device c JOIN device_tree p ON c.device_parent_id = p.device_id"
-            ")"
-            "SELECT device_id, device_parent_id, device_name, device_type,"
-            "       device_path, device_total_file_size, device_total_file_count,"
-            "       device_total_space, device_free_space, device_active, device_date_updated, level,"
-            "       COALESCE((SELECT device_type FROM device p WHERE p.device_id = device_tree.device_parent_id),''),"
-            "       device_group_id"
-            " FROM device_tree"
-            " ORDER BY sort_path");
-        query.prepare(sql);
-        if (scopeDeviceId > 0) query.bindValue(":scope", scopeDeviceId);
-    }
-
-    if (!query.exec()) {
-        qWarning() << "getDeviceList error:" << query.lastError().text();
-        return result;
-    }
-    while (query.next()) {
         QVariantMap item;
-        item[QStringLiteral("deviceId")]      = query.value(0).toInt();
-        item[QStringLiteral("parentId")]      = query.value(1).toInt();
-        item[QStringLiteral("name")]          = query.value(2).toString();
-        item[QStringLiteral("type")]          = query.value(3).toString();
-        item[QStringLiteral("path")]          = query.value(4).toString();
-        item[QStringLiteral("totalFileSize")] = query.value(5).toLongLong();
-        item[QStringLiteral("fileCount")]     = query.value(6).toLongLong();
-        item[QStringLiteral("totalSpace")]    = query.value(7).toLongLong();
-        item[QStringLiteral("freeSpace")]     = query.value(8).toLongLong();
-        item[QStringLiteral("active")]        = query.value(9).toBool();
-        item[QStringLiteral("dateUpdated")]   = query.value(10).toString();
-        item[QStringLiteral("level")]         = query.value(11).toInt();
-        item[QStringLiteral("parentType")]    = query.value(12).toString();
-        item[QStringLiteral("groupId")]       = query.value(13).toInt();
+        item[QStringLiteral("deviceId")]      = n.id;
+        item[QStringLiteral("parentId")]      = n.parentId;
+        item[QStringLiteral("name")]          = n.name;
+        item[QStringLiteral("type")]          = n.type;
+        item[QStringLiteral("path")]          = n.path;
+        item[QStringLiteral("totalFileSize")] = n.totalFileSize;
+        item[QStringLiteral("fileCount")]     = n.totalFileCount;
+        item[QStringLiteral("totalSpace")]    = n.totalSpace;
+        item[QStringLiteral("freeSpace")]     = n.freeSpace;
+        item[QStringLiteral("active")]        = n.isActive;
+        item[QStringLiteral("dateUpdated")]   = n.dateUpdated;
+        item[QStringLiteral("level")]         = n.level;
+        item[QStringLiteral("parentType")]    = typeById.value(n.parentId);
+        item[QStringLiteral("groupId")]       = n.groupId;
         result.append(item);
     }
     return result;
@@ -2081,7 +2033,6 @@ void AppManager::updateDevice(int deviceId)
 //----------------------------------------------------------------------
 void AppManager::updateAllActiveDevices(bool showEachReport)
 {
-    qDebug() << "updateAllActiveDevices: called, deviceUpdateIsRunning=" << m_deviceUpdateIsRunning;
     if (m_deviceUpdateIsRunning) return;
 
     m_isBatchUpdate        = true;
@@ -2092,11 +2043,7 @@ void AppManager::updateAllActiveDevices(bool showEachReport)
     // Scope: catalogs under the currently selected device (same as what the Catalogs
     // list view displays). 0 = no selection = all catalogs in the collection.
     int scopeId = selectedDevice ? selectedDevice->ID : 0;
-    qDebug() << "updateAllActiveDevices: conn=" << conn << "scopeId=" << scopeId;
     QList<Device *> activeCatalogs = Device::getActiveCatalogList(conn, scopeId);
-    qDebug() << "updateAllActiveDevices: activeCatalogs.count()=" << activeCatalogs.count();
-    for (Device *d : activeCatalogs)
-        qDebug() << "  catalog id=" << d->ID << "name=" << d->name << "path=" << d->path << "active=" << d->active;
 
     if (activeCatalogs.isEmpty()) {
         m_isBatchUpdate = false;
