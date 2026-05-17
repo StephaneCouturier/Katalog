@@ -204,6 +204,8 @@ public:
             const QString& databaseMode,
             const QString& collectionFolder);
 
+        void setConnectionName(const QString &name) { m_connectionName = name; }
+
 private:
         QString m_connectionName = "defaultConnection";
         void loadSubDeviceList(QString connectionName);

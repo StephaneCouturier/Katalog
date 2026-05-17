@@ -233,6 +233,19 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
+                text: "New..."
+                icon.name: "document-new"
+                Kirigami.Action {
+                    icon.name: "network-server-database"
+                    text: "SQLite Database..."
+                    onTriggered: {
+                        var p = appManager1.getNewCollectionDefaultPath()
+                        newDatabaseFileDialog.currentFile = "file://" + p
+                        newDatabaseFileDialog.open()
+                    }
+                }
+            },
+            Kirigami.Action {
                 separator: true
             },
             Kirigami.Action {
@@ -1513,6 +1526,17 @@ Kirigami.ApplicationWindow {
         onAccepted: {
             var path = selectedFile.toString().replace("file://", "")
             appManager1.setDatabaseFilePath(path)
+        }
+    }
+
+    Dialogs.FileDialog {
+        id: newDatabaseFileDialog
+        title: qsTr("Select the database to create and open:")
+        fileMode: Dialogs.FileDialog.SaveFile
+        nameFilters: ["SQLite databases (*.db)", "All files (*)"]
+        onAccepted: {
+            var path = selectedFile.toString().replace("file://", "")
+            appManager1.createNewSQLiteCollection(path)
         }
     }
 

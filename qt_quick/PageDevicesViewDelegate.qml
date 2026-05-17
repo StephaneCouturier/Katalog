@@ -32,8 +32,9 @@ Kirigami.AbstractCard {
     readonly property bool   devActive:    modelData.active
     readonly property int    devGroupId:   modelData.groupId ?? 0
 
-    // Unassign: K2 condition — device is in a Virtual Group (groupId != 0) and not EXPORT
-    readonly property bool canUnassign: devGroupId !== 0 && devPath !== "EXPORT"
+    // Unassign: only Catalog and Storage devices assigned to a Virtual Group (groupId != 0).
+    // Virtual devices are never unassigned — they can only be deleted.
+    readonly property bool canUnassign: devType !== "Virtual" && devGroupId !== 0 && devPath !== "EXPORT"
 
     anchors.left:       parent ? parent.left  : undefined
     anchors.leftMargin: devLevel * Kirigami.Units.gridUnit

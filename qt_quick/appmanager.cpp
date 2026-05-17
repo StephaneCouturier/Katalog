@@ -479,6 +479,59 @@ void AppManager::setDatabaseFilePath(const QString &path)
     }
 }
 //----------------------------------------------------------------------
+void AppManager::createNewSQLiteCollection(const QString &path)
+{
+    if (path.isEmpty()) return;
+
+    // Create an empty file — SQLite will write the schema on first connection.
+    QFile dbFile(path);
+    if (!dbFile.open(QFile::WriteOnly)) {
+        emit databaseConnectionChanged(false, tr("Could not create file: %1").arg(path));
+        return;
+    }
+    dbFile.close();
+
+    // Connect, run migrations (creates schema), add to recents, refresh UI.
+    setDatabaseFilePath(path);
+
+    // Seed the three default devices K2 always creates for a new collection.
+    // insertPhysicalStorageGroup() is idempotent — it checks for device_id=1 first.
+    bool defaultsCreated = collection->insertPhysicalStorageGroup();
+    if (defaultsCreated) {
+        // Translate the hard-coded English names K2 inserted into the user's locale.
+        const QString conn = QSqlDatabase::defaultConnection;
+        auto renameDevice = [&](int id, const QString &newName) {
+            Device dev;
+            dev.setConnectionName(conn);
+            dev.ID = id;
+            dev.loadDevice(conn);
+            dev.name = newName;
+            dev.saveDevice();
+        };
+        renameDevice(1, tr(" Physical Group"));
+        renameDevice(2, tr("Virtual device"));
+
+        QSqlQuery q(QSqlDatabase::database(conn));
+        q.prepare("SELECT device_id FROM device WHERE device_type='Storage' AND device_name='Local disk' LIMIT 1");
+        if (q.exec() && q.next())
+            renameDevice(q.value(0).toInt(), tr("Local disk"));
+
+        refreshAllUI();
+    }
+}
+//----------------------------------------------------------------------
+QString AppManager::getNewCollectionDefaultPath() const
+{
+    QString folder;
+    if (!collection->databaseFilePath.isEmpty())
+        folder = QFileInfo(collection->databaseFilePath).absolutePath();
+    else if (!collection->folder.isEmpty())
+        folder = collection->folder;
+    else
+        folder = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    return folder + "/newKatalogFile.db";
+}
+//----------------------------------------------------------------------
 void AppManager::refreshAllUI()
 {
     qDebug() << "AppManager::refreshAllUI() - Starting comprehensive UI refresh";

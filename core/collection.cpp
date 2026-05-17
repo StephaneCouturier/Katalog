@@ -2265,6 +2265,7 @@ bool Collection::insertPhysicalStorageGroup() {
     int result = query.value(0).toInt();
     if(result == 0){
         Device *newDeviceItem1 = new Device();
+        newDeviceItem1->setConnectionName(m_connectionName);
         newDeviceItem1->ID = 1;
         newDeviceItem1->parentID = 0;
         newDeviceItem1->name = " Physical Group";
@@ -2274,6 +2275,7 @@ bool Collection::insertPhysicalStorageGroup() {
         newDeviceItem1->insertDevice();
 
         Device *newDeviceItem2 = new Device();
+        newDeviceItem2->setConnectionName(m_connectionName);
         newDeviceItem2->ID = 2;
         newDeviceItem2->parentID = 1;
         newDeviceItem2->name = "Virtual device";
@@ -2301,6 +2303,8 @@ bool Collection::insertPhysicalStorageGroup() {
     if (queryStorage.value(0).toInt() == 0){
         //Create Device and related Storage under Physical group (ID=0)
         Device *newStorageDevice = new Device();
+        newStorageDevice->setConnectionName(m_connectionName);
+        newStorageDevice->storage->setConnectionName(m_connectionName);
         newStorageDevice->generateDeviceID();
         newStorageDevice->parentID = 2;
         if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)

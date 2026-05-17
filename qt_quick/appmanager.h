@@ -153,6 +153,8 @@ public slots:
     Q_INVOKABLE void openCollectionMemory(const QString &folder);
     Q_INVOKABLE void openCollectionHosted(const QString &hostName, const QString &dbName,
                                           int port, const QString &userName, const QString &password);
+    Q_INVOKABLE void    createNewSQLiteCollection(const QString &path);
+    Q_INVOKABLE QString getNewCollectionDefaultPath() const;
 
     //Useful functions
     void executeSearch();
