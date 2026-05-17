@@ -170,6 +170,7 @@ public:
             int     parentId       = 0;
             int     level          = 0;
             int     groupId        = 0;
+            int     externalId     = 0;
             QString name;
             QString type;
             QString path;

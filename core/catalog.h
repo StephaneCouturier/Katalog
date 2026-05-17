@@ -167,6 +167,32 @@ public:
     QString getFileChecksum(const QString &fileName, const QString &folderPath) const;
     static QString getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath, const QString &connectionName);
 
+    // Explore
+    struct ExploreFileEntry {
+        QString name;
+        qint64  size         = 0;
+        QString dateUpdated;
+        QString folderPath;
+        QString fullPath;
+        QString entryType;   // "file" or "folder"
+        QString fileType;
+        QString mimeType;
+        double  videoDurationSeconds = 0.0;
+        QString audioArtist;
+        QString audioAlbum;
+        QString audioTitle;
+        QString checksumSha256;
+    };
+
+    static QList<ExploreFileEntry> getExploreEntries(
+        const QString &connectionName,
+        int catalogId,
+        const QString &folderPath,
+        bool showFolders,
+        bool showSubFolders);
+
+    static int getExploreFolderCount(const QString &connectionName, int catalogId);
+
     // Metadata management
     bool clearMetadataBasicFields();
     bool clearMetadataExtendedField();

@@ -292,6 +292,12 @@ public slots:
     bool    getDeviceUpdateIsRunning()  const { return m_deviceUpdateIsRunning; }
     QString getDeviceUpdateStatusText() const { return m_deviceUpdateStatusText; }
 
+    // Explore page
+    Q_INVOKABLE QVariantMap  exploreOpenCatalog(int deviceId);
+    Q_INVOKABLE QVariantList getExploreFolders();
+    Q_INVOKABLE QVariantList getExploreEntries(const QString &folderPath, bool showFolders, bool showSubFolders);
+    Q_INVOKABLE QString      exploreGetChecksum(const QString &fileName, const QString &folderPath);
+
     // Storage helpers
     Q_INVOKABLE QStringList  getStoragePictureList() const;
     Q_INVOKABLE QString      getStorageImageFolderPath() const;

@@ -1218,7 +1218,7 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Explore
-    Kirigami.ScrollablePage {
+    Kirigami.Page {
         id: pageExplore
         visible: false
         title: "Explore"
@@ -1226,23 +1226,48 @@ Kirigami.ApplicationWindow {
             Kirigami.Icon { source: "view-list-tree"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
             Kirigami.Heading { text: pageExplore.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
 
+        padding: 0
+
         actions: [
-            /*Kirigami.Action {
-                text: "Batch process"
-                icon.name: "document-export"
-                onTriggered: showPassiveNotification("Batch process clicked, no action")
-            },*/
             Kirigami.Action {
-                text: "Close"
+                text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageExplore)
             }
         ]
 
-        Kirigami.PlaceholderMessage {
-            anchors.centerIn: parent
-            text: "Explore — coming soon"
-            icon.name: "view-list-tree"
+        RowLayout {
+            anchors.fill: parent
+            spacing: 0
+
+            PageExploreFolders {
+                id: exploreFolders
+                Layout.preferredWidth: 280
+                Layout.minimumWidth:   180
+                Layout.fillHeight: true
+
+                onFolderClicked: function(folderPath) {
+                    exploreFiles.currentFolderPath = folderPath
+                }
+                onCatalogOpenRequested: function(info) {
+                    exploreFiles.catalogName  = info.name  ?? ""
+                    exploreFiles.catalogPath  = info.path  ?? ""
+                    exploreFiles.catalogId    = info.externalId ?? 0
+                }
+            }
+
+            Kirigami.Separator { Layout.fillHeight: true }
+
+            PageExploreFiles {
+                id: exploreFiles
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                onFolderNavigated: function(folderPath) {
+                    exploreFolders.selectedFolderPath = folderPath
+                    exploreFiles.currentFolderPath    = folderPath
+                }
+            }
         }
     }
 

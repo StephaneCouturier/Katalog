@@ -1060,6 +1060,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                     device_active,
                     device_date_updated,
                     device_group_id,
+                    device_external_id,
                     0 AS level,
                     SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS TEXT), -10)
                         || '|' || LOWER(device_name) AS sort_path
@@ -1078,6 +1079,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                     c.device_active,
                     c.device_date_updated,
                     c.device_group_id,
+                    c.device_external_id,
                     p.level + 1,
                     p.sort_path || '/' ||
                         SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS TEXT), -10)
@@ -1097,7 +1099,8 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                 device_active,
                 device_date_updated,
                 device_group_id,
-                level
+                level,
+                device_external_id
         FROM device_tree
         ORDER BY sort_path
     )");
@@ -1127,6 +1130,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
         node.dateUpdated    = query.value(10).toString();
         node.groupId        = query.value(11).toInt();
         node.level          = query.value(12).toInt();
+        node.externalId     = query.value(13).toInt();
         result.append(node);
     }
 

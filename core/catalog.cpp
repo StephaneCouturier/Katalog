@@ -2051,3 +2051,102 @@ QString Catalog::getFileMetadataJson(int catalogId, const QString &fileName, con
         return query.value(0).toString();
     return QString();
 }
+//----------------------------------------------------------------------
+QList<Catalog::ExploreFileEntry> Catalog::getExploreEntries(
+    const QString &connectionName,
+    int catalogId,
+    const QString &folderPath,
+    bool showFolders,
+    bool showSubFolders)
+{
+    QList<ExploreFileEntry> result;
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen()) return result;
+
+    QString sql;
+
+    if (showFolders) {
+        sql = QLatin1String(R"(
+            SELECT REPLACE(folder_path, :folderPath || '/', '') AS name,
+                   NULL AS file_size,
+                   '' AS file_date_updated,
+                   folder_path AS file_folder_path,
+                   'folder' AS entry_type,
+                   '1' || folder_path AS order_val,
+                   folder_path AS file_full_path,
+                   NULL AS file_type, NULL AS mime_type,
+                   0.0 AS video_duration_seconds,
+                   NULL AS audio_artist, NULL AS audio_album, NULL AS audio_title,
+                   NULL AS checksum_sha256
+            FROM folder
+            WHERE folder_catalog_id = :catalogId
+            AND folder_path LIKE :folderPath || '/%'
+        )");
+
+        if (!showSubFolders) {
+            sql += QLatin1String(R"(
+            AND REPLACE(folder_path, :folderPath || '/', '') NOT LIKE '%/%'
+            )");
+        }
+
+        sql += QLatin1String(R"(
+            UNION
+        )");
+    }
+
+    sql += QLatin1String(R"(
+        SELECT file_name, file_size, file_date_updated, file_folder_path,
+               'file' AS entry_type,
+               '2' || file_name AS order_val,
+               file_full_path,
+               file_type, mime_type,
+               video_duration_seconds,
+               audio_artist, audio_album, audio_title,
+               checksum_sha256
+        FROM file
+        WHERE file_catalog_id = :catalogId
+        AND file_folder_path = :folderPath
+        ORDER BY order_val ASC
+    )");
+
+    QSqlQuery q(db);
+    q.prepare(sql);
+    q.bindValue(":catalogId",  catalogId);
+    q.bindValue(":folderPath", folderPath);
+
+    if (!q.exec()) {
+        qWarning() << "Catalog::getExploreEntries failed:" << q.lastError().text();
+        return result;
+    }
+
+    while (q.next()) {
+        ExploreFileEntry e;
+        e.name                 = q.value(0).toString();
+        e.size                 = q.value(1).toLongLong();
+        e.dateUpdated          = q.value(2).toString();
+        e.folderPath           = q.value(3).toString();
+        e.entryType            = q.value(4).toString();
+        // col 5 = order_val (unused)
+        e.fullPath             = q.value(6).toString();
+        e.fileType             = q.value(7).toString();
+        e.mimeType             = q.value(8).toString();
+        e.videoDurationSeconds = q.value(9).toDouble();
+        e.audioArtist          = q.value(10).toString();
+        e.audioAlbum           = q.value(11).toString();
+        e.audioTitle           = q.value(12).toString();
+        e.checksumSha256       = q.value(13).toString();
+        result.append(e);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+int Catalog::getExploreFolderCount(const QString &connectionName, int catalogId)
+{
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen()) return 0;
+    QSqlQuery q(db);
+    q.prepare(QLatin1String("SELECT COUNT(DISTINCT folder_path) FROM folder WHERE folder_catalog_id = :catalogId"));
+    q.bindValue(":catalogId", catalogId);
+    if (!q.exec() || !q.next()) return 0;
+    return q.value(0).toInt();
+}

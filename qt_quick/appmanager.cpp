@@ -13,6 +13,7 @@
 #include "core/backupprofilegenerator.h"
 #include "core/directoryreplicator.h"
 #include "core/storage.h"
+#include "core/foldertreeloader.h"
 #include <QThread>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -1815,6 +1816,7 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
         item[QStringLiteral("level")]         = n.level;
         item[QStringLiteral("parentType")]    = typeById.value(n.parentId);
         item[QStringLiteral("groupId")]       = n.groupId;
+        item[QStringLiteral("externalId")]    = n.externalId;
         result.append(item);
     }
     return result;
@@ -2819,6 +2821,108 @@ bool AppManager::removeDeviceExcludeFolder(int deviceId, const QString &path)
     if (ok) collection->saveCatalogFilterTableToFile();
     return ok;
 }
+
+// Explore page
+//----------------------------------------------------------------------
+QVariantMap AppManager::exploreOpenCatalog(int deviceId)
+{
+    QVariantMap result;
+    const QString conn = QSqlDatabase::defaultConnection;
+
+    exploreDevice->catalog->setConnectionName(conn);
+    exploreDevice->setConnectionName(conn);
+    exploreDevice->ID = deviceId;
+    exploreDevice->loadDevice(conn);
+
+    if (exploreDevice->type != QLatin1String("Catalog")) {
+        result[QStringLiteral("success")] = false;
+        result[QStringLiteral("message")] = tr("Selected device is not a catalog");
+        return result;
+    }
+
+    if (collection->databaseMode == QLatin1String("Memory")) {
+        exploreDevice->catalog->loadFoldersToTable();
+        bool stopRequested = false;
+        QMutex mutex;
+        exploreDevice->catalog->loadCatalogFileListToTable(mutex, stopRequested);
+    }
+
+    int folderCount = Catalog::getExploreFolderCount(conn, exploreDevice->externalID);
+
+    result[QStringLiteral("success")]    = true;
+    result[QStringLiteral("name")]       = exploreDevice->name;
+    result[QStringLiteral("path")]       = exploreDevice->path;
+    result[QStringLiteral("externalId")] = exploreDevice->externalID;
+    result[QStringLiteral("folderCount")] = folderCount;
+    return result;
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getExploreFolders()
+{
+    QVariantList result;
+    if (exploreDevice->externalID == 0) return result;
+
+    const QString conn = QSqlDatabase::defaultConnection;
+    const QString catalogPath = exploreDevice->path;
+    int pos = catalogPath.lastIndexOf(QLatin1Char('/'));
+    const QString pathRoot = (pos >= 0) ? catalogPath.left(pos) : QString();
+
+    QList<FolderNode*> nodes = FolderTreeLoader::loadExploreTree(conn, exploreDevice->externalID, pathRoot);
+
+    std::function<void(const QList<FolderNode*>&, int)> flatten;
+    flatten = [&](const QList<FolderNode*> &list, int level) {
+        for (FolderNode *node : list) {
+            QVariantMap item;
+            item[QStringLiteral("name")]      = node->name;
+            item[QStringLiteral("fullPath")]  = node->fullPath;
+            item[QStringLiteral("level")]     = level;
+            item[QStringLiteral("fileCount")] = node->fileCount;
+            result.append(item);
+            if (!node->children.isEmpty())
+                flatten(node->children, level + 1);
+        }
+    };
+    flatten(nodes, 0);
+    qDeleteAll(nodes);
+
+    return result;
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getExploreEntries(const QString &folderPath, bool showFolders, bool showSubFolders)
+{
+    QVariantList result;
+    if (exploreDevice->externalID == 0) return result;
+
+    const QString conn = QSqlDatabase::defaultConnection;
+    const QList<Catalog::ExploreFileEntry> entries = Catalog::getExploreEntries(
+        conn, exploreDevice->externalID, folderPath, showFolders, showSubFolders);
+
+    for (const Catalog::ExploreFileEntry &e : entries) {
+        QVariantMap item;
+        item[QStringLiteral("name")]                 = e.name;
+        item[QStringLiteral("size")]                 = e.size;
+        item[QStringLiteral("dateUpdated")]          = e.dateUpdated;
+        item[QStringLiteral("folderPath")]           = e.folderPath;
+        item[QStringLiteral("fullPath")]             = e.fullPath;
+        item[QStringLiteral("entryType")]            = e.entryType;
+        item[QStringLiteral("fileType")]             = e.fileType;
+        item[QStringLiteral("mimeType")]             = e.mimeType;
+        item[QStringLiteral("videoDurationSeconds")] = e.videoDurationSeconds;
+        item[QStringLiteral("audioArtist")]          = e.audioArtist;
+        item[QStringLiteral("audioAlbum")]           = e.audioAlbum;
+        item[QStringLiteral("audioTitle")]           = e.audioTitle;
+        item[QStringLiteral("checksumSha256")]       = e.checksumSha256;
+        result.append(item);
+    }
+    return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::exploreGetChecksum(const QString &fileName, const QString &folderPath)
+{
+    if (exploreDevice->externalID == 0) return QString();
+    return exploreDevice->catalog->getFileChecksum(fileName, folderPath);
+}
+//----------------------------------------------------------------------
 
 // Storage helpers
 //----------------------------------------------------------------------
