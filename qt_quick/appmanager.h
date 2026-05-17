@@ -85,6 +85,7 @@ class AppManager : public QObject
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
+    Q_PROPERTY(bool deviceFilterFromSelection READ getDeviceFilterFromSelection WRITE setDeviceFilterFromSelection NOTIFY deviceFilterFromSelectionChanged)
     Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
     Q_PROPERTY(bool checkVersionChoice READ getCheckVersionChoice WRITE setCheckVersionChoice NOTIFY checkVersionChoiceChanged)
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
@@ -170,6 +171,8 @@ public slots:
     Q_INVOKABLE bool canCollapseDevices() const;
     bool getShowDeviceInfo() const;
     void setShowDeviceInfo(bool value);
+    bool getDeviceFilterFromSelection() const;
+    void setDeviceFilterFromSelection(bool value);
     bool getSearchKeepsSelection() const;
     void setSearchKeepsSelection(bool value);
     QString getAppReleaseDate() const { return releaseDate; }
@@ -272,7 +275,7 @@ public slots:
     Q_INVOKABLE int          addDeviceVirtual(int parentId);
     Q_INVOKABLE int          addDeviceStorage(int parentId);
     Q_INVOKABLE void         updateDevice(int deviceId);
-    Q_INVOKABLE void         updateAllActiveDevices();
+    Q_INVOKABLE void         updateAllActiveDevices(bool showEachReport = false);
     Q_INVOKABLE void         stopDeviceUpdate();
     Q_INVOKABLE void         gentleStopDeviceUpdate();
     Q_INVOKABLE QVariantMap  recordDevicesSnapshot();
@@ -291,6 +294,7 @@ public slots:
     Q_INVOKABLE QStringList  getStoragePictureList() const;
     Q_INVOKABLE QString      getStorageImageFolderPath() const;
     Q_INVOKABLE QString      formatDataSize(qlonglong bytes) const;
+    Q_INVOKABLE QString      formatDataSizeDelta(qlonglong bytes) const;
     Q_INVOKABLE QVariantMap  refreshStorageFromDisk(int deviceId);
 
     // URL / path conversion helpers (cross-platform, wrap QUrl)
@@ -373,6 +377,7 @@ signals:
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
     void searchKeepsSelectionChanged();
+    void deviceFilterFromSelectionChanged();
     void checkVersionChoiceChanged();
     void databasePathChanged(const QString &newPath);
     void databaseConnectionChanged(bool success, const QString &message);
@@ -398,6 +403,7 @@ signals:
     void catalogsForMappingPrepared(int mappingId, bool success, const QString &error);
     void deviceUpdateStateChanged();
     void deviceUpdateStatusChanged();
+    void deviceUpdateReportReady(QVariantMap report);
     void deviceListChanged();
     void checksumVerificationCompleted(QVariantMap result);
     void splitCompleted(bool success, const QString &error);
@@ -455,9 +461,14 @@ private:
     bool    m_deviceUpdateIsRunning  = false;
     QString m_deviceUpdateStatusText;
     QList<int> m_pendingDeviceUpdates;
+    int     m_currentUpdateDeviceId  = 0;
+    bool    m_isBatchUpdate          = false;
+    bool    m_showEachUpdateReport   = false;
     void setupDeviceUpdateManagerForDevices();
     void onDevicePageUpdateCompleted(const QList<qint64> &results);
     void startNextDeviceUpdate();
+    QVariantMap buildUpdateReport(int deviceId, const QList<qint64> &results);
+    QVariantMap buildBatchUpdateReport(const QList<qint64> &results);
 
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,

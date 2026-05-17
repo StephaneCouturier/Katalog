@@ -703,10 +703,126 @@ Kirigami.ApplicationWindow {
                 if (role === Controls.DialogButtonBox.RejectRole) {
                     devUpdateAllDialog.close()
                 } else {
+                    var showReport = (role === Controls.DialogButtonBox.YesRole)
                     devUpdateAllDialog.close()
-                    appManager1.updateAllActiveDevices()
+                    appManager1.updateAllActiveDevices(showReport)
                 }
             }
+        }
+    }
+
+    // Device update result dialog — shown after single update or each catalog in "All active" with Yes
+    Controls.Dialog {
+        id: devUpdateReportDialog
+        property var report: ({})
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            wrapMode: Text.WordWrap
+            textFormat: Text.RichText
+            text: {
+                var r = devUpdateReportDialog.report
+                if (!r || !r.deviceType) return ""
+                var msg = ""
+
+                if (r.deviceType === "Catalog") {
+                    msg += "<table>"
+                    msg += "<tr><td>" + qsTr("Catalog updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
+                    msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
+                    msg += "</table><br/><table>"
+                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + (r.fileCount || 0).toLocaleString() + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + (r.filesAdded || 0).toLocaleString() + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
+                    msg += "</table>"
+                    if (r.storageUpdated) {
+                        msg += "<br/><table>"
+                        msg += "<tr><td>" + qsTr("Storage updated: ") + "</td><td align='center'><b>" + (r.storageName || "") + "</b></td></tr>"
+                        msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + (r.storagePath || "") + "</b></td></tr>"
+                        msg += "</table><br/><table>"
+                        msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
+                        msg += "</table>"
+                    }
+
+                } else if (r.deviceType === "Storage") {
+                    msg += "<table>"
+                    msg += "<tr><td>" + qsTr("Storage updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
+                    msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
+                    msg += "</table><br/><table>"
+                    msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
+                    msg += "</table>"
+
+                } else if (r.deviceType === "Virtual") {
+                    msg += "<table>"
+                    msg += "<tr><td>" + qsTr("Virtual device updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
+                    msg += "</table><br/><table>"
+                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + (r.fileCount || 0).toLocaleString() + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + (r.filesAdded || 0).toLocaleString() + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
+                    msg += "</table><br/>"
+                    msg += qsTr("Catalogs updated:") + " <b>" + (r.catalogsUpdated || 0) + "</b> (" + (r.catalogsSkipped || 0) + " " + qsTr("skipped") + ")<br/>"
+                    if (r.storageUpdated) {
+                        msg += "<br/><table>"
+                        msg += "<tr><td>" + qsTr("Storage") + "</td></tr>"
+                        msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
+                        msg += "</table>"
+                    }
+
+                } else if (r.deviceType === "list") {
+                    msg += "<table><br/>"
+                    msg += qsTr("Selected active catalogs are updated.") + "&nbsp;<br/>"
+                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + (r.fileCount || 0).toLocaleString() + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + (r.filesAdded || 0).toLocaleString() + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
+                    msg += "</table><br/>"
+                    msg += qsTr("Catalogs updated:") + " <b>" + (r.catalogsUpdated || 0) + "</b> (" + (r.catalogsSkipped || 0) + " " + qsTr("skipped") + ")<br/>"
+                    if (r.storageUpdated) {
+                        msg += "<br/><table>"
+                        msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
+                        msg += "</table>"
+                    }
+                }
+                return msg
+            }
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("OK")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: devUpdateReportDialog.close()
+        }
+    }
+
+    Connections {
+        target: appManager1
+        function onDeviceUpdateReportReady(report) {
+            devUpdateReportDialog.report = report
+            devUpdateReportDialog.open()
         }
     }
 
@@ -991,6 +1107,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: qsTr("All active")
                 icon.name: "view-refresh"
+                visible: pageDevicesView.viewFilter === "Catalogs"
                 enabled: !appManager1.deviceUpdateIsRunning
                 onTriggered: devUpdateAllDialog.open()
             },
@@ -1065,7 +1182,6 @@ Kirigami.ApplicationWindow {
         ]
 
         footer: RowLayout {
-            visible: appManager1.deviceUpdateIsRunning || appManager1.deviceUpdateStatusText.length > 0
             spacing: Kirigami.Units.smallSpacing
             Controls.BusyIndicator {
                 running: appManager1.deviceUpdateIsRunning

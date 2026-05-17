@@ -68,6 +68,7 @@ public:
      * @param catalogProgressManager The progress manager from MainWindow
      */
     void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
+    void setConnectionName(const QString &name) { m_connectionName = name; }
 
     int getProcessedStorageDevices() const { return m_processedStorageDevices; }
 

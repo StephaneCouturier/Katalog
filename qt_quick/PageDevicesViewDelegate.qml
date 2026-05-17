@@ -32,8 +32,8 @@ Kirigami.AbstractCard {
     readonly property bool   devActive:    modelData.active
     readonly property int    devGroupId:   modelData.groupId ?? 0
 
-    // Unassign: parent is a Virtual device (K2: groupID != 0 && path != "EXPORT")
-    readonly property bool canUnassign: devParent > 0 && devParentType === "Virtual"
+    // Unassign: K2 condition — device is in a Virtual Group (groupId != 0) and not EXPORT
+    readonly property bool canUnassign: devGroupId !== 0 && devPath !== "EXPORT"
 
     anchors.left:       parent ? parent.left  : undefined
     anchors.leftMargin: devLevel * Kirigami.Units.gridUnit
@@ -55,9 +55,9 @@ Kirigami.AbstractCard {
             enabled: false
             font.bold: true
         }
-        Controls.MenuSeparator {}
 
-        // Update — Catalog: active only; Storage/Virtual: always
+        // K2 has NO separator between the header and the first action items.
+        // Update: Catalog only if active; Storage and Virtual always
         Controls.MenuItem {
             text: qsTr("Update")
             icon.name: "media-playlist-repeat"
@@ -67,8 +67,6 @@ Kirigami.AbstractCard {
             enabled: !appManager1.deviceUpdateIsRunning
             onTriggered: appManager1.updateDevice(card.devId)
         }
-        Controls.MenuSeparator {}
-
         Controls.MenuItem {
             text: qsTr("Edit")
             icon.name: "document-edit-sign"
@@ -81,7 +79,15 @@ Kirigami.AbstractCard {
             onTriggered: appManager1.openDeviceFolder(card.devId)
         }
 
-        // Catalog-specific items
+        // Storage: Filelight with NO separator before it (K2 structure)
+        Controls.MenuItem {
+            text: qsTr("Filelight")
+            icon.name: "view-statistics"
+            visible: card.devType === "Storage" && card.devActive
+            onTriggered: card.filelightRequested(card.devId)
+        }
+
+        // Catalog section: separator, Verify, separator+Filelight only when active, separator, Splits
         Controls.MenuSeparator { visible: card.devType === "Catalog" }
         Controls.MenuItem {
             text: qsTr("Verify Checksums")
@@ -89,11 +95,11 @@ Kirigami.AbstractCard {
             visible: card.devType === "Catalog"
             onTriggered: card.verifyRequested(card.devId, card.devName)
         }
-        Controls.MenuSeparator { visible: card.devType === "Catalog" }
+        Controls.MenuSeparator { visible: card.devType === "Catalog" && card.devActive }
         Controls.MenuItem {
             text: qsTr("Filelight")
             icon.name: "view-statistics"
-            visible: (card.devType === "Catalog" || card.devType === "Storage") && card.devActive
+            visible: card.devType === "Catalog" && card.devActive
             onTriggered: card.filelightRequested(card.devId)
         }
         Controls.MenuSeparator { visible: card.devType === "Catalog" }
@@ -110,7 +116,7 @@ Kirigami.AbstractCard {
             onTriggered: card.splitFileTypeRequested(card.devId, card.devName, card.devActive)
         }
 
-        // Virtual-specific items
+        // Virtual section: separator, then virtual device actions
         Controls.MenuSeparator { visible: card.devType === "Virtual" }
         Controls.MenuItem {
             text: qsTr("Add Virtual device")
@@ -132,8 +138,8 @@ Kirigami.AbstractCard {
             onTriggered: card.assignCatalogRequested(card.devId)
         }
 
-        // Unassign / Delete
-        Controls.MenuSeparator { visible: card.canUnassign || card.devType === "Storage" || card.devType === "Virtual" }
+        // Separator before Unassign/Delete (always visible after all type-specific items)
+        Controls.MenuSeparator {}
         Controls.MenuItem {
             text: card.devType === "Storage" ? qsTr("Unassign this storage") : qsTr("Unassign this catalog")
             icon.name: "edit-cut"
@@ -145,9 +151,7 @@ Kirigami.AbstractCard {
                 : card.devType === "Storage" ? qsTr("Delete this storage")
                 : qsTr("Delete")
             icon.name: "edit-delete"
-            visible: (card.devType === "Catalog" && !card.canUnassign)
-                     || card.devType === "Storage"
-                     || card.devType === "Virtual"
+            visible: !card.canUnassign
             onTriggered: card.deleteRequested(card.devId, card.devName, card.devType)
         }
     }

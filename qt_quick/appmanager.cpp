@@ -312,6 +312,20 @@ void AppManager::setShowDeviceInfo(bool value)
     emit showDeviceInfoChanged();
 }
 //----------------------------------------------------------------------
+bool AppManager::getDeviceFilterFromSelection() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Devices/FilterFromSelection", false).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setDeviceFilterFromSelection(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Devices/FilterFromSelection", value);
+    settings.sync();
+    emit deviceFilterFromSelectionChanged();
+}
+//----------------------------------------------------------------------
 bool AppManager::getSearchKeepsSelection() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
@@ -1457,6 +1471,7 @@ void AppManager::setupDeviceUpdateManager()
                 });
     }
     m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
+    m_deviceUpdateManager->setConnectionName(QSqlDatabase::defaultConnection);
 
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
             this, &AppManager::onCatalogCreationCompleted);
@@ -1703,6 +1718,7 @@ QString AppManager::deleteDevice(int deviceId)
         }
     }
 
+    emit deviceListChanged();
     refreshAllUI();
     return QString();
 }
@@ -1744,18 +1760,22 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
         QString startCond = (scopeDeviceId > 0)
             ? QStringLiteral("device_id = :scope")
             : QStringLiteral("device_parent_id = 0");
+        // sort_path encodes depth-first traversal using device_order+name per level (same as DeviceListModel).
+        // Sibling order: device_order ASC, then device_name ASC (case-insensitive).
         sql = QStringLiteral(
             "WITH RECURSIVE device_tree AS ("
             "  SELECT device_id, device_parent_id, device_name, device_type,"
             "         device_path, device_total_file_size, device_total_file_count,"
             "         device_total_space, device_free_space, device_active, device_date_updated, 0 AS level,"
-            "         device_group_id"
+            "         device_group_id,"
+            "         SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS TEXT), -10) || '|' || LOWER(device_name) AS sort_path"
             "  FROM device WHERE ") + startCond + QStringLiteral(
             "  UNION ALL"
             "  SELECT c.device_id, c.device_parent_id, c.device_name, c.device_type,"
             "         c.device_path, c.device_total_file_size, c.device_total_file_count,"
             "         c.device_total_space, c.device_free_space, c.device_active, c.device_date_updated, p.level+1,"
-            "         c.device_group_id"
+            "         c.device_group_id,"
+            "         p.sort_path || '/' || SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS TEXT), -10) || '|' || LOWER(c.device_name)"
             "  FROM device c JOIN device_tree p ON c.device_parent_id = p.device_id"
             ")"
             "SELECT device_id, device_parent_id, device_name, device_type,"
@@ -1764,7 +1784,7 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
             "       COALESCE((SELECT device_type FROM device p WHERE p.device_id = device_tree.device_parent_id),''),"
             "       device_group_id"
             " FROM device_tree"
-            " ORDER BY level ASC, device_type DESC, device_parent_id ASC, device_id ASC");
+            " ORDER BY sort_path");
         query.prepare(sql);
         if (scopeDeviceId > 0) query.bindValue(":scope", scopeDeviceId);
     }
@@ -1864,6 +1884,7 @@ void AppManager::setupDeviceUpdateManagerForDevices()
                 emit deviceUpdateStatusChanged();
             });
     m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
+    m_deviceUpdateManager->setConnectionName(QSqlDatabase::defaultConnection);
 
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
             this, &AppManager::onDevicePageUpdateCompleted);
@@ -1887,37 +1908,167 @@ void AppManager::setupDeviceUpdateManagerForDevices()
             });
 }
 //----------------------------------------------------------------------
-void AppManager::onDevicePageUpdateCompleted(const QList<qint64> &)
+void AppManager::onDevicePageUpdateCompleted(const QList<qint64> &results)
 {
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
     emit deviceListChanged();
     refreshDeviceList();
-    startNextDeviceUpdate();
+
+    if (m_isBatchUpdate) {
+        // Single operationCompleted for the whole "All Active" batch — show aggregate
+        QVariantMap report = buildBatchUpdateReport(results);
+        if (!report.isEmpty())
+            emit deviceUpdateReportReady(report);
+
+        m_deviceUpdateIsRunning = false;
+        m_isBatchUpdate         = false;
+        emit deviceUpdateStateChanged();
+        QTimer::singleShot(5000, this, [this]() {
+            m_deviceUpdateStatusText.clear();
+            emit deviceUpdateStatusChanged();
+        });
+        setupDeviceUpdateManager();
+    } else {
+        if (m_showEachUpdateReport) {
+            QVariantMap report = buildUpdateReport(m_currentUpdateDeviceId, results);
+            if (!report.isEmpty())
+                emit deviceUpdateReportReady(report);
+        }
+        startNextDeviceUpdate();
+    }
 }
 //----------------------------------------------------------------------
 void AppManager::startNextDeviceUpdate()
 {
     if (m_pendingDeviceUpdates.isEmpty()) {
         m_deviceUpdateIsRunning = false;
-        m_deviceUpdateStatusText.clear();
+        m_isBatchUpdate         = false;
         emit deviceUpdateStateChanged();
-        emit deviceUpdateStatusChanged();
+        // Status text lingers for 5 seconds then clears (K2 behaviour)
+        QTimer::singleShot(5000, this, [this]() {
+            m_deviceUpdateStatusText.clear();
+            emit deviceUpdateStatusChanged();
+        });
         setupDeviceUpdateManager();
         return;
     }
     int nextId = m_pendingDeviceUpdates.takeFirst();
+    m_currentUpdateDeviceId = nextId;
     Device *dev = new Device();
     dev->ID = nextId;
     dev->loadDevice(QSqlDatabase::defaultConnection);
-    m_deviceUpdateStatusText = tr("Updating %1…").arg(dev->name);
-    emit deviceUpdateStatusChanged();
     m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::buildUpdateReport(int deviceId, const QList<qint64> &results)
+{
+    if (results.isEmpty() || results[0] != 1)
+        return {};
+
+    const QString conn = QSqlDatabase::defaultConnection;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(conn);
+
+    QVariantMap r;
+    r[QStringLiteral("deviceName")] = dev.name;
+    r[QStringLiteral("deviceType")] = dev.type;
+    r[QStringLiteral("devicePath")] = dev.path;
+
+    if (dev.type == QStringLiteral("Catalog")) {
+        if (results.size() > 4) {
+            r[QStringLiteral("fileCount")]  = results[1];
+            r[QStringLiteral("filesAdded")] = results[2];
+            r[QStringLiteral("totalSize")]  = results[3];
+            r[QStringLiteral("sizeAdded")]  = results[4];
+        }
+        bool storageUpdated = (results.size() > 7 && results[7] == 1);
+        r[QStringLiteral("storageUpdated")] = storageUpdated;
+        if (storageUpdated && results.size() > 13) {
+            Device parent;
+            parent.ID = dev.parentID;
+            parent.loadDevice(conn);
+            r[QStringLiteral("storageName")]       = parent.name;
+            r[QStringLiteral("storagePath")]       = parent.path;
+            r[QStringLiteral("storageUsed")]       = results[8];
+            r[QStringLiteral("storageUsedAdded")]  = results[9];
+            r[QStringLiteral("storageFree")]       = results[10];
+            r[QStringLiteral("storageFreeAdded")]  = results[11];
+            r[QStringLiteral("storageTotal")]      = results[12];
+            r[QStringLiteral("storageTotalAdded")] = results[13];
+        }
+    } else if (dev.type == QStringLiteral("Storage")) {
+        bool storageUpdated = (results.size() > 7 && results[7] == 1);
+        r[QStringLiteral("storageUpdated")] = storageUpdated;
+        if (results.size() > 13) {
+            r[QStringLiteral("storageUsed")]       = results[8];
+            r[QStringLiteral("storageUsedAdded")]  = results[9];
+            r[QStringLiteral("storageFree")]       = results[10];
+            r[QStringLiteral("storageFreeAdded")]  = results[11];
+            r[QStringLiteral("storageTotal")]      = results[12];
+            r[QStringLiteral("storageTotalAdded")] = results[13];
+        }
+    } else if (dev.type == QStringLiteral("Virtual")) {
+        if (results.size() > 4) {
+            r[QStringLiteral("fileCount")]       = results[1];
+            r[QStringLiteral("filesAdded")]      = results[2];
+            r[QStringLiteral("totalSize")]       = results[3];
+            r[QStringLiteral("sizeAdded")]       = results[4];
+        }
+        if (results.size() > 6) {
+            r[QStringLiteral("catalogsUpdated")] = results[5];
+            r[QStringLiteral("catalogsSkipped")] = results[6];
+        }
+        bool storageUpdated = (results.size() > 7 && results[7] == 1);
+        r[QStringLiteral("storageUpdated")] = storageUpdated;
+        if (storageUpdated && results.size() > 13) {
+            r[QStringLiteral("storageUsed")]       = results[8];
+            r[QStringLiteral("storageUsedAdded")]  = results[9];
+            r[QStringLiteral("storageFree")]       = results[10];
+            r[QStringLiteral("storageFreeAdded")]  = results[11];
+            r[QStringLiteral("storageTotal")]      = results[12];
+            r[QStringLiteral("storageTotalAdded")] = results[13];
+        }
+    }
+    return r;
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::buildBatchUpdateReport(const QList<qint64> &results)
+{
+    if (results.isEmpty() || results[0] != 1)
+        return {};
+
+    QVariantMap r;
+    r[QStringLiteral("deviceType")] = QStringLiteral("list");
+    if (results.size() > 4) {
+        r[QStringLiteral("fileCount")]       = results[1];
+        r[QStringLiteral("filesAdded")]      = results[2];
+        r[QStringLiteral("totalSize")]       = results[3];
+        r[QStringLiteral("sizeAdded")]       = results[4];
+    }
+    if (results.size() > 6) {
+        r[QStringLiteral("catalogsUpdated")] = results[5];
+        r[QStringLiteral("catalogsSkipped")] = results[6];
+    }
+    bool storageUpdated = (results.size() > 7 && results[7] == 1);
+    r[QStringLiteral("storageUpdated")] = storageUpdated;
+    if (storageUpdated && results.size() > 13) {
+        r[QStringLiteral("storageUsed")]       = results[8];
+        r[QStringLiteral("storageUsedAdded")]  = results[9];
+        r[QStringLiteral("storageFree")]       = results[10];
+        r[QStringLiteral("storageFreeAdded")]  = results[11];
+        r[QStringLiteral("storageTotal")]      = results[12];
+        r[QStringLiteral("storageTotalAdded")] = results[13];
+    }
+    return r;
 }
 //----------------------------------------------------------------------
 void AppManager::updateDevice(int deviceId)
 {
     if (m_deviceUpdateIsRunning) return;
+    m_isBatchUpdate          = false;
+    m_showEachUpdateReport   = true;  // single update always reports
     m_pendingDeviceUpdates.clear();
     m_pendingDeviceUpdates.append(deviceId);
     m_deviceUpdateIsRunning = true;
@@ -1926,22 +2077,51 @@ void AppManager::updateDevice(int deviceId)
     startNextDeviceUpdate();
 }
 //----------------------------------------------------------------------
-void AppManager::updateAllActiveDevices()
+void AppManager::updateAllActiveDevices(bool showEachReport)
 {
     if (m_deviceUpdateIsRunning) return;
 
-    QSqlQuery q(QSqlDatabase::database(QSqlDatabase::defaultConnection));
-    q.exec("SELECT device_id FROM device WHERE device_type='Catalog' AND device_active=1 ORDER BY device_id");
-    m_pendingDeviceUpdates.clear();
-    while (q.next())
-        m_pendingDeviceUpdates.append(q.value(0).toInt());
+    m_isBatchUpdate        = true;
+    m_showEachUpdateReport = showEachReport;
 
-    if (m_pendingDeviceUpdates.isEmpty()) return;
+    const QString conn = QSqlDatabase::defaultConnection;
+    QSqlQuery q(QSqlDatabase::database(conn));
+    q.exec("SELECT device_id FROM device WHERE device_type='Catalog' AND device_active=1 ORDER BY device_id");
+
+    QList<Device *> activeCatalogs;
+    while (q.next()) {
+        Device *dev = new Device();
+        dev->ID = q.value(0).toInt();
+        dev->loadDevice(conn);
+        activeCatalogs.append(dev);
+    }
+
+    if (activeCatalogs.isEmpty()) {
+        qDeleteAll(activeCatalogs);
+        return;
+    }
 
     m_deviceUpdateIsRunning = true;
+    m_currentUpdateDeviceId = -1;
     emit deviceUpdateStateChanged();
+
     setupDeviceUpdateManagerForDevices();
-    startNextDeviceUpdate();
+
+    // Per-catalog report during batch (only when user chose Yes in confirmation dialog)
+    if (m_showEachUpdateReport) {
+        connect(m_deviceUpdateManager, &DeviceUpdateManager::catalogCompletedInBatch,
+                this, [this](Device *catalogDevice, const QList<qint64> &batchResults) {
+                    QVariantMap report = buildUpdateReport(catalogDevice->ID, batchResults);
+                    if (!report.isEmpty())
+                        emit deviceUpdateReportReady(report);
+                });
+    }
+
+    Device *dummy = m_deviceUpdateManager->createDummyDeviceFromList(activeCatalogs);
+    m_deviceUpdateManager->updateDeviceHierarchy(dummy, collection->databaseMode, collection->folder, "update");
+    // activeCatalogs intentionally not deleted here — createDummyDeviceFromList copies Device
+    // values but the copies share raw catalog*/storage* pointers with the originals.
+    // Deleting the originals would create dangling pointers in dummy->subDevices (same pattern as K2).
 }
 //----------------------------------------------------------------------
 void AppManager::stopDeviceUpdate()
@@ -2805,6 +2985,11 @@ QString AppManager::updateAllImportsFromSource(const QString &path)
 QString AppManager::formatDataSize(qlonglong bytes) const
 {
     if (bytes <= 0) return QString();
+    return QLocale().formattedDataSize(bytes);
+}
+//----------------------------------------------------------------------
+QString AppManager::formatDataSizeDelta(qlonglong bytes) const
+{
     return QLocale().formattedDataSize(bytes);
 }
 //----------------------------------------------------------------------

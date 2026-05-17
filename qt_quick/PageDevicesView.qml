@@ -11,7 +11,7 @@ Item {
 
     property real   cardScale: 1.0
     property string viewFilter: "All"
-    property bool   filterFromSelection: false
+    property bool   filterFromSelection: appManager1.deviceFilterFromSelection
     property var    devices: []
     property string operationDeviceName: ""
     property bool   operationDeviceActive: false
@@ -308,16 +308,16 @@ Item {
                     onClicked: { root.viewFilter = "All"; root.refreshDevices() }
                 }
                 Controls.ToolButton {
-                    text: qsTr("Catalogs list")
-                    checkable: true; checked: root.viewFilter === "Catalogs"
-                    Controls.ButtonGroup.group: filterGroup
-                    onClicked: { root.viewFilter = "Catalogs"; root.refreshDevices() }
-                }
-                Controls.ToolButton {
                     text: qsTr("Storage list")
                     checkable: true; checked: root.viewFilter === "Storage"
                     Controls.ButtonGroup.group: filterGroup
                     onClicked: { root.viewFilter = "Storage"; root.refreshDevices() }
+                }
+                Controls.ToolButton {
+                    text: qsTr("Catalogs list")
+                    checkable: true; checked: root.viewFilter === "Catalogs"
+                    Controls.ButtonGroup.group: filterGroup
+                    onClicked: { root.viewFilter = "Catalogs"; root.refreshDevices() }
                 }
 
                 Item { Layout.fillWidth: true }
@@ -327,6 +327,7 @@ Item {
                     checked: root.filterFromSelection
                     onToggled: {
                         root.filterFromSelection = checked
+                        appManager1.deviceFilterFromSelection = checked
                         root.refreshDevices()
                     }
                 }
@@ -335,11 +336,91 @@ Item {
 
         Kirigami.Separator { Layout.fillWidth: true }
 
+        // Summary bar — shown for Catalogs and Storage list views (matches K2 CatalogStats/StorageStats)
+        Rectangle {
+            Layout.fillWidth: true
+            implicitHeight: summaryRow.implicitHeight + Kirigami.Units.smallSpacing * 2
+            color: Kirigami.Theme.alternateBackgroundColor
+            visible: root.viewFilter !== "All"
+
+            RowLayout {
+                id: summaryRow
+                anchors {
+                    left: parent.left; right: parent.right
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: Kirigami.Units.largeSpacing
+                    rightMargin: Kirigami.Units.largeSpacing
+                }
+                spacing: Kirigami.Units.largeSpacing
+
+                // Catalogs summary
+                Controls.Label {
+                    visible: root.viewFilter === "Catalogs"
+                    text: qsTr("Catalogs") + ":  <b>" + root.devices.length + "</b>"
+                    textFormat: Text.RichText
+                }
+                Controls.ToolSeparator { visible: root.viewFilter === "Catalogs" }
+                Controls.Label {
+                    visible: root.viewFilter === "Catalogs"
+                    text: qsTr("Total File Size") + ":  <b>" + appManager1.formatDataSize(
+                        root.devices.reduce(function(s, d) { return s + (d.totalFileSize || 0) }, 0)) + "</b>"
+                    textFormat: Text.RichText
+                }
+                Controls.ToolSeparator { visible: root.viewFilter === "Catalogs" }
+                Controls.Label {
+                    visible: root.viewFilter === "Catalogs"
+                    text: qsTr("Total Number of Files") + ":  <b>" + root.devices.reduce(
+                        function(s, d) { return s + (d.fileCount || 0) }, 0).toLocaleString() + "</b>"
+                    textFormat: Text.RichText
+                }
+
+                // Storage summary
+                Controls.Label {
+                    visible: root.viewFilter === "Storage"
+                    text: qsTr("Devices") + ":  <b>" + root.devices.length + "</b>"
+                    textFormat: Text.RichText
+                }
+                Controls.ToolSeparator { visible: root.viewFilter === "Storage" }
+                Controls.Label {
+                    visible: root.viewFilter === "Storage"
+                    text: qsTr("Total Space") + ":  <b>" + appManager1.formatDataSize(
+                        root.devices.reduce(function(s, d) { return s + (d.totalSpace || 0) }, 0)) + "</b>"
+                    textFormat: Text.RichText
+                }
+                Controls.ToolSeparator { visible: root.viewFilter === "Storage" }
+                Controls.Label {
+                    id: storageUsedLabel
+                    visible: root.viewFilter === "Storage"
+                    text: {
+                        var used = root.devices.reduce(function(s, d) { return s + ((d.totalSpace || 0) - (d.freeSpace || 0)) }, 0)
+                        return qsTr("Used") + ":  <b>" + appManager1.formatDataSize(used) + "</b>"
+                    }
+                    textFormat: Text.RichText
+                }
+                Controls.ToolSeparator { visible: root.viewFilter === "Storage" }
+                Controls.Label {
+                    id: storageFreeLabel
+                    visible: root.viewFilter === "Storage"
+                    text: {
+                        var free  = root.devices.reduce(function(s, d) { return s + (d.freeSpace  || 0) }, 0)
+                        var total = root.devices.reduce(function(s, d) { return s + (d.totalSpace || 0) }, 0)
+                        var pct   = total > 0 ? Math.round(free / total * 100) : 0
+                        return qsTr("Free") + ":  <b>" + appManager1.formatDataSize(free) + "  (" + pct + "%)</b>"
+                    }
+                    textFormat: Text.RichText
+                }
+
+                Item { Layout.fillWidth: true }
+            }
+        }
+        Kirigami.Separator { Layout.fillWidth: true; visible: root.viewFilter !== "All" }
+
         // Device list
         Kirigami.CardsListView {
             id: deviceList
             Layout.fillWidth: true
             Layout.fillHeight: true
+            clip: true
             model: root.devices
             topMargin: Kirigami.Units.smallSpacing
 
@@ -418,5 +499,6 @@ Item {
                 }
             }
         }
+
     }
 }

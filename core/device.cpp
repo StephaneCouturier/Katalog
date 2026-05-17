@@ -43,6 +43,8 @@ void Device::loadDevice(QString connectionName){
     stepTimer.start();
     bool useTimerForDebug = false;
 
+    m_connectionName = connectionName;
+
     QSqlDatabase db = QSqlDatabase::database(connectionName);
     if (!db.isOpen()) {
         return;
@@ -99,6 +101,7 @@ void Device::loadDevice(QString connectionName){
     //Load storage values
     if(type == "Storage"){
         storage->ID = externalID;
+        storage->setConnectionName(connectionName);
         storage->loadStorage(connectionName);
         storage->path = path;
         storage->totalSpace = totalSpace;
@@ -111,6 +114,7 @@ void Device::loadDevice(QString connectionName){
     //Load catalog values
     if(type == "Catalog"){
         catalog->ID = externalID;
+        catalog->setConnectionName(connectionName);
         catalog->loadCatalog();
         if (catalog->includeMetadata == "false") {
             catalog->includeMetadata = Catalog::METADATA_NONE;
