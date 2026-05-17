@@ -552,6 +552,7 @@ bool AppManager::reconnectToDatabase()
     }
 
     lastDatabaseError.clear();
+    collection->setConnectionName(conn);
     collection->loadImageFolderPath();
     refreshAllUI();
     emit databaseModeChanged();
@@ -1900,6 +1901,7 @@ void AppManager::setupDeviceUpdateManagerForDevices()
             this, [this]() {
                 m_pendingDeviceUpdates.clear();
                 m_deviceUpdateIsRunning = false;
+                m_isBatchUpdate = false;
                 m_deviceUpdateStatusText.clear();
                 emit deviceUpdateStateChanged();
                 emit deviceUpdateStatusChanged();
@@ -2079,25 +2081,25 @@ void AppManager::updateDevice(int deviceId)
 //----------------------------------------------------------------------
 void AppManager::updateAllActiveDevices(bool showEachReport)
 {
+    qDebug() << "updateAllActiveDevices: called, deviceUpdateIsRunning=" << m_deviceUpdateIsRunning;
     if (m_deviceUpdateIsRunning) return;
 
     m_isBatchUpdate        = true;
     m_showEachUpdateReport = showEachReport;
 
     const QString conn = QSqlDatabase::defaultConnection;
-    QSqlQuery q(QSqlDatabase::database(conn));
-    q.exec("SELECT device_id FROM device WHERE device_type='Catalog' AND device_active=1 ORDER BY device_id");
 
-    QList<Device *> activeCatalogs;
-    while (q.next()) {
-        Device *dev = new Device();
-        dev->ID = q.value(0).toInt();
-        dev->loadDevice(conn);
-        activeCatalogs.append(dev);
-    }
+    // Scope: catalogs under the currently selected device (same as what the Catalogs
+    // list view displays). 0 = no selection = all catalogs in the collection.
+    int scopeId = selectedDevice ? selectedDevice->ID : 0;
+    qDebug() << "updateAllActiveDevices: conn=" << conn << "scopeId=" << scopeId;
+    QList<Device *> activeCatalogs = Device::getActiveCatalogList(conn, scopeId);
+    qDebug() << "updateAllActiveDevices: activeCatalogs.count()=" << activeCatalogs.count();
+    for (Device *d : activeCatalogs)
+        qDebug() << "  catalog id=" << d->ID << "name=" << d->name << "path=" << d->path << "active=" << d->active;
 
     if (activeCatalogs.isEmpty()) {
-        qDeleteAll(activeCatalogs);
+        m_isBatchUpdate = false;
         return;
     }
 

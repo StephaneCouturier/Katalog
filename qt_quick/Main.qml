@@ -689,24 +689,17 @@ Kirigami.ApplicationWindow {
             Controls.Button {
                 text: qsTr("Yes")
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.YesRole
+                onClicked: { devUpdateAllDialog.close(); appManager1.updateAllActiveDevices(true) }
             }
             Controls.Button {
                 text: qsTr("No")
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.NoRole
+                onClicked: { devUpdateAllDialog.close(); appManager1.updateAllActiveDevices(false) }
             }
             Controls.Button {
                 text: qsTr("Cancel")
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
-            }
-            onClicked: (button) => {
-                var role = devUpdateAllDialog.footer.buttonRole(button)
-                if (role === Controls.DialogButtonBox.RejectRole) {
-                    devUpdateAllDialog.close()
-                } else {
-                    var showReport = (role === Controls.DialogButtonBox.YesRole)
-                    devUpdateAllDialog.close()
-                    appManager1.updateAllActiveDevices(showReport)
-                }
+                onClicked: devUpdateAllDialog.close()
             }
         }
     }

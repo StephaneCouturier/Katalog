@@ -185,7 +185,7 @@ void DeviceListModel::loadDevicesFromDatabase()
                 device_free_space,
                 device_active
         FROM device
-        ORDER BY device_parent_id ASC, device_order ASC, device_name ASC
+        ORDER BY device_parent_id ASC, COALESCE(device_order, 0) ASC, LOWER(device_name) ASC
     )"));
 
     if (!query.exec()) {

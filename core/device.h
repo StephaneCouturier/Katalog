@@ -159,6 +159,9 @@ public:
         static QString getDevicePath(int deviceId, const QString &connectionName);
         // Returns the ID of the first Storage-type descendant of a Virtual device
         static int getFirstStorageDescendantId(int virtualDeviceId, const QString &connectionName);
+        // Returns heap-allocated active Catalog devices in scope (caller owns pointers).
+        // scopeDeviceId == 0 → all catalogs; otherwise → catalog descendants of that device.
+        static QList<Device*> getActiveCatalogList(const QString &connectionName, int scopeDeviceId = 0);
 
         /**
          * @brief Update storage information only (no catalog processing)

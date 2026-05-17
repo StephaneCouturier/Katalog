@@ -981,6 +981,59 @@ int Device::getMaxHierarchyDepth(const QString &connectionName)
     return 4; // safe default
 }
 //----------------------------------------------------------------------
+QList<Device*> Device::getActiveCatalogList(const QString &connectionName, int scopeDeviceId)
+{
+    QList<Device*> result;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen())
+        return result;
+
+    QSqlQuery query(db);
+
+    if (scopeDeviceId <= 0) {
+        query.prepare(QLatin1String(R"(
+            SELECT device_id FROM device
+            WHERE  device_type = 'Catalog'
+            ORDER  BY device_id
+        )"));
+    } else {
+        // Recursive CTE: all catalog descendants of scopeDeviceId (inclusive)
+        query.prepare(QLatin1String(R"(
+            WITH RECURSIVE subtree AS (
+                SELECT device_id FROM device WHERE device_id = :scope
+                UNION ALL
+                SELECT d.device_id FROM device d
+                JOIN subtree s ON d.device_parent_id = s.device_id
+            )
+            SELECT device_id FROM device
+            WHERE  device_type = 'Catalog'
+            AND    device_id IN (SELECT device_id FROM subtree)
+            ORDER  BY device_id
+        )"));
+        query.bindValue(":scope", scopeDeviceId);
+    }
+
+    if (!query.exec()) {
+        qWarning() << "getActiveCatalogList: query failed:" << query.lastError().text();
+        return result;
+    }
+
+    while (query.next()) {
+        Device *dev = new Device();
+        dev->ID = query.value(0).toInt();
+        dev->loadDevice(connectionName);   // sets path, calls updateActiveState()
+        qDebug() << "getActiveCatalogList: id=" << dev->ID << "name=" << dev->name << "path=" << dev->path << "active=" << dev->active;
+        if (dev->active)
+            result.append(dev);
+        else
+            delete dev;
+    }
+
+    qDebug() << "getActiveCatalogList: returning" << result.count() << "active catalogs";
+    return result;
+}
+//----------------------------------------------------------------------
 QString Device::getDevicePath(int deviceId, const QString &connectionName)
 {
     // Walk up via device_parent_id, building the ancestor chain iteratively.
