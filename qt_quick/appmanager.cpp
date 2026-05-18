@@ -363,6 +363,11 @@ void AppManager::openSettingsFile()
     QDesktopServices::openUrl(QUrl::fromLocalFile(collection->settingsFilePath));
 }
 //----------------------------------------------------------------------
+QString AppManager::getSettingsFilePath() const
+{
+    return collection->settingsFilePath;
+}
+//----------------------------------------------------------------------
 QString AppManager::getDatabaseSchemaVersion()
 {
     return collection->loadDatabaseSchemaVersion();
@@ -436,6 +441,11 @@ void AppManager::selectSQLiteDatabase()
 QString AppManager::getDatabaseFilePath() const
 {
     return collection->databaseFilePath;
+}
+//----------------------------------------------------------------------
+void AppManager::openDatabaseFile()
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(collection->databaseFilePath));
 }
 //----------------------------------------------------------------------
 void AppManager::setDatabaseFilePath(const QString &path)

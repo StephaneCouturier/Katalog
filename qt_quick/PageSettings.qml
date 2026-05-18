@@ -123,16 +123,26 @@ Kirigami.ScrollablePage {
         Controls.Label { text: appManager1.databaseMode || "—"; font.bold: true }
 
         Controls.Label { text: qsTr("Collection"); opacity: 0.7 }
-        Controls.Label {
-            text: {
-                var mode = appManager1.databaseMode
-                if (mode === "Memory") return appManager1.getCollectionFolder() || qsTr("(none)")
-                if (mode === "File")   return appManager1.getDatabaseFilePath() || qsTr("(none)")
-                if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
-                return "—"
-            }
-            elide: Text.ElideMiddle
+        RowLayout {
             Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                text: {
+                    var mode = appManager1.databaseMode
+                    if (mode === "Memory") return appManager1.getCollectionFolder() || qsTr("(none)")
+                    if (mode === "File")   return appManager1.getDatabaseFilePath() || qsTr("(none)")
+                    if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
+                    return "—"
+                }
+                elide: Text.ElideMiddle
+                Layout.fillWidth: true
+            }
+            Controls.Button {
+                text: qsTr("Edit")
+                icon.name: "document-edit"
+                visible: appManager1.databaseMode === "File"
+                onClicked: appManager1.openDatabaseFile()
+            }
         }
 
         Controls.Label { text: qsTr("Database Version"); opacity: 0.7 }
@@ -449,11 +459,20 @@ Kirigami.ScrollablePage {
         }
 */
         Controls.Label { text: qsTr("Settings file"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
-        Controls.Button {
-            text: qsTr("Open")
-            icon.name: "document-edit"
-            onClicked: appManager1.openSettingsFile()
+        RowLayout {
+            Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                text: appManager1.getSettingsFilePath() || qsTr("(none)")
+                elide: Text.ElideMiddle
+                Layout.fillWidth: true
+            }
+            Controls.Button {
+                text: qsTr("Open")
+                icon.name: "document-edit"
+                onClicked: appManager1.openSettingsFile()
+            }
         }
         /*
         // ── Separator ──────────────────────────────────────────────────

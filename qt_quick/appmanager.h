@@ -150,6 +150,7 @@ public slots:
     // Collection management
     Q_INVOKABLE QString getDatabaseMode() const;
     Q_INVOKABLE QString getCollectionFolder() const;
+    Q_INVOKABLE void openDatabaseFile();
     Q_INVOKABLE void openCollectionMemory(const QString &folder);
     Q_INVOKABLE void openCollectionHosted(const QString &hostName, const QString &dbName,
                                           int port, const QString &userName, const QString &password);
@@ -180,7 +181,8 @@ public slots:
     QString getAppReleaseDate() const { return releaseDate; }
     bool getCheckVersionChoice() const;
     void setCheckVersionChoice(bool value);
-    Q_INVOKABLE void openSettingsFile();
+    Q_INVOKABLE void    openSettingsFile();
+    Q_INVOKABLE QString getSettingsFilePath() const;
     Q_INVOKABLE QString getDatabaseSchemaVersion();
     Q_INVOKABLE void    setLastPage(const QString &pageName);
     Q_INVOKABLE QString getLastPage() const;
