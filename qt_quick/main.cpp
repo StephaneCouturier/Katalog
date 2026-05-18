@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
     appManager->initiateApp();
     appManager->collection->appVersion = appManager->currentVersion;
     appManager->startDatabase();
-    appManager->selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
 
     SearchSync *newSearch = new SearchSync;
     PageSearch pageSearch;

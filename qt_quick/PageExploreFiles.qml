@@ -13,6 +13,14 @@ Item {
     property string catalogName:       ""
     property bool   showFolders:       true
     property bool   showSubFolders:    false
+    property int    folderFileCount:   0
+    property var    folderTotalSize:   0
+
+    // Active file state for checksum dialogs
+    property string _activeFilePath:   ""
+    property string _activeFileName:   ""
+    property string _activeFolderPath: ""
+    property string _activeChecksum:   ""
 
     signal folderNavigated(string folderPath)
 
@@ -23,6 +31,9 @@ Item {
         for (var i = 0; i < entries.length; i++) {
             fileListModel.append(entries[i])
         }
+        var stats = appManager1.getExploreFolderStats(currentFolderPath)
+        root.folderFileCount = stats.fileCount
+        root.folderTotalSize = stats.totalSize
     }
 
     function iconForType(fileType, entryType) {
@@ -84,6 +95,31 @@ Item {
                     root.loadEntries()
                 }
             }
+        }
+
+        Kirigami.Separator { Layout.fillWidth: true }
+
+        // Files count and total size row
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.leftMargin:  Kirigami.Units.smallSpacing
+            Layout.rightMargin: Kirigami.Units.smallSpacing
+            Layout.topMargin:   Kirigami.Units.smallSpacing
+            Layout.bottomMargin: Kirigami.Units.smallSpacing
+            spacing: Kirigami.Units.smallSpacing
+
+            Controls.Label { text: qsTr("Number of Files") }
+            Controls.Label {
+                text: root.folderFileCount.toLocaleString(Qt.locale(), "f", 0)
+                font.bold: true
+            }
+            Item { Layout.preferredWidth: Kirigami.Units.gridUnit }
+            Controls.Label { text: qsTr("Total Size") }
+            Controls.Label {
+                text: appManager1.formatDataSize(root.folderTotalSize) || "0"
+                font.bold: true
+            }
+            Item { Layout.fillWidth: true }
         }
 
         Kirigami.Separator { Layout.fillWidth: true }
@@ -228,6 +264,10 @@ Item {
                         acceptedButtons: Qt.RightButton
                         onTapped: {
                             fileListView.currentIndex = fileDelegate.dIndex
+                            root._activeFilePath   = fileDelegate.dFullPath
+                            root._activeFileName   = fileDelegate.dName
+                            root._activeFolderPath = fileDelegate.dFolderPath
+                            root._activeChecksum   = fileDelegate.dChecksum
                             fileContextMenu.popup()
                         }
                     }
@@ -263,6 +303,14 @@ Item {
                         }
 
                         Controls.MenuItem {
+                            text: qsTr("Copy folder name")
+                            icon.name: "edit-copy"
+                            visible: fileDelegate.dEntryType === "folder"
+                            height: visible ? implicitHeight : 0
+                            onTriggered: appManager1.copyToClipboard(fileDelegate.dName)
+                        }
+
+                        Controls.MenuItem {
                             text: qsTr("Copy absolute path")
                             icon.name: "edit-copy"
                             visible: fileDelegate.dEntryType === "file"
@@ -291,7 +339,7 @@ Item {
                         }
 
                         Controls.MenuItem {
-                            text: qsTr("Copy file checksum")
+                            text: qsTr("Copy Checksum")
                             icon.name: "edit-copy"
                             visible: fileDelegate.dEntryType === "file" && fileDelegate.dChecksum !== ""
                             height: visible ? implicitHeight : 0
@@ -302,6 +350,53 @@ Item {
                             visible: fileDelegate.dEntryType === "file"
                             height: visible ? implicitHeight : 0
                         }
+
+                        Controls.MenuItem {
+                            text: qsTr("Calculate Checksum (SHA-256)")
+                            icon.name: "document-properties"
+                            visible: fileDelegate.dEntryType === "file" && fileDelegate.dChecksum === ""
+                            height: visible ? implicitHeight : 0
+                            onTriggered: {
+                                var cksum = appManager1.calculateAndSaveChecksum(
+                                    root._activeFilePath,
+                                    root._activeFileName,
+                                    root._activeFolderPath,
+                                    root.catalogId)
+                                if (cksum.length > 0) {
+                                    root._activeChecksum = cksum
+                                    exploreChecksumResultDialog.checksumText = cksum
+                                    exploreChecksumResultDialog.wasSaved = root.catalogId > 0
+                                    exploreChecksumResultDialog.open()
+                                } else {
+                                    showPassiveNotification(qsTr("File not found or could not be read"))
+                                }
+                            }
+                        }
+
+                        Controls.MenuItem {
+                            text: qsTr("Verify Checksum (SHA-256)")
+                            icon.name: "document-properties"
+                            visible: fileDelegate.dEntryType === "file" && fileDelegate.dChecksum !== ""
+                            height: visible ? implicitHeight : 0
+                            onTriggered: {
+                                var result = appManager1.verifyFileChecksum(
+                                    root._activeFilePath,
+                                    root._activeChecksum)
+                                if (result === "match") {
+                                    exploreChecksumResultDialog.checksumText = root._activeChecksum
+                                    exploreChecksumResultDialog.wasSaved = false
+                                    exploreChecksumResultDialog.open()
+                                } else if (result.startsWith("mismatch:")) {
+                                    exploreChecksumMismatchDialog.expectedChecksum = root._activeChecksum
+                                    exploreChecksumMismatchDialog.actualChecksum   = result.substring(9)
+                                    exploreChecksumMismatchDialog.open()
+                                } else {
+                                    showPassiveNotification(qsTr("Error: ") + result.substring(6))
+                                }
+                            }
+                        }
+
+                        Controls.MenuSeparator {}
 
                         Controls.MenuItem {
                             text: qsTr("Move file to Trash")
@@ -342,4 +437,88 @@ Item {
     }
 
     onCurrentFolderPathChanged: loadEntries()
+
+    // ── Checksum result dialog ────────────────────────────────────────────
+    Kirigami.Dialog {
+        id: exploreChecksumResultDialog
+        property string checksumText: ""
+        property bool   wasSaved: false
+        title: qsTr("Checksum (SHA-256)")
+        standardButtons: Kirigami.Dialog.Close
+        preferredWidth: Kirigami.Units.gridUnit * 36
+        padding: Kirigami.Units.largeSpacing
+
+        contentItem: ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                text: "SHA-256: " + exploreChecksumResultDialog.checksumText
+                wrapMode: Text.WrapAnywhere
+                Layout.fillWidth: true
+                font.family: "monospace"
+            }
+            Controls.Label {
+                text: exploreChecksumResultDialog.wasSaved
+                      ? qsTr("Checksum saved to database.")
+                      : qsTr("Checksums match.")
+                opacity: 0.7
+            }
+            Controls.Button {
+                text: qsTr("Copy to Clipboard")
+                icon.name: "edit-copy"
+                onClicked: {
+                    appManager1.copyToClipboard(exploreChecksumResultDialog.checksumText)
+                    showPassiveNotification(qsTr("Checksum copied to clipboard"))
+                }
+            }
+        }
+    }
+
+    // ── Checksum mismatch dialog ──────────────────────────────────────────
+    Kirigami.Dialog {
+        id: exploreChecksumMismatchDialog
+        property string expectedChecksum: ""
+        property string actualChecksum:   ""
+        title: qsTr("Checksum Mismatch")
+        standardButtons: Kirigami.Dialog.Cancel
+        preferredWidth: Kirigami.Units.gridUnit * 36
+        padding: Kirigami.Units.largeSpacing
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Update Checksum")
+                icon.name: "document-save"
+                onTriggered: {
+                    appManager1.calculateAndSaveChecksum(
+                        root._activeFilePath,
+                        root._activeFileName,
+                        root._activeFolderPath,
+                        root.catalogId)
+                    root._activeChecksum = exploreChecksumMismatchDialog.actualChecksum
+                    showPassiveNotification(qsTr("Checksum saved to database"))
+                    exploreChecksumMismatchDialog.close()
+                }
+            }
+        ]
+
+        contentItem: ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label { text: qsTr("Checksums do not match."); font.bold: true }
+            Controls.Label { text: qsTr("Expected:"); opacity: 0.7 }
+            Controls.Label {
+                text: exploreChecksumMismatchDialog.expectedChecksum
+                wrapMode: Text.WrapAnywhere
+                Layout.fillWidth: true
+                font.family: "monospace"
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+            Controls.Label { text: qsTr("Actual:"); opacity: 0.7 }
+            Controls.Label {
+                text: exploreChecksumMismatchDialog.actualChecksum
+                wrapMode: Text.WrapAnywhere
+                Layout.fillWidth: true
+                font.family: "monospace"
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+        }
+    }
 }

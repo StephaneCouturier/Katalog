@@ -8,6 +8,7 @@ Item {
     anchors.fill: parent
 
     signal editDeviceRequested(int deviceId)
+    signal exploreDeviceRequested(int deviceId)
 
     property real   cardScale: 1.0
     property string viewFilter: "All"
@@ -434,7 +435,8 @@ Item {
             delegate: PageDevicesViewDelegate {
                 delegateCardScale: root.cardScale
 
-                onEditRequested: (id) => root.editDeviceRequested(id)
+                onEditRequested:    (id) => root.editDeviceRequested(id)
+                onExploreRequested: (id) => root.exploreDeviceRequested(id)
 
                 onSplitSubDirRequested: (id, name) => {
                     root.operationDeviceName = name

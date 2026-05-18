@@ -37,6 +37,18 @@ Kirigami.AbstractCard {
         Controls.MenuSeparator {}
 
         Controls.MenuItem {
+            text: qsTr("Explore")
+            icon.name: "view-list-tree"
+            visible: model.type === "Catalog"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                appManager1.setLastPage("Explore")
+                exploreFolders.openByDeviceId(model.deviceId)
+                root.showPage(pageExplore)
+            }
+        }
+
+        Controls.MenuItem {
             text: qsTr("Open folder")
             icon.name: "document-open"
             onTriggered: appManager1.openDeviceFolder(model.deviceId)

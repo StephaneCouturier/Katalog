@@ -1214,6 +1214,11 @@ Kirigami.ApplicationWindow {
                 pageDeviceEdit_form.loadDevice()
                 root.showPage(pageDeviceEdit)
             }
+            onExploreDeviceRequested: (deviceId) => {
+                appManager1.setLastPage("Explore")
+                exploreFolders.openByDeviceId(deviceId)
+                root.showPage(pageExplore)
+            }
         }
     }
 

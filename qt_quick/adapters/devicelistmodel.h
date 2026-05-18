@@ -74,7 +74,7 @@ private:
     int m_maxLevel = -1; // -1 = show all levels
     QSet<int> m_collapsedIds;  // device IDs explicitly collapsed (children hidden)
     QSet<int> m_expandedIds;   // device IDs explicitly expanded (override level filter)
-    QString m_connectionName;          // empty = default Qt SQL connection
+    QString m_connectionName = "defaultConnection";
     bool m_includeCollectionRoot = false; // prepend synthetic id=0 "Collection" entry
 };
 

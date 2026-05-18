@@ -12,6 +12,7 @@ Kirigami.AbstractCard {
     property real delegateCardScale: 1.0
 
     signal editRequested(int deviceId)
+    signal exploreRequested(int deviceId)
     signal splitSubDirRequested(int deviceId, string deviceName)
     signal splitFileTypeRequested(int deviceId, string deviceName, bool deviceActive)
     signal verifyRequested(int deviceId, string deviceName)
@@ -67,6 +68,12 @@ Kirigami.AbstractCard {
                      || card.devType === "Virtual"
             enabled: !appManager1.deviceUpdateIsRunning
             onTriggered: appManager1.updateDevice(card.devId)
+        }
+        Controls.MenuItem {
+            text: qsTr("Explore")
+            icon.name: "view-list-tree"
+            visible: card.devType === "Catalog"
+            onTriggered: card.exploreRequested(card.devId)
         }
         Controls.MenuItem {
             text: qsTr("Edit")

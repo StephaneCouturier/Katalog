@@ -162,11 +162,7 @@ void DeviceListModel::clear()
 //----------------------------------------------------------------------
 void DeviceListModel::loadDevicesFromDatabase()
 {
-    const QString conn = m_connectionName.isEmpty()
-                         ? QSqlDatabase::defaultConnection
-                         : m_connectionName;
-
-    const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(conn);
+    const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(m_connectionName);
     if (nodes.isEmpty() && !m_includeCollectionRoot) {
         // Could be a genuine empty collection or a DB error — either way nothing to show.
         // loadDeviceTree already logs a warning on query failure.

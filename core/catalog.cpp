@@ -2150,3 +2150,22 @@ int Catalog::getExploreFolderCount(const QString &connectionName, int catalogId)
     if (!q.exec() || !q.next()) return 0;
     return q.value(0).toInt();
 }
+
+Catalog::ExploreFolderStats Catalog::getExploreFolderStats(
+    const QString &connectionName, int catalogId, const QString &folderPath)
+{
+    ExploreFolderStats stats;
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen()) return stats;
+    QSqlQuery q(db);
+    q.prepare(QLatin1String(
+        "SELECT COUNT(*), SUM(file_size) FROM file "
+        "WHERE file_catalog_id = :catalogId AND file_folder_path = :folderPath"));
+    q.bindValue(":catalogId",  catalogId);
+    q.bindValue(":folderPath", folderPath);
+    if (q.exec() && q.next()) {
+        stats.fileCount  = q.value(0).toLongLong();
+        stats.totalSize  = q.value(1).toLongLong();
+    }
+    return stats;
+}

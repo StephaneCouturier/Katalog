@@ -193,6 +193,10 @@ public:
 
     static int getExploreFolderCount(const QString &connectionName, int catalogId);
 
+    struct ExploreFolderStats { qint64 fileCount = 0; qint64 totalSize = 0; };
+    static ExploreFolderStats getExploreFolderStats(
+        const QString &connectionName, int catalogId, const QString &folderPath);
+
     // Metadata management
     bool clearMetadataBasicFields();
     bool clearMetadataExtendedField();

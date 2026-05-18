@@ -79,10 +79,10 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Search Progress     | ✅ | ✅ | result throttler| |
 | — Search Pause/Stop   | ✅ | 🔲 | Review thread mechanism compared to BackUp | |
 | **Create**            | ✅ | ✅ | Review thread mechanism compared to BackUp, Add Paste button, Add Paste from selected path & name | |
-| **Devices**           | ✅ | 🔲 | |
-| — View list           | ✅ | 🔲 | |
+| **Devices**           | ✅ | 🚧 | |
+| — View list           | ✅ | 🚧 | |
 | — Edit                | ✅ | ✅ | |
-| — Update progress     | ✅ | 🔲 | |
+| — Update progress     | ✅ | 🚧 | |
 | **Explore**           | ✅ | 🔲 | |
 | **Statistics**        | ✅ | 🚧 | zoom in feature, axis labels|
 | **Tags**              | ✅ | ✅ | |

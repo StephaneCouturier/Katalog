@@ -33,7 +33,6 @@
 
 SearchSync::SearchSync(QObject *parent) : SearchJobStoppable(parent)
 {
-    setDatabaseConnection(QSqlDatabase::defaultConnection);
 }
 
 //file list model

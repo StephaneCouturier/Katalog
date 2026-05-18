@@ -9,6 +9,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
+> **CRITICAL — Core class changes:**
+> - **NEVER add or modify methods in `core/` classes** without explicit user approval first.
+> - Before proposing a new core method, always check: does the equivalent SQL/logic already exist in K2's UI layer? If so, state where it is and ask for approval to move it to core.
+> - The core library was deliberately cleaned up (all SQL moved from K2 UI to core) before K3 was started. Any further change to `core/` is a deliberate architectural decision and must be approved in advance.
+
 > **CRITICAL — UI structure:**
 > - **NEVER create a new source file** (`.cpp`, `.h`, `.qml`) for a new tab (Katalog2), section, or Page (Katalog3) without the user explicitly requesting it.
 > - If unsure where new code belongs, **ask before creating new files**.

@@ -55,7 +55,7 @@ void AppManager::initiateApp()
 
     selectedDevice->ID = settings.value("Selection/SelectedDeviceID", 1).toInt();
     if (selectedDevice->ID == 0) selectedDevice->type = "All";
-    selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
+    selectedDevice->loadDevice(m_connectionName);
 
     //Check for new version
     checkVersionChoice = settings.value("Settings/CheckVersion", true).toBool();
@@ -68,6 +68,7 @@ void AppManager::initiateApp()
 void AppManager::setSearchObject(SearchSync *search)
 {
     searchObject = search;
+    search->setDatabaseConnection(m_connectionName);
     connect(search, &Search::searchProgress, this, &AppManager::onSearchProgress);
 }
 //----------------------------------------------------------------------
@@ -147,10 +148,10 @@ void AppManager::executeSearch()
     searchObject->setMemoryModeEnabled(collection->databaseMode == "Memory");
 
     // Capture device path at search time so Results page shows the right device
-    searchObject->devicePath = Device::getDevicePath(selectedDevice->ID, QSqlDatabase::defaultConnection);
+    searchObject->devicePath = Device::getDevicePath(selectedDevice->ID, m_connectionName);
 
     // Save criteria to history table before search (mirrors SearchManager::startSearchJobStoppable)
-    searchObject->saveSearchHistoryToTable(QSqlDatabase::defaultConnection);
+    searchObject->saveSearchHistoryToTable(m_connectionName);
 
     m_searchIsRunning = true;
     m_searchStatusText = StatusBarMessageBuilder().setOperation(tr("Search")).setStatus(tr("In Progress")).build();
@@ -210,7 +211,7 @@ void AppManager::checkVersion()
 //Database management --------------------------------------------------
 QString AppManager::startDatabase()
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
 
     QSqlError err = DatabaseManager::connect(conn, collection);
     if (err.type() != QSqlError::NoError) {
@@ -219,6 +220,7 @@ QString AppManager::startDatabase()
     }
 
     initializeDeviceListModel();
+    selectedDevice->loadDevice(conn);
     emit databaseModeChanged();
     return "startDatabase: No Error";
 }
@@ -245,7 +247,7 @@ void AppManager::openDeviceFolder(int deviceId)
 {
     Device device;
     device.ID = deviceId;
-    device.loadDevice(QSqlDatabase::defaultConnection);
+    device.loadDevice(m_connectionName);
     if (!device.path.isEmpty())
         QDesktopServices::openUrl(QUrl::fromLocalFile(device.path));
 }
@@ -274,7 +276,7 @@ void AppManager::expandDevices()
 
     if (m_deviceExpandLevel == -1) return;
 
-    int maxDepth = Device::getMaxHierarchyDepth(QSqlDatabase::defaultConnection);
+    int maxDepth = Device::getMaxHierarchyDepth(m_connectionName);
     m_deviceExpandLevel++;
     if (m_deviceExpandLevel >= maxDepth)
         m_deviceExpandLevel = -1; // show all once past max
@@ -289,7 +291,7 @@ void AppManager::collapseDevices()
     if (!deviceListModel || !canCollapseDevices()) return;
 
     if (m_deviceExpandLevel == -1) {
-        int maxDepth = Device::getMaxHierarchyDepth(QSqlDatabase::defaultConnection);
+        int maxDepth = Device::getMaxHierarchyDepth(m_connectionName);
         m_deviceExpandLevel = qMax(0, maxDepth - 1);
     } else {
         m_deviceExpandLevel--;
@@ -500,7 +502,7 @@ void AppManager::createNewSQLiteCollection(const QString &path)
     bool defaultsCreated = collection->insertPhysicalStorageGroup();
     if (defaultsCreated) {
         // Translate the hard-coded English names K2 inserted into the user's locale.
-        const QString conn = QSqlDatabase::defaultConnection;
+        const QString conn = m_connectionName;
         auto renameDevice = [&](int id, const QString &newName) {
             Device dev;
             dev.setConnectionName(conn);
@@ -548,12 +550,12 @@ void AppManager::refreshAllUI()
 
     // Reload selected device to ensure it's still valid
     if (selectedDevice && selectedDevice->ID > 0) {
-        selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
+        selectedDevice->loadDevice(m_connectionName);
 
         // If device no longer exists, reset to default
         if (selectedDevice->name.isEmpty()) {
             selectedDevice->ID = 1; // Physical Group
-            selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
+            selectedDevice->loadDevice(m_connectionName);
             qDebug() << "Previous selected device not found, reset to Physical Group";
         }
     }
@@ -569,7 +571,8 @@ void AppManager::refreshDeviceList()
         qDebug() << "Refreshing device list model";
         deviceListModel->refreshData();
         emit deviceListRefreshed();
-        emit deviceListModelChanged(); // Notify QML of model change
+        emit deviceListModelChanged();
+        emit deviceListChanged();
     }
 }
 
@@ -591,7 +594,7 @@ void AppManager::refreshStatistics()
 
 bool AppManager::reconnectToDatabase()
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
 
     QSqlError err = DatabaseManager::reconnect(conn, collection);
     if (err.type() != QSqlError::NoError) {
@@ -764,7 +767,7 @@ QString AppManager::exportSearchResultsAsCatalog()
     if (!searchObject || searchObject->fileNames.isEmpty())
         return QString();
 
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     const QString timestamp = QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss");
     const QString catalogName = tr("search_results") + "_" + timestamp;
 
@@ -955,7 +958,7 @@ QVariantMap AppManager::batchVerifyChecksums()
 
             if (stored.isEmpty()) {
                 if (catalogId > 0)
-                    FileChecksum::updateFileChecksum(QSqlDatabase::defaultConnection,
+                    FileChecksum::updateFileChecksum(m_connectionName,
                                                     catalogId, fileName, folder, actual, "SHA256");
                 ++calculated;
             } else {
@@ -992,7 +995,7 @@ QVariantMap AppManager::batchGetMetadata()
             QVariantMap metadata = FileMetadata::extractMetadata(filePath, Catalog::METADATA_MEDIA_EXTENDED);
             if (metadata.isEmpty())           { ++skipped; continue; }
 
-            if (FileMetadata::updateFileMetadata(QSqlDatabase::defaultConnection,
+            if (FileMetadata::updateFileMetadata(m_connectionName,
                                                 catalogId, fileName, folder, metadata))
                 ++updated;
             else
@@ -1020,7 +1023,7 @@ bool AppManager::deleteSingleFile(const QString &fullPath)
 //----------------------------------------------------------------------
 bool AppManager::catalogIncludesExtendedMetadata(int catalogId)
 {
-    QSqlQuery query(QSqlDatabase::database(QSqlDatabase::defaultConnection));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare(QLatin1String("SELECT catalog_include_metadata FROM catalog WHERE catalog_id = :id"));
     query.bindValue(":id", catalogId);
     if (query.exec() && query.next())
@@ -1030,12 +1033,12 @@ bool AppManager::catalogIncludesExtendedMetadata(int catalogId)
 //----------------------------------------------------------------------
 QString AppManager::getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath)
 {
-    return Catalog::getFileMetadataJson(catalogId, fileName, folderPath, QSqlDatabase::defaultConnection);
+    return Catalog::getFileMetadataJson(catalogId, fileName, folderPath, m_connectionName);
 }
 //----------------------------------------------------------------------
 QVariantList AppManager::getFileMetadataParsedFields(int catalogId, const QString &fileName, const QString &folderPath)
 {
-    QString json = Catalog::getFileMetadataJson(catalogId, fileName, folderPath, QSqlDatabase::defaultConnection);
+    QString json = Catalog::getFileMetadataJson(catalogId, fileName, folderPath, m_connectionName);
     if (json.isEmpty())
         return {};
 
@@ -1062,7 +1065,7 @@ QString AppManager::calculateAndSaveChecksum(const QString &filePath, const QStr
         return QString();
     QString checksum = FileChecksum::calculateChecksum(filePath, QCryptographicHash::Sha256);
     if (!checksum.isEmpty() && catalogId > 0)
-        FileChecksum::updateFileChecksum(QSqlDatabase::defaultConnection, catalogId, fileName, folderPath, checksum, "SHA256");
+        FileChecksum::updateFileChecksum(m_connectionName, catalogId, fileName, folderPath, checksum, "SHA256");
     return checksum;
 }
 //----------------------------------------------------------------------
@@ -1091,7 +1094,7 @@ QVariantList AppManager::getSearchHistory() const
     // 24 folder_criteria_checked  25 show_folders  26 tag_checked  27 tag
 
     QVariantList result;
-    QSqlQuery query(QSqlDatabase::database(QSqlDatabase::defaultConnection));
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare(QLatin1String(R"(
         SELECT date_time,
                text_checked, text_phrase, text_criteria, case_sensitive, text_exclude,
@@ -1181,25 +1184,25 @@ QVariantMap AppManager::restoreSearchHistory(const QString &dateTime)
     if (!searchObject)
         return {};
     searchObject->searchDateTime = dateTime;
-    searchObject->loadSearchHistoryCriteria(QSqlDatabase::defaultConnection);
+    searchObject->loadSearchHistoryCriteria(m_connectionName);
     return searchObject->properties();
 }
 //----------------------------------------------------------------------
 void AppManager::clearSearchHistory()
 {
-    collection->clearSearchHistory(QSqlDatabase::defaultConnection);
+    collection->clearSearchHistory(m_connectionName);
 }
 //----------------------------------------------------------------------
 void AppManager::keepLastSearchHistory(int count)
 {
-    collection->keepLastSearchHistory(count, QSqlDatabase::defaultConnection);
+    collection->keepLastSearchHistory(count, m_connectionName);
 }
 //----------------------------------------------------------------------
 QStringList AppManager::getTagNames() const
 {
     collection->loadTagFileToTable();
     Tag tag;
-    tag.loadFromDatabase(QSqlDatabase::defaultConnection);
+    tag.loadFromDatabase(m_connectionName);
     QStringList result;
     for (const QString &name : tag.tagNames())
         if (!result.contains(name))
@@ -1212,7 +1215,7 @@ QVariantList AppManager::getTagEntries(const QString &filterName) const
 {
     collection->loadTagFileToTable();
     Tag tagModel;
-    tagModel.loadFromDatabase(QSqlDatabase::defaultConnection, filterName);
+    tagModel.loadFromDatabase(m_connectionName, filterName);
     QVariantList result;
     for (int i = 0; i < tagModel.rowCount(); ++i) {
         QModelIndex idx = tagModel.index(i, 0);
@@ -1248,7 +1251,7 @@ QVariantMap AppManager::getStatisticsData(const QString &source, const QString &
         dt = QDateTime::fromString(startDate, "yyyy-MM-dd");
 
     StatChartData data = Statistics::getChartData(
-        QSqlDatabase::defaultConnection,
+        m_connectionName,
         selectedDevice->ID,
         selectedDevice->type,
         source,
@@ -1318,7 +1321,7 @@ void AppManager::selectDeviceById(int deviceId)
     if (selectedDevice->ID != deviceId) {
         selectedDevice->ID = deviceId;
         if (selectedDevice->ID == 0) selectedDevice->type = "All";
-        selectedDevice->loadDevice(QSqlDatabase::defaultConnection);
+        selectedDevice->loadDevice(m_connectionName);
 
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
         settings.setValue("Selection/SelectedDeviceID", deviceId);
@@ -1526,7 +1529,7 @@ void AppManager::setupDeviceUpdateManager()
                 });
     }
     m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
-    m_deviceUpdateManager->setConnectionName(QSqlDatabase::defaultConnection);
+    m_deviceUpdateManager->setConnectionName(m_connectionName);
 
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
             this, &AppManager::onCatalogCreationCompleted);
@@ -1577,7 +1580,7 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
     // Load storage name for catalog record
     Device parentDevice;
     parentDevice.ID = storageId;
-    parentDevice.loadDevice(QSqlDatabase::defaultConnection);
+    parentDevice.loadDevice(m_connectionName);
 
     newDevice->catalog->name             = newDevice->name;
     newDevice->catalog->filePath         = collection->folder + "/" + newDevice->name + ".idx";
@@ -1707,7 +1710,7 @@ int AppManager::getDefaultStorageId() const
     if (type == "Catalog")
         return selectedDevice->parentID;
     if (type == "Virtual")
-        return Device::getFirstStorageDescendantId(selectedDevice->ID, QSqlDatabase::defaultConnection);
+        return Device::getFirstStorageDescendantId(selectedDevice->ID, m_connectionName);
     return 0;
 }
 
@@ -1715,7 +1718,7 @@ int AppManager::getDefaultStorageId() const
 //----------------------------------------------------------------------
 QVariantMap AppManager::checkDeviceDeleteAllowed(int deviceId) const
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -1734,7 +1737,7 @@ QVariantMap AppManager::checkDeviceDeleteAllowed(int deviceId) const
 //----------------------------------------------------------------------
 QString AppManager::deleteDevice(int deviceId)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -1782,7 +1785,7 @@ QString AppManager::deleteDevice(int deviceId)
 //----------------------------------------------------------------------
 QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDeviceId) const
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(conn, scopeDeviceId);
 
     // Build id → type map so each node can resolve its parent's type without a second query.
@@ -1824,7 +1827,7 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
 //----------------------------------------------------------------------
 int AppManager::addDeviceVirtual(int parentId)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device parent;
     parent.ID = parentId;
     parent.loadDevice(conn);
@@ -1849,7 +1852,7 @@ int AppManager::addDeviceVirtual(int parentId)
 //----------------------------------------------------------------------
 int AppManager::addDeviceStorage(int parentId)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device parent;
     parent.ID = parentId;
     parent.loadDevice(conn);
@@ -1892,7 +1895,7 @@ void AppManager::setupDeviceUpdateManagerForDevices()
                 emit deviceUpdateStatusChanged();
             });
     m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
-    m_deviceUpdateManager->setConnectionName(QSqlDatabase::defaultConnection);
+    m_deviceUpdateManager->setConnectionName(m_connectionName);
 
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
             this, &AppManager::onDevicePageUpdateCompleted);
@@ -1966,7 +1969,7 @@ void AppManager::startNextDeviceUpdate()
     m_currentUpdateDeviceId = nextId;
     Device *dev = new Device();
     dev->ID = nextId;
-    dev->loadDevice(QSqlDatabase::defaultConnection);
+    dev->loadDevice(m_connectionName);
     m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
 }
 //----------------------------------------------------------------------
@@ -1975,7 +1978,7 @@ QVariantMap AppManager::buildUpdateReport(int deviceId, const QList<qint64> &res
     if (results.isEmpty() || results[0] != 1)
         return {};
 
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -2093,7 +2096,7 @@ void AppManager::updateAllActiveDevices(bool showEachReport)
     m_isBatchUpdate        = true;
     m_showEachUpdateReport = showEachReport;
 
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
 
     // Scope: catalogs under the currently selected device (same as what the Catalogs
     // list view displays). 0 = no selection = all catalogs in the collection.
@@ -2144,7 +2147,7 @@ void AppManager::gentleStopDeviceUpdate()
 //----------------------------------------------------------------------
 QString AppManager::assignCatalogToDevice(int catalogDeviceId, int virtualDeviceId)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
 
     Device catalogDev;
     catalogDev.ID = catalogDeviceId;
@@ -2171,7 +2174,7 @@ void AppManager::launchFilelight(int deviceId)
 {
     Device dev;
     dev.ID = deviceId;
-    dev.loadDevice(QSqlDatabase::defaultConnection);
+    dev.loadDevice(m_connectionName);
     QString path = (dev.type == QStringLiteral("Catalog") && dev.catalog)
                    ? dev.catalog->sourcePath : dev.path;
     if (!path.isEmpty())
@@ -2186,7 +2189,7 @@ void AppManager::openDeviceListFile()
 //----------------------------------------------------------------------
 QVariantMap AppManager::recordDevicesSnapshot()
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
 
     auto sumQuery = [&](const QString &type) -> QList<qint64> {
         QSqlQuery q(QSqlDatabase::database(conn));
@@ -2236,7 +2239,7 @@ QString AppManager::splitCatalogBySubDirectory(int deviceId)
 {
     Device dev;
     dev.ID = deviceId;
-    dev.loadDevice(QSqlDatabase::defaultConnection);
+    dev.loadDevice(m_connectionName);
 
     if (collection->databaseMode == "Memory")
         dev.catalog->loadFoldersToTable();
@@ -2254,7 +2257,7 @@ void AppManager::splitCatalogByFileType(int deviceId, bool verifyFirst)
 {
     Device *dev = new Device();
     dev->ID = deviceId;
-    dev->loadDevice(QSqlDatabase::defaultConnection);
+    dev->loadDevice(m_connectionName);
 
     auto performSplit = [this, dev]() {
         if (!collection->executeSplitByFileType(dev)) {
@@ -2302,7 +2305,7 @@ QVariantMap AppManager::verifyDeviceChecksums(int deviceId)
 {
     Device dev;
     dev.ID = deviceId;
-    dev.loadDevice(QSqlDatabase::defaultConnection);
+    dev.loadDevice(m_connectionName);
 
     if (!dev.catalog) return QVariantMap{{ "error", tr("Device has no catalog.") }};
 
@@ -2312,7 +2315,7 @@ QVariantMap AppManager::verifyDeviceChecksums(int deviceId)
         dev.catalog->loadCatalogFileListToTable(mutex, stop);
     }
 
-    int total = FileChecksum::countFilesWithChecksum(QSqlDatabase::defaultConnection, dev.externalID);
+    int total = FileChecksum::countFilesWithChecksum(m_connectionName, dev.externalID);
     if (total == 0)
         return QVariantMap{{ "noChecksums", true }, { "verified", 0 }, { "mismatches", 0 }, { "missing", 0 }};
 
@@ -2325,7 +2328,7 @@ QVariantMap AppManager::verifyDeviceChecksums(int deviceId)
     };
 
     auto res = FileChecksum::verifyCatalogChecksums(
-        QSqlDatabase::defaultConnection,
+        m_connectionName,
         dev.externalID, dev.catalog->sourcePath,
         shouldContinue, progressCb);
 
@@ -2347,7 +2350,7 @@ QVariantMap AppManager::verifyDeviceChecksums(int deviceId)
 //----------------------------------------------------------------------
 QString AppManager::unassignDevice(int deviceId, int parentId)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     if (!Device::unassignFromDevice(deviceId, parentId, conn))
         return tr("Failed to unassign device.");
     if (collection->databaseMode == "Memory")
@@ -2359,7 +2362,7 @@ QString AppManager::unassignDevice(int deviceId, int parentId)
 //----------------------------------------------------------------------
 QString AppManager::importFromVVV(const QString &path)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     QFile sourceFile(path);
 
     if (!sourceFile.open(QIODevice::ReadOnly))
@@ -2530,7 +2533,7 @@ QString AppManager::importFromVVV(const QString &path)
 //----------------------------------------------------------------------
 QVariantMap AppManager::getDeviceDetails(int deviceId) const
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -2570,7 +2573,7 @@ QVariantMap AppManager::getDeviceDetails(int deviceId) const
 //----------------------------------------------------------------------
 QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int parentId, const QString &path)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -2626,7 +2629,7 @@ QVariantMap AppManager::checkCatalogOptionChanges(int deviceId, const QString &f
                                                    const QString &includeMetadata, const QString &includeChecksum,
                                                    bool isFullDevice) const
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device prev;
     prev.ID = deviceId;
     prev.loadDevice(conn);
@@ -2672,7 +2675,7 @@ QString AppManager::saveCatalogOptions(int deviceId, const QString &fileType, bo
                                         const QString &includeMetadata, const QString &includeChecksum,
                                         bool isFullDevice)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -2697,7 +2700,7 @@ QString AppManager::saveCatalogOptions(int deviceId, const QString &fileType, bo
 //----------------------------------------------------------------------
 QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
 {
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -2774,7 +2777,7 @@ void AppManager::triggerDeviceRescan(int deviceId)
 {
     Device *dev = new Device();
     dev->ID = deviceId;
-    dev->loadDevice(QSqlDatabase::defaultConnection);
+    dev->loadDevice(m_connectionName);
     if (!m_deviceUpdateManager)
         setupDeviceUpdateManager();
     m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
@@ -2784,7 +2787,7 @@ void AppManager::triggerStoragePathReplace(int deviceId, const QString &previous
 {
     Device *dev = new Device();
     dev->ID = deviceId;
-    dev->loadDevice(QSqlDatabase::defaultConnection);
+    dev->loadDevice(m_connectionName);
     if (!m_deviceUpdateManager)
         setupDeviceUpdateManager();
     m_deviceUpdateManager->replaceStorageRoot(dev, previousPath, newPath,
@@ -2795,7 +2798,7 @@ QStringList AppManager::getDeviceExcludeFolders(int deviceId) const
 {
     Device dev;
     dev.ID = deviceId;
-    dev.loadDevice(QSqlDatabase::defaultConnection);
+    dev.loadDevice(m_connectionName);
     if (dev.type != "Catalog") return {};
     return dev.catalog->getExcludeFolders();
 }
@@ -2804,7 +2807,7 @@ bool AppManager::addDeviceExcludeFolder(int deviceId, const QString &path)
 {
     Device dev;
     dev.ID = deviceId;
-    dev.loadDevice(QSqlDatabase::defaultConnection);
+    dev.loadDevice(m_connectionName);
     if (dev.type != "Catalog") return false;
     bool ok = dev.catalog->addExcludeFolder(path.trimmed());
     if (ok) collection->saveCatalogFilterTableToFile();
@@ -2815,7 +2818,7 @@ bool AppManager::removeDeviceExcludeFolder(int deviceId, const QString &path)
 {
     Device dev;
     dev.ID = deviceId;
-    dev.loadDevice(QSqlDatabase::defaultConnection);
+    dev.loadDevice(m_connectionName);
     if (dev.type != "Catalog") return false;
     bool ok = dev.catalog->removeExcludeFolder(path);
     if (ok) collection->saveCatalogFilterTableToFile();
@@ -2827,7 +2830,7 @@ bool AppManager::removeDeviceExcludeFolder(int deviceId, const QString &path)
 QVariantMap AppManager::exploreOpenCatalog(int deviceId)
 {
     QVariantMap result;
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
 
     exploreDevice->catalog->setConnectionName(conn);
     exploreDevice->setConnectionName(conn);
@@ -2862,7 +2865,7 @@ QVariantList AppManager::getExploreFolders()
     QVariantList result;
     if (exploreDevice->externalID == 0) return result;
 
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     const QString catalogPath = exploreDevice->path;
     int pos = catalogPath.lastIndexOf(QLatin1Char('/'));
     const QString pathRoot = (pos >= 0) ? catalogPath.left(pos) : QString();
@@ -2893,7 +2896,7 @@ QVariantList AppManager::getExploreEntries(const QString &folderPath, bool showF
     QVariantList result;
     if (exploreDevice->externalID == 0) return result;
 
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     const QList<Catalog::ExploreFileEntry> entries = Catalog::getExploreEntries(
         conn, exploreDevice->externalID, folderPath, showFolders, showSubFolders);
 
@@ -2921,6 +2924,19 @@ QString AppManager::exploreGetChecksum(const QString &fileName, const QString &f
 {
     if (exploreDevice->externalID == 0) return QString();
     return exploreDevice->catalog->getFileChecksum(fileName, folderPath);
+}
+//----------------------------------------------------------------------
+QVariantMap AppManager::getExploreFolderStats(const QString &folderPath)
+{
+    QVariantMap result;
+    result["fileCount"] = 0;
+    result["totalSize"] = 0LL;
+    if (exploreDevice->externalID == 0) return result;
+    const QString conn = exploreDevice->catalog->connectionName();
+    Catalog::ExploreFolderStats stats = Catalog::getExploreFolderStats(conn, exploreDevice->externalID, folderPath);
+    result["fileCount"] = stats.fileCount;
+    result["totalSize"] = stats.totalSize;
+    return result;
 }
 //----------------------------------------------------------------------
 
@@ -3102,7 +3118,7 @@ QString AppManager::formatDataSizeDelta(qlonglong bytes) const
 QVariantMap AppManager::refreshStorageFromDisk(int deviceId)
 {
     QVariantMap r;
-    const QString conn = QSqlDatabase::defaultConnection;
+    const QString conn = m_connectionName;
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(conn);
@@ -3182,7 +3198,7 @@ static MappingFilter buildMappingFilter(const QString &filterType, int deviceId,
 
 QVariantList AppManager::getBackupMappings(const QString &filterType, int deviceId, const QString &mappingType) const
 {
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     const MappingFilter filter = buildMappingFilter(filterType, deviceId, mappingType);
     const QList<MappingInfo> mappings = manager.getFilteredMappings(filter);
 
@@ -3197,7 +3213,7 @@ QVariantList AppManager::getBackupMappings(const QString &filterType, int device
                 Device d;
                 d.ID   = devId;
                 d.path = path;
-                d.updateActiveState(QSqlDatabase::defaultConnection);
+                d.updateActiveState(m_connectionName);
                 activeByDeviceId[devId] = d.active;
             }
         }
@@ -3237,7 +3253,7 @@ QVariantList AppManager::getBackupMappings(const QString &filterType, int device
 //----------------------------------------------------------------------
 QVariantMap AppManager::getBackupTotals(const QString &filterType, int deviceId, const QString &mappingType) const
 {
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     const MappingFilter filter  = buildMappingFilter(filterType, deviceId, mappingType);
     const MappingTotals  totals = manager.calculateTotals(filter);
 
@@ -3274,7 +3290,7 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
     if (sourceId == targetId)
         return tr("Select a different source or target (a device shall not be mapped to itself).");
 
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     if (!manager.createMapping(name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive))
         return tr("Failed to create link.");
 
@@ -3285,7 +3301,7 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
 //----------------------------------------------------------------------
 bool AppManager::deleteBackupMapping(int mappingId)
 {
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     if (!manager.deleteMapping(mappingId))
         return false;
     collection->saveMappingTableToFile();
@@ -3295,7 +3311,7 @@ bool AppManager::deleteBackupMapping(int mappingId)
 //----------------------------------------------------------------------
 bool AppManager::invertBackupMapping(int mappingId)
 {
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     if (!manager.invertMapping(mappingId))
         return false;
     collection->saveMappingTableToFile();
@@ -3310,7 +3326,7 @@ AppManager::BackupCompareResult AppManager::compareForBackup(
     BackupCompareResult out;
 
     if (strictCopy) {
-        CatalogDifferenceEngine engine(QSqlDatabase::defaultConnection);
+        CatalogDifferenceEngine engine(m_connectionName);
         StrictDifferenceResult r;
         if (sourceDrive) {
             r = engine.compareStrictFromDrive(sourceDevice.path, targetDevice.externalID, targetDevice.path);
@@ -3322,17 +3338,17 @@ AppManager::BackupCompareResult AppManager::compareForBackup(
         out.fileConflicts = r.conflicts;
         out.skippedCount  = r.skippedCount;
     } else {
-        CatalogDifferenceEngine engine(QSqlDatabase::defaultConnection);
+        CatalogDifferenceEngine engine(m_connectionName);
         const QList<int> sourceIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
-            const_cast<Device*>(&sourceDevice), QSqlDatabase::defaultConnection);
+            const_cast<Device*>(&sourceDevice), m_connectionName);
         const QList<int> targetIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
-            const_cast<Device*>(&targetDevice), QSqlDatabase::defaultConnection);
+            const_cast<Device*>(&targetDevice), m_connectionName);
         const DifferenceResult diff = engine.compare(
             sourceIds, targetIds,
             CatalogDifferenceEngine::Name | CatalogDifferenceEngine::Size,
             false, QStringLiteral("file"));
 
-        BackupMappingManager manager(QSqlDatabase::defaultConnection);
+        BackupMappingManager manager(m_connectionName);
         const QSet<QString> targetPaths  = manager.getCatalogFilePaths(targetDevice.externalID);
         const int           srcRootLen   = sourceDevice.path.length();
         for (const DifferenceFileEntry &e : diff.onlyInSource) {
@@ -3356,7 +3372,7 @@ QVariantMap AppManager::previewBackup(int mappingId)
     result[QStringLiteral("hasData")] = false;
     result[QStringLiteral("error")]   = QString();
 
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) {
         result[QStringLiteral("error")] = tr("Link not found.");
@@ -3365,18 +3381,18 @@ QVariantMap AppManager::previewBackup(int mappingId)
 
     Device sourceDevice;
     sourceDevice.ID = mapping.sourceDeviceId;
-    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    sourceDevice.loadDevice(m_connectionName);
     Device targetDevice;
     targetDevice.ID = mapping.targetDeviceId;
-    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+    targetDevice.loadDevice(m_connectionName);
 
     if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
         result[QStringLiteral("error")] = tr("Both source and target must be Catalog devices.");
         return result;
     }
 
-    sourceDevice.updateActiveState(QSqlDatabase::defaultConnection);
-    targetDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    sourceDevice.updateActiveState(m_connectionName);
+    targetDevice.updateActiveState(m_connectionName);
 
     if (collection->databaseMode == QLatin1String("Memory")) {
         QMutex mutex;
@@ -3466,24 +3482,24 @@ void AppManager::runBackup(int mappingId)
 //----------------------------------------------------------------------
 void AppManager::executeBackupJob(int mappingId)
 {
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) return;
 
     Device sourceDevice;
     sourceDevice.ID = mapping.sourceDeviceId;
-    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    sourceDevice.loadDevice(m_connectionName);
     Device targetDevice;
     targetDevice.ID = mapping.targetDeviceId;
-    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+    targetDevice.loadDevice(m_connectionName);
 
     if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
         emit backupNotification(tr("Both source and target must be Catalog devices."), true);
         return;
     }
 
-    sourceDevice.updateActiveState(QSqlDatabase::defaultConnection);
-    targetDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    sourceDevice.updateActiveState(m_connectionName);
+    targetDevice.updateActiveState(m_connectionName);
     if (!sourceDevice.active) {
         emit backupNotification(tr("Source not available: %1").arg(sourceDevice.name), true);
         return;
@@ -3504,7 +3520,7 @@ void AppManager::executeBackupJob(int mappingId)
     }
 
     if (mapping.sourceDrive) {
-        DirectoryReplicator replicator(QSqlDatabase::defaultConnection);
+        DirectoryReplicator replicator(m_connectionName);
         replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
     }
 
@@ -3595,7 +3611,7 @@ void AppManager::onBackupFinishedInternal(const BackupReport &report)
 QVariantMap AppManager::replicateDirectories(int mappingId)
 {
     QVariantMap result;
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) {
         result[QStringLiteral("error")] = tr("Link not found.");
@@ -3604,17 +3620,17 @@ QVariantMap AppManager::replicateDirectories(int mappingId)
 
     Device sourceDevice;
     sourceDevice.ID = mapping.sourceDeviceId;
-    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    sourceDevice.loadDevice(m_connectionName);
     Device targetDevice;
     targetDevice.ID = mapping.targetDeviceId;
-    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+    targetDevice.loadDevice(m_connectionName);
 
     if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
         result[QStringLiteral("error")] = tr("Both source and target must be Catalog devices.");
         return result;
     }
-    sourceDevice.updateActiveState(QSqlDatabase::defaultConnection);
-    targetDevice.updateActiveState(QSqlDatabase::defaultConnection);
+    sourceDevice.updateActiveState(m_connectionName);
+    targetDevice.updateActiveState(m_connectionName);
     if (!sourceDevice.active) {
         result[QStringLiteral("error")] = tr("Source not available: %1").arg(sourceDevice.name);
         return result;
@@ -3624,7 +3640,7 @@ QVariantMap AppManager::replicateDirectories(int mappingId)
         return result;
     }
 
-    DirectoryReplicator replicator(QSqlDatabase::defaultConnection);
+    DirectoryReplicator replicator(m_connectionName);
     ReplicationResult repResult;
     if (mapping.sourceDrive) {
         repResult = replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
@@ -3657,7 +3673,7 @@ QString AppManager::generateLuckyBackupProfile(const QVariantList &mappingIds)
     for (const QVariant &v : mappingIds)
         ids.append(v.toInt());
 
-    BackupProfileGenerator generator(QSqlDatabase::defaultConnection);
+    BackupProfileGenerator generator(m_connectionName);
     const BackupProfileResult result = generator.generateProfile(ids);
     if (!result.success) {
         const QString msg = tr("Failed to generate Backup profile") + ": " + result.errorMessage;
@@ -3704,7 +3720,7 @@ void AppManager::prepareCatalogsForMapping(int mappingId)
         return;
     }
 
-    BackupMappingManager manager(QSqlDatabase::defaultConnection);
+    BackupMappingManager manager(m_connectionName);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) {
         emit catalogsForMappingPrepared(mappingId, false, tr("Mapping not found."));
@@ -3713,10 +3729,10 @@ void AppManager::prepareCatalogsForMapping(int mappingId)
 
     Device sourceDevice;
     sourceDevice.ID = mapping.sourceDeviceId;
-    sourceDevice.loadDevice(QSqlDatabase::defaultConnection);
+    sourceDevice.loadDevice(m_connectionName);
     Device targetDevice;
     targetDevice.ID = mapping.targetDeviceId;
-    targetDevice.loadDevice(QSqlDatabase::defaultConnection);
+    targetDevice.loadDevice(m_connectionName);
 
     m_pendingCatalogUpdateMappingId    = mappingId;
     m_pendingCatalogUpdateSourceDevice = sourceDevice;
@@ -3773,8 +3789,8 @@ void AppManager::onCatalogUpdateForBackupStep()
 
     // Both catalogs updated — reload device data then continue
     m_backupCatalogUpdatePhase = BackupCatalogUpdatePhase::None;
-    m_pendingCatalogUpdateSourceDevice.loadDevice(QSqlDatabase::defaultConnection);
-    m_pendingCatalogUpdateTargetDevice.loadDevice(QSqlDatabase::defaultConnection);
+    m_pendingCatalogUpdateSourceDevice.loadDevice(m_connectionName);
+    m_pendingCatalogUpdateTargetDevice.loadDevice(m_connectionName);
 
     int id                          = m_pendingCatalogUpdateMappingId;
     m_pendingCatalogUpdateMappingId = -1;

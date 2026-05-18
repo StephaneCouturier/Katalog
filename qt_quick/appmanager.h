@@ -296,6 +296,7 @@ public slots:
     Q_INVOKABLE QVariantMap  exploreOpenCatalog(int deviceId);
     Q_INVOKABLE QVariantList getExploreFolders();
     Q_INVOKABLE QVariantList getExploreEntries(const QString &folderPath, bool showFolders, bool showSubFolders);
+    Q_INVOKABLE QVariantMap  getExploreFolderStats(const QString &folderPath);
     Q_INVOKABLE QString      exploreGetChecksum(const QString &fileName, const QString &folderPath);
 
     // Storage helpers
@@ -417,6 +418,7 @@ signals:
     void splitCompleted(bool success, const QString &error);
 
 private:
+    QString m_connectionName = "defaultConnection";
     bool    m_searchIsRunning  = false;
     QString m_searchStatusText;
     bool    m_catalogIsCreating = false;
