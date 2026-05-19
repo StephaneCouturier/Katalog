@@ -291,6 +291,8 @@ ColumnLayout {
                 ScrollBar.vertical:   ScrollBar { policy: ScrollBar.AsNeeded }
                 ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
 
+                rowHeightProvider: function(row) { return 30 }
+
                 columnWidthProvider: function(column) {
                     switch (column) {
                         case  0: return 250  // Name

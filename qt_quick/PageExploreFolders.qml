@@ -80,6 +80,8 @@ Item {
         Controls.ScrollView {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Controls.ScrollBar.vertical.policy:   Controls.ScrollBar.AsNeeded
+            Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AsNeeded
 
             ListView {
                 id: folderListView

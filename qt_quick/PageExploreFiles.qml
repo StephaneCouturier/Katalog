@@ -164,14 +164,17 @@ Item {
         Controls.ScrollView {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Controls.ScrollBar.vertical.policy:   Controls.ScrollBar.AsNeeded
+            Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AsNeeded
 
             ListView {
                 id: fileListView
                 model: ListModel { id: fileListModel }
+                contentWidth: Math.max(width, Kirigami.Units.gridUnit * 44)
 
                 delegate: Item {
                     id: fileDelegate
-                    width:  fileListView.width
+                    width:  Math.max(fileListView.width, Kirigami.Units.gridUnit * 44)
                     height: Kirigami.Units.gridUnit * 1.6
 
                     readonly property string dName:       model.name        ?? ""
