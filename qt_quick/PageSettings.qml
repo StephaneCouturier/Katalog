@@ -52,7 +52,8 @@ Kirigami.ScrollablePage {
         onAccepted: {
             var path = appManager1.pathFromFileUrl(selectedFile.toString())
             importPathField.text = path
-            appManager1.openImportSource(path)
+            if (importModeCombo.currentIndex < 2)
+                appManager1.openImportSource(path)
         }
     }
 
@@ -62,15 +63,6 @@ Kirigami.ScrollablePage {
             var path = appManager1.pathFromFileUrl(selectedFolder.toString())
             importPathField.text = path
             appManager1.openImportSource(path)
-        }
-    }
-
-    FileDialog {
-        id: vvvFileDialog
-        fileMode: FileDialog.OpenFile
-        onAccepted: {
-            var path = appManager1.pathFromFileUrl(selectedFile.toString())
-            vvvPathField.text = path
         }
     }
 
@@ -265,18 +257,20 @@ Kirigami.ScrollablePage {
         Controls.Label { text: qsTr("Data mode"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
         Controls.ComboBox {
             id: importModeCombo
-            model: [qsTr("File"), qsTr("Memory")]
+            model: [qsTr("Katalog File"), qsTr("Katalog Memory"), qsTr("VVV Tab Separated Values")]
             Layout.fillWidth: true
+            onCurrentIndexChanged: importPathField.text = ""
         }
 
-        Controls.Label { text: qsTr("Import"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        Controls.Label { text: qsTr("Source"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
         RowLayout {
             Layout.fillWidth: true
             spacing: Kirigami.Units.smallSpacing
             Controls.TextField {
                 id: importPathField
-                placeholderText: qsTr("Path")
+                placeholderText: importModeCombo.currentIndex === 2 ? qsTr("VVV export file (.tsv)") : qsTr("Path")
                 Layout.fillWidth: true
+                readOnly: true
             }
             Controls.Button {
                 text: qsTr("Select")
@@ -285,15 +279,18 @@ Kirigami.ScrollablePage {
                     if (importModeCombo.currentIndex === 0) {
                         importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
                         importFileDialog.open()
-                    } else {
+                    } else if (importModeCombo.currentIndex === 1) {
                         importFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
                         importFolderDialog.open()
+                    } else {
+                        importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                        importFileDialog.open()
                     }
                 }
             }
         }
 
-        Controls.Label { opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        Controls.Label { text: qsTr("Device"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
         RowLayout {
             Layout.fillWidth: true
             spacing: Kirigami.Units.smallSpacing
@@ -301,13 +298,26 @@ Kirigami.ScrollablePage {
                 id: importDeviceCombo
                 Layout.fillWidth: true
                 sourceModel: appManager1.importSourceDeviceModel
-                enabled: selectedDeviceName.length > 0 && !appManager1.importIsRunning
+                enabled: importModeCombo.currentIndex < 2 && selectedDeviceName.length > 0 && !appManager1.importIsRunning
             }
             Controls.Button {
                 text: qsTr("Import")
                 icon.name: "document-import"
-                enabled: importDeviceCombo.selectedDeviceName.length > 0 && !appManager1.importIsRunning
-                onClicked: appManager1.importDevice(importDeviceCombo.selectedDeviceId)
+                enabled: !appManager1.importIsRunning && (
+                    importModeCombo.currentIndex === 2
+                        ? importPathField.text.length > 0
+                        : importDeviceCombo.selectedDeviceName.length > 0
+                )
+                onClicked: {
+                    if (importModeCombo.currentIndex === 2) {
+                        var err = appManager1.importFromVVV(importPathField.text)
+                        if (err.length > 0)
+                            importErrorMessage.text = err
+                        importErrorMessage.visible = err.length > 0
+                    } else {
+                        appManager1.importDevice(importDeviceCombo.selectedDeviceId)
+                    }
+                }
             }
         }
 
@@ -318,47 +328,19 @@ Kirigami.ScrollablePage {
             Controls.ComboBox {
                 id: importUpdateSourceCombo
                 Layout.fillWidth: true
-                enabled: !appManager1.importIsRunning
+                enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
             }
             Controls.Button {
                 text: qsTr("Update")
                 icon.name: "view-refresh"
-                enabled: importUpdateSourceCombo.count > 0 && !appManager1.importIsRunning
+                enabled: importModeCombo.currentIndex < 2 && importUpdateSourceCombo.count > 0 && !appManager1.importIsRunning
                 onClicked: appManager1.updateAllImportsFromSource(importUpdateSourceCombo.currentText)
             }
         }
 
-        Controls.Label { text: qsTr("VVV"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: Kirigami.Units.smallSpacing
-            Controls.TextField {
-                id: vvvPathField
-                placeholderText: qsTr("VVV export file (.tsv)")
-                Layout.fillWidth: true
-                readOnly: true
-            }
-            Controls.Button {
-                text: qsTr("Select")
-                icon.name: "edit-select"
-                onClicked: vvvFileDialog.open()
-            }
-            Controls.Button {
-                text: qsTr("Import")
-                icon.name: "document-import"
-                enabled: vvvPathField.text.length > 0 && !appManager1.importIsRunning
-                onClicked: {
-                    var err = appManager1.importFromVVV(vvvPathField.text)
-                    if (err.length > 0)
-                        vvvErrorMessage.text = err
-                    vvvErrorMessage.visible = err.length > 0
-                }
-            }
-        }
-
-        Controls.Label { visible: vvvErrorMessage.visible }
+        Controls.Label { visible: importErrorMessage.visible }
         Kirigami.InlineMessage {
-            id: vvvErrorMessage
+            id: importErrorMessage
             Layout.fillWidth: true
             type: Kirigami.MessageType.Error
             visible: false
