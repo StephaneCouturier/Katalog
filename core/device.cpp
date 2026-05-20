@@ -30,6 +30,7 @@
 */
 
 #include "device.h"
+#include "database.h"
 #include <QSqlError>
 #include <QCoreApplication>
 #include <qelapsedtimer.h>
@@ -1046,6 +1047,18 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
         ? QLatin1String("device_id = :scope")
         : QLatin1String("device_parent_id = 0");
 
+    // MySQL uses CONCAT() for string concatenation; SQLite and PostgreSQL use ||.
+    const bool isMySQL = (Database::getDatabaseType(connectionName) == Database::DatabaseType::MySQL);
+
+    QString anchorSortPath, recursiveSortPath;
+    if (isMySQL) {
+        anchorSortPath    = "CONCAT(RIGHT(CONCAT('0000000000', CAST(COALESCE(device_order,0) AS CHAR)), 10), '|', LOWER(device_name))";
+        recursiveSortPath = "CONCAT(p.sort_path, '/', RIGHT(CONCAT('0000000000', CAST(COALESCE(c.device_order,0) AS CHAR)), 10), '|', LOWER(c.device_name))";
+    } else {
+        anchorSortPath    = "SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS CHAR), -10) || '|' || LOWER(device_name)";
+        recursiveSortPath = "p.sort_path || '/' || SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS CHAR), -10) || '|' || LOWER(c.device_name)";
+    }
+
     QString sql = QLatin1String(R"(
         WITH RECURSIVE device_tree AS (
             SELECT  device_id,
@@ -1062,8 +1075,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                     device_group_id,
                     device_external_id,
                     0 AS level,
-                    SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS TEXT), -10)
-                        || '|' || LOWER(device_name) AS sort_path
+                    )") + anchorSortPath + QLatin1String(R"( AS sort_path
             FROM device
             WHERE )") + startCond + QLatin1String(R"(
             UNION ALL
@@ -1081,9 +1093,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                     c.device_group_id,
                     c.device_external_id,
                     p.level + 1,
-                    p.sort_path || '/' ||
-                        SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS TEXT), -10)
-                        || '|' || LOWER(c.device_name)
+                    )") + recursiveSortPath + QLatin1String(R"(
             FROM device c
             JOIN device_tree p ON c.device_parent_id = p.device_id
         )

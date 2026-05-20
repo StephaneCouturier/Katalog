@@ -219,6 +219,11 @@ QString AppManager::startDatabase()
         return "startDatabase: " + err.text();
     }
 
+    QSqlError migErr = DatabaseManager::runMigrations(conn, collection);
+    if (migErr.type() != QSqlError::NoError)
+        qWarning() << "startDatabase: migrations failed (non-fatal):" << migErr.text();
+
+    collection->insertPhysicalStorageGroup();
     initializeDeviceListModel();
     selectedDevice->loadDevice(conn);
     emit databaseModeChanged();
@@ -231,6 +236,7 @@ void AppManager::initializeDeviceListModel()
         delete deviceListModel;
     }
     deviceListModel = new DeviceListModel(this);
+    deviceListModel->loadFromConnection(m_connectionName);
     m_deviceExpandLevel = -1; // reset to fully expanded on new connection
 
     if (!m_deviceFilterModel) {
@@ -621,6 +627,7 @@ bool AppManager::reconnectToDatabase()
     lastDatabaseError.clear();
     collection->setConnectionName(conn);
     collection->loadImageFolderPath();
+    collection->insertPhysicalStorageGroup();
     refreshAllUI();
     emit databaseModeChanged();
     return true;
