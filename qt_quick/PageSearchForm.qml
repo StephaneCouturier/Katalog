@@ -20,6 +20,13 @@ ColumnLayout {
 
     Component.onCompleted: { pageSearchForm.tagNames = appManager1.getTagNames() }
 
+    function restoreLastSearch() {
+        var hist = appManager1.getSearchHistory()
+        if (hist.length === 0) return
+        var map = appManager1.restoreSearchHistory(hist[0].dateTime)
+        applyHistoryCriteria(map)
+    }
+
     function getCriteria() {
         //Global type of search
         newSearch1.properties = {"searchInCatalogsChecked":  search_radioButton_SearchInCatalogs.checked};
@@ -37,7 +44,7 @@ ColumnLayout {
         //File Attributes
         newSearch1.properties = {"searchOnFileCriteria":    checkBoxFileAttributesCriteria.checked};
         //Type
-        newSearch1.properties = {"searchOnType":            checkBoxFileAttributesCriteria.checked && search_checkBox_Type.checked};
+        newSearch1.properties = {"searchOnType":            search_checkBox_Type.checked};
         newSearch1.properties = {"selectedFileType":        search_comboBox_FileType.currentValue};
         //Size
         newSearch1.properties = {"searchOnSize":            checkBoxFileAttributesCriteria.checked && search_checkBox_Size.checked};
@@ -262,12 +269,12 @@ ColumnLayout {
             search_comboBox_FolderTag.currentIndex = 0
         }
 
-        // Duplicates
+        // Duplicates — restore Size/Date/Checksum before Name so the "at least one" guard doesn't fire
         search_checkBox_Duplicates.checked                = map.searchOnDuplicates ?? false
-        search_checkBox_DuplicatesOnName.checked          = map.searchDuplicatesOnName ?? true
         search_checkBox_DuplicatesOnSize.checked          = map.searchDuplicatesOnSize ?? false
         search_checkBox_DuplicatesOnDate.checked          = map.searchDuplicatesOnDate ?? false
         search_checkBox_DuplicatesOnChecksum.checked      = map.searchDuplicatesOnChecksum ?? false
+        search_checkBox_DuplicatesOnName.checked          = map.searchDuplicatesOnName ?? true
         search_comboBox_DuplicateChecksumSign.currentIndex = (map.searchDuplicatesChecksumEqual ?? true) ? 0 : 1
         if (map.duplicatesCompareDevices ?? false)
             search_radioButton_DuplicatesCompareTwoDevices.checked = true
@@ -282,12 +289,12 @@ ColumnLayout {
         else
             search_comboBox_DuplicatesDevice2.resetSelection()
 
-        // Differences
+        // Differences — restore Size/Date/Checksum before Name so the "at least one" guard doesn't fire
         search_checkBox_Differences.checked               = map.searchOnDifferences ?? false
-        search_checkBox_DifferencesOnName.checked         = map.differencesOnName ?? true
         search_checkBox_DifferencesOnSize.checked         = map.differencesOnSize ?? false
         search_checkBox_DifferencesOnDate.checked         = map.differencesOnDate ?? false
         search_checkBox_DifferencesOnChecksum.checked     = map.differencesOnChecksum ?? false
+        search_checkBox_DifferencesOnName.checked         = map.differencesOnName ?? true
         search_comboBox_DifferenceChecksumSign.currentIndex = (map.differencesChecksumEqual ?? true) ? 0 : 1
         if ((map.differencesDeviceID1 ?? 0) > 0)
             search_comboBox_DifferencesDevice1._applyDevice(map.differencesDeviceID1)

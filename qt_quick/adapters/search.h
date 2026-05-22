@@ -63,6 +63,7 @@ public:
             map["selectedFileType"]         = selectedFileType;
             map["selectedSearchExclude"]    = selectedSearchExclude;
             //File attributes
+            map["searchOnFileCriteria"]     = searchOnFileCriteria;
             //Size
             map["searchOnSize"]             = searchOnSize;
             map["selectedMinimumSize"]      = selectedMinimumSize;

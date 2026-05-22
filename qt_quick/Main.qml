@@ -390,6 +390,7 @@ Kirigami.ApplicationWindow {
                 if (success) {
                     showPassiveNotification("✓ " + message, "positive")
                     root.showPage(pageSelection)  // clear col 2, go to Selection
+                    pageSearchForm.restoreLastSearch()
                 } else {
                     showPassiveNotification("✗ " + message, "warning")
                 }
@@ -405,6 +406,8 @@ Kirigami.ApplicationWindow {
         root.cardScale = windowSettings.savedCardScale
         if (appManager1.shouldShowAlphaWarning())
             alphaWarningDialog.open()
+
+        pageSearchForm.restoreLastSearch()
 
         // Restore last active page
         var last = appManager1.getLastPage()
