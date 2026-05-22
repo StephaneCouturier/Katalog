@@ -289,7 +289,6 @@ public slots:
     Q_INVOKABLE QString      unassignDevice(int deviceId, int parentId);
     Q_INVOKABLE QString      assignCatalogToDevice(int catalogDeviceId, int virtualDeviceId);
     Q_INVOKABLE void         launchFilelight(int deviceId);
-    Q_INVOKABLE void         openDeviceListFile();
     Q_INVOKABLE QString      importFromVVV(const QString &path);
     bool    getDeviceUpdateIsRunning()  const { return m_deviceUpdateIsRunning; }
     QString getDeviceUpdateStatusText() const { return m_deviceUpdateStatusText; }

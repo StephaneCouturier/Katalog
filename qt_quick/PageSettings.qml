@@ -68,8 +68,9 @@ Kirigami.ScrollablePage {
 
     actions: [
         Kirigami.Action {
-            text: qsTr("Close")
-            icon.name: "view-close"
+            text:        qsTr("Close")
+            icon.name:   "view-close"
+            displayHint: Kirigami.DisplayHint.KeepVisible
             onTriggered: pageStack.layers.pop()
         }
     ]

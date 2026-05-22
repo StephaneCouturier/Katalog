@@ -66,7 +66,7 @@ ColumnLayout {
             root.progressFile      = ""
             root.lastReportIsError = false
             var status = wasCancelled ? qsTr("Cancelled") : qsTr("Completed")
-            root.lastReportSummary = status + " — "
+            root.lastReportSummary = status + " - "
                 + qsTr("Copied: %1").arg(copiedCount + movedCount)
                 + (renamedCount > 0 ? " · " + qsTr("Archived & copied: %1").arg(renamedCount) : "")
                 + (conflictCount > 0 ? " · " + qsTr("Conflicts: %1").arg(conflictCount) : "")
@@ -152,7 +152,7 @@ ColumnLayout {
         text: {
             if (!root.totals.deviceName) return ""
             return root.totals.deviceName
-                + " — " + (root.totals.totalMappings || 0) + " " + qsTr("link(s)")
+                + " - " + (root.totals.totalMappings || 0) + " " + qsTr("link(s)")
                 + " · " + (root.totals.totalSourceSizeStr || "0") + " " + qsTr("source")
                 + " · " + (root.totals.coveragePct || "0") + "% " + qsTr("covered")
         }
@@ -189,7 +189,7 @@ ColumnLayout {
     // AbstractCard is a QQC2 ItemDelegate whose internal layout chain goes stale
     // after any page visibility cycle (layer push/pop, close/reopen).
     // Rectangle.implicitHeight is a direct binding to the inner ColumnLayout's
-    // implicitHeight — no QQC2 internals, always correct by construction.
+    // implicitHeight - no QQC2 internals, always correct by construction.
     Repeater {
         id: mappingRepeater
         model: root.mappings
@@ -204,7 +204,7 @@ ColumnLayout {
             Layout.rightMargin:  Kirigami.Units.largeSpacing
             Layout.bottomMargin: index === root.mappings.length - 1 ? Kirigami.Units.largeSpacing : 0
 
-            // Height is a direct binding — never stale after visibility cycles
+            // Height is a direct binding - never stale after visibility cycles
             implicitHeight: cardContent.implicitHeight + Kirigami.Units.largeSpacing * 2
 
             Kirigami.Theme.inherit:   false
@@ -384,7 +384,7 @@ ColumnLayout {
                     }
                 }
 
-                // ── Action buttons — Flow wraps on narrow windows ──────────────
+                // ── Action buttons - Flow wraps on narrow windows ──────────────
                 Flow {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
@@ -446,7 +446,7 @@ ColumnLayout {
                                 icon.name: "folder-sync"
                                 onTriggered: {
                                     var r = appManager1.replicateDirectories(modelData.mappingId)
-                                    root.lastReportSummary = r.error || (qsTr("Replicate") + " — "
+                                    root.lastReportSummary = r.error || (qsTr("Replicate") + " - "
                                         + qsTr("Created: %1").arg(r.created || 0)
                                         + " · " + qsTr("Already existing: %1").arg(r.skipped || 0)
                                         + (r.errors > 0 ? " · " + qsTr("Errors: %1").arg(r.errors) : ""))

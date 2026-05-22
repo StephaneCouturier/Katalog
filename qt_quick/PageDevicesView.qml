@@ -337,7 +337,7 @@ Item {
 
         Kirigami.Separator { Layout.fillWidth: true }
 
-        // Summary bar — shown for Catalogs and Storage list views (matches K2 CatalogStats/StorageStats)
+        // Summary bar - shown for Catalogs and Storage list views (matches K2 CatalogStats/StorageStats)
         Rectangle {
             Layout.fillWidth: true
             implicitHeight: summaryRow.implicitHeight + Kirigami.Units.smallSpacing * 2

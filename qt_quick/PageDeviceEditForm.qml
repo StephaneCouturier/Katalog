@@ -14,7 +14,7 @@ ColumnLayout {
     property bool   _originalIsFullDevice: false
     property var    storagePictureList:    [""]
 
-    // Signals — dialogs live in Main.qml
+    // Signals - dialogs live in Main.qml
     signal saveError(string message)
     signal catalogConfirmNeeded(string message, bool rescanNeeded, bool pathChanged)
     signal catalogUpdateContentNeeded()

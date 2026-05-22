@@ -2198,12 +2198,6 @@ void AppManager::launchFilelight(int deviceId)
         QProcess::startDetached(QStringLiteral("filelight"), {path});
 }
 //----------------------------------------------------------------------
-void AppManager::openDeviceListFile()
-{
-    if (collection && !collection->deviceFilePath.isEmpty())
-        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->deviceFilePath));
-}
-//----------------------------------------------------------------------
 QVariantMap AppManager::recordDevicesSnapshot()
 {
     const QString conn = m_connectionName;

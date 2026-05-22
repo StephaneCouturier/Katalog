@@ -8,7 +8,7 @@ ColumnLayout {
     id: pageCreateForm
     spacing: 0
 
-    // Signals — dialogs live in Main.qml to guarantee proper window overlay
+    // Signals - dialogs live in Main.qml to guarantee proper window overlay
     signal validationError(string message)
     signal emptyDirConfirmNeeded()
 
@@ -94,7 +94,7 @@ ColumnLayout {
     }
 
     // ════════════════════════════════════════════════════════════════════════════
-    // Master GridLayout — 2 columns shared across all sections
+    // Master GridLayout - 2 columns shared across all sections
     // ════════════════════════════════════════════════════════════════════════════
     GridLayout {
         Layout.fillWidth: true

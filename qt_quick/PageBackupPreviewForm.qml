@@ -29,7 +29,7 @@ Kirigami.ScrollablePage {
         root.updatingCatalogs = false
         root.previewData = appManager1.previewBackup(root.mappingId)
         if (root.previewData && root.previewData.mappingName)
-            root.title = qsTr("Preview") + " — " + root.previewData.mappingName
+            root.title = qsTr("Preview") + " - " + root.previewData.mappingName
     }
 
     function closeLayer() {
@@ -53,9 +53,10 @@ Kirigami.ScrollablePage {
 
     actions: [
         Kirigami.Action {
-            text:      qsTr("Export to CSV")
-            icon.name: "document-export"
-            enabled:   root.previewData && (root.previewData.filesToCopy.length + root.previewData.fileConflicts.length) > 0
+            text:        qsTr("Export to CSV")
+            icon.name:   "document-export"
+            displayHint: Kirigami.DisplayHint.KeepVisible
+            enabled:     root.previewData && (root.previewData.filesToCopy.length + root.previewData.fileConflicts.length) > 0
             onTriggered: {
                 var path = appManager1.exportLastBackupPreviewToCsv()
                 exportMsg.text    = path
@@ -63,8 +64,9 @@ Kirigami.ScrollablePage {
             }
         },
         Kirigami.Action {
-            text:      qsTr("Close")
-            icon.name: "view-close"
+            text:        qsTr("Close")
+            icon.name:   "view-close"
+            displayHint: Kirigami.DisplayHint.KeepVisible
             onTriggered: root.closeLayer()
         }
     ]
@@ -119,8 +121,8 @@ Kirigami.ScrollablePage {
                     return copyLabel + ": " + copyCount + " " + qsTr("file(s)")
                         + " · " + qsTr("Conflicts: %1").arg(confCount)
                         + " · " + qsTr("Already in target: %1").arg(pd.skippedCount || 0)
-                        + (pd.sourceActive ? "" : " — ⚠ " + qsTr("source offline"))
-                        + (pd.targetActive ? "" : " — ⚠ " + qsTr("target offline"))
+                        + (pd.sourceActive ? "" : " - ⚠ " + qsTr("source offline"))
+                        + (pd.targetActive ? "" : " - ⚠ " + qsTr("target offline"))
                 }
             }
 
@@ -137,10 +139,10 @@ Kirigami.ScrollablePage {
                 text: {
                     if (!root.previewData) return ""
                     if (root.previewData.spaceStatus === "Insufficient")
-                        return qsTr("Insufficient disk space — Required: %1, Available: %2")
+                        return qsTr("Insufficient disk space - Required: %1, Available: %2")
                             .arg(appManager1.formatDataSize(root.previewData.spaceRequired))
                             .arg(appManager1.formatDataSize(root.previewData.spaceAvailable))
-                    return qsTr("Low target space — %1 remaining after operation")
+                    return qsTr("Low target space - %1 remaining after operation")
                         .arg(appManager1.formatDataSize(root.previewData.spaceAvailable - root.previewData.spaceRequired))
                 }
                 showCloseButton: false

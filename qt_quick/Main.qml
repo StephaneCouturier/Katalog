@@ -274,6 +274,11 @@ Kirigami.ApplicationWindow {
                 onTriggered: { appManager1.setLastPage("Create"); root.showPage(pageCreate) }
             },
             Kirigami.Action {
+                icon.name: "backup"
+                text: "BackUp"
+                onTriggered: { appManager1.setLastPage("BackUp"); root.showPage(pageBackup) }
+            },
+            Kirigami.Action {
                 icon.name: "view-statistics"
                 text: "Statistics"
                 onTriggered: { appManager1.setLastPage("Statistics"); root.showPage(pageStatistics) }
@@ -282,11 +287,6 @@ Kirigami.ApplicationWindow {
                 icon.name: "tag"
                 text: "Tags"
                 onTriggered: { appManager1.setLastPage("Tags"); root.showPage(pageTags) }
-            },
-            Kirigami.Action {
-                icon.name: "backup"
-                text: "Backup"
-                onTriggered: { appManager1.setLastPage("Backup"); root.showPage(pageBackup) }
             },
             Kirigami.Action {
                 icon.name: "configure"
@@ -977,8 +977,9 @@ Kirigami.ApplicationWindow {
 
         actions: [
             Kirigami.Action {
-                text: qsTr("Search")
-                icon.name: "edit-find"
+                text:        qsTr("Search")
+                icon.name:   "edit-find"
+                displayHint: Kirigami.DisplayHint.KeepVisible
                 onTriggered: {
                     root.searchTriggered()
                     pageSearchForm.executeSearch()
@@ -998,18 +999,21 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
-                text: qsTr("Reset")
-                icon.name: "edit-clear-history"
+                text:        qsTr("Reset")
+                icon.name:   "edit-clear-history"
+                displayHint: Kirigami.DisplayHint.KeepVisible
                 onTriggered: pageSearchForm.resetSearch()
             },
             Kirigami.Action {
-                text: qsTr("History")
-                icon.name: "view-history"
+                text:        qsTr("History")
+                icon.name:   "view-history"
+                displayHint: Kirigami.DisplayHint.KeepVisible
                 onTriggered: pageSearchForm.openHistorySheet()
             },
             Kirigami.Action {
-                text: qsTr("Close")
-                icon.name: "view-close"
+                text:        qsTr("Close")
+                icon.name:   "view-close"
+                displayHint: Kirigami.DisplayHint.KeepVisible
                 onTriggered: {
                     pageStack.removePage(pageSearch)
                     pageSearch.visible = false
@@ -1161,12 +1165,6 @@ Kirigami.ApplicationWindow {
                 visible: pageDevicesView.viewFilter === "Catalogs"
                 enabled: !appManager1.deviceUpdateIsRunning
                 onTriggered: devVvvFileDialog.open()
-            },
-            Kirigami.Action {
-                text: qsTr("Edit List")
-                icon.name: "document-edit"
-                enabled: !appManager1.deviceUpdateIsRunning
-                onTriggered: appManager1.openDeviceListFile()
             },
             Kirigami.Action {
                 text: qsTr("Stop")

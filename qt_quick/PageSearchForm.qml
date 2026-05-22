@@ -430,6 +430,11 @@ ColumnLayout {
                 text: qsTr("Clear")
                 icon.name: "edit-delete"
                 onTriggered: clearHistoryConfirmDialog.open()
+            },
+            Kirigami.Action {
+                text: qsTr("Cancel")
+                icon.name: "dialog-cancel"
+                onTriggered: searchHistoryDialog.close()
             }
         ]
 

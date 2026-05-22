@@ -42,13 +42,15 @@ Kirigami.ScrollablePage {
 
     actions: [
         Kirigami.Action {
-            text:      qsTr("Save")
-            icon.name: "document-save"
+            text:        qsTr("Save")
+            icon.name:   "document-save"
+            displayHint: Kirigami.DisplayHint.KeepVisible
             onTriggered: root.save()
         },
         Kirigami.Action {
-            text:      qsTr("Cancel")
-            icon.name: "dialog-cancel"
+            text:        qsTr("Cancel")
+            icon.name:   "dialog-cancel"
+            displayHint: Kirigami.DisplayHint.KeepVisible
             onTriggered: root.closeLayer()
         }
     ]
@@ -146,8 +148,8 @@ Kirigami.ScrollablePage {
                 textRole:  "text"
                 valueRole: "value"
                 model: [
-                    { value: "RenameOldest", text: qsTr("Rename oldest — rename target, copy source") },
-                    { value: "Skip",         text: qsTr("Skip — leave target untouched") }
+                    { value: "RenameOldest", text: qsTr("Rename oldest - rename target, copy source") },
+                    { value: "Skip",         text: qsTr("Skip - leave target untouched") }
                 ]
             }
 

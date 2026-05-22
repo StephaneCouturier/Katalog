@@ -83,6 +83,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — View list           | ✅ | 🚧 | |
 | — Edit                | ✅ | ✅ | |
 | — Update progress     | ✅ | 🚧 | |
+| — Update Stop         | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
 | **Statistics**        | ✅ | 🚧 | zoom in feature, axis labels|
 | **Tags**              | ✅ | ✅ | |
@@ -96,7 +97,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Image folder        | ✅ | ✅ | |
 | — New & Import        | ✅ | ✅ | |
 | — Themes              | ✅ | 🔲 | |
-| — Languages           | ✅ | 🚧 | |
+| — Languages           | ✅ | 🔲 | |
 | **About**             | ✅ | ✅ | |
 
 
