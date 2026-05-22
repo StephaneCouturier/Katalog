@@ -23,118 +23,83 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   filesview.cpp
-// Purpose:     Class/model to display a list of files
-// Description:
+// Purpose:     QSortFilterProxyModel wrapper for file list models
+// Description: Provides intelligent sorting (numeric size, merged metadata)
+//              for both SearchSync and ExploreFilesModel.
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "filesview.h"
-
-#include <QFont>
-#include <QBrush>
-#include <QDebug>
-#include <QLocale>
-//#include <QFileIconProvider>
-#include <QStandardItem>
+#include "core/filemetadata.h"
 
 FilesView::FilesView(QObject *parent)
     : QSortFilterProxyModel(parent)
 {
-
 }
 
-QVariant FilesView::data(const QModelIndex &index, int role) const
+void FilesView::setCaseSensitive(bool v)
 {
-    //Define list of columns per type of data
-    QList<int> filesizeColumnList, filecountColumnList;
-    filesizeColumnList <<1;
-
-    //Definition of filetypes
-    QStringList fileTypesPlain_Image, fileTypesPlain_Audio,fileTypesPlain_Video,fileTypesPlain_Text;
-    fileTypesPlain_Image << "png" << "jpg" << "gif" << "xcf" << "tif" << "bmp";
-    fileTypesPlain_Audio << "mp3" << "wav" << "ogg" << "aif";
-    fileTypesPlain_Video << "wmv" << "avi" << "mp4" << "mkv" << "flv"  << "webm";
-    fileTypesPlain_Text  << "txt" << "pdf" << "odt" << "idx" << "html" << "rtf" << "doc" << "docx" << "epub";
-
-    switch ( role )
-    {
-    case Qt::DisplayRole:
-    {
-        //File Size columns
-        if( filesizeColumnList.contains(index.column()) ){
-            QModelIndex idx = index.sibling(index.row(), 5);
-            if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" )
-                return "";
-            else
-                return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
-        }
-
-        //Numbers columns (without units)
-        else if( filecountColumnList.contains(index.column()) ){
-            return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 0)  + "  ");
-        }
-        else QSortFilterProxyModel::data(index, role) ;
-
-        break;
-    }
-
-    case Qt::TextAlignmentRole:
-    {
-        //align numbers to the right
-        if ( filecountColumnList.contains(index.column()) )
-            return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
-
-        if ( filesizeColumnList.contains(index.column()) )
-            return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
-
-        break;
-    }
-
-    case Qt::DecorationRole:
-    {
-        if( index.column()==0 ){
-
-            //Identification of filetype
-            QString fullFileName, fileName, fileType;
-            fullFileName = QSortFilterProxyModel::data(index, Qt::DisplayRole).toString();
-            fileName = fullFileName.left(fullFileName.lastIndexOf("."));
-            fileType = fullFileName.remove(fileName+".");
-
-            //Assign the icon per filetype
-            QModelIndex idx = index.sibling(index.row(), 5);
-            if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" ){
-                return QIcon::fromTheme("folder");
-            }
-            else if( fileTypesPlain_Image.contains(fileType,Qt::CaseInsensitive)){
-                return QIcon::fromTheme("image-jpeg");
-            }
-            else if( fileTypesPlain_Audio.contains(fileType,Qt::CaseInsensitive)){
-                return QIcon::fromTheme("audio-x-mpeg");
-            }
-            else if( fileTypesPlain_Video.contains(fileType,Qt::CaseInsensitive)){
-                return QIcon::fromTheme("video-mp4");
-            }
-            else if(  fileTypesPlain_Text.contains(fileType,Qt::CaseInsensitive)){
-                return QIcon::fromTheme("view-list-text");
-            }
-            else
-                return QIcon::fromTheme("application-x-zerosize");
-        }
-
-        break;
-    }
-    }
-    return QSortFilterProxyModel::data(index, role);
+    if (m_caseSensitive == v) return;
+    m_caseSensitive = v;
+    invalidate();
 }
 
-QVariant FilesView::headerData(int section, Qt::Orientation orientation, int role) const
+void FilesView::sort(int column, int order)
 {
-    switch ( role )
-    {
-    case Qt::DisplayRole:
-    {
-        return QSortFilterProxyModel::headerData( section, orientation, role) ;
+    QSortFilterProxyModel::sort(column, Qt::SortOrder(order));
+    // QML TableView doesn't reliably respond to layoutChanged from a proxy;
+    // a modelReset guarantees the view re-reads all cells in the new sorted order.
+    beginResetModel();
+    endResetModel();
+}
+
+bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+    const int col = left.column();
+
+    // Column 1: file size — numeric sort on raw qint64
+    if (col == 1) {
+        qint64 l = sourceModel()->data(left).toLongLong();
+        qint64 r = sourceModel()->data(right).toLongLong();
+        return l < r;
     }
+
+    // Search model merged metadata columns
+    if (col == 10) { // Width (image + video merged)
+        int l = FileMetadata::mergeMetadataValue(
+            sourceModel()->data(sourceModel()->index(left.row(),  10)),
+            sourceModel()->data(sourceModel()->index(left.row(),  13)));
+        int r = FileMetadata::mergeMetadataValue(
+            sourceModel()->data(sourceModel()->index(right.row(), 10)),
+            sourceModel()->data(sourceModel()->index(right.row(), 13)));
+        return l < r;
     }
-    return QVariant();
+    if (col == 11) { // Height (image + video merged)
+        int l = FileMetadata::mergeMetadataValue(
+            sourceModel()->data(sourceModel()->index(left.row(),  11)),
+            sourceModel()->data(sourceModel()->index(left.row(),  14)));
+        int r = FileMetadata::mergeMetadataValue(
+            sourceModel()->data(sourceModel()->index(right.row(), 11)),
+            sourceModel()->data(sourceModel()->index(right.row(), 14)));
+        return l < r;
+    }
+    if (col == 12) { // Duration (video + audio merged)
+        int l = FileMetadata::mergeMetadataValue(
+            sourceModel()->data(sourceModel()->index(left.row(),  12)),
+            sourceModel()->data(sourceModel()->index(left.row(),  15)));
+        int r = FileMetadata::mergeMetadataValue(
+            sourceModel()->data(sourceModel()->index(right.row(), 12)),
+            sourceModel()->data(sourceModel()->index(right.row(), 15)));
+        return l < r;
+    }
+
+    // All other columns: case-insensitive string sort by default
+    QVariant lData = sourceModel()->data(left);
+    QVariant rData = sourceModel()->data(right);
+    if (lData.typeId() == QMetaType::QString && rData.typeId() == QMetaType::QString) {
+        Qt::CaseSensitivity cs = m_caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
+        return QString::compare(lData.toString(), rData.toString(), cs) < 0;
+    }
+
+    return QSortFilterProxyModel::lessThan(left, right);
 }

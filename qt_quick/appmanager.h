@@ -66,6 +66,8 @@
 #include "core/catalogdifferenceengine.h"
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
+#include "adapters/explorefilesmodel.h"
+#include "filesview.h"
 #include <QElapsedTimer>
 
 class BackupJobStoppable;
@@ -75,7 +77,9 @@ class AppManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
-    Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel READ getDeviceFilterModel CONSTANT)
+    Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel  READ getDeviceFilterModel  CONSTANT)
+    Q_PROPERTY(QAbstractItemModel*    searchSortModel   READ getSearchSortModel    CONSTANT)
+    Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
     Q_PROPERTY(int     selectedDeviceId   READ getSelectedDeviceId   NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceType READ getSelectedDeviceType NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)
@@ -92,6 +96,7 @@ class AppManager : public QObject
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
     Q_PROPERTY(bool    searchIsRunning   READ getSearchIsRunning   NOTIFY searchStateChanged)
+    Q_PROPERTY(bool    searchIsPaused    READ getSearchIsPaused    NOTIFY searchStateChanged)
     Q_PROPERTY(QString searchStatusText  READ getSearchStatusText  NOTIFY searchStatusTextChanged)
     Q_PROPERTY(bool    catalogIsCreating READ getCatalogIsCreating NOTIFY catalogIsCreatingChanged)
     Q_PROPERTY(QString catalogStatusText READ getCatalogStatusText NOTIFY catalogStatusTextChanged)
@@ -228,8 +233,12 @@ public slots:
 
     // Search progress
     bool    getSearchIsRunning()  const { return m_searchIsRunning; }
+    bool    getSearchIsPaused()   const { return m_searchIsPaused; }
     QString getSearchStatusText() const { return m_searchStatusText; }
     void onSearchProgress(int filesProcessed);
+    Q_INVOKABLE void stopSearch();
+    Q_INVOKABLE void pauseSearch();
+    Q_INVOKABLE void resumeSearch();
 
     // Catalog creation progress
     bool    getCatalogIsCreating()  const { return m_catalogIsCreating; }
@@ -297,8 +306,18 @@ public slots:
     Q_INVOKABLE QVariantMap  exploreOpenCatalog(int deviceId);
     Q_INVOKABLE QVariantList getExploreFolders();
     Q_INVOKABLE QVariantList getExploreEntries(const QString &folderPath, bool showFolders, bool showSubFolders);
+    Q_INVOKABLE void         loadExploreEntries(const QString &folderPath, bool showFolders, bool showSubFolders);
+    Q_INVOKABLE void         exploreRemoveRow(int proxyRow);
     Q_INVOKABLE QVariantMap  getExploreFolderStats(const QString &folderPath);
     Q_INVOKABLE QString      exploreGetChecksum(const QString &fileName, const QString &folderPath);
+
+    // Sort
+    Q_INVOKABLE void sortSearch(int column, int order);
+    Q_INVOKABLE void sortExplore(int column, int order);
+
+    // Sort model accessors (for Q_PROPERTY)
+    QAbstractItemModel *getSearchSortModel()  const { return m_searchSortModel; }
+    QAbstractItemModel *getExploreSortModel() const { return m_exploreSortModel; }
 
     // Storage helpers
     Q_INVOKABLE QStringList  getStoragePictureList() const;
@@ -421,6 +440,7 @@ signals:
 private:
     QString m_connectionName = "defaultConnection";
     bool    m_searchIsRunning  = false;
+    bool    m_searchIsPaused   = false;
     QString m_searchStatusText;
     bool    m_catalogIsCreating = false;
     QString m_catalogStatusText;
@@ -480,6 +500,10 @@ private:
     void startNextDeviceUpdate();
     QVariantMap buildUpdateReport(int deviceId, const QList<qint64> &results);
     QVariantMap buildBatchUpdateReport(const QList<qint64> &results);
+
+    ExploreFilesModel *m_exploreFilesModel = nullptr;
+    FilesView         *m_exploreSortModel  = nullptr;
+    FilesView         *m_searchSortModel   = nullptr;
 
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,

@@ -22,9 +22,10 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   devicetreeview.h
-// Purpose:     Class/model to display a list of files
-// Description:
+// File Name:   filesview.h
+// Purpose:     QSortFilterProxyModel wrapper for file list models
+// Description: Provides intelligent sorting (numeric size, merged metadata)
+//              for both SearchSync and ExploreFilesModel.
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
@@ -33,18 +34,24 @@
 
 #include <QSortFilterProxyModel>
 
-class FilesView  : public QSortFilterProxyModel
+class FilesView : public QSortFilterProxyModel
 {
     Q_OBJECT
 
 public:
-    FilesView(QObject *parent = nullptr);
+    explicit FilesView(QObject *parent = nullptr);
+
+    bool caseSensitive() const { return m_caseSensitive; }
+    void setCaseSensitive(bool v);
+
+    // Q_INVOKABLE wrapper so QML can call sort(column, Qt.AscendingOrder/Qt.DescendingOrder)
+    Q_INVOKABLE void sort(int column, int order = 0);
+
+protected:
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
-    QString percentBrush;
-    QVariant data( const QModelIndex &index, int role ) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-
+    bool m_caseSensitive = false;
 };
 
 #endif // FILESVIEW_H

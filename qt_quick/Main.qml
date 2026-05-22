@@ -1030,7 +1030,7 @@ Kirigami.ApplicationWindow {
             visible: appManager1.searchIsRunning || appManager1.searchStatusText.length > 0
             spacing: Kirigami.Units.smallSpacing
             Controls.BusyIndicator {
-                running: appManager1.searchIsRunning
+                running: appManager1.searchIsRunning && !appManager1.searchIsPaused
                 visible: appManager1.searchIsRunning
                 implicitWidth:  Kirigami.Units.gridUnit * 1.5
                 implicitHeight: Kirigami.Units.gridUnit * 1.5
@@ -1043,6 +1043,22 @@ Kirigami.ApplicationWindow {
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
                 font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+            Controls.Button {
+                visible: appManager1.searchIsRunning
+                icon.name: appManager1.searchIsPaused ? "media-playback-start" : "media-playback-pause"
+                Controls.ToolTip.text: appManager1.searchIsPaused ? qsTr("Resume") : qsTr("Pause")
+                Controls.ToolTip.visible: hovered
+                flat: true
+                onClicked: appManager1.searchIsPaused ? appManager1.resumeSearch() : appManager1.pauseSearch()
+            }
+            Controls.Button {
+                visible: appManager1.searchIsRunning
+                icon.name: "media-playback-stop"
+                Controls.ToolTip.text: qsTr("Stop")
+                Controls.ToolTip.visible: hovered
+                flat: true
+                onClicked: appManager1.stopSearch()
             }
         }
 
@@ -1059,7 +1075,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Icon { source: "edit-find"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
             Kirigami.Heading { text: pageSearchResults.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
         title: {
-            let n = newSearch1.properties.filesFoundNumber ?? 0
+            let n = Number(newSearch1.properties.filesFoundNumber ?? 0).toLocaleString(Qt.locale(), "f", 0)
             if (newSearch1.properties.searchOnDuplicates)
                 return qsTr("Duplicates (%1)").arg(n)
             if (newSearch1.properties.searchOnDifferences)

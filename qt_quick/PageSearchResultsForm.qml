@@ -10,6 +10,10 @@ ColumnLayout {
 
     signal closeRequested()
 
+    // Sort state
+    property int  sortColumn:    -1
+    property bool sortAscending: true
+
     // ── Helpers ──────────────────────────────────────────────────────────
     function formatFileSize(size) {
         let n = Number(size)
@@ -91,7 +95,7 @@ ColumnLayout {
             Controls.Label {
                 font.bold: true
                 text: {
-                    let n = newSearch1.properties.filesFoundNumber ?? 0
+                    let n = Number(newSearch1.properties.filesFoundNumber ?? 0).toLocaleString(Qt.locale(), "f", 0)
                     if (newSearch1.properties.searchOnDuplicates)
                         return qsTr("%1 duplicate(s) found").arg(n)
                     if (newSearch1.properties.searchOnDifferences)
@@ -251,26 +255,53 @@ ColumnLayout {
             resizableColumns: true
 
                 delegate: Rectangle {
+                    required property int    column
                     required property string display
                     color: Kirigami.Theme.backgroundColor
                     implicitHeight: headerView.implicitHeight
 
-                    Controls.Label {
+                    RowLayout {
                         anchors {
-                            left: parent.left; right: parent.right
+                            left: parent.left; right: sortIndicator.left
                             verticalCenter: parent.verticalCenter
-                            leftMargin: 6; rightMargin: 6
+                            leftMargin: 6; rightMargin: 2
                         }
-                        text: display
-                        elide: Text.ElideRight
-                        //clip: true
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                        Controls.Label {
+                            Layout.fillWidth: true
+                            text: display
+                            elide: Text.ElideRight
+                            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                            color: Kirigami.Theme.textColor
+                        }
+                    }
+
+                    Controls.Label {
+                        id: sortIndicator
+                        anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 4 }
+                        text: pageSearchResults_column.sortColumn === column
+                              ? (pageSearchResults_column.sortAscending ? "▲" : "▼") : ""
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.7
+                        color: Kirigami.Theme.textColor
                     }
 
                     Rectangle {//Vertical separator
                         anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
                         width: 1
                         color: Kirigami.Theme.separatorColor ?? "transparent"
+                    }
+
+                    TapHandler {
+                        onTapped: {
+                            tableView.selectedRow = -1
+                            if (pageSearchResults_column.sortColumn === column) {
+                                pageSearchResults_column.sortAscending = !pageSearchResults_column.sortAscending
+                            } else {
+                                pageSearchResults_column.sortColumn    = column
+                                pageSearchResults_column.sortAscending = true
+                            }
+                            appManager1.sortSearch(pageSearchResults_column.sortColumn,
+                                                   pageSearchResults_column.sortAscending ? 0 : 1)
+                        }
                     }
                 }
             }
@@ -285,7 +316,7 @@ ColumnLayout {
             anchors { top: headerSep.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
                 columnSpacing: 0
                 rowSpacing: 0
-                model: newSearch1
+                model: appManager1.searchSortModel
 
                 property int selectedRow: -1
 
@@ -402,17 +433,19 @@ ColumnLayout {
                         onClicked: function(mouse) {
                             tableView.selectedRow = row
                             if (mouse.button === Qt.RightButton) {
-                                let fileName    = String(newSearch1.data(newSearch1.index(row, 0),  Qt.DisplayRole) ?? "")
-                                let folder      = String(newSearch1.data(newSearch1.index(row, 3),  Qt.DisplayRole) ?? "")
-                                let catalogName = String(newSearch1.data(newSearch1.index(row, 4),  Qt.DisplayRole) ?? "")
-                                let catalogId   = Number(newSearch1.data(newSearch1.index(row, 5),  Qt.DisplayRole) ?? -1)
-                                let checksum    = String(newSearch1.data(newSearch1.index(row, 19), Qt.DisplayRole) ?? "")
+                                var m = appManager1.searchSortModel
+                                let fileName    = String(m.data(m.index(row, 0),  Qt.DisplayRole) ?? "")
+                                let folder      = String(m.data(m.index(row, 3),  Qt.DisplayRole) ?? "")
+                                let catalogName = String(m.data(m.index(row, 4),  Qt.DisplayRole) ?? "")
+                                let catalogId   = Number(m.data(m.index(row, 5),  Qt.DisplayRole) ?? -1)
+                                let checksum    = String(m.data(m.index(row, 19), Qt.DisplayRole) ?? "")
                                 resultContextMenu.openForRow(row, fileName, folder, checksum, catalogId, catalogName)
                             }
                         }
                         onDoubleClicked: {
-                            let fileName = String(newSearch1.data(newSearch1.index(row, 0), Qt.DisplayRole) ?? "")
-                            let folder   = String(newSearch1.data(newSearch1.index(row, 3), Qt.DisplayRole) ?? "")
+                            var m = appManager1.searchSortModel
+                            let fileName = String(m.data(m.index(row, 0), Qt.DisplayRole) ?? "")
+                            let folder   = String(m.data(m.index(row, 3), Qt.DisplayRole) ?? "")
                             appManager1.openFile(folder + "/" + fileName)
                         }
                     }

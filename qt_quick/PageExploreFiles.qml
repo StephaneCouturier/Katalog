@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import QtQuick.Controls   // required for ScrollBar attached property (namespace alias prevents it)
-import Qt.labs.qmlmodels
 import org.kde.kirigami as Kirigami
 
 // Right panel of the Explore page: file and folder list for the selected folder.
@@ -18,6 +17,10 @@ Item {
     property int    folderFileCount:   0
     property var    folderTotalSize:   0
 
+    // Sort state
+    property int  sortColumn:    -1
+    property bool sortAscending: true
+
     // Active entry state for context menu and checksum dialogs
     property string _activeFilePath:   ""
     property string _activeFileName:   ""
@@ -27,31 +30,10 @@ Item {
 
     signal folderNavigated(string folderPath)
 
-    TableModel {
-        id: fileTableModel
-        TableModelColumn { display: "name" }
-        TableModelColumn { display: "size" }
-        TableModelColumn { display: "dateUpdated" }
-        TableModelColumn { display: "folderPath" }
-    }
-
     function loadEntries() {
         if (currentFolderPath === "") return
-        fileTableModel.clear()
         exploreTableView.selectedRow = -1
-        var entries = appManager1.getExploreEntries(currentFolderPath, showFolders, showSubFolders)
-        for (var i = 0; i < entries.length; i++) {
-            fileTableModel.appendRow({
-                name:           entries[i].name          ?? "",
-                size:           entries[i].size           ?? 0,
-                dateUpdated:    entries[i].dateUpdated    ?? "",
-                folderPath:     entries[i].folderPath     ?? "",
-                fullPath:       entries[i].fullPath       ?? "",
-                entryType:      entries[i].entryType      ?? "",
-                fileType:       entries[i].fileType       ?? "",
-                checksumSha256: entries[i].checksumSha256 ?? ""
-            })
-        }
+        appManager1.loadExploreEntries(currentFolderPath, showFolders, showSubFolders)
         var stats = appManager1.getExploreFolderStats(currentFolderPath)
         root.folderFileCount = stats.fileCount
         root.folderTotalSize = stats.totalSize
@@ -148,21 +130,31 @@ Item {
                 resizableColumns: true
 
                 delegate: Rectangle {
-                    required property int column
+                    required property int    column
+                    required property string display
                     color: Kirigami.Theme.backgroundColor
                     implicitHeight: exploreHeaderView.implicitHeight
 
-                    readonly property var headerLabels: [qsTr("Name"), qsTr("Size"), qsTr("Date"), qsTr("Directory")]
+                    RowLayout {
+                        anchors {
+                            left: parent.left; right: sortIndicator.left
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 6; rightMargin: 2
+                        }
+                        Controls.Label {
+                            Layout.fillWidth: true
+                            text: display
+                            elide: Text.ElideRight
+                            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                            color: Kirigami.Theme.textColor
+                        }
+                    }
 
                     Controls.Label {
-                        anchors {
-                            left: parent.left; right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: 6; rightMargin: 6
-                        }
-                        text: column < headerLabels.length ? headerLabels[column] : ""
-                        elide: Text.ElideRight
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                        id: sortIndicator
+                        anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 4 }
+                        text: root.sortColumn === column ? (root.sortAscending ? "▲" : "▼") : ""
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.7
                         color: Kirigami.Theme.textColor
                     }
 
@@ -170,6 +162,19 @@ Item {
                         anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
                         width: 1
                         color: Kirigami.Theme.separatorColor ?? "transparent"
+                    }
+
+                    TapHandler {
+                        onTapped: {
+                            exploreTableView.selectedRow = -1
+                            if (root.sortColumn === column) {
+                                root.sortAscending = !root.sortAscending
+                            } else {
+                                root.sortColumn    = column
+                                root.sortAscending = true
+                            }
+                            appManager1.sortExplore(root.sortColumn, root.sortAscending ? 0 : 1)
+                        }
                     }
                 }
             }
@@ -184,7 +189,7 @@ Item {
                 anchors { top: exploreHeaderSep.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
                 columnSpacing: 0
                 rowSpacing: 0
-                model: fileTableModel
+                model: appManager1.exploreSortModel
 
                 property int selectedRow: -1
 
@@ -206,16 +211,18 @@ Item {
                 }
 
                 delegate: Rectangle {
-                    required property int row
-                    required property int column
-                    required property var display
+                    required property int    row
+                    required property int    column
+                    required property var    display
+                    required property string entryType
+                    required property string fileType
+                    required property string fullPath
+                    required property string folderPath
+                    required property string name
+                    required property string checksumSha256
                     implicitHeight: 30
 
-                    readonly property var    rowData:    fileTableModel.getRow(row) ?? {}
-                    readonly property string entryType:  rowData.entryType      ?? ""
-                    readonly property string fileType:   rowData.fileType       ?? ""
-                    readonly property string fullPath:   rowData.fullPath       ?? ""
-                    readonly property string checksum:   rowData.checksumSha256 ?? ""
+                    readonly property string checksum: checksumSha256
 
                     readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
                     color: exploreTableView.selectedRow === row
@@ -291,8 +298,8 @@ Item {
                             }
                             if (mouse.button === Qt.RightButton) {
                                 root._activeFilePath   = fullPath
-                                root._activeFileName   = rowData.name      ?? ""
-                                root._activeFolderPath = rowData.folderPath ?? ""
+                                root._activeFileName   = name
+                                root._activeFolderPath = folderPath
                                 root._activeChecksum   = checksum
                                 root._activeEntryType  = entryType
                                 exploreContextMenu.popup()
@@ -442,7 +449,7 @@ Item {
             height: visible ? implicitHeight : 0
             onTriggered: {
                 if (appManager1.moveFileToTrash(root._activeFilePath))
-                    fileTableModel.removeRow(exploreTableView.selectedRow)
+                    appManager1.exploreRemoveRow(exploreTableView.selectedRow)
             }
         }
 
@@ -453,7 +460,7 @@ Item {
             height: visible ? implicitHeight : 0
             onTriggered: {
                 if (appManager1.moveFileToTrash(root._activeFilePath))
-                    fileTableModel.removeRow(exploreTableView.selectedRow)
+                    appManager1.exploreRemoveRow(exploreTableView.selectedRow)
             }
         }
 
@@ -464,7 +471,7 @@ Item {
             height: visible ? implicitHeight : 0
             onTriggered: {
                 if (appManager1.deleteSingleFile(root._activeFilePath))
-                    fileTableModel.removeRow(exploreTableView.selectedRow)
+                    appManager1.exploreRemoveRow(exploreTableView.selectedRow)
             }
         }
     }

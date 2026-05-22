@@ -70,6 +70,13 @@ void AppManager::setSearchObject(SearchSync *search)
     searchObject = search;
     search->setDatabaseConnection(m_connectionName);
     connect(search, &Search::searchProgress, this, &AppManager::onSearchProgress);
+
+    m_searchSortModel = new FilesView(this);
+    m_searchSortModel->setSourceModel(search);
+
+    m_exploreFilesModel = new ExploreFilesModel(this);
+    m_exploreSortModel  = new FilesView(this);
+    m_exploreSortModel->setSourceModel(m_exploreFilesModel);
 }
 //----------------------------------------------------------------------
 void AppManager::onSearchProgress(int filesProcessed)
@@ -119,6 +126,29 @@ void AppManager::onSearchProgress(int filesProcessed)
     QCoreApplication::processEvents();
 }
 //----------------------------------------------------------------------
+void AppManager::stopSearch()
+{
+    if (searchObject) searchObject->stopSearch();
+}
+//----------------------------------------------------------------------
+void AppManager::pauseSearch()
+{
+    if (searchObject) {
+        searchObject->pauseSearch();
+        m_searchIsPaused = true;
+        emit searchStateChanged();
+    }
+}
+//----------------------------------------------------------------------
+void AppManager::resumeSearch()
+{
+    if (searchObject) {
+        searchObject->resumeSearch();
+        m_searchIsPaused = false;
+        emit searchStateChanged();
+    }
+}
+//----------------------------------------------------------------------
 void AppManager::executeSearch()
 {
     if (!searchObject) {
@@ -162,6 +192,7 @@ void AppManager::executeSearch()
     searchObject->searchFiles(selectedDevice);
 
     m_searchIsRunning = false;
+    m_searchIsPaused  = false;
     emit searchStateChanged();
 
     // Build completion message
@@ -2929,6 +2960,39 @@ QVariantList AppManager::getExploreEntries(const QString &folderPath, bool showF
         result.append(item);
     }
     return result;
+}
+//----------------------------------------------------------------------
+void AppManager::loadExploreEntries(const QString &folderPath, bool showFolders, bool showSubFolders)
+{
+    if (!m_exploreFilesModel) return;
+    if (exploreDevice->externalID == 0) {
+        m_exploreFilesModel->clear();
+        return;
+    }
+    const QList<Catalog::ExploreFileEntry> entries = Catalog::getExploreEntries(
+        m_connectionName, exploreDevice->externalID, folderPath, showFolders, showSubFolders);
+    m_exploreFilesModel->populate(entries);
+}
+//----------------------------------------------------------------------
+void AppManager::exploreRemoveRow(int proxyRow)
+{
+    if (!m_exploreSortModel || !m_exploreFilesModel) return;
+    QModelIndex proxyIdx  = m_exploreSortModel->index(proxyRow, 0);
+    QModelIndex sourceIdx = m_exploreSortModel->mapToSource(proxyIdx);
+    if (sourceIdx.isValid())
+        m_exploreFilesModel->removeEntry(sourceIdx.row());
+}
+//----------------------------------------------------------------------
+void AppManager::sortSearch(int column, int order)
+{
+    if (m_searchSortModel)
+        m_searchSortModel->sort(column, order);
+}
+//----------------------------------------------------------------------
+void AppManager::sortExplore(int column, int order)
+{
+    if (m_exploreSortModel)
+        m_exploreSortModel->sort(column, order);
 }
 //----------------------------------------------------------------------
 QString AppManager::exploreGetChecksum(const QString &fileName, const QString &folderPath)
