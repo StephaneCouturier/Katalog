@@ -85,7 +85,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | — Update progress     | ✅ | 🚧 | |
 | — Update Stop         | ✅ | 🔲 | |
 | **Explore**           | ✅ | 🔲 | |
-| **Statistics**        | ✅ | 🚧 | zoom in feature, axis labels|
+| **Statistics**        | ✅ | 🚧 | zoom in feature |
 | **Tags**              | ✅ | ✅ | |
 | **Backup**            | ✅ | ✅ | |
 | — View                | ✅ | ✅ | |

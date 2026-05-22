@@ -37,6 +37,15 @@ Kirigami.AbstractCard {
         Controls.MenuSeparator {}
 
         Controls.MenuItem {
+            text:      qsTr("Update")
+            icon.name: "media-playlist-repeat"
+            visible:   model.type === "Catalog" && model.isActive
+            height:    visible ? implicitHeight : 0
+            enabled:   !appManager1.deviceUpdateIsRunning
+            onTriggered: appManager1.updateDevice(model.deviceId)
+        }
+
+        Controls.MenuItem {
             text: qsTr("Explore")
             icon.name: "view-list-tree"
             visible: model.type === "Catalog"

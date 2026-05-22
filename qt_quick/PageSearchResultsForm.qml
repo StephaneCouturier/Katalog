@@ -248,6 +248,7 @@ ColumnLayout {
             syncView: tableView
             clip: true
             implicitHeight: 34
+            resizableColumns: true
 
                 delegate: Rectangle {
                     required property string display
@@ -294,6 +295,8 @@ ColumnLayout {
                 rowHeightProvider: function(row) { return 30 }
 
                 columnWidthProvider: function(column) {
+                    let w = tableView.explicitColumnWidth(column)
+                    if (w >= 0) return w
                     switch (column) {
                         case  0: return 250  // Name
                         case  1: return 90   // Size

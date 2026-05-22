@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
+import QtQuick.Controls   // required for ScrollBar attached property (namespace alias prevents it)
+import Qt.labs.qmlmodels
 import org.kde.kirigami as Kirigami
 
 // Right panel of the Explore page: file and folder list for the selected folder.
@@ -16,36 +18,43 @@ Item {
     property int    folderFileCount:   0
     property var    folderTotalSize:   0
 
-    // Active file state for checksum dialogs
+    // Active entry state for context menu and checksum dialogs
     property string _activeFilePath:   ""
     property string _activeFileName:   ""
     property string _activeFolderPath: ""
     property string _activeChecksum:   ""
+    property string _activeEntryType:  ""
 
     signal folderNavigated(string folderPath)
 
+    TableModel {
+        id: fileTableModel
+        TableModelColumn { display: "name" }
+        TableModelColumn { display: "size" }
+        TableModelColumn { display: "dateUpdated" }
+        TableModelColumn { display: "folderPath" }
+    }
+
     function loadEntries() {
         if (currentFolderPath === "") return
-        fileListModel.clear()
+        fileTableModel.clear()
+        exploreTableView.selectedRow = -1
         var entries = appManager1.getExploreEntries(currentFolderPath, showFolders, showSubFolders)
         for (var i = 0; i < entries.length; i++) {
-            fileListModel.append(entries[i])
+            fileTableModel.appendRow({
+                name:           entries[i].name          ?? "",
+                size:           entries[i].size           ?? 0,
+                dateUpdated:    entries[i].dateUpdated    ?? "",
+                folderPath:     entries[i].folderPath     ?? "",
+                fullPath:       entries[i].fullPath       ?? "",
+                entryType:      entries[i].entryType      ?? "",
+                fileType:       entries[i].fileType       ?? "",
+                checksumSha256: entries[i].checksumSha256 ?? ""
+            })
         }
         var stats = appManager1.getExploreFolderStats(currentFolderPath)
         root.folderFileCount = stats.fileCount
         root.folderTotalSize = stats.totalSize
-    }
-
-    function iconForType(fileType, entryType) {
-        if (entryType === "folder") return "folder"
-        switch (fileType) {
-            case "audio":  return "audio-x-mpeg"
-            case "image":  return "image-jpeg"
-            case "video":  return "video-mp4"
-            case "text":   return "view-list-text"
-            case "other":  return "document-open"
-            default:       return "application-x-zerosize"
-        }
     }
 
     ColumnLayout {
@@ -102,9 +111,9 @@ Item {
         // Files count and total size row
         RowLayout {
             Layout.fillWidth: true
-            Layout.leftMargin:  Kirigami.Units.smallSpacing
-            Layout.rightMargin: Kirigami.Units.smallSpacing
-            Layout.topMargin:   Kirigami.Units.smallSpacing
+            Layout.leftMargin:   Kirigami.Units.smallSpacing
+            Layout.rightMargin:  Kirigami.Units.smallSpacing
+            Layout.topMargin:    Kirigami.Units.smallSpacing
             Layout.bottomMargin: Kirigami.Units.smallSpacing
             spacing: Kirigami.Units.smallSpacing
 
@@ -124,317 +133,338 @@ Item {
 
         Kirigami.Separator { Layout.fillWidth: true }
 
-        // File list header row
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.leftMargin:  Kirigami.Units.smallSpacing
-            Layout.rightMargin: Kirigami.Units.smallSpacing
-            spacing: 0
-
-            Controls.Label {
-                text: qsTr("Name")
-                font.bold: true
-                Layout.preferredWidth: 260
-                Layout.minimumWidth:   120
-            }
-            Controls.Label {
-                text: qsTr("Size")
-                font.bold: true
-                Layout.preferredWidth: 90
-                horizontalAlignment: Text.AlignRight
-            }
-            Controls.Label {
-                text: qsTr("Date")
-                font.bold: true
-                Layout.preferredWidth: 150
-                Layout.leftMargin: Kirigami.Units.smallSpacing
-            }
-            Controls.Label {
-                text: qsTr("Directory")
-                font.bold: true
-                Layout.fillWidth: true
-                Layout.leftMargin: Kirigami.Units.smallSpacing
-                elide: Text.ElideRight
-            }
-        }
-
-        Kirigami.Separator { Layout.fillWidth: true }
-
-        // File/folder list
-        Controls.ScrollView {
+        // ── Column headers + Table ────────────────────────────────────────
+        Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Controls.ScrollBar.vertical.policy:   Controls.ScrollBar.AsNeeded
-            Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AsNeeded
+            clip: true
 
-            ListView {
-                id: fileListView
-                model: ListModel { id: fileListModel }
-                contentWidth: Math.max(width, Kirigami.Units.gridUnit * 44)
+            Controls.HorizontalHeaderView {
+                id: exploreHeaderView
+                anchors { top: parent.top; left: parent.left; right: parent.right }
+                syncView: exploreTableView
+                clip: true
+                implicitHeight: 34
+                resizableColumns: true
 
-                delegate: Item {
-                    id: fileDelegate
-                    width:  Math.max(fileListView.width, Kirigami.Units.gridUnit * 44)
-                    height: Kirigami.Units.gridUnit * 1.6
+                delegate: Rectangle {
+                    required property int column
+                    color: Kirigami.Theme.backgroundColor
+                    implicitHeight: exploreHeaderView.implicitHeight
 
-                    readonly property string dName:       model.name        ?? ""
-                    readonly property var    dSize:       model.size        ?? 0
-                    readonly property string dDate:       model.dateUpdated ?? ""
-                    readonly property string dFolderPath: model.folderPath  ?? ""
-                    readonly property string dFullPath:   model.fullPath    ?? ""
-                    readonly property string dEntryType:  model.entryType   ?? ""
-                    readonly property string dFileType:   model.fileType    ?? ""
-                    readonly property string dChecksum:   model.checksumSha256 ?? ""
-                    readonly property int    dIndex:      index
+                    readonly property var headerLabels: [qsTr("Name"), qsTr("Size"), qsTr("Date"), qsTr("Directory")]
 
+                    Controls.Label {
+                        anchors {
+                            left: parent.left; right: parent.right
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 6; rightMargin: 6
+                        }
+                        text: column < headerLabels.length ? headerLabels[column] : ""
+                        elide: Text.ElideRight
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                        color: Kirigami.Theme.textColor
+                    }
+
+                    Rectangle { // Vertical separator
+                        anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
+                        width: 1
+                        color: Kirigami.Theme.separatorColor ?? "transparent"
+                    }
+                }
+            }
+
+            Kirigami.Separator {
+                id: exploreHeaderSep
+                anchors { top: exploreHeaderView.bottom; left: parent.left; right: parent.right }
+            }
+
+            TableView {
+                id: exploreTableView
+                anchors { top: exploreHeaderSep.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+                columnSpacing: 0
+                rowSpacing: 0
+                model: fileTableModel
+
+                property int selectedRow: -1
+
+                ScrollBar.vertical:   ScrollBar { policy: ScrollBar.AsNeeded }
+                ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
+
+                rowHeightProvider: function(row) { return 30 }
+
+                columnWidthProvider: function(column) {
+                    let w = exploreTableView.explicitColumnWidth(column)
+                    if (w >= 0) return w
+                    switch (column) {
+                        case 0: return 260  // Name
+                        case 1: return 90   // Size
+                        case 2: return 150  // Date
+                        case 3: return 320  // Directory
+                    }
+                    return 100
+                }
+
+                delegate: Rectangle {
+                    required property int row
+                    required property int column
+                    required property var display
+                    implicitHeight: 30
+
+                    readonly property var    rowData:    fileTableModel.getRow(row) ?? {}
+                    readonly property string entryType:  rowData.entryType      ?? ""
+                    readonly property string fileType:   rowData.fileType       ?? ""
+                    readonly property string fullPath:   rowData.fullPath       ?? ""
+                    readonly property string checksum:   rowData.checksumSha256 ?? ""
+
+                    readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
+                    color: exploreTableView.selectedRow === row
+                           ? Kirigami.Theme.highlightColor
+                           : (row % 2 === 0
+                              ? (darkTheme ? Kirigami.Theme.backgroundColor : "#ffffff")
+                              : (darkTheme ? "#161b1d" : "#e9f7fc"))
+
+                    // Column separator
                     Rectangle {
+                        visible: column > 0
+                        anchors { top: parent.top; bottom: parent.bottom; left: parent.left }
+                        width: 1
+                        color: Kirigami.Theme.separatorColor
+                        opacity: 0.4
+                    }
+
+                    // File type icon (column 0 only)
+                    Kirigami.Icon {
+                        id: fileTypeIcon
+                        visible: column === 0
+                        anchors {
+                            left: parent.left
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 6
+                        }
+                        source: {
+                            if (entryType === "folder") return "folder"
+                            switch (fileType) {
+                                case "audio":  return "audio-x-mpeg"
+                                case "image":  return "image-jpeg"
+                                case "video":  return "video-mp4"
+                                case "text":   return "view-list-text"
+                                case "other":  return "document-open"
+                                default:       return "application-x-zerosize"
+                            }
+                        }
+                        implicitWidth:  Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
+                    }
+
+                    Controls.Label {
+                        anchors {
+                            left: column === 0 ? fileTypeIcon.right : parent.left
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                            leftMargin:  column === 0 ? 4 : 6
+                            rightMargin: 4
+                        }
+                        text: {
+                            if (display === undefined || display === null) return ""
+                            if (column === 1) return (Number(display) > 0 && entryType === "file")
+                                                     ? appManager1.formatDataSize(Number(display)) : ""
+                            if (column === 3) return entryType === "file" ? String(display) : ""
+                            return String(display)
+                        }
+                        horizontalAlignment: column === 1 ? Text.AlignRight : Text.AlignLeft
+                        color: exploreTableView.selectedRow === row
+                               ? Kirigami.Theme.highlightedTextColor
+                               : (column === 0 ? Kirigami.Theme.textColor : Kirigami.Theme.disabledTextColor)
+                        elide: column === 3 ? Text.ElideLeft : Text.ElideRight
+                        clip: true
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                    }
+
+                    MouseArea {
                         anchors.fill: parent
-                        color: fileListView.currentIndex === index
-                               ? Kirigami.Theme.highlightColor
-                               : (index % 2 === 0 ? "transparent" : Qt.alpha(Kirigami.Theme.alternateBackgroundColor, 0.4))
-                    }
-
-                    RowLayout {
-                        anchors { fill: parent; leftMargin: Kirigami.Units.smallSpacing; rightMargin: Kirigami.Units.smallSpacing }
-                        spacing: Kirigami.Units.smallSpacing
-
-                        Kirigami.Icon {
-                            source: root.iconForType(fileDelegate.dFileType, fileDelegate.dEntryType)
-                            implicitWidth:  Kirigami.Units.iconSizes.small
-                            implicitHeight: Kirigami.Units.iconSizes.small
-                        }
-
-                        Controls.Label {
-                            text: fileDelegate.dName
-                            elide: Text.ElideRight
-                            Layout.preferredWidth: 250
-                            Layout.minimumWidth:   80
-                            color: fileListView.currentIndex === index
-                                   ? Kirigami.Theme.highlightedTextColor
-                                   : Kirigami.Theme.textColor
-                        }
-
-                        Controls.Label {
-                            text: fileDelegate.dEntryType === "file"
-                                  ? appManager1.formatDataSize(fileDelegate.dSize) : ""
-                            Layout.preferredWidth: 90
-                            horizontalAlignment: Text.AlignRight
-                            color: fileListView.currentIndex === index
-                                   ? Kirigami.Theme.highlightedTextColor
-                                   : Kirigami.Theme.disabledTextColor
-                        }
-
-                        Controls.Label {
-                            text: fileDelegate.dDate
-                            Layout.preferredWidth: 150
-                            elide: Text.ElideRight
-                            color: fileListView.currentIndex === index
-                                   ? Kirigami.Theme.highlightedTextColor
-                                   : Kirigami.Theme.disabledTextColor
-                        }
-
-                        Controls.Label {
-                            text: fileDelegate.dEntryType === "file" ? fileDelegate.dFolderPath : ""
-                            elide: Text.ElideLeft
-                            Layout.fillWidth: true
-                            color: fileListView.currentIndex === index
-                                   ? Kirigami.Theme.highlightedTextColor
-                                   : Kirigami.Theme.disabledTextColor
-                        }
-                    }
-
-                    // Single click to select
-                    TapHandler {
-                        onTapped: {
-                            fileListView.currentIndex = fileDelegate.dIndex
-                            if (fileDelegate.dEntryType === "folder") {
-                                root.folderNavigated(fileDelegate.dFullPath)
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onClicked: function(mouse) {
+                            exploreTableView.selectedRow = row
+                            if (mouse.button === Qt.LeftButton && entryType === "folder") {
+                                root.folderNavigated(fullPath)
+                            }
+                            if (mouse.button === Qt.RightButton) {
+                                root._activeFilePath   = fullPath
+                                root._activeFileName   = rowData.name      ?? ""
+                                root._activeFolderPath = rowData.folderPath ?? ""
+                                root._activeChecksum   = checksum
+                                root._activeEntryType  = entryType
+                                exploreContextMenu.popup()
                             }
                         }
-                    }
-
-                    // Double-click to open file
-                    TapHandler {
-                        onDoubleTapped: {
-                            if (fileDelegate.dEntryType === "file") {
-                                appManager1.openFile(fileDelegate.dFullPath)
-                            }
-                        }
-                    }
-
-                    // Right-click context menu
-                    TapHandler {
-                        acceptedButtons: Qt.RightButton
-                        onTapped: {
-                            fileListView.currentIndex = fileDelegate.dIndex
-                            root._activeFilePath   = fileDelegate.dFullPath
-                            root._activeFileName   = fileDelegate.dName
-                            root._activeFolderPath = fileDelegate.dFolderPath
-                            root._activeChecksum   = fileDelegate.dChecksum
-                            fileContextMenu.popup()
-                        }
-                    }
-
-                    Controls.Menu {
-                        id: fileContextMenu
-
-                        Controls.MenuItem {
-                            text: fileDelegate.dEntryType === "folder" ? qsTr("Open folder") : qsTr("Open file")
-                            icon.name: "document-open"
-                            onTriggered: {
-                                if (fileDelegate.dEntryType === "folder")
-                                    appManager1.openFolder(fileDelegate.dFullPath)
-                                else
-                                    appManager1.openFile(fileDelegate.dFullPath)
-                            }
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Open folder")
-                            icon.name: "document-open-data"
-                            visible: fileDelegate.dEntryType === "file"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: appManager1.openFolder(fileDelegate.dFolderPath)
-                        }
-
-                        Controls.MenuSeparator {}
-
-                        Controls.MenuItem {
-                            text: qsTr("Copy folder path")
-                            icon.name: "edit-copy"
-                            onTriggered: appManager1.copyToClipboard(fileDelegate.dFolderPath)
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Copy folder name")
-                            icon.name: "edit-copy"
-                            visible: fileDelegate.dEntryType === "folder"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: appManager1.copyToClipboard(fileDelegate.dName)
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Copy absolute path")
-                            icon.name: "edit-copy"
-                            visible: fileDelegate.dEntryType === "file"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: appManager1.copyToClipboard(fileDelegate.dFullPath)
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Copy file name")
-                            icon.name: "edit-copy"
-                            visible: fileDelegate.dEntryType === "file"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: appManager1.copyToClipboard(fileDelegate.dName)
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Copy file name without extension")
-                            icon.name: "edit-copy"
-                            visible: fileDelegate.dEntryType === "file"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: {
-                                var n = fileDelegate.dName
-                                var dot = n.lastIndexOf(".")
-                                appManager1.copyToClipboard(dot > 0 ? n.substring(0, dot) : n)
-                            }
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Copy Checksum")
-                            icon.name: "edit-copy"
-                            visible: fileDelegate.dEntryType === "file" && fileDelegate.dChecksum !== ""
-                            height: visible ? implicitHeight : 0
-                            onTriggered: appManager1.copyToClipboard(fileDelegate.dChecksum)
-                        }
-
-                        Controls.MenuSeparator {
-                            visible: fileDelegate.dEntryType === "file"
-                            height: visible ? implicitHeight : 0
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Calculate Checksum (SHA-256)")
-                            icon.name: "document-properties"
-                            visible: fileDelegate.dEntryType === "file" && fileDelegate.dChecksum === ""
-                            height: visible ? implicitHeight : 0
-                            onTriggered: {
-                                var cksum = appManager1.calculateAndSaveChecksum(
-                                    root._activeFilePath,
-                                    root._activeFileName,
-                                    root._activeFolderPath,
-                                    root.catalogId)
-                                if (cksum.length > 0) {
-                                    root._activeChecksum = cksum
-                                    exploreChecksumResultDialog.checksumText = cksum
-                                    exploreChecksumResultDialog.wasSaved = root.catalogId > 0
-                                    exploreChecksumResultDialog.open()
-                                } else {
-                                    showPassiveNotification(qsTr("File not found or could not be read"))
-                                }
-                            }
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Verify Checksum (SHA-256)")
-                            icon.name: "document-properties"
-                            visible: fileDelegate.dEntryType === "file" && fileDelegate.dChecksum !== ""
-                            height: visible ? implicitHeight : 0
-                            onTriggered: {
-                                var result = appManager1.verifyFileChecksum(
-                                    root._activeFilePath,
-                                    root._activeChecksum)
-                                if (result === "match") {
-                                    exploreChecksumResultDialog.checksumText = root._activeChecksum
-                                    exploreChecksumResultDialog.wasSaved = false
-                                    exploreChecksumResultDialog.open()
-                                } else if (result.startsWith("mismatch:")) {
-                                    exploreChecksumMismatchDialog.expectedChecksum = root._activeChecksum
-                                    exploreChecksumMismatchDialog.actualChecksum   = result.substring(9)
-                                    exploreChecksumMismatchDialog.open()
-                                } else {
-                                    showPassiveNotification(qsTr("Error: ") + result.substring(6))
-                                }
-                            }
-                        }
-
-                        Controls.MenuSeparator {}
-
-                        Controls.MenuItem {
-                            text: qsTr("Move file to Trash")
-                            icon.name: "user-trash"
-                            visible: fileDelegate.dEntryType === "file"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: {
-                                if (appManager1.moveFileToTrash(fileDelegate.dFullPath))
-                                    fileListModel.remove(fileDelegate.dIndex)
-                            }
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Move folder to Trash")
-                            icon.name: "user-trash"
-                            visible: fileDelegate.dEntryType === "folder"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: {
-                                if (appManager1.moveFileToTrash(fileDelegate.dFullPath))
-                                    fileListModel.remove(fileDelegate.dIndex)
-                            }
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Delete file")
-                            icon.name: "edit-delete"
-                            visible: fileDelegate.dEntryType === "file"
-                            height: visible ? implicitHeight : 0
-                            onTriggered: {
-                                if (appManager1.deleteSingleFile(fileDelegate.dFullPath))
-                                    fileListModel.remove(fileDelegate.dIndex)
-                            }
+                        onDoubleClicked: {
+                            if (entryType === "file")
+                                appManager1.openFile(fullPath)
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // ── Context menu ─────────────────────────────────────────────────────
+    Controls.Menu {
+        id: exploreContextMenu
+
+        Controls.MenuItem {
+            text: root._activeEntryType === "folder" ? qsTr("Open folder") : qsTr("Open file")
+            icon.name: "document-open"
+            onTriggered: {
+                if (root._activeEntryType === "folder")
+                    appManager1.openFolder(root._activeFilePath)
+                else
+                    appManager1.openFile(root._activeFilePath)
+            }
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Open folder")
+            icon.name: "document-open-data"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: appManager1.openFolder(root._activeFolderPath)
+        }
+
+        Controls.MenuSeparator {}
+
+        Controls.MenuItem {
+            text: qsTr("Copy folder path")
+            icon.name: "edit-copy"
+            onTriggered: appManager1.copyToClipboard(root._activeFolderPath)
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Copy folder name")
+            icon.name: "edit-copy"
+            visible: root._activeEntryType === "folder"
+            height: visible ? implicitHeight : 0
+            onTriggered: appManager1.copyToClipboard(root._activeFileName)
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Copy absolute path")
+            icon.name: "edit-copy"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: appManager1.copyToClipboard(root._activeFilePath)
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Copy file name")
+            icon.name: "edit-copy"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: appManager1.copyToClipboard(root._activeFileName)
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Copy file name without extension")
+            icon.name: "edit-copy"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                var n = root._activeFileName
+                var dot = n.lastIndexOf(".")
+                appManager1.copyToClipboard(dot > 0 ? n.substring(0, dot) : n)
+            }
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Copy Checksum")
+            icon.name: "edit-copy"
+            visible: root._activeEntryType === "file" && root._activeChecksum !== ""
+            height: visible ? implicitHeight : 0
+            onTriggered: appManager1.copyToClipboard(root._activeChecksum)
+        }
+
+        Controls.MenuSeparator {
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Calculate Checksum (SHA-256)")
+            icon.name: "document-properties"
+            visible: root._activeEntryType === "file" && root._activeChecksum === ""
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                var cksum = appManager1.calculateAndSaveChecksum(
+                    root._activeFilePath,
+                    root._activeFileName,
+                    root._activeFolderPath,
+                    root.catalogId)
+                if (cksum.length > 0) {
+                    root._activeChecksum = cksum
+                    exploreChecksumResultDialog.checksumText = cksum
+                    exploreChecksumResultDialog.wasSaved = root.catalogId > 0
+                    exploreChecksumResultDialog.open()
+                } else {
+                    showPassiveNotification(qsTr("File not found or could not be read"))
+                }
+            }
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Verify Checksum (SHA-256)")
+            icon.name: "document-properties"
+            visible: root._activeEntryType === "file" && root._activeChecksum !== ""
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                var result = appManager1.verifyFileChecksum(
+                    root._activeFilePath,
+                    root._activeChecksum)
+                if (result === "match") {
+                    exploreChecksumResultDialog.checksumText = root._activeChecksum
+                    exploreChecksumResultDialog.wasSaved = false
+                    exploreChecksumResultDialog.open()
+                } else if (result.startsWith("mismatch:")) {
+                    exploreChecksumMismatchDialog.expectedChecksum = root._activeChecksum
+                    exploreChecksumMismatchDialog.actualChecksum   = result.substring(9)
+                    exploreChecksumMismatchDialog.open()
+                } else {
+                    showPassiveNotification(qsTr("Error: ") + result.substring(6))
+                }
+            }
+        }
+
+        Controls.MenuSeparator {}
+
+        Controls.MenuItem {
+            text: qsTr("Move file to Trash")
+            icon.name: "user-trash"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                if (appManager1.moveFileToTrash(root._activeFilePath))
+                    fileTableModel.removeRow(exploreTableView.selectedRow)
+            }
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Move folder to Trash")
+            icon.name: "user-trash"
+            visible: root._activeEntryType === "folder"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                if (appManager1.moveFileToTrash(root._activeFilePath))
+                    fileTableModel.removeRow(exploreTableView.selectedRow)
+            }
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Delete file")
+            icon.name: "edit-delete"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                if (appManager1.deleteSingleFile(root._activeFilePath))
+                    fileTableModel.removeRow(exploreTableView.selectedRow)
             }
         }
     }
