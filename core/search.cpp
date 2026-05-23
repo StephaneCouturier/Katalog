@@ -760,7 +760,8 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":differences_checksum", differencesOnChecksum);
     query.bindValue(":differences_checksum_equal", differencesChecksumEqual);
     query.exec();
-    qWarning() << "WARNING: Search::saveSearchHistoryToTable: lastError" << query.lastError();
+    if (query.lastError().isValid())
+        qWarning() << "WARNING: Search::saveSearchHistoryToTable: lastError" << query.lastError();
 }
 
 void Search::loadSearchHistoryCriteria(const QString &connectionName)

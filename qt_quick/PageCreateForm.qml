@@ -193,6 +193,8 @@ ColumnLayout {
                 highlighted: create_comboBox_FileType.highlightedIndex === index
             }
             contentItem: RowLayout {
+                function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                property int selectionStart: 0
                 spacing: Kirigami.Units.smallSpacing
                 Item { width: Kirigami.Units.smallSpacing }
                 Kirigami.Icon {

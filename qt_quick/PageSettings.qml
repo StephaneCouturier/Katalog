@@ -391,6 +391,8 @@ Kirigami.ScrollablePage {
                 model: appManager1.getLanguageList()
 
                 contentItem: RowLayout {
+                    function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                    property int selectionStart: 0
                     spacing: Kirigami.Units.smallSpacing
                     Image {
                         source: languageComboBox.currentIndex >= 0

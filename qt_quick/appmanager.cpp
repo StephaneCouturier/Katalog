@@ -62,7 +62,7 @@ void AppManager::initiateApp()
     if ( checkVersionChoice == true)
         checkVersion();
 
-    qDebug()<<"initiated App.";
+    //qDebug()<<"initiated App.";
 }
 //----------------------------------------------------------------------
 void AppManager::setSearchObject(SearchSync *search)
@@ -161,19 +161,6 @@ void AppManager::executeSearch()
         return;
     }
 
-    // Debug: Check if criteria are set
-    QVariantMap props = searchObject->properties();
-    qDebug() << "=== SEARCH CRITERIA CHECK ===";
-    qDebug() << "searchOnFileName:" << props.value("searchOnFileName").toBool();
-    qDebug() << "searchText:" << props.value("searchText").toString();
-    qDebug() << "searchInCatalogsChecked:" << props.value("searchInCatalogsChecked").toBool();
-    qDebug() << "selectedFileType:" << props.value("selectedFileType").toString();
-    qDebug() << "Search object pointer:" << searchObject;
-
-    qDebug() << "Executing search with device ID:" << selectedDevice->ID
-             << "Name:" << selectedDevice->name
-             << "Type:" << selectedDevice->type;
-
     // Memory mode requires CSV loading during search
     searchObject->setMemoryModeEnabled(collection->databaseMode == "Memory");
 
@@ -216,9 +203,6 @@ void AppManager::executeSearch()
     // Persist history to CSV file (no-op for File/Hosted modes — guarded inside the method)
     collection->saveSearchHistoryTableToFile();
 
-    // Debug: Check results
-    QVariantMap resultProps = searchObject->properties();
-    qDebug() << "Files found:" << resultProps.value("filesFoundNumber").toInt();
 }
 //----------------------------------------------------------------------
 // Also add a method to get current database info for display:
@@ -258,6 +242,7 @@ QString AppManager::startDatabase()
     initializeDeviceListModel();
     selectedDevice->loadDevice(conn);
     emit databaseModeChanged();
+    qInfo() << "Katalog" << currentVersion << "– database ready:" << collection->databaseMode;
     return "startDatabase: No Error";
 }
 //----------------------------------------------------------------------
@@ -277,7 +262,7 @@ void AppManager::initializeDeviceListModel()
     }
     m_deviceFilterModel->setSourceModel(deviceListModel);
 
-    qDebug() << "DeviceListModel initialized with" << deviceListModel->rowCount() << "devices";
+    //qDebug() << "DeviceListModel initialized with" << deviceListModel->rowCount() << "devices";
 }
 //----------------------------------------------------------------------
 void AppManager::openDeviceFolder(int deviceId)

@@ -4,7 +4,7 @@ import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 import QtQuick.Dialogs as Dialogs
 import Qt.labs.platform
-import Qt.labs.settings 1.0
+import QtCore
 import Katalog 3.0
 
 // Provides basic features needed for all kirigami applications

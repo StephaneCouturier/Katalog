@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     //         engine.retranslate();
     //     });
 
-    appManager->testQuery();
+    //appManager->testQuery();
 
     return app.exec();
 }

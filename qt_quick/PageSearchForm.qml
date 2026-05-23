@@ -551,7 +551,7 @@ ColumnLayout {
                 Controls.TextArea {
                     id: search_TextField_FileNameText
                     width: parent.availableWidth
-                    wrapMode: TextArea.Wrap
+                    wrapMode: Text.WordWrap
                     background: Item {}
                     Keys.onPressed: function(event) {
                         if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
@@ -694,6 +694,8 @@ ColumnLayout {
                     highlighted: search_comboBox_FileType.highlightedIndex === index
                 }
                 contentItem: RowLayout {
+                    function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                    property int selectionStart: 0
                     spacing: Kirigami.Units.smallSpacing
                     Item { width: Kirigami.Units.smallSpacing }
                     Kirigami.Icon {

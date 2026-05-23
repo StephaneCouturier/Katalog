@@ -87,6 +87,9 @@ Controls.Button {
 
     // Left-aligned text with a drop-down arrow on the right
     contentItem: RowLayout {
+        // KDE desktop style's MobileCursor calls positionToRectangle on contentItem expecting a TextInput
+        function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+        property int selectionStart: 0
         spacing: Kirigami.Units.smallSpacing
 
         Kirigami.Icon {
