@@ -1992,8 +1992,14 @@ void AppManager::onDevicePageUpdateCompleted(const QList<qint64> &results)
     } else {
         if (m_showEachUpdateReport) {
             QVariantMap report = buildUpdateReport(m_currentUpdateDeviceId, results);
-            if (!report.isEmpty())
+            if (!report.isEmpty()) {
                 emit deviceUpdateReportReady(report);
+                if (!m_pendingDeviceUpdates.isEmpty()) {
+                    // More catalogs pending — pause until user acknowledges the report
+                    m_waitingForReportAck = true;
+                    return;
+                }
+            }
         }
         startNextDeviceUpdate();
     }
@@ -2004,6 +2010,7 @@ void AppManager::startNextDeviceUpdate()
     if (m_pendingDeviceUpdates.isEmpty()) {
         m_deviceUpdateIsRunning = false;
         m_isBatchUpdate         = false;
+        m_pendingBatchTotal     = 0;
         emit deviceUpdateStateChanged();
         // Status text lingers for 5 seconds then clears (K2 behaviour)
         QTimer::singleShot(5000, this, [this]() {
@@ -2019,6 +2026,12 @@ void AppManager::startNextDeviceUpdate()
     dev->ID = nextId;
     dev->loadDevice(m_connectionName);
     m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+    // Set batch context AFTER updateDeviceHierarchy (which internally calls cleanupOperation →
+    // clearBatchContext), so the context survives into the async catalog job's progress signals.
+    if (m_pendingBatchTotal > 1 && m_catalogProgressManager) {
+        int current = m_pendingBatchTotal - m_pendingDeviceUpdates.size();
+        m_catalogProgressManager->setBatchContext(current, m_pendingBatchTotal);
+    }
 }
 //----------------------------------------------------------------------
 QVariantMap AppManager::buildUpdateReport(int deviceId, const QList<qint64> &results)
@@ -2141,7 +2154,6 @@ void AppManager::updateAllActiveDevices(bool showEachReport)
 {
     if (m_deviceUpdateIsRunning) return;
 
-    m_isBatchUpdate        = true;
     m_showEachUpdateReport = showEachReport;
 
     const QString conn = m_connectionName;
@@ -2151,40 +2163,52 @@ void AppManager::updateAllActiveDevices(bool showEachReport)
     int scopeId = selectedDevice ? selectedDevice->ID : 0;
     QList<Device *> activeCatalogs = Device::getActiveCatalogList(conn, scopeId);
 
-    if (activeCatalogs.isEmpty()) {
-        m_isBatchUpdate = false;
+    if (activeCatalogs.isEmpty())
         return;
-    }
 
     m_deviceUpdateIsRunning = true;
     m_currentUpdateDeviceId = -1;
     emit deviceUpdateStateChanged();
 
-    setupDeviceUpdateManagerForDevices();
+    if (showEachReport) {
+        // Process one catalog at a time so each report can pause for acknowledgement
+        m_isBatchUpdate = false;
+        m_pendingDeviceUpdates.clear();
+        for (Device *d : activeCatalogs)
+            m_pendingDeviceUpdates.append(d->ID);
+        qDeleteAll(activeCatalogs);
+        m_pendingBatchTotal = m_pendingDeviceUpdates.size();
 
-    // Per-catalog report during batch (only when user chose Yes in confirmation dialog)
-    if (m_showEachUpdateReport) {
-        connect(m_deviceUpdateManager, &DeviceUpdateManager::catalogCompletedInBatch,
-                this, [this](Device *catalogDevice, const QList<qint64> &batchResults) {
-                    QVariantMap report = buildUpdateReport(catalogDevice->ID, batchResults);
-                    if (!report.isEmpty())
-                        emit deviceUpdateReportReady(report);
-                });
+        setupDeviceUpdateManagerForDevices();
+        startNextDeviceUpdate();
+    } else {
+        // Run all as a single hierarchy; show one aggregate report at the end
+        m_isBatchUpdate = true;
+
+        setupDeviceUpdateManagerForDevices();
+
+        Device *dummy = m_deviceUpdateManager->createDummyDeviceFromList(activeCatalogs);
+        m_deviceUpdateManager->updateDeviceHierarchy(dummy, collection->databaseMode, collection->folder, "update");
+        // activeCatalogs intentionally not deleted here — createDummyDeviceFromList copies Device
+        // values but the copies share raw catalog*/storage* pointers with the originals.
+        // Deleting the originals would create dangling pointers in dummy->subDevices (same pattern as K2).
     }
-
-    Device *dummy = m_deviceUpdateManager->createDummyDeviceFromList(activeCatalogs);
-    m_deviceUpdateManager->updateDeviceHierarchy(dummy, collection->databaseMode, collection->folder, "update");
-    // activeCatalogs intentionally not deleted here — createDummyDeviceFromList copies Device
-    // values but the copies share raw catalog*/storage* pointers with the originals.
-    // Deleting the originals would create dangling pointers in dummy->subDevices (same pattern as K2).
 }
 //----------------------------------------------------------------------
 void AppManager::stopDeviceUpdate()
 {
+    m_waitingForReportAck = false;
     if (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning()) {
         m_pendingDeviceUpdates.clear();
         m_deviceUpdateManager->requestHardStop();
     }
+}
+//----------------------------------------------------------------------
+void AppManager::acknowledgeUpdateReport()
+{
+    if (!m_waitingForReportAck) return;
+    m_waitingForReportAck = false;
+    startNextDeviceUpdate();
 }
 //----------------------------------------------------------------------
 void AppManager::gentleStopDeviceUpdate()

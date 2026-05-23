@@ -289,6 +289,7 @@ public slots:
     Q_INVOKABLE int          addDeviceStorage(int parentId);
     Q_INVOKABLE void         updateDevice(int deviceId);
     Q_INVOKABLE void         updateAllActiveDevices(bool showEachReport = false);
+    Q_INVOKABLE void         acknowledgeUpdateReport();
     Q_INVOKABLE void         stopDeviceUpdate();
     Q_INVOKABLE void         gentleStopDeviceUpdate();
     Q_INVOKABLE QVariantMap  recordDevicesSnapshot();
@@ -493,8 +494,10 @@ private:
     QString m_deviceUpdateStatusText;
     QList<int> m_pendingDeviceUpdates;
     int     m_currentUpdateDeviceId  = 0;
+    int     m_pendingBatchTotal      = 0;
     bool    m_isBatchUpdate          = false;
     bool    m_showEachUpdateReport   = false;
+    bool    m_waitingForReportAck    = false;
     void setupDeviceUpdateManagerForDevices();
     void onDevicePageUpdateCompleted(const QList<qint64> &results);
     void startNextDeviceUpdate();

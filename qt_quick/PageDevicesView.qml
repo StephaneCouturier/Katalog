@@ -370,8 +370,8 @@ Item {
                 Controls.ToolSeparator { visible: root.viewFilter === "Catalogs" }
                 Controls.Label {
                     visible: root.viewFilter === "Catalogs"
-                    text: qsTr("Total Number of Files") + ":  <b>" + root.devices.reduce(
-                        function(s, d) { return s + (d.fileCount || 0) }, 0).toLocaleString() + "</b>"
+                    text: qsTr("Total Number of Files") + ":  <b>" + Number(root.devices.reduce(
+                        function(s, d) { return s + (d.fileCount || 0) }, 0)).toLocaleString(Qt.locale(), "f", 0) + "</b>"
                     textFormat: Text.RichText
                 }
 

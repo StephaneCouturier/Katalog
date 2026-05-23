@@ -210,7 +210,7 @@ Kirigami.AbstractCard {
                         var parts = []
                         if (d.type !== "Virtual") parts.push(d.type)
                         if (d.fileCount > 0)
-                            parts.push(d.fileCount.toLocaleString() + " " + qsTr("files")
+                            parts.push(Number(d.fileCount).toLocaleString(Qt.locale(), "f", 0) + " " + qsTr("files")
                                        + "  " + appManager1.formatDataSize(d.totalFileSize))
                         if (d.type === "Storage" && d.freeSpace > 0)
                             parts.push(qsTr("free") + ": " + appManager1.formatDataSize(d.freeSpace))

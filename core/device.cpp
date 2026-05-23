@@ -986,42 +986,16 @@ QList<Device*> Device::getActiveCatalogList(const QString &connectionName, int s
 {
     QList<Device*> result;
 
-    QSqlDatabase db = QSqlDatabase::database(connectionName);
-    if (!db.isOpen())
-        return result;
+    // Use loadDeviceTree so the returned order matches the Catalogs list display order
+    // (hierarchical sort_path: device_order then name, depth-first).
+    const QList<DeviceTreeNode> nodes = loadDeviceTree(connectionName, scopeDeviceId);
 
-    QSqlQuery query(db);
-
-    if (scopeDeviceId <= 0) {
-        query.prepare(QLatin1String(R"(
-            SELECT device_id FROM device
-            WHERE  device_type = 'Catalog'
-            ORDER  BY device_id
-        )"));
-    } else {
-        // Recursive CTE: all catalog descendants of scopeDeviceId (inclusive)
-        query.prepare(QLatin1String(R"(
-            WITH RECURSIVE subtree AS (
-                SELECT device_id FROM device WHERE device_id = :scope
-                UNION ALL
-                SELECT d.device_id FROM device d
-                JOIN subtree s ON d.device_parent_id = s.device_id
-            )
-            SELECT device_id FROM device
-            WHERE  device_type = 'Catalog'
-            AND    device_id IN (SELECT device_id FROM subtree)
-            ORDER  BY device_id
-        )"));
-        query.bindValue(":scope", scopeDeviceId);
-    }
-
-    if (!query.exec())
-        return result;
-
-    while (query.next()) {
+    for (const DeviceTreeNode &n : nodes) {
+        if (n.type != QLatin1String("Catalog") || !n.isActive)
+            continue;
         Device *dev = new Device();
-        dev->ID = query.value(0).toInt();
-        dev->loadDevice(connectionName);   // sets path, calls updateActiveState()
+        dev->ID = n.id;
+        dev->loadDevice(connectionName);
         if (dev->active)
             result.append(dev);
         else

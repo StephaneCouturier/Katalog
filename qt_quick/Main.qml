@@ -673,7 +673,7 @@ Kirigami.ApplicationWindow {
                 return "<br/>" + qsTr("A snapshot of this collection was recorded:") +
                     "<table>" +
                     "<tr><td><br/><b>" + qsTr("Catalogs") + "</b></td><td></td><td></td></tr>" +
-                    "<tr><td>" + qsTr("Number of files:") + " </td><td style='text-align:right;'><b> " + fc.toLocaleString() + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((dfc >= 0) ? "+" : "") + dfc.toLocaleString() + " </b>)</td></tr>" +
+                    "<tr><td>" + qsTr("Number of files:") + " </td><td style='text-align:right;'><b> " + Number(fc).toLocaleString(Qt.locale(), "f", 0) + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((dfc >= 0) ? "+" : "") + Number(dfc).toLocaleString(Qt.locale(), "f", 0) + " </b>)</td></tr>" +
                     "<tr><td>" + qsTr("Total file size:") + " </td><td style='text-align:right;'><b> " + fs + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaCatalogFileSize >= 0) ? "+" : "") + dfs + " </b>)</td></tr>" +
                     "<tr><td><br/><b>" + qsTr("Storage") + "</b></td><td></td><td></td></tr>" +
                     "<tr><td>" + qsTr("Storage free space:") + " </td><td style='text-align:right;'><b> " + spc + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaStorageFree >= 0) ? "+" : "") + dspc + " </b>)</td></tr>" +
@@ -741,8 +741,8 @@ Kirigami.ApplicationWindow {
                     msg += "<tr><td>" + qsTr("Catalog updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
                     msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
                     msg += "</table><br/><table>"
-                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + (r.fileCount || 0).toLocaleString() + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + (r.filesAdded || 0).toLocaleString() + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
                     msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
                     msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
                     msg += "</table>"
@@ -777,8 +777,8 @@ Kirigami.ApplicationWindow {
                     msg += "<table>"
                     msg += "<tr><td>" + qsTr("Virtual device updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
                     msg += "</table><br/><table>"
-                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + (r.fileCount || 0).toLocaleString() + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + (r.filesAdded || 0).toLocaleString() + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
                     msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
                     msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
                     msg += "</table><br/>"
@@ -798,8 +798,8 @@ Kirigami.ApplicationWindow {
                 } else if (r.deviceType === "list") {
                     msg += "<table><br/>"
                     msg += qsTr("Selected active catalogs are updated.") + "&nbsp;<br/>"
-                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + (r.fileCount || 0).toLocaleString() + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + (r.filesAdded || 0).toLocaleString() + "</b>)</td></tr>"
+                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
+                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
                     msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
                     msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
                     msg += "</table><br/>"
@@ -823,7 +823,10 @@ Kirigami.ApplicationWindow {
                 text: qsTr("OK")
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
             }
-            onAccepted: devUpdateReportDialog.close()
+            onAccepted: {
+                devUpdateReportDialog.close()
+                appManager1.acknowledgeUpdateReport()
+            }
         }
     }
 
