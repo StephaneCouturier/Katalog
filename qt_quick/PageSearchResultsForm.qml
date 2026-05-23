@@ -385,7 +385,7 @@ ColumnLayout {
                         visible: column > 0
                         anchors { top: parent.top; bottom: parent.bottom; left: parent.left }
                         width: 1
-                        color: Kirigami.Theme.separatorColor
+                        color: Kirigami.Theme.separatorColor ?? Kirigami.Theme.textColor
                         opacity: 0.4
                     }
 
@@ -769,7 +769,7 @@ ColumnLayout {
                             y: 0
                             width: 1
                             height: parent.height
-                            color: Kirigami.Theme.separatorColor
+                            color: Kirigami.Theme.separatorColor ?? Kirigami.Theme.textColor
                             opacity: 0.4
                         }
 

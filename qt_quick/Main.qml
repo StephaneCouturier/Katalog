@@ -990,19 +990,29 @@ Kirigami.ApplicationWindow {
                 onTriggered: {
                     root.searchTriggered()
                     pageSearchForm.executeSearch()
-                    // Remove any stale Results page, then push fresh
-                    while (pageStack.depth > 2) {
-                        let p = pageStack.get(pageStack.depth - 1)
-                        pageStack.removePage(p)
-                        p.visible = false
+                    // If the results page is already the top of the stack, do NOT remove and
+                    // re-push it: removing and immediately re-pushing the same static page object
+                    // in one event loop tick corrupts the QML component context and crashes.
+                    // The onSearchTriggered Connections in PageSearchResultsForm resets the model.
+                    let resultsAtTop = pageStack.depth > 2
+                                       && pageStack.get(pageStack.depth - 1) === pageSearchResults
+                    if (resultsAtTop) {
+                        pageStack.currentIndex = pageStack.depth - 1
+                    } else {
+                        // Remove any stale pages beyond Search, then push Results fresh.
+                        while (pageStack.depth > 2) {
+                            let p = pageStack.get(pageStack.depth - 1)
+                            pageStack.removePage(p)
+                            p.visible = false
+                        }
+                        // Ensure currentIndex points to Search (depth-1) before pushing.
+                        // Kirigami's push() truncates pages forward of currentIndex, so if
+                        // the user back-navigated to Selection (currentIndex=0) without
+                        // removing pages, push() would drop Search and land on [Selection, Results].
+                        pageStack.currentIndex = pageStack.depth - 1
+                        pageSearchResults.visible = true
+                        pageStack.push(pageSearchResults)
                     }
-                    // Ensure currentIndex points to Search (depth-1) before pushing.
-                    // Kirigami's push() truncates pages forward of currentIndex, so if
-                    // the user back-navigated to Selection (currentIndex=0) without
-                    // removing pages, push() would drop Search and land on [Selection, Results].
-                    pageStack.currentIndex = pageStack.depth - 1
-                    pageSearchResults.visible = true
-                    pageStack.push(pageSearchResults)
                 }
             },
             Kirigami.Action {
