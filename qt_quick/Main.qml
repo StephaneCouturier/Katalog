@@ -983,6 +983,7 @@ Kirigami.ApplicationWindow {
                 text:        qsTr("Search")
                 icon.name:   "edit-find"
                 displayHint: Kirigami.DisplayHint.KeepVisible
+                enabled:     !appManager1.searchIsRunning
                 onTriggered: {
                     root.searchTriggered()
                     pageSearchForm.executeSearch()
@@ -1002,15 +1003,31 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
+                text:        appManager1.searchIsPaused ? qsTr("Resume") : qsTr("Pause")
+                icon.name:   appManager1.searchIsPaused ? "media-playback-start" : "media-playback-pause"
+                displayHint: Kirigami.DisplayHint.KeepVisible
+                enabled:     appManager1.searchIsRunning
+                onTriggered: appManager1.searchIsPaused ? appManager1.resumeSearch() : appManager1.pauseSearch()
+            },
+            Kirigami.Action {
+                text:        qsTr("Stop")
+                icon.name:   "process-stop"
+                displayHint: Kirigami.DisplayHint.KeepVisible
+                enabled:     appManager1.searchIsRunning
+                onTriggered: appManager1.stopSearch()
+            },
+            Kirigami.Action {
                 text:        qsTr("Reset")
                 icon.name:   "edit-clear-history"
                 displayHint: Kirigami.DisplayHint.KeepVisible
+                enabled:     !appManager1.searchIsRunning
                 onTriggered: pageSearchForm.resetSearch()
             },
             Kirigami.Action {
                 text:        qsTr("History")
                 icon.name:   "view-history"
                 displayHint: Kirigami.DisplayHint.KeepVisible
+                enabled:     !appManager1.searchIsRunning
                 onTriggered: pageSearchForm.openHistorySheet()
             },
             Kirigami.Action {
@@ -1043,22 +1060,6 @@ Kirigami.ApplicationWindow {
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
                 font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
-            }
-            Controls.Button {
-                visible: appManager1.searchIsRunning
-                icon.name: appManager1.searchIsPaused ? "media-playback-start" : "media-playback-pause"
-                Controls.ToolTip.text: appManager1.searchIsPaused ? qsTr("Resume") : qsTr("Pause")
-                Controls.ToolTip.visible: hovered
-                flat: true
-                onClicked: appManager1.searchIsPaused ? appManager1.resumeSearch() : appManager1.pauseSearch()
-            }
-            Controls.Button {
-                visible: appManager1.searchIsRunning
-                icon.name: "media-playback-stop"
-                Controls.ToolTip.text: qsTr("Stop")
-                Controls.ToolTip.visible: hovered
-                flat: true
-                onClicked: appManager1.stopSearch()
             }
         }
 
@@ -1134,11 +1135,18 @@ Kirigami.ApplicationWindow {
 
         actions: [
             Kirigami.Action {
-                text: qsTr("All active")
-                icon.name: "view-refresh"
-                visible: pageDevicesView.viewFilter === "Catalogs"
+                text:        qsTr("All active")
+                icon.name:   "media-playlist-repeat"
+                displayHint: Kirigami.DisplayHint.KeepVisible
                 enabled: !appManager1.deviceUpdateIsRunning
                 onTriggered: devUpdateAllDialog.open()
+            },
+            Kirigami.Action {
+                text:        qsTr("Stop")
+                icon.name:   "process-stop"
+                displayHint: Kirigami.DisplayHint.KeepVisible
+                enabled:     appManager1.deviceUpdateIsRunning
+                onTriggered: appManager1.stopDeviceUpdate()
             },
             Kirigami.Action {
                 text: qsTr("Snapshot")
@@ -1185,18 +1193,13 @@ Kirigami.ApplicationWindow {
                 enabled: !appManager1.deviceUpdateIsRunning
                 onTriggered: devVvvFileDialog.open()
             },
-            Kirigami.Action {
-                text: qsTr("Stop")
-                icon.name: "process-stop"
-                visible: appManager1.deviceUpdateIsRunning
-                onTriggered: appManager1.stopDeviceUpdate()
-            },
-            Kirigami.Action {
-                text: qsTr("Gentle stop")
-                icon.name: "media-playback-stop"
-                visible: appManager1.deviceUpdateIsRunning
-                onTriggered: appManager1.gentleStopDeviceUpdate()
-            },
+            // Kirigami.Action {
+            //     text:        qsTr("Gentle stop")
+            //     icon.name:   "media-playback-stop"
+            //     displayHint: Kirigami.DisplayHint.KeepVisible
+            //     enabled:     appManager1.deviceUpdateIsRunning
+            //     onTriggered: appManager1.gentleStopDeviceUpdate()
+            // },
             Kirigami.Action {
                 text: qsTr("Close")
                 icon.name: "view-close"
@@ -1205,6 +1208,7 @@ Kirigami.ApplicationWindow {
         ]
 
         footer: RowLayout {
+            visible: appManager1.deviceUpdateIsRunning || appManager1.deviceUpdateStatusText.length > 0
             spacing: Kirigami.Units.smallSpacing
             Controls.BusyIndicator {
                 running: appManager1.deviceUpdateIsRunning
