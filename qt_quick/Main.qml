@@ -903,10 +903,6 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageSelection
         title: "Selection"
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "edit-select"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageSelection.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         property string deviceType: "Storage"
 
         Connections {
@@ -977,10 +973,6 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageSearch
         title: qsTr("Search")
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "edit-find"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageSearch.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         actions: [
             Kirigami.Action {
                 text:        qsTr("Search")
@@ -1085,9 +1077,6 @@ Kirigami.ApplicationWindow {
     Kirigami.Page {
         id: pageSearchResults
         visible: false
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "edit-find"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageSearchResults.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
         title: {
             let n = Number(newSearch1.properties.filesFoundNumber ?? 0).toLocaleString(Qt.locale(), "f", 0)
             if (newSearch1.properties.searchOnDuplicates)
@@ -1142,10 +1131,6 @@ Kirigami.ApplicationWindow {
         visible: false
         padding: 0
         title: "Devices"
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "drive-multidisk"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageDevices.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         actions: [
             Kirigami.Action {
                 text:        qsTr("All active")
@@ -1261,10 +1246,6 @@ Kirigami.ApplicationWindow {
         id: pageExplore
         visible: false
         title: "Explore"
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "view-list-tree"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageExplore.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         padding: 0
 
         actions: [
@@ -1315,10 +1296,6 @@ Kirigami.ApplicationWindow {
         id: pageCreate
         visible: false
         title: "Create"
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "journal-new"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageCreate.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         Connections {
             target: appManager1
             function onCatalogCreationCompleted(success, report) {
@@ -1395,10 +1372,6 @@ Kirigami.ApplicationWindow {
         visible: false
         title: qsTr("Edit Device")
         property bool fromDevicesPage: false
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "document-edit"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageDeviceEdit.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         Connections {
             target: pageDeviceEdit_form
             function onSaveError(message) {
@@ -1476,9 +1449,6 @@ Kirigami.ApplicationWindow {
         id: pageStatistics
         visible: false
         title: "Statistics"
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "view-statistics"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageStatistics.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
         padding: 0
 
         actions: [
@@ -1499,10 +1469,6 @@ Kirigami.ApplicationWindow {
         id: pageTags
         visible: false
         title: "Tags"
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "tag"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageTags.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         actions: [
             Kirigami.Action {
                 text: qsTr("Close")
@@ -1519,10 +1485,6 @@ Kirigami.ApplicationWindow {
         id: pageBackup
         visible: false
         title: qsTr("BackUp")
-        titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-            Kirigami.Icon { source: "backup"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-            Kirigami.Heading { text: pageBackup.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
-
         onVisibleChanged: {
             if (visible)
                 Qt.callLater(function() { backupPageForm.refresh() })

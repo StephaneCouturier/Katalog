@@ -6,9 +6,6 @@ import org.kde.kirigami as Kirigami
 Kirigami.ScrollablePage {
     id: root
     title: qsTr("Backup Preview")
-    titleDelegate: Component { RowLayout { spacing: Kirigami.Units.smallSpacing; Layout.fillWidth: true; Layout.minimumWidth: 0
-        Kirigami.Icon { source: "view-preview"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: Kirigami.Units.iconSizes.smallMedium }
-        Kirigami.Heading { text: root.title; maximumLineCount: 1; elide: Text.ElideRight; Layout.fillWidth: true } } }
 
     property int mappingId: -1
     property var previewData: null
