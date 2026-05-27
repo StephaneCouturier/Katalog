@@ -66,7 +66,7 @@ int ExploreFilesModel::rowCount(const QModelIndex &parent) const
 int ExploreFilesModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return 4; // Name, Size, Date, Directory
+    return 5; // Name, Size, Date, Directory, [4] hidden folder-sort order
 }
 
 QVariant ExploreFilesModel::data(const QModelIndex &index, int role) const
@@ -83,6 +83,7 @@ QVariant ExploreFilesModel::data(const QModelIndex &index, int role) const
         case 1: return e.size;        // raw qint64 — QML formats it; sort uses the numeric value
         case 2: return e.dateUpdated;
         case 3: return e.folderPath;
+        case 4: return (e.entryType == QLatin1String("folder")) ? 0 : 1; // hidden folders-first sort key
         }
         return {};
 
@@ -107,6 +108,7 @@ QVariant ExploreFilesModel::headerData(int section, Qt::Orientation orientation,
     case 1: return QCoreApplication::translate("MainWindow", "Size");
     case 2: return QCoreApplication::translate("MainWindow", "Date");
     case 3: return QCoreApplication::translate("MainWindow", "Directory");
+    case 4: return QString(); // hidden sort column — no visible header
     }
     return {};
 }

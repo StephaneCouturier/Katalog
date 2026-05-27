@@ -73,7 +73,7 @@ Item {
 
             Controls.CheckBox {
                 id: showFoldersCheck
-                text: qsTr("Folders")
+                text: qsTr("Display folders")
                 checked: root.showFolders
                 onCheckedChanged: {
                     root.showFolders = checked
@@ -87,12 +87,23 @@ Item {
 
             Controls.CheckBox {
                 id: showSubFoldersCheck
-                text: qsTr("Sub-folders")
+                text: qsTr("and all sub-folders")
                 checked: root.showSubFolders
                 enabled: root.showFolders
                 onCheckedChanged: {
                     root.showSubFolders = checked
                     root.loadEntries()
+                }
+            }
+
+            Controls.Button {
+                text: qsTr("Order folders first")
+                icon.name: "view-sort"
+                enabled: root.showFolders
+                onClicked: {
+                    root.sortColumn    = -1
+                    root.sortAscending = true
+                    appManager1.sortExplore(4, 0)
                 }
             }
         }
@@ -215,6 +226,7 @@ Item {
                         case 1: return 90   // Size
                         case 2: return 150  // Date
                         case 3: return 320  // Directory
+                        case 4: return 0    // hidden folders-first sort key
                     }
                     return 100
                 }
