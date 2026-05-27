@@ -1365,12 +1365,13 @@ void AppManager::selectDeviceById(int deviceId)
     if (selectedDevice->ID != deviceId) {
         selectedDevice->ID = deviceId;
         if (selectedDevice->ID == 0) selectedDevice->type = "All";
+
+        emit selectedDeviceChanged(deviceId); // emit before DB query for immediate visual feedback
+
         selectedDevice->loadDevice(m_connectionName);
 
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
         settings.setValue("Selection/SelectedDeviceID", deviceId);
-
-        emit selectedDeviceChanged(deviceId);
 
         qDebug() << "Selected device changed to ID:" << deviceId << "Name:" << selectedDevice->name;
     }
