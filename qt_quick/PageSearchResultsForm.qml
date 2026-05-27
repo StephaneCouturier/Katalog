@@ -14,6 +14,15 @@ ColumnLayout {
     property int  sortColumn:    -1
     property bool sortAscending: true
 
+    Component.onCompleted: {
+        var col   = appManager1.getSearchSortColumn()
+        var order = appManager1.getSearchSortOrder()
+        if (col >= 0) {
+            pageSearchResults_column.sortColumn    = col
+            pageSearchResults_column.sortAscending = (order === 0)
+        }
+    }
+
     // ── Helpers ──────────────────────────────────────────────────────────
     function formatFileSize(size) {
         let n = Number(size)
@@ -1002,7 +1011,7 @@ ColumnLayout {
         function onSearchTriggered() {
             tableView.selectedRow = -1
             tableView.model = emptyModel
-            tableView.model = newSearch1
+            tableView.model = appManager1.searchSortModel
             tableView.forceLayout()
         }
     }

@@ -21,6 +21,15 @@ Item {
     property int  sortColumn:    -1
     property bool sortAscending: true
 
+    Component.onCompleted: {
+        var col   = appManager1.getExploreSortColumn()
+        var order = appManager1.getExploreSortOrder()
+        if (col >= 0) {
+            root.sortColumn    = col
+            root.sortAscending = (order === 0)
+        }
+    }
+
     // Active entry state for context menu and checksum dialogs
     property string _activeFilePath:   ""
     property string _activeFileName:   ""

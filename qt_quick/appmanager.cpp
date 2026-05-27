@@ -77,6 +77,17 @@ void AppManager::setSearchObject(SearchSync *search)
     m_exploreFilesModel = new ExploreFilesModel(this);
     m_exploreSortModel  = new FilesView(this);
     m_exploreSortModel->setSourceModel(m_exploreFilesModel);
+
+    // Restore saved sort state so data is sorted correctly when it first arrives
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    int searchCol   = settings.value("Search/lastSearchSortSection", -1).toInt();
+    int searchOrder = settings.value("Search/lastSearchSortOrder",    0).toInt();
+    if (searchCol >= 0)
+        m_searchSortModel->sort(searchCol, searchOrder);
+    int exploreCol   = settings.value("Explore/lastExploreSortSection", -1).toInt();
+    int exploreOrder = settings.value("Explore/lastExploreSortOrder",    0).toInt();
+    if (exploreCol >= 0)
+        m_exploreSortModel->sort(exploreCol, exploreOrder);
 }
 //----------------------------------------------------------------------
 void AppManager::onSearchProgress(int filesProcessed)
@@ -2994,14 +3005,37 @@ void AppManager::exploreRemoveRow(int proxyRow)
 //----------------------------------------------------------------------
 void AppManager::sortSearch(int column, int order)
 {
-    if (m_searchSortModel)
-        m_searchSortModel->sort(column, order);
+    if (!m_searchSortModel) return;
+    m_searchSortModel->sort(column, order);
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Search/lastSearchSortSection", column);
+    settings.setValue("Search/lastSearchSortOrder",   order);
 }
 //----------------------------------------------------------------------
 void AppManager::sortExplore(int column, int order)
 {
-    if (m_exploreSortModel)
-        m_exploreSortModel->sort(column, order);
+    if (!m_exploreSortModel) return;
+    m_exploreSortModel->sort(column, order);
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Explore/lastExploreSortSection", column);
+    settings.setValue("Explore/lastExploreSortOrder",   order);
+}
+//----------------------------------------------------------------------
+int AppManager::getSearchSortColumn() const
+{
+    return m_searchSortModel ? m_searchSortModel->sortColumn() : -1;
+}
+int AppManager::getSearchSortOrder() const
+{
+    return m_searchSortModel ? (int)m_searchSortModel->sortOrder() : 0;
+}
+int AppManager::getExploreSortColumn() const
+{
+    return m_exploreSortModel ? m_exploreSortModel->sortColumn() : -1;
+}
+int AppManager::getExploreSortOrder() const
+{
+    return m_exploreSortModel ? (int)m_exploreSortModel->sortOrder() : 0;
 }
 //----------------------------------------------------------------------
 QString AppManager::exploreGetChecksum(const QString &fileName, const QString &folderPath)

@@ -315,6 +315,10 @@ public slots:
     // Sort
     Q_INVOKABLE void sortSearch(int column, int order);
     Q_INVOKABLE void sortExplore(int column, int order);
+    Q_INVOKABLE int  getSearchSortColumn()  const;
+    Q_INVOKABLE int  getSearchSortOrder()   const;
+    Q_INVOKABLE int  getExploreSortColumn() const;
+    Q_INVOKABLE int  getExploreSortOrder()  const;
 
     // Sort model accessors (for Q_PROPERTY)
     QAbstractItemModel *getSearchSortModel()  const { return m_searchSortModel; }
