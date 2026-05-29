@@ -371,6 +371,13 @@ Kirigami.ScrollablePage {
                 checked: appManager1.checkVersionChoice
                 onCheckedChanged: appManager1.checkVersionChoice = checked
             }
+            Controls.CheckBox {
+                text: qsTr("File sorting is Case Sensitive")
+                checked: appManager1.fileSortCaseSensitive
+                onCheckedChanged: appManager1.fileSortCaseSensitive = checked
+                Controls.ToolTip.visible: hovered
+                Controls.ToolTip.text: qsTr("If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac")
+            }
         }
 
 /*

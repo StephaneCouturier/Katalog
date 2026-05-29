@@ -78,6 +78,8 @@ void AppManager::initiateApp()
     if ( checkVersionChoice == true)
         checkVersion();
 
+    m_fileSortCaseSensitive = settings.value("Settings/FileCaseSensitiveSort", false).toBool();
+
     //qDebug()<<"initiated App.";
 }
 //----------------------------------------------------------------------
@@ -93,6 +95,9 @@ void AppManager::setSearchObject(SearchSync *search)
     m_exploreFilesModel = new ExploreFilesModel(this);
     m_exploreSortModel  = new FilesView(this);
     m_exploreSortModel->setSourceModel(m_exploreFilesModel);
+
+    m_searchSortModel->setCaseSensitive(m_fileSortCaseSensitive);
+    m_exploreSortModel->setCaseSensitive(m_fileSortCaseSensitive);
 
     // Restore saved sort state so data is sorted correctly when it first arrives
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
@@ -405,6 +410,23 @@ void AppManager::setCheckVersionChoice(bool value)
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     settings.setValue("Settings/CheckVersion", value);
     emit checkVersionChoiceChanged();
+}
+//----------------------------------------------------------------------
+bool AppManager::getFileSortCaseSensitive() const
+{
+    return m_fileSortCaseSensitive;
+}
+//----------------------------------------------------------------------
+void AppManager::setFileSortCaseSensitive(bool value)
+{
+    if (m_fileSortCaseSensitive == value)
+        return;
+    m_fileSortCaseSensitive = value;
+    if (m_searchSortModel)  m_searchSortModel->setCaseSensitive(value);
+    if (m_exploreSortModel) m_exploreSortModel->setCaseSensitive(value);
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/FileCaseSensitiveSort", value);
+    emit fileSortCaseSensitiveChanged();
 }
 //----------------------------------------------------------------------
 void AppManager::openSettingsFile()

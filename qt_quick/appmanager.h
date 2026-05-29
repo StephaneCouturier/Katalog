@@ -92,6 +92,7 @@ class AppManager : public QObject
     Q_PROPERTY(bool deviceFilterFromSelection READ getDeviceFilterFromSelection WRITE setDeviceFilterFromSelection NOTIFY deviceFilterFromSelectionChanged)
     Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
     Q_PROPERTY(bool checkVersionChoice READ getCheckVersionChoice WRITE setCheckVersionChoice NOTIFY checkVersionChoiceChanged)
+    Q_PROPERTY(bool fileSortCaseSensitive READ getFileSortCaseSensitive WRITE setFileSortCaseSensitive NOTIFY fileSortCaseSensitiveChanged)
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
@@ -116,6 +117,7 @@ public:
     QString currentVersion;
     QString releaseDate;
     bool checkVersionChoice;
+    bool m_fileSortCaseSensitive = false;
     bool firstRun;
     bool developmentMode;
     int themeID;
@@ -187,6 +189,8 @@ public slots:
     QString getAppReleaseDate() const { return releaseDate; }
     bool getCheckVersionChoice() const;
     void setCheckVersionChoice(bool value);
+    bool getFileSortCaseSensitive() const;
+    void setFileSortCaseSensitive(bool value);
     Q_INVOKABLE void    openSettingsFile();
     Q_INVOKABLE QString getSettingsFilePath() const;
     Q_INVOKABLE QString getDatabaseSchemaVersion();
@@ -416,6 +420,7 @@ signals:
     void searchKeepsSelectionChanged();
     void deviceFilterFromSelectionChanged();
     void checkVersionChoiceChanged();
+    void fileSortCaseSensitiveChanged();
     void databasePathChanged(const QString &newPath);
     void databaseConnectionChanged(bool success, const QString &message);
     void deviceListRefreshed();
