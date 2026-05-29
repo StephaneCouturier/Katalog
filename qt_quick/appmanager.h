@@ -82,6 +82,7 @@ class AppManager : public QObject
     Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
     Q_PROPERTY(int     selectedDeviceId   READ getSelectedDeviceId   NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceType READ getSelectedDeviceType NOTIFY selectedDeviceChanged)
+    Q_PROPERTY(QString selectedDevicePath READ getSelectedDevicePath NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)
     Q_PROPERTY(QString appReleaseDate         READ getAppReleaseDate         CONSTANT)
     Q_PROPERTY(QString databaseSchemaVersion  READ getDatabaseSchemaVersion  NOTIFY databaseModeChanged FINAL)
@@ -191,6 +192,7 @@ public slots:
     void setCheckVersionChoice(bool value);
     bool getFileSortCaseSensitive() const;
     void setFileSortCaseSensitive(bool value);
+    QString getSelectedDevicePath() const;
     Q_INVOKABLE void    openSettingsFile();
     Q_INVOKABLE QString getSettingsFilePath() const;
     Q_INVOKABLE QString getDatabaseSchemaVersion();

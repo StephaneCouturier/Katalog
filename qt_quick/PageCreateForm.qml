@@ -73,6 +73,13 @@ ColumnLayout {
         function onExcludeDirectoriesChanged() {
             globalExcludes = appManager1.getExcludeDirectories()
         }
+        function onSelectedDeviceChanged() {
+            // selectedDevice->loadDevice() runs after the signal is emitted;
+            // defer one event-loop tick so the path reflects the new device.
+            Qt.callLater(function() {
+                create_lineEdit_NewCatalogPath.text = appManager1.selectedDevicePath
+            })
+        }
     }
 
     Component.onCompleted: {

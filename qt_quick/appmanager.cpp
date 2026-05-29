@@ -723,6 +723,13 @@ QString AppManager::getSelectedDeviceType() const
         return selectedDevice->type;
     return QString();
 }
+//----------------------------------------------------------------------
+QString AppManager::getSelectedDevicePath() const
+{
+    if (selectedDevice)
+        return selectedDevice->path;
+    return QString();
+}
 
 QString AppManager::getHostName() const
 {
