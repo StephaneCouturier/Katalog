@@ -31,6 +31,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - **NEVER alter existing `tr()` strings or any user-visible label text** — not for brevity, not for layout reasons, not for any reason. Any change breaks all 30 translations and diverges K3 from K2.
 > - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.
 > - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
+> - **Before writing any K3 user-visible text** (labels, status messages, progress reports, dialog text, tooltips, notifications) **always read the K2 equivalent first** and reuse its exact `tr()` string. Creating a new string when K2 already has one wastes a translation slot across 30 languages.
+> - **Progress/status messages in K3 MUST follow `SpecProgressReport.md`** (`docs_src/docs/SpecProgressReport.md`). Every status bar message must use `StatusBarMessageBuilder`. NEVER write a raw string where the builder is the specification. Read the spec before implementing any progress or status message.
 
 > **CRITICAL — Version context:**
 > - Last **released** version: **2.11**

@@ -1740,29 +1740,14 @@ void AppManager::onCatalogCreationCompleted(const QList<qint64> &/*results*/)
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
 
-    const QDateTime endTime  = QDateTime::currentDateTime();
-    const qint64 elapsedMs   = m_catalogCreateStartTime.msecsTo(endTime);
-    const int totalSec       = static_cast<int>(elapsedMs / 1000);
-    const QString duration   = QString("%1:%2:%3")
-        .arg(totalSec / 3600,        2, 10, QLatin1Char('0'))
-        .arg((totalSec % 3600) / 60, 2, 10, QLatin1Char('0'))
-        .arg(totalSec % 60,          2, 10, QLatin1Char('0'));
-    const QString report = tr("Indexing — Start: %1 | End: %2 | Duration: %3")
-        .arg(m_catalogCreateStartTime.toString("hh:mm:ss"))
-        .arg(endTime.toString("hh:mm:ss"))
-        .arg(duration);
-
     m_catalogIsCreating = false;
-    m_catalogStatusText = report;
     emit catalogIsCreatingChanged();
-    emit catalogStatusTextChanged();
-    QTimer::singleShot(8000, this, [this]() {
-        m_catalogStatusText.clear();
-        emit catalogStatusTextChanged();
-    });
+    // Status bar message is built and emitted by CatalogProgressManager
+    // via statusMessageChanged → m_catalogStatusText, matching the spec:
+    // CREATE | Completed | Catalog 1 of 1 | <name> | Indexed: N of N (100%)
 
     refreshDeviceList();
-    emit catalogCreationCompleted(true, report);
+    emit catalogCreationCompleted(true, QString());
     m_creatingDevice = nullptr;
 }
 //----------------------------------------------------------------------
