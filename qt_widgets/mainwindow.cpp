@@ -298,6 +298,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
         //Setup tab: Settings
             //Load path of last collection used
             ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
             ui->Settings_lineEdit_ImageFolderPath->setText(collection->imageFolderPath);
 
             //Apply databaseMode in Settings tab

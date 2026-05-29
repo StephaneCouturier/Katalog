@@ -562,7 +562,7 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
 
     // Set defaults if values are not provided
     if (collection->databaseMode.isEmpty())
-        collection->databaseMode = "Memory";
+        collection->databaseMode = "File";
 
     // Set database host defaults for Hosted mode
     if (collection->databaseHostName.isEmpty()) {
@@ -580,6 +580,9 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
         db.setDatabaseName(":memory:");
     }
     else if (collection->databaseMode == "File") {
+        if (collection->databaseFilePath.isEmpty()) {
+            return QSqlError(); // Not configured yet; first-run flow will set the path
+        }
         QFile databaseFile(collection->databaseFilePath);
         if (!databaseFile.exists()) {
             return QSqlError("Database file not found", collection->databaseFilePath, QSqlError::ConnectionError);

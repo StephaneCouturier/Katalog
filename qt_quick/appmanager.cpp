@@ -575,7 +575,7 @@ QString AppManager::getNewCollectionDefaultPath() const
         folder = collection->folder;
     else
         folder = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    return folder + "/newKatalogFile.db";
+    return folder + "/katalog.db";
 }
 //----------------------------------------------------------------------
 void AppManager::refreshAllUI()

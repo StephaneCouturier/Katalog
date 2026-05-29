@@ -42,7 +42,17 @@
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+76"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+108"/>
+        <source>Select a Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Select a Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Select</source>
         <translation type="unfinished">Vybrať</translation>
     </message>
@@ -68,24 +78,281 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+537"/>
+        <location filename="../qt_quick/Main.qml" line="+484"/>
+        <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+60"/>
+        <location line="+29"/>
+        <location line="+127"/>
+        <location line="+170"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-382"/>
+        <location line="+60"/>
+        <location line="+162"/>
+        <location line="+713"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <location line="-901"/>
+        <location line="+158"/>
+        <location line="+137"/>
+        <location line="+33"/>
+        <location line="+740"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1021"/>
+        <source>Update the catalog content with the new criteria?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+128"/>
+        <location line="+169"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-271"/>
+        <source>The catalog source path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The storage path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>How should the catalog indexes be updated?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Replace path root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Full re-index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+4"/>
+        <source>Skip</source>
+        <translation type="unfinished">Preskočiť</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>A snapshot of this collection was recorded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Catalogs</source>
+        <translation type="unfinished">Katalógy</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Number of files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location line="+1"/>
+        <location line="+2"/>
+        <location line="+1"/>
+        <source>added:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Total file size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+110"/>
+        <source>Storage</source>
+        <translation type="unfinished">Úložisko</translation>
+    </message>
+    <message>
+        <location line="-109"/>
+        <source>Storage free space:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage total space:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Do you want a the summary of updates for each catalog?</source>
+        <translation type="unfinished">Chcete súhrn aktualizácií pre každý katalóg?</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Catalog updated: </source>
+        <translation type="unfinished">Katalóg aktualizovaný: </translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+10"/>
+        <location line="+14"/>
+        <source>Path: </source>
+        <translation type="unfinished">Cesta: </translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <location line="+36"/>
+        <location line="+21"/>
+        <source>Number of files: </source>
+        <translation type="unfinished">Počet súborov: </translation>
+    </message>
+    <message>
+        <location line="-56"/>
+        <location line="+2"/>
+        <location line="+8"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+10"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+8"/>
+        <location line="+2"/>
+        <location line="+7"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+8"/>
+        <location line="+2"/>
+        <location line="+6"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <source>(added: </source>
+        <translation type="unfinished">(pridané: </translation>
+    </message>
+    <message>
+        <location line="-68"/>
+        <location line="+36"/>
+        <location line="+21"/>
+        <source>Total file size: </source>
+        <translation type="unfinished">Celková veľkosť súborov: </translation>
+    </message>
+    <message>
+        <location line="-52"/>
+        <location line="+14"/>
+        <source>Storage updated: </source>
+        <translation type="unfinished">Úložisko aktualizované: </translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+14"/>
+        <location line="+21"/>
+        <location line="+20"/>
+        <source>Used Space: </source>
+        <translation type="unfinished">Použité miesto: </translation>
+    </message>
+    <message>
+        <location line="-53"/>
+        <location line="+14"/>
+        <location line="+21"/>
+        <location line="+20"/>
+        <source>Free Space: </source>
+        <translation type="unfinished">Voľné miesto: </translation>
+    </message>
+    <message>
+        <location line="-53"/>
+        <location line="+14"/>
+        <location line="+21"/>
+        <location line="+20"/>
+        <source>Total Space: </source>
+        <translation type="unfinished">Celkové miesto: </translation>
+    </message>
+    <message>
+        <location line="-35"/>
+        <source>Virtual device updated: </source>
+        <translation type="unfinished">Virtuálne zariadenie aktualizované: </translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+21"/>
+        <source>Catalogs updated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-21"/>
+        <location line="+21"/>
+        <source>skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source>Selected active catalogs are updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+72"/>
+        <source>The source folder does not contain any file.
+This could mean that the source is empty or the device is not mounted to this folder.
+Do you want to save it anyway (the catalog would be empty)?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+103"/>
+        <location line="+3"/>
         <source>Search</source>
         <translation>Hľadať</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+33"/>
+        <source>Resume</source>
+        <translation type="unfinished">Pokračovať</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Pause</source>
+        <translation type="unfinished">Pozastaviť</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+125"/>
+        <location line="+189"/>
+        <source>Stop</source>
+        <translation type="unfinished">Zastaviť</translation>
+    </message>
+    <message>
+        <location line="-307"/>
         <source>Reset</source>
         <translation>Resetovať</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+32"/>
+        <location line="+7"/>
+        <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+53"/>
+        <location line="+110"/>
+        <location line="+51"/>
+        <location line="+85"/>
+        <location line="+118"/>
+        <location line="+18"/>
+        <location line="+35"/>
         <source>Close</source>
         <translation>Zavrieť</translation>
     </message>
     <message>
-        <location line="-9"/>
+        <location line="-426"/>
         <source>Duplicates (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,19 +366,114 @@
         <source>Results</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+50"/>
+        <source>All active</source>
+        <translation type="unfinished">Všetky aktívne</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Snapshot</source>
+        <translation type="unfinished">Snímka</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Insert Virtual Group</source>
+        <translation type="unfinished">Vložiť virtuálnu skupinu</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Add Storage</source>
+        <translation type="unfinished">Pridať úložisko</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Import</source>
+        <translation type="unfinished">Importovať</translation>
+    </message>
+    <message>
+        <location line="+116"/>
+        <source>Catalog created successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Catalog creation failed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Create</source>
+        <translation type="unfinished">Vytvoriť</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Edit Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Save changes to the catalog definition?
+
+%1
+
+(The catalog must be updated to reflect these changes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Save</source>
+        <translation type="unfinished">Uložiť</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delete</source>
+        <translation type="unfinished">Zmazať</translation>
+    </message>
+    <message>
+        <location line="+75"/>
+        <source>BackUp</source>
+        <translation type="unfinished">Záloha</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Add</source>
+        <translation type="unfinished">Pridať</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Generate LuckyBackup profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <source>Select the database to create and open:</source>
+        <translation type="unfinished">Vyberte databázu na vytvorenie a otvorenie:</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Import from VVV</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2252"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
         <source>Include Checksum</source>
         <translation>Zahrnúť kontrolný súčet</translation>
     </message>
     <message>
-        <location line="+551"/>
+        <location line="+584"/>
         <location line="+46"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+360"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1078"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1121"/>
+        <location line="+541"/>
+        <location line="+15"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-578"/>
         <location line="+541"/>
         <location line="+15"/>
         <location line="+22"/>
@@ -121,6 +483,8 @@
     <message>
         <location line="-45"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+76"/>
+        <location line="+7"/>
+        <location line="-7"/>
         <location line="+7"/>
         <source>Loading</source>
         <translation>Načítava sa</translation>
@@ -148,6 +512,7 @@
     <message>
         <location line="+27"/>
         <location line="+5"/>
+        <location line="+0"/>
         <source>Verified:</source>
         <translation>Overené:</translation>
     </message>
@@ -177,37 +542,43 @@
         <translation>Chýbajúce súbory:</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+9797"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+8123"/>
         <source>Include File Type</source>
         <translation>Zahrnúť typ súboru</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-856"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-861"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy Checksum</source>
         <translation>Kopírovať kontrolný súčet</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-8"/>
+        <location line="+0"/>
         <source>Calculate Checksum</source>
         <translation>Vypočítať kontrolný súčet</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+13"/>
+        <location line="+0"/>
         <source>Verify Checksum</source>
         <translation>Overiť kontrolný súčet</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1427"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
         <source>Verifying checksum...</source>
         <translation>Overovanie kontrolného súčtu...</translation>
     </message>
     <message>
         <location line="+43"/>
         <location line="+58"/>
+        <location line="+68"/>
+        <location line="-68"/>
         <location line="+68"/>
         <source>Checksum saved to database.</source>
         <translation>Kontrolný súčet uložený do databázy.</translation>
@@ -220,6 +591,7 @@
     <message>
         <location line="+5"/>
         <location line="+122"/>
+        <location line="+0"/>
         <source>Copy to Clipboard</source>
         <translation>Kopírovať do schránky</translation>
     </message>
@@ -288,12 +660,14 @@
         <translation>Vaše údaje budú odoslané do tejto sieťovej databázy.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Continue?</source>
         <translation>Pokračovať?</translation>
     </message>
     <message>
-        <location line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Táto kolekcia bola vytvorená v Katalog verzii %1, ktorá už nie je podporovaná.&lt;br/&gt;&lt;br/&gt;Na konverziu ju najprv otvorte v Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Vyberte prosím iný priečinok kolekcie.</translation>
     </message>
@@ -306,9 +680,10 @@
         <translation type="vanished">Kontrolné súčty vypočítané</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6504"/>
-        <location line="+926"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1295"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
+        <location line="+737"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
+        <location line="+0"/>
         <source>Checksum</source>
         <translation>Kontrolný súčet</translation>
     </message>
@@ -317,50 +692,57 @@
         <translation type="vanished">Dátum kontrolného súčtu</translation>
     </message>
     <message>
-        <location line="-768"/>
+        <location line="-614"/>
         <source>Within selected device</source>
         <translation>V rámci vybraného zariadenia</translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+89"/>
         <source>Compare two devices</source>
         <translation>Porovnať dve zariadenia</translation>
     </message>
     <message>
-        <location line="+212"/>
-        <location line="+661"/>
+        <location line="+170"/>
+        <location line="+521"/>
         <source>compared to</source>
         <translation>v porovnaní s</translation>
     </message>
     <message>
-        <location line="-264"/>
+        <location line="-208"/>
         <source>and</source>
         <translation>a</translation>
     </message>
     <message>
-        <location line="+3332"/>
-        <location line="+2375"/>
+        <location line="+2778"/>
+        <location line="+2135"/>
         <source>Include files checksum</source>
         <translation>Zahrnúť kontrolné súčty súborov</translation>
     </message>
     <message>
-        <location line="-258"/>
+        <location line="-202"/>
         <source>Stop the cataloging (no data will be saved)</source>
         <translation>Zastaviť katalogizáciu (žiadne údaje nebudú uložené)</translation>
     </message>
     <message>
-        <location line="+1621"/>
-        <location line="+949"/>
+        <location line="+1306"/>
+        <location line="+872"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
     <message>
-        <location line="-944"/>
-        <location line="+949"/>
+        <location line="-867"/>
+        <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+97"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+319"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+358"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+721"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+68"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+68"/>
@@ -368,7 +750,7 @@
         <translation>Archív</translation>
     </message>
     <message>
-        <location line="-928"/>
+        <location line="-851"/>
         <source>Generate Profile</source>
         <translation>Generovať profil</translation>
     </message>
@@ -384,6 +766,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+285"/>
         <location line="+29"/>
+        <location line="+0"/>
         <source>No backup links found.</source>
         <translation>Neboli nájdené žiadne záložné odkazy.</translation>
     </message>
@@ -421,7 +804,16 @@
         <location line="+54"/>
         <location line="+25"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-742"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
+        <location line="+23"/>
+        <location line="+23"/>
+        <location line="+21"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-113"/>
+        <location line="+30"/>
+        <location line="+54"/>
+        <location line="+25"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
@@ -439,6 +831,15 @@
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-354"/>
+        <location line="+128"/>
+        <location line="+87"/>
+        <location line="+139"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
+        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
+        <location line="+36"/>
         <source>Completed</source>
         <translation>Dokončené</translation>
     </message>
@@ -451,21 +852,30 @@
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-335"/>
         <location line="+109"/>
         <location line="+87"/>
+        <location line="-87"/>
+        <location line="+87"/>
         <source>Cancelled</source>
         <translation>Zrušené</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
+        <location line="+0"/>
         <source>Loaded</source>
         <translation>Načítané</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+415"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+429"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-23"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-71"/>
         <location line="+54"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-89"/>
+        <location line="+15"/>
+        <location line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-54"/>
+        <location line="+54"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
         <source>In Progress</source>
@@ -474,11 +884,12 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
+        <location line="+0"/>
         <source>Stopped</source>
         <translation>Zastavené</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+403"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+417"/>
         <source>MIME Verification Complete</source>
         <translation>Overenie MIME Dokončené</translation>
     </message>
@@ -488,7 +899,7 @@
         <translation>Otvoriť Správu</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-417"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-431"/>
         <source>Hidden</source>
         <translation>Skryté</translation>
     </message>
@@ -498,42 +909,45 @@
         <translation>Metadáta</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6593"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5645"/>
         <source>File metadata</source>
         <translation>Metadáta súboru</translation>
     </message>
     <message>
-        <location line="+356"/>
+        <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
+        <location line="+0"/>
         <source>Height</source>
         <translation>Výška</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
+        <location line="+0"/>
         <source>Width</source>
         <translation>Šírka</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
+        <location line="+0"/>
         <source>Duration</source>
         <translation>Trvanie</translation>
     </message>
     <message>
-        <location line="+74"/>
-        <location line="+94"/>
+        <location line="+60"/>
+        <location line="+73"/>
         <source>HH:mm:ss</source>
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1817"/>
-        <location line="+2309"/>
+        <location line="+1592"/>
+        <location line="+2076"/>
         <source>Include files metadata</source>
         <translation>Zahrnúť metadáta súborov</translation>
     </message>
     <message>
-        <location line="-1518"/>
+        <location line="-1301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zistiť skutočné typy MIME a identifikovať nezrovnalosti (dlhý proces)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -545,6 +959,8 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+503"/>
         <location line="+19"/>
+        <location line="+11"/>
+        <location line="-11"/>
         <location line="+11"/>
         <source>Other</source>
         <translation>Iné</translation>
@@ -559,14 +975,25 @@
         <location line="+8"/>
         <location line="+15"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+642"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+697"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-104"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <location line="+12"/>
+        <location line="+34"/>
+        <location line="+8"/>
+        <location line="+15"/>
+        <location line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
         <location line="+1"/>
         <source>None</source>
         <translation>Žiadne</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-945"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location line="+0"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Zobraziť rozšírené metadáta (JSON)</translation>
     </message>
@@ -608,6 +1035,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-250"/>
         <location line="+8"/>
+        <location line="+0"/>
         <source>Copy JSON</source>
         <translation>Kopírovať JSON</translation>
     </message>
@@ -617,6 +1045,10 @@
         <location line="+32"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-3"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-33"/>
+        <location line="+32"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Copied</source>
         <translation>Skopírované</translation>
     </message>
@@ -658,12 +1090,14 @@
     <message>
         <location line="+1"/>
         <location line="+9"/>
+        <location line="+0"/>
         <source>Select Different Folder</source>
         <translation>Vybrať Iný Priečinok</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+9"/>
+        <location line="+0"/>
         <source>Use Application Folder</source>
         <translation>Použiť Priečinok Aplikácie</translation>
     </message>
@@ -674,6 +1108,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-77"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Media Basic</source>
         <translation>Médiá Základné</translation>
     </message>
@@ -688,12 +1123,14 @@
     <message>
         <location line="-11"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Media Extended</source>
         <translation>Médiá Rozšírené</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Full Extended</source>
         <translation>Plné Rozšírené</translation>
     </message>
@@ -702,8 +1139,9 @@
         <translation type="vanished">Chcete &lt;span style=&apos;color: red&apos;;&gt;odstrániť&lt;/span&gt; toto %1 zariadenie?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+810"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+855"/>
         <location line="+38"/>
+        <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalógy aktualizované:&lt;b&gt; %1 &lt;/b&gt;(%2 preskočené)</translation>
     </message>
@@ -713,7 +1151,7 @@
         <translation>Virtuálne zariadenie aktualizované: </translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-1372"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-1331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik: Zastaviť okamžite (tvrdé zastavenie)&lt;/p&gt;&lt;p&gt;Ctrl+Klik: Zastaviť po aktuálnom katalógu (jemné zastavenie)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -725,23 +1163,33 @@
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+6"/>
+        <location line="+0"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Zdrojový priečinok neobsahuje žiadny súbor.&lt;br/&gt;To môže znamenať, že zdroj je prázdny alebo zariadenie nie je pripojené do tohto priečinka.&lt;br/&gt;Chcete ho uložiť aj tak (katalóg by bol prázdny)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-476"/>
-        <location line="+103"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3095"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
+        <location line="+117"/>
         <location line="+72"/>
         <location line="+136"/>
         <location line="+123"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+246"/>
         <location line="+40"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-448"/>
+        <location line="+117"/>
+        <location line="+72"/>
+        <location line="+136"/>
+        <location line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-40"/>
+        <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>Operácia zariadenia už beží.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1101"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
         <source>Operation cancelled</source>
         <translation>Operácia zrušená</translation>
     </message>
@@ -750,15 +1198,17 @@
         <translation type="vanished">Zastavovanie po dokončení aktuálneho katalógu...</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6915"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+852"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+926"/>
+        <location line="+6"/>
+        <location line="-6"/>
         <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalóg</translation>
     </message>
     <message>
-        <location line="+882"/>
-        <location line="+436"/>
+        <location line="+667"/>
+        <location line="+360"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
         <location line="+39"/>
@@ -769,24 +1219,37 @@
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
+        <location line="+37"/>
+        <location line="+39"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-573"/>
+        <location line="+20"/>
+        <location line="+30"/>
+        <location line="+150"/>
+        <location line="+53"/>
+        <location line="+316"/>
+        <location line="+4"/>
         <source>Search</source>
         <translation>Hľadať</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-357"/>
         <source>Search for files or folders</source>
         <translation>Hľadať súbory alebo priečinky</translation>
     </message>
     <message>
-        <location line="+3923"/>
+        <location line="+3110"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+84"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="-30"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location line="-3609"/>
+        <location line="-2844"/>
         <source>Paste the text from the clipboard</source>
         <translation>Vložiť text zo schránky</translation>
     </message>
@@ -796,19 +1259,20 @@
         <translation>Získať text zo schránky</translation>
     </message>
     <message>
-        <location line="+110"/>
-        <location line="+38"/>
+        <location line="+82"/>
+        <location line="+31"/>
         <source>Launch the search of files.</source>
         <translation>Spustiť vyhľadávanie súborov.</translation>
     </message>
     <message>
-        <location line="+189"/>
+        <location line="+154"/>
         <source>with</source>
         <translation>s</translation>
     </message>
     <message>
-        <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+363"/>
+        <location line="+32"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+368"/>
+        <location line="+0"/>
         <source>All Words</source>
         <translation>Všetky slová</translation>
     </message>
@@ -828,13 +1292,14 @@
         <translation>Akékoľvek slovo</translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+73"/>
         <source>in</source>
         <translation>v</translation>
     </message>
     <message>
-        <location line="+41"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-980"/>
+        <location line="+34"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
+        <location line="+0"/>
         <source>File names or Folder paths</source>
         <translation>Názvy súborov alebo cesty priečinkov</translation>
     </message>
@@ -842,150 +1307,165 @@
         <location line="-5"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-5"/>
         <location line="+4"/>
-        <location line="+982"/>
+        <location line="+1015"/>
+        <location line="-1019"/>
+        <location line="+4"/>
+        <location line="+1015"/>
         <source>File names only</source>
         <translation>Iba názvy súborov</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-980"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
+        <location line="+0"/>
         <source>Folder path only</source>
         <translation>Iba cesta priečinka</translation>
     </message>
     <message>
-        <location line="+4252"/>
+        <location line="+3328"/>
         <source>Choose to only show folders as results</source>
         <translation>Vyberte zobrazenie iba priečinkov vo výsledkoch</translation>
     </message>
     <message>
-        <location line="-4939"/>
+        <location line="-3902"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>Resetovať všetky kritériá na predvolené hodnoty a vymazať predchádzajúce výsledky.</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location line="+4545"/>
         <source>Reset</source>
         <translation>Resetovať</translation>
     </message>
     <message>
-        <location line="+12130"/>
+        <location line="+5655"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="-2838"/>
-        <location line="+2817"/>
+        <location line="-2494"/>
+        <location line="+2481"/>
         <source>Password</source>
         <translation>Heslo</translation>
     </message>
     <message>
-        <location line="-699"/>
+        <location line="-583"/>
         <source>Database File Path</source>
         <translation>Cesta k súboru databázy</translation>
     </message>
     <message>
-        <location line="+494"/>
-        <location line="+897"/>
+        <location line="+429"/>
+        <location line="+748"/>
         <source>Data mode</source>
         <translation>Režim dát</translation>
     </message>
     <message>
-        <location line="-884"/>
-        <location line="+892"/>
+        <location line="-735"/>
+        <location line="+743"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+306"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>File</source>
         <translation>Súbor</translation>
     </message>
     <message>
-        <location line="-11547"/>
-        <location line="+848"/>
-        <location line="+891"/>
-        <location line="+921"/>
+        <location line="-9766"/>
+        <location line="+652"/>
+        <location line="+709"/>
+        <location line="+725"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-53"/>
         <location line="+143"/>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-244"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-531"/>
+        <location line="+143"/>
+        <location line="+388"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Size</source>
         <translation>Veľkosť</translation>
     </message>
     <message>
-        <location line="-4663"/>
-        <location line="+6599"/>
+        <location line="-3679"/>
+        <location line="+5261"/>
         <source>Device tree</source>
         <translation>Strom zariadení</translation>
     </message>
     <message>
-        <location line="-6146"/>
+        <location line="-4923"/>
         <source>Reload all collection&apos;s data</source>
         <translation>Znovu načítať všetky dáta kolekcie</translation>
     </message>
     <message>
-        <location line="+1579"/>
-        <location line="+451"/>
-        <location line="+2250"/>
-        <location line="+218"/>
-        <location line="+283"/>
+        <location line="+1277"/>
+        <location line="+346"/>
+        <location line="+1774"/>
+        <location line="+169"/>
+        <location line="+220"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-3138"/>
+        <location line="-2459"/>
         <source>File size unit for minimum value</source>
         <translation>Jednotka veľkosti súboru pre minimálnu hodnotu</translation>
     </message>
     <message>
-        <location line="+49"/>
-        <location line="+426"/>
-        <location line="+2249"/>
-        <location line="+218"/>
-        <location line="+290"/>
+        <location line="+35"/>
+        <location line="+328"/>
+        <location line="+1773"/>
+        <location line="+169"/>
+        <location line="+227"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-3122"/>
+        <location line="-2450"/>
         <source>File size unit for maximum value</source>
         <translation>Jednotka veľkosti súboru pre maximálnu hodnotu</translation>
     </message>
     <message>
-        <location line="+81"/>
-        <location line="+5160"/>
-        <location line="+4396"/>
+        <location line="+60"/>
+        <location line="+4277"/>
+        <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1499"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-9518"/>
+        <location line="-8066"/>
         <source>Select the type of files</source>
         <translation>Vyberte typ súborov</translation>
     </message>
     <message>
-        <location line="+6570"/>
+        <location line="+5622"/>
         <source>Catalog Parameters</source>
         <translation>Parametre katalógu</translation>
     </message>
     <message>
-        <location line="+1283"/>
+        <location line="+923"/>
         <source>Global Parameters</source>
         <translation>Globálne parametre</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+80"/>
         <source>Excluded from all catalogs</source>
         <translation>Vylúčené zo všetkých katalógov</translation>
     </message>
     <message>
-        <location line="+547"/>
+        <location line="+533"/>
         <source>BackUp &amp; Archive Links for device</source>
         <translation>Záložné &amp; archívne odkazy pre zariadenie</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+39"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-6"/>
         <location line="+158"/>
         <location line="+8"/>
@@ -994,9 +1474,34 @@
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+907"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+9"/>
+        <location line="+1"/>
+        <location line="+62"/>
+        <location line="+2"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-166"/>
+        <location line="+158"/>
+        <location line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-130"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+91"/>
+        <location line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-93"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
@@ -1018,12 +1523,16 @@
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-129"/>
         <location line="+19"/>
         <location line="+11"/>
+        <location line="-11"/>
+        <location line="+11"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
         <location line="-29"/>
         <location line="+19"/>
+        <location line="+11"/>
+        <location line="-11"/>
         <location line="+11"/>
         <source>Image</source>
         <translation>Obrázok</translation>
@@ -1032,34 +1541,45 @@
         <location line="-28"/>
         <location line="+19"/>
         <location line="+11"/>
+        <location line="-11"/>
+        <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-5217"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-4563"/>
         <source>only list folders in results</source>
         <translation>zobrazovať vo výsledkoch iba priečinky</translation>
     </message>
     <message>
-        <location line="+465"/>
+        <location line="+354"/>
         <location line="+3"/>
         <source>Define which batch process to execute on all results</source>
         <translation>Definovať, ktorý hromadný proces sa má vykonať na všetkých výsledkoch</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1375"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1408"/>
+        <location line="+0"/>
         <source>Export Results</source>
         <translation>Exportovať výsledky</translation>
     </message>
     <message>
-        <location line="-276"/>
+        <location line="-221"/>
         <source>Show/Hide Catalogs with results</source>
         <translation>Zobraziť/skryť katalógy s výsledkami</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+101"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+473"/>
+        <location line="+50"/>
+        <location line="+24"/>
+        <location line="+24"/>
+        <location line="+33"/>
+        <location line="+21"/>
+        <location line="+25"/>
+        <location line="+4"/>
+        <location line="-181"/>
         <location line="+50"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1071,260 +1591,319 @@
         <translation>Nájdené súbory</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <location line="+56"/>
-        <location line="+690"/>
-        <location line="+41"/>
-        <location line="+29"/>
-        <location line="+29"/>
-        <location line="+987"/>
-        <location line="+45"/>
+        <location line="+24"/>
+        <location line="+46"/>
+        <location line="+647"/>
         <location line="+38"/>
-        <location line="+496"/>
-        <location line="+100"/>
-        <location line="+53"/>
-        <location line="+2413"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+179"/>
-        <location line="+45"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+24"/>
+        <location line="+26"/>
+        <location line="+26"/>
+        <location line="+978"/>
+        <location line="+35"/>
+        <location line="+35"/>
+        <location line="+472"/>
+        <location line="+90"/>
+        <location line="+50"/>
+        <location line="+1957"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+169"/>
+        <location line="+35"/>
+        <location line="+21"/>
+        <location line="+21"/>
+        <location line="+21"/>
+        <location line="+35"/>
+        <location line="+21"/>
+        <location line="+21"/>
+        <location line="+21"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3696"/>
-        <location line="+377"/>
+        <location line="-3120"/>
+        <location line="+347"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-16"/>
+        <location line="+0"/>
         <source>Catalogs</source>
         <translation>Katalógy</translation>
     </message>
     <message>
-        <location line="-332"/>
-        <location line="+2640"/>
+        <location line="-312"/>
+        <location line="+2154"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-30"/>
+        <location line="+0"/>
         <source>Total File Size</source>
         <translation>Celková veľkosť súborov</translation>
     </message>
     <message>
-        <location line="-2602"/>
+        <location line="-2119"/>
         <source>Total Number of Files</source>
         <translation>Celkový počet súborov</translation>
     </message>
     <message>
-        <location line="-1239"/>
+        <location line="-1201"/>
         <source>All active</source>
         <translation>Všetky aktívne</translation>
     </message>
     <message>
-        <location line="+1330"/>
-        <location line="+5513"/>
+        <location line="+1289"/>
+        <location line="+4701"/>
         <location line="+55"/>
         <location line="+10"/>
         <source>Import</source>
         <translation>Importovať</translation>
     </message>
     <message>
-        <location line="-5229"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-418"/>
+        <location line="-4438"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-432"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-327"/>
         <location line="+21"/>
         <location line="+18"/>
         <location line="+18"/>
         <location line="+14"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-166"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-71"/>
+        <location line="+21"/>
+        <location line="+18"/>
+        <location line="+18"/>
+        <location line="+14"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
         <source>Explore</source>
         <translation>Prehliadať</translation>
     </message>
     <message>
-        <location line="-1863"/>
-        <location line="+1016"/>
-        <location line="+6083"/>
+        <location line="-1801"/>
+        <location line="+991"/>
+        <location line="+5255"/>
         <location line="+20"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-228"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-269"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-27"/>
-        <location line="+105"/>
+        <location line="+119"/>
         <location line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-102"/>
+        <location line="+36"/>
+        <location line="+40"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-191"/>
+        <location line="+119"/>
+        <location line="+72"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
         <source>Update</source>
         <translation>Aktualizovať</translation>
     </message>
     <message>
-        <location line="-1403"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-135"/>
-        <location line="+89"/>
+        <location line="-1197"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-149"/>
+        <location line="+103"/>
+        <location line="+71"/>
+        <location line="-174"/>
+        <location line="+103"/>
         <location line="+71"/>
         <source>Edit</source>
         <translation>Upraviť</translation>
     </message>
     <message>
-        <location line="-6043"/>
+        <location line="-5377"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1138"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Delete</source>
         <translation>Zmazať</translation>
     </message>
     <message>
-        <location line="+2193"/>
+        <location line="+2112"/>
         <source>Explore a catalog</source>
         <translation>Prehliadať katalóg</translation>
     </message>
     <message>
-        <location line="-8458"/>
-        <location line="+8837"/>
+        <location line="-7034"/>
+        <location line="+7387"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+6"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+255"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Catalog</source>
         <translation>Katalóg</translation>
     </message>
     <message>
-        <location line="+1032"/>
-        <location line="+3778"/>
+        <location line="+799"/>
+        <location line="+3246"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+701"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-922"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-936"/>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
+        <location line="+143"/>
+        <location line="+301"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-493"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
     <message>
-        <location line="-5133"/>
+        <location line="-4342"/>
         <source>Directories</source>
         <translation>Adresáre</translation>
     </message>
     <message>
-        <location line="-8087"/>
-        <location line="+13428"/>
+        <location line="-6778"/>
+        <location line="+11307"/>
         <source>Show/Hide Filters</source>
         <translation>Zobraziť/skryť filtre</translation>
     </message>
     <message>
-        <location line="-13943"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1222"/>
+        <location line="-11687"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
+        <location line="+0"/>
         <source>Virtual</source>
         <translation>Virtuálne</translation>
     </message>
     <message>
-        <location line="+990"/>
-        <location line="+1022"/>
-        <location line="+2502"/>
-        <location line="+1196"/>
+        <location line="+761"/>
+        <location line="+832"/>
+        <location line="+1963"/>
+        <location line="+937"/>
         <source>Use the criteria in the Search</source>
         <translation>Použiť kritériá hľadania</translation>
     </message>
     <message>
-        <location line="-4485"/>
-        <location line="+5562"/>
-        <location line="+2672"/>
+        <location line="-3672"/>
+        <source>Clear the search text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+141"/>
+        <location line="+4443"/>
+        <location line="+2463"/>
         <source>Stop</source>
         <translation>Zastaviť</translation>
     </message>
     <message>
-        <location line="-3135"/>
+        <location line="-6706"/>
+        <source>Regex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3799"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-74"/>
+        <location line="+0"/>
         <source>Select...</source>
         <translation>Vybrať...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+29"/>
+        <location line="+0"/>
         <source>Rename (KRename)</source>
         <translation>Premenovať (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-721"/>
-        <location line="+727"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-726"/>
+        <location line="+732"/>
+        <location line="-732"/>
+        <location line="+732"/>
         <source>Move to Trash</source>
         <translation>Presunúť do koša</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+28"/>
         <source>Run process on all results</source>
         <translation>Spustiť proces na všetkých výsledkoch</translation>
     </message>
     <message>
-        <location line="+381"/>
+        <location line="+223"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1327"/>
+        <location line="+0"/>
+        <source>Keep last 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+146"/>
         <source>Catalogs list</source>
         <translation>Zoznam katalógov</translation>
     </message>
     <message>
-        <location line="+530"/>
+        <location line="+505"/>
         <source>The change will be applied only when Saving</source>
         <translation>Zmena sa použije iba pri uložení</translation>
     </message>
     <message>
         <location line="+159"/>
-        <location line="+2337"/>
+        <location line="+2083"/>
         <source>Excluded folders from this catalog</source>
         <translation>Vylúčené priečinky z tohto katalógu</translation>
     </message>
     <message>
-        <location line="-2322"/>
-        <location line="+2337"/>
-        <location line="+574"/>
+        <location line="-2068"/>
+        <location line="+2083"/>
+        <location line="+382"/>
         <source>Folder path or pattern to exclude</source>
         <translation>Cesta k priečinku alebo vzor na vylúčenie</translation>
     </message>
     <message>
-        <location line="-2891"/>
-        <location line="+2337"/>
-        <location line="+607"/>
+        <location line="-2445"/>
+        <location line="+2083"/>
+        <location line="+393"/>
         <source>Add</source>
         <translation>Pridať</translation>
     </message>
     <message>
-        <location line="-2794"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+978"/>
+        <location line="-2326"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
+        <location line="+0"/>
         <source>Comment 1</source>
         <translation>Komentár 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Comment 2</source>
         <translation>Komentár 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Comment 3</source>
         <translation>Komentár 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-6"/>
+        <location line="+0"/>
         <source>Brand</source>
         <translation>Značka</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Model</source>
         <translation>Model</translation>
     </message>
     <message>
-        <location line="+412"/>
+        <location line="+396"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+79"/>
         <source>Display the *Physical Group* and its related Devices.</source>
         <translation>Zobraziť *Fyzickú skupinu* a jej súvisiace zariadenia.</translation>
     </message>
@@ -1354,23 +1933,28 @@
         <translation>Vytvoriť a vložiť nové virtuálne zariadenie pod vybrané zariadenie v hierarchii a otvoriť panel úprav.</translation>
     </message>
     <message>
-        <location line="+227"/>
-        <location line="+2008"/>
-        <location line="+913"/>
+        <location line="+210"/>
+        <location line="+1559"/>
+        <location line="+845"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
+        <location line="+94"/>
+        <location line="+38"/>
+        <location line="-132"/>
         <location line="+94"/>
         <location line="+38"/>
         <source>Number of Files</source>
         <translation>Počet súborov</translation>
     </message>
     <message>
-        <location line="-2805"/>
+        <location line="-2301"/>
         <source>Click to open the file</source>
         <translation>Kliknite pre otvorenie súboru</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+209"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-116"/>
+        <location line="+243"/>
+        <location line="-243"/>
         <location line="+243"/>
         <source>Create</source>
         <translation>Vytvoriť</translation>
@@ -1381,17 +1965,17 @@
         <translation>Vytvoriť katalóg</translation>
     </message>
     <message>
-        <location line="+503"/>
+        <location line="+367"/>
         <source>2- </source>
         <translation>2- </translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+10"/>
         <source>Select Content options</source>
         <translation>Vybrať možnosti obsahu</translation>
     </message>
     <message>
-        <location line="+4081"/>
+        <location line="+3468"/>
         <source>Images folder</source>
         <translation>Priečinok obrázkov</translation>
     </message>
@@ -1412,38 +1996,38 @@
         <translation type="vanished">Pridať adresár na vylúčenie</translation>
     </message>
     <message>
-        <location line="-4535"/>
+        <location line="-3789"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+10"/>
         <source>Define &amp; Create catalog</source>
         <translation>Definovať a vytvoriť katalóg</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+54"/>
         <source>Select Storage</source>
         <translation>Vybrať úložisko</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+25"/>
         <source>Add a new storage device</source>
         <translation>Pridať nové úložné zariadenie</translation>
     </message>
     <message>
-        <location line="-2135"/>
-        <location line="+2138"/>
+        <location line="-2004"/>
+        <location line="+2007"/>
         <source>Add Storage</source>
         <translation>Pridať úložisko</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+41"/>
         <source>Enter the Name of the new catalog</source>
         <translation>Zadajte názov nového katalógu</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+12"/>
         <source>NewCatalog</source>
         <translation>NovýKatalóg</translation>
     </message>
@@ -1453,13 +2037,13 @@
         <translation>Zadajte názov pre váš nový katalóg</translation>
     </message>
     <message>
-        <location line="+29"/>
-        <location line="+2637"/>
+        <location line="+22"/>
+        <location line="+2224"/>
         <source>Generate</source>
         <translation>Generovať</translation>
     </message>
     <message>
-        <location line="-2581"/>
+        <location line="-2182"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Spustiť katalogizáciu a uložiť do súboru</translation>
     </message>
@@ -1469,17 +2053,17 @@
         <translation>Vytvoriť katalóg</translation>
     </message>
     <message>
-        <location line="+441"/>
+        <location line="+357"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+16"/>
         <source>Select Source path</source>
         <translation>Vybrať zdrojovú cestu</translation>
     </message>
     <message>
-        <location line="-1566"/>
+        <location line="-1328"/>
         <source>Tree options</source>
         <translation>Možnosti stromu</translation>
     </message>
@@ -1499,7 +2083,7 @@
         <translation>Vložiť virtuálnu skupinu</translation>
     </message>
     <message>
-        <location line="-1711"/>
+        <location line="-1656"/>
         <source>View</source>
         <translation>Zobrazenie</translation>
     </message>
@@ -1509,7 +2093,7 @@
         <translation>Zoznam úložísk</translation>
     </message>
     <message>
-        <location line="+583"/>
+        <location line="+558"/>
         <source>Catalog fields</source>
         <translation>Polia katalógu</translation>
     </message>
@@ -1525,53 +2109,54 @@
         <translation>Obrázok zariadenia</translation>
     </message>
     <message>
-        <location line="-719"/>
+        <location line="-694"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Zaznamenať hodnoty všetkých zariadení pre štatistiky celej kolekcie.</translation>
     </message>
     <message>
-        <location line="+864"/>
+        <location line="+839"/>
         <source>Storage fields</source>
         <translation>Polia úložiska</translation>
     </message>
     <message>
-        <location line="+5845"/>
+        <location line="+5034"/>
         <source>Icons</source>
         <translation>Ikony</translation>
     </message>
     <message>
-        <location line="-28"/>
+        <location line="-20"/>
         <source>Use bigger icon size</source>
         <translation>Použiť väčšiu veľkosť ikon</translation>
     </message>
     <message>
-        <location line="-784"/>
+        <location line="-649"/>
         <source>Load last catalog to Explore</source>
         <translation>Načítať posledný katalóg na prehliadanie</translation>
     </message>
     <message>
-        <location line="+381"/>
+        <location line="+279"/>
         <source>Database Name</source>
         <translation>Názov databázy</translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-48"/>
         <source>User Name</source>
         <translation>Používateľské meno</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="-16"/>
         <source>Host Name</source>
         <translation>Názov hostiteľa</translation>
     </message>
     <message>
-        <location line="-557"/>
+        <location line="-473"/>
         <source>Create a new database file</source>
         <translation>Vytvoriť nový súbor databázy</translation>
     </message>
     <message>
-        <location line="+423"/>
+        <location line="+366"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Hosted</source>
         <translation>Hostované</translation>
     </message>
@@ -1581,67 +2166,76 @@
         <translation>Správa dát</translation>
     </message>
     <message>
-        <location line="-12355"/>
-        <location line="+7033"/>
-        <location line="+2337"/>
-        <location line="+190"/>
-        <location line="+459"/>
+        <location line="-10383"/>
+        <location line="+5740"/>
+        <location line="+2083"/>
+        <location line="+134"/>
+        <location line="+294"/>
         <source>Select the path</source>
         <translation>Vybrať cestu</translation>
     </message>
     <message>
-        <location line="-10016"/>
-        <location line="+6833"/>
+        <location line="-8248"/>
+        <location line="+5540"/>
         <location line="+200"/>
-        <location line="+2337"/>
-        <location line="+190"/>
-        <location line="+459"/>
-        <location line="+500"/>
-        <location line="+2689"/>
-        <location line="+92"/>
+        <location line="+2083"/>
+        <location line="+134"/>
+        <location line="+294"/>
+        <location line="+479"/>
+        <location line="+2360"/>
+        <location line="+89"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-65"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
+        <location line="+214"/>
+        <location line="+5"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-219"/>
         <location line="+214"/>
         <location line="+5"/>
         <source>Select</source>
         <translation>Vybrať</translation>
     </message>
     <message>
-        <location line="-13683"/>
-        <location line="+8317"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-947"/>
-        <location line="+2708"/>
+        <location line="-11461"/>
+        <location line="+6893"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
+        <location line="+2838"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
+        <location line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2838"/>
+        <location line="+2838"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Úložisko</translation>
     </message>
     <message>
-        <location line="+4039"/>
+        <location line="+3447"/>
         <source>New</source>
         <translation>Nový</translation>
     </message>
     <message>
-        <location line="-5749"/>
-        <location line="+268"/>
+        <location line="-5102"/>
+        <location line="+261"/>
         <source>Devices</source>
         <translation>Zariadenia</translation>
     </message>
     <message>
-        <location line="+41"/>
-        <location line="+737"/>
+        <location line="+38"/>
+        <location line="+722"/>
         <location line="+28"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location line="+0"/>
         <source>Total Space</source>
         <translation>Celkové miesto</translation>
     </message>
     <message>
-        <location line="-649"/>
+        <location line="-646"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3517"/>
+        <location line="+3018"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Znovu načítať</translation>
@@ -1672,29 +2266,30 @@
         <translation>Upraviť súbor obsahujúci všetky záznamy</translation>
     </message>
     <message>
-        <location line="-2108"/>
+        <location line="-1642"/>
         <source>Add Virtual</source>
         <translation>Pridať virtuálne</translation>
     </message>
     <message>
-        <location line="-1753"/>
+        <location line="-1698"/>
         <source>Edit List</source>
         <translation>Upraviť zoznam</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4891"/>
+        <location line="+4290"/>
         <source>Full Table</source>
         <translation>Úplná tabuľka</translation>
     </message>
     <message>
-        <location line="-4586"/>
+        <location line="-4007"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+80"/>
+        <location line="+0"/>
         <source>Device Name</source>
         <translation>Názov zariadenia</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+73"/>
         <source>Parent name (ID)</source>
         <translation>Názov rodičovského (ID)</translation>
     </message>
@@ -1702,11 +2297,12 @@
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
+        <location line="+0"/>
         <source>Device ID</source>
         <translation>ID zariadenia</translation>
     </message>
     <message>
-        <location line="+3373"/>
+        <location line="+2877"/>
         <source>Edit Statistics</source>
         <translation>Upraviť štatistiky</translation>
     </message>
@@ -1754,6 +2350,7 @@
         <location line="+20"/>
         <location line="+24"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-144"/>
+        <location line="+0"/>
         <source>Select a folder</source>
         <translation>Vybrať priečinok</translation>
     </message>
@@ -1769,7 +2366,7 @@
         <translation>Znovu načítať súbor obsahujúci značky</translation>
     </message>
     <message>
-        <location line="+1097"/>
+        <location line="+1017"/>
         <source>Link name</source>
         <translation>Názov odkazu</translation>
     </message>
@@ -1779,23 +2376,32 @@
         <translation>Vytvoriť odkaz</translation>
     </message>
     <message>
-        <location line="-612"/>
+        <location line="-578"/>
         <source>Catalog Links</source>
         <translation>Odkazy katalógu</translation>
     </message>
     <message>
-        <location line="-265"/>
+        <location line="-239"/>
         <source>Linked</source>
         <translation>Prepojené</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+49"/>
         <source>Unlinked</source>
         <translation>Neprepojené</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+161"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-41"/>
+        <location line="+8"/>
+        <location line="+7"/>
+        <location line="+3"/>
+        <location line="+31"/>
+        <location line="+7"/>
+        <location line="+10"/>
+        <location line="+7"/>
+        <location line="+5"/>
+        <location line="-78"/>
         <location line="+8"/>
         <location line="+7"/>
         <location line="+3"/>
@@ -1808,13 +2414,14 @@
         <translation>Exportovať</translation>
     </message>
     <message>
-        <location line="+331"/>
+        <location line="+297"/>
         <source>Update catalogs</source>
         <translation>Aktualizovať katalógy</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1263"/>
+        <location line="+0"/>
         <source>Replicate directories</source>
         <translation>Replikovať adresáre</translation>
     </message>
@@ -1823,12 +2430,19 @@
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
         <location line="+1244"/>
         <location line="+16"/>
+        <location line="-1260"/>
+        <location line="+1244"/>
+        <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Náhľad zálohy</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1265"/>
+        <location line="+280"/>
+        <location line="+968"/>
+        <location line="+14"/>
+        <location line="-1262"/>
         <location line="+280"/>
         <location line="+968"/>
         <location line="+14"/>
@@ -1860,6 +2474,7 @@
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
+        <location line="+0"/>
         <source>On conflict</source>
         <translation>Pri konflikte</translation>
     </message>
@@ -1867,6 +2482,12 @@
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2598"/>
+        <location line="+1771"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1771"/>
+        <location line="+1771"/>
         <source>Skip</source>
         <translation>Preskočiť</translation>
     </message>
@@ -1874,19 +2495,22 @@
         <location line="+5"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
         <source>Rename oldest</source>
         <translation>Premenovať najstarší</translation>
     </message>
     <message>
         <location line="+40"/>
-        <location line="+578"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-246"/>
+        <location line="+486"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-274"/>
+        <location line="+0"/>
         <source>Settings</source>
         <translation>Nastavenia</translation>
     </message>
     <message>
-        <location line="+632"/>
-        <location line="+45"/>
+        <location line="+521"/>
+        <location line="+29"/>
         <source>Version</source>
         <translation>Verzia</translation>
     </message>
@@ -1896,23 +2520,23 @@
         <translation>Poznámky k vydaniu</translation>
     </message>
     <message>
-        <location line="-553"/>
-        <location line="+60"/>
+        <location line="-437"/>
+        <location line="+57"/>
         <source>(Changing requires to restart)</source>
         <translation>(Zmena vyžaduje reštart)</translation>
     </message>
     <message>
-        <location line="-428"/>
+        <location line="-371"/>
         <source>Data mode &quot;Memory&quot;</source>
         <translation>Režim dát „Pamäť&quot;</translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+89"/>
         <source>Select and read folder</source>
         <translation>Vybrať a prečítať priečinok</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+132"/>
         <source>Preload last catalogs</source>
         <translation>Prednačítať posledné katalógy</translation>
     </message>
@@ -1922,27 +2546,27 @@
         <translation>Spustenie</translation>
     </message>
     <message>
-        <location line="-59"/>
+        <location line="-48"/>
         <source>Back up</source>
         <translation>Zálohovanie</translation>
     </message>
     <message>
-        <location line="-398"/>
+        <location line="-331"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
         <translation>Režim dát „SQLite lokálny súbor&quot;</translation>
     </message>
     <message>
-        <location line="-4038"/>
+        <location line="-3456"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Použiť možnosti na strom zariadení výberu.</translation>
     </message>
     <message>
-        <location line="+1794"/>
+        <location line="+1493"/>
         <source>Type of source</source>
         <translation>Typ zdroja</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+11"/>
         <source>Local drive</source>
         <translation>Lokálna jednotka</translation>
     </message>
@@ -1952,31 +2576,41 @@
         <translation>Samba zdieľanie</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+31"/>
         <source>IP address</source>
         <translation>IP adresa</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+34"/>
         <source>Username</source>
         <translation>Používateľské meno</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+49"/>
         <source>Connection settings</source>
         <translation>Nastavenia pripojenia</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-101"/>
         <source>Verify connection</source>
         <translation>Overiť pripojenie</translation>
     </message>
     <message>
-        <location line="+936"/>
+        <location line="+778"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-14"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+233"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+261"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-919"/>
+        <location line="+170"/>
+        <location line="+145"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+38"/>
+        <location line="+30"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
         <location line="+170"/>
         <location line="+145"/>
         <location line="+19"/>
@@ -1991,17 +2625,17 @@
         <translation type="vanished">Záložné odkazy pre zariadenie</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Znovu načítať odkazy a obnoviť štatistiky pre vybrané zariadenie.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+265"/>
         <source>Create new link</source>
         <translation>Vytvoriť nový odkaz</translation>
     </message>
     <message>
-        <location line="-236"/>
+        <location line="-193"/>
         <source>Coverage</source>
         <translation>Pokrytie</translation>
     </message>
@@ -2014,7 +2648,7 @@
         <translation type="vanished">Načítať cieľové katalógy</translation>
     </message>
     <message>
-        <location line="+1100"/>
+        <location line="+1004"/>
         <source>File list display</source>
         <translation>Zobrazenie zoznamu súborov</translation>
     </message>
@@ -2029,60 +2663,60 @@
         <translation>Triedenie súborov rozlišuje veľkosť písmen</translation>
     </message>
     <message>
-        <location line="+1061"/>
+        <location line="+880"/>
         <source>Documentation</source>
         <translation>Dokumentácia</translation>
     </message>
     <message>
-        <location line="-1000"/>
+        <location line="-830"/>
         <source>The collection data is saved to an SQLite .db file.</source>
         <translation>Dáta kolekcie sa ukladajú do SQLite .db súboru.</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <location line="+219"/>
+        <location line="+30"/>
+        <location line="+184"/>
         <source>Apply</source>
         <translation>Použiť</translation>
     </message>
     <message>
-        <location line="-189"/>
+        <location line="-154"/>
         <source>Select and open database file</source>
         <translation>Vybrať a otvoriť súbor databázy</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+219"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
         <translation>Exportovať na konverziu a otvorenie kolekcie v režime „Súbor&quot;.</translation>
     </message>
     <message>
-        <location line="-203"/>
-        <location line="+693"/>
+        <location line="-168"/>
+        <location line="+545"/>
         <source>Export to Memory mode (csv)</source>
         <translation>Exportovať do režimu pamäte (csv)</translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+477"/>
+        <location line="-374"/>
+        <location line="+364"/>
         <source>Export to SQLite file</source>
         <translation>Exportovať do SQLite súboru</translation>
     </message>
     <message>
-        <location line="-212"/>
+        <location line="-124"/>
         <source>Data mode &quot;Hosted database&quot;</source>
         <translation>Režim dát „Hostovaná databáza&quot;</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+23"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
         <translation>Dáta kolekcie sa ukladajú do databázy hosťovanej na lokálnom alebo vzdialenom serveri.</translation>
     </message>
     <message>
-        <location line="+243"/>
+        <location line="+163"/>
         <source>Apply and restart</source>
         <translation>Použiť a reštartovať</translation>
     </message>
     <message>
-        <location line="+297"/>
+        <location line="+264"/>
         <source>Select a theme</source>
         <translation>Vybrať motív</translation>
     </message>
@@ -2098,7 +2732,7 @@
         <translation>Motív</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+80"/>
         <source>(requires to restart)</source>
         <translation>(vyžaduje reštart)</translation>
     </message>
@@ -2108,49 +2742,58 @@
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location line="-1001"/>
+        <location line="-831"/>
         <source>Collection folder</source>
         <translation>Priečinok kolekcie</translation>
     </message>
     <message>
-        <location line="-171"/>
-        <location line="+222"/>
+        <location line="-144"/>
+        <location line="+187"/>
         <source>Select a different Collection folder</source>
         <translation>Vybrať iný priečinok kolekcie</translation>
     </message>
     <message>
-        <location line="-419"/>
+        <location line="-349"/>
         <source>Other Settings</source>
         <translation>Ďalšie nastavenia</translation>
     </message>
     <message>
         <location line="+32"/>
+        <location line="+152"/>
         <location line="+187"/>
-        <location line="+222"/>
         <source>Open the collection folder</source>
         <translation>Otvoriť priečinok kolekcie</translation>
     </message>
     <message>
-        <location line="-406"/>
+        <location line="-336"/>
         <source>Open</source>
         <translation>Otvoriť</translation>
     </message>
     <message>
-        <location line="-1333"/>
+        <location line="-1242"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-677"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-842"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+480"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open file</source>
         <translation>Otvoriť súbor</translation>
     </message>
     <message>
-        <location line="+1742"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-197"/>
-        <location line="+89"/>
+        <location line="+1581"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-211"/>
+        <location line="+103"/>
         <location line="+71"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <location line="+109"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-174"/>
+        <location line="+103"/>
+        <location line="+71"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-109"/>
+        <location line="+109"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open folder</source>
         <translation>Otvoriť priečinok</translation>
     </message>
@@ -2158,47 +2801,62 @@
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-62"/>
         <location line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy folder path</source>
         <translation>Kopírovať cestu priečinka</translation>
     </message>
     <message>
         <location line="-64"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file absolute path</source>
         <translation>Kopírovať absolútnu cestu súboru</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file name with extension</source>
         <translation>Kopírovať názov súboru s príponou</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file name without extension</source>
         <translation>Kopírovať názov súboru bez prípony</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-9618"/>
-        <location line="+891"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2019"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-8197"/>
+        <location line="+709"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location line="-1265"/>
-        <location line="+10653"/>
-        <location line="+64"/>
+        <location line="-999"/>
+        <location line="+9029"/>
+        <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1355"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
@@ -2207,84 +2865,103 @@
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+0"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Vybrať adresár na katalogizáciu v tomto novom katalógu</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-225"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-252"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-19"/>
+        <location line="+0"/>
         <source>Select the directory for this collection</source>
         <translation>Vybrať adresár pre túto kolekciu</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-7105"/>
-        <location line="+2517"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2198"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-6257"/>
+        <location line="+2406"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="-493"/>
         <location line="+240"/>
         <location line="+253"/>
         <source>Total Size</source>
         <translation>Celková veľkosť</translation>
     </message>
     <message>
-        <location line="-1490"/>
-        <location line="+1673"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+687"/>
+        <location line="-1440"/>
+        <location line="+1610"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+742"/>
+        <location line="+0"/>
         <source>Source Path</source>
         <translation>Zdrojová cesta</translation>
     </message>
     <message>
-        <location line="-1589"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-670"/>
-        <location line="+639"/>
+        <location line="-1526"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-725"/>
+        <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-694"/>
+        <location line="+694"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>File Type</source>
         <translation>Typ súboru</translation>
     </message>
     <message>
-        <location line="+4164"/>
+        <location line="+3612"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+481"/>
+        <location line="+7"/>
+        <location line="-7"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Veľkosť súboru</translation>
     </message>
     <message>
-        <location line="-3617"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-901"/>
+        <location line="-3065"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
+        <location line="+0"/>
         <source>Label</source>
         <translation>Štítok</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>FileSystem</source>
         <translation>Súborový systém</translation>
     </message>
     <message>
-        <location line="+3247"/>
+        <location line="+2741"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Total</source>
         <translation>Celkom</translation>
     </message>
     <message>
-        <location line="-4126"/>
+        <location line="-3611"/>
         <source>Free</source>
         <translation>Voľné</translation>
     </message>
     <message>
-        <location line="+813"/>
+        <location line="+804"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Serial Number</source>
         <translation>Sériové číslo</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Build Date</source>
         <translation>Dátum výroby</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1280"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1429"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalóg je už priradený k tomuto virtuálnemu zariadeniu.</translation>
     </message>
@@ -2299,7 +2976,58 @@
         <translation>Mazanie zlyhalo</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+23"/>
+        <source>This catalog has no immediate sub-directories to split by.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Split catalog &quot;%1&quot;?
+
+This will create %2 new catalogs (one per sub-directory plus one for root files) and remove the original.
+This operation cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+41"/>
+        <location line="+0"/>
+        <source>Split failed: no catalogs were created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify file types before splitting?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File types in the catalog may be based on file extensions only. Running a verification reads each file from disk and ensures the split uses accurate types. The device must be connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Verify then Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Split without verifying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The device must be connected to verify file types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>MIME verification failed: %1
+Split was not performed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Snímka tejto kolekcie bola zaznamenaná:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalógy&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Počet súborov: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridané: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková veľkosť súborov: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridané: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Úložisko&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Voľné miesto úložiska: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridané: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celkové miesto úložiska: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridané: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -2324,21 +3052,64 @@
         <translation>Katalóg vo fyzickej skupine môže byť nastavený iba pod úložiskom alebo touto skupinou. Vyberte úložisko v tejto skupine.&lt;br/&gt;&lt;br/&gt;Na použitie tohto katalógu pod zariadením vo virtuálnej skupine použite príkaz Priradiť.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+497"/>
+        <location line="+35"/>
+        <source>The storage path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>Old path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1770"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>New path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1769"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>How should the catalog indexes be updated?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1769"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>Replace path root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1770"/>
+        <source>Full re-scan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+484"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location line="-2065"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>Parent ID</source>
         <translation>Rodičovské ID</translation>
     </message>
     <message>
-        <location line="-2204"/>
+        <location line="-2304"/>
         <source>External ID</source>
         <translation>Externé ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Number of files</source>
         <translation>Počet súborov</translation>
@@ -2347,12 +3118,16 @@
         <location line="-490"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Free space</source>
         <translation>Voľné miesto</translation>
     </message>
     <message>
         <location line="-492"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Total space</source>
         <translation>Celkové miesto</translation>
@@ -2361,6 +3136,8 @@
         <location line="-492"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Date updated</source>
         <translation>Dátum aktualizácie</translation>
     </message>
@@ -2368,12 +3145,15 @@
         <location line="-491"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Group ID</source>
         <translation>ID skupiny</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location line="+0"/>
         <source>Catalog ID</source>
         <translation>ID katalógu</translation>
     </message>
@@ -2403,12 +3183,12 @@
         <translation>Cesta súboru</translation>
     </message>
     <message>
-        <location line="+261"/>
+        <location line="+275"/>
         <source>Indexing - Start: %1 | End: %2 | Duration: %3</source>
         <translation>Indexovanie - Začiatok: %1 | Koniec: %2 | Trvanie: %3</translation>
     </message>
     <message>
-        <location line="+366"/>
+        <location line="+407"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Uložiť zmeny v definícii katalógu?&lt;br/&gt;</translation>
     </message>
@@ -2443,20 +3223,31 @@
         <translation>(Katalóg musí byť aktualizovaný, aby sa tieto zmeny prejavili)</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+34"/>
+        <source>The catalog source path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Full re-index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation>Aktualizovať obsah katalógu s novými kritériami?
 </translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+86"/>
         <source>Select the csv file to be imported</source>
         <translation>Vybrať csv súbor na import</translation>
     </message>
     <message>
         <location line="+17"/>
         <location line="+143"/>
+        <location line="+0"/>
         <source>No catalog found.</source>
         <translation>Žiadny katalóg nenájdený.</translation>
     </message>
@@ -2466,7 +3257,27 @@
         <translation>Súbor bol nájdený, ale nepodarilo sa ho načítať</translation>
     </message>
     <message>
-        <location line="+503"/>
+        <location line="+498"/>
+        <source>Storage path updated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>catalog(s),</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>file(s),</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>folder(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Catalog updated: </source>
         <translation>Katalóg aktualizovaný: </translation>
     </message>
@@ -2477,12 +3288,18 @@
         <location line="+17"/>
         <location line="+24"/>
         <location line="+23"/>
+        <location line="-86"/>
+        <location line="+22"/>
+        <location line="+17"/>
+        <location line="+24"/>
+        <location line="+23"/>
         <source>Path: </source>
         <translation>Cesta: </translation>
     </message>
     <message>
         <location line="-100"/>
         <location line="+39"/>
+        <location line="+0"/>
         <source>Number of files: </source>
         <translation>Počet súborov: </translation>
     </message>
@@ -2504,12 +3321,29 @@
         <location line="+64"/>
         <location line="+1"/>
         <location line="+1"/>
+        <location line="-171"/>
+        <location line="+17"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+37"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+24"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+19"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+64"/>
+        <location line="+1"/>
+        <location line="+1"/>
         <source>(added: </source>
         <translation>(pridané: </translation>
     </message>
     <message>
         <location line="-171"/>
         <location line="+39"/>
+        <location line="+0"/>
         <source>Total file size: </source>
         <translation>Celková veľkosť súborov: </translation>
     </message>
@@ -2518,12 +3352,19 @@
         <location line="+39"/>
         <location line="+24"/>
         <location line="+23"/>
+        <location line="-47"/>
+        <location line="+24"/>
+        <location line="+23"/>
         <source>Storage updated: </source>
         <translation>Úložisko aktualizované: </translation>
     </message>
     <message>
         <location line="-81"/>
         <location line="+39"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
+        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -2536,12 +3377,20 @@
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
+        <location line="-113"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
         <source>Free Space: </source>
         <translation>Voľné miesto: </translation>
     </message>
     <message>
         <location line="-151"/>
         <location line="+39"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
+        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -2572,8 +3421,10 @@
         <translation type="vanished">Vybrané zariadenie musí byť katalóg. Skúste s iným ID zariadenia</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1954"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2054"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Used space</source>
         <translation>Použité miesto</translation>
@@ -2589,53 +3440,53 @@
         <translation>z</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6291"/>
-        <location line="+1989"/>
-        <location line="+108"/>
-        <location line="+553"/>
-        <location line="+108"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5212"/>
+        <location line="+1555"/>
+        <location line="+87"/>
+        <location line="+434"/>
+        <location line="+87"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>Definovať, či sa má hľadaný text používať iba v názvoch súborov, cestách priečinkov alebo v oboch.</translation>
     </message>
     <message>
-        <location line="-2901"/>
+        <location line="-2283"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>Definovať, ako sa má hľadaný text používať.</translation>
     </message>
     <message>
-        <location line="+5988"/>
-        <location line="+2320"/>
+        <location line="+4886"/>
+        <location line="+2073"/>
         <source>Include Hidden files</source>
         <translation>Zahrnúť skryté súbory</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+20"/>
         <source>Follow symbolic links</source>
         <translation>Nasledovať symbolické odkazy</translation>
     </message>
     <message>
-        <location line="-422"/>
+        <location line="-331"/>
         <source>Generate a catalog name based on the path.</source>
         <translation>Generovať názov katalógu na základe cesty.</translation>
     </message>
     <message>
-        <location line="-8766"/>
+        <location line="-7348"/>
         <source>Reset all filters</source>
         <translation>Resetovať všetky filtre</translation>
     </message>
     <message>
-        <location line="+12640"/>
+        <location line="+10612"/>
         <source>About</source>
         <translation>O aplikácii</translation>
     </message>
     <message>
-        <location line="-530"/>
+        <location line="-425"/>
         <source>Auto-backup catalogs</source>
         <translation>Automaticky zálohovať katalógy</translation>
     </message>
     <message>
-        <location line="+797"/>
+        <location line="+662"/>
         <source>Keep records of files and size for Statistics</source>
         <translation>Uchovávať záznamy súborov a veľkosti pre štatistiky</translation>
     </message>
@@ -2644,6 +3495,9 @@
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-35"/>
+        <location line="+35"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -2651,6 +3505,8 @@
         <location line="-44"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
@@ -2658,28 +3514,32 @@
         <location line="-12"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-386"/>
+        <location line="-391"/>
         <source>Explore folder</source>
         <translation>Prehliadať priečinok</translation>
     </message>
     <message>
         <location line="+250"/>
-        <location line="+592"/>
+        <location line="+597"/>
+        <location line="+0"/>
         <source>MOVE</source>
         <translation>PRESUNÚŤ</translation>
     </message>
     <message>
-        <location line="-591"/>
+        <location line="-596"/>
         <source>Move this file to the trash?</source>
         <translation>Presunúť tento súbor do koša?</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+64"/>
+        <location line="+0"/>
         <source>Information</source>
         <translation>Informácie</translation>
     </message>
@@ -2689,13 +3549,18 @@
         <translation>Presunutie priečinka do koša nie je dostupné.</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <location line="+567"/>
+        <location line="-770"/>
+        <location line="+13"/>
+        <location line="+803"/>
+        <location line="+572"/>
+        <location line="-1375"/>
+        <location line="+803"/>
+        <location line="+572"/>
         <source>DELETE</source>
         <translation>ZMAZAŤ</translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-571"/>
         <source>Delete this file?</source>
         <translation>Zmazať tento súbor?</translation>
     </message>
@@ -2705,15 +3570,19 @@
         <translation>Mazanie priečinka nie je dostupné.</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+46"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-8"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
     <message>
         <location line="-7"/>
         <location line="+11"/>
+        <location line="+30"/>
+        <location line="-30"/>
         <location line="+30"/>
         <source>Bytes</source>
         <translation>Bajtov</translation>
@@ -2726,6 +3595,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-952"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
+        <location line="+0"/>
         <source>Results exported to the collection folder:</source>
         <translation>Výsledky exportované do priečinka kolekcie:</translation>
     </message>
@@ -2960,12 +3830,12 @@
         <translation>Zoznam vybraných ID zariadení</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-800"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-665"/>
         <source>Always keep one back of each catalog</source>
         <translation>Vždy uchovávať jednu zálohu každého katalógu</translation>
     </message>
     <message>
-        <location line="-5687"/>
+        <location line="-5007"/>
         <source>Used</source>
         <translation>Použité</translation>
     </message>
@@ -2976,7 +3846,9 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+18"/>
         <location line="+145"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-501"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-515"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Select the directory to exclude</source>
         <translation>Vyberte adresár na vylúčenie</translation>
     </message>
@@ -2984,6 +3856,8 @@
         <location line="-77"/>
         <location line="+103"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+35"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Remove</source>
         <translation>Odstrániť</translation>
     </message>
@@ -3009,12 +3883,13 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1027"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
+        <location line="+0"/>
         <source>Choose a different name and try again.</source>
         <translation>Vyberte iný názov a skúste znova.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+6370"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+5563"/>
         <source>Check at start up</source>
         <translation>Skontrolovať pri spustení</translation>
     </message>
@@ -3023,41 +3898,45 @@
         <translation type="vanished">Zahrnúť skryté súbory</translation>
     </message>
     <message>
-        <location line="-5421"/>
+        <location line="-4626"/>
         <source>Save</source>
         <translation>Uložiť</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-15"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-16"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Vitajte v Katalógu!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Zdá sa, že toto je prvé spustenie.&lt;br/&gt;&lt;br/&gt;Nasledovné nastavenia boli použité:&lt;br/&gt; - Jazyk: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Motív: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Môžete ich zmeniť na karte %3.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-1137"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-1112"/>
         <source>Snapshot</source>
         <translation>Snímka</translation>
     </message>
     <message>
-        <location line="+3806"/>
+        <location line="+3285"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
+        <location line="+338"/>
+        <location line="+745"/>
+        <location line="-1083"/>
         <location line="+338"/>
         <location line="+745"/>
         <source>Source</source>
         <translation>Zdroj</translation>
     </message>
     <message>
-        <location line="-3767"/>
+        <location line="-3246"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktualizovať všetky katalógy, ktoré sú aktívne, ak je zariadenie dostupné.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1330"/>
+        <location line="+1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importovať zoznam zväzkov z VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-216"/>
-        <location line="+3862"/>
+        <location line="-200"/>
+        <location line="+3286"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-471"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+59"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
@@ -3067,87 +3946,119 @@
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-96"/>
         <location line="+18"/>
         <location line="+49"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-117"/>
+        <location line="+117"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-243"/>
+        <location line="+107"/>
+        <location line="+9"/>
+        <location line="+127"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-67"/>
+        <location line="+18"/>
+        <location line="+49"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+325"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+353"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Toto je verzia: v%1 &lt;br/&gt;&lt;br/&gt;Dostupná je nová verzia: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Zoznam nových funkcií nájdete v &lt;a href=&apos;%3&apos;&gt;Poznámkach k vydaniu&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Chcete si ju stiahnuť?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-4240"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+771"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
+        <location line="+0"/>
         <source>Storage ID</source>
         <translation>ID úložiska</translation>
     </message>
     <message>
-        <location line="-920"/>
-        <location line="+1016"/>
+        <location line="-895"/>
+        <location line="+991"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktualizovať súbory vybraného katalógu, ak je zariadenie dostupné&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1196"/>
-        <location line="+1274"/>
+        <location line="+1133"/>
+        <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
+        <location line="+0"/>
         <source>Directory</source>
         <translation>Adresár</translation>
     </message>
     <message>
-        <location line="-9037"/>
+        <location line="-7499"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Vyčistiť hľadaný text od znakov ako _ - . ,</translation>
     </message>
     <message>
-        <location line="+1790"/>
+        <location line="+1410"/>
         <source>Duplicates on</source>
         <translation>Duplikáty na</translation>
     </message>
     <message>
-        <location line="+130"/>
-        <location line="+891"/>
+        <location line="+95"/>
+        <location line="+709"/>
         <source>Date Modified</source>
         <translation>Dátum úpravy</translation>
     </message>
     <message>
-        <location line="+9440"/>
+        <location line="+8077"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Overiť, či je dostupná nová verzia Katalógu pri spustení aplikácie.</translation>
     </message>
     <message>
-        <location line="-6816"/>
+        <location line="-6026"/>
         <source>Show/Hide search history</source>
         <translation>Zobraziť/skryť históriu vyhľadávania</translation>
     </message>
     <message>
-        <location line="-5694"/>
+        <location line="-4483"/>
         <source>Search criteria</source>
         <translation>Kritériá vyhľadávania</translation>
     </message>
     <message>
-        <location line="+5087"/>
+        <location line="+4008"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-183"/>
+        <location line="+0"/>
         <source>Tag</source>
         <translation>Značka</translation>
     </message>
     <message>
-        <location line="+196"/>
+        <location line="+147"/>
         <source>View more statitics about the results</source>
         <translation>Zobraziť viac štatistík o výsledkoch</translation>
     </message>
     <message>
-        <location line="+449"/>
+        <location line="+359"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location line="+13"/>
+        <location line="-13"/>
+        <location line="+13"/>
         <source>Search history</source>
         <translation>História vyhľadávania</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-321"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-357"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;Na ďalšej obrazovke vyberte existujúci priečinok kolekcie alebo vytvorte nový.</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+2"/>
+        <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing collection database file or create a new one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+85"/>
+        <source>Select or create a database file for this collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Database files (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Pripravený na vytvorenie katalógu súborov:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -3157,48 +4068,48 @@
         <translation>1- Vyberte celú jednotku alebo adresár, &lt;br/&gt;2- vyberte možnosti a &lt;br/&gt;3- kliknite na „Vytvoriť&quot;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-5770"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-4545"/>
         <source>Show/Hide search criteria</source>
         <translation>Zobraziť/skryť kritériá vyhľadávania</translation>
     </message>
     <message>
-        <location line="-454"/>
+        <location line="-353"/>
         <source>Search in connected drives</source>
         <translation>Hľadať v pripojených jednotkách</translation>
     </message>
     <message>
-        <location line="-50"/>
+        <location line="-36"/>
         <source>Search in file catalogs</source>
         <translation>Hľadať v katalógoch súborov</translation>
     </message>
     <message>
-        <location line="+1496"/>
+        <location line="+1198"/>
         <source>exclude</source>
         <translation>vylúčiť</translation>
     </message>
     <message>
-        <location line="+5620"/>
+        <location line="+4590"/>
         <source>is full device</source>
         <translation>je celé zariadenie</translation>
     </message>
     <message>
-        <location line="+1830"/>
+        <location line="+1695"/>
         <source>catalog is for the full device</source>
         <translation>katalóg je pre celé zariadenie</translation>
     </message>
     <message>
-        <location line="-6358"/>
-        <location line="+888"/>
+        <location line="-5438"/>
+        <location line="+706"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Vyberte vyhľadávanie duplikátov na základe nasledujúcich kritérií</translation>
     </message>
     <message>
-        <location line="+2150"/>
+        <location line="+1674"/>
         <source>Choose to use Tags to filter results</source>
         <translation>Vyberte použitie značiek na filtrovanie výsledkov</translation>
     </message>
     <message>
-        <location line="-4221"/>
+        <location line="-3297"/>
         <source>case sensitive</source>
         <translation>rozlišovanie veľkosti písmen</translation>
     </message>
@@ -3208,8 +4119,8 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Výsledky by mali presne zodpovedať textu (citlivé na veľkosť písmen)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+10986"/>
-        <location line="+31"/>
+        <location line="+9267"/>
+        <location line="+23"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Prednačítať naposledy vybrané katalógy pri spustení na urýchlenie ďalšieho vyhľadávania</translation>
     </message>
@@ -3221,9 +4132,16 @@
     <message>
         <location line="+141"/>
         <location line="+33"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1208"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2"/>
+        <location line="+739"/>
         <location line="+64"/>
-        <location line="+528"/>
+        <location line="+533"/>
+        <location line="+39"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1375"/>
+        <location line="+739"/>
+        <location line="+64"/>
+        <location line="+533"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Potvrdenie</translation>
@@ -3233,7 +4151,12 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-619"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-624"/>
+        <location line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-38"/>
+        <location line="+35"/>
+        <location line="+3"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-64"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Upozornenie</translation>
@@ -3241,30 +4164,35 @@
     <message>
         <location line="-41"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
+        <location line="+0"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Presunuté do koša:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Move to trash failed.</source>
         <translation>Presunutie do koša zlyhalo.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+61"/>
+        <location line="+0"/>
         <source>Deleted.</source>
         <translation>Zmazané.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Failed to delete.</source>
         <translation>Mazanie zlyhalo.</translation>
     </message>
     <message>
         <location line="-182"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-214"/>
+        <location line="+0"/>
         <source>Delete file</source>
         <translation>Zmazať súbor</translation>
     </message>
@@ -3288,41 +4216,43 @@ do koša?</translation>
         <translation>Označiť tento priečinok</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-12200"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-10255"/>
         <source>Selection</source>
         <translation>Výber</translation>
     </message>
     <message>
-        <location line="-329"/>
-        <location line="+32"/>
-        <location line="+8015"/>
-        <location line="+32"/>
+        <location line="-249"/>
+        <location line="+25"/>
+        <location line="+6650"/>
+        <location line="+25"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Rozbaliť 1 úroveň, 2 úrovne alebo zbaliť</translation>
     </message>
     <message>
-        <location line="+2351"/>
+        <location line="+1885"/>
         <source>all records</source>
         <translation>všetky záznamy</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+36"/>
+        <location line="+0"/>
         <source>updates only</source>
         <translation>iba aktualizácie</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
+        <location line="+0"/>
         <source>snapshots only</source>
         <translation>iba snímky</translation>
     </message>
     <message>
-        <location line="-7115"/>
-        <location line="+108"/>
-        <location line="+553"/>
-        <location line="+108"/>
-        <location line="+6733"/>
+        <location line="-5967"/>
+        <location line="+87"/>
+        <location line="+434"/>
+        <location line="+87"/>
+        <location line="+5743"/>
         <source>Device</source>
         <translation>Zariadenie</translation>
     </message>
@@ -3341,7 +4271,7 @@ do koša?</translation>
         <translation>ako cieľ</translation>
     </message>
     <message>
-        <location line="+737"/>
+        <location line="+660"/>
         <source>Select Source catalog</source>
         <translation>Vybrať zdrojový katalóg</translation>
     </message>
@@ -3351,38 +4281,38 @@ do koša?</translation>
         <translation>Vybrať cieľový katalóg</translation>
     </message>
     <message>
-        <location line="+562"/>
+        <location line="+505"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation>Dáta kolekcie sa ukladajú do súborov .idx alebo .csv lokálne na počítači.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+13"/>
         <source>The database is in Memory only (RAM).</source>
         <translation>Databáza je iba v pamäti (RAM).</translation>
     </message>
     <message>
-        <location line="+959"/>
+        <location line="+797"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
         <translation>Farby katalógu</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+107"/>
         <source>Language &amp; Theme</source>
         <translation>Jazyk a motív</translation>
     </message>
     <message>
-        <location line="-1459"/>
+        <location line="-1221"/>
         <source>Open Settings file</source>
         <translation>Otvoriť súbor nastavení</translation>
     </message>
     <message>
-        <location line="-3288"/>
+        <location line="-2764"/>
         <source>Display folders</source>
         <translation>Zobraziť priečinky</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+54"/>
         <source>and all sub-folders</source>
         <translation>a všetky podpriečinky</translation>
     </message>
@@ -3407,12 +4337,16 @@ do koša?</translation>
         <translation>hodnotaPortadia</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-1730"/>
-        <location line="+21"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-1664"/>
+        <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-244"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>Device Type</source>
         <translation>Typ zariadenia</translation>
     </message>
@@ -3422,9 +4356,10 @@ do koša?</translation>
         <translation>Vybraný katalóg obsahuje viac ako %1 súborov.&lt;br/&gt;Otvorenie môže trvať niekoľko minút.&lt;br/&gt;Pokračovať?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+5635"/>
-        <location line="+902"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+4956"/>
+        <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="-2"/>
+        <location line="+0"/>
         <source>Memory</source>
         <translation>Pamäť</translation>
     </message>
@@ -3433,7 +4368,7 @@ do koša?</translation>
         <translation type="vanished">Použiť textové kritériá vo vyhľadávaní</translation>
     </message>
     <message>
-        <location line="-9923"/>
+        <location line="-8492"/>
         <source>Differences on</source>
         <translation>Rozdiely na</translation>
     </message>
@@ -3446,23 +4381,24 @@ do koša?</translation>
         <translation type="vanished">Katalóg2</translation>
     </message>
     <message>
-        <location line="-2811"/>
+        <location line="-2236"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
+        <location line="+0"/>
         <source>File name</source>
         <translation>Názov súboru</translation>
     </message>
     <message>
-        <location line="+1022"/>
+        <location line="+832"/>
         <source>File criteria</source>
         <translation>Kritériá súboru</translation>
     </message>
     <message>
-        <location line="+3698"/>
+        <location line="+2900"/>
         <source>Folder criteria</source>
         <translation>Kritériá priečinka</translation>
     </message>
     <message>
-        <location line="+5054"/>
+        <location line="+4368"/>
         <source>Graphic Start Date</source>
         <translation>Grafický počiatočný dátum</translation>
     </message>
@@ -3472,8 +4408,12 @@ do koša?</translation>
         <translation>Vybrať dátum</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1038"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+258"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1083"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
+        <location line="+587"/>
+        <location line="+14"/>
+        <location line="+20"/>
+        <location line="-621"/>
         <location line="+587"/>
         <location line="+14"/>
         <location line="+20"/>
@@ -3579,15 +4519,23 @@ do koša?</translation>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-406"/>
+        <location line="+399"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Catalog with results</source>
         <translation>Katalóg s výsledkami</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1165"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3604,10 +4552,15 @@ do koša?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2206"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2306"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>Active</source>
         <translation>Aktívne</translation>
     </message>
@@ -3615,12 +4568,15 @@ do koša?</translation>
         <location line="-4"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+189"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>Files</source>
         <translation>Súbory</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
+        <location line="+0"/>
         <source>Date Updated</source>
         <translation>Dátum aktualizácie</translation>
     </message>
@@ -3633,18 +4589,22 @@ do koša?</translation>
         <location line="-1088"/>
         <location line="+338"/>
         <location line="+751"/>
+        <location line="-751"/>
+        <location line="+751"/>
         <source>Target</source>
         <translation>Cieľ</translation>
     </message>
     <message>
         <location line="-1193"/>
         <location line="+1262"/>
+        <location line="+0"/>
         <source>Run Archive</source>
         <translation>Spustiť archivovanie</translation>
     </message>
     <message>
         <location line="-1257"/>
         <location line="+1260"/>
+        <location line="+0"/>
         <source>Preview Archive</source>
         <translation>Náhľad archívu</translation>
     </message>
@@ -3658,6 +4618,9 @@ do koša?</translation>
         <location line="+111"/>
         <location line="+230"/>
         <location line="+444"/>
+        <location line="-674"/>
+        <location line="+230"/>
+        <location line="+444"/>
         <source>Select a mapping first.</source>
         <translation>Najprv vyberte odkaz.</translation>
     </message>
@@ -3665,24 +4628,30 @@ do koša?</translation>
         <location line="-763"/>
         <location line="+108"/>
         <location line="+230"/>
+        <location line="-230"/>
+        <location line="+230"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Zdroj aj cieľ musia byť katalógové zariadenia.</translation>
     </message>
     <message>
         <location line="-326"/>
         <location line="+62"/>
+        <location line="+0"/>
         <source>Replicate</source>
         <translation>Replikovať</translation>
     </message>
     <message>
         <location line="-61"/>
         <location line="+338"/>
+        <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 nie je dostupný</translation>
     </message>
     <message>
         <location line="-327"/>
         <location line="+90"/>
+        <location line="+249"/>
+        <location line="-249"/>
         <location line="+249"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Aktualizácia katalógu už prebieha. Počkajte a skúste znova.</translation>
@@ -3700,12 +4669,15 @@ do koša?</translation>
     <message>
         <location line="+1"/>
         <location line="+637"/>
+        <location line="+0"/>
         <source>Errors</source>
         <translation>Chyby</translation>
     </message>
     <message>
         <location line="-218"/>
         <location line="+239"/>
+        <location line="+74"/>
+        <location line="-74"/>
         <location line="+74"/>
         <source>Move</source>
         <translation>Presunúť</translation>
@@ -3714,12 +4686,15 @@ do koša?</translation>
         <location line="-313"/>
         <location line="+239"/>
         <location line="+74"/>
+        <location line="-74"/>
+        <location line="+74"/>
         <source>Copy</source>
         <translation>Kopírovať</translation>
     </message>
     <message>
         <location line="-312"/>
         <location line="+240"/>
+        <location line="+0"/>
         <source>Already in target</source>
         <translation>Už v cieli</translation>
     </message>
@@ -3727,6 +4702,8 @@ do koša?</translation>
         <location line="-154"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1s</source>
         <translation>%1s</translation>
     </message>
@@ -3734,6 +4711,8 @@ do koša?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>
@@ -3741,6 +4720,8 @@ do koša?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1h %2m</source>
         <translation>%1h %2m</translation>
     </message>
@@ -3757,12 +4738,14 @@ do koša?</translation>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+1"/>
+        <location line="+0"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
         <location line="+60"/>
         <location line="+143"/>
+        <location line="+0"/>
         <source>Status</source>
         <translation>Stav</translation>
     </message>
@@ -3774,18 +4757,26 @@ do koša?</translation>
     <message>
         <location line="+8"/>
         <location line="+33"/>
+        <location line="+0"/>
         <source>Archived</source>
         <translation>Archivované</translation>
     </message>
     <message>
         <location line="-25"/>
         <location line="+135"/>
+        <location line="+0"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
     <message>
         <location line="-127"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-173"/>
+        <location line="+64"/>
+        <location line="+10"/>
+        <location line="+58"/>
+        <location line="+73"/>
+        <location line="+35"/>
+        <location line="-240"/>
         <location line="+64"/>
         <location line="+10"/>
         <location line="+58"/>
@@ -3802,6 +4793,7 @@ do koša?</translation>
     <message>
         <location line="+4"/>
         <location line="+23"/>
+        <location line="+0"/>
         <source>Conflicts</source>
         <translation>Konflikty</translation>
     </message>
@@ -3932,12 +4924,23 @@ do koša?</translation>
     </message>
     <message>
         <location line="+271"/>
-        <location line="+76"/>
+        <location line="+90"/>
+        <location line="+0"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-64"/>
+        <location line="-81"/>
+        <source>Split catalog by sub-directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Split catalog by file type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Unassign this catalog</source>
         <translation>Odpriradiť tento katalóg</translation>
     </message>
@@ -3994,6 +4997,7 @@ do koša?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-646"/>
         <location line="+324"/>
+        <location line="+0"/>
         <source>Search Error</source>
         <translation>Chyba vyhľadávania</translation>
     </message>
@@ -4012,6 +5016,9 @@ do koša?</translation>
         <location line="+974"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-42"/>
+        <location line="+42"/>
         <source>Pause</source>
         <translation>Pozastaviť</translation>
     </message>
@@ -4019,6 +5026,9 @@ do koša?</translation>
         <location line="-967"/>
         <location line="+967"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
+        <location line="+30"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-30"/>
         <location line="+30"/>
         <source>Resume</source>
         <translation>Pokračovať</translation>
@@ -4091,6 +5101,7 @@ do koša?</translation>
     <message>
         <location line="+3"/>
         <location line="+11"/>
+        <location line="+0"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;Spracované súbory: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -4155,6 +5166,7 @@ do koša?</translation>
     <message>
         <location line="+15"/>
         <location line="+53"/>
+        <location line="+0"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Najprv vyberte katalóg (niektoré informácie chýbajú).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
     </message>
@@ -4166,6 +5178,7 @@ do koša?</translation>
     <message>
         <location line="+14"/>
         <location line="+87"/>
+        <location line="+0"/>
         <source>Could not open file.</source>
         <translation>Nepodarilo sa otvoriť súbor.</translation>
     </message>
@@ -4186,25 +5199,34 @@ do koša?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+164"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+165"/>
+        <location line="+0"/>
         <source>Strict</source>
         <translation>Presný</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Unique</source>
         <translation>Jedinečný</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Drive</source>
         <translation>Disk</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-177"/>
         <location line="+10"/>
+        <location line="+58"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <location line="+38"/>
+        <location line="+9"/>
+        <location line="-131"/>
         <location line="+58"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -4227,6 +5249,8 @@ do koša?</translation>
         <location line="+88"/>
         <location line="+10"/>
         <location line="+8"/>
+        <location line="-8"/>
+        <location line="+8"/>
         <source>Collection Update</source>
         <translation>Aktualizovať kolekciu</translation>
     </message>
@@ -4234,30 +5258,519 @@ do koša?</translation>
 <context>
     <name>PageCreateForm</name>
     <message>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+180"/>
+        <location line="+46"/>
         <source>All</source>
-        <translation type="vanished">Všetko</translation>
+        <translation>Všetko</translation>
     </message>
     <message>
+        <location line="-44"/>
         <source>Image</source>
-        <translation type="vanished">Obrázok</translation>
+        <translation>Obrázok</translation>
     </message>
     <message>
+        <location line="-1"/>
         <source>Audio</source>
-        <translation type="vanished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
+        <location line="-163"/>
+        <source>Provide a name for this new catalog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Provide a path for this new catalog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select a Storage for this new catalog.
+(Selection panel on the left and dropdown list)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+83"/>
+        <source>Catalog definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Source path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Path to index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Storage</source>
+        <translation type="unfinished">Úložisko</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Catalog name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>New catalog name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Generate name from path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Content options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>File type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Text</source>
-        <translation type="vanished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Video</source>
-        <translation type="vanished">Video</translation>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Iné</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+40"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <source>None</source>
+        <translation type="unfinished">Žiadne</translation>
+    </message>
+    <message>
+        <location line="-36"/>
+        <source>Include subdirectories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Include hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Include metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Media Basic</source>
+        <translation type="unfinished">Médiá Základné</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Media Extended</source>
+        <translation type="unfinished">Médiá Rozšírené</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Full Extended</source>
+        <translation type="unfinished">Plné Rozšírené</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Include checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Folder to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Path to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+81"/>
+        <source>Add</source>
+        <translation type="unfinished">Pridať</translation>
+    </message>
+    <message>
+        <location line="-35"/>
+        <source>Global Parameters</source>
+        <translation type="unfinished">Globálne parametre</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Global exclude directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Path to exclude globally</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDevicesView</name>
+    <message>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
+        <location line="+37"/>
+        <source>Split Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-32"/>
+        <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+62"/>
+        <location line="+25"/>
+        <location line="+62"/>
+        <location line="+36"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <location line="-156"/>
+        <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Verify then Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Split without verifying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Verify Checksums</source>
+        <translation type="unfinished">Overiť kontrolné súčty</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>No checksums are stored for this catalog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Total: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Verified: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatches: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Checksum Verification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+89"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-78"/>
+        <source>Unassign Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Unassign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Delete Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>Device tree</source>
+        <translation type="unfinished">Strom zariadení</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Storage list</source>
+        <translation type="unfinished">Zoznam úložísk</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Catalogs list</source>
+        <translation type="unfinished">Zoznam katalógov</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Filter from Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Catalogs</source>
+        <translation type="unfinished">Katalógy</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Total File Size</source>
+        <translation type="unfinished">Celková veľkosť súborov</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Total Number of Files</source>
+        <translation type="unfinished">Celkový počet súborov</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Devices</source>
+        <translation type="unfinished">Zariadenia</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Total Space</source>
+        <translation type="unfinished">Celkové miesto</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Used</source>
+        <translation type="unfinished">Použité</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Free</source>
+        <translation type="unfinished">Voľné</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>No devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDevicesViewDelegate</name>
+    <message>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+64"/>
+        <source>Update</source>
+        <translation type="unfinished">Aktualizovať</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Explore</source>
+        <translation type="unfinished">Prehliadať</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Edit</source>
+        <translation type="unfinished">Upraviť</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Open folder</source>
+        <translation type="unfinished">Otvoriť priečinok</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+16"/>
+        <source>Filelight</source>
+        <translation type="unfinished">Filelight</translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>Verify Checksums</source>
+        <translation type="unfinished">Overiť kontrolné súčty</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Split catalog by sub-directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Split catalog by file type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Add Virtual device</source>
+        <translation type="unfinished">Pridať virtuálne zariadenie</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Add Storage device</source>
+        <translation type="unfinished">Pridať úložné zariadenie</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Assign selected catalog</source>
+        <translation type="unfinished">Priradiť vybraný katalóg</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Unassign this storage</source>
+        <translation type="unfinished">Odpriradiť toto úložisko</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Unassign this catalog</source>
+        <translation type="unfinished">Odpriradiť tento katalóg</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Delete this catalog</source>
+        <translation type="unfinished">Zmazať tento katalóg</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete this storage</source>
+        <translation type="unfinished">Zmazať toto úložisko</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete</source>
+        <translation type="unfinished">Zmazať</translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>files</source>
+        <translation type="unfinished">súbory</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+260"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+406"/>
+        <source>Delete search history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This will delete all search history entries. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Keep last 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This will delete all but the last 10 search history entries. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Search History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Keep Last 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>(no text filter)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Catalogs</source>
+        <translation type="unfinished">Katalógy</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Connected drive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Path to connected drive or folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>File name</source>
         <translation>Názov súboru</translation>
     </message>
@@ -4267,7 +5780,7 @@ do koša?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+42"/>
         <source>with</source>
         <translation>s</translation>
     </message>
@@ -4287,7 +5800,7 @@ do koša?</translation>
         <translation>vylúčiť</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+39"/>
         <source>File attributes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4313,12 +5826,12 @@ do koša?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+162"/>
+        <location line="+164"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location line="-161"/>
+        <location line="-163"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -4333,27 +5846,27 @@ do koša?</translation>
         <translation>Žiadne</translation>
     </message>
     <message>
-        <location line="+33"/>
-        <location line="+152"/>
+        <location line="+35"/>
+        <location line="+167"/>
         <location line="+184"/>
-        <location line="+121"/>
+        <location line="+122"/>
         <source>Size</source>
         <translation>Veľkosť</translation>
     </message>
     <message>
-        <location line="-405"/>
-        <location line="+294"/>
-        <location line="+121"/>
+        <location line="-421"/>
+        <location line="+309"/>
+        <location line="+122"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
     <message>
-        <location line="-358"/>
+        <location line="-374"/>
         <source>File metadata</source>
         <translation>Metadáta súboru</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+75"/>
         <source>Width</source>
         <translation>Šírka</translation>
     </message>
@@ -4389,30 +5902,30 @@ do koša?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+121"/>
+        <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-107"/>
-        <location line="+121"/>
+        <location line="-108"/>
+        <location line="+122"/>
         <source>On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-113"/>
-        <location line="+121"/>
+        <location line="-114"/>
+        <location line="+122"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location line="-83"/>
-        <location line="+121"/>
+        <location line="-84"/>
+        <location line="+122"/>
         <source>Checksum</source>
         <translation>Kontrolný súčet</translation>
     </message>
     <message>
-        <location line="-107"/>
+        <location line="-108"/>
         <source>Scope</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4437,7 +5950,7 @@ do koša?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Differences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4455,7 +5968,7 @@ do koša?</translation>
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+96"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4496,33 +6009,37 @@ do koša?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+736"/>
+        <location line="+771"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation type="unfinished">Overiť kontrolné súčty</translation>
     </message>
     <message>
-        <location line="-788"/>
-        <location line="+736"/>
+        <location line="-52"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation type="unfinished">Zahrnúť metadáta</translation>
     </message>
     <message>
-        <location line="-786"/>
-        <location line="+426"/>
+        <location line="-822"/>
+        <location line="+462"/>
         <location line="+305"/>
         <source>Move to Trash</source>
         <translation>Presunúť do koša</translation>
     </message>
     <message>
-        <location line="-730"/>
-        <location line="+691"/>
+        <location line="-768"/>
+        <source>Extract Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+727"/>
         <source>Delete</source>
         <translation>Zmazať</translation>
     </message>
     <message>
-        <location line="-638"/>
+        <location line="-672"/>
         <source>Exported to: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4542,7 +6059,7 @@ do koša?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+250"/>
         <source>(no selection)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4810,8 +6327,205 @@ Errors: %3</source>
     <name>PageSelectionDelegate</name>
     <message>
         <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
+        <source>Update</source>
+        <translation type="unfinished">Aktualizovať</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Explore</source>
+        <translation type="unfinished">Prehliadať</translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Open folder</source>
         <translation>Otvoriť priečinok</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Edit</source>
+        <translation type="unfinished">Upraviť</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettings</name>
+    <message>
+        <location filename="../qt_quick/PageSettings.qml" line="+9"/>
+        <source>Settings</source>
+        <translation type="unfinished">Nastavenia</translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Close</source>
+        <translation type="unfinished">Zavrieť</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection &amp; Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Database Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+1"/>
+        <location line="+326"/>
+        <source>(none)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-318"/>
+        <source>Edit</source>
+        <translation type="unfinished">Upraviť</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Database Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Images folder</source>
+        <translation type="unfinished">Priečinok obrázkov</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location line="+120"/>
+        <source>Select</source>
+        <translation type="unfinished">Vybrať</translation>
+    </message>
+    <message>
+        <location line="-109"/>
+        <source>Host name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Database name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>User name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Startup:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Connect automatically on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Collection Import &amp; Synchronization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Data mode</source>
+        <translation type="unfinished">Režim dát</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Katalog File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Katalog Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>VVV Tab Separated Values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Source</source>
+        <translation type="unfinished">Zdroj</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>VVV export file (.tsv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Path</source>
+        <translation type="unfinished">Cesta</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Device</source>
+        <translation type="unfinished">Zariadenie</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Import</source>
+        <translation type="unfinished">Importovať</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location line="+10"/>
+        <source>Update</source>
+        <translation type="unfinished">Aktualizovať</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Version</source>
+        <translation type="unfinished">Verzia</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Release Notes</source>
+        <translation type="unfinished">Poznámky k vydaniu</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Check for a new version on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>Settings file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Open</source>
+        <translation type="unfinished">Otvoriť</translation>
     </message>
 </context>
 <context>

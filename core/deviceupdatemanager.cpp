@@ -13,6 +13,7 @@ DeviceUpdateManager::DeviceUpdateManager(QObject *parent)
 
 DeviceUpdateManager::~DeviceUpdateManager()
 {
+    m_catalogProgressManager = nullptr;
     cleanupOperation();
 }
 
