@@ -50,8 +50,24 @@ void AppManager::initiateApp()
     }
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
 
-    // Load collection folder (Memory mode) from settings
-    collection->folder = settings.value("LastCollectionFolder").toString();
+    // Read database mode and path so collection->folder can be derived correctly.
+    // Database::initialize() reads these same keys again inside startDatabase(),
+    // but we need folder set before any core code uses it.
+    collection->databaseMode     = settings.value("Settings/databaseMode").toString();
+    collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+    if (collection->databaseMode.isEmpty())
+        collection->databaseMode = "File";
+
+    if (collection->databaseMode == "Memory") {
+        collection->folder = settings.value("LastCollectionFolder").toString();
+    } else if (collection->databaseMode == "File") {
+        if (!collection->databaseFilePath.isEmpty())
+            collection->folder = QFileInfo(collection->databaseFilePath).absolutePath();
+    }
+
+    m_firstRun = !QFile(collection->settingsFilePath).exists()
+              || (collection->databaseMode == "Memory" && collection->folder.isEmpty())
+              || (collection->databaseMode == "File"   && collection->databaseFilePath.isEmpty());
 
     selectedDevice->ID = settings.value("Selection/SelectedDeviceID", 1).toInt();
     if (selectedDevice->ID == 0) selectedDevice->type = "All";
@@ -650,6 +666,9 @@ bool AppManager::reconnectToDatabase()
     if (migErr.type() != QSqlError::NoError) {
         qWarning() << "AppManager::reconnectToDatabase: migrations failed (non-fatal):" << migErr.text();
     }
+
+    if (collection->databaseMode == "File" && !collection->databaseFilePath.isEmpty())
+        collection->folder = QFileInfo(collection->databaseFilePath).absolutePath();
 
     lastDatabaseError.clear();
     collection->setConnectionName(conn);
@@ -1353,6 +1372,14 @@ void AppManager::setAlphaWarningShown()
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     settings.setValue("Settings/ShowAlphaWarning", false);
     settings.sync();
+}
+//----------------------------------------------------------------------
+void AppManager::clearFirstRun()
+{
+    if (m_firstRun) {
+        m_firstRun = false;
+        emit firstRunChanged();
+    }
 }
 
 void AppManager::selectDeviceById(int deviceId)

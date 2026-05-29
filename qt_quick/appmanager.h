@@ -107,6 +107,7 @@ class AppManager : public QObject
     Q_PROPERTY(bool catalogUpdateForBackupRunning READ catalogUpdateForBackupRunning NOTIFY catalogUpdateForBackupRunningChanged)
     Q_PROPERTY(bool    deviceUpdateIsRunning  READ getDeviceUpdateIsRunning  NOTIFY deviceUpdateStateChanged)
     Q_PROPERTY(QString deviceUpdateStatusText READ getDeviceUpdateStatusText NOTIFY deviceUpdateStatusChanged)
+    Q_PROPERTY(bool    isFirstRun             READ isFirstRun                NOTIFY firstRunChanged)
 
 public:
     explicit AppManager(QObject *parent = nullptr);
@@ -368,6 +369,8 @@ public slots:
 
     Q_INVOKABLE bool    shouldShowAlphaWarning() const;
     Q_INVOKABLE void    setAlphaWarningShown();
+    bool                isFirstRun() const { return m_firstRun; }
+    Q_INVOKABLE void    clearFirstRun();
 
     // Recent collections
     QVariantList getRecentCollections() const;
@@ -438,12 +441,14 @@ signals:
     void deviceUpdateStateChanged();
     void deviceUpdateStatusChanged();
     void deviceUpdateReportReady(QVariantMap report);
+    void firstRunChanged();
     void deviceListChanged();
     void checksumVerificationCompleted(QVariantMap result);
     void splitCompleted(bool success, const QString &error);
 
 private:
     QString m_connectionName = "defaultConnection";
+    bool    m_firstRun = false;
     bool    m_searchIsRunning  = false;
     bool    m_searchIsPaused   = false;
     QString m_searchStatusText;

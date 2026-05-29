@@ -85,23 +85,24 @@
 
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
-                QString welcomeNextStepText;
-                if (collection->databaseMode == "Memory") {
-                    welcomeNextStepText = tr("<br/><br/>On the next screen, pick an existing Collection folder or create a new one.");
-                } else {
-                    welcomeNextStepText = tr("<br/><br/>On the next screen, pick an existing collection database file or create a new one.");
-                }
                 msgBox.setText(tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
                                   "It seems this is the first run.<br/><br/>"
                                   "The following Settings have been applied:<br/>"
-                                  " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings"))
-                               + welcomeNextStepText);
+                                  " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings")));
                 msgBox.setIcon(QMessageBox::Information);
+                QPushButton *openExistingBtn = nullptr;
+                if (collection->databaseMode == "File") {
+                    openExistingBtn = msgBox.addButton(tr("Open existing..."), QMessageBox::AcceptRole);
+                    msgBox.addButton(tr("Create new..."), QMessageBox::AcceptRole);
+                } else {
+                    msgBox.addButton(QMessageBox::Ok);
+                }
                 msgBox.exec();
 
                 //Language
                 ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
+                bool openExisting = false;
                 if (collection->databaseMode == "Memory") {
                     //Collection folder choice - with validation
                     bool folderSelected = false;
@@ -169,14 +170,24 @@
                     settings.setValue("LastCollectionFolder", collection->folder);
 
                 } else {
-                    // File mode: pick or create a database file
+                    // File mode: open existing or create a new database file
                     bool fileSelected = false;
+                    openExisting = (msgBox.clickedButton() == openExistingBtn);
                     while (!fileSelected) {
-                        QString selectedFile = QFileDialog::getSaveFileName(
-                            this,
-                            tr("Select or create a database file for this collection"),
-                            QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/katalog.db",
-                            tr("Database files (*.db)"));
+                        QString selectedFile;
+                        if (openExisting) {
+                            selectedFile = QFileDialog::getOpenFileName(
+                                this,
+                                tr("Select or create a database file for this collection"),
+                                QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                tr("Database files (*.db)"));
+                        } else {
+                            selectedFile = QFileDialog::getSaveFileName(
+                                this,
+                                tr("Select or create a database file for this collection"),
+                                QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/katalog.db",
+                                tr("Database files (*.db)"));
+                        }
 
                         if (selectedFile.isEmpty()) {
                             // User cancelled — loop again to re-prompt
@@ -189,11 +200,13 @@
                         collection->databaseFilePath = selectedFile;
                         collection->folder = QFileInfo(selectedFile).absolutePath();
 
-                        // Touch the file so Database::initialize() can open it
-                        // (QFileDialog::getSaveFileName returns a path but does not create the file)
-                        QFile newFile(collection->databaseFilePath);
-                        if (newFile.open(QFile::WriteOnly))
-                            newFile.close();
+                        if (!openExisting) {
+                            // Touch the file so Database::initialize() can open it
+                            // (QFileDialog::getSaveFileName returns a path but does not create the file)
+                            QFile newFile(collection->databaseFilePath);
+                            if (newFile.open(QFile::WriteOnly))
+                                newFile.close();
+                        }
 
                         fileSelected = true;
                     }
@@ -208,12 +221,14 @@
                 }
 
                 //Go to Create screen
-                QMessageBox msgBox2;
-                msgBox2.setWindowTitle("Katalog");
-                msgBox2.setText(tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
-                                   + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>"));
-                msgBox2.setIcon(QMessageBox::Information);
-                msgBox2.exec();
+                if (!openExisting) {
+                    QMessageBox msgBox2;
+                    msgBox2.setWindowTitle("Katalog");
+                    msgBox2.setText(tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
+                                       + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>"));
+                    msgBox2.setIcon(QMessageBox::Information);
+                    msgBox2.exec();
+                }
 
                 ui->tabWidget->setCurrentIndex(selectedTab);
             }

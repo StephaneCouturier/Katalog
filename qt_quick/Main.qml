@@ -22,6 +22,7 @@ Kirigami.ApplicationWindow {
 
     signal searchTriggered()
     property real cardScale: 1.0
+    property bool _firstRunCreateNew: false
 
     // ── Page navigation ────────────────────────────────────────────────────
     //
@@ -391,6 +392,11 @@ Kirigami.ApplicationWindow {
                     showPassiveNotification("✓ " + message, "positive")
                     root.showPage(pageSelection)  // clear col 2, go to Selection
                     pageSearchForm.restoreLastSearch()
+                    if (appManager1.isFirstRun) {
+                        appManager1.clearFirstRun()
+                        if (root._firstRunCreateNew)
+                            firstRunReadyDialog.open()
+                    }
                 } else {
                     showPassiveNotification("✗ " + message, "warning")
                 }
@@ -404,6 +410,12 @@ Kirigami.ApplicationWindow {
         width         = windowSettings.savedWidth
         height        = windowSettings.savedHeight
         root.cardScale = windowSettings.savedCardScale
+
+        if (appManager1.isFirstRun) {
+            firstRunWelcomeDialog.open()
+            return
+        }
+
         if (appManager1.shouldShowAlphaWarning())
             alphaWarningDialog.open()
 
@@ -463,6 +475,71 @@ Kirigami.ApplicationWindow {
                 if (doNotShowAgain.checked)
                     appManager1.setAlphaWarningShown()
                 alphaWarningDialog.close()
+            }
+        }
+    }
+
+    // First-run welcome dialog
+    Controls.Dialog {
+        id: firstRunWelcomeDialog
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            width: firstRunWelcomeDialog.availableWidth
+            wrapMode: Text.WordWrap
+            textFormat: Text.RichText
+            text: qsTr("<br/><b>Welcome to Katalog!</b><br/><br/>It seems this is the first run.<br/><br/>The following Settings have been applied:<br/> - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.")
+                      .arg(Qt.locale().name)
+                      .arg(qsTr("System"))
+                      .arg(qsTr("Settings"))
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Open existing...")
+                onClicked: {
+                    root._firstRunCreateNew = false
+                    firstRunWelcomeDialog.close()
+                    databaseFileDialog.open()
+                }
+            }
+            Controls.Button {
+                text: qsTr("Create new...")
+                onClicked: {
+                    root._firstRunCreateNew = true
+                    firstRunWelcomeDialog.close()
+                    var p = appManager1.getNewCollectionDefaultPath()
+                    newDatabaseFileDialog.currentFile = "file://" + p
+                    newDatabaseFileDialog.open()
+                }
+            }
+        }
+    }
+
+    // First-run ready dialog (shown after the collection is created)
+    Controls.Dialog {
+        id: firstRunReadyDialog
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            width: firstRunReadyDialog.availableWidth
+            wrapMode: Text.WordWrap
+            textFormat: Text.RichText
+            text: qsTr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
+                  + qsTr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>")
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("OK")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: {
+                firstRunReadyDialog.close()
+                appManager1.setLastPage("Create")
+                root.showPage(pageCreate)
             }
         }
     }
