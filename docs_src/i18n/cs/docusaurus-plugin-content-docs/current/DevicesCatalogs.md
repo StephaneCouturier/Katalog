@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Zařízení: Katalogy
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Souhrn
 Tato stránka popisuje všechny funkce zobrazení **Seznam katalogů** na obrazovce [Zařízení](Devices).
@@ -47,6 +47,32 @@ Kliknutím pravým tlačítkem na katalog se otevře kontextová nabídka:
 | *Filelight* | Pouze aktivní katalog | Otevře [Filelight](https://apps.kde.org/filelight/) ve zdrojové cestě katalogu |
 | *Zrušit přiřazení tohoto katalogu* | Katalog přiřazen do virtuální skupiny | Odebere katalog z jeho virtuální skupiny (katalog samotný není smazán) |
 | *Smazat tento katalog* | Katalogy fyzické skupiny a exporty | Trvale odstraní katalog z kolekce |
+| *Rozdělit katalog podle podadresáře* | Zařízení katalog | Rozdělí katalog na jeden katalog na každý bezprostřední podadresář plus jeden pro soubory v kořenové složce — viz [Rozdělení katalogu](#split-catalog) |
+| *Rozdělit katalog podle typu souboru* | Zařízení katalog | Rozdělí katalog na jeden katalog na každý typ souboru — viz [Rozdělení katalogu](#split-catalog) |
+
+## Rozdělení katalogu {#split-catalog}
+
+Dvě operace rozdělení jsou dostupné z kontextové nabídky (kliknutí pravým tlačítkem) na libovolném zařízení typu Katalog. Obě operace odstraní původní katalog a nahradí ho sadou menších katalogů. **Tuto operaci nelze vrátit zpět.**
+
+### Rozdělit podle podadresáře
+
+Vytvoří jeden nový katalog pro každý bezprostřední podadresář zdrojové cesty katalogu. Soubory umístěné přímo v kořenové složce (nikoli v žádném podadresáři) jsou shromážděny do dedikovaného katalogu pojmenovaného `[NázevKatalogu]_(root)`.
+
+Nové katalogy se pojmenovávají podle vzoru `[NázevKatalogu]_NázevPodadresáře`.
+
+Před pokračováním se zobrazí potvrzovací dialog s počtem katalogů, které budou vytvořeny.
+
+:::note
+Pokud katalog nemá žádné bezprostřední podadresáře, operace je zrušena a původní katalog zůstane nezměněn.
+:::
+
+### Rozdělit podle typu souboru
+
+Vytvoří jeden nový katalog pro každý typ souboru nalezený v katalogu (Audio, Obrázek, Text, Video, Ostatní), použijíce stejnou zdrojovou cestu jako originál. Je to ekvivalent ručního vytvoření těchto katalogů s filtrem typu souboru při vytváření.
+
+Před rozdělením nabídne dialog tyto možnosti:
+- *Ověřit a pak rozdělit* — znovu načte každý soubor z disku pomocí systémové databáze MIME pro přesnou detekci typu, poté rozdělí. Vyžaduje připojené zařízení.
+- *Rozdělit bez ověření* — rozdělí okamžitě pomocí typů souborů již uložených v indexu katalogu.
 
 ## Upravit {#edit}
 
@@ -66,6 +92,18 @@ Panel úprav umožňuje změnit následující pole:
 | *Vyloučené složky* | Seznam podsložek, které mají být vyloučeny z prohledávání katalogu |
 
 Obecně se doporučuje nastavit správné možnosti při **vytváření** katalogu, nikoli je upravovat později.
+
+### Změna zdrojové cesty {#catalog-path-change}
+
+Když je *Zdrojová cesta* změněna a uložena, Katalog detekuje změnu a nabídne tři možnosti:
+
+| Možnost | Popis |
+|---------|-------|
+| *Nahradit kořen cesty* | Okamžitě aktualizuje všechny indexované cesty souborů a složek nahrazením starého prefixu novým — bez nutnosti opětovného skenování, funguje bez připojeného zařízení |
+| *Úplná re-indexace* | Znovu prohledá katalog z nové zdrojové cesty |
+| *Přeskočit* | Uloží novou cestu bez změny indexu katalogu |
+
+*Nahradit kořen cesty* je nejrychlejší možností, pokud se soubory nepřesunuly a změnil se pouze přípojný bod nebo písmeno jednotky.
 
 ## Import {#import}
 

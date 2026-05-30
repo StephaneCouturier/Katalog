@@ -196,7 +196,7 @@ ninja
 
 ## Database
 
-SQLite with multiple connection modes (file, hosted, memory). Schema versioning handles migrations. Separate files for: devices, catalogs, storage, statistics, search history.
+Multiple connection modes: file (SQLite file), memory (SQLite), hosted (Mariadb/MySQL). Schema versioning handles migrations. Memeory mode: Separate files for: devices, catalogs, storage, statistics, search history.
 
 ### Memory Mode Caveat
 

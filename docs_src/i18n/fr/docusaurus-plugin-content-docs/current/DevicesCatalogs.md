@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Périphériques : Catalogues
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de la vue **Liste des catalogues** de l'écran [Périphériques](Devices).
@@ -47,6 +47,32 @@ Un clic droit sur un catalogue ouvre un menu contextuel :
 | *Filelight* | Catalogue actif uniquement | Ouvre [Filelight](https://apps.kde.org/filelight/) dans le chemin source du catalogue |
 | *Désaffecter ce catalogue* | Catalogue attribué à un groupe virtuel | Retire le catalogue de son groupe virtuel (le catalogue lui-même n'est pas supprimé) |
 | *Supprimer ce catalogue* | Catalogues du groupe physique et exports | Supprime définitivement le catalogue de la collection |
+| *Diviser le catalogue par sous-répertoire* | Périphérique catalogue | Découpe le catalogue en un catalogue par sous-répertoire immédiat, plus un pour les fichiers à la racine — voir [Diviser le catalogue](#split-catalog) |
+| *Diviser le catalogue par type de fichier* | Périphérique catalogue | Découpe le catalogue en un catalogue par type de fichier — voir [Diviser le catalogue](#split-catalog) |
+
+## Diviser le catalogue {#split-catalog}
+
+Deux opérations de division sont disponibles depuis le menu contextuel (clic droit) sur tout périphérique de type Catalogue. Les deux opérations suppriment le catalogue d'origine et le remplacent par un ensemble de catalogues plus petits. **Cette opération est irréversible.**
+
+### Diviser par sous-répertoire
+
+Crée un nouveau catalogue par sous-répertoire immédiat du chemin source du catalogue. Les fichiers situés directement à la racine (et non dans un sous-répertoire) sont regroupés dans un catalogue dédié nommé `[NomCatalogue]_(root)`.
+
+Les nouveaux catalogues suivent le modèle `[NomCatalogue]_NomSousRépertoire`.
+
+Une boîte de dialogue de confirmation indique le nombre de catalogues qui seront créés avant de procéder.
+
+:::note
+Si le catalogue n'a pas de sous-répertoires immédiats, l'opération est annulée et le catalogue d'origine reste inchangé.
+:::
+
+### Diviser par type de fichier
+
+Crée un nouveau catalogue par type de fichier trouvé dans le catalogue (Audio, Image, Texte, Vidéo, Autre), en utilisant le même chemin source que l'original. Cela équivaut à créer manuellement ces catalogues avec un filtre de type de fichier lors de la création.
+
+Avant de diviser, une boîte de dialogue propose :
+- *Vérifier puis diviser* — relit chaque fichier depuis le disque à l'aide de la base MIME système pour s'assurer d'une détection précise du type, puis divise. Nécessite que le périphérique soit connecté.
+- *Diviser sans vérifier* — divise immédiatement en utilisant les types de fichiers déjà enregistrés dans l'index du catalogue.
 
 ## Modifier {#edit}
 
@@ -66,6 +92,18 @@ Le panneau de modification permet de changer les champs suivants :
 | *Dossiers exclus* | Liste des sous-dossiers à exclure du scan du catalogue |
 
 Il est généralement recommandé de définir les options correctes lors de la **création** d'un catalogue plutôt que de les modifier ultérieurement.
+
+### Changement du chemin source {#catalog-path-change}
+
+Lorsque le *Chemin source* est modifié et enregistré, Katalog détecte le changement et propose trois options :
+
+| Option | Description |
+|--------|-------------|
+| *Remplacer la racine du chemin* | Met à jour instantanément tous les chemins de fichiers et de dossiers indexés en remplaçant l'ancien préfixe par le nouveau — aucun re-scan requis, fonctionne sans le périphérique connecté |
+| *Ré-indexer complètement* | Re-scanne le catalogue depuis le nouveau chemin source |
+| *Ignorer* | Enregistre le nouveau chemin sans modifier l'index du catalogue |
+
+*Remplacer la racine du chemin* est l'option la plus rapide lorsque les fichiers n'ont pas bougé et que seul le point de montage ou la lettre de lecteur a changé.
 
 ## Importer {#import}
 

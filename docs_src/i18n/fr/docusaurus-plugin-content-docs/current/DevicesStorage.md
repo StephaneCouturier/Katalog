@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Périphériques : Stockage
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de la vue **Liste de stockage** de l'écran [Périphériques](Devices).
@@ -57,6 +57,7 @@ Le panneau de modification permet de changer tous les champs du périphérique d
 | Champ | Description |
 |-------|-------------|
 | *Nom du périphérique* | Le nom affiché du périphérique de stockage |
+| *Chemin source* | Le point de montage ou chemin racine du périphérique (ex. `/media/user/MonDisque` sous Linux, `E:\` sous Windows) |
 | *Type* | Le type de périphérique (ex. disque interne, disque externe, USB, NAS…) |
 | *Étiquette* | L'étiquette du système de fichiers du lecteur |
 | *Système de fichiers* | Le type de système de fichiers (ex. ext4, NTFS, exFAT…) |
@@ -67,6 +68,18 @@ Le panneau de modification permet de changer tous les champs du périphérique d
 | *Commentaire 1 / 2 / 3* | Champs de texte libre pour des notes |
 | *Image* | Une image associée à ce stockage — voir [Image du périphérique](#device-picture) ci-dessous |
 | *Périphérique parent* | Le périphérique virtuel ou groupe auquel ce stockage appartient |
+
+### Changement du chemin source {#storage-path-change}
+
+Lorsque le *Chemin source* est modifié et enregistré, Katalog détecte le changement et propose trois options pour mettre à jour tous les index de catalogues associés :
+
+| Option | Description |
+|--------|-------------|
+| *Remplacer la racine du chemin* | Met à jour instantanément tous les chemins de fichiers et de dossiers indexés dans chaque catalogue associé en remplaçant l'ancien préfixe par le nouveau — aucun re-scan requis, fonctionne sans le périphérique connecté |
+| *Re-scanner complètement* | Re-scanne tous les catalogues sous ce périphérique de stockage depuis le nouveau chemin |
+| *Ignorer* | Enregistre le nouveau chemin sans modifier les index de catalogues |
+
+*Remplacer la racine du chemin* est l'option la plus rapide lorsque le périphérique n'a pas changé physiquement et que seul son point de montage ou sa lettre de lecteur a changé.
 
 ## Image du périphérique {#device-picture}
 

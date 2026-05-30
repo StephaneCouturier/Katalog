@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Přehled
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Indexování souborů a správce úložných zařízení
 Katalog je výkonný <b>správce katalogů souborů</b>, který vám pomáhá organizovat a vyhledávat soubory.<br/>

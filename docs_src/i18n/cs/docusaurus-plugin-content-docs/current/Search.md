@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Vyhledávání
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Vyhledávání** a jak je používat.
@@ -49,6 +49,10 @@ Zadat text pro vyhledávání v názvech souborů a/nebo cestách složek.
 
 „Slovo" je skupina znaků oddělená od jiné skupiny mezerou. To lze použít k vyhledání složek, souborů nebo souborů v určitých složkách.
 
+Textové pole přijímá více řádků. Každý řádek je zpracován jako nezávislý vyhledávací výraz a jsou vráceny výsledky odpovídající **libovolnému** řádku (logika NEBO). Funguje se všemi režimy *S*.
+
+![Vyhledávací textové pole zobrazující více řádků použitých jako nezávislé vyhledávací výrazy v logice NEBO](/img/screen_search_05_list_for_file_name.png)
+
 Tlačítka vedle textového pole:
 - *Vložit ze schránky* — vloží obsah schránky do vyhledávacího pole.
 - *Vyčistit text vyhledávání* — odstraní speciální znaky (`.  ,  _  -  (  )  [  ]  {  }  /  \  '  "`).
@@ -64,6 +68,11 @@ Určuje, jak mají být slova v poli *Text* porovnávána:
 | *Přesná fráze* | Vrátí výsledky, kde je nalezena přesná fráze (včetně pořadí slov a mezer) |
 | *Začíná na* | Název souboru musí začínat textem — dostupné pouze s *Pouze názvy souborů* |
 | *Jakékoli slovo* | Vrátí výsledky, pokud je nalezeno alespoň jedno ze slov |
+| *Regex* | Text vyhledávání je použit jako vzor regulárního výrazu (syntaxe PCRE2) |
+
+:::note
+V režimu *Regex* neplatný vzor nevrátí žádné výsledky. Možnost *Rozlišovat velikost písmen* se nadále uplatňuje.
+:::
 
 #### V
 Určuje, ve které části cesty souboru se má hledat:
@@ -276,7 +285,11 @@ Tlačítko *Zpracovat výsledky* otevře nabídku dávkových operací aplikovan
 ## Historie vyhledávání
 Pokaždé, když je spuštěno vyhledávání, jsou kritéria a výběr zařízení uloženy do souboru historie ve složce Kolekce.
 
-Tato historie je zobrazena v tabulce ve spodní části obrazovky. Kliknutím na řádek se obnoví všechna kritéria a okamžitě se spustí toto vyhledávání znovu.
+Tato historie je zobrazena v tabulce ve spodní části obrazovky. Kliknutím na řádek se obnoví všechna kritéria — vyhledávání je pak nutné spustit ručně.
+
+Dvě tlačítka umožňují spravovat seznam historie:
+- *Ponechat posledních 10* — odstraní všechny záznamy kromě 10 nejnovějších (s potvrzením).
+- *Resetovat* — smaže všechny záznamy historie (s potvrzením).
 
 Tento panel lze skrýt, aby se ušetřilo místo.
 

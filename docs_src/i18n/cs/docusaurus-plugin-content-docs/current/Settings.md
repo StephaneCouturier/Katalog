@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Nastavení
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je používat.
@@ -30,8 +30,8 @@ Poznámka: Změna režimu vyžaduje kliknutí na *Použít a restartovat*.
 
 | Režim | Typ databáze | Ukládání dat | Soubory | Rychlost vyhledávání | Rychlost katalogizace |
 | -------| -------------------|---|---|---|---|
-| **Paměť** (výchozí) | paměť počítače | v souborech .csv oddělených tabulátorem (pro zařízení, statistiky atd.) a v souborech .idx (pro seznamy souborů katalogů) | Lepší pro pravidelnou synchronizaci souborů do cloudu | Nejvyšší rychlost vyhledávání, jakmile jsou katalogy v paměti (delší čas při prvním použití katalogu) | Mírně rychlejší |
-| **Soubor** | Soubor SQLite, nízké využití paměti | vše v souboru SQLite | všechna data v jednom souboru, který může narůst na několik set MB | Rychlejší pro první vyhledávání, pomalejší pro opakované vyhledávání ve velké kolekci | Mírně pomalejší |
+| **Paměť** | paměť počítače | v souborech .csv oddělených tabulátorem (pro zařízení, statistiky atd.) a v souborech .idx (pro seznamy souborů katalogů) | Lepší pro pravidelnou synchronizaci souborů do cloudu | Nejvyšší rychlost vyhledávání, jakmile jsou katalogy v paměti (delší čas při prvním použití katalogu) | Mírně rychlejší |
+| **Soubor** (výchozí) | Soubor SQLite, nízké využití paměti | vše v souboru SQLite | všechna data v jednom souboru, který může narůst na několik set MB | Rychlejší pro první vyhledávání, pomalejší pro opakované vyhledávání ve velké kolekci | Mírně pomalejší |
 | **Hostovaný** | Server MySQL/MariaDB | všechna data uložena na hostovaném databázovém serveru | Data centralizována na serveru, přístupná z více počítačů v síti | Výkon dotazů na straně serveru, vhodné pro velké kolekce | Mírně pomalejší (síťová režie) |
 
 ![Diagram datových režimů](/img/settings_database-model.png)
