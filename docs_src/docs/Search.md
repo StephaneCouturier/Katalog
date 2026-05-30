@@ -51,6 +51,9 @@ A "word" is a group of characters separated from another group by a space. This 
 
 The text field accepts multiple lines. Each line is treated as an independent search term and results matching **any** line are returned (OR logic). This works with all *With* modes.
 
+- Press **Enter** to trigger the search.
+- Press **Shift+Enter** to insert a new line.
+
 ![Search text field showing multiple lines used as independent OR search terms](/img/screen_search_05_list_for_file_name.png)
 
 Buttons next to the text field:

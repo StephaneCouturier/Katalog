@@ -51,6 +51,9 @@ Zadat text pro vyhledávání v názvech souborů a/nebo cestách složek.
 
 Textové pole přijímá více řádků. Každý řádek je zpracován jako nezávislý vyhledávací výraz a jsou vráceny výsledky odpovídající **libovolnému** řádku (logika NEBO). Funguje se všemi režimy *S*.
 
+- Stisknutím **Enter** spustíte vyhledávání.
+- Stisknutím **Shift+Enter** vložíte nový řádek.
+
 ![Vyhledávací textové pole zobrazující více řádků použitých jako nezávislé vyhledávací výrazy v logice NEBO](/img/screen_search_05_list_for_file_name.png)
 
 Tlačítka vedle textového pole:

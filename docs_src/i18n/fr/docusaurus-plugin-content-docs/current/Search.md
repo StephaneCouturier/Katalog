@@ -51,6 +51,9 @@ Un « mot » est un groupe de caractères séparé d'un autre groupe par un espa
 
 Le champ de texte accepte plusieurs lignes. Chaque ligne est traitée comme un terme de recherche indépendant et les résultats correspondant à **n'importe quelle** ligne sont retournés (logique OU). Cela fonctionne avec tous les modes *Avec*.
 
+- Appuyer sur **Entrée** pour lancer la recherche.
+- Appuyer sur **Maj+Entrée** pour insérer un nouveau ligne.
+
 ![Champ de texte de recherche affichant plusieurs lignes utilisées comme termes de recherche indépendants en logique OU](/img/screen_search_05_list_for_file_name.png)
 
 Boutons à côté du champ de texte :
