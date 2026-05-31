@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6 (inc KF6)
-#v3.alpha2 run2
+#v3.alpha2 run3
 on:
   # Trigger on new releases
   # release:
@@ -461,6 +461,7 @@ jobs:
         LIBRARY_FLAGS=""
         for lib in \
           libQt6Qml.so.6 \
+          libQt6QmlCore.so.6 \
           libQt6Quick.so.6 \
           libQt6QuickControls2.so.6 \
           libQt6QuickControls2Fusion.so.6 \
