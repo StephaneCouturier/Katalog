@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6 (inc KF6)
-#v3.alpha2 run5
+#v3.alpha2 run6
 on:
   # Trigger on new releases
   # release:
@@ -469,7 +469,9 @@ jobs:
           -name "libQt6Quick*.so.6" -o \
           -name "libQt6Labs*.so.6"  -o \
           -name "libQt6Charts*.so.6" \
-        \) | sort)
+        \) ! -name "libQt6Quick3D*.so.6" \
+          ! -name "libQt6QuickTimeline*.so.6" \
+        | sort)
 
         linuxdeploy \
           --appdir AppDir \
