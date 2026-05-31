@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6 (inc KF6)
-#v3.alpha2 run1
+#v3.alpha2 run2
 on:
   # Trigger on new releases
   # release:
@@ -489,7 +489,8 @@ jobs:
           libQt6LabsFolderListModel.so.6 \
           libQt6LabsQmlModels.so.6 \
           libQt6QuickShapes.so.6 \
-          libQt6QuickEffects.so.6; do
+          libQt6QuickEffects.so.6 \
+          libQt6Charts.so.6; do
           src="$QT6_LIB_DIR/$lib"
           if [ -f "$src" ] || [ -L "$src" ]; then
             LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"
@@ -551,6 +552,8 @@ jobs:
           mkdir -p "$DEST"
 
           for module in \
+            "QtCore" \
+            "QtCharts" \
             "QtQuick" \
             "QtQuick/Controls" \
             "QtQuick/Layouts" \
