@@ -78,7 +78,7 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+484"/>
+        <location filename="../qt_quick/Main.qml" line="+561"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -100,7 +100,8 @@
         <translation type="unfinished">Annuleren</translation>
     </message>
     <message>
-        <location line="-901"/>
+        <location line="-970"/>
+        <location line="+69"/>
         <location line="+158"/>
         <location line="+137"/>
         <location line="+33"/>
@@ -109,7 +110,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1021"/>
+        <location line="-1180"/>
+        <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
+        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Welkom bij Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Het lijkt erop dat dit de eerste keer is dat het programma wordt uitgevoerd.&lt;br/&gt;&lt;br/&gt;De volgende instellingen zijn toegepast:&lt;br/&gt; - Taal: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;U kunt deze wijzigen in het tabblad %3.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Settings</source>
+        <translation type="unfinished">Instellingen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Open existing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Create new...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
+        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Klaar om een bestandscatalogus te maken:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
+        <translation type="unfinished">1- Selecteer een volledige schijf of map, &lt;br/&gt;2- selecteer opties, en &lt;br/&gt;3- klik op &apos;Maken&apos;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -733,7 +769,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-867"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+97"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+358"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+721"/>
         <location line="+19"/>
@@ -1139,7 +1175,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Wilt u dit %1 apparaat &lt;span style=&apos;color: red&apos;;&gt;verwijderen&lt;/span&gt;?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+855"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
         <location line="+38"/>
         <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
@@ -1169,7 +1205,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3095"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -1362,7 +1398,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-735"/>
         <location line="+743"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+306"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -1783,7 +1819,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-3672"/>
         <source>Clear the search text</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoektekst wissen</translation>
     </message>
     <message>
         <location line="+141"/>
@@ -1795,7 +1831,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-6706"/>
         <source>Regex</source>
-        <translation type="unfinished"></translation>
+        <translation>Regex</translation>
     </message>
     <message>
         <location line="+3799"/>
@@ -1830,7 +1866,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1327"/>
         <location line="+0"/>
         <source>Keep last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Laatste 10 bewaren</translation>
     </message>
     <message>
         <location line="+146"/>
@@ -2199,11 +2235,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-11461"/>
         <location line="+6893"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
-        <location line="+2838"/>
+        <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2838"/>
-        <location line="+2838"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2831"/>
+        <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -2482,7 +2518,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2598"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
         <location line="+1771"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
@@ -2503,7 +2539,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-274"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
         <location line="+0"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
@@ -2598,7 +2634,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+778"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-14"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+297"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-919"/>
         <location line="+170"/>
@@ -2833,13 +2869,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Name</source>
@@ -2872,7 +2908,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Selecteer de map die in deze nieuwe catalogus geïndexeerd moet worden</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-252"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-281"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-19"/>
         <location line="+0"/>
         <source>Select the directory for this collection</source>
@@ -2881,7 +2917,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-6257"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
         <location line="+240"/>
         <location line="+253"/>
         <location line="-493"/>
@@ -2978,7 +3014,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+23"/>
         <source>This catalog has no immediate sub-directories to split by.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deze catalogus heeft geen directe submappen om op te splitsen.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2986,45 +3022,49 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 
 This will create %2 new catalogs (one per sub-directory plus one for root files) and remove the original.
 This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogus &quot;%1&quot; splitsen?
+
+Hiermee worden %2 nieuwe catalogi gemaakt (één per submap plus één voor rootbestanden) en het origineel verwijderd.
+Deze bewerking kan niet ongedaan worden gemaakt.</translation>
     </message>
     <message>
         <location line="+12"/>
         <location line="+41"/>
         <location line="+0"/>
         <source>Split failed: no catalogs were created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Splitsen mislukt: er zijn geen catalogi gemaakt.</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>Verify file types before splitting?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandstypen controleren voor het splitsen?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File types in the catalog may be based on file extensions only. Running a verification reads each file from disk and ensures the split uses accurate types. The device must be connected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandstypen in de catalogus zijn mogelijk alleen gebaseerd op bestandsextensies. Het uitvoeren van een verificatie leest elk bestand van de schijf en zorgt ervoor dat de splitsing nauwkeurige typen gebruikt. Het apparaat moet zijn verbonden.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Verify then Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Controleren en splitsen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Split without verifying</source>
-        <translation type="unfinished"></translation>
+        <translation>Splitsen zonder controleren</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>The device must be connected to verify file types.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het apparaat moet verbonden zijn om bestandstypen te controleren.</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>MIME verification failed: %1
 Split was not performed.</source>
-        <translation type="unfinished"></translation>
+        <translation>MIME-verificatie mislukt: %1
+Splitsen is niet uitgevoerd.</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -3054,54 +3094,54 @@ Split was not performed.</source>
     <message>
         <location line="+35"/>
         <source>The storage path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het opslagpad is gewijzigd.</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>Old path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oud pad:</translation>
     </message>
     <message>
         <location line="-1770"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>New path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuw pad:</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>How should the catalog indexes be updated?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoe moeten de catalogusindexen worden bijgewerkt?</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>Replace path root</source>
-        <translation type="unfinished"></translation>
+        <translation>Padwortel vervangen</translation>
     </message>
     <message>
         <location line="-1770"/>
         <source>Full re-scan</source>
-        <translation type="unfinished"></translation>
+        <translation>Volledig opnieuw scannen</translation>
     </message>
     <message>
         <location line="+484"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2065"/>
+        <location line="+1805"/>
+        <location line="-2058"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Parent ID</source>
         <translation>Bovenliggend ID</translation>
     </message>
     <message>
-        <location line="-2304"/>
+        <location line="-2297"/>
         <source>External ID</source>
         <translation>Extern ID</translation>
     </message>
@@ -3225,12 +3265,12 @@ Split was not performed.</source>
     <message>
         <location line="+34"/>
         <source>The catalog source path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bronpad van de catalogus is gewijzigd.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Full re-index</source>
-        <translation type="unfinished"></translation>
+        <translation>Volledig herindexeren</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -3257,27 +3297,7 @@ Split was not performed.</source>
         <translation>Een bestand werd gevonden, maar kon niet worden geladen</translation>
     </message>
     <message>
-        <location line="+498"/>
-        <source>Storage path updated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>catalog(s),</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>file(s),</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>folder(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+508"/>
         <source>Catalog updated: </source>
         <translation>Catalogus bijgewerkt: </translation>
     </message>
@@ -3421,7 +3441,7 @@ Split was not performed.</source>
         <translation type="vanished">Het geselecteerde apparaat moet een catalogus zijn. Probeer met een ander apparaat-ID</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2054"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
         <location line="+240"/>
         <location line="+253"/>
         <location line="-253"/>
@@ -3903,7 +3923,7 @@ Split was not performed.</source>
         <translation>Opslaan</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-16"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-23"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Welkom bij Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Het lijkt erop dat dit de eerste keer is dat het programma wordt uitgevoerd.&lt;br/&gt;&lt;br/&gt;De volgende instellingen zijn toegepast:&lt;br/&gt; - Taal: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;U kunt deze wijzigen in het tabblad %3.</translation>
     </message>
@@ -3960,7 +3980,7 @@ Split was not performed.</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+353"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dit is versie: v%1 &lt;br/&gt;&lt;br/&gt;Een nieuwe versie is beschikbaar: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Vind de lijst met nieuwe functies in de &lt;a href=&apos;%3&apos;&gt;Versienotities&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Wilt u deze downloaden?</translation>
     </message>
@@ -4038,27 +4058,40 @@ Split was not performed.</source>
         <translation>Zoekgeschiedenis</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-357"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;Kies op het volgende scherm een bestaande collectiemap of maak een nieuwe aan.</translation>
+        <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Kies op het volgende scherm een bestaande collectiemap of maak een nieuwe aan.</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing collection database file or create a new one.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <source>Open existing...</source>
+        <translation>Bestaande openen...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create new...</source>
+        <translation>Nieuwe maken...</translation>
     </message>
     <message>
         <location line="+85"/>
+        <location line="+6"/>
+        <location line="+0"/>
         <source>Select or create a database file for this collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer of maak een databasebestand voor deze collectie</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-4"/>
+        <location line="+6"/>
+        <location line="+0"/>
         <source>Database files (*.db)</source>
-        <translation type="unfinished"></translation>
+        <translation>Databasebestanden (*.db)</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+29"/>
+        <source>Failed to open the database file: %1</source>
+        <translation>Kan het databasebestand niet openen: %1</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Klaar om een bestandscatalogus te maken:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4341,11 +4374,11 @@ naar de prullenbak verplaatsen?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-244"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2305"/>
+        <location line="+1805"/>
+        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Device Type</source>
         <translation>Apparaattype</translation>
     </message>
@@ -4407,7 +4440,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Datum selecteren</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1083"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
         <location line="+587"/>
         <location line="+14"/>
@@ -4420,12 +4453,12 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Metadata opnemen</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+382"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
         <source>Local disk</source>
         <translation>Lokale schijf</translation>
     </message>
     <message>
-        <location line="-630"/>
+        <location line="-631"/>
         <source>The directory does not exist. Create it?</source>
         <translation>De map bestaat niet. Aanmaken?</translation>
     </message>
@@ -4483,12 +4516,12 @@ naar de prullenbak verplaatsen?</translation>
         <translation type="vanished">Applicatie afsluiten</translation>
     </message>
     <message>
-        <location line="+329"/>
+        <location line="+330"/>
         <source>Select the database to open:</source>
         <translation>Selecteer de database om te openen:</translation>
     </message>
     <message>
-        <location line="-228"/>
+        <location line="-229"/>
         <source>Select the database to create and open:</source>
         <translation>Selecteer de database om te maken en openen:</translation>
     </message>
@@ -4498,7 +4531,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Sommige wijzigingen in de lijst met opslagapparaten zijn niet opgeslagen.&lt;br/&gt;Opslaan en afsluiten, verwijderen en afsluiten, of afsluiten annuleren?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+260"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
         <source> Physical Group</source>
         <translation> Fysieke groep</translation>
     </message>
@@ -4530,11 +4563,11 @@ naar de prullenbak verplaatsen?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2305"/>
+        <location line="+1805"/>
+        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -4551,15 +4584,15 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2306"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2299"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Active</source>
         <translation>Actief</translation>
     </message>
@@ -4931,12 +4964,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-81"/>
         <source>Split catalog by sub-directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogus splitsen op submap</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split catalog by file type</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogus splitsen op bestandstype</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -5198,7 +5231,7 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+165"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+169"/>
         <location line="+0"/>
         <source>Strict</source>
         <translation>Strikt</translation>
@@ -5257,7 +5290,7 @@ naar de prullenbak verplaatsen?</translation>
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+180"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+187"/>
         <location line="+46"/>
         <source>All</source>
         <translation>Alle</translation>
@@ -5273,7 +5306,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-163"/>
+        <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5289,7 +5322,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+90"/>
         <source>Catalog definition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6375,12 +6408,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+326"/>
+        <location line="+333"/>
         <source>(none)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-318"/>
+        <location line="-325"/>
         <source>Edit</source>
         <translation type="unfinished">Bewerken</translation>
     </message>
@@ -6517,7 +6550,17 @@ Errors: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+5"/>
+        <source>File sorting is Case Sensitive</source>
+        <translation type="unfinished">Bestandssortering is hoofdlettergevoelig</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
+        <translation type="unfinished">Indien ingeschakeld, respecteert de sortering hoofdlettergevoelige sortering, om deze volgorde te hebben: AA, AB, AC, Aa, Ab, Ac</translation>
+    </message>
+    <message>
+        <location line="+71"/>
         <source>Settings file</source>
         <translation type="unfinished"></translation>
     </message>

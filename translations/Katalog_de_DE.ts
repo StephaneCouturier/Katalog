@@ -78,7 +78,7 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+484"/>
+        <location filename="../qt_quick/Main.qml" line="+561"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -100,7 +100,8 @@
         <translation type="unfinished">Abbrechen</translation>
     </message>
     <message>
-        <location line="-901"/>
+        <location line="-970"/>
+        <location line="+69"/>
         <location line="+158"/>
         <location line="+137"/>
         <location line="+33"/>
@@ -109,7 +110,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1021"/>
+        <location line="-1180"/>
+        <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
+        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Willkommen im Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies scheint der erste Lauf zu sein.&lt;br/&gt;&lt;br/&gt;Die folgenden Einstellungen wurden angewendet:&lt;br/&gt; - Sprache: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Diese können Sie im Reiter %3 ändern.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Open existing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Create new...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
+        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Bereit zum Erstellen eines Dateikatalogs:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
+        <translation type="unfinished">1- Wählen Sie ein ganzes Laufwerk oder Verzeichnis aus, &lt;br/&gt;2- wählen Sie Optionen aus und &lt;br/&gt;3- klicken Sie auf &quot;Erstellen&quot;.&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1113,7 +1149,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Möchten Sie dieses %1 Gerät &lt;span style=&apos;color: red&apos;;&gt;löschen&lt;/span&gt;?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+855"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
         <location line="+38"/>
         <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
@@ -1143,7 +1179,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3095"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -1189,11 +1225,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-392"/>
         <location line="+6893"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2560"/>
-        <location line="+2838"/>
+        <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2838"/>
-        <location line="+2838"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2831"/>
+        <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -1262,7 +1298,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+149"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+96"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+91"/>
         <location line="+0"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
@@ -1326,7 +1362,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+2300"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-8"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+297"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-533"/>
         <location line="+170"/>
@@ -1400,19 +1436,19 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-7305"/>
         <source>Clear the search text</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchtext löschen</translation>
     </message>
     <message>
         <location line="+341"/>
         <source>Regex</source>
-        <translation type="unfinished"></translation>
+        <translation>Regex</translation>
     </message>
     <message>
         <location line="+4071"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1920"/>
         <location line="+0"/>
         <source>Keep last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte 10 behalten</translation>
     </message>
     <message>
         <location line="+825"/>
@@ -1560,7 +1596,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+10"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2598"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
         <location line="+1771"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
@@ -1735,7 +1771,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+9808"/>
         <location line="+753"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+305"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+306"/>
         <location line="+0"/>
         <source>Memory</source>
         <translation>Speicher</translation>
@@ -2468,13 +2504,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1211"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-22"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Name</source>
@@ -2535,7 +2571,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+678"/>
         <location line="+1610"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1063"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1056"/>
         <location line="+0"/>
         <source>Source Path</source>
         <translation>Quellpfad</translation>
@@ -3240,32 +3276,45 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Laden Sie die Datei neu, in der die Tags gespeichert sind</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-429"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-465"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Willkommen im Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies scheint der erste Lauf zu sein.&lt;br/&gt;&lt;br/&gt;Die folgenden Einstellungen wurden angewendet:&lt;br/&gt; - Sprache: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Diese können Sie im Reiter %3 ändern.</translation>
     </message>
     <message>
-        <location line="-4"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;Wählen Sie auf dem nächsten Bildschirm einen vorhandenen Sammlungsordner aus oder erstellen Sie einen neuen.</translation>
+        <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Wählen Sie auf dem nächsten Bildschirm einen vorhandenen Sammlungsordner aus oder erstellen Sie einen neuen.</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing collection database file or create a new one.</source>
-        <translation type="unfinished"></translation>
+        <location line="+7"/>
+        <source>Open existing...</source>
+        <translation>Vorhandene öffnen...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create new...</source>
+        <translation>Neue erstellen...</translation>
     </message>
     <message>
         <location line="+85"/>
+        <location line="+6"/>
+        <location line="+0"/>
         <source>Select or create a database file for this collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Datenbankdatei für diese Sammlung auswählen oder erstellen</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-4"/>
+        <location line="+6"/>
+        <location line="+0"/>
         <source>Database files (*.db)</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbankdateien (*.db)</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+29"/>
+        <source>Failed to open the database file: %1</source>
+        <translation>Fehler beim Öffnen der Datenbankdatei: %1</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Bereit zum Erstellen eines Dateikatalogs:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -3275,7 +3324,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>1- Wählen Sie ein ganzes Laufwerk oder Verzeichnis aus, &lt;br/&gt;2- wählen Sie Optionen aus und &lt;br/&gt;3- klicken Sie auf &quot;Erstellen&quot;.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+245"/>
+        <location line="+249"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dies ist Version: v%1 &lt;br/&gt;&lt;br/&gt;Eine neue Version ist verfügbar: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Die Liste der neuen Funktionen finden Sie im &lt;a href=&apos;%3 &apos;&gt;Versionshinweise&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Möchten Sie es herunterladen?</translation>
     </message>
@@ -4064,35 +4113,15 @@ in den Papierkorb?</translation>
     <message>
         <location line="+483"/>
         <source>The catalog source path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Quellpfad des Katalogs hat sich geändert.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Full re-index</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständige Neuindizierung</translation>
     </message>
     <message>
-        <location line="+638"/>
-        <source>Storage path updated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>catalog(s),</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>file(s),</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>folder(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+648"/>
         <source>Catalog updated: </source>
         <translation>Catalogue mis à jour&#xa0;: </translation>
     </message>
@@ -4231,7 +4260,7 @@ in den Papierkorb?</translation>
         <translation type="vanished">Das ausgewählte Gerät muss ein Katalog sein. Versuchen Sie es mit einer anderen Geräte-ID</translation>
     </message>
     <message>
-        <location line="-1537"/>
+        <location line="-1530"/>
         <source>File Path</source>
         <translation>Dateipfad</translation>
     </message>
@@ -4243,7 +4272,7 @@ in den Papierkorb?</translation>
     <message>
         <location line="+23"/>
         <source>This catalog has no immediate sub-directories to split by.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Katalog hat keine direkten Unterverzeichnisse zum Aufteilen.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -4251,83 +4280,87 @@ in den Papierkorb?</translation>
 
 This will create %2 new catalogs (one per sub-directory plus one for root files) and remove the original.
 This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog &quot;%1&quot; aufteilen?
+
+Dies erstellt %2 neue Kataloge (einen pro Unterverzeichnis und einen für Dateien im Stammverzeichnis) und entfernt das Original.
+Diese Aktion kann nicht rückgängig gemacht werden.</translation>
     </message>
     <message>
         <location line="+12"/>
         <location line="+41"/>
         <location line="+0"/>
         <source>Split failed: no catalogs were created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufteilung fehlgeschlagen: Es wurden keine Kataloge erstellt.</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>Verify file types before splitting?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateitypen vor dem Aufteilen überprüfen?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File types in the catalog may be based on file extensions only. Running a verification reads each file from disk and ensures the split uses accurate types. The device must be connected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateitypen im Katalog basieren möglicherweise nur auf Dateiendungen. Eine Überprüfung liest jede Datei von der Festplatte und stellt sicher, dass die Aufteilung genaue Typen verwendet. Das Gerät muss verbunden sein.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Verify then Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfen und aufteilen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Split without verifying</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohne Überprüfung aufteilen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>The device must be connected to verify file types.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Gerät muss verbunden sein, um Dateitypen zu überprüfen.</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>MIME verification failed: %1
 Split was not performed.</source>
-        <translation type="unfinished"></translation>
+        <translation>MIME-Überprüfung fehlgeschlagen: %1
+Aufteilung wurde nicht durchgeführt.</translation>
     </message>
     <message>
         <location line="+485"/>
         <source>The storage path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Speicherpfad hat sich geändert.</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>Old path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alter Pfad:</translation>
     </message>
     <message>
         <location line="-1770"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>New path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Pfad:</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>How should the catalog indexes be updated?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie sollen die Katalogindizes aktualisiert werden?</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>Replace path root</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfadwurzel ersetzen</translation>
     </message>
     <message>
         <location line="-1770"/>
         <source>Full re-scan</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständige Neuprüfung</translation>
     </message>
     <message>
         <location line="+485"/>
@@ -4397,12 +4430,12 @@ Split was not performed.</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-498"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Active</source>
         <translation>Aktiv</translation>
     </message>
@@ -4769,7 +4802,7 @@ Split was not performed.</source>
         <translation>Möchten Sie eine Zusammenfassung der Aktualisierungen für jeden Katalog?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-907"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-900"/>
         <source>Select the csv file to be imported</source>
         <translation>Wählen Sie die zu importierende CSV-Datei aus</translation>
     </message>
@@ -4819,17 +4852,17 @@ Split was not performed.</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1311"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2305"/>
+        <location line="+1805"/>
+        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-3065"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2053"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2046"/>
         <location line="+0"/>
         <source>Label</source>
         <translation>Etikett</translation>
@@ -4871,7 +4904,7 @@ Split was not performed.</source>
         <translation>Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-337"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-366"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-84"/>
         <location line="+0"/>
         <source>Select the directory for this collection</source>
@@ -4885,12 +4918,12 @@ Split was not performed.</source>
     <message>
         <location line="+280"/>
         <source>Split catalog by sub-directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog nach Unterverzeichnis aufteilen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split catalog by file type</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog nach Dateityp aufteilen</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -5029,32 +5062,32 @@ Split was not performed.</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-500"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2305"/>
+        <location line="+1805"/>
+        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Device Type</source>
         <translation>Gerätetyp</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2302"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2295"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2065"/>
+        <location line="+1805"/>
+        <location line="-2058"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Parent ID</source>
         <translation>Eltern ID</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+468"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+469"/>
         <source>Local disk</source>
         <translation>Lokale Festplatte</translation>
     </message>
     <message>
-        <location line="-630"/>
+        <location line="-631"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Das Verzeichnis existiert nicht. Soll es erstellt werden?</translation>
     </message>
@@ -5140,12 +5173,12 @@ Split was not performed.</source>
         <translation type="vanished">Anwendung verlassen</translation>
     </message>
     <message>
-        <location line="+329"/>
+        <location line="+330"/>
         <source>Select the database to open:</source>
         <translation>Wählen Sie die zu öffnende Datenbank aus:</translation>
     </message>
     <message>
-        <location line="-228"/>
+        <location line="-229"/>
         <source>Select the database to create and open:</source>
         <translation>Wählen Sie die zu erstellende und zu öffnende Datenbank aus:</translation>
     </message>
@@ -5160,7 +5193,7 @@ Split was not performed.</source>
         <translation>Heben Sie die Zuweisung dieses Katalogs auf</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+260"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
         <source> Physical Group</source>
         <translation> Physische Gruppe</translation>
     </message>
@@ -5199,7 +5232,7 @@ Split was not performed.</source>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-10"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+257"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+286"/>
         <location line="+0"/>
         <source>Strict</source>
         <translation>Streng</translation>
@@ -5258,7 +5291,7 @@ Split was not performed.</source>
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+180"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+187"/>
         <location line="+46"/>
         <source>All</source>
         <translation>Alle</translation>
@@ -5274,7 +5307,7 @@ Split was not performed.</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-163"/>
+        <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5290,7 +5323,7 @@ Split was not performed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+90"/>
         <source>Catalog definition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6376,12 +6409,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+326"/>
+        <location line="+333"/>
         <source>(none)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-318"/>
+        <location line="-325"/>
         <source>Edit</source>
         <translation type="unfinished">Bearbeiten</translation>
     </message>
@@ -6518,7 +6551,17 @@ Errors: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+5"/>
+        <source>File sorting is Case Sensitive</source>
+        <translation type="unfinished">Bei der Dateisortierung wird zwischen Groß- und Kleinschreibung unterschieden</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
+        <translation type="unfinished">Wenn aktiviert, wird bei der Sortierung die Groß- und Kleinschreibung beachtet, so dass die Reihenfolge AA, AB, AC, Aa, Ab, Ac lautet</translation>
+    </message>
+    <message>
+        <location line="+71"/>
         <source>Settings file</source>
         <translation type="unfinished"></translation>
     </message>

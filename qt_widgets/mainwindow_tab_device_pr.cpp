@@ -3154,13 +3154,6 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
 
     //Storage root path replace
     if (updateType == "replaceRoot") {
-        if (list.size() >= 4 && list[0] == 1) {
-            statusBarLabel->setText(
-                tr("Storage path updated:")
-                + " " + QString::number(list[1]) + " " + tr("catalog(s),")
-                + " " + QString::number(list[2]) + " " + tr("file(s),")
-                + " " + QString::number(list[3]) + " " + tr("folder(s)"));
-        }
         return true;
     }
 

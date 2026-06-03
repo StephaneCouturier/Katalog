@@ -78,7 +78,7 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+484"/>
+        <location filename="../qt_quick/Main.qml" line="+561"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -100,7 +100,8 @@
         <translation type="unfinished">रद्द करें</translation>
     </message>
     <message>
-        <location line="-901"/>
+        <location line="-970"/>
+        <location line="+69"/>
         <location line="+158"/>
         <location line="+137"/>
         <location line="+33"/>
@@ -109,7 +110,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1021"/>
+        <location line="-1180"/>
+        <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
+        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;कैटलॉग में आपका स्वागत है!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;यह पहली बार चलाया जा रहा है।&lt;br/&gt;&lt;br/&gt;निम्नलिखित सेटिंग्स लागू की गई हैं:&lt;br/&gt; - भाषा: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - थीम: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;आप इन्हें टैब %3 में बदल सकते हैं।</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Settings</source>
+        <translation type="unfinished">सेटिंग्स</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Open existing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Create new...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
+        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;फ़ाइल कैटलॉग बनाने के लिए तैयार:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
+        <translation type="unfinished">1- एक पूरी ड्राइव या डायरेक्टरी चुनें, &lt;br/&gt;2- विकल्प चुनें, और &lt;br/&gt;3- &apos;बनाएं&apos; पर क्लिक करें&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -733,7 +769,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-867"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+97"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+358"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+721"/>
         <location line="+19"/>
@@ -1139,7 +1175,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">क्या आप इस %1 डिवाइस को &lt;span style=&apos;color: red&apos;;&gt;डिलीट&lt;/span&gt; करना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+855"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
         <location line="+38"/>
         <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
@@ -1169,7 +1205,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3095"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -1362,7 +1398,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-735"/>
         <location line="+743"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+306"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -1783,7 +1819,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-3672"/>
         <source>Clear the search text</source>
-        <translation type="unfinished"></translation>
+        <translation>खोज पाठ साफ़ करें</translation>
     </message>
     <message>
         <location line="+141"/>
@@ -1795,7 +1831,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-6706"/>
         <source>Regex</source>
-        <translation type="unfinished"></translation>
+        <translation>Regex</translation>
     </message>
     <message>
         <location line="+3799"/>
@@ -1830,7 +1866,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1327"/>
         <location line="+0"/>
         <source>Keep last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>अंतिम 10 रखें</translation>
     </message>
     <message>
         <location line="+146"/>
@@ -2199,11 +2235,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-11461"/>
         <location line="+6893"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
-        <location line="+2838"/>
+        <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2838"/>
-        <location line="+2838"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2831"/>
+        <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -2482,7 +2518,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2598"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
         <location line="+1771"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
@@ -2503,7 +2539,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-274"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
         <location line="+0"/>
         <source>Settings</source>
         <translation>सेटिंग्स</translation>
@@ -2598,7 +2634,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+778"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-14"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+297"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-919"/>
         <location line="+170"/>
@@ -2833,13 +2869,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Name</source>
@@ -2872,7 +2908,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>इस नए कैटलॉग में कैटलॉग की जाने वाली डायरेक्टरी चुनें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-252"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-281"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-19"/>
         <location line="+0"/>
         <source>Select the directory for this collection</source>
@@ -2881,7 +2917,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-6257"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
         <location line="+240"/>
         <location line="+253"/>
         <location line="-493"/>
@@ -2978,7 +3014,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+23"/>
         <source>This catalog has no immediate sub-directories to split by.</source>
-        <translation type="unfinished"></translation>
+        <translation>इस कैटलॉग में विभाजन के लिए कोई तत्काल उप-निर्देशिकाएँ नहीं हैं।</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2986,45 +3022,49 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 
 This will create %2 new catalogs (one per sub-directory plus one for root files) and remove the original.
 This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग &quot;%1&quot; विभाजित करें?
+
+इससे %2 नए कैटलॉग बनेंगे (प्रत्येक उप-निर्देशिका के लिए एक और मूल फ़ाइलों के लिए एक) और मूल हटा दिया जाएगा।
+इस ऑपरेशन को पूर्ववत नहीं किया जा सकता।</translation>
     </message>
     <message>
         <location line="+12"/>
         <location line="+41"/>
         <location line="+0"/>
         <source>Split failed: no catalogs were created.</source>
-        <translation type="unfinished"></translation>
+        <translation>विभाजन विफल: कोई कैटलॉग नहीं बनाया गया।</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>Verify file types before splitting?</source>
-        <translation type="unfinished"></translation>
+        <translation>विभाजन से पहले फ़ाइल प्रकार सत्यापित करें?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File types in the catalog may be based on file extensions only. Running a verification reads each file from disk and ensures the split uses accurate types. The device must be connected.</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग में फ़ाइल प्रकार केवल फ़ाइल एक्सटेंशन पर आधारित हो सकते हैं। सत्यापन चलाने से प्रत्येक फ़ाइल डिस्क से पढ़ी जाती है और यह सुनिश्चित होता है कि विभाजन सटीक प्रकारों का उपयोग करता है। डिवाइस कनेक्टेड होना चाहिए।</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Verify then Split</source>
-        <translation type="unfinished"></translation>
+        <translation>सत्यापित करें और विभाजित करें</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Split without verifying</source>
-        <translation type="unfinished"></translation>
+        <translation>सत्यापन के बिना विभाजित करें</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>The device must be connected to verify file types.</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल प्रकार सत्यापित करने के लिए डिवाइस कनेक्टेड होना चाहिए।</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>MIME verification failed: %1
 Split was not performed.</source>
-        <translation type="unfinished"></translation>
+        <translation>MIME सत्यापन विफल: %1
+विभाजन नहीं किया गया।</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -3054,54 +3094,54 @@ Split was not performed.</source>
     <message>
         <location line="+35"/>
         <source>The storage path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>संग्रहण पथ बदल गया है।</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>Old path:</source>
-        <translation type="unfinished"></translation>
+        <translation>पुराना पथ:</translation>
     </message>
     <message>
         <location line="-1770"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>New path:</source>
-        <translation type="unfinished"></translation>
+        <translation>नया पथ:</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>How should the catalog indexes be updated?</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग अनुक्रमणिका को कैसे अपडेट किया जाना चाहिए?</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
         <location line="+0"/>
         <source>Replace path root</source>
-        <translation type="unfinished"></translation>
+        <translation>पथ मूल बदलें</translation>
     </message>
     <message>
         <location line="-1770"/>
         <source>Full re-scan</source>
-        <translation type="unfinished"></translation>
+        <translation>पूर्ण पुनः स्कैन</translation>
     </message>
     <message>
         <location line="+484"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2065"/>
+        <location line="+1805"/>
+        <location line="-2058"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Parent ID</source>
         <translation>पैरेंट ID</translation>
     </message>
     <message>
-        <location line="-2304"/>
+        <location line="-2297"/>
         <source>External ID</source>
         <translation>बाहरी ID</translation>
     </message>
@@ -3225,12 +3265,12 @@ Split was not performed.</source>
     <message>
         <location line="+34"/>
         <source>The catalog source path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग स्रोत पथ बदल गया है।</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Full re-index</source>
-        <translation type="unfinished"></translation>
+        <translation>पूर्ण पुनः अनुक्रमण</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -3257,27 +3297,7 @@ Split was not performed.</source>
         <translation>एक फ़ाइल मिली, लेकिन लोड नहीं हो सकी</translation>
     </message>
     <message>
-        <location line="+498"/>
-        <source>Storage path updated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>catalog(s),</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>file(s),</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>folder(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+508"/>
         <source>Catalog updated: </source>
         <translation>कैटलॉग अपडेट किया गया: </translation>
     </message>
@@ -3421,7 +3441,7 @@ Split was not performed.</source>
         <translation type="vanished">चयनित डिवाइस एक कैटलॉग होना चाहिए। एक अलग डिवाइस ID के साथ कोशिश करें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2054"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
         <location line="+240"/>
         <location line="+253"/>
         <location line="-253"/>
@@ -3903,7 +3923,7 @@ Split was not performed.</source>
         <translation>सेव करें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-16"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-23"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;कैटलॉग में आपका स्वागत है!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;यह पहली बार चलाया जा रहा है।&lt;br/&gt;&lt;br/&gt;निम्नलिखित सेटिंग्स लागू की गई हैं:&lt;br/&gt; - भाषा: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - थीम: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;आप इन्हें टैब %3 में बदल सकते हैं।</translation>
     </message>
@@ -3960,7 +3980,7 @@ Split was not performed.</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+353"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>यह संस्करण है: v%1 &lt;br/&gt;&lt;br/&gt;एक नया संस्करण उपलब्ध है: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; नई सुविधाओं की सूची &lt;a href=&apos;%3&apos;&gt;रिलीज़ नोट्स&lt;/a&gt; में देखें&lt;br/&gt;&lt;br/&gt;क्या आप इसे डाउनलोड करना चाहते हैं?</translation>
     </message>
@@ -4038,27 +4058,40 @@ Split was not performed.</source>
         <translation>खोज इतिहास</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-357"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;अगली स्क्रीन पर, एक मौजूदा संग्रह फ़ोल्डर चुनें या नया बनाएं।</translation>
+        <translation type="vanished">&lt;br/&gt;&lt;br/&gt;अगली स्क्रीन पर, एक मौजूदा संग्रह फ़ोल्डर चुनें या नया बनाएं।</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing collection database file or create a new one.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <source>Open existing...</source>
+        <translation>मौजूदा खोलें...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create new...</source>
+        <translation>नया बनाएं...</translation>
     </message>
     <message>
         <location line="+85"/>
+        <location line="+6"/>
+        <location line="+0"/>
         <source>Select or create a database file for this collection</source>
-        <translation type="unfinished"></translation>
+        <translation>इस संग्रह के लिए डेटाबेस फ़ाइल चुनें या बनाएं</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-4"/>
+        <location line="+6"/>
+        <location line="+0"/>
         <source>Database files (*.db)</source>
-        <translation type="unfinished"></translation>
+        <translation>डेटाबेस फ़ाइलें (*.db)</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+29"/>
+        <source>Failed to open the database file: %1</source>
+        <translation>डेटाबेस फ़ाइल खोलने में विफल: %1</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;फ़ाइल कैटलॉग बनाने के लिए तैयार:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4341,11 +4374,11 @@ to the trash?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-244"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2305"/>
+        <location line="+1805"/>
+        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Device Type</source>
         <translation>डिवाइस प्रकार</translation>
     </message>
@@ -4407,7 +4440,7 @@ to the trash?</source>
         <translation>दिनांक चुनें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1083"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
         <location line="+587"/>
         <location line="+14"/>
@@ -4420,12 +4453,12 @@ to the trash?</source>
         <translation>मेटाडेटा शामिल करें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+382"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
         <source>Local disk</source>
         <translation>स्थानीय डिस्क</translation>
     </message>
     <message>
-        <location line="-630"/>
+        <location line="-631"/>
         <source>The directory does not exist. Create it?</source>
         <translation>डायरेक्टरी मौजूद नहीं है। इसे बनाएं?</translation>
     </message>
@@ -4483,12 +4516,12 @@ to the trash?</source>
         <translation type="vanished">एप्लिकेशन बंद करें</translation>
     </message>
     <message>
-        <location line="+329"/>
+        <location line="+330"/>
         <source>Select the database to open:</source>
         <translation>खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
-        <location line="-228"/>
+        <location line="-229"/>
         <source>Select the database to create and open:</source>
         <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
@@ -4498,7 +4531,7 @@ to the trash?</source>
         <translation>स्टोरेज डिवाइस सूची में कुछ परिवर्तन सेव नहीं किए गए हैं।&lt;br/&gt;सेव करके बाहर निकलें, छोड़कर बाहर निकलें, या बाहर निकलना रद्द करें?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+260"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
         <source> Physical Group</source>
         <translation> फिजिकल ग्रुप</translation>
     </message>
@@ -4530,11 +4563,11 @@ to the trash?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
-        <location line="-2305"/>
+        <location line="+1805"/>
+        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -4551,15 +4584,15 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2306"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2299"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1812"/>
+        <location line="+1805"/>
         <source>Active</source>
         <translation>सक्रिय</translation>
     </message>
@@ -4931,12 +4964,12 @@ to the trash?</source>
     <message>
         <location line="-81"/>
         <source>Split catalog by sub-directory</source>
-        <translation type="unfinished"></translation>
+        <translation>उप-निर्देशिका द्वारा कैटलॉग विभाजित करें</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split catalog by file type</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल प्रकार द्वारा कैटलॉग विभाजित करें</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -5198,7 +5231,7 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+165"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+169"/>
         <location line="+0"/>
         <source>Strict</source>
         <translation>सख्त</translation>
@@ -5257,7 +5290,7 @@ to the trash?</source>
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+180"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+187"/>
         <location line="+46"/>
         <source>All</source>
         <translation>सभी</translation>
@@ -5273,7 +5306,7 @@ to the trash?</source>
         <translation>ऑडियो</translation>
     </message>
     <message>
-        <location line="-163"/>
+        <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5289,7 +5322,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+90"/>
         <source>Catalog definition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6375,12 +6408,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+326"/>
+        <location line="+333"/>
         <source>(none)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-318"/>
+        <location line="-325"/>
         <source>Edit</source>
         <translation type="unfinished">संपादन</translation>
     </message>
@@ -6517,7 +6550,17 @@ Errors: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+5"/>
+        <source>File sorting is Case Sensitive</source>
+        <translation type="unfinished">फ़ाइल सॉर्टिंग केस सेंसिटिव है</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
+        <translation type="unfinished">यदि सक्षम है, तो सॉर्टिंग केस सेंसिटिव सॉर्टिंग का सम्मान करेगी, जैसे AA, AB, AC, Aa, Ab, Ac क्रम में</translation>
+    </message>
+    <message>
+        <location line="+71"/>
         <source>Settings file</source>
         <translation type="unfinished"></translation>
     </message>
