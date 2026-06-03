@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Search
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Summary
 This page describes all the features of the **Search** screen and how to use them.
@@ -49,6 +49,13 @@ Type the text to search for in file names and/or folder paths.
 
 A "word" is a group of characters separated from another group by a space. This can be used to find folders, files, or files in certain folders.
 
+The text field accepts multiple lines. Each line is treated as an independent search term and results matching **any** line are returned (OR logic). This works with all *With* modes.
+
+- Press **Enter** to trigger the search.
+- Press **Shift+Enter** to insert a new line.
+
+![Search text field showing multiple lines used as independent OR search terms](/img/screen_search_05_list_for_file_name.png)
+
 Buttons next to the text field:
 - *Paste from Clipboard* — pastes clipboard content into the search field.
 - *Clean Search Text* — removes special characters (`.  ,  _  -  (  )  [  ]  {  }  /  \  '  "`).
@@ -64,6 +71,11 @@ Specifies how the words in the *Text* field should be matched:
 | *Exact Phrase* | Returns results where the exact phrase (including word order and spaces) is found |
 | *Begins With* | File name must start with the text — only available with *File names only* |
 | *Any Word* | Returns results if at least one of the words is found |
+| *Regex* | The search text is used as a regular expression pattern (PCRE2 syntax) |
+
+:::note
+When using *Regex*, entering an invalid pattern returns no results. The *Case sensitive* option still applies.
+:::
 
 #### In
 Specifies which part of the file path to search:
@@ -276,7 +288,11 @@ The *Process Results* button opens a menu of batch operations applied to all fil
 ## Search History
 Every time a search is run, the criteria and device selection are saved to a history file in the Collection folder.
 
-This history is displayed in a table at the bottom of the screen. Clicking on a row restores all criteria and immediately re-runs that search.
+This history is displayed in a table at the bottom of the screen. Clicking on a row restores all criteria — the search must then be triggered manually.
+
+Two buttons let you manage the history list:
+- *Keep last 10* — removes all but the 10 most recent entries (with confirmation).
+- *Reset* — deletes all history entries (with confirmation).
 
 This panel can be hidden to save space.
 

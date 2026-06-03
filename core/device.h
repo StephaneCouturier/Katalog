@@ -157,6 +157,32 @@ public:
         static bool unassignFromDevice(int deviceID, int deviceParentID, const QString &connectionName);
         static int     getMaxHierarchyDepth(const QString &connectionName);
         static QString getDevicePath(int deviceId, const QString &connectionName);
+        // Returns the ID of the first Storage-type descendant of a Virtual device
+        static int getFirstStorageDescendantId(int virtualDeviceId, const QString &connectionName);
+        // Returns heap-allocated active Catalog devices in scope (caller owns pointers).
+        // scopeDeviceId == 0 → all catalogs; otherwise → catalog descendants of that device.
+        static QList<Device*> getActiveCatalogList(const QString &connectionName, int scopeDeviceId = 0);
+
+        // Flat DFS-ordered device tree — single canonical query used by all UI consumers.
+        // scopeDeviceId == 0 → full tree from root; otherwise → subtree rooted at that device.
+        struct DeviceTreeNode {
+            int     id             = 0;
+            int     parentId       = 0;
+            int     level          = 0;
+            int     groupId        = 0;
+            int     externalId     = 0;
+            QString name;
+            QString type;
+            QString path;
+            qint64  totalFileSize  = 0;
+            qint64  totalFileCount = 0;
+            qint64  totalSpace     = 0;
+            qint64  freeSpace      = 0;
+            bool    isActive       = false;
+            QString dateUpdated;
+        };
+        static QList<DeviceTreeNode> loadDeviceTree(const QString &connectionName,
+                                                    int scopeDeviceId = 0);
 
         /**
          * @brief Update storage information only (no catalog processing)
@@ -165,6 +191,21 @@ public:
          * @return QList<qint64> Results in same format as updateDevice for compatibility
          */
         QList<qint64> updateStorageOnly(const QString& statisticsRequestSource);
+
+        struct StorageRootReplaceResult {
+            int catalogsUpdated = 0;
+            int filesUpdated    = 0;
+            int foldersUpdated  = 0;
+        };
+
+        StorageRootReplaceResult replaceStorageRootInIndexes(
+            const QString& oldRoot,
+            const QString& newRoot,
+            const QString& connectionName,
+            const QString& databaseMode,
+            const QString& collectionFolder);
+
+        void setConnectionName(const QString &name) { m_connectionName = name; }
 
 private:
         QString m_connectionName = "defaultConnection";

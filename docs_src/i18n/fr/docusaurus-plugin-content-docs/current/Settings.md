@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Paramètres
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Paramètres** et comment les utiliser.
@@ -30,8 +30,8 @@ Remarque : changer de mode nécessite de cliquer sur *Appliquer et redémarrer*.
 
 | Mode | Type de base de données | Stockage de données | Fichiers | Vitesse de recherche | Vitesse de catalogage |
 | -------| -------------------|---|---|---|---|
-| **Mémoire** (par défaut) | mémoire informatique | dans les fichiers .csv séparés par des tabulations (pour les appareils, les statistiques, etc.) et dans les fichiers .idx (pour les listes de fichiers de catalogues) | Meilleur pour une synchronisation régulière des fichiers vers un cloud | Vitesse de recherche la plus rapide une fois les catalogues en mémoire (temps plus long lors de la première utilisation d'un catalogue) | Légèrement plus rapide |
-| **Fichier** | Fichier SQLite, faible utilisation de la mémoire | le tout dans le fichier SQLite | toutes les données regroupées dans un seul fichier pouvant atteindre plusieurs centaines de Mo | Plus rapide pour la première recherche, plus lente pour les recherches répétitives dans une grande collection | Légèrement plus lent |
+| **Mémoire** | mémoire informatique | dans les fichiers .csv séparés par des tabulations (pour les appareils, les statistiques, etc.) et dans les fichiers .idx (pour les listes de fichiers de catalogues) | Meilleur pour une synchronisation régulière des fichiers vers un cloud | Vitesse de recherche la plus rapide une fois les catalogues en mémoire (temps plus long lors de la première utilisation d'un catalogue) | Légèrement plus rapide |
+| **Fichier** (par défaut) | Fichier SQLite, faible utilisation de la mémoire | le tout dans le fichier SQLite | toutes les données regroupées dans un seul fichier pouvant atteindre plusieurs centaines de Mo | Plus rapide pour la première recherche, plus lente pour les recherches répétitives dans une grande collection | Légèrement plus lent |
 | **Hébergé** | Serveur MySQL/MariaDB | toutes les données stockées dans le serveur de base de données hébergé | Données centralisées sur un serveur, accessibles depuis plusieurs machines sur le réseau | Performances de requête côté serveur, adapté aux grandes collections | Légèrement plus lent (surcharge réseau) |
 
 ![Diagramme des modes de données](/img/settings_database-model.png)

@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Devices: Storage
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Summary
 This page describes all the features of the **Storage list** view of the [Devices](Devices) screen and how to use them.
@@ -57,6 +57,7 @@ The edit panel gives access to modify all storage device fields:
 | Field | Description |
 |-------|-------------|
 | *Device Name* | The display name of the storage device |
+| *Source Path* | The mount point or root path of the device (e.g. `/media/user/MyDisk` on Linux, `E:\` on Windows) |
 | *Type* | The type of device (e.g. internal drive, external drive, USB, NAS…) |
 | *Label* | The filesystem label of the drive |
 | *File System* | The filesystem type (e.g. ext4, NTFS, exFAT…) |
@@ -67,6 +68,18 @@ The edit panel gives access to modify all storage device fields:
 | *Comment 1 / 2 / 3* | Free-text fields for notes |
 | *Picture* | An image associated with this storage — see [Device picture](#device-picture) below |
 | *Parent device* | The virtual device or group this storage belongs to |
+
+### Source path change {#storage-path-change}
+
+When the *Source Path* is changed and saved, Katalog detects the change and offers three options for updating all associated catalog indexes:
+
+| Option | Description |
+|--------|-------------|
+| *Replace path root* | Instantly updates all indexed file and folder paths in every associated catalog by replacing the old path prefix with the new one — no rescan required, works without the device connected |
+| *Full re-scan* | Re-scans all catalogs under this storage device from the new path |
+| *Skip* | Saves the new path without modifying any catalog index |
+
+*Replace path root* is the fastest option when the device has not changed physically and only its mount point or drive letter has changed.
 
 ## Device picture
 

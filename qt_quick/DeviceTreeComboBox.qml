@@ -6,12 +6,22 @@ import org.kde.kirigami as Kirigami
 // A button + popup that shows the device tree with indentation.
 // Use selectedDeviceId (int) and selectedDeviceName (string) to read the selection.
 // Call resetSelection() to clear back to the current app-selected device.
+// Call selectById(id) to pre-select a specific device by ID.
+// Set storageOnly: true to restrict selection to Storage-type devices only
+// (ancestor groups are shown as non-selectable context, pre-selection uses getDefaultStorageId()).
+// Set catalogOnly: true to restrict selection to Catalog-type devices only
+// (Virtual ancestors shown as non-selectable context; Storage hidden; no auto-reset on selection change).
+// Set hideCatalogs: true to hide Catalog-type devices from the list entirely.
 Controls.Button {
     id: control
 
     property int    selectedDeviceId:   0
     property string selectedDeviceName: ""
     property string selectedDeviceType: ""
+    property bool   storageOnly:        false
+    property bool   catalogOnly:        false
+    property bool   hideCatalogs:       false
+    property bool   hideStorages:       false
 
     // Source model — defaults to the shared device list
     property var sourceModel: appManager1.deviceListModel
@@ -31,6 +41,18 @@ Controls.Button {
     function _applyDevice(id) {
         var dev = _findDevice(id)
         if (dev) {
+            if (storageOnly && dev.type !== "Storage") {
+                selectedDeviceId   = 0
+                selectedDeviceName = ""
+                selectedDeviceType = ""
+                return
+            }
+            if (catalogOnly && dev.type !== "Catalog") {
+                selectedDeviceId   = 0
+                selectedDeviceName = ""
+                selectedDeviceType = ""
+                return
+            }
             selectedDeviceId   = id
             selectedDeviceName = dev.name
             selectedDeviceType = dev.type
@@ -38,8 +60,14 @@ Controls.Button {
     }
 
     function resetSelection() {
-        _applyDevice(appManager1.selectedDeviceId)
+        if (catalogOnly) return   // catalogOnly pickers start empty; caller uses selectById()
+        if (storageOnly)
+            _applyDevice(appManager1.getDefaultStorageId())
+        else
+            _applyDevice(appManager1.selectedDeviceId)
     }
+
+    function selectById(id) { _applyDevice(id) }
 
     // Initialise from the currently selected device, and follow changes
     Component.onCompleted: resetSelection()
@@ -47,6 +75,7 @@ Controls.Button {
     Connections {
         target: appManager1
         function onSelectedDeviceChanged() { control.resetSelection() }
+        function onDeviceListRefreshed()   { control.resetSelection() }
     }
 
     // ── Button appearance ─────────────────────────────────────────────────
@@ -58,6 +87,9 @@ Controls.Button {
 
     // Left-aligned text with a drop-down arrow on the right
     contentItem: RowLayout {
+        // KDE desktop style's MobileCursor calls positionToRectangle on contentItem expecting a TextInput
+        function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+        property int selectionStart: 0
         spacing: Kirigami.Units.smallSpacing
 
         Kirigami.Icon {
@@ -73,7 +105,9 @@ Controls.Button {
         Controls.Label {
             text:               control.selectedDeviceName.length > 0
                                     ? control.selectedDeviceName
-                                    : qsTr("Select")
+                                    : control.storageOnly  ? qsTr("Select a Storage")
+                                    : control.catalogOnly  ? qsTr("Select a Catalog")
+                                    :                        qsTr("Select")
             elide:              Text.ElideRight
             horizontalAlignment: Text.AlignLeft
             verticalAlignment:   Text.AlignVCenter
@@ -102,7 +136,7 @@ Controls.Button {
         closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
 
         background: Rectangle {
-            color:        Kirigami.Theme.backgroundColor
+            color:        popup.palette.base
             border.color: Kirigami.Theme.separatorColor ?? "transparent"
             border.width: 1
             radius:       4
@@ -122,9 +156,15 @@ Controls.Button {
                     required property int    level
                     required property string type
 
+                    visible:     !(control.hideCatalogs && type === "Catalog")
+                                 && !(control.hideStorages && type === "Storage")
+                                 && !(control.catalogOnly  && type === "Storage")
+                    height:      visible ? implicitHeight : 0
                     width:       ListView.view.width
                     leftPadding: Kirigami.Units.smallSpacing + level * Kirigami.Units.gridUnit
                     highlighted: control.selectedDeviceId === deviceId
+                    enabled:     (!control.storageOnly  || type === "Storage")
+                                 && (!control.catalogOnly || type === "Catalog")
 
                     background: Rectangle {
                         color: control.selectedDeviceId === deviceId

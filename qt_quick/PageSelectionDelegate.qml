@@ -37,9 +37,41 @@ Kirigami.AbstractCard {
         Controls.MenuSeparator {}
 
         Controls.MenuItem {
+            text:      qsTr("Update")
+            icon.name: "media-playlist-repeat"
+            visible:   model.type === "Catalog" && model.isActive
+            height:    visible ? implicitHeight : 0
+            enabled:   !appManager1.deviceUpdateIsRunning
+            onTriggered: appManager1.updateDevice(model.deviceId)
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Explore")
+            icon.name: "view-list-tree"
+            visible: model.type === "Catalog"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                appManager1.setLastPage("Explore")
+                exploreFolders.openByDeviceId(model.deviceId)
+                root.showPage(pageExplore)
+            }
+        }
+
+        Controls.MenuItem {
             text: qsTr("Open folder")
             icon.name: "document-open"
             onTriggered: appManager1.openDeviceFolder(model.deviceId)
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Edit")
+            icon.name: "document-edit"
+            onTriggered: {
+                pageDeviceEdit.fromDevicesPage = false
+                pageDeviceEdit_form.deviceId = model.deviceId
+                pageDeviceEdit_form.loadDevice()
+                root.showPage(pageDeviceEdit)
+            }
         }
     }
 

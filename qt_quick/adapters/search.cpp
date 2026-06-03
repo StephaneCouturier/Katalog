@@ -33,7 +33,6 @@
 
 SearchSync::SearchSync(QObject *parent) : SearchJobStoppable(parent)
 {
-    setDatabaseConnection(QSqlDatabase::defaultConnection);
 }
 
 //file list model
@@ -78,16 +77,17 @@ QHash<int, QByteArray> SearchSync::roleNames() const
 //----------------------------------------------------------------------
 void SearchSync::resetSearchResults()
 {
+    beginResetModel();
     clearResults();
+    endResetModel();
     emit propertiesChanged();
 }
 //----------------------------------------------------------------------
 void SearchSync::searchFiles(Device *selectedDevice)
 {
+    beginResetModel();
     SearchJobStoppable::searchFiles(selectedDevice);
-
-    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
+    endResetModel();
     emit propertiesChanged();
-    emit layoutChanged();
 }
 //----------------------------------------------------------------------

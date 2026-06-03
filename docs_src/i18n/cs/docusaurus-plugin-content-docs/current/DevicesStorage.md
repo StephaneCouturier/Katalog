@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Zařízení: Úložiště
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Souhrn
 Tato stránka popisuje všechny funkce zobrazení **Seznam úložiště** na obrazovce [Zařízení](Devices).
@@ -57,6 +57,7 @@ Panel úprav umožňuje změnit všechna pole úložného zařízení:
 | Pole | Popis |
 |------|-------|
 | *Název zařízení* | Zobrazovaný název úložného zařízení |
+| *Zdrojová cesta* | Přípojný bod nebo kořenová cesta zařízení (např. `/media/uzivatel/MujDisk` na Linuxu, `E:\` na Windows) |
 | *Typ* | Typ zařízení (např. interní disk, externí disk, USB, NAS…) |
 | *Štítek* | Popisek souborového systému disku |
 | *Systém souborů* | Typ souborového systému (např. ext4, NTFS, exFAT…) |
@@ -67,6 +68,18 @@ Panel úprav umožňuje změnit všechna pole úložného zařízení:
 | *Komentář 1 / 2 / 3* | Volná textová pole pro poznámky |
 | *Obrázek* | Obrázek přidružený k tomuto úložišti — viz [Obrázek zařízení](#device-picture) níže |
 | *Nadřazené zařízení* | Virtuální zařízení nebo skupina, do které toto úložiště patří |
+
+### Změna zdrojové cesty {#storage-path-change}
+
+Když je *Zdrojová cesta* změněna a uložena, Katalog detekuje změnu a nabídne tři možnosti pro aktualizaci všech přidružených indexů katalogů:
+
+| Možnost | Popis |
+|---------|-------|
+| *Nahradit kořen cesty* | Okamžitě aktualizuje všechny indexované cesty souborů a složek v každém přidruženém katalogu nahrazením starého prefixu novým — bez nutnosti opětovného skenování, funguje bez připojeného zařízení |
+| *Úplné přeskenování* | Znovu prohledá všechny katalogy pod tímto úložným zařízením z nové cesty |
+| *Přeskočit* | Uloží novou cestu bez změny jakéhokoli indexu katalogu |
+
+*Nahradit kořen cesty* je nejrychlejší možností, pokud se zařízení fyzicky nezměnilo a změnil se pouze jeho přípojný bod nebo písmeno jednotky.
 
 ## Obrázek zařízení {#device-picture}
 

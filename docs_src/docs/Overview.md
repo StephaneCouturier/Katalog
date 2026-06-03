@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Overview
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Files indexing & Storage devices manager
 Katalog is a powerful <b>file catalog manager</b> that helps you organize and find files.<br/>

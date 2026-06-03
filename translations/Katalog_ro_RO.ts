@@ -42,7 +42,17 @@
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+76"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+108"/>
+        <source>Select a Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Select a Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Select</source>
         <translation type="unfinished">Selectați</translation>
     </message>
@@ -68,24 +78,281 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+537"/>
+        <location filename="../qt_quick/Main.qml" line="+484"/>
+        <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+60"/>
+        <location line="+29"/>
+        <location line="+127"/>
+        <location line="+170"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-382"/>
+        <location line="+60"/>
+        <location line="+162"/>
+        <location line="+713"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Anulare</translation>
+    </message>
+    <message>
+        <location line="-901"/>
+        <location line="+158"/>
+        <location line="+137"/>
+        <location line="+33"/>
+        <location line="+740"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1021"/>
+        <source>Update the catalog content with the new criteria?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+128"/>
+        <location line="+169"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-271"/>
+        <source>The catalog source path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The storage path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>How should the catalog indexes be updated?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Replace path root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Full re-index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+4"/>
+        <source>Skip</source>
+        <translation type="unfinished">Omite</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>A snapshot of this collection was recorded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Catalogs</source>
+        <translation type="unfinished">Cataloage</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Number of files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location line="+1"/>
+        <location line="+2"/>
+        <location line="+1"/>
+        <source>added:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Total file size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+110"/>
+        <source>Storage</source>
+        <translation type="unfinished">Stocare</translation>
+    </message>
+    <message>
+        <location line="-109"/>
+        <source>Storage free space:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage total space:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Do you want a the summary of updates for each catalog?</source>
+        <translation type="unfinished">Doriți rezumatul actualizărilor pentru fiecare catalog?</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Catalog updated: </source>
+        <translation type="unfinished">Catalog actualizat: </translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+10"/>
+        <location line="+14"/>
+        <source>Path: </source>
+        <translation type="unfinished">Cale: </translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <location line="+36"/>
+        <location line="+21"/>
+        <source>Number of files: </source>
+        <translation type="unfinished">Numărul de fișiere: </translation>
+    </message>
+    <message>
+        <location line="-56"/>
+        <location line="+2"/>
+        <location line="+8"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+10"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+8"/>
+        <location line="+2"/>
+        <location line="+7"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+8"/>
+        <location line="+2"/>
+        <location line="+6"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <source>(added: </source>
+        <translation type="unfinished">(adăugat: </translation>
+    </message>
+    <message>
+        <location line="-68"/>
+        <location line="+36"/>
+        <location line="+21"/>
+        <source>Total file size: </source>
+        <translation type="unfinished">Dimensiunea totală a fișierului: </translation>
+    </message>
+    <message>
+        <location line="-52"/>
+        <location line="+14"/>
+        <source>Storage updated: </source>
+        <translation type="unfinished">Stocare actualizată: </translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+14"/>
+        <location line="+21"/>
+        <location line="+20"/>
+        <source>Used Space: </source>
+        <translation type="unfinished">Spațiul utilizat: </translation>
+    </message>
+    <message>
+        <location line="-53"/>
+        <location line="+14"/>
+        <location line="+21"/>
+        <location line="+20"/>
+        <source>Free Space: </source>
+        <translation type="unfinished">Spațiu liber: </translation>
+    </message>
+    <message>
+        <location line="-53"/>
+        <location line="+14"/>
+        <location line="+21"/>
+        <location line="+20"/>
+        <source>Total Space: </source>
+        <translation type="unfinished">Spațiul total: </translation>
+    </message>
+    <message>
+        <location line="-35"/>
+        <source>Virtual device updated: </source>
+        <translation type="unfinished">Dispozitiv virtual actualizat: </translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+21"/>
+        <source>Catalogs updated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-21"/>
+        <location line="+21"/>
+        <source>skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source>Selected active catalogs are updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+72"/>
+        <source>The source folder does not contain any file.
+This could mean that the source is empty or the device is not mounted to this folder.
+Do you want to save it anyway (the catalog would be empty)?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+103"/>
+        <location line="+3"/>
         <source>Search</source>
         <translation>Căutare</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+33"/>
+        <source>Resume</source>
+        <translation type="unfinished">Reluare</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Pause</source>
+        <translation type="unfinished">Pauză</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+125"/>
+        <location line="+189"/>
+        <source>Stop</source>
+        <translation type="unfinished">Stop</translation>
+    </message>
+    <message>
+        <location line="-307"/>
         <source>Reset</source>
         <translation>Resetare</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+32"/>
+        <location line="+7"/>
+        <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+53"/>
+        <location line="+110"/>
+        <location line="+51"/>
+        <location line="+85"/>
+        <location line="+118"/>
+        <location line="+18"/>
+        <location line="+35"/>
         <source>Close</source>
         <translation>Închide</translation>
     </message>
     <message>
-        <location line="-9"/>
+        <location line="-426"/>
         <source>Duplicates (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,19 +366,114 @@
         <source>Results</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+50"/>
+        <source>All active</source>
+        <translation type="unfinished">Toate active</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Snapshot</source>
+        <translation type="unfinished">Instantaneu</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Insert Virtual Group</source>
+        <translation type="unfinished">Inserați grup virtual</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Add Storage</source>
+        <translation type="unfinished">Adăugați stocare</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Import</source>
+        <translation type="unfinished">Importă</translation>
+    </message>
+    <message>
+        <location line="+116"/>
+        <source>Catalog created successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Catalog creation failed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Create</source>
+        <translation type="unfinished">Creează</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Edit Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Save changes to the catalog definition?
+
+%1
+
+(The catalog must be updated to reflect these changes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Save</source>
+        <translation type="unfinished">Salvați</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delete</source>
+        <translation type="unfinished">Șterge</translation>
+    </message>
+    <message>
+        <location line="+75"/>
+        <source>BackUp</source>
+        <translation type="unfinished">Copie de rezervă</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Add</source>
+        <translation type="unfinished">Adaugă</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Generate LuckyBackup profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <source>Select the database to create and open:</source>
+        <translation type="unfinished">Selectați baza de date de creat și deschis:</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Import from VVV</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2252"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
         <source>Include Checksum</source>
         <translation>Includeți suma de control</translation>
     </message>
     <message>
-        <location line="+551"/>
+        <location line="+584"/>
         <location line="+46"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+360"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1078"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1121"/>
+        <location line="+541"/>
+        <location line="+15"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-578"/>
         <location line="+541"/>
         <location line="+15"/>
         <location line="+22"/>
@@ -121,6 +483,8 @@
     <message>
         <location line="-45"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+76"/>
+        <location line="+7"/>
+        <location line="-7"/>
         <location line="+7"/>
         <source>Loading</source>
         <translation>Se încarcă</translation>
@@ -148,6 +512,7 @@
     <message>
         <location line="+27"/>
         <location line="+5"/>
+        <location line="+0"/>
         <source>Verified:</source>
         <translation>Verificat:</translation>
     </message>
@@ -177,37 +542,43 @@
         <translation>Fișiere lipsă:</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+9797"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+8123"/>
         <source>Include File Type</source>
         <translation>Includeți tipul de fișier</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-856"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-861"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy Checksum</source>
         <translation>Copiați suma de control</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-8"/>
+        <location line="+0"/>
         <source>Calculate Checksum</source>
         <translation>Calculați suma de control</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+13"/>
+        <location line="+0"/>
         <source>Verify Checksum</source>
         <translation>Verificați suma de control</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1427"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
         <source>Verifying checksum...</source>
         <translation>Se verifică suma de control...</translation>
     </message>
     <message>
         <location line="+43"/>
         <location line="+58"/>
+        <location line="+68"/>
+        <location line="-68"/>
         <location line="+68"/>
         <source>Checksum saved to database.</source>
         <translation>Suma de control salvată în baza de date.</translation>
@@ -220,6 +591,7 @@
     <message>
         <location line="+5"/>
         <location line="+122"/>
+        <location line="+0"/>
         <source>Copy to Clipboard</source>
         <translation>Copiați în clipboard</translation>
     </message>
@@ -288,12 +660,14 @@
         <translation>Datele dumneavoastră vor fi trimise către această bază de date de rețea.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Continue?</source>
         <translation>Continuați?</translation>
     </message>
     <message>
-        <location line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Această colecție a fost creată cu Katalog versiunea %1, care nu mai este acceptată.&lt;br/&gt;&lt;br/&gt;Pentru a o converti, deschideți-o mai întâi cu Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Selectați un alt folder de colecție.</translation>
     </message>
@@ -306,9 +680,10 @@
         <translation type="vanished">Sume de control calculate</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6504"/>
-        <location line="+926"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1295"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
+        <location line="+737"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
+        <location line="+0"/>
         <source>Checksum</source>
         <translation>Sumă de control</translation>
     </message>
@@ -317,50 +692,57 @@
         <translation type="vanished">Data sumei de control</translation>
     </message>
     <message>
-        <location line="-768"/>
+        <location line="-614"/>
         <source>Within selected device</source>
         <translation>În cadrul dispozitivului selectat</translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+89"/>
         <source>Compare two devices</source>
         <translation>Compară două dispozitive</translation>
     </message>
     <message>
-        <location line="+212"/>
-        <location line="+661"/>
+        <location line="+170"/>
+        <location line="+521"/>
         <source>compared to</source>
         <translation>comparativ cu</translation>
     </message>
     <message>
-        <location line="-264"/>
+        <location line="-208"/>
         <source>and</source>
         <translation>și</translation>
     </message>
     <message>
-        <location line="+3332"/>
-        <location line="+2375"/>
+        <location line="+2778"/>
+        <location line="+2135"/>
         <source>Include files checksum</source>
         <translation>Includeți suma de control a fișierelor</translation>
     </message>
     <message>
-        <location line="-258"/>
+        <location line="-202"/>
         <source>Stop the cataloging (no data will be saved)</source>
         <translation>Opriți catalogarea (nu vor fi salvate date)</translation>
     </message>
     <message>
-        <location line="+1621"/>
-        <location line="+949"/>
+        <location line="+1306"/>
+        <location line="+872"/>
         <source>Backup</source>
         <translation>Copie de rezervă</translation>
     </message>
     <message>
-        <location line="-944"/>
-        <location line="+949"/>
+        <location line="-867"/>
+        <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+97"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+319"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+358"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+721"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+68"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+68"/>
@@ -368,7 +750,7 @@
         <translation>Arhivă</translation>
     </message>
     <message>
-        <location line="-928"/>
+        <location line="-851"/>
         <source>Generate Profile</source>
         <translation>Generați profil</translation>
     </message>
@@ -384,6 +766,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+285"/>
         <location line="+29"/>
+        <location line="+0"/>
         <source>No backup links found.</source>
         <translation>Nu au fost găsite linkuri de backup.</translation>
     </message>
@@ -421,7 +804,16 @@
         <location line="+54"/>
         <location line="+25"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-742"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
+        <location line="+23"/>
+        <location line="+23"/>
+        <location line="+21"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-113"/>
+        <location line="+30"/>
+        <location line="+54"/>
+        <location line="+25"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
@@ -439,6 +831,15 @@
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-354"/>
+        <location line="+128"/>
+        <location line="+87"/>
+        <location line="+139"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
+        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
+        <location line="+36"/>
         <source>Completed</source>
         <translation>Finalizat</translation>
     </message>
@@ -451,21 +852,30 @@
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-335"/>
         <location line="+109"/>
         <location line="+87"/>
+        <location line="-87"/>
+        <location line="+87"/>
         <source>Cancelled</source>
         <translation>Anulat</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
+        <location line="+0"/>
         <source>Loaded</source>
         <translation>Încărcat</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+415"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+429"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-23"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-71"/>
         <location line="+54"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-89"/>
+        <location line="+15"/>
+        <location line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-54"/>
+        <location line="+54"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
         <source>In Progress</source>
@@ -474,11 +884,12 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
+        <location line="+0"/>
         <source>Stopped</source>
         <translation>Oprit</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+403"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+417"/>
         <source>MIME Verification Complete</source>
         <translation>Verificare MIME Completă</translation>
     </message>
@@ -488,7 +899,7 @@
         <translation>Deschide Raportul</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-417"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-431"/>
         <source>Hidden</source>
         <translation>Ascuns</translation>
     </message>
@@ -498,42 +909,45 @@
         <translation>Metadate</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6593"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5645"/>
         <source>File metadata</source>
         <translation>Metadate fișier</translation>
     </message>
     <message>
-        <location line="+356"/>
+        <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
+        <location line="+0"/>
         <source>Height</source>
         <translation>Înălțime</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
+        <location line="+0"/>
         <source>Width</source>
         <translation>Lățime</translation>
     </message>
     <message>
-        <location line="+286"/>
+        <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
+        <location line="+0"/>
         <source>Duration</source>
         <translation>Durată</translation>
     </message>
     <message>
-        <location line="+74"/>
-        <location line="+94"/>
+        <location line="+60"/>
+        <location line="+73"/>
         <source>HH:mm:ss</source>
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location line="+1817"/>
-        <location line="+2309"/>
+        <location line="+1592"/>
+        <location line="+2076"/>
         <source>Include files metadata</source>
         <translation>Include metadate fișiere</translation>
     </message>
     <message>
-        <location line="-1518"/>
+        <location line="-1301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detectează tipurile MIME reale și identifică neconcordanțele (proces lung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -545,6 +959,8 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+503"/>
         <location line="+19"/>
+        <location line="+11"/>
+        <location line="-11"/>
         <location line="+11"/>
         <source>Other</source>
         <translation>Altele</translation>
@@ -559,14 +975,25 @@
         <location line="+8"/>
         <location line="+15"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+642"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+697"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-104"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <location line="+12"/>
+        <location line="+34"/>
+        <location line="+8"/>
+        <location line="+15"/>
+        <location line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
         <location line="+1"/>
         <source>None</source>
         <translation>Niciunul</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-945"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location line="+0"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Afișează metadate extinse (JSON)</translation>
     </message>
@@ -608,6 +1035,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-250"/>
         <location line="+8"/>
+        <location line="+0"/>
         <source>Copy JSON</source>
         <translation>Copiază JSON</translation>
     </message>
@@ -617,6 +1045,10 @@
         <location line="+32"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-3"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-33"/>
+        <location line="+32"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Copied</source>
         <translation>Copiat</translation>
     </message>
@@ -658,12 +1090,14 @@
     <message>
         <location line="+1"/>
         <location line="+9"/>
+        <location line="+0"/>
         <source>Select Different Folder</source>
         <translation>Selectează Alt Dosar</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+9"/>
+        <location line="+0"/>
         <source>Use Application Folder</source>
         <translation>Folosește Dosarul Aplicației</translation>
     </message>
@@ -674,6 +1108,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-77"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Media Basic</source>
         <translation>Media Simplu</translation>
     </message>
@@ -688,12 +1123,14 @@
     <message>
         <location line="-11"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Media Extended</source>
         <translation>Media Extins</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Full Extended</source>
         <translation>Complet Extins</translation>
     </message>
@@ -702,8 +1139,9 @@
         <translation type="vanished">Doriți să &lt;span style=&apos;color: red&apos;;&gt;ștergeți&lt;/span&gt; acest dispozitiv %1?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+810"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+855"/>
         <location line="+38"/>
+        <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Cataloage actualizate:&lt;b&gt; %1 &lt;/b&gt;(%2 omise)</translation>
     </message>
@@ -713,7 +1151,7 @@
         <translation>Dispozitiv virtual actualizat: </translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-1372"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-1331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clic: Oprește imediat (oprire forțată)&lt;/p&gt;&lt;p&gt;Ctrl+Clic: Oprește după catalogul curent (oprire blândă)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -725,23 +1163,33 @@
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+6"/>
+        <location line="+0"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Folderul sursă nu conține niciun fișier.&lt;br/&gt;Aceasta ar putea însemna că sursa este goală sau dispozitivul nu este montat în acest folder.&lt;br/&gt;Vrei să-l salvezi oricum (catalogul ar fi gol)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-476"/>
-        <location line="+103"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3095"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
+        <location line="+117"/>
         <location line="+72"/>
         <location line="+136"/>
         <location line="+123"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+246"/>
         <location line="+40"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-448"/>
+        <location line="+117"/>
+        <location line="+72"/>
+        <location line="+136"/>
+        <location line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-40"/>
+        <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>O operație pe dispozitiv rulează deja.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1101"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
         <source>Operation cancelled</source>
         <translation>Operația a fost anulată</translation>
     </message>
@@ -750,15 +1198,17 @@
         <translation type="vanished">Se oprește după finalizarea catalogului curent...</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6915"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+852"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+926"/>
+        <location line="+6"/>
+        <location line="-6"/>
         <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+882"/>
-        <location line="+436"/>
+        <location line="+667"/>
+        <location line="+360"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
         <location line="+39"/>
@@ -769,24 +1219,37 @@
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
+        <location line="+37"/>
+        <location line="+39"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-573"/>
+        <location line="+20"/>
+        <location line="+30"/>
+        <location line="+150"/>
+        <location line="+53"/>
+        <location line="+316"/>
+        <location line="+4"/>
         <source>Search</source>
         <translation>Căutare</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-357"/>
         <source>Search for files or folders</source>
         <translation>Căutați fișiere sau dosare</translation>
     </message>
     <message>
-        <location line="+3923"/>
+        <location line="+3110"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+84"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="-30"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location line="-3609"/>
+        <location line="-2844"/>
         <source>Paste the text from the clipboard</source>
         <translation>Lipiți textul din clipboard</translation>
     </message>
@@ -796,19 +1259,20 @@
         <translation>Obțineți textul din clipboard</translation>
     </message>
     <message>
-        <location line="+110"/>
-        <location line="+38"/>
+        <location line="+82"/>
+        <location line="+31"/>
         <source>Launch the search of files.</source>
         <translation>Lansați căutarea fișierelor.</translation>
     </message>
     <message>
-        <location line="+189"/>
+        <location line="+154"/>
         <source>with</source>
         <translation>cu</translation>
     </message>
     <message>
-        <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+363"/>
+        <location line="+32"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+368"/>
+        <location line="+0"/>
         <source>All Words</source>
         <translation>Toate cuvintele</translation>
     </message>
@@ -828,13 +1292,14 @@
         <translation>Orice cuvânt</translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+73"/>
         <source>in</source>
         <translation>în</translation>
     </message>
     <message>
-        <location line="+41"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-980"/>
+        <location line="+34"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
+        <location line="+0"/>
         <source>File names or Folder paths</source>
         <translation>Numele fișierelor sau căile dosarelor</translation>
     </message>
@@ -842,150 +1307,165 @@
         <location line="-5"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-5"/>
         <location line="+4"/>
-        <location line="+982"/>
+        <location line="+1015"/>
+        <location line="-1019"/>
+        <location line="+4"/>
+        <location line="+1015"/>
         <source>File names only</source>
         <translation>Numai numele fișierelor</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-980"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
+        <location line="+0"/>
         <source>Folder path only</source>
         <translation>Numai calea dosarului</translation>
     </message>
     <message>
-        <location line="+4252"/>
+        <location line="+3328"/>
         <source>Choose to only show folders as results</source>
         <translation>Alegeți să afișați doar dosarele ca rezultate</translation>
     </message>
     <message>
-        <location line="-4939"/>
+        <location line="-3902"/>
         <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>Resetați toate criteriile la valorile implicite și ștergeți rezultatele anterioare.</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location line="+4545"/>
         <source>Reset</source>
         <translation>Resetare</translation>
     </message>
     <message>
-        <location line="+12130"/>
+        <location line="+5655"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="-2838"/>
-        <location line="+2817"/>
+        <location line="-2494"/>
+        <location line="+2481"/>
         <source>Password</source>
         <translation>Parolă</translation>
     </message>
     <message>
-        <location line="-699"/>
+        <location line="-583"/>
         <source>Database File Path</source>
         <translation>Calea fișierului de bază de date</translation>
     </message>
     <message>
-        <location line="+494"/>
-        <location line="+897"/>
+        <location line="+429"/>
+        <location line="+748"/>
         <source>Data mode</source>
         <translation>Modul de date</translation>
     </message>
     <message>
-        <location line="-884"/>
-        <location line="+892"/>
+        <location line="-735"/>
+        <location line="+743"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+306"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>File</source>
         <translation>Fișier</translation>
     </message>
     <message>
-        <location line="-11547"/>
-        <location line="+848"/>
-        <location line="+891"/>
-        <location line="+921"/>
+        <location line="-9766"/>
+        <location line="+652"/>
+        <location line="+709"/>
+        <location line="+725"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-53"/>
         <location line="+143"/>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-244"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-531"/>
+        <location line="+143"/>
+        <location line="+388"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
     </message>
     <message>
-        <location line="-4663"/>
-        <location line="+6599"/>
+        <location line="-3679"/>
+        <location line="+5261"/>
         <source>Device tree</source>
         <translation>Arborele dispozitivelor</translation>
     </message>
     <message>
-        <location line="-6146"/>
+        <location line="-4923"/>
         <source>Reload all collection&apos;s data</source>
         <translation>Reîncărcați toate datele colecției</translation>
     </message>
     <message>
-        <location line="+1579"/>
-        <location line="+451"/>
-        <location line="+2250"/>
-        <location line="+218"/>
-        <location line="+283"/>
+        <location line="+1277"/>
+        <location line="+346"/>
+        <location line="+1774"/>
+        <location line="+169"/>
+        <location line="+220"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location line="-3138"/>
+        <location line="-2459"/>
         <source>File size unit for minimum value</source>
         <translation>Unitatea de măsură pentru valoarea minimă</translation>
     </message>
     <message>
-        <location line="+49"/>
-        <location line="+426"/>
-        <location line="+2249"/>
-        <location line="+218"/>
-        <location line="+290"/>
+        <location line="+35"/>
+        <location line="+328"/>
+        <location line="+1773"/>
+        <location line="+169"/>
+        <location line="+227"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location line="-3122"/>
+        <location line="-2450"/>
         <source>File size unit for maximum value</source>
         <translation>Unitatea de măsură pentru valoarea maximă</translation>
     </message>
     <message>
-        <location line="+81"/>
-        <location line="+5160"/>
-        <location line="+4396"/>
+        <location line="+60"/>
+        <location line="+4277"/>
+        <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1499"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location line="-9518"/>
+        <location line="-8066"/>
         <source>Select the type of files</source>
         <translation>Selectați tipul de fișiere</translation>
     </message>
     <message>
-        <location line="+6570"/>
+        <location line="+5622"/>
         <source>Catalog Parameters</source>
         <translation>Parametrii catalogului</translation>
     </message>
     <message>
-        <location line="+1283"/>
+        <location line="+923"/>
         <source>Global Parameters</source>
         <translation>Parametrii globali</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+80"/>
         <source>Excluded from all catalogs</source>
         <translation>Exclus din toate cataloagele</translation>
     </message>
     <message>
-        <location line="+547"/>
+        <location line="+533"/>
         <source>BackUp &amp; Archive Links for device</source>
         <translation>Linkuri copie de rezervă &amp; arhivă pentru dispozitiv</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+39"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-6"/>
         <location line="+158"/>
         <location line="+8"/>
@@ -994,9 +1474,34 @@
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+907"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+9"/>
+        <location line="+1"/>
+        <location line="+62"/>
+        <location line="+2"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-166"/>
+        <location line="+158"/>
+        <location line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-130"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+91"/>
+        <location line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-93"/>
         <location line="+1"/>
         <location line="+1"/>
         <location line="+9"/>
@@ -1018,12 +1523,16 @@
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-129"/>
         <location line="+19"/>
         <location line="+11"/>
+        <location line="-11"/>
+        <location line="+11"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
         <location line="-29"/>
         <location line="+19"/>
+        <location line="+11"/>
+        <location line="-11"/>
         <location line="+11"/>
         <source>Image</source>
         <translation>Imagine</translation>
@@ -1032,34 +1541,45 @@
         <location line="-28"/>
         <location line="+19"/>
         <location line="+11"/>
+        <location line="-11"/>
+        <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-5217"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-4563"/>
         <source>only list folders in results</source>
         <translation>listați doar dosarele în rezultate</translation>
     </message>
     <message>
-        <location line="+465"/>
+        <location line="+354"/>
         <location line="+3"/>
         <source>Define which batch process to execute on all results</source>
         <translation>Definiți ce proces în serie să execute pe toate rezultatele</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1375"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1408"/>
+        <location line="+0"/>
         <source>Export Results</source>
         <translation>Exportați rezultatele</translation>
     </message>
     <message>
-        <location line="-276"/>
+        <location line="-221"/>
         <source>Show/Hide Catalogs with results</source>
         <translation>Afișați/Ascundeți cataloagele cu rezultate</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+101"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+473"/>
+        <location line="+50"/>
+        <location line="+24"/>
+        <location line="+24"/>
+        <location line="+33"/>
+        <location line="+21"/>
+        <location line="+25"/>
+        <location line="+4"/>
+        <location line="-181"/>
         <location line="+50"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1071,260 +1591,319 @@
         <translation>Fișiere găsite</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <location line="+56"/>
-        <location line="+690"/>
-        <location line="+41"/>
-        <location line="+29"/>
-        <location line="+29"/>
-        <location line="+987"/>
-        <location line="+45"/>
+        <location line="+24"/>
+        <location line="+46"/>
+        <location line="+647"/>
         <location line="+38"/>
-        <location line="+496"/>
-        <location line="+100"/>
-        <location line="+53"/>
-        <location line="+2413"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+179"/>
-        <location line="+45"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+38"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+24"/>
+        <location line="+26"/>
+        <location line="+26"/>
+        <location line="+978"/>
+        <location line="+35"/>
+        <location line="+35"/>
+        <location line="+472"/>
+        <location line="+90"/>
+        <location line="+50"/>
+        <location line="+1957"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+28"/>
+        <location line="+21"/>
+        <location line="+169"/>
+        <location line="+35"/>
+        <location line="+21"/>
+        <location line="+21"/>
+        <location line="+21"/>
+        <location line="+35"/>
+        <location line="+21"/>
+        <location line="+21"/>
+        <location line="+21"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location line="-3696"/>
-        <location line="+377"/>
+        <location line="-3120"/>
+        <location line="+347"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-16"/>
+        <location line="+0"/>
         <source>Catalogs</source>
         <translation>Cataloage</translation>
     </message>
     <message>
-        <location line="-332"/>
-        <location line="+2640"/>
+        <location line="-312"/>
+        <location line="+2154"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-30"/>
+        <location line="+0"/>
         <source>Total File Size</source>
         <translation>Dimensiunea totală a fișierelor</translation>
     </message>
     <message>
-        <location line="-2602"/>
+        <location line="-2119"/>
         <source>Total Number of Files</source>
         <translation>Numărul total de fișiere</translation>
     </message>
     <message>
-        <location line="-1239"/>
+        <location line="-1201"/>
         <source>All active</source>
         <translation>Toate active</translation>
     </message>
     <message>
-        <location line="+1330"/>
-        <location line="+5513"/>
+        <location line="+1289"/>
+        <location line="+4701"/>
         <location line="+55"/>
         <location line="+10"/>
         <source>Import</source>
         <translation>Importă</translation>
     </message>
     <message>
-        <location line="-5229"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-418"/>
+        <location line="-4438"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-432"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-327"/>
         <location line="+21"/>
         <location line="+18"/>
         <location line="+18"/>
         <location line="+14"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-166"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-71"/>
+        <location line="+21"/>
+        <location line="+18"/>
+        <location line="+18"/>
+        <location line="+14"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
         <source>Explore</source>
         <translation>Explorează</translation>
     </message>
     <message>
-        <location line="-1863"/>
-        <location line="+1016"/>
-        <location line="+6083"/>
+        <location line="-1801"/>
+        <location line="+991"/>
+        <location line="+5255"/>
         <location line="+20"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-228"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-269"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-27"/>
-        <location line="+105"/>
+        <location line="+119"/>
         <location line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-102"/>
+        <location line="+36"/>
+        <location line="+40"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-191"/>
+        <location line="+119"/>
+        <location line="+72"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
         <source>Update</source>
         <translation>Actualizare</translation>
     </message>
     <message>
-        <location line="-1403"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-135"/>
-        <location line="+89"/>
+        <location line="-1197"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-149"/>
+        <location line="+103"/>
+        <location line="+71"/>
+        <location line="-174"/>
+        <location line="+103"/>
         <location line="+71"/>
         <source>Edit</source>
         <translation>Editare</translation>
     </message>
     <message>
-        <location line="-6043"/>
+        <location line="-5377"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1138"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Delete</source>
         <translation>Șterge</translation>
     </message>
     <message>
-        <location line="+2193"/>
+        <location line="+2112"/>
         <source>Explore a catalog</source>
         <translation>Explorează un catalog</translation>
     </message>
     <message>
-        <location line="-8458"/>
-        <location line="+8837"/>
+        <location line="-7034"/>
+        <location line="+7387"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+6"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+255"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Catalog</source>
         <translation>Catalog</translation>
     </message>
     <message>
-        <location line="+1032"/>
-        <location line="+3778"/>
+        <location line="+799"/>
+        <location line="+3246"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+701"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-922"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-936"/>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
+        <location line="+143"/>
+        <location line="+301"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-493"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Path</source>
         <translation>Cale</translation>
     </message>
     <message>
-        <location line="-5133"/>
+        <location line="-4342"/>
         <source>Directories</source>
         <translation>Directoare</translation>
     </message>
     <message>
-        <location line="-8087"/>
-        <location line="+13428"/>
+        <location line="-6778"/>
+        <location line="+11307"/>
         <source>Show/Hide Filters</source>
         <translation>Afișați/Ascundeți filtrele</translation>
     </message>
     <message>
-        <location line="-13943"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1222"/>
+        <location line="-11687"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
+        <location line="+0"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
     <message>
-        <location line="+990"/>
-        <location line="+1022"/>
-        <location line="+2502"/>
-        <location line="+1196"/>
+        <location line="+761"/>
+        <location line="+832"/>
+        <location line="+1963"/>
+        <location line="+937"/>
         <source>Use the criteria in the Search</source>
         <translation>Folosește criteriile de căutare</translation>
     </message>
     <message>
-        <location line="-4485"/>
-        <location line="+5562"/>
-        <location line="+2672"/>
+        <location line="-3672"/>
+        <source>Clear the search text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+141"/>
+        <location line="+4443"/>
+        <location line="+2463"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="-3135"/>
+        <location line="-6706"/>
+        <source>Regex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3799"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-74"/>
+        <location line="+0"/>
         <source>Select...</source>
         <translation>Selectați...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+29"/>
+        <location line="+0"/>
         <source>Rename (KRename)</source>
         <translation>Redenumire (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-721"/>
-        <location line="+727"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-726"/>
+        <location line="+732"/>
+        <location line="-732"/>
+        <location line="+732"/>
         <source>Move to Trash</source>
         <translation>Mutați la coșul de gunoi</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+28"/>
         <source>Run process on all results</source>
         <translation>Rulați procesul pe toate rezultatele</translation>
     </message>
     <message>
-        <location line="+381"/>
+        <location line="+223"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1327"/>
+        <location line="+0"/>
+        <source>Keep last 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+146"/>
         <source>Catalogs list</source>
         <translation>Lista cataloagelor</translation>
     </message>
     <message>
-        <location line="+530"/>
+        <location line="+505"/>
         <source>The change will be applied only when Saving</source>
         <translation>Modificarea va fi aplicată doar la salvare</translation>
     </message>
     <message>
         <location line="+159"/>
-        <location line="+2337"/>
+        <location line="+2083"/>
         <source>Excluded folders from this catalog</source>
         <translation>Dosare excluse din acest catalog</translation>
     </message>
     <message>
-        <location line="-2322"/>
-        <location line="+2337"/>
-        <location line="+574"/>
+        <location line="-2068"/>
+        <location line="+2083"/>
+        <location line="+382"/>
         <source>Folder path or pattern to exclude</source>
         <translation>Calea dosarului sau modelul de exclus</translation>
     </message>
     <message>
-        <location line="-2891"/>
-        <location line="+2337"/>
-        <location line="+607"/>
+        <location line="-2445"/>
+        <location line="+2083"/>
+        <location line="+393"/>
         <source>Add</source>
         <translation>Adaugă</translation>
     </message>
     <message>
-        <location line="-2794"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+978"/>
+        <location line="-2326"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
+        <location line="+0"/>
         <source>Comment 1</source>
         <translation>Comentariu 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Comment 2</source>
         <translation>Comentariu 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Comment 3</source>
         <translation>Comentariu 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-6"/>
+        <location line="+0"/>
         <source>Brand</source>
         <translation>Marcă</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Model</source>
         <translation>Model</translation>
     </message>
     <message>
-        <location line="+412"/>
+        <location line="+396"/>
         <source>&lt;&lt;</source>
         <translation>&lt;&lt;</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+79"/>
         <source>Display the *Physical Group* and its related Devices.</source>
         <translation>Afișați *Grupul fizic* și dispozitivele sale conexe.</translation>
     </message>
@@ -1354,23 +1933,28 @@
         <translation>Creați și inserați un nou dispozitiv Virtual sub dispozitivul selectat în ierarhie și deschideți panoul de editare.</translation>
     </message>
     <message>
-        <location line="+227"/>
-        <location line="+2008"/>
-        <location line="+913"/>
+        <location line="+210"/>
+        <location line="+1559"/>
+        <location line="+845"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
+        <location line="+94"/>
+        <location line="+38"/>
+        <location line="-132"/>
         <location line="+94"/>
         <location line="+38"/>
         <source>Number of Files</source>
         <translation>Numărul de fișiere</translation>
     </message>
     <message>
-        <location line="-2805"/>
+        <location line="-2301"/>
         <source>Click to open the file</source>
         <translation>Faceți clic pentru a deschide fișierul</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+209"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-116"/>
+        <location line="+243"/>
+        <location line="-243"/>
         <location line="+243"/>
         <source>Create</source>
         <translation>Creează</translation>
@@ -1381,17 +1965,17 @@
         <translation>Creează un catalog</translation>
     </message>
     <message>
-        <location line="+503"/>
+        <location line="+367"/>
         <source>2- </source>
         <translation>2- </translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+10"/>
         <source>Select Content options</source>
         <translation>Selectați opțiunile de conținut</translation>
     </message>
     <message>
-        <location line="+4081"/>
+        <location line="+3468"/>
         <source>Images folder</source>
         <translation>Dosar imagini</translation>
     </message>
@@ -1412,38 +1996,38 @@
         <translation type="vanished">Adăugați directorul de exclus</translation>
     </message>
     <message>
-        <location line="-4535"/>
+        <location line="-3789"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+10"/>
         <source>Define &amp; Create catalog</source>
         <translation>Definiți și creați catalogul</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+54"/>
         <source>Select Storage</source>
         <translation>Selectați stocarea</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+25"/>
         <source>Add a new storage device</source>
         <translation>Adăugați un nou dispozitiv de stocare</translation>
     </message>
     <message>
-        <location line="-2135"/>
-        <location line="+2138"/>
+        <location line="-2004"/>
+        <location line="+2007"/>
         <source>Add Storage</source>
         <translation>Adăugați stocare</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+41"/>
         <source>Enter the Name of the new catalog</source>
         <translation>Introduceți numele noului catalog</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+12"/>
         <source>NewCatalog</source>
         <translation>CatalogNou</translation>
     </message>
@@ -1453,13 +2037,13 @@
         <translation>Introduceți un nume pentru noul dvs. catalog</translation>
     </message>
     <message>
-        <location line="+29"/>
-        <location line="+2637"/>
+        <location line="+22"/>
+        <location line="+2224"/>
         <source>Generate</source>
         <translation>Generează</translation>
     </message>
     <message>
-        <location line="-2581"/>
+        <location line="-2182"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Lansați catalogarea și salvați-o într-un fișier</translation>
     </message>
@@ -1469,17 +2053,17 @@
         <translation>Creează catalog</translation>
     </message>
     <message>
-        <location line="+441"/>
+        <location line="+357"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+16"/>
         <source>Select Source path</source>
         <translation>Selectați calea sursă</translation>
     </message>
     <message>
-        <location line="-1566"/>
+        <location line="-1328"/>
         <source>Tree options</source>
         <translation>Opțiuni arbore</translation>
     </message>
@@ -1499,7 +2083,7 @@
         <translation>Inserați grup virtual</translation>
     </message>
     <message>
-        <location line="-1711"/>
+        <location line="-1656"/>
         <source>View</source>
         <translation>Vizualizare</translation>
     </message>
@@ -1509,7 +2093,7 @@
         <translation>Lista de stocare</translation>
     </message>
     <message>
-        <location line="+583"/>
+        <location line="+558"/>
         <source>Catalog fields</source>
         <translation>Câmpurile catalogului</translation>
     </message>
@@ -1525,53 +2109,54 @@
         <translation>Imaginea dispozitivului</translation>
     </message>
     <message>
-        <location line="-719"/>
+        <location line="-694"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
         <translation>Înregistrați valorile tuturor dispozitivelor pentru statistici asupra întregii colecții.</translation>
     </message>
     <message>
-        <location line="+864"/>
+        <location line="+839"/>
         <source>Storage fields</source>
         <translation>Câmpurile de stocare</translation>
     </message>
     <message>
-        <location line="+5845"/>
+        <location line="+5034"/>
         <source>Icons</source>
         <translation>Pictograme</translation>
     </message>
     <message>
-        <location line="-28"/>
+        <location line="-20"/>
         <source>Use bigger icon size</source>
         <translation>Folosiți dimensiunea mai mare a pictogramelor</translation>
     </message>
     <message>
-        <location line="-784"/>
+        <location line="-649"/>
         <source>Load last catalog to Explore</source>
         <translation>Încărcați ultimul catalog pentru explorare</translation>
     </message>
     <message>
-        <location line="+381"/>
+        <location line="+279"/>
         <source>Database Name</source>
         <translation>Numele bazei de date</translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-48"/>
         <source>User Name</source>
         <translation>Numele utilizatorului</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="-16"/>
         <source>Host Name</source>
         <translation>Numele gazdei</translation>
     </message>
     <message>
-        <location line="-557"/>
+        <location line="-473"/>
         <source>Create a new database file</source>
         <translation>Creați un nou fișier de bază de date</translation>
     </message>
     <message>
-        <location line="+423"/>
+        <location line="+366"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Hosted</source>
         <translation>Găzduit</translation>
     </message>
@@ -1581,67 +2166,76 @@
         <translation>Gestionarea datelor</translation>
     </message>
     <message>
-        <location line="-12355"/>
-        <location line="+7033"/>
-        <location line="+2337"/>
-        <location line="+190"/>
-        <location line="+459"/>
+        <location line="-10383"/>
+        <location line="+5740"/>
+        <location line="+2083"/>
+        <location line="+134"/>
+        <location line="+294"/>
         <source>Select the path</source>
         <translation>Selectați calea</translation>
     </message>
     <message>
-        <location line="-10016"/>
-        <location line="+6833"/>
+        <location line="-8248"/>
+        <location line="+5540"/>
         <location line="+200"/>
-        <location line="+2337"/>
-        <location line="+190"/>
-        <location line="+459"/>
-        <location line="+500"/>
-        <location line="+2689"/>
-        <location line="+92"/>
+        <location line="+2083"/>
+        <location line="+134"/>
+        <location line="+294"/>
+        <location line="+479"/>
+        <location line="+2360"/>
+        <location line="+89"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-65"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
+        <location line="+214"/>
+        <location line="+5"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-219"/>
         <location line="+214"/>
         <location line="+5"/>
         <source>Select</source>
         <translation>Selectați</translation>
     </message>
     <message>
-        <location line="-13683"/>
-        <location line="+8317"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-947"/>
-        <location line="+2708"/>
+        <location line="-11461"/>
+        <location line="+6893"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
+        <location line="+2838"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
+        <location line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2838"/>
+        <location line="+2838"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Stocare</translation>
     </message>
     <message>
-        <location line="+4039"/>
+        <location line="+3447"/>
         <source>New</source>
         <translation>Nou</translation>
     </message>
     <message>
-        <location line="-5749"/>
-        <location line="+268"/>
+        <location line="-5102"/>
+        <location line="+261"/>
         <source>Devices</source>
         <translation>Dispozitive</translation>
     </message>
     <message>
-        <location line="+41"/>
-        <location line="+737"/>
+        <location line="+38"/>
+        <location line="+722"/>
         <location line="+28"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location line="+0"/>
         <source>Total Space</source>
         <translation>Spațiul total</translation>
     </message>
     <message>
-        <location line="-649"/>
+        <location line="-646"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location line="+3517"/>
+        <location line="+3018"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Reîncărcați</translation>
@@ -1672,29 +2266,30 @@
         <translation>Editați fișierul care stochează toate înregistrările</translation>
     </message>
     <message>
-        <location line="-2108"/>
+        <location line="-1642"/>
         <source>Add Virtual</source>
         <translation>Adăugați virtual</translation>
     </message>
     <message>
-        <location line="-1753"/>
+        <location line="-1698"/>
         <source>Edit List</source>
         <translation>Editați lista</translation>
     </message>
     <message>
         <location line="+123"/>
-        <location line="+4891"/>
+        <location line="+4290"/>
         <source>Full Table</source>
         <translation>Tabelul complet</translation>
     </message>
     <message>
-        <location line="-4586"/>
+        <location line="-4007"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+80"/>
+        <location line="+0"/>
         <source>Device Name</source>
         <translation>Numele dispozitivului</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+73"/>
         <source>Parent name (ID)</source>
         <translation>Numele părintelui (ID)</translation>
     </message>
@@ -1702,11 +2297,12 @@
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
+        <location line="+0"/>
         <source>Device ID</source>
         <translation>ID-ul dispozitivului</translation>
     </message>
     <message>
-        <location line="+3373"/>
+        <location line="+2877"/>
         <source>Edit Statistics</source>
         <translation>Editați statisticile</translation>
     </message>
@@ -1754,6 +2350,7 @@
         <location line="+20"/>
         <location line="+24"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-144"/>
+        <location line="+0"/>
         <source>Select a folder</source>
         <translation>Selectați un dosar</translation>
     </message>
@@ -1769,7 +2366,7 @@
         <translation>Reîncărcați fișierul care stochează etichetele</translation>
     </message>
     <message>
-        <location line="+1097"/>
+        <location line="+1017"/>
         <source>Link name</source>
         <translation>Numele linkului</translation>
     </message>
@@ -1779,23 +2376,32 @@
         <translation>Creați linkul</translation>
     </message>
     <message>
-        <location line="-612"/>
+        <location line="-578"/>
         <source>Catalog Links</source>
         <translation>Linkurile catalogului</translation>
     </message>
     <message>
-        <location line="-265"/>
+        <location line="-239"/>
         <source>Linked</source>
         <translation>Legat</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+49"/>
         <source>Unlinked</source>
         <translation>Nelegat</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+161"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-41"/>
+        <location line="+8"/>
+        <location line="+7"/>
+        <location line="+3"/>
+        <location line="+31"/>
+        <location line="+7"/>
+        <location line="+10"/>
+        <location line="+7"/>
+        <location line="+5"/>
+        <location line="-78"/>
         <location line="+8"/>
         <location line="+7"/>
         <location line="+3"/>
@@ -1808,13 +2414,14 @@
         <translation>Exportă</translation>
     </message>
     <message>
-        <location line="+331"/>
+        <location line="+297"/>
         <source>Update catalogs</source>
         <translation>Actualizează cataloagele</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1263"/>
+        <location line="+0"/>
         <source>Replicate directories</source>
         <translation>Replică directoarele</translation>
     </message>
@@ -1823,12 +2430,19 @@
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
         <location line="+1244"/>
         <location line="+16"/>
+        <location line="-1260"/>
+        <location line="+1244"/>
+        <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Previzualizare copie de rezervă</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1265"/>
+        <location line="+280"/>
+        <location line="+968"/>
+        <location line="+14"/>
+        <location line="-1262"/>
         <location line="+280"/>
         <location line="+968"/>
         <location line="+14"/>
@@ -1860,6 +2474,7 @@
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
+        <location line="+0"/>
         <source>On conflict</source>
         <translation>La conflict</translation>
     </message>
@@ -1867,6 +2482,12 @@
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2598"/>
+        <location line="+1771"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1771"/>
+        <location line="+1771"/>
         <source>Skip</source>
         <translation>Omite</translation>
     </message>
@@ -1874,19 +2495,22 @@
         <location line="+5"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
         <source>Rename oldest</source>
         <translation>Redenumește cel mai vechi</translation>
     </message>
     <message>
         <location line="+40"/>
-        <location line="+578"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-246"/>
+        <location line="+486"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-274"/>
+        <location line="+0"/>
         <source>Settings</source>
         <translation>Setări</translation>
     </message>
     <message>
-        <location line="+632"/>
-        <location line="+45"/>
+        <location line="+521"/>
+        <location line="+29"/>
         <source>Version</source>
         <translation>Versiune</translation>
     </message>
@@ -1896,23 +2520,23 @@
         <translation>Note de lansare</translation>
     </message>
     <message>
-        <location line="-553"/>
-        <location line="+60"/>
+        <location line="-437"/>
+        <location line="+57"/>
         <source>(Changing requires to restart)</source>
         <translation>(Modificarea necesită repornire)</translation>
     </message>
     <message>
-        <location line="-428"/>
+        <location line="-371"/>
         <source>Data mode &quot;Memory&quot;</source>
         <translation>Modul de date „Memorie&quot;</translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+89"/>
         <source>Select and read folder</source>
         <translation>Selectați și citiți dosarul</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+132"/>
         <source>Preload last catalogs</source>
         <translation>Preîncărcați ultimele cataloage</translation>
     </message>
@@ -1922,27 +2546,27 @@
         <translation>Pornire</translation>
     </message>
     <message>
-        <location line="-59"/>
+        <location line="-48"/>
         <source>Back up</source>
         <translation>Copie de rezervă</translation>
     </message>
     <message>
-        <location line="-398"/>
+        <location line="-331"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
         <translation>Modul de date „Fișier local SQLite&quot;</translation>
     </message>
     <message>
-        <location line="-4038"/>
+        <location line="-3456"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Aplicați opțiunile arborelui de dispozitive de selecție.</translation>
     </message>
     <message>
-        <location line="+1794"/>
+        <location line="+1493"/>
         <source>Type of source</source>
         <translation>Tipul de sursă</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+11"/>
         <source>Local drive</source>
         <translation>Unitatea locală</translation>
     </message>
@@ -1952,31 +2576,41 @@
         <translation>Partajarea Samba</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+31"/>
         <source>IP address</source>
         <translation>Adresa IP</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+34"/>
         <source>Username</source>
         <translation>Numele de utilizator</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+49"/>
         <source>Connection settings</source>
         <translation>Setările de conexiune</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-101"/>
         <source>Verify connection</source>
         <translation>Verificați conexiunea</translation>
     </message>
     <message>
-        <location line="+936"/>
+        <location line="+778"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-14"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+233"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+261"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-919"/>
+        <location line="+170"/>
+        <location line="+145"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+38"/>
+        <location line="+30"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
         <location line="+170"/>
         <location line="+145"/>
         <location line="+19"/>
@@ -1991,17 +2625,17 @@
         <translation type="vanished">Linkuri de rezervă pentru dispozitiv</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reîncărcați linkurile și actualizați statisticile pentru dispozitivul selectat.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+265"/>
         <source>Create new link</source>
         <translation>Creați un link nou</translation>
     </message>
     <message>
-        <location line="-236"/>
+        <location line="-193"/>
         <source>Coverage</source>
         <translation>Acoperire</translation>
     </message>
@@ -2014,7 +2648,7 @@
         <translation type="vanished">Încărcați cataloagele țintă</translation>
     </message>
     <message>
-        <location line="+1100"/>
+        <location line="+1004"/>
         <source>File list display</source>
         <translation>Afișarea listei de fișiere</translation>
     </message>
@@ -2029,60 +2663,60 @@
         <translation>Sortarea fișierelor este sensibilă la majuscule</translation>
     </message>
     <message>
-        <location line="+1061"/>
+        <location line="+880"/>
         <source>Documentation</source>
         <translation>Documentație</translation>
     </message>
     <message>
-        <location line="-1000"/>
+        <location line="-830"/>
         <source>The collection data is saved to an SQLite .db file.</source>
         <translation>Datele colecției sunt salvate într-un fișier SQLite .db.</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <location line="+219"/>
+        <location line="+30"/>
+        <location line="+184"/>
         <source>Apply</source>
         <translation>Aplicați</translation>
     </message>
     <message>
-        <location line="-189"/>
+        <location line="-154"/>
         <source>Select and open database file</source>
         <translation>Selectați și deschideți fișierul bazei de date</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+219"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
         <translation>Exportați pentru a converti și deschide colecția în modul „Fișier&quot;.</translation>
     </message>
     <message>
-        <location line="-203"/>
-        <location line="+693"/>
+        <location line="-168"/>
+        <location line="+545"/>
         <source>Export to Memory mode (csv)</source>
         <translation>Exportați în modul Memorie (csv)</translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+477"/>
+        <location line="-374"/>
+        <location line="+364"/>
         <source>Export to SQLite file</source>
         <translation>Exportați în fișierul SQLite</translation>
     </message>
     <message>
-        <location line="-212"/>
+        <location line="-124"/>
         <source>Data mode &quot;Hosted database&quot;</source>
         <translation>Modul de date „Baza de date găzduită&quot;</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+23"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
         <translation>Datele colecției sunt salvate într-o bază de date găzduită pe un server local sau la distanță.</translation>
     </message>
     <message>
-        <location line="+243"/>
+        <location line="+163"/>
         <source>Apply and restart</source>
         <translation>Aplicați și reporniți</translation>
     </message>
     <message>
-        <location line="+297"/>
+        <location line="+264"/>
         <source>Select a theme</source>
         <translation>Selectați o temă</translation>
     </message>
@@ -2098,7 +2732,7 @@
         <translation>Temă</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+80"/>
         <source>(requires to restart)</source>
         <translation>(necesită repornire)</translation>
     </message>
@@ -2108,49 +2742,58 @@
         <translation>Limbă</translation>
     </message>
     <message>
-        <location line="-1001"/>
+        <location line="-831"/>
         <source>Collection folder</source>
         <translation>Dosarul colecției</translation>
     </message>
     <message>
-        <location line="-171"/>
-        <location line="+222"/>
+        <location line="-144"/>
+        <location line="+187"/>
         <source>Select a different Collection folder</source>
         <translation>Selectați un dosar de colecție diferit</translation>
     </message>
     <message>
-        <location line="-419"/>
+        <location line="-349"/>
         <source>Other Settings</source>
         <translation>Alte setări</translation>
     </message>
     <message>
         <location line="+32"/>
+        <location line="+152"/>
         <location line="+187"/>
-        <location line="+222"/>
         <source>Open the collection folder</source>
         <translation>Deschideți dosarul colecției</translation>
     </message>
     <message>
-        <location line="-406"/>
+        <location line="-336"/>
         <source>Open</source>
         <translation>Deschide</translation>
     </message>
     <message>
-        <location line="-1333"/>
+        <location line="-1242"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-677"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-842"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+480"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open file</source>
         <translation>Deschide fișierul</translation>
     </message>
     <message>
-        <location line="+1742"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-197"/>
-        <location line="+89"/>
+        <location line="+1581"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-211"/>
+        <location line="+103"/>
         <location line="+71"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <location line="+109"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-174"/>
+        <location line="+103"/>
+        <location line="+71"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-109"/>
+        <location line="+109"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open folder</source>
         <translation>Deschide dosarul</translation>
     </message>
@@ -2158,47 +2801,62 @@
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-62"/>
         <location line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy folder path</source>
         <translation>Copiați calea dosarului</translation>
     </message>
     <message>
         <location line="-64"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file absolute path</source>
         <translation>Copiați calea absolută a fișierului</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file name with extension</source>
         <translation>Copiați numele fișierului cu extensia</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file name without extension</source>
         <translation>Copiați numele fișierului fără extensie</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-9618"/>
-        <location line="+891"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2019"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-8197"/>
+        <location line="+709"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
     <message>
-        <location line="-1265"/>
-        <location line="+10653"/>
-        <location line="+64"/>
+        <location line="-999"/>
+        <location line="+9029"/>
+        <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1355"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Date</source>
         <translation>Dată</translation>
     </message>
@@ -2207,84 +2865,103 @@
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+0"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Selectați directorul care va fi catalogat în acest nou catalog</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-225"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-252"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-19"/>
+        <location line="+0"/>
         <source>Select the directory for this collection</source>
         <translation>Selectați directorul pentru această colecție</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-7105"/>
-        <location line="+2517"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2198"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-6257"/>
+        <location line="+2406"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="-493"/>
         <location line="+240"/>
         <location line="+253"/>
         <source>Total Size</source>
         <translation>Dimensiunea totală</translation>
     </message>
     <message>
-        <location line="-1490"/>
-        <location line="+1673"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+687"/>
+        <location line="-1440"/>
+        <location line="+1610"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+742"/>
+        <location line="+0"/>
         <source>Source Path</source>
         <translation>Calea sursă</translation>
     </message>
     <message>
-        <location line="-1589"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-670"/>
-        <location line="+639"/>
+        <location line="-1526"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-725"/>
+        <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-694"/>
+        <location line="+694"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>File Type</source>
         <translation>Tipul fișierului</translation>
     </message>
     <message>
-        <location line="+4164"/>
+        <location line="+3612"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+481"/>
+        <location line="+7"/>
+        <location line="-7"/>
         <location line="+7"/>
         <source>File Size</source>
         <translation>Dimensiunea fișierului</translation>
     </message>
     <message>
-        <location line="-3617"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-901"/>
+        <location line="-3065"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
+        <location line="+0"/>
         <source>Label</source>
         <translation>Etichetă</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>FileSystem</source>
         <translation>Sistemul de fișiere</translation>
     </message>
     <message>
-        <location line="+3247"/>
+        <location line="+2741"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location line="-4126"/>
+        <location line="-3611"/>
         <source>Free</source>
         <translation>Liber</translation>
     </message>
     <message>
-        <location line="+813"/>
+        <location line="+804"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Serial Number</source>
         <translation>Numărul de serie</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Build Date</source>
         <translation>Data de construire</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1280"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1429"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Catalogul este deja atribuit acestui dispozitiv virtual.</translation>
     </message>
@@ -2299,7 +2976,58 @@
         <translation>Ștergerea a eșuat</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+23"/>
+        <source>This catalog has no immediate sub-directories to split by.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Split catalog &quot;%1&quot;?
+
+This will create %2 new catalogs (one per sub-directory plus one for root files) and remove the original.
+This operation cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+41"/>
+        <location line="+0"/>
+        <source>Split failed: no catalogs were created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify file types before splitting?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File types in the catalog may be based on file extensions only. Running a verification reads each file from disk and ensures the split uses accurate types. The device must be connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Verify then Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Split without verifying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The device must be connected to verify file types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>MIME verification failed: %1
+Split was not performed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;O captură de ecran a acestei colecții a fost înregistrată:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Cataloage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Numărul de fișiere: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensiunea totală a fișierului: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Stocare&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spațiul liber de stocare: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spațiul total de stocare: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (adăugat: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -2324,21 +3052,64 @@
         <translation>Un catalog din grupul fizic poate fi setat doar sub o stocare sau acest grup. Selectați o stocare din acest grup.&lt;br/&gt;&lt;br/&gt;Pentru a utiliza acest catalog sub un dispozitiv dintr-un grup virtual, utilizați comanda Atribuire.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+497"/>
+        <location line="+35"/>
+        <source>The storage path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>Old path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1770"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>New path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1769"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>How should the catalog indexes be updated?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1769"/>
+        <location line="+1771"/>
+        <location line="+0"/>
+        <source>Replace path root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1770"/>
+        <source>Full re-scan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+484"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location line="-2065"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>Parent ID</source>
         <translation>ID-ul părintelui</translation>
     </message>
     <message>
-        <location line="-2204"/>
+        <location line="-2304"/>
         <source>External ID</source>
         <translation>ID-ul extern</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Number of files</source>
         <translation>Numărul de fișiere</translation>
@@ -2347,12 +3118,16 @@
         <location line="-490"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Free space</source>
         <translation>Spațiu liber</translation>
     </message>
     <message>
         <location line="-492"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Total space</source>
         <translation>Spațiul total</translation>
@@ -2361,6 +3136,8 @@
         <location line="-492"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Date updated</source>
         <translation>Data actualizării</translation>
     </message>
@@ -2368,12 +3145,15 @@
         <location line="-491"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Group ID</source>
         <translation>ID-ul grupului</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location line="+0"/>
         <source>Catalog ID</source>
         <translation>ID-ul catalogului</translation>
     </message>
@@ -2403,12 +3183,12 @@
         <translation>Calea fișierului</translation>
     </message>
     <message>
-        <location line="+261"/>
+        <location line="+275"/>
         <source>Indexing - Start: %1 | End: %2 | Duration: %3</source>
         <translation>Indexare - Start: %1 | Sfârșit: %2 | Durată: %3</translation>
     </message>
     <message>
-        <location line="+366"/>
+        <location line="+407"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Salvați modificările la definiția catalogului?&lt;br/&gt;</translation>
     </message>
@@ -2443,20 +3223,31 @@
         <translation>(Catalogul trebuie actualizat pentru a reflecta aceste modificări)</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+34"/>
+        <source>The catalog source path changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Full re-index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation>Actualizați conținutul catalogului cu noile criterii?
 </translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+86"/>
         <source>Select the csv file to be imported</source>
         <translation>Selectați fișierul csv care va fi importat</translation>
     </message>
     <message>
         <location line="+17"/>
         <location line="+143"/>
+        <location line="+0"/>
         <source>No catalog found.</source>
         <translation>Nu s-a găsit niciun catalog.</translation>
     </message>
@@ -2466,7 +3257,27 @@
         <translation>S-a găsit un fișier, dar nu a putut fi încărcat</translation>
     </message>
     <message>
-        <location line="+503"/>
+        <location line="+498"/>
+        <source>Storage path updated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>catalog(s),</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>file(s),</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>folder(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Catalog updated: </source>
         <translation>Catalog actualizat: </translation>
     </message>
@@ -2477,12 +3288,18 @@
         <location line="+17"/>
         <location line="+24"/>
         <location line="+23"/>
+        <location line="-86"/>
+        <location line="+22"/>
+        <location line="+17"/>
+        <location line="+24"/>
+        <location line="+23"/>
         <source>Path: </source>
         <translation>Cale: </translation>
     </message>
     <message>
         <location line="-100"/>
         <location line="+39"/>
+        <location line="+0"/>
         <source>Number of files: </source>
         <translation>Numărul de fișiere: </translation>
     </message>
@@ -2504,12 +3321,29 @@
         <location line="+64"/>
         <location line="+1"/>
         <location line="+1"/>
+        <location line="-171"/>
+        <location line="+17"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+37"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+24"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+19"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+64"/>
+        <location line="+1"/>
+        <location line="+1"/>
         <source>(added: </source>
         <translation>(adăugat: </translation>
     </message>
     <message>
         <location line="-171"/>
         <location line="+39"/>
+        <location line="+0"/>
         <source>Total file size: </source>
         <translation>Dimensiunea totală a fișierului: </translation>
     </message>
@@ -2518,12 +3352,19 @@
         <location line="+39"/>
         <location line="+24"/>
         <location line="+23"/>
+        <location line="-47"/>
+        <location line="+24"/>
+        <location line="+23"/>
         <source>Storage updated: </source>
         <translation>Stocare actualizată: </translation>
     </message>
     <message>
         <location line="-81"/>
         <location line="+39"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
+        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -2536,12 +3377,20 @@
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
+        <location line="-113"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
         <source>Free Space: </source>
         <translation>Spațiu liber: </translation>
     </message>
     <message>
         <location line="-151"/>
         <location line="+39"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
+        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -2572,8 +3421,10 @@
         <translation type="vanished">Dispozitivul selectat trebuie să fie un catalog. Încercați cu un ID de dispozitiv diferit</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1954"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2054"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Used space</source>
         <translation>Spațiul utilizat</translation>
@@ -2589,53 +3440,53 @@
         <translation>din</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6291"/>
-        <location line="+1989"/>
-        <location line="+108"/>
-        <location line="+553"/>
-        <location line="+108"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5212"/>
+        <location line="+1555"/>
+        <location line="+87"/>
+        <location line="+434"/>
+        <location line="+87"/>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>Definiți dacă textul de căutare trebuie folosit pentru a căuta doar în numele fișierelor, sau căile dosarelor, sau ambele.</translation>
     </message>
     <message>
-        <location line="-2901"/>
+        <location line="-2283"/>
         <location line="+3"/>
         <source>Define how the search text should be used.</source>
         <translation>Definiți cum trebuie folosit textul de căutare.</translation>
     </message>
     <message>
-        <location line="+5988"/>
-        <location line="+2320"/>
+        <location line="+4886"/>
+        <location line="+2073"/>
         <source>Include Hidden files</source>
         <translation>Include fișierele ascunse</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+20"/>
         <source>Follow symbolic links</source>
         <translation>Urmați legăturile simbolice</translation>
     </message>
     <message>
-        <location line="-422"/>
+        <location line="-331"/>
         <source>Generate a catalog name based on the path.</source>
         <translation>Generați un nume de catalog bazat pe cale.</translation>
     </message>
     <message>
-        <location line="-8766"/>
+        <location line="-7348"/>
         <source>Reset all filters</source>
         <translation>Resetați toate filtrele</translation>
     </message>
     <message>
-        <location line="+12640"/>
+        <location line="+10612"/>
         <source>About</source>
         <translation>Despre</translation>
     </message>
     <message>
-        <location line="-530"/>
+        <location line="-425"/>
         <source>Auto-backup catalogs</source>
         <translation>Cataloage de rezervă automate</translation>
     </message>
     <message>
-        <location line="+797"/>
+        <location line="+662"/>
         <source>Keep records of files and size for Statistics</source>
         <translation>Păstrați înregistrările fișierelor și dimensiunile pentru statistici</translation>
     </message>
@@ -2644,6 +3495,9 @@
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-35"/>
+        <location line="+35"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -2651,6 +3505,8 @@
         <location line="-44"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
@@ -2658,28 +3514,32 @@
         <location line="-12"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
-        <location line="-386"/>
+        <location line="-391"/>
         <source>Explore folder</source>
         <translation>Explorează dosarul</translation>
     </message>
     <message>
         <location line="+250"/>
-        <location line="+592"/>
+        <location line="+597"/>
+        <location line="+0"/>
         <source>MOVE</source>
         <translation>MUTARE</translation>
     </message>
     <message>
-        <location line="-591"/>
+        <location line="-596"/>
         <source>Move this file to the trash?</source>
         <translation>Mutați acest fișier la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+64"/>
+        <location line="+0"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
@@ -2689,13 +3549,18 @@
         <translation>Mutarea unui dosar la coșul de gunoi nu este disponibilă.</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <location line="+567"/>
+        <location line="-770"/>
+        <location line="+13"/>
+        <location line="+803"/>
+        <location line="+572"/>
+        <location line="-1375"/>
+        <location line="+803"/>
+        <location line="+572"/>
         <source>DELETE</source>
         <translation>ȘTERGE</translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-571"/>
         <source>Delete this file?</source>
         <translation>Ștergeți acest fișier?</translation>
     </message>
@@ -2705,15 +3570,19 @@
         <translation>Ștergerea unui dosar nu este disponibilă.</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+46"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-8"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
     <message>
         <location line="-7"/>
         <location line="+11"/>
+        <location line="+30"/>
+        <location line="-30"/>
         <location line="+30"/>
         <source>Bytes</source>
         <translation>Octeți</translation>
@@ -2726,6 +3595,7 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-952"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
+        <location line="+0"/>
         <source>Results exported to the collection folder:</source>
         <translation>Rezultatele exportate în dosarul colecției:</translation>
     </message>
@@ -2960,12 +3830,12 @@
         <translation>Lista ID-urilor dispozitivelor selectate</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-800"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-665"/>
         <source>Always keep one back of each catalog</source>
         <translation>Păstrați întotdeauna o copie de rezervă a fiecărui catalog</translation>
     </message>
     <message>
-        <location line="-5687"/>
+        <location line="-5007"/>
         <source>Used</source>
         <translation>Utilizat</translation>
     </message>
@@ -2976,7 +3846,9 @@
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+18"/>
         <location line="+145"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-501"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-515"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Select the directory to exclude</source>
         <translation>Selectează directorul de exclus</translation>
     </message>
@@ -2984,6 +3856,8 @@
         <location line="-77"/>
         <location line="+103"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+35"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Remove</source>
         <translation>Elimină</translation>
     </message>
@@ -3009,12 +3883,13 @@
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1027"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
+        <location line="+0"/>
         <source>Choose a different name and try again.</source>
         <translation>Alegeți un nume diferit și încercați din nou.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+6370"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+5563"/>
         <source>Check at start up</source>
         <translation>Verificați la pornire</translation>
     </message>
@@ -3023,41 +3898,45 @@
         <translation type="vanished">Include fișierele ascunse</translation>
     </message>
     <message>
-        <location line="-5421"/>
+        <location line="-4626"/>
         <source>Save</source>
         <translation>Salvați</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-15"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-16"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Bun venit la Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Se pare că aceasta este prima rulare.&lt;br/&gt;&lt;br/&gt;Următoarele setări au fost aplicate:&lt;br/&gt; - Limba: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Puteți modifica acestea în fila %3.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-1137"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-1112"/>
         <source>Snapshot</source>
         <translation>Instantaneu</translation>
     </message>
     <message>
-        <location line="+3806"/>
+        <location line="+3285"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
+        <location line="+338"/>
+        <location line="+745"/>
+        <location line="-1083"/>
         <location line="+338"/>
         <location line="+745"/>
         <source>Source</source>
         <translation>Sursă</translation>
     </message>
     <message>
-        <location line="-3767"/>
+        <location line="-3246"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizați toate cataloagele care sunt active, dacă dispozitivul este disponibil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1330"/>
+        <location line="+1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importați o listă de volume din VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-216"/>
-        <location line="+3862"/>
+        <location line="-200"/>
+        <location line="+3286"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-471"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+59"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
@@ -3067,87 +3946,119 @@
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-96"/>
         <location line="+18"/>
         <location line="+49"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-117"/>
+        <location line="+117"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-243"/>
+        <location line="+107"/>
+        <location line="+9"/>
+        <location line="+127"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-67"/>
+        <location line="+18"/>
+        <location line="+49"/>
         <source>Cancel</source>
         <translation>Anulare</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+325"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+353"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Aceasta este versiunea: v%1 &lt;br/&gt;&lt;br/&gt;O nouă versiune este disponibilă: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Găsiți lista de funcții noi în &lt;a href=&apos;%3&apos;&gt;Notele de lansare&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Doriți să o descărcați?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-4240"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+771"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
+        <location line="+0"/>
         <source>Storage ID</source>
         <translation>ID-ul stocării</translation>
     </message>
     <message>
-        <location line="-920"/>
-        <location line="+1016"/>
+        <location line="-895"/>
+        <location line="+991"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualizați fișierele catalogului selectat, dacă dispozitivul este disponibil&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+1196"/>
-        <location line="+1274"/>
+        <location line="+1133"/>
+        <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
+        <location line="+0"/>
         <source>Directory</source>
         <translation>Director</translation>
     </message>
     <message>
-        <location line="-9037"/>
+        <location line="-7499"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Curățați textul de căutare de caractere precum _ - . ,</translation>
     </message>
     <message>
-        <location line="+1790"/>
+        <location line="+1410"/>
         <source>Duplicates on</source>
         <translation>Duplicate pe</translation>
     </message>
     <message>
-        <location line="+130"/>
-        <location line="+891"/>
+        <location line="+95"/>
+        <location line="+709"/>
         <source>Date Modified</source>
         <translation>Data modificării</translation>
     </message>
     <message>
-        <location line="+9440"/>
+        <location line="+8077"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Verificați dacă o nouă versiune de Katalog este disponibilă la pornirea aplicației.</translation>
     </message>
     <message>
-        <location line="-6816"/>
+        <location line="-6026"/>
         <source>Show/Hide search history</source>
         <translation>Afișați/Ascundeți istoricul căutărilor</translation>
     </message>
     <message>
-        <location line="-5694"/>
+        <location line="-4483"/>
         <source>Search criteria</source>
         <translation>Criteriile de căutare</translation>
     </message>
     <message>
-        <location line="+5087"/>
+        <location line="+4008"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-183"/>
+        <location line="+0"/>
         <source>Tag</source>
         <translation>Etichetă</translation>
     </message>
     <message>
-        <location line="+196"/>
+        <location line="+147"/>
         <source>View more statitics about the results</source>
         <translation>Vizualizați mai multe statistici despre rezultate</translation>
     </message>
     <message>
-        <location line="+449"/>
+        <location line="+359"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location line="+13"/>
+        <location line="-13"/>
+        <location line="+13"/>
         <source>Search history</source>
         <translation>Istoricul căutărilor</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-321"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-357"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation>&lt;br/&gt;&lt;br/&gt;Pe ecranul următor, alegeți un dosar de colecție existent sau creați unul nou.</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+2"/>
+        <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing collection database file or create a new one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+85"/>
+        <source>Select or create a database file for this collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Database files (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Gata să creați un catalog de fișiere:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -3157,48 +4068,48 @@
         <translation>1- Selectați o unitate sau un director întreg, &lt;br/&gt;2- selectați opțiunile, și &lt;br/&gt;3- faceți clic pe „Creează&quot;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-5770"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-4545"/>
         <source>Show/Hide search criteria</source>
         <translation>Afișați/Ascundeți criteriile de căutare</translation>
     </message>
     <message>
-        <location line="-454"/>
+        <location line="-353"/>
         <source>Search in connected drives</source>
         <translation>Căutați în unitățile conectate</translation>
     </message>
     <message>
-        <location line="-50"/>
+        <location line="-36"/>
         <source>Search in file catalogs</source>
         <translation>Căutați în cataloagele de fișiere</translation>
     </message>
     <message>
-        <location line="+1496"/>
+        <location line="+1198"/>
         <source>exclude</source>
         <translation>exclude</translation>
     </message>
     <message>
-        <location line="+5620"/>
+        <location line="+4590"/>
         <source>is full device</source>
         <translation>este dispozitiv complet</translation>
     </message>
     <message>
-        <location line="+1830"/>
+        <location line="+1695"/>
         <source>catalog is for the full device</source>
         <translation>catalogul este pentru dispozitivul complet</translation>
     </message>
     <message>
-        <location line="-6358"/>
-        <location line="+888"/>
+        <location line="-5438"/>
+        <location line="+706"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Alegeți să căutați duplicate bazate pe următoarele criterii</translation>
     </message>
     <message>
-        <location line="+2150"/>
+        <location line="+1674"/>
         <source>Choose to use Tags to filter results</source>
         <translation>Alegeți să folosiți etichetele pentru a filtra rezultatele</translation>
     </message>
     <message>
-        <location line="-4221"/>
+        <location line="-3297"/>
         <source>case sensitive</source>
         <translation>sensibil la majuscule</translation>
     </message>
@@ -3208,8 +4119,8 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rezultatele trebuie să se potrivească exact cu textul (sensibil la majuscule)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+10986"/>
-        <location line="+31"/>
+        <location line="+9267"/>
+        <location line="+23"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Preîncărcați ultimele cataloage selectate la pornire pentru a accelera următoarea căutare</translation>
     </message>
@@ -3221,9 +4132,16 @@
     <message>
         <location line="+141"/>
         <location line="+33"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1208"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2"/>
+        <location line="+739"/>
         <location line="+64"/>
-        <location line="+528"/>
+        <location line="+533"/>
+        <location line="+39"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1375"/>
+        <location line="+739"/>
+        <location line="+64"/>
+        <location line="+533"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>Confirmare</translation>
@@ -3233,7 +4151,12 @@
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-619"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-624"/>
+        <location line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-38"/>
+        <location line="+35"/>
+        <location line="+3"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-64"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
@@ -3241,30 +4164,35 @@
     <message>
         <location line="-41"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
+        <location line="+0"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Mutat la coșul de gunoi:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Move to trash failed.</source>
         <translation>Mutarea la coșul de gunoi a eșuat.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+61"/>
+        <location line="+0"/>
         <source>Deleted.</source>
         <translation>Șters.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Failed to delete.</source>
         <translation>Ștergerea a eșuat.</translation>
     </message>
     <message>
         <location line="-182"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-214"/>
+        <location line="+0"/>
         <source>Delete file</source>
         <translation>Șterge fișierul</translation>
     </message>
@@ -3288,41 +4216,43 @@ la coșul de gunoi?</translation>
         <translation>Etichetați acest dosar</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-12200"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-10255"/>
         <source>Selection</source>
         <translation>Selecție</translation>
     </message>
     <message>
-        <location line="-329"/>
-        <location line="+32"/>
-        <location line="+8015"/>
-        <location line="+32"/>
+        <location line="-249"/>
+        <location line="+25"/>
+        <location line="+6650"/>
+        <location line="+25"/>
         <source>Expand 1 level, 2 levels, or collapse</source>
         <translation>Extindeți 1 nivel, 2 nivele sau restrângeți</translation>
     </message>
     <message>
-        <location line="+2351"/>
+        <location line="+1885"/>
         <source>all records</source>
         <translation>toate înregistrările</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+36"/>
+        <location line="+0"/>
         <source>updates only</source>
         <translation>doar actualizări</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
+        <location line="+0"/>
         <source>snapshots only</source>
         <translation>doar instantanee</translation>
     </message>
     <message>
-        <location line="-7115"/>
-        <location line="+108"/>
-        <location line="+553"/>
-        <location line="+108"/>
-        <location line="+6733"/>
+        <location line="-5967"/>
+        <location line="+87"/>
+        <location line="+434"/>
+        <location line="+87"/>
+        <location line="+5743"/>
         <source>Device</source>
         <translation>Dispozitiv</translation>
     </message>
@@ -3341,7 +4271,7 @@ la coșul de gunoi?</translation>
         <translation>ca țintă</translation>
     </message>
     <message>
-        <location line="+737"/>
+        <location line="+660"/>
         <source>Select Source catalog</source>
         <translation>Selectați catalogul sursă</translation>
     </message>
@@ -3351,38 +4281,38 @@ la coșul de gunoi?</translation>
         <translation>Selectați catalogul țintă</translation>
     </message>
     <message>
-        <location line="+562"/>
+        <location line="+505"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation>Datele colecției sunt salvate în fișiere .idx sau .csv local pe computer.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+13"/>
         <source>The database is in Memory only (RAM).</source>
         <translation>Baza de date este doar în memorie (RAM).</translation>
     </message>
     <message>
-        <location line="+959"/>
+        <location line="+797"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
         <translation>Culorile Katalog</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+107"/>
         <source>Language &amp; Theme</source>
         <translation>Limba și tema</translation>
     </message>
     <message>
-        <location line="-1459"/>
+        <location line="-1221"/>
         <source>Open Settings file</source>
         <translation>Deschide fișierul de setări</translation>
     </message>
     <message>
-        <location line="-3288"/>
+        <location line="-2764"/>
         <source>Display folders</source>
         <translation>Afișați dosarele</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+54"/>
         <source>and all sub-folders</source>
         <translation>și toate subdosarele</translation>
     </message>
@@ -3407,12 +4337,16 @@ la coșul de gunoi?</translation>
         <translation>valoareaOrdinii</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-1730"/>
-        <location line="+21"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-1664"/>
+        <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-244"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>Device Type</source>
         <translation>Tipul dispozitivului</translation>
     </message>
@@ -3422,9 +4356,10 @@ la coșul de gunoi?</translation>
         <translation>Catalogul selectat conține mai mult de %1 fișiere.&lt;br/&gt;Poate dura câteva minute să se deschidă.&lt;br/&gt;Continuați?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+5635"/>
-        <location line="+902"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+4956"/>
+        <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="-2"/>
+        <location line="+0"/>
         <source>Memory</source>
         <translation>Memorie</translation>
     </message>
@@ -3433,7 +4368,7 @@ la coșul de gunoi?</translation>
         <translation type="vanished">Folosiți criteriile de text în căutare</translation>
     </message>
     <message>
-        <location line="-9923"/>
+        <location line="-8492"/>
         <source>Differences on</source>
         <translation>Diferențe pe</translation>
     </message>
@@ -3446,23 +4381,24 @@ la coșul de gunoi?</translation>
         <translation type="vanished">Catalogul 2</translation>
     </message>
     <message>
-        <location line="-2811"/>
+        <location line="-2236"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
+        <location line="+0"/>
         <source>File name</source>
         <translation>Numele fișierului</translation>
     </message>
     <message>
-        <location line="+1022"/>
+        <location line="+832"/>
         <source>File criteria</source>
         <translation>Criteriile fișierului</translation>
     </message>
     <message>
-        <location line="+3698"/>
+        <location line="+2900"/>
         <source>Folder criteria</source>
         <translation>Criteriile dosarului</translation>
     </message>
     <message>
-        <location line="+5054"/>
+        <location line="+4368"/>
         <source>Graphic Start Date</source>
         <translation>Data de început grafic</translation>
     </message>
@@ -3472,8 +4408,12 @@ la coșul de gunoi?</translation>
         <translation>Selectați data</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1038"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+258"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1083"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
+        <location line="+587"/>
+        <location line="+14"/>
+        <location line="+20"/>
+        <location line="-621"/>
         <location line="+587"/>
         <location line="+14"/>
         <location line="+20"/>
@@ -3579,15 +4519,23 @@ la coșul de gunoi?</translation>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-406"/>
+        <location line="+399"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Catalog with results</source>
         <translation>Catalog cu rezultate</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1165"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -3604,10 +4552,15 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2206"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2306"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="+1712"/>
+        <location line="+1812"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2305"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1812"/>
         <source>Active</source>
         <translation>Activ</translation>
     </message>
@@ -3615,12 +4568,15 @@ la coșul de gunoi?</translation>
         <location line="-4"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+189"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>Files</source>
         <translation>Fișiere</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
+        <location line="+0"/>
         <source>Date Updated</source>
         <translation>Data actualizării</translation>
     </message>
@@ -3633,18 +4589,22 @@ la coșul de gunoi?</translation>
         <location line="-1088"/>
         <location line="+338"/>
         <location line="+751"/>
+        <location line="-751"/>
+        <location line="+751"/>
         <source>Target</source>
         <translation>Ținta</translation>
     </message>
     <message>
         <location line="-1193"/>
         <location line="+1262"/>
+        <location line="+0"/>
         <source>Run Archive</source>
         <translation>Rulează arhivarea</translation>
     </message>
     <message>
         <location line="-1257"/>
         <location line="+1260"/>
+        <location line="+0"/>
         <source>Preview Archive</source>
         <translation>Previzualizare arhivă</translation>
     </message>
@@ -3658,6 +4618,9 @@ la coșul de gunoi?</translation>
         <location line="+111"/>
         <location line="+230"/>
         <location line="+444"/>
+        <location line="-674"/>
+        <location line="+230"/>
+        <location line="+444"/>
         <source>Select a mapping first.</source>
         <translation>Selectați mai întâi un link.</translation>
     </message>
@@ -3665,24 +4628,30 @@ la coșul de gunoi?</translation>
         <location line="-763"/>
         <location line="+108"/>
         <location line="+230"/>
+        <location line="-230"/>
+        <location line="+230"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Sursa și destinația trebuie să fie dispozitive de catalog.</translation>
     </message>
     <message>
         <location line="-326"/>
         <location line="+62"/>
+        <location line="+0"/>
         <source>Replicate</source>
         <translation>Replică</translation>
     </message>
     <message>
         <location line="-61"/>
         <location line="+338"/>
+        <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 indisponibil</translation>
     </message>
     <message>
         <location line="-327"/>
         <location line="+90"/>
+        <location line="+249"/>
+        <location line="-249"/>
         <location line="+249"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>O actualizare de catalog este deja în curs. Așteptați și încercați din nou.</translation>
@@ -3700,12 +4669,15 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+1"/>
         <location line="+637"/>
+        <location line="+0"/>
         <source>Errors</source>
         <translation>Erori</translation>
     </message>
     <message>
         <location line="-218"/>
         <location line="+239"/>
+        <location line="+74"/>
+        <location line="-74"/>
         <location line="+74"/>
         <source>Move</source>
         <translation>Mută</translation>
@@ -3714,12 +4686,15 @@ la coșul de gunoi?</translation>
         <location line="-313"/>
         <location line="+239"/>
         <location line="+74"/>
+        <location line="-74"/>
+        <location line="+74"/>
         <source>Copy</source>
         <translation>Copiază</translation>
     </message>
     <message>
         <location line="-312"/>
         <location line="+240"/>
+        <location line="+0"/>
         <source>Already in target</source>
         <translation>Deja în destinație</translation>
     </message>
@@ -3727,6 +4702,8 @@ la coșul de gunoi?</translation>
         <location line="-154"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1s</source>
         <translation>%1s</translation>
     </message>
@@ -3734,6 +4711,8 @@ la coșul de gunoi?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>
@@ -3741,6 +4720,8 @@ la coșul de gunoi?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1h %2m</source>
         <translation>%1h %2m</translation>
     </message>
@@ -3757,12 +4738,14 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+1"/>
+        <location line="+0"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
         <location line="+60"/>
         <location line="+143"/>
+        <location line="+0"/>
         <source>Status</source>
         <translation>Stare</translation>
     </message>
@@ -3774,18 +4757,26 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+8"/>
         <location line="+33"/>
+        <location line="+0"/>
         <source>Archived</source>
         <translation>Arhivat</translation>
     </message>
     <message>
         <location line="-25"/>
         <location line="+135"/>
+        <location line="+0"/>
         <source>Conflict</source>
         <translation>Conflict</translation>
     </message>
     <message>
         <location line="-127"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-173"/>
+        <location line="+64"/>
+        <location line="+10"/>
+        <location line="+58"/>
+        <location line="+73"/>
+        <location line="+35"/>
+        <location line="-240"/>
         <location line="+64"/>
         <location line="+10"/>
         <location line="+58"/>
@@ -3802,6 +4793,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+4"/>
         <location line="+23"/>
+        <location line="+0"/>
         <source>Conflicts</source>
         <translation>Conflicte</translation>
     </message>
@@ -3932,12 +4924,23 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+271"/>
-        <location line="+76"/>
+        <location line="+90"/>
+        <location line="+0"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-64"/>
+        <location line="-81"/>
+        <source>Split catalog by sub-directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Split catalog by file type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Unassign this catalog</source>
         <translation>Anulați atribuirea acestui catalog</translation>
     </message>
@@ -3994,6 +4997,7 @@ la coșul de gunoi?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-646"/>
         <location line="+324"/>
+        <location line="+0"/>
         <source>Search Error</source>
         <translation>Eroare de căutare</translation>
     </message>
@@ -4012,6 +5016,9 @@ la coșul de gunoi?</translation>
         <location line="+974"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-42"/>
+        <location line="+42"/>
         <source>Pause</source>
         <translation>Pauză</translation>
     </message>
@@ -4019,6 +5026,9 @@ la coșul de gunoi?</translation>
         <location line="-967"/>
         <location line="+967"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
+        <location line="+30"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-30"/>
         <location line="+30"/>
         <source>Resume</source>
         <translation>Reluare</translation>
@@ -4091,6 +5101,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+3"/>
         <location line="+11"/>
+        <location line="+0"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;Fișiere procesate: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -4155,6 +5166,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+15"/>
         <location line="+53"/>
+        <location line="+0"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Selectați mai întâi un catalog (lipsesc unele informații).&lt;br/&gt; calea_fișierului_catalogului_curent: %1 &lt;br/&gt;numele_catalogului_curent: %2 &lt;br/&gt; calea_sursei_catalogului_curent: %3</translation>
     </message>
@@ -4166,6 +5178,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+14"/>
         <location line="+87"/>
+        <location line="+0"/>
         <source>Could not open file.</source>
         <translation>Nu s-a putut deschide fișierul.</translation>
     </message>
@@ -4186,25 +5199,34 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+164"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+165"/>
+        <location line="+0"/>
         <source>Strict</source>
         <translation>Strict</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Unique</source>
         <translation>Unic</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Drive</source>
         <translation>Unitate</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-177"/>
         <location line="+10"/>
+        <location line="+58"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <location line="+38"/>
+        <location line="+9"/>
+        <location line="-131"/>
         <location line="+58"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -4227,6 +5249,8 @@ la coșul de gunoi?</translation>
         <location line="+88"/>
         <location line="+10"/>
         <location line="+8"/>
+        <location line="-8"/>
+        <location line="+8"/>
         <source>Collection Update</source>
         <translation>Actualizare colecție</translation>
     </message>
@@ -4234,30 +5258,519 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageCreateForm</name>
     <message>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+180"/>
+        <location line="+46"/>
         <source>All</source>
-        <translation type="vanished">Toate</translation>
+        <translation>Toate</translation>
     </message>
     <message>
+        <location line="-44"/>
         <source>Image</source>
-        <translation type="vanished">Imagine</translation>
+        <translation>Imagine</translation>
     </message>
     <message>
+        <location line="-1"/>
         <source>Audio</source>
-        <translation type="vanished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
+        <location line="-163"/>
+        <source>Provide a name for this new catalog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Provide a path for this new catalog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select a Storage for this new catalog.
+(Selection panel on the left and dropdown list)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+83"/>
+        <source>Catalog definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Source path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Path to index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Storage</source>
+        <translation type="unfinished">Stocare</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Catalog name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>New catalog name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Generate name from path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Content options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>File type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Text</source>
-        <translation type="vanished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Video</source>
-        <translation type="vanished">Video</translation>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Altele</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+40"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <source>None</source>
+        <translation type="unfinished">Niciunul</translation>
+    </message>
+    <message>
+        <location line="-36"/>
+        <source>Include subdirectories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Include hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Include metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Media Basic</source>
+        <translation type="unfinished">Media Simplu</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Media Extended</source>
+        <translation type="unfinished">Media Extins</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Full Extended</source>
+        <translation type="unfinished">Complet Extins</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Include checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Folder to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Path to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+81"/>
+        <source>Add</source>
+        <translation type="unfinished">Adaugă</translation>
+    </message>
+    <message>
+        <location line="-35"/>
+        <source>Global Parameters</source>
+        <translation type="unfinished">Parametrii globali</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Global exclude directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Path to exclude globally</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDevicesView</name>
+    <message>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
+        <location line="+37"/>
+        <source>Split Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-32"/>
+        <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+62"/>
+        <location line="+25"/>
+        <location line="+62"/>
+        <location line="+36"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Anulare</translation>
+    </message>
+    <message>
+        <location line="-156"/>
+        <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Verify then Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Split without verifying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Verify Checksums</source>
+        <translation type="unfinished">Verificați sumele de control</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>No checksums are stored for this catalog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Total: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Verified: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatches: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Checksum Verification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+89"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-78"/>
+        <source>Unassign Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Unassign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Delete Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>Device tree</source>
+        <translation type="unfinished">Arborele dispozitivelor</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Storage list</source>
+        <translation type="unfinished">Lista de stocare</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Catalogs list</source>
+        <translation type="unfinished">Lista cataloagelor</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Filter from Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Catalogs</source>
+        <translation type="unfinished">Cataloage</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Total File Size</source>
+        <translation type="unfinished">Dimensiunea totală a fișierelor</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Total Number of Files</source>
+        <translation type="unfinished">Numărul total de fișiere</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Devices</source>
+        <translation type="unfinished">Dispozitive</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Total Space</source>
+        <translation type="unfinished">Spațiul total</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Used</source>
+        <translation type="unfinished">Utilizat</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Free</source>
+        <translation type="unfinished">Liber</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>No devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDevicesViewDelegate</name>
+    <message>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+64"/>
+        <source>Update</source>
+        <translation type="unfinished">Actualizare</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Explore</source>
+        <translation type="unfinished">Explorează</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Edit</source>
+        <translation type="unfinished">Editare</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Open folder</source>
+        <translation type="unfinished">Deschide dosarul</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+16"/>
+        <source>Filelight</source>
+        <translation type="unfinished">Filelight</translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>Verify Checksums</source>
+        <translation type="unfinished">Verificați sumele de control</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Split catalog by sub-directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Split catalog by file type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Add Virtual device</source>
+        <translation type="unfinished">Adăugați dispozitiv virtual</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Add Storage device</source>
+        <translation type="unfinished">Adăugați dispozitiv de stocare</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Assign selected catalog</source>
+        <translation type="unfinished">Atribuiți catalogul selectat</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Unassign this storage</source>
+        <translation type="unfinished">Anulați atribuirea acestei stocări</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Unassign this catalog</source>
+        <translation type="unfinished">Anulați atribuirea acestui catalog</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Delete this catalog</source>
+        <translation type="unfinished">Ștergeți acest catalog</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete this storage</source>
+        <translation type="unfinished">Ștergeți această stocare</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete</source>
+        <translation type="unfinished">Șterge</translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>files</source>
+        <translation type="unfinished">fișiere</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>free</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+260"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+406"/>
+        <source>Delete search history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This will delete all search history entries. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Keep last 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This will delete all but the last 10 search history entries. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Search History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Keep Last 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Anulare</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>(no text filter)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Catalogs</source>
+        <translation type="unfinished">Cataloage</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Connected drive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Path to connected drive or folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>File name</source>
         <translation>Numele fișierului</translation>
     </message>
@@ -4267,7 +5780,7 @@ la coșul de gunoi?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+42"/>
         <source>with</source>
         <translation>cu</translation>
     </message>
@@ -4287,7 +5800,7 @@ la coșul de gunoi?</translation>
         <translation>exclude</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+39"/>
         <source>File attributes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4313,12 +5826,12 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+162"/>
+        <location line="+164"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location line="-161"/>
+        <location line="-163"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -4333,27 +5846,27 @@ la coșul de gunoi?</translation>
         <translation>Niciunul</translation>
     </message>
     <message>
-        <location line="+33"/>
-        <location line="+152"/>
+        <location line="+35"/>
+        <location line="+167"/>
         <location line="+184"/>
-        <location line="+121"/>
+        <location line="+122"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
     </message>
     <message>
-        <location line="-405"/>
-        <location line="+294"/>
-        <location line="+121"/>
+        <location line="-421"/>
+        <location line="+309"/>
+        <location line="+122"/>
         <source>Date</source>
         <translation>Dată</translation>
     </message>
     <message>
-        <location line="-358"/>
+        <location line="-374"/>
         <source>File metadata</source>
         <translation>Metadate fișier</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+75"/>
         <source>Width</source>
         <translation>Lățime</translation>
     </message>
@@ -4389,30 +5902,30 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+121"/>
+        <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-107"/>
-        <location line="+121"/>
+        <location line="-108"/>
+        <location line="+122"/>
         <source>On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-113"/>
-        <location line="+121"/>
+        <location line="-114"/>
+        <location line="+122"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
     <message>
-        <location line="-83"/>
-        <location line="+121"/>
+        <location line="-84"/>
+        <location line="+122"/>
         <source>Checksum</source>
         <translation>Sumă de control</translation>
     </message>
     <message>
-        <location line="-107"/>
+        <location line="-108"/>
         <source>Scope</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4437,7 +5950,7 @@ la coșul de gunoi?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Differences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4455,7 +5968,7 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+96"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4496,33 +6009,37 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+736"/>
+        <location line="+771"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation type="unfinished">Verificați sumele de control</translation>
     </message>
     <message>
-        <location line="-788"/>
-        <location line="+736"/>
+        <location line="-52"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation type="unfinished">Include metadatele</translation>
     </message>
     <message>
-        <location line="-786"/>
-        <location line="+426"/>
+        <location line="-822"/>
+        <location line="+462"/>
         <location line="+305"/>
         <source>Move to Trash</source>
         <translation>Mutați la coșul de gunoi</translation>
     </message>
     <message>
-        <location line="-730"/>
-        <location line="+691"/>
+        <location line="-768"/>
+        <source>Extract Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+727"/>
         <source>Delete</source>
         <translation>Șterge</translation>
     </message>
     <message>
-        <location line="-638"/>
+        <location line="-672"/>
         <source>Exported to: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4542,7 +6059,7 @@ la coșul de gunoi?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+250"/>
         <source>(no selection)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4810,8 +6327,205 @@ Errors: %3</source>
     <name>PageSelectionDelegate</name>
     <message>
         <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
+        <source>Update</source>
+        <translation type="unfinished">Actualizare</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Explore</source>
+        <translation type="unfinished">Explorează</translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Open folder</source>
         <translation>Deschide dosarul</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Edit</source>
+        <translation type="unfinished">Editare</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettings</name>
+    <message>
+        <location filename="../qt_quick/PageSettings.qml" line="+9"/>
+        <source>Settings</source>
+        <translation type="unfinished">Setări</translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Close</source>
+        <translation type="unfinished">Închide</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection &amp; Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Database Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+1"/>
+        <location line="+326"/>
+        <source>(none)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-318"/>
+        <source>Edit</source>
+        <translation type="unfinished">Editare</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Database Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Images folder</source>
+        <translation type="unfinished">Dosar imagini</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location line="+120"/>
+        <source>Select</source>
+        <translation type="unfinished">Selectați</translation>
+    </message>
+    <message>
+        <location line="-109"/>
+        <source>Host name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Database name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>User name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Startup:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Connect automatically on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Collection Import &amp; Synchronization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Data mode</source>
+        <translation type="unfinished">Modul de date</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Katalog File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Katalog Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>VVV Tab Separated Values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Source</source>
+        <translation type="unfinished">Sursă</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>VVV export file (.tsv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Path</source>
+        <translation type="unfinished">Cale</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Device</source>
+        <translation type="unfinished">Dispozitiv</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Import</source>
+        <translation type="unfinished">Importă</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location line="+10"/>
+        <source>Update</source>
+        <translation type="unfinished">Actualizare</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Version</source>
+        <translation type="unfinished">Versiune</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Release Notes</source>
+        <translation type="unfinished">Note de lansare</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Check for a new version on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>Settings file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Open</source>
+        <translation type="unfinished">Deschide</translation>
     </message>
 </context>
 <context>

@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Devices: Catalogs
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Summary
 This page describes all the features of the **Catalogs list** view of the [Devices](Devices) screen and how to use them.
@@ -47,6 +47,32 @@ Right-clicking on a catalog in the list opens a context menu:
 | *Filelight* | Active catalog only | Opens [Filelight](https://apps.kde.org/filelight/) in the catalog's source path |
 | *Unassign this catalog* | Catalog is assigned to a virtual group | Removes the catalog from its virtual group (the catalog itself is not deleted) |
 | *Delete this catalog* | Physical group catalogs and exports | Permanently removes the catalog from the collection |
+| *Split catalog by sub-directory* | Catalog device | Breaks the catalog into one catalog per immediate sub-directory plus one for root-level files — see [Split catalog](#split-catalog) |
+| *Split catalog by file type* | Catalog device | Breaks the catalog into one catalog per file type — see [Split catalog](#split-catalog) |
+
+## Split catalog {#split-catalog}
+
+Two split operations are available from the right-click context menu on any Catalog device. Both operations remove the original catalog and replace it with a set of smaller catalogs. **This operation cannot be undone.**
+
+### Split by sub-directory
+
+Creates one new catalog per immediate sub-directory of the catalog's source path. Files located directly at the root level (not inside any sub-directory) are collected into a dedicated catalog named `[CatalogName]_(root)`.
+
+New catalog names follow the pattern `[CatalogName]_SubDirectoryName`.
+
+A confirmation dialog shows the number of catalogs that will be created before proceeding.
+
+:::note
+If the catalog has no immediate sub-directories, the operation is cancelled and the original catalog is left unchanged.
+:::
+
+### Split by file type
+
+Creates one new catalog per file type found in the catalog (Audio, Image, Text, Video, Other), using the same source path as the original. This is equivalent to creating those catalogs manually with a file type filter at creation time.
+
+Before splitting, a dialog offers:
+- *Verify then Split* — re-reads every file from disk using the system MIME database to ensure accurate type detection, then splits. Requires the device to be connected.
+- *Split without verifying* — splits immediately using the file types already stored in the catalog index.
 
 ## Edit {#edit}
 
@@ -66,6 +92,18 @@ The edit panel gives access to modify the following fields:
 | *Exclude Folders* | List of sub-folders to exclude from the catalog scan |
 
 It is generally recommended to set the correct options when **creating** a catalog rather than editing them later.
+
+### Source path change {#catalog-path-change}
+
+When the *Source Path* is changed and saved, Katalog detects the change and offers three options:
+
+| Option | Description |
+|--------|-------------|
+| *Replace path root* | Instantly updates all indexed file and folder paths by replacing the old path prefix with the new one — no rescan required, works without the device connected |
+| *Full re-index* | Re-scans the catalog from the new source path |
+| *Skip* | Saves the new path without modifying the catalog index |
+
+*Replace path root* is the fastest option when the files have not moved and only the mount point or drive letter has changed.
 
 ## Import {#import}
 

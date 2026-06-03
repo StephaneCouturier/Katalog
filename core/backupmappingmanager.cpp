@@ -347,6 +347,56 @@ bool BackupMappingManager::deleteMapping(int mappingId)
     return true;
 }
 
+bool BackupMappingManager::createMapping(
+    const QString &name, const QString &type,
+    int sourceId, int targetId,
+    bool strictCopy, const QString &conflictMode,
+    bool sourceDrive)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        INSERT INTO device_mapping
+        (mapping_name, mapping_type, mapping_device_source_id, mapping_device_target_id,
+         mapping_strict_copy, mapping_conflict_mode, mapping_source_mode)
+        VALUES (:name, :type, :sourceId, :targetId, :strictCopy, :conflictMode, :sourceMode)
+    )"));
+    query.bindValue(":name",         name);
+    query.bindValue(":type",         type);
+    query.bindValue(":sourceId",     sourceId);
+    query.bindValue(":targetId",     targetId);
+    query.bindValue(":strictCopy",   strictCopy ? 1 : 0);
+    query.bindValue(":conflictMode", conflictMode);
+    query.bindValue(":sourceMode",   sourceDrive ? QStringLiteral("Drive") : QStringLiteral("Catalog"));
+    if (!query.exec()) {
+        qWarning() << "BackupMappingManager::createMapping error:" << query.lastError();
+        return false;
+    }
+    return true;
+}
+
+QSet<QString> BackupMappingManager::getCatalogFilePaths(int catalogExternalId) const
+{
+    QSet<QString> paths;
+    QSqlQuery q(QSqlDatabase::database(m_connectionName));
+    q.prepare(QLatin1String("SELECT file_folder_path || '/' || file_name FROM file WHERE file_catalog_id = :id"));
+    q.bindValue(":id", catalogExternalId);
+    if (q.exec()) {
+        while (q.next())
+            paths.insert(q.value(0).toString());
+    }
+    return paths;
+}
+
+int BackupMappingManager::getCatalogFileCount(int catalogExternalId) const
+{
+    QSqlQuery q(QSqlDatabase::database(m_connectionName));
+    q.prepare(QLatin1String("SELECT COUNT(*) FROM file WHERE file_catalog_id = :id"));
+    q.bindValue(":id", catalogExternalId);
+    if (q.exec() && q.next())
+        return q.value(0).toInt();
+    return 0;
+}
+
 //------------------------------------------------------------------------------
 // Statistics
 //------------------------------------------------------------------------------

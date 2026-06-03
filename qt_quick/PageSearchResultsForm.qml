@@ -10,6 +10,19 @@ ColumnLayout {
 
     signal closeRequested()
 
+    // Sort state
+    property int  sortColumn:    -1
+    property bool sortAscending: true
+
+    Component.onCompleted: {
+        var col   = appManager1.getSearchSortColumn()
+        var order = appManager1.getSearchSortOrder()
+        if (col >= 0) {
+            pageSearchResults_column.sortColumn    = col
+            pageSearchResults_column.sortAscending = (order === 0)
+        }
+    }
+
     // ── Helpers ──────────────────────────────────────────────────────────
     function formatFileSize(size) {
         let n = Number(size)
@@ -91,7 +104,7 @@ ColumnLayout {
             Controls.Label {
                 font.bold: true
                 text: {
-                    let n = newSearch1.properties.filesFoundNumber ?? 0
+                    let n = Number(newSearch1.properties.filesFoundNumber ?? 0).toLocaleString(Qt.locale(), "f", 0)
                     if (newSearch1.properties.searchOnDuplicates)
                         return qsTr("%1 duplicate(s) found").arg(n)
                     if (newSearch1.properties.searchOnDifferences)
@@ -157,8 +170,7 @@ ColumnLayout {
                     { text: qsTr("Export to CSV"),     value: "csv",              iconName: "document-save"    },
                     { text: qsTr("Export to Catalog"), value: "catalog",          iconName: "media-optical"    },
                     { text: qsTr("Verify Checksums"),  value: "verify-checksums", iconName: "dialog-ok-apply"  },
-                    { text: qsTr("Include Metadata"),   value: "get-metadata",     iconName: "configure"        },
-                    { text: "",                        value: "---",              iconName: ""                 },
+                    { text: qsTr("Extract Metadata"),  value: "get-metadata",     iconName: "video-mp4"        },
                     { text: qsTr("Move to Trash"),     value: "trash",            iconName: "user-trash"       },
                     { text: qsTr("Delete"),            value: "delete",           iconName: "edit-delete"      }
                 ]
@@ -181,6 +193,8 @@ ColumnLayout {
                     }
                 }
                 contentItem: RowLayout {
+                    function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                    property int selectionStart: 0
                     spacing: Kirigami.Units.smallSpacing
                     Item { width: Kirigami.Units.smallSpacing }
                     Kirigami.Icon {
@@ -249,28 +263,56 @@ ColumnLayout {
             syncView: tableView
             clip: true
             implicitHeight: 34
+            resizableColumns: true
 
                 delegate: Rectangle {
+                    required property int    column
                     required property string display
                     color: Kirigami.Theme.backgroundColor
                     implicitHeight: headerView.implicitHeight
 
-                    Controls.Label {
+                    RowLayout {
                         anchors {
-                            left: parent.left; right: parent.right
+                            left: parent.left; right: sortIndicator.left
                             verticalCenter: parent.verticalCenter
-                            leftMargin: 6; rightMargin: 6
+                            leftMargin: 6; rightMargin: 2
                         }
-                        text: display
-                        elide: Text.ElideRight
-                        //clip: true
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                        Controls.Label {
+                            Layout.fillWidth: true
+                            text: display
+                            elide: Text.ElideRight
+                            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                            color: Kirigami.Theme.textColor
+                        }
+                    }
+
+                    Controls.Label {
+                        id: sortIndicator
+                        anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 4 }
+                        text: pageSearchResults_column.sortColumn === column
+                              ? (pageSearchResults_column.sortAscending ? "▲" : "▼") : ""
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.7
+                        color: Kirigami.Theme.textColor
                     }
 
                     Rectangle {//Vertical separator
                         anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
                         width: 1
                         color: Kirigami.Theme.separatorColor ?? "transparent"
+                    }
+
+                    TapHandler {
+                        onTapped: {
+                            tableView.selectedRow = -1
+                            if (pageSearchResults_column.sortColumn === column) {
+                                pageSearchResults_column.sortAscending = !pageSearchResults_column.sortAscending
+                            } else {
+                                pageSearchResults_column.sortColumn    = column
+                                pageSearchResults_column.sortAscending = true
+                            }
+                            appManager1.sortSearch(pageSearchResults_column.sortColumn,
+                                                   pageSearchResults_column.sortAscending ? 0 : 1)
+                        }
                     }
                 }
             }
@@ -285,14 +327,18 @@ ColumnLayout {
             anchors { top: headerSep.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
                 columnSpacing: 0
                 rowSpacing: 0
-                model: newSearch1
+                model: appManager1.searchSortModel
 
                 property int selectedRow: -1
 
                 ScrollBar.vertical:   ScrollBar { policy: ScrollBar.AsNeeded }
                 ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
 
+                rowHeightProvider: function(row) { return 30 }
+
                 columnWidthProvider: function(column) {
+                    let w = tableView.explicitColumnWidth(column)
+                    if (w >= 0) return w
                     switch (column) {
                         case  0: return 250  // Name
                         case  1: return 90   // Size
@@ -350,7 +396,7 @@ ColumnLayout {
                         visible: column > 0
                         anchors { top: parent.top; bottom: parent.bottom; left: parent.left }
                         width: 1
-                        color: Kirigami.Theme.separatorColor
+                        color: Kirigami.Theme.separatorColor ?? Kirigami.Theme.textColor
                         opacity: 0.4
                     }
 
@@ -398,17 +444,19 @@ ColumnLayout {
                         onClicked: function(mouse) {
                             tableView.selectedRow = row
                             if (mouse.button === Qt.RightButton) {
-                                let fileName    = String(newSearch1.data(newSearch1.index(row, 0),  Qt.DisplayRole) ?? "")
-                                let folder      = String(newSearch1.data(newSearch1.index(row, 3),  Qt.DisplayRole) ?? "")
-                                let catalogName = String(newSearch1.data(newSearch1.index(row, 4),  Qt.DisplayRole) ?? "")
-                                let catalogId   = Number(newSearch1.data(newSearch1.index(row, 5),  Qt.DisplayRole) ?? -1)
-                                let checksum    = String(newSearch1.data(newSearch1.index(row, 19), Qt.DisplayRole) ?? "")
+                                var m = appManager1.searchSortModel
+                                let fileName    = String(m.data(m.index(row, 0),  Qt.DisplayRole) ?? "")
+                                let folder      = String(m.data(m.index(row, 3),  Qt.DisplayRole) ?? "")
+                                let catalogName = String(m.data(m.index(row, 4),  Qt.DisplayRole) ?? "")
+                                let catalogId   = Number(m.data(m.index(row, 5),  Qt.DisplayRole) ?? -1)
+                                let checksum    = String(m.data(m.index(row, 19), Qt.DisplayRole) ?? "")
                                 resultContextMenu.openForRow(row, fileName, folder, checksum, catalogId, catalogName)
                             }
                         }
                         onDoubleClicked: {
-                            let fileName = String(newSearch1.data(newSearch1.index(row, 0), Qt.DisplayRole) ?? "")
-                            let folder   = String(newSearch1.data(newSearch1.index(row, 3), Qt.DisplayRole) ?? "")
+                            var m = appManager1.searchSortModel
+                            let fileName = String(m.data(m.index(row, 0), Qt.DisplayRole) ?? "")
+                            let folder   = String(m.data(m.index(row, 3), Qt.DisplayRole) ?? "")
                             appManager1.openFile(folder + "/" + fileName)
                         }
                     }
@@ -732,7 +780,7 @@ ColumnLayout {
                             y: 0
                             width: 1
                             height: parent.height
-                            color: Kirigami.Theme.separatorColor
+                            color: Kirigami.Theme.separatorColor ?? Kirigami.Theme.textColor
                             opacity: 0.4
                         }
 
@@ -963,7 +1011,7 @@ ColumnLayout {
         function onSearchTriggered() {
             tableView.selectedRow = -1
             tableView.model = emptyModel
-            tableView.model = newSearch1
+            tableView.model = appManager1.searchSortModel
             tableView.forceLayout()
         }
     }

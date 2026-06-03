@@ -1,6 +1,6 @@
 project(Katalog3 VERSION 3.0 LANGUAGES CXX)
 
-set(KATALOG_VERSION_STRING "3.alpha1")
+set(KATALOG_VERSION_STRING "3.alpha2")
 set(KATALOG_RELEASE_DATE  "2026-03-31")
 
 configure_file(
@@ -9,7 +9,7 @@ configure_file(
 )
 
 # Qt Quick-specific dependencies not already found by root CMakeLists.txt
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Sql)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Sql Charts)
 find_package(KF6I18n REQUIRED)
 find_package(KF6Archive)
 
@@ -31,6 +31,7 @@ target_compile_definitions(Katalog3 PRIVATE
 set(CORE_SOURCES
     adapters/search.h            adapters/search.cpp
     adapters/devicelistmodel.h   adapters/devicelistmodel.cpp
+    adapters/explorefilesmodel.h adapters/explorefilesmodel.cpp
     #adapters/commandline.h adapters/commandline.cpp
     #adapters/database.cpp adapters/database.h
     #adapters/searchjob.cpp adapters/searchjob.h
@@ -59,15 +60,21 @@ qt_add_qml_module(Katalog3
         PageDevicesView.qml
         PageDevicesViewDelegate.qml
         PageCreateForm.qml
+        PageDeviceEditForm.qml
+        PageTagsForm.qml
+        PageStatisticsForm.qml
+        PageBackupForm.qml
+        PageBackupMappingForm.qml
+        PageBackupPreviewForm.qml
         PageSelectionView.qml
         DeviceTreeComboBox.qml
+        PageExploreFolders.qml
+        PageExploreFiles.qml
     SOURCES
         ${CORE_SOURCES}
         ${UI_SOURCES}
     RESOURCES
-        ../assets/logo-64.png
         ../assets/Katalog_logo_64.ico
-        ../assets/logo-64.ico
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -89,6 +96,7 @@ target_link_libraries(Katalog3
     Qt6::Gui
     Qt6::Sql
     #Qt6::QuickControls2
+    Qt6::Charts
     Qt6::Widgets
     KF6::I18n
     KF6::CoreAddons

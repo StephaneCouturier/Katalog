@@ -132,13 +132,9 @@
                 <item row="0" column="1">
                  <widget class="QLabel" name="Filters_label_DisplayDevice">
                   <property name="font">
-
                    <font>
-
-                     <bold>true</bold>
-
+                    <bold>true</bold>
                    </font>
-
                   </property>
                   <property name="text">
                    <string/>
@@ -148,13 +144,9 @@
                 <item row="1" column="1">
                  <widget class="QLabel" name="Filters_label_DisplayStorage">
                   <property name="font">
-
                    <font>
-
-                     <bold>true</bold>
-
+                    <bold>true</bold>
                    </font>
-
                   </property>
                   <property name="text">
                    <string/>
@@ -208,13 +200,9 @@
                 <item row="2" column="1">
                  <widget class="QLabel" name="Filters_label_DisplayCatalog">
                   <property name="font">
-
                    <font>
-
-                     <bold>true</bold>
-
+                    <bold>true</bold>
                    </font>
-
                   </property>
                   <property name="text">
                    <string/>
@@ -535,13 +523,9 @@
              <item>
               <widget class="QLabel" name="Filters_label_Selection">
                <property name="font">
-
                 <font>
-
-                  <bold>true</bold>
-
+                 <bold>true</bold>
                 </font>
-
                </property>
                <property name="text">
                 <string>Selection</string>
@@ -877,7 +861,7 @@
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background: url(:/images/link-tree-mid.png) repeat-y left;</string>
+                      <string notr="true">background: url(:/images/link-tree-mid.png) no-repeat left center;</string>
                      </property>
                      <property name="text">
                       <string/>
@@ -913,21 +897,24 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="Search_lineEdit_SearchText">
+                    <widget class="QPlainTextEdit" name="Search_lineEdit_SearchText">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>32</height>
+                       <height>40</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>32</height>
+                       <height>64</height>
                       </size>
-                     </property>
-                     <property name="clearButtonEnabled">
-                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -946,6 +933,25 @@
                       </size>
                      </property>
                     </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="Search_pushButton_ClearSearchText">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Clear the search text</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-clear"/>
+                     </property>
+                    </widget>
                    </item>
                    <item>
                     <widget class="QPushButton" name="Search_pushButton_PasteFromClipboard">
@@ -4981,13 +4987,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </size>
                     </property>
                     <property name="font">
-
                      <font>
-
-                       <bold>true</bold>
-
+                      <bold>true</bold>
                      </font>
-
                     </property>
                     <property name="text">
                      <string>0</string>
@@ -5031,13 +5033,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </size>
                     </property>
                     <property name="font">
-
                      <font>
-
-                       <bold>true</bold>
-
+                      <bold>true</bold>
                      </font>
-
                     </property>
                     <property name="text">
                      <string>0</string>
@@ -5325,6 +5323,57 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </spacer>
                 </item>
                </layout>
+              </item>
+              <item>
+               <widget class="QWidget" name="Search_widget_HistoryActions">
+                <layout class="QHBoxLayout" name="Search_horizontalLayout_HistoryActions">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <spacer name="Search_horizontalSpacer_HistoryActions">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Search_pushButton_KeepLastHistory">
+                   <property name="text">
+                    <string>Keep last 10</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="edit-clear-history"/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Search_pushButton_ClearHistory">
+                   <property name="text">
+                    <string>Reset</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="edit-clear-history"/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </item>
               <item>
                <widget class="QTreeView" name="Search_treeView_History">
@@ -5631,13 +5680,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>0</string>
@@ -5673,13 +5718,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>0</string>
@@ -5703,13 +5744,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="QLabel" name="Storage_label_SpaceUsedValue">
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>0</string>
@@ -5733,13 +5770,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="QLabel" name="Storage_label_SpaceFreeValue">
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>0</string>
@@ -5771,13 +5804,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>%</string>
@@ -5871,13 +5900,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>Device Type</string>
@@ -6723,13 +6748,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>0</string>
@@ -6762,13 +6783,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>0</string>
@@ -6801,13 +6818,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>0</string>
@@ -7277,13 +7290,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <bool>true</bool>
                       </property>
                       <property name="font">
-
                        <font>
-
-                         <bold>true</bold>
-
+                        <bold>true</bold>
                        </font>
-
                       </property>
                       <property name="text">
                        <string>0</string>
@@ -7371,13 +7380,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <bool>true</bool>
                       </property>
                       <property name="font">
-
                        <font>
-
-                         <bold>true</bold>
-
+                        <bold>true</bold>
                        </font>
-
                       </property>
                       <property name="text">
                        <string>0</string>
@@ -7425,13 +7430,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <bool>true</bool>
                       </property>
                       <property name="font">
-
                        <font>
-
-                         <bold>true</bold>
-
+                        <bold>true</bold>
                        </font>
-
                       </property>
                       <property name="text">
                        <string>0</string>
@@ -7522,13 +7523,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </size>
                  </property>
                  <property name="font">
-
                   <font>
-
-                    <bold>true</bold>
-
+                   <bold>true</bold>
                   </font>
-
                  </property>
                  <property name="text">
                   <string/>
@@ -7634,13 +7631,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <item row="1" column="1">
                 <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
                  <property name="font">
-
                   <font>
-
-                    <bold>true</bold>
-
+                   <bold>true</bold>
                   </font>
-
                  </property>
                  <property name="text">
                   <string/>
@@ -7663,13 +7656,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <item row="2" column="1">
                 <widget class="QLabel" name="Explore_label_CatalogDirectoryDisplay">
                  <property name="font">
-
                   <font>
-
-                    <bold>true</bold>
-
+                   <bold>true</bold>
                   </font>
-
                  </property>
                  <property name="text">
                   <string/>
@@ -7716,13 +7705,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QLabel" name="label">
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>Catalog Parameters</string>
@@ -7827,7 +7812,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <layout class="QHBoxLayout" name="Create_horizontalLayout_AddStorage">
                     <item>
-                     <widget class="QComboBox" name="Create_comboBox_StorageSelection">
+                     <widget class="TreeComboBox" name="Create_comboBox_StorageSelection">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -8643,13 +8628,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <widget class="QLabel" name="Create_label_GlobalParameters">
                     <property name="font">
-
                      <font>
-
-                       <bold>true</bold>
-
+                      <bold>true</bold>
                      </font>
-
                     </property>
                     <property name="text">
                      <string>Global Parameters</string>
@@ -8684,8 +8665,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <item row="1" column="0">
                     <layout class="QGridLayout" name="Create_gridLayout_ExcludeDirectorySelection">
                      <item row="0" column="0">
-                      <widget class="QLineEdit" name="Create_lineEdit_FolderToExclude">
-                      </widget>
+                      <widget class="QLineEdit" name="Create_lineEdit_FolderToExclude"/>
                      </item>
                      <item row="0" column="2">
                       <widget class="QPushButton" name="Create_pushButton_AddDirectoryToExclude">
@@ -9273,13 +9253,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QLabel" name="BackUp_label_CurrentMappings_DeviceValue">
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>Device</string>
@@ -9411,13 +9387,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9443,13 +9415,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9468,13 +9436,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9500,13 +9464,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9525,13 +9485,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9698,13 +9654,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9737,13 +9689,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9762,13 +9710,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9787,13 +9731,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9812,13 +9752,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9851,13 +9787,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9876,13 +9808,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9901,13 +9829,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -9926,13 +9850,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -10374,13 +10294,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="0" column="2">
                <widget class="QLabel" name="Settings_label_Settings">
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="lineWidth">
                  <number>1</number>
@@ -10473,13 +10389,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <widget class="QLabel" name="Settings_label_CurrentFolder_9">
                       <property name="font">
-
                        <font>
-
-                         <bold>true</bold>
-
+                        <bold>true</bold>
                        </font>
-
                       </property>
                       <property name="text">
                        <string>Data mode &quot;SQLite local file&quot;</string>
@@ -10517,8 +10429,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="Settings_lineEdit_DatabaseFilePath">
-                     </widget>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DatabaseFilePath"/>
                     </item>
                     <item>
                      <widget class="QPushButton" name="Settings_pushButton_ApplyFilepath">
@@ -10649,13 +10560,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <widget class="QLabel" name="Settings_label_CurrentFolder_4">
                       <property name="font">
-
                        <font>
-
-                         <bold>true</bold>
-
+                        <bold>true</bold>
                        </font>
-
                       </property>
                       <property name="text">
                        <string>Data mode &quot;Memory&quot;</string>
@@ -10706,8 +10613,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="Settings_lineEdit_CollectionFolder">
-                     </widget>
+                     <widget class="QLineEdit" name="Settings_lineEdit_CollectionFolder"/>
                     </item>
                     <item>
                      <widget class="QPushButton" name="Settings_pushButton_ApplyFolderpath">
@@ -10826,13 +10732,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item row="1" column="0">
                         <widget class="QLabel" name="Settings_label_Settings_3">
                          <property name="font">
-
                           <font>
-
-                            <bold>true</bold>
-
+                           <bold>true</bold>
                           </font>
-
                          </property>
                          <property name="text">
                           <string>Settings</string>
@@ -10923,13 +10825,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="font">
-
                     <font>
-
-                      <bold>true</bold>
-
+                     <bold>true</bold>
                     </font>
-
                    </property>
                    <property name="text">
                     <string>Data management</string>
@@ -11026,13 +10924,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </size>
                       </property>
                       <property name="font">
-
                        <font>
-
-                         <bold>true</bold>
-
+                        <bold>true</bold>
                        </font>
-
                       </property>
                       <property name="text">
                        <string>Data mode &quot;Hosted database&quot;</string>
@@ -11073,8 +10967,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <number>0</number>
                     </property>
                     <item row="3" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_UserName">
-                     </widget>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_UserName"/>
                     </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="Settings_label_DataModeHostedHostname">
@@ -11090,8 +10983,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="2" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Port">
-                     </widget>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Port"/>
                     </item>
                     <item row="3" column="0">
                      <widget class="QLabel" name="Settings_label_DataModeHostedUserName">
@@ -11133,16 +11025,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="4" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Password">
-                     </widget>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Password"/>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_DatabaseName">
-                     </widget>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_DatabaseName"/>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_HostName">
-                     </widget>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_HostName"/>
                     </item>
                     <item row="1" column="0">
                      <widget class="QLabel" name="Settings_label_DataModeHostedDatabaseName">
@@ -11278,13 +11167,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QLabel" name="Settings_label_About">
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>About</string>
@@ -11328,13 +11213,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item row="0" column="4">
                  <widget class="QLabel" name="Settings_label_DateValue">
                   <property name="font">
-
                    <font>
-
-                     <bold>true</bold>
-
+                    <bold>true</bold>
                    </font>
-
                   </property>
                   <property name="text">
                    <string>Date</string>
@@ -11372,13 +11253,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item row="0" column="2">
                  <widget class="QLabel" name="Settings_label_VersionValue">
                   <property name="font">
-
                    <font>
-
-                     <bold>true</bold>
-
+                    <bold>true</bold>
                    </font>
-
                   </property>
                   <property name="text">
                    <string>Version</string>
@@ -11613,13 +11490,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="0" column="1">
                <widget class="QLabel" name="Settings_label_Settings_2">
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>Language &amp; Theme</string>
@@ -11652,13 +11525,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QLabel" name="Settings_label_ImageFolder">
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>Images folder</string>
@@ -11720,13 +11589,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="1" column="1">
                <widget class="QLabel" name="Settings_label_Import_2">
                 <property name="font">
-
                  <font>
-
-                   <bold>true</bold>
-
+                  <bold>true</bold>
                  </font>
-
                 </property>
                 <property name="text">
                  <string>Import</string>

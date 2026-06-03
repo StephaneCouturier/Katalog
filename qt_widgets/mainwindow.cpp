@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 {
     //Set current version and release date from CMake-generated values
     currentVersion  = KatalogVersion::string();
-    releaseDate     = "2026-04-12";
+    releaseDate     = "2026-06-01";
     //releaseDate     = KatalogVersion::buildDate(); //Commented out for release
 
     // MainWindow is stack-allocated in main.cpp; prevent KMainWindow from
@@ -298,6 +298,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
         //Setup tab: Settings
             //Load path of last collection used
             ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
             ui->Settings_lineEdit_ImageFolderPath->setText(collection->imageFolderPath);
 
             //Apply databaseMode in Settings tab

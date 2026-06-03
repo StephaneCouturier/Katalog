@@ -511,7 +511,7 @@
 
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to create and open:"),
-                                                                   newFileFolder + "/newKatalogFile.db","*.db");
+                                                                   newFileFolder + "/katalog.db","*.db");
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
@@ -688,7 +688,8 @@
         // exists.  If any model queries the catalog table before the migration runs,
         // DROP TABLE catalog inside the migration fails with SQLITE_LOCKED.
         if(collection->databaseMode != "Memory"){
-            runDatabaseMigrations();
+            if (QSqlDatabase::contains(m_connectionName))
+                runDatabaseMigrations();
         }
 
         //Check active status and synch it

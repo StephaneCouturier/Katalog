@@ -314,7 +314,7 @@
         }
 
         // Validation 3: Storage selection
-        if (ui->Create_comboBox_StorageSelection->currentText() == "") {
+        if (ui->Create_comboBox_StorageSelection->selectedDeviceId() <= 0) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(tr("Select a Storage for this new catalog.<br/>(Selection panel on the left and dropdown list)"));
@@ -360,7 +360,7 @@
         }
 
         //Continue populating values and add device
-        newCatalogDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
+        newCatalogDevice->parentID = ui->Create_comboBox_StorageSelection->selectedDeviceId();
         newCatalogDevice->catalog->generateID();
         newCatalogDevice->externalID = newCatalogDevice->catalog->ID;
         newCatalogDevice->groupID = 0;

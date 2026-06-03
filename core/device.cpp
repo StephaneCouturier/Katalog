@@ -30,9 +30,12 @@
 */
 
 #include "device.h"
+#include "database.h"
 #include <QSqlError>
 #include <QCoreApplication>
 #include <qelapsedtimer.h>
+#include <QDir>
+#include <QMutex>
 
 void Device::loadDevice(QString connectionName){
     QElapsedTimer totalTimer;
@@ -40,6 +43,8 @@ void Device::loadDevice(QString connectionName){
     QElapsedTimer stepTimer;
     stepTimer.start();
     bool useTimerForDebug = false;
+
+    m_connectionName = connectionName;
 
     QSqlDatabase db = QSqlDatabase::database(connectionName);
     if (!db.isOpen()) {
@@ -97,6 +102,7 @@ void Device::loadDevice(QString connectionName){
     //Load storage values
     if(type == "Storage"){
         storage->ID = externalID;
+        storage->setConnectionName(connectionName);
         storage->loadStorage(connectionName);
         storage->path = path;
         storage->totalSpace = totalSpace;
@@ -109,6 +115,7 @@ void Device::loadDevice(QString connectionName){
     //Load catalog values
     if(type == "Catalog"){
         catalog->ID = externalID;
+        catalog->setConnectionName(connectionName);
         catalog->loadCatalog();
         if (catalog->includeMetadata == "false") {
             catalog->includeMetadata = Catalog::METADATA_NONE;
@@ -685,6 +692,19 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
 
     if (type == "Catalog") {
         catalog->deleteCatalog();
+
+        // Remove any virtual device assignment rows for the same catalog
+        // (rows with the same externalID created via "Assign selected catalog")
+        QSqlQuery queryCleanup(QSqlDatabase::database(m_connectionName));
+        queryCleanup.prepare(QLatin1String(R"(
+            DELETE FROM device
+            WHERE device_external_id = :externalID
+              AND device_id          != :device_id
+              AND device_type        = 'Catalog'
+        )"));
+        queryCleanup.bindValue(":externalID", externalID);
+        queryCleanup.bindValue(":device_id",  ID);
+        queryCleanup.exec();
     }
 
     result.result = DeleteSuccess;
@@ -962,6 +982,145 @@ int Device::getMaxHierarchyDepth(const QString &connectionName)
     return 4; // safe default
 }
 //----------------------------------------------------------------------
+QList<Device*> Device::getActiveCatalogList(const QString &connectionName, int scopeDeviceId)
+{
+    QList<Device*> result;
+
+    // Use loadDeviceTree so the returned order matches the Catalogs list display order
+    // (hierarchical sort_path: device_order then name, depth-first).
+    const QList<DeviceTreeNode> nodes = loadDeviceTree(connectionName, scopeDeviceId);
+
+    for (const DeviceTreeNode &n : nodes) {
+        if (n.type != QLatin1String("Catalog") || !n.isActive)
+            continue;
+        Device *dev = new Device();
+        dev->ID = n.id;
+        dev->loadDevice(connectionName);
+        if (dev->active)
+            result.append(dev);
+        else
+            delete dev;
+    }
+
+    return result;
+}
+//----------------------------------------------------------------------
+QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionName,
+                                                     int scopeDeviceId)
+{
+    QList<DeviceTreeNode> result;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen())
+        return result;
+
+    // Recursive CTE: depth-first order via sort_path (zero-padded device_order + lower name).
+    // scopeDeviceId == 0 → start from all root devices (device_parent_id = 0).
+    // scopeDeviceId  > 0 → start from that single device and recurse into its subtree.
+    QString startCond = (scopeDeviceId > 0)
+        ? QLatin1String("device_id = :scope")
+        : QLatin1String("device_parent_id = 0");
+
+    // MySQL uses CONCAT() for string concatenation; SQLite and PostgreSQL use ||.
+    const bool isMySQL = (Database::getDatabaseType(connectionName) == Database::DatabaseType::MySQL);
+
+    QString anchorSortPath, recursiveSortPath;
+    if (isMySQL) {
+        anchorSortPath    = "CONCAT(RIGHT(CONCAT('0000000000', CAST(COALESCE(device_order,0) AS CHAR)), 10), '|', LOWER(device_name))";
+        recursiveSortPath = "CONCAT(p.sort_path, '/', RIGHT(CONCAT('0000000000', CAST(COALESCE(c.device_order,0) AS CHAR)), 10), '|', LOWER(c.device_name))";
+    } else {
+        anchorSortPath    = "SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS CHAR), -10) || '|' || LOWER(device_name)";
+        recursiveSortPath = "p.sort_path || '/' || SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS CHAR), -10) || '|' || LOWER(c.device_name)";
+    }
+
+    QString sql = QLatin1String(R"(
+        WITH RECURSIVE device_tree AS (
+            SELECT  device_id,
+                    device_parent_id,
+                    device_name,
+                    device_type,
+                    device_path,
+                    device_total_file_size,
+                    device_total_file_count,
+                    device_total_space,
+                    device_free_space,
+                    device_active,
+                    device_date_updated,
+                    device_group_id,
+                    device_external_id,
+                    0 AS level,
+                    )") + anchorSortPath + QLatin1String(R"( AS sort_path
+            FROM device
+            WHERE )") + startCond + QLatin1String(R"(
+            UNION ALL
+            SELECT  c.device_id,
+                    c.device_parent_id,
+                    c.device_name,
+                    c.device_type,
+                    c.device_path,
+                    c.device_total_file_size,
+                    c.device_total_file_count,
+                    c.device_total_space,
+                    c.device_free_space,
+                    c.device_active,
+                    c.device_date_updated,
+                    c.device_group_id,
+                    c.device_external_id,
+                    p.level + 1,
+                    )") + recursiveSortPath + QLatin1String(R"(
+            FROM device c
+            JOIN device_tree p ON c.device_parent_id = p.device_id
+        )
+        SELECT  device_id,
+                device_parent_id,
+                device_name,
+                device_type,
+                device_path,
+                device_total_file_size,
+                device_total_file_count,
+                device_total_space,
+                device_free_space,
+                device_active,
+                device_date_updated,
+                device_group_id,
+                level,
+                device_external_id
+        FROM device_tree
+        ORDER BY sort_path
+    )");
+
+    QSqlQuery query(db);
+    query.prepare(sql);
+    if (scopeDeviceId > 0)
+        query.bindValue(":scope", scopeDeviceId);
+
+    if (!query.exec()) {
+        qWarning() << "Device::loadDeviceTree query failed:" << query.lastError().text();
+        return result;
+    }
+
+    while (query.next()) {
+        DeviceTreeNode node;
+        node.id             = query.value(0).toInt();
+        node.parentId       = query.value(1).toInt();
+        node.name           = query.value(2).toString();
+        node.type           = query.value(3).toString();
+        node.path           = query.value(4).toString();
+        node.totalFileSize  = query.value(5).toLongLong();
+        node.totalFileCount = query.value(6).toLongLong();
+        node.totalSpace     = query.value(7).toLongLong();
+        node.freeSpace      = query.value(8).toLongLong();
+        node.isActive       = query.value(9).toBool();
+        node.dateUpdated    = query.value(10).toString();
+        node.groupId        = query.value(11).toInt();
+        node.level          = query.value(12).toInt();
+        node.externalId     = query.value(13).toInt();
+        result.append(node);
+    }
+
+    return result;
+}
+//----------------------------------------------------------------------
 QString Device::getDevicePath(int deviceId, const QString &connectionName)
 {
     // Walk up via device_parent_id, building the ancestor chain iteratively.
@@ -978,4 +1137,233 @@ QString Device::getDevicePath(int deviceId, const QString &connectionName)
         id = q.value(1).toInt();
     }
     return parts.join(" / ");
+}
+//----------------------------------------------------------------------
+int Device::getFirstStorageDescendantId(int virtualDeviceId, const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare(QLatin1String(R"(
+        WITH RECURSIVE subtree AS (
+            SELECT device_id, device_name, device_type
+            FROM   device
+            WHERE  device_parent_id = :virtualId
+            UNION ALL
+            SELECT d.device_id, d.device_name, d.device_type
+            FROM   device d
+            JOIN   subtree s ON d.device_parent_id = s.device_id
+        )
+        SELECT device_id FROM subtree
+        WHERE  device_type = 'Storage'
+        ORDER  BY device_name
+        LIMIT  1
+    )"));
+    query.bindValue(":virtualId", virtualDeviceId);
+    if (query.exec() && query.next())
+        return query.value(0).toInt();
+    return 0;
+}
+//----------------------------------------------------------------------
+Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
+    const QString& oldRoot,
+    const QString& newRoot,
+    const QString& connectionName,
+    const QString& databaseMode,
+    const QString& collectionFolder)
+{
+    StorageRootReplaceResult result;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen())
+        return result;
+
+    // Normalize: forward slashes, no trailing slash (except lone "/")
+    auto normalize = [](const QString& p) -> QString {
+        QString n = QDir::fromNativeSeparators(p);
+        if (n.length() > 1 && n.endsWith('/'))
+            n.chop(1);
+        return n;
+    };
+    const QString oldN = normalize(oldRoot);
+    const QString newN = normalize(newRoot);
+    const QString pattern = oldN + '%';
+    const int     oldLen  = oldN.length();
+
+    // --- Catalog device: update its own file/folder tables directly ---
+    // device.device_path and catalog.catalog_source_path already saved by saveDeviceForm/saveCatalogChanges.
+    if (type == "Catalog") {
+        const int catId   = catalog->ID;
+        const int startPos = oldLen + 1;
+
+        if (databaseMode == "Memory") {
+            QMutex mutex;
+            bool stop = false;
+            catalog->loadCatalogFileListToTable(mutex, stop);
+            catalog->loadFoldersToTable();
+        }
+
+        QSqlQuery fileQ(db);
+        fileQ.prepare(QLatin1String(R"(
+            UPDATE file
+            SET    file_full_path   = :newRootF  || SUBSTR(file_full_path,   :startPosF),
+                   file_folder_path = :newRootFP || SUBSTR(file_folder_path, :startPosFP)
+            WHERE  file_catalog_id  = :catIdF
+              AND  file_full_path   LIKE :patternF
+        )"));
+        fileQ.bindValue(":newRootF",   newN);
+        fileQ.bindValue(":startPosF",  startPos);
+        fileQ.bindValue(":newRootFP",  newN);
+        fileQ.bindValue(":startPosFP", startPos);
+        fileQ.bindValue(":catIdF",     catId);
+        fileQ.bindValue(":patternF",   pattern);
+        if (fileQ.exec())
+            result.filesUpdated += fileQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes(Catalog): file UPDATE failed:" << fileQ.lastError().text();
+
+        QSqlQuery folderQ(db);
+        folderQ.prepare(QLatin1String(R"(
+            UPDATE folder
+            SET    folder_path       = :newRootD || SUBSTR(folder_path, :startPosD)
+            WHERE  folder_catalog_id = :catIdD
+              AND  folder_path       LIKE :patternD
+        )"));
+        folderQ.bindValue(":newRootD",  newN);
+        folderQ.bindValue(":startPosD", startPos);
+        folderQ.bindValue(":catIdD",    catId);
+        folderQ.bindValue(":patternD",  pattern);
+        if (folderQ.exec())
+            result.foldersUpdated += folderQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes(Catalog): folder UPDATE failed:" << folderQ.lastError().text();
+
+        if (databaseMode == "Memory")
+            catalog->saveCatalogToFile(databaseMode, collectionFolder);
+
+        result.catalogsUpdated = 1;
+        return result;
+    }
+
+    // Find all Catalog-type descendants of this Storage device (mirrors loadSubDeviceList CTE)
+    QSqlQuery findQ(db);
+    findQ.prepare(QLatin1String(R"(
+        SELECT device_id
+        FROM   device
+        WHERE  device_id IN (
+            WITH RECURSIVE hierarchy AS (
+                SELECT device_id FROM device WHERE device_id = :pid
+                UNION ALL
+                SELECT t.device_id FROM device t
+                JOIN hierarchy h ON t.device_parent_id = h.device_id
+            )
+            SELECT device_id FROM hierarchy
+        )
+          AND  device_id   != :pid
+          AND  device_type  = 'Catalog'
+    )"));
+    findQ.bindValue(":pid", ID);
+    if (!findQ.exec()) {
+        qWarning() << "WARNING: replaceStorageRootInIndexes: failed to list child catalogs:" << findQ.lastError().text();
+        return result;
+    }
+
+    QList<int> childIds;
+    while (findQ.next())
+        childIds << findQ.value(0).toInt();
+
+    for (int devId : childIds) {
+
+        Device catalogDev;
+        catalogDev.ID = devId;
+        catalogDev.catalog->setConnectionName(connectionName);
+        catalogDev.loadDevice(connectionName);
+
+        if (catalogDev.type != "Catalog" || !catalogDev.catalog)
+            continue;
+
+        // Skip if this catalog's source is not under oldRoot
+        const QString src = QDir::fromNativeSeparators(catalogDev.catalog->sourcePath);
+        if (!src.startsWith(oldN))
+            continue;
+
+        const int catId = catalogDev.catalog->ID;
+
+        // Memory mode: ensure file/folder data is loaded into the in-memory tables
+        if (databaseMode == "Memory") {
+            QMutex mutex;
+            bool stop = false;
+            catalogDev.catalog->loadCatalogFileListToTable(mutex, stop);
+            catalogDev.catalog->loadFoldersToTable();
+        }
+
+        // Precompute start position (1-based) for SUBSTR — avoids in-SQL arithmetic
+        // and prevents Qt/QSQLITE silent failure when the same named param appears
+        // multiple times in one SET clause.
+        const int startPos = oldLen + 1;
+
+        // UPDATE file paths
+        QSqlQuery fileQ(db);
+        fileQ.prepare(QLatin1String(R"(
+            UPDATE file
+            SET    file_full_path   = :newRootF || SUBSTR(file_full_path,   :startPosF),
+                   file_folder_path = :newRootFP || SUBSTR(file_folder_path, :startPosFP)
+            WHERE  file_catalog_id  = :catIdF
+              AND  file_full_path   LIKE :patternF
+        )"));
+        fileQ.bindValue(":newRootF",    newN);
+        fileQ.bindValue(":startPosF",   startPos);
+        fileQ.bindValue(":newRootFP",   newN);
+        fileQ.bindValue(":startPosFP",  startPos);
+        fileQ.bindValue(":catIdF",      catId);
+        fileQ.bindValue(":patternF",    pattern);
+        if (fileQ.exec())
+            result.filesUpdated += fileQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes: file UPDATE failed:" << fileQ.lastError().text();
+
+        // UPDATE folder paths
+        QSqlQuery folderQ(db);
+        folderQ.prepare(QLatin1String(R"(
+            UPDATE folder
+            SET    folder_path       = :newRootD || SUBSTR(folder_path, :startPosD)
+            WHERE  folder_catalog_id = :catIdD
+              AND  folder_path       LIKE :patternD
+        )"));
+        folderQ.bindValue(":newRootD",   newN);
+        folderQ.bindValue(":startPosD",  startPos);
+        folderQ.bindValue(":catIdD",     catId);
+        folderQ.bindValue(":patternD",   pattern);
+        if (folderQ.exec())
+            result.foldersUpdated += folderQ.numRowsAffected();
+        else
+            qWarning() << "WARNING: replaceStorageRootInIndexes: folder UPDATE failed:" << folderQ.lastError().text();
+
+        // UPDATE catalog source path in the catalog table, device table, and C++ object
+        const QString newSrc = newN + src.mid(oldLen);
+        catalogDev.catalog->sourcePath = newSrc;
+        catalogDev.catalog->saveCatalog();
+
+        // Keep device.device_path in sync with catalog.catalog_source_path
+        QSqlQuery devPathQ(db);
+        devPathQ.prepare("UPDATE device SET device_path = :newPath WHERE device_id = :devId");
+        devPathQ.bindValue(":newPath", newSrc);
+        devPathQ.bindValue(":devId",   devId);
+        if (!devPathQ.exec())
+            qWarning() << "WARNING: replaceStorageRootInIndexes: device_path UPDATE failed:" << devPathQ.lastError().text();
+
+        // Memory mode: persist corrected data back to .idx / .folders.idx files
+        if (databaseMode == "Memory")
+            catalogDev.catalog->saveCatalogToFile(databaseMode, collectionFolder);
+
+        result.catalogsUpdated++;
+    }
+
+    // UPDATE storage_path
+    QSqlQuery storQ(db);
+    storQ.prepare(QLatin1String("UPDATE storage SET storage_path = :path WHERE storage_id = :id"));
+    storQ.bindValue(":path", newN);
+    storQ.bindValue(":id",   externalID);
+    if (!storQ.exec())
+        qWarning() << "WARNING: replaceStorageRootInIndexes: storage_path UPDATE failed:" << storQ.lastError().text();
+
+    return result;
 }

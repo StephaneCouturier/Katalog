@@ -63,6 +63,7 @@ public:
             map["selectedFileType"]         = selectedFileType;
             map["selectedSearchExclude"]    = selectedSearchExclude;
             //File attributes
+            map["searchOnFileCriteria"]     = searchOnFileCriteria;
             //Size
             map["searchOnSize"]             = searchOnSize;
             map["selectedMinimumSize"]      = selectedMinimumSize;
@@ -117,6 +118,8 @@ public:
             map["filesFoundMaxDate"]        = filesFoundMaxDate;
         //Global search options
             map["searchInCatalogsChecked"]  = searchInCatalogsChecked;
+            map["searchInConnectedChecked"] = searchInConnectedChecked;
+            map["connectedDirectory"]       = connectedDirectory;
 
         return map;
     }
@@ -240,7 +243,9 @@ public:
             if (map.contains("filesFoundMaxDate"))      { filesFoundMaxDate         = map["filesFoundMaxDate"].toString(); }
 
         //Global search options
-            if (map.contains("searchInCatalogsChecked")){ searchInCatalogsChecked   = map["searchInCatalogsChecked"].toBool(); }
+            if (map.contains("searchInCatalogsChecked")) { searchInCatalogsChecked  = map["searchInCatalogsChecked"].toBool(); }
+            if (map.contains("searchInConnectedChecked")){ searchInConnectedChecked  = map["searchInConnectedChecked"].toBool(); }
+            if (map.contains("connectedDirectory"))      { connectedDirectory        = map["connectedDirectory"].toString(); }
 
         // Recalculate size multipliers whenever properties are set
         setMultipliers();

@@ -1,5 +1,5 @@
 name: Katalog 2 - Build linux Qt6 (inc KF6)
-#v2026-04-26 run20
+#v2.12 run1
 on:
   # Trigger on new releases
   # release:

@@ -9,23 +9,39 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
+> **CRITICAL — Core class changes:**
+> - **NEVER add or modify methods in `core/` classes** without explicit user approval first.
+> - Before proposing a new core method, always check: does the equivalent SQL/logic already exist in K2's UI layer? If so, state where it is and ask for approval to move it to core.
+> - The core library was deliberately cleaned up (all SQL moved from K2 UI to core) before K3 was started. Any further change to `core/` is a deliberate architectural decision and must be approved in advance.
+
 > **CRITICAL — UI structure:**
 > - **NEVER create a new source file** (`.cpp`, `.h`, `.qml`) for a new tab (Katalog2), section, or Page (Katalog3) without the user explicitly requesting it.
 > - If unsure where new code belongs, **ask before creating new files**.
+> - **K2 UI is in maintenance mode:** keep K2 changes minimal (bug fixes, small tweaks). New major UI features are designed and built in K3 only, and only after the full K2 feature set has been migrated to K3.
+
+> **CRITICAL — K3 migration process:**
+> - Before implementing any K3 feature that mirrors a K2 feature, **read ALL of the K2 source code** for that feature: the loading method, the display/model population, every user interaction handler (including destructive actions and their confirmation dialogs), side-effects triggered on search/save/complete events, and the restoration/apply logic. Never implement a partial migration.
+> - K3 must achieve **full feature parity** with K2 for each migrated feature. Checklist for every migrated feature:
+>   1. **Display** — same data shown to the user (all fields, not just a subset)
+>   2. **Destructive actions** — every Clear/Delete/Keep button must have a confirmation dialog matching K2
+>   3. **Lifecycle hooks** — any side-effect K2 triggers on search start, search complete, or save (e.g. saving to history table, persisting to CSV) must be replicated in K3
+>   4. **Restore/apply** — clicking a history/saved entry must restore all criteria, not just the visible ones
 
 > **CRITICAL — User-visible text:**
 > - **NEVER alter existing `tr()` strings or any user-visible label text** — not for brevity, not for layout reasons, not for any reason. Any change breaks all 30 translations and diverges K3 from K2.
 > - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.
 > - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
+> - **Before writing any K3 user-visible text** (labels, status messages, progress reports, dialog text, tooltips, notifications) **always read the K2 equivalent first** and reuse its exact `tr()` string. Creating a new string when K2 already has one wastes a translation slot across 30 languages.
+> - **Progress/status messages in K3 MUST follow `SpecProgressReport.md`** (`docs_src/docs/SpecProgressReport.md`). Every status bar message must use `StatusBarMessageBuilder`. NEVER write a raw string where the builder is the specification. Read the spec before implementing any progress or status message.
 
 > **CRITICAL — Version context:**
-> - Last **released** version: **2.10**
-> - Current **development** version: **2.11** (branch `katalog_development`)
-> - Database migrations 2.11 were introduced **during** the 2.11 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
+> - Last **released** version: **2.11**
+> - Current **development** version: **2.12** (branch `katalog_development`)
+> - Database migrations 2.12 were introduced **during** the 2.12 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
 >
 > **New fields added in 2.12 (unreleased — edit in place, no extra migration needed):**
-> none for now
+> - `catalog.catalog_include_sub_dir` INTEGER DEFAULT 1 — whether the catalog scanner recurses into subdirectories; `false` for the `(root)` split catalog in the Devices Split feature
 
 ## Project Overview
 
@@ -100,6 +116,7 @@ The two-layer separation is enforced for future **QtQuick compatibility**. The g
 
 **What belongs in `src/core/`:**
 - All SQL queries (`QSqlQuery`) — wrap in methods on the relevant domain class (`Catalog`, `Device`, `Collection`, `Tag`, `FileMetadata`, etc.)
+- All domain object operations: creating, inserting, updating, deleting `Device`, `Catalog`, `Storage`, `Tag`, etc. — even if they don't contain raw SQL
 - File I/O for data files
 - Business logic, data transformations, algorithms
 - Domain-specific sorting/formatting logic (e.g. metadata field priority order)
@@ -111,12 +128,15 @@ The two-layer separation is enforced for future **QtQuick compatibility**. The g
 - HTML/CSS generation for display
 - Qt Charts series building
 - Error dialogs and user confirmations
+- Calling core methods and refreshing UI from their results
 
 **Enforcement rules:**
 - `core/` files must **never** include Qt Widgets headers (`QWidget`, `QDialog`, `QMessageBox`, etc.)
 - `qt_widgets/mainwindow_tab_*.cpp` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
+- `qt_widgets/mainwindow_tab_*.cpp` files must **not** call domain mutating methods directly (`insertDevice()`, `deleteDevice()`, `generateNextDeviceID()`, `saveDevice()`, `insertPhysicalStorageGroup()`, etc.) — wrap multi-step domain operations in a single core method
 - `qt_quick/` files must **not** contain raw `QSqlQuery` — delegate to a core method instead
 - Core methods return plain Qt value types (`QString`, `QList`, `QStringList`, `QPair`, etc.), never widget types
+- **When reviewing any `mainwindow_tab_*.cpp` method:** ask "does this touch domain objects or the database?" — if yes, it belongs in core regardless of whether it uses raw SQL
 
 **Reference implementations (established patterns):**
 - Single-row DB lookup: `Catalog::getFileChecksum(fileName, folderPath)` → `QString`
@@ -176,7 +196,7 @@ ninja
 
 ## Database
 
-SQLite with multiple connection modes (file, hosted, memory). Schema versioning handles migrations. Separate files for: devices, catalogs, storage, statistics, search history.
+Multiple connection modes: file (SQLite file), memory (SQLite), hosted (Mariadb/MySQL). Schema versioning handles migrations. Memeory mode: Separate files for: devices, catalogs, storage, statistics, search history.
 
 ### Memory Mode Caveat
 

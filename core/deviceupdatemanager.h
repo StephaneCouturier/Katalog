@@ -40,6 +40,12 @@ public:
                                const QString& collectionFolder,
                                const QString& updateType = "update");
 
+    void replaceStorageRoot(Device* storageDevice,
+                            const QString& oldRoot,
+                            const QString& newRoot,
+                            const QString& databaseMode,
+                            const QString& collectionFolder);
+
     // ===== CONTROL INTERFACE =====
     void requestGentleStop();
     void requestHardStop();
@@ -62,6 +68,7 @@ public:
      * @param catalogProgressManager The progress manager from MainWindow
      */
     void setCatalogProgressManager(CatalogProgressManager* catalogProgressManager);
+    void setConnectionName(const QString &name) { m_connectionName = name; }
 
     int getProcessedStorageDevices() const { return m_processedStorageDevices; }
 

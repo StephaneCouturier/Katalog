@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
 # Rechercher
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Rechercher** et comment les utiliser.
@@ -49,6 +49,13 @@ Saisir le texte à rechercher dans les noms de fichiers et/ou les chemins de dos
 
 Un « mot » est un groupe de caractères séparé d'un autre groupe par un espace. Cela peut être utilisé pour trouver des dossiers, des fichiers, ou des fichiers dans certains dossiers.
 
+Le champ de texte accepte plusieurs lignes. Chaque ligne est traitée comme un terme de recherche indépendant et les résultats correspondant à **n'importe quelle** ligne sont retournés (logique OU). Cela fonctionne avec tous les modes *Avec*.
+
+- Appuyer sur **Entrée** pour lancer la recherche.
+- Appuyer sur **Maj+Entrée** pour insérer un nouveau ligne.
+
+![Champ de texte de recherche affichant plusieurs lignes utilisées comme termes de recherche indépendants en logique OU](/img/screen_search_05_list_for_file_name.png)
+
 Boutons à côté du champ de texte :
 - *Coller depuis le presse-papiers* — colle le contenu du presse-papiers dans le champ de recherche.
 - *Nettoyer le texte de recherche* — supprime les caractères spéciaux (`.  ,  _  -  (  )  [  ]  {  }  /  \  '  "`).
@@ -64,6 +71,11 @@ Spécifie comment les mots du champ *Texte* doivent être mis en correspondance 
 | *Expression exacte* | Retourne les résultats où l'expression exacte (y compris l'ordre des mots et les espaces) est trouvée |
 | *Commence par* | Le nom de fichier doit commencer par le texte — disponible uniquement avec *Noms de fichiers uniquement* |
 | *N'importe quel mot* | Retourne les résultats si au moins un des mots est trouvé |
+| *Regex* | Le texte de recherche est utilisé comme expression régulière (syntaxe PCRE2) |
+
+:::note
+En mode *Regex*, un motif invalide ne retourne aucun résultat. L'option *Sensible à la casse* s'applique toujours.
+:::
 
 #### Dans
 Spécifie quelle partie du chemin de fichier doit être recherchée :
@@ -276,7 +288,11 @@ Le bouton *Traiter les résultats* ouvre un menu d'opérations appliquées à to
 ## Historique des recherches
 Chaque fois qu'une recherche est lancée, les critères et la sélection de périphérique sont enregistrés dans un fichier d'historique dans le dossier Collection.
 
-Cet historique est affiché dans un tableau en bas de l'écran. Cliquer sur une ligne restaure tous les critères et relance immédiatement cette recherche.
+Cet historique est affiché dans un tableau en bas de l'écran. Cliquer sur une ligne restaure tous les critères — la recherche doit ensuite être déclenchée manuellement.
+
+Deux boutons permettent de gérer la liste de l'historique :
+- *Garder les 10 dernières* — supprime toutes les entrées sauf les 10 plus récentes (avec confirmation).
+- *Réinitialiser* — supprime toutes les entrées de l'historique (avec confirmation).
 
 Ce panneau peut être masqué pour économiser de l'espace.
 

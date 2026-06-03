@@ -1,4 +1,4 @@
-project(Katalog VERSION 2.11 LANGUAGES CXX)
+project(Katalog VERSION 2.12 LANGUAGES CXX)
 
 set(KATALOG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(KATALOG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
@@ -120,7 +120,6 @@ set(TS_FILES
 set(QRC_FILES
     icons.qrc
     images.qrc
-    Resources.qrc
     styles.qrc
     translations.qrc
 )

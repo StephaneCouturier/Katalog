@@ -11,9 +11,27 @@ ColumnLayout {
     // Width of the left label column inside sub-sections
     readonly property int labelW: Kirigami.Units.gridUnit * 4
 
+    property var tagNames: []
+
+    Connections {
+        target: appManager1
+        function onTagsChanged() { pageSearchForm.tagNames = appManager1.getTagNames() }
+    }
+
+    Component.onCompleted: { pageSearchForm.tagNames = appManager1.getTagNames() }
+
+    function restoreLastSearch() {
+        var hist = appManager1.getSearchHistory()
+        if (hist.length === 0) return
+        var map = appManager1.restoreSearchHistory(hist[0].dateTime)
+        applyHistoryCriteria(map)
+    }
+
     function getCriteria() {
         //Global type of search
-        newSearch1.properties = {"searchInCatalogsChecked": true}; //DEV: TEMP
+        newSearch1.properties = {"searchInCatalogsChecked":  search_radioButton_SearchInCatalogs.checked};
+        newSearch1.properties = {"searchInConnectedChecked": search_radioButton_SearchInConnected.checked};
+        newSearch1.properties = {"connectedDirectory":       search_lineEdit_ConnectedDirectory.text};
 
         //File name
         newSearch1.properties = {"searchOnFileName":        search_checkBox_FileNameCriteria.checked};
@@ -26,7 +44,7 @@ ColumnLayout {
         //File Attributes
         newSearch1.properties = {"searchOnFileCriteria":    checkBoxFileAttributesCriteria.checked};
         //Type
-        newSearch1.properties = {"searchOnType":            checkBoxFileAttributesCriteria.checked && search_checkBox_Type.checked};
+        newSearch1.properties = {"searchOnType":            search_checkBox_Type.checked};
         newSearch1.properties = {"selectedFileType":        search_comboBox_FileType.currentValue};
         //Size
         newSearch1.properties = {"searchOnSize":            checkBoxFileAttributesCriteria.checked && search_checkBox_Size.checked};
@@ -81,6 +99,10 @@ ColumnLayout {
     }
 
     function resetSearch() {
+        // Reset search scope
+        search_radioButton_SearchInCatalogs.checked = true
+        search_lineEdit_ConnectedDirectory.text = ""
+
         // Reset fileNameCriteria
         search_checkBox_FileNameCriteria.checked = true
         search_TextField_FileNameText.text = ""
@@ -172,6 +194,118 @@ ColumnLayout {
         appManager1.executeSearch()
     }
 
+    function openHistorySheet() {
+        _refreshHistoryModel()
+        searchHistoryDialog.open()
+    }
+
+    function _refreshHistoryModel() {
+        historyListModel.clear()
+        var hist = appManager1.getSearchHistory()
+        for (var i = 0; i < hist.length; ++i)
+            historyListModel.append(hist[i])
+    }
+
+    function applyHistoryCriteria(map) {
+        // Search scope
+        if (map.searchInConnectedChecked ?? false) {
+            search_radioButton_SearchInConnected.checked = true
+        } else {
+            search_radioButton_SearchInCatalogs.checked = true
+        }
+        search_lineEdit_ConnectedDirectory.text           = map.connectedDirectory ?? ""
+
+        // File name
+        search_checkBox_FileNameCriteria.checked          = map.searchOnFileName ?? false
+        search_TextField_FileNameText.text                = map.searchText ?? ""
+        var idx = search_ComboBox_TextCriteriaWith.find(map.selectedTextCriteria ?? "")
+        if (idx >= 0) search_ComboBox_TextCriteriaWith.currentIndex = idx
+        idx = search_ComboBox_TextCriteriaIn.find(map.selectedSearchIn ?? "")
+        if (idx >= 0) search_ComboBox_TextCriteriaIn.currentIndex = idx
+        search_CheckBox_FileNameCaseSensitive.checked     = map.caseSensitive ?? false
+        search_TextField_FileNameExclude.text             = map.selectedSearchExclude ?? ""
+
+        // File attributes
+        checkBoxFileAttributesCriteria.checked            = map.searchOnFileCriteria ?? false
+        search_checkBox_Type.checked                      = map.searchOnType ?? false
+        for (var i = 0; i < search_comboBox_FileType.count; ++i) {
+            if (search_comboBox_FileType.model[i].value === (map.selectedFileType ?? "All")) {
+                search_comboBox_FileType.currentIndex = i
+                break
+            }
+        }
+        search_checkBox_Size.checked                      = map.searchOnSize ?? false
+        search_spinBox_MinimumSize.value                  = map.selectedMinimumSize ?? 0
+        idx = search_comboBox_MinSizeUnit.find(map.selectedMinSizeUnit ?? "Bytes")
+        if (idx >= 0) search_comboBox_MinSizeUnit.currentIndex = idx
+        search_spinBox_MaximumSize.value                  = map.selectedMaximumSize ?? 1000
+        idx = search_comboBox_MaxSizeUnit.find(map.selectedMaxSizeUnit ?? "GiB")
+        if (idx >= 0) search_comboBox_MaxSizeUnit.currentIndex = idx
+        search_checkBox_Date.checked                      = map.searchOnDate ?? false
+        search_dateTimeEdit_Min.text                      = map.selectedDateMin ?? "1970/01/01 00:00:00"
+        search_dateTimeEdit_Max.text                      = map.selectedDateMax ?? "2030/01/01 00:00:00"
+
+        // File metadata
+        search_checkBox_FileMetadata.checked              = map.searchOnFileMetadata ?? false
+        search_checkBox_MetadataText.checked              = map.searchOnMetadataText ?? false
+        search_lineEdit_MetadataText.text                 = map.metadataTextSearch ?? ""
+        search_checkBox_MetadataSize.checked              = map.searchOnMetadataSize ?? false
+        search_spinBox_MetadataMinimumHeight.value        = map.metadataMinimumHeight ?? 0
+        search_spinBox_MetadataMaximumHeight.value        = map.metadataMaximumHeight ?? 30000
+        search_spinBox_MetadataMinimumWidth.value         = map.metadataMinimumWidth ?? 0
+        search_spinBox_MetadataMaximumWidth.value         = map.metadataMaximumWidth ?? 30000
+        search_checkBox_MetadataDuration.checked          = map.searchOnMetadataDuration ?? false
+        search_dateTimeEdit_MetadataDurationMin.text      = map.metadataDurationMin ?? "00:00:00"
+        search_dateTimeEdit_MetadataDurationMax.text      = map.metadataDurationMax ?? "23:59:59"
+
+        // Folder attributes
+        search_checkBox_FolderCriteria.checked            = map.searchOnFolderCriteria ?? false
+        search_checkBox_ShowFoldersOnly.checked           = map.showFoldersOnly ?? false
+        search_checkBox_SearchOnTags.checked              = map.searchOnTags ?? false
+        if (map.selectedTagName) {
+            idx = search_comboBox_FolderTag.find(map.selectedTagName)
+            if (idx >= 0) search_comboBox_FolderTag.currentIndex = idx
+        } else {
+            search_comboBox_FolderTag.currentIndex = 0
+        }
+
+        // Duplicates — restore Size/Date/Checksum before Name so the "at least one" guard doesn't fire
+        search_checkBox_Duplicates.checked                = map.searchOnDuplicates ?? false
+        search_checkBox_DuplicatesOnSize.checked          = map.searchDuplicatesOnSize ?? false
+        search_checkBox_DuplicatesOnDate.checked          = map.searchDuplicatesOnDate ?? false
+        search_checkBox_DuplicatesOnChecksum.checked      = map.searchDuplicatesOnChecksum ?? false
+        search_checkBox_DuplicatesOnName.checked          = map.searchDuplicatesOnName ?? true
+        search_comboBox_DuplicateChecksumSign.currentIndex = (map.searchDuplicatesChecksumEqual ?? true) ? 0 : 1
+        if (map.duplicatesCompareDevices ?? false)
+            search_radioButton_DuplicatesCompareTwoDevices.checked = true
+        else
+            search_radioButton_DuplicatesWithinSelectedDevice.checked = true
+        if ((map.duplicatesDeviceID1 ?? 0) > 0)
+            search_comboBox_DuplicatesDevice1._applyDevice(map.duplicatesDeviceID1)
+        else
+            search_comboBox_DuplicatesDevice1.resetSelection()
+        if ((map.duplicatesDeviceID2 ?? 0) > 0)
+            search_comboBox_DuplicatesDevice2._applyDevice(map.duplicatesDeviceID2)
+        else
+            search_comboBox_DuplicatesDevice2.resetSelection()
+
+        // Differences — restore Size/Date/Checksum before Name so the "at least one" guard doesn't fire
+        search_checkBox_Differences.checked               = map.searchOnDifferences ?? false
+        search_checkBox_DifferencesOnSize.checked         = map.differencesOnSize ?? false
+        search_checkBox_DifferencesOnDate.checked         = map.differencesOnDate ?? false
+        search_checkBox_DifferencesOnChecksum.checked     = map.differencesOnChecksum ?? false
+        search_checkBox_DifferencesOnName.checked         = map.differencesOnName ?? true
+        search_comboBox_DifferenceChecksumSign.currentIndex = (map.differencesChecksumEqual ?? true) ? 0 : 1
+        if ((map.differencesDeviceID1 ?? 0) > 0)
+            search_comboBox_DifferencesDevice1._applyDevice(map.differencesDeviceID1)
+        else
+            search_comboBox_DifferencesDevice1.resetSelection()
+        if ((map.differencesDeviceID2 ?? 0) > 0)
+            search_comboBox_DifferencesDevice2._applyDevice(map.differencesDeviceID2)
+        else
+            search_comboBox_DifferencesDevice2.resetSelection()
+    }
+
     Kirigami.Dialog {
         id: dateDialog
         property string selectedDateField
@@ -204,6 +338,20 @@ ColumnLayout {
                         var yesterday = new Date(today);
                         yesterday.setDate(today.getDate() - 1);
                         var fullDate = yesterday.getFullYear() + '/' + (yesterday.getMonth()+1) + '/' + yesterday.getDate() + ' ' + yesterday.getHours() + ':' + yesterday.getMinutes() + ':' + yesterday.getSeconds();
+                        if (dateDialog.selectedDateField === "Min")
+                            search_dateTimeEdit_Min.text = returnCleanedDate(fullDate)
+                        else
+                            search_dateTimeEdit_Max.text = returnCleanedDate(fullDate)
+                        dateDialog.close()
+                    }
+                }
+                Controls.Button {
+                    text: "1 week ago"
+                    onClicked: {
+                        var today = new Date();
+                        var lastWeek = new Date(today);
+                        lastWeek.setDate(today.getDate() - 7);
+                        var fullDate = lastWeek.getFullYear() + '/' + (lastWeek.getMonth()+1) + '/' + lastWeek.getDate() + ' ' + lastWeek.getHours() + ':' + lastWeek.getMinutes() + ':' + lastWeek.getSeconds();
                         if (dateDialog.selectedDateField === "Min")
                             search_dateTimeEdit_Min.text = returnCleanedDate(fullDate)
                         else
@@ -253,6 +401,129 @@ ColumnLayout {
         }
     }
 
+    Kirigami.PromptDialog {
+        id: clearHistoryConfirmDialog
+        title: qsTr("Delete search history")
+        subtitle: qsTr("This will delete all search history entries. Continue?")
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
+        onAccepted: {
+            appManager1.clearSearchHistory()
+            historyListModel.clear()
+        }
+    }
+
+    Kirigami.PromptDialog {
+        id: keepLastHistoryConfirmDialog
+        title: qsTr("Keep last 10")
+        subtitle: qsTr("This will delete all but the last 10 search history entries. Continue?")
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
+        onAccepted: {
+            appManager1.keepLastSearchHistory(10)
+            pageSearchForm._refreshHistoryModel()
+        }
+    }
+
+    Kirigami.Dialog {
+        id: searchHistoryDialog
+        title: qsTr("Search History")
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Keep Last 10")
+                icon.name: "edit-delete"
+                onTriggered: keepLastHistoryConfirmDialog.open()
+            },
+            Kirigami.Action {
+                text: qsTr("Clear")
+                icon.name: "edit-delete"
+                onTriggered: clearHistoryConfirmDialog.open()
+            },
+            Kirigami.Action {
+                text: qsTr("Cancel")
+                icon.name: "dialog-cancel"
+                onTriggered: searchHistoryDialog.close()
+            }
+        ]
+
+        contentItem: ListView {
+            id: historyListView
+            implicitWidth: Kirigami.Units.gridUnit * 30
+            implicitHeight: Math.min(contentHeight, Kirigami.Units.gridUnit * 20)
+            clip: true
+            model: ListModel { id: historyListModel }
+
+            delegate: Controls.ItemDelegate {
+                width: historyListView.width
+                contentItem: ColumnLayout {
+                    spacing: Kirigami.Units.smallSpacing / 2
+                    Controls.Label {
+                        text: model.dateTime
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+                    Controls.Label {
+                        text: model.summary.length > 0 ? model.summary : qsTr("(no text filter)")
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        color: Kirigami.Theme.disabledTextColor
+                        font.italic: model.summary.length === 0
+                    }
+                }
+                onClicked: {
+                    var map = appManager1.restoreSearchHistory(model.dateTime)
+                    pageSearchForm.applyHistoryCriteria(map)
+                    searchHistoryDialog.close()
+                }
+            }
+        }
+    }
+
+    // ── Section 0: Search scope ───────────────────────────────────────────────
+    FolderDialog {
+        id: connectedDirectoryDialog
+        onAccepted: search_lineEdit_ConnectedDirectory.text = folder.toString().replace("file://", "")
+    }
+
+    RowLayout {
+        Layout.fillWidth: true
+        Layout.leftMargin: Kirigami.Units.smallSpacing
+
+        Controls.RadioButton {
+            id: search_radioButton_SearchInCatalogs
+            text: qsTr("Catalogs")
+            checked: true
+            onCheckedChanged: {
+                if (checked) search_lineEdit_ConnectedDirectory.text = ""
+            }
+        }
+        Controls.RadioButton {
+            id: search_radioButton_SearchInConnected
+            text: qsTr("Connected drive")
+        }
+    }
+
+    RowLayout {
+        id: search_RowLayout_ConnectedDirectory
+        Layout.fillWidth: true
+        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.topMargin: Kirigami.Units.smallSpacing * 2
+        visible: search_radioButton_SearchInConnected.checked
+
+        Controls.TextField {
+            id: search_lineEdit_ConnectedDirectory
+            Layout.fillWidth: true
+            placeholderText: qsTr("Path to connected drive or folder")
+        }
+        Controls.Button {
+            icon.name: "folder-open"
+            onClicked: connectedDirectoryDialog.open()
+        }
+    }
+
+    Controls.Label { text: ""}
+
+    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
+
     // ── Section 1: File name ──────────────────────────────────────────────────
     Controls.CheckBox {
         id: search_checkBox_FileNameCriteria
@@ -270,21 +541,45 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW }
-            Controls.TextField {
-                id: search_TextField_FileNameText
+            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            Controls.ScrollView {
                 Layout.fillWidth: true
-                onAccepted: pageSearchForm.executeSearch()
+                implicitHeight: Kirigami.Units.gridUnit * 2
+                background: Rectangle {
+                    color: palette.base
+                }
+                Controls.TextArea {
+                    id: search_TextField_FileNameText
+                    width: parent.availableWidth
+                    wrapMode: Text.WordWrap
+                    background: Item {}
+                    Keys.onPressed: function(event) {
+                        if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
+                                && (event.modifiers & Qt.ControlModifier)) {
+                            pageSearchForm.executeSearch()
+                            event.accepted = true
+                        }
+                    }
+                }
             }
-            Controls.Button {
-                id: search_Button_PasteClipboard
-                icon.name: "edit-paste"
-                onClicked: search_TextField_FileNameText.text = pageSearch1.returnClipboard()
-            }
-            Controls.Button {
-                id: search_Button_CleanText
-                icon.name: "edit-clear-history"
-                onClicked: search_TextField_FileNameText.text = pageSearch1.returnCleanedText(search_TextField_FileNameText.text)
+            RowLayout {
+                Layout.alignment: Qt.AlignTop
+                spacing: Kirigami.Units.smallSpacing
+                Controls.Button {
+                    id: search_Button_ClearSearchText
+                    icon.name: "edit-clear"
+                    onClicked: search_TextField_FileNameText.clear()
+                }
+                Controls.Button {
+                    id: search_Button_PasteClipboard
+                    icon.name: "edit-paste"
+                    onClicked: search_TextField_FileNameText.text = pageSearch1.returnClipboard()
+                }
+                Controls.Button {
+                    id: search_Button_CleanText
+                    icon.name: "edit-clear-history"
+                    onClicked: search_TextField_FileNameText.text = pageSearch1.returnCleanedText(search_TextField_FileNameText.text)
+                }
             }
         }
         RowLayout {
@@ -322,6 +617,21 @@ ColumnLayout {
             Controls.TextField {
                 id: search_TextField_FileNameExclude
                 Layout.fillWidth: true
+                leftPadding: Kirigami.Units.largeSpacing
+                rightPadding: text.length > 0
+                              ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                              : Kirigami.Units.smallSpacing
+                Kirigami.Icon {
+                    anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
+                    source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
+                    implicitWidth: Kirigami.Units.iconSizes.small
+                    implicitHeight: Kirigami.Units.iconSizes.small
+                    visible: parent.text.length > 0
+                    opacity: excludeClearTap.pressed ? 0.5 : 1.0
+                    Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                    HoverHandler { cursorShape: Qt.ArrowCursor }
+                    TapHandler { id: excludeClearTap; onTapped: search_TextField_FileNameExclude.clear() }
+                }
             }
             Controls.Button {
                 id: search_Button_ExcludePasteClipboard
@@ -384,6 +694,8 @@ ColumnLayout {
                     highlighted: search_comboBox_FileType.highlightedIndex === index
                 }
                 contentItem: RowLayout {
+                    function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                    property int selectionStart: 0
                     spacing: Kirigami.Units.smallSpacing
                     Item { width: Kirigami.Units.smallSpacing }
                     Kirigami.Icon {
@@ -542,6 +854,21 @@ ColumnLayout {
                 id: search_lineEdit_MetadataText
                 enabled: false
                 Layout.fillWidth: true
+                leftPadding: Kirigami.Units.largeSpacing
+                rightPadding: text.length > 0
+                              ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                              : Kirigami.Units.smallSpacing
+                Kirigami.Icon {
+                    anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
+                    source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
+                    implicitWidth: Kirigami.Units.iconSizes.small
+                    implicitHeight: Kirigami.Units.iconSizes.small
+                    visible: parent.text.length > 0
+                    opacity: metaClearTap.pressed ? 0.5 : 1.0
+                    Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                    HoverHandler { cursorShape: Qt.ArrowCursor }
+                    TapHandler { id: metaClearTap; onTapped: search_lineEdit_MetadataText.clear() }
+                }
             }
             Controls.Button {
                 icon.name: "edit-paste"
@@ -695,7 +1022,7 @@ ColumnLayout {
             Controls.ComboBox {
                 id: search_comboBox_FolderTag
                 enabled: false
-                model: appManager1.getTagNames()
+                model: pageSearchForm.tagNames
             }
         }
     }
@@ -827,6 +1154,7 @@ ColumnLayout {
     Controls.CheckBox {
         id: search_checkBox_Differences
         checked: false
+        enabled: search_radioButton_SearchInCatalogs.checked
         text: qsTr("Differences")
         Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false

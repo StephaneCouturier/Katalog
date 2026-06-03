@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="images/Appname_Logo.png">../assets/Appname_Logo.png</file>
         <file alias="images/Katalog_logo_64.ico">../assets/Katalog_logo_64.ico</file>
+        <file alias="images/Appname_Logo.png">../assets/Appname_Logo.png</file>
         <file alias="images/link-h.png">../assets/link-h.png</file>
         <file alias="images/link-tree-end.png">../assets/link-tree-end.png</file>
         <file alias="images/link-tree-mid.png">../assets/link-tree-mid.png</file>
@@ -48,6 +48,5 @@
         <file alias="images/flags/ua.png">../assets/flags/ua.png</file>
         <file alias="images/flags/hr.png">../assets/flags/hr.png</file>
         <file alias="images/flags/id.png">../assets/flags/id.png</file>
-        <file alias="images/Katalog_logo_256.png">../assets/Katalog_logo_256.png</file>
     </qresource>
 </RCC>

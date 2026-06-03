@@ -114,6 +114,7 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_include_metadata      TEXT,
                     catalog_include_checksum      TEXT,
                     catalog_app_version           TEXT,
+                    catalog_include_sub_dir       TEXT,
                     %4,
                     %5)
     )").arg(catalogNameType, largeNumeric, catalogIdType, primaryKey, uniqueCatalogName);
@@ -561,7 +562,7 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
 
     // Set defaults if values are not provided
     if (collection->databaseMode.isEmpty())
-        collection->databaseMode = "Memory";
+        collection->databaseMode = "File";
 
     // Set database host defaults for Hosted mode
     if (collection->databaseHostName.isEmpty()) {
@@ -579,6 +580,9 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
         db.setDatabaseName(":memory:");
     }
     else if (collection->databaseMode == "File") {
+        if (collection->databaseFilePath.isEmpty()) {
+            return QSqlError(); // Not configured yet; first-run flow will set the path
+        }
         QFile databaseFile(collection->databaseFilePath);
         if (!databaseFile.exists()) {
             return QSqlError("Database file not found", collection->databaseFilePath, QSqlError::ConnectionError);
@@ -1224,6 +1228,21 @@ QSqlError Database::runMigration_2_11(const QString &connectionName)
         }
     }
 
+    return QSqlError();
+}
+//----------------------------------------------------------------------
+
+QSqlError Database::runMigration_2_12(const QString &connectionName)
+{
+    QStringList existingColumns = getTableColumns(connectionName, "catalog");
+    if (!existingColumns.contains("catalog_include_sub_dir")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE catalog ADD COLUMN catalog_include_sub_dir TEXT DEFAULT 'true'");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add catalog_include_sub_dir column:" << err.text();
+            return err;
+        }
+    }
     return QSqlError();
 }
 //----------------------------------------------------------------------

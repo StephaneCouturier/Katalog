@@ -376,6 +376,20 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         deviceContextMenu.addSeparator();
 
+        QAction *menuSplitBySubDir = new QAction(QIcon::fromTheme("edit-cut"), tr("Split catalog by sub-directory"), this);
+        deviceContextMenu.addAction(menuSplitBySubDir);
+        connect(menuSplitBySubDir, &QAction::triggered, this, [this]() {
+            splitCatalogBySubDirectory();
+        });
+
+        QAction *menuSplitByFileType = new QAction(QIcon::fromTheme("edit-cut"), tr("Split catalog by file type"), this);
+        deviceContextMenu.addAction(menuSplitByFileType);
+        connect(menuSplitByFileType, &QAction::triggered, this, [this]() {
+            splitCatalogByFileType();
+        });
+
+        deviceContextMenu.addSeparator();
+
         // Show "Unassign" only for assigned catalogs (not exports)
         // Show "Delete" for exports and physical group catalogs
         if(activeDevice->groupID != 0 && activeDevice->path != "EXPORT"){

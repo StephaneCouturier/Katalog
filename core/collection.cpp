@@ -264,7 +264,7 @@ bool Collection::load()
     QDir dir(folder);
     dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     if(dir.entryList().isEmpty()){
-        dbSchemaVersion = appVersion;
+        dbSchemaVersion = "2.12";
         setDatabaseSchemaVersion();
     }
 
@@ -529,11 +529,11 @@ void Collection::loadCatalogFilesToTable()
             //Prepare a textsteam for the file
             QTextStream textStreamCatalogs(&catalogFile);
 
-            //Read the first 12 lines and put values in a stringlist
+            //Read the first 13 lines and put values in a stringlist
             QStringList catalogValues;
             QString line;
             QString value;
-            for (int i=0; i<12; i++) {
+            for (int i=0; i<13; i++) {
                 line = textStreamCatalogs.readLine();
                 if (line !="" and QVariant(line.at(0)).toString()=="<"){
                     value = line.right(line.size() - line.indexOf(">") - 1);
@@ -546,13 +546,14 @@ void Collection::loadCatalogFilesToTable()
             if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion (v2.7)
             if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID (v2.8)
             if (catalogValues.count()==11) catalogValues.insert(9, "None");  //for older catalog without includeChecksum (v2.9)
+            if (catalogValues.count()==12) catalogValues.insert(7, "true");  //for older catalog without includeSubDir (v2.12)
 
             if(catalogValues.length()>0){
                 //Insert a line in the table with available data
 
                 Catalog newCatalog;
                 newCatalog.setConnectionName(m_connectionName); // use this collection's connection
-                newCatalog.ID               = catalogValues[11].toInt(); //catalog_id
+                newCatalog.ID               = catalogValues[12].toInt(); //catalog_id
                 newCatalog.filePath         = path; //catalog_file_path
                 newCatalog.name             = catalogFileInfo.completeBaseName(); //catalog_name
                 newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
@@ -563,16 +564,17 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.fileType         = catalogValues[4]; //catalog_file_type
                 newCatalog.storageName      = catalogValues[5]; //catalog_storage
                 newCatalog.includeSymblinks = catalogValues[6].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_symblinks
-                newCatalog.isFullDevice     = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
-                newCatalog.includeMetadata  = catalogValues[8];
+                newCatalog.includeSubDir    = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_sub_dir
+                newCatalog.isFullDevice     = catalogValues[8].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
+                newCatalog.includeMetadata  = catalogValues[9];
                 if (newCatalog.includeMetadata == "false") {
                     newCatalog.includeMetadata = Catalog::METADATA_NONE;
                 }
-                newCatalog.includeChecksum  = catalogValues[9]; //catalog_include_checksum
+                newCatalog.includeChecksum  = catalogValues[10]; //catalog_include_checksum
                 if (newCatalog.includeChecksum == "false" || newCatalog.includeChecksum.isEmpty()) {
                     newCatalog.includeChecksum = Catalog::CHECKSUM_NONE;
                 }
-                newCatalog.appVersion       = catalogValues[10]; //catalog_app_version
+                newCatalog.appVersion       = catalogValues[11]; //catalog_app_version
                 newCatalog.insertCatalog();
             }
             catalogFile.close();
@@ -1467,6 +1469,24 @@ void Collection::saveParameterTableToFile()
     }
 }
 //----------------------------------------------------------------------
+void Collection::keepLastSearchHistory(int count, const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare("DELETE FROM search WHERE rowid NOT IN "
+                  "(SELECT rowid FROM search ORDER BY date_time DESC LIMIT :count)");
+    query.bindValue(":count", count);
+    query.exec();
+    saveSearchHistoryTableToFile();
+}
+//----------------------------------------------------------------------
+void Collection::clearSearchHistory(const QString &connectionName)
+{
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare("DELETE FROM search");
+    query.exec();
+    saveSearchHistoryTableToFile();
+}
+//----------------------------------------------------------------------
 void Collection::saveSearchHistoryTableToFile()
 {//To keep forward compatibility, new field shall be added at the end of the column list, not in the order of the table
     if(databaseMode=="Memory"){
@@ -2245,6 +2265,7 @@ bool Collection::insertPhysicalStorageGroup() {
     int result = query.value(0).toInt();
     if(result == 0){
         Device *newDeviceItem1 = new Device();
+        newDeviceItem1->setConnectionName(m_connectionName);
         newDeviceItem1->ID = 1;
         newDeviceItem1->parentID = 0;
         newDeviceItem1->name = " Physical Group";
@@ -2254,6 +2275,7 @@ bool Collection::insertPhysicalStorageGroup() {
         newDeviceItem1->insertDevice();
 
         Device *newDeviceItem2 = new Device();
+        newDeviceItem2->setConnectionName(m_connectionName);
         newDeviceItem2->ID = 2;
         newDeviceItem2->parentID = 1;
         newDeviceItem2->name = "Virtual device";
@@ -2281,6 +2303,8 @@ bool Collection::insertPhysicalStorageGroup() {
     if (queryStorage.value(0).toInt() == 0){
         //Create Device and related Storage under Physical group (ID=0)
         Device *newStorageDevice = new Device();
+        newStorageDevice->setConnectionName(m_connectionName);
+        newStorageDevice->storage->setConnectionName(m_connectionName);
         newStorageDevice->generateDeviceID();
         newStorageDevice->parentID = 2;
         if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
@@ -2403,6 +2427,165 @@ QString Collection::getValidationMessage(CollectionFolderStatus status) const
     default:
         return tr("This folder contains user data and is not suitable for a collection.<br/>"
                   "Collections should be stored in dedicated folders to avoid mixing with personal files.");
+    }
+}
+//--------------------------------------------------------------------------
+bool Collection::executeSplitBySubDirectory(Device *activeDevice)
+{
+    Device primaryBuffer;
+    Device *device = resolvePhysicalDevice(activeDevice, primaryBuffer);
+
+    if (databaseMode == "Memory") {
+        device->catalog->loadFoldersToTable();
+        QMutex mutex;
+        bool stop = false;
+        device->catalog->loadCatalogFileListToTable(mutex, stop);
+    }
+
+    QList<Catalog*> newCatalogs = device->catalog->executeSplitBySubDirectory(databaseMode, folder);
+    if (newCatalogs.isEmpty()) {
+        qDeleteAll(newCatalogs);
+        return false;
+    }
+
+    applySplitResult(device, newCatalogs);
+    qDeleteAll(newCatalogs);
+    return true;
+}
+//--------------------------------------------------------------------------
+bool Collection::executeSplitByFileType(Device *activeDevice)
+{
+    Device primaryBuffer;
+    Device *device = resolvePhysicalDevice(activeDevice, primaryBuffer);
+
+    if (databaseMode == "Memory") {
+        device->catalog->loadFoldersToTable();
+        QMutex mutex;
+        bool stop = false;
+        device->catalog->loadCatalogFileListToTable(mutex, stop);
+    }
+
+    QList<Catalog*> newCatalogs = device->catalog->executeSplitByFileType(databaseMode, folder);
+    if (newCatalogs.isEmpty()) {
+        qDeleteAll(newCatalogs);
+        return false;
+    }
+
+    applySplitResult(device, newCatalogs);
+    qDeleteAll(newCatalogs);
+    return true;
+}
+//--------------------------------------------------------------------------
+Device* Collection::resolvePhysicalDevice(Device *activeDevice, Device &buffer)
+{
+    QSqlQuery queryParentType(QSqlDatabase::database(m_connectionName));
+    queryParentType.prepare(QLatin1String(
+        "SELECT device_type FROM device WHERE device_id = :parentID"));
+    queryParentType.bindValue(":parentID", activeDevice->parentID);
+    if (!queryParentType.exec() || !queryParentType.next())
+        return activeDevice;
+
+    if (queryParentType.value(0).toString() != "Virtual")
+        return activeDevice;
+
+    // activeDevice is a virtual assignment — find the primary (non-virtual-parented) row
+    QSqlQuery queryPrimary(QSqlDatabase::database(m_connectionName));
+    queryPrimary.prepare(QLatin1String(R"(
+        SELECT d.device_id FROM device d
+        JOIN device p ON p.device_id = d.device_parent_id
+        WHERE d.device_external_id = :externalID
+          AND d.device_id          != :activeDeviceID
+          AND d.device_type        = 'Catalog'
+          AND p.device_type        != 'Virtual'
+        LIMIT 1
+    )"));
+    queryPrimary.bindValue(":externalID",     activeDevice->externalID);
+    queryPrimary.bindValue(":activeDeviceID", activeDevice->ID);
+    if (!queryPrimary.exec() || !queryPrimary.next())
+        return activeDevice;
+
+    buffer.ID = queryPrimary.value(0).toInt();
+    buffer.catalog->setConnectionName(m_connectionName);
+    buffer.loadDevice(m_connectionName);
+    return &buffer;
+}
+//--------------------------------------------------------------------------
+void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &newCatalogs)
+{
+    // Insert new device rows under the same parent as the original
+    Device parentDevice;
+    parentDevice.ID = activeDevice->parentID;
+    parentDevice.loadDevice(m_connectionName);
+
+    for (Catalog *c : std::as_const(newCatalogs)) {
+        Device newDev;
+        newDev.ID             = Device::generateNextDeviceID(m_connectionName);
+        newDev.parentID       = parentDevice.ID;
+        newDev.name           = c->name;
+        newDev.type           = "Catalog";
+        newDev.externalID     = c->ID;
+        newDev.path           = c->sourcePath;
+        newDev.totalFileSize  = c->totalFileSize;
+        newDev.totalFileCount = c->fileCount;
+        newDev.groupID        = parentDevice.groupID;
+        newDev.active         = activeDevice->active;
+        newDev.order          = 0;
+        newDev.insertDevice();
+    }
+
+    // Find virtual devices the original catalog was assigned to, so the splits
+    // can be assigned to the same virtual devices after deleteDevice() removes the originals
+    QList<int> virtualParentIDs;
+    QSqlQuery queryAssignments(QSqlDatabase::database(m_connectionName));
+    queryAssignments.prepare(QLatin1String(R"(
+        SELECT d.device_parent_id
+        FROM device d
+        JOIN device p ON p.device_id = d.device_parent_id
+        WHERE d.device_external_id = :externalID
+          AND d.device_id          != :activeDeviceID
+          AND d.device_type        = 'Catalog'
+          AND p.device_type        = 'Virtual'
+    )"));
+    queryAssignments.bindValue(":externalID",     activeDevice->externalID);
+    queryAssignments.bindValue(":activeDeviceID", activeDevice->ID);
+    queryAssignments.exec();
+    while (queryAssignments.next())
+        virtualParentIDs.append(queryAssignments.value(0).toInt());
+
+    QString origFilePath        = activeDevice->catalog->filePath;
+    QString origFoldersFilePath = origFilePath;
+    origFoldersFilePath.replace(origFoldersFilePath.lastIndexOf(".idx"), 4, ".folders.idx");
+
+    // deleteDevice() also removes virtual assignment rows for this catalog
+    activeDevice->deleteDevice(false);
+
+    // Re-assign each split catalog to every virtual device the original was on
+    for (int virtualParentID : std::as_const(virtualParentIDs)) {
+        Device virtualParent;
+        virtualParent.ID = virtualParentID;
+        virtualParent.loadDevice(m_connectionName);
+
+        for (Catalog *c : std::as_const(newCatalogs)) {
+            Device newDev;
+            newDev.ID             = Device::generateNextDeviceID(m_connectionName);
+            newDev.parentID       = virtualParentID;
+            newDev.name           = c->name;
+            newDev.type           = "Catalog";
+            newDev.externalID     = c->ID;
+            newDev.path           = c->sourcePath;
+            newDev.totalFileSize  = c->totalFileSize;
+            newDev.totalFileCount = c->fileCount;
+            newDev.groupID        = virtualParent.groupID;
+            newDev.active         = activeDevice->active;
+            newDev.order          = 0;
+            newDev.insertDevice();
+        }
+    }
+
+    if (databaseMode == "Memory") {
+        saveDeviceTableToFile();
+        QFile::remove(origFilePath);
+        QFile::remove(origFoldersFilePath);
     }
 }
 //----------------------------------------------------------------------

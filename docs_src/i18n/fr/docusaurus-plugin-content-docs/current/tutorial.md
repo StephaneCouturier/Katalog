@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-version: "2.11"
+version: "2.12"
 ---
 
 # Tutoriel
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 Découvrons **Katalog en moins de 5 minutes**.
 

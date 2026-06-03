@@ -1,9 +1,8 @@
 #include "devicelistmodel.h"
+#include "core/device.h"
 #include <QDebug>
 #include <QLocale>
-#include <functional>
 #include <qdatetime.h>
-#include <qsqlerror.h>
 
 DeviceListModel::DeviceListModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -142,52 +141,48 @@ QString DeviceListModel::getRefreshStatus() const
     return "Not loaded";
 }
 
+void DeviceListModel::loadFromConnection(const QString &connectionName)
+{
+    m_connectionName = connectionName;
+    refreshDataSilently();
+}
+//----------------------------------------------------------------------
+void DeviceListModel::setIncludeCollectionRoot(bool value)
+{
+    m_includeCollectionRoot = value;
+}
+//----------------------------------------------------------------------
+void DeviceListModel::clear()
+{
+    m_connectionName.clear();
+    beginResetModel();
+    m_devices.clear();
+    endResetModel();
+}
+//----------------------------------------------------------------------
 void DeviceListModel::loadDevicesFromDatabase()
 {
-    // Enhanced error handling
-    QSqlDatabase db = QSqlDatabase::database();
-    if (!db.isOpen()) {
-        m_lastError = "Database not connected";
-        qWarning() << "DeviceListModel::loadDevicesFromDatabase:" << m_lastError;
+    const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(m_connectionName);
+    if (nodes.isEmpty() && !m_includeCollectionRoot) {
+        // Could be a genuine empty collection or a DB error — either way nothing to show.
+        // loadDeviceTree already logs a warning on query failure.
         return;
     }
 
-    // Load all devices flat — tree order built in C++ to avoid DB-specific SQL (|| vs CONCAT, CTE support)
-    QSqlQuery query(db);
-    query.prepare(QLatin1String(R"(
-        SELECT  device_id,
-                device_parent_id,
-                device_name,
-                device_type,
-                device_total_file_size,
-                device_total_file_count,
-                device_total_space,
-                device_free_space,
-                device_active
-        FROM device
-        ORDER BY device_parent_id ASC, device_order ASC, device_name ASC
-    )"));
-
-    if (!query.exec()) {
-        m_lastError = QString("Query failed: %1").arg(query.lastError().text());
-        qWarning() << "DeviceListModel::loadDevicesFromDatabase:" << m_lastError;
-        return;
-    }
-
-    // Build parent → children map (same pattern as K2 QMap<id, item>)
+    // Build parent → children map from the DFS-ordered core result.
+    // We preserve the already-correct DFS order by building an ordered list per parent.
     QMap<int, QList<DeviceItem>> childrenOf;
-    while (query.next()) {
-        DeviceItem device;
-        device.id            = query.value(0).toInt();
-        int parentId         = query.value(1).toInt();
-        device.name          = query.value(2).toString();
-        device.type          = query.value(3).toString();
-        device.totalFileSize  = query.value(4).toLongLong();
-        device.totalFileCount = query.value(5).toLongLong();
-        device.totalSpace    = query.value(6).toLongLong();
-        device.freeSpace     = query.value(7).toLongLong();
-        device.isActive      = query.value(8).toBool();
-        childrenOf[parentId].append(device);
+    for (const Device::DeviceTreeNode &node : nodes) {
+        DeviceItem dev;
+        dev.id             = node.id;
+        dev.name           = node.name;
+        dev.type           = node.type;
+        dev.totalFileSize  = node.totalFileSize;
+        dev.totalFileCount = node.totalFileCount;
+        dev.totalSpace     = node.totalSpace;
+        dev.freeSpace      = node.freeSpace;
+        dev.isActive       = node.isActive;
+        childrenOf[node.parentId].append(dev);
     }
 
     // Depth-first traversal → flat list in correct visual order with levels.
@@ -212,6 +207,18 @@ void DeviceListModel::loadDevicesFromDatabase()
         }
     };
     traverse(0, 0);
+
+    if (m_includeCollectionRoot) {
+        DeviceItem root;
+        root.id           = 0;
+        root.level        = 0;
+        root.name         = tr("Collection");
+        root.type         = "Virtual";
+        root.isActive     = true;
+        root.hasChildren  = !m_devices.isEmpty();
+        root.isCollapsed  = false;
+        m_devices.prepend(root);
+    }
 }
 //----------------------------------------------------------------------
 void DeviceListModel::setMaxLevel(int level)

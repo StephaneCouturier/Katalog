@@ -41,6 +41,8 @@
 
 #include <QSet>
 #include <QMap>
+#include <QFile>
+#include <QMutex>
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
@@ -140,9 +142,128 @@ void MainWindow::deleteDeviceItem()
 
     //Reload data to models
     updateStorageSelectionStatistics();
-    loadDevicesTreeToModel("Filters");
+    loadDevicesTreeToModel("All");
     loadDevicesView("");
     filterFromSelectedDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::splitCatalogBySubDirectory()
+{
+    // activeDevice has already been loaded in the context menu handler
+
+    if (collection->databaseMode == "Memory")
+        activeDevice->catalog->loadFoldersToTable();
+
+    QStringList subDirs = activeDevice->catalog->listImmediateSubdirectories();
+    if (subDirs.isEmpty()) {
+        QMessageBox::information(this, "Katalog",
+            tr("This catalog has no immediate sub-directories to split by."));
+        return;
+    }
+
+    int confirmed = QMessageBox::warning(this, "Katalog",
+        tr("Split catalog \"%1\"?\n\n"
+           "This will create %2 new catalogs "
+           "(one per sub-directory plus one for root files) "
+           "and remove the original.\n"
+           "This operation cannot be undone.")
+            .arg(activeDevice->catalog->name)
+            .arg(subDirs.count() + 1),
+        QMessageBox::Yes | QMessageBox::Cancel);
+    if (confirmed != QMessageBox::Yes)
+        return;
+
+    if (!collection->executeSplitBySubDirectory(activeDevice)) {
+        QMessageBox::warning(this, "Katalog", tr("Split failed: no catalogs were created."));
+        return;
+    }
+
+    updateStorageSelectionStatistics();
+    loadDevicesTreeToModel("All");
+    loadDevicesView("");
+    filterFromSelectedDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::splitCatalogByFileType()
+{
+    // activeDevice has already been loaded in the context menu handler
+
+    bool deviceActive = activeDevice->active;
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setText(tr("Verify file types before splitting?") + "\n\n" +
+                   tr("File types in the catalog may be based on file extensions only. "
+                      "Running a verification reads each file from disk and ensures "
+                      "the split uses accurate types. The device must be connected."));
+    msgBox.setIcon(QMessageBox::Question);
+
+    QPushButton *btnVerify = msgBox.addButton(tr("Verify then Split"), QMessageBox::AcceptRole);
+    QPushButton *btnSplit  = msgBox.addButton(tr("Split without verifying"), QMessageBox::AcceptRole);
+    QPushButton *btnCancel = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+    Q_UNUSED(btnSplit)
+
+    if (!deviceActive) {
+        btnVerify->setEnabled(false);
+        btnVerify->setToolTip(tr("The device must be connected to verify file types."));
+    }
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == btnCancel)
+        return;
+
+    auto performSplit = [this]() {
+        if (!collection->executeSplitByFileType(activeDevice)) {
+            QMessageBox::warning(this, "Katalog", tr("Split failed: no catalogs were created."));
+            return;
+        }
+        updateStorageSelectionStatistics();
+        loadDevicesTreeToModel("All");
+        loadDevicesView("");
+        filterFromSelectedDevice();
+    };
+
+    if (msgBox.clickedButton() == btnVerify) {
+        if (!deviceUpdateManager)
+            setupDeviceUpdateManager();
+        if (deviceUpdateManager->operationRunning()) {
+            QMessageBox::information(this, "Katalog", tr("A device operation is already running."));
+            return;
+        }
+
+        int capturedDeviceID = activeDevice->ID;
+
+        CatalogJobStoppable *catalogJob = new CatalogJobStoppable(this);
+        catalogJob->configureOperation(activeDevice,
+                                       CatalogJobStoppable::VerifyMimeTypes,
+                                       collection->databaseMode,
+                                       collection->folder);
+
+        connect(catalogJob, &CatalogJobStoppable::mimeVerificationCompleted,
+                this, [this, catalogJob, capturedDeviceID, performSplit](int, const QString&) {
+                    catalogJob->deleteLater();
+                    setCatalogUpdateUIState(false);
+                    activeDevice->ID = capturedDeviceID;
+                    activeDevice->loadDevice(m_connectionName);
+                    performSplit();
+                });
+
+        connect(catalogJob, &CatalogJobStoppable::catalogOperationError,
+                this, [this, catalogJob](const QString &error) {
+                    catalogJob->deleteLater();
+                    setCatalogUpdateUIState(false);
+                    QMessageBox::warning(this, "Katalog",
+                        tr("MIME verification failed: %1\nSplit was not performed.").arg(error));
+                });
+
+        setCatalogUpdateUIState(true);
+        catalogJob->processCatalog();
+        return;
+    }
+
+    // Split without verifying
+    performSplit();
 }
 //--------------------------------------------------------------------------
 void MainWindow::recordDevicesSnapshot()
@@ -614,10 +735,40 @@ void MainWindow::saveDeviceForm()
     activeDevice->freeSpace  = ui->Storage_lineEdit_Panel_Free->text().toLongLong();
     activeDevice->saveDevice();
     //Update device if path was changed (for non-Catalog types; Catalogs are handled in saveCatalogChanges)
-    if (activeDevice->type != "Catalog" && activeDevice->path != previousPath){
-        // Set UI state for operation
+    if (activeDevice->type == "Storage" && !previousPath.isEmpty() && activeDevice->path != previousPath){
+        // Ask user how to handle the path change in child catalog indexes
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("The storage path changed.")
+                       + "<br/><br/><table>"
+                       + "<tr><td>" + tr("Old path:") + "</td><td><b>" + previousPath          + "</b></td></tr>"
+                       + "<tr><td>" + tr("New path:") + "</td><td><b>" + activeDevice->path    + "</b></td></tr>"
+                       + "</table><br/>"
+                       + tr("How should the catalog indexes be updated?"));
+        msgBox.setIcon(QMessageBox::Question);
+        QPushButton *btnReplace  = msgBox.addButton(tr("Replace path root"), QMessageBox::AcceptRole);
+        QPushButton *btnRescan   = msgBox.addButton(tr("Full re-scan"),        QMessageBox::AcceptRole);
+        /*QPushButton *btnSkip =*/ msgBox.addButton(tr("Skip"),                QMessageBox::RejectRole);
+        msgBox.exec();
+
+        if (msgBox.clickedButton() == btnReplace) {
+            setCatalogUpdateUIState(true);
+            deviceUpdateManager->replaceStorageRoot(activeDevice,
+                                                    previousPath,
+                                                    activeDevice->path,
+                                                    collection->databaseMode,
+                                                    collection->folder);
+        } else if (msgBox.clickedButton() == btnRescan) {
+            setCatalogUpdateUIState(true);
+            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                       collection->databaseMode,
+                                                       collection->folder,
+                                                       "update");
+        }
+        // else Skip — do nothing further
+    } else if (activeDevice->type != "Catalog" && activeDevice->path != previousPath){
+        // Other non-Catalog device types (Virtual, Group…)
         setCatalogUpdateUIState(true);
-        //Update device
         deviceUpdateManager->updateDeviceHierarchy(activeDevice,
                                                    collection->databaseMode,
                                                    collection->folder,
@@ -1822,6 +1973,7 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     // Determine report device and correct updateType for reportAllUpdates
     Device* reportDevice = deviceUpdateManager->m_rootDevice;
     bool isCatalogCreation = (deviceUpdateManager->m_updateType == "create");
+    bool isReplaceRoot     = (deviceUpdateManager->m_updateType == "replaceRoot");
 
     // Save collection data
     collection->saveDeviceTableToFile();
@@ -1831,6 +1983,19 @@ void MainWindow::onDeviceUpdateCompleted(const QList<qint64>& results)
     if (reportDevice) {
         reportAllUpdates(reportDevice, results, deviceUpdateManager->m_updateType);
     } else {
+    }
+
+    // replaceRoot: minimal UI refresh then done
+    if (isReplaceRoot) {
+        setCatalogUpdateUIState(false);
+        loadDevicesView("");
+        loadDevicesTreeToModel("Filters");
+        if (selectedDevice) {
+            selectedDevice->loadDevice(m_connectionName);
+            updateCatalogsScreenStatistics();
+        }
+        currentUpdateDevice = nullptr;
+        return;
     }
 
     // STEP 2: UI restoration (existing logic continues...)
@@ -2025,53 +2190,94 @@ void MainWindow::onDeviceUpdateProgress()
 //--------------------------------------------------------------------------
 //--- Storage --------------------------------------------------------------
 void MainWindow::loadStorageList()
-{//Load Storage selection to comboBoxes
+{//Load Storage selection tree — all Storage devices with their ancestor context
 
-    //Get data
+    // Query Storage devices and all their ancestors to build the hierarchy
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL = QLatin1String(R"(
-                                SELECT device_id, device_name
-                                FROM   device
-                                WHERE  device_type = 'Storage'
-
-                            )");//AND    device_group_id = 0
-
-    if ( selectedDevice->type == "Storage" ){
-        querySQL += QLatin1String(R"( AND device_name ='%1' )").arg(selectedDevice->name);
-        ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name);
-    }
-    else if ( selectedDevice->type == "Catalog" ){
-        querySQL += " AND device_id =:device_parent_id";
-    }
-    else if ( selectedDevice->type == "Virtual" ){
-        QString prepareSQL = QLatin1String(R"(
-                                AND device_id IN (
-                                WITH RECURSIVE hierarchy AS (
-                                     SELECT device_id, device_parent_id, device_name
-                                     FROM device
-                                     WHERE device_id = :device_id
-                                     UNION ALL
-                                     SELECT t.device_id, t.device_parent_id, t.device_name
-                                     FROM device t
-                                     JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                )
-                                SELECT device_id
-                                FROM hierarchy)
-            )");
-        querySQL += prepareSQL;
-    }
-
-    querySQL += " ORDER BY device_name ";
-    query.prepare(querySQL);
-    query.bindValue(":device_id", selectedDevice->ID);
-    query.bindValue(":device_parent_id", selectedDevice->parentID);
+    query.prepare(QLatin1String(R"(
+        WITH RECURSIVE device_and_ancestors AS (
+            SELECT device_id, device_parent_id, device_name, device_type, device_active
+            FROM   device
+            WHERE  device_type = 'Storage'
+            UNION ALL
+            SELECT d.device_id, d.device_parent_id, d.device_name, d.device_type, d.device_active
+            FROM   device d
+            JOIN   device_and_ancestors a ON d.device_id = a.device_parent_id
+        )
+        SELECT DISTINCT device_id, device_parent_id, device_name, device_type, device_active
+        FROM   device_and_ancestors
+        ORDER  BY device_parent_id, device_name
+    )"));
     query.exec();
 
-    //Clear comboboxes and load selected Storage device list
-    ui->Create_comboBox_StorageSelection->clear();
-    while(query.next())
-    {
-        ui->Create_comboBox_StorageSelection->addItem(query.value(1).toString(),query.value(0).toInt());
+    // Build hierarchical tree model — col 0=Name, col 1=Type, col 2=Active, col 3=ID, col 4=ParentID
+    // Non-Storage rows (ancestor context) are visible but not selectable
+    QStandardItemModel *treeModel = new QStandardItemModel(this);
+    QMap<int, QStandardItem*> itemMap;
+
+    while (query.next()) {
+        int id         = query.value(0).toInt();
+        int parentId   = query.value(1).toInt();
+        QString type   = query.value(3).toString();
+        bool isStorage = (type == "Storage");
+
+        QList<QStandardItem*> row = {
+            new QStandardItem(query.value(2).toString()),  // Name
+            new QStandardItem(type),                       // Type
+            new QStandardItem(query.value(4).toString()),  // Active
+            new QStandardItem(QString::number(id)),        // ID
+            new QStandardItem(QString::number(parentId))   // ParentID
+        };
+
+        // Non-Storage ancestors are context only — disable selection so only Storage can be chosen
+        if (!isStorage) {
+            for (QStandardItem *cell : row)
+                cell->setFlags(Qt::ItemIsEnabled);
+        }
+
+        QStandardItem *parentItem = itemMap.value(parentId, nullptr);
+        if (!parentItem)
+            treeModel->appendRow(row);
+        else
+            parentItem->appendRow(row);
+        itemMap.insert(id, row[0]);
+    }
+
+    DeviceTreeView *proxy = new DeviceTreeView(this);
+    proxy->setSourceModel(treeModel);
+    proxy->setKatalogTheme(themeID > 0);
+    ui->Create_comboBox_StorageSelection->setTreeModel(proxy);
+    ui->Create_comboBox_StorageSelection->expandToDepth(2);
+    ui->Create_comboBox_StorageSelection->setCurrentIndex(-1); // clear auto-selection from setModel()
+
+    // Pre-select based on selected device
+    if (selectedDevice->type == "Storage") {
+        ui->Create_comboBox_StorageSelection->setSelectedDeviceId(selectedDevice->ID);
+    } else if (selectedDevice->type == "Catalog") {
+        ui->Create_comboBox_StorageSelection->setSelectedDeviceId(selectedDevice->parentID);
+    } else if (selectedDevice->type == "Virtual") {
+        // Recursively search the full subtree for the first Storage descendant
+        QSqlQuery queryStorage(QSqlDatabase::database(m_connectionName));
+        queryStorage.prepare(QLatin1String(R"(
+            WITH RECURSIVE subtree AS (
+                SELECT device_id, device_name, device_type
+                FROM   device
+                WHERE  device_parent_id = :virtualId
+                UNION ALL
+                SELECT d.device_id, d.device_name, d.device_type
+                FROM   device d
+                JOIN   subtree s ON d.device_parent_id = s.device_id
+            )
+            SELECT device_id
+            FROM   subtree
+            WHERE  device_type = 'Storage'
+            ORDER  BY device_name
+            LIMIT  1
+        )"));
+        queryStorage.bindValue(":virtualId", selectedDevice->ID);
+        queryStorage.exec();
+        if (queryStorage.next())
+            ui->Create_comboBox_StorageSelection->setSelectedDeviceId(queryStorage.value(0).toInt());
     }
 }
 //--------------------------------------------------------------------------
@@ -2299,19 +2505,52 @@ void MainWindow::saveCatalogChanges(const QString &previousPath)
     }
 
     // Update the list of files if the changes impact the contents (i.e. path, file type, hidden, checksum)
-    if( rescanNeeded){
-        int updatechoice = QMessageBox::warning(this, "Katalog",
-                                                tr("Update the catalog content with the new criteria?\n")
-                                                , QMessageBox::Yes
-                                                    | QMessageBox::No);
-        if ( updatechoice == QMessageBox::Yes){
-            activeDevice->catalog->loadCatalog();
-            setCatalogUpdateUIState(true);
-            deviceUpdateManager->updateDeviceHierarchy(activeDevice,
-                                                       collection->databaseMode,
-                                                       collection->folder,
-                                                       "update");
+    if (rescanNeeded) {
+        if (activeDevice->path != previousPath) {
+            // Path changed: offer quick prefix update or full re-scan
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("The catalog source path changed.")
+                           + "<br/><br/><table>"
+                           + "<tr><td>" + tr("Old path:") + "</td><td><b>" + previousPath          + "</b></td></tr>"
+                           + "<tr><td>" + tr("New path:") + "</td><td><b>" + activeDevice->path    + "</b></td></tr>"
+                           + "</table><br/>"
+                           + tr("How should the catalog indexes be updated?"));
+            msgBox.setIcon(QMessageBox::Question);
+            QPushButton *btnReplace = msgBox.addButton(tr("Replace path root"), QMessageBox::AcceptRole);
+            QPushButton *btnRescan  = msgBox.addButton(tr("Full re-index"),        QMessageBox::AcceptRole);
+            /*QPushButton *btnSkip =*/ msgBox.addButton(tr("Skip"),               QMessageBox::RejectRole);
+            msgBox.exec();
 
+            if (msgBox.clickedButton() == btnReplace) {
+                setCatalogUpdateUIState(true);
+                deviceUpdateManager->replaceStorageRoot(activeDevice,
+                                                        previousPath,
+                                                        activeDevice->path,
+                                                        collection->databaseMode,
+                                                        collection->folder);
+            } else if (msgBox.clickedButton() == btnRescan) {
+                activeDevice->catalog->loadCatalog();
+                setCatalogUpdateUIState(true);
+                deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                           collection->databaseMode,
+                                                           collection->folder,
+                                                           "update");
+            }
+            // else Skip — do nothing further
+        } else {
+            // Other criteria changed (file type, hidden, checksum…): original Yes/No
+            int updatechoice = QMessageBox::warning(this, "Katalog",
+                                                    tr("Update the catalog content with the new criteria?\n"),
+                                                    QMessageBox::Yes | QMessageBox::No);
+            if (updatechoice == QMessageBox::Yes) {
+                activeDevice->catalog->loadCatalog();
+                setCatalogUpdateUIState(true);
+                deviceUpdateManager->updateDeviceHierarchy(activeDevice,
+                                                           collection->databaseMode,
+                                                           collection->folder,
+                                                           "update");
+            }
         }
     }
 
@@ -2912,6 +3151,18 @@ void MainWindow::verifyCatalogChecksums()
 bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
 {//Provide a report for any combinaison of updates (updateType = create, single, or list) and devices
     QApplication::restoreOverrideCursor();
+
+    //Storage root path replace
+    if (updateType == "replaceRoot") {
+        if (list.size() >= 4 && list[0] == 1) {
+            statusBarLabel->setText(
+                tr("Storage path updated:")
+                + " " + QString::number(list[1]) + " " + tr("catalog(s),")
+                + " " + QString::number(list[2]) + " " + tr("file(s),")
+                + " " + QString::number(list[3]) + " " + tr("folder(s)"));
+        }
+        return true;
+    }
 
     QMessageBox msgBox;
     QString message;

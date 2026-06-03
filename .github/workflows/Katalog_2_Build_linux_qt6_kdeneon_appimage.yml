@@ -1,11 +1,11 @@
-name: Katalog 2 - Build linux Qt6
-#v2026-04-19 run17
+name: Katalog 2 - Build linux Qt6 (KDE neon)
+#2.12 run1 — manual-only; KDE neon repo is unreliable, kept as fallback
 on:
   # Trigger on new releases
   # release:
     # types: [published]
 
-  # Allow manual triggering
+  # Allow manual triggering only — KDE neon repo drifts from Ubuntu 24.04
   workflow_dispatch:
     inputs:
       version_tag:
@@ -16,7 +16,7 @@ on:
   # Trigger automatically when this workflow file is updated
   push:
     paths:
-      - '.github/workflows/Katalog_2_Build_linux_qt6_appimage.yml'
+      - '.github/workflows/Katalog_2_Build_linux_qt6_kdeneon_appimage.yml'
 
 jobs:
   build-appimage-qt6:
@@ -28,9 +28,11 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install system dependencies
+    - name: Install Qt6 and KF6 dependencies
       run: |
         sudo apt-get update
+
+        # Install base dependencies first
         sudo apt-get install -y \
           cmake \
           ninja-build \
@@ -40,161 +42,72 @@ jobs:
           file \
           fuse3 \
           libfuse2t64 \
-          gettext \
-          gperf \
-          libwayland-dev \
-          wayland-protocols \
-          libbz2-dev \
-          liblzma-dev \
-          libxcb-icccm4-dev \
-          libxcb-keysyms1-dev \
-          libxcb-res0-dev \
-          libxfixes-dev \
-          libxcb-xfixes0-dev \
-          libhunspell-dev \
-          libattr1-dev
-        # ECM FindXCB.cmake looks for libxcb-icccm.so / libxcb-keysyms.so / libxcb-res.so
-        # but Ubuntu 24.04 ships them with version suffixes in the name.
-        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-icccm4.so  /usr/lib/x86_64-linux-gnu/libxcb-icccm.so
-        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-keysyms1.so /usr/lib/x86_64-linux-gnu/libxcb-keysyms.so
-        sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-res0.so     /usr/lib/x86_64-linux-gnu/libxcb-res.so
+          software-properties-common \
+          gpg \
+          gettext
 
-    - name: Install Qt 6.10.0
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: '6.10.0'
-        host: 'linux'
-        target: 'desktop'
-        dir: '/opt/qt'
-        modules: 'qtcharts qtnetworkauth qtmultimedia qtspeech'
-        cache: true
+        # Add KDE neon repository for KF6
+        # Download to file first so wget failures are not silently swallowed by the pipe.
+        # The key may be armored or binary — try dearmor, fall back to direct copy.
+        wget -q https://archive.neon.kde.org/public.key -O /tmp/neon.key
+        sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/neon.gpg /tmp/neon.key 2>/dev/null \
+          || sudo cp /tmp/neon.key /etc/apt/trusted.gpg.d/neon.gpg
+        echo "deb http://archive.neon.kde.org/user noble main" | sudo tee /etc/apt/sources.list.d/neon.list
 
-    - name: Patch Qt6 for GuiPrivate target
-      # kguiaddons 6.10.0 uses Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate).
-      # aqtinstall may not include Qt6GuiPrivateConfig.cmake, so we create it ourselves
-      # in the Qt cmake directory. find_package(Qt6GuiPrivate) will find it via
-      # CMAKE_PREFIX_PATH when kguiaddons is built. Uses printf (no heredoc) to avoid
-      # YAML literal-block indentation issues.
-      run: |
-        echo "QT_ROOT_DIR=${QT_ROOT_DIR}"
-        echo "=== Qt cmake layout ==="
-        ls "${QT_ROOT_DIR}/lib/cmake/" 2>/dev/null | grep -i gui || echo "(no Gui entries)"
+        # Update with new repository
+        sudo apt-get update
 
-        PRIVATE_DIR="${QT_ROOT_DIR}/lib/cmake/Qt6GuiPrivate"
-        PRIVATE_CFG="${PRIVATE_DIR}/Qt6GuiPrivateConfig.cmake"
+        # Install Qt6 packages with correct names
+        sudo apt-get install -y \
+          qt6-base-dev \
+          qt6-base-dev-tools \
+          qt6-tools-dev \
+          qt6-tools-dev-tools \
+          qt6-l10n-tools \
+          qt6-charts-dev \
+          libqt6sql6-sqlite \
+          qt6-networkauth-dev
 
-        if [ -f "${PRIVATE_CFG}" ]; then
-          echo "Qt6GuiPrivateConfig.cmake already present at ${PRIVATE_CFG}"
-        else
-          echo "Creating ${PRIVATE_CFG}"
-          mkdir -p "${PRIVATE_DIR}"
-          printf 'set(Qt6GuiPrivate_FOUND TRUE)\n'                                 >  "${PRIVATE_CFG}"
-          printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                >> "${PRIVATE_CFG}"
-          printf '  add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)\n'      >> "${PRIVATE_CFG}"
-          printf '  target_include_directories(Qt6::GuiPrivate INTERFACE\n'        >> "${PRIVATE_CFG}"
-          printf '    "%s/include/QtGui/6.10.0"\n'       "${QT_ROOT_DIR}"          >> "${PRIVATE_CFG}"
-          printf '    "%s/include/QtGui/6.10.0/QtGui")\n' "${QT_ROOT_DIR}"         >> "${PRIVATE_CFG}"
-          printf 'endif()\n'                                                        >> "${PRIVATE_CFG}"
-          echo "Created:"
-          cat "${PRIVATE_CFG}"
-        fi
-
-    - name: Restore KF6 cache
-      id: kf6-cache
-      uses: actions/cache@v4
-      with:
-        path: /opt/kf6
-        key: kf6.24.0-ubuntu24.04-v17
-
-    - name: Build KF6 from source
-      if: steps.kf6-cache.outputs.cache-hit != 'true'
-      run: |
-        # No KF6 dev packages in Ubuntu 24.04 (added in 24.10), and every KF6
-        # version requires Qt ≥ 6.5 while Ubuntu 24.04 ships Qt 6.4.2.
-        # Qt is installed by install-qt-action; QT_ROOT_DIR points to it.
-        # Both are cached — first run ~30 min, subsequent runs ~30 s.
-        KF6_VER="6.24.0"
-        KF6_MIN="6.24"
-        KF6_BASE="https://download.kde.org/stable/frameworks/${KF6_MIN}"
-        KF6_PREFIX="/opt/kf6"
-
-        export PATH="${QT_ROOT_DIR}/bin:$PATH"
-        export LD_LIBRARY_PATH="${QT_ROOT_DIR}/lib:$LD_LIBRARY_PATH"
-
-        # --- KF6 modules (dependency order) ---
-        build() {
-          local name=$1; shift
-          echo "=== Building ${name}-${KF6_VER} ==="
-          wget -q --tries=5 --waitretry=15 "${KF6_BASE}/${name}-${KF6_VER}.tar.xz"
-          tar xf "${name}-${KF6_VER}.tar.xz"
-          # Multiple KF6 components (kguiaddons, kcolorscheme, ...) link against
-          # Qt6::GuiPrivate without calling find_package(Qt6GuiPrivate) first.
-          # Prepend the call to every src/CMakeLists.txt that exists so cmake
-          # finds the Qt6GuiPrivateConfig.cmake created in the "Patch Qt6" step.
-          local src_cml="${name}-${KF6_VER}/src/CMakeLists.txt"
-          if [ -f "${src_cml}" ]; then
-            { printf 'find_package(Qt6GuiPrivate QUIET CONFIG)\n'; cat "${src_cml}"; } > /tmp/patched_src_cml.cmake
-            mv /tmp/patched_src_cml.cmake "${src_cml}"
-          fi
-          # kcoreaddons >= 6.20 adds unconditional Python bindings (Shiboken6/PySide6).
-          # Shiboken6 is not available in CI; remove REQUIRED so it fails silently,
-          # then blank python/CMakeLists.txt so ECMGeneratePythonBindings never runs.
-          if [ "${name}" = "kcoreaddons" ]; then
-            find "${name}-${KF6_VER}" -name "CMakeLists.txt" | xargs sed -i \
-              -e 's/find_package(\(Shiboken6[^)]*\)REQUIRED\([^)]*\))/find_package(\1\2)/g' \
-              -e 's/find_package(\(PySide6[^)]*\)REQUIRED\([^)]*\))/find_package(\1\2)/g' \
-              2>/dev/null || true
-            printf '# Python bindings disabled in CI\n' \
-              > "${name}-${KF6_VER}/python/CMakeLists.txt"
-          fi
-          cmake -B "build-${name}" "${name}-${KF6_VER}" \
-            -GNinja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}" \
-            -DCMAKE_PREFIX_PATH="${KF6_PREFIX};${QT_ROOT_DIR}" \
-            -DBUILD_TESTING=OFF \
-            "$@"
-          ninja -C "build-${name}"
-          sudo ninja -C "build-${name}" install
-          sudo rm -rf "build-${name}"
-          rm -rf "${name}-${KF6_VER}" "${name}-${KF6_VER}.tar.xz"
+        # Install KF6 packages - try different possible names
+        # UPDATED: Added libkf6filemetadata-dev for metadata extraction
+        sudo apt-get install -y \
+          libkf6coreaddons-dev \
+          libkf6i18n-dev \
+          libkf6xmlgui-dev \
+          libkf6config-dev \
+          libkf6iconthemes-dev \
+          libkf6filemetadata-dev \
+          libkf6completion-dev || \
+        sudo apt-get install -y \
+          kf6-kcoreaddons-dev \
+          kf6-ki18n-dev \
+          kf6-kxmlgui-dev \
+          kf6-kconfig-dev \
+          kf6-kiconthemes-dev \
+          kf6-kfilemetadata-dev \
+          kf6-kcompletion-dev || \
+        {
+          echo "Failed to install KF6 packages from KDE neon repository"
+          echo "Attempting alternative installation methods..."
+          
+          # Fallback: Try building from source or use alternative repos
+          echo "This might require manual KF6 installation"
+          exit 1
         }
 
-        build extra-cmake-modules -DBUILD_HTML_DOCS=OFF -DBUILD_QTHELP_DOCS=OFF
-        build kcodecs
-        build kcoreaddons
-        build ki18n        -DBUILD_WITH_QML=OFF
-        build kconfig
+        # Verify critical KF6 packages are installed
+        echo "=== Verifying KF6 installations ==="
+        for pkg in KF6CoreAddons KF6Config KF6FileMetaData; do
+          if pkg-config --exists ${pkg}; then
+            echo "✅ ${pkg} found: $(pkg-config --modversion ${pkg})"
+          else
+            echo "⚠️  ${pkg} not found via pkg-config"
+          fi
+        done
 
-        # plasma-wayland-protocols is required by kguiaddons ≥ 6.8 but is not
-        # available at a recent enough version in Ubuntu 24.04.
-        # It is protocol-definition files + CMake config only — very fast to build.
-        # Always use latest HEAD — this repo only ever holds stable XML/cmake files.
-        echo "=== Building plasma-wayland-protocols ==="
-        git clone --depth=1 \
-          https://invent.kde.org/libraries/plasma-wayland-protocols.git pwp-src
-        cmake -B build-pwp pwp-src \
-          -GNinja \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_INSTALL_PREFIX="${KF6_PREFIX}"
-        sudo ninja -C build-pwp install
-        rm -rf build-pwp pwp-src
-
-        build kguiaddons
-        build kwidgetsaddons
-        build kcolorscheme
-        build kconfigwidgets
-        build karchive
-        build breeze-icons
-        build kiconthemes
-        build kglobalaccel
-        build kitemviews
-        build kwindowsystem
-        build kcompletion
-        build sonnet
-        build ktextwidgets
-        build kxmlgui
-        build kfilemetadata
+        # List installed KF6 packages
+        echo "=== Installed KF6 packages ==="
+        dpkg -l | grep -i 'kf6\|libkf6' || echo "No KF6 packages pattern match"
 
     - name: Download and setup linuxdeploy
       run: |
@@ -233,6 +146,22 @@ jobs:
         ./linuxdeploy --help | head -5
         echo "Testing Qt plugin:"
         ./linuxdeploy-plugin-qt --help | head -5
+
+        # Download appimagetool and the type2 runtime (supports fuse2, fuse3, and
+        # fuse-free fallback via bwrap/uidmap — required on modern distros like Arch)
+        wget -q "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
+        chmod +x appimagetool-x86_64.AppImage
+        mkdir -p appimagetool-extracted
+        cd appimagetool-extracted
+        ../appimagetool-x86_64.AppImage --appimage-extract
+        cd ..
+        echo '#!/bin/bash' > appimagetool
+        echo 'exec "$HOME/linuxdeploy/appimagetool-extracted/squashfs-root/AppRun" "$@"' >> appimagetool
+        chmod +x appimagetool
+
+        wget -q "https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64" -O runtime-x86_64
+        chmod +x runtime-x86_64
+        echo "type2-runtime downloaded: $(ls -lh runtime-x86_64 | awk '{print $5}')"
 
     - name: Create packaging directory and files
       run: |
@@ -315,14 +244,11 @@ jobs:
         mkdir build
         cd build
 
-        export PATH="$QT_ROOT_DIR/bin:$PATH"
-        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:$LD_LIBRARY_PATH"
-
         cmake .. \
           -GNinja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_PREFIX_PATH="/opt/kf6;$QT_ROOT_DIR" \
+          -DCMAKE_PREFIX_PATH=/usr \
           -DBUILD_QT_WIDGETS=ON \
           -DBUILD_QT_QUICK=OFF \
           -DBUILD_TESTS=OFF
@@ -364,6 +290,29 @@ jobs:
     - name: Prepare AppDir structure
       run: |
         cd build
+
+        # Custom AppRun: must be created before linuxdeploy runs (it won't overwrite
+        # an existing AppRun).  Two issues fixed here:
+        #   1. SIGSEGV on non-KDE desktops (Cinnamon, GNOME, etc.): the session may
+        #      export QT_QPA_PLATFORMTHEME=kde/qt6ct/gnome, pointing to a plugin that
+        #      is not bundled in this AppImage.  Qt6 auto-detects KDE via
+        #      KDE_SESSION_VERSION without needing the env var, so unsetting it on
+        #      non-KDE desktops is safe.
+        #   2. KF6 data lookup: XDG_DATA_DIRS must include the AppDir share path so
+        #      KXmlGui, KIconThemes, and other KF6 components find their data files.
+        cat > AppDir/AppRun << 'APPRUN_EOF'
+        #!/bin/bash
+        APPDIR="$(dirname "$(readlink -f "${0}")")"
+        export PATH="${APPDIR}/usr/bin${PATH:+:$PATH}"
+        export LD_LIBRARY_PATH="${APPDIR}/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        export QT_PLUGIN_PATH="${APPDIR}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+        export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+        if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then
+            unset QT_QPA_PLATFORMTHEME
+        fi
+        exec "${APPDIR}/usr/bin/Katalog" "$@"
+        APPRUN_EOF
+        chmod +x AppDir/AppRun
 
         # Ensure proper AppDir structure
         mkdir -p AppDir/usr/share/applications
@@ -407,9 +356,10 @@ jobs:
         cd build
 
         # Set up environment for linuxdeploy
-        export PATH="$HOME/linuxdeploy:$QT_ROOT_DIR/bin:$PATH"
-        export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:/opt/kf6/lib:$LD_LIBRARY_PATH"
-        export QMAKE="$QT_ROOT_DIR/bin/qmake"
+        export PATH="$HOME/linuxdeploy:$PATH"
+        export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+        export QMAKE=$(command -v qmake6 || command -v qmake)
+        echo "Using QMAKE: $QMAKE  ($(${QMAKE} -query QT_VERSION 2>/dev/null || echo 'version query failed'))"
 
         # Verify tools work
         echo "Testing linuxdeploy..."
@@ -423,23 +373,42 @@ jobs:
         find AppDir -type f -name "Katalog*" || true
         ls -la AppDir/usr/bin/ || true
 
-        # Create AppImage
+        # Step 1: deploy Qt and all shared-library dependencies into AppDir.
+        # Omit --output appimage so we can pack with a custom runtime below.
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
           --executable AppDir/usr/bin/Katalog \
           --desktop-file AppDir/usr/share/applications/Katalog.desktop \
-          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png \
-          --output appimage
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
 
-        # Rename AppImage with version
-        if ls Katalog-*.AppImage 1> /dev/null 2>&1; then
-          mv Katalog-*.AppImage Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-        else
-          echo "Warning: AppImage not found with expected pattern"
-          ls -la *.AppImage || echo "No AppImage files found"
-          exit 1
-        fi
+        # Step 2: strip plugins/libs not used by Katalog.
+        # KF6FileMetaData pulls in GStreamer, FFmpeg, and PulseAudio as transitive
+        # deps — ~150 MB that Katalog never loads at runtime.
+        rm -rf AppDir/usr/plugins/multimedia
+        rm -rf AppDir/usr/plugins/geoservices
+        rm -rf AppDir/usr/plugins/position
+        for lib in \
+            libavcodec libavformat libavutil libswresample libswscale \
+            libgst libgstreamer libgstpbutils libgstallocators libgstapp \
+            libgstplay libgstphotography libgstgl libgstvideo libgstbase \
+            libgstaudio libgsttag \
+            libpulse libpulsecommon \
+            libshaderc libSPIRV libglslang \
+            libsndfile libFLAC libogg libvorbis \
+            libgudev libdw libelf liborc libzvbi; do
+          find AppDir/usr/lib -maxdepth 1 -name "${lib}*.so*" -delete 2>/dev/null || true
+        done
+        echo "AppDir size after stripping: $(du -sh AppDir | cut -f1)"
+
+        # Step 3: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
+        # The default linuxdeploy runtime only supports libfuse2 and fails with
+        # "dlopen(): error loading libfuse.so.2" on modern distros (Arch, CachyOS, etc.)
+        # that ship only libfuse3.
+        ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
+          --runtime-file "$HOME/linuxdeploy/runtime-x86_64" \
+          AppDir \
+          Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
 
     - name: Test AppImage
       run: |

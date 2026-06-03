@@ -68,6 +68,7 @@ public:
         QString fileType;
         QString storageName;
         bool    includeSymblinks;
+        bool    includeSubDir;
         bool    isFullDevice;
         QDateTime dateLoaded;
         QString includeMetadata;
@@ -146,6 +147,13 @@ public:
     void cleanupTempID();
     int getTempID() const;
 
+    // Split operations
+    QStringList listImmediateSubdirectories() const;
+    QList<Catalog*> executeSplitBySubDirectory(const QString &databaseMode,
+                                                const QString &collectionFolder);
+    QList<Catalog*> executeSplitByFileType(const QString &databaseMode,
+                                            const QString &collectionFolder);
+
     //Metadata
     static const QString METADATA_NONE;
     static const QString METADATA_MEDIA_BASIC;
@@ -158,6 +166,36 @@ public:
     static const QString CHECKSUM_SHA256;
     QString getFileChecksum(const QString &fileName, const QString &folderPath) const;
     static QString getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath, const QString &connectionName);
+
+    // Explore
+    struct ExploreFileEntry {
+        QString name;
+        qint64  size         = 0;
+        QString dateUpdated;
+        QString folderPath;
+        QString fullPath;
+        QString entryType;   // "file" or "folder"
+        QString fileType;
+        QString mimeType;
+        double  videoDurationSeconds = 0.0;
+        QString audioArtist;
+        QString audioAlbum;
+        QString audioTitle;
+        QString checksumSha256;
+    };
+
+    static QList<ExploreFileEntry> getExploreEntries(
+        const QString &connectionName,
+        int catalogId,
+        const QString &folderPath,
+        bool showFolders,
+        bool showSubFolders);
+
+    static int getExploreFolderCount(const QString &connectionName, int catalogId);
+
+    struct ExploreFolderStats { qint64 fileCount = 0; qint64 totalSize = 0; };
+    static ExploreFolderStats getExploreFolderStats(
+        const QString &connectionName, int catalogId, const QString &folderPath);
 
     // Metadata management
     bool clearMetadataBasicFields();

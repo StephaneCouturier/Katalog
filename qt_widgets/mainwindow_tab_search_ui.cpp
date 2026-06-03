@@ -33,6 +33,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/catalog.h"
+#include <QKeyEvent>
 #include "core/database.h"
 #include "core/filemetadata.h"
 #include "core/filechecksum.h"
@@ -43,9 +44,18 @@
     //User interactions
 
         //Buttons and other changes
-        void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
+        // Enter (no modifier) triggers search; Shift+Enter inserts a newline.
+        bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         {
-            launchSearch();
+            if (obj == ui->Search_lineEdit_SearchText && event->type() == QEvent::KeyPress) {
+                QKeyEvent *key = static_cast<QKeyEvent *>(event);
+                if ((key->key() == Qt::Key_Return || key->key() == Qt::Key_Enter)
+                        && !(key->modifiers() & Qt::ShiftModifier)) {
+                    launchSearch();
+                    return true;
+                }
+            }
+            return QMainWindow::eventFilter(obj, event);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
@@ -100,12 +110,12 @@
         {
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
-            ui->Search_lineEdit_SearchText->setText(originalText);
+            ui->Search_lineEdit_SearchText->setPlainText(originalText);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_CleanSearchText_clicked()
         {
-            QString cleanedSearchText = ui->Search_lineEdit_SearchText->text();
+            QString cleanedSearchText = ui->Search_lineEdit_SearchText->toPlainText();
             cleanedSearchText.replace("."," ");
             cleanedSearchText.replace(","," ");
             cleanedSearchText.replace("_"," ");
@@ -121,7 +131,7 @@
             cleanedSearchText.replace("'"," ");
             cleanedSearchText.replace("\""," ");
 
-            ui->Search_lineEdit_SearchText->setText(cleanedSearchText);
+            ui->Search_lineEdit_SearchText->setPlainText(cleanedSearchText);
 
         }
         //----------------------------------------------------------------------
@@ -213,6 +223,7 @@
 
             if ( iconName == "go-down"){ //Hide
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
+                    ui->Search_widget_HistoryActions->setHidden(true);
                     ui->Search_treeView_History->setHidden(true);
 
                     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
@@ -220,10 +231,37 @@
             }
             else{ //Show
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-down"));
+                    ui->Search_widget_HistoryActions->setHidden(false);
                     ui->Search_treeView_History->setHidden(false);
 
                     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchHistory", "go-down");
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_ClearHistory_clicked()
+        {
+            if (QMessageBox::critical(this,
+                                      "Katlog",
+                                      "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
+                                          +tr("Search history")+".<br/><br/>"+tr("Continue?"),
+                                      QMessageBox::Yes|QMessageBox::Cancel)
+                == QMessageBox::Yes) {
+                collection->clearSearchHistory(m_connectionName);
+                loadSearchHistoryTableToModel();
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_KeepLastHistory_clicked()
+        {
+            if (QMessageBox::warning(this,
+                                     tr("Confirmation"),
+                                     "<span style='color:orange;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
+                                         +tr("Search history")+"<br/>"+tr("Keep last 10"),
+                                     QMessageBox::Yes|QMessageBox::Cancel)
+                == QMessageBox::Yes) {
+                collection->keepLastSearchHistory(10, m_connectionName);
+                loadSearchHistoryTableToModel();
             }
         }
         //----------------------------------------------------------------------
@@ -1060,6 +1098,10 @@
     //Methods-----------------------------------------------------------------------
         void MainWindow::initiateSearchFields()
         {
+            ui->Search_lineEdit_SearchText->installEventFilter(this);
+            connect(ui->Search_pushButton_ClearSearchText, &QPushButton::clicked,
+                    ui->Search_lineEdit_SearchText, &QPlainTextEdit::clear);
+
             // Add internal constants for TextCriteria:
             ui->Search_comboBox_TextCriteria->setItemData(0, Search::TEXT_CRITERIA_ALL_WORDS,    Qt::UserRole);
             ui->Search_comboBox_TextCriteria->setItemData(1, Search::TEXT_CRITERIA_EXACT_PHRASE, Qt::UserRole);
@@ -1116,7 +1158,7 @@
         {//Reset criteria to default search values
             //File name
             ui->Search_checkBox_FileName->setChecked(true);
-            ui->Search_lineEdit_SearchText->setText("");
+            ui->Search_lineEdit_SearchText->clear();
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
             ui->Search_checkBox_CaseSensitive->setChecked(false);
@@ -1216,7 +1258,7 @@
             //File name
             ui->Search_checkBox_FileCriteria->setChecked(search->searchOnFileCriteria);
             ui->Search_checkBox_FileName->setChecked(search->searchOnFileName);
-            ui->Search_lineEdit_SearchText->setText(search->searchText);
+            ui->Search_lineEdit_SearchText->setPlainText(search->searchText);
             int textCriteriaIndex = search->mapTextCriteriaToComboBoxIndex(search->selectedTextCriteria);
             ui->Search_comboBox_TextCriteria->setCurrentIndex(textCriteriaIndex);
             int comboIndex = currentSearch->mapSearchInToComboBoxIndex(search->selectedSearchIn);
@@ -1348,7 +1390,7 @@
                 //Clear the temporary search
                 currentSearch = nullptr;
                 currentSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
-                currentSearch->searchText               = ui->Search_lineEdit_SearchText->text();
+                currentSearch->searchText               = ui->Search_lineEdit_SearchText->toPlainText();
                 int textCriteriaIndex = ui->Search_comboBox_TextCriteria->currentIndex();
                 switch (textCriteriaIndex) {
                     case 0: currentSearch->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS; break;

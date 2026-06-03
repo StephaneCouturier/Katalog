@@ -2,10 +2,11 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
+import QtQuick.Dialogs
 
 Kirigami.ScrollablePage {
     id: pageSettingsRoot
-    title: "Settings"
+    title: qsTr("Settings")
 
     // Set to true when opened from Open Collection > Hosted Db menu
     property bool showHostedForm: false
@@ -16,6 +17,13 @@ Kirigami.ScrollablePage {
             if (appManager1.databaseMode !== "Hosted")
                 showHostedForm = false
         }
+        function onImportSourceChanged() {
+            importUpdateSourceCombo.model = appManager1.getImportSourcePaths()
+            importDeviceCombo.selectById(0)
+        }
+        function onImageFolderPathChanged() {
+            imageFolderField.text = appManager1.imageFolderPath
+        }
     }
 
     Component.onCompleted: {
@@ -25,15 +33,63 @@ Kirigami.ScrollablePage {
         userField.text         = appManager1.getDatabaseUserName()
         passwordField.text     = appManager1.getDatabasePassword()
         autoConnectBox.checked = appManager1.getHostedAutoConnect()
+        importUpdateSourceCombo.model = appManager1.getImportSourcePaths()
+    }
+
+    // ── Dialogs ────────────────────────────────────────────────────────
+
+    FolderDialog {
+        id: imageFolderDialog
+        onAccepted: appManager1.imageFolderPath = appManager1.pathFromFileUrl(selectedFolder.toString())
+    }
+
+    FileDialog {
+        id: importFileDialog
+        fileMode: FileDialog.OpenFile
+        onAccepted: {
+            var path = appManager1.pathFromFileUrl(selectedFile.toString())
+            importPathField.text = path
+            if (importModeCombo.currentIndex < 2)
+                appManager1.openImportSource(path)
+        }
+    }
+
+    FolderDialog {
+        id: importFolderDialog
+        onAccepted: {
+            var path = appManager1.pathFromFileUrl(selectedFolder.toString())
+            importPathField.text = path
+            appManager1.openImportSource(path)
+        }
     }
 
     actions: [
         Kirigami.Action {
-            text: "Close"
-            icon.name: "view-close"
+            text:        qsTr("Close")
+            icon.name:   "view-close"
+            displayHint: Kirigami.DisplayHint.KeepVisible
             onTriggered: pageStack.layers.pop()
         }
     ]
+
+    footer: RowLayout {
+        visible: appManager1.importIsRunning || appManager1.importStatusText.length > 0
+        spacing: Kirigami.Units.smallSpacing
+        Controls.BusyIndicator {
+            running: appManager1.importIsRunning
+            visible: appManager1.importIsRunning
+            implicitWidth:  Kirigami.Units.gridUnit * 1.5
+            implicitHeight: Kirigami.Units.gridUnit * 1.5
+            Layout.leftMargin: Kirigami.Units.smallSpacing
+        }
+        Controls.Label {
+            Layout.fillWidth: true
+            Layout.margins: Kirigami.Units.smallSpacing
+            text: appManager1.importStatusText
+            elide: Text.ElideRight
+            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+        }
+    }
 
     // Single GridLayout so column 0 width is shared across all sections
     GridLayout {
@@ -47,34 +103,65 @@ Kirigami.ScrollablePage {
 
         // ── Collection & Database ──────────────────────────────────────
         Kirigami.Heading {
-            level: 3; text: "Collection & Database"
+            level: 3; text: qsTr("Collection & Database")
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
-            color: Kirigami.Theme.linkColor;
+            color: Kirigami.Theme.linkColor
         }
 
-        Controls.Label { text: "Database Mode";    opacity: 0.7; }
-        Controls.Label { text: appManager1.databaseMode || "—"; font.bold: true }
+        Controls.Label { text: qsTr("Database Mode"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing }
+        Controls.Label { text: appManager1.databaseMode || "—"; font.bold: true ; Layout.topMargin: Kirigami.Units.largeSpacing }
 
-        Controls.Label { text: "Collection";       opacity: 0.7; }
-        Controls.Label {
-            text: {
-                var mode = appManager1.databaseMode
-                if (mode === "Memory") return appManager1.getCollectionFolder() || "(none)"
-                if (mode === "File")   return appManager1.getDatabaseFilePath() || "(none)"
-                if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
-                return "—"
-            }
-            elide: Text.ElideMiddle
+        Controls.Label { text: qsTr("Collection"); opacity: 0.7 }
+        RowLayout {
             Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                text: {
+                    var mode = appManager1.databaseMode
+                    if (mode === "Memory") return appManager1.getCollectionFolder() || qsTr("(none)")
+                    if (mode === "File")   return appManager1.getDatabaseFilePath() || qsTr("(none)")
+                    if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
+                    return "—"
+                }
+                elide: Text.ElideMiddle
+                Layout.fillWidth: true
+            }
+            Controls.Button {
+                text: qsTr("Edit")
+                icon.name: "document-edit"
+                visible: appManager1.databaseMode === "File"
+                onClicked: appManager1.openDatabaseFile()
+            }
         }
 
-        Controls.Label { text: "Database Version"; opacity: 0.7; }
+        Controls.Label { text: qsTr("Database Version"); opacity: 0.7 }
         Controls.Label { text: appManager1.databaseSchemaVersion || "—" }
+
+        // ── Images folder ──────────────────────────────────────────────
+        Controls.Label { text: qsTr("Images folder"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Controls.TextField {
+                id: imageFolderField
+                text: appManager1.imageFolderPath
+                Layout.fillWidth: true
+                onEditingFinished: appManager1.imageFolderPath = text
+            }
+            Controls.Button {
+                text: qsTr("Select")
+                icon.name: "edit-select"
+                onClicked: {
+                    imageFolderDialog.currentFolder = appManager1.pathToFileUrl(imageFolderField.text || appManager1.getCollectionFolder())
+                    imageFolderDialog.open()
+                }
+            }
+        }
 
         // ── Hosted database fields (only when Hosted mode) ─────────────
         Controls.Label {
-            text: "Host name";  opacity: 0.7
+            text: qsTr("Host name"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
         }
@@ -87,7 +174,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: "Database name:"; opacity: 0.7
+            text: qsTr("Database name:"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.TextField {
@@ -98,7 +185,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: "Port:"; opacity: 0.7
+            text: qsTr("Port:"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.SpinBox {
@@ -108,7 +195,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: "User name:"; opacity: 0.7
+            text: qsTr("User name:"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.TextField {
@@ -119,7 +206,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: "Password:"; opacity: 0.7
+            text: qsTr("Password:"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.TextField {
@@ -130,12 +217,12 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: "Startup:"; opacity: 0.7
+            text: qsTr("Startup:"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.CheckBox {
             id: autoConnectBox
-            text: "Connect automatically on startup"
+            text: qsTr("Connect automatically on startup")
             onCheckedChanged: appManager1.setHostedAutoConnect(checked)
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
@@ -145,7 +232,7 @@ Kirigami.ScrollablePage {
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.Button {
-            text: "Connect"
+            text: qsTr("Connect")
             icon.name: "network-connect"
             enabled: hostField.text.length > 0 && dbNameField.text.length > 0
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
@@ -158,35 +245,143 @@ Kirigami.ScrollablePage {
         }
 
         // ── Separator ──────────────────────────────────────────────────
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
+        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
+
+        // ── Import ─────────────────────────────────────────────────────
+        Kirigami.Heading { level: 3; text: qsTr("Collection Import & Synchronization"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; font.bold: true }
+
+        Controls.Label { text: qsTr("Data mode"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter; Layout.topMargin: Kirigami.Units.largeSpacing }
+        Controls.ComboBox {
+            id: importModeCombo
+            model: [qsTr("Katalog File"), qsTr("Katalog Memory"), qsTr("VVV Tab Separated Values")]
+            Layout.fillWidth: true
+            onCurrentIndexChanged: importPathField.text = ""
+            Layout.topMargin: Kirigami.Units.largeSpacing
+        }
+
+        Controls.Label { text: qsTr("Source"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Controls.TextField {
+                id: importPathField
+                placeholderText: importModeCombo.currentIndex === 2 ? qsTr("VVV export file (.tsv)") : qsTr("Path")
+                Layout.fillWidth: true
+                readOnly: true
+            }
+            Controls.Button {
+                text: qsTr("Select")
+                icon.name: "edit-select"
+                onClicked: {
+                    if (importModeCombo.currentIndex === 0) {
+                        importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                        importFileDialog.open()
+                    } else if (importModeCombo.currentIndex === 1) {
+                        importFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                        importFolderDialog.open()
+                    } else {
+                        importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                        importFileDialog.open()
+                    }
+                }
+            }
+        }
+
+        Controls.Label { text: qsTr("Device"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            DeviceTreeComboBox {
+                id: importDeviceCombo
+                Layout.fillWidth: true
+                sourceModel: appManager1.importSourceDeviceModel
+                enabled: importModeCombo.currentIndex < 2 && selectedDeviceName.length > 0 && !appManager1.importIsRunning
+            }
+            Controls.Button {
+                text: qsTr("Import")
+                icon.name: "document-import"
+                enabled: !appManager1.importIsRunning && (
+                    importModeCombo.currentIndex === 2
+                        ? importPathField.text.length > 0
+                        : importDeviceCombo.selectedDeviceName.length > 0
+                )
+                onClicked: {
+                    if (importModeCombo.currentIndex === 2) {
+                        var err = appManager1.importFromVVV(importPathField.text)
+                        if (err.length > 0)
+                            importErrorMessage.text = err
+                        importErrorMessage.visible = err.length > 0
+                    } else {
+                        appManager1.importDevice(importDeviceCombo.selectedDeviceId)
+                    }
+                }
+            }
+        }
+
+        Controls.Label { text: qsTr("Update"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Controls.ComboBox {
+                id: importUpdateSourceCombo
+                Layout.fillWidth: true
+                enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
+            }
+            Controls.Button {
+                text: qsTr("Update")
+                icon.name: "view-refresh"
+                enabled: importModeCombo.currentIndex < 2 && importUpdateSourceCombo.count > 0 && !appManager1.importIsRunning
+                onClicked: appManager1.updateAllImportsFromSource(importUpdateSourceCombo.currentText)
+            }
+        }
+
+        Controls.Label { visible: importErrorMessage.visible }
+        Kirigami.InlineMessage {
+            id: importErrorMessage
+            Layout.fillWidth: true
+            type: Kirigami.MessageType.Error
+            visible: false
+            showCloseButton: true
+        }
+
+        // ── Separator ──────────────────────────────────────────────────
+        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
 
         // ── Application ────────────────────────────────────────────────
-        Kirigami.Heading { level: 3; text: "Application"; Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; font.bold: true }
+        Kirigami.Heading { level: 3; text: qsTr("Application"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; font.bold: true }
 
-        Controls.Label { text: "Version"; opacity: 0.7; Layout.alignment: Qt.AlignTop; }
+        Controls.Label { text: qsTr("Version"); opacity: 0.7; Layout.alignment: Qt.AlignTop; Layout.topMargin: Kirigami.Units.largeSpacing }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
+            Layout.topMargin: Kirigami.Units.largeSpacing
             Flow {
                 spacing: Kirigami.Units.largeSpacing
                 Layout.fillWidth: true
                 Controls.Label { text: About.version; font.bold: true }
                 Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7 }
                 Controls.Button {
-                    text: "Release Notes"
+                    text: qsTr("Release Notes")
                     icon.name: "view-list-text"
                     //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
                     onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
                 }
             }
             Controls.CheckBox {
-                text: "Check for a new version on startup"
+                text: qsTr("Check for a new version on startup")
                 checked: appManager1.checkVersionChoice
                 onCheckedChanged: appManager1.checkVersionChoice = checked
+            }
+            Controls.CheckBox {
+                text: qsTr("File sorting is Case Sensitive")
+                checked: appManager1.fileSortCaseSensitive
+                onCheckedChanged: appManager1.fileSortCaseSensitive = checked
+                Controls.ToolTip.visible: hovered
+                Controls.ToolTip.text: qsTr("If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac")
             }
         }
 
 /*
-        Controls.Label { text: "Language"; opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }
+        Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
@@ -200,6 +395,8 @@ Kirigami.ScrollablePage {
                 model: appManager1.getLanguageList()
 
                 contentItem: RowLayout {
+                    function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                    property int selectionStart: 0
                     spacing: Kirigami.Units.smallSpacing
                     Image {
                         source: languageComboBox.currentIndex >= 0
@@ -250,23 +447,32 @@ Kirigami.ScrollablePage {
             }
         }
 */
-        Controls.Label { text: "Settings file"; opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
-        Controls.Button {
-            text: "Open"
-            icon.name: "document-edit"
-            onClicked: appManager1.openSettingsFile()
+        Controls.Label { text: qsTr("Settings file"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
+        RowLayout {
+            Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                text: appManager1.getSettingsFilePath() || qsTr("(none)")
+                elide: Text.ElideMiddle
+                Layout.fillWidth: true
+            }
+            Controls.Button {
+                text: qsTr("Open")
+                icon.name: "document-edit"
+                onClicked: appManager1.openSettingsFile()
+            }
         }
         /*
         // ── Separator ──────────────────────────────────────────────────
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
 
         // ── Search ────────────────────────────────────────────────────
-        Kirigami.Heading { level: 3; text: "Search"; Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; }
+        Kirigami.Heading { level: 3; text: qsTr("Search"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; }
 
-        Controls.Label { text: "Layout"; opacity: 0.7; }
+        Controls.Label { text: qsTr("Layout"); opacity: 0.7; }
         Controls.CheckBox {
-            text: "Keep Selection visible with Search and Results"
+            text: qsTr("Keep Selection visible with Search and Results")
             checked: appManager1.searchKeepsSelection
             onCheckedChanged: appManager1.searchKeepsSelection = checked
         }

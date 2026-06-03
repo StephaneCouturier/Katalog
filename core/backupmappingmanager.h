@@ -37,6 +37,7 @@
 #include <QString>
 #include <QList>
 #include <QSqlQuery>
+#include <QSet>
 
 /**
  * @brief Represents a backup mapping with source and target information
@@ -167,8 +168,16 @@ public:
     MappingInfo getMappingById(int mappingId);
 
     // Changes
+    bool createMapping(const QString &name, const QString &type,
+                       int sourceId, int targetId,
+                       bool strictCopy, const QString &conflictMode,
+                       bool sourceDrive);
     bool deleteMapping(int mappingId);
     bool invertMapping(int mappingId);
+
+    // Catalog content helpers (used by backup comparison)
+    QSet<QString> getCatalogFilePaths(int catalogExternalId) const;
+    int           getCatalogFileCount(int catalogExternalId) const;
 
     // Statistics
     int getMappingCount();

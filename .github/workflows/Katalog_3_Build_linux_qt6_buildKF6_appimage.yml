@@ -1,5 +1,5 @@
 name: Katalog 3 - Build linux Qt6 (inc KF6)
-#v2026-04-26 run3
+#v3.alpha2 run6
 on:
   # Trigger on new releases
   # release:
@@ -458,46 +458,20 @@ jobs:
         # RPATH setup correctly. linuxdeploy-plugin-qt may not detect them
         # automatically when all QML is embedded in Qt resources (no on-disk .qml
         # files for qmlimportscanner to discover).
+        # Dynamically discover all Qt6 QML/Quick/Charts/Labs libraries so the
+        # AppImage is self-contained regardless of what Qt version is on the host.
         LIBRARY_FLAGS=""
-        for lib in \
-          libQt6Qml.so.6 \
-          libQt6Quick.so.6 \
-          libQt6QuickControls2.so.6 \
-          libQt6QuickControls2Fusion.so.6 \
-          libQt6QuickControls2Material.so.6 \
-          libQt6QuickControls2Basic.so.6 \
-          libQt6QuickControls2BasicStyle.so.6 \
-          libQt6QuickControls2Imagine.so.6 \
-          libQt6QuickControls2Universal.so.6 \
-          libQt6QuickTemplates2.so.6 \
-          libQt6QuickLayouts.so.6 \
-          libQt6QmlModels.so.6 \
-          libQt6QmlWorkerScript.so.6 \
-          libQt6QuickDialogs2.so.6 \
-          libQt6QuickDialogs2QuickImpl.so.6 \
-          libQt6QuickDialogs2Utils.so.6 \
-          libQt6QuickControls2Impl.so.6 \
-          libQt6QuickControls2FusionStyleImpl.so.6 \
-          libQt6QuickControls2MaterialStyleImpl.so.6 \
-          libQt6QuickControls2BasicStyleImpl.so.6 \
-          libQt6QuickControls2ImagineStyleImpl.so.6 \
-          libQt6QuickControls2UniversalStyleImpl.so.6 \
-          libQt6QuickWidgets.so.6 \
-          libQt6LabsPlatform.so.6 \
-          libQt6LabsSettings.so.6 \
-          libQt6LabsAnimation.so.6 \
-          libQt6LabsFolderListModel.so.6 \
-          libQt6LabsQmlModels.so.6 \
-          libQt6QuickShapes.so.6 \
-          libQt6QuickEffects.so.6; do
-          src="$QT6_LIB_DIR/$lib"
-          if [ -f "$src" ] || [ -L "$src" ]; then
-            LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"
-            echo "  Will bundle: $lib"
-          else
-            echo "  Not found (skip): $lib"
-          fi
-        done
+        while IFS= read -r src; do
+          LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"
+          echo "  Will bundle: $(basename $src)"
+        done < <(find "$QT6_LIB_DIR" -maxdepth 1 \( \
+          -name "libQt6Qml*.so.6"   -o \
+          -name "libQt6Quick*.so.6" -o \
+          -name "libQt6Labs*.so.6"  -o \
+          -name "libQt6Charts*.so.6" \
+        \) ! -name "libQt6Quick3D*.so.6" \
+          ! -name "libQt6QuickTimeline*.so.6" \
+        | sort)
 
         linuxdeploy \
           --appdir AppDir \
@@ -551,6 +525,8 @@ jobs:
           mkdir -p "$DEST"
 
           for module in \
+            "QtCore" \
+            "QtCharts" \
             "QtQuick" \
             "QtQuick/Controls" \
             "QtQuick/Layouts" \

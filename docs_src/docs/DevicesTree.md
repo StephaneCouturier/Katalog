@@ -1,8 +1,8 @@
 ---
-version: "2.11"
+version: "2.12"
 ---
-# Device Tree
-![2.11](https://img.shields.io/badge/Version-2.11-blue)
+# Devices: Device Tree
+![2.12](https://img.shields.io/badge/Version-2.12-blue)
 
 ## Summary
 This page describes all the features of the **Device Tree** view of the [Devices](Devices) screen and how to use them.

@@ -296,7 +296,9 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
         filters |= QDir::Hidden;
     }
 
-    QDirIterator::IteratorFlags iteratorFlags = QDirIterator::Subdirectories;
+    QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
+                                                ? QDirIterator::Subdirectories
+                                                : QDirIterator::NoIteratorFlags;
     if (catalog->includeSymblinks) {
         iteratorFlags |= QDirIterator::FollowSymlinks;
     }
@@ -328,6 +330,12 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
 
         QString entryPath = it.next();
         QFileInfo entry(entryPath);
+
+        // QDir::Hidden is unreliable for dot-prefix entries on macOS (UF_HIDDEN vs. "."
+        // prefix convention) and on Windows (no hidden attribute for dot-prefix files).
+        // Apply an explicit cross-platform check as a defense in depth.
+        if (!catalog->includeHidden && entry.fileName().startsWith('.'))
+            continue;
 
         // Skip excluded folders
         bool isExcluded = false;
@@ -423,7 +431,9 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
         filters |= QDir::Hidden;
     }
 
-    QDirIterator::IteratorFlags iteratorFlags = QDirIterator::Subdirectories;
+    QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
+                                                ? QDirIterator::Subdirectories
+                                                : QDirIterator::NoIteratorFlags;
     if (catalog->includeSymblinks) {
         iteratorFlags |= QDirIterator::FollowSymlinks;
     }
@@ -432,6 +442,9 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
 
     while (it.hasNext() && shouldContinue()) {
         QString filePath = it.next();
+
+        if (!catalog->includeHidden && QFileInfo(filePath).fileName().startsWith('.'))
+            continue;
 
         if (catalog->fileType == "None") {
             QFileInfo fileInfo(filePath);
@@ -1968,7 +1981,9 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
         filters |= QDir::Hidden;
     }
 
-    QDirIterator::IteratorFlags iteratorFlags = QDirIterator::Subdirectories;
+    QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
+                                                ? QDirIterator::Subdirectories
+                                                : QDirIterator::NoIteratorFlags;
     if (catalog->includeSymblinks) {
         iteratorFlags |= QDirIterator::FollowSymlinks;
     }
@@ -1997,6 +2012,9 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
 
         QString entryPath = it.next();
         QFileInfo entry(entryPath);
+
+        if (!catalog->includeHidden && entry.fileName().startsWith('.'))
+            continue;
 
         // Skip excluded folders
         bool isExcluded = false;

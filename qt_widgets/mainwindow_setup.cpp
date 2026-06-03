@@ -61,12 +61,18 @@
 
             collection->folder = settings.value("LastCollectionFolder").toString();
 
-            if (collection->folder == "")
-                firstRun =true;
+            if (collection->databaseMode == "Memory") {
+                if (collection->folder.isEmpty())
+                    firstRun = true;
+            } else if (collection->databaseMode == "File") {
+                if (collection->databaseFilePath.isEmpty())
+                    firstRun = true;
+            }
 
             if (firstRun == true){
-                //Create a file, with default values
-                settings.setValue("LastCollectionFolder", QApplication::applicationDirPath());
+                //Create a file, with default values (Memory mode only: File mode derives folder from the db path)
+                if (collection->databaseMode == "Memory")
+                    settings.setValue("LastCollectionFolder", QApplication::applicationDirPath());
 
                 //Set Language and theme
                 QString userLanguage = QLocale::system().name();
@@ -82,87 +88,147 @@
                 msgBox.setText(tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
                                   "It seems this is the first run.<br/><br/>"
                                   "The following Settings have been applied:<br/>"
-                                  " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings"))
-                + tr("<br/><br/>On the next screen, pick an existing Collection folder or create a new one."));
+                                  " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings")));
                 msgBox.setIcon(QMessageBox::Information);
+                QPushButton *openExistingBtn = nullptr;
+                if (collection->databaseMode == "File") {
+                    openExistingBtn = msgBox.addButton(tr("Open existing..."), QMessageBox::AcceptRole);
+                    msgBox.addButton(tr("Create new..."), QMessageBox::AcceptRole);
+                } else {
+                    msgBox.addButton(QMessageBox::Ok);
+                }
                 msgBox.exec();
 
                 //Language
                 ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
-                //Collection folder choice - with validation
-                bool folderSelected = false;
-                while (!folderSelected) {
-                    //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-                    QString selectedFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                                               collection->folder,
-                                                                               QFileDialog::ShowDirsOnly
-                                                                                   | QFileDialog::DontResolveSymlinks);
+                bool openExisting = false;
+                if (collection->databaseMode == "Memory") {
+                    //Collection folder choice - with validation
+                    bool folderSelected = false;
+                    while (!folderSelected) {
+                        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+                        QString selectedFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                                                   collection->folder,
+                                                                                   QFileDialog::ShowDirsOnly
+                                                                                       | QFileDialog::DontResolveSymlinks);
 
-                    //Handle user cancellation
-                    if (selectedFolder.isEmpty()) {
-                        //set the location of the application as a default value if a folder was not provided
-                        selectedFolder = QApplication::applicationDirPath();
-                    }
-
-                    // Validate the selected folder
-                    Collection::CollectionFolderStatus status = collection->validateCollectionFolder(selectedFolder, collection->databaseMode);
-
-                    switch (status) {
-                    case Collection::VALID_EMPTY:
-                    case Collection::VALID_MEMORY_MODE:
-                    case Collection::VALID_FILE_MODE:
-                        // Valid folder - accept and continue
-                        collection->folder = selectedFolder;
-                        folderSelected = true;
-                        break;
-
-                    case Collection::INVALID_MEMORY_FILES:
-                    case Collection::INVALID_FILE_FILES:
-                    case Collection::INVALID_USER_DATA:
-                    case Collection::INVALID_MIXED_DATA: {
-                        // Invalid folder - show options to user
-                        InvalidFolderAction action = showInvalidFolderDialog(selectedFolder, status, true);
-
-                        switch (action) {
-                        case ACTION_CREATE_SUBFOLDER: {
-                            // Create new collection in subfolder
-                            QString newCollectionPath = selectedFolder + "/Katalog_Collection_" +
-                                                        QDateTime::currentDateTime().toString("yyyyMMdd");
-                            if (QDir().mkpath(newCollectionPath)) {
-                                collection->folder = newCollectionPath;
-                                folderSelected = true;
-                            }
-                            // If creation failed, continue loop
-                            break;
+                        //Handle user cancellation: re-prompt rather than silently falling back
+                        if (selectedFolder.isEmpty()) {
+                            continue;
                         }
-                        case ACTION_SELECT_DIFFERENT:
-                            // Continue loop to let user select again
-                            break;
 
-                        case ACTION_USE_DEFAULT:
-                            // Use application folder as fallback
-                            collection->folder = QApplication::applicationDirPath();
+                        // Validate the selected folder
+                        Collection::CollectionFolderStatus status = collection->validateCollectionFolder(selectedFolder, collection->databaseMode);
+
+                        switch (status) {
+                        case Collection::VALID_EMPTY:
+                        case Collection::VALID_MEMORY_MODE:
+                        case Collection::VALID_FILE_MODE:
+                            // Valid folder - accept and continue
+                            collection->folder = selectedFolder;
                             folderSelected = true;
                             break;
-                        case ACTION_CANCEL:
+
+                        case Collection::INVALID_MEMORY_FILES:
+                        case Collection::INVALID_FILE_FILES:
+                        case Collection::INVALID_USER_DATA:
+                        case Collection::INVALID_MIXED_DATA: {
+                            // Invalid folder - show options to user
+                            InvalidFolderAction action = showInvalidFolderDialog(selectedFolder, status, true);
+
+                            switch (action) {
+                            case ACTION_CREATE_SUBFOLDER: {
+                                // Create new collection in subfolder
+                                QString newCollectionPath = selectedFolder + "/Katalog_Collection_" +
+                                                            QDateTime::currentDateTime().toString("yyyyMMdd");
+                                if (QDir().mkpath(newCollectionPath)) {
+                                    collection->folder = newCollectionPath;
+                                    folderSelected = true;
+                                }
+                                // If creation failed, continue loop
+                                break;
+                            }
+                            case ACTION_SELECT_DIFFERENT:
+                                // Continue loop to let user select again
+                                break;
+
+                            case ACTION_USE_DEFAULT:
+                                // Use application folder as fallback
+                                collection->folder = QApplication::applicationDirPath();
+                                folderSelected = true;
+                                break;
+                            case ACTION_CANCEL:
+                                break;
+                            }
                             break;
                         }
-                        break;
+                        }
                     }
-                    }
-                }
 
                     //save setting
                     settings.setValue("LastCollectionFolder", collection->folder);
 
+                } else {
+                    // File mode: open existing or create a new database file
+                    bool fileSelected = false;
+                    openExisting = (msgBox.clickedButton() == openExistingBtn);
+                    while (!fileSelected) {
+                        QString selectedFile;
+                        if (openExisting) {
+                            selectedFile = QFileDialog::getOpenFileName(
+                                this,
+                                tr("Select or create a database file for this collection"),
+                                QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                tr("Database files (*.db)"));
+                        } else {
+                            selectedFile = QFileDialog::getSaveFileName(
+                                this,
+                                tr("Select or create a database file for this collection"),
+                                QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/katalog.db",
+                                tr("Database files (*.db)"));
+                        }
+
+                        if (selectedFile.isEmpty()) {
+                            // User cancelled — loop again to re-prompt
+                            continue;
+                        }
+
+                        if (!selectedFile.endsWith(".db", Qt::CaseInsensitive))
+                            selectedFile += ".db";
+
+                        collection->databaseFilePath = selectedFile;
+                        collection->folder = QFileInfo(selectedFile).absolutePath();
+
+                        if (!openExisting) {
+                            // Touch the file so Database::initialize() can open it
+                            // (QFileDialog::getSaveFileName returns a path but does not create the file)
+                            QFile newFile(collection->databaseFilePath);
+                            if (newFile.open(QFile::WriteOnly))
+                                newFile.close();
+                        }
+
+                        fileSelected = true;
+                    }
+
+                    settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+                    QSqlError dbErr = DatabaseManager::reconnect(m_connectionName, collection);
+                    if (dbErr.type() != QSqlError::NoError) {
+                        QMessageBox::critical(this, "Katalog",
+                            tr("Failed to open the database file: %1").arg(dbErr.text()));
+                        return;
+                    }
+                }
+
                 //Go to Create screen
-                QMessageBox msgBox2;
-                msgBox2.setWindowTitle("Katalog");
-                msgBox2.setText(tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
-                                   + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>"));
-                msgBox2.setIcon(QMessageBox::Information);
-                msgBox2.exec();
+                if (!openExisting) {
+                    QMessageBox msgBox2;
+                    msgBox2.setWindowTitle("Katalog");
+                    msgBox2.setText(tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
+                                       + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>"));
+                    msgBox2.setIcon(QMessageBox::Information);
+                    msgBox2.exec();
+                }
 
                 ui->tabWidget->setCurrentIndex(selectedTab);
             }
@@ -171,7 +237,10 @@
 
             //Collection folder
             if (firstRun != true){
-                collection->folder = settings.value("LastCollectionFolder").toString();
+                if (collection->databaseMode == "Memory")
+                    collection->folder = settings.value("LastCollectionFolder").toString();
+                else if (collection->databaseMode == "File")
+                    collection->folder = QFileInfo(collection->databaseFilePath).absolutePath();
             }
 
             selectedDevice->ID   = settings.value("Selection/SelectedDeviceID").toInt();
@@ -233,6 +302,7 @@
             //Show or Hide ShowHideSearchHistory
             if ( settings.value("Settings/ShowHideSearchHistory") == "go-up"){ //Hide
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
+                    ui->Search_widget_HistoryActions->setHidden(true);
                     ui->Search_treeView_History->setHidden(true);
             }
             //Show or Hide ShowHideGlobalParameters

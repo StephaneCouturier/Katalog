@@ -113,6 +113,10 @@ public:
     void saveMappingTableToFile();
     void saveCatalogFilterTableToFile();
 
+    //Search history management
+    void clearSearchHistory(const QString &connectionName);
+    void keepLastSearchHistory(int count, const QString &connectionName);
+
     //File deleting
     enum DeleteCatalogResult {
         DeleteSuccess = 0,
@@ -145,6 +149,8 @@ public:
     //Data management
     bool insertPhysicalStorageGroup();
     void updateAllDeviceActive();
+    bool executeSplitBySubDirectory(Device *activeDevice);
+    bool executeSplitByFileType(Device *activeDevice);
 
     enum CollectionFolderStatus {
         VALID_EMPTY,           // Empty folder - can create new collection
@@ -164,6 +170,8 @@ public:
 
 private:
     QString m_connectionName = "defaultConnection";
+    void applySplitResult(Device *activeDevice, const QList<Catalog*> &newCatalogs);
+    Device* resolvePhysicalDevice(Device *activeDevice, Device &buffer);
 
 };
 
