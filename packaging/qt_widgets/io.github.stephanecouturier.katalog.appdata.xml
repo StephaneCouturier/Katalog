@@ -65,9 +65,9 @@
     <name>Stéphane Couturier</name>
   </developer>
   <releases>
-    <release version="2.11" date="2026-04-12">
+    <release version="2.12" date="2026-06-01">
       <description>
-        <p>Import and Update data from a different Collection</p>
+        <p>Search list, Search Regex, Catalog split</p>
       </description>
     </release>
   </releases>
