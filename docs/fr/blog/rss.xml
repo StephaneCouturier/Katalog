@@ -20,14 +20,14 @@
 <li class=""><strong>#222 SEARCH: Search History / Clear list (can keep last 10 searches)</strong></li>
 <li class=""><strong>#684 SEARCH: List as Search input (several text search input)</strong>
 Pasting a list of term (several lines) and run the search, the results is equivalent to running individual searches with sames criteria except on each different term (a term can be several words).
-See:<a href="https://stephanecouturier.github.io/Katalog/docs/Search#file-name" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a></li>
+See:<a href="https://stephanecouturier.github.io/Katalog/docs/Search#file-name" target="_blank" rel="noopener noreferrer" class="">Search#file-name</a></li>
 </ul>
 <ul>
 <li class="">
 <p><strong>#401 DEVICES: breakdown a catalog onto 1 per file type or 1 by sub folder</strong>
 Split Catalog per sub directory
 Split Catalog per File type
-See:<a href="https://stephanecouturier.github.io/Katalog/docs/DevicesCatalogs#catalog-context-menu" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a></p>
+See:<a href="https://stephanecouturier.github.io/Katalog/docs/DevicesCatalogs#catalog-context-menu" target="_blank" rel="noopener noreferrer" class="">DevicesCatalogs#catalog-context-menu</a></p>
 </li>
 <li class="">
 <p><strong>#770 DEVICES: replace Storage root path in devices and indexes</strong>
@@ -44,12 +44,12 @@ The current fallback is a full re-scan. this feature offers a fast, offline alte
 <p>✨ Katalog 3 Preparation:</p>
 <ul>
 <li class="">
-<p><strong>#747 Katalog 3 Alpha 2: Full featured app for testing and feedback</strong><br>
-<!-- -->Katalog 3 is now covering all features of Katalog 2 except mutli-languages.<br>
-<!-- -->See:<a href="https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a>
+<p><strong>#747 Katalog 3 Alpha 2: Full featured app for testing and feedback</strong>
+Katalog 3 is now covering all features of Katalog 2 except multi-languages.
+See:<a href="https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a>
 Versions: Linux AppImage only, Windows Portable only, macOS.</p>
-<p>⚠️ Even if most of the code is common, this version is still an <strong>Alpha</strong>   version:<br>
-<!-- -->it still has risks of errors and can alter. USE ONLY ON A COPY of YOUR   COLLECTION.</p>
+<p>⚠️ Even if most of the code is common, this version is still an <strong>Alpha</strong>   version:
+it still has risks of errors and can alter. USE ONLY ON A COPY of YOUR COLLECTION.</p>
 </li>
 </ul>
 <p>⚠️ Technical changes:</p>
