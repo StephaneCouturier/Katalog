@@ -4,12 +4,75 @@
         <title>Katalog Blog</title>
         <link>https://StephaneCouturier.github.io/Katalog/fr/blog</link>
         <description>Katalog Blog</description>
-        <lastBuildDate>Sun, 12 Apr 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 31 May 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>fr</language>
         <item>
-            <title><![CDATA[Release 2.11]]></title>
+            <title><![CDATA[Release 2.12 & 3.alpha2]]></title>
+            <link>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-12</link>
+            <guid>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-12</guid>
+            <pubDate>Sun, 31 May 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[✨ Katalog 2 Main improvements:]]></description>
+            <content:encoded><![CDATA[<p>✨ Katalog 2 Main improvements:</p>
+<ul>
+<li class=""><strong>#766 SEARCH: Regular expression support for file name search</strong></li>
+<li class=""><strong>#222 SEARCH: Search History / Clear list (can keep last 10 searches)</strong></li>
+<li class=""><strong>#684 SEARCH: List as Search input (several text search input)</strong>
+Pasting a list of term (several lines) and run the search, the results is equivalent to running individual searches with sames criteria except on each different term (a term can be several words).
+See:<a href="https://stephanecouturier.github.io/Katalog/docs/Search#file-name" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a></li>
+</ul>
+<ul>
+<li class="">
+<p><strong>#401 DEVICES: breakdown a catalog onto 1 per file type or 1 by sub folder</strong>
+Split Catalog per sub directory
+Split Catalog per File type
+See:<a href="https://stephanecouturier.github.io/Katalog/docs/DevicesCatalogs#catalog-context-menu" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a></p>
+</li>
+<li class="">
+<p><strong>#770 DEVICES: replace Storage root path in devices and indexes</strong>
+When a Storage device's mount point or drive letter changes, every indexed file/folder path become obsolete.
+The current fallback is a full re-scan. this feature offers a fast, offline alternative that performs a prefix-replace, without requiring the device to be mounted.</p>
+</li>
+<li class="">
+<p><strong>#776 APP: File database mode as default instead of Memory mode</strong></p>
+</li>
+<li class="">
+<p><strong>#775 CREATE: replace the Select Storage list by a device tree</strong></p>
+</li>
+</ul>
+<p>✨ Katalog 3 Preparation:</p>
+<ul>
+<li class="">
+<p><strong>#747 Katalog 3 Alpha 2: Full featured app for testing and feedback</strong><br>
+<!-- -->Katalog 3 is now covering all features of Katalog 2 except mutli-languages.<br>
+<!-- -->See:<a href="https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3" target="_blank" rel="noopener noreferrer" class="">Development-Roadmap#katalog-3</a>
+Versions: Linux AppImage only, Windows Portable only, macOS.</p>
+<p>⚠️ Even if most of the code is common, this version is still an <strong>Alpha</strong>   version:<br>
+<!-- -->it still has risks of errors and can alter. USE ONLY ON A COPY of YOUR   COLLECTION.</p>
+</li>
+</ul>
+<p>⚠️ Technical changes:</p>
+<ul>
+<li class="">As for any new version, it is highly recommended to <strong>backup the collections</strong> 💾, and test the new version on other copies.</li>
+<li class=""><strong>Database updates</strong>: added fields to support collections import and image folder</li>
+</ul>
+<p>📦 Distribution Formats:</p>
+<ul>
+<li class="">As usual, <strong>Window 64</strong>, <strong>Linux</strong>, <strong>macOS</strong></li>
+<li class=""><strong>Linux</strong>: for easier Linux deployment, now available on <a href="https://flathub.org/en/apps/io.github.stephanecouturier.Katalog" target="_blank" rel="noopener noreferrer" class=""><strong>Flathub/Flatpak</strong></a></li>
+</ul>
+<p>📋 Release details:</p>
+<ul>
+<li class="">Full list of updates: <a href="https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.12+sort%3Acreated-asc" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A2.12+sort%3Acreated-asc</a></li>
+<li class="">Full code changelog: <a href="https://github.com/StephaneCouturier/Katalog/compare/v2.11...v2.12" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/compare/v2.11...v2.12</a></li>
+<li class="">📥 <strong>Download Katalog</strong>: <a href="https://sourceforge.net/projects/katalogg" target="_blank" rel="noopener noreferrer" class="">https://sourceforge.net/projects/katalogg</a></li>
+<li class="">📚 <strong>Documentation</strong>: <a href="https://stephanecouturier.github.io/Katalog" target="_blank" rel="noopener noreferrer" class="">https://stephanecouturier.github.io/Katalog</a></li>
+</ul>]]></content:encoded>
+            <category>release</category>
+        </item>
+        <item>
+            <title><![CDATA[Release 2.11 & 3.alpha1]]></title>
             <link>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-11</link>
             <guid>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-11</guid>
             <pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate>
