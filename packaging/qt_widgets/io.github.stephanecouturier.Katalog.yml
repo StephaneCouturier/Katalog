@@ -26,6 +26,5 @@ modules:
     sources:
       - type: git
         url: https://github.com/StephaneCouturier/Katalog.git
-        tag: v2.12
-        commit: 72735b9473b4e829afec7758f6e427dc1c483caf
-
+        tag: v2.12.1
+        commit: c7134acda9c0feee1c2ddfb5652d5ab7cc89364e

@@ -19,18 +19,20 @@ Name:
 Release x.xx
 
 Description:
-This issue is a check list to help prepare and publish the Release
+
+This issue is a check list to help preparing and publishing the Release
 
 Functional updates
 - [ ] Version number, date
 - [ ] Clean Application Output: no debug messages, errors, and warnings
 - [ ] CMakeList_qt5.txt update if changes to CMakeList.txt
-- [ ] macOS yml update if using new KF6 libraries
+- [ ] macOS yml if using new KF6 libraries
 
 Language & documentation
 - [ ] Language updates
 - [ ] Comments, code style, and structure.
 - [ ] Documentation (inc build and copy to /docs)
+- [ ] Update xml version note for Flatpak
 
 Packaging
 - [ ] Linux pre-build & AppImages locally
@@ -50,6 +52,7 @@ Publishing
 - [ ] Release publish (Facebook)
 - [ ] Close GitHub issues and milestone
 - [ ] Inform users who submitted bugs or ideas
+
 
 ---
 ## Description & Summaries

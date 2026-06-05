@@ -6,6 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - **K2** at the start of a prompt → Katalog 2, the Qt Widgets version (`qt_widgets/`)
 > - **K3** at the start of a prompt → Katalog 3, the Qt Quick / QML / Kirigami version (`qt_quick/`)
 
+> **CRITICAL — File access boundary:**
+> - **Full access:** `/home/stephane/Documents/Informatique/Katalog/_Source_Katalog/` — always allowed, no restrictions.
+> - **Forbidden:** any other path under `/home/` — never access, read, search, or browse.
+> - **System files** (e.g. `/usr/include/KF6/`, `/usr/lib/`, etc.) — request explicit user authorization before accessing, for debugging purposes only.
+
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
