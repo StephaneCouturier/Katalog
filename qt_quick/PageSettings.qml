@@ -380,7 +380,6 @@ Kirigami.ScrollablePage {
             }
         }
 
-/*
         Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
@@ -391,6 +390,10 @@ Kirigami.ScrollablePage {
                 Layout.fillWidth: true
                 textRole: "displayName"
                 valueRole: "code"
+                // Suppress the style's built-in text so only the custom
+                // contentItem (flag + label) renders — otherwise the selected
+                // language name is drawn twice, overlapping.
+                displayText: ""
 
                 model: appManager1.getLanguageList()
 
@@ -446,7 +449,7 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-*/
+
         Controls.Label { text: qsTr("Settings file"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
         RowLayout {
             Layout.fillWidth: true

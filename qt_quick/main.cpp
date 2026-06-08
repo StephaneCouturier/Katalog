@@ -40,26 +40,10 @@ int main(int argc, char *argv[])
         QIcon::setFallbackSearchPaths(fallbackPaths);
     }
 
-    // K3 alpha1: translations not yet complete — always run in English.
-    // The language setting is left untouched in the shared settings file
-    // so K2 continues to use it normally.
+    // Application translator. It is installed further down, once AppManager has
+    // resolved the settings file path (the same portable-aware file K2 and the
+    // K3 Settings page use), and re-loaded at runtime on language change.
     QTranslator *translator = new QTranslator(&app);
-    // {
-    //     QString homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
-    //     QString settingsFilePath = homePath + "/.config/katalog_settings.ini";
-    //     QSettings settings(settingsFilePath, QSettings::IniFormat);
-    //     QString userLanguage = settings.value("Settings/Language").toString();
-    //
-    //     if (userLanguage.isEmpty()) {
-    //         userLanguage = Language::getSystemLanguage();
-    //         if (!Language::isLanguageSupported(userLanguage))
-    //             userLanguage = "en_US";
-    //         settings.setValue("Settings/Language", userLanguage);
-    //     }
-    //
-    //     if (translator->load("Katalog_" + userLanguage, ":translations"))
-    //         app.installTranslator(translator);
-    // }
 
     KAboutData aboutData(
         QStringLiteral("Katalog"),
@@ -84,6 +68,39 @@ int main(int argc, char *argv[])
     appManager->initiateApp();
     appManager->collection->appVersion = appManager->currentVersion;
     appManager->startDatabase();
+
+    // Load the user's language and install the translator before the QML engine
+    // evaluates any qsTr string. Mirrors K2 (qt_widgets/main.cpp): migrate the
+    // legacy Czech code, detect the (validated) system language on first run,
+    // and fall back to English US when the stored value is unsupported. Uses the
+    // settings file AppManager resolved so the choice persists and stays in sync
+    // with K2 and AppManager::getCurrentLanguage().
+    {
+        QSettings settings(appManager->collection->settingsFilePath, QSettings::IniFormat);
+        QString userLanguage = settings.value("Settings/Language").toString();
+
+        //Migrate the legacy Czech code "cz_CZ" to the standard locale "cs_CZ".
+        if (userLanguage == "cz_CZ") {
+            userLanguage = "cs_CZ";
+            settings.setValue("Settings/Language", userLanguage);
+        }
+
+        if (userLanguage.isEmpty()) {
+            //First run: detect the system language, default to English US.
+            userLanguage = Language::getSystemLanguage();
+            if (!Language::isLanguageSupported(userLanguage))
+                userLanguage = "en_US";
+            settings.setValue("Settings/Language", userLanguage);
+        }
+        else if (!Language::isLanguageSupported(userLanguage)) {
+            //Sanitize an already-stored but unsupported value.
+            userLanguage = "en_US";
+            settings.setValue("Settings/Language", userLanguage);
+        }
+
+        if (translator->load("Katalog_" + userLanguage, ":translations"))
+            app.installTranslator(translator);
+    }
 
     SearchSync *newSearch = new SearchSync;
     PageSearch pageSearch;
@@ -113,14 +130,14 @@ int main(int argc, char *argv[])
 
     engine.loadFromModule("io.github.stephanecouturier.Katalog", "Main");
 
-    // // Apply language change at runtime without restart
-    // QObject::connect(appManager, &AppManager::languageChanged, &engine,
-    //     [&app, &engine, translator](const QString &code) {
-    //         app.removeTranslator(translator);
-    //         if (translator->load("Katalog_" + code, ":translations"))
-    //             app.installTranslator(translator);
-    //         engine.retranslate();
-    //     });
+    // Apply language change at runtime without restart
+    QObject::connect(appManager, &AppManager::languageChanged, &engine,
+        [&app, &engine, translator](const QString &code) {
+            app.removeTranslator(translator);
+            if (translator->load("Katalog_" + code, ":translations"))
+                app.installTranslator(translator);
+            engine.retranslate();
+        });
 
     //appManager->testQuery();
 
