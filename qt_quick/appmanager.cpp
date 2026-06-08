@@ -369,6 +369,22 @@ void AppManager::setShowDeviceInfo(bool value)
     emit showDeviceInfoChanged();
 }
 //----------------------------------------------------------------------
+bool AppManager::getShowSelectionPage() const
+{
+    // Mirrors K2's Selection/Filters panel show/hide (mainwindow_tab_filters.cpp).
+    // K2 stores "go-next" when hidden and "go-previous" when shown; default = shown.
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/ShowHideFilters", "go-previous").toString() != "go-next";
+}
+//----------------------------------------------------------------------
+void AppManager::setShowSelectionPage(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/ShowHideFilters", value ? "go-previous" : "go-next");
+    settings.sync();
+    emit showSelectionPageChanged();
+}
+//----------------------------------------------------------------------
 bool AppManager::getDeviceFilterFromSelection() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);

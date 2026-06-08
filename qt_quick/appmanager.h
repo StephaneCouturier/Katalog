@@ -90,6 +90,7 @@ class AppManager : public QObject
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
+    Q_PROPERTY(bool showSelectionPage READ getShowSelectionPage WRITE setShowSelectionPage NOTIFY showSelectionPageChanged)
     Q_PROPERTY(bool deviceFilterFromSelection READ getDeviceFilterFromSelection WRITE setDeviceFilterFromSelection NOTIFY deviceFilterFromSelectionChanged)
     Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
     Q_PROPERTY(bool checkVersionChoice READ getCheckVersionChoice WRITE setCheckVersionChoice NOTIFY checkVersionChoiceChanged)
@@ -183,6 +184,8 @@ public slots:
     Q_INVOKABLE bool canCollapseDevices() const;
     bool getShowDeviceInfo() const;
     void setShowDeviceInfo(bool value);
+    bool getShowSelectionPage() const;
+    void setShowSelectionPage(bool value);
     bool getDeviceFilterFromSelection() const;
     void setDeviceFilterFromSelection(bool value);
     bool getSearchKeepsSelection() const;
@@ -419,6 +422,7 @@ signals:
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
+    void showSelectionPageChanged();
     void searchKeepsSelectionChanged();
     void deviceFilterFromSelectionChanged();
     void checkVersionChoiceChanged();

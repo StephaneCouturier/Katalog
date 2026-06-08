@@ -317,18 +317,24 @@ Item {
                             if (mouse.button === Qt.LeftButton && entryType === "folder") {
                                 root.folderNavigated(fullPath)
                             }
-                            if (mouse.button === Qt.RightButton) {
-                                root._activeFilePath   = fullPath
-                                root._activeFileName   = name
-                                root._activeFolderPath = folderPath
-                                root._activeChecksum   = checksum
-                                root._activeEntryType  = entryType
-                                exploreContextMenu.popup()
-                            }
-                        }
-                        onDoubleClicked: {
-                            if (entryType === "file")
+                            if (mouse.button === Qt.LeftButton && entryType === "file") {
                                 appManager1.openFile(fullPath)
+                            }
+                            if (mouse.button === Qt.RightButton)
+                                openExploreContextMenu()
+                        }
+                        onPressAndHold: {
+                            exploreTableView.selectedRow = row
+                            openExploreContextMenu()
+                        }
+
+                        function openExploreContextMenu() {
+                            root._activeFilePath   = fullPath
+                            root._activeFileName   = name
+                            root._activeFolderPath = folderPath
+                            root._activeChecksum   = checksum
+                            root._activeEntryType  = entryType
+                            exploreContextMenu.popup()
                         }
                     }
                 }

@@ -24,10 +24,63 @@ Kirigami.ApplicationWindow {
     property real cardScale: 1.0
     property bool _firstRunCreateNew: false
 
+    // Selection ("Filters" panel in K2) can be collapsed beside an open feature
+    // page — the K2 ShowHideFilters portage (mainwindow_tab_filters.cpp). It is
+    // removed from the stack when hidden so the feature page becomes column 0 and
+    // keeps Kirigami's global-drawer button; it is forced back in whenever no
+    // feature page is open, so the window is never blank.
+    // featureOpen = is any non-Selection page currently in the stack.
+    property bool featureOpen: false
+
+    function indexOfPage(page) {
+        for (var i = 0; i < pageStack.depth; i++)
+            if (pageStack.get(i) === page) return i
+        return -1
+    }
+
+    function selectionInStack() {
+        return pageStack.depth > 0 && pageStack.get(0) === pageSelection
+    }
+
+    function recomputeFeatureOpen() {
+        for (var i = 0; i < pageStack.depth; i++)
+            if (pageStack.get(i) !== pageSelection) { featureOpen = true; return }
+        featureOpen = false
+    }
+
+    // Remove every page except Selection (static page objects are reused, so we
+    // also hide them — matches the existing close/re-push pattern).
+    function removeAllFeaturePages() {
+        for (var i = pageStack.depth - 1; i >= 0; i--) {
+            let p = pageStack.get(i)
+            if (p !== pageSelection) {
+                pageStack.removePage(p)
+                p.visible = false
+            }
+        }
+        featureOpen = false
+    }
+
+    // Enforce the invariant: Selection in stack at index 0 iff shown OR no feature
+    // page open. Call after any change to the stack or to showSelectionPage.
+    function syncSelectionVisibility() {
+        let shouldShow = appManager1.showSelectionPage || !featureOpen
+        let inStack = selectionInStack()
+        if (shouldShow && !inStack) {
+            pageSelection.visible = true
+            pageStack.insertPage(0, pageSelection)
+        } else if (!shouldShow && inStack) {
+            pageStack.removePage(pageSelection)
+            pageSelection.visible = false
+        }
+    }
+
     // ── Page navigation ────────────────────────────────────────────────────
     //
     // Stack layout:
-    //   col 0 : pageSelection  — permanent, never removed, no Close button
+    //   col 0 : pageSelection — the home column; collapsible (see syncSelectionVisibility).
+    //           When hidden with a feature page open it is removed from the stack,
+    //           so the feature page takes col 0. No Close button.
     //   col 1 : one active feature page at a time (Search by default)
     //           Switching feature pages replaces col 1, so Search is hidden
     //           when Devices / Explore / etc. is open — matching K2 tab behaviour.
@@ -75,30 +128,30 @@ Kirigami.ApplicationWindow {
             pageStack.layers.pop()
 
         if (page === pageSelection) {
-            while (pageStack.depth > 1) {
-                let p = pageStack.get(pageStack.depth - 1)
-                pageStack.removePage(p)
-                p.visible = false
-            }
+            // Navigate home: drop feature pages. Selection reappears (it is now the
+            // only page) without changing the user's show/hide preference.
+            removeAllFeaturePages()
+            syncSelectionVisibility()
+            pageStack.currentIndex = 0
             return
         }
 
-        // If page is already in the stack, navigate to it (preserves pages above)
-        for (var i = 1; i < pageStack.depth; i++) {
-            if (pageStack.get(i) === page) {
-                pageStack.currentIndex = i
-                return
-            }
+        // If the feature page is already in the stack, navigate to it
+        // (preserves pages above it, e.g. SearchResults stays when going to Search).
+        let existing = indexOfPage(page)
+        if (existing >= 0) {
+            pageStack.currentIndex = existing
+            return
         }
 
-        // Not in stack: clear col 1+, push at col 1
-        while (pageStack.depth > 1) {
-            let p = pageStack.get(pageStack.depth - 1)
-            pageStack.removePage(p)
-            p.visible = false
-        }
+        // Not in stack: clear other feature pages, push this one, then collapse
+        // Selection if it is hidden so the feature page becomes column 0.
+        removeAllFeaturePages()
         page.visible = true
         pageStack.push(page)
+        featureOpen = true
+        syncSelectionVisibility()
+        pageStack.currentIndex = indexOfPage(page)
     }
 
     // Show a layer overlay (Settings, About).
@@ -122,12 +175,11 @@ Kirigami.ApplicationWindow {
     function closeFeaturePage(page) {
         pageStack.removePage(page)
         page.visible = false
-        // Clear any remaining col 1+ pages (e.g. SearchResults if Search was closed)
-        while (pageStack.depth > 1) {
-            let p = pageStack.get(pageStack.depth - 1)
-            pageStack.removePage(p)
-            p.visible = false
-        }
+        // Clear any remaining feature pages (e.g. SearchResults if Search was closed)
+        removeAllFeaturePages()
+        // No feature page left → Selection must reappear so the window is not blank.
+        syncSelectionVisibility()
+        pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
     }
 
     // Global Drawer
@@ -342,6 +394,31 @@ Kirigami.ApplicationWindow {
                 }
             }
 
+            Row {
+                width: parent.width - Kirigami.Units.largeSpacing * 2
+                spacing: Kirigami.Units.smallSpacing
+
+                Controls.ToolButton {
+                    // Collapse/restore the Selection column beside the open feature
+                    // page (K2 ShowHideFilters portage). Disabled when Selection is
+                    // the only page — there is nothing to collapse to.
+                    icon.name: appManager1.showSelectionPage ? "go-previous" : "go-next"
+                    checkable: true
+                    checked: !appManager1.showSelectionPage
+                    enabled: root.featureOpen
+                    Controls.ToolTip.text: appManager1.showSelectionPage ? "Hide Selection" : "Show Selection"
+                    Controls.ToolTip.visible: hovered
+                    onToggled: appManager1.showSelectionPage = !checked
+                }
+
+                Controls.Label {
+                    text: appManager1.showSelectionPage ? "Selection shown" : "Selection hidden"
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                    opacity: 0.7
+                }
+            }
+
             Controls.Label {
                 text: "Card text size"
                 //font.bold: true
@@ -401,6 +478,13 @@ Kirigami.ApplicationWindow {
                     showPassiveNotification("✗ " + message, "warning")
                 }
             }
+            // Collapse/restore Selection when the user toggles it, keeping the
+            // open feature page in view.
+            function onShowSelectionPageChanged() {
+                root.syncSelectionVisibility()
+                if (pageStack.depth > 0)
+                    pageStack.currentIndex = pageStack.depth - 1
+            }
         }
 
     //Pages ---------------------------------------------------------------------
@@ -445,7 +529,7 @@ Kirigami.ApplicationWindow {
 
     Controls.Dialog {
         id: alphaWarningDialog
-        title: "Katalog 3 - Alpha2 Version"
+        title: "Katalog 3 - Alpha3 Version"
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
@@ -453,12 +537,7 @@ Kirigami.ApplicationWindow {
         Controls.Label {
             width: parent.width
             wrapMode: Text.WordWrap
-            text: "This is an early alpha version of Katalog intended to support development and gather feedback.\n\n" +
-                  "Features available (read-only):\n" +
-                  "  • Open a collection\n" +
-                  "  • Device selection\n" +
-                  "  • Search\n\n" +
-                  "All other features are not yet available in this version."
+            text: "This is an early alpha version of Katalog intended to support development and gather feedback.\n\n"
         }
 
         footer: Controls.DialogButtonBox {
@@ -1063,22 +1142,22 @@ Kirigami.ApplicationWindow {
                     // re-push it: removing and immediately re-pushing the same static page object
                     // in one event loop tick corrupts the QML component context and crashes.
                     // The onSearchTriggered Connections in PageSearchResultsForm resets the model.
-                    let resultsAtTop = pageStack.depth > 2
+                    let resultsAtTop = pageStack.depth > 0
                                        && pageStack.get(pageStack.depth - 1) === pageSearchResults
                     if (resultsAtTop) {
                         pageStack.currentIndex = pageStack.depth - 1
                     } else {
                         // Remove any stale pages beyond Search, then push Results fresh.
-                        while (pageStack.depth > 2) {
+                        let searchIdx = indexOfPage(pageSearch)
+                        while (pageStack.depth - 1 > searchIdx) {
                             let p = pageStack.get(pageStack.depth - 1)
                             pageStack.removePage(p)
                             p.visible = false
                         }
-                        // Ensure currentIndex points to Search (depth-1) before pushing.
+                        // Ensure currentIndex points to Search before pushing.
                         // Kirigami's push() truncates pages forward of currentIndex, so if
-                        // the user back-navigated to Selection (currentIndex=0) without
-                        // removing pages, push() would drop Search and land on [Selection, Results].
-                        pageStack.currentIndex = pageStack.depth - 1
+                        // the user back-navigated without removing pages, push() would drop Search.
+                        pageStack.currentIndex = searchIdx
                         pageSearchResults.visible = true
                         pageStack.push(pageSearchResults)
                     }
@@ -1120,6 +1199,8 @@ Kirigami.ApplicationWindow {
                     pageStack.removePage(pageSearch)
                     pageSearch.visible = false
                     // Results stays in the stack if present; navigate to it or Selection
+                    root.recomputeFeatureOpen()
+                    root.syncSelectionVisibility()
                     pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
                 }
             }
@@ -1172,6 +1253,8 @@ Kirigami.ApplicationWindow {
                     pageStack.removePage(pageSearchResults)
                     pageSearchResults.visible = false
                     // Go to Search if still in stack, otherwise Selection
+                    root.recomputeFeatureOpen()
+                    root.syncSelectionVisibility()
                     pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
                 }
             }
@@ -1197,6 +1280,8 @@ Kirigami.ApplicationWindow {
             onCloseRequested: {
                 pageStack.removePage(pageSearchResults)
                 pageSearchResults.visible = false
+                root.recomputeFeatureOpen()
+                root.syncSelectionVisibility()
                 pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
             }
         }

@@ -443,21 +443,28 @@ ColumnLayout {
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                         onClicked: function(mouse) {
                             tableView.selectedRow = row
-                            if (mouse.button === Qt.RightButton) {
-                                var m = appManager1.searchSortModel
-                                let fileName    = String(m.data(m.index(row, 0),  Qt.DisplayRole) ?? "")
-                                let folder      = String(m.data(m.index(row, 3),  Qt.DisplayRole) ?? "")
-                                let catalogName = String(m.data(m.index(row, 4),  Qt.DisplayRole) ?? "")
-                                let catalogId   = Number(m.data(m.index(row, 5),  Qt.DisplayRole) ?? -1)
-                                let checksum    = String(m.data(m.index(row, 19), Qt.DisplayRole) ?? "")
-                                resultContextMenu.openForRow(row, fileName, folder, checksum, catalogId, catalogName)
+                            if (mouse.button === Qt.LeftButton) {
+                                var lm = appManager1.searchSortModel
+                                let lFileName = String(lm.data(lm.index(row, 0), Qt.DisplayRole) ?? "")
+                                let lFolder   = String(lm.data(lm.index(row, 3), Qt.DisplayRole) ?? "")
+                                appManager1.openFile(lFolder + "/" + lFileName)
                             }
+                            if (mouse.button === Qt.RightButton)
+                                openResultContextMenu()
                         }
-                        onDoubleClicked: {
+                        onPressAndHold: {
+                            tableView.selectedRow = row
+                            openResultContextMenu()
+                        }
+
+                        function openResultContextMenu() {
                             var m = appManager1.searchSortModel
-                            let fileName = String(m.data(m.index(row, 0), Qt.DisplayRole) ?? "")
-                            let folder   = String(m.data(m.index(row, 3), Qt.DisplayRole) ?? "")
-                            appManager1.openFile(folder + "/" + fileName)
+                            let fileName    = String(m.data(m.index(row, 0),  Qt.DisplayRole) ?? "")
+                            let folder      = String(m.data(m.index(row, 3),  Qt.DisplayRole) ?? "")
+                            let catalogName = String(m.data(m.index(row, 4),  Qt.DisplayRole) ?? "")
+                            let catalogId   = Number(m.data(m.index(row, 5),  Qt.DisplayRole) ?? -1)
+                            let checksum    = String(m.data(m.index(row, 19), Qt.DisplayRole) ?? "")
+                            resultContextMenu.openForRow(row, fileName, folder, checksum, catalogId, catalogName)
                         }
                     }
                 }
