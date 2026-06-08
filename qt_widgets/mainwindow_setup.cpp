@@ -33,6 +33,7 @@
 #include "ui_mainwindow.h"
 #include "core/database.h"
 #include "core/databasemanager.h"
+#include "core/language.h"
 #include <QTimer>
 #include <QVersionNumber>
 
@@ -75,7 +76,13 @@
                     settings.setValue("LastCollectionFolder", QApplication::applicationDirPath());
 
                 //Set Language and theme
-                QString userLanguage = QLocale::system().name();
+                //Use the validated system language (falls back to en_US if the
+                //system locale, e.g. "en_GB", is not in the supported list) — must
+                //stay consistent with the translation loaded in main.cpp. Never store
+                //a raw, unsupported locale name here.
+                QString userLanguage = Language::getSystemLanguage();
+                if (!Language::isLanguageSupported(userLanguage))
+                    userLanguage = "en_US";
                 settings.setValue("Settings/Language", userLanguage);
 
                 ui->Settings_comboBox_Theme->setCurrentIndex(themeID); //Default theme is "Katalog Colors"

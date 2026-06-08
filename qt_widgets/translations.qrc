@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>../translations/Katalog_en_US.qm</file>
         <file>../translations/Katalog_fr_FR.qm</file>
-        <file>../translations/Katalog_cz_CZ.qm</file>
+        <file>../translations/Katalog_cs_CZ.qm</file>
         <file>../translations/Katalog_de_DE.qm</file>
         <file>../translations/Katalog_es_ES.qm</file>
         <file>../translations/Katalog_it_IT.qm</file>

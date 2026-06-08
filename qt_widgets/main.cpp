@@ -62,6 +62,13 @@ int main(int argc, char *argv[])
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         QString userLanguage = settings.value("Settings/Language").toString();
 
+        //Migrate the legacy Czech code "cz_CZ" (used before) to the standard
+        //locale name "cs_CZ", so existing Czech users keep their language.
+        if ( userLanguage == "cz_CZ" ){
+            userLanguage = "cs_CZ";
+            settings.setValue("Settings/Language", userLanguage);
+        }
+
         //Define a language for the first run (no value in the settings file)
         if ( userLanguage == "" ){
 
@@ -76,6 +83,13 @@ int main(int argc, char *argv[])
 
             //Save the value
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/Language", userLanguage);
+        }
+        //Sanitize an already-stored but unsupported value (e.g. a raw system
+        //locale such as "en_GB" persisted by an earlier build): fall back to
+        //English US so the UI is not left without a usable translation.
+        else if (!Language::isLanguageSupported(userLanguage)) {
+            userLanguage = "en_US";
             settings.setValue("Settings/Language", userLanguage);
         }
 

@@ -87,7 +87,7 @@ set(K3_QML_FILES
 
 set(TS_FILES
     ${CMAKE_SOURCE_DIR}/translations/Katalog_bg_BG.ts
-    ${CMAKE_SOURCE_DIR}/translations/Katalog_cz_CZ.ts
+    ${CMAKE_SOURCE_DIR}/translations/Katalog_cs_CZ.ts
     ${CMAKE_SOURCE_DIR}/translations/Katalog_da_DK.ts
     ${CMAKE_SOURCE_DIR}/translations/Katalog_de_DE.ts
     ${CMAKE_SOURCE_DIR}/translations/Katalog_en_US.ts
