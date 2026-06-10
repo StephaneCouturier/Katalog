@@ -54,7 +54,7 @@
     <message>
         <location line="+1"/>
         <source>Select</source>
-        <translation type="unfinished">Valitse</translation>
+        <translation>Valitse</translation>
     </message>
 </context>
 <context>
@@ -97,7 +97,7 @@
         <location line="+162"/>
         <location line="+713"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peruuta</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <location line="-970"/>
@@ -112,7 +112,7 @@
     <message>
         <location line="-1180"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Tervetuloa Katalogiin!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Tämä näyttää olevan ensimmäinen käynnistys.&lt;br/&gt;&lt;br/&gt;Seuraavat asetukset on otettu käyttöön:&lt;br/&gt; - Kieli: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Teema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Voit muuttaa näitä välilehdessä %3.</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Tervetuloa Katalogiin!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Tämä näyttää olevan ensimmäinen käynnistys.&lt;br/&gt;&lt;br/&gt;Seuraavat asetukset on otettu käyttöön:&lt;br/&gt; - Kieli: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Teema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Voit muuttaa näitä välilehdessä %3.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -122,22 +122,22 @@
     <message>
         <location line="+1"/>
         <source>Settings</source>
-        <translation type="unfinished">Asetukset</translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Open existing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaa olemassa oleva...</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Create new...</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo uusi...</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Valmis luomaan tiedostokatalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Valmis luomaan tiedostokatalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -159,32 +159,32 @@
     <message>
         <location line="-271"/>
         <source>The catalog source path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Luettelon lähdepolku on muuttunut.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The storage path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennuspolku on muuttunut.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>How should the catalog indexes be updated?</source>
-        <translation type="unfinished"></translation>
+        <translation>Miten luetteloindeksit päivitetään?</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Replace path root</source>
-        <translation type="unfinished"></translation>
+        <translation>Korvaa polun juuri</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Full re-index</source>
-        <translation type="unfinished"></translation>
+        <translation>Täydellinen uudelleenindeksointi</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Skip</source>
-        <translation type="unfinished">Ohita</translation>
+        <translation>Ohita</translation>
     </message>
     <message>
         <location line="+46"/>
@@ -194,7 +194,7 @@
     <message>
         <location line="+2"/>
         <source>Catalogs</source>
-        <translation type="unfinished">Katalogit</translation>
+        <translation>Katalogit</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -218,7 +218,7 @@
         <location line="+1"/>
         <location line="+110"/>
         <source>Storage</source>
-        <translation type="unfinished">Tallennustila</translation>
+        <translation>Tallennustila</translation>
     </message>
     <message>
         <location line="-109"/>
@@ -233,26 +233,26 @@
     <message>
         <location line="+22"/>
         <source>Do you want a the summary of updates for each catalog?</source>
-        <translation type="unfinished">Haluatko yhteenvedon päivityksistä jokaiselle katalogille?</translation>
+        <translation>Haluatko yhteenvedon päivityksistä jokaiselle katalogille?</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Catalog updated: </source>
-        <translation type="unfinished">Katalogi päivitetty: </translation>
+        <translation>Katalogi päivitetty: </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+10"/>
         <location line="+14"/>
         <source>Path: </source>
-        <translation type="unfinished">Polku: </translation>
+        <translation>Polku: </translation>
     </message>
     <message>
         <location line="-22"/>
         <location line="+36"/>
         <location line="+21"/>
         <source>Number of files: </source>
-        <translation type="unfinished">Tiedostojen määrä: </translation>
+        <translation>Tiedostojen määrä: </translation>
     </message>
     <message>
         <location line="-56"/>
@@ -274,20 +274,20 @@
         <location line="+2"/>
         <location line="+2"/>
         <source>(added: </source>
-        <translation type="unfinished">(lisätty: </translation>
+        <translation>(lisätty: </translation>
     </message>
     <message>
         <location line="-68"/>
         <location line="+36"/>
         <location line="+21"/>
         <source>Total file size: </source>
-        <translation type="unfinished">Tiedostojen kokonaiskoko: </translation>
+        <translation>Tiedostojen kokonaiskoko: </translation>
     </message>
     <message>
         <location line="-52"/>
         <location line="+14"/>
         <source>Storage updated: </source>
-        <translation type="unfinished">Tallennustila päivitetty: </translation>
+        <translation>Tallennustila päivitetty: </translation>
     </message>
     <message>
         <location line="-11"/>
@@ -295,7 +295,7 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Used Space: </source>
-        <translation type="unfinished">Käytetty tila: </translation>
+        <translation>Käytetty tila: </translation>
     </message>
     <message>
         <location line="-53"/>
@@ -303,7 +303,7 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Free Space: </source>
-        <translation type="unfinished">Vapaa tila: </translation>
+        <translation>Vapaa tila: </translation>
     </message>
     <message>
         <location line="-53"/>
@@ -311,12 +311,12 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Total Space: </source>
-        <translation type="unfinished">Kokonaistila: </translation>
+        <translation>Kokonaistila: </translation>
     </message>
     <message>
         <location line="-35"/>
         <source>Virtual device updated: </source>
-        <translation type="unfinished">Virtuaalinen laite päivitetty: </translation>
+        <translation>Virtuaalinen laite päivitetty: </translation>
     </message>
     <message>
         <location line="+7"/>
@@ -351,19 +351,19 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+33"/>
         <source>Resume</source>
-        <translation type="unfinished">Jatka</translation>
+        <translation>Jatka</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Pause</source>
-        <translation type="unfinished">Keskeytä</translation>
+        <translation>Keskeytä</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+125"/>
         <location line="+189"/>
         <source>Stop</source>
-        <translation type="unfinished">Pysäytä</translation>
+        <translation>Pysäytä</translation>
     </message>
     <message>
         <location line="-307"/>
@@ -405,27 +405,27 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+50"/>
         <source>All active</source>
-        <translation type="unfinished">Kaikki aktiiviset</translation>
+        <translation>Kaikki aktiiviset</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Snapshot</source>
-        <translation type="unfinished">Tilannevedos</translation>
+        <translation>Tilannevedos</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Insert Virtual Group</source>
-        <translation type="unfinished">Lisää virtuaaliryhmä</translation>
+        <translation>Lisää virtuaaliryhmä</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Add Storage</source>
-        <translation type="unfinished">Lisää tallennustila</translation>
+        <translation>Lisää tallennustila</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Import</source>
-        <translation type="unfinished">Tuo</translation>
+        <translation>Tuo</translation>
     </message>
     <message>
         <location line="+116"/>
@@ -440,7 +440,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+22"/>
         <source>Create</source>
-        <translation type="unfinished">Luo</translation>
+        <translation>Luo</translation>
     </message>
     <message>
         <location line="+47"/>
@@ -459,22 +459,22 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+25"/>
         <source>Save</source>
-        <translation type="unfinished">Tallenna</translation>
+        <translation>Tallenna</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Poista</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>BackUp</source>
-        <translation type="unfinished">Varmuuskopio</translation>
+        <translation>Varmuuskopio</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Add</source>
-        <translation type="unfinished">Lisää</translation>
+        <translation>Lisää</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -484,7 +484,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+60"/>
         <source>Select the database to create and open:</source>
-        <translation type="unfinished">Valitse luotava ja avattava tietokanta:</translation>
+        <translation>Valitse luotava ja avattava tietokanta:</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -5340,7 +5340,7 @@ roskakoriin?</translation>
     <message>
         <location line="+12"/>
         <source>Storage</source>
-        <translation type="unfinished">Tallennustila</translation>
+        <translation>Tallennustila</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5380,7 +5380,7 @@ roskakoriin?</translation>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">Muu</translation>
+        <translation>Muu</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5388,7 +5388,7 @@ roskakoriin?</translation>
         <location line="+11"/>
         <location line="+15"/>
         <source>None</source>
-        <translation type="unfinished">Ei mitään</translation>
+        <translation>Ei mitään</translation>
     </message>
     <message>
         <location line="-36"/>
@@ -5408,17 +5408,17 @@ roskakoriin?</translation>
     <message>
         <location line="+8"/>
         <source>Media Basic</source>
-        <translation type="unfinished">Media perustaso</translation>
+        <translation>Media perustaso</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media Extended</source>
-        <translation type="unfinished">Media laajennettu</translation>
+        <translation>Media laajennettu</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Full Extended</source>
-        <translation type="unfinished">Täysi laajennettu</translation>
+        <translation>Täysi laajennettu</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5439,12 +5439,12 @@ roskakoriin?</translation>
         <location line="+12"/>
         <location line="+81"/>
         <source>Add</source>
-        <translation type="unfinished">Lisää</translation>
+        <translation>Lisää</translation>
     </message>
     <message>
         <location line="-35"/>
         <source>Global Parameters</source>
-        <translation type="unfinished">Globaalit parametrit</translation>
+        <translation>Globaalit parametrit</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -5482,7 +5482,7 @@ roskakoriin?</translation>
         <location line="+62"/>
         <location line="+36"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peruuta</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <location line="-156"/>
@@ -5492,17 +5492,17 @@ roskakoriin?</translation>
     <message>
         <location line="+9"/>
         <source>Verify then Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarkista ja jaa</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Split without verifying</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaa ilman tarkistusta</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">Tarkista tarkistussummat</translation>
+        <translation>Tarkista tarkistussummat</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5583,17 +5583,17 @@ roskakoriin?</translation>
     <message>
         <location line="+63"/>
         <source>Device tree</source>
-        <translation type="unfinished">Laitepuu</translation>
+        <translation>Laitepuu</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Storage list</source>
-        <translation type="unfinished">Tallennuslista</translation>
+        <translation>Tallennuslista</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Catalogs list</source>
-        <translation type="unfinished">Katalogien lista</translation>
+        <translation>Katalogien lista</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -5603,37 +5603,37 @@ roskakoriin?</translation>
     <message>
         <location line="+33"/>
         <source>Catalogs</source>
-        <translation type="unfinished">Katalogit</translation>
+        <translation>Katalogit</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Total File Size</source>
-        <translation type="unfinished">Tiedostojen kokonaiskoko</translation>
+        <translation>Tiedostojen kokonaiskoko</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total Number of Files</source>
-        <translation type="unfinished">Tiedostojen kokonaismäärä</translation>
+        <translation>Tiedostojen kokonaismäärä</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Devices</source>
-        <translation type="unfinished">Laitteet</translation>
+        <translation>Laitteet</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Total Space</source>
-        <translation type="unfinished">Kokonaistila</translation>
+        <translation>Kokonaistila</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Used</source>
-        <translation type="unfinished">Käytetty</translation>
+        <translation>Käytetty</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Free</source>
-        <translation type="unfinished">Vapaa</translation>
+        <translation>Vapaa</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -5646,88 +5646,88 @@ roskakoriin?</translation>
     <message>
         <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+64"/>
         <source>Update</source>
-        <translation type="unfinished">Päivitä</translation>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Explore</source>
-        <translation type="unfinished">Selaa</translation>
+        <translation>Selaa</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation type="unfinished">Muokkaa</translation>
+        <translation>Muokkaa</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Open folder</source>
-        <translation type="unfinished">Avaa kansio</translation>
+        <translation>Avaa kansio</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+16"/>
         <source>Filelight</source>
-        <translation type="unfinished">Filelight</translation>
+        <translation>Filelight</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">Tarkista tarkistussummat</translation>
+        <translation>Tarkista tarkistussummat</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Split catalog by sub-directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaa luettelo alihakemiston mukaan</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split catalog by file type</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaa luettelo tiedostotyypin mukaan</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Add Virtual device</source>
-        <translation type="unfinished">Lisää virtuaalilaite</translation>
+        <translation>Lisää virtuaalilaite</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Add Storage device</source>
-        <translation type="unfinished">Lisää tallennuslaite</translation>
+        <translation>Lisää tallennuslaite</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Assign selected catalog</source>
-        <translation type="unfinished">Määritä valittu luettelo</translation>
+        <translation>Määritä valittu luettelo</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Unassign this storage</source>
-        <translation type="unfinished">Poista tämä tallennustila</translation>
+        <translation>Poista tämä tallennustila</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Unassign this catalog</source>
-        <translation type="unfinished">Poista tämä luettelo</translation>
+        <translation>Poista tämä luettelo</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Delete this catalog</source>
-        <translation type="unfinished">Poista tämä luettelo</translation>
+        <translation>Poista tämä luettelo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete this storage</source>
-        <translation type="unfinished">Poista tämä tallennustila</translation>
+        <translation>Poista tämä tallennustila</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete</source>
-        <translation type="unfinished">Poista</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>files</source>
-        <translation type="unfinished">tiedostot</translation>
+        <translation>tiedostot</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5755,7 +5755,7 @@ roskakoriin?</translation>
     <message>
         <location line="+10"/>
         <source>Keep last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Säilytä viimeiset 10</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5780,7 +5780,7 @@ roskakoriin?</translation>
     <message>
         <location line="+5"/>
         <source>Cancel</source>
-        <translation type="unfinished">Peruuta</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -5790,7 +5790,7 @@ roskakoriin?</translation>
     <message>
         <location line="+28"/>
         <source>Catalogs</source>
-        <translation type="unfinished">Katalogit</translation>
+        <translation>Katalogit</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6045,13 +6045,13 @@ roskakoriin?</translation>
         <location line="+771"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">Tarkista tarkistussummat</translation>
+        <translation>Tarkista tarkistussummat</translation>
     </message>
     <message>
         <location line="-52"/>
         <location line="+52"/>
         <source>Include Metadata</source>
-        <translation type="unfinished">Sisällytä metatiedot</translation>
+        <translation>Sisällytä metatiedot</translation>
     </message>
     <message>
         <location line="-822"/>
@@ -6361,12 +6361,12 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
         <source>Update</source>
-        <translation type="unfinished">Päivitä</translation>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Explore</source>
-        <translation type="unfinished">Selaa</translation>
+        <translation>Selaa</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6376,7 +6376,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation type="unfinished">Muokkaa</translation>
+        <translation>Muokkaa</translation>
     </message>
 </context>
 <context>
@@ -6384,12 +6384,12 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageSettings.qml" line="+9"/>
         <source>Settings</source>
-        <translation type="unfinished">Asetukset</translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Close</source>
-        <translation type="unfinished">Sulje</translation>
+        <translation>Sulje</translation>
     </message>
     <message>
         <location line="+38"/>
@@ -6416,7 +6416,7 @@ Errors: %3</source>
     <message>
         <location line="-325"/>
         <source>Edit</source>
-        <translation type="unfinished">Muokkaa</translation>
+        <translation>Muokkaa</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6426,13 +6426,13 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Images folder</source>
-        <translation type="unfinished">Kuvakansio</translation>
+        <translation>Kuvakansio</translation>
     </message>
     <message>
         <location line="+11"/>
         <location line="+120"/>
         <source>Select</source>
-        <translation type="unfinished">Valitse</translation>
+        <translation>Valitse</translation>
     </message>
     <message>
         <location line="-109"/>
@@ -6482,7 +6482,7 @@ Errors: %3</source>
     <message>
         <location line="+2"/>
         <source>Data mode</source>
-        <translation type="unfinished">Datatila</translation>
+        <translation>Datatila</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6502,7 +6502,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Source</source>
-        <translation type="unfinished">Lähde</translation>
+        <translation>Lähde</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6512,23 +6512,23 @@ Errors: %3</source>
     <message>
         <location line="+0"/>
         <source>Path</source>
-        <translation type="unfinished">Polku</translation>
+        <translation>Polku</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Device</source>
-        <translation type="unfinished">Laite</translation>
+        <translation>Laite</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Import</source>
-        <translation type="unfinished">Tuo</translation>
+        <translation>Tuo</translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+10"/>
         <source>Update</source>
-        <translation type="unfinished">Päivitä</translation>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -6538,12 +6538,12 @@ Errors: %3</source>
     <message>
         <location line="+2"/>
         <source>Version</source>
-        <translation type="unfinished">Versio</translation>
+        <translation>Versio</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Release Notes</source>
-        <translation type="unfinished">Julkaisumuistiinpanot</translation>
+        <translation>Julkaisumuistiinpanot</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6553,12 +6553,12 @@ Errors: %3</source>
     <message>
         <location line="+5"/>
         <source>File sorting is Case Sensitive</source>
-        <translation type="unfinished">Tiedostojen lajittelu on kirjainkoon huomioiva</translation>
+        <translation>Tiedostojen lajittelu on kirjainkoon huomioiva</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
-        <translation type="unfinished">Jos käytössä, lajittelu kunnioittaa kirjainkoon huomioivaa lajittelua, jolloin järjestys on AA, AB, AC, Aa, Ab, Ac</translation>
+        <translation>Jos käytössä, lajittelu kunnioittaa kirjainkoon huomioivaa lajittelua, jolloin järjestys on AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
         <location line="+71"/>
@@ -6568,7 +6568,7 @@ Errors: %3</source>
     <message>
         <location line="+11"/>
         <source>Open</source>
-        <translation type="unfinished">Avaa</translation>
+        <translation>Avaa</translation>
     </message>
 </context>
 <context>
@@ -6584,6 +6584,799 @@ Errors: %3</source>
     <message>
         <source>Tag</source>
         <translation type="vanished">Tunniste</translation>
+    </message>
+</context>
+
+<context>
+    <name>PageBackupForm</name>
+    <message>
+        <source>in sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelled</source>
+        <translation>Peruutettu</translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translation>Valmis</translation>
+    </message>
+    <message>
+        <source>Copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archived &amp; copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicts: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tyyppi</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Kaikki</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>Varmuuskopio</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>Arkisto</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Lähde</translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>Kohde</translation>
+    </message>
+    <message>
+        <source>Update catalogs before backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>link(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>covered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No backup links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a link to define a source and target for backup or archive operations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation>tiedostot</translation>
+    </message>
+    <message>
+        <source>Diff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run Archive</source>
+        <translation>Suorita arkistointi</translation>
+    </message>
+    <message>
+        <source>Run Backup</source>
+        <translation>Suorita varmuuskopiointi</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>Keskeytä</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>Jatka</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Preview Archive</source>
+        <translation>Arkiston esikatselu</translation>
+    </message>
+    <message>
+        <source>Preview Backup</source>
+        <translation>Varmuuskopion esikatselu</translation>
+    </message>
+    <message>
+        <source>More actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replicate directories</source>
+        <translation>Replikoi hakemistot</translation>
+    </message>
+    <message>
+        <source>Replicate</source>
+        <translation>Replikoi</translation>
+    </message>
+    <message>
+        <source>Created: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already existing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert (swap source and target)</source>
+        <translation>Käännä (vaihda lähde ja kohde)</translation>
+    </message>
+    <message>
+        <source>Export last preview to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>Delete link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete link \"%1\"? This cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageBackupMappingForm</name>
+    <message>
+        <source>Add Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>e.g. Docs → NAS_Docs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-generate name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tyyppi</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>Varmuuskopio</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>Arkisto</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Lähde</translation>
+    </message>
+    <message>
+        <source>Source catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>Kohde</translation>
+    </message>
+    <message>
+        <source>Target catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strict copy</source>
+        <translation>Tarkka kopiointi</translation>
+    </message>
+    <message>
+        <source>Mirror folder structure exactly (default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On conflict</source>
+        <translation>Ristiriidan sattuessa</translation>
+    </message>
+    <message>
+        <source>Rename oldest - rename target, copy source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip - leave target untouched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source mode</source>
+        <translation>Lähdetila</translation>
+    </message>
+    <message>
+        <source>Scan source drive directly (requires connected source)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageBackupPreviewForm</name>
+    <message>
+        <source>Backup Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Esikatselu</translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sulje</translation>
+    </message>
+    <message>
+        <source>Updating catalogs…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Computing preview…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation>Siirrä</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+    <message>
+        <source>file(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicts: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already in target: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>target offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insufficient disk space - Required: %1, Available: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low target space - %1 remaining after operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>Tila</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation>Tiedostonimi</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Polku</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Koko</translation>
+    </message>
+    <message>
+        <source>Conflict</source>
+        <translation>Ristiriita</translation>
+    </message>
+    <message>
+        <source>Everything is in sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files need to be copied or moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDeviceEditForm</name>
+    <message>
+        <source>Provide a name for this device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source path: %1 → %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation>Laite</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tyyppi</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Parent device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Kaikki</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Ääni</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>Kuva</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Teksti</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Muu</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Ei mitään</translation>
+    </message>
+    <message>
+        <source>Include hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Media Basic</source>
+        <translation>Media perustaso</translation>
+    </message>
+    <message>
+        <source>Media Extended</source>
+        <translation>Media laajennettu</translation>
+    </message>
+    <message>
+        <source>Full Extended</source>
+        <translation>Täysi laajennettu</translation>
+    </message>
+    <message>
+        <source>Include checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude folders (this catalog)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Lisää</translation>
+    </message>
+    <message>
+        <source>Storage details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage ID</source>
+        <translation>Tallennustila-ID</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>Nimike</translation>
+    </message>
+    <message>
+        <source>File system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total space (bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free space (bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh from disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brand</source>
+        <translation>Merkki</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation>Malli</translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment 1</source>
+        <translation>Kommentti 1</translation>
+    </message>
+    <message>
+        <source>Comment 2</source>
+        <translation>Kommentti 2</translation>
+    </message>
+    <message>
+        <source>Comment 3</source>
+        <translation>Kommentti 3</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageExploreFiles</name>
+    <message>
+        <source>No folder selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display folders</source>
+        <translation>Näytä kansiot</translation>
+    </message>
+    <message>
+        <source>and all sub-folders</source>
+        <translation>ja kaikki alikansiot</translation>
+    </message>
+    <message>
+        <source>Order folders first</source>
+        <translation>Järjestä kansiot ensin</translation>
+    </message>
+    <message>
+        <source>Number of Files</source>
+        <translation>Tiedostojen määrä</translation>
+    </message>
+    <message>
+        <source>Total Size</source>
+        <translation>Kokonaiskoko</translation>
+    </message>
+    <message>
+        <source>Open folder</source>
+        <translation>Avaa kansio</translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation>Avaa tiedosto</translation>
+    </message>
+    <message>
+        <source>Copy folder path</source>
+        <translation>Kopioi kansion polku</translation>
+    </message>
+    <message>
+        <source>Copy folder name</source>
+        <translation>Kopioi kansion nimi</translation>
+    </message>
+    <message>
+        <source>Copy absolute path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name without extension</source>
+        <translation>Kopioi tiedostonimi ilman päätettä</translation>
+    </message>
+    <message>
+        <source>Copy Checksum</source>
+        <translation>Kopioi tarkistussumma</translation>
+    </message>
+    <message>
+        <source>Calculate Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File not found or could not be read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verify Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move file to Trash</source>
+        <translation>Siirrä tiedosto roskakoriin</translation>
+    </message>
+    <message>
+        <source>Move folder to Trash</source>
+        <translation>Siirrä kansio roskakoriin</translation>
+    </message>
+    <message>
+        <source>Delete file</source>
+        <translation>Poista tiedosto</translation>
+    </message>
+    <message>
+        <source>Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum saved to database.</source>
+        <translation>Tarkistussumma tallennettu tietokantaan.</translation>
+    </message>
+    <message>
+        <source>Checksums match.</source>
+        <translation>Tarkistussummat täsmäävät.</translation>
+    </message>
+    <message>
+        <source>Copy to Clipboard</source>
+        <translation>Kopioi leikepöydälle</translation>
+    </message>
+    <message>
+        <source>Checksum copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum Mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Checksum</source>
+        <translation>Päivitä tarkistussumma</translation>
+    </message>
+    <message>
+        <source>Checksum saved to database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksums do not match.</source>
+        <translation>Tarkistussummat eivät täsmää.</translation>
+    </message>
+    <message>
+        <source>Expected:</source>
+        <translation>Odotettu:</translation>
+    </message>
+    <message>
+        <source>Actual:</source>
+        <translation>Todellinen:</translation>
+    </message>
+</context>
+<context>
+    <name>PageExploreFolders</name>
+    <message>
+        <source>Directories</source>
+        <translation>Hakemistot</translation>
+    </message>
+</context>
+<context>
+    <name>PageStatisticsForm</name>
+    <message>
+        <source>TiB</source>
+        <translation>Tt</translation>
+    </message>
+    <message>
+        <source>GiB</source>
+        <translation>Gt</translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation>Mt</translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation>kt</translation>
+    </message>
+    <message>
+        <source>No data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation>Yhteensä</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>Tiedostojen kokonaiskoko</translation>
+    </message>
+    <message>
+        <source>Number of Files</source>
+        <translation>Tiedostojen määrä</translation>
+    </message>
+    <message>
+        <source>Catalogs</source>
+        <translation>Katalogit</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Lähde</translation>
+    </message>
+    <message>
+        <source>all records</source>
+        <translation>kaikki tietueet</translation>
+    </message>
+    <message>
+        <source>updates only</source>
+        <translation>vain päivitykset</translation>
+    </message>
+    <message>
+        <source>snapshots only</source>
+        <translation>vain tilannevedokset</translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display each value</source>
+        <translation>Näytä jokainen arvo</translation>
+    </message>
+    <message>
+        <source>Select start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 week ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Päivämäärä</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Tallennustila</translation>
+    </message>
+    <message>
+        <source>Used Space</source>
+        <translation>Käytetty tila</translation>
+    </message>
+    <message>
+        <source>Total Space</source>
+        <translation>Kokonaistila</translation>
+    </message>
+</context>
+<context>
+    <name>PageTagsForm</name>
+    <message>
+        <source>Add a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translation>Kansio</translation>
+    </message>
+    <message>
+        <source>Folder path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation>Tunniste</translation>
+    </message>
+    <message>
+        <source>Tag the folder</source>
+        <translation>Merkitse kansio</translation>
+    </message>
+    <message>
+        <source>Please enter a tag name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current folders and tags</source>
+        <translation>Nykyiset kansiot ja tunnisteet</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Kaikki</translation>
+    </message>
+    <message>
+        <source>No tags</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

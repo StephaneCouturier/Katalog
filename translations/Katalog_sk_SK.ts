@@ -54,7 +54,7 @@
     <message>
         <location line="+1"/>
         <source>Select</source>
-        <translation type="unfinished">Vybrať</translation>
+        <translation>Vybrať</translation>
     </message>
 </context>
 <context>
@@ -97,7 +97,7 @@
         <location line="+162"/>
         <location line="+713"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
+        <translation>Zrušiť</translation>
     </message>
     <message>
         <location line="-970"/>
@@ -112,7 +112,7 @@
     <message>
         <location line="-1180"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Vitajte v Katalógu!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Zdá sa, že toto je prvé spustenie.&lt;br/&gt;&lt;br/&gt;Nasledovné nastavenia boli použité:&lt;br/&gt; - Jazyk: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Motív: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Môžete ich zmeniť na karte %3.</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Vitajte v Katalógu!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Zdá sa, že toto je prvé spustenie.&lt;br/&gt;&lt;br/&gt;Nasledovné nastavenia boli použité:&lt;br/&gt; - Jazyk: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Motív: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Môžete ich zmeniť na karte %3.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -122,22 +122,22 @@
     <message>
         <location line="+1"/>
         <source>Settings</source>
-        <translation type="unfinished">Nastavenia</translation>
+        <translation>Nastavenia</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Open existing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť existujúci...</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Create new...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť nový...</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;Pripravený na vytvorenie katalógu súborov:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Pripravený na vytvorenie katalógu súborov:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -159,32 +159,32 @@
     <message>
         <location line="-271"/>
         <source>The catalog source path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdrojová cesta katalógu sa zmenila.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The storage path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta úložiska sa zmenila.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>How should the catalog indexes be updated?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ako by sa mali aktualizovať indexy katalógu?</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Replace path root</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahradiť koreň cesty</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Full re-index</source>
-        <translation type="unfinished"></translation>
+        <translation>Úplná reindexácia</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Skip</source>
-        <translation type="unfinished">Preskočiť</translation>
+        <translation>Preskočiť</translation>
     </message>
     <message>
         <location line="+46"/>
@@ -194,7 +194,7 @@
     <message>
         <location line="+2"/>
         <source>Catalogs</source>
-        <translation type="unfinished">Katalógy</translation>
+        <translation>Katalógy</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -218,7 +218,7 @@
         <location line="+1"/>
         <location line="+110"/>
         <source>Storage</source>
-        <translation type="unfinished">Úložisko</translation>
+        <translation>Úložisko</translation>
     </message>
     <message>
         <location line="-109"/>
@@ -233,26 +233,26 @@
     <message>
         <location line="+22"/>
         <source>Do you want a the summary of updates for each catalog?</source>
-        <translation type="unfinished">Chcete súhrn aktualizácií pre každý katalóg?</translation>
+        <translation>Chcete súhrn aktualizácií pre každý katalóg?</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Catalog updated: </source>
-        <translation type="unfinished">Katalóg aktualizovaný: </translation>
+        <translation>Katalóg aktualizovaný: </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+10"/>
         <location line="+14"/>
         <source>Path: </source>
-        <translation type="unfinished">Cesta: </translation>
+        <translation>Cesta: </translation>
     </message>
     <message>
         <location line="-22"/>
         <location line="+36"/>
         <location line="+21"/>
         <source>Number of files: </source>
-        <translation type="unfinished">Počet súborov: </translation>
+        <translation>Počet súborov: </translation>
     </message>
     <message>
         <location line="-56"/>
@@ -274,20 +274,20 @@
         <location line="+2"/>
         <location line="+2"/>
         <source>(added: </source>
-        <translation type="unfinished">(pridané: </translation>
+        <translation>(pridané: </translation>
     </message>
     <message>
         <location line="-68"/>
         <location line="+36"/>
         <location line="+21"/>
         <source>Total file size: </source>
-        <translation type="unfinished">Celková veľkosť súborov: </translation>
+        <translation>Celková veľkosť súborov: </translation>
     </message>
     <message>
         <location line="-52"/>
         <location line="+14"/>
         <source>Storage updated: </source>
-        <translation type="unfinished">Úložisko aktualizované: </translation>
+        <translation>Úložisko aktualizované: </translation>
     </message>
     <message>
         <location line="-11"/>
@@ -295,7 +295,7 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Used Space: </source>
-        <translation type="unfinished">Použité miesto: </translation>
+        <translation>Použité miesto: </translation>
     </message>
     <message>
         <location line="-53"/>
@@ -303,7 +303,7 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Free Space: </source>
-        <translation type="unfinished">Voľné miesto: </translation>
+        <translation>Voľné miesto: </translation>
     </message>
     <message>
         <location line="-53"/>
@@ -311,12 +311,12 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Total Space: </source>
-        <translation type="unfinished">Celkové miesto: </translation>
+        <translation>Celkové miesto: </translation>
     </message>
     <message>
         <location line="-35"/>
         <source>Virtual device updated: </source>
-        <translation type="unfinished">Virtuálne zariadenie aktualizované: </translation>
+        <translation>Virtuálne zariadenie aktualizované: </translation>
     </message>
     <message>
         <location line="+7"/>
@@ -351,19 +351,19 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+33"/>
         <source>Resume</source>
-        <translation type="unfinished">Pokračovať</translation>
+        <translation>Pokračovať</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Pause</source>
-        <translation type="unfinished">Pozastaviť</translation>
+        <translation>Pozastaviť</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+125"/>
         <location line="+189"/>
         <source>Stop</source>
-        <translation type="unfinished">Zastaviť</translation>
+        <translation>Zastaviť</translation>
     </message>
     <message>
         <location line="-307"/>
@@ -405,27 +405,27 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+50"/>
         <source>All active</source>
-        <translation type="unfinished">Všetky aktívne</translation>
+        <translation>Všetky aktívne</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Snapshot</source>
-        <translation type="unfinished">Snímka</translation>
+        <translation>Snímka</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Insert Virtual Group</source>
-        <translation type="unfinished">Vložiť virtuálnu skupinu</translation>
+        <translation>Vložiť virtuálnu skupinu</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Add Storage</source>
-        <translation type="unfinished">Pridať úložisko</translation>
+        <translation>Pridať úložisko</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Import</source>
-        <translation type="unfinished">Importovať</translation>
+        <translation>Importovať</translation>
     </message>
     <message>
         <location line="+116"/>
@@ -440,7 +440,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+22"/>
         <source>Create</source>
-        <translation type="unfinished">Vytvoriť</translation>
+        <translation>Vytvoriť</translation>
     </message>
     <message>
         <location line="+47"/>
@@ -459,22 +459,22 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+25"/>
         <source>Save</source>
-        <translation type="unfinished">Uložiť</translation>
+        <translation>Uložiť</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">Zmazať</translation>
+        <translation>Zmazať</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>BackUp</source>
-        <translation type="unfinished">Záloha</translation>
+        <translation>Záloha</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Add</source>
-        <translation type="unfinished">Pridať</translation>
+        <translation>Pridať</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -484,7 +484,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+60"/>
         <source>Select the database to create and open:</source>
-        <translation type="unfinished">Vyberte databázu na vytvorenie a otvorenie:</translation>
+        <translation>Vyberte databázu na vytvorenie a otvorenie:</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -5340,7 +5340,7 @@ do koša?</translation>
     <message>
         <location line="+12"/>
         <source>Storage</source>
-        <translation type="unfinished">Úložisko</translation>
+        <translation>Úložisko</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5380,7 +5380,7 @@ do koša?</translation>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">Iné</translation>
+        <translation>Iné</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5388,7 +5388,7 @@ do koša?</translation>
         <location line="+11"/>
         <location line="+15"/>
         <source>None</source>
-        <translation type="unfinished">Žiadne</translation>
+        <translation>Žiadne</translation>
     </message>
     <message>
         <location line="-36"/>
@@ -5408,17 +5408,17 @@ do koša?</translation>
     <message>
         <location line="+8"/>
         <source>Media Basic</source>
-        <translation type="unfinished">Médiá Základné</translation>
+        <translation>Médiá Základné</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media Extended</source>
-        <translation type="unfinished">Médiá Rozšírené</translation>
+        <translation>Médiá Rozšírené</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Full Extended</source>
-        <translation type="unfinished">Plné Rozšírené</translation>
+        <translation>Plné Rozšírené</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5439,12 +5439,12 @@ do koša?</translation>
         <location line="+12"/>
         <location line="+81"/>
         <source>Add</source>
-        <translation type="unfinished">Pridať</translation>
+        <translation>Pridať</translation>
     </message>
     <message>
         <location line="-35"/>
         <source>Global Parameters</source>
-        <translation type="unfinished">Globálne parametre</translation>
+        <translation>Globálne parametre</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -5482,7 +5482,7 @@ do koša?</translation>
         <location line="+62"/>
         <location line="+36"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
+        <translation>Zrušiť</translation>
     </message>
     <message>
         <location line="-156"/>
@@ -5492,17 +5492,17 @@ do koša?</translation>
     <message>
         <location line="+9"/>
         <source>Verify then Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Overiť a rozdeliť</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Split without verifying</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozdeliť bez overenia</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">Overiť kontrolné súčty</translation>
+        <translation>Overiť kontrolné súčty</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5583,17 +5583,17 @@ do koša?</translation>
     <message>
         <location line="+63"/>
         <source>Device tree</source>
-        <translation type="unfinished">Strom zariadení</translation>
+        <translation>Strom zariadení</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Storage list</source>
-        <translation type="unfinished">Zoznam úložísk</translation>
+        <translation>Zoznam úložísk</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Catalogs list</source>
-        <translation type="unfinished">Zoznam katalógov</translation>
+        <translation>Zoznam katalógov</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -5603,37 +5603,37 @@ do koša?</translation>
     <message>
         <location line="+33"/>
         <source>Catalogs</source>
-        <translation type="unfinished">Katalógy</translation>
+        <translation>Katalógy</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Total File Size</source>
-        <translation type="unfinished">Celková veľkosť súborov</translation>
+        <translation>Celková veľkosť súborov</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total Number of Files</source>
-        <translation type="unfinished">Celkový počet súborov</translation>
+        <translation>Celkový počet súborov</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Devices</source>
-        <translation type="unfinished">Zariadenia</translation>
+        <translation>Zariadenia</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Total Space</source>
-        <translation type="unfinished">Celkové miesto</translation>
+        <translation>Celkové miesto</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Used</source>
-        <translation type="unfinished">Použité</translation>
+        <translation>Použité</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Free</source>
-        <translation type="unfinished">Voľné</translation>
+        <translation>Voľné</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -5646,88 +5646,88 @@ do koša?</translation>
     <message>
         <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+64"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualizovať</translation>
+        <translation>Aktualizovať</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Explore</source>
-        <translation type="unfinished">Prehliadať</translation>
+        <translation>Prehliadať</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation type="unfinished">Upraviť</translation>
+        <translation>Upraviť</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Open folder</source>
-        <translation type="unfinished">Otvoriť priečinok</translation>
+        <translation>Otvoriť priečinok</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+16"/>
         <source>Filelight</source>
-        <translation type="unfinished">Filelight</translation>
+        <translation>Filelight</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">Overiť kontrolné súčty</translation>
+        <translation>Overiť kontrolné súčty</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Split catalog by sub-directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozdeliť katalóg podľa podadresára</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split catalog by file type</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozdeliť katalóg podľa typu súboru</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Add Virtual device</source>
-        <translation type="unfinished">Pridať virtuálne zariadenie</translation>
+        <translation>Pridať virtuálne zariadenie</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Add Storage device</source>
-        <translation type="unfinished">Pridať úložné zariadenie</translation>
+        <translation>Pridať úložné zariadenie</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Assign selected catalog</source>
-        <translation type="unfinished">Priradiť vybraný katalóg</translation>
+        <translation>Priradiť vybraný katalóg</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Unassign this storage</source>
-        <translation type="unfinished">Odpriradiť toto úložisko</translation>
+        <translation>Odpriradiť toto úložisko</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Unassign this catalog</source>
-        <translation type="unfinished">Odpriradiť tento katalóg</translation>
+        <translation>Odpriradiť tento katalóg</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Delete this catalog</source>
-        <translation type="unfinished">Zmazať tento katalóg</translation>
+        <translation>Zmazať tento katalóg</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete this storage</source>
-        <translation type="unfinished">Zmazať toto úložisko</translation>
+        <translation>Zmazať toto úložisko</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete</source>
-        <translation type="unfinished">Zmazať</translation>
+        <translation>Zmazať</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>files</source>
-        <translation type="unfinished">súbory</translation>
+        <translation>súbory</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5755,7 +5755,7 @@ do koša?</translation>
     <message>
         <location line="+10"/>
         <source>Keep last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponechať posledných 10</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5780,7 +5780,7 @@ do koša?</translation>
     <message>
         <location line="+5"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
+        <translation>Zrušiť</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -5790,7 +5790,7 @@ do koša?</translation>
     <message>
         <location line="+28"/>
         <source>Catalogs</source>
-        <translation type="unfinished">Katalógy</translation>
+        <translation>Katalógy</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6045,13 +6045,13 @@ do koša?</translation>
         <location line="+771"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">Overiť kontrolné súčty</translation>
+        <translation>Overiť kontrolné súčty</translation>
     </message>
     <message>
         <location line="-52"/>
         <location line="+52"/>
         <source>Include Metadata</source>
-        <translation type="unfinished">Zahrnúť metadáta</translation>
+        <translation>Zahrnúť metadáta</translation>
     </message>
     <message>
         <location line="-822"/>
@@ -6361,12 +6361,12 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualizovať</translation>
+        <translation>Aktualizovať</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Explore</source>
-        <translation type="unfinished">Prehliadať</translation>
+        <translation>Prehliadať</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6376,7 +6376,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation type="unfinished">Upraviť</translation>
+        <translation>Upraviť</translation>
     </message>
 </context>
 <context>
@@ -6384,12 +6384,12 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageSettings.qml" line="+9"/>
         <source>Settings</source>
-        <translation type="unfinished">Nastavenia</translation>
+        <translation>Nastavenia</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Close</source>
-        <translation type="unfinished">Zavrieť</translation>
+        <translation>Zavrieť</translation>
     </message>
     <message>
         <location line="+38"/>
@@ -6416,7 +6416,7 @@ Errors: %3</source>
     <message>
         <location line="-325"/>
         <source>Edit</source>
-        <translation type="unfinished">Upraviť</translation>
+        <translation>Upraviť</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6426,13 +6426,13 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Images folder</source>
-        <translation type="unfinished">Priečinok obrázkov</translation>
+        <translation>Priečinok obrázkov</translation>
     </message>
     <message>
         <location line="+11"/>
         <location line="+120"/>
         <source>Select</source>
-        <translation type="unfinished">Vybrať</translation>
+        <translation>Vybrať</translation>
     </message>
     <message>
         <location line="-109"/>
@@ -6482,7 +6482,7 @@ Errors: %3</source>
     <message>
         <location line="+2"/>
         <source>Data mode</source>
-        <translation type="unfinished">Režim dát</translation>
+        <translation>Režim dát</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6502,7 +6502,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Source</source>
-        <translation type="unfinished">Zdroj</translation>
+        <translation>Zdroj</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6512,23 +6512,23 @@ Errors: %3</source>
     <message>
         <location line="+0"/>
         <source>Path</source>
-        <translation type="unfinished">Cesta</translation>
+        <translation>Cesta</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Device</source>
-        <translation type="unfinished">Zariadenie</translation>
+        <translation>Zariadenie</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Import</source>
-        <translation type="unfinished">Importovať</translation>
+        <translation>Importovať</translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+10"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualizovať</translation>
+        <translation>Aktualizovať</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -6538,12 +6538,12 @@ Errors: %3</source>
     <message>
         <location line="+2"/>
         <source>Version</source>
-        <translation type="unfinished">Verzia</translation>
+        <translation>Verzia</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Release Notes</source>
-        <translation type="unfinished">Poznámky k vydaniu</translation>
+        <translation>Poznámky k vydaniu</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6553,12 +6553,12 @@ Errors: %3</source>
     <message>
         <location line="+5"/>
         <source>File sorting is Case Sensitive</source>
-        <translation type="unfinished">Triedenie súborov rozlišuje veľkosť písmen</translation>
+        <translation>Triedenie súborov rozlišuje veľkosť písmen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
-        <translation type="unfinished">Ak je povolené, triedenie bude rozlišovať veľkosť písmen, takže poradie bude AA, AB, AC, Aa, Ab, Ac</translation>
+        <translation>Ak je povolené, triedenie bude rozlišovať veľkosť písmen, takže poradie bude AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
         <location line="+71"/>
@@ -6568,7 +6568,7 @@ Errors: %3</source>
     <message>
         <location line="+11"/>
         <source>Open</source>
-        <translation type="unfinished">Otvoriť</translation>
+        <translation>Otvoriť</translation>
     </message>
 </context>
 <context>
@@ -6584,6 +6584,799 @@ Errors: %3</source>
     <message>
         <source>Tag</source>
         <translation type="vanished">Značka</translation>
+    </message>
+</context>
+
+<context>
+    <name>PageBackupForm</name>
+    <message>
+        <source>in sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelled</source>
+        <translation>Zrušené</translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translation>Dokončené</translation>
+    </message>
+    <message>
+        <source>Copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archived &amp; copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicts: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Typ</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Všetko</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>Záloha</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>Archív</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Zdroj</translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>Cieľ</translation>
+    </message>
+    <message>
+        <source>Update catalogs before backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>link(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>covered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No backup links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a link to define a source and target for backup or archive operations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation>súbory</translation>
+    </message>
+    <message>
+        <source>Diff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run Archive</source>
+        <translation>Spustiť archivovanie</translation>
+    </message>
+    <message>
+        <source>Run Backup</source>
+        <translation>Spustiť zálohu</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>Pozastaviť</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>Pokračovať</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušiť</translation>
+    </message>
+    <message>
+        <source>Preview Archive</source>
+        <translation>Náhľad archívu</translation>
+    </message>
+    <message>
+        <source>Preview Backup</source>
+        <translation>Náhľad zálohy</translation>
+    </message>
+    <message>
+        <source>More actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replicate directories</source>
+        <translation>Replikovať adresáre</translation>
+    </message>
+    <message>
+        <source>Replicate</source>
+        <translation>Replikovať</translation>
+    </message>
+    <message>
+        <source>Created: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already existing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert (swap source and target)</source>
+        <translation>Invertovať (vymeniť zdroj a cieľ)</translation>
+    </message>
+    <message>
+        <source>Export last preview to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Zmazať</translation>
+    </message>
+    <message>
+        <source>Delete link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete link \"%1\"? This cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageBackupMappingForm</name>
+    <message>
+        <source>Add Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Uložiť</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušiť</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Názov</translation>
+    </message>
+    <message>
+        <source>e.g. Docs → NAS_Docs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-generate name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Typ</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>Záloha</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>Archív</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Zdroj</translation>
+    </message>
+    <message>
+        <source>Source catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>Cieľ</translation>
+    </message>
+    <message>
+        <source>Target catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strict copy</source>
+        <translation>Presné kopírovanie</translation>
+    </message>
+    <message>
+        <source>Mirror folder structure exactly (default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On conflict</source>
+        <translation>Pri konflikte</translation>
+    </message>
+    <message>
+        <source>Rename oldest - rename target, copy source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip - leave target untouched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source mode</source>
+        <translation>Zdrojový režim</translation>
+    </message>
+    <message>
+        <source>Scan source drive directly (requires connected source)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageBackupPreviewForm</name>
+    <message>
+        <source>Backup Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Náhľad</translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zavrieť</translation>
+    </message>
+    <message>
+        <source>Updating catalogs…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Computing preview…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation>Presunúť</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopírovať</translation>
+    </message>
+    <message>
+        <source>file(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicts: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already in target: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>target offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insufficient disk space - Required: %1, Available: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low target space - %1 remaining after operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>Stav</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation>Názov súboru</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Cesta</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Veľkosť</translation>
+    </message>
+    <message>
+        <source>Conflict</source>
+        <translation>Konflikt</translation>
+    </message>
+    <message>
+        <source>Everything is in sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files need to be copied or moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDeviceEditForm</name>
+    <message>
+        <source>Provide a name for this device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source path: %1 → %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation>Zariadenie</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Typ</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Názov</translation>
+    </message>
+    <message>
+        <source>Parent device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Všetko</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>Obrázok</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Text</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Iné</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Žiadne</translation>
+    </message>
+    <message>
+        <source>Include hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Media Basic</source>
+        <translation>Médiá Základné</translation>
+    </message>
+    <message>
+        <source>Media Extended</source>
+        <translation>Médiá Rozšírené</translation>
+    </message>
+    <message>
+        <source>Full Extended</source>
+        <translation>Plné Rozšírené</translation>
+    </message>
+    <message>
+        <source>Include checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude folders (this catalog)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Pridať</translation>
+    </message>
+    <message>
+        <source>Storage details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage ID</source>
+        <translation>ID úložiska</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>Štítok</translation>
+    </message>
+    <message>
+        <source>File system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total space (bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free space (bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh from disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brand</source>
+        <translation>Značka</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation>Model</translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment 1</source>
+        <translation>Komentár 1</translation>
+    </message>
+    <message>
+        <source>Comment 2</source>
+        <translation>Komentár 2</translation>
+    </message>
+    <message>
+        <source>Comment 3</source>
+        <translation>Komentár 3</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageExploreFiles</name>
+    <message>
+        <source>No folder selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display folders</source>
+        <translation>Zobraziť priečinky</translation>
+    </message>
+    <message>
+        <source>and all sub-folders</source>
+        <translation>a všetky podpriečinky</translation>
+    </message>
+    <message>
+        <source>Order folders first</source>
+        <translation>Zoradiť priečinky na prvom mieste</translation>
+    </message>
+    <message>
+        <source>Number of Files</source>
+        <translation>Počet súborov</translation>
+    </message>
+    <message>
+        <source>Total Size</source>
+        <translation>Celková veľkosť</translation>
+    </message>
+    <message>
+        <source>Open folder</source>
+        <translation>Otvoriť priečinok</translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation>Otvoriť súbor</translation>
+    </message>
+    <message>
+        <source>Copy folder path</source>
+        <translation>Kopírovať cestu priečinka</translation>
+    </message>
+    <message>
+        <source>Copy folder name</source>
+        <translation>Kopírovať názov priečinka</translation>
+    </message>
+    <message>
+        <source>Copy absolute path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name without extension</source>
+        <translation>Kopírovať názov súboru bez prípony</translation>
+    </message>
+    <message>
+        <source>Copy Checksum</source>
+        <translation>Kopírovať kontrolný súčet</translation>
+    </message>
+    <message>
+        <source>Calculate Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File not found or could not be read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verify Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move file to Trash</source>
+        <translation>Presunúť súbor do koša</translation>
+    </message>
+    <message>
+        <source>Move folder to Trash</source>
+        <translation>Presunúť priečinok do koša</translation>
+    </message>
+    <message>
+        <source>Delete file</source>
+        <translation>Zmazať súbor</translation>
+    </message>
+    <message>
+        <source>Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum saved to database.</source>
+        <translation>Kontrolný súčet uložený do databázy.</translation>
+    </message>
+    <message>
+        <source>Checksums match.</source>
+        <translation>Kontrolné súčty sa zhodujú.</translation>
+    </message>
+    <message>
+        <source>Copy to Clipboard</source>
+        <translation>Kopírovať do schránky</translation>
+    </message>
+    <message>
+        <source>Checksum copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum Mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Checksum</source>
+        <translation>Aktualizovať kontrolný súčet</translation>
+    </message>
+    <message>
+        <source>Checksum saved to database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksums do not match.</source>
+        <translation>Kontrolné súčty sa nezhodujú.</translation>
+    </message>
+    <message>
+        <source>Expected:</source>
+        <translation>Očakávané:</translation>
+    </message>
+    <message>
+        <source>Actual:</source>
+        <translation>Skutočné:</translation>
+    </message>
+</context>
+<context>
+    <name>PageExploreFolders</name>
+    <message>
+        <source>Directories</source>
+        <translation>Adresáre</translation>
+    </message>
+</context>
+<context>
+    <name>PageStatisticsForm</name>
+    <message>
+        <source>TiB</source>
+        <translation>TiB</translation>
+    </message>
+    <message>
+        <source>GiB</source>
+        <translation>GiB</translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation>MiB</translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation>KiB</translation>
+    </message>
+    <message>
+        <source>No data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation>Celkom</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>Celková veľkosť súborov</translation>
+    </message>
+    <message>
+        <source>Number of Files</source>
+        <translation>Počet súborov</translation>
+    </message>
+    <message>
+        <source>Catalogs</source>
+        <translation>Katalógy</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Zdroj</translation>
+    </message>
+    <message>
+        <source>all records</source>
+        <translation>všetky záznamy</translation>
+    </message>
+    <message>
+        <source>updates only</source>
+        <translation>iba aktualizácie</translation>
+    </message>
+    <message>
+        <source>snapshots only</source>
+        <translation>iba snímky</translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display each value</source>
+        <translation>Zobraziť každú hodnotu</translation>
+    </message>
+    <message>
+        <source>Select start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 week ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Dátum</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Úložisko</translation>
+    </message>
+    <message>
+        <source>Used Space</source>
+        <translation>Využité miesto</translation>
+    </message>
+    <message>
+        <source>Total Space</source>
+        <translation>Celkové miesto</translation>
+    </message>
+</context>
+<context>
+    <name>PageTagsForm</name>
+    <message>
+        <source>Add a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translation>Priečinok</translation>
+    </message>
+    <message>
+        <source>Folder path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation>Značka</translation>
+    </message>
+    <message>
+        <source>Tag the folder</source>
+        <translation>Označiť priečinok</translation>
+    </message>
+    <message>
+        <source>Please enter a tag name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current folders and tags</source>
+        <translation>Aktuálne priečinky a značky</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Všetko</translation>
+    </message>
+    <message>
+        <source>No tags</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

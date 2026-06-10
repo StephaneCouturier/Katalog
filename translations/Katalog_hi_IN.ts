@@ -54,7 +54,7 @@
     <message>
         <location line="+1"/>
         <source>Select</source>
-        <translation type="unfinished">चुनें</translation>
+        <translation>चुनें</translation>
     </message>
 </context>
 <context>
@@ -97,7 +97,7 @@
         <location line="+162"/>
         <location line="+713"/>
         <source>Cancel</source>
-        <translation type="unfinished">रद्द करें</translation>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location line="-970"/>
@@ -112,7 +112,7 @@
     <message>
         <location line="-1180"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;कैटलॉग में आपका स्वागत है!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;यह पहली बार चलाया जा रहा है।&lt;br/&gt;&lt;br/&gt;निम्नलिखित सेटिंग्स लागू की गई हैं:&lt;br/&gt; - भाषा: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - थीम: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;आप इन्हें टैब %3 में बदल सकते हैं।</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;कैटलॉग में आपका स्वागत है!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;यह पहली बार चलाया जा रहा है।&lt;br/&gt;&lt;br/&gt;निम्नलिखित सेटिंग्स लागू की गई हैं:&lt;br/&gt; - भाषा: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - थीम: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;आप इन्हें टैब %3 में बदल सकते हैं।</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -122,22 +122,22 @@
     <message>
         <location line="+1"/>
         <source>Settings</source>
-        <translation type="unfinished">सेटिंग्स</translation>
+        <translation>सेटिंग्स</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Open existing...</source>
-        <translation type="unfinished"></translation>
+        <translation>मौजूदा खोलें...</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Create new...</source>
-        <translation type="unfinished"></translation>
+        <translation>नया बनाएं...</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;b&gt;फ़ाइल कैटलॉग बनाने के लिए तैयार:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;फ़ाइल कैटलॉग बनाने के लिए तैयार:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -159,32 +159,32 @@
     <message>
         <location line="-271"/>
         <source>The catalog source path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग स्रोत पथ बदल गया है।</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The storage path changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>संग्रहण पथ बदल गया है।</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>How should the catalog indexes be updated?</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग अनुक्रमणिका को कैसे अपडेट किया जाना चाहिए?</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Replace path root</source>
-        <translation type="unfinished"></translation>
+        <translation>पथ मूल बदलें</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Full re-index</source>
-        <translation type="unfinished"></translation>
+        <translation>पूर्ण पुनः अनुक्रमण</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Skip</source>
-        <translation type="unfinished">छोड़ें</translation>
+        <translation>छोड़ें</translation>
     </message>
     <message>
         <location line="+46"/>
@@ -194,7 +194,7 @@
     <message>
         <location line="+2"/>
         <source>Catalogs</source>
-        <translation type="unfinished">कैटलॉग</translation>
+        <translation>कैटलॉग</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -218,7 +218,7 @@
         <location line="+1"/>
         <location line="+110"/>
         <source>Storage</source>
-        <translation type="unfinished">स्टोरेज</translation>
+        <translation>स्टोरेज</translation>
     </message>
     <message>
         <location line="-109"/>
@@ -233,26 +233,26 @@
     <message>
         <location line="+22"/>
         <source>Do you want a the summary of updates for each catalog?</source>
-        <translation type="unfinished">क्या आप प्रत्येक कैटलॉग के लिए अपडेट का सारांश चाहते हैं?</translation>
+        <translation>क्या आप प्रत्येक कैटलॉग के लिए अपडेट का सारांश चाहते हैं?</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Catalog updated: </source>
-        <translation type="unfinished">कैटलॉग अपडेट किया गया: </translation>
+        <translation>कैटलॉग अपडेट किया गया: </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+10"/>
         <location line="+14"/>
         <source>Path: </source>
-        <translation type="unfinished">पथ: </translation>
+        <translation>पथ: </translation>
     </message>
     <message>
         <location line="-22"/>
         <location line="+36"/>
         <location line="+21"/>
         <source>Number of files: </source>
-        <translation type="unfinished">फ़ाइलों की संख्या: </translation>
+        <translation>फ़ाइलों की संख्या: </translation>
     </message>
     <message>
         <location line="-56"/>
@@ -274,20 +274,20 @@
         <location line="+2"/>
         <location line="+2"/>
         <source>(added: </source>
-        <translation type="unfinished">(जोड़ा गया: </translation>
+        <translation>(जोड़ा गया: </translation>
     </message>
     <message>
         <location line="-68"/>
         <location line="+36"/>
         <location line="+21"/>
         <source>Total file size: </source>
-        <translation type="unfinished">कुल फ़ाइल आकार: </translation>
+        <translation>कुल फ़ाइल आकार: </translation>
     </message>
     <message>
         <location line="-52"/>
         <location line="+14"/>
         <source>Storage updated: </source>
-        <translation type="unfinished">स्टोरेज अपडेट किया गया: </translation>
+        <translation>स्टोरेज अपडेट किया गया: </translation>
     </message>
     <message>
         <location line="-11"/>
@@ -295,7 +295,7 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Used Space: </source>
-        <translation type="unfinished">उपयोग किया गया स्थान: </translation>
+        <translation>उपयोग किया गया स्थान: </translation>
     </message>
     <message>
         <location line="-53"/>
@@ -303,7 +303,7 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Free Space: </source>
-        <translation type="unfinished">मुक्त स्थान: </translation>
+        <translation>मुक्त स्थान: </translation>
     </message>
     <message>
         <location line="-53"/>
@@ -311,12 +311,12 @@
         <location line="+21"/>
         <location line="+20"/>
         <source>Total Space: </source>
-        <translation type="unfinished">कुल स्थान: </translation>
+        <translation>कुल स्थान: </translation>
     </message>
     <message>
         <location line="-35"/>
         <source>Virtual device updated: </source>
-        <translation type="unfinished">वर्चुअल डिवाइस अपडेट किया गया: </translation>
+        <translation>वर्चुअल डिवाइस अपडेट किया गया: </translation>
     </message>
     <message>
         <location line="+7"/>
@@ -351,19 +351,19 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+33"/>
         <source>Resume</source>
-        <translation type="unfinished">फिर से शुरू करें</translation>
+        <translation>फिर से शुरू करें</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Pause</source>
-        <translation type="unfinished">रोकें</translation>
+        <translation>रोकें</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+125"/>
         <location line="+189"/>
         <source>Stop</source>
-        <translation type="unfinished">रोकें</translation>
+        <translation>रोकें</translation>
     </message>
     <message>
         <location line="-307"/>
@@ -405,27 +405,27 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+50"/>
         <source>All active</source>
-        <translation type="unfinished">सभी सक्रिय</translation>
+        <translation>सभी सक्रिय</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Snapshot</source>
-        <translation type="unfinished">स्नैपशॉट</translation>
+        <translation>स्नैपशॉट</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Insert Virtual Group</source>
-        <translation type="unfinished">वर्चुअल ग्रुप डालें</translation>
+        <translation>वर्चुअल ग्रुप डालें</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Add Storage</source>
-        <translation type="unfinished">स्टोरेज जोड़ें</translation>
+        <translation>स्टोरेज जोड़ें</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Import</source>
-        <translation type="unfinished">आयात</translation>
+        <translation>आयात</translation>
     </message>
     <message>
         <location line="+116"/>
@@ -440,7 +440,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+22"/>
         <source>Create</source>
-        <translation type="unfinished">बनाएं</translation>
+        <translation>बनाएं</translation>
     </message>
     <message>
         <location line="+47"/>
@@ -459,22 +459,22 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+25"/>
         <source>Save</source>
-        <translation type="unfinished">सेव करें</translation>
+        <translation>सेव करें</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished">डिलीट</translation>
+        <translation>डिलीट</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>BackUp</source>
-        <translation type="unfinished">बैकअप</translation>
+        <translation>बैकअप</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Add</source>
-        <translation type="unfinished">जोड़ें</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -484,7 +484,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+60"/>
         <source>Select the database to create and open:</source>
-        <translation type="unfinished">बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
+        <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -5339,7 +5339,7 @@ to the trash?</source>
     <message>
         <location line="+12"/>
         <source>Storage</source>
-        <translation type="unfinished">स्टोरेज</translation>
+        <translation>स्टोरेज</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5379,7 +5379,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">अन्य</translation>
+        <translation>अन्य</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5387,7 +5387,7 @@ to the trash?</source>
         <location line="+11"/>
         <location line="+15"/>
         <source>None</source>
-        <translation type="unfinished">कोई नहीं</translation>
+        <translation>कोई नहीं</translation>
     </message>
     <message>
         <location line="-36"/>
@@ -5407,17 +5407,17 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Media Basic</source>
-        <translation type="unfinished">मीडिया बुनियादी</translation>
+        <translation>मीडिया बुनियादी</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media Extended</source>
-        <translation type="unfinished">मीडिया विस्तारित</translation>
+        <translation>मीडिया विस्तारित</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Full Extended</source>
-        <translation type="unfinished">पूर्ण विस्तारित</translation>
+        <translation>पूर्ण विस्तारित</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5438,12 +5438,12 @@ to the trash?</source>
         <location line="+12"/>
         <location line="+81"/>
         <source>Add</source>
-        <translation type="unfinished">जोड़ें</translation>
+        <translation>जोड़ें</translation>
     </message>
     <message>
         <location line="-35"/>
         <source>Global Parameters</source>
-        <translation type="unfinished">वैश्विक पैरामीटर</translation>
+        <translation>वैश्विक पैरामीटर</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -5481,7 +5481,7 @@ to the trash?</source>
         <location line="+62"/>
         <location line="+36"/>
         <source>Cancel</source>
-        <translation type="unfinished">रद्द करें</translation>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location line="-156"/>
@@ -5491,17 +5491,17 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Verify then Split</source>
-        <translation type="unfinished"></translation>
+        <translation>सत्यापित करें और विभाजित करें</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Split without verifying</source>
-        <translation type="unfinished"></translation>
+        <translation>सत्यापन के बिना विभाजित करें</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">चेकसम सत्यापित करें</translation>
+        <translation>चेकसम सत्यापित करें</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5582,17 +5582,17 @@ to the trash?</source>
     <message>
         <location line="+63"/>
         <source>Device tree</source>
-        <translation type="unfinished">डिवाइस ट्री</translation>
+        <translation>डिवाइस ट्री</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Storage list</source>
-        <translation type="unfinished">स्टोरेज सूची</translation>
+        <translation>स्टोरेज सूची</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Catalogs list</source>
-        <translation type="unfinished">कैटलॉग सूची</translation>
+        <translation>कैटलॉग सूची</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -5602,37 +5602,37 @@ to the trash?</source>
     <message>
         <location line="+33"/>
         <source>Catalogs</source>
-        <translation type="unfinished">कैटलॉग</translation>
+        <translation>कैटलॉग</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Total File Size</source>
-        <translation type="unfinished">कुल फ़ाइल आकार</translation>
+        <translation>कुल फ़ाइल आकार</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total Number of Files</source>
-        <translation type="unfinished">फ़ाइलों की कुल संख्या</translation>
+        <translation>फ़ाइलों की कुल संख्या</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Devices</source>
-        <translation type="unfinished">डिवाइसेस</translation>
+        <translation>डिवाइसेस</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Total Space</source>
-        <translation type="unfinished">कुल स्थान</translation>
+        <translation>कुल स्थान</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Used</source>
-        <translation type="unfinished">उपयोग किया गया</translation>
+        <translation>उपयोग किया गया</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Free</source>
-        <translation type="unfinished">मुक्त</translation>
+        <translation>मुक्त</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -5645,88 +5645,88 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+64"/>
         <source>Update</source>
-        <translation type="unfinished">अपडेट</translation>
+        <translation>अपडेट</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Explore</source>
-        <translation type="unfinished">अन्वेषण</translation>
+        <translation>अन्वेषण</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation type="unfinished">संपादन</translation>
+        <translation>संपादन</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Open folder</source>
-        <translation type="unfinished">फ़ोल्डर खोलें</translation>
+        <translation>फ़ोल्डर खोलें</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+16"/>
         <source>Filelight</source>
-        <translation type="unfinished">फाइललाइट</translation>
+        <translation>फाइललाइट</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">चेकसम सत्यापित करें</translation>
+        <translation>चेकसम सत्यापित करें</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Split catalog by sub-directory</source>
-        <translation type="unfinished"></translation>
+        <translation>उप-निर्देशिका द्वारा कैटलॉग विभाजित करें</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split catalog by file type</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल प्रकार द्वारा कैटलॉग विभाजित करें</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Add Virtual device</source>
-        <translation type="unfinished">वर्चुअल डिवाइस जोड़ें</translation>
+        <translation>वर्चुअल डिवाइस जोड़ें</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Add Storage device</source>
-        <translation type="unfinished">स्टोरेज डिवाइस जोड़ें</translation>
+        <translation>स्टोरेज डिवाइस जोड़ें</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Assign selected catalog</source>
-        <translation type="unfinished">चयनित कैटलॉग असाइन करें</translation>
+        <translation>चयनित कैटलॉग असाइन करें</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Unassign this storage</source>
-        <translation type="unfinished">इस स्टोरेज को अनासाइन करें</translation>
+        <translation>इस स्टोरेज को अनासाइन करें</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Unassign this catalog</source>
-        <translation type="unfinished">इस कैटलॉग को अनासाइन करें</translation>
+        <translation>इस कैटलॉग को अनासाइन करें</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Delete this catalog</source>
-        <translation type="unfinished">इस कैटलॉग को डिलीट करें</translation>
+        <translation>इस कैटलॉग को डिलीट करें</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete this storage</source>
-        <translation type="unfinished">इस स्टोरेज को डिलीट करें</translation>
+        <translation>इस स्टोरेज को डिलीट करें</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete</source>
-        <translation type="unfinished">डिलीट</translation>
+        <translation>डिलीट</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>files</source>
-        <translation type="unfinished">फ़ाइलें</translation>
+        <translation>फ़ाइलें</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5754,7 +5754,7 @@ to the trash?</source>
     <message>
         <location line="+10"/>
         <source>Keep last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>अंतिम 10 रखें</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5779,7 +5779,7 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Cancel</source>
-        <translation type="unfinished">रद्द करें</translation>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -5789,7 +5789,7 @@ to the trash?</source>
     <message>
         <location line="+28"/>
         <source>Catalogs</source>
-        <translation type="unfinished">कैटलॉग</translation>
+        <translation>कैटलॉग</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6044,13 +6044,13 @@ to the trash?</source>
         <location line="+771"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
-        <translation type="unfinished">चेकसम सत्यापित करें</translation>
+        <translation>चेकसम सत्यापित करें</translation>
     </message>
     <message>
         <location line="-52"/>
         <location line="+52"/>
         <source>Include Metadata</source>
-        <translation type="unfinished">मेटाडेटा शामिल करें</translation>
+        <translation>मेटाडेटा शामिल करें</translation>
     </message>
     <message>
         <location line="-822"/>
@@ -6360,12 +6360,12 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
         <source>Update</source>
-        <translation type="unfinished">अपडेट</translation>
+        <translation>अपडेट</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Explore</source>
-        <translation type="unfinished">अन्वेषण</translation>
+        <translation>अन्वेषण</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6375,7 +6375,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation type="unfinished">संपादन</translation>
+        <translation>संपादन</translation>
     </message>
 </context>
 <context>
@@ -6383,12 +6383,12 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageSettings.qml" line="+9"/>
         <source>Settings</source>
-        <translation type="unfinished">सेटिंग्स</translation>
+        <translation>सेटिंग्स</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Close</source>
-        <translation type="unfinished">बंद करें</translation>
+        <translation>बंद करें</translation>
     </message>
     <message>
         <location line="+38"/>
@@ -6415,7 +6415,7 @@ Errors: %3</source>
     <message>
         <location line="-325"/>
         <source>Edit</source>
-        <translation type="unfinished">संपादन</translation>
+        <translation>संपादन</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6425,13 +6425,13 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Images folder</source>
-        <translation type="unfinished">चित्र फ़ोल्डर</translation>
+        <translation>चित्र फ़ोल्डर</translation>
     </message>
     <message>
         <location line="+11"/>
         <location line="+120"/>
         <source>Select</source>
-        <translation type="unfinished">चुनें</translation>
+        <translation>चुनें</translation>
     </message>
     <message>
         <location line="-109"/>
@@ -6481,7 +6481,7 @@ Errors: %3</source>
     <message>
         <location line="+2"/>
         <source>Data mode</source>
-        <translation type="unfinished">डेटा मोड</translation>
+        <translation>डेटा मोड</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6501,7 +6501,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Source</source>
-        <translation type="unfinished">स्रोत</translation>
+        <translation>स्रोत</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6511,23 +6511,23 @@ Errors: %3</source>
     <message>
         <location line="+0"/>
         <source>Path</source>
-        <translation type="unfinished">पथ</translation>
+        <translation>पथ</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Device</source>
-        <translation type="unfinished">डिवाइस</translation>
+        <translation>डिवाइस</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Import</source>
-        <translation type="unfinished">आयात</translation>
+        <translation>आयात</translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+10"/>
         <source>Update</source>
-        <translation type="unfinished">अपडेट</translation>
+        <translation>अपडेट</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -6537,12 +6537,12 @@ Errors: %3</source>
     <message>
         <location line="+2"/>
         <source>Version</source>
-        <translation type="unfinished">संस्करण</translation>
+        <translation>संस्करण</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Release Notes</source>
-        <translation type="unfinished">रिलीज़ नोट्स</translation>
+        <translation>रिलीज़ नोट्स</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6552,12 +6552,12 @@ Errors: %3</source>
     <message>
         <location line="+5"/>
         <source>File sorting is Case Sensitive</source>
-        <translation type="unfinished">फ़ाइल सॉर्टिंग केस सेंसिटिव है</translation>
+        <translation>फ़ाइल सॉर्टिंग केस सेंसिटिव है</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
-        <translation type="unfinished">यदि सक्षम है, तो सॉर्टिंग केस सेंसिटिव सॉर्टिंग का सम्मान करेगी, जैसे AA, AB, AC, Aa, Ab, Ac क्रम में</translation>
+        <translation>यदि सक्षम है, तो सॉर्टिंग केस सेंसिटिव सॉर्टिंग का सम्मान करेगी, जैसे AA, AB, AC, Aa, Ab, Ac क्रम में</translation>
     </message>
     <message>
         <location line="+71"/>
@@ -6567,7 +6567,7 @@ Errors: %3</source>
     <message>
         <location line="+11"/>
         <source>Open</source>
-        <translation type="unfinished">खोलें</translation>
+        <translation>खोलें</translation>
     </message>
 </context>
 <context>
@@ -6583,6 +6583,799 @@ Errors: %3</source>
     <message>
         <source>Tag</source>
         <translation type="vanished">टैग</translation>
+    </message>
+</context>
+
+<context>
+    <name>PageBackupForm</name>
+    <message>
+        <source>in sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelled</source>
+        <translation>रद्द किया गया</translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translation>पूर्ण हुआ</translation>
+    </message>
+    <message>
+        <source>Copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archived &amp; copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicts: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>प्रकार</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>सभी</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>बैकअप</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>आर्काइव</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>स्रोत</translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>लक्ष्य</translation>
+    </message>
+    <message>
+        <source>Update catalogs before backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>link(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>covered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No backup links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a link to define a source and target for backup or archive operations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation>फ़ाइलें</translation>
+    </message>
+    <message>
+        <source>Diff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run Archive</source>
+        <translation>आर्काइव चलाएँ</translation>
+    </message>
+    <message>
+        <source>Run Backup</source>
+        <translation>बैकअप चलाएँ</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>रोकें</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>फिर से शुरू करें</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <source>Preview Archive</source>
+        <translation>आर्काइव पूर्वावलोकन</translation>
+    </message>
+    <message>
+        <source>Preview Backup</source>
+        <translation>बैकअप पूर्वावलोकन</translation>
+    </message>
+    <message>
+        <source>More actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replicate directories</source>
+        <translation>निर्देशिकाएँ प्रतिलिपि करें</translation>
+    </message>
+    <message>
+        <source>Replicate</source>
+        <translation>प्रतिलिपि बनाएँ</translation>
+    </message>
+    <message>
+        <source>Created: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already existing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert (swap source and target)</source>
+        <translation>पलटें (स्रोत और लक्ष्य बदलें)</translation>
+    </message>
+    <message>
+        <source>Export last preview to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>डिलीट</translation>
+    </message>
+    <message>
+        <source>Delete link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete link \"%1\"? This cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageBackupMappingForm</name>
+    <message>
+        <source>Add Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>सेव करें</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>नाम</translation>
+    </message>
+    <message>
+        <source>e.g. Docs → NAS_Docs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-generate name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>प्रकार</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>बैकअप</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>आर्काइव</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>स्रोत</translation>
+    </message>
+    <message>
+        <source>Source catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>लक्ष्य</translation>
+    </message>
+    <message>
+        <source>Target catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strict copy</source>
+        <translation>सख्त प्रतिलिपि</translation>
+    </message>
+    <message>
+        <source>Mirror folder structure exactly (default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On conflict</source>
+        <translation>विरोध पर</translation>
+    </message>
+    <message>
+        <source>Rename oldest - rename target, copy source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip - leave target untouched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source mode</source>
+        <translation>स्रोत मोड</translation>
+    </message>
+    <message>
+        <source>Scan source drive directly (requires connected source)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageBackupPreviewForm</name>
+    <message>
+        <source>Backup Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>पूर्वावलोकन</translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>बंद करें</translation>
+    </message>
+    <message>
+        <source>Updating catalogs…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Computing preview…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation>स्थानांतरित करें</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>कॉपी करें</translation>
+    </message>
+    <message>
+        <source>file(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicts: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already in target: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>target offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insufficient disk space - Required: %1, Available: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low target space - %1 remaining after operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>स्थिति</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation>फ़ाइल नाम</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>पथ</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>आकार</translation>
+    </message>
+    <message>
+        <source>Conflict</source>
+        <translation>विरोध</translation>
+    </message>
+    <message>
+        <source>Everything is in sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files need to be copied or moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDeviceEditForm</name>
+    <message>
+        <source>Provide a name for this device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source path: %1 → %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation>डिवाइस</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>प्रकार</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>नाम</translation>
+    </message>
+    <message>
+        <source>Parent device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>सभी</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>ऑडियो</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>छवि</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>टेक्स्ट</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>वीडियो</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>अन्य</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>कोई नहीं</translation>
+    </message>
+    <message>
+        <source>Include hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Media Basic</source>
+        <translation>मीडिया बुनियादी</translation>
+    </message>
+    <message>
+        <source>Media Extended</source>
+        <translation>मीडिया विस्तारित</translation>
+    </message>
+    <message>
+        <source>Full Extended</source>
+        <translation>पूर्ण विस्तारित</translation>
+    </message>
+    <message>
+        <source>Include checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude folders (this catalog)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>जोड़ें</translation>
+    </message>
+    <message>
+        <source>Storage details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage ID</source>
+        <translation>स्टोरेज ID</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>लेबल</translation>
+    </message>
+    <message>
+        <source>File system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total space (bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free space (bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh from disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brand</source>
+        <translation>ब्रांड</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation>मॉडल</translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment 1</source>
+        <translation>टिप्पणी 1</translation>
+    </message>
+    <message>
+        <source>Comment 2</source>
+        <translation>टिप्पणी 2</translation>
+    </message>
+    <message>
+        <source>Comment 3</source>
+        <translation>टिप्पणी 3</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageExploreFiles</name>
+    <message>
+        <source>No folder selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display folders</source>
+        <translation>फ़ोल्डर प्रदर्शित करें</translation>
+    </message>
+    <message>
+        <source>and all sub-folders</source>
+        <translation>और सभी उप-फ़ोल्डर</translation>
+    </message>
+    <message>
+        <source>Order folders first</source>
+        <translation>पहले फ़ोल्डर क्रम में</translation>
+    </message>
+    <message>
+        <source>Number of Files</source>
+        <translation>फ़ाइलों की संख्या</translation>
+    </message>
+    <message>
+        <source>Total Size</source>
+        <translation>कुल आकार</translation>
+    </message>
+    <message>
+        <source>Open folder</source>
+        <translation>फ़ोल्डर खोलें</translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation>फ़ाइल खोलें</translation>
+    </message>
+    <message>
+        <source>Copy folder path</source>
+        <translation>फ़ोल्डर पथ कॉपी करें</translation>
+    </message>
+    <message>
+        <source>Copy folder name</source>
+        <translation>फ़ोल्डर नाम कॉपी करें</translation>
+    </message>
+    <message>
+        <source>Copy absolute path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name without extension</source>
+        <translation>एक्सटेंशन के बिना फ़ाइल नाम कॉपी करें</translation>
+    </message>
+    <message>
+        <source>Copy Checksum</source>
+        <translation>चेकसम कॉपी करें</translation>
+    </message>
+    <message>
+        <source>Calculate Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File not found or could not be read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verify Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move file to Trash</source>
+        <translation>फ़ाइल को ट्रैश में भेजें</translation>
+    </message>
+    <message>
+        <source>Move folder to Trash</source>
+        <translation>फ़ोल्डर को ट्रैश में भेजें</translation>
+    </message>
+    <message>
+        <source>Delete file</source>
+        <translation>फ़ाइल डिलीट करें</translation>
+    </message>
+    <message>
+        <source>Checksum (SHA-256)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum saved to database.</source>
+        <translation>चेकसम डेटाबेस में सहेजा गया।</translation>
+    </message>
+    <message>
+        <source>Checksums match.</source>
+        <translation>चेकसम मेल खाते हैं।</translation>
+    </message>
+    <message>
+        <source>Copy to Clipboard</source>
+        <translation>क्लिपबोर्ड पर कॉपी करें</translation>
+    </message>
+    <message>
+        <source>Checksum copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksum Mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Checksum</source>
+        <translation>चेकसम अपडेट करें</translation>
+    </message>
+    <message>
+        <source>Checksum saved to database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checksums do not match.</source>
+        <translation>चेकसम मेल नहीं खाते।</translation>
+    </message>
+    <message>
+        <source>Expected:</source>
+        <translation>अपेक्षित:</translation>
+    </message>
+    <message>
+        <source>Actual:</source>
+        <translation>वास्तविक:</translation>
+    </message>
+</context>
+<context>
+    <name>PageExploreFolders</name>
+    <message>
+        <source>Directories</source>
+        <translation>डायरेक्टरियां</translation>
+    </message>
+</context>
+<context>
+    <name>PageStatisticsForm</name>
+    <message>
+        <source>TiB</source>
+        <translation>TiB</translation>
+    </message>
+    <message>
+        <source>GiB</source>
+        <translation>GiB</translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation>MiB</translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation>KiB</translation>
+    </message>
+    <message>
+        <source>No data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation>कुल</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>कुल फ़ाइल आकार</translation>
+    </message>
+    <message>
+        <source>Number of Files</source>
+        <translation>फ़ाइलों की संख्या</translation>
+    </message>
+    <message>
+        <source>Catalogs</source>
+        <translation>कैटलॉग</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>स्रोत</translation>
+    </message>
+    <message>
+        <source>all records</source>
+        <translation>सभी रिकॉर्ड</translation>
+    </message>
+    <message>
+        <source>updates only</source>
+        <translation>केवल अपडेट</translation>
+    </message>
+    <message>
+        <source>snapshots only</source>
+        <translation>केवल स्नैपशॉट</translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display each value</source>
+        <translation>प्रत्येक मान प्रदर्शित करें</translation>
+    </message>
+    <message>
+        <source>Select start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 week ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>दिनांक</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>स्टोरेज</translation>
+    </message>
+    <message>
+        <source>Used Space</source>
+        <translation>उपयोग की गई जगह</translation>
+    </message>
+    <message>
+        <source>Total Space</source>
+        <translation>कुल स्थान</translation>
+    </message>
+</context>
+<context>
+    <name>PageTagsForm</name>
+    <message>
+        <source>Add a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translation>फ़ोल्डर</translation>
+    </message>
+    <message>
+        <source>Folder path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation>टैग</translation>
+    </message>
+    <message>
+        <source>Tag the folder</source>
+        <translation>फ़ोल्डर को टैग करें</translation>
+    </message>
+    <message>
+        <source>Please enter a tag name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current folders and tags</source>
+        <translation>वर्तमान फ़ोल्डर और टैग्स</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>सभी</translation>
+    </message>
+    <message>
+        <source>No tags</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

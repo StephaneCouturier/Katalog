@@ -91,8 +91,51 @@ def build_context_block(context_name, sources, k2_tr):
     return "\n".join(lines)
 
 
+def refresh_existing_contexts(content, k3_context_names, k2_tr):
+    """Fill `unfinished` translations in already-present K3 contexts from the K2
+    map.  Targeted text replacement (only unfinished entries with a K2 match) so
+    the rest of the file is untouched.  Returns (new_content, count)."""
+    count = 0
+
+    def repl_ctx(cmatch):
+        nonlocal count
+        block  = cmatch.group(0)
+        name_m = re.search(r"<name>(.*?)</name>", block, re.S)
+        if not name_m or name_m.group(1) not in k3_context_names:
+            return block
+
+        def repl_msg(mmatch):
+            nonlocal count
+            msg   = mmatch.group(0)
+            src_m = re.search(r"<source>(.*?)</source>", msg, re.S)
+            if not src_m:
+                return msg
+            src_plain = (src_m.group(1)
+                         .replace("&amp;", "&")
+                         .replace("&lt;", "<")
+                         .replace("&gt;", ">"))
+            tr = k2_tr.get(src_plain)
+            if not tr:
+                return msg
+            # Finish the entry whether it is empty or already carries a
+            # lupdate suggestion (type="unfinished" with text). K2 is authoritative.
+            new_msg, n = re.subn(
+                r'<translation type="unfinished">.*?</translation>'
+                r'|<translation type="unfinished"\s*/>',
+                f"<translation>{_esc(tr)}</translation>",
+                msg, flags=re.S)
+            count += n
+            return new_msg
+
+        return re.sub(r"<message>.*?</message>", repl_msg, block, flags=re.S)
+
+    new_content = re.sub(r"<context>.*?</context>", repl_ctx, content, flags=re.S)
+    return new_content, count
+
+
 def process_ts(ts_path, k3_strings):
-    """Add missing K3 contexts to one .ts file.  Returns True if modified."""
+    """Add missing K3 contexts AND refresh unfinished entries in existing K3
+    contexts from K2 matches.  Returns True if modified."""
     content = ts_path.read_text(encoding="utf-8")
 
     tree = ET.parse(ts_path)
@@ -104,7 +147,8 @@ def process_ts(ts_path, k3_strings):
         if ctx.find("name") is not None
     }
 
-    k2_tr      = get_k2_translations(root, set(k3_strings.keys()))
+    k3_context_names = set(k3_strings.keys())
+    k2_tr      = get_k2_translations(root, k3_context_names)
     new_blocks = []
 
     for ctx_name, sources in k3_strings.items():
@@ -113,12 +157,19 @@ def process_ts(ts_path, k3_strings):
         block = build_context_block(ctx_name, sources, k2_tr)
         new_blocks.append(block)
 
-    if not new_blocks:
+    # 1. Append any brand-new K3 contexts (with K2 matches pre-filled).
+    if new_blocks:
+        insertion = "\n" + "\n".join(new_blocks) + "\n"
+        content   = content.replace("</TS>", insertion + "</TS>")
+
+    # 2. Refresh already-present K3 contexts: fill unfinished entries that K2
+    #    now has a translation for (fixes the former add-only limitation).
+    content, refreshed = refresh_existing_contexts(content, k3_context_names, k2_tr)
+
+    if not new_blocks and refreshed == 0:
         return False
 
-    insertion   = "\n" + "\n".join(new_blocks) + "\n"
-    new_content = content.replace("</TS>", insertion + "</TS>")
-    ts_path.write_text(new_content, encoding="utf-8")
+    ts_path.write_text(content, encoding="utf-8")
     return True
 
 

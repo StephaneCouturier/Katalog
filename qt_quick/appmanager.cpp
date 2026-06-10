@@ -2311,6 +2311,12 @@ QVariantMap AppManager::recordDevicesSnapshot()
 {
     const QString conn = m_connectionName;
 
+    // In Memory mode the statistics_device table is empty until loaded from
+    // file; without this the "previous" totals below read an empty table and
+    // every delta equals the full total. No-op in File/Hosted mode. Mirrors
+    // K2's recordAllDeviceStats().
+    collection->loadStatisticsDeviceFileToTable();
+
     auto sumQuery = [&](const QString &type) -> QList<qint64> {
         QSqlQuery q(QSqlDatabase::database(conn));
         q.prepare(QStringLiteral(
