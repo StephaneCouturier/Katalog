@@ -46,6 +46,7 @@
         <file alias="fallback-icons/user-trash.png">../assets/fallback-icons/user-trash.png</file>
         <file alias="fallback-icons/video-mp4.png">../assets/fallback-icons/video-mp4.png</file>
         <file alias="fallback-icons/view-filter.png">../assets/fallback-icons/view-filter.png</file>
+        <file alias="fallback-icons/view-history.png">../assets/fallback-icons/view-history.png</file>
         <file alias="fallback-icons/view-list-text.png">../assets/fallback-icons/view-list-text.png</file>
         <file alias="fallback-icons/view-list-tree.png">../assets/fallback-icons/view-list-tree.png</file>
         <file alias="fallback-icons/view-media-playlist.png">../assets/fallback-icons/view-media-playlist.png</file>
@@ -97,6 +98,7 @@
         <file alias="fallback-icons-dark/user-trash.png">../assets/fallback-icons-dark/user-trash.png</file>
         <file alias="fallback-icons-dark/video-mp4.png">../assets/fallback-icons-dark/video-mp4.png</file>
         <file alias="fallback-icons-dark/view-filter.png">../assets/fallback-icons-dark/view-filter.png</file>
+        <file alias="fallback-icons-dark/view-history.png">../assets/fallback-icons-dark/view-history.png</file>
         <file alias="fallback-icons-dark/view-list-text.png">../assets/fallback-icons-dark/view-list-text.png</file>
         <file alias="fallback-icons-dark/view-list-tree.png">../assets/fallback-icons-dark/view-list-tree.png</file>
         <file alias="fallback-icons-dark/view-media-playlist.png">../assets/fallback-icons-dark/view-media-playlist.png</file>

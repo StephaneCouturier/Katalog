@@ -1652,8 +1652,9 @@ Kirigami.ApplicationWindow {
                 onTriggered: root.showLayer(backupMappingFormComponent)
             },
             Kirigami.Action {
-                text:      qsTr("Generate LuckyBackup profile")
-                icon.name: "application-x-executable"
+                text:      qsTr("LuckyBackup")
+                tooltip: "Generate LuckyBackup profile"
+                icon.name: "document-save"
                 enabled:   backupPageForm.mappings.length > 0
                 onTriggered: {
                     var ids = backupPageForm.mappings.map(function(m) { return m.mappingId })
