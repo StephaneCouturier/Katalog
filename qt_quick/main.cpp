@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QIcon>
+#include <QQuickStyle>
 
 #include "appmanager.h"
 #include "core/collection.h"
@@ -21,6 +22,16 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    // Qt Quick Controls style. On Linux (KDE) the system org.kde.desktop/Breeze
+    // style is used, which gives dialog buttons a uniform minimum width. On other
+    // platforms that style is unavailable and Qt falls back to Basic, whose
+    // buttons size to their text (uneven OK/Yes/No/Cancel widths). Force Fusion
+    // there for a consistent look across all dialogs — set once, before the QML
+    // engine loads, so it covers every current and future button.
+#if !defined(Q_OS_LINUX)
+    QQuickStyle::setStyle(QStringLiteral("Fusion"));
+#endif
 
     //Set the application icon
     app.setWindowIcon(QIcon(":/images/Katalog_logo_64.ico"));

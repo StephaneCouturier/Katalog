@@ -227,7 +227,7 @@ Kirigami.ApplicationWindow {
                     onTriggered: {
                         var p = appManager1.getCollectionFolder()
                         if (p.length > 0)
-                            memoryFolderDialog.currentFolder = "file://" + p
+                            memoryFolderDialog.currentFolder = appManager1.pathToFileUrl(p)
                         memoryFolderDialog.open()
                     }
                 }
@@ -240,7 +240,7 @@ Kirigami.ApplicationWindow {
                             var slash = p.lastIndexOf("/")
                             var folder = slash >= 0 ? p.substring(0, slash) : p
                             var parentSlash = folder.lastIndexOf("/")
-                            databaseFileDialog.currentFolder = "file://" + (parentSlash > 0 ? folder.substring(0, parentSlash) : folder)
+                            databaseFileDialog.currentFolder = appManager1.pathToFileUrl(parentSlash > 0 ? folder.substring(0, parentSlash) : folder)
                         }
                         databaseFileDialog.open()
                     }
@@ -293,7 +293,7 @@ Kirigami.ApplicationWindow {
                     text: "SQLite Database..."
                     onTriggered: {
                         var p = appManager1.getNewCollectionDefaultPath()
-                        newDatabaseFileDialog.currentFile = "file://" + p
+                        newDatabaseFileDialog.currentFile = appManager1.pathToFileUrl(p)
                         newDatabaseFileDialog.open()
                     }
                 }
@@ -589,7 +589,7 @@ Kirigami.ApplicationWindow {
                     root._firstRunCreateNew = true
                     firstRunWelcomeDialog.close()
                     var p = appManager1.getNewCollectionDefaultPath()
-                    newDatabaseFileDialog.currentFile = "file://" + p
+                    newDatabaseFileDialog.currentFile = appManager1.pathToFileUrl(p)
                     newDatabaseFileDialog.open()
                 }
             }
@@ -1695,7 +1695,7 @@ Kirigami.ApplicationWindow {
         id: memoryFolderDialog
         title: "Select Collection Folder"
         onAccepted: {
-            var path = selectedFolder.toString().replace("file://", "")
+            var path = appManager1.pathFromFileUrl(selectedFolder.toString())
             appManager1.openCollectionMemory(path)
         }
     }
@@ -1705,7 +1705,7 @@ Kirigami.ApplicationWindow {
         title: "Open SQLite Database"
         nameFilters: ["SQLite databases (*.db *.sqlite *.sqlite3)", "All files (*)"]
         onAccepted: {
-            var path = selectedFile.toString().replace("file://", "")
+            var path = appManager1.pathFromFileUrl(selectedFile.toString())
             appManager1.setDatabaseFilePath(path)
         }
     }
@@ -1716,7 +1716,7 @@ Kirigami.ApplicationWindow {
         fileMode: Dialogs.FileDialog.SaveFile
         nameFilters: ["SQLite databases (*.db)", "All files (*)"]
         onAccepted: {
-            var path = selectedFile.toString().replace("file://", "")
+            var path = appManager1.pathFromFileUrl(selectedFile.toString())
             appManager1.createNewSQLiteCollection(path)
         }
     }
