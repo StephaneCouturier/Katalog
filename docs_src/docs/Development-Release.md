@@ -83,6 +83,7 @@ Catalog your devices to search, analyze, and backup your files.
 | `README.md` (root) | `README.md` |
 | `CLAUDE.md` | `CLAUDE.md` |
 | SourceForge / Short Summary | https://sourceforge.net/p/katalogg/admin/overview |
+| Katalog / About page | mainj.cpp |
 
 ### Level 3 — Short summary (~3 lines)
 ```

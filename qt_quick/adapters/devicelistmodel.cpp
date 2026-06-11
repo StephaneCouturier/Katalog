@@ -41,6 +41,8 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device.hasChildren;
     case IsCollapsedRole:
         return device.isCollapsed;
+    case GroupIdRole:
+        return device.groupId;
     default:
         return QVariant();
     }
@@ -57,6 +59,7 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles[LevelRole] = "level";
     roles[HasChildrenRole] = "hasChildren";
     roles[IsCollapsedRole] = "isCollapsed";
+    roles[GroupIdRole] = "groupId";
     return roles;
 }
 
@@ -177,6 +180,7 @@ void DeviceListModel::loadDevicesFromDatabase()
         dev.id             = node.id;
         dev.name           = node.name;
         dev.type           = node.type;
+        dev.groupId        = node.groupId;
         dev.totalFileSize  = node.totalFileSize;
         dev.totalFileCount = node.totalFileCount;
         dev.totalSpace     = node.totalSpace;

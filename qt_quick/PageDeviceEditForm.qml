@@ -32,6 +32,10 @@ ColumnLayout {
         originalPath  = d.path
 
         edit_lineEdit_Name.text = d.name
+        // Only offer parents in the same group, and never the device itself —
+        // re-parenting can reorganise within a group but never cross groups.
+        edit_storageComboBox.groupFilter     = d.groupId
+        edit_storageComboBox.excludeDeviceId = deviceId
         edit_storageComboBox.selectById(d.parentId)
 
         if (d.type !== "Virtual")
@@ -209,12 +213,18 @@ ColumnLayout {
             Layout.fillWidth: true
         }
 
-        Controls.Label { text: qsTr("Parent device"); opacity: 0.7 }
+        Controls.Label { text: qsTr("Parent device"); opacity: root.deviceId === 1 ? 0.35 : 0.7 }
         DeviceTreeComboBox {
             id: edit_storageComboBox
             storageOnly: root.deviceType === "Catalog"
             hideCatalogs: true
             hideStorages: root.deviceType === "Storage"
+            // The editor's parent must reflect only the loaded device + explicit
+            // dropdown picks — never silently follow the Selection page.
+            followAppSelection: false
+            // Device id 1 is the reserved " Physical Group" root — it is the
+            // structural top of the Physical hierarchy and must never be re-parented.
+            enabled: root.deviceId !== 1
             Layout.fillWidth: true
         }
 

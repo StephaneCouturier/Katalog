@@ -2670,6 +2670,7 @@ QVariantMap AppManager::getDeviceDetails(int deviceId) const
     r["parentId"] = dev.parentID;
     r["path"]     = dev.path;
     r["deviceId"] = dev.ID;
+    r["groupId"]  = dev.groupID;
 
     if (dev.type == "Catalog") {
         r["fileType"]        = dev.catalog->fileType;
@@ -2704,6 +2705,12 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     dev.ID = deviceId;
     dev.loadDevice(conn);
 
+    // Device id 1 is the reserved " Physical Group" root: its parent is fixed at
+    // root (which keeps it in the Physical group, id 0). Force it here so no UI
+    // path — including a stale parent picker — can ever re-parent it.
+    if (deviceId == 1)
+        parentId = 0;
+
     // Name uniqueness for Catalog
     if (dev.type == "Catalog" && name != dev.name) {
         Device check;
@@ -2732,7 +2739,12 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
         return tr("A Catalog in the Physical group can only be set under a Storage device.");
     }
 
-    int newGroupId = (parentId == 0) ? 1 : newParent.groupID;
+    // At root (parentId 0) keep the device's current group. K2 forced group 1
+    // here ("root == Virtual"), but the seeded " Physical Group" (device id 1)
+    // is a group-0 device that lives at root — forcing 1 would cascade-flip the
+    // whole physical hierarchy into the Virtual group. Combined with the
+    // same-group parent filter, the group can now never change on edit.
+    int newGroupId = (parentId == 0) ? dev.groupID : newParent.groupID;
     if (dev.groupID != newGroupId) {
         dev.loadDevice(conn); // reload to get deviceIDList
         Device sub;

@@ -18,7 +18,8 @@ public:
         DeviceIdRole,
         LevelRole,
         HasChildrenRole,
-        IsCollapsedRole
+        IsCollapsedRole,
+        GroupIdRole
     };
 
     explicit DeviceListModel(QObject *parent = nullptr);
@@ -47,6 +48,7 @@ private:
     struct DeviceItem {
         int id;
         int level = 0;
+        int groupId = 0;
         QString type;
         QString name;
         QString description;

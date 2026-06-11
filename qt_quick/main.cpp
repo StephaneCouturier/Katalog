@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         QStringLiteral("Katalog"),
         "Katalog",
         QStringLiteral(KATALOG_VERSION_STRING),
-        "Katalog is an application to catalog, search, and manage files from any drive, permanent or removable.",
+        "Catalog your devices to search, analyze, and backup your files.",
         KAboutLicense::GPL_V3,
         "(c) 2020-2026");
 

@@ -22,6 +22,12 @@ Controls.Button {
     property bool   catalogOnly:        false
     property bool   hideCatalogs:       false
     property bool   hideStorages:       false
+    // Restrict selectable parents to a single device group (0=Physical, 1=Virtual);
+    // -1 disables the filter. Mirrors K2's loadParentsList, which only offers parents
+    // in the same group so a device can never be re-parented across groups.
+    property int    groupFilter:        -1
+    // Hide a single device (e.g. the one being edited) so it can't be its own parent.
+    property int    excludeDeviceId:    -1
 
     // Source model — defaults to the shared device list
     property var sourceModel: appManager1.deviceListModel
@@ -39,6 +45,16 @@ Controls.Button {
     }
 
     function _applyDevice(id) {
+        // id <= 0 means "no parent / root". Without this, selectById(0) would be a
+        // no-op (no device has id 0) and leave the selection pre-filled by
+        // resetSelection() — so editing a root device would silently re-parent it
+        // under the app-selected device on save. Mirrors K2 (parentID 0 == root).
+        if (id <= 0) {
+            selectedDeviceId   = 0
+            selectedDeviceName = ""
+            selectedDeviceType = ""
+            return
+        }
         var dev = _findDevice(id)
         if (dev) {
             if (storageOnly && dev.type !== "Storage") {
@@ -69,11 +85,18 @@ Controls.Button {
 
     function selectById(id) { _applyDevice(id) }
 
+    // When true, the selection tracks the app-selected device (default — used by
+    // pickers on Create/Search/etc.). The parent picker in the device editor sets
+    // this false: its value must come only from selectById()/the user's dropdown
+    // choice, never silently follow what is selected on the Selection page.
+    property bool followAppSelection: true
+
     // Initialise from the currently selected device, and follow changes
-    Component.onCompleted: resetSelection()
+    Component.onCompleted: if (followAppSelection) resetSelection()
 
     Connections {
         target: appManager1
+        enabled: control.followAppSelection
         function onSelectedDeviceChanged() { control.resetSelection() }
         function onDeviceListRefreshed()   { control.resetSelection() }
     }
@@ -155,10 +178,13 @@ Controls.Button {
                     required property int    deviceId
                     required property int    level
                     required property string type
+                    required property int    groupId
 
                     visible:     !(control.hideCatalogs && type === "Catalog")
                                  && !(control.hideStorages && type === "Storage")
                                  && !(control.catalogOnly  && type === "Storage")
+                                 && (control.groupFilter < 0 || groupId === control.groupFilter)
+                                 && deviceId !== control.excludeDeviceId
                     height:      visible ? implicitHeight : 0
                     width:       ListView.view.width
                     leftPadding: Kirigami.Units.smallSpacing + level * Kirigami.Units.gridUnit

@@ -1346,13 +1346,6 @@ Kirigami.ApplicationWindow {
                     }
                 }
             },
-            Kirigami.Action {
-                text: qsTr("Import")
-                icon.name: "document-import"
-                visible: pageDevicesView.viewFilter === "Catalogs"
-                enabled: !appManager1.deviceUpdateIsRunning
-                onTriggered: devVvvFileDialog.open()
-            },
             // Kirigami.Action {
             //     text:        qsTr("Gentle stop")
             //     icon.name:   "media-playback-stop"
@@ -1725,40 +1718,6 @@ Kirigami.ApplicationWindow {
         onAccepted: {
             var path = selectedFile.toString().replace("file://", "")
             appManager1.createNewSQLiteCollection(path)
-        }
-    }
-
-    Dialogs.FileDialog {
-        id: devVvvFileDialog
-        title: qsTr("Import from VVV")
-        nameFilters: ["VVV files (*.vvv)", "All files (*)"]
-        onAccepted: {
-            var path = selectedFile.toString().replace("file://", "")
-            var err = appManager1.importFromVVV(path)
-            if (err.length > 0) {
-                devVvvErrorDialog.text = err
-                devVvvErrorDialog.open()
-            }
-        }
-    }
-
-    Controls.Dialog {
-        id: devVvvErrorDialog
-        property alias text: devVvvErrorLabel.text
-        title: "Katalog"
-        modal: true
-        anchors.centerIn: parent
-        width: Math.min(420, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            id: devVvvErrorLabel
-            wrapMode: Text.WordWrap
-        }
-        footer: Controls.DialogButtonBox {
-            Controls.Button {
-                text: qsTr("OK")
-                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
-            }
-            onAccepted: devVvvErrorDialog.close()
         }
     }
 }
