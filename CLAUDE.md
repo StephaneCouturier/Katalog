@@ -36,7 +36,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 >   4. **Restore/apply** — clicking a history/saved entry must restore all criteria, not just the visible ones
 
 > **CRITICAL — User-visible text:**
-> - **Never add, change, or delete any user-visible string** (`tr`/`qsTr`/label/message) without quoting the exact before/after and getting explicit per-string approval — even if trivial or a side effect. Matching is byte-for-byte: one character drops the string to English across all 30 languages. Porting K2→K3: copy the K2 source verbatim. Full architecture & rationale: `docs_src/docs/SpecLanguages.md`.
+> - **Never add, change, or delete any user-visible string** (`tr`/`qsTr`/label/message) without quoting the exact before/after and getting explicit per-string approval — even if trivial or a side effect. Matching is byte-for-byte: one character drops the string to English across all 30 languages. Porting K2→K3: copy the K2 source verbatim. Full architecture & rationale: `.claude/agents/translations.md`.
 > - If a layout is too wide, solve it with layout changes only. Never shorten label text as a workaround.
 > - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
 > - **Before writing any K3 user-visible text** (labels, status messages, progress reports, dialog text, tooltips, notifications) **always read the K2 equivalent first** and reuse its exact `tr()` string. Creating a new string when K2 already has one wastes a translation slot across 30 languages.

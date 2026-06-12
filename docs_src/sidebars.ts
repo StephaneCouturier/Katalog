@@ -84,8 +84,8 @@ export default {
                 'SpecCollection',
                 'SpecDeviceStorageRoot',
                 'SpecSearchList',
-                'SpecDevicesSplit',
-                'SpecLanguages'],
+                'SpecDevicesSplit'
+                ],
       },
        'Development-Repository',
        'Development-Build-from-source',

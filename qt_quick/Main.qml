@@ -219,7 +219,7 @@ Kirigami.ApplicationWindow {
                 separator: true
             },
             Kirigami.Action {
-                text: "Open..."
+                text: qsTr("Open...")
                 icon.name: "document-open"
                 Kirigami.Action {
                     icon.name: "folder"
@@ -286,7 +286,7 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
-                text: "New..."
+                text: qsTr("New...")
                 icon.name: "document-new"
                 Kirigami.Action {
                     icon.name: "network-server-database"
@@ -303,47 +303,47 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 icon.name: "edit-select"
-                text: "Selection"
+                text: qsTr("Selection")
                 onTriggered: { appManager1.setLastPage("Selection"); root.showPage(pageSelection) }
             },
             Kirigami.Action {
                 icon.name: "edit-find"
-                text: "Search"
+                text: qsTr("Search")
                 onTriggered: { appManager1.setLastPage("Search"); root.showPage(pageSearch) }
             },
             Kirigami.Action {
                 icon.name: "drive-multidisk"
-                text: "Devices"
+                text: qsTr("Devices")
                 onTriggered: { appManager1.setLastPage("Devices"); root.showPage(pageDevices) }
             },
             Kirigami.Action {
                 icon.name: "view-list-tree"
-                text: "Explore"
+                text: qsTr("Explore")
                 onTriggered: { appManager1.setLastPage("Explore"); root.showPage(pageExplore) }
             },
             Kirigami.Action {
                 icon.name: "journal-new"
-                text: "Create"
+                text: qsTr("Create")
                 onTriggered: { appManager1.setLastPage("Create"); root.showPage(pageCreate) }
             },
             Kirigami.Action {
                 icon.name: "backup"
-                text: "BackUp"
+                text: qsTr("BackUp")
                 onTriggered: { appManager1.setLastPage("BackUp"); root.showPage(pageBackup) }
             },
             Kirigami.Action {
                 icon.name: "view-statistics"
-                text: "Statistics"
+                text: qsTr("Statistics")
                 onTriggered: { appManager1.setLastPage("Statistics"); root.showPage(pageStatistics) }
             },
             Kirigami.Action {
                 icon.name: "tag"
-                text: "Tags"
+                text: qsTr("Tags")
                 onTriggered: { appManager1.setLastPage("Tags"); root.showPage(pageTags) }
             },
             Kirigami.Action {
                 icon.name: "configure"
-                text: "Settings"
+                text: qsTr("Settings")
                 onTriggered: { appManager1.setLastPage("Settings"); root.showLayer(settingsPageComponent) }
             },
             Kirigami.Action {
@@ -351,16 +351,16 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 icon.name: "help-about"
-                text: "Documentation"
+                text: qsTr("Documentation")
                 onTriggered: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/");
             },
             Kirigami.Action {
-                text: "About" //i18n("About")
+                text: qsTr("About") //i18n("About")
                 icon.name: "help-about"
                 onTriggered: root.showLayer(aboutPage)
             },
             Kirigami.Action {
-                text: "Quit"
+                text: qsTr("Quit")
                 icon.name: "application-exit"
                 shortcut: StandardKey.Quit
                 onTriggered: Qt.quit()
@@ -381,13 +381,11 @@ Kirigami.ApplicationWindow {
                     icon.name: windowSettings.drawerPinned ? "window-unpin" : "window-pin"
                     checkable: true
                     checked: windowSettings.drawerPinned
-                    Controls.ToolTip.text: windowSettings.drawerPinned ? "Unpin drawer" : "Pin drawer open"
-                    Controls.ToolTip.visible: hovered
                     onToggled: windowSettings.drawerPinned = checked
                 }
 
                 Controls.Label {
-                    text: windowSettings.drawerPinned ? "Drawer pinned" : "Drawer floating"
+                    text: windowSettings.drawerPinned ? qsTr("Drawer pinned") : qsTr("Drawer floating")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                     opacity: 0.7
@@ -402,17 +400,15 @@ Kirigami.ApplicationWindow {
                     // Collapse/restore the Selection column beside the open feature
                     // page (K2 ShowHideFilters portage). Disabled when Selection is
                     // the only page — there is nothing to collapse to.
-                    icon.name: appManager1.showSelectionPage ? "go-previous" : "go-next"
+                    icon.name: appManager1.showSelectionPage ? "window-unpin" : "window-pin"
                     checkable: true
                     checked: !appManager1.showSelectionPage
                     enabled: root.featureOpen
-                    Controls.ToolTip.text: appManager1.showSelectionPage ? "Hide Selection" : "Show Selection"
-                    Controls.ToolTip.visible: hovered
                     onToggled: appManager1.showSelectionPage = !checked
                 }
 
                 Controls.Label {
-                    text: appManager1.showSelectionPage ? "Selection shown" : "Selection hidden"
+                    text: appManager1.showSelectionPage ? qsTr("Selection shown") : qsTr("Selection hidden")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                     opacity: 0.7
@@ -420,7 +416,7 @@ Kirigami.ApplicationWindow {
             }
 
             Controls.Label {
-                text: "Card text size"
+                text: qsTr("Card text size")
                 //font.bold: true
                 width: parent.width
             }
@@ -547,7 +543,7 @@ Kirigami.ApplicationWindow {
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.ResetRole
             }
             Controls.Button {
-                text: "OK"
+                text: qsTr("OK")
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
             }
             onAccepted: {
@@ -1047,7 +1043,7 @@ Kirigami.ApplicationWindow {
             aboutData: About
             actions: [
                 Kirigami.Action {
-                    text: "Close"
+                    text: qsTr("Close")
                     icon.name: "view-close"
                     onTriggered: pageStack.layers.pop()
                 }
@@ -1058,7 +1054,7 @@ Kirigami.ApplicationWindow {
     //Pages - Selection
     Kirigami.ScrollablePage {
         id: pageSelection
-        title: "Selection"
+        title: qsTr("Selection")
         property string deviceType: "Storage"
 
         Connections {
@@ -1292,7 +1288,7 @@ Kirigami.ApplicationWindow {
         id: pageDevices
         visible: false
         padding: 0
-        title: "Devices"
+        title: qsTr("Devices")
         actions: [
             Kirigami.Action {
                 text:        qsTr("All active")
@@ -1400,7 +1396,7 @@ Kirigami.ApplicationWindow {
     Kirigami.Page {
         id: pageExplore
         visible: false
-        title: "Explore"
+        title: qsTr("Explore")
         padding: 0
 
         actions: [
@@ -1450,7 +1446,7 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageCreate
         visible: false
-        title: "Create"
+        title: qsTr("Create")
         Connections {
             target: appManager1
             function onCatalogCreationCompleted(success, report) {
@@ -1603,7 +1599,7 @@ Kirigami.ApplicationWindow {
     Kirigami.Page {
         id: pageStatistics
         visible: false
-        title: "Statistics"
+        title: qsTr("Statistics")
         padding: 0
 
         actions: [
@@ -1623,7 +1619,7 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageTags
         visible: false
-        title: "Tags"
+        title: qsTr("Tags")
         actions: [
             Kirigami.Action {
                 text: qsTr("Close")
@@ -1653,7 +1649,7 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 text:      qsTr("LuckyBackup")
-                tooltip: "Generate LuckyBackup profile"
+                tooltip: qsTr("Generate LuckyBackup profile")
                 icon.name: "document-save"
                 enabled:   backupPageForm.mappings.length > 0
                 onTriggered: {

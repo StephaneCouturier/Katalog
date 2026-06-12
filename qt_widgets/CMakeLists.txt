@@ -83,6 +83,14 @@ set(K3_QML_FILES
     ${CMAKE_SOURCE_DIR}/qt_quick/PageDevicesViewDelegate.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageCreateForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/DeviceTreeComboBox.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageDeviceEditForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageBackupForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageBackupMappingForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageBackupPreviewForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageExploreFiles.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageExploreFolders.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageStatisticsForm.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/PageTagsForm.qml
 )
 
 set(TS_FILES

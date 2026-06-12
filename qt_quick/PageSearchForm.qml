@@ -332,7 +332,7 @@ ColumnLayout {
                     }
                 }
                 Controls.Button {
-                    text: "1 day ago"
+                    text: qsTr("1 day ago")
                     onClicked: {
                         var today = new Date();
                         var yesterday = new Date(today);
@@ -346,7 +346,7 @@ ColumnLayout {
                     }
                 }
                 Controls.Button {
-                    text: "1 week ago"
+                    text: qsTr("1 week ago")
                     onClicked: {
                         var today = new Date();
                         var lastWeek = new Date(today);
@@ -360,7 +360,7 @@ ColumnLayout {
                     }
                 }
                 Controls.Button {
-                    text: "1 month ago"
+                    text: qsTr("1 month ago")
                     onClicked: {
                         var today = new Date();
                         var lastMonth = new Date(today);
@@ -374,7 +374,7 @@ ColumnLayout {
                     }
                 }
                 Controls.Button {
-                    text: "1 year ago"
+                    text: qsTr("1 year ago")
                     onClicked: {
                         var today = new Date();
                         var lastYear = new Date(today);
@@ -388,7 +388,7 @@ ColumnLayout {
                     }
                 }
                 Controls.Button {
-                    text: "Reset"
+                    text: qsTr("Reset")
                     onClicked: {
                         if (dateDialog.selectedDateField === "Min")
                             search_dateTimeEdit_Min.text = "1970/01/01 00:00:00"
