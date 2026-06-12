@@ -133,6 +133,19 @@ Kirigami.ScrollablePage {
                 visible: appManager1.databaseMode === "File"
                 onClicked: appManager1.openDatabaseFile()
             }
+            Controls.Button {
+                text: qsTr("Edit")
+                icon.name: "document-edit"
+                visible: appManager1.databaseMode === "Memory"
+                onClicked: appManager1.openFolder(appManager1.getCollectionFolder())
+            }
+            Controls.Button {
+                text: qsTr("Edit")
+                icon.name: "document-edit"
+                visible: appManager1.databaseMode === "Hosted"
+                onClicked: Qt.openUrlExternally(appManager1.getPhpMyAdminUrl()
+                                                + encodeURIComponent(appManager1.getDatabaseName()))
+            }
         }
 
         Controls.Label { text: qsTr("Database Version"); opacity: 0.7 }
@@ -225,6 +238,18 @@ Kirigami.ScrollablePage {
             text: qsTr("Connect automatically on startup")
             onCheckedChanged: appManager1.setHostedAutoConnect(checked)
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+
+        Controls.Label {
+            text: qsTr("phpMyAdmin URL"); opacity: 0.7
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+        }
+        Controls.TextField {
+            id: phpMyAdminUrlField
+            text: appManager1.getPhpMyAdminUrl()
+            Layout.fillWidth: true
+            visible: appManager1.databaseMode === "Hosted" || showHostedForm
+            onEditingFinished: appManager1.setPhpMyAdminUrl(text)
         }
 
         Controls.Label {

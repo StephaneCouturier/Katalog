@@ -759,6 +759,22 @@ QString AppManager::getDatabaseName() const
     return settings.value("Settings/databaseName").toString();
 }
 //----------------------------------------------------------------------
+QString AppManager::getPhpMyAdminUrl() const
+{
+    // Base URL the Hosted "Edit" button opens; the database name is appended by
+    // the caller. Editable + persisted so each machine can adjust host/port/path
+    // (e.g. macOS MAMP uses :8888) without code changes.
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/PhpMyAdminUrl",
+               "http://localhost/phpMyAdmin/index.php?route=/database/structure&db=").toString();
+}
+//----------------------------------------------------------------------
+void AppManager::setPhpMyAdminUrl(const QString &url)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/PhpMyAdminUrl", url);
+}
+//----------------------------------------------------------------------
 int AppManager::getDatabasePort() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);

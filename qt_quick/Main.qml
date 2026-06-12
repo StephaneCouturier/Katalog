@@ -219,7 +219,7 @@ Kirigami.ApplicationWindow {
                 separator: true
             },
             Kirigami.Action {
-                text: "Open Collection..."
+                text: "Open..."
                 icon.name: "document-open"
                 Kirigami.Action {
                     icon.name: "folder"

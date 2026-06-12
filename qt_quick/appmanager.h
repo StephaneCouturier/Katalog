@@ -390,6 +390,8 @@ public slots:
     // Hosted database settings
     Q_INVOKABLE QString getHostName() const;
     Q_INVOKABLE QString getDatabaseName() const;
+    Q_INVOKABLE QString getPhpMyAdminUrl() const;
+    Q_INVOKABLE void    setPhpMyAdminUrl(const QString &url);
     Q_INVOKABLE int     getDatabasePort() const;
     Q_INVOKABLE QString getDatabaseUserName() const;
     Q_INVOKABLE QString getDatabasePassword() const;
