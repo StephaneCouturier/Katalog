@@ -738,6 +738,7 @@ ColumnLayout {
                     Controls.SpinBox {
                         id: search_spinBox_MinimumSize
                         enabled: false
+                        editable: true
                         from: 0; value: 0; to: 1000
                         implicitWidth: 110
                     }
@@ -753,6 +754,7 @@ ColumnLayout {
                     Controls.SpinBox {
                         id: search_spinBox_MaximumSize
                         enabled: false
+                        editable: true
                         from: 0; value: 1000; to: 1000
                         implicitWidth: 110
                     }
@@ -909,6 +911,7 @@ ColumnLayout {
                         Controls.SpinBox {
                             id: search_spinBox_MetadataMinimumWidth
                             enabled: false
+                            editable: true
                             from: 0; value: 0; to: 30000
                             implicitWidth: 110
                         }
@@ -918,6 +921,7 @@ ColumnLayout {
                         Controls.SpinBox {
                             id: search_spinBox_MetadataMaximumWidth
                             enabled: false
+                            editable: true
                             from: 0; value: 30000; to: 30000
                             implicitWidth: 110
                         }
@@ -932,6 +936,7 @@ ColumnLayout {
                         Controls.SpinBox {
                             id: search_spinBox_MetadataMinimumHeight
                             enabled: false
+                            editable: true
                             from: 0; value: 0; to: 30000
                             implicitWidth: 110
                         }
@@ -941,6 +946,7 @@ ColumnLayout {
                         Controls.SpinBox {
                             id: search_spinBox_MetadataMaximumHeight
                             enabled: false
+                            editable: true
                             from: 0; value: 30000; to: 30000
                             implicitWidth: 110
                         }
